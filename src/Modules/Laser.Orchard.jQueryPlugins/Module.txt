@@ -1,0 +1,11 @@
+﻿Name: Laser JQuery Plugins
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.jQueryPlugins:
+        Description: Manifest definition for javascripts and stylesheets resources.
+        Dependencies: Orchard.Resources
+        Category: Administration

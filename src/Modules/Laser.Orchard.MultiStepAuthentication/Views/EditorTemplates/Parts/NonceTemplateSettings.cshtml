@@ -1,0 +1,8 @@
+﻿@model Laser.Orchard.MultiStepAuthentication.Models.NonceTemplateSettingsPart
+<fieldset>
+    <div class="editor-field">
+        @Html.LabelFor(m => m.ct.TemplateIdSelected, T("Nonce template"))
+        @Html.DropDownListFor(m => m.ct.TemplateIdSelected, new SelectList(Model.ct.TemplatesList, "Id", "Title", Model.ct.TemplateIdSelected))
+        <span class="hint">@T("The template to use for.")</span>
+</div>
+</fieldset>

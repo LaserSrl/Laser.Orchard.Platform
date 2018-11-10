@@ -1,0 +1,40 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.GDPRPartFieldSettingsViewModel
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.ShouldAnonymize)
+        <label for="@Html.FieldIdFor(m => m.ShouldAnonymize)" class="forcheckbox">
+            @T("This ContentField is subject to anonymization.")
+        </label>
+        <span class="hint">
+            @T("Setting this flag casues the field to be processed when a ContentItem of this type is being processed for anonymization.")
+        </span>
+    </div>
+    <div id="@Model.AnonymizationDivId" data-controllerid="@Html.FieldIdFor(m => m.ShouldAnonymize)">
+        <label for="@Html.FieldIdFor(m => m.AnonymizationPropertyValuePairs)">
+            @T("Default Anonymization")
+        </label>
+        @Html.TextAreaFor(m => m.AnonymizationPropertyValuePairs)
+        <span class="hint">
+            @T("Property value pairs for reflection. Write them as a json dictionary. E.g.: { \"key1\": \"value1\", \"key2\": \"value2\"}")
+        </span>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.ShouldErase)
+        <label for="@Html.FieldIdFor(m => m.ShouldErase)" class="forcheckbox">
+            @T("This ContentField is subject to erasure.")
+        </label>
+        <span class="hint">
+            @T("Setting this flag casues the field to be processed when a ContentItem of this type is being processed for erasure.")
+        </span>
+    </div>
+    <div id="@Model.ErasureDivId" data-controllerid="@Html.FieldIdFor(m => m.ShouldErase)">
+        <label for="@Html.FieldIdFor(m => m.ErasurePropertyValuePairs)">
+            @T("Default Erasure")
+        </label>
+        @Html.TextAreaFor(m => m.ErasurePropertyValuePairs)
+        <span class="hint">
+            @T("Property value pairs for reflection. Write them as a json dictionary. E.g.: { \"key1\": \"value1\", \"key2\": \"value2\"}")
+        </span>
+    </div>
+</fieldset>

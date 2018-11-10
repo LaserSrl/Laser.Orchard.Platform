@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.PaymentCartaSi
+AntiForgery: enabled
+Author: Laser s.r.l - Matteo Piovanelli
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: Description for the module
+Features:
+    Laser.Orchard.PaymentCartaSi:
+        Description: Enables payments using CartaSì as a provider
+		Dependencies: Laser.Orchard.PaymentGateway

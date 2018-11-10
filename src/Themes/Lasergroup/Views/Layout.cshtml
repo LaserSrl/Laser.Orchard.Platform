@@ -1,0 +1,149 @@
+﻿@functions {
+    // To support the layout classifaction below. Implementing as a razor function because we can, could otherwise be a Func<string[], string, string> in the code block following.
+    string CalcuClassify(string[] zoneNames, string classNamePrefix) {
+        var zoneCounter = 0;
+        var zoneNumsFilled = string.Join("", zoneNames.Select(zoneName => { ++zoneCounter; return Model[zoneName] != null ? zoneCounter.ToString() : ""; }).ToArray());
+        return HasText(zoneNumsFilled) ? classNamePrefix + zoneNumsFilled : "";
+    }
+}
+@{
+    /* Global includes for the theme moved to Document.cshtml
+    ***************************************************************/
+
+
+    /* Some useful shortcuts or settings
+    ***************************************************************/
+
+    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
+
+    /* Layout classification based on filled zones
+    ***************************************************************/
+
+    //Add classes to the wrapper div to toggle aside widget zones on and off
+    var asideClass = CalcuClassify(new[] { "AsideFirst", "AsideSecond" }, "aside-"); // for aside-1, aside-2 or aside-12 if any of the aside zones are filled
+    if (HasText(asideClass)) {
+        Model.Classes.Add(asideClass);
+    }
+
+    //Add classes to the wrapper div to toggle tripel widget zones on and off
+    var tripelClass = CalcuClassify(new[] { "TripelFirst", "TripelSecond", "TripelThird" }, "tripel-"); // for tripel-1, triple-2, etc. if any of the tripel zones are filled
+    if (HasText(tripelClass)) {
+        Model.Classes.Add(tripelClass);
+    }
+
+    //Add classes to the wrapper div to toggle quad widget zones on and off
+    var footerQuadClass = CalcuClassify(new[] { "FooterQuadFirst", "FooterQuadSecond", "FooterQuadThird", "FooterQuadFourth" }, "split-"); // for quad-1, quad-2, etc. if any of the quad zones are filled
+    if (HasText(footerQuadClass)) {
+        Model.Classes.Add(footerQuadClass);
+    }
+
+    /* Inserting some ad hoc shapes
+    ***************************************************************/
+    //WorkContext.Layout.Logo.Add(New.Branding(), "1");
+    //WorkContext.Layout.Footer.Add(New.BadgeOfHonor(), "5"); // Powered by Orchard
+    WorkContext.Layout.Footer.Add(New.User(), "10"); // Login and dashboard links
+
+    /* Last bit of code to prep the layout wrapper
+    ***************************************************************/
+
+    //Model.Id = "layout-wrapper";
+    //Model.Classes.Add("main-bg");
+    //var tag = Tag(Model, "div"); // using Tag so the layout div gets the classes, id and other attributes added to the Model
+    var subthemePath = Url.Content("~/Themes/Lasergroup");
+    var settings = WorkContext.Resolve<Orchard.Environment.Configuration.ShellSettings>();
+    var host = settings.RequestUrlHost;
+    var prefix = settings.RequestUrlPrefix;
+    var urlPath = (Request.Path.EndsWith("/") ? Request.Path : Request.Path + "/");
+    var urlHome = Url.Content("~/" + (!String.IsNullOrWhiteSpace(prefix) ? prefix + "/" : ""));
+
+
+
+}
+
+<div id="page" class="hfeed site">
+    <header id="header" class="site-header" role="banner">
+
+        @if (Model.Navigation != null) {
+            @Zone(Model.Navigation)
+        }
+
+    </header>
+
+    <div id="content" class="site-content">
+        @if (Model.Messages != null) {
+            @Zone(Model.Messages)
+        }
+
+        @if (Model.Content != null) {
+            @Zone(Model.Content)
+        }
+
+        @if (Model.AfterContentContattiPage != null) {
+            <div class="container">
+                <div class="space-40"></div>
+                <div class="row">
+                    @Zone(Model.AfterContentContattiPage)
+                </div>
+            </div>
+        }
+
+        @if (Model.AfterContent != null) {
+            @Zone(Model.AfterContent)
+        }
+
+        @if (Model.AfterContentProdotto != null) {
+            <div class="container">
+                @Zone(Model.AfterContentProdotto)
+            </div>
+        }
+
+    </div>
+
+    <div id="footer" class="container-fluid">
+        <div class="space-40"></div>
+        <div class="space-40"></div>
+        <div class="row">
+            @if (Model.QuadFirst != null) {
+                @Zone(Model.QuadFirst)
+            }
+
+            @if (Model.QuadSecond != null) {
+                @Zone(Model.QuadSecond)
+            }
+
+            @if (Model.QuadThird != null) {
+                @Zone(Model.QuadThird)
+            }
+
+            @if (Model.QuadFourth != null) {
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 text-center">
+                    <div class="space-40  visible-xs"></div>
+                    @Zone(Model.QuadFourth)
+                </div>
+            }
+        </div>
+        @if (Model.QuadBottom != null) {
+            <div class="row">
+                <div class="col">
+                    @Zone(Model.QuadBottom)
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="space-20"></div>
+            <div class="container footer-bottom"></div>
+        </div>
+        @if (Model.Footer != null) {
+            @Zone(Model.Footer)
+        }
+    </div>
+
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var _wpcf7 = { "loaderUrl": "@subthemePath/styles/images/ajax-loader.gif", "recaptcha": { "messages": { "empty": "@T("Please show me you are not a robot.")" } }, "sending": "@T("Send...")" };
+        /* ]]> */
+    </script>
+
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2170079.js"></script>
+    <!-- End of HubSpot Embed Code -->

@@ -1,0 +1,38 @@
+﻿@model Contrib.Voting.ViewModels.VoteWidgetViewModel
+
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.Part.ContentType, T("Content Type"))
+        <select id="@Html.FieldIdFor(m => m.Part.ContentType)" name="@Html.FieldNameFor(m => m.Part.ContentType)">
+        @foreach(var contentType in Model.ContentTypeNames) {
+            @Html.SelectOption(Model.Part.ContentType, contentType, contentType)
+        }
+        </select>
+        <span class="hint">@T("Select which Content Type you want to display")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Part.Count, T("Count"))
+        @Html.TextBoxFor(m => m.Part.Count)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Part.Dimension, T("Dimension"))
+        @Html.TextBoxFor(m => m.Part.Dimension)
+        <span class="hint">@T("Provide the technical name of the vote. Leave empty for 'overall' rating.")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Part.FunctionName, T("Function name"))
+        <select id="@Html.FieldIdFor(m => m.Part.FunctionName)" name="@Html.FieldNameFor(m => m.Part.FunctionName)">
+        @foreach (var functionName in Model.FunctionNames) {
+            @Html.SelectOption(Model.Part.FunctionName, functionName, functionName)
+        }
+        </select>
+        <span class="hint">@T("Select which function should be used for ordering")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Part.Ascending, T("Order By"))
+        <select id="@Html.FieldIdFor(m => m.Part.Ascending)" name="@Html.FieldNameFor(m => m.Part.Ascending)">
+            <option value="true">@T("Ascending")</option>
+            <option value="false">@T("Descending")</option>
+        </select>
+    </div>
+</fieldset>

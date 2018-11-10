@@ -1,0 +1,31 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+    var testoBody = item.BodyPart.Text;
+}
+
+<div id="foto-sfondo" style="background-image:url('@item.ParallasseWidget.Image.FirstMediaUrl');">
+    <div class="foto-sfondo-top"></div>
+    
+    @if (testoBody != "") {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="space-40"></div>
+
+                    @if (!string.IsNullOrEmpty(item.ParallasseWidget.TitoloConLink.Value)) {
+                        <a href="@item.ParallasseWidget.TitoloConLink.Value"><h3 class="foto-sfondo-title">@item.ParallasseWidget.TitoloConLink.Text</h3></a>
+                    }
+                    else {
+                        <h3 class="foto-sfondo-title">@item.ParallasseWidget.TitoloParallasse.Value</h3>
+                    }
+
+                    <div class="space-40"></div>
+                </div>
+                <div class="col-sm-12 col-md-4 hidden-xs hidden-sm">
+                    @Html.Raw(testoBody)
+                </div>
+            </div>
+        </div>
+    }
+    <div class="foto-sfondo-bottom"></div>
+</div>

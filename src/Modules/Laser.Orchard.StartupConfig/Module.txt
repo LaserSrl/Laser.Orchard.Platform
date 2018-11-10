@@ -1,0 +1,60 @@
+﻿Name: Laser Orchard StartupConfig
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.8
+Description: Laser Framework that enables many general features
+Dependencies: Orchard.MediaLibrary, Orchard.Fields, Orchard.ContentPicker, Orchard.Localization, Orchard.Modules, Orchard.Tokens ,Orchard.Roles
+Category: Administration
+Features:
+    Laser.Orchard.StartupConfig.UriCultureSelector:
+        Name: Laser Uri Culture selector
+        Description: Derives the current language parsing the url or reading the query string parameter "lang".
+        Category: Localization
+        Dependencies: Orchard.Localization
+	Laser.Orchard.StartupConfig.RoleExtension:
+		Name: Laser Role Extension
+		Description: Funzione implementata lista utenti collegata ad un ruolo
+		Category: Role
+		Dependencies: 
+	Laser.Orchard.StartupConfig.MediaExtensions:
+		Name: Laser Media Extension
+		Description: Expose a route to transform images
+		Category: Media
+		Dependencies: Orchard.MediaProcessing
+	Laser.Orchard.StartupConfig.WorkflowExtensions:
+		Name: Laser Workflow Extension
+		Description: Expose useful functions for workflows
+		Category: Workflows
+		Dependencies: Orchard.Workflows, Orchard.Forms, Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.RelationshipsEnhancer:
+		Name: Laser Relationships Enhancer
+		Description: Create a part to obtain parents Content Items via Content Picker Field informations.
+		Category: Content
+		Dependencies: Orchard.Projections
+	Laser.Orchard.StartupConfig.TaxonomiesExtensions:
+		Name: Laser Taxonomies Extensions
+		Description: Make Taxonomies fully integrated with localization
+		Category: Content
+		Dependencies: Orchard.Taxonomies, Orchard.Localization, Contents, Laser.Orchard.StartupConfig, Orchard.Taxonomies.LocalizationExtensions
+	Laser.Orchard.StartupConfig.PermissionExtension:
+		Name: Laser Permission Extensions
+		Description: Enable Permission and Group Management
+		Category: Role
+		Dependencies: Orchard.Workflows,Orchard.Forms,itWORKS.ExtendedRegistration
+	Laser.Orchard.StartupConfig.Maintenance
+		Name: Laser Maintenance System
+		Description: Enable feature for site's maintenance, message etc...
+		Category: Messaging
+		Dependencies: Laser.Orchard.StartupConfig,Orchard.PublishLater
+	Laser.Orchard.StartupConfig.WebApiProtection
+		Name: Laser WebApi and Controller Protection
+		Description: Enable feature to protect WebApi Call
+		Category: Security
+		Dependencies: Laser.Orchard.StartupConfig, Orchard.OutputCache, Orchard.Caching
+	Laser.Orchard.StartupConfig.JsonDataTablePart
+		Name: Laser JsonDataTable Part
+		Description: Part to show and edit a data table in json format
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig

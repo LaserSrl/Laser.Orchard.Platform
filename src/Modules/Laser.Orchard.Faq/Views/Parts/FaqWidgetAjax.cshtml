@@ -1,0 +1,103 @@
+@using Laser.Orchard.Faq.Models
+@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models
+@{
+    Script.Require("jQuery").AtHead();
+    Style.Include("Laser.Orchard.Faq.css").AtHead();
+    IEnumerable<FaqTypePartRecord> types = Model.FaqTypes;
+}
+
+
+@if (types == null || types.Count() < 1)
+{
+    <p>@T("NoItems")</p>
+}
+else
+{
+    <div class="faq_widget_ajax">
+        <div class="faq_widget_ajax_header">
+            <span>Choose a FAQ type: </span>
+            @Html.DropDownList("faqTypes", types.Select(ft => new SelectListItem { Selected = false, Text = ft.Title, Value = ft.Id.ToString() }), new {style="width: 100%;"})
+        </div>
+        <div class="faq-list"></div>
+    </div>
+}
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+
+            $('#faqTypes').change(function () {
+                var id = "";
+                $("#faqTypes option:selected").each(function () {
+                    id = parseInt($(this).attr("value"));
+                });
+
+                $.ajax(
+                    {
+                        url: "/FaqWidgetAjax/GetTypedFaq",
+                        success: function (result) {
+                            renderFaq(result);
+                        },
+                        type: "POST",
+                        data: { faqTypeId: id, __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()' },
+                        complete: function () {
+                        }
+                    });
+
+           });
+
+            $('#faqTypes').change();
+        });
+
+
+            function questionClick(sender) {
+                var id = $(sender).attr("id");
+                if (!$(sender).hasClass('faq-ajax-selected')) {
+                    $("#faq_ajax_question_marker_" + id).addClass('faq_list_marker_expanded');
+                    $(sender).addClass('faq-ajax-selected');
+                    $('#faq-answer-ajax-' + id).show();
+                    //$("#show-trigger-ajax-" + id).hide();
+                    //$("#answer-trigger-ajax-" + id).show();
+                } else {
+                    $("#faq_ajax_question_marker_" + id).removeClass('faq_list_marker_expanded');
+                    //$("#show-trigger-ajax-" + id).show();
+                    //$("#answer-trigger-ajax-" + id).hide();
+                    $('#faq-answer-ajax-' + id).hide();
+                    $(sender).removeClass('faq-ajax-selected');
+                }
+            }
+
+            function renderFaq(faq) {
+                $(".faq-ajax-items-question").remove();
+                $(".faq-noItems-container").remove();
+
+                if (faq.length == 0) {
+                    var noItemsDiv = $("<div class='faq-noItems-container'>");
+                    var noItems = $("<span class='faq-noItems' align='center'>").text("@T("NoItems")");
+                    noItems.appendTo(noItemsDiv);
+                    noItemsDiv.appendTo($(".faq-list"));
+                } else {
+                    $.each(faq, function(i, val) {
+                        var ul = $("<ul class='faq-ajax-items-question'>");
+                        var question = $("<li class='faq-question' onclick='questionClick(this)' id='" + val.Id + "'>");
+                        var marker = $("<span id='faq_ajax_question_marker_" + val.Id + "' class='faq_question_marker'>");
+                        question.text(val.Question);
+                        marker.prependTo(question);
+                        @*var triger = $("<a class='faq_trigger'>");
+                        $('<span id="show-trigger-ajax-' + val.Id + '">@T("Answer")</span>').appendTo(triger);
+                        $('<span id="answer-trigger-ajax-' + val.Id + '" style="display: none;">@T("Hide")</span>').appendTo(triger);
+                        triger.appendTo(question);*@
+                        var answer = $('<li class="faq-answer-ajax-" style="display: none;" id="faq-answer-ajax-' + val.Id + '">' + val.Answer + '</li>');
+                        question.appendTo(ul);
+                        answer.appendTo(ul);
+                        ul.appendTo($(".faq-list"));
+                    });
+                }
+            }
+            //]]>
+    </script>
+
+}

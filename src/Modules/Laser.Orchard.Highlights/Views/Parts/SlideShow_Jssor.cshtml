@@ -1,0 +1,42 @@
+﻿@using hTools = Laser.Orchard.Highlights.Shared.HelperTools;
+@using Laser.Orchard.Highlights.Models;
+
+@{
+    var HighlightsService = WorkContext.Resolve<Laser.Orchard.Highlights.Services.IHighlightsService>();
+    
+    //Versioni di debug degli script Jssor
+    //Script.Require("Jssor_Core").AtHead();
+    //Script.Require("Jssor_Slider").AtHead();
+    //Script.Require("Jssor_Utils").AtHead();
+    
+    Script.Require("Jssor_Mini").AtHead();
+}
+    <script>
+        jQuery(document).ready(function ($) {
+            var options = {
+
+                $AutoPlay: true,                                   //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $DragOrientation: 3                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+            };
+
+            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+        });
+    </script>
+    <div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 600px;
+        height: 300px;">
+        <!-- Slides Container -->
+        <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 300px; overflow: hidden;">
+             @{
+                var indexer = 0;
+              }
+            @foreach (var item in Model.HighlightsItems) {
+                indexer++;
+                if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.ByHand) {
+                @Display(item.Content)} else if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.FromQuery) {
+                    //FromQuery
+                                          var shape = HighlightsService.CreateHighlightsItemShape(item, Model.HighlightsGroup.DisplayTemplate.ToString(), "Parts_HighlightsItem_Jssor");
+                @Display(shape)
+                }
+            }
+        </div>
+    </div>

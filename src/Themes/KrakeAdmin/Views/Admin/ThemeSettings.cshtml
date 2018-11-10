@@ -1,0 +1,32 @@
+﻿﻿@model KrakeAdmin.Settings.ViewModels.ThemeSettingsViewModel
+
+@{ Layout.Title = T("Krake admin theme settings"); }
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary();
+    <fieldset>
+        @Html.Label(T("Header logo URL").Text)
+        @Html.TextBoxFor(m => m.HeaderLogoUrl, new { @class="text large"})
+        <span class="hint">@T("type an URL for the header logo. Recommended size is 222x55.")</span>
+    </fieldset>
+    <fieldset>
+        @Html.Label(T("Placeholder logo URL").Text)
+        @Html.TextBoxFor(m => m.PlaceholderLogoUrl, new { @class = "text large" })
+        <span class="hint">@T("type an URL for the placeholder logo. Recommended size is 240x120.")</span>
+    </fieldset>
+    <fieldset>
+        @Html.Label(T("Placeholder small logo URL").Text)
+        @Html.TextBoxFor(m => m.PlaceholderSmallLogoUrl, new { @class = "text large" })
+        <span class="hint">@T("type an URL for the placeholder small logo. Recommended size is 70x70.")</span>
+    </fieldset>
+    <fieldset>
+        @Html.Label(T("Base line text").Text)
+        @Html.TextBoxFor(m => m.BaseLineText, new { @class = "text large" })
+        <span class="hint">@T("type a base line text")</span>
+    </fieldset>
+
+    <fieldset>
+        <legend></legend>
+        <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
+    </fieldset>
+}

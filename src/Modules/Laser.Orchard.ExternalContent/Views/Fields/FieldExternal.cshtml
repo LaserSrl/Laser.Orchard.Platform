@@ -1,0 +1,28 @@
+﻿@using Orchard.Utility.Extensions;
+@*
+@{
+  string name = Model.ContentField.Name;  
+}
+@if (!string.IsNullOrWhiteSpace(Model.ContentField.ExternalUrl))
+{
+    <p class="file-field">
+       <span class="name">@name.CamelFriendly()</span>
+       <a href="@Url.Content(Model.ContentField.ExternalUrl)">Link del content item</a>
+     
+    </p>
+}else{
+    <a href="@Url.Content(Model.Setting.ExternalURL)">link del setting del content item</a>
+
+} 
+@{
+    foreach(var item in Model.ContentField.ContentObject)
+    {
+                @Html.Raw(item.Name)
+
+
+    }
+        
+}
+URL FINALE: @Model.ContentField.ContentObject["Students"]["Student"][0]["Name"]
+ @Model.ContentField.ContentObject["Students"]["Student"][0]["@id"]
+tutto l'oggetto  @Model.ContentField.ContentObject*@

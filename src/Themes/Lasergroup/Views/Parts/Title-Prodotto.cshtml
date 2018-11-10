@@ -1,0 +1,38 @@
+@{
+    Layout.Title = Model.Title;
+    dynamic item = Model.ContentItem;
+    // 20180618: Added color to Prodotto for Krake website;
+    // Moved instruction to add ShowcaseBackLink in the else branch (the one that "happens" for laser-group.com)
+    if (item.Prodotto.Colorebase != null
+        && item.Prodotto.Colorebase.Value != null
+        && item.Prodotto.Colorebase.Value != "Default") {
+        Layout.BaseClass = item.Prodotto.Colorebase.Value.ToLower() + " single single-showcase navbar-fixed";
+    } else {
+        WorkContext.Layout.Zones["AfterContentProdotto"].Add(New.ShowcaseBackLink(ContentItem: Model.ContentItem), "9999");
+        Layout.BaseClass = "single single-showcase navbar-fixed";
+    }
+
+}
+<div id="intro" class="showcase-intro">
+    <canvas id="intro-canvas"></canvas>
+    <div class="container container-desc clearfix">
+        <div class="col-xs-12 col-sm-6 col-intro-desc">
+            <h1 class="handel-got-d title">@Model.Title</h1>
+            <h2 class="page-claim">@item.Prodotto.Sottotitolo.Value</h2>
+            <div class="page-desc">@Html.Raw(item.BodyPart.Text)</div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="showcase-perspective">
+                <img src="@item.Prodotto.Gallery.FirstMediaUrl"  title="@item.Prodotto.Gallery.MediaParts[0].Title" alt="@item.Prodotto.Gallery.MediaParts[0].AlternateText"  class="img-responsive perspective-layer">
+                    @foreach (var tipo in item.Prodotto.Tipologia.Terms) {
+                            <div class="perspective-layer category-layer" style="background:@tipo.ContentItem.TipologiaProdottiTerm.Colore.Value">
+							@if (tipo.ContentItem.TipologiaProdottiTerm.Image.MediaParts.Count > 0){	
+                                <img src="@tipo.ContentItem.TipologiaProdottiTerm.Image.FirstMediaUrl" title="@tipo.ContentItem.TipologiaProdottiTerm.Image.MediaParts[0].Title" alt="@tipo.ContentItem.TipologiaProdottiTerm.Image.MediaParts[0].AlternateText" class="img-responsive category-layer-icon">
+							}
+                                <h5 class="category-layer-title">@tipo.Name</h5>
+                            </div>
+                        }
+            </div>
+        </div>
+    </div>
+</div>

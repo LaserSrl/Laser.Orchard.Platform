@@ -1,0 +1,50 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Models
+@using Orchard.Utility.Extensions;
+
+@{
+    var documentPath = Url.Content("~/Themes/KrakeDefaultTheme/Styles/images/documento.png");
+    var videoPath = Url.Content("~/Themes/KrakeDefaultTheme/Styles/images/video.png");
+    var audioPath = Url.Content("~/Themes/KrakeDefaultTheme/Styles/images/audio.png");
+    var mediaPart = ((ContentItem)Model.ContentItem).As<MediaPart>();
+}
+
+@switch (mediaPart.LogicalType) {
+    case "Image":
+        <a class="thumbnail" href="@Url.Content(mediaPart.MediaUrl)">
+            <img class="thunb-media" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+            <label class="thunb-text">@cutExtension(mediaPart.FileName)</label>
+        </a>
+        break;
+    case "Document":
+        <a class="thumbnail" href="@mediaPart.MediaUrl">
+            <img class="thunb-media" src="@documentPath" alt="doc"/>
+            <label class="thunb-text">@cutExtension(mediaPart.FileName)</label>
+        </a>
+        break;
+    case "Audio":
+        <a class="thumbnail" href="@mediaPart.MediaUrl">
+            <img class="thunb-media" src="@audioPath" alt="doc"  />
+            <label class="thunb-text">@cutExtension(mediaPart.FileName)</label>
+        </a>
+        break;
+    case "Video":
+        <a class="thumbnail" href="@mediaPart.MediaUrl">
+            <img class="thunb-media" src="@videoPath" alt="doc"  />
+            <label class="thunb-text">@cutExtension(mediaPart.FileName)</label>
+        </a>
+        break;
+    default:
+        <a class="thumbnail" href="@mediaPart.MediaUrl">
+            <img class="thunb-media" src="@documentPath" alt="doc" />
+            <label class="thunb-text">@cutExtension(mediaPart.FileName)</label>
+        </a>
+        break;
+
+}
+
+@functions{
+        public string cutExtension(string name) {
+            return name.Substring(0, name.Length - 4);
+        }
+}

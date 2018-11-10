@@ -1,0 +1,71 @@
+﻿@model Laser.Orchard.Mobile.Models.SmsSettingsPart
+
+<fieldset>
+    <legend>@T("Sms Settings")</legend>
+    
+    @Html.LabelFor(m=>m.MamDriverIdentifier, T("Mam driver identifier"))
+    @Html.EditorFor(m=>m.MamDriverIdentifier)
+    @Html.ValidationMessageFor(m=>m.MamDriverIdentifier)
+
+    @Html.LabelFor(m=>m.MamHaveAlias, T("Mam has alias"))
+    @Html.CheckBoxFor(m => m.MamHaveAlias, new { @disabled = "disabled" })
+    @Html.ValidationMessageFor(m=>m.MamHaveAlias)
+
+    @Html.LabelFor(m=>m.SmsFrom, T("Sms sender name"))
+    @Html.TextBoxFor(m=>m.SmsFrom, new { @readonly = "readonly" })
+    @Html.ValidationMessageFor(m=>m.SmsFrom)
+
+    @Html.LabelFor(m=>m.MaxLenghtSms, T("Sms max lenght"))
+    @Html.TextBoxFor(m=>m.MaxLenghtSms, new { @readonly = "readonly" })
+    @Html.ValidationMessageFor(m=>m.MaxLenghtSms)
+
+    @Html.LabelFor(m=>m.Protocollo, T("Protocol"))
+    @Html.TextBoxFor(m=>m.Protocollo, new { @readonly = "readonly" })
+    @Html.ValidationMessageFor(m=>m.Protocollo)
+
+    @Html.LabelFor(m=>m.SmsPrority, T("SMS priority"))
+    @{ 
+        List<SelectListItem> priorityList = new List<SelectListItem>();
+
+        priorityList.Add(new SelectListItem {
+            Text = T("High").ToString(),
+            Value = "0",
+        });
+        priorityList.Add(new SelectListItem {
+            Text = T("Medium").ToString(),
+            Value = "5",
+            Selected = true
+        });
+        priorityList.Add(new SelectListItem {
+            Text = T("Low").ToString(),
+            Value = "9",
+        });
+
+    }
+    @Html.DropDownListFor(m => m.SmsPrority, priorityList)
+    @Html.ValidationMessageFor(m=>m.SmsPrority)
+
+    @Html.LabelFor(m=>m.SmsValidityPeriod, T("Sms validity period in seconds"))
+    @Html.EditorFor(m=>m.SmsValidityPeriod)
+    @Html.ValidationMessageFor(m=>m.SmsValidityPeriod)
+
+    @Html.LabelFor(m=>m.TotalMaxRetry, T("Total max retry"))
+    @Html.EditorFor(m=>m.TotalMaxRetry)
+    @Html.ValidationMessageFor(m=>m.SmsValidityPeriod)
+
+@*    @Html.LabelFor(m=>m.UrlSmsEngine)
+    @Html.EditorFor(m=>m.UrlSmsEngine)*@
+
+    @Html.LabelFor(m=>m.SmsServiceEndPoint, T("Sms web service url end-point"))
+    @Html.EditorFor(m=>m.SmsServiceEndPoint)
+    @Html.ValidationMessageFor(m=>m.SmsServiceEndPoint)
+
+    @Html.LabelFor(m=>m.WsUsername, T("Web service username"))
+    @Html.EditorFor(m=>m.WsUsername)
+    @Html.ValidationMessageFor(m=>m.WsUsername)
+
+    @Html.LabelFor(m=>m.WsPassword, T("Web service password"))
+    @Html.EditorFor(m=>m.WsPassword)
+    @Html.ValidationMessageFor(m=>m.WsPassword)
+
+</fieldset>

@@ -1,0 +1,16 @@
+﻿@using Orchard.Projections.Services;
+@{
+    int page = 1;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+    var services = WorkContext.Resolve<IProjectionManager>();
+    var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    var queryItems = services.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
+}
+@foreach (var item in queryItems) {
+    <div class="col-sm-12 col-md-3">
+	    <div class="space-20"></div>
+	    <h5 class="contact-title"><img src="@item.Sede.Icona.FirstMediaUrl"  title="@item.Sede.Icona.MediaParts[0].Title" alt="@item.Sede.Icona.MediaParts[0].AlternateText" />&nbsp;@item.TitlePart.Title</h5>
+	    <p class="contact-desc">@Html.Raw(item.BodyPart.Text)</p>
+	    <div class="space-40"></div>
+    </div>
+}

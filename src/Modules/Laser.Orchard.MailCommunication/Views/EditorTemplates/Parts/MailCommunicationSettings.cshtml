@@ -1,0 +1,10 @@
+﻿@model Laser.Orchard.MailCommunication.ViewModels.MailCommunicationSettingsVM
+
+<fieldset>
+    <div>
+        <h2>@T("UNSUBSCRIPTION")</h2>
+        @Html.LabelFor(m => m.Settings.IdTemplateUnsubscribe, T("Pick a template Unsubscribe"))
+        @Html.DropDownListFor(m=>m.Settings.IdTemplateUnsubscribe, new SelectList(Model.TemplatesUnsubscribeList,"Id","Title", Model.Settings.IdTemplateUnsubscribe))
+        <span class="hint">@T("The template to use for.") @T("You can use this placeholder \"[UNSUBSCRIBE]\" in order to render the unsubscription link in your template.")</span>
+    </div>
+</fieldset>

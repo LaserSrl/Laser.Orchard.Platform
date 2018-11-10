@@ -1,0 +1,33 @@
+﻿@using Laser.Orchard.UserReactions.Models
+@using Laser.Orchard.UserReactions.ViewModels
+@using Orchard.ContentManagement
+@using Laser.Orchard.UserReactions.Services
+@using Laser.Orchard.UserReactions
+@{
+    List<Laser.Orchard.UserReactions.ViewModels.UserReactionsVM> part = Model.UserReaction;
+    IUserReactionsService _reactionService;
+    WorkContext.TryResolve<IUserReactionsService>(out _reactionService);
+
+    var settings = WorkContext.CurrentSite.As<UserReactionsSettingsPart>();
+    Style.Require(settings.StyleFileNameProvider.ToString());
+}
+
+<div class="reaction-wrapper">
+    @{foreach (var item in part) {
+          var quantità = "(" + item.Quantity + ")";
+          var itemName = " " + _reactionService.GetReactionEnumTranslations((ReactionsNames)Enum.Parse(typeof(ReactionsNames), item.TypeName));
+          string attCSS = string.Format("reaction-icon-{0}", item.TypeName.ToLowerInvariant());
+          var id = @item.TypeId;
+    
+        <div class="reaction-container" id="@id">
+            <div class="reaction-icon @attCSS"></div>
+            @{var itemNameCount = "itemName" + @id; }
+            @{var itemQtyCount = "itemQuantity" + @id; }
+            <div>
+                <span class="reaction-name" id="@itemNameCount">@itemName</span>
+                <span class="reaction-qty" id="@itemQtyCount">@quantità</span>
+            </div>
+        </div>    
+      } 
+    }
+</div>

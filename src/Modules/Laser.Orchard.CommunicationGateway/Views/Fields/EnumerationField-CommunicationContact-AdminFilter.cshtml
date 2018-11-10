@@ -1,0 +1,9 @@
+﻿@{
+    var enumerationField = (Orchard.Fields.Fields.EnumerationField)(Model.Field);
+}
+<fieldset>
+    <legend>@enumerationField.DisplayName</legend>
+    @foreach (var val in enumerationField.SelectedValues) {
+        @val<br />
+    }
+</fieldset>

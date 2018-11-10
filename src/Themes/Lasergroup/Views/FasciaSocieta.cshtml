@@ -1,0 +1,11 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="col-xs-12 col-sm-6">
+    <a class="focus-item nav-societa-link text-center" href="@item.ElementoFascia.Link.Value">
+        <h2 class="focus-item-link nav-societa-title">@item.TitlePart.Title</h2>
+        <div class="space-20"></div>
+        <span class="focus-plus">@item.ElementoFascia.Link.Text</span>
+    </a>
+</div>

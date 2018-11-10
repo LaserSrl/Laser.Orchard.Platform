@@ -1,0 +1,37 @@
+﻿@using System.Web.Mvc.Html
+@using (Script.Head()) {
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+}
+@using (Script.Foot()) {  
+    <script type="text/javascript">
+        $(function () {
+        $('.rcswitcher-checkbox-fb').rcSwitcher({
+            theme: 'flat',
+            blobOffset: 1,
+            onText: '@T("YES")',
+            offText: '@T("NO")'
+        });
+        });
+    </script>
+}
+
+@model Laser.Orchard.Twitter.ViewModels.TwitterAccountVM
+<fieldset>
+    <legend>@T("Twitter Account")</legend>
+    <div class="editor-label">@Html.LabelFor(m => m.Shared, T("Shared Account"))</div>
+    <div class="editor-label">@Html.CheckBoxFor(m => m.Shared, new { @class = "rcswitcher-checkbox-fb" })</div>
+    <span class="hint">@T("Shared = This account can be used by other user to generate Twitter Post")</span>
+</fieldset>
+<br />
+<fieldset>
+    <div class="editor-label">@Html.LabelFor(m => m.Valid, T("Enable"))</div>
+    <div class="editor-label">@Html.CheckBoxFor(m => m.Valid, new { @class = "rcswitcher-checkbox-fb" })</div>
+    <span class="hint">@T("Only Enabled account can be used to post on Twitter")</span>
+    @Html.HiddenFor(m => m.IdUser)
+    @Html.HiddenFor(m => m.SocialName)
+    @Html.HiddenFor(m => m.UserToken)
+    @Html.HiddenFor(m => m.UserTokenSecret)
+     @Html.HiddenFor(m => m.DisplayAs)
+     @Html.HiddenFor(m => m.AccountType)
+</fieldset>

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Orchard>
+  <Recipe>
+    <Name>SetupTheme</Name>
+    <Description>This recipes configures the current instance to use the ecommerce theme.</Description>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Default</Category>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Common,
+        Containers,
+        Contents,
+        Contrib.Profile,
+        Contrib.Reviews,
+        Contrib.Voting,
+        Dashboard,
+        Feeds,
+        Gallery,
+        itWORKS.ExtendedRegistration,
+        Laser.ECommerce,
+        Laser.Orchard.CommunicationGateway,
+        Laser.Orchard.jQueryPlugins,
+        Laser.Orchard.MailCommunication,
+        Laser.Orchard.MailerUtility,
+        Laser.Orchard.NewsLetters,
+        Laser.Orchard.OpenAuthentication,
+        Laser.Orchard.Policy,
+        Laser.Orchard.Queries,
+        Laser.Orchard.ShortLinks,
+        Laser.Orchard.StartupConfig,
+        Laser.Orchard.TemplateManagement,
+        Laser.Orchard.TemplateManagement.Parsers.Razor,
+        Laser.Orchard.UsersExtensions,
+        Laser.Orchard.ZoneAlternates,
+        Navigation,
+        Nwazet.AdvancedSKUManagement,
+        Nwazet.Attributes,
+        Nwazet.Commerce,
+        Nwazet.CurrencyProviderBySiteSetting,
+        Nwazet.Orders,
+        Nwazet.PersistentCart,
+        Nwazet.Shipping,
+        Nwazet.WishLists,
+        Orchard.Alias,
+        Orchard.Autoroute,
+        Orchard.Blogs,
+        Orchard.Comments,
+        Orchard.Conditions,
+        Orchard.ContentPicker,
+        Orchard.ContentTypes,
+        Orchard.Email,
+        Orchard.Fields,
+        Orchard.Forms,
+        Orchard.ImportExport,
+        Orchard.JobsQueue,
+        Orchard.Layouts,
+        Orchard.Layouts.Tokens,
+        Orchard.Localization,
+        Orchard.MediaLibrary,
+        Orchard.MediaProcessing,
+        Orchard.Modules,
+        Orchard.OutputCache,
+        Orchard.Packaging,
+        Orchard.Pages,
+        Orchard.Projections,
+        Orchard.PublishLater,
+        Orchard.Recipes,
+        Orchard.Resources,
+        Orchard.Roles,
+        Orchard.Scripting,
+        Orchard.Scripting.Lightweight,
+        Orchard.SecureSocketsLayer,
+        Orchard.Setup.Services,
+        Orchard.Tags,
+        Orchard.Taxonomies,
+        Orchard.Themes,
+        Orchard.Tokens,
+        Orchard.Users,
+        Orchard.Widgets,
+        Orchard.Workflows,
+        PackagingServices,
+        Scheduling,
+        Settings,
+        Shapes,
+        Stripe,
+        TheThemeMachine,
+        TinyMce,
+        Title" />
+  <Settings>
+    <AdvancedSKUsSiteSettingPart AllowCustomPattern="false" GenerateSKUAutomatically="true" RequireUniqueSKU="true" SKUPattern="" />
+    <CacheSettingsPart CacheAuthenticatedRequests="false" DebugMode="false" DefaultCacheDuration="0" DefaultCacheGraceTime="60" DefaultMaxAge="0" IgnoredUrls="" IgnoreNoCache="false" VaryByAuthenticationState="false" VaryByCulture="false" VaryByQueryStringParameters="" VaryByRequestCookies="" VaryByRequestHeaders="">
+      <Routes />
+    </CacheSettingsPart>
+    <ECommerceCurrencySiteSettingsPart CurrencyCode="EUR" />
+    <OpenAuthenticationSettingsPart AutoRegistrationEnabled="true" />
+    <RegistrationSettingsPart EnableLostPassword="false" NotificationsRecipients="" NotifyModeration="false" UsersAreModerated="false" UsersCanRegister="true" UsersMustValidateEmail="false" ValidateEmailContactEMail="" ValidateEmailRegisteredWebsite="" />
+    <SiteSettingsPart SupportedCultures="en-US" MaxPagedCount="0" MaxPageSize="0" PageSize="6" SiteCulture="en-US" />
+    <StripeSettingsPart PublishableKey="pk_test_vXURuMWJ03SIxl20PUfg5vOm" SecretKey="sk_test_kF1MLzhUTM18hCiSJl1eKzhq" Currency="EUR" />
+    <ThemeSiteSettingsPart CurrentThemeName="Laser.ECommerce" />
+  </Settings>
+  <ContentDefinition>
+    <Types>
+      <HomePage ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" DisplayName="HomePage">
+        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <HomePage />
+      </HomePage>
+      <HomePageHighlight ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" DisplayName="HomePageHighlight">
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <HomePageHighlight />
+        <IdentityPart />
+        <TitlePart />
+      </HomePageHighlight>
+      <HomePageVideo ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" DisplayName="HomePageVideo">
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <IdentityPart />
+        <HomePageVideo />
+      </HomePageVideo>
+      <HomePageVideoAndCategories ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" Stereotype="Widget" DisplayName="HomePageVideoAndCategories">
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <HomePageVideoAndCategories />
+        <IdentityPart />
+        <WidgetPart />
+      </HomePageVideoAndCategories>
+      <NewsletterDefinition OwnerEditorSettings.ShowOwnerEditor="false" BodyTypePartSettings.Flavor="text" DisplayName="Newsletter Definition">
+        <BodyPart />
+        <CommonPart />
+        <IdentityPart />
+        <NewsletterDefinitionPart />
+        <TitlePart />
+      </NewsletterDefinition>
+      <Page ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeSettings.Draftable="True" TypeIndexing.Indexes="Search" ContentTypeLayoutSettings.Placeable="False" DisplayName="Page">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-page&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart DateEditorSettings.ShowDateEditor="True" OwnerEditorSettings.ShowOwnerEditor="True" />
+        <LayoutPart LayoutTypePartSettings.IsTemplate="False" />
+        <LocalizationPart />
+        <MenuPart />
+        <Page />
+        <PublishLaterPart />
+        <TagsPart />
+        <TitlePart />
+      </Page>
+      <Product ContentTypeSettings.Creatable="True" TypeIndexing.Indexes="" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="False" ContentTypeLayoutSettings.Placeable="False" DisplayName="Product">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-product&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <BodyPart BodyTypePartSettings.Flavor="Html" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <Product />
+        <ProductAttributesPart />
+        <ProductPart />
+        <ReviewsPart ReviewTypePartSettings.ShowStars="True" />
+        <TitlePart />
+      </Product>
+      <ProductsTerm Taxonomy="Products" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" ContentTypeLayoutSettings.Placeable="False" DisplayName="Products Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <ProductsTerm />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" />
+        <TitlePart />
+      </ProductsTerm>
+      <ShoppingCartWidget Stereotype="Widget" DisplayName="Shopping Cart Widget">
+        <CommonPart />
+        <ShoppingCartWidgetPart />
+        <IdentityPart />
+        <WidgetPart />
+      </ShoppingCartWidget>
+      <TopBrand ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" DisplayName="Top Brand">
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <TitlePart />
+        <IdentityPart />
+        <TopBrand />
+      </TopBrand>
+      <WeightBasedShippingMethod DisplayName="Weight Based Shipping Method">
+        <IdentityPart />
+        <TitlePart />
+        <WeightBasedShippingMethodPart />
+      </WeightBasedShippingMethod>
+    </Types>
+    <Parts>
+      <BodyPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Allows the editing of text using an editor provided by the configured flavor (e.g. html, text, markdown)." ContentPartLayoutSettings.Placeable="True" BodyPartSettings.FlavorDefault="html" />
+      <HomePage ContentPartSettings.Attachable="True">
+        <Banner.MediaLibraryPickerField DisplayName="Banner" MediaLibraryPickerFieldSettings.Required="True" MediaLibraryPickerFieldSettings.Multiple="False" />
+        <BannerH3.TextField DisplayName="BannerH3" TextFieldSettings.Flavor="Large" TextFieldSettings.Required="True" />
+        <BannerHeight.NumericField DisplayName="BannerHeight" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="400" NumericFieldSettings.Maximum="" />
+      </HomePage>
+      <HomePageHighlight ContentPartSettings.Attachable="True">
+        <DisplayStyle.EnumerationField DisplayName="DisplayStyle" EnumerationFieldSettings.Required="True" EnumerationFieldSettings.Options="Banner&#xD;&#xA;Zoom&#xD;&#xA;Vertical&#xD;&#xA;Review" EnumerationFieldSettings.ListMode="Dropdown" />
+        <EndDate.DateTimeField DisplayName="End Date" DateTimeFieldSettings.Display="DateAndTime" DateTimeFieldSettings.Hint="This will be used to display a countdown if DisplayStyle is Banner" DateTimeFieldSettings.Required="False" DateTimeFieldSettings.DefaultValue="" />
+        <Picture.MediaLibraryPickerField DisplayName="Picture" MediaLibraryPickerFieldSettings.Hint="DisplayStyle Banner uses 2 images.&#xD;&#xA;All other styles only use 1 image." MediaLibraryPickerFieldSettings.Required="True" MediaLibraryPickerFieldSettings.Multiple="True" />
+        <TargetUrl.LinkField DisplayName="TargetUrl" LinkFieldSettings.Hint="If an url is present, clicking on the highlight will redirect there. The link's text is ignored." LinkFieldSettings.Required="False" LinkFieldSettings.TargetMode="Top" LinkFieldSettings.LinkTextMode="Optional" />
+        <TextOne.TextField DisplayName="Text One" TextFieldSettings.Flavor="Large" TextFieldSettings.Hint="DisplayStyle Banner and Review have more room for this, so in those it may be used as a brief description" TextFieldSettings.Required="True" />
+        <TextThree.TextField DisplayName="Text Three" TextFieldSettings.Hint="This is used only in DisplayStyle Banner and Vertical" TextFieldSettings.Required="False" />
+        <TextTwo.TextField DisplayName="Text Two" TextFieldSettings.Hint="DisplayStyle Review does not use this." TextFieldSettings.Required="False" TextFieldSettings.Flavor="Large" />
+        <TitleOne.TextField DisplayName="Title One" TextFieldSettings.Flavor="Large" TextFieldSettings.Required="True" />
+        <TitleTwo.TextField DisplayName="Title Two" TextFieldSettings.Hint="DisplayStyle Review ignores this" TextFieldSettings.Required="False" TextFieldSettings.Flavor="Large" />
+      </HomePageHighlight>
+      <HomePageVideo ContentPartSettings.Attachable="True">
+        <Video.MediaLibraryPickerField DisplayName="Video" MediaLibraryPickerFieldSettings.Required="True" MediaLibraryPickerFieldSettings.Multiple="False" />
+      </HomePageVideo>
+      <HomePageVideoAndCategories ContentPartSettings.Attachable="True">
+        <Categories.ContentPickerField DisplayName="Categories" ContentPickerFieldSettings.Required="True" ContentPickerFieldSettings.Multiple="False" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="ProductsTerm" ContentPickerFieldExtensionSettings.CascadePublish="False" />
+        <Video.ContentPickerField DisplayName="Video" ContentPickerFieldSettings.Required="True" ContentPickerFieldSettings.Multiple="False" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="ProjectionPage" ContentPickerFieldExtensionSettings.CascadePublish="False" />
+      </HomePageVideoAndCategories>
+      <Page ContentPartSettings.Attachable="True">
+        <Banner.MediaLibraryPickerField DisplayName="Banner" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="False" />
+        <BannerH2.TextField DisplayName="BannerH2" TextFieldSettings.Required="False" TextFieldSettings.Flavor="Textarea" />
+        <BannerH3.TextField DisplayName="BannerH3" TextFieldSettings.Required="False" TextFieldSettings.Flavor="Textarea" />
+        <BannerHeight.NumericField DisplayName="BannerHeight" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" />
+      </Page>
+      <Product>
+        <Category.TaxonomyField DisplayName="Category" TaxonomyFieldSettings.Taxonomy="Products" TaxonomyFieldSettings.LeavesOnly="True" TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" TaxonomyFieldSettings.AllowCustomTerms="False" />
+        <Description.TextField DisplayName="Description" TextFieldSettings.Flavor="Textarea" TextFieldSettings.Hint="A short description of the product" TextFieldSettings.Required="False" />
+        <IsNewProduct.BooleanField DisplayName="New Product" BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="False" />
+        <ProductImage.MediaLibraryPickerField DisplayName="Product Image" MediaLibraryPickerFieldSettings.Required="True" MediaLibraryPickerFieldSettings.Multiple="True" />
+        <RelatedProducts.ContentPickerField DisplayName="Related Products" ContentPickerFieldSettings.Required="False" ContentPickerFieldSettings.Multiple="True" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="Product" ContentPickerFieldExtensionSettings.CascadePublish="False" />
+      </Product>
+      <ProductsTerm ContentPartSettings.Attachable="True">
+        <Banner.MediaLibraryPickerField DisplayName="Banner" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="False" />
+      </ProductsTerm>
+      <ProjectionPage ContentPartSettings.Attachable="True">
+        <Banner.MediaLibraryPickerField DisplayName="Banner" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="False" />
+      </ProjectionPage>
+      <TopBrand ContentPartSettings.Attachable="True">
+        <Logo.MediaLibraryPickerField DisplayName="Logo" MediaLibraryPickerFieldSettings.Required="True" MediaLibraryPickerFieldSettings.Multiple="False" />
+      </TopBrand>
+    </Parts>
+  </ContentDefinition>
+  <Command>
+    layer create Anonymous /LayerRule:"not authenticated" /Description:"The widgets in this layer are displayed when the user is anonymous"
+    layer create Authenticated /LayerRule:"authenticated" /Description:"The widgets in this layer are displayed when the user is authenticated"
+    layer create Catalog /LayerRule:"url ('~/products/*')" /Description:"The widgets in this layer are displayed in pages from the catalog"
+    layer create Default /LayerRule:"true" /Description:"The widgets in this layer are displayed on all pages"
+    layer create Disabled /LayerRule:"false" /Description:"The widgets in this layer are never displayed"
+    layer create NotHomepage /LayerRule:"not (url '~/')" /Description:"The widgets in this layer are displayed everywhere but the homepage"
+    layer create ProductDetailPage /LayerRule:"ContentType('Product')" /Description:"The widgets in this page are displayed along with a product's details"
+    layer create TheHomepage /LayerRule:"url '~/'" /Description:"The widgets in this layer are displayed on the home page"
+    recipes execute "Laser.ECommerce" "SetupTaxonomies"
+    recipes execute "Laser.ECommerce" "SetupProjections"
+    recipes execute "Laser.ECommerce" "SetupNavigation"
+    recipes execute "Laser.ECommerce" "SetupWidgets"
+  </Command>
+</Orchard>

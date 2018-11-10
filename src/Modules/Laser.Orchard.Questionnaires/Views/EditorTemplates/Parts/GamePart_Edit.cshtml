@@ -1,0 +1,68 @@
+﻿@model Laser.Orchard.Questionnaires.ViewModels.GamePartVM
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.AbstractText)">@T("Abstract")</label>
+    @Html.TextAreaFor(x => x.AbstractText, new { @class = "text large" })
+    <span class="hint"></span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.GameDateEditor)">@T("Game Date")</label>
+
+    @Html.EditorFor(m => m.GameDateEditor, new { @class = "text" })
+    <span class="hint"></span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.RankingIOSIdentifier)">@T("Ranking IOS Identifier")</label>
+    @Html.EditorFor(x => x.RankingIOSIdentifier)
+    <span class="hint"></span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.RankingAndroidIdentifier)">@T("Ranking Android Identifier")</label>
+    @Html.EditorFor(x => x.RankingAndroidIdentifier)
+    <span class="hint"></span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.MyOrder)">@T("Order")</label>
+    @Html.EditorFor(x => x.MyOrder)
+      <span class="hint"></span>
+</fieldset>
+<fieldset> <legend>@T("Don't change this value when Game is started or Ranking will be incorrect altered")</legend>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.QuestionsSortedRandomlyNumber)" >@T("Number of questions sorted Randomly") </label>
+    @Html.TextBoxFor(m => m.QuestionsSortedRandomlyNumber, new { @class = "text medium " })
+    <span class="hint">@T("Set the Limit of number of questions sorted randomly , default is 0 (No limits)")</span>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.RandomResponse)
+        <label for="@Html.FieldIdFor(m => m.RandomResponse)" class="forcheckbox">@T("Random Response") </label>
+        <span class="hint">@T("Default is false. If selected response will be showed randomly")</span>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AnswerPoint)
+        <label for="@Html.FieldIdFor(m => m.AnswerPoint)" >@T("Point for answer") </label>
+       
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AnswerTime)
+        <label for="@Html.FieldIdFor(m => m.AnswerTime)" >@T("Time for Answer") </label>
+    </div>
+</fieldset>
+    <fieldset>
+            <div class="editor-label">@Html.LabelFor(m => m.GameType, T("Game Type"))</div>
+            <div class="editor-field">@Html.DropDownListFor(m => m.GameType, Model.ListOfGameType)
+                <span class="hint">@T("Select Game Type")</span>
+            </div>
+    </fieldset>
+    <fieldset>
+        <label>@T("The value of this field is changed automatically by the system")</label>
+          @Html.CheckBoxFor(m => m.workflowfired)
+        <label for="@Html.FieldIdFor(m => m.workflowfired)" class="forcheckbox">@T("Email sended at the end of the game") </label>     
+    </fieldset>
+</fieldset>
+
+@Html.HiddenFor(x => x.State)

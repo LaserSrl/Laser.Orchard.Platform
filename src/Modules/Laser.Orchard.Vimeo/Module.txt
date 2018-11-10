@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.Vimeo
+AntiForgery: enabled
+Author: The Orchard Team
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Description for the module
+Features:
+    Laser.Orchard.Vimeo:
+        Description: Enables connection to a Vimeo account and provides API endpoints to allow clent video uplaods and adding Vimeo videos to contents
+		Category: Media
+		Dependencies: Orchard.MediaLibrary, Orchard.PublishLater, Laser.Orchard.StartupConfig, Laser.Orchard.jQueryPlugins

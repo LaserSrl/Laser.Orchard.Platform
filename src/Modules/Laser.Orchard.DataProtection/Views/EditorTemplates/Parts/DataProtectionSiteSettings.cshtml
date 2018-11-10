@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.DataProtection.Models.DataProtectionSiteSettings
+<fieldset>
+    <legend>@T("Data Protection")</legend>
+    <div class="editor-label">
+        @Html.LabelFor(m => m.ApplyToFrontEnd)
+    </div>
+    <div class="editor-field">
+        @Html.CheckBoxFor(m => m.ApplyToFrontEnd)
+    </div>
+</fieldset>
+
+
+

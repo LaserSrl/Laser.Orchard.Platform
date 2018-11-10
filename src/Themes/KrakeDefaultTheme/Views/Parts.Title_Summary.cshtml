@@ -1,0 +1,12 @@
+﻿@{
+    Orchard.ContentManagement.ContentItem contentItem = Model.ContentPart.ContentItem;
+    string title = Model.Title.ToString();
+}
+<div class="borderTop">
+    <h3>@Html.ItemDisplayLink(title, contentItem)</h3>
+
+    @*<a href="@Url.ItemDisplayUrl(contentItem)" role="button" class="btn btn-primary floatRight">@T("View Content")</a>*@
+</div>
+
+
+

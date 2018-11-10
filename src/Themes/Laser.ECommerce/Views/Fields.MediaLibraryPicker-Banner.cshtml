@@ -1,0 +1,18 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+@using Orchard.MediaLibrary.Models
+
+@{
+    var field = (MediaLibraryPickerField)Model.ContentField;
+    string displayName = field.DisplayName;
+    string name = field.Name;
+    var contents = field.MediaParts;
+}
+@if (contents.Any()) {
+    var mediaPart = contents.First();
+    WorkContext.Layout.BeforeMain.Add(New.Banner(
+        ContentItem: (ContentItem)Model.ContentItem,
+        ImageUrl: mediaPart.MediaUrl
+    ), "5");
+}

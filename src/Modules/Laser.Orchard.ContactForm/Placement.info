@@ -1,0 +1,13 @@
+﻿<Placement>
+    <Place Parts_ContactForm_Edit="Content:2"/>
+    <Match DisplayType="Detail">
+        <Place Parts_ContactForm="Content:1"/>
+    </Match>
+    <Match DisplayType="SummaryAdmin">
+        <Place Parts_ContactForm="-" />
+    </Match>
+    <Match DisplayType="DetailAdmin">
+        <Place Parts_ContactForm_Edit="Content:1" />
+    </Match>
+    <Place Parts_ContactForm_SiteSettings="Content:10"/>
+</Placement>

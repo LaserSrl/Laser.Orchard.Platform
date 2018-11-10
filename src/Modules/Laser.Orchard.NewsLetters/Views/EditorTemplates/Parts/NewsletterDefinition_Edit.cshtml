@@ -1,0 +1,48 @@
+﻿@using Laser.Orchard.NewsLetters.Services
+@using Laser.Orchard.TemplateManagement.Services
+@model Laser.Orchard.NewsLetters.Models.NewsletterDefinitionPart
+@{           
+    Style.Include("newsletter-admin").AtHead();
+    ITemplateService _templateService;
+    WorkContext.TryResolve<ITemplateService>(out _templateService);
+    var listTemplate = _templateService.GetTemplates().Where(w => !w.IsLayout);
+}
+<fieldset>
+    <legend>@T("Newsletter Templates")</legend>
+
+    <div class="editor-label">
+        @T("Templates")
+    </div>
+    <div class="editor-field">
+        <table class="items" summary="@T("Choose templates of this  newsletter")">
+            <colgroup>
+                <col id="Col1" style="width: 20px" />
+                <col id="Col2" />
+                <col id="Col3" />
+                <col id="Col4" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">&nbsp;&darr;</th>
+                    <th scope="col">@T("Edition Template")</th>
+                    <th scope="col">@T("Subscription Template")</th>
+                    <th scope="col">@T("Unsubscription Template")</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>
+                        @Html.DropDownListFor(m => m.TemplateRecord_Id, new SelectList(listTemplate, "Id", "Title", Model.TemplateRecord_Id))
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.ConfirmSubscrptionTemplateRecord_Id, new SelectList(listTemplate, "Id", "Title", Model.ConfirmSubscrptionTemplateRecord_Id))
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.DeleteSubscrptionTemplateRecord_Id, new SelectList(listTemplate, "Id", "Title", Model.DeleteSubscrptionTemplateRecord_Id))
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

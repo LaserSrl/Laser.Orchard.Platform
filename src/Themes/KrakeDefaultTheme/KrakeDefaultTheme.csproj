@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CABDCB59-8E15-4B37-9D6B-41BF1425F36A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KrakeDefaultTheme</RootNamespace>
+    <AssemblyName>KrakeDefaultTheme</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.css" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.min.css" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\HELP-US-OUT.txt" />
+    <Content Include="Styles\fonts\krake.svg" />
+    <Content Include="Styles\images\bg.png" />
+    <Content Include="Styles\images\documento.png" />
+    <Content Include="Styles\images\logo.png" />
+    <Content Include="Styles\images\milano.png" />
+    <Content Include="Styles\style.css" />
+    <Content Include="Styles\toggle.css" />
+    <Content Include="Web.config" />
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Content\Web.config" />
+    <Content Include="Theme.txt" />
+    <Content Include="Theme.png" />
+    <Content Include="Placement.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Document.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\FontAwesome.otf" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\animated.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\bordered-pulled.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\core.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\fixed-width.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\font-awesome.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\icons.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\larger.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\list.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\mixins.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\path.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\rotated-flipped.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\screen-reader.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\stacked.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\less\variables.less" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\font-awesome.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_animated.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_bordered-pulled.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_core.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_fixed-width.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_icons.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_larger.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_list.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_mixins.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_path.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_rotated-flipped.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_screen-reader.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_stacked.scss" />
+    <Content Include="Styles\fonts\font-awesome-4.6.2\scss\_variables.scss" />
+    <Content Include="Styles\fonts\HandelGotD-Bold.otf" />
+    <Content Include="Styles\fonts\krake.eot" />
+    <Content Include="Styles\fonts\krake.ttf" />
+    <Content Include="Styles\fonts\krake.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orchard.Users\Account\RequestLostPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\OpenAuthLogOn.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\OpenAuthRegister.cshtml" />
+    <Content Include="Views\Parts.Common.Body-Page.cshtml" />
+    <Content Include="Views\Parts.Common.Metadata.cshtml" />
+    <Content Include="Views\Parts.MenuWidget-Navigation.cshtml" />
+    <Content Include="Views\Parts.Title.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orchard.Users\Account\ChangePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\UserRegistrationPolicy_Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\FavoriteCulturePart_Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LogOn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Fields\MediaLibraryPicker.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Media_Summary.cshtml" />
+    <Content Include="Views\Parts.Title_Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts.Common.Body.Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Content.Summary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Settings\AdminMenu.cs" />
+    <Compile Include="Settings\Constants.cs" />
+    <Compile Include="Settings\Controllers\AdminController.cs" />
+    <Compile Include="Settings\Drivers\KrakeDefaultThemeSettingsDriver.cs" />
+    <Compile Include="Settings\Handlers\KrakeDefaultThemeSettingsHandler.cs" />
+    <Compile Include="Settings\Migration.cs" />
+    <Compile Include="Settings\Models\KrakeDefaultThemeSettingsPart.cs" />
+    <Compile Include="Settings\Models\ThemeSettingsRecord.cs" />
+    <Compile Include="Settings\Services\ThemeSettingsService.cs" />
+    <Compile Include="Settings\ViewModels\ThemeSettingsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\ThemeSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\ThemeSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PlaceholderLogo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Content.Edit-User.cshtml" />
+    <Content Include="Views\Content.SaveButton-User.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Content.Edit-User-TextField.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplate-User-TextField.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplate-FavoriteCulturePart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Content.Edit-FavoriteCulturePart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Themes\Orchard.Themes.csproj">
+      <Project>{cde24a24-01d3-403c-84b9-37722e18dfb7}</Project>
+      <Name>Orchard.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

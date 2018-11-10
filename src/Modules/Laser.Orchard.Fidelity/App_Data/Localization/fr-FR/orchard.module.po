@@ -1,0 +1,90 @@
+# Orchard resource strings - fr-FR
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "API URL"
+msgstr "URL API"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Developer Secret Key"
+msgstr "Cl� Secr�te Developpeur"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Merchant Password"
+msgstr "Mot de Passe Marchand"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Merchant Username"
+msgstr "Nom d'Utilisateur Marchand"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The password of the merchant account."
+msgstr "Le mot de passe du compte associ� au marchand."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The secret developer key used by Loyalzoo."
+msgstr "La cl� secr�te du developpeur utiliz�e par Loyalzoo."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The URL to use to call Loyalzoo."
+msgstr "L'URL � utilizer pour appeler Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The username of the merchant account."
+msgstr "Le nom d'utilisateur du compte associ� au marchand."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "<b>Warning</b>: By using this button the above Loyalzoo data will be ignored and an account will be automatically created using a random password."
+msgstr "<b>Attention</b>: En utilisant ce bouton les donn�es Loyalzoo au-dessus seront ignor�s et un compte sera automatiquement cre�e en utilizant un mot de passe al�atoire."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Automatically create Loyalzoo account"
+msgstr "Cr�er automatiquement un compte Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Customer Session ID"
+msgstr "ID Session Client Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Password"
+msgstr "Mot de Passe Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo User Data"
+msgstr "Donn�es Utilizateur Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Username"
+msgstr "Nom d'Utilizateur Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The password of the Loyalzoo customer account."
+msgstr "Le mot de passe du compte associ� au client."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The session ID of the Loyalzoo customer account."
+msgstr "L'ID de session du compte client Loyalzoo."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The username of the Loyalzoo customer account."
+msgstr "Le nom d'utilisateur du compte associ� au client."
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "Registration failed: {0}"
+msgstr "Enregistrement pas possible: {0}"
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "The provided part cannot be used for registration."
+msgstr "La pi�ce fourni ne peut pas �tre utilis� pour s'enregistrer."
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "Unable to register: {0}"
+msgstr "Enregistrement pas possible: {0}"
+

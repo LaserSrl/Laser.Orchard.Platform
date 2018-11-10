@@ -1,0 +1,186 @@
+﻿@using Laser.Orchard.Commons.Helpers;
+@using Laser.Orchard.Vimeo;
+@using Laser.Orchard.Vimeo.ViewModels;
+
+@model Laser.Orchard.Vimeo.ViewModels.VimeoSettingsPartViewModel
+
+@{
+    Script.Require("jQUery_NestedModels").AtHead();
+}
+
+@*After restarting an instance, the files with the lists of countries and stuff have not been read yet. People may try to directly
+access the URL of this view, without going through the controller, and that would cause errors. So here we force going through the
+controller if the files have not been processed.*@
+@if (VimeoSettingsPartViewModel.CCLicenseDictionary == null || VimeoSettingsPartViewModel.CCLicenseDictionary.Count == 0 || VimeoSettingsPartViewModel.LocaleDictionary == null || VimeoSettingsPartViewModel.LocaleDictionary.Count == 0 || VimeoSettingsPartViewModel.ContentRatingDictionary == null || VimeoSettingsPartViewModel.ContentRatingDictionary.Count == 0) {
+    { Response.Redirect(Url.Action("Index")); }
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset id="TokenArea">
+        <p>@T("Get your tokens on ")<a href="https://developer.vimeo.com/apps" target="_blank">Vimeo.com</a></p>
+        <div id="allAccessTokens">
+            @Html.EditorFor(m => m.AccessTokens)
+        </div>
+        <div id="deletedTokens" class="display: none;">
+            @Html.EditorFor(m=> m.DeletedAccessTokens)
+        </div>
+        <div id="addTokenButton">
+            @Html.LinkToAddNestedForm(m => m.AccessTokens, "<i class=\"fa fa-plus\" style=\"color: green\"></i> " + T(" Add new token").Text, "#allAccessTokens", ".j_VimeoATVM")
+        </div>
+    </fieldset>
+    <fieldset id="VimeoCategories">
+        <legend>@T("Categorization for the uploads")</legend>
+        <span class="hint">@T("Do not check the options here unless they are actually needed, to decrease the likelyhood of overloading the Vimeo API servers.")</span>
+        @Html.TextBoxFor(m => m.ChannelName, new { placeholder = T("Channel Name"), @class = "text medium" })<text > &nbsp; &nbsp;</text>
+        @Html.CheckBoxFor(m => m.AlwaysUploadToChannel)
+        <label for="@Html.FieldIdFor(m => m.AlwaysUploadToChannel)" class="forcheckbox">@T("Always upload to this channel.")</label>
+        <span class="hint">@T("Videos will be uploaded to/ read from this channel. Leave blank if unused.")</span>
+        @Html.TextBoxFor(m => m.GroupName, new { placeholder = T("Group Name"), @class = "text medium" })<text > &nbsp; &nbsp;</text>
+        @Html.CheckBoxFor(m => m.AlwaysUploadToGroup)
+        <label for="@Html.FieldIdFor(m => m.AlwaysUploadToGroup)" class="forcheckbox">@T("Always upload to this group.")</label>
+        <span class="hint">@T("Videos will be uploaded to/ read from this group. Leave blank if unused.")</span>
+        @Html.TextBoxFor(m => m.AlbumName, new { placeholder = T("Album Name"), @class = "text medium" })<text > &nbsp; &nbsp;</text>
+        @Html.CheckBoxFor(m => m.AlwaysUploadToAlbum)
+        <label for="@Html.FieldIdFor(m => m.AlwaysUploadToAlbum)" class="forcheckbox">@T("Always upload to this album.")</label>
+        <span class="hint">@T("Videos will be uploaded to/ read from this album. Leave blank if unused.")</span>
+    </fieldset>
+    
+    <fieldset id="VideoSettings">
+        <legend>@T("Default video settings")</legend>
+        @{
+            List<SelectListItem> LicenseDDItems = new List<SelectListItem>();
+            foreach (var cc in VimeoSettingsPartViewModel.CCLicenseDictionary) {
+                LicenseDDItems.Add(
+                    new SelectListItem { Text = cc.Value, Value = cc.Key }
+                    );
+            }
+
+            List<SelectListItem> LocaleDDItems = new List<SelectListItem>();
+            //languages from site settings
+            Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord> _cultureRepository;
+            if (WorkContext.TryResolve<Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord>>(out _cultureRepository)) {
+                foreach (var row in _cultureRepository.Table) {
+                    var lCode = row.Culture;
+                    var shortLCode = lCode.Substring(0, 2);
+                    var lText = VimeoSettingsPartViewModel.LocaleDictionary.ContainsKey(lCode) ?
+                        VimeoSettingsPartViewModel.LocaleDictionary[lCode] :
+                        VimeoSettingsPartViewModel.LocaleDictionary.ContainsKey(shortLCode) ?
+                        VimeoSettingsPartViewModel.LocaleDictionary[shortLCode] : "";
+                    if (!String.IsNullOrWhiteSpace(lText)) {
+                        LocaleDDItems.Add(
+                            new SelectListItem { Selected = WorkContext.CurrentSite.SiteCulture == lCode, Text = lText, Value = shortLCode }
+                            );
+                    }
+                }
+            }
+            //separator
+            if (LocaleDDItems.Count > 0) {
+                //we will use javascript to disable all select options whose value is -1
+                LocaleDDItems.Add(new SelectListItem { Selected = false, Text = "_________", Value = "-1" });
+            }
+            //languages from file
+            foreach (var loc in VimeoSettingsPartViewModel.LocaleDictionary) {
+                LocaleDDItems.Add(
+                    new SelectListItem { Selected = false, Text = loc.Value, Value = loc.Key }
+                    );
+            }
+        
+            //License options
+            @Html.LabelFor(m => m.License);
+            @Html.DropDownListFor(m => m.License,
+                    LicenseDDItems);
+
+            //Default video privacy
+            @Html.LabelFor(m => m.Privacy);
+            <label for="@Html.FieldIdFor(m => m.Privacy.view)" class="forcheckbox">@Html.DisplayNameFor(m => m.Privacy.view)</label>
+            @Html.DropDownListFor(m => m.Privacy.view, new SelectList(Enum.GetValues(typeof(VimeoPrivacyViewOption))));
+            <text>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</text>
+            @Html.TextBoxFor(m => m.Password, new { placeholder = T("Password"), @class = "medium text" });
+            <span class="hint">@T("Who can view the video?")</span>
+            <br />
+            <label for="@Html.FieldIdFor(m => m.Privacy.embed)" class="forcheckbox">@Html.DisplayNameFor(m => m.Privacy.embed)</label>
+            //@Html.DropDownListFor(m => m.Privacy.embed, new SelectList(Enum.GetValues(typeof(VimeoPrivacyEmbedOptions))));
+            @Html.DropDownListFor(m => m.Privacy.embed, VimeoPrivacyEmbedOption.GetValues());
+            @Html.TextBoxFor(m => m.Whitelist, new { placeholder = T("Comma separated domains whitelist"), @class = "large text" });
+            <span class="hint">@T("Where can the video be embedded?")</span>
+            <br />
+            @Html.CheckBoxFor(m => m.Privacy.download);
+            <label for="@Html.FieldIdFor(m => m.Privacy.download)" class="forcheckbox">@Html.DisplayNameFor(m => m.Privacy.download)</label>
+            <span class="hint">@T("Can the video be downloaded?")</span>
+            <br />
+            @Html.CheckBoxFor(m => m.Privacy.add);
+            <label for="@Html.FieldIdFor(m => m.Privacy.add)" class="forcheckbox">@Html.DisplayNameFor(m => m.Privacy.add)</label>
+            <span class="hint">@T("Can the video be added to channels, groups, or albums?")</span>
+            <br />
+            <label for="@Html.FieldIdFor(m => m.Privacy.comments)" class="forcheckbox">@Html.DisplayNameFor(m => m.Privacy.comments)</label>
+            @Html.DropDownListFor(m => m.Privacy.comments, new SelectList(Enum.GetValues(typeof(VimeoPrivacyCommentsOption))));    
+            <span class="hint">@T("Who can comment on the video?")</span>
+            <br />
+        
+            //ReviewLink
+            @Html.LabelFor(m => m.ReviewLink);
+            @Html.CheckBoxFor(m => m.ReviewLink);
+            <label for="@Html.FieldIdFor(m => m.ReviewLink)" class="forcheckbox" style="font-weight: normal;">@Html.DisplayNameFor(m => m.ReviewLink)</label>
+
+            //locale
+            @Html.LabelFor(m => m.Locale);
+            @Html.DropDownListFor(m => m.Locale,
+                LocaleDDItems);
+
+            //Content rating options are handled differently
+            <label>@T("Content ratings")</label>
+            @Html.RadioButtonFor(m => m.ContentRatingsSafe, "true", new { id = "rbCRSafe", @onclick = "enableCRCheckBoxes()" });
+            <label for="rbCRSafe" class="forcheckbox" style="font-weight: normal;">@T("All Audiences")</label>
+            <br />
+            @Html.RadioButtonFor(m => m.ContentRatingsSafe, "false", new { id = "rbCRUnsafe", @onclick = "enableCRCheckBoxes()" });
+            <label for="rbCRUnsafe" class="forcheckbox" style="font-weight: normal;">@T("Mature")</label>
+            <br /><text>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</text>
+            foreach (var cr in Model.ContentRatingsUnsafe) {
+                @Html.CheckBoxFor(m => m.ContentRatingsUnsafe[cr.Key], new { disabled = "disabled" });
+                string cbName = "cbCR" + cr.Key;
+                <label for="@Html.FieldIdFor(m => m.ContentRatingsUnsafe[cr.Key])" class="forcheckbox" style="font-weight: normal;">@VimeoSettingsPartViewModel.ContentRatingDictionary[cr.Key]</label>
+                <text > &nbsp; &nbsp;</text>
+            }
+        }
+    </fieldset>
+    <div class="box-footer align-right padding-right-35">
+        <button id="testSettings" type="submit" name="submit.TestSettings" value="yes please">@T("Test")</button>
+        <button id="saveSettings" type="submit" name="submit.SaveSettings" value="yes please">@T("Save")</button>
+    </div>
+    
+    
+}
+
+@using (Script.Foot()) {
+    foreach (var cr in VimeoSettingsPartViewModel.ContentRatingDictionary) {
+        if (!Model.ContentRatingsSafe) {
+            var cbName = "ContentRatingsUnsafe_" + cr.Key + "_";
+            <text>
+                <script>
+                    document.getElementById("rbCRUnsafe").check;
+                    document.getElementById("@cbName").disabled = false;
+                </script>
+            </text>
+        }
+    }
+    <script>
+        function enableCRCheckBoxes(){
+            if (document.getElementById("rbCRUnsafe").checked){
+                @foreach (var cr in Model.ContentRatingsUnsafe) {
+                    string cbName = "ContentRatingsUnsafe_" + cr.Key + "_";
+                    <text>
+                        document.getElementById("@cbName").disabled = false;
+                    </text>
+                }
+            } else {
+                @foreach (var cr in VimeoSettingsPartViewModel.ContentRatingDictionary) {
+                    string cbName = "ContentRatingsUnsafe_" + cr.Key + "_";
+                    <text>
+                        document.getElementById("@cbName").disabled = true;
+                        document.getElementById("@cbName").checked = false;
+                    </text>
+                }
+            }
+        }
+    </script>
+}

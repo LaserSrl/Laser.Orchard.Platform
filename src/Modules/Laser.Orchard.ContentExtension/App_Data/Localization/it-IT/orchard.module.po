@@ -1,0 +1,230 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "ContentType"
+msgstr "Tipo di contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "ContentType Permission Settings"
+msgstr "Impostazione dei permessi per il tipo di contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "If multiple permissions are set for same ContentType then, if one permission is matched, ContentType access is enabled"
+msgstr "Nel caso in cui vengano assegnati più permessi, è sufficiente anche solo una sola corrispondenza per permettere l'accesso al contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Permission Delete"
+msgstr "Permesso di Eliminazione"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Permission Get"
+msgstr "Permesso di Lettura"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Permission Post"
+msgstr "Permesso di Scrittura"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Permission Publish"
+msgstr "Permesso di Pubblicazione"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Replace ContentType with empty value to delete element"
+msgstr "Inserire stringa vuota nel Tipo di contenuto per cancellare l'intera riga"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Set the permission in orchard style es: don't set EditOwnUserReport permission at UserReport contenttype but EditUserReport (and assign at users EditOwnUserReport permission)"
+msgstr "Impostare il permesso più generico. es: per il tipo di contenuto UserReport non impostare il permesso EditOwnUserReport ma EditUserReport (contestualmente assegnare il permesso EditOwnUserReport sull'opportuno ruolo)"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "The workflow authorization is: if (test orchardauthorization) then authorized else { if (test this ContentType Permission Settings) then authorized else {if (test generic permission for contentitem) then authorized else unauthorized}}"
+msgstr "Per le autorizzazioni all'interno di un workflow, impostare la seguente condizione: if (test orchardauthorization) then authorized else { if (test this ContentType Permission Settings) then authorized else {if (test generic permission for contentitem) then authorized else unauthorized}}"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
+msgid "Update settings"
+msgstr "Aggiorna le impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "({0})"
+msgstr "({0})"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "(Default Layout)"
+msgstr "(Schema predefinito)"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Area"
+msgstr "Area"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Check to add a pager to the list."
+msgstr "Seleziona per aggiungere i pulsanti di paginazione alla lista."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Controller"
+msgstr "Controller"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Edit Query"
+msgstr "Modifica Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "For Query"
+msgstr "Per la Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Form Files"
+msgstr "Files per il form"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Icon"
+msgstr "Icona"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Items to display"
+msgstr "Elementi da visualizzare"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Maximum items"
+msgstr "Massimo numero di oggetti"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Maximum number of items which can be queried at once. Use 0 for unlimited. This is only used as a failsafe when the number of items comes from a user-provided source such as the query string."
+msgstr "Il numero massimo di oggetti che si possano ricercare. Inserire 0 per non imporre un limite. Questo parametro è utilizzato con sicurezza nel caso in cui il numero di oggetti sia dato dall'utente."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Menu text"
+msgstr "Testo del menu"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Offset"
+msgstr "Offset"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Optional. Provide a suffix to use when multiple pagers are displayed on the same page, e.g., when using multiple Projection Widgets, or to define alternates."
+msgstr "Opzionale. Inserire un suffisso da utilizzare quando più numeratori di pagina vengono visualizzati contemporaneamente. Es. quando si utilizzano più widget di proiezione, o quando si definiscono delle alternative."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Position"
+msgstr "Posizione"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Shape"
+msgstr "Shape"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Show on admin menu"
+msgstr "Mostra sul menu di amministrazione"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Show pager"
+msgstr "Visualizza i pulsanti di paginazione"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Suffix"
+msgstr "Suffisso"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The Action used for generate menu link."
+msgstr "La Action usata per generare il menu link."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The Area used for generate menu link."
+msgstr "L'Area usata per generare il menu link."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The Controller used for generate menu link."
+msgstr "Il Controller utilizzato per generare il menu link."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The Icon used for menu link."
+msgstr "L'icona usata per il menu link."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The number of items to display. Enter 0 for no limit. When using pagination, this is the number of items per page."
+msgstr "Il numero di oggetti da visualizzare. Inserire 0 per non imporre un limite. Quando si usa la paginazione, questo è il numero di oggetti per pagina."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The number of items to skip (e.g., if 2 is entered, the first 2 items won't be diplayed)."
+msgstr "Il numero di oggetti da saltare (e.g. se si inserisce 2, i primi 2 oggetti non saranno visualizzati)."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The position in the menu."
+msgstr "La posizione nel menu."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The query to display."
+msgstr "La ricerca da visualizzare."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The Shape used for search form."
+msgstr "La Shape usata per il form di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The text that should appear in the menu."
+msgstr "Il testo che dovrebbe apparire nel menu."
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "ContentType Permission settings updated."
+msgstr "Impostazione dei permessi per il tipo di contenuto aggiornate."
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "Settings update failed: {0}"
+msgstr "Aggiornamento impostazioni fallito: {0}"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "Yout have to be an Administrator to edit ContentTypePermission settings!"
+msgstr "Devi essere un Amministratore per poter modificare le impostazioni dei Permessi"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentController"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
+msgid "ContentType not exist"
+msgstr "Il tipo di contenuto non esiste"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
+msgid "No content with this Id"
+msgstr "Contenuto inesistente"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.testpostController"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.UploadFileController"
+msgid "The file extension in the filename is not allowed or has not been provided."
+msgstr "L'estensione del file non è tra quelle autorizzate o non è contenuta nel nome del file."
+
+msgctxt "Laser.Orchard.ContentExtension.Drivers.ViewDataContainer"
+msgid "Suffix should not contain special characters."
+msgstr "Il suffisso non può contenere caratteri speciali."
+
+msgctxt "Laser.Orchard.ContentExtension.Drivers.ViewDataContainer"
+msgid "The AdminMenuText field is required"
+msgstr "Il campo AdminMenuText è obbligatorio"
+
+msgctxt "Laser.Orchard.ContentExtension.Navigation.ContentExtensionNavigationProvider"
+msgid "ContentType Permission"
+msgstr "Permessi per il tipo di contenuto"
+
+msgctxt "Laser.Orchard.ContentExtension.Navigation.ContentExtensionNavigationProvider"
+msgid "Settings"
+msgstr "Impostazioni"
+

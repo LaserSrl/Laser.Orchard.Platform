@@ -1,0 +1,84 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.ContactForm.ViewModels
+@{
+    Script.Require("jQuery").AtHead();
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Include("ContactForm.css").AtHead();
+    const string displayNone = "style=\"display:none\"";
+    var contactForm = (ContactFormViewModel)Model.ContactForm;
+    var displaySubject = contactForm.ShowSubjectField ? string.Empty : displayNone;
+    var displayName = contactForm.ShowNameField ? string.Empty : displayNone;
+    var displayAttachmentButton = contactForm.EnableFileUpload ? string.Empty : displayNone;
+    var uniqueId = Model.ContentPart.Id;
+    }
+@{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" }))
+    {
+        <ul>
+            <li @Html.Raw(displayName)>
+                <label for="Name">@T("Name")</label>
+                <input id="Name-@uniqueId" class="text" name="Name" type="text" placeholder="@T("Your Name")" />
+            </li>
+            <li class="emailForm">
+                <label for="Email">@T("Email")</label>
+                <input id="Email-@uniqueId" class="text medium" name="Email" type="text" placeholder="@T("Email Address")" />
+            </li>
+            <li>
+                <label for="ConfirmEmail">@T("Confirm Email")</label>
+                <input id="ConfirmEmail-@uniqueId" class="text medium" name="ConfirmEmail" type="text" placeholder="@T("Confirm Email Address")" />
+            </li>
+            <li @Html.Raw(displaySubject)>
+                <label for="Subject">@T("Subject")</label>
+                <input id="Subject-@uniqueId" class="text medium" name="Subject" type="text" placeholder="@T("Subject")" />
+            </li>
+            <li>
+                <label for="Address">@T("Address")</label>
+                <input id="Address-@uniqueId" class="text" name="FromNameLocation" type="text" placeholder="@T("Address of the Point of Interest")"/>
+            </li>
+            <li>
+                <label for="Coordinates">@T("Coordinates")</label>
+                <div>
+                    <div>
+                        <label for="Latitude">@T("Latitude")</label>
+                        <input id="Latitude-@uniqueId" class="text-small" name="FromLatitude" type="text" />
+                    </div>
+                    <div>
+                        <label for="Longitude">@T("Longitude")</label>
+                        <input id="Longitude-@uniqueId" class="text-small" name="FromLongitude" type="text" />
+                    </div>
+                </div>
+            </li>
+            <li>
+                <label for="Message">@T("Description")</label>
+                <textarea id="Message-@uniqueId" class="text" name="Message" placeholder="@T("Description of the Point of Interest")" cols="50" rows="10"></textarea>
+            </li>
+        </ul>
+        <div id="AttachmentSection-@uniqueId" type="hidden">
+            <img id="AttachmentPreview-@uniqueId" ></img>
+            <label id="AttachmentNameLabel-@uniqueId"></label>
+            <br />
+        </div>
+        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+        <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
+        <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
+        @Html.AntiForgeryTokenOrchard()
+        <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
+        <input type="submit" value="@T("Send")" />
+    }
+}
+
+@using (Script.Head()) {
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $('#attachment_button-@uniqueId').click(function () {
+                 $.colorbox({ iframe: true, width: "40%", height: "26%", href: "@(Url.Action("Add", "FileUpload", new { Area = "Laser.Orchard.ContactForm" }) + "?ContactFormID=" + uniqueId)", title: "@T("Upload file")" });
+             });
+
+             $('#MediaId-@uniqueId').change(function () {
+                 if ($('#MediaId-@uniqueId').val() != '') {
+                     $('#attachment_button-@uniqueId').attr('disabled', 'disabled');
+                 }
+             });
+         });
+    </script>
+}

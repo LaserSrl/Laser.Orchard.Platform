@@ -1,0 +1,18 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+<div class="col-xs-12 col-sm-6">
+    <a class="focus-item societa-footer-link row focus-plus-home" href="@item.ElementoFascia.Link.Value" >
+        <div class="col-xs-4 text-center societa-col-fixed">
+            <img src="@item.ElementoFascia.Image.FirstMediaUrl"  title="@item.ElementoFascia.Image.MediaParts[0].Title" alt="@item.ElementoFascia.Image.MediaParts[0].AlternateText"  class="img-responsive societa-footer-icon">
+        </div>
+        <div class="col-xs-8 societa-col-fixed">
+            <div class="space-10 visible-xs"></div>
+            <h2 class=" focus-item-link societa-footer-title">@item.TitlePart.Title</h2>
+            <p class="hidden-xs">@Html.Raw(item.BodyPart.Text)</p>
+        </div>
+        <div class="col-xs-12 text-center">
+            <span class="focus-plus">@item.ElementoFascia.Link.Text</span>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,11 @@
+﻿<Placement>
+  <Match DisplayType="Detail">
+    <Place Parts_Accessibility="Content:before"/>
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Parts_Accessibility_Summary="Content:after"/>
+  </Match>
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_Accessibility_SummaryAdmin="Content:after"/>
+  </Match>
+</Placement>

@@ -1,0 +1,6 @@
+﻿<Placement>
+  <Place Parts_ButtonToWorkflows="Sidebar:25.1" />
+  <Place Parts_DynamicButtonToWorkflows="Sidebar:25.1" />
+  <Place Parts_ButtonToWorkflowsSettings_Edit="Content:0"/>
+  <Place Parts_DynamicButtonToWorkflowsSettings_Edit="Content:1"/>
+</Placement>

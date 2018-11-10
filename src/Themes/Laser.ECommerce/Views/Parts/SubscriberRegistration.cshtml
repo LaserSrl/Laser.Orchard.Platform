@@ -1,0 +1,45 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.NewsLetters.Services
+@if (!string.IsNullOrWhiteSpace(Model.ContentPart.NewsletterDefinitionIds)) {
+    string newsIds = Model.ContentPart.NewsletterDefinitionIds.ToString();
+    INewsletterServices _newsServices;
+    WorkContext.TryResolve<INewsletterServices>(out _newsServices);
+
+    var newsList = _newsServices.GetNewsletterDefinition(newsIds, Orchard.ContentManagement.VersionOptions.Published).ToList();
+
+    <div class="newsletter">
+        <div class="container">
+            <div class="col-md-6 ecommerce_newsletter_left">
+                <h3>@T("Newsletter")</h3>
+            </div>
+            <div class="col-md-6 ecommerce_newsletter_right">
+                @if (newsList.Count > 0) {
+                    using (Html.BeginFormAntiForgeryPost(
+                        Url.Action("Subscribe", "Subscription",
+                        new { area = "Laser.Orchard.NewsLetters" }),
+                        FormMethod.Post, new { @class = "newsletter-form" })) {
+
+                        <input id="Name" class="text" name="Name" type="hidden" />
+                        <input id="ConfirmEmail" class="text" name="ConfirmEmail" type="hidden" />
+
+                        <input id="Email" type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
+
+                        @Html.Hidden("Subscription_Newsletters_Ids", (object)newsList[0].Id.ToString())
+                        <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                        <input id="Id" name="Id" type="hidden" value="@Model.ContentPart.Id" />
+                        <input type="submit" name="Newsletter_Subscriber_Subscribe" onclick="newsletterFieldFiller(this);" value=" " />
+                    }
+                    <script type="text/javascript">
+                    newsletterFieldFiller = function (button) {
+                        var nlForm = button.closest("form");
+                        var email = nlForm.querySelector('#Email').value;
+                        nlForm.querySelector('#Name').value = email;
+                        nlForm.querySelector('#ConfirmEmail').value = email;
+                    }
+                    </script>
+                }
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,8 @@
+﻿@if (!Request.IsAuthenticated) {
+    <a href="@Url.Action("LogOn", "Account", new { area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+    </a>
+} else {
+    <a href="@Url.Action("LogOff", "Account", new { area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+}
+

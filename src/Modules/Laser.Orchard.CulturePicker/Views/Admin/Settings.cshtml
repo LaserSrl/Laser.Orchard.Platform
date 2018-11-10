@@ -1,0 +1,37 @@
+﻿@model Laser.Orchard.CulturePicker.Models.SettingsModel
+           
+@{ Layout.Title = T("Culture Picker Settings").ToString(); }
+@using (Html.BeginFormAntiForgeryPost())
+{
+    var i=0;
+<div class="manage">
+    <button class="primaryAction" type="submit">@T("Update settings")</button>
+</div>
+<fieldset>
+    <legend>@T("Available cultures")</legend>
+    <table class="items" summary="@T("This is a table of the cultures currently available in your site.")">
+        <thead>
+            <tr>
+                <th>@T("Language/Culture")</th>
+                <th>@T("Priority")</th>
+                <th>@T("Displayed Name")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var culture in Model.ExtendedCulturesList)
+            {
+                @Html.EditorFor(settings=>settings.ExtendedCulturesList[i],"ExtendedCulture")
+                i++;
+            }
+        </tbody>
+    </table>
+    <legend>@T("Other settings")</legend>
+    <div>
+    @Html.HiddenFor(settings => settings.Settings.Id)
+    @Html.CheckBoxFor(settings => settings.Settings.ShowOnlyPertinentCultures) @T("Show only languages of translated contents")
+    </div>
+    <div>
+    @Html.CheckBoxFor(settings => settings.Settings.ShowLabel) @T("Show culture choice label")
+    </div>
+</fieldset>
+}

@@ -1,0 +1,34 @@
+﻿@model Laser.Orchard.Braintree.Models.BraintreeSiteSettingsPart
+
+@using(Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <legend>@T("Braintree PayPal Settings")</legend>
+        <div>
+            @Html.CheckBoxFor(m => m.ProductionEnvironment, new { @class = "check-box" })
+            <label class="forcheckbox" for="@Html.FieldIdFor(m => m.ProductionEnvironment)">@T("Production Environment") </label>
+            <span class="hint">@T("If checked, it means this is a production environment.")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.MerchantId)">@T("Merchant ID")</label>
+            @Html.TextBoxFor(m => m.MerchantId, new { @class = "text large" })
+            <span class="hint">@T("The Merchant ID assigned by Braintree during merchant registration.")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.CurrencyCode)">@T("Currency Code")</label>
+            @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "text large" })
+            <span class="hint">@T("Currency code bound to the merchant ID in Braintree configuration.")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.PublicKey)">@T("Public Key")</label>
+            @Html.TextBoxFor(m => m.PublicKey, new { @class = "text large" })
+            <span class="hint">@T("The Public Key assigned by Braintree during merchant registration.")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.PrivateKey)">@T("Private Key")</label>
+            @Html.TextBoxFor(m => m.PrivateKey, new { @class = "text large" })
+            <span class="hint">@T("The Private Key assigned by Braintree during merchant registration.")</span>
+        </div>
+    </fieldset>
+
+    <button class="primaryAction" type="submit">@T("Save")</button>
+}

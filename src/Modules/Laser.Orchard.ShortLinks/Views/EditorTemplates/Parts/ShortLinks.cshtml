@@ -1,0 +1,91 @@
+﻿@using Orchard.Environment.Configuration
+@using Orchard.ContentManagement
+
+@model Laser.Orchard.ShortLinks.Models.ShortLinksPart
+
+@{
+    var shortUlrSettings = WorkContext.CurrentSite.As<Laser.Orchard.ShortLinks.Models.ShortLinksSettingsPart>();
+    var apiKey = shortUlrSettings.GoogleApiKey;
+    var dynamicLinkDomain = shortUlrSettings.DynamicLinkDomain;
+    var sensitiveDataOption = shortUlrSettings.HasSensitiveData ? "UNGUESSABLE" : "SHORT";
+    //var apiKey = "AIzaSyA8yaRn83trUJcr4cFKRiorhfI7WtUpm2s";
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantPrefix = settings.RequestUrlPrefix;
+    var appBasePath = HttpRuntime.AppDomainAppVirtualPath;
+    var alias = ((dynamic)Model.ContentItem).AutoroutePart.DisplayAlias;
+    var fullUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+    if (string.IsNullOrWhiteSpace(appBasePath) == false) {
+        fullUrl += appBasePath;
+    }
+    if (string.IsNullOrWhiteSpace(tenantPrefix) == false) {
+        fullUrl += "/" + tenantPrefix;
+    }
+    if (string.IsNullOrWhiteSpace(alias) == false) {
+        fullUrl += "/" + alias;
+    }
+    var fullAbsoluteUrl = "";
+    fullAbsoluteUrl = Url.Content(fullUrl);
+}
+
+@using (Script.Head()) {
+    <script type="text/javascript">
+        function CallGoogleShortLinkGenerator() {
+            if ('@Model.Url' != '' && '@Model.FullLink' != '@fullAbsoluteUrl') {
+                alert('Salva la pagina prima di chiedere il nuovo short link');
+            }
+            $.ajax({
+                type: "POST",
+                data: "{'dynamicLinkInfo': {'dynamicLinkDomain': '@dynamicLinkDomain','link': '@fullAbsoluteUrl'},'suffix': {'option': '@sensitiveDataOption'}}",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                url: "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=@apiKey",
+                success: function (data) {
+                    $('#@Html.FieldIdFor(model => model.Url)').val(data.shortLink);
+                    $('#@Html.FieldIdFor(model => model.FullLink)').val('@fullAbsoluteUrl');
+                },
+                error: function (response) {
+                    alert('error urlshortener');
+                },
+                failure: function (response) {
+                    alert('failure urlshortener');
+                }
+            });
+        }
+
+        function TestGoogleShortLink() {
+            var urlToTest = $('#@Html.FieldIdFor(model => model.Url)').val();
+            window.open(urlToTest, '_blank');
+        }
+
+
+
+    </script>
+}
+
+
+<fieldset>
+    <legend>@T("Short Link")</legend>
+
+    <div class="editor-field">
+        @if (string.IsNullOrEmpty(apiKey)) { //se non ho salvato l'api key
+            @T("You must save a valid Google API KEY on settings before be able to create short link.")
+        }
+        else {
+            @Html.TextBoxFor(model => model.Url, new { @class = "text medium" })
+            @Html.ValidationMessageFor(model => model.Url)
+            <span>
+                @T("Current content full URL:") @Html.TextBoxFor(model => model.FullLink, new { @class = "text medium", @readonly = "readonly" })
+            </span><br />
+            <br />
+            if (Model.Id != 0) { //se non ho salvato la pagina non ho un url corretto.
+                <button type='button' onclick='CallGoogleShortLinkGenerator();'>@T("Ask New Short Link")</button>
+                <button type='button' onclick="TestGoogleShortLink();">@T("Test Short Link")</button>
+            }
+            else {
+                @T("You must save content before be able to create short link.")
+            }
+        }
+
+    </div>
+
+</fieldset>

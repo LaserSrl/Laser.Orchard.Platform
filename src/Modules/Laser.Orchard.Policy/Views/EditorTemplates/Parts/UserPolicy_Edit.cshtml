@@ -1,0 +1,76 @@
+﻿@using Orchard.ContentManagement
+@model Laser.Orchard.Policy.Models.UserPolicyPart
+@{
+    IContentManager contentManager;
+    WorkContext.TryResolve<IContentManager>(out contentManager);
+    
+    Script.Require("jQuery").AtHead();
+    Script.Require("jQueryColorBox").AtHead();
+    
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+
+}
+<fieldset>
+    <legend>@T("Policy acceptances")</legend>
+    <table class="items">
+        <thead>
+            <tr>
+                <th>@T("Policy Text")</th>
+                <th>@T("Accepted")</th>
+                <th>@T("Answer date")</th>
+                <th>@T("User")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserPolicyAnswers) {
+                var acceptTypePolicy = item.PolicyTextInfoPartRecord.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
+                                    || item.PolicyTextInfoPartRecord.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
+                                    || item.PolicyTextInfoPartRecord.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
+                var dynContent = ((dynamic)contentManager.Get(item.PolicyTextInfoPartRecord.Id, VersionOptions.Latest));
+                if (dynContent != null) {
+                <tr>
+                    <td>
+                        @(dynContent.TitlePart.Title)
+                    </td>
+                    <td>@if (item.Accepted) {
+                        <i class="fa fa-check-circle" style="color: green"></i> 
+                        if (item.PolicyTextInfoPartRecord.PolicyType == null || acceptTypePolicy) {
+                        @T("Accepted")
+                        } else {
+                        @T("Read")
+                        }
+                    } else {
+                        <i class="fa fa-exclamation-triangle" style="color: red"></i> 
+                        if (item.PolicyTextInfoPartRecord.PolicyType == null || acceptTypePolicy) {
+                        @T("Not Accepted")
+                        } else {
+                        @T("Unread")
+                        }
+                    }</td>
+                    <td>@item.AnswerDate</td>
+                    <td>@(item.UserPartRecord != null ? item.UserPartRecord.UserName :  "")</td>
+                </tr>
+                }
+            }
+            @if (Model.UserPolicyAnswers == null || Model.UserPolicyAnswers.Count() == 0) { 
+                <tr>
+                    <td colspan="3">@T("User never accepted policies.")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.UserPolicyAnswers != null && Model.UserPolicyAnswers.Count() > 0) {
+        <input id="historyButton" type="button" value="@T("Show full history")" />
+    }
+</fieldset>
+
+@using (Script.Head()) {
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $('#historyButton').click(function () {
+                 $.colorbox({ iframe: true, width: "80%", height: "60%", href: "@(Url.Action("ShowHistory", "PoliciesUser", new { Area = "Laser.Orchard.Policy" }) + "?userId=" + Model.Id)", title: "@T("Policy Acceptances History")" });
+             });
+         });
+    </script>
+}

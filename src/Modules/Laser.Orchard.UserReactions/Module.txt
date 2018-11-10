@@ -1,0 +1,12 @@
+﻿AntiForgery: enabled
+Author: Laser s.r.l. - Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: A module that allows visitors to rate and react to content using Emojis.
+Features:
+    Laser.Orchard.UserReactions:
+		Name: Laser Orchard User Reaction
+		Description: Allows visitors to rate and react to content using Emojis.
+		Category: Social
+		Dependencies: Laser.Orchard.jQueryPlugins, Orchard.Resources, Laser.Orchard.StartupConfig

@@ -1,0 +1,26 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    var field = (MediaLibraryPickerField)Model.ContentField;
+    string name = field.DisplayName;
+    var contents = field.MediaParts;
+}
+<div class="gallery_wrapper">
+    @foreach (var content in contents) {
+        <a rel="gallery-@Model.ContentPart.Id" href="@Display.ResizeMediaUrl(Width: 1024, Height: 768, Mode: "crop", Alignment: "middlecenter", Path: content.MediaUrl)">
+            <img src="@Display.ResizeMediaUrl(Width: 140, Height: 140, Mode: "crop", Alignment: "middlecenter", Path: content.MediaUrl)" />
+        </a>
+    }
+</div>
+@using (Script.Foot()) { 
+    <script type="text/javascript">
+        $("a[rel='gallery-@Model.ContentPart.Id']").colorbox({
+            innerWidth: '80%',
+            innerHeight: '60%',
+        });
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@model Laser.Orchard.CommunicationGateway.ViewModels.SearchIndexVM
+@using Orchard.Security
+@using Laser.Orchard.CommunicationGateway
+@using Laser.Orchard.CommunicationGateway.ViewModels
+@{
+    var ContentsIndexVM = Model.ContentsIndexVM;
+    var selectList = new SelectList(new[] { new { Value = "", Text = "" },
+                                            new { Value = "true", Text = T("Yes").ToString() },
+                                            new { Value = "false", Text = T("No").ToString() }},
+                                            "Value", "Text", Model);
+    Layout.Title = T("Contact");
+
+    Script.Require("jQuery").AtHead();
+    var urlBack = Url.Action("Index", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway" });
+}
+
+@if (Authorizer.Authorize(Permissions.ManageContact)) {
+    <div class="manage">
+        <a class="button primaryAction" href="@Url.Action("Edit", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = 0 })" title="@T("Create New Contact")">@T("Create New Contact")</a>
+    </div>
+} else {
+    <div class="manage">&nbsp;</div>
+}
+        @if (Authorizer.Authorize(StandardPermissions.SiteOwner)) {
+            <div class="manage">
+                <a class="button primaryAction" href="@Url.Action("Synchronize", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway" })" title="@T("Synchronize")">@T("Synchronize")</a>
+            </div>
+        }
+        @using (Html.BeginForm("IndexSearch", "ContactsAdmin", FormMethod.Get)) {
+            @Html.AntiForgeryToken()
+            <fieldset class="bulk-actions bottom-20">
+                <div>
+                    <div>
+                        <div style="float: left; margin-right: 25px;">
+                            <div>
+                                <label for="search">@T("Search:")</label>
+                                @Html.TextBoxFor(m => m.Search.Expression)
+                                <label>@T("Filter by")</label>
+                                @Html.DropDownListFor(m => m.Search.Field, new SelectList(Enum.GetValues(typeof(SearchFieldEnum))), new { @id = "searchTypeList" })
+                            </div>
+                        </div>
+                        <div style="float: right; display: flex;">
+                            <div id="buttonContactSearch">
+                                <button type="submit" name="submit.Search" value="search">@T("Search")</button>
+                                <a href="@Url.Action("Index")">@T("Clear")</a>
+                            </div>
+                            @if (Authorizer.Authorize(Permissions.AccessExportContacts)) {
+                                <div class="manage-export" id="manage-export">
+                                    <button class="button primaryAction" style="margin-left: 4px" type="submit" name="submit.Export" value="export">@T("Export")</button>
+                                    <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=Contacts">@T("Show Exported Files")</a>
+                                </div>
+                            } else {
+                                <div class="manage">&nbsp;</div>
+                            }
+                        </div>
+                    </div>
+                    <div id="authDiv" style="float: left; margin-top: 10px;">
+                        <label id="authLabel">@T("Authorizations:")</label>
+                        <label style="margin: 0 5px 0 5px;">@T("Commercial Use")</label>
+                        @Html.DropDownListFor(m => m.Search.CommercialUseAuthorization, selectList, new { @id = "commercialUseAuthList" })
+                        <label style="margin: 0 5px 0 5px;">@T("Third Party")</label>
+                        @Html.DropDownListFor(m => m.Search.ThirdPartyAuthorization, selectList, new { @id = "thirdPartyAuthList" })
+                    </div>
+                </div>
+            </fieldset>
+        }
+        @if (Authorizer.Authorize(Permissions.AccessImportContacts)) {
+            using (Html.BeginFormAntiForgeryPost(Url.Action("ImportCsv", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway" }), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+                <input type="file" name="csvFile" id="csvFile" />
+                <button type="submit">@T("Import")</button>
+                <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=Contacts&ParentFolder=Import&FileFilter=*.log">@T("Show Import Logs")</a>
+            }
+        } else {
+            <div class="manage">&nbsp;</div>
+        }
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            <fieldset class="contentItems bulk-items">
+                <ul>
+                    @{
+                        foreach (var contentIndexVM in ContentsIndexVM) {
+                            <li>
+                                <div class="summary" itemscope="itemscope" itemid="@contentIndexVM.Id" itemtype="http://orchardproject.net/data/ContentItem">
+                                    <div class="properties">
+                                        @if (contentIndexVM.UserId == 0 && Authorizer.Authorize(Permissions.ManageContact)) {
+                                            <h3><a href="@Url.Action("Edit", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@contentIndexVM.Title</a></h3>
+                                        } else {
+                                            <h3><a href="@Url.Action("View", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@contentIndexVM.Title</a></h3>
+                                        }
+                                        (@contentIndexVM.Provider)
+                                        <div class="contentType">
+                                            @(string.IsNullOrEmpty(contentIndexVM.PreviewEmail) ? "" : " - " + contentIndexVM.PreviewEmail)
+                                            @(string.IsNullOrEmpty(contentIndexVM.PreviewSms) ? "" : " - " + contentIndexVM.PreviewSms)
+                                        </div>
+                                        <div class="metadata">
+                                            <ul class="pageStatus">
+                                                <li>
+                                                    @T("Last modified"):
+                                                @{TimeSpan tp = DateTime.UtcNow - (contentIndexVM.ModifiedUtc ?? DateTime.UtcNow);// content.CommonPart.ModifiedUtc;
+                                                    if (tp.Days > 0) {
+                                                        @Html.Raw(tp.Days.ToString() + " " + T("days ago"))
+                                                    } else if (tp.Hours > 0) {
+                                                        @Html.Raw(tp.Hours.ToString() + " " + T("hours ago"))
+                                                    } else if (tp.Minutes > 0) {
+                                                        @Html.Raw(tp.Minutes.ToString() + " " + T("minutes ago"))
+                                                    } else if (tp.Seconds > 0) {
+                                                        @Html.Raw(T("a moment ago"))
+                                                    }
+                                                    @Html.Raw("&nbsp;&vert;&nbsp;")
+                                                }
+                                            </li>
+                                            <li>
+                                                @T("By") @contentIndexVM.UserName
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="related">
+                                    @if (contentIndexVM.UserId == 0 && Authorizer.Authorize(Permissions.ManageContact)) {
+                                        <a href="@Url.Action("Edit", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@T("Edit")</a>
+                                        <text>&nbsp;&vert;&nbsp;</text>
+                                        <a href="@Url.Action("Remove", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                                    } else {
+                                        <a href="@Url.Action("View", "ContactsAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@T("View")</a>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                                                    }
+                    }
+                </ul>
+            </fieldset>
+                                                    }
+        <br />
+        @Display(Model.Pager)
+        @*@using (Html.BeginForm("Index", "Routes", FormMethod.Post)) {
+            }
+        *@
+
+        @{
+            using (Script.Head()) {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        ShowAuthorizationList();
+
+                        $('#searchTypeList').change(function () {
+                            ShowAuthorizationList();
+                        });
+
+                        function ShowAuthorizationList() {
+                            if ($('#searchTypeList').val() != '@SearchFieldEnum.Name') {
+                                $('#authDiv').show();
+                                $('#manage-export').css({ 'marginTop': '37px' });
+
+                                var label = '@T("Authorizations:")';
+                                if ($('#searchTypeList').val() == '@SearchFieldEnum.Mail') {
+                                    label = '@T("Mail Authorizations:")';
+                                } else if ($('#searchTypeList').val() == '@SearchFieldEnum.Phone') {
+                                    label = '@T("Sms Authorizations:")';
+                                }
+
+                                $('#authLabel').text(label);
+                            } else {
+                                $('#authDiv').hide();
+                                $('#commercialUseAuthList').val("");
+                                $('#thirdPartyAuthList').val("");
+                            }
+                        }
+                    });
+                </script>
+            }
+        }

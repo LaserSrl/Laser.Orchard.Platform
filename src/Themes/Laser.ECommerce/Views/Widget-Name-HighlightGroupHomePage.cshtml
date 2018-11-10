@@ -1,0 +1,235 @@
+﻿@using Orchard.Fields.Fields
+@using Orchard.ContentManagement
+@using System.Collections.Generic
+@functions{
+
+    IEnumerable<dynamic> reviews, zooms, verticals;
+
+    public bool IsRightKind(dynamic zone, string type) {
+        var field = ((ContentItem)zone.ContentItem).Parts
+            .SelectMany(pa => pa.Fields)
+            .Where(fi => fi is EnumerationField && fi.Name == "DisplayStyle")
+            .FirstOrDefault() as EnumerationField;
+        return field == null ? false : field.Value == type;
+    }
+    Dictionary<int, Func<IEnumerable<dynamic>, dynamic>> VerticalDisplayMap;
+    Dictionary<int, Func<dynamic>> LayoutsMap;
+}
+
+@helper SliderSubLayout(IEnumerable<dynamic> shapes, string typeClass, bool leftSide = true) {
+    <div class="wmuSlider @typeClass">
+        <div class="wmuSliderWrapper">
+            @foreach (var shape in shapes) {
+                <article style="position: absolute; width: 100%; opacity: 0;">
+                    <div class="banner-wrap">
+                        @if (leftSide) {
+                            @Display(shape)
+                        } else {
+                            @Display(shape)
+                        }
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+    <script type="text/javascript">
+	    $('.@typeClass').wmuSlider();
+    </script>
+}
+@helper VerticalWideSlider(IEnumerable<dynamic> shapes) {
+    <ul id="home-vertical-slider">
+        @foreach (var shape in shapes) {
+            <li>
+                <div class="ecommerce_related_contents_grid">
+                    @Display(shape)
+                </div>
+            </li>
+        }
+    </ul>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $("#home-vertical-slider").flexisel({
+                visibleItems: 4,
+                animationSpeed: 1000,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                enableResponsiveBreakpoints: true,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 1
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 2
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3
+                    }
+                }
+            });
+
+        });
+    </script>
+    Script.Include("jquery.flexisel.js", "jquery.flexisel.min.js");
+}
+@helper VerticalsSideBySide(IEnumerable<dynamic> shapes, string divClass) { 
+    foreach (var shape in shapes) {
+        <div class="@divClass">
+            @Display(shape)
+        </div>
+    }
+}
+
+@helper ZRVLayout() { //zooms, reviews, verticals
+    <div class="col-md-7 home_highlight_group_grid_left">
+        @if (zooms.Count() > 1) {
+            @SliderSubLayout(zooms, "zooms_slider")
+        } else {
+            @Display(zooms.First())
+        }
+        @if (reviews.Count() > 1) {
+            @SliderSubLayout(reviews, "reviews_slider")
+        } else {
+            @Display(reviews.First())
+        }
+    </div>
+    <div class="col-md-5 home_highlight_group_grid_right">
+        @if (verticals.Count() > 1) {
+            @SliderSubLayout(verticals, "verticals_slider", false)
+        } else {
+            @Display(verticals.First())
+        }
+    </div>
+}
+
+@helper ZRLayout() { //zooms, reviews
+    <div class="col-md-12 home_highlight_group_grid_left">
+        @if (zooms.Count() > 1) {
+            @SliderSubLayout(zooms, "zooms_slider")
+        } else {
+            @Display(zooms.First())
+        }
+    </div>
+    <div class="col-md-12 home_highlight_group_grid_right">
+        @if (reviews.Count() > 1) {
+            @SliderSubLayout(reviews, "reviews_slider")
+        } else {
+            @Display(reviews.First())
+        }
+    </div>
+}
+@helper RVLayout() {
+    <div class="col-md-7 home_highlight_group_grid_left">
+        @if (reviews.Count() > 1) {
+            @SliderSubLayout(reviews, "reviews_slider")
+        } else {
+            @Display(reviews.First())
+        }
+    </div>
+    <div class="col-md-5 home_highlight_group_grid_right">
+        @if (verticals.Count() > 1) {
+            @SliderSubLayout(verticals, "verticals_slider", false)
+        } else {
+            @Display(verticals.First())
+        }
+    </div>
+}
+@helper ZVLayout() {
+    <div class="col-md-7 home_highlight_group_grid_left">
+        @if (zooms.Count() > 1) {
+            @SliderSubLayout(zooms, "zooms_slider")
+        } else {
+            @Display(zooms.First())
+        }
+    </div>
+    <div class="col-md-5 home_highlight_group_grid_right">
+        @if (verticals.Count() > 1) {
+            @SliderSubLayout(verticals, "verticals_slider", false)
+        } else {
+            @Display(verticals.First())
+        }
+    </div>
+}
+
+@helper ZLayout() { //zooms only
+    <div class="col-md-12 home_highlight_group_grid_left">
+        @if (zooms.Count() > 1) {
+            @SliderSubLayout(zooms, "zooms_slider")
+        } else {
+            @Display(zooms.First())
+        }
+    </div>
+}
+@helper RLayout() { //reviews only
+    <div class="col-md-12 home_highlight_group_grid_left">
+        @if (reviews.Count() > 1) {
+            @SliderSubLayout(reviews, "reviews_slider")
+        } else {
+            @Display(reviews.First())
+        }
+    </div>
+}
+@helper VLayout() { //vertical only
+    <div class="col-md-12">
+        <div class="home_highlight_group_grid_right">
+            @VerticalDisplayMap[verticals.Count()](verticals)
+        </div>
+    </div>
+}
+
+@{
+    var title = (string)Model.ContentItem.WidgetPart.Title;
+
+    var projectionShape = ((IEnumerable<dynamic>)Model.Content.Items)
+        .Where((Func<dynamic, bool>)(it => it.Metadata.Prefix == "ProjectionPart"))
+        .FirstOrDefault();
+
+    var items = (List<dynamic>)projectionShape.Items;
+    reviews = items.Where(z => IsRightKind(z, "Review"));
+    zooms = items.Where(z => IsRightKind(z, "Zoom"));
+    verticals = items.Where(z => IsRightKind(z, "Vertical"));
+
+    int layoutCode = 0;
+    layoutCode += verticals.Any() ? 1 : 0;
+    layoutCode += reviews.Any() ? 10 : 0;
+    layoutCode += zooms.Any() ? 100 : 0;
+
+    Script.Include("jquery.wmuSlider.js", "jquery.wmuSlider.min.js").AtHead();
+
+    VerticalDisplayMap = new Dictionary<int, Func<IEnumerable<dynamic>, dynamic>>() {
+        {1, z => VerticalsSideBySide(z, "col-md-12")},
+        {2, z => VerticalsSideBySide(z, "col-md-6")},
+        {3, z => VerticalsSideBySide(z, "col-md-4")},
+        {4, z => VerticalsSideBySide(z, "col-md-3")},
+        {5, z => VerticalWideSlider(z)},
+    };
+
+    LayoutsMap = new Dictionary<int, Func<dynamic>>() {
+        {0, () => Display(Model.Content) },
+        {1, () => VLayout() },
+        {10, () => RLayout() },
+        {11, () => RVLayout() },
+        {100, () => ZLayout() },
+        {101, () => ZVLayout() },
+        {110, () => ZRLayout() },
+        {111, () => ZRVLayout() }
+    };
+
+}
+
+
+<div class="home-highlight-group">
+    <div class="container">
+        @if (!string.IsNullOrWhiteSpace(title)) {
+            <h2>@title</h2>
+        }
+        <div  class="home_highlight_group_grids">
+            @*There are different layouts depending on the kinds of highlights that we have*@
+            @LayoutsMap[layoutCode]()
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

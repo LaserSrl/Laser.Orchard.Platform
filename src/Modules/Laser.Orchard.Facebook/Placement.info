@@ -1,0 +1,13 @@
+﻿<Placement>
+  <Place Parts_FacebookAccount="Content:4" />
+  <Place Parts_FacebookPost="Content:5.4" />
+  <Place Parts_FacebookPostSetting_Edit="Content:4" />
+  <Match ContentType="CommunicationAdvertising">
+    <Place Parts_FacebookPost="Content:5.1" />
+  </Match>
+  <Match ContentType="CommunicationAdvertising">
+    <Match DisplayType="Summary">
+      <Place Parts_FacebookPost="Content:5.4"/>
+    </Match>
+  </Match>
+</Placement>

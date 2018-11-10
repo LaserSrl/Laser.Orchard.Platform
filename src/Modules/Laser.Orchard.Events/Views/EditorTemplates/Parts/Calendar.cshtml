@@ -1,0 +1,127 @@
+﻿@model Laser.Orchard.Events.ViewModels.CalendarEditViewModel
+
+@{
+    var selectedQueryRecordId = -1;
+
+    var calendarShapes = new Dictionary<string, string>();
+    calendarShapes.Add(T("Calendar").ToString(), "BC");
+    calendarShapes.Add(T("List").ToString(), "L");
+    var calendarShapeList = new SelectList(calendarShapes, "Value", "Key", Model.CalendarShape);
+}
+
+@Display.TokenHint()
+
+<fieldset>
+    @Html.LabelFor(m => m.QueryLayoutRecordId, T("For Query"))
+    <select id="@Html.FieldIdFor(m => m.QueryLayoutRecordId)" name="@Html.FieldNameFor(m => m.QueryLayoutRecordId)">
+        @foreach (Laser.Orchard.Events.ViewModels.QueryRecordEntry queryRecord in Model.QueryRecordEntries.OrderBy(x => x.Name)) {
+            <optgroup label="@queryRecord.Name">
+                @Html.SelectOption(Model.QueryLayoutRecordId, queryRecord.Id + ";-1", queryRecord.Name + " " + T("(Default Layout)").Text)
+                @if (Model.QueryLayoutRecordId == queryRecord.Id + ";-1") {
+                    selectedQueryRecordId = queryRecord.Id;
+                }
+
+                @foreach (Laser.Orchard.Events.ViewModels.LayoutRecordEntry layoutRecord in queryRecord.LayoutRecordEntries.OrderBy(x => x.Description)) {
+                    @Html.SelectOption(Model.QueryLayoutRecordId, queryRecord.Id + ";" + layoutRecord.Id, queryRecord.Name + " " + T("({0})", layoutRecord.Description).Text)
+                    if (Model.QueryLayoutRecordId == queryRecord.Id + ";" + layoutRecord.Id) {
+                        selectedQueryRecordId = queryRecord.Id;
+                    }
+                }
+            </optgroup>
+        }
+    </select>
+    @if (selectedQueryRecordId != -1) {
+        @Html.ActionLink(T("Edit Query").Text, "Edit", new { area = "Orchard.Projections", id = selectedQueryRecordId }, new { })
+    }
+    <span class="hint">@T("The query to display.")</span>
+</fieldset>
+
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.CalendarShape, T("Display events as:"))
+        @Html.DropDownListFor(m => m.CalendarShape, calendarShapeList)
+        <span class="hint">@T("The shape to use to display the events.")</span>
+    </div>
+</fieldset>
+
+<fieldset id="listoptions">
+    <div>
+        @Html.LabelFor(m => m.StartDate, T("List start date"))
+        @Html.TextBoxFor(m => m.StartDate, new { @class = "text-medium tokenized" })
+        <span class="hint">@T("The list will display events from this date.")</span>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.NumDays, T("Number of days"))
+        @Html.TextBoxFor(m => m.NumDays, new { @class = "text-medium tokenized" })
+        <span class="hint">@T("The number of days displayed in the list.")</span>
+    </div>
+
+    <div>
+        @Html.CheckBoxFor(m => m.DisplayPager)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.DisplayPager)">@T("Show pager")</label>
+        <span class="hint">@T("Check to add a pager to the list.")</span>
+    </div>
+
+    <div id="pageroptions">
+        <div>
+            @Html.LabelFor(m => m.ItemsPerPage, T("Items to display"))
+            @Html.TextBoxFor(m => m.ItemsPerPage, new { @class = "text small" })
+            <span class="hint">@T("When using pagination, this is the number of items per page. If 0, the default value in the site settings will be used.")</span>
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.PagerSuffix, T("Suffix"))
+            @Html.TextBoxFor(m => m.PagerSuffix, new { @class = "text" })
+            <span class="hint">@T("Optional. Provide a suffix to use when multiple pagers are displayed on the same page, e.g., when using multiple Projection Widgets, or to define alternates.")</span>
+        </div>
+    </div>
+</fieldset>
+
+@using (Script.Foot()) {
+<script type="text/javascript">
+//<![CDATA[
+    (function ($) {
+        $("fieldset legend").expandoControl(function (controller) { return controller.nextAll(".expando"); }, { collapse: true, remember: false });
+    })(jQuery);
+//]]>
+</script>
+    
+<script type="text/javascript">
+    //<![CDATA[
+    $(function () {
+
+        //Visualizzo la sezione con le opzioni di dettaglio della lista in base allo shape selezionato
+        if ('@Model.CalendarShape' == 'L') {
+            $('#listoptions').show();
+        } else {
+            $('#listoptions').hide();
+        }
+
+        $('#@Html.FieldIdFor(m => m.CalendarShape)').change(function () {
+
+            if ($('#@Html.FieldIdFor(m => m.CalendarShape)').val() == 'L') {
+                $('#listoptions').show();
+            } else {
+                $('#listoptions').hide();
+            }
+        });
+
+        //Visualizzo la sezione con le opzioni di dettaglio del pager solo se la checkbox DisplayPager è selezionata
+        if ('@Model.DisplayPager' == 'True') {
+            $('#pageroptions').show();
+        } else {
+            $('#pageroptions').hide();
+        }
+
+        $('#@Html.FieldIdFor(m => m.DisplayPager)').click(function () {
+            if ($('#@Html.FieldIdFor(m => m.DisplayPager)').is(':checked')) {
+                $('#pageroptions').show();
+            } else {
+                $('#pageroptions').hide();
+            }
+        });
+
+    });
+</script>
+}

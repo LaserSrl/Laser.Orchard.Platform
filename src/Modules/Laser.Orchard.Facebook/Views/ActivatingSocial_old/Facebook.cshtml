@@ -1,0 +1,9 @@
+﻿@model Laser.Orchard.Facebook.ViewModels.ListVM
+@T("Post on this Facebook's page - Select a page ")
+
+@using (Html.BeginForm("FacebookPage", "ActivatingSocial", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(m => m.Elenco, T("Select a element of the page list"))
+    @Html.DropDownListFor(m => m.Elenco, Model.Elenco)
+    <button type="submit">@T("Save")</button>
+}

@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{19099D7B-78B6-43E6-94F0-33D22971D027}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Laser.Bootstrap</RootNamespace>
+    <AssemblyName>Laser.Bootstrap</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Admin\Swatches.png" />
+    <Content Include="Content\facebook.png" />
+    <Content Include="Content\fonts\font-awesome\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\google.png" />
+    <Content Include="Content\prettyPhoto\dark_rounded\btnNext.png" />
+    <Content Include="Content\prettyPhoto\dark_rounded\btnPrevious.png" />
+    <Content Include="Content\prettyPhoto\dark_rounded\contentPattern.png" />
+    <Content Include="Content\prettyPhoto\dark_rounded\default_thumbnail.gif" />
+    <Content Include="Content\prettyPhoto\dark_rounded\loader.gif" />
+    <Content Include="Content\prettyPhoto\dark_rounded\sprite.png" />
+    <Content Include="Content\prettyPhoto\dark_square\btnNext.png" />
+    <Content Include="Content\prettyPhoto\dark_square\btnPrevious.png" />
+    <Content Include="Content\prettyPhoto\dark_square\contentPattern.png" />
+    <Content Include="Content\prettyPhoto\dark_square\default_thumbnail.gif" />
+    <Content Include="Content\prettyPhoto\dark_square\loader.gif" />
+    <Content Include="Content\prettyPhoto\dark_square\sprite.png" />
+    <Content Include="Content\prettyPhoto\default\default_thumb.png" />
+    <Content Include="Content\prettyPhoto\default\loader.gif" />
+    <Content Include="Content\prettyPhoto\default\sprite.png" />
+    <Content Include="Content\prettyPhoto\default\sprite_next.png" />
+    <Content Include="Content\prettyPhoto\default\sprite_prev.png" />
+    <Content Include="Content\prettyPhoto\default\sprite_x.png" />
+    <Content Include="Content\prettyPhoto\default\sprite_y.png" />
+    <Content Include="Content\prettyPhoto\facebook\btnNext.png" />
+    <Content Include="Content\prettyPhoto\facebook\btnPrevious.png" />
+    <Content Include="Content\prettyPhoto\facebook\contentPatternBottom.png" />
+    <Content Include="Content\prettyPhoto\facebook\contentPatternLeft.png" />
+    <Content Include="Content\prettyPhoto\facebook\contentPatternRight.png" />
+    <Content Include="Content\prettyPhoto\facebook\contentPatternTop.png" />
+    <Content Include="Content\prettyPhoto\facebook\default_thumbnail.gif" />
+    <Content Include="Content\prettyPhoto\facebook\loader.gif" />
+    <Content Include="Content\prettyPhoto\facebook\sprite.png" />
+    <Content Include="Content\prettyPhoto\light_rounded\btnNext.png" />
+    <Content Include="Content\prettyPhoto\light_rounded\btnPrevious.png" />
+    <Content Include="Content\prettyPhoto\light_rounded\default_thumbnail.gif" />
+    <Content Include="Content\prettyPhoto\light_rounded\loader.gif" />
+    <Content Include="Content\prettyPhoto\light_rounded\sprite.png" />
+    <Content Include="Content\prettyPhoto\light_square\btnNext.png" />
+    <Content Include="Content\prettyPhoto\light_square\btnPrevious.png" />
+    <Content Include="Content\prettyPhoto\light_square\default_thumbnail.gif" />
+    <Content Include="Content\prettyPhoto\light_square\loader.gif" />
+    <Content Include="Content\prettyPhoto\light_square\sprite.png" />
+    <Content Include="Content\twitter.png" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Scripts\jquery.prettyPhoto.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Styles\amelia.min.css" />
+    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Styles\bootswatch.min.css" />
+    <Content Include="Styles\cerulean.min.css" />
+    <Content Include="Styles\cosmo.min.css" />
+    <Content Include="Styles\cyborg.min.css" />
+    <Content Include="Styles\flatly.min.css" />
+    <Content Include="Styles\font-awesome-ie7.min.css" />
+    <Content Include="Styles\font-awesome.min.css" />
+    <Content Include="Styles\images\gui-next.png" />
+    <Content Include="Styles\images\gui-prev.png" />
+    <Content Include="Styles\images\transfervalledaosta\bg-featured.png" />
+    <Content Include="Styles\images\transfervalledaosta\featured-bg.png" />
+    <Content Include="Styles\images\transfervalledaosta\footer-bg.png" />
+    <Content Include="Styles\images\transfervalledaosta\header-bg.png" />
+    <Content Include="Styles\images\transfervalledaosta\mercedes-classe-e-bg.png" />
+    <Content Include="Styles\images\transfervalledaosta\mercedes-classe-e.jpg" />
+    <Content Include="Styles\journal.min.css" />
+    <Content Include="Styles\overwrite.css" />
+    <Content Include="Styles\prettyPhoto.css" />
+    <Content Include="Styles\readable.min.css" />
+    <Content Include="Styles\simplex.min.css" />
+    <Content Include="Styles\slate.min.css" />
+    <Content Include="Styles\spacelab.min.css" />
+    <Content Include="Styles\transfer-valle-aosta.min.css" />
+    <Content Include="Styles\united.min.css" />
+    <Content Include="Styles\zGourmet.css" />
+    <Content Include="ThemeZonePreview.png" />
+    <Content Include="Web.config" />
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Content\Web.config" />
+    <Content Include="Theme.txt" />
+    <Content Include="Theme.png" />
+    <Content Include="Placement.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Fields\" />
+    <Folder Include="Zones\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminMenu.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Filters\AlternateCssFilter.cs" />
+    <Compile Include="Filters\LayoutFilter.cs" />
+    <Compile Include="Gravatar.cs" />
+    <Compile Include="Gremail.cs" />
+    <Compile Include="Grofile.cs" />
+    <Compile Include="GrofileInfo.cs" />
+    <Compile Include="Html\HtmlHelperExtensions.cs" />
+    <Compile Include="Html\UrlHelperExtensions.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ThemeSettingsRecord.cs" />
+    <Compile Include="Permissions.cs" />
+    <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes.cs" />
+    <Compile Include="Services\IThemeSettingsService.cs" />
+    <Compile Include="Services\ThemeSettingsService.cs" />
+    <Compile Include="ThemeHelper.cs" />
+    <Compile Include="ViewModels\ThemeInfoViewModel.cs" />
+    <Compile Include="ViewModels\ThemeSettingsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\fonts\font-awesome\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\font-awesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\font-awesome\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\font-awesome\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\OptionsIndex.cshtml" />
+    <Content Include="Views\BadgeOfHonor.cshtml" />
+    <Content Include="Views\Branding.cshtml" />
+    <Content Include="Views\CommentAuthor.cshtml" />
+    <Content Include="Views\CommentGravatar.cshtml" />
+    <Content Include="Views\CommentMetadata.cshtml" />
+    <Content Include="Views\CommentReplyButton.cshtml" />
+    <Content Include="Views\Content.Edit-ModuloContatti.cshtml" />
+    <Content Include="Views\Document.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts.Comment.cshtml" />
+    <Content Include="Views\Fields.Common.Text.cshtml" />
+    <Content Include="Views\Fields_MediaLibraryPicker.cshtml" />
+    <Content Include="Views\Layout.cshtml" />
+    <Content Include="Views\LogOn.cshtml" />
+    <Content Include="Views\Menu.cshtml" />
+    <Content Include="Views\MenuItem.cshtml" />
+    <Content Include="Views\MenuItemLink.cshtml" />
+    <Content Include="Views\MenuItemLinkdd.cshtml" />
+    <Content Include="Views\Message.cshtml" />
+    <Content Include="Views\OpenAuthLogOn.cshtml" />
+    <Content Include="Views\OpenAuthRegister.cshtml" />
+    <Content Include="Views\Orchard.Users\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Orchard.Users\Account\LostPassword.cshtml" />
+    <Content Include="Views\Orchard.Users\Account\RequestLostPassword.cshtml" />
+    <Content Include="Views\Pager.cshtml" />
+    <Content Include="Views\Pager.CurrentPage.cshtml" />
+    <Content Include="Views\Pager.First.cshtml" />
+    <Content Include="Views\Pager.Gap.cshtml" />
+    <Content Include="Views\Pager.Last.cshtml" />
+    <Content Include="Views\Pager.Next.cshtml" />
+    <Content Include="Views\Pager.Previous.cshtml" />
+    <Content Include="Views\Parts.HighlightsItem-List.cshtml" />
+    <Content Include="Views\Parts.HighlightsItem-SlideShow.cshtml" />
+    <Content Include="Views\Parts.Map-AsideSecond.cshtml" />
+    <Content Include="Views\Parts\Blogs.BlogArchives.cshtml" />
+    <Content Include="Views\Parts\Blogs.RecentBlogPosts.cshtml" />
+    <Content Include="Views\Parts\Comment.cshtml" />
+    <Content Include="Views\Parts\CommentForm.cshtml" />
+    <Content Include="Views\Parts\Comments.Count.cshtml" />
+    <Content Include="Views\Parts\Common.Body.Summary.cshtml" />
+    <Content Include="Views\Parts\Common.Metadata.cshtml" />
+    <Content Include="Views\Parts\Common.Metadata.Summary.cshtml" />
+    <Content Include="Views\Parts\CulturePicker.cshtml" />
+    <Content Include="Views\Parts\ListOfComments.cshtml" />
+    <Content Include="Views\Parts\Search.SearchForm.cshtml" />
+    <Content Include="Views\Parts\Share.ShareBar-BlogPost.cshtml" />
+    <Content Include="Views\Parts\Tags.ShowTags.cshtml" />
+    <Content Include="Views\Parts\Title-BlogPost.cshtml" />
+    <Content Include="Views\Parts\Title.cshtml" />
+    <Content Include="Views\Parts\Title.Summary-BlogPost.cshtml" />
+    <Content Include="Views\Parts\TwitterWidget.cshtml" />
+    <Content Include="Views\Parts\ZenGallery.cshtml" />
+    <Content Include="Views\Register.cshtml" />
+    <Content Include="Views\SearchNav.cshtml" />
+    <Content Include="Views\User.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Widget.Wrapper.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Themes\Orchard.Themes.csproj">
+      <Project>{cde24a24-01d3-403c-84b9-37722e18dfb7}</Project>
+      <Name>Orchard.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
+      <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
+      <Name>Laser.Orchard.Commons</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

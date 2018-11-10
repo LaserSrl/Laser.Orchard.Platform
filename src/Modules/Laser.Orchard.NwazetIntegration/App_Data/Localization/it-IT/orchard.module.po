@@ -1,0 +1,150 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "{0} is required."
+msgstr "{0} è obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Back to cart"
+msgstr "Torna al carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Bill me at the shipping address."
+msgstr "Fatturazione all'indirizzo di spedizione."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Checkout: Shipping & Billing Addresses"
+msgstr "Checkout: indirizzi di spedizione e fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "e-mail"
+msgstr "E-mail"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "International Phone Prefix"
+msgstr "Prefisso telefonico internazionale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Phone"
+msgstr "Telefono"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries."
+msgstr "Per favore, inserite un numero telefonico a cui vi si possa raggiungere nel caso servano informazioni addizionali. Questo è necessario per la spedizione verso alcuni stati."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Please provide an e-mail address for us to use in order to give you updates on your order."
+msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Please provide an international phone prefix, For example 0039 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Required information"
+msgstr "Informazioni richieste"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
+msgid "Special Instructions"
+msgstr "Istruzioni speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "First Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Last Name"
+msgstr "Cognome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "none"
+msgstr "Nessuno"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Please include middle name or initial as appropriate."
+msgstr "Per favore, includete il secondo nome o l'iniziale in maniera opportuna."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'WA' per lo stato di Washington negli Stati Uniti d'America."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Remove inserted data"
+msgstr "Rimuovi i dati inseriti"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "State, province, prefecture, republic or region"
+msgstr "Stato, provincia, prefettura, repubblica o regione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Stored Billing Address"
+msgstr "Indirizzo di fatturazione salvato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Stored Shipping Address"
+msgstr "Indirizzo di spedizione salvato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
+msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "You may leave this blank for the United States."
+msgstr "Lasciare vuoto per gli Stati Uniti d'America."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
+msgid "{0} &times; {1}"
+msgstr "{0} &times; {1}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
+msgid "Back to cart"
+msgstr "Torna al carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
+msgid "Checkout"
+msgstr "Checkout"
+

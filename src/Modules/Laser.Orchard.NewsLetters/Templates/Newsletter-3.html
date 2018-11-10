@@ -1,0 +1,47 @@
+<tr>	
+	<td>
+		<table>
+			<tr>
+				<td width="15"></td>
+				<td width="620">
+					<table style="background: #eee; border: 1px solid #ccc; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #666;" width="620">
+						<tr>
+							<td style="line-height: 1.4em; padding: 15px;">
+								<span style="font-size: 25px; letter-spacing: -1px; font-weight: 700; color: #ccc;">@Model.Content.NewsletterEdition.ContentItem.TitlePart.Title</span><br />
+								<div>@Raw(Model.Content.NewsletterEdition.ContentItem.BodyPart.Text)</div>
+							</td>
+						</tr>
+					</table><br />                                        
+				</td>
+				<td width="15"></td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td>
+		@foreach(dynamic item in Model.Content.ContentItems){
+		<table>
+			<tr>
+				<td width="180" align="center" style="text-align: center;">
+					<img width="150" height="150" src="@(Model.Urls.Domain)@(Model.Urls.MediaUrl)?Path=@item.AnnouncementPart.PreviewImage.MediaParts[0].MediaUrl&Width=150&Height=150&Mode=crop&Alignment=middlecenter" style="float:left" />
+				</td>
+				<td valign="top" style="padding-right: 15px;">
+					<p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #666; margin:0; padding: 0; line-height: 1.6em;">
+						<span style="font-size: 32px; letter-spacing: -1px; font-weight: 700; color: #ccc; line-height: 1em;">
+							<a href="@(Model.Urls.Domain)@item.DisplayUrl">
+								@(item.AnnouncementPart.AnnouncementTitle!=null?item.AnnouncementPart.AnnouncementTitle:item.AnnouncementPart.ContentItem.TitlePart.Title)
+							</a>
+						</span><br />
+						@Raw(item.AnnouncementPart.Abstract.Value)
+					</p>
+				</td>
+			</tr>
+		</table>
+		<hr />
+		}
+	</td>
+</tr>
+<tr><td>
+	[UNSUBSCRIBE]
+	</td></tr>

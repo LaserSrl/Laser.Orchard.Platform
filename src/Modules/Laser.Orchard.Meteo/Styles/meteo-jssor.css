@@ -1,0 +1,94 @@
+﻿/* jssor slider bullet navigator skin 03 css */
+/*
+        .jssorb03 div           (normal)
+        .jssorb03 div:hover     (normal mouseover)
+        .jssorb03 .av           (active)
+        .jssorb03 .av:hover     (active mouseover)
+        .jssorb03 .dn           (mousedown)
+        */
+.jssorb03 div, .jssorb03 div:hover, .jssorb03 .av {
+    background: url(../img/b03.png) no-repeat;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.jssorb03 div {
+    background-position: -5px -4px;
+}
+
+.jssorb03 div:hover, .jssorb03 .av:hover {
+    background-position: -35px -4px;
+}
+
+.jssorb03 .av {
+    background-position: -65px -4px;
+}
+
+.jssorb03 .dn, .jssorb03 .dn:hover {
+    background-position: -95px -4px;
+}
+
+
+/* jssor slider thumbnail Navigator Skin 12 css */
+/*
+                .jssort12 .p            (normal)
+                .jssort12 .p:hover      (normal mouseover)
+                .jssort12 .pav          (active)
+                .jssort12 .pav:hover    (active mouseover)
+                .jssort12 .pdn          (mousedown)
+                */
+.jssort12 .p img {
+    FILTER: alpha(opacity=55);
+    opacity: .55;
+    transition: opacity .6s;
+    -moz-transition: opacity .6s;
+    -webkit-transition: opacity .6s;
+    -o-transition: opacity .6s;
+}
+
+.jssort12 .pav img, .jssort12 .pav:hover img, .jssort12 .p:hover img {
+    FILTER: alpha(opacity=100);
+    opacity: 1;
+    transition: none;
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: none;
+}
+
+.jssort12 .pav:hover img, .jssort12 .p:hover img {
+    FILTER: alpha(opacity=70);
+    opacity: .7;
+}
+
+.jssort12 .title, .jssort12 .title_back {
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #000;
+    font-size: 20px;
+}
+
+.jssort12 .title_back {
+    background-color: #fff;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+.jssort12 .pav:hover .title_back, .jssort12 .p:hover .title_back {
+    filter: alpha(opacity=40);
+    opacity: .4;
+}
+
+.jssort12 .pav .title_back {
+    background-color: #000;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+.jssort12 .pav .title {
+    color: #fff;
+}

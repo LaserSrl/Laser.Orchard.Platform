@@ -1,0 +1,23 @@
+﻿@using Orchard.ContentManagement
+@model Laser.Orchard.DynamicNavigation.ViewModels.DynamicMenuViewModel
+
+<fieldset>
+    <legend>Dynamic Menu</legend>
+    <div>
+        <select id="@Html.FieldIdFor(m => m.MenuId)" name="@Html.FieldNameFor(m => m.MenuId)">
+            @foreach (ContentItem menu in Model.Menus) {
+                @Html.SelectOption(Model.MenuId, menu.Id, Html.ItemDisplayText(menu).ToString())
+            }
+        </select>
+        <span class="hint">@T("Select which menu do you want to dynamically render.")</span>
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.LevelsToShow, new { @class = "text-box" })
+        <span class="hint">@T("Select how many levels to show.")</span>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.ShowFirstLevelBrothers) <label class="forcheckbox" for="@Html.FieldIdFor(m=>m.ShowFirstLevelBrothers)">@T("Show first level menu item brothers")</label>
+        <span class="hint">@T("Select if you want to render first level menu item brothers.")</span>
+    </div>
+
+</fieldset>

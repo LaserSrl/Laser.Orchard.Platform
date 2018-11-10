@@ -1,0 +1,137 @@
+﻿@using Orchard.Projections.Services;
+@{
+    int page = 0;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+
+    //var services = WorkContext.Resolve<IProjectionManager>();
+    //var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    //var queryItems = services.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
+
+    var filterValue = "nofilter";
+    if (WorkContext.HttpContext.Request.QueryString.AllKeys.Contains("termid")) {
+        filterValue = WorkContext.HttpContext.Request.QueryString["termid"];
+    }
+    
+}
+<div class="overflow-hidden">
+    <div class="space-40"></div>
+    <div class="container-fluid" id="showcase-container">
+        <div class="row">
+            <div id="showcases">
+            </div>
+            <div class="text-center">
+                <div class="space-20" ></div>
+                <div id="load-showcase-div-button">
+                    <a id="load_showcase" class="btn btn-primary" href="@Url.Action("display", "webapi", new { area = "Laser.Orchard.webservices"})">@T("Show more showcases")</a>
+                    <div id="load_posts_loader"></div>
+                </div>         
+            </div>
+            <input type="hidden" value="@filterValue" id="hiddenFilter" />
+            <input type="hidden" value='@T("Show more showcases")' id="textButtonShowShowcase" />
+            <input type="hidden" id="currentPage" value="@page">
+        </div>
+        <div class="showcase-container-bottom"></div>
+    </div>
+</div>
+@using (Script.Head()) {
+<script type="text/javascript">
+    jQuery(window).load(function (x) {
+        
+        var contPage = 0;
+        $("#currentPage").val(contPage);
+        
+        //load_more_showcase(x);
+        jQuery('#load_showcase').bind('inview', function (e, isInView) {
+            if (isInView) load_more_showcase(e);
+        });
+        jQuery(document).on('click', '#load_showcase', load_more_showcase);
+    })
+
+    function load_more_showcase(e) {
+        e.preventDefault();
+
+        var filter = "";
+        if ($('#hiddenFilter').attr('value') && $('#hiddenFilter').attr('value') != 'nofilter') {
+            filter = '&TermIds=' + $('#hiddenFilter').attr('value');
+        }
+
+        jQuery('#load_posts_loader').addClass('active');
+
+        var contPage = jQuery('#currentPage').val();
+        contPage++;
+
+        $("#currentPage").val(contPage);
+
+        jQuery.ajax({
+            url: jQuery('#load_showcase').attr('href'),
+            dataType: 'json',
+            data: 'alias=vetrina-prodotti&page=' + contPage + '&pageSize=@pageSize' + filter + '&lang=@WorkContext.CurrentCulture',
+            success: function (response) {
+
+                jQuery('#load_posts_loader').removeClass('active');
+                if (response.ProjectionPage.ProjectionPageResults.length > 0) {
+                    for (var i = 0; i < response.ProjectionPage.ProjectionPageResults.length; i++) {
+                        getShowcases(response, i);
+                    }
+
+                    //if (response.nextOffsetLink) jQuery('#load_showcase').attr('href', response.nextOffsetLink);
+                    //else jQuery('#load_showcase, #load_posts_loader').fadeOut(400, function () { jQuery(this).remove(); });
+                } else {
+                    jQuery('#load_showcase, #load_posts_loader').fadeOut(400, function () { jQuery(this).remove(); });
+                }
+
+            }, error: function () {
+            }
+        });
+    }
+
+    function getShowcases(response, i) {
+
+        var prodotto = response.ProjectionPage.ProjectionPageResults[i].Prodotto;
+        //console.log(prodotto);
+
+        var classeContenitore = "";
+        var categories = "";
+
+        for (var z = 0; z < prodotto.ProdottoDPart.TipologiaTaxonomyField.Terms.length; z++) {
+            for (var x = 0; x < prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy.length; x++) {
+
+                if (prodotto.ProdottoDPart.TipologiaTaxonomyField.Terms[z] == prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy[x].Id) {
+
+                    var slug = prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy[x].Slug;
+                    var slugTerms = slug.split('/');
+
+                    classeContenitore += slugTerms[1] + " ";
+
+                    categories +=
+                                    '<div class="perspective-layer category-layer" style="background:' + prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy[x].ColoreInputField + '">' +
+                                    '<img class="img-responsive category-layer-icon" src="' + prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy[x].ImageMediaLibraryPickerField.FirstMediaUrl + '">' +
+                                    '<h5 class="category-layer-title">' + prodotto.ProdottoDPart.TipologiaTaxonomyField.Taxonomy[x].Name + '</h5></div>'
+                }
+            }
+        }
+
+        var html =
+                    '<div class="col-xs-12 col-sm-6 col-md-4 showcase-item-img filterable-item bg-showcase ' + classeContenitore + '">' +
+                    '<div class="row no-margin">' +
+                        '<div class="col-xs-9 no-padding">' +
+                            '<div class="space-40 hidden-xs"></div>' +
+                            '<h1 class="showcase-title text-right"><a href="' + prodotto.AutoroutePart.Path + '">' + prodotto.TitlePart.Title + '</a></h1>' +
+                        '</div>' +
+                        '<div class="col-xs-3 no-padding">' +
+                            '<div class="showcase-item-logo">' +
+                                '<a href="' + prodotto.AutoroutePart.Path + '">' +
+                                '<img class="img-responsive wp-post-image" src="' + prodotto.ProdottoDPart.LogoMediaLibraryPickerField.MediaParts[0].MediaPart.MediaUrl + '" alt="' + prodotto.TitlePart.Title + '">' +
+                            '</a>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="space-20 visible-xs"></div>' +
+                    '<a href="' + prodotto.AutoroutePart.Path + '" class="showcase-perspective">' +
+                        '<img src="' + prodotto.ProdottoDPart.GalleryMediaLibraryPickerField.MediaParts[0].MediaPart.MediaUrl + '" class="img-responsive perspective-layer">' + categories +
+                    '</a>' +
+                '</div>';
+        jQuery('#showcases').append(jQuery(html).hide().fadeIn(500));
+    }
+</script>
+}

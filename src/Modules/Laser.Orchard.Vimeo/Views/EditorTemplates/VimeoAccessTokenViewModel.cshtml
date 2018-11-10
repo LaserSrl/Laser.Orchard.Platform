@@ -1,0 +1,24 @@
+﻿@using Laser.Orchard.Commons.Helpers;
+@using Laser.Orchard.Vimeo;
+@using Laser.Orchard.Vimeo.ViewModels;
+@using Orchard;
+
+@model Laser.Orchard.Vimeo.ViewModels.VimeoAccessTokenViewModel
+@{
+    var atId = "atNum_" + Html.UniqueClientId("VimeoAccessTokenViewModel");
+}
+@if (Model.Delete) {
+    @*This is for elements that have already been marked for deletion. We do not display them, but we keep the data.*@
+    <div id="@atId" class="j_VimeoATVM">
+        @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.AccessToken)
+    </div>
+} else {
+    <div id="@atId" class="j_VimeoATVM">
+        @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+        @Html.HiddenFor(m => m.Id)
+        @Html.TextBoxFor(m => m.AccessToken, new { placeholder=T("Authorized Access Token").Text, @class = "text medium" })
+        @Html.LinkToRemoveNestedForm("<i class=\"fa fa-times\" style=\"color: red\"></i>", ".j_VimeoATVM", "input.ph-mark-for-delete")
+    </div>
+}

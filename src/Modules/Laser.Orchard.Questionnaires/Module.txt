@@ -1,0 +1,9 @@
+﻿Name: Laser Orchard Questionnaires
+AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.8
+Description: Integrate your Content Items with a customizable part/widget that allow you to propose Questions/Answers to your visitors. The module allow you to extract some statistics about questions and answers. 
+Dependencies: Orchard.Tokens, Orchard.Email, Orchard.ContentPicker, Orchard.Autoroute, Orchard.Captcha, Orchard.Localization, Orchard.Workflows, Laser.Orchard.jQueryPlugins, Laser.Orchard.StartUpConfig,Laser.Orchard.Events,Laser.Orchard.TemplateManagement, Laser.Orchard.ContentExtension
+Category: Content

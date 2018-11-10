@@ -1,0 +1,468 @@
+﻿@using Orchard.Core.Common.ViewModels;
+@using Orchard.Core.Contents.ViewModels;
+@using Laser.Orchard.AdvancedSearch.ViewModels;
+@using Laser.Orchard.AdvancedSearch;
+@using Orchard.Security;
+
+
+@{
+    Script.Require("jQuery");
+    Script.Require("jQueryUI_Core").AtHead();
+    Script.Require("jQueryUI_Autocomplete").AtHead();
+ //   Script.Require("Bootstrap").AtHead();
+    Style.Require("jQuery_Autocomplete").AtHead();
+    Style.Require("AdvancedSearch").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+    Style.Require("Accordion").AtHead();
+ //   Style.Require("Bootstrap").AtHead();
+    var typeDisplayName = Model.TypeDisplayName;
+    var pageTitle = T("Manage Content");
+    var createLinkText = T("Create New Content");
+    if (!string.IsNullOrWhiteSpace(typeDisplayName)) {
+        pageTitle = T("Manage {0} Content", typeDisplayName);
+        createLinkText = T("Create New {0}", typeDisplayName);
+    }
+    Layout.Title = pageTitle;
+}
+
+@using (Script.Head()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var aft = $("input[name=__RequestVerificationToken]:first").val();
+            inputvalueignorelist = new Array('AdvancedOptions.SelectedLanguageId0', 'AdvancedOptions.SelectedOwner', 'AdvancedOptions.SelectedFromDate', 'AdvancedOptions.SelectedToDate', 'AdvancedOptions.DateFilterType0', 'AdvancedOptions.SelectedTermId0', 'AdvancedOptions.HasMediafalse');
+            $('.accordion-section-content :input').each(function () {
+                if (!(inputvalueignorelist.indexOf((this.name + $(this).val())) >= 0)) {
+                    if (this.name == 'AdvancedOptions.HasMedia') {
+                        if (this.checked == true) {
+                            //if (!$(this).parent().hasClass('open')) {
+                            //    $(this).parent().parent().addClass('open');
+                            //    $(this).parent().parent().css({ display: "block" });
+                            //    //if ($($(this).parent().parent().parent().find('.accordion-section-title')).hasClass('active')) {
+                            //    //   $($(this).parent().parent().parent().find('.accordion-section-title')).addClass('active');
+                            //    //}
+                            //}
+                            if (!$(this).parentsUntil($('.accordion-section-content')).parent().hasClass('open')) {
+                                $(this).parentsUntil($('.accordion-section-content')).parent().addClass('open');
+                                $(this).parentsUntil($('.accordion-section-content')).parent().css({ display: "block" });
+                            }
+                            if (!$($(this).parentsUntil($('.accordion-section')).parent().find('.accordion-section-title')).hasClass('active')) {
+                                $($(this).parentsUntil($('.accordion-section')).parent().find('.accordion-section-title')).addClass('active');
+                            }
+                        }
+                    }
+                    else {
+
+                        if (!$(this).parentsUntil($('.accordion-section-content')).parent().hasClass('open')) {
+                            $(this).parentsUntil($('.accordion-section-content')).parent().addClass('open');
+                            $(this).parentsUntil($('.accordion-section-content')).parent().css({ display: "block" });
+                        }
+                        if (!$($(this).parentsUntil($('.accordion-section')).parent().find('.accordion-section-title')).hasClass('active')) {
+                            $($(this).parentsUntil($('.accordion-section')).parent().find('.accordion-section-title')).addClass('active');
+                        }
+                    }
+                }
+            });
+
+            function close_accordion_section() {
+                var conpnl = $('.accordion .accordion-section-title');
+                conpnl.removeClass('active');
+                //  $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
+            }
+
+            $('.accordion-section-title').click(function (e) {
+                // Grab current anchor value
+                var currentAttrValue = $(this).attr('href');
+
+                if ($(e.target).is('.active')) {
+                    close_accordion_section();
+                    $(e.target).parent().find(' .accordion-section-content').slideUp(300).removeClass('open')
+                    //  $('.accordion ').slideUp(300).removeClass('open');
+                } else {
+                    close_accordion_section();
+
+                    // Add active class to section title
+                    $(this).addClass('active');
+                    // Open up the hidden content panel
+                    var conpnl = $('.accordion ' + currentAttrValue);
+                    conpnl.slideDown(300).addClass('open');
+                }
+
+                e.preventDefault();
+            });
+
+            $.widget("custom.myautocomplete", $.ui.autocomplete, {
+                _renderItem: function (ul, item) {
+                    var row = $("<li class='ac-li'>");
+                    var aux = "<div class='ac-div-name'>" + item.UserName + "</div><div class='ac-div-mail'>" + item.Email + "</div>";
+                    row = row.append($("<a>").html(aux));
+                    row = row.appendTo(ul);
+                    return row;
+                }
+            });
+
+            $("#ownerResults").myautocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("Search", "UsersAutocomplete", new { area = "Laser.Orchard.StartupConfig" })",
+                        data: { searchText: $("#ownerResults").val(), __RequestVerificationToken: aft },
+                        success: function (dataAutocomplete) {
+                            response(dataAutocomplete);
+                        }
+                    });
+                },
+                response: function (event, ui) {
+                    for (var x in ui.content) {
+                        ui.content[x].value = ui.content[x].UserName;
+                        @* non imposta ui.content[x].label perché la customizzazione non lo utilizza e quindi sarebbe inutile *@
+                    }
+                },
+                minLength: 3
+            });
+        });
+    </script>
+}
+
+
+@{
+    AdvancedContentOptions AdvancedOptions = Model.AdvancedOptions;
+}
+
+@using (Script.Foot()) {
+    
+    <script type="text/javascript">
+        function removeFilterAndReload(index) {
+            //each filter is hardcoded to a case statement. This is rather ugly.
+            switch (index) {
+                case 0:
+                    document.getElementById("filterResults").value = "";
+                    break;
+                case 1:
+                    document.getElementById("orderResults").value = '@ContentsOrder.Modified.ToString()';
+                    break;
+                case 2:
+                    document.getElementById("contentResults").value = '@ContentsStatus.Latest.ToString()';
+                    break;
+                case 3:
+                    document.getElementById("languageResults").value = "0";
+                    break;
+                case 4:
+                    document.getElementById("languageUntranslatedResults").value = "0";
+                    break;
+                case 5:
+                    document.getElementById("termsResults").value = "0";
+                    break;
+                case 6:
+                    document.getElementById("ownerResults").value = "";
+                    break;
+                case 7:
+                    document.getElementById("ownerResults").disabled = false;
+                    document.getElementById("isOwnedByMe").value = 0;
+                    break;
+                case 8:
+                    document.getElementById("@Html.FieldIdFor(m => AdvancedOptions.SelectedFromDateEditor.Date)").value = "";
+                    break;
+                case 9:
+                    document.getElementById("@Html.FieldIdFor(m => AdvancedOptions.SelectedToDateEditor.Date)").value = "";
+                    break;
+                case 10:
+                    document.getElementById("hasMediaResults").value = 0;
+                    break;
+                case 11:
+                    document.getElementById("CPFIdToSearch").value = null;
+                    document.getElementById("CPFName").value = "";
+                    break;
+            }
+
+            //location;
+            document.getElementById("applyFiltersButton").click();
+            //$.post(document.submit.Filter.action);
+            return false;
+        }
+    </script>
+    
+    <script>
+        function checkOwnedByMeCheckBox() {
+            var cbOwnedByMe = document.getElementById("isOwnedByMe"); //this is the checkbox object
+            var tbOwner = document.getElementById("ownerResults"); //this is the owner textbox
+            if (cbOwnedByMe.checked) {
+                tbOwner.value = "@WorkContext.CurrentUser.UserName";
+                tbOwner.disabled = true;
+            } else {
+                tbOwner.disabled = false;
+            }
+        }
+    </script>
+}
+
+@helper FilterActiveTag(int filter, string text) {
+    <li>
+        <a href="javascript:void(0)" onclick="removeFilterAndReload(@filter)" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
+            @text <i class="fa fa-times"></i>
+        </a>
+    </li>
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+
+    <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">@T("Manage content")</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label class="col-sm-4 align-right gray-label">@T("Content creation:")</label>
+                        @Html.ActionLink(createLinkText.Text, "Create", new { Area = "Contents", Id = (string)Model.Options.SelectedFilter }, new { @class = "button primaryAction" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-3 align-right gray-label">@T("Builk actions:")</label>
+                        <div class="col-sm-9">
+                            <select id="publishActions" name="Options.BulkAction">
+                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.None, T("Choose action...").ToString())
+                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.PublishNow, T("Publish Now").ToString())
+                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Unpublish, T("Unpublish").ToString())
+                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Remove, T("Delete").ToString())
+                            </select>
+                            <button type="submit" id="applyManageContentBtn" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">@T("Content filtering")</h3>
+                @* Use a javascript to add labels here for each filter that is not default. Those labels should be clickable: on click, the page 
+                should reload, with the condition connected to the label reset to default.*@
+                <div id="appliedFilters" class="row">
+                    @* Generate labels with razor. Each label has a script to remove the corresponding filter and reload the page. *@
+                    <ul>
+                        @if (Model.Options.SelectedFilter != null) {
+                            @FilterActiveTag(0, @T("Content type: {0}", Model.Options.SelectedFilter.ToString()).ToString());
+                        }
+                        @if (Model.Options.OrderBy != (ContentsOrder)ContentsOrder.Modified) {
+                            @FilterActiveTag(1, @T("Content order: {0}", Model.Options.OrderBy.ToString()).ToString());
+                        }
+                        @if (Model.Options.ContentsStatus != (ContentsStatus)ContentsStatus.Latest) {
+                            @FilterActiveTag(2, @T("Content status: {0}", Model.Options.ContentsStatus.ToString()).ToString());
+                        }
+                        @if (Model.AdvancedOptions.SelectedLanguageId != 0) {
+                            var culture = Model.AdvancedOptions.CultureById(Model.AdvancedOptions.SelectedLanguageId);
+                            @FilterActiveTag(3, @T("Language: {0}", culture.ToString()).ToString());
+                        }
+                        @if (Model.AdvancedOptions.SelectedUntranslatedLanguageId != 0) {
+                            var culture = Model.AdvancedOptions.CultureById(Model.AdvancedOptions.SelectedUntranslatedLanguageId);
+                            @FilterActiveTag(4, @T("Not translated to: {0}", culture.ToString()).ToString());
+                        }
+                        @if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
+                            if (Model.AdvancedOptions.SelectedTermId != 0) {
+                                var term = Model.AdvancedOptions.TermById(Model.AdvancedOptions.SelectedTermId);
+                            @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString());
+                            }
+                        }
+                        @{
+                        bool seeAll = Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
+                        bool mayChoose = Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
+                        bool onlyMine = seeAll ? (bool)Model.AdvancedOptions.OwnedByMeSeeAll : (bool)Model.AdvancedOptions.OwnedByMe;
+                        if (mayChoose) { //seeAll impliese mayChoose
+                            if (onlyMine) {
+                            @FilterActiveTag(7, @T("Only show my items.").ToString());
+                            } else if (Model.AdvancedOptions.SelectedOwner != null && !String.IsNullOrEmpty(Model.AdvancedOptions.SelectedOwner.ToString())) {
+                            @FilterActiveTag(6, @T("Only show items by: {0}", Model.AdvancedOptions.SelectedOwner.ToString()).ToString());
+                            }
+                        }
+                        }
+                        @if (Model.AdvancedOptions.SelectedFromDate != null) {
+                            @FilterActiveTag(8, @T("{0} from {1}", Model.AdvancedOptions.DateFilterType.ToString(), Model.AdvancedOptions.SelectedFromDate.ToString()).ToString());
+                        }
+                        @if (Model.AdvancedOptions.SelectedToDate != null) {
+                            @FilterActiveTag(9, @T("{0} until {1}", Model.AdvancedOptions.DateFilterType.ToString(), Model.AdvancedOptions.SelectedToDate.ToString()).ToString());
+                        }
+                        @if ((bool)Model.AdvancedOptions.HasMedia) {
+                            @FilterActiveTag(10, @T("Only items with media.").ToString());
+                        }
+
+@*In this case we create some hidden input fields to hold the values from the model*@
+                        @Html.Hidden("AdvancedOptions.CPFIdToSearch", (string)(Model.AdvancedOptions.CPFIdToSearch != null ? Model.AdvancedOptions.CPFIdToSearch.ToString() : ""), new { id = "CPFIdToSearch" })
+                        @Html.Hidden("AdvancedOptions.CPFName", (string)(Model.AdvancedOptions.CPFName != null ? Model.AdvancedOptions.CPFName.ToString() : ""), new { id = "CPFName" })
+                        @if (Model.AdvancedOptions.CPFIdToSearch != null && !String.IsNullOrWhiteSpace(Model.AdvancedOptions.CPFName)) {
+                            @FilterActiveTag(11, @T("Items with Id {0} in the CPF {1}", Model.AdvancedOptions.CPFIdToSearch.ToString(), Model.AdvancedOptions.CPFName).ToString());
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <label class="gray-label">@T("Content type:")</label>
+                        <select id="filterResults" name="Options.SelectedFilter">
+                            @Html.SelectOption((string)Model.Options.SelectedFilter, "", T("any (show all)").ToString())
+                            @foreach (var filterOption in Model.Options.FilterOptions) {
+                                @Html.SelectOption((string)Model.Options.SelectedFilter, (string)filterOption.Key, (string)filterOption.Value)
+                            }
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <label class="gray-label">@T("Content order:")</label>
+                        <select id="orderResults" name="Options.OrderBy">
+                            @Html.SelectOption((ContentsOrder)Model.Options.OrderBy, ContentsOrder.Created, T("recently created").ToString())
+                            @Html.SelectOption((ContentsOrder)Model.Options.OrderBy, ContentsOrder.Modified, T("recently modified").ToString())
+                            @Html.SelectOption((ContentsOrder)Model.Options.OrderBy, ContentsOrder.Published, T("recently published").ToString())
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <label class="gray-label">@T("Content status:")</label>
+                        <select id="contentResults" name="Options.ContentsStatus">
+                            @Html.SelectOption((ContentsStatus)Model.Options.ContentsStatus, ContentsStatus.Latest, T("latest").ToString())
+                            @Html.SelectOption((ContentsStatus)Model.Options.ContentsStatus, ContentsStatus.Published, T("published").ToString())
+                            @Html.SelectOption((ContentsStatus)Model.Options.ContentsStatus, ContentsStatus.Draft, T("unpublished").ToString())
+                            @Html.SelectOption((ContentsStatus)Model.Options.ContentsStatus, ContentsStatus.AllVersions, T("all versions").ToString())
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <a class="accordion-section-title" role="button" data-toggle="collapse" href="#collapserow" aria-expanded="false" aria-controls="collapseExample">@T("Advanced filters")</a>
+                    </div>
+                </div>
+            </div>
+            <div id="collapserow" class="collapse">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <label for="languageResults" class="bulk-filter">@T("Language")</label>
+                            <select id="languageResults" name="AdvancedOptions.SelectedLanguageId">
+                                @Html.SelectOption((string)Model.AdvancedOptions.SelectedLanguageId.ToString(), "0", T("any (show all)").ToString())
+                                @foreach (var languageOption in Model.AdvancedOptions.LanguageOptions) {
+                                    @Html.SelectOption((string)Model.AdvancedOptions.SelectedLanguageId.ToString(), (string)languageOption.Key.ToString(), (string)languageOption.Value)
+                                }
+                            </select>
+                            <br />
+                            <br />
+                            <select id="languageUntranslatedResults" name="AdvancedOptions.SelectedUntranslatedLanguageId">
+                                @Html.SelectOption((string)Model.AdvancedOptions.SelectedUntranslatedLanguageId.ToString(), "0", T("any (translated or not)").ToString())
+                                @foreach (var languageOption in Model.AdvancedOptions.LanguageOptions) {
+                                    @Html.SelectOption(
+                                    (string)Model.AdvancedOptions.SelectedUntranslatedLanguageId.ToString(),
+                                    (string)languageOption.Key.ToString(),
+                                    @T("Untranslated in {0}", (string)languageOption.Value).ToString()
+                                )
+                                }
+                            </select>
+                        </div>
+                        @{
+                            //bool seeAll = Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
+                            //bool mayChoose = Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
+                            //bool onlyMine = seeAll ? (bool)Model.AdvancedOptions.OwnedByMeSeeAll : (bool)Model.AdvancedOptions.OwnedByMe;
+
+                            if (mayChoose) {
+                                //seeAll implies mayChoose
+                                <div class="col-xs-12 col-md-4">
+                                    <label for="ownerResults" class="bulk-filter">@T("Owner")</label>
+                                    @*for the texbox, we check loads of conditions*@
+                                    @Html.TextBox(
+                                    "AdvancedOptions.SelectedOwner",
+                                    (!onlyMine) ? //(seeAll || !onlyMine) ?
+                                        (string)Model.AdvancedOptions.SelectedOwner :
+                                        (string)WorkContext.CurrentUser.UserName,
+                                    (!onlyMine) ?
+                                        (object)new { id = "ownerResults", @placeholder = @T("User name or e-mail"), @class = "av-textbox" } :
+                                        (object)new { id = "ownerResults", @disabled = "disabled", @class = "av-textbox" }
+                                )
+                                    &nbsp;
+                                    @Html.CheckBox(
+                                    seeAll ?
+                                        "AdvancedOptions.OwnedByMeSeeAll" :
+                                        "AdvancedOptions.OwnedByMe",
+                                    onlyMine,
+                                    new { id = "isOwnedByMe", @onclick = "checkOwnedByMeCheckBox()" }
+                                )
+                                    @T("Owned by me")
+
+                                </div>
+                            }
+                        }
+                        <div class="col-xs-12 col-md-4">
+                            @try {
+                                if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
+                                <label for="termsResults" class="bulk-filter">@T("Terms")</label>
+                                <select id="termsResults" name="AdvancedOptions.SelectedTermId">
+                                    @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), "0", T("any (show all)").ToString())
+                                    @{ int optgroupinserted = 0;
+                                       foreach (var languageOption in Model.AdvancedOptions.TaxonomiesOptions) {
+                                           if ((string)languageOption.Key.ToString() == "-1") {
+                                               if (optgroupinserted > 0) {
+                                                   Html.Raw("</optgroup>");
+                                               }
+                                               optgroupinserted = 1;
+                                        @Html.Raw("<optgroup label=\"" + (string)languageOption.Value + "\">");
+                                           } else {
+                                        @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), (string)languageOption.Key.ToString(), (string)languageOption.Value)
+                                           }
+                                       }
+                                       if (optgroupinserted > 0) {
+                                        @Html.Raw("</optgroup>");
+                                       }
+                                    }
+                                </select>
+                                }
+                            } catch { }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <label class="gray-label">@T("Publish status:")</label>
+                            <select id="dateTypeResults" name="AdvancedOptions.DateFilterType">
+                                @foreach (var dateFilterOption in Enum.GetNames(typeof(Laser.Orchard.AdvancedSearch.DateFilterOptions))) {
+                                    @Html.SelectOption((string)Convert.ToInt32(Model.AdvancedOptions.DateFilterType).ToString(), (string)Convert.ToInt32(Enum.Parse(typeof(Laser.Orchard.AdvancedSearch.DateFilterOptions), dateFilterOption)).ToString(), (string)dateFilterOption)
+                                }
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
+                            @Html.EditorFor(m => AdvancedOptions.SelectedFromDateEditor, new { id = "dateFromResults"})
+                            @*@Html.TextBox("AdvancedOptions.SelectedFromDate", (string)(Model.AdvancedOptions.SelectedFromDate != null ? Model.AdvancedOptions.SelectedFromDate.ToString() : ""), new { id = "dateFromResults" })*@
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
+                            @Html.EditorFor(m => AdvancedOptions.SelectedToDateEditor, new { id = "dateToResults" })
+                            @*@Html.TextBox("AdvancedOptions.SelectedToDate", (string)(Model.AdvancedOptions.SelectedToDate != null ? Model.AdvancedOptions.SelectedToDate.ToString() : ""), new { id = "dateToResults" })*@
+                        </div>
+                        <div class="col-xs-12 col-md-4" id="onlyWithMedia">
+                            @Html.CheckBox("AdvancedOptions.HasMedia", (bool)Model.AdvancedOptions.HasMedia, new { id = "hasMediaResults" })
+                            @T("Only with media")
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="box-footer align-right padding-right-35">
+                <button id="applyFiltersButton" type="submit" name="submit.Filter" value="yes please">@T("Apply")</button>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    
+
+    
+
+    
+    
+    
+    <fieldset class="contentItems bulk-items">
+        @Display(Model.ContentItems)
+    </fieldset>
+    @Display(Model.Pager)
+}

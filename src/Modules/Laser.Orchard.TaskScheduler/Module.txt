@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.TaskScheduler
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.8
+Description: This module enables the creation of schedulable and periodic tasks that trigger custom signals upon termination
+Features:
+    Laser.Orchard.TaskScheduler:
+        Description: Enables the creation of schedulable and periodic tasks that trigger custom signals upon termination
+		Category: Workflows
+		Dependencies: Laser.Orchard.StartupConfig,Orchard.Workflows,Orchard.Resources,Laser.Orchard.jQueryPlugins

@@ -1,0 +1,75 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.ContactForm.ViewModels
+@using System.Collections.Specialized
+@{
+    Script.Require("jQuery").AtHead();
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Include("ContactForm.css").AtHead();
+    const string displayNone = "style=\"display:none\"";
+    var contactForm = (ContactFormViewModel)Model.ContactForm;
+    var displaySubject = contactForm.ShowSubjectField ? string.Empty : displayNone;
+    var displayName = contactForm.ShowNameField ? string.Empty : displayNone;
+    var displayAttachmentButton = contactForm.EnableFileUpload ? string.Empty : displayNone;
+    var uniqueId = Model.ContentPart.Id;
+
+    var formData = TempData["form"];
+    var name = formData != null ? ((NameValueCollection)formData)["Name"] : "";
+    var email = formData != null ? ((NameValueCollection)formData)["Email"] : "";
+    var confirmEmail = formData != null ? ((NameValueCollection)formData)["ConfirmEmail"] : "";
+    var subject = formData != null ? ((NameValueCollection)formData)["Subject"] : "";
+    var message = formData != null ? ((NameValueCollection)formData)["Message"] : "";
+    }
+@{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" }))
+    {
+        <ul>
+            <li @Html.Raw(displayName)>
+                <label for="Name">@T("Name")</label>
+                <input id="Name-@uniqueId" class="text" name="Name" type="text" placeholder="@T("Your Name")" value="@name" />
+            </li>
+            <li class="emailForm">
+                <label for="Email">@T("Email")</label>
+                <input id="Email-@uniqueId" class="text medium" name="Email" type="text" placeholder="@T("Email Address")" value="@email" />
+            </li>
+            <li>
+                <label for="ConfirmEmail">@T("Confirm Email")</label>
+                <input id="ConfirmEmail-@uniqueId" class="text medium" name="ConfirmEmail" type="text" placeholder="@T("Confirm Email Address")" value="@confirmEmail" />
+            </li>
+            <li @Html.Raw(displaySubject)>
+                <label for="Subject">@T("Subject")</label>
+                <input id="Subject-@uniqueId" class="text medium" name="Subject" type="text" placeholder="@T("Subject")" value="@subject" />
+            </li>
+            <li>
+                <label for="Message">@T("Message")</label>
+                <textarea id="Message-@uniqueId" class="text" name="Message" placeholder="@T("Comments or Inquiry")" cols="50" rows="10">@message</textarea>
+            </li>
+        </ul>
+        <div id="AttachmentSection-@uniqueId" type="hidden">
+            <img id="AttachmentPreview-@uniqueId" ></img>
+            <label id="AttachmentNameLabel-@uniqueId"></label>
+            <br />
+        </div>
+        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+        <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
+        <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
+        @Html.AntiForgeryTokenOrchard()
+        <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
+        <input type="submit" value="@T("Send")" />
+    }
+}
+
+@using (Script.Head()) {
+     <script type="text/javascript">
+         $(document).ready(function () {
+             $('#attachment_button-@uniqueId').click(function () {
+                 $.colorbox({ iframe: true, width: "40%", height: "26%", href: "@(Url.Action("Add", "FileUpload", new { Area = "Laser.Orchard.ContactForm" }) + "?ContactFormID=" + uniqueId)", title: "@T("Upload file")" });
+             });
+
+             $('#MediaId-@uniqueId').change(function () {
+                 if ($('#MediaId-@uniqueId').val() != '') {
+                     $('#attachment_button-@uniqueId').attr('disabled', 'disabled');
+                 }
+             });
+         });
+    </script>
+}

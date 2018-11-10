@@ -1,0 +1,290 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts.ContactForm.SiteSettings.cshtml"
+msgid "Contact Form"
+msgstr "Modulo di Contatto"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts.ContactForm.SiteSettings.cshtml"
+msgid "Email for Spam Collection"
+msgstr "Email per Raccolta Spam"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts.ContactForm.SiteSettings.cshtml"
+msgid "Enable spam email collection (Send messaged flagged as spam to this address)"
+msgstr "Abilita raccolta email di spam (invia i messaggi identificati come spam a questo indirizzo)"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts.ContactForm.SiteSettings.cshtml"
+msgid "Specify one or more addresses separated by a semicolon."
+msgstr "Specificare uno o più indirizzi separati da punto e virgola."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "A dictionary containing all the other data"
+msgstr "Un dizionario contenente tutti gli altri dati"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Attach files to email"
+msgstr "Allega i file alla email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Display Name Field"
+msgstr "Mostra il Campo 'Nome'"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Enable File Upload"
+msgstr "Abilita Caricamento File"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If checked, an upload button will be added to the form."
+msgstr "Se selezionato, un bottone di caricamento verrà aggiunto al form."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked, the subject specified in the template will be used. If no template is specified, the subject specified in the textbox above will be used."
+msgstr "Se non selezionato, un campo 'Oggetto' verrà visualizzato nel form. Tokens: {DOMAIN}, {NAME}.<br/>Se selezionato, verrà usato l'oggetto specificato nel template. Se nessun template è stato selezionato, verrà usato l'oggetto specificato nella casella di testo soprastante."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If the folder does not exists, it will be created."
+msgstr "Se la cartella non esiste verrà creata."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If this option is checked, every form submission or API request must have an attached file."
+msgstr "Se questa opzione è selezionata, ogni invio di form o richiesta alle API dovrà avere un file allegato"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If this option is not checked, instead of attaching the file to the email its URL will be added to the body."
+msgstr "Se questa opzione non è selezionata, invece di allegare i file alla email il loro URL verrà aggiunto al testo del messaggio."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Mail Template"
+msgstr "Template dell'Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Recipient Email Address"
+msgstr "Indirizzo Email Destinatario"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Require attachment"
+msgstr "Rendi obbligatoria la presenza di un allegato"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Require Name Field"
+msgstr "Rendi Obbligatorio il Campo 'Nome'"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Specify one or more destination addresses separated by a semicolon."
+msgstr "Specificare uno o più indirizzi di destinazione separati da punto e virgola."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The email address of the sender"
+msgstr "L'indirizzo email del mittente"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The name collected by this field is included in the email body."
+msgstr "Il nome inserito in questo campo verrà incluso nel corpo dell'email."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The name of the sender"
+msgstr "Il nome del mittente"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The subject of the email"
+msgstr "L'oggetto dell'email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The text of the email"
+msgstr "Il testo dell'email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "The URL of the attachment"
+msgstr "L'URL dell'allegato"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Upload files in the following path:"
+msgstr "Carica file nella seguente cartella:"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Use Same Subject for All Emails"
+msgstr "Usa lo Stesso Oggetto per Tutte le Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "Variables passed to the template through the model:"
+msgstr "Variabili passate al template attraverso il modello:"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "Browse"
+msgstr "Sfoglia"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "The file \"{0}\" has been uploaded!"
+msgstr "Il file \"{0}\" è stato inviato!"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "Upload"
+msgstr "Carica"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "Uploading..."
+msgstr "Caricamento in corso..."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Add attachment"
+msgstr "Aggiungi allegato"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Comments or Inquiry"
+msgstr "Il Tuo Messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Confirm Email Address"
+msgstr "Conferma Indirizzo Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Email Address"
+msgstr "Indirizzo Email"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Send"
+msgstr "Inoltra"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Subject"
+msgstr "Oggetto"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Upload file"
+msgstr "Carica file"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
+msgid "Your Name"
+msgstr "Il Vostro Nome"
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormDriver"
+msgid "The destination folder for the uploaded files has been succesfully created!"
+msgstr "La cartella di destinazione per i file da caricare è stata creata con successo!"
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormDriver"
+msgid "The destination folder for the uploaded files has not been created!"
+msgstr "La cartella di destinazione per i file da caricare non è stata creata!"
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.EmailAPIController"
+msgid "The content Id has not been provided or does not correspond to a content part of the correct type."
+msgstr "Il content Id non è stato fornito o non corrisponde ad una content part del tipo corretto."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.EmailAPIController"
+msgid "The file extension in the filename is not allowed or has not been provided."
+msgstr "L'estensione del file non è tra quelle autorizzate o non è contenuta nel nome del file."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.EmailAPIController"
+msgid "The provided data does not correspond to the required format."
+msgstr "I dati forniti non corrispondono al formato richiesto."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.FileUploadController"
+msgid "Please select a file."
+msgstr "Selezionare un file."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.FileUploadController"
+msgid "The file extension in the filename is not allowed or has not been provided."
+msgstr "L'estensione del file non è tra quelle autorizzate o non è contenuta nel nome del file."
+
+msgctxt "Laser.Orchard.ContactForm.Drivers.ContactFormDriver"
+msgid "The destination folder for the uploaded files has been succesfully created!"
+msgstr "La cartella di destinazione per i file da caricare è stata creata con successo!"
+
+msgctxt "Laser.Orchard.ContactForm.Drivers.ContactFormDriver"
+msgid "The destination folder for the uploaded files has not been created!"
+msgstr "La cartella di destinazione per i file da caricare non è stata creata!"
+
+msgctxt "Laser.Orchard.ContactForm.Handlers.ContactFormSettingsPartHandler"
+msgid "Contact Form"
+msgstr "Modulo di Contatto"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "All contact fields are required."
+msgstr "Tutti i campi sono obbligatori."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "An unexpected error occured when sending your message. You may email us directly at: {0}"
+msgstr "Si è verificato un errore inatteso nell'invio del vostro messaggio. E' possibile contattarci direttamente all'indirizzo: {0}"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "An unexpected error while sending a contact form message flagged as spam to {0} at {1}"
+msgstr "Errore inatteso nell'invio di un messaggio identificato come spam da {0} a {1}"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "An unexpected error while sending a contact form message to {0} at {1}"
+msgstr "Errore inatteso nell'invio di un messaggio da {0} a {1}"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Attachment"
+msgstr "Allegato"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "'Confirm email' and 'Email' does not match. Please retry."
+msgstr "I campi 'Email' e 'Conferma email' non corrispondono. Per favore riprovare."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Contact form message sent to {0} at {1}"
+msgstr "Messaggio inviato da {0} a {1}"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Invalid email address."
+msgstr "Indirizzo di posta elettronica non valido."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Operation completed successfully."
+msgstr "Operazione completata con successo."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Our email server isn't configured. You may email us directly at: {0}"
+msgstr "Il nostro server email non è configurato. E' possibile contattarci direttamente all'indirizzo: {0}"
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Thank you for your inquiry, we will respond to you shortly."
+msgstr "Grazie per il vostro messaggio, vi risponderemo a breve."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "The sender email and the message text are required, but one or more of these informations are missing."
+msgstr "L'indirizzo del mittente e il testo del messaggio sono dati obbligatori, ma una o più di queste informazioni sono mancanti."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "The sender email, message text and attachment are required, but one or more of these informations are missing."
+msgstr "L'indirizzo del mittente, il testo del messaggio e l'allegato sono dati obbligatori, ma una o più di queste informazioni sono mancanti."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "The sender email, sender name and message text are required, but one or more of these informations are missing."
+msgstr "L'indirizzo del mittente, il nome del mittente e il testo del messaggio sono dati obbligatori, ma una o più di queste informazioni sono mancanti."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "The sender email, sender name, message text and attachment are required, but one or more of these informations are missing."
+msgstr "L'indirizzo del mittente, il nome del mittente, il testo del messaggio e l'allegato sono dati obbligatori, ma una o più di queste informazioni sono mancanti."
+
+msgctxt "Laser.Orchard.ContactForm.Services.ContactFormService"
+msgid "Your message was flagged as spam. If you feel this was in error contact us directly at: {0}"
+msgstr "Il tuo messaggio e' stato identificato come spam. Se pensi che si tratti di un errore contattaci direttamente all'indirizzo: {0}"
+

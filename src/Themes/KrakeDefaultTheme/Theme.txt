@@ -1,0 +1,9 @@
+Name: KrakeDefaultTheme
+AntiForgery: enabled
+Author: Laser Srl
+Website: http://www.laser-group.com
+Description: Krake frontoffice theme
+Version: 1.0
+Zones: ProjectName, Navigation, Content, footer,
+# todo: provide tags
+# Tags: Classic, Serif

@@ -1,0 +1,19 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    var field = (MediaLibraryPickerField)Model.ContentField;
+    var contents = field.MediaParts;
+}
+<div id="loghi">
+    <div class="container">
+        <div class="row text-center">
+            @foreach (var content in contents) {
+                @Display(New.ClientsGalleryElement(ContentItem: content.ContentItem))
+            }
+        </div>
+    </div>
+    <div class="loghi-bottom"></div>
+</div>
+

@@ -1,0 +1,16 @@
+﻿@model Laser.Orchard.SEO.Models.RedirectRule
+
+@Html.ValidationSummary()
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <legend>@T("Edit Redirect rule")</legend>
+        @Html.EditorForModel()
+    </fieldset>
+
+    <fieldset class="save-button">
+        <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">Save</button>
+    </fieldset>
+}
+
+

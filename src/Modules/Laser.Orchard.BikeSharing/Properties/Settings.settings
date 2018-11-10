@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Laser.Orchard.BikeSharing.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Laser_Orchard_BikeSharing_com_mobilityparc_www_StationOpWSService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.mobility-parc.com/ws/stationOpWS</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

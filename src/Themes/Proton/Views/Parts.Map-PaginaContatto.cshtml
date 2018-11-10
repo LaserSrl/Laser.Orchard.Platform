@@ -1,0 +1,98 @@
+﻿@using Orchard.UI.Resources;
+@using Orchard.MediaLibrary.Fields;
+@{
+    Script.Require("GoogleMapsAPI").AtHead();
+    Script.Require("LaserOrchardMaps").AtHead();
+    Style.Require("GoogleMaps").AtHead();
+
+    string tilesType = Model.MapTiles;
+    string usedTiles = "google.maps.MapTypeId.TERRAIN";
+    int maxZoom = 22;
+    bool httpTiles = false;
+    if (!String.IsNullOrWhiteSpace(tilesType)) {
+        if (!tilesType.ToLower().Trim().StartsWith("http")) {
+            usedTiles = "google.maps.MapTypeId." + tilesType;
+        } else {
+            usedTiles = tilesType;
+            httpTiles = true;
+            maxZoom = Model.MaxZoom > 0 ? Model.MaxZoom : maxZoom = 22;
+        }
+    }
+
+
+    var ID = Model.ContentItem.Id;
+    var mapSourceFile = (MediaLibraryPickerField)((Laser.Orchard.Maps.Models.MapPart)Model.ContentPart).Fields.SingleOrDefault(w => w.Name == "MapSourceFile");
+    var mediaUrl = "";
+    if (mapSourceFile != null && mapSourceFile.Ids.Length > 0 && mapSourceFile.MediaParts != null && mapSourceFile.MediaParts.Count() > 0) {
+        mediaUrl = ((Orchard.MediaLibrary.Models.MediaPart)mapSourceFile.MediaParts.FirstOrDefault()).MediaUrl;
+    }
+}
+
+@if (Model.Latitude > 0) {
+    using (Script.Foot()) {
+    <script type="text/javascript">
+        function @("initialize" + ID + "()") {
+            var mapOptions = {
+            scaleControl: true,
+            center: new google.maps.LatLng(@Model.Latitude.ToString().Replace(",", "."),@Model.Longitude.ToString().Replace(",", ".")),
+                zoom: 15,
+                mapTypeId: @Html.Raw(!httpTiles ? usedTiles : "'OSM'")   
+
+            @if (httpTiles) {
+                <text>,
+            mapTypeControl: false,
+            streetViewControl: false
+                </text>
+            }
+        };
+
+        var map = new google.maps.Map(document.getElementById('map_canvas-@ID'),
+    mapOptions);
+                    @if (httpTiles) {
+                        //Define OSM map type pointing at the OpenStreetMap tile server
+                <text>
+        map.mapTypes.set("OSM", new google.maps.ImageMapType({
+            getTileUrl: function(coord, zoom) {
+                var usedTilesJS = "@usedTiles";
+                var values = [zoom,coord.x,coord.y];
+
+                var result = switch_url(format(usedTilesJS, zoom, coord.x, coord.y));
+                    
+                return result; //"http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+            },
+            tileSize: new google.maps.Size(256, 256),
+            name: "OpenStreetMap",
+            maxZoom: @maxZoom
+            }));
+        </text>
+                    }
+
+                @if (!String.IsNullOrWhiteSpace(mediaUrl)) {
+        <text>var ctaLayer = new google.maps.KmlLayer({
+                    url: '@WorkContext.CurrentSite.BaseUrl@(mediaUrl)'
+                });
+                ctaLayer.setMap(map);
+        </text>
+                }
+
+        var marker = new google.maps.Marker({
+            map: map,
+            position: map.getCenter()
+        });
+        var infowindow = new google.maps.InfoWindow();
+        infowindow.setContent('<div style="overflow:hidden;white-space:nowrap;"><span class="map-locationinfo-marker">@(Model.LocationInfo == null ? Layout.Title : Model.LocationInfo)</span><span class="map-locationaddress-marker">@Model.LocationAddress</span></div>');
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(map, marker);
+        });
+        }
+
+        google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+    </script>
+    }
+    <section id="map">
+        <div class="map-canvas" id="map_canvas-@ID">
+        </div>
+    </section>
+
+}
+

@@ -1,0 +1,18 @@
+﻿@model Laser.Orchard.DataProtection.Models.DataRestrictionsPartSettings
+
+<fieldset>
+    <legend></legend>
+    <div>
+        @Html.LabelFor(m => m.ForceDefault, T("Force default value"))
+        @Html.CheckBoxFor(m => m.ForceDefault)
+        <span class="hint">@T("Check to force default value on saving and to disable user editing on data restrictions.")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.RestricitonsDefault, T("Default data restrictions"))
+        @Html.TextAreaFor(m => m.RestricitonsDefault, new { @class = "text medium tokenized" })
+        <span class="hint">
+            @T("A data restriciton per row. Each data restriction has the following form: key1=val1,key2=val2?key3=val3. Example: company=Microsoft,sector=marketing,country=italy?city=Rome. Restrictions following question mark are applied on edit only and they are optional.")<br />
+        </span>
+    </div>
+</fieldset>
+@Display.TokenHint()

@@ -1,0 +1,17 @@
+﻿@using Orchard.Core.Contents
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    var field = (MediaLibraryPickerField) Model.ContentField;
+    string name = field.DisplayName;
+    var mediaParts = field.MediaParts;
+}
+@if (mediaParts.Any()) {
+<p class="media-@name.HtmlClassify()">    
+        @{
+            var contentItem = mediaParts.First();
+            @Display(BuildDisplay(contentItem, "Thumbnail"))
+        }
+</p>
+}

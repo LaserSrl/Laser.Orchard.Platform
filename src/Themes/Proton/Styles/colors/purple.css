@@ -1,0 +1,93 @@
+/* Purple Color - #885ec2
+================================================== */
+a:hover {
+	color: #885ec2;
+}
+.flexslider .slides .slide-caption, .flexslider2 .slides .slide-caption2 {
+	border-bottom: 2px solid #885ec2;
+}
+.flexslider .slides .slide-caption h3 a:hover, .flexslider2 .slides .slide-caption2 h3 a:hover{
+	color: #885ec2;
+}
+.flex-direction-nav a, .flexslider2 .flex-direction-nav a {
+	background: #885ec2 url(../images/bg_direction_nav.png) no-repeat 0 0;
+}
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:focus, 
+.navbar .nav > li > a:focus, 
+.navbar .nav > li > a:hover,
+#header .nav li:hover > a, .nav li.active:hover > a  {
+	background: #885ec2;
+}
+.subnav {
+	border-top: 2px solid #885ec2;	
+	border-bottom: 2px solid #885ec2;
+}
+.subnav li a:hover {
+	border-bottom-color: #885ec2;
+}
+.feat2 {
+	border-top: 2px solid #885ec2;
+}
+.caption-container h1 span {
+  	color: #885ec2;
+}
+.caption-slide2 .btn {
+	background: #885ec2;	
+}
+#footer-copy {
+	border-top: 1px solid #885ec2;	
+}
+#scrolltop a {
+	background: #885ec2 url(../images/bg-scrolltop.png) no-repeat 0 0;
+}
+.btn {
+	background: #885ec2;
+}
+#accordions h2:hover {
+	color: #885ec2;
+}
+.nav-tabs li:hover a, .nav-tabs li a:hover, .nav-tabs li.active a:hover {
+	color: #885ec2;
+}
+.dropcap { 
+	color: #885ec2;
+}
+.dropcap2 {
+	background: #885ec2;
+}
+.span3:hover .block-title {
+ 	color: #885ec2;
+}
+.span3:hover .block-circle, .span4:hover .block-circle {
+	background: #885ec2;
+}
+.progress .bar {
+	background: #885ec2;
+}
+.portfolio article:hover .p-text, .portfolio .portfolio-item:hover .p-text {
+	border-bottom: 2px solid #885ec2;
+}
+.image-overlay-bg a.image-link {
+	background: #885ec2 url(../images/img-overlay2.png) no-repeat center;
+}
+.image-overlay-bg a.image-lightbox {
+	background: #885ec2 url(../images/img-overlay.png) no-repeat center;
+}
+.image-overlay-bg a.overlay-video {
+	background: #885ec2 url(../images/video-overlay.png) no-repeat center;
+}
+.menu-filterable.nav-pills > .active > a, 
+.menu-filterable.nav-pills.nav-pills > .active > a:hover {	
+	background-color: #885ec2;
+}
+.portfolio-detail .flex-direction-nav .flex-prev,  
+.portfolio-detail .flex-direction-nav .flex-next {
+	background-color: #885ec2;  
+}
+.post-date {
+	background: #885ec2;
+}
+.tagscloud a {
+	background: #885ec2 url(../images/arrows2.png) no-repeat left center;
+}

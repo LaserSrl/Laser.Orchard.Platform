@@ -1,0 +1,17 @@
+﻿@{
+    Style.Require("FontAwesome430");
+}
+
+@if (Model.SmsMessageSent ?? false)
+{
+    var aux = string.Format("({0}/{1})", Model.SmsDeliveredOrAcceptedNumber ?? 0, Model.RecipientsNumber ?? 0);
+    <span style="color:green;font-weight:bold"><i class="fa fa-phone"></i> @aux</span>
+}
+else if (Model.SendOnNextPublish??false)
+{
+    <span style="color:orange;font-weight:bold"><i class="fa fa-phone"></i></span>
+}
+else {
+    <span style="color:red;font-weight:bold"><i class="fa fa-phone"></i></span>
+}
+

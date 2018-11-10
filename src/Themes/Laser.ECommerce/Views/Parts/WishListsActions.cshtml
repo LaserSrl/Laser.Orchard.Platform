@@ -1,0 +1,7 @@
+﻿<div id="your-wish-lists-actions" class="wishlist-actions">
+    @Html.ActionLink(T("Wish lists' settings").Text, "Edit", new { area = "Nwazet.Commerce", controller = "WishLists", id = Model.Id })
+
+    @Html.ActionLink(T("New wishlist").Text, "Create", new { area = "Nwazet.Commerce", controller = "WishLists" })
+    
+</div>
+<div class="clearfix"> </div>

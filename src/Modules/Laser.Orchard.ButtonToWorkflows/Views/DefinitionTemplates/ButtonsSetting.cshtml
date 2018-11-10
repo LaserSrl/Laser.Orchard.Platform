@@ -1,0 +1,39 @@
+﻿@using System.Web.Mvc.Html
+@using Orchard.Mvc.Html
+@using Orchard
+@using Laser.Orchard.ButtonToWorkflows.Models
+@model Laser.Orchard.ButtonToWorkflows.Settings.ButtonsSetting
+@{ 
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+
+    var getpart = ((dynamic)_orchardServices.WorkContext.CurrentSite).ButtonToWorkflowsSettingsPart;
+    string elencovalori = "";
+    try {
+        elencovalori = getpart.ButtonsText;
+    }
+    catch { }
+    if (!string.IsNullOrEmpty(elencovalori)) {
+        string[] elenco = elencovalori.Split('£');
+    //    IEnumerable<SelectListItem> selectList =
+    //from c in elenco
+    //select new SelectListItem {
+    //    Selected = (c.CustomerID == invoice.CustomerID),
+    //    Text = c,
+    //    Value = index.ToString()
+    //};
+        IEnumerable<SelectListItem> ienumerableListOf = elenco.Select((x, index) => new SelectListItem { Text = x, Value = index.ToString(), Selected = Model.ButtonNumber.Contains(index.ToString()) });
+
+   //     SelectList ListOf = new SelectList(elenco.Select((x, index) => new SelectListItem { Text = x, Value = index.ToString() }), "Value", "Text", Model.ButtonNumber);
+      
+   
+    @Html.LabelFor(m => m.ButtonNumber, T("Select Button Type"))
+    @*Html.DropDownListFor(m => m.ButtonNumber, ListOf)  *@
+     @Html.ListBoxFor(m => m.ButtonNumber, ienumerableListOf)  
+    }
+    else {
+    @Html.HiddenFor(m => m.ButtonNumber)
+    @Html.Raw(T("Go on Setting -> Buttons to configure module"));
+    }
+}
+

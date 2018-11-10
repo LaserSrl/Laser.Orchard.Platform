@@ -1,0 +1,29 @@
+﻿@model Laser.Orchard.Events.Models.ActivityPartSettings
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.UseRecurrences, new { @checked = "checked", @class = "check-box" })
+        <label for="@Html.FieldIdFor(m => m.UseRecurrences)" class="forcheckbox">@T("Allow user to configure recurrences for activities.")</label>
+        <br />
+
+        @Html.CheckBoxFor(m => m.SingleDate, new { @checked = "checked", @class = "check-box" })
+        <label for="@Html.FieldIdFor(m => m.SingleDate)" class="forcheckbox">@T("Allow user set only one date.")</label>
+        @Display.TokenHint()
+        <br />
+
+        <div>
+            <label for="@Html.FieldIdFor(m => m.DateTimeType)">@T("DateTime Types")</label>
+            @Html.DropDownListFor(m => m.DateTimeType, new SelectList(Enum.GetNames(typeof(Laser.Orchard.Events.DateTimeTypes)), Model.DateTimeType))
+        </div>
+
+        <div>
+            <label for="@Html.FieldIdFor(m => m.DateStartLabel)">@T("Date Start Label")</label>
+            @Html.TextBoxFor(m => m.DateStartLabel)
+
+            <label for="@Html.FieldIdFor(m => m.DateEndLabel)">@T("Date End Label")</label>
+            @Html.TextBoxFor(m => m.DateEndLabel)
+
+            <label for="@Html.FieldIdFor(m => m.ActivityPartLabel)">@T("Activity Part Label")</label>
+            @Html.TextBoxFor(m => m.ActivityPartLabel)           
+        </div>
+    </div>
+</fieldset>

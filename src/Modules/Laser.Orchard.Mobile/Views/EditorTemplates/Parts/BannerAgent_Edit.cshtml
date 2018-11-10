@@ -1,0 +1,76 @@
+﻿@model Laser.Orchard.Mobile.Models.BannerAgentPart
+<fieldset>
+    <legend>@T("Banner Agent settings"):</legend>
+    <span class="hint">@T("For settings look at project:")</span><a href="https://github.com/ain/smartbanner.js">https://github.com/ain/smartbanner.js</a>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.title, T("Title"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.title, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.author, T("Author"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.author, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.button, T("Button"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.button, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.button_url_apple, T("Apple button url"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.button_url_apple, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.button_url_google, T("Google button url"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.button_url_google, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.enabled_platforms, T("Enabled platforms"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.enabled_platforms, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.icon_apple, T("App icon on App Store"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.icon_apple, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.icon_google, T("App icon on Play Store"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.icon_google, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.price, T("Price"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.price, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.price_suffix_apple, T("Apple price suffix"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.price_suffix_apple, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.price_suffix_google, T("Google price suffix"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.price_suffix_google, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@T("Banner Agent extra settings")</legend>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.exclude_user_agent_regex, T("Exclude \"User-Agent\" regex"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.exclude_user_agent_regex, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.include_user_agent_regex, T("Include \"User-Agent\" regex"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.include_user_agent_regex, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.hide_path, T("Hide path"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.hide_path, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.hide_ttl, T("Hide ttl"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.hide_ttl, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.disable_positioning, T("Disable positioning"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.disable_positioning, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+    <div>
+        <div class="editor-label">@Html.LabelFor(m => m.custom_design_modifier, T("Custom design modifier"))</div>
+        <div class="editor-field">@Html.TextBoxFor(m => m.custom_design_modifier, new { @class = "text large", @maxlength = 400 })</div>
+    </div>
+</fieldset>

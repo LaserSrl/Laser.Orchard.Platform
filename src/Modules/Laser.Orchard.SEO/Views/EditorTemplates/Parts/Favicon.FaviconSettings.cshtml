@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.SEO.ViewModels.FaviconSettingsViewModel
+
+<fieldset>
+  <legend>@T("Favicon")</legend>
+
+  <div>
+    <label for="FaviconUrl">@T("Favicon URL")</label>
+    @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium" })
+    @if (!String.IsNullOrWhiteSpace(Model.FaviconUrl)) {
+      <img src="@Model.FaviconUrl" alt="@T("current")" title="@T("current")" />
+    }
+    @Html.ValidationMessage("FaviconUrl", "*")
+  </div>
+
+</fieldset>

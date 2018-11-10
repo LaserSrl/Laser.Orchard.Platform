@@ -1,0 +1,20 @@
+﻿<div class="sharebar">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style " 
+    addthis:url="@(Model.ViewModel.Link as string)"      
+    addthis:title="@(Model.ViewModel.Title as string)"
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Description)){
+             <text>addthis:description="@(Model.ViewModel.Description as string)"</text>}
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Media)){
+             <text>addthis:media="@(Model.ViewModel.Media as string)"</text>}
+         >
+        <a href="//addthis.com/bookmark.php?v=250" class="addthis_button_compact">Share</a>
+        <span class="addthis_separator"></span><a class="addthis_button_facebook"></a><a
+            class="addthis_button_twitter"></a><a class="addthis_button_googlebuzz"></a>
+        <a class="addthis_button_email"></a><span class="addthis_separator"></span><a class="addthis_button_facebook_like">
+        </a>
+    </div>
+    <script type="text/javascript">        var addthis_config = { "data_track_clickback": true };</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=@(Model.ViewModel.Account as string)"></script>
+    <!-- AddThis Button END -->
+</div>

@@ -1,0 +1,11 @@
+﻿@model ColorPickerFieldSettings
+@using Laser.Orchard.StartupConfig.ColorPicker;
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Options)">@T("Options")</label>
+    @Html.TextAreaFor(m => m.Options)
+    <span class="hint">@T("Insert options as json object, starting and ending with brackets.") <a href="https://bgrins.github.io/spectrum/" target="_blank">@T("For help consult {0}", "https://bgrins.github.io/spectrum/")</a></span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Hint)">@T("Help Text")</label>
+    @Html.TextAreaFor(m => m.Hint)
+</fieldset>

@@ -1,0 +1,83 @@
+﻿@using Laser.Orchard.PaymentGateway.ViewModels;
+@{
+    Script.Require("jQuery").AtHead();
+}
+<div class="ship">
+    <h4 id="PaymentMethodsTitle">@T("Pay using:")</h4>
+    @using (Html.BeginFormAntiForgeryPost()) {
+        //TODO:move all the parameters to hidden fields, rather than passing them to the Actions in querystring.
+        //also, the actions should be called in post.
+        <div id="VirtualPosButtons">
+            @Html.Hidden("PaymentRecordGuid", (string)(Model.Record.Guid), new { @id = "paymentRecordGuid" })
+            <div class="actions">
+                <ul style="list-style-type:none">
+                    @foreach (var pos in Model.PosList) {
+                        @*
+                            <li><button type="submit" style="padding: 10px 10px; display: none;" class="posButtonClass" formaction="@Html.Raw(pos.GetPosActionUrl(Model.Record.Id))">@pos.GetPosName()</button></li>*@
+                        <li><button type="submit" style="padding: 10px 10px; display: none;" class="posButtonClass submit-button" formaction="@Html.Raw(pos.GetPosActionUrl(Model.Record.Guid))">@pos.GetPosName()</button></li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+    }
+</div>
+    @using (Script.Foot()) {
+        <script type="text/javascript">
+        // this script connects to our server and checks things about the payment whose ID we have here.
+        $(function () {
+            //get all the buttons we use to call the Actions to start payments
+            var posButtons = document.querySelectorAll(".posButtonClass");
+            //get the id of the payment
+            var paymentGuid = document.getElementById("paymentRecordGuid").value;
+            //get the area where we want to show the buttons
+            var divForButtons = document.getElementById("VirtualPosButtons");
+            var posTitle = document.getElementById("PaymentMethodsTitle");
+
+            function PaymentIsIncomplete() {
+                var result = false;
+                var url = ('@Url.Action("PaymentIsIncomplete", "Payment", new { area = "Laser.Orchard.PaymentGateway"})'+'?guid=__id__').replace('__id__', paymentGuid);
+                var formData = { __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()' };
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: "POST",
+                    success: function (response) {
+                        if (response.Success) {
+                            ShowPosButtons();
+                        } else {
+                            HidePosButtons();
+                        }
+                    },
+                    error: function (response) {
+                        HidePosButtons();
+                    }
+                });
+            }
+
+            function ResetPosTitle() {
+                posTitle.innerText = "@T("Pay using:")";
+            }
+
+            function ShowPosButtons() {
+                ResetPosTitle();
+                for (var but = 0; but < posButtons.length; but++) {
+                    posButtons[but].style.display = "inherit";
+                }
+            }
+
+            function HidePosButtons() {
+                ResetPosTitle();
+                for (var but = 0; but < posButtons.length; but++) {
+                    posButtons[but].style.display = "none";
+                }
+                //after this next call, the buttons will not be in the DOM anymore
+                divForButtons.innerText = "@T("There was an error initializing the payment. Please try again.").Text";
+            }
+
+            posTitle.innerText = "@T("Loading valid payment methods. Please wait.").Text";
+            PaymentIsIncomplete();
+
+        }());
+        </script>
+    }

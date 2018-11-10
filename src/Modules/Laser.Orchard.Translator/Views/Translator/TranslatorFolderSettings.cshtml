@@ -1,0 +1,63 @@
+﻿@model Laser.Orchard.Translator.Models.TranslationFolderSettingsRecord
+
+@using Laser.Orchard.Translator.Permissions;
+
+@{
+    Script.Require("jQuery").AtHead();
+
+    Style.Require("Laser.Orchard.Translator");
+
+    Style.Include("~/themes/theadmin/styles/ie.css").UseCondition("lte IE 8").SetAttribute("media", "screen, projection");
+    Style.Include("~/themes/theadmin/styles/ie6.css").UseCondition("lte IE 6").SetAttribute("media", "screen, projection");
+
+    var authorized = AuthorizedFor(TranslatorPermission.ManageTranslations);
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="translator-settings-html" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@T("Settings")</title>
+    <link rel="stylesheet" type="text/css" href="~/themes/theadmin/styles/site.css" />
+
+    @Display(Layout.Head)
+</head>
+<body id="translator-settings-body">
+    @Html.ValidationSummary()
+    <div id="main" class="iframe-main">
+        <div id="translator-settings-container">
+            @{
+                using (Html.BeginForm("TranslatorFolderSettings", "Translator",
+                                      new { area = "Laser.Orchard.Translator" },
+                                      FormMethod.Post,
+                                      new { id = "translator-settings-form" })) {
+
+                    @Html.AntiForgeryTokenOrchard();
+
+                    <h2>@T("Translations settings")</h2>
+
+                    <div id="translation-text-container">
+                        @Html.CheckBoxFor(m => m.Deprecated)
+                        <label class="forcheckbox">@T("Deprecated")</label>
+                        @if (Model.ContainerType.Equals("M")) {
+                            <span class="hint">@T("If checked, translations for this module won't be exported anymore.")</span>
+                            <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
+                        } else if (Model.ContainerType.Equals("T")) {
+                            <span class="hint">@T("If checked, translations for this theme won't be exported anymore.")</span>
+                            <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
+                        }
+                    </div>
+
+                    @Html.HiddenFor(m => m.Id);
+                    @*@Html.HiddenFor(m => m.Language);*@
+                    @Html.HiddenFor(m => m.ContainerName);
+                    @Html.HiddenFor(m => m.ContainerType);
+
+                    if (ViewData.ModelState.IsValid) {
+                        <input id="save-tfsettings" name="saveTFSettings" class="button" type="submit" value="@T("Save")" />
+                    }
+                }
+            }
+        </div>
+    </div>
+</body>
+</html>

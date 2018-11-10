@@ -1,0 +1,14 @@
+﻿@model Laser.Orchard.Mobile.Models.UserPwdRecoveryPart
+<fieldset>
+    <legend>@T("Password recovery phone number"):</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.InternationalPrefix)">@T("international prefix"):</label>
+        @Html.EditorFor(m => m.InternationalPrefix)
+        @Html.ValidationMessageFor(m => m.InternationalPrefix)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.PhoneNumber)">@T("Phone number"):</label>
+        @Html.EditorFor(m => m.PhoneNumber)
+        @Html.ValidationMessageFor(m => m.PhoneNumber)
+    </div>
+</fieldset>

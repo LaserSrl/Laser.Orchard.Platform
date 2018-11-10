@@ -1,0 +1,11 @@
+﻿@{ Layout.Title = T("Edit Campaign"); }
+
+@*    <div class="manage">
+        <a class="button primaryAction" href="@Url.Action("Edit", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = 0, idCampaign = Model.ContentItem.Id })" title="@T("Create New Advertising")">@T("Create New Advertising")</a>
+    </div>*@
+<p class="breadcrumb"><a href="@Url.Action("Index")">@T("Campaigns List")</a> &#62; @Layout.Title</p>
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Display(Model)
+
+}

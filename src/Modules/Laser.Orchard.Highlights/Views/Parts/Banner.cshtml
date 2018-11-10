@@ -1,0 +1,25 @@
+﻿@{
+    var HighlightsService = WorkContext.Resolve<Laser.Orchard.Highlights.Services.IHighlightsService>();
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+}
+<div class="highlights-container list">
+
+    @foreach (var item in Model.HighlightsItems) {
+        <div class="highlight-items">
+            @if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.ByHand) {
+                @Display(item.Content)} else if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.FromQuery) {
+                //FromQuery
+                var shape = HighlightsService.CreateHighlightsItemShape(item, Model.HighlightsGroup.DisplayTemplate.ToString());
+                @Display(shape)
+            }
+        </div>
+    }
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        $(document).ready(function () { $("highlight-item .media-cbox").colorbox({ iframe: true, innerWidth: 640, innerHeight: 480 }); });
+        /* ]]> */
+    </script>
+
+</div>

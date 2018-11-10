@@ -1,0 +1,29 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions
+@using Orchard.Environment.Configuration
+@{
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+    /*Logica Logo WhiteLabel*/
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
+
+}
+<div class="facts">
+    <div class="register">
+        @using (Html.BeginFormAntiForgeryPost(
+                                        Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"], @class = "login-form" }))) {
+            @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
+            <div class="space-20"></div>
+            @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = "Password...", @class = "input-text form-control" })
+            if (enableLostPassword) { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword", null, null, new { @class = "links" }) }
+
+            <div class="space-20"></div>
+            @T("Remember Me")<div class="padding-right-5"></div> @Html.CheckBox("rememberMe", new { id = "remember-me" })
+            <div class="space-20"></div>
+
+            <input type="submit" class="submit" value="@T("Sign In")">
+        }
+    </div>
+</div>

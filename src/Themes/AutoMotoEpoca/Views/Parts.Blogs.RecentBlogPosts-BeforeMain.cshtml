@@ -1,0 +1,48 @@
+﻿@using Orchard.Utility.Extensions;
+<div id="auto-slider-@Model.ContentItem.Id">
+    <div>
+        <img src="~/Media/AutoMotoEpoca/Home/automoto-home.jpg" class="img-responsive">
+    </div>
+
+    @{
+        var i = 0;
+        var tot = Model.ContentItems.ContentItems.Items.Count;
+        var totSmall = 4;
+        var totBig = tot - totSmall;
+    }
+    @foreach (var contentShape in Model.ContentItems.ContentItems.Items) {
+        i++;
+        var content = contentShape.ContentItem;
+        if (i <= totBig) {
+        <div>
+            <a href="@Url.ItemDisplayUrl((Orchard.ContentManagement.IContent)content)" title="@T("Go to page {0}", content.TitlePart.Title)">
+                <img src="@Display.ResizeMediaUrl(Width: 1920, Height: 800, Mode: "pad", PadColor: "#000000", Alignment: "middlecenter", Path: content.BlogPost.Gallery.MediaParts[0].MediaUrl)" class="img-responsive"></a>
+            <div class="container text-right">
+                <div class="box-slider">
+                    <h3 class="slider-title">@content.TitlePart.Title</h3>
+                    <div class="clear"></div>
+                    <h4 class="slider-desc">@content.CommonPart.CreatedUtc.ToString("dd MMMM yyyy")</h4>
+                </div>
+            </div>
+        </div>
+        } else {
+            WorkContext.Layout.Zones["NewsArea"].Add(New.BlogHomeItems(ContentItem: content));
+        }
+
+    }
+</div>
+<script>
+    jQuery(document).ready(function () {
+        jQuery('#auto-slider-@Model.ContentItem.Id').slick({
+            autoplay: true,
+            autoplaySpeed: 1000,
+            lazyLoad: 'progressive',
+            cssEase: 'linear',
+            fade: true,
+            dots: false,
+            arrows: false
+        });
+    });
+    </script>
+
+

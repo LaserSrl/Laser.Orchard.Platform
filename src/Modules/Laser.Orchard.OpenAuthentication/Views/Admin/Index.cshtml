@@ -1,0 +1,87 @@
+﻿@using Laser.Orchard.OpenAuthentication.Extensions
+@using Orchard.Utility.Extensions
+@using Orchard.ContentManagement
+@using Orchard.Users.Models
+@model Laser.Orchard.OpenAuthentication.ViewModels.IndexViewModel
+
+@{
+    Layout.Title = T("Open Authentication Settings");
+    var _userSettings = WorkContext.CurrentSite.As<RegistrationSettingsPart>();
+    var autoMergeEditable= (!_userSettings.UsersCanRegister || _userSettings.UsersMustValidateEmail || _userSettings.UsersAreModerated);
+
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+
+    if (Model.CurrentProviders.Any()) {
+    <h2>@T("Enabled Providers")</h2>
+    <div class="actions" style="margin-bottom: 15px;"><a class="add button primaryAction" href="@Url.ProviderCreate()">@T("Register a new provider")</a></div>
+    <table class="items">
+        <thead>
+            <tr>
+                <th scope="col">@T("Name")</th>
+                <th scope="col">@T("Identifier")</th>
+                 <th scope="col">@T("User")</th>
+                <th scope="col">@T("Key")</th>
+                <th scope="col">@T("Secret")</th>
+                <th scope="col">@T("Enable Login")</th>
+                <th scope="col">@T("Actions")</th>
+            </tr>
+        </thead>
+
+        @foreach (var currentProvider in Model.CurrentProviders) {
+            <tr>
+                <td>@currentProvider.ProviderName</td>
+                <td>@currentProvider.ProviderIdentifier</td>
+                 <td>@currentProvider.UserIdentifier</td>
+                <td>@currentProvider.ProviderIdKey</td>
+                <td>@currentProvider.ProviderSecret</td>
+                 <td>@(currentProvider.IsEnabled == 1)</td>
+                <td>
+                <a href="@Url.EditProviderConfiguration(currentProvider.Id)">@T("Edit")</a>&nbsp;|&nbsp;<a href="@Url.RemoveProviderConfiguration(currentProvider.Id)">@T("Remove")</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <span class="hint">@T("A provider identifier may not be shown if not supplied by an internal library. Also A key and secret are not required for every mechanism")</span>
+    } else {
+    <p class="noproviders">@T("There are no providers registered. Why not <a href=\"{0}\">register one</a>?", Url.ProviderCreate())</p>
+    }
+
+    <fieldset>
+        @Html.CheckBoxFor(m => m.AutoRegistrationEnabled)
+        <label for="@Html.FieldIdFor(m => m.AutoRegistrationEnabled)" class="forcheckbox">@T("Auto Registration Enabled")</label>
+        <span class="hint">@T("When checked, if the user who is authenticating does not have an account then a local account will be created and a username will be created based on claims.")<br />
+            @T("Note: Remember to enable \"Users can create new accounts on the site\" in Settings > Users")
+        </span>
+    </fieldset>
+    <fieldset>
+        @Html.CheckBoxFor(m => m.AutoMergeNewUsersEnabled, (!autoMergeEditable ? new { onclick = "return false" } : null))
+        <label for="@Html.FieldIdFor(m => m.AutoMergeNewUsersEnabled)" class="forcheckbox">@T("Auto merge new users Enabled")</label>
+        <div class="hint">
+            @T("When checked, the system will try to merge new users to exixting users based on their e-mail.") 
+            @T("In order to enable \"Auto merge\", Users registration settings have to be in one of these status:")
+            <ul>
+                <li>@T("Users can create new accounts on the site")</li>
+                <li>@T("Users must verify their email address")</li>
+                <li>@T("Users must be approved before they can log in")</li>
+            </ul>
+        </div>
+</fieldset>
+    if (Model.ShowAppDirectSetting) {
+        <fieldset>
+            @Html.LabelFor(m => m.AppDirectBaseUrl, T("App Direct BaseUrl"))
+            @Html.TextBoxFor(m => m.AppDirectBaseUrl, new { @class = "text large" })
+                <span class="hint">
+                @T("Base Url like https://marketplace.appdirect.com")
+             </span>
+        </fieldset>
+    }
+    else {
+        @Html.HiddenFor(m => m.AppDirectBaseUrl, new { @class = "text large" })
+    }
+
+
+    <button class="primaryAction" type="submit">@T("Save")</button>
+}

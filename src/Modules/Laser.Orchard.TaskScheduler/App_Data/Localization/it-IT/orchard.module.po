@@ -1,0 +1,98 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/Admin/Index.cshtml"
+msgid " Add new tasks"
+msgstr "Aggiungi nuovi task"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/Admin/Index.cshtml"
+msgid "Existing scheduled tasks"
+msgstr "Task pianificati esistenti"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/Admin/Index.cshtml"
+msgid "Save schedulers"
+msgstr "Salva la pianificazione"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid " Remove this task"
+msgstr "Rimuovi questo task"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Amount of time that should pass between repetitions of the task (integer)"
+msgstr "Tempo che passerà tra ripetizioni del task (intero)"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Content Item Id"
+msgstr "Id del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Fewer details"
+msgstr "Meno informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Id of the Content Item that will be passed with the task. 0 for no item."
+msgstr "Id del contenuto che sarà passato al task. Inserire 0 per non passare alcuno contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Invalid dates will be ignored"
+msgstr "Date non valide verranno ignorate"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "More details"
+msgstr "Più informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Name of the signal that will be triggered by the task"
+msgstr "Nome del segnale che sarà scatenato dal task"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Periodicity"
+msgstr "Periodicità"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Schedule"
+msgstr "Pianifica"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Signal name"
+msgstr "Nome del segnale"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Start Date"
+msgstr "Data di inizio"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "The task is scheduled for execution. Unschedule it before removing it."
+msgstr "Il task è stato pianificato e sarà eseguito. Cancellarne la pianificazione prima di rimuoverlo del tutto."
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "The time units for the repetitions of the task."
+msgstr "Le unità di tempo per la ripetizione del task."
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Unschedule"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Unschedule this task"
+msgstr "Cancella questo task"
+
+msgctxt "Laser.Orchard.TaskScheduler.Controllers.AdminController"
+msgid "Not allowed to schedule periodic tasks"
+msgstr "Non hai i permessi per pianificare dei task"
+
+msgctxt "Laser.Orchard.TaskScheduler.Navigation.AdminMenu"
+msgid "Task Scheduler"
+msgstr "Task Scheduler"
+

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>Reviews Recipe</Name>
+    <Description>This is a recipe for setting up the Reviews module. It's purpose is to automatically install the Contrib.Voting dependency.</Description>
+    <Author>NimblePrs</Author>
+    <WebSite>http://bitbucket.org/nimblepros/orchard-reviews</WebSite>
+    <Tags></Tags>
+    <Version>1.0.1</Version>
+  </Recipe>
+
+  <Module packageId="Orchard.Module.Contrib.Voting" />
+  <Feature enable="Contrib.Voting" />
+
+</Orchard>

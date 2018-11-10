@@ -1,0 +1,170 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Check to enable token replacement in the field contents."
+msgstr "Seleziona per abilitare nel campo la sostituzione dei token."
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Default value."
+msgstr "Valore iniziale"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Selecting a value different than None will start a background update of these hidden fields."
+msgstr "Selezionando un valore diverso da Nessuno verrà avviato un aggiornamento in background dei campi nascosti"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Tokenized"
+msgstr "Applica la trasformazione via token"
+
+msgctxt "Laser.Orchard.HiddenFields.Drivers.HiddenStringFieldDriver"
+msgid "The string associated with the field."
+msgstr "La stringa associata al campo."
+
+msgctxt "Laser.Orchard.HiddenFields.Drivers.HiddenStringFieldDriver"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} contains '{1}'"
+msgstr "{0} contiene '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} contains all '{1}'"
+msgstr "{0} contiene tutto '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} contains any of '{1}'"
+msgstr "{0} contiene almeno uno di '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} does not contain '{1}'"
+msgstr "{0} NON contiene '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} does not end with '{1}'"
+msgstr "{0} NON termina con '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} does not start with '{1}'"
+msgstr "{0} NON inizia con '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} ends with '{1}'"
+msgstr "{0} termina con '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} is empty"
+msgstr "{0} è vuoto"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} is equal to '{1}'"
+msgstr "{0} è uguale a '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} is not empty"
+msgstr "{0} NON è vuoto"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} is not equal to '{1}'"
+msgstr "{0} NON è uguale a '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "{0} starts with '{1}'"
+msgstr "{0} inizia con '{1}'"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Contains"
+msgstr "Contiene"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Contains all words"
+msgstr "Contiene tutte le parole"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Contains any word"
+msgstr "Contiene almeno una parola"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Does not contain"
+msgstr "NON contiene"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Does not end with"
+msgstr "NON termina con"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Does not start with"
+msgstr "Inizia con"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Ends with"
+msgstr "Termina con"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Enter the value the string should be."
+msgstr "Inserisci il valore previsto del campo"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Is empty"
+msgstr "È vuoto"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Is equal to"
+msgstr "È uguale a"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Is not empty"
+msgstr "NON è vuoto"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Is not equal to"
+msgstr "NON è uguale"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Starts with"
+msgstr "Inizia con"
+
+msgctxt "Laser.Orchard.HiddenFields.FilterEditors.Forms.HiddenStringFieldFilterForm"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
+msgid "{0} Content Fields"
+msgstr "{0} Campi di contenuto"
+
+msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
+msgid "{0} property for {1}"
+msgstr "{0} proprietà di {1}"
+
+msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
+msgid "Content Fields for {0}"
+msgstr "Campo di {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
+msgid "Field {0} {1} \"{2}\""
+msgstr "Campo {0} {1} \"{2}\""
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
+msgid "All fields"
+msgstr "Tutti i campi"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
+msgid "Empty fields"
+msgstr "Campi vuoti"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
+msgid "None"
+msgstr "Nessuno"
+

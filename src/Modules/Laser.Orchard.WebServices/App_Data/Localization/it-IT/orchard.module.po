@@ -1,0 +1,30 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServiceSettings.cshtml"
+msgid "default is false"
+msgstr "il valore predefinito è falso"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServiceSettings.cshtml"
+msgid "Log all json sent by WebServices"
+msgstr "Traccia tutti i json inviati dai WebService"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServiceSettings.cshtml"
+msgid "WebServices Settings"
+msgstr "Impostazioni dei WebService"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/Parts/StoreRedirect.cshtml"
+msgid "REDIRECT PAGE FOR MOBILE DEVICES"
+msgstr "PAGINA DI REDIREZIONE PER DISPOSITIVI MOBILI"
+
+msgctxt "Laser.Orchard.WebServices.Controllers.TermsController"
+msgid "Missing Icon field in Term Part."
+msgstr "Campo Icona assente per il termine."
+

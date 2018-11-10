@@ -1,0 +1,9 @@
+﻿Name: Laser HiddenFields
+AntiForgery: enabled
+Author: Laser srl - Matteo Piovanelli
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: This module enables hidden fields to be added to content types.
+Category: Fields
+Dependencies: Laser.Orchard.StartupConfig

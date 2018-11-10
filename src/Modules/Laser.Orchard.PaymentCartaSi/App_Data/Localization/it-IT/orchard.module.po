@@ -1,0 +1,70 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "CartaSì secret key"
+msgstr "Chiave segreta CartaSì"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "CartaSì shop alias"
+msgstr "Identificativo del negozio"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "Insert your CartaSì secret key."
+msgstr "Inserire la chiave segreta di CartaSì."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "Insert your CartaSì shop alias."
+msgstr "Inserire l'identificativo del negozio."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "Selecting this checkbox will mean that we are using CartaSì's test environment. Payments there are fake."
+msgstr "Selezionando questa checkbox si userà l'ambiente di test CartaSì. I pagamenti saranno fasulli."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentCartaSi/Views/Admin/Index.cshtml"
+msgid "Use test environment."
+msgstr "Usa l'ambiente di test."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Errors while creating the query string. The query string cannot be empty."
+msgstr "Errori nella creazione della QueryString. La QueryString non può essere vuota."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Formal error in the call."
+msgstr "Errori formali durante la chiamata."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "HandleS2STransaction: MAC NOT VALID:\nComputed: {0}\nReceived: {1}"
+msgstr "HandleS2STransaction: MAC NON VALIDO:\nCalcolato: {0}\nRicevuto: {1}"
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Impossible to identify transaction. There was a communication error between CartaSì and our servers"
+msgstr "È stato impossibile identificare la transazione. C'è stato un errore di comunicazione tra CartaSì ed i nostri servers."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Received wrong information while coming back from payment: wrong Id format."
+msgstr "Sono state ricevute delle informazioni sbagliate in chiusura del pagamento: l'Id non è nel formato corretto."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Transaction canceled."
+msgstr "Transazione annullata."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Transaction information not valid: {0}"
+msgstr "Informazioni sulla transazione non valide: {0}"
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Unknown error."
+msgstr "Errore sconosciuto"
+

@@ -1,0 +1,8 @@
+﻿@if (Model.DiscountedPrice != Model.Price) {
+    string price = Model.CurrencyProvider.GetPriceString(Model.Price);
+    string dPrice = Model.CurrencyProvider.GetPriceString(Model.DiscountedPrice);
+    <p><span>@price</span> <i class="item_price">@dPrice</i></p>
+} else {
+    string price = Model.CurrencyProvider.GetPriceString(Model.Price);
+    <p><i class="item_price">@price</i></p>
+}

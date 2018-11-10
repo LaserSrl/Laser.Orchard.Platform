@@ -1,0 +1,16 @@
+<div class="wrapper indent-bot pad-right-relative">
+    @{
+        int iProj = 0;
+        }
+    @foreach (var item in Model.Items) {
+        iProj++;
+        <div class="col-1-3">
+            <div class="wrap-col def-list-1">
+                @Display(item)
+            </div>
+        </div>
+        if (iProj % 3 == 0) { 
+            <br class="clear"/>
+        }
+}
+</br>

@@ -1,0 +1,109 @@
+﻿@model Laser.Orchard.CommunicationGateway.ViewModels.SearchIndexVM
+@* <a href="@Url.Action("Edit", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id =  Model.Option.Campaign.Id })"><--</a>
+         *@
+
+@{
+    var ContentsIndexVM = Model.ContentsIndexVM;
+    var contentIsActive = Model.Option.Campaign.Id <= 0 || (Model.Option.Campaign.CommunicationCampaignPart.ToDate.DateTime == DateTime.MinValue || Model.Option.Campaign.CommunicationCampaignPart.ToDate.DateTime == null || Model.Option.Campaign.CommunicationCampaignPart.ToDate.DateTime > DateTime.UtcNow);
+
+    if (Model.Option.Campaign.Id > 0) {
+        Layout.Title = Model.Option.Campaign.TitlePart.Title + " - " + T("List Advertisings");
+    }
+    else {
+        Layout.Title = @T("Flash Advertising") + " - " + T("List Advertisings");
+    }
+}
+@if (Model.Option.Campaign.Id > 0) {
+    <p class="breadcrumb"><a href="@Url.Action("Index", "CampaignAdmin")">@T("Campaigns List")</a> &#62; @Layout.Title</p>
+}
+@if (contentIsActive) {
+    <div class="manage">
+        <a class="button primaryAction" href="@Url.Action("Edit", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = 0, idCampaign = Model.Option.Campaign.Id })" title="@T("Create New Advertising")">@T("Create New Advertising")</a>
+        @if (Model.Option.Campaign.Id > 0) {
+            <a class="button primaryAction" href="@Url.Action("Edit", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = Model.Option.Campaign.Id })">@T("Edit Campaign")</a>
+        }
+    </div>
+}
+@using (Html.BeginForm("Index", "AdvertisingAdmin", FormMethod.Get)) {
+   @Html.AntiForgeryToken()
+    <fieldset class="bulk-actions">
+        <label for="search">@T("Search:")</label>
+        @Html.TextBoxFor(m => m.Search.Expression)
+
+        <button type="submit">@T("Search")</button>
+        <a href="@Url.Action("Index")">@T("Clear")</a>
+    </fieldset>
+
+}
+@if (Model.Option.Campaign.Id > 0 && !contentIsActive) {
+    <div class="message message-Warning">@T("The campaign '{0}' is no more active. You will not be able to Add new advertsing.", Model.Option.Campaign.TitlePart.Title)</div>
+}
+<fieldset class="contentItems bulk-items">
+    <ul>
+
+        @{
+            foreach (var contentIndexVM in ContentsIndexVM) {
+            <li>
+                <div class="summary" itemscope="itemscope" itemid="@contentIndexVM.Id" itemtype="http://orchardproject.net/data/ContentItem">
+                    <div class="properties">
+                        <h3><a href="@Url.Action("Edit", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id, idCampaign = Model.Option.Campaign.Id })">@contentIndexVM.Title</a></h3><br />
+                        @Display(BuildDisplay(contentIndexVM.ContentItem, "Summary"))  
+                        <div class="contentType">
+                        </div>
+                        <div class="metadata">
+                            <ul class="pageStatus">
+                                @{
+                                    dynamic publishLater = contentIndexVM.ContentItem.Parts.FirstOrDefault(x => x.PartDefinition.Name == "PublishLaterPart");
+                                }
+                                @if (publishLater != null) {
+                                    if(publishLater.ScheduledPublishUtc.Value != null) {
+                                        <text><li>@T("Scheduled"): @string.Format("{0}", publishLater.ScheduledPublishUtc.Value)&nbsp;&vert;&nbsp;</li></text>
+                                    }
+                                }
+
+                                @*                                          @if  ((bool)contentIndexVM.Option){
+                                <li> @T("Published")&nbsp;&vert;&nbsp;
+                                </li>
+                                }*@
+                                <li>@T("Last modified"):
+                    @{TimeSpan tp = DateTime.UtcNow - (contentIndexVM.ModifiedUtc ?? DateTime.UtcNow);// content.CommonPart.ModifiedUtc;
+
+                      if (tp.Days > 0) {
+                        @Html.Raw(tp.Days.ToString() + " " + T("days ago"))
+                      }
+                      else if (tp.Hours > 0) {
+                        @Html.Raw(tp.Hours.ToString() + " " + T("hours ago"))
+                      }
+                      else if (tp.Minutes > 0) {
+                        @Html.Raw(tp.Minutes.ToString() + " " + T("minutes ago"))
+                      }
+                      else if (tp.Seconds > 0) {
+                        @Html.Raw(T("a moment ago"))
+                      }
+                        @Html.Raw("&nbsp;&vert;&nbsp;")
+                    }
+                                </li>
+                                <li>@T("By") @contentIndexVM.UserName
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="related">
+                        <a href="@Url.Action("Edit", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id, idCampaign = Model.Option.Campaign.Id })">@T("Edit")</a>
+                        @if (contentIsActive) {
+                            <text>&nbsp;&vert;&nbsp;</text>
+                            <a href="@Url.Action("Remove", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id, idCampaign = Model.Option.Campaign.Id })" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                        }
+                    </div>
+                </div>
+            </li>
+            }
+        }
+    </ul>
+</fieldset>
+
+<br />
+ @Display(Model.Pager)
+@*@using (Html.BeginForm("Index", "Routes", FormMethod.Post)) {
+    @Display(Model.Pager)
+}*@

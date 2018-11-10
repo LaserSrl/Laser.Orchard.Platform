@@ -1,0 +1,127 @@
+﻿@using System.Web.Mvc.Html
+@using (Script.Head()) {
+    Script.Require("jQuery_textcounter").AtHead();
+    Script.Require("jQuery_ImagePicker").AtHead();
+   Style.Require("jQuery_ImagePicker").AtHead();
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+
+}
+@using (Script.Foot()) {
+<script type="text/javascript">
+    $(function () {
+        $("#@Html.FieldIdFor(m => m.SelectedList)").imagepicker({
+            show_label: true
+        });
+            @if (Model.ListOption.Count > 0) {
+                <text>
+        $('.rcswitcher-checkbox-tw').rcSwitcher({
+            theme: 'flat',
+            blobOffset: 1,
+            onText: '@T("YES")',
+            offText: '@T("NO")'
+        });
+                </text>
+            }
+        $("#@Html.FieldIdFor(model => model.TwitterMessage)").keypress(function (event) {
+            // Check the keyCode and if the user pressed Enter (code = 13) 
+            // disable it
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+        $("#@Html.FieldIdFor(model => model.TwitterMessage)").textcounter({
+            type: "character",            // "character" or "word"
+            min: 0,                      // minimum number of characters/words
+            max: 140,                    // maximum number of characters/words, -1 for unlimited, 'auto' to use maxlength attribute
+            countContainerElement: "div",                  // HTML element to wrap the text count in
+            countContainerClass: "text-count-wrapper",   // class applied to the countContainerElement
+            inputErrorClass: "error",                // error class appended to the input element if error occurs
+            counterErrorClass: "error",                // error class appended to the countContainerElement if error occurs
+            counterText: "Total Count: ",        // counter text
+            errorTextElement: "div",                  // error text element
+            minimumErrorText: "Minimum not met",      // error message for minimum not met,
+            maximumErrorText: "Maximum exceeded",     // error message for maximum range exceeded,
+            displayErrorText: true,                   // display error text messages for minimum/maximum values
+            stopInputAtMaximum: false,                   // stop further text input if maximum reached
+            countSpaces: true,                  // count spaces as character (only for "character" type)
+            countDown: true,                  // if the counter should deduct from maximum characters/words rather than counting up
+            countDownText: "Remaining: ",          // count down text
+            countExtendedCharacters: false,                  // count extended UTF-8 characters as 2 bytes (such as Chinese characters)
+            maxcount: function (el) { },         // Callback: function(element) - Fires when the counter hits the maximum word/character count
+            mincount: function (el) { },         // Callback: function(element) - Fires when the counter hits the minimum word/character count
+            init: function (el) { }          // Callback: function(element) - Fires after the counter is initially setup
+        });
+    });
+</script>
+}
+@model Laser.Orchard.Twitter.ViewModels.TwitterPostVM
+<div id="twitter-comm-container" class="comm-tabbed">
+    @if (Model.ListOption.Count == 0) {
+        <br />   <a href="@Url.Action("Index", "TwitterAccount", new { area = "Laser.Orchard.Twitter" })">@T("Insert a twitter account ")</a> <br /> 
+    }
+    else {
+        <fieldset>
+            @Html.HiddenFor(m => m.TwitterMessageSent)
+            <div class="editor-label">@Html.LabelFor(m => m.TwitterMessage, T("Message"))</div>
+            <div class="editor-label">@Html.TextAreaFor(m => m.TwitterMessage)</div>
+            <span class="hint">@T("Each link is counted 22 characters")</span>
+            @if ((bool)Model.ShowTwitterCurrentLink) {
+                <div class="editor-label">@Html.LabelFor(m => m.TwitterCurrentLink, T("Link current page"))</div>
+                <div class="editor-label">@Html.CheckBoxFor(m => m.TwitterCurrentLink)</div>
+            }
+            @Html.HiddenFor(m => m.TwitterLink)
+            @*        <div class="editor-label">@Html.LabelFor(m => m.TwitterPicture, T("Meta twitter picture Url"))</div>
+        <div class="editor-label">@Html.TextBoxFor(m => m.TwitterPicture)</div>*@
+
+            @Html.HiddenFor(m => m.TwitterPicture)
+            @if (Model.ShowTitle) {
+                <div class="editor-label">@Html.LabelFor(m => m.TwitterTitle, T("Meta twitter title"))</div>
+                <div class="editor-label">@Html.TextBoxFor(m => m.TwitterTitle, new { @class = "text large" })</div>
+            }
+            else {
+                @Html.HiddenFor(m => m.TwitterTitle)
+            }
+            @if (Model.ShowDescription) {
+                <div class="editor-label">@Html.LabelFor(m => m.TwitterDescription, T("Meta twitter description"))</div>
+                <div class="editor-label">@Html.TextAreaFor(m => m.TwitterDescription)</div>
+            }
+            else {
+                @Html.HiddenFor(m => m.TwitterDescription)
+            }
+
+
+            @*    <div class="editor-label">@Html.LabelFor(m => m.TwitterName, T("Name"))</div>
+    <div class="editor-label">@Html.TextBoxFor(m => m.TwitterName)</div>*@
+
+            @{
+            if (Model.ListOption.Count > 0) {
+                <div class="editor-label">@Html.LabelFor(m => m.SelectedList, T("AccountList"))</div>
+@*     <div class="editor-label">@Html.LabelFor(m => m.SelectedList, T("AccountList"))</div>
+            <div class="editor-label">@Html.ListBoxFor(m => m.SelectedList, Model.TwitterAccountList,new {@class="image-picker show-labels show-html"})</div>*@
+                <select multiple="multiple" name="@Html.FieldNameFor(m => m.SelectedList)" id="@Html.FieldIdFor(m => m.SelectedList)"  class="image-picker show-labels show-html">
+                    @foreach (var item in Model.ListOption) {
+                        <option data-img-src="@item.ImageUrl" data-img-label="@item.Text" value="@item.Value" @(item.Selected)>@item.Text</option>
+                    }
+                </select>
+            }
+            }
+        </fieldset>
+        <fieldset>
+            @Html.LabelFor(m => m.SendOnNextPublish, T("Approved").Text, new { @class = "forcheckbox" })
+            @if (!Model.TwitterMessageSent) { 
+                @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-tw" })
+                <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet posted.")
+
+            }
+            else {
+                @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-tw", @disabled = "disabled" })
+                <i class="fa fa-check-circle" style="color: green"></i> @T("Message already posted.")
+                <div class="message message-Error">@T("This Twitter message has been already posted. You will be able to edit and save it, but it will not be posted anymore on next publish.")</div>
+            }
+        </fieldset>
+    }  
+</div>
+<div class="tab-folder">
+    <a href="#twitter-comm-container"><i class="fa fa-twitter"></i>@T("Twitter")</a>
+</div>

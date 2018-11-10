@@ -1,0 +1,39 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions
+@using Orchard.Environment.Configuration
+@using KrakeDefaultTheme.Settings.Services;
+@{            
+    /*Logica Logo WhiteLabel*/
+    /*
+     Fallback Logic: 
+        logo defined in settings
+        logo defined in filesystem (e.g.: used in VisitMilano)
+        default krakelogo
+     */
+    ShellSettings _shellsettings;
+    IThemeSettingsService _themeSettingsService;
+
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    WorkContext.TryResolve<IThemeSettingsService>(out _themeSettingsService);
+    string tenantname = _shellsettings.Name;
+    var themeSettings = _themeSettingsService.GetSettings();
+    var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
+    var isLocalLogo = true;
+    if (!String.IsNullOrEmpty(themeSettings.PlaceholderLogoUrl)) {
+        isLocalLogo = !themeSettings.PlaceholderLogoUrl.StartsWith("http");
+        if (isLocalLogo) {
+            whitelabelLogo = Url.Content(themeSettings.PlaceholderLogoUrl);
+        } else {
+            whitelabelLogo = themeSettings.PlaceholderLogoUrl;
+        }
+    }
+    if (isLocalLogo && !File.Exists(Server.MapPath(whitelabelLogo))) {
+
+        whitelabelLogo = "";
+    }
+}
+@if (!String.IsNullOrEmpty(whitelabelLogo)) {
+    <img src="@whitelabelLogo" alt="@tenantname" class="img-responsive" />
+} else {
+    <div class="placeholder-logo"></div>
+}

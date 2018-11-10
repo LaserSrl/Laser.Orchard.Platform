@@ -1,0 +1,11 @@
+﻿AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.Meteo:
+		Name: Laser Orchard Meteo	
+		Category: Content
+		Description: Include meteo informations to your website provided by different sources: Regione Vda
+        

@@ -1,0 +1,55 @@
+﻿@{
+    Model.PreviousText = T("Prev");
+    Model.NextText = T("Next");
+
+    var routeData = new RouteValueDictionary(ViewContext.RouteData.Values);
+    var queryString = ViewContext.HttpContext.Request.QueryString;
+    if (queryString != null) {
+        foreach (string key in queryString.Keys) {
+            if (key != null && !routeData.ContainsKey(key)) {
+                var value = queryString[key];
+                routeData[key] = queryString[key];
+            }
+        }
+    }
+
+    if (routeData.ContainsKey("id") && !HasText(routeData["id"])) {
+        routeData.Remove("id");
+    }
+
+    var totalPageCount = (int)Math.Ceiling((double)Model.TotalItemCount / Model.PageSize);
+
+    Model.Metadata.Type = "Pager_Links";
+    IHtmlString pagerLinks = Display(Model);
+
+    Model.Classes.Add("selector");
+    var pageSizeTag = Tag(Model, "ul");
+
+    if (Model.RouteData != null) {
+        foreach (var rd in Model.RouteData.Values) {
+            routeData[rd.Key] = rd.Value;
+        }
+    }
+
+}
+
+@if (Model.TotalItemCount > 1) {
+    routeData["page"] = Model.Page != null ? Model.Page - 1 : 1;
+    <div class="pagination">
+        <ul>
+            <li class="@(Model.Page == 1 ? "disabled" : "")">@Display.ActionLink(Value: Model.PreviousText, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+            @for (int i = 1; i <= totalPageCount; i++) {
+                routeData["page"] = i;
+                if (Model.Page == i) {
+                <li class="active">@Display.ActionLink(Value: i, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+                } else {
+                <li>@Display.ActionLink(Value: i, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+                }
+            }
+            @{
+            routeData["page"] = Model.Page != null ? Model.Page + 1 : 1;
+            }
+            <li class="@(Model.Page == totalPageCount ? "disabled" : "")">@Display.ActionLink(Value: Model.NextText, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+        </ul>
+    </div>
+}

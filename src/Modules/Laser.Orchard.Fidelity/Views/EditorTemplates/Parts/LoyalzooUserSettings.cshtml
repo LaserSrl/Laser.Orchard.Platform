@@ -1,0 +1,67 @@
+﻿@model Laser.Orchard.Fidelity.ViewModels.LoyalzooUserSettingsViewModel
+@{
+    Script.Require("jQuery").AtHead();
+}
+
+<fieldset>
+    <legend>@T("Loyalzoo User Data")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LoyalzooUsername)">@T("Loyalzoo Username")</label>
+        @Html.TextBoxFor(m => m.LoyalzooUsername, new { @class="text medium"})
+        <span class="hint">@T("The username of the Loyalzoo customer account.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LoyalzooPassword)">@T("Loyalzoo Password")</label>
+        @Html.TextBoxFor(m => m.LoyalzooPassword, new {  type="password", @class="text medium"})
+        <span class="hint">@T("The password of the Loyalzoo customer account.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.CustomerSessionId)">@T("Loyalzoo Customer Session ID")</label>
+        @Html.TextBoxFor(m => m.CustomerSessionId, new { @class="text medium"})
+        <span class="hint">@T("The session ID of the Loyalzoo customer account.")</span>
+    </div>
+    <div id="createAccount-@Model.PartId">
+        <br />
+        <input type="button" id="createAccountButton-@Model.PartId" value="@T("Automatically create Loyalzoo account")" />
+        <span class="hint">@T("<b>Warning</b>: By using this button the above Loyalzoo data will be ignored and an account will be automatically created using a random password.")</span>
+    </div>
+</fieldset>
+
+@using (Script.Head()) {
+     <script type="text/javascript">
+         $(document).ready(function () {
+
+             if (Number(@Model.PartId) == 0)
+             {
+                 $('#createAccount-@Model.PartId').hide();
+                 @*$('#createAccountButton-@Model.PartId').prop('disabled', true);*@
+             }
+
+             if ('@Model.LoyalzooUsername' != '' || '@Model.CustomerSessionId' != '')
+             {
+                 $('#createAccount-@Model.PartId').hide();
+             }
+
+             $('#createAccountButton-@Model.PartId').click(function () {
+                 $.ajax({
+                     type: 'GET',
+                     url: '@Url.Action("CreateLoyalzooAccountFromPart", "Fidelity", new { area="Laser.Orchard.Fidelity" })?partId=@Model.PartId',
+                     success: function (response) {
+                         window.location.reload();
+                     },
+                 });
+             });
+         });
+
+         @*$('#@Html.FieldIdFor(m => m.LoyalzooUsername)').keyup(checkLoyalzooData);*@
+
+         @*function checkLoyalzooData() {
+             if ($('#@Html.FieldIdFor(m => m.LoyalzooUsername)').val() == '' && $('#@Html.FieldIdFor(m => m.LoyalzooPassword)').val() == '' && $('#@Html.FieldIdFor(m => m.CustomerSessionId)').val() == '') {
+                 $('#createAccount-@Model.PartId').prop('disabled', false);
+             }
+             else {
+                 $('#createAccount-@Model.PartId').prop('disabled', true);
+             }
+         }*@
+    </script>
+}

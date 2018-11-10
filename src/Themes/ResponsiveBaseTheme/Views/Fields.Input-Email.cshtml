@@ -1,0 +1,13 @@
+﻿@using Orchard.Fields.Settings;
+@using Orchard.Utility.Extensions;
+@{
+    string value = (string)Model.ContentField.Value;
+    string name = Model.ContentField.DisplayName;
+    <div class="text-field icons inline">
+        @if (!string.IsNullOrEmpty(value)) {
+            <a href="mailto:@value" target="_blank" title="@T(name)"><i class="fa fa-envelope"></i></a>    
+        } else {
+        <i class="fa fa-envelope"></i>
+        }
+    </div>
+}

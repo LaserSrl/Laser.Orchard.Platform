@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="tns:Login" />
+            <s:element minOccurs="0" maxOccurs="1" name="sms" type="tns:Sms" />
+            <s:element minOccurs="0" maxOccurs="1" name="listaPH" type="tns:ArrayOfPlaceHolderMessaggio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Login">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DriverId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sms">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SmsNumber" type="tns:ArrayOfLong" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsBody" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DriverId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExternalId" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SmsValidityPeriod" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SmsPrority" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SmsTipoCodifica" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MamHaveAlias" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alias" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsFrom" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfLong">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="long" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPlaceHolderMessaggio">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PlaceHolderMessaggio" nillable="true" type="tns:PlaceHolderMessaggio" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PlaceHolderMessaggio">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Telefono" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ListaPHChiaveValore" type="tns:ArrayOfPHChiaveValore" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPHChiaveValore">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PHChiaveValore" nillable="true" type="tns:PHChiaveValore" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PHChiaveValore">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Chiave" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Valore" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendSMSResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfig">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="tns:Login" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetConfigResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetConfigResult" type="tns:Config" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Config">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Protocollo" type="tns:enumProtocollo" />
+          <s:element minOccurs="0" maxOccurs="1" name="Multialias" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ListaAlias" type="tns:ArrayOfString" />
+          <s:element minOccurs="1" maxOccurs="1" name="MaxLenghtSms" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="enumProtocollo">
+        <s:restriction base="s:string">
+          <s:enumeration value="MAM" />
+          <s:enumeration value="SMPP" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSmsStateByExternalId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="tns:Login" />
+            <s:element minOccurs="0" maxOccurs="1" name="externalId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSmsStateByExternalIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSmsStateByExternalIdResult" type="tns:ArrayOfStatusByExtId" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfStatusByExtId">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="StatusByExtId" nillable="true" type="tns:StatusByExtId" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="StatusByExtId">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:SmsStatus">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="SmsNumber" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SmsStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SmsState" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsSentDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsLastUpdate" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="tns:Login" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetStatusResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigSoapIn">
+    <wsdl:part name="parameters" element="tns:GetConfig" />
+  </wsdl:message>
+  <wsdl:message name="GetConfigSoapOut">
+    <wsdl:part name="parameters" element="tns:GetConfigResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSmsStateByExternalIdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSmsStateByExternalId" />
+  </wsdl:message>
+  <wsdl:message name="GetSmsStateByExternalIdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSmsStateByExternalIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStatusResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SmsWebServiceSoap">
+    <wsdl:operation name="SendSMS">
+      <wsdl:input message="tns:SendSMSSoapIn" />
+      <wsdl:output message="tns:SendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetConfig">
+      <wsdl:input message="tns:GetConfigSoapIn" />
+      <wsdl:output message="tns:GetConfigSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsStateByExternalId">
+      <wsdl:input message="tns:GetSmsStateByExternalIdSoapIn" />
+      <wsdl:output message="tns:GetSmsStateByExternalIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <wsdl:input message="tns:GetStatusSoapIn" />
+      <wsdl:output message="tns:GetStatusSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmsWebServiceSoap" type="tns:SmsWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendSMS">
+      <soap:operation soapAction="http://tempuri.org/SendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfig">
+      <soap:operation soapAction="http://tempuri.org/GetConfig" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsStateByExternalId">
+      <soap:operation soapAction="http://tempuri.org/GetSmsStateByExternalId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <soap:operation soapAction="http://tempuri.org/GetStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SmsWebServiceSoap12" type="tns:SmsWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendSMS">
+      <soap12:operation soapAction="http://tempuri.org/SendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetConfig">
+      <soap12:operation soapAction="http://tempuri.org/GetConfig" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSmsStateByExternalId">
+      <soap12:operation soapAction="http://tempuri.org/GetSmsStateByExternalId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStatus">
+      <soap12:operation soapAction="http://tempuri.org/GetStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmsWebService">
+    <wsdl:port name="SmsWebServiceSoap" binding="tns:SmsWebServiceSoap">
+      <soap:address location="https://lcit.laser-group.com/wsOrchardSMS/SmsWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SmsWebServiceSoap12" binding="tns:SmsWebServiceSoap12">
+      <soap12:address location="https://lcit.laser-group.com/wsOrchardSMS/SmsWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

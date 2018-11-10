@@ -1,0 +1,109 @@
+﻿@using Laser.Orchard.OpenAuthentication.Extensions
+@using Laser.Orchard.OpenAuthentication.Models
+@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions
+@using Laser.Orchard.OpenAuthentication
+@using Orchard.Environment.Configuration
+@using Orchard.Security
+@{
+
+    Style.Include("fonts/font-awesome-4.6.2/css/font-awesome.min.css").AtHead();
+
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+
+    var clientsData = (List<OrchardAuthenticationClientData>)Model.ClientsData;
+
+    var userName = Request.QueryString["UserName"];
+    var externalLoginData = Request.QueryString["ExternalLoginData"];
+    var returnUrl = Request.QueryString["ReturnUrl"];
+    
+    /*Logica Logo WhiteLabel*/
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
+
+}
+
+@if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(externalLoginData)) {
+    <div class="row">
+        <p>@T("This user account will be linked to <b>{0}</b> when you login.", userName)</p>
+    </div>
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-index">
+        @if (File.Exists(Server.MapPath(whitelabelLogo))) {
+            <img src="@whitelabelLogo" alt="@tenantname" class="img-responsive" />
+        } else {
+            <div class="placeholder-logo"></div>
+        }
+        <h3>@T("Login now")</h3>        
+    </div>
+    <div class="col-xs-12 col-sm-4 col-index">
+        @if (userCanRegister) {
+            <div class="sap_tabs">
+                <div id="horizontalTab1" style="display: block; width: 100%; margin: 0px;">
+                    <ul>
+                        <li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>@T("Sign in")</span></li>
+                        <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>@T("Sign up")</span></li>
+                    </ul>
+
+                    <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+                        @Display.OpenAuthLogonForm()
+                    </div>
+
+                    <div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
+                        @Display.OpenAuthRegisterForm()
+                    </div>
+                </div>
+            </div>
+            
+            Script.Include("easyResponsiveTabs.js", "easyResponsiveTabs.min.js");
+            
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $('#horizontalTab1').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true   // 100% fit in a container
+                    });
+                });
+            </script>
+
+        } else {
+            @Display.OpenAuthLogonForm()
+        }
+    </div>
+
+
+
+    @if (clientsData.Any()) {
+        using (Html.BeginFormAntiForgeryPost(Url.OpenAuthLogOn(returnUrl))) {
+            <div class="col-xs-12 col-sm-4 col-index">
+                <h3>@T("...or login with:")</h3>
+                <div class="social-login-buttons">
+                    @foreach (OrchardAuthenticationClientData clientData in clientsData) {
+                        var cssPattern = "fa-{0} fa-stack-1x";
+                        var cssClass = String.Format(cssPattern, clientData.ProviderName.ToLowerInvariant());
+                        if (clientData.ProviderName.ToLowerInvariant() == "google") {
+                            cssClass = String.Format(cssPattern, "google-plus", "1");
+                        } else if (clientData.ProviderName.ToLowerInvariant() == "microsoft") {
+                            cssClass = String.Format(cssPattern, "windows", "1");
+                        } else if (clientData.ProviderName.ToLowerInvariant() == "linkedin") {
+                            cssClass = String.Format(cssPattern, "linkedin", "1");
+                        } else if (clientData.ProviderName.ToLowerInvariant() == "twitter") {
+                            cssClass = String.Format(cssPattern, "twitter", "1");
+                        }
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <button class="fa @cssClass social-hover" type="submit" name="providerName" value="@clientData.ProviderName" title="@T("Log in with") @clientData.ProviderName.ToLowerInvariant()"></button>
+                            @*                        <i class="fa @cssClass fa-stack-1x" style="color:white"></i>*@
+                        </span>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

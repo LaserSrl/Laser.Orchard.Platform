@@ -1,0 +1,114 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.ContentManagement
+@using Orchard.ContentPicker.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@using Orchard.Projections.Models
+@using Orchard.Projections.Services
+@using Orchard.Taxonomies.Models
+@using Orchard.Taxonomies.Services
+@{
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    var _taxonomyService = WorkContext.Resolve<ITaxonomyService>();
+    var _projectionManager = WorkContext.Resolve<IProjectionManagerExtension>();
+    //The widget has 2 CPF:
+    // - Video contains the projection that gives the video to display
+    // - Categories has the taxonomy for the side menu
+
+    //for the video
+    var videoCPF = ((ContentItem)Model.ContentItem).Parts
+        .SelectMany(pa => pa.Fields)
+        .Where(fi => fi is ContentPickerField && fi.Name == "Video")
+        .FirstOrDefault() as ContentPickerField;
+    var projectionPart = videoCPF.ContentItems.First().As<ProjectionPart>();
+    var query = projectionPart.Record.QueryPartRecord;
+    var videoCI = _projectionManager.GetContentItems(query.Id, projectionPart, 0, 1).FirstOrDefault();
+    OEmbedPart oEmbed = null;
+    string thumbnail = "";
+    if (videoCI != null) {
+        var videoField = videoCI.Parts
+            .SelectMany(pa => pa.Fields)
+            .Where(fi => fi is MediaLibraryPickerField && fi.Name == "Video")
+            .FirstOrDefault() as MediaLibraryPickerField;
+        if (videoField.MediaParts.Any()) {
+            oEmbed = videoField.MediaParts.First().ContentItem.As<OEmbedPart>();
+            thumbnail = oEmbed["thumbnail_url"] ?? oEmbed["thumbnail"];
+        }
+    }
+
+    //Get all the leaf-categories
+    var maxTerms = oEmbed == null ? 6 : 4;
+    var taxField = ((ContentItem)Model.ContentItem).Parts
+        .SelectMany(pa => pa.Fields)
+        .Where(fi => fi is ContentPickerField && fi.Name == "Categories")
+        .FirstOrDefault() as ContentPickerField;
+    var parentPart = taxField.ContentItems.First().As<TermPart>();
+    var terms = _taxonomyService.GetTaxonomy(parentPart.TaxonomyId).Terms
+        .Where(tp => !_taxonomyService.GetChildren(tp, false).Any() && tp.Count > 2)
+        .Where((tp, index) => index < maxTerms);
+    //stuff to display the taxonomies
+    var firstLi = true;
+    var firstDiv = true;
+    var slugs = terms
+        .Select(tp => new KeyValuePair<int, string>(tp.Id, tp.Slug.Replace("/", "_")))
+        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+    var colClass = "col-md-12";
+}
+<div class="banner-bottom">
+    <div class="container">
+        @if (oEmbed != null) {
+            colClass = "col-md-7";
+            <div class="col-md-5 home_categories_banner_left">
+                <div class="video-img" style="background: url(@thumbnail) no-repeat center;">
+                    <a class="play-icon popup-with-zoom-anim" href="#small-dialog">
+                        <span class="glyphicon glyphicon-expand" aria-hidden="true"></span>
+                    </a>
+                </div>
+                @{
+                    Style.Include("popup-box.css", "popup-box.min.css");
+                    Script.Include("jquery.magnific-popup.js", "jquery.magnific-popup.min.js");
+                }
+                <div id="small-dialog" class="mfp-hide">
+                    @Html.Raw(oEmbed["html"]);
+                </div>
+                <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.popup-with-zoom-anim').magnificPopup({
+                        type: 'inline',
+                        fixedContentPos: false,
+                        fixedBgPos: true,
+                        overflowY: 'auto',
+                        closeBtnInside: true,
+                        preloader: false,
+                        midClick: true,
+                        removalDelay: 300,
+                        mainClass: 'my-mfp-zoom-in'
+                    });
+                });
+                </script>
+            </div>
+        }
+        
+        <div class="@colClass home_categories_banner_right">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" rolw="tablist">
+                    @foreach (var term in terms) {
+                        <li role="presentation" class="home_categories_category_label  @(firstLi ? "active" : "")"><a href="#@slugs[term.Id]" data-toggle="tab" aria-controls="@slugs[term.Id]">@term.Name</a></li>
+                        firstLi = false;
+                    }
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    @foreach (var term in terms) {
+                        <div role="tabpanel" class="tab-pane fade @(firstDiv ? "active in" : "")" id="@slugs[term.Id]" aria-labelledby="@(@slugs[term.Id]+"-tab")">
+                            <div class="agile_ecommerce_tabs">
+                                @Display.HomePageTaxonomyTermPart(TermPart: term)
+                            </div>
+                        </div>
+                        firstDiv = false;
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

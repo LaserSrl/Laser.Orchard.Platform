@@ -1,0 +1,15 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Widgets.Models;
+@{
+    var widgetPart = ((IContent)Model.ContentItem).As<WidgetPart>();
+}
+@if ((widgetPart.RenderTitle && HasText(widgetPart.Title)) || Model.Header != null) {
+    if ((widgetPart.RenderTitle && HasText(widgetPart.Title))) {
+    <h1>@widgetPart.Title</h1>
+    }
+    @Display(Model.Header)
+}
+@Display(Model.Child)
+@if (Model.Footer != null) {
+    @Display(Model.Footer)
+}

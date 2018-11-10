@@ -1,0 +1,5 @@
+﻿<Placement>
+  <Place Parts_DataProtectionContextPart_Edit="Content:after"/>
+  <Place Parts_DataRestrictionsPart_Edit="Content:after"/>
+  <Place Parts_DataProtectionSiteSettings_Edit="Content:1" />
+</Placement>

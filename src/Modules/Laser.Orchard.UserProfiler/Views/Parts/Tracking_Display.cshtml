@@ -1,0 +1,14 @@
+﻿ @{
+     Script.Require("JQuery").AtHead();
+ }
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+              url: "@Url.Action( "PostId", "Profile", new { area = "Laser.Orchard.UserProfiler" })",
+            type: "POST",
+            data: {id:@Model.PageID, __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()'}
+        });
+    });
+    </script>
+}

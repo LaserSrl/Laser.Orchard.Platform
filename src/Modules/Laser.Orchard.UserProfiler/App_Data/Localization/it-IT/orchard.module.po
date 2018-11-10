@@ -1,0 +1,66 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.UserProfiler/Views/EditorTemplates/Parts/UserProfilingSetting.cshtml"
+msgid "Number of tracking elements of type ContentItem to show (Default:0). If changed all users profile will be recalculated"
+msgstr "Numero degli elementi di tipo contenuto da visualizzare (Default:0). Se viene cambiato tutti i profili utenti verranno ricalcolati."
+
+msgctxt "~/Modules/Laser.Orchard.UserProfiler/Views/EditorTemplates/Parts/UserProfilingSetting.cshtml"
+msgid "Number of tracking elements to show (Default:5). If changed all users profile will be recalculated"
+msgstr "Numero degli elementi da visualizzare (Default:5). Se cambiato tutti i profili utente verranno ricalcolati."
+
+msgctxt "~/Modules/Laser.Orchard.UserProfiler/Views/EditorTemplates/Parts/UserProfilingSetting.cshtml"
+msgid "User Profiling Settings"
+msgstr "Impostazioni Profilo Utente"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
+msgid "List of available tags"
+msgstr "Lista delle etichette disponibili"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
+msgid "none"
+msgstr "Nessuno"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
+msgid "Or"
+msgstr "O"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
+msgid "Tag"
+msgstr "Etichetta"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingQueryFilter"
+msgid "Filter for a specific tracking element."
+msgstr "Filtra su un elemento di tracking specifico."
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingQueryFilter"
+msgid "User Profilling"
+msgstr "Profilazione utente"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingQueryFilter"
+msgid "User Tracking Filter"
+msgstr "Filtro per tracking dell'utente"
+
+msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingQueryFilter"
+msgid "User who interact with specific tag on contentitem."
+msgstr "Utente che interagisce con una etichetta specifica sul contenuto."
+
+msgctxt "Laser.Orchard.UserProfiler.Workflows.UserTrackingWorkflow"
+msgid "Interaction"
+msgstr "Interazione"
+
+msgctxt "Laser.Orchard.UserProfiler.Workflows.UserTrackingWorkflow"
+msgid "Social"
+msgstr "Social"
+
+msgctxt "Laser.Orchard.UserProfiler.Workflows.UserTrackingWorkflow"
+msgid "Start on user interaction with contentitem having TrackingPart"
+msgstr "Avvia quando un utente interagisce con un contenuto che ha una TrackingPart"
+

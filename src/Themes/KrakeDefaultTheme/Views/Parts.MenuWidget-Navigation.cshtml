@@ -1,0 +1,49 @@
+﻿@using System.Web.Mvc;
+@using Orchard.Utility.Extensions;
+@using Orchard.Environment.Configuration;
+@{
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    
+    var Menu = Model.Menu;
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+    if (items.Any()) {
+    }
+}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="~/">@WorkContext.CurrentSite.SiteName</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right navbar-blue">
+                @foreach (var item in items) {
+                    <li><a href="@item.Href">@item.Text</a></li>
+                }
+                @if (WorkContext.CurrentUser != null) {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@T("Welcome,") @Html.ItemDisplayText(WorkContext.CurrentUser)<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" })">@T("Change Password")</a></li>
+                            <li><a href="@Url.Action("LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">@T("Logoff")</a></li>
+                             @if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
+                                <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new {Area = "Dashboard", Controller = "Admin"})</li>
+                             }
+                        </ul>
+                    </li>
+                } else {
+                    <li>@Html.ActionLink(T("Login").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) })</li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,34 @@
+﻿@model Laser.Orchard.Reporting.ViewModels.EditDataReportViewerViewModel
+@{
+    IEnumerable<SelectListItem> reports = Model.Reports;
+}
+<div>
+    <fieldset>
+        <div>
+            <div class="label">@T("Report:")</div>
+            <div>@Html.DropDownList("ReportId", reports, new { @class = "combobox selects-width" })</div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <label>@T("Chart Type")</label>
+        @Html.EnumDropDownListFor(m => m.ChartType)
+        <br />
+
+        @*<label>@T("Container Css Class")</label>
+        <input type="text" value="@Model.ContainerCssClass" id="DataReportViewerPart.ContainerCssClass" name="DataReportViewerPart.ContainerCssClass" />
+               <br />
+
+        <label>@T("ChartTag Css Class")</label>
+        <input type="text" value="@Model.ChartTagCssClass" id="DataReportViewerPart.ChartTagCssClass" name="DataReportViewerPart.ChartTagCssClass" />
+        <br />*@
+
+        <label>@T("Color Style")</label>
+        @Html.EnumDropDownListFor(m => m.ColorStyle)
+        <br />
+
+        <label>@T("Start Color")</label>
+        @Html.EnumDropDownListFor(m => m.StartColor)
+        <br />
+
+    </fieldset>
+</div>

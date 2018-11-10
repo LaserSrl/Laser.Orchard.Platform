@@ -1,0 +1,11 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+<div class="col-xs-12 col-sm-4">
+    <a class="focus-item text-center focus-plus-home" href="@item.ElementoFascia.Link.Value">
+	    <img src="@item.ElementoFascia.Image.FirstMediaUrl"  title="@item.ElementoFascia.Image.MediaParts[0].Title" alt="@item.ElementoFascia.Image.MediaParts[0].AlternateText" class="img-responsive">
+	    <h2 class="focus-item-link">@item.TitlePart.Title</h2>
+	    <div class="space-20"></div>
+	    <span class="focus-plus">@item.ElementoFascia.Link.Text</span>
+    </a>
+</div>

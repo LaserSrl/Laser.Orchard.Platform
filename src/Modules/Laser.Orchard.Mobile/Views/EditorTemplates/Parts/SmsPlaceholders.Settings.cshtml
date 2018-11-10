@@ -1,0 +1,12 @@
+﻿@model Laser.Orchard.Mobile.Models.SmsPlaceholdersSettingsPart
+@{
+    Script.Require("jQuery_NestedModels").AtHead();
+}
+<fieldset>
+    <legend>@T("Settings - Sms Placeholders")</legend>
+    <i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(x => x.PlaceholdersList.Placeholders, T("Add Placeholder").Text, "#placeholders", ".j_ph")
+    <div id="placeholders">
+        @Html.EditorFor(x => x.PlaceholdersList.Placeholders)
+    </div>
+</fieldset>
+@Display.TokenHint()

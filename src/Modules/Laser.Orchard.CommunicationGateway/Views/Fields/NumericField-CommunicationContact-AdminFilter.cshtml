@@ -1,0 +1,9 @@
+﻿@{
+    var numericField = (Orchard.Fields.Fields.NumericField)Model.Field;
+}
+<fieldset>
+    <legend>@numericField.DisplayName</legend>
+    @if(numericField.Value.HasValue) {
+        @numericField.Value.Value
+    }
+</fieldset>

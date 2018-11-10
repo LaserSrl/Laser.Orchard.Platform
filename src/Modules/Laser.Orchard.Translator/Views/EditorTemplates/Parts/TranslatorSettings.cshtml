@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.Translator.Models.TranslatorSettingsPart
+
+<fieldset>
+    <legend>@T("Translator Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ModulesToTranslate)">@T("Modules to Translate")</label>
+        @Html.TextAreaFor(m => m.ModulesToTranslate)
+        <span class="hint">@T("Comma separated list of modules that must be translated.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ThemesToTranslate)">@T("Themes to Translate")</label>
+        @Html.TextAreaFor(m => m.ThemesToTranslate)
+        <span class="hint">@T("Comma separated list of themes that must be translated.")</span>
+    </div>
+</fieldset>

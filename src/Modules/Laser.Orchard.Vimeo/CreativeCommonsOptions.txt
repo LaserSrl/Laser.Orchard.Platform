@@ -1,0 +1,8 @@
+﻿,No Creative Commons License
+by,Attribution
+by-sa,Attribution Share Alike
+by-nd,Attribution No Derivatives
+by-nc,Attribution Non-Commercial
+by-nc-sa,Attribution Non-Commercial Share Alike
+by-nc-ns,Attribution Non-Commercial No Derivatives
+cc0,Public Domain Dedication

@@ -1,0 +1,128 @@
+[
+  {
+    "outputFileName": "Scripts/webfont.min.js",
+    "inputFiles": [
+      "Scripts/webfont.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery-migrate.min.js",
+    "inputFiles": [
+      "Scripts/jquery-migrate.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/slick.min.js",
+    "inputFiles": [
+      "Scripts/slick.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/styles.min.css",
+    "inputFiles": [
+      "Styles/styles.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/slick.min.css",
+    "inputFiles": [
+      "Styles/slick.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.min.css",
+    "inputFiles": [
+      "Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/css.min.css",
+    "inputFiles": [
+      "Styles/css.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/Custom.min.css",
+    "inputFiles": [
+      "Styles/Custom.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery_002.min.js",
+    "inputFiles": [
+      "Scripts/jquery_002.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/main.min.js",
+    "inputFiles": [
+      "Scripts/main.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.min.css",
+    "inputFiles": [
+      "Styles/style.media.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.min1200.min.css",
+    "inputFiles": [
+      "Styles/style.media.min1200.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.max767.min.css",
+    "inputFiles": [
+      "Styles/style.media.max767.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.min768.min.css",
+    "inputFiles": [
+      "Styles/style.media.min768.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.max1649.min.css",
+    "inputFiles": [
+      "Styles/style.media.max1649.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.media.min992.min.css",
+    "inputFiles": [
+      "Styles/style.media.min992.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.premedia.min.css",
+    "inputFiles": [
+      "Styles/styles.css",
+      "Styles/slick.css",
+      "Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/style.postmedia.min.css",
+    "inputFiles": [
+      "Styles/css.css",
+      "Styles/Custom.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/head.deferred.min.js",
+    "inputFiles": [
+      "Scripts/webfont.js",
+      "Scripts/jquery-migrate.js",
+      "Scripts/slick.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/foot.deferred.min.js",
+    "inputFiles": [
+      "Scripts/jquery_002.js",
+      "Scripts/main.js"
+    ]
+  }
+]

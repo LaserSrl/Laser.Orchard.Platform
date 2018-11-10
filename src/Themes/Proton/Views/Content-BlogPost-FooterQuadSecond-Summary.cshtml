@@ -1,0 +1,18 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Mvc.Html;
+@using Orchard.ContentManagement;
+
+<div>
+    <a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)">@Model.ContentItem.TitlePart.Title</a>
+    <br />
+        <span class="author">@Model.ContentItem.CommonPart.OwnerField.Value.UserName</span> - 
+        @{
+            if (Model.ContentItem.TagsPart.CurrentTags.Length > 0) {
+                var tags = String.Join(", ", Model.ContentItem.TagsPart.CurrentTags);
+            <span class="tags">
+                @tags
+            </span>
+            }
+        }
+    <p>@(((DateTime)Model.ContentItem.CommonPart.PublishedUtc).ToShortDateString())</p>
+</div>

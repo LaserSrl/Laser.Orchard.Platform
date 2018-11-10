@@ -1,0 +1,10 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="space-40"></div>
+<div class="text-center">
+    <img src="@item.ShowcaseImmagineTestoWidget.Image.FirstMediaUrl"  title="@item.ShowcaseImmagineTestoWidget.Image.MediaParts[0].Title" alt="@item.ShowcaseImmagineTestoWidget.Image.MediaParts[0].AlternateText" class="img-responsive">
+</div>
+<div class="space-40"></div>
+<p>@Html.Raw(item.BodyPart.Text)</p>

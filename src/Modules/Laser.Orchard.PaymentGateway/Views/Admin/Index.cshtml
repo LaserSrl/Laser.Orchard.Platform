@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.PaymentGateway.Models.PaymentGatewaySiteSettingsPart
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <legend>@T("Payment Gateway Settings")</legend>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.NonceMinutesDuration)">@T("Payment nonce duration (minutes)")</label>
+            @Html.TextBoxFor(m => m.NonceMinutesDuration, new { @class = "text medium" })
+            <span class="hint">@T("Payment nonce duration in minutes (suggested value: 20).")</span>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save")</button>
+}
+<br />
+<label>@T("Please refer to each POS tab for POS specific settings.")</label>
+

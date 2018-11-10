@@ -1,0 +1,17 @@
+﻿/* hide useless elements when printing */
+div.headerbar, div#messages, div#local-navigation, div#menubar.menubar-inverse, p.breadcrumb, header#header, div#footer {display: none}
+fieldset:after {visibility:hidden}
+div#base, div#main, div#layout-main, div#content.group { margin:0; border:0; padding:0 !important;}
+/* hide buttons */
+#btnRefresh, #btnPrint, #btnDownload { display: none}
+/* avoid page breaks inside charts */
+div.chart-container {page-break-inside:avoid}
+/* hide useless parts of content pickers */
+table.content-picker > thead {display: none; }
+span.content-picker-remove { display: none}
+a[href]:after { content: none !important; }
+/* hide hints */
+span.hint { display: none}
+/* hide scrollbars for tables */
+div.table-responsive { overflow: visible; width:auto; }
+div.fixed-table-container > div { overflow: visible; width:auto; }

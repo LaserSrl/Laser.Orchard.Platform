@@ -1,0 +1,5 @@
+﻿<Placement>
+	<Match DisplayType="SummaryAdmin">
+		<Place Parts_SummaryAdminToolbarPart_SummaryAdmin="Actions:4.after"/>
+	</Match>
+</Placement>

@@ -1,0 +1,17 @@
+﻿@model Laser.Orchard.PaymentCartaSi.Models.PaymentCartaSiSettingsPart 
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.TextBoxFor(m => m.CartaSiShopAlias, new { placeholder = T("CartaSì shop alias"), @class = "text medium" })
+    <span class="hint">@T("Insert your CartaSì shop alias.")</span>
+    
+    @Html.TextBoxFor(m => m.CartaSiSecretKey, new { placeholder = T("CartaSì secret key"), @class = "text medium" })
+    <span class="hint">@T("Insert your CartaSì secret key.")</span>
+    
+     @Html.CheckBoxFor(m => m.UseTestEnvironment)
+    <label for="@Html.FieldIdFor(m => m.UseTestEnvironment)" class="forcheckbox">@T("Use test environment.")</label>
+    <span class="hint">@T("Selecting this checkbox will mean that we are using CartaSì's test environment. Payments there are fake.")</span>
+    
+    <div class="box-footer align-right padding-right-35">
+        <button id="saveSettings" type="submit" name="submit.SaveSettings" value="yes please">@T("Save")</button>
+    </div>
+}

@@ -1,0 +1,31 @@
+﻿@model Laser.Orchard.Fidelity.ViewModels.FidelitySiteSettingsViewModel
+
+<fieldset>
+    <legend>@T("Fidelity")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DeveloperKey)">@T("Developer Secret Key")</label>
+        @Html.TextBoxFor(m => m.DeveloperKey, new { @class="text medium"})
+        <span class="hint">@T("The secret developer key used by Loyalzoo.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ApiURL)">@T("API URL")</label>
+        @Html.TextBoxFor(m => m.ApiURL, new { @class="text medium"})
+        <span class="hint">@T("The URL to use to call Loyalzoo.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.MerchantUsername)">@T("Merchant Username")</label>
+        @Html.TextBoxFor(m => m.MerchantUsername, new { @class="text medium"})
+        <span class="hint">@T("The username of the merchant account.")</span>
+
+        <label for="@Html.FieldIdFor(m => m.MerchantPwd)">@T("Merchant Password")</label>
+        @Html.TextBoxFor(m => m.MerchantPwd, new { type="password", @class="text medium"})
+        <span class="hint">@T("The password of the merchant account.")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.RegisterOnLogin, @T("Create Loyalzoo Account on Login:"))
+        @Html.RadioButtonFor(m => m.RegisterOnLogin, LoyalzooRegistrationEnum.Never) @T("Never")<br />
+        @Html.RadioButtonFor(m => m.RegisterOnLogin, LoyalzooRegistrationEnum.External) @T("Only for external authentications")<br />
+        @Html.RadioButtonFor(m => m.RegisterOnLogin, LoyalzooRegistrationEnum.Always) @T("Always")
+        <span class="hint">@T("Whether to create or not a Loyalzoo account at login for users not already associated to a Loyalzoo account data.")</span>
+    </div>
+</fieldset>

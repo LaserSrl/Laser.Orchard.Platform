@@ -1,0 +1,165 @@
+﻿aa,Afar
+ab,Abkhazian
+af,Afrikaans
+am,Amharic
+ar,Arabic
+as,Assamese
+ay,Aymara
+az,Azerbaijani
+ba,Bashkir
+be,Belarusian
+bg,Bulgarian
+bh,Bihari
+bi,Bislama
+bn,Bengali
+bo,Tibetan
+br,Breton
+ca,Catalan
+co,Corsican
+cs,Czech
+cy,Welsh
+da,Danish
+de,German
+de-AT,German (Austria)
+de-CH,German (Switzerland)
+dz,Dzongkha
+el,Greek
+en,English
+en-CA,English (Canada)
+en-GB,English (United Kingdom)
+en-IE,English (Ireland)
+en-US,English (United States)
+eo,Esperanto
+es,Spanish
+es-419,Spanish (Latin America)
+es-ES,Spanish (Spain)
+es-MX,Spanish (Mexico)
+et,Estonian
+eu,Basque
+fa,Persian
+fa-AF,Persian (Afghanistan)
+fi,Finnish
+fil,Filipino
+fj,Fijian
+fo,Faroese
+fr,French
+fr-BE,French (Belgium)
+fr-CA,French (Canada)
+fr-CH,French (Switzerland)
+fy,Western Frisian
+ga,Irish
+gd,Scottish Gaelic
+gl,Galician
+gn,Guarani
+gu,Gujarati
+ha,Hausa
+hi,Hindi
+hr,Croatian
+ht,Haitian
+hu,Hungarian
+hy,Armenian
+ia,Interlingua
+id,Indonesian
+ie,Interlingue
+ik,Inupiaq
+is,Icelandic
+it,Italian
+iw,Hebrew
+ja,Japanese
+jv,Javanese
+ka,Georgian
+kk,Kazakh
+kl,Kalaallisut
+km,Khmer
+kn,Kannada
+ko,Korean
+ks,Kashmiri
+ku,Kurdish
+ky,Kirghiz
+la,Latin
+ln,Lingala
+lo,Lao
+lt,Lithuanian
+lv,Latvian
+mg,Malagasy
+mi,Maori
+mk,Macedonian
+ml,Malayalam
+mn,Mongolian
+mo,Moldavian
+mr,Marathi
+ms,Malay
+mt,Maltese
+my,Burmese
+na,Nauru
+ne,Nepali
+nl,Dutch
+nl-BE,Dutch (Belgium)
+no,Norwegian
+oc,Occitan
+om,Oromo
+or,Oriya
+pa,Punjabi
+pl,Polish
+ps,Pashto
+pt,Portuguese
+pt-BR,Portuguese (Brazil)
+pt-PT,Portuguese (Portugal)
+qu,Quechua
+rm,Romansh
+rn,Rundi
+ro,Romanian
+ru,Russian
+rw,Kinyarwanda
+sa,Sanskrit
+sd,Sindhi
+sg,Sango
+sh,Serbo-Croatian
+si,Sinhala
+sk,Slovak
+sl,Slovenian
+sm,Samoan
+sn,Shona
+so,Somali
+sq,Albanian
+sr,Serbian
+ss,Swati
+st,Southern Sotho
+su,Sundanese
+sv,Swedish
+sw,Swahili
+ta,Tamil
+te,Telugu
+tg,Tajik
+th,Thai
+ti,Tigrinya
+tk,Turkmen
+tl,Tagalog
+tn,Tswana
+to,Tongan
+tr,Turkish
+ts,Tsonga
+tt,Tatar
+tw,Twi
+uk,Ukrainian
+ur,Urdu
+uz,Uzbek
+vi,Vietnamese
+vo,Volapük
+wo,Wolof
+xh,Xhosa
+yi,Yiddish
+yo,Yoruba
+zh,Chinese
+zh-CN,Chinese (China)
+zh-Hans,Chinese (Simplified)
+zh-Hant,Chinese (Traditional)
+zh-HK,Chinese (Hong Kong SAR China)
+zh-SG,Chinese (Singapore)
+zh-TW,Chinese (Taiwan)
+zu,Zulu
+din,Dinka
+tet,Tetum
+se,Northern Sami
+nb,Norwegian Bokmål
+nn,Norwegian Nynorsk

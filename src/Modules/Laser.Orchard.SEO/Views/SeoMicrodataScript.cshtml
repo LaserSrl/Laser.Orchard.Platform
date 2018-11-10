@@ -1,0 +1,7 @@
+﻿@{
+    var scriptMicro = Model.ScriptMicrodata;
+    using (Script.Head()) {
+        if (!string.IsNullOrEmpty(scriptMicro)) { @Html.Raw(scriptMicro);
+        }
+    }
+}

@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.FidelityGateway
+AntiForgery: enabled
+Author: Laser Diego
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Modulo Base Fidelity
+Features:
+    Laser.Orchard.FidelityGateway:
+		Category: FidelityBase
+        Description:  Modulo Base Fidelity
+		Dependencies: Laser.Orchard.StartupConfig

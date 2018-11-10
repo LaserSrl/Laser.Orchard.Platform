@@ -1,0 +1,219 @@
+﻿/*Caption Style */
+.captionOrange, .captionBlack
+        {
+            color: #fff;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 4px;
+        }
+.captionOrange
+        {
+            background: #EB5100;
+            background-color: rgba(235, 81, 0, 0.6);
+        }
+.captionBlack
+        {
+        	font-size:16px;
+            background: #000;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+a.captionOrange, A.captionOrange:active, A.captionOrange:visited
+        {
+        	color: #ffffff;
+        	text-decoration: none;
+        }
+a.captionOrange:hover
+        {
+            color: #eb5100;
+            text-decoration: underline;
+            background-color: #eeeeee;
+            background-color: rgba(238, 238, 238, 0.7);
+        }
+.bricon
+        {
+            background: url(./img/browser-icons.png);
+        }
+
+/* Bullet Navigator Skin Begin */
+
+/* jssor slider bullet navigator skin 01
+.jssorb01 div           (normal)
+.jssorb01 div:hover     (normal mouseover)
+.jssorb01 .av           (active)
+.jssorb01 .av:hover     (active mouseover)
+.jssorb01 .dn           (mousedown)
+*/
+.jssorb01 div, .jssorb01 div:hover, .jssorb01 .av
+            {
+                filter: alpha(opacity=70);
+                opacity: .7;
+                overflow:hidden;
+                cursor: pointer;
+                border: #000 1px solid;
+            }
+.jssorb01 div { background-color: gray; }
+.jssorb01 div:hover, .jssorb01 .av:hover { background-color: #d3d3d3; }
+.jssorb01 .av { background-color: #fff; }
+.jssorb01 .dn, .jssorb01 .dn:hover { background-color: #555555; }
+.jssorb01
+			{
+				position: absolute;
+				bottom: 16px;
+				right: 10px;
+			}
+
+/* Arrow Navigator Skin Begin */
+
+/* jssor slider arrow navigator skin 05 css
+.jssora05l              (normal)
+.jssora05r              (normal)
+.jssora05l:hover        (normal mouseover)
+.jssora05r:hover        (normal mouseover)
+.jssora05ldn            (mousedown)
+.jssora05rdn            (mousedown)
+*/
+.jssora05l, .jssora05r, .jssora05ldn, .jssora05rdn
+            {
+            	position: absolute;
+            	cursor: pointer;
+            	display: block;
+                background: url(./img/a17.png) no-repeat;
+                overflow:hidden;
+            }
+.jssora05l { background-position: -10px -40px; }
+.jssora05r { background-position: -70px -40px; }
+.jssora05l:hover { background-position: -130px -40px; }
+.jssora05r:hover { background-position: -190px -40px; }
+.jssora05ldn { background-position: -250px -40px; }
+.jssora05rdn { background-position: -310px -40px; }
+
+/* Other styles */
+
+.load
+		{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+.load1
+		{
+			filter: alpha(opacity=70);
+			opacity:0.7;
+			position: absolute;
+			display: block;
+            background-color: #000;
+			top: 0px;
+			left: 0px;
+			width: 100%;
+			height:100%;
+		}
+
+.load2
+		{
+			position: absolute;
+			display: block;
+			background: url(./img/loading.gif) no-repeat center center;
+            top: 0px;
+			left: 0px;
+			width: 100%;
+			height:100%;
+		}
+
+.slidecontainer
+		{
+			cursor: move;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+            overflow: hidden;
+		}
+
+.slides_prototype
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+.jssorb01 div
+		{
+			position: absolute;
+			width: 12px;
+			height: 12px;
+		}
+
+.sliderb_container
+		{
+			position: relative;
+			overflow: hidden;
+		}
+
+.sliderb-T
+		{
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+		}
+
+.thumbbar
+		{
+			filter: alpha(opacity=40);
+			opacity:0.4;
+			position: absolute;
+			display: block;
+            background-color: #000000;
+			top: 0px;
+			left: 0px;
+			width: 100%;
+			height: 100%;
+		}
+
+.sliderb-T h1,
+.sliderb-T h2,
+.sliderb-T h3,
+.sliderb-T h4,
+.sliderb-T h5,
+.sliderb-T h6,
+.sliderb-T h7,
+.sliderb-T .bodyExcerpt
+		{
+			color:#fff;
+			font-family: Verdana;
+			padding-left:10px;
+		}
+
+.sliderb-T a
+		{
+			font-family: Verdana;
+			padding-left:10px;
+		}
+
+.sliderb-T h4
+		{
+			font-size: 20px;
+			font-weight: bold;
+			line-height: 5px;
+		}
+
+.sliderb-T h5
+		{
+			font-size: 18px;
+		}
+
+.sliderb-T .bodyExcerpt
+		{
+			font-size: 15px;
+			height:50px;
+			overflow: hidden;
+		}
+
+.video_icon
+        {
+            background: url('./img/play_icon.png') no-repeat scroll left top;
+            min-width: 39px;
+            display: block;
+            position: relative;
+            margin: auto;
+        }

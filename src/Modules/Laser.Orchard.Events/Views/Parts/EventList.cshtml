@@ -1,0 +1,14 @@
+﻿@{
+    foreach(var item in Model.EventList)
+    {
+        <div>
+            @(item.start + " - " + item.end)
+            @Display(BuildDisplay(item.content, "Summary"))
+        </div>
+    }
+    
+    if (Model.Pager != null)
+    {
+        @Display(Model.Pager)
+    }
+}

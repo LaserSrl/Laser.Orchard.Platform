@@ -1,0 +1,16 @@
+﻿@model Laser.Orchard.StartupConfig.Settings.ContentPickerFieldExtensionSettings
+<fieldset>
+    @Html.LabelFor(m => m.SummaryView,T("Custom View to use on Summary"))
+    @Html.TextBoxFor(m => m.SummaryView)
+      <span class="hint">Name of file cshtml </span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(m => m.PreviewSelected, T("Custom View to use on Preview of selected content pickerfield items"))
+    @Html.TextBoxFor(m => m.PreviewSelected)
+    <span class="hint">Name of file cshtml </span>
+</fieldset>
+<fieldset>
+    @Html.CheckBoxFor(m => m.CascadePublish)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.CascadePublish)">@T("Cascade Publish Action")</label>
+    <span class="hint">@T("If checked, when the ContentItem is published also other ContentItems connected to it through the Content Picker Field will be published.")</span>
+</fieldset>

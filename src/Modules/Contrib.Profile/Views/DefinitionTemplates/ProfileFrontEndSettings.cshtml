@@ -1,0 +1,10 @@
+﻿@model Contrib.Profile.Settings.ProfileFrontEndSettings
+
+<fieldset>
+    @Html.CheckBoxFor(m => m.AllowFrontEndEdit)
+    <label for="@Html.FieldIdFor(m => m.AllowFrontEndEdit)" class="forcheckbox">@T("Allow edit on front end")</label>
+    <span class="hint">@T("Check to allow editing the contents of this part/field from the front-end, e.g. upon registration or editing a user's own profile.")</span>
+    @Html.CheckBoxFor(m => m.AllowFrontEndDisplay)
+    <label for="@Html.FieldIdFor(m => m.AllowFrontEndDisplay)" class="forcheckbox">@T("Allow display on front end")</label>
+    <span class="hint">@T("Check to allow displaying this part/field on the front-end, e.g. when viewing a user's profile.")</span>
+</fieldset>

@@ -1,0 +1,10 @@
+﻿Name: Laser.Orchard.DataProtection
+AntiForgery: enabled
+Author: Laser s.r.l.
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.0
+Description: Data protection management module.
+Features:
+    Laser.Orchard.DataProtection:
+        Description: Manage data protection based on data context.

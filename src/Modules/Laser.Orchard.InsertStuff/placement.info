@@ -1,0 +1,9 @@
+﻿<Placement>
+  <Place Fields_Laser_Orchard_InsertStuff_Edit="Content:2.5" />
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Fields_Laser_Orchard_InsertStuff="Content" />
+  </Match>
+
+  <Place Fields_Laser_Orchard_InsertStuff="Content:after" />
+</Placement>

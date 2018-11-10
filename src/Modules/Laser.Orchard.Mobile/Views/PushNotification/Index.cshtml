@@ -1,0 +1,74 @@
+﻿@using Laser.Orchard.Mobile.ViewModels
+@model Laser.Orchard.Mobile.ViewModels.PushIndex
+@{
+    var _records = Model.PushRecords;
+    Layout.Title = T("Devices");
+}
+
+@using (Html.BeginForm("Index", "PushNotification", FormMethod.Get)) {
+    @Html.AntiForgeryToken()  
+      <fieldset class="bulk-actions">
+            <label for="search">@T("Search:")</label>
+            @Html.TextBoxFor(m => m.Search.Expression)
+            @*@T("Show All")
+            @Html.CheckBoxFor(m => m.Search.ShowAll)*@
+            <button type="submit">@T("Search")</button>
+            <a href="@Url.Action("Index")">@T("Clear")</a>
+        </fieldset>
+}
+<br />
+<div class="table-responsive">
+<table class="items" summary="@T("List of devices.")">
+    <colgroup>
+        <col id="Col1" />
+        <col id="Col2" />
+        <col id="Col3" />
+        <col id="Col4" />
+        <col id="Col5" />
+        <col id="Col6" />
+        <col id="Col7" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th scope="col">&nbsp;&darr;</th>
+            <th scope="col">@T("Device")</th>
+            <th scope="col">@T("DataInserimento")</th>
+            <th scope="col">@T("DataModifica")</th>
+            <th scope="col">@T("UUIdentifier")</th>
+            <th scope="col">@T("Token")</th>
+            <th scope="col">@T("Validated")</th>
+            <th scope="col">@T("Produzione")</th>
+            <th scope="col">@T("Language")</th>
+            <th scope="col">@T("Registration Host")</th>
+            <th scope="col">@T("Registration Prefix")</th>
+            <th scope="col">@T("Registration Machine")</th>
+            <th scope="col">@T("Actions")</th>
+        </tr>
+    </thead>
+    @if (_records != null) {
+
+        foreach (var singlerecord in _records) {
+        <tr  id="@("tr_Element" + singlerecord.Id)">
+            <td>@singlerecord.Id</td>
+            <td>@singlerecord.Device</td>
+            <td>@singlerecord.DataInserimento</td>
+            <td>@singlerecord.DataModifica</td>
+            <td><div class="deviceTdminWidth">@singlerecord.UUIdentifier</div></td>
+            <td>@singlerecord.Token</td>
+            <td>@singlerecord.Validated</td>
+            <td>@singlerecord.Produzione</td>
+            <td>@singlerecord.Language</td>
+            <td>@singlerecord.RegistrationUrlHost</td>
+            <td>@singlerecord.RegistrationUrlPrefix</td>
+            <td>@singlerecord.RegistrationMachineName</td>
+            <td>
+                <div>
+                    @*@Html.ItemEditLinkWithReturnUrl(T("Edit").Text, (Orchard.ContentManagement.IContent)order)*@
+                </div>
+            </td>
+        </tr>
+        }
+    }
+</table>
+    </div>
+@Display(Model.Pager)

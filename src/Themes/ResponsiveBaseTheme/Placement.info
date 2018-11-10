@@ -1,0 +1,154 @@
+<Placement>
+  <Match DisplayType="Summary">
+    <Place Parts_Common_Metadata_Summary="-" />
+  </Match>
+  <Match DisplayType="Detail">
+    <Place Parts_Common_Metadata="-" />
+  </Match>
+  <Match ContentType="Produttore">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_Title_Summary="Content:2"
+             Parts_Map_Summary="Content:3"
+             Fields_MediaLibraryPicker_Summary="Content:1"
+             Parts_Common_Body_Summary="Content:4"
+             Fields_Common_Text-Telefono="Content:5"
+             Fields_Common_Text-Fax="Content:5.1"
+             Fields_Input-SitoWeb="Content:6"
+             Fields_Input-Email="Content:7"
+             Fields_Input-Facebook="Content:8"
+             Fields_Input-Twitter="Content:9"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             Fields_MediaLibraryPicker__MapPart-MapSourceFile="-"
+             Parts_Common_Body="Content:2"
+             Fields_MediaLibraryPicker="Content:3"
+             Parts_Map="Content:4"
+             Fields_Common_Text-Telefono="Content:1.1"
+             Fields_Common_Text-Fax="Content:1.1.1"
+             Fields_Input-SitoWeb="Content:1.2"
+             Fields_Input-Email="Content:1.3"
+             Fields_Input-Facebook="Content:1.4"
+             Fields_Input-Twitter="Content:1.5"
+             Fields_ContentPicker-Eccellenze="/AsideSecond:2.1;Alternate=Fields_ContentPicker__AsideSecond__ProdottiEccellenze"
+             Fields_ContentPicker-Prodotti="/AsideSecond:2.2;Alternate=Fields_ContentPicker__AsideSecond__ProdottiEccellenze"
+             Fields_ContentPicker-Ricette="/AsideSecond:2.3;Alternate=Fields_ContentPicker__AsideSecond__Ricette"
+
+             />
+    </Match>
+  </Match>
+  <Match ContentType="Prodotto">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_ContentPickerConnector="-"
+             Fields_TaxonomyField="-"
+             Parts_Title_Summary="Content:2"
+             Fields_MediaLibraryPicker_Summary="Content:1"
+             Parts_Common_Body_Summary="Content:4"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             Fields_MediaLibraryPicker="Content:2"
+             Fields_MediaLibraryPicker__MapPart-MapSourceFile="-"
+             Parts_Common_Body="Content:1"
+             Parts_ContentPickerConnector="/AsideSecond:1;Alternate=Parts_ContentPickerConnector__AsideSecond"
+             Fields_TaxonomyField-TipoProdotto="-"
+             />
+    </Match>
+  </Match>
+  <Match ContentType="Cards">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_Title_Summary="Content:1"
+             Fields_MediaLibraryPicker_Summary="Content:2"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             Fields_MediaLibraryPicker="Content:2"
+             Fields_MediaLibraryPicker__MapPart-MapSourceFile="-"
+             Parts_Common_Body="Content:1"
+             Parts_ContentPickerConnector="/AsideSecond:1;Alternate=Parts_ContentPickerConnector__AsideSecond"
+             Fields_TaxonomyField-TipoProdotto="-"
+             />
+    </Match>
+  </Match>
+  <Match ContentType="POI">
+    <Match DisplayType="Summary">
+      <Place
+             Fields_TaxonomyField="-"
+             Fields_MediaLibraryPicker_Summary="Content:1"
+             Parts_Title_Summary="Content:2"
+             Parts_Map_Summary="Content:3"
+             Parts_Common_Body_Summary="Content:4"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             Fields_MediaLibraryPicker="Content:2"
+             Fields_MediaLibraryPicker__MapPart-MapSourceFile="-"
+             Parts_Common_Body="Content:1"
+             Fields_TaxonomyField-Categoria="-"
+             />
+    </Match>
+  </Match>
+  <Match ContentType="WebCams">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_Title_Summary="-"
+             Fields_Numeric__WebCams__slm="-"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+    </Match>
+  </Match>
+  <Match ContentType="Ricetta">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_ContentPickerConnector="-"
+             Fields_TaxonomyField="-"
+             Parts_Title_Summary="Content:2"
+             Fields_MediaLibraryPicker_Summary="Content:1"
+             Parts_Common_Body_Summary="Content:4"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             Fields_Common_Text-Ingredienti="Content:1"
+             Fields_Common_Text-VideoUrls="Content:2"
+             Parts_Common_Body="Content:3"
+             Parts_ContentPickerConnector="/AsideSecond:1;Alternate=Parts_ContentPickerConnector__AsideSecond"
+             />
+    </Match>
+  </Match>
+  <Match ContentType="BlogPost">
+    <Match DisplayType="Summary">
+      <Place
+             Parts_Title_Summary="Content:2"
+             Fields_MediaLibraryPicker_Summary="Content:1"
+             Parts_Common_Body_Summary="-"
+             />
+    </Match>
+    <Match DisplayType="Detail">
+      <Place
+             />
+    </Match>
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Parts_TermPart-TipiProdottoTerm="-"
+           Parts_QrCode="-"
+  />
+  </Match>
+  <Match DisplayType="Detail">
+    <Place Parts_Meteo="Content;Alternate=Parts_MeteoJssor"
+	           Parts_QrCode="-"
+            />
+  </Match>
+
+  <Place Fields_MediaLibraryPicker-Icon="Header:before" />
+  <Place Parts_SlideShow_Jssor="/BeforeMain:before;Alternate=Parts_SlideShow_Jssor_BannerSlider"/>
+  <Place Parts_HighlightsItem_Jssor="Content;Alternate=Parts_HighlightsItem_Jssor_BannerSlider" />
+</Placement>

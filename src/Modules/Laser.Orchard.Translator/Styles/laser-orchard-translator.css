@@ -1,0 +1,151 @@
+#content {
+    height: auto;
+    padding-bottom: 15px;
+}
+
+#media-library-toolbar {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+#media-library-bottom-toolbar {
+    padding-top: 10px;
+}
+
+.media-library-folder-title {
+    padding-left: 5px;
+    padding-top: 2px;
+}
+
+#translator-form-frame, #translator-settings-form-frame {
+    width: 100%;
+}
+
+#translator-form-frame {
+    height: 60vh;
+}
+
+#translator-settings-form-frame {
+    height: 25vh;
+}
+
+.translator-media-library #media-library-main-list, .translator-media-library #media-library-main-navigation {
+    height: 65vh;
+}
+
+#media-library-main-list-wrapper {
+    height: 60vh;
+}
+
+#folder-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#language {
+    font-size: 15px;
+    float: right;
+}
+
+#translator-html, #translator-settings-html {
+    background: none;
+}
+
+#translator-body, #translator-settings-body {
+    background: none;
+    min-width: 0px;
+}
+
+#translator-body .iframe-main, #translator-settings-body .iframe-main {
+    margin-top: 0px !important;
+    margin-left: 20px !important;
+}
+
+#translation-container {
+    min-height: 500px;
+    overflow: auto;
+}
+
+#translation-container, #translator-settings-container {
+    padding-top: 10px;
+}
+
+    #translation-container h2 {
+        font-weight: bold;
+    }
+
+#translation-text-container {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+#translated-text-container {
+    padding-bottom: 10px;
+}
+
+#suggestions-area {
+    padding-top: 15px;
+}
+
+.fa-check {
+    color: green;
+}
+
+.fa-times {
+    color: red;
+}
+
+.jstree-default .jstree-clicked, .jstree-hovered {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
+.jstree-grid-column {
+    width: 100% !important;
+}
+
+#translation-tree-lang-selector {
+    padding: 10px 0px 10px 0px;
+    display: inline-block;
+}
+
+#translation-tree-legend {
+    padding: 10px 0px 10px 0px;
+    float: right;
+}
+
+#translation-tree-legend label {
+    display: inline;
+}
+
+.translation-tree-legend-desc {
+    float: right;
+}
+
+ .translation-tree-legend-icon {
+     padding: 5px;
+     float: right;
+ }
+
+ .translation-tree-elem {
+    display: inline-block;
+    /*border: solid 1px #C0C0C0;*/
+    float: right;
+    padding-right: 5px;
+    margin-left: 5px;
+ }
+
+ #translation-tree-choice-message {
+    text-align: center;
+    vertical-align: middle;
+ }
+
+ #translation-tree-load {
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('images/ajax-loader.gif') 50% 50% no-repeat;
+ }

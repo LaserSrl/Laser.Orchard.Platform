@@ -1,0 +1,29 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Mvc.Html;
+@using Orchard.ContentManagement;
+@{
+    if (Model.Title != null) {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var tag = Tag(Model, "article");
+    Model.ListIndex = 1;
+    
+}
+<article data-id="id-@Model.ContentItem.Id" data-type="vimeo" class="span4" style="@(((Model.ListIndex + 1) % 3) == 1 ? "margin-left: 0" : "")">
+    <div class="p-thumb">
+        <img src="@Display.ResizeMediaUrl(Width: 627, Height: 419, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.Piatto.Gallery.MediaParts[0].MediaUrl)" alt="@Model.ContentItem.Piatto.Gallery.MediaParts[0].Title" />
+        <div class="image-overlay-bg">
+            <a href="@Model.ContentItem.Piatto.Gallery.MediaParts[0].MediaUrl" data-rel="prettyPhoto[portfolio]" title="@Model.ContentItem.Piatto.Gallery.MediaParts[0].Title" class="image-lightbox"></a>
+            <a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)" title="@Model.ContentItem.TitlePart.Title" class="image-link"></a>
+        </div>
+    </div>
+    <div class="p-text">
+        <a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)">@Model.ContentItem.TitlePart.Title</a><p>@(Model.ContentItem.Piatto.Tipodipiatto.Terms.Count>0?@Model.ContentItem.Piatto.Tipodipiatto.Terms[0].Name:"")</p>
+    </div>
+</article>

@@ -1,0 +1,7 @@
+Name: TheLaserAdmin
+Author: Laser s.r.l.
+Website: http://www.laser-group.com
+Description: Laser admin theme
+Version: 1.0
+OrchardVersion: 1.10
+BaseTheme: TheAdmin

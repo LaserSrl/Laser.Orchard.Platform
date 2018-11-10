@@ -1,0 +1,462 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Base line text"
+msgstr "Testo base"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Header logo URL"
+msgstr "URL del logo dell'intestazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Krake admin theme settings"
+msgstr "Impostazioni del tema admin di Krake"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Placeholder logo URL"
+msgstr "URL del logo placeholder"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Placeholder small logo URL"
+msgstr "URL del logo placeholder piccolo"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "type a base line text"
+msgstr "digitare un testo di base"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "type an URL for the header logo. Recommended size is 222x55."
+msgstr "digitare un URL per il logo dell'intestazione. Dimensione consigliata 222x55."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "type an URL for the placeholder logo. Recommended size is 240x120."
+msgstr "digitare un URL per il logo placeholder. Dimensione consigliata 240x120."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
+msgid "type an URL for the placeholder small logo. Recommended size is 70x70."
+msgstr "digitare un URL per il logo placeholder piccolo. Dimensione consigliata 70x70."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
+msgid "More info"
+msgstr "Mostra più informazioni"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
+msgid "Content Item"
+msgstr "Elemento di contenuto"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
+msgid "You need to save your changes."
+msgstr "Devi salvare i cambiamenti."
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
+msgid "Content Item"
+msgstr "Elemento di contenuto"
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
+msgid "You need to save your changes."
+msgstr "Devi salvare i cambiamenti."
+
+msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerSummaryAdmin.cshtml"
+msgid "Select"
+msgstr "Seleziona"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "A simple and transparent interface to manage content (and processes) multifaceted and heterogeneous."
+msgstr "Un'interfaccia semplice e trasparente per gestire contenuti (e processi) poliedrici ed eterogenei."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "A single dashboard to manage direct marketing campaigns: SMS, MAIL, PUSH NOTIFICATION, SOCIAL."
+msgstr "Una dashboard unica per gestire campagne di Direct Marketing: SMS, MAIL, PUSH NOTIFICATION, SOCIAL."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Add & Cut"
+msgstr "Aggiungi & Taglia"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Allows you to implement and manage marketing campaigns and communications via SMS"
+msgstr "permetterà di gestire campagne di marketing e comunicazione via SMS: una soluzione di facile utilizzo e di veloce attivazione e configurazione."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Allows you to implement and manage several mobile applications"
+msgstr "permetterà di implementare e gestire più applicazioni mobile."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Allows you to implement and manage several responsive websites"
+msgstr "permetterà di implementare e gestire più siti web dal design responsivo."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Allows you to manage integrated communication streams through your social accounts"
+msgstr "ti permetterà di gestire flussi di comunicazione integrata attraverso i profili social."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "CMS"
+msgstr "CMS"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Communication Gateway"
+msgstr "Communication Gateway"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Design and development of Mobile Applications"
+msgstr "Progettazione e sviluppo di Mobile Applications"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "for affordable (and usable) solutions by any user, on any device"
+msgstr "per soluzioni accessibili (e usabili) da qualsiasi utente e su qualsiasi device"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Import and Export"
+msgstr "Import ed Export"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "KRAKE&#8482;"
+msgstr "KRAKE&#8482;"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "MAIL"
+msgstr "MAIL"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "manage through its back office aimed marketing campaigns, newsletter and much more"
+msgstr "potrà gestire, attraverso un ambiente di back office, campagne di marketing mirato, newsletter, ecc."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "MOBILE APP"
+msgstr "APP MOBILE"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "More and less"
+msgstr "Di più e di meno"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Multi Users"
+msgstr "Multiutente"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "MyKrake&#8482; - ONE PLATFORM, MANY COMMUNICATION CHANNELS"
+msgstr "MyKrake&#8482; - UN'UNICA PIATTAFORMA PER PIÙ CANALI DI COMUNICAZIONE"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "One quick and easy way to manage targeted marketing campaigns and effective."
+msgstr "Uno strumento semplice e immediato per gestire campagne di marketing mirate ed efficaci."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "PUSH NOTIFICATIONS"
+msgstr "NOTIFICHE PUSH"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Responsive Web Design (RWD)"
+msgstr "Responsive Web Design (RWD)"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Responsive websites and mobile applications: you think about the content, the rest is Krake™."
+msgstr "Siti web responsivi e applicazioni mobile: tu pensa ai contenuti, al resto ci pensa KRAKE™."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "SMS"
+msgstr "SMS"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Social"
+msgstr "Social"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "the app will remain up and vigilant thanks to custom push notifications"
+msgstr "l'app sarà sempre viva e attiva: notifiche push, anche personalizzate, garantiranno comunicazioni precise, puntuali e mirate"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "WEB"
+msgstr "WEB"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "Web&Mobile"
+msgstr "Web&Mobile"
+
+msgctxt "~/Themes/KrakeAdmin/Views/ErrorPage.cshtml"
+msgid "An unhandled exception has occurred and the request was terminated. Please refresh the page. If the error persists, go back"
+msgstr "Si è  verificato un errore imprevisto e la richiesta è stata terminata. Aggiorna la pagina, se l'errore persiste vai indietro."
+
+msgctxt "~/Themes/KrakeAdmin/Views/ErrorPage.cshtml"
+msgid "Oops. Something went wrong ... sorry"
+msgstr "Oops. Qualcosa è andato storto..."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Header.cshtml"
+msgid "Project Krake"
+msgstr "Progetto Krake"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Header.cshtml"
+msgid "Your site"
+msgstr "Il tuo sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Amelia"
+msgstr "Amelia"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cerulean"
+msgstr "Cerulean"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cosmo"
+msgstr "Cosmo"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Cyborg"
+msgstr "Cyborg"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Flatly"
+msgstr "Flatly"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Journal"
+msgstr "Giornale"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Readable"
+msgstr "Readable"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select the swatch that you want"
+msgstr "Selezionare lo stile desiderato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a fixed navigation"
+msgstr "Selezionare questa checkbox per usare una navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a fluid layout (100% width)"
+msgstr "Selezionare questa checkbox per usare un layout fluido (100% width)"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a navigation bar search field. *REQUIRES SEARCH MODULE"
+msgstr "Selezionare questa checkbox per usare un campo di ricerca nella barra di navigazione. *Richiesto per il modulo di ricerca"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use a sticky footer"
+msgstr "Selezionare questa checkbox per usare un footer "adesivo"."
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Select this checkbox to use the inverse navigation color. *REQUIRES FIXED NAVIGATION BAR"
+msgstr "Selezionare questa checkbox per invertire i colori della barra di navigazione. *Richiede la barra di navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Simplex"
+msgstr "Simplex"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Slate"
+msgstr "Slate"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Spacelab"
+msgstr "Spacelab"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Swatch"
+msgstr "Stile"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Tagline text"
+msgstr "Testo della Tagline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "type tagline text for your site"
+msgstr "tipo di testo tagline per il sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "United"
+msgstr "United"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Fixed Navigation Bar"
+msgstr "Usare la barra di navigazione fissa"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Fluid Layout"
+msgstr "Usare il layout fluido"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Inverse Navigation Bar Color"
+msgstr "Usare la barra di navigazione con colori invertiti"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Navigation Bar Search Field"
+msgstr "Usare il campo di ricerca nella barra di navigazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
+msgid "Use Sticky Footer"
+msgstr "Usare un footer "adesivo""
+
+msgctxt "~/Themes/KrakeAdmin/Views/Layout.cshtml"
+msgid "Are you sure you want to remove this element ?"
+msgstr "Sicuro di volere eliminare questo elemento?"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Layout.cshtml"
+msgid "Skip to navigation"
+msgstr "Vai alla navigazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/OrchardVersion.cshtml"
+msgid "Krake v.{0}"
+msgstr "Krake v.{0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
+msgid "<"
+msgstr "<"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
+msgid ">"
+msgstr ">"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
+msgid "All"
+msgstr "Tutti"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
+msgid "Show:"
+msgstr "Mostra:"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
+msgid "Showing items {0} - {1} of {2}"
+msgstr "Elementi {0} - {1} di {2}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Add Selected"
+msgstr "Aggiungi selezionato/i"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "any (show all)"
+msgstr "qualsiasi (visualizza tutti)"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Apply"
+msgstr "Applica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Culture"
+msgstr "Cultura"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Manage {0} Content"
+msgstr "Gestire Contenuto {0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Ordered by"
+msgstr "Ordinato per"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Recent Content"
+msgstr "Contenuti recenti"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "recently created"
+msgstr "creato di recente"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "recently modified"
+msgstr "modificato di recente"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "recently published"
+msgstr "pubblicato di recente"
+
+msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
+msgid "Show"
+msgstr "Visualizza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Title.cshtml"
+msgid "Project Krake"
+msgstr "Progetto Krake"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Title.cshtml"
+msgid "Your site"
+msgstr "Il tuo sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "Logout"
+msgstr "Esci"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "Project Krake"
+msgstr "Progetto Krake"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "User"
+msgstr "Utente"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "User:"
+msgstr "Utente:"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "Your site"
+msgstr "Il tuo sito"
+
+msgctxt "KrakeAdmin.Settings.AdminMenu"
+msgid "Krake admin theme options"
+msgstr "Opzioni del tema admin di Krake"
+
+msgctxt "KrakeAdmin.Settings.AdminMenu"
+msgid "Themes"
+msgstr "Temi"
+
+msgctxt "KrakeAdmin.Settings.Controllers.AdminController"
+msgid "Couldn't update theme settings"
+msgstr "Impossibile aggiornare le impostazioni del tema"
+
+msgctxt "KrakeAdmin.Settings.Controllers.AdminController"
+msgid "Your settings have been saved."
+msgstr "Le impostazioni sono state salvate."
+

@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B262E9D8-A4DA-4F70-9ABE-9CEB2D8D6171}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Laser.Orchard.Mobile</RootNamespace>
+    <AssemblyName>Laser.Orchard.Mobile</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Amazon, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Amazon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Apple, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Apple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Blackberry, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Blackberry.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Core, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Firefox, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Firefox.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Google, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Google.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PushSharp.Windows, Version=4.0.10.0, Culture=neutral, PublicKeyToken=cf74b75eab2c0170, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\PushSharp.4.0.10\lib\net45\PushSharp.Windows.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\smsScript.js" />
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.Config.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.GetConfigResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.GetSmsStateByExternalIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.SendSMSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.StatusByExtId.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SmsServiceReference\Laser.Orchard.Mobile.SmsServiceReference.GetStatusResponse.datasource" />
+    <Content Include="packages.config" />
+    <None Include="Service References\SmsServiceReference\SmsWebService.disco" />
+    <None Include="Service References\SmsServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\SmsServiceReference\configuration.svcinfo" />
+    <None Include="Service References\SmsServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Module.txt" />
+    <Content Include="Views\PushNotification\Send.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PushMobileSettings_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\UserAgentRedirect_Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\EditorTemplates\AppStoreEdit.cshtml" />
+    <Content Include="Views\Parts\UserAgentRedirect.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\MobilePush_Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\ModuleRelease.pubxml" />
+    <None Include="Properties\PublishProfiles\Orchard_Module_Release.pubxml" />
+    <Content Include="Views\DefinitionTemplates\PushMobilePartSettingVM.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\SmsSettingsPart_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\UserPwdRecoveryPart_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\MobileContact_Edit.cshtml" />
+    <Content Include="Views\Parts\MobilePush.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\SmsGateway_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\SmsPlaceholders.Settings.cshtml" />
+    <Content Include="Views\EditorTemplates\SmsPlaceholder.cshtml" />
+    <Content Include="Views\Parts\SmsGateway_SummaryAdmin.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\MobilePushApproved_Edit.cshtml" />
+    <Content Include="Views\Parts\MobileContact.cshtml" />
+    <None Include="Service References\SmsServiceReference\SmsWebService.wsdl" />
+    <Content Include="Views\EditorTemplates\Parts\Users.LastDeviceUserDataProviderSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\BannerAgent_Edit.cshtml" />
+    <Content Include="Views\Parts\BannerAgent.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BannerAgentManifest.cs" />
+    <Compile Include="Controllers\CheckMAMController.cs" />
+    <Compile Include="Controllers\ContactListController.cs" />
+    <Compile Include="Controllers\CountPanelController.cs" />
+    <Compile Include="Controllers\ExternalPushController.cs" />
+    <Compile Include="Controllers\SmsDeliveryReportController.cs" />
+    <Compile Include="Controllers\TaxonomiePushController.cs" />
+    <Compile Include="Controllers\TransferDeliveryReportController.cs" />
+    <Compile Include="Drivers\BannerAgentDriver.cs" />
+    <Compile Include="Drivers\MobileContactPartDriver.cs" />
+    <Compile Include="Drivers\SmsGatewayPartDriver.cs" />
+    <Compile Include="Drivers\SmsSettingsPartDriver.cs" />
+    <Compile Include="Drivers\UserPwdRecoveryPartDriver.cs" />
+    <Compile Include="Feature\MobileCommunicationImportFeature.cs" />
+    <Compile Include="Feature\MobileGDPRKeyFeaturesProvider.cs" />
+    <Compile Include="Feature\PushGatewayGDPRKeyFeaturesProvider.cs" />
+    <Compile Include="Feature\SmsCommunicationImportFeature.cs" />
+    <Compile Include="Handlers\BannerAgentHandler.cs" />
+    <Compile Include="Feature\SmsExtensionGDPRKeyFeaturesProvider.cs" />
+    <Compile Include="Feature\SmsGatewayGDPRKeyFeaturesProvider.cs" />
+    <Compile Include="Handlers\ContactRelatedEventHandler.cs" />
+    <Compile Include="Handlers\LastDeviceUserDataProviderSettingsPartHandler.cs" />
+    <Compile Include="Handlers\MobileContactPartHandler.cs" />
+    <Compile Include="Handlers\MobilePushPartGDPRHandler.cs" />
+    <Compile Include="Handlers\PushScheduledTaskHandler.cs" />
+    <Compile Include="Handlers\SmsGatewayEventHandler.cs" />
+    <Compile Include="Handlers\SmsGatewayPartGDPRHandler.cs" />
+    <Compile Include="Handlers\SmsGatewayPartHandler.cs" />
+    <Compile Include="Handlers\SmsPlaceholdersSettingsHandler.cs" />
+    <Compile Include="Handlers\SmsScheduledTaskHandler.cs" />
+    <Compile Include="Handlers\UserPwdRecoveryPartGDPRHandler.cs" />
+    <Compile Include="Handlers\UserPwdRecoveryPartHandler.cs" />
+    <Compile Include="MigrationBannerAgent.cs" />
+    <Compile Include="Models\BannerAgentPart.cs" />
+    <Compile Include="Handlers\UUIDGDPRHandler.cs" />
+    <Compile Include="Models\LastDeviceUserDataProviderSettingsPart.cs" />
+    <Compile Include="Models\LatestUUIDForUserRecord.cs" />
+    <Compile Include="Models\MobileContactPart.cs" />
+    <Compile Include="Models\PushState.cs" />
+    <Compile Include="Models\SentRecord.cs" />
+    <Compile Include="Models\SmsGatewayPart.cs" />
+    <Compile Include="Models\SmsPlaceholdersSettingsPart.cs" />
+    <Compile Include="Models\UserPwdRecoveryPart.cs" />
+    <Compile Include="Projections\DeviceTypeFilter.cs" />
+    <Compile Include="Projections\DeviceTypeForm.cs" />
+    <Compile Include="RedirectResourceManifest.cs" />
+    <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Service References\SmsServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LastDeviceUserDataProvider.cs" />
+    <Compile Include="Services\MissingSmsSettingsBanner.cs" />
+    <Compile Include="Services\PushGatewayService.cs" />
+    <Compile Include="Services\SmsCommunicationService.cs" />
+    <Compile Include="Services\SmsValidationService.cs" />
+    <Compile Include="Services\UserPwdRecoveryDefaultFrontEndSettingsProvider.cs" />
+    <Compile Include="SMSGatewayMigration.cs" />
+    <Compile Include="SmsMigrations.cs" />
+    <Compile Include="Projections\DeviceFilter.cs" />
+    <Compile Include="Handlers\SmsSettingsPartHandler.cs" />
+    <Compile Include="Handlers\UserDeviceHandler.cs" />
+    <Compile Include="Models\UserDeviceRecord.cs" />
+    <Compile Include="Services\SmsServices.cs" />
+    <Compile Include="Models\SmsSettingsPart.cs" />
+    <Compile Include="Settings\SmsSettingsPartHooks.cs" />
+    <Compile Include="ViewModels\DeliveryReportVM.cs" />
+    <Compile Include="ViewModels\PhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\PushMessage.cs" />
+    <Compile Include="ViewModels\PushNotificationVM.cs" />
+    <Compile Include="ViewModels\SmsDeliveryReportResultVM.cs" />
+    <Compile Include="ViewModels\SmsGatewayVM.cs" />
+    <Compile Include="WorkFlows\PushEditForm.cs" />
+    <Compile Include="Controllers\DeviceController.cs" />
+    <Compile Include="Controllers\PushNotificationController.cs" />
+    <Compile Include="Controllers\AppStoreRedirectController.cs" />
+    <Compile Include="Controllers\SignalController.cs" />
+    <Compile Include="Drivers\MobilePushPartDriver.cs" />
+    <Compile Include="Drivers\PushMobileSettingsPartDriver.cs" />
+    <Compile Include="Drivers\UserAgentRedirectDriver.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Handlers\MobilePushPartHandler.cs" />
+    <Compile Include="Handlers\PushMobileHandler.cs" />
+    <Compile Include="Handlers\UserAgentRedirectHandlers.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\MobilePushPartRecord.cs" />
+    <Compile Include="Models\PushMobileSettingsPart.cs" />
+    <Compile Include="Models\UserAgentRedirect.cs" />
+    <Compile Include="Routes\Routes.cs" />
+    <Compile Include="Services\PushNotificationService.cs" />
+    <Compile Include="Services\UserAgentRedirectServices.cs" />
+    <Compile Include="Settings\PushMobileEditorEvents.cs" />
+    <Compile Include="Settings\PushMobilePartSettingVM.cs" />
+    <Compile Include="ViewModels\DeviceVM.cs" />
+    <Compile Include="ViewModels\MobilePushVM.cs" />
+    <Compile Include="ViewModels\PushIndex.cs" />
+    <Compile Include="Models\PushNotificationRecord.cs" />
+    <Compile Include="ViewModels\PushMobileSettingsVM.cs" />
+    <Compile Include="ViewModels\PushSearch.cs" />
+    <Compile Include="ViewModels\UserAgentRedirectEdit.cs" />
+    <Compile Include="WorkFlows\PushTask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\EditorTemplates\Fields\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PushNotification\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Autoroute\Orchard.Autoroute.csproj">
+      <Project>{66fccd76-2761-47e3-8d11-b45d0001ddaa}</Project>
+      <Name>Orchard.Autoroute</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentPicker\Orchard.ContentPicker.csproj">
+      <Project>{f301ef7d-f19c-4d83-aa94-cb64f29c037d}</Project>
+      <Name>Orchard.ContentPicker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
+      <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
+      <Name>Orchard.Forms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
+      <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
+      <Name>Orchard.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
+      <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
+      <Name>Orchard.Projections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
+      <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
+      <Name>Orchard.Taxonomies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
+      <Name>Orchard.Tokens</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
+      <Name>Orchard.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
+      <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
+      <Name>Orchard.Workflows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Laser.Orchard.Commons\Laser.Orchard.Commons.csproj">
+      <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
+      <Name>Laser.Orchard.Commons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
+      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
+      <Name>Contrib.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.CommunicationGateway\Laser.Orchard.CommunicationGateway.csproj">
+      <Project>{bb12e69f-0976-407d-a716-542b7d22ee5f}</Project>
+      <Name>Laser.Orchard.CommunicationGateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.GDPR\Laser.Orchard.GDPR.csproj">
+      <Project>{fa9ea67b-dc6e-4fb3-b46d-e777d191b35a}</Project>
+      <Name>Laser.Orchard.GDPR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Queries\Laser.Orchard.Queries.csproj">
+      <Project>{d494b57f-2ae6-460f-9785-565376409afc}</Project>
+      <Name>Laser.Orchard.Queries</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.ShortLinks\Laser.Orchard.ShortLinks.csproj">
+      <Project>{EC3AC4A2-7368-4609-999B-29965418372C}</Project>
+      <Name>Laser.Orchard.ShortLinks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
+      <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
+      <Name>Laser.Orchard.StartupConfig</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\SmsServiceReference\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

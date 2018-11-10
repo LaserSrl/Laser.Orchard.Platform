@@ -1,0 +1,48 @@
+﻿@using Newtonsoft.Json.Linq;
+@{ 
+    var tableData = Model.Table;
+    JArray arr = JArray.Parse(tableData.TableData);
+    JArray settings = new JArray();
+    if (!String.IsNullOrWhiteSpace(Model.Settings.ColumnsDefinition)) {
+        var normalizedSettings = System.Text.RegularExpressions.Regex.Replace(Model.Settings.ColumnsDefinition, "\"editor\":[^},\"]+", "\"editor\":false");
+        settings = JArray.Parse(normalizedSettings);
+    }
+    var headers = new List<string>();
+    var fields = new List<string>();
+    foreach (var token in settings) {
+        headers.Add(token.Value<string>("title"));
+        fields.Add(token.Value<string>("field"));
+    }
+}
+@using (Script.Head()) {
+    <style>
+        .json-data-table td, .json-data-table th {
+            padding: 5px;
+        }
+        .json-data-table-header {
+            border-bottom: 1px solid red;
+        }
+    </style>
+}
+<table class="json-data-table">
+    <thead>
+        <tr class="json-data-table-header">
+            @foreach (var header in headers) {
+                <th>
+                    @(header)
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in arr) {
+            <tr>
+                @foreach (var field in fields) {
+                    <td>
+                        @(obj.Value<string>(field))
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

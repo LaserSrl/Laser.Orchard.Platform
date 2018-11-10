@@ -1,0 +1,46 @@
+﻿.dotted {
+    border-top: 1px dotted #333;
+    padding: 3px;
+}
+
+#my-btn-outline {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: black;
+}
+
+#my-btn-outline a, a:link, a:hover, a:visited {
+    color: black;
+}
+
+#appliedFilters ul li {
+    display: inline;
+    margin-right: 0.2em;
+}
+
+.box-body, .box-footer {
+    padding-top: 10px;
+}
+
+.av-textbox {
+    width: 12em;
+    font-family: inherit;
+    padding: 3px;
+    border: 1px solid #bdbcbc;
+    font-size: inherit;
+}
+
+.ac-li {
+    width: 50em;
+}
+
+.ac-div-name, .ac-div-mail {
+    width: 20em;
+    display: inline-block;
+    vertical-align: top;
+    word-wrap: break-word
+}
+
+.ac-div-mail {
+    margin-left: 0.4em;
+}

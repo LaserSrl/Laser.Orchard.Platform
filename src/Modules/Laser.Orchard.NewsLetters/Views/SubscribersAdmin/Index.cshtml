@@ -1,0 +1,61 @@
+﻿@using Laser.Orchard.NewsLetters.Extensions;
+@using Orchard.Core.Contents.ViewModels;
+@using Orchard.Utility.Extensions;
+@using Laser.Orchard.NewsLetters.Models;
+
+@{ Layout.Title = T("Newsletter Subscribers List").ToString();
+   int newsletterId = Model.NewsletterId;
+}
+<p class="breadcrumb"><a href="@Url.NewsLettersForAdmin()">@T("Newsletter List")</a>@T(" &#62; ")@T("Newsletter Edition List")</p>
+
+@using (Html.BeginFormAntiForgeryPost(Url.Action("List", "Admin", new { area = "Contents", id = "" }))) {
+@*
+    <fieldset class="bulk-actions">
+        <label for="publishActions">@T("Actions:")</label>
+        <select id="publishActions" name="Options.BulkAction">
+            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.None, T("Choose action...").ToString())
+            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.Remove, T("Delete").ToString())
+        </select>
+        @Html.Hidden("returnUrl", ViewContext.RequestContext.HttpContext.Request.ToUrlString())
+        <button type="submit" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+    </fieldset>
+    *@
+    <fieldset class="contentItems bulk-items">
+        <ul>
+            @foreach (SubscriberRecord item in Model.Subscribers) {
+                <li class="last first">
+                    <div class="summary">
+                        <div class="properties">
+                            <h3>@item.Name</h3>
+                            -
+                            <div class="contentType">@item.Email</div>
+                            <div class="metadata">
+                                <ul class="pageStatus">
+                                    @if (item.Confirmed) {
+                                        <li>
+                                            <img class="icon" src="~/Modules/Orchard.PublishLater/Content/Admin/images/online.gif" alt="Confirmed" title="Email confirmed">
+                                        </li>
+                                        <li>@String.Format(T("Subscribed from {0}").Text, item.SubscriptionDate.ToShortDateString())&nbsp;|&nbsp;</li>
+                                        <li>@String.Format(T("Confirmation on {0}").Text, item.ConfirmationDate.HasValue ? item.ConfirmationDate.Value.ToShortDateString() : "-")</li>
+                                    } else {
+                                        <li>
+                                            <img class="icon" src="~/Modules/Orchard.PublishLater/Content/Admin/images/offline.gif" alt="Not confirmed" title="Email not confirmed">
+                                        </li>
+                                        <li>@String.Format(T("Subscribed from {0}").Text, item.SubscriptionDate.ToShortDateString())&nbsp;|&nbsp;</li>
+                                        <li>@String.Format(T("Unsubscribed on {0}").Text, item.UnsubscriptionDate.HasValue ? item.UnsubscriptionDate.Value.ToShortDateString() : "-")</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+@*                        <div class="related">
+                            <a href="@Url.SubscriberRemove(item)" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                        </div>*@
+                    </div>
+                </li>
+            }
+        </ul>
+    </fieldset>
+}
+@using (Html.BeginForm("Index", "Routes", FormMethod.Post)) {
+    @Display(Model.Pager)
+}

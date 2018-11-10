@@ -1,0 +1,122 @@
+﻿@model Laser.Orchard.SEO.ViewModels.SeoPartViewModel
+@{
+    var emptySeo = String.IsNullOrWhiteSpace(Model.Keywords) && String.IsNullOrWhiteSpace(Model.Description) && String.IsNullOrWhiteSpace(Model.TitleOverride);
+    Style.Require("FontAwesome430").AtHead();
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            $(function () {
+                $('#seo-label a').click(function () {
+                    if ($("#seo-data-container").is(":visible")) {
+                        $("i", this).attr('class', 'fa fa-chevron-right');
+                        $("#seo-data-container").hide(400);
+                    }
+                    else {
+                        $("i", this).attr('class', 'fa fa-chevron-down');
+                        $("#seo-data-container").show(400);
+                    }
+                    $('html, body').animate({
+                        scrollTop: $($(this).attr('href')).offset().top
+                    }, 500);
+                    return false;
+                });
+            });
+        </script>
+    }
+}
+
+@helper CbAndLabelFor(System.Linq.Expressions.Expression<Func<Laser.Orchard.SEO.ViewModels.SeoPartViewModel, bool>> expression, string titleTag = "") {
+    @Html.CheckBoxFor(expression, new { @title = titleTag })
+    <label for="@Html.FieldIdFor(expression)" class="forcheckbox" style="font-weight: normal;" title="@titleTag">@Html.DisplayNameFor(expression)</label>
+    <text>&nbsp;&nbsp;</text>
+}
+
+<fieldset class="editor">
+    <legend id="seo-label"><a href="#seo-label"><i class="fa fa-chevron-right"></i></a> @T("SEO attributes")</legend>
+    @if (emptySeo) {
+        <span class="hint">@T("SEO attributes are empty!")</span>
+    }
+    <div id="seo-data-container" style="display:none">
+        <div class="editor-label">
+            @Html.LabelFor(m => m.TitleOverride, @T("TitleOverride"))
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.TitleOverride, new { @class = "large text", @title = T("This value will replace the page title.") })
+            <span class="hint">@T("TitleOverrideDescription")</span>
+            @Html.ValidationMessageFor(m => m.TitleOverride)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Description, @T("Description"))
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Description, new { @class = "large text", @title = T("This is the page description. This is the most important metadata tag for search engine crawlers.") })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(m => m.Keywords, @T("Keywords"))
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.Keywords, new { @class = "large text", @title = T("This is a list of keywords for the page. Note that this metadata tag is not used by search engines anymore.") })
+            @Html.ValidationMessageFor(m => m.Keywords)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(m => m.CanonicalUrl, @T("Canonical Url"))
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(m => m.CanonicalUrl, new { @class = "large text tokenized", @title = T("Canonical Url.") })
+            @Html.ValidationMessageFor(m => m.CanonicalUrl)
+            <span class="hint">@T("Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}")</span>
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(m => m.RobotsNoIndex, @T("Robots settings"))
+        </div>
+
+        <div class="editor-field">
+            @CbAndLabelFor(m => m.RobotsNoIndex, @T("Prevents the page from being indexed in search engines.").ToString())
+
+            @CbAndLabelFor(m => m.RobotsNoFollow, @T("Prevents crawlers from following page links").ToString())
+
+            @CbAndLabelFor(m => m.RobotsNoSnippet, @T("Prevents page snippets from being shown in search results").ToString())
+
+            @CbAndLabelFor(m => m.RobotsNoOdp, @T("Prevents the alternative description from the ODP/DMOZ from being used").ToString())
+
+            @CbAndLabelFor(m => m.RobotsNoArchive, @T("Prevents displaying the cached link for a page").ToString())
+
+            @CbAndLabelFor(m => m.RobotsUnavailableAfter, @T("Specify the exact date to stop crawling and indexing the page").ToString())
+
+            @Html.EditorFor(m => m.RobotsUnavailableAfterDateEditor)
+
+            @CbAndLabelFor(m => m.RobotsNoImageIndex, @T("Prevents the page to appear as referring page for an image that appears in search results").ToString())
+
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(m => m.RobotsNoIndex, @T("Google settings"))
+        </div>
+        <div class="editor-field">
+            @CbAndLabelFor(m => m.GoogleNoSiteLinkSearchBox, @T("If this website has a search functionality powered by Google, this tag prevents a search box from being displayed in Google's search results.").ToString())
+
+            @CbAndLabelFor(m => m.GoogleNoTranslate, @T("Prevents Google from providing a translation link for the page in its search results").ToString())
+        </div>
+
+        @if (Model.HasDetailMicrodata || Model.HasAggregatedMicrodata) {
+            <div class="editor-label">
+                <label>@T("Microdata").ToString()</label>
+            </div>
+            <div class="editor-field">
+                @if (Model.HasDetailMicrodata) {
+                    @Html.CheckBoxFor(m => m.HideDetailMicrodata)
+                    <label for="@Html.FieldIdFor(m => m.HideDetailMicrodata)" class="forcheckbox" style="font-weight: normal;">@T("Don't show microdata for this content").ToString()</label>
+                    <br />
+                }
+                @if (Model.HasAggregatedMicrodata) {
+                    @Html.CheckBoxFor(m => m.HideAggregatedMicrodata)
+                    <label for="@Html.FieldIdFor(m => m.HideAggregatedMicrodata)" class="forcheckbox" style="font-weight: normal;">@T("Don't show aggregated microdata for nested content").ToString()</label>
+                }
+            </div>
+        }
+        </div>
+    </fieldset>

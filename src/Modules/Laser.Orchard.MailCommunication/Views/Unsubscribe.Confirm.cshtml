@@ -1,0 +1,20 @@
+﻿@{
+    Layout.Title = T("Unsubscribe Confirm");
+}
+
+<h1>@T("Email unsubscription")</h1>
+@using (Html.BeginForm("UnsubscribeMail", "Unsubscribe", new { area = "Laser.Orchard.MailCommunication" }, FormMethod.Post)) { 
+    @Html.AntiForgeryTokenOrchard()
+    <ul>
+        <li class="emailForm">
+            <label for="Email">@T("Email")</label>
+            <input id="Email" class="text" name="Email" type="text" placeholder="@T("Email Address")" />
+        </li>
+        <li>
+            <label for="ConfirmEmail">@T("Email Confirmation")</label>
+            <input id="ConfirmEmail" class="text" name="ConfirmEmail" type="text" placeholder="@T("Email Confirmation")" />
+        </li>
+    </ul>
+     
+    <input type="submit" name="Mail_Unsubscribe_Confirm" value="@T("Unsubscribe")" />
+}

@@ -1,0 +1,11 @@
+﻿@try{
+@Html.Raw(Model.Model.PartFieldDefinition.Settings["BooleanFieldSettings.Hint"])
+}catch{}
+<fieldset>
+    <label for="ProfilePart_Privacy_Value">Privacy</label>
+            <input type="checkbox" id="ProfilePart_Privacy_Value" value="true" name="ProfilePart.Privacy.Value"  /><input name="ProfilePart.Privacy.Value" type="hidden" value="false" /> 
+            <label class="forcheckbox" for="ProfilePart_Privacy_Value">Ho letto ed accetto l'informativa sulla Privacy </label>
+    
+
+</fieldset>
+

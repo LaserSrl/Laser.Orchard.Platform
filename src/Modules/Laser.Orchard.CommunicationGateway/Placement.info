@@ -1,0 +1,51 @@
+﻿<Placement>
+  <Match DisplayType="Detail">
+    <Place Parts_Advertising="Content:before.1" />
+  </Match>
+  <Match ContentType="CommunicationAdvertising">
+    <Match DisplayType="Summary">
+      <Place Parts_Title_Summary="-" />
+      <Place Fields_Link__CommunicationAdvertising__CommunicationAdvertisingPart-UrlLinked="Content:2.1"/>
+      <Place Fields_ContentPicker__CommunicationAdvertising__CommunicationAdvertisingPart-ContentLinked="Content:2.2"/>
+    </Match>
+  </Match>
+  <Match ContentType="CommunicationAdvertising">
+    <Place Fields_ContentPicker_Edit-Campaign="-"/>
+    <Place switchurl="Content:2" />
+    <Place Fields_MediaLibraryPicker_Edit__CommunicationAdvertisingPart-Gallery="Content:3"/>
+    <Place Parts_AdvertisingSwitcher="Content:4.1.1"/>
+    <Place Fields_ContentPicker_Edit__CommunicationAdvertisingPart-ContentLinked="Content:4.1.2;Wrapper=switchurl"/>
+    <Place Fields_Link_Edit__CommunicationAdvertisingPart-UrlLinked="Content:4.1.3;Wrapper=switchurl"/>
+
+    <Place Parts_CommunicationAdvertising_Edit="Content:1"/>
+  </Match>
+  <Match ContentType="CommunicationContact">
+    <Match DisplayType="Detail">
+      <Place Parts_EmailContact="Content:1"/>
+      <Place Parts_SmsContact="Content:2"/>
+      <Place Parts_MobileContact="Content:3"/>
+      <Place Parts_FavoriteCulturePart="Content:4"/>
+      <Place Parts_ProfilePart="Content:5"/>
+      <Place Parts_CommunicationContact="Content:6"/>
+      <Place Parts_ContactInfo="Content:7"/>
+      <!-- hide all other fields -->
+      <Place Fields_Numeric="-"/>
+      <Place Fields_Boolean="-"/>
+      <Place Fields_Enumeration="-"/>
+      <Place Fields_TaxonomyField="-"/>
+      <Place Fields_Common_Text="-"/>
+      <Place Fields_Input="-"/>
+      <Place Fields_DateTime="-"/>
+      <Place Fields_Link="-"/>
+      <Place Fields_ContentPicker="-"/>
+      <Place Fields_MediaLibraryPicker="-"/>
+    </Match>
+  </Match>
+  <Place Fields_MediaLibraryPicker_Edit="Content:2"/>
+  <Place Parts_Tags_Edit="Content:3"/>
+  <Place Parts_EmailContact_Edit="Content:4"/>
+  <Place Parts_SmsContact_Edit="Content:4.1"/>
+  <Place Parts_Advertising_Edit="Content:4.2"/>
+  <Place Parts_QueryPicker_Edit="Content:5"/>
+  <Place Parts_CommunicationContact_Edit="Content:after" />"
+</Placement>

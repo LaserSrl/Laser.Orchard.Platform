@@ -1,0 +1,24 @@
+﻿@{
+    var taxonomyMenu = (dynamic)Model.Item;
+
+    var ulClass = "dropdown-menu";
+    ulClass += taxonomyMenu.Item.Items.Length > 1 ? " multi-column columns-" + taxonomyMenu.Item.Items.Length : "";
+    var subUlClass = "multi-column-dropdown";
+}
+
+<ul class="@ulClass" role="menu" aria-labelledby="dLabel-@(taxonomyMenu.Content.Id)">
+    <div class="row">
+        @foreach (var subItem in taxonomyMenu.Items) {
+            <div class="dropdown-menu-column col-sm-3">
+                @{
+                    subItem.Classes.Add(subUlClass);
+                    var tagUl = Tag(subItem, "ul");
+                    @tagUl.StartElement
+                    <h6>@subItem.Text</h6>
+                        @DisplayChildren(subItem)
+                        @tagUl.EndElement
+                }
+            </div>
+        }
+    </div>
+</ul>

@@ -1,0 +1,11 @@
+﻿@model Laser.Orchard.Mobile.Models.LastDeviceUserDataProviderSettingsPart
+
+<fieldset>
+    <legend>@T("Mobile authentication")</legend>
+    <div>
+        @Html.CheckBoxFor(m => m.AuthenticateOnlyLatestUUID)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.AuthenticateOnlyLatestUUID)">@T("Validate only calls that carry the latest UUID.")</label>
+        @Html.ValidationMessageFor(m => m.AuthenticateOnlyLatestUUID)
+        <p class="hint">@T("When checked, the user will be validated only for calls made with the UUID corresponding to the latest device they signed in with.")</p>
+    </div>
+</fieldset>

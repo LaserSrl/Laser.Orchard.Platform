@@ -1,0 +1,94 @@
+<style type="text/css">
+   
+</style>
+@using Laser.Orchard.Faq.Models
+@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models
+@{
+    IEnumerable<object> faqs = Model.Faqs;
+    IEnumerable<object> types = Model.FaqTypes;
+}
+
+@{
+    Style.Include("Laser.Orchard.Faq.css");
+}
+
+@if (types == null || faqs.Count() < 1)
+{
+    <p>@T("NoItems")</p>
+}
+else
+{
+    Script.Require("jQuery");
+    <ol class="faq-items">
+        @foreach (dynamic type in types)
+        {
+            string catTitle = type.Title;
+            int typeId = type.Id;
+            var findFaqs = faqs.Cast<FaqPart>().Where(f => f.FaqTypeId == type.Id);
+            int count = findFaqs.Count();
+            if (count == 0) { continue; }
+            <div class="faq-type-title" id="@typeId">
+                <span id="faq_list_marker_@typeId" class="faq_list_marker"></span>
+                <h3 >@catTitle (@count)</h3>
+            </div>
+            foreach (dynamic faq in findFaqs)
+            {
+                int faqId = faq.Id;
+                var body = (faq as FaqPart).ContentItem.As<BodyPart>().Text;
+            <ul class="faq-items-question @typeId" style="display: none;">
+                <li class="faq-question" id="@faqId">
+                    <span id="faq_question_marker_@faqId" class="faq_question_marker"></span>
+                    @(new MvcHtmlString(faq.Question))
+                    @*<a class="faq_trigger ">
+                        <span id="show-trigger-@faqId">@T("Answer")</span>
+                        <span id="answer-trigger-@faqId" style="display: none;">@T("Hide")</span>
+                    </a>*@
+                </li>
+                <li class="faq-answer" style="display: none;" id="faq-answer-@faqId">@(new MvcHtmlString(body))</li>
+            </ul>
+            }
+        }
+    </ol>
+
+        using (Script.Foot())
+        {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            $('.faq-type-title').click(function () {
+                var id = $(this).attr("id");
+                if (!$(this).hasClass('faq-title-selected')) {
+                    $("#faq_list_marker_" + id).addClass('faq_list_marker_expanded');
+                    $('.faq-type-title').removeClass('faq-title-selected');
+                    $(this).addClass('faq-title-selected');
+                    $(".faq-items-question").hide();
+                    $(".faq-items-question." + id).show();
+                } else {
+                    $("#faq_list_marker_" + id).removeClass('faq_list_marker_expanded');
+                    $(".faq-items-question." + id).hide();
+                    $(this).removeClass('faq-title-selected');
+                }
+            });
+
+            $('.faq-question').click(function () {
+                var id = $(this).attr("id");
+                if (!$(this).hasClass('faq-selected')) {
+                    $("#faq_question_marker_" + id).addClass('faq_list_marker_expanded');
+                   $(this).addClass('faq-selected');
+                    $('#faq-answer-' + id).show();
+                    //$("#show-trigger-" + id).hide();
+                    //$("#answer-trigger-" + id).show();
+                } else {
+                    $("#faq_question_marker_" + id).removeClass('faq_list_marker_expanded');
+                    //$("#show-trigger-" + id).show();
+                    //$("#answer-trigger-" + id).hide();
+                    $('#faq-answer-' + id).hide();
+                    $(this).removeClass('faq-selected');
+                }
+            });
+        });
+        //]]>
+    </script>
+        }
+}

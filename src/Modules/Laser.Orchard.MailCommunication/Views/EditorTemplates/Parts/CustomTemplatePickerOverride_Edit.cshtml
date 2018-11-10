@@ -1,0 +1,9 @@
+﻿@model Laser.Orchard.TemplateManagement.ViewModels.CustomTemplatePickerViewModel
+<fieldset>
+    <legend>@T("Template picker")</legend>
+    <div class="editor-field">
+        @Html.LabelFor(m => m.TemplateIdSelected, T("Pick a template"))
+        @Html.DropDownListFor(m=>m.TemplateIdSelected, new SelectList(Model.TemplatesList, "Id","Title", Model.TemplateIdSelected))
+        <span class="hint">@T("The template to use for.")</span>
+    </div>
+</fieldset>

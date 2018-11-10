@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.Highlights.Settings.HighlightsGroupSettings
+           @{
+	Style.Include("Common.css", "Common.min.css");
+}
+<fieldset>
+	<div class="editor-field">
+		@Html.LabelFor(m => m.ShapeName, T("Shape Name"))
+		@Html.DropDownListFor(m => m.ShapeName, new SelectList(Model.AvailablePlugins, Model.ShapeName))
+		<span class="hint">@T("The suffix view name (shape) used to render highlights. Remember to add it to Placement.info. (ex: Parts_SlideShow_suffixviewname)")</span>
+		<span class="hint">@T("Leave empty if you want to use a default view")</span>
+
+	</div>
+</fieldset>

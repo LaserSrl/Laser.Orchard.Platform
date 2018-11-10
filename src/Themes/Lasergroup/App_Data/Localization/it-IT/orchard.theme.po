@@ -1,0 +1,610 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/Lasergroup/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/Lasergroup/Views/Admin/Index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "~/Themes/Lasergroup/Views/Admin/Index.cshtml"
+msgid "Type the paths to the additional CSS files that will be added to the site's frontend, one per line."
+msgstr "Inserire i percorsi dei file CSS addizionali che saranno aggiunti al sito di front-end, uno per riga."
+
+msgctxt "~/Themes/Lasergroup/Views/EditorTemplates/Parts.Comment.cshtml"
+msgid "Hi, {0}!"
+msgstr "Ciao, {0}!"
+
+msgctxt "~/Themes/Lasergroup/Views/ElencoProdotti.cshtml"
+msgid "Show more showcases"
+msgstr "Carica altri showcases"
+
+msgctxt "~/Themes/Lasergroup/Views/ElencoProdottiHome.cshtml"
+msgid "See all projects"
+msgstr "Guarda tutti i progetti"
+
+msgctxt "~/Themes/Lasergroup/Views/Home/Search.cshtml"
+msgid "Contents tagged with {0}"
+msgstr "Contenuti taggati con {0}"
+
+msgctxt "~/Themes/Lasergroup/Views/Home/Search.cshtml"
+msgid "Tagged with <span>{0}</span>"
+msgstr "Taggato con <span>{0}</span>"
+
+msgctxt "~/Themes/Lasergroup/Views/Home/Search.cshtml"
+msgid "Tags"
+msgstr "Tags"
+
+msgctxt "~/Themes/Lasergroup/Views/Layout.cshtml"
+msgid "Please show me you are not a robot."
+msgstr "Dimostra che non sei un robot."
+
+msgctxt "~/Themes/Lasergroup/Views/Layout.cshtml"
+msgid "Send..."
+msgstr "Invio..."
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid " if you don't have an account."
+msgstr "se non hai un account."
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Login was unsuccessful. Please correct the errors and try again."
+msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Please enter your username and password."
+msgstr "Inserire utente e password."
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Lasergroup/Views/LogOn.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/AccessDenied.cshtml"
+msgid "Access Denied"
+msgstr "Accesso negato"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/AccessDenied.cshtml"
+msgid "You do not have permission to complete your request."
+msgstr "Non hai i permessi per completare la richiesta."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Challenge Email"
+msgstr "Email di verifica"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Your email address could not be validated."
+msgstr "Non è stato possibile confermare il tuo indirizzo email."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "An email has been sent to you. Please click on the link it contains in order to have access on this site."
+msgstr "Una email è stata inviata. Clicca il link nella email per avere accesso al sito."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "Challenge Email Sent"
+msgstr "Inviata email di verifica"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "Go back to where you were"
+msgstr "Torna a dove eri"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Challenge Email"
+msgstr "Email di verifica"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Your email address has been validated."
+msgstr "Il tuo indirizzo email è stato confermato."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Confirm Password"
+msgstr "Conferma password"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Current Password"
+msgstr "Password corrente"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "New Password"
+msgstr "Nuova Password"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "New passwords are required to be a minimum of {0} characters in length."
+msgstr "La password deve essere almeno di {0} caratteri."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Utilizza il modulo sottostante per cambiare la tua password."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Your password has been changed successfully."
+msgstr "Password cambiata con successo."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Confirm new password:"
+msgstr "Conferma nuova password:"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "New password:"
+msgstr "Nuova password:"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "New passwords are required to be a minimum of {0} characters in length."
+msgstr "La password deve essere almeno di {0} caratteri."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Password change was unsuccessful. Please correct the errors and try again."
+msgstr "La modifica della password è fallita. Correggere gli errori e provare di nuovo."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Utilizza il modulo sottostante per cambiare la tua password."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "Go back to where you were"
+msgstr "Torna a dove eri"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "Please enter your username or email address.You will receive a link to create a new password via email."
+msgstr "Inserire nome utente o indirizzo email. Riceverai via mail un link per creare la nuova password."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "User Registration Pending"
+msgstr "Registrazione utente in fase di approvazione"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "Your user account has been created but has to be approved before it can be used."
+msgstr "Il tuo account è stato creato ma deve essere approvato prima di essere disponibile."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Lost Password"
+msgstr "Password dimenticata"
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Please enter your username or email address.You will receive a link to create a new password via email."
+msgstr "Inserire nome utente o indirizzo email. Riceverai via mail un link per creare la nuova password."
+
+msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Send Request"
+msgstr "Invia richiesta"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.CommentForm-BlogPost.cshtml"
+msgid "Comments have been disabled for this content."
+msgstr "I commenti sono stati disabilitati per questo contenuto."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.CommentForm-BlogPost.cshtml"
+msgid "Submit Comment"
+msgstr "Invia Commento"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.CommentForm-BlogPost.cshtml"
+msgid "You are not authorized to add a comment."
+msgstr "Non sei autorizzato ad aggiungere commenti"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.CommentForm-BlogPost.cshtml"
+msgid "You must {0} to comment."
+msgstr "Occorre {0} per commentare"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Add attachment"
+msgstr "Allega file"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Comments or Inquiry"
+msgstr "Il tuo messaggio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Confirm Email Address"
+msgstr "Conferma il tuo indirizzo email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email Address"
+msgstr "Il tuo indirizzo email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email address in invalid format"
+msgstr "Formato non valido"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Name"
+msgstr "Nome e Cognome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "One or more fields contain errors. Please check and try again."
+msgstr "Uno o più campi contengono errori. Correggi e riprova."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "SEND"
+msgstr "INVIA"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "The email and confirmation do not match"
+msgstr "Email ed email di conferma non corrispondono"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "The field is required."
+msgstr "Campo obbligatorio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Upload file"
+msgstr "Carica allegato"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.ContactForm-AfterContentContattiPage.cshtml"
+msgid "Your Name"
+msgstr "Il tuo nome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Map-MapWidget.cshtml"
+msgid "Map"
+msgstr "Mappa"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.MenuWidget-MenuWidget-AfterContent.cshtml"
+msgid "Filter"
+msgstr "Filtra"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-BlogPost.cshtml"
+msgid "Back to news"
+msgstr "Torna alle news"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-BlogPost.cshtml"
+msgid "News"
+msgstr "News"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-BlogPost.cshtml"
+msgid "Show all news"
+msgstr "Tutte le news"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-BlogPost.cshtml"
+msgid "Tags:"
+msgstr "Tags:"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-OffertaLavoro.cshtml"
+msgid "Back to work with us"
+msgstr "Torna indietro"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts.Title-OffertaLavoro.cshtml"
+msgid "WORK WITH US"
+msgstr "LAVORA CON NOI"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "Comments have been disabled for this content."
+msgstr "I commenti sono stati disabilitati per questo contenuto."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "Submit Comment"
+msgstr "Invia commento"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "You are not authorized to add a comment."
+msgstr "Non sei autorizzato ad aggiungere commenti"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "You must {0} to comment."
+msgstr "Occorre {0} per commentare"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Add attachment"
+msgstr "Aggiungi allegato"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Comments or Inquiry"
+msgstr "Commenti o richieste"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Confirm Email Address"
+msgstr "Conferma Indirizzo Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email Address"
+msgstr "Indirizzo email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Email address in invalid format"
+msgstr "Formato non valido"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "One or more fields contain errors. Please check and try again."
+msgstr "Uno o più campi contengono errori. Correggi e riprova."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "SEND"
+msgstr "INVIA"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "The email and confirmation do not match"
+msgstr "Email ed email di conferma non corrispondono"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "The field is required."
+msgstr "Campo obbligatorio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Upload file"
+msgstr "Carica file"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
+msgid "Your Name"
+msgstr "Il tuo Nome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "By clicking \"SEND\" I declare that I have read and understood "
+msgstr "Cliccando su \"Invia\" dichiaro di avere letto e compreso"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Comments or Inquiry"
+msgstr "Il Vostro Messaggio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Confirm Email Address"
+msgstr "Conferma Indirizzo Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Email Address"
+msgstr "Indirizzo Email"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Email address in invalid format"
+msgstr "Formato non valido"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Mobile"
+msgstr "Mobile"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "One or more fields contain errors. Please check and try again."
+msgstr "Uno o più campi contengono errori. Correggi e riprova."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Role"
+msgstr "Ruolo"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "SEND"
+msgstr "Invia"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Surname"
+msgstr "Cognome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "The email and confirmation do not match"
+msgstr "Email ed email di conferma non corrispondono"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "The field is required."
+msgstr "Campo obbligatorio"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "the privacy policy."
+msgstr "l'informativa sulla privacy."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Upload file"
+msgstr "Upload file"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Your Company"
+msgstr "La Vostra Azienda"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Your Family Name"
+msgstr "il Vostro Cognome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Your Job Position"
+msgstr "Il Vostro ruolo aziendale"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Your Mobile Number"
+msgstr "Il Vostro numero di cellulare"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-FormContattoVertical.cshtml"
+msgid "Your Name"
+msgstr "Il Vostro Nome"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CulturePicker.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Map-MapWidget.cshtml"
+msgid "Map"
+msgstr "Mappa"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/MenuWidget-MenuWidget-AfterContent.cshtml"
+msgid "Filter"
+msgstr "Filtra"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Questionnaire.FrontEnd.Edit.cshtml"
+msgid "Continue >"
+msgstr "Avanti >"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Questionnaire.FrontEnd.Edit.cshtml"
+msgid "I accept your terms and conditions. I want to answer to your survey."
+msgstr "Accetto i termini e lecondizioni del servizio. Desidero partecipare al vostro questionario."
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Questionnaire.FrontEnd.Edit.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Questionnaire.FrontEnd.Edit.cshtml"
+msgid "Previous"
+msgstr "Precedente"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Questionnaire.FrontEnd.Edit.cshtml"
+msgid "Send your questionnaire"
+msgstr "Inoltra questionario"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Title-BlogPost.cshtml"
+msgid "News"
+msgstr "News"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Title-BlogPost.cshtml"
+msgid "Show all news"
+msgstr "Tutte le news"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Title-BlogPost.cshtml"
+msgid "Tags:"
+msgstr "Tags:"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Title-OffertaLavoro.cshtml"
+msgid "Back to work with us"
+msgstr "Torna indietro"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/Title-OffertaLavoro.cshtml"
+msgid "WORK WITH US"
+msgstr "LAVORA CON NOI"
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Create a New Account"
+msgstr "Creare un nuovo Account"
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
+msgid "Use the form below to create a new account."
+msgstr "Usare il modulo sottostante per creare un nuovo account."
+
+msgctxt "~/Themes/Lasergroup/Views/ShowcaseBackLink.cshtml"
+msgid "Show all showcases"
+msgstr "Tutti gli showcases"
+
+msgctxt "~/Themes/Lasergroup/Views/User.cshtml"
+msgid "Dashboard"
+msgstr "Pannello di controllo"
+
+msgctxt "~/Themes/Lasergroup/Views/User.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Lasergroup/Views/User.cshtml"
+msgid "Sign Out"
+msgstr "Disconnetti"
+
+msgctxt "~/Themes/Lasergroup/Views/User.cshtml"
+msgid "Welcome, <strong>{0}</strong>!"
+msgstr "Benvenuto, <strong>{0}</strong>!"
+
+msgctxt "Lasergroup.Controllers.AdminController"
+msgid "Couldn't update theme settings"
+msgstr "Impossibile aggiornare le impostazioni del tema"
+
+msgctxt "Lasergroup.Controllers.AdminController"
+msgid "Your settings have been saved."
+msgstr "Le impostazioni sono state salvate."
+
+msgctxt "Lasergroup.Navigation.ThemeSettingsMenu"
+msgid "Frontend Theme settings"
+msgstr "Impostazioni del tema di front-end"
+
+msgctxt "Lasergroup.Navigation.ThemeSettingsMenu"
+msgid "Themes"
+msgstr "Temi"
+

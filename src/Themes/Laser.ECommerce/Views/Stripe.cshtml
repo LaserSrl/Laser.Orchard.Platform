@@ -1,0 +1,39 @@
+﻿@using Orchard.SecureSocketsLayer.Services
+@*
+    Available model properties:
+        CartItems
+            Product
+            Title
+            ProductAttributes
+            Sku
+            ProductImage
+            IsDigital
+            Price
+            Weight
+            ShippingCost
+        ShippingOptions
+            Price
+            DisplayName
+            Name
+            ShippingCompany
+            IncludedShippingAreas
+            ExcludedShippingAreas
+        PublishableKey
+        Custom
+*@
+@{
+    var sslService = WorkContext.Resolve<ISecureSocketsLayerService>();
+}
+@if (Model.ShippingOptions != null) {
+    <form method="POST" action="@sslService.SecureActionUrl("Checkout", "Stripe", new {area = "Nwazet.Commerce"})" class="stripe-checkout">
+        @Html.AntiForgeryTokenOrchard()
+        <input type="hidden" name="checkoutData" value="@Model.EncryptedData" />
+        <input type="submit" value="@T("Checkout")" class="submit-button" />
+        <div>
+            <input type="image" name="StripeCheckout" src="@Url.Content("~/Modules/Nwazet.Commerce/Content/accepted-cards.png")"
+                   alt="@T("Secure Checkout with VISA, Mastercard, American Express, Discover, Diners, or JCB (payment handled by Stripe)")"
+                   title="@T("Secure Checkout with VISA, Mastercard, American Express, Discover, Diners, or JCB (payment handled by Stripe)")"
+                   class="checkout-button" />
+        </div>
+    </form>
+}

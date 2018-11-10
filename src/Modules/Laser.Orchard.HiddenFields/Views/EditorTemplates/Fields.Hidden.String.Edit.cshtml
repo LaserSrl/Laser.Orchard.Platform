@@ -1,0 +1,27 @@
+﻿@model Laser.Orchard.HiddenFields.ViewModels.HiddenStringFieldDriverViewModel
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Value)">
+        @Model.Field.DisplayName
+    </label>
+    @{
+        string classS = "text large";
+        if (Model.Settings.Tokenized) {
+            classS += " tokenized";
+        }
+        object tbAttributes;
+        if (Model.IsEditAuthorized) {
+            tbAttributes = new { @class = classS };
+        }
+        else {
+            tbAttributes = new { @class = classS, disabled = true };
+        }
+    }
+     
+    @if ((Model.Value??"").IndexOf("\n")>-1) {
+        @Html.TextAreaFor(m => m.Value, @tbAttributes)
+    }
+    else {
+        @Html.TextBoxFor(m => m.Value, @tbAttributes)
+    }
+</fieldset>

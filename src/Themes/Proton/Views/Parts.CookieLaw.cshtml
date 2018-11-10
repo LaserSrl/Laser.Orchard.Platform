@@ -1,0 +1,58 @@
+﻿@{
+    Style.Require("CookieCuttr");
+    Script.Include("~/Modules/Laser.Orchard.Cookies/Scripts/jquery.cookie.min.js");
+    Script.Include("~/Modules/Laser.Orchard.Cookies/Scripts/jquery.cookiecuttr.min.js");
+    
+    var settings = Model.CookieSettings;
+    var part = Model.CookieLawPart;
+    var cookieAnalytics = settings.cookieAnalytics.ToString().ToLower();
+    var cookieNotificationLocationBottom = settings.cookieNotificationLocationBottom.ToString().ToLower();
+    var cookieAcceptButton = settings.showCookieAcceptButton.ToString().ToLower();
+    var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
+    var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
+    var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower(); 
+    
+    using (Script.Foot())
+    {
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cookiesettings = {};
+        cookiesettings.cookieAnalytics = @cookieAnalytics;
+        if (cookiesettings.cookieAnalytics) {
+            if ('@part.cookieAnalyticsMessage.Replace(System.Environment.NewLine, "")'.length > 0)
+            {
+                var analyticsMessage = '@part.cookieAnalyticsMessage.Replace(System.Environment.NewLine, "{{space}}")';
+                cookiesettings.cookieAnalyticsMessage = analyticsMessage.replace("{{space}}", "<br>");
+            }
+            if ('@part.cookieWhatAreLinkText'.length > 0)
+                cookiesettings.cookieWhatAreLinkText = '@part.cookieWhatAreLinkText';
+            if ('@part.cookieWhatAreTheyLink'.length > 0)
+                cookiesettings.cookieWhatAreTheyLink = '@part.cookieWhatAreTheyLink';
+        }
+        else {
+            if ('@part.cookieMessage'.length > 0)
+                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage)';
+            if ('@part.cookiePolicyLink'.length > 0)
+                cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
+        }
+        // positioning
+        cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
+        cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
+        if ('@settings.cookieDiscreetPosition'.length > 0)
+            cookiesettings.cookieDiscreetPosition = '@settings.cookieDiscreetPosition';
+        // buttons
+        cookiesettings.cookieAcceptButton = @cookieAcceptButton;
+        if ('@part.cookieAcceptButtonText'.length > 0)
+            cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
+        cookiesettings.cookieDeclineButton = @cookieDeclineButton;
+        if ('@part.cookieDeclineButtonText'.length > 0)
+            cookiesettings.cookieDeclineButtonText = '@part.cookieDeclineButtonText';
+        cookiesettings.cookieResetButton = @cookieResetButton;
+        if ('@part.cookieResetButtonText'.length > 0)
+            cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+
+        $.cookieCuttr(cookiesettings);
+    });
+</script>
+    }
+}

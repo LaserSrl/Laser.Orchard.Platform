@@ -1,0 +1,34 @@
+﻿@using Laser.Orchard.CommunicationGateway.ViewModels
+@using Orchard.Utility.Extensions
+@using Laser.Orchard.Commons.Helpers
+@model View_EmailVM_element
+@{ 
+    MvcHtmlString answerBlock = Html.UniqueClientId("Email");
+    var qid = "RedirectNum_" + answerBlock;
+}
+<div id="@qid" class="singleemail">
+        <div style="vertical-align:top;text-align: left; width: 35%;float:right">
+        <i class="fa fa-times" style="color: red; margin-right: 2px;"></i>
+        @Html.LinkToRemoveNestedForm(T("Remove").Text, ".singleemail", "input.mark-for-delete", "")
+    </div>
+    <div style="width: 64%">    
+    <span>Mail</span>
+    @Html.TextBoxFor(x => x.Email, new { @class = "text medium", @placeholder = T("Type a email") })
+    <br />
+    <span>Valid:</span>    @Html.EditorFor(x => x.Validated)
+    <br />
+    <span>Produzione:</span>    @Html.DisplayFor(x => x.Produzione)
+    <br />
+    <span>@T("Commercial use"):</span>    @Html.EditorFor(x => x.AccettatoUsoCommerciale)
+    <br />
+    <span>@T("Third party"):</span>    @Html.EditorFor(x => x.AutorizzatoTerzeParti)
+    <br />
+    <span>Data Creazione :</span>    @Model.DataInserimento
+    <br />
+    <span>Ultima modifica:</span>    @Model.DataModifica
+    @Html.HiddenFor(x => x.Id, new { @class = "preserve-on-clean" })
+          @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete preserve-on-clean" })
+    <br /><br />
+    </div>
+</div>
+

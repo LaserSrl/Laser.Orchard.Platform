@@ -1,0 +1,53 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.NewsLetters.Services
+@{
+    string newsIds = Model.ContentPart.NewsletterDefinitionIds.ToString();
+    INewsletterServices _newsServices;
+    WorkContext.TryResolve<INewsletterServices>(out _newsServices);
+
+    var newsList = _newsServices.GetNewsletterDefinition(newsIds, Orchard.ContentManagement.VersionOptions.Published).ToList();
+}
+
+@{using (Html.BeginForm("Subscribe", "Subscription", new { area = "Laser.Orchard.NewsLetters" }, FormMethod.Post, new { @class = "newsletter-form" })) {
+    if (newsList.Count() > 0) {
+        <ul>
+            <li>
+                <label for="Name">@T("Name")</label>
+                <input id="Name" class="text" name="Name" type="text" placeholder="@T("Your Name")" />
+            </li>
+            <li class="emailForm">
+                <label for="Email">@T("Email")</label>
+                <input id="Email" class="text" name="Email" type="text" placeholder="@T("Email Address")" />
+            </li>
+            <li>
+                <label for="ConfirmEmail">@T("Email Confirmation")</label>
+                <input id="ConfirmEmail" class="text" name="ConfirmEmail" type="text" placeholder="@T("Email Confirmation")" />
+            </li>
+            @if (newsList.Count() > 1) {
+                <li>
+                    <label>@T("Subscribe to")</label>
+                    <ul>
+                        @foreach (dynamic news in newsList) { 
+                            <li>
+                                @if (Model.ContentPart.PermitCumulativeRegistrations) {
+                                    <input id="newsletter-@news.Id.ToString()" type="checkbox"  name="Subscription_Newsletters_Ids"value="@news.Id.ToString()"/>
+                                } else {
+                                    @Html.RadioButton("Subscription_Newsletters_Ids", (object)news.Id.ToString(), new { @id = "newsletter-" + news.Id.ToString() })
+                                }
+
+                                <label for="newsletter-@news.Id.ToString()" class="forcheckbox">@news.TitlePart.Title</label>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            } else if (newsList.Count() == 1) {
+                @Html.Hidden("Subscription_Newsletters_Ids", (object)newsList[0].Id.ToString())
+            }
+        </ul>
+        <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+        <input id="Id" name="Id" type="hidden" value="@Model.ContentPart.Id" />
+        @Html.AntiForgeryTokenOrchard()
+        <input type="submit" name="Newsletter_Subscriber_Subscribe" value="@T("Subscribe")" />
+    }
+  }
+}

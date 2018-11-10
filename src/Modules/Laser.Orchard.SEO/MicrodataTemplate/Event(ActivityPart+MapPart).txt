@@ -1,0 +1,23 @@
+<script type="application/ld+json">
+{{
+  "@context": "http://schema.org",
+  "@type": "Event",
+  "name": "{Content.DisplayText}",
+  "description": "{Content.Body.StripHtml}",
+  "startDate": "{Content.Parameter:ActivityPart-DateTimeStart}",
+  "endDate": "{Content.Parameter:ActivityPart-DateTimeEnd}",
+  "location": {{
+    "@type": "Place",
+    "name": "{Content.Parameter:MapPart-LocationInfo}",
+    "address": "{Content.Parameter:MapPart-LocationAddress}",
+    "geo": {{
+       "@type": "GeoCoordinates",
+       "latitude": "{Content.Parameter:MapPart-Latitude}",
+       "longitude": "{Content.Parameter:MapPart-Longitude}"
+    }}
+  }},
+  "image": [
+    "{Site.BaseUrl}{Content.Fields.CONTENTNAME.Gallery.Url}"
+   ]
+}}
+</script>

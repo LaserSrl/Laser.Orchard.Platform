@@ -1,0 +1,63 @@
+﻿@using Orchard.Environment.Configuration
+@{
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantName = settings.Name;
+
+    var title = @WorkContext.CurrentSite.SiteName;
+    var subthemePath = "~/Themes/ResponsiveBaseTheme/Styles/" + tenantName + "/";
+
+    Style.Include("https://fonts.googleapis.com/css?family=Lobster&subset=latin");
+}
+@{
+    if (!(File.Exists(Server.MapPath(subthemePath + "site-style.css"))) || tenantName.ToLower() == "default") {
+        Style.Include("Site.css").AtHead();
+    } else {
+        Style.Include(tenantName + "/site-style.css").AtHead();
+    }
+    if (!(File.Exists(Server.MapPath(subthemePath + "custom-style.css"))) || tenantName.ToLower() == "default") {
+        Style.Include("Custom.css").AtHead();
+    } else {
+        Style.Include(tenantName+"/custom-style.css").AtHead();
+    }
+    Style.Require("FontAwesome").AtHead();
+    Script.Include("Respond.min.js").AtHead(); /* Polyfill for media queries before IE9 */
+    Script.Require("jQuery").AtHead();
+    Script.Include("ResponsiveChanges.js").AtHead(); /* For responsive navigation/layout changes in mobile/tablet layouts. Requires jQuery */
+}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta name="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="HandheldFriendly" content="True" />
+    <!-- Older Palm/Blackberry models and browsers like AvantGo -->
+    <meta name="MobileOptimized" content="320" />
+    <!-- Microsoft Pocket PC -->
+    <!-- IOS web apps full screen mode (hides address bar and component bar at top and bottom of browser) and styling of top bar in browser. 
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    -->
+    <meta http-equiv="cleartype" content="on" />
+    <!-- Mobile IE font smoothing -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../Images/Touch/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../Images/Touch/apple-touch-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../Images/Touch/apple-touch-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" href="../Images/Touch/apple-touch-icon-57x57-precomposed.png" />
+    <link rel="shortcut icon" href="../Images/Touch/apple-touch-icon.png" />
+    <title>@title</title>
+    @Display(Model.Head)
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="@Html.ClassForPage()">
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

@@ -1,0 +1,16 @@
+﻿@model Laser.Orchard.ContactForm.Models.ContactFormSettingsRecord
+
+<fieldset>
+    <legend>@T("Contact Form")</legend>
+    <div>
+        @Html.EditorFor(m => m.EnableSpamEmail) 
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnableSpamEmail)">@T("Enable spam email collection (Send messaged flagged as spam to this address)")</label>
+        @Html.ValidationMessage("EnableSpamEmail", "*")
+    </div>
+    <div data-controllerid="@Html.FieldIdFor(m => m.EnableSpamEmail)">
+        <label for="@Html.FieldIdFor(m => m.SpamEmail)">@T("Email for Spam Collection")</label>
+        @Html.TextBoxFor(m => m.SpamEmail, new { @class = "text large" })
+        <span class="hint">@T("Specify one or more addresses separated by a semicolon.")</span>
+        @Html.ValidationMessage("SpamEmail", "*")
+    </div>
+</fieldset>

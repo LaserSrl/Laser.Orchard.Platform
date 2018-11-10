@@ -1,0 +1,50 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/DefinitionTemplates/SummaryAdminToolbarPartSettings.cshtml"
+msgid "Add action label"
+msgstr "Aggiungi etichetta attiva"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/DefinitionTemplates/SummaryAdminToolbarPartSettings.cshtml"
+msgid "Admin action labels"
+msgstr "Etichette d'amministrazione attive"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/DefinitionTemplates/SummaryAdminToolbarPartSettings.cshtml"
+msgid "The Custom URL is a series of parameter to append to the query string (i.e. param1=value1&amp;param2=value2)"
+msgstr "L'URL Personalizzato è una serie di parametri da aggiungere alla query string (e.g. param1=valore1&amp;param2=valore2)"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Area"
+msgstr "Area"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Controller"
+msgstr "Controller"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Custom URL"
+msgstr "URL personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Label"
+msgstr "Etichetta"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Parameters"
+msgstr "Parametri"
+
+msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+

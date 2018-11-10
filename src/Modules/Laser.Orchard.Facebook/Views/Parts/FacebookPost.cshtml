@@ -1,0 +1,12 @@
+﻿@if (Model.Sent)
+{
+    <span style="color:green;font-weight:bold"><i class="fa fa-facebook"></i></span>
+}
+else if (Model.SendOnNextPublish)
+{
+    <span style="color:yellow;font-weight:bold"><i class="fa fa-facebook"></i></span>
+}
+else
+{
+    <span style="color:red;font-weight:bold"><i class="fa fa-facebook"></i></span>
+}

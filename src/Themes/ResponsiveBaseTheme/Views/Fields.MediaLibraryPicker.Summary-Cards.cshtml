@@ -1,0 +1,22 @@
+﻿@using Orchard.Core.Contents
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+@using Orchard.Mvc.Html 
+@using Orchard.ContentManagement
+
+
+@{
+    var field = (MediaLibraryPickerField) Model.ContentField;
+    string name = field.DisplayName;
+    var mediaParts = field.MediaParts;
+}
+@if (mediaParts.Any()) {
+<p class="media-@name.HtmlClassify()">    
+        @{
+            var contentItem = mediaParts.First();
+            <img src="@Display.ResizeMediaUrl(Width: 200, Height: 150, Mode: "crop", Alignment: "middlecenter", Path: contentItem.MediaUrl)" />
+        }
+</p>
+    <a class="action-button" href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)">@T("Select")</a>
+    <div class="clear"></div>
+}

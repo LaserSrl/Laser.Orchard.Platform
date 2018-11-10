@@ -1,0 +1,22 @@
+﻿@using Orchard.Core.Contents
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+@using Orchard.Mvc.Html 
+@using Orchard.ContentManagement
+
+
+@{
+    var field = (MediaLibraryPickerField) Model.ContentField;
+    string name = field.DisplayName;
+    var mediaParts = field.MediaParts;
+}
+@if (mediaParts.Any()) {
+<p class="media-@name.HtmlClassify()">    
+        @{
+            var contentItem = mediaParts.First();
+            <img src="@Display.ResizeMediaUrl(Width: 600, Height: 400, Mode: "crop", Alignment: "middlecenter", Path: contentItem.MediaUrl)" />
+        }
+</p>
+    <div class="clear"></div>
+    WorkContext.Layout.AsideSecond.Add(New.Parts_CardsForm(Id: Model.ContentItem.Id), "before");
+}

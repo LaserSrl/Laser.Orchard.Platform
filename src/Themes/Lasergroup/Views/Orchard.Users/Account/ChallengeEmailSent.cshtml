@@ -1,0 +1,9 @@
+﻿@model dynamic
+@Display(New.Parts_Title_Default(Title: T("Challenge Email Sent").ToString(),
+    Subtitle: T("An email has been sent to you. Please click on the link it contains in order to have access on this site.").ToString(),
+    ImageUrl: "",
+    ImageTitle: "",
+    ImageAlternateText: ""))
+@if (Url.IsLocalUrl(Request.QueryString["ReturnUrl"])) {
+    @Display(New.Parts_Body_Default(Html: Html.Link(T("Go back to where you were"), Url.Content(Request.QueryString["ReturnUrl"]))))
+}

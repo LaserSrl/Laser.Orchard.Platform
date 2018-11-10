@@ -1,0 +1,24 @@
+﻿@using Laser.Orchard.Mobile.Models
+@using Orchard.Security
+@if (Authorizer.Authorize(StandardPermissions.SiteOwner)) {
+    <fieldset>
+        <legend>@T("Mobile")</legend>
+        @{
+    foreach (PushNotificationRecord pnr in Model) {
+            <div >
+                <span>Device</span>    @Html.Raw(pnr.Device)
+            <br />
+                <span>UUid:</span>    @Html.Raw(pnr.UUIdentifier)
+            <br />
+                <span>Valid:</span>    @Html.Raw(pnr.Validated)
+            <br />
+                <span>Produzione:</span>    @Html.Raw(pnr.Produzione)
+                <br />
+                <span>Data Creazione :</span>    @Html.Raw(pnr.DataInserimento)
+            <br />
+                <span>Ultima modifica:</span>    @Html.Raw(pnr.DataModifica)
+            </div>  <br />   
+    }
+        }
+    </fieldset>
+}

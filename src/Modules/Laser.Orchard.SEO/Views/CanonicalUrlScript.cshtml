@@ -1,0 +1,9 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Mvc.Extensions
+@{ 
+    using (Script.Head()) {
+        if (!string.IsNullOrEmpty(Model.CanonicalUrl)) {
+             @Html.Raw("<link rel=\"canonical\" href=\"" + Model.CanonicalUrl + "\" />");
+        }
+    }
+}

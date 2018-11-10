@@ -1,0 +1,29 @@
+﻿@{
+    var Menu = Model.Menu;
+
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+
+    //We are only going to show the home link and the path to the current thing
+    var title = Layout.Title.ToString();
+}
+
+<div class="breadcrumb_products">
+    <div class="container">
+        <ul>
+            @{ 
+                //home link
+                var item = items.FirstOrDefault();
+                <li><a href="@item.Href"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> @item.Text</a> <i>/</i></li>
+            }
+            @{
+                //current path
+                if (items.Count > 1) {
+                    item = items.LastOrDefault();
+                    <li>@item.Text</li>
+                } else {
+                    <li>@title</li>
+                }
+            }
+        </ul>
+    </div>
+</div>

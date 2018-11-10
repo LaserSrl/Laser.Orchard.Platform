@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Orchard>
+  <Recipe>
+    <Name>SetupWidgets</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the widgets for the ecommerce theme.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Content>
+    <HtmlWidget Id="/Identifier=0e78e2ccf1e149f284834d9d91ae4d0b" Status="Published">
+      <BodyPart Text="" />
+      <CommonPart Container="/Layer.LayerName=Default" />
+      <IdentityPart Identifier="0e78e2ccf1e149f284834d9d91ae4d0b" />
+      <WidgetPart Title="Link to wishlists" Position="1" Zone="HeaderRight" RenderTitle="false" Name="LinkToWishlist" CssClasses="" />
+    </HtmlWidget>
+    <MenuWidget Id="/Identifier=bf035a13176a460f95cfe587cdc260dd" Status="Published">
+      <CommonPart Container="/Layer.LayerName=NotHomepage" />
+      <IdentityPart Identifier="bf035a13176a460f95cfe587cdc260dd" />
+      <MenuWidgetPart Menu="/Identifier=6890acdfcfee4bb6ba9badf452aaeda0" StartLevel="1" Levels="0" Breadcrumb="true" AddCurrentPage="true" AddHomePage="true" ShowFullMenu="false" />
+      <WidgetPart Title="Breadcrumb" Position="7" Zone="BeforeMain" RenderTitle="false" Name="" CssClasses="" />
+    </MenuWidget>
+    <MenuWidget Id="/Identifier=e7e0fb9b10f847419616573d31a60863" Status="Published">
+      <CommonPart Container="/Layer.LayerName=Catalog" />
+      <IdentityPart Identifier="e7e0fb9b10f847419616573d31a60863" />
+      <MenuWidgetPart Menu="/Identifier=cbb7f6fc7fd644ddac5aaa2c5c4511a2" StartLevel="1" Levels="0" Breadcrumb="false" AddCurrentPage="false" AddHomePage="false" ShowFullMenu="false" />
+      <WidgetPart Title="Categories" Position="1" Zone="AsideFirst" RenderTitle="false" Name="" CssClasses="" />
+    </MenuWidget>
+    <MenuWidget Id="/Identifier=MenuWidget1" Status="Published">
+      <CommonPart Container="/Layer.LayerName=Default" />
+      <IdentityPart Identifier="MenuWidget1" />
+      <MenuWidgetPart Menu="/Identifier=6890acdfcfee4bb6ba9badf452aaeda0" StartLevel="1" Levels="0" Breadcrumb="false" AddCurrentPage="false" AddHomePage="false" ShowFullMenu="false" />
+      <WidgetPart Title="Main Menu" Position="1" Zone="Navigation" RenderTitle="false" Name="" />
+    </MenuWidget>
+    <ProjectionWidget Id="/Identifier=1a88886a9d264bf18ed29d0de1dded85" Status="Published">
+      <CommonPart Container="/Layer.LayerName=TheHomepage"/>
+      <IdentityPart Identifier="1a88886a9d264bf18ed29d0de1dded85" />
+      <ProjectionPart Items="5" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="false" Query="/Identifier=58d9e6a6c4cc4febb211b64af9401285" LayoutIndex="-1" />
+      <WidgetPart Title="Special Deals" Position="4" Zone="Content" RenderTitle="false" Name="HighlightGroupHomePage" CssClasses="" />
+    </ProjectionWidget>
+    <ProjectionWidget Id="/Identifier=8556f9056a874a178934bc59fadca219" Status="Published">
+      <CommonPart Container="/Layer.LayerName=TheHomepage" />
+      <IdentityPart Identifier="8556f9056a874a178934bc59fadca219" />
+      <ProjectionPart Items="10" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="10" DisplayPager="false" Query="/Identifier=5d89636078914968a0c0fe0bad84d96d" LayoutIndex="-1" />
+      <WidgetPart Title="Top Brands" Position="6" Zone="Content" RenderTitle="false" Name="TopBrandsHomePage" CssClasses="" />
+    </ProjectionWidget>
+    <ProjectionWidget Id="/Identifier=8c4e73f2e20d43b48b6056cc7443c2df" Status="Published">
+      <CommonPart Container="/Layer.LayerName=TheHomepage" />
+      <IdentityPart Identifier="8c4e73f2e20d43b48b6056cc7443c2df" />
+      <ProjectionPart Items="4" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="4" DisplayPager="false" Query="/Identifier=f9be7b28670d4a62a09f91bda0a07b75" LayoutIndex="-1" />
+      <WidgetPart Title="New Arrivals" Position="5" Zone="Content" RenderTitle="false" Name="NewArrivalsHomePage" CssClasses="" />
+    </ProjectionWidget>
+    <ProjectionWidget Id="/Identifier=c8e53bb858f54f8f827cc67133f97a9b" Status="Published">
+      <CommonPart Container="/Layer.LayerName=TheHomepage" />
+      <IdentityPart Identifier="c8e53bb858f54f8f827cc67133f97a9b" />
+      <ProjectionPart Items="1" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="1" DisplayPager="false" Query="/Identifier=ac05fa9f948543bcaf4ec3d18714fcd0" LayoutIndex="-1" />
+      <WidgetPart Title="BannerHighlightHomePage" Position="3" Zone="Content" RenderTitle="false" Name="BannerHighlightHomePage" CssClasses="" />
+    </ProjectionWidget>
+    <HomePageVideoAndCategories Id="/Identifier=" Status="Published">
+      <ContentPickerField.Categories ContentItems="/alias=products\/products" />
+      <ContentPickerField.Video ContentItems="/alias=homepagevideos" />
+      <CommonPart Container="/Layer.LayerName=TheHomepage" />
+      <IdentityPart Identifier="" />
+      <WidgetPart Title="VideoCategoriesHomePage" Position="1" Zone="Content" RenderTitle="false" Name="VideoCategoriesHomePage" CssClasses="" />
+    </HomePageVideoAndCategories>
+    <ShoppingCartWidget Id="/Identifier=8cd5a4235be8432b90cdee26957a4d30" Status="Published">
+      <NumericField.Creator Value="" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Container="/Layer.LayerName=Default" />
+      <IdentityPart Identifier="8cd5a4235be8432b90cdee26957a4d30" />
+      <WidgetPart Title="Cart" Position="2" Zone="HeaderRight" RenderTitle="false" Name="" CssClasses="" />
+    </ShoppingCartWidget>
+    <SubscriberRegistrationWidget Id="/Identifier=e6a770a087d14b489982d768df2e50d8" Status="Published">
+      <CommonPart Container="/Layer.LayerName=Default" />
+      <IdentityPart Identifier="e6a770a087d14b489982d768df2e50d8" />
+      <WidgetPart Title="Newsletter" Position="7" Zone="AfterMain" RenderTitle="false" Name="" CssClasses="" />
+    </SubscriberRegistrationWidget>
+  </Content>
+</Orchard>

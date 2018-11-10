@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.MultiStepAuthentication.Models.NonceLoginSettingsPart
+
+<fieldset>
+    <legend>@T("Nonce Login Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.NonceMinutesValidity)">@T("Nonce validity (minutes)")</label>
+        @Html.TextBoxFor(m => m.NonceMinutesValidity, new { @class = "text normal" })
+        <span class="hint">@T("Nonce validity in minutes (60 minutes = 1 hour, 1440 minutes = 1 day).")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.LoginLinkFormat)">@T("Login link format")</label>
+        @Html.TextBoxFor(m => m.LoginLinkFormat, new { @class = "text large" })
+        <span class="hint">@T("Format string for login link. Placeholder {0} is used to insert the nonce. Example 1: myapp://{0} . Example 2: https://myapp.mydomain.com/mycontroller?n={0}")</span>
+    </div>
+</fieldset>

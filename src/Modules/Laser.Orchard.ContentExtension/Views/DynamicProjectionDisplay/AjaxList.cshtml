@@ -1,0 +1,24 @@
+﻿<fieldset class="contentItems bulk-items">
+    @Display(Model.ContentItems)
+</fieldset>
+@if((bool)Model.Part.Record.DisplayPager) {
+    @Display(Model.Pager)
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("ul.pager > li > a").click(function(e){
+            var url=$(this).attr('href');
+           // var url_old = "~/Modules/Laser.Orchard.ContentExtension/View/DynamicProjectionDisplay/AjaxList.cshtml";
+           // var url = '@Url.Action("AjaxList", "DynamicProjectionDisplay", new { area = "Laser.Orchard.ContentExtension"})'
+            $.ajax({
+                type: "GET",
+                url: url,
+             //   data: $("#FormAjaxList").serialize(),
+                success: function (data) {
+                    $("#AjaxList").html(data);
+                 }
+            });
+            e.preventDefault();
+        });
+    });
+</script>

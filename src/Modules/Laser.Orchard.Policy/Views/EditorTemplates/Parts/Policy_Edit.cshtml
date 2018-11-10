@@ -1,0 +1,47 @@
+﻿@using Orchard.ContentManagement;
+@model Laser.Orchard.Policy.Models.PolicyPart
+@{
+    Style.Require("FontAwesome430").AtHead();   
+}
+<fieldset>
+    <legend>@T("Policy")</legend>
+    <div>
+        @{
+            var settings = Model.Settings.GetModel<Laser.Orchard.Policy.Models.PolicyPartSettings>();
+            if (settings.IncludePendingPolicy == Laser.Orchard.Policy.IncludePendingPolicyOptions.DependsOnContent) {
+                var listItems = new SelectList(Enum.GetNames(typeof(Laser.Orchard.Policy.IncludePendingPolicyOptions))
+                    .Where(w => w != Laser.Orchard.Policy.IncludePendingPolicyOptions.DependsOnContent.ToString()), Model.IncludePendingPolicy);
+            <label for="@Html.FieldIdFor(m => m.IncludePendingPolicy)">@T("Policy part behaviour"):</label>
+            @Html.DropDownListFor(m => m.IncludePendingPolicy, listItems)
+            } else {
+                if (((Laser.Orchard.Policy.IncludePendingPolicyOptions)Model.IncludePendingPolicy) == Laser.Orchard.Policy.IncludePendingPolicyOptions.Yes) {
+            <i class="fa fa-check-circle" style="color: green"></i> @T("Pending policies included")
+                } else {
+            <i class="fa fa-times-circle" style="color: red"></i> @T("Pending policies NOT included")
+                }
+            @Html.HiddenFor(m => m.IncludePendingPolicy);
+            }
+        }
+    </div>
+    <div>
+        @if (settings.PolicyTextReferences != null && settings.PolicyTextReferences.Contains("{DependsOnContent}")) {
+            var contentManager = WorkContext.Resolve<IContentManager>();
+            var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });
+            var selectedItems = new string[] { };
+            if (Model.PolicyTextReferences != null) {
+                selectedItems = Model.PolicyTextReferences;
+            }
+
+            <label for="@Html.FieldIdFor(m => m.PolicyTextReferences)">@T("Policy filters"):</label>
+            <select multiple="multiple" name="@Html.FieldNameFor(m => m.PolicyTextReferences)" id="@Html.FieldIdFor(m => m.PolicyTextReferences)">
+                <option value="{All}" @(selectedItems.Contains("{All}") || selectedItems.Length == 0 ? "selected=\"selected\"" : "")>@T("All Policies")</option>
+                @foreach (var policy in items) { 
+                    <option value="{@policy.ContentItem.Id}" @(selectedItems.Contains("{" + policy.ContentItem.Id + "}") ? "selected=\"selected\"" : "")>@policy.Title</option>
+                }
+            </select>
+        } else {
+            <i class="fa fa-check-circle" style="color: orange"></i> @T("Policy filters ruled by settings.")
+            @Html.HiddenFor(m => m.PolicyTextReferencesCsv);
+        }
+    </div>
+</fieldset>

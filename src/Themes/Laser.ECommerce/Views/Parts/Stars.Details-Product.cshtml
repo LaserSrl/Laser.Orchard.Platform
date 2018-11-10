@@ -1,0 +1,41 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    Style.Require("Contrib_Stars");
+
+    var roundedResult = Math.Round(Model.ContentPart.Rating.CurrentVotingResult.Value * 2, MidpointRounding.AwayFromZero) / 2;
+    var currentResultClass = string.Format("stars-value-{0}", Math.Floor(roundedResult));
+}
+<div class="col-md-8 single-right stars-rating">
+    <div class="stars-current-result @currentResultClass" style="display:inline;">
+        @if (roundedResult == .5) {
+            <span class="star-0-5 a-half-star">@T(".").ToString()</span>
+            <span class="star-1 a-star a-half-star">@T("-").ToString()</span>
+        } else {
+            <span class="star-1 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 0 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 1.5) {
+            <span class="star-1-5 a-half-star">@T(".").ToString()</span>
+            <span class="star-2 a-star a-half-star">@T("-").ToString()</span>
+        } else {
+            <span class="star-2 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 1 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 2.5) {
+            <span class="star-2-5 a-half-star">@T(".").ToString()</span>
+            <span class="star-3 a-star a-half-star">@T("-").ToString()</span>
+        } else {
+            <span class="star-3 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 2 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 3.5) {
+            <span class="star-3-5 a-half-star">@T(".").ToString()</span>
+            <span class="star-4 a-star a-half-star">@T("-").ToString()</span>
+        } else {
+            <span class="star-4 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 3 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 4.5) {
+            <span class="star-4-5 a-half-star">@T(".").ToString()</span>
+            <span class="star-5 a-star a-half-star">@T("-").ToString()</span>
+        } else {
+            <span class="star-5 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 4 ? T("*").ToString() : T("-").ToString())</span>
+        }
+    </div>
+</div>

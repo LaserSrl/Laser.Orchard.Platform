@@ -1,0 +1,42 @@
+﻿@using Orchard.Environment.Configuration
+@using Orchard.Mvc.Extensions
+
+@model Laser.Orchard.SEO.Models.RedirectRule
+
+@{
+    //Html.EnableUnobtrusiveJavaScript();
+    //Html.EnableClientValidation();
+    var urlPrefix = WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+    if (!String.IsNullOrWhiteSpace(urlPrefix)) {
+        urlPrefix += "/";
+    }
+
+    //Script.Require("expressive.annotations.validate");
+}
+<div>
+    @Html.LabelFor(x => x.SourceUrl)
+
+    <span class="permalink-definition" dir="ltr">
+        <span>@Url.MakeAbsolute("/")@urlPrefix</span>
+        <span>@Html.TextBoxFor(x => x.SourceUrl, new { @class = "text is-url" }))</span>
+    </span>
+    
+    @Html.ValidationMessageFor(x => x.SourceUrl)
+    <span class="hint">@T("Relative Url from which redirect. Do not start with '~/'")</span>
+</div>
+<div>
+    @Html.LabelFor(x => x.DestinationUrl)
+    <span class="permalink-definition" dir="ltr">
+        <span>@Url.MakeAbsolute("/")@urlPrefix</span>
+        <span>@Html.TextBoxFor(x => x.DestinationUrl, new { @class = "text is-url" }))</span>
+    </span>
+    @Html.ValidationMessageFor(x => x.DestinationUrl)
+    <span class="hint">@T("Relative Url to which redirect. Do not start with '~/'")</span>
+</div>
+<div>
+    @Html.LabelFor(x => x.IsPermanent)
+    @Html.CheckBoxFor(x => x.IsPermanent)
+    @Html.ValidationMessageFor(x => x.IsPermanent)
+    <span class="hint">@T("Redirect should be permanent 301")</span>
+</div>
+

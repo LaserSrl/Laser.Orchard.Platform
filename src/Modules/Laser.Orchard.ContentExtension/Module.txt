@@ -1,0 +1,14 @@
+﻿Name: Laser.Orchard.ContentExtension
+AntiForgery: disabled
+Author: Laser srl -Lorenzo Frediani 
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: Extends content editing capabilities
+Dependencies: Laser.Orchard.StartupConfig,Orchard.MediaLibrary,Orchard.Localization,Orchard.Fields,Orchard.ContentPicker,Orchard.Taxonomies,Laser.Orchard.WebServices,Laser.Orchard.UsersExtensions
+Category: Content
+Features:
+    Laser.Orchard.ContentExtension.DynamicProjection:
+        Name:  Dynamic Projection
+        Description: Add  Dynamic Projection ContentType and DynamicProjectionPart to customize projection.
+	    Category: Content

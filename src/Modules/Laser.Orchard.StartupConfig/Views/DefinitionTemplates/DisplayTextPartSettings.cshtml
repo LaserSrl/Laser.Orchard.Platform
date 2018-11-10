@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.StartupConfig.Models.DisplayTextPartSettings
+@{ 
+    Script.Require("jQuery");
+}
+@Display.TokenHint()
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisplayText)">@T("Display Text")</label>
+        @Html.TextBoxFor(m => m.DisplayText, new { @class = "text large tokenized" })
+        <span class="hint">@T("Display Text to show in back-end lists.")</span>
+    </div>
+</fieldset>

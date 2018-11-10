@@ -1,0 +1,146 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Available cultures"
+msgstr "Culture disponibili"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Culture Picker Settings"
+msgstr "Impostazioni del Selettore di Culture"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Displayed Name"
+msgstr "Nome Visualizzato"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Language/Culture"
+msgstr "Lingua/Culture"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Other settings"
+msgstr "Altre Impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Priority"
+msgstr "Priorità"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Show culture choice label"
+msgstr "Visualizza l'etichetta della scelta della culture"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Show only languages of translated contents"
+msgstr "Visualizza solo le lingue dei contenuti tradotti"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "This is a table of the cultures currently available in your site."
+msgstr "Questa è una tabella delle Culture attualmente disponibili nel sito."
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Admin/Settings.cshtml"
+msgid "Update settings"
+msgstr "Aggiorna le impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/EditorTemplates/Parts/TranslateMenuItem.cshtml"
+msgid " To be translated"
+msgstr "Da tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/EditorTemplates/Parts/TranslateMenuItem.cshtml"
+msgid " Translated"
+msgstr "Tradotto"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/EditorTemplates/Parts/TranslateMenuItem.cshtml"
+msgid "This is the translation from the {0} culture."
+msgstr "Questa è la traduzione dalla cultura {0}."
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Parts/CulturePicker.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
+msgid "check your input!"
+msgstr "verificare i valori inseriti!"
+
+msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
+msgid "Culture Picker settings updated."
+msgstr "Impostazioni del Culture Picker aggiornate"
+
+msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
+msgid "Settings update failed: {0}"
+msgstr "Aggiornamento impostazioni fallito: {0}"
+
+msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
+msgid "Yout have to be an Administrator to edit Culture Picker settings!"
+msgstr "E' necessario essere amministratori per modificare le impostazioni del selettore di Culture!"
+
+msgctxt "Laser.Orchard.CulturePicker.Navigation.CulturePickerNavigationProvider"
+msgid "Culture Picker"
+msgstr "Culture Picker"
+
+msgctxt "Laser.Orchard.CulturePicker.Navigation.CulturePickerNavigationProvider"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureFilter"
+msgid "For current or default culture"
+msgstr "Per la lingua corrente o quella di default"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureFilter"
+msgid "Localization"
+msgstr "Localizzazione"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureFilter"
+msgid "Localized content items for current or default culture"
+msgstr "Versione tradotta dei contenuti nella lingua corrente o quella di default"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedFilter"
+msgid "For current culture (include untranslated in default)"
+msgstr "Per la lingua corrente (includi non tradotti in default)"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedFilter"
+msgid "Localization"
+msgstr "Localizzazione"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedFilter"
+msgid "Localized content items for current culture (untranslated included in default culture)"
+msgstr "Versione tradotta dei contenuti nella lingua corrente (non tradotti inclusi nella lingua di default)"
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for a Term in Taxonomy Item {0} could not be found."
+msgstr "Impossibile trovare il contenuto corrispondente ad un Termine nella Tassonomia {0}."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for a Term in Taxonomy Item {0} should be localized."
+msgstr "Il contenuto per un Termine nella Tassonomia {0} deve essere localizzato."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for Menu Item {0} could not be found."
+msgstr "Impossibile trovare il contenuto corrispondente al menu {0}."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for Menu Item {0} should be localized."
+msgstr "Il contenuto corrispondente al menu {0} deve essere localizzato."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for Taxonomy Item {0} could not be found."
+msgstr "Impossibile trovare il contenuto corrispondente ala Tassonomia {0}."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The content for Taxonomy Item {0} should be localized."
+msgstr "Il contenuto per la Tassonomia {0} deve essere localizzato."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "The localization was successful."
+msgstr "Localizzazione eseguita con successo."
+
+msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
+msgid "Verify the Url in Menu Item {0}."
+msgstr "Verificare l'URL nel menu {0}."
+

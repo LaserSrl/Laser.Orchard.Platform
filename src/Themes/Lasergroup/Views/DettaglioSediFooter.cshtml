@@ -1,0 +1,27 @@
+﻿@using Orchard.Environment.Configuration;
+@using Orchard.Projections.Services;
+@{
+    int page = 1;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+
+    var services = WorkContext.Resolve<IProjectionManager>();
+    var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    var queryItems = services.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
+
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var prefix = settings.RequestUrlPrefix;
+}
+@foreach (var item in queryItems) {
+    var url = (string)(item.Sede.Link.Value);
+    url = (url.StartsWith("~/") && !string.IsNullOrWhiteSpace(prefix)) ?
+        ("~/" + prefix + "/" + url.Substring(2)) :
+        url;
+    url = Url.Content(url);
+    <div class="footer-sedi col-xs-12 col-sm-4 col-md-2">
+        <div class="space-20 visible-xs"></div>
+        <a href="@url">
+            <h5 class="footer-title"><img src="@item.Sede.Icona.FirstMediaUrl"  title="@item.Sede.Icona.MediaParts[0].Title" alt="@item.Sede.Icona.MediaParts[0].AlternateText" /> &nbsp;@item.TitlePart.Title</h5>
+        </a>
+        <p class="footer-contact">@Html.Raw(item.BodyPart.Text)</p>
+    </div>
+}

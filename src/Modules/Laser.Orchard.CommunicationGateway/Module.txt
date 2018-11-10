@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.CommunicationGateway
+AntiForgery: enabled
+Author: Laser srl - Frediani Lorenzo
+Website: http://www.laser-group.com
+Version: 1.0
+Dependencies: Orchard.PublishLater, Orchard.Modules, Orchard.ContentPicker, Orchard.Projections, Laser.Orchard.Queries, Orchard.Tags, Laser.Orchard.ShortLinks, Laser.Orchard.StartupConfig,Orchard.Taxonomies,Orchard.Fields,Laser.Orchard.ZoneAlternates,Laser.Orchard.jQueryPlugins
+Category:Messaging
+Features:
+	Laser.Orchard.GDPR.ContactExtension:
+		Name: GDPR Communication Contact Extensions
+		Description: Enables specialized handling of the information from our communication features. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.CommunicationGateway

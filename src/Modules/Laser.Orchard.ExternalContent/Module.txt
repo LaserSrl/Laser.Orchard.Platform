@@ -1,0 +1,9 @@
+﻿Name: Laser.Orchard.ExternalContent
+AntiForgery: enabled
+Author: Laser Group - Frediani Lorenzo
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10
+Description: Adds the ability to manage external content such as REST WEBAPI or SOAP WEBSERVICES
+Dependencies: Orchard.Tokens,Orchard.Caching,Laser.Orchard.StartupConfig,Orchard.Autoroute
+Category: Content

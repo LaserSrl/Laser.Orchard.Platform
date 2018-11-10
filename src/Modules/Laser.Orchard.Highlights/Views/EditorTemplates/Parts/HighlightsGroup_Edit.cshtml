@@ -1,0 +1,306 @@
+﻿@using Laser.Orchard.Highlights.Enums
+@using Orchard.ContentManagement;
+@using Orchard.Core.Contents
+@using Orchard.Projections.ViewModels;
+@using Orchard.Utility.Extensions;
+@using Laser.Orchard.Highlights.Services;
+@using Orchard.Environment.Configuration;
+
+@{
+    ShellSettings _shellsetting;
+    WorkContext.TryResolve<ShellSettings>(out _shellsetting);
+    string tenantname = "";
+    if (_shellsetting.Name != "Default") {
+        tenantname = _shellsetting.Name + "/";
+    }
+}
+@model Laser.Orchard.Highlights.ViewModels.HighlightsGroup
+@{
+    IHighlightsService _highlightsService;
+    WorkContext.TryResolve<IHighlightsService>(out _highlightsService);
+
+    Style.Require("Highlights").AtHead();
+
+    Script.Require("Highlights").AtFoot();
+    Script.Require("jQueryUI_Core");
+    Script.Include("jquery.mjs.nestedSortable.js");
+    Script.Include("HighlightsNav.js");
+
+    // La gestione dell'url di ritorno era stata spostata all'interno di HighlightsItem_Edit utilizzando una variabile di sessione
+    // che (se ancora presente) viene rimossa in questa fase
+    // Attualmente la gestione è tornata qui. Lo spostamento era stato deciso per la gestione della cultura, essa richiedeva il salvataggio
+    // della stessa pagina una volta per ogni lingua creata. Il ritorno al chiamante in questo caso (a fronte del salvataggio) era fastidioso
+
+    String Verifica;
+    var returnUrl = ViewContext.RequestContext.HttpContext.Request.RawUrl;
+    if (returnUrl.IndexOf("Admin/Contrib.Widgets") > 0) {
+        var Inizio = returnUrl.IndexOf("&returnUrl");
+        if (Inizio > 0) {
+            Verifica = returnUrl.Substring(0, Inizio);
+        } else {
+            Verifica = ViewContext.RequestContext.HttpContext.Request.RawUrl;
+        }
+    } else {
+        Verifica = ViewContext.RequestContext.HttpContext.Request.RawUrl;
+        Verifica = Verifica.Replace("?returnUrl=", "&returnUrlSource=");
+    }
+    //String pathCorrente = ViewContext.RequestContext.HttpContext.Request.Url.LocalPath;
+    //String pathChiamante = ViewContext.RequestContext.HttpContext.Request.UrlReferrer.LocalPath;
+    //String retRitorno = "?returnUrl=" + pathCorrente + "?returnUrl=" + pathChiamante;
+
+    //String retRitorno = "?returnUrl=" + ViewContext.RequestContext.HttpContext.Request.RawUrl;
+    String retRitorno = "?returnUrl=" + Verifica;
+
+    String Base = "";
+
+    if (Session["retRitorno"] != null) {
+        Session["retRitorno"] = null;
+        Session.Remove("retRitorno");
+    }
+
+}
+
+<fieldset>
+    <legend>@T("Highlights group")</legend>
+    <div class="mini-banner-combo">
+        <div>
+            <span>@T("Template type")&nbsp;:&nbsp;</span>@Html.DropDownListFor(m => m.DisplayTemplate, new SelectList(Enum.GetValues(typeof(DisplayTemplate)), Model.DisplayTemplate))
+        </div>
+        <div>
+            @{
+                var listPlugins = new List<string>() { "(default)" };
+                foreach (DisplayTemplate dispTemplate in Enum.GetValues(typeof(DisplayTemplate))) {
+                    var plugins = _highlightsService.GetDisplayPluginsFor(dispTemplate);
+                    if (plugins != null) {
+                        listPlugins.AddRange(plugins);
+                    }
+                }
+            }
+            <span>@T("Display plugin")&nbsp;:&nbsp;</span>@Html.DropDownListFor(m => m.DisplayPlugin, new SelectList(listPlugins, Model.DisplayPlugin))
+            @{
+                var previewImage = _highlightsService.GetDisplayPluginsPreviewImage();
+                if (previewImage != "") {
+                    Script.Require("jQueryUI_Tooltip").AtHead();
+                    using (Script.Foot()) {
+                <script type="text/javascript">
+                    //<![CDATA[
+                    $( document ).tooltip({ 
+                        items: "#zona-info-plugin",
+                        position: { at: 'center top', my: 'center bottom' },
+                        content: '<img src="@Url.Content(previewImage)" style="width:640px"/>' ,
+                        tooltipClass: "tooltip-640"
+                    });
+                    //]]>
+                </script>
+                    }
+                <img id="zona-info-plugin" src="~/Themes/TheAdmin/Styles/images/info.gif" class="info-button" style="margin-left: 220px;" />
+                }
+            }
+        </div>
+        <div>
+            <span>@T("Items source")&nbsp;:&nbsp;</span>@Html.DropDownListFor(m => m.ItemsSourceType, new SelectList(Enum.GetValues(typeof(ItemsSourceTypes)), Model.ItemsSourceType), new { @onchange = "switchItemsArea(this);" })
+        </div>
+    </div>
+    <div id="save-message-@Html.FieldIdFor(m => m.Id)" class="message message-Warning content-picker-message">@T("Save to update this list.")</div>
+    <div id="mustsave-message-@Html.FieldIdFor(m => m.Id)" class="message message-Warning content-picker-message">@T("Save to accept order change.")</div>
+    @Html.HiddenFor(m => m.HighlightsItemsOrder)
+
+    <div id="mv-mb-save-message" class="message message-Warning" style="display:@(Model.ItemsSourceType == ItemsSourceTypes.ByHand ? "block" : "none")">@T("Premere \"Salva\" per memorizzare le modifiche.")</div>
+
+    <div class="mv-mb-primary">
+        <div class="mv-mb-container">
+            <div id="fromquery-area" class="mv-mb-nav-menu" style="display:@(Model.ItemsSourceType == ItemsSourceTypes.FromQuery ? "block" : "none")">
+                @T("Select a query as source")
+
+                <select id="@Html.FieldIdFor(m => m.Query_Id)" name="@Html.FieldNameFor(m => m.Query_Id)">
+                    @foreach (QueryRecordEntry queryRecord in Model.QueryRecordEntries.OrderBy(x => x.Name)) {
+                        @Html.SelectOption(queryRecord.Id, queryRecord.Id == Model.Query_Id, queryRecord.Name + " " + T("(Default Layout)").Text)
+                    }
+                </select>
+                @if (Model.Query_Id != -1) {
+                    @Html.ActionLink(T("Edit Query").Text, "Edit", new { area = "Orchard.Projections", id = Model.Query_Id }, new { })
+                }
+                <span class="hint">@T("The query to display.")</span>
+            </div>
+            <div id="byhand-area" class="mv-mb-nav-menu" style="display:@(Model.ItemsSourceType == ItemsSourceTypes.ByHand ? "block" : "none")">
+                <ol>
+                    @{
+                        var indexen = 0;}
+                    @foreach (var contentItem in Model.HighlightsItems) {
+                        var daPubblicare = ((dynamic)contentItem).PublishLaterPart;
+                        var daArchiviare = ((dynamic)contentItem).ArchiveLaterPart;
+                        var cultura = String.Empty;
+                        //if (((dynamic)contentItem).LocalizationPart.Culture != null)
+                        //{
+                        //    cultura = ((dynamic)contentItem).LocalizationPart.Culture.Culture;
+                        //}
+
+                        var dataPubblicazione = daPubblicare.ScheduledPublishUtc.Value;
+                        var dataArchiviazione = daArchiviare.ScheduledArchiveUtc.Value;
+
+                        <li class="mv-mb-nav-menu-item" data-index="@indexen">
+                            <div class="mv-mb-nav-riga">
+                                <div class="mv-mb-nav-sinistra" style="border: none;">
+                                    <span class="mv-mb-nav-nome" data-id="@contentItem.Id" id="mini-banner-title-@indexen">@Html.ItemDisplayText(contentItem)</span>
+
+                                    <span class="mv-mb-nav-position">
+                                        <input type="text" class="text-box" name="HighlightsItems[@indexen].Position" value="@contentItem.ItemOrder" /></span>
+                                </div>
+
+                                <span class="mv-mb-nav-status">
+
+                                    @if (contentItem.HasPublished()) {
+                                        if (Authorizer.Authorize(Permissions.PublishContent, contentItem)) {
+                                        @Html.Link(T("Published").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" });
+                                        } else {@T("Published")}
+                                    } else {
+                                        if (Authorizer.Authorize(Permissions.PublishContent, contentItem)) {
+                                        @Html.Link(T("Not published").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
+                                        } else {@T("Not published");
+                                        }
+                                    }
+                                </span>
+
+                                @if (contentItem.HasPublished()) {
+                                    if (dataArchiviazione != null) {
+                                    <span class="mv-mb-nav-status" style="margin-left: 140px; width: 50px; text-align: right;">
+                                        @T("to")
+                                    </span>
+                                    <span class="mv-mb-nav-status" style="margin-left: 200px;">
+                                        @dataArchiviazione.ToString("dd MMM yyyy")
+                                    </span>
+                                    }
+                                } else {
+                                    if (dataPubblicazione != null) {
+                                    <span class="mv-mb-nav-status" style="margin-left: 140px; width: 50px; text-align: right;">
+                                        @T("from")
+                                    </span>
+                                    <span class="mv-mb-nav-status" style="margin-left: 200px;">
+                                        @dataPubblicazione.ToString("dd MMM yyyy")
+                                    </span>
+                                    }
+                                }
+
+                                @if (cultura != null) {
+                                    <span class="mv-mb-nav-status" style="margin-left: 340px;">
+                                        @cultura
+                                    </span>
+                                }
+
+                                <span class="mv-mb-nav-actions">
+                                    <input type="hidden" name="HighlightsItems[@indexen].ItemId" value="@contentItem.Id" />
+
+
+                                    @{
+                    
+                                Base = Html.ItemEditLink(T("Edit").Text, contentItem).ToString()
+                                    .Replace("\"", "")
+                                    .Replace("<" + "a href=", "")
+                                    .Replace(">" + T("Edit").Text + "</" + "a>", retRitorno);
+                                    }
+                                    <span data-id="@contentItem.Id" class="mini-banner-item-edit">@Html.Link(T("Edit").Text, @Base)</span> | 
+
+                                    @*<!--						    <span data-id="@contentItem.Id" class="mini-banner-item-edit">@Html.ItemEditLink(T("Edit").Text, contentItem)</span> |  -->
+                                    *@
+
+                                    <span data-id="@contentItem.Id" class="mini-banner-item-remove">
+                                        @Html.Link(T("Delete").Text, Url.ItemRemoveUrl(contentItem, new { returnUrl }), new { itemprop = "RemoveUrl UnsafeUrl" })
+
+                                    </span>
+                                </span>
+                            </div>
+                        </li>
+                                indexen++;
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.ContentId > 0) {
+        <span id="btn-@Html.FieldIdFor(m => m.Id)" class="button">@T("Add")</span>
+    } else { 
+        @T("Save the item before adding mini-banner!")
+    }
+</fieldset>
+
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+
+        (function ($) {
+            $('#save-message-@Html.FieldIdFor(m => m.Id)').hide();
+            $('#mustsave-message-@Html.FieldIdFor(m => m.Id)').hide();
+        
+            var idForModelOrder = 'HighlightsGroup_HighlightsItems_{id}__ItemOrder';
+            var addButton = $('#btn-@Html.FieldIdFor(m => m.Id)');
+            var data = { 
+                partId: @Model.Id,
+                fieldId: '@Html.FieldIdFor(m => m.Id)',
+                baseUrl: '@Url.Content("~/" + tenantname)',
+                returnUrl: '@retRitorno'
+            };
+
+            addButton.click(function () {
+                var url = '@Url.Action("Create", "Admin", new { Area = "Contents", Id = "HighlightsItem", HighlightsGroupId = Model.Id, returnUrl = Verifica })';
+                var newWindow = window.open(url, "_self", "width=980,height=700,status=no,toolbar=no,location=no,menubar=no,resizable=no,scrollbars=yes");
+            });
+
+            $('#mini-banner-item-@Html.FieldIdFor(m => m.Id) .mini-banner-item-edit > a').on("click", function () {
+                return (openEditWindow($(this).parent('span').attr("data-id"), data));
+            });
+            $('#mini-banner-item-@Html.FieldIdFor(m => m.Id) .mini-banner-item-edit').on("click", function () {
+                return (openEditWindow($(this).attr("data-id"), data));
+            });
+
+            $('#mini-banner-item-@Html.FieldIdFor(m => m.Id) .mini-banner-item-remove').on("click", function () {
+                $(this).closest('tr').remove();
+                $('#save-message-@Html.FieldIdFor(m => m.Id)').show();
+            });
+
+            $( ".mini-banner-item-sortable").sortable({
+                start: function (event, ui) {
+                    ui.item.startPos = ui.item.index();
+                },
+                update: function (event, ui) {
+                    var numberOfItems = ui.item.context.parentElement.children.length;
+                    var listaidOrdinati = "";
+                    for (var i = 0; i < numberOfItems; i++) {
+                        var element = ui.item.context.parentElement.children[i];
+                        var indexPos = element.id.replace('mini-banner-id-','');
+                        listaidOrdinati += indexPos+", ";
+                    }
+                    $('#@Html.FieldIdFor(m => m.HighlightsItemsOrder)').val(listaidOrdinati);
+                    $('#mustsave-message-@Html.FieldIdFor(m => m.Id)').show();
+
+                }
+            });
+            $( ".mini-banner-item-sortable" ).disableSelection();
+        })(jQuery);
+        //]]>
+    </script>
+}
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        var ConfermaUscita = '@T("There are unsaved changes.")';
+
+        function switchItemsArea(sender){
+            if (sender.value=="ByHand"){
+                $('#fromquery-area').hide();
+                $('#byhand-area').show();
+                $('#mv-mb-save-message').show();
+            }
+            else if (sender.value=="FromQuery"){
+                $('#fromquery-area').show();
+                $('#byhand-area').hide();
+                $('#mv-mb-save-message').hide();
+            }
+        }
+
+        //]]>
+    </script>
+}

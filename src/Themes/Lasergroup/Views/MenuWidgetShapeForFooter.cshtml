@@ -1,0 +1,43 @@
+﻿@{
+    var Menu = Model.WidgetMenuModel.Menu;
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+
+    int position = 0;
+    var linkHome = items[0].Href;
+}
+
+<div class="space-40 visible-xs"></div>
+<div class="col-sm-12 col-md-1 hidden-md">&nbsp;</div>
+<div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="row">
+        @if (!string.IsNullOrWhiteSpace(Model.WidgetMenuModel.ContentItem.MenuWidget.Titolo.Value)) {
+            <div class="col-xs-6 text-right">
+                <strong class="footer-nav-title">@Model.WidgetMenuModel.ContentItem.MenuWidget.Titolo.Value</strong>
+            </div>
+        }
+        <div class="col-xs-6">
+            <div class="menu-menu-footer-container">
+                <ul id="footer-menu" class="nav">
+                    @foreach (var item in items) {
+                        if (position > 0) {
+                            bool hasChildren = (item.Item.Items.Length > 0);
+                            <li class="menu-item @(((bool)item.Selected) ? "current-page-ancestor" : "")">
+                                @if (hasChildren) {
+                                    <a href="@item.Href">@item.Text</a>
+                                    <ul>
+                                        @DisplayChildren(item)
+                                    </ul>
+                                }
+                                else {
+                                    <a href="@item.Href">@item.Text</a>
+                                }
+                            </li>
+                        }
+
+                        position = position + 1;
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

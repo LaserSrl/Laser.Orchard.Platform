@@ -1,0 +1,21 @@
+﻿@using Nwazet.Commerce.Models
+@using Orchard.ContentManagement
+@{
+    var themeBasePath = Url.Content(Html.ThemePath(WorkContext.CurrentTheme, ""));
+
+    var items = (IList<dynamic>)Model.ShopItems;
+    var subtotal = (decimal)Model.Subtotal;
+    var root = HttpContext.Current.Request.ApplicationPath;
+    var cartUrl = Url.Action("Index", "ShoppingCart", new { area = "NWazet.Commerce" });
+    @Html.Hidden("Country", (string)Model.Country)
+    @Html.Hidden("ZipCode", (string)Model.ZipCode)
+    <div class="header-right-component">
+        <a href="@cartUrl">
+            <div class="total">
+                <span class="simpleCart_total">@Model.CurrencyProvider.GetPriceString((decimal)Model.Total)</span>
+                &nbsp;(<span class="simpleCart_quantity">@items.Sum(it => it.Quantity) @T("items")</span>)
+                <img src="@(themeBasePath + "/Styles/Images/bag.png")"/>
+            </div>
+        </a>
+    </div>
+}

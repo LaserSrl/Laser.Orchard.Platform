@@ -1,0 +1,24 @@
+﻿@* editor template view *@
+
+@using Orchard;
+@using Laser.Orchard.CulturePicker;
+@using Laser.Orchard.CulturePicker.Models;
+
+@model TranslateMenuItemsPart
+
+@{
+    //Check permissions, because if the current user does not have ReplayMenuTranslation, then the checkbox
+    //for Translated should be disabled.
+    IOrchardServices _orchardServices;
+    bool authorizedToCheck = false; //check authorization
+    if (WorkContext.TryResolve<IOrchardServices>(out _orchardServices)){
+        authorizedToCheck = _orchardServices.Authorizer.Authorize(TranslateMenuItemsPermissions.ReplayMenuTranslation);
+    }
+}
+<div>
+    @((Model.FromLocale==null || Model.FromLocale=="")? null : @T("This is the translation from the {0} culture.", Model.FromLocale ) + "<br />")
+    @Html.CheckBoxFor(tmip => tmip.ToBeTranslated)<label class="sub">@T(" To be translated") </label><br />
+    @Html.CheckBoxFor(tmip => tmip.Translated, new { 
+        enabled = authorizedToCheck
+    })<label class="sub">@T(" Translated") </label>
+</div>

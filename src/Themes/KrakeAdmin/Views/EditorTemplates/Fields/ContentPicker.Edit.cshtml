@@ -1,0 +1,46 @@
+﻿@model Orchard.ContentPicker.ViewModels.ContentPickerFieldViewModel
+@using Orchard.ContentPicker.Settings;
+@using System.Dynamic
+@{
+    Script.Require("ContentPicker").AtFoot();
+    Script.Require("jQueryUI_Sortable").AtFoot();
+    Style.Include("content-picker-admin.css");
+
+    var settings = Model.Field.PartFieldDefinition.Settings.GetModel<ContentPickerFieldSettings>();
+    var extensionSettings = Model.Field.PartFieldDefinition.Settings.GetModel<Laser.Orchard.StartupConfig.Settings.ContentPickerFieldExtensionSettings>();
+    if (extensionSettings != null && (!string.IsNullOrEmpty(extensionSettings.PreviewSelected))) {
+
+
+        dynamic obj = new ExpandoObject();
+        obj.Required = settings.Required;
+        obj.Multiple = settings.Multiple;
+        obj.DisplayName = Model.Field.DisplayName;
+        obj.IdsFieldId = Html.FieldIdFor(m => m.Field.Ids);
+        obj.SelectedItemsFieldName = Html.FieldNameFor(m => m.SelectedIds);
+        obj.ContentItems = Model.ContentItems;
+        obj.Hint = settings.Hint;
+        obj.PartName = Model.Part.PartDefinition.Name;
+        obj.FieldName = Model.Field.PartFieldDefinition.Name;
+        obj.Field = Model.Field;
+        obj.Part = Model.Part;
+    
+
+        @Html.Partial(extensionSettings.PreviewSelected,(object)obj)
+    }
+    else {
+        @Display.ContentPicker_Edit(
+                                   Field: Model.Field,
+                                   Part: Model.Part,
+                                   Required: settings.Required,
+                                   Multiple: settings.Multiple,
+                                   DisplayName: Model.Field.DisplayName,
+                                   IdsFieldId: Html.FieldIdFor(m => m.Field.Ids),
+                                   SelectedItemsFieldName: Html.FieldNameFor(m => m.SelectedIds),
+                                   ContentItems: Model.ContentItems,
+                                   Hint: settings.Hint,
+                                   PartName: Model.Part.PartDefinition.Name,
+                                   FieldName: Model.Field.PartFieldDefinition.Name
+                               )
+    }
+}
+    

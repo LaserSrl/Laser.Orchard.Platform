@@ -1,0 +1,46 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "List of scripts in module's Scripts folder to include on the edit page (separated by returns, full filename). jquery.validate.min.js is auto-included."
+msgstr "La lista degli script, appartenenti alla cartella Scripts dei moduli, da includere nell'edit della pagina (separati dai return, intero nome del file). jquary.validate.min.js è già incluso."
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "List of stylesheets in module's Styles folder to include on the edit page (separated by returns, full filename)"
+msgstr "La lista dei file di stile, appartenenti alla cartella Scripts dei moduli, da includere nell'edit della pagina (separati dai return, intero nome del file)."
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "Raw HTML"
+msgstr "Riga HTML"
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "Raw Html to include in the same order this field is displayed on the edit page."
+msgstr "Riga HTML da includere nello stesso ordine ti visualizzazione dei campi nella pagina di modifica"
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "RawHtml on footer ('used for include RawHtml javascript on footer')"
+msgstr "Riga HTML nel footer ('usato per includere righe HTML javascript nel footer')"
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "Scripts"
+msgstr "Scripts"
+
+msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
+msgid "Stylesheets"
+msgstr "Fogli stile"
+
+msgctxt "Laser.Orchard.InsertStuff.Drivers.InsertStuffFieldDriver"
+msgid "The selected values of the field."
+msgstr "I valori selezionati nel campo"
+
+msgctxt "Laser.Orchard.InsertStuff.Drivers.InsertStuffFieldDriver"
+msgid "Value"
+msgstr "Valore"
+

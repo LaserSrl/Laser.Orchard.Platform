@@ -1,0 +1,34 @@
+﻿@model Laser.Orchard.ShareLink.ViewModels.ShareLinkModuleSettingVM
+
+<fieldset>
+    <div class="settings">
+
+        <label for="@Html.FieldIdFor(m => m.SharedLink)">@T("Link") </label>
+        @Html.TextBoxFor(m => m.SharedLink, new { @class = "text large tokenized" })
+        <span class="hint">@T("Link to share")</span>
+    </div>
+    <div class="settings">
+
+        <label for="@Html.FieldIdFor(m => m.SharedBody)">@T("Description") </label>
+        @Html.TextAreaFor(m => m.SharedBody, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Text to Share used on OpenGraph")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.SharedText)">@T("Text") </label>
+        @Html.TextAreaFor(m => m.SharedText, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Text to Share")</span>
+    </div>
+    <div class="settings">
+
+        <label for="@Html.FieldIdFor(m => m.SharedImage)">@T("Picture") </label>
+        @Html.TextBoxFor(m => m.SharedImage, new { @class = "text large tokenized", rows = "5" })
+        <span class="hint">@T("Picture to Share")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Fb_App)">@T("Fb_appId") </label>
+        @Html.TextBoxFor(m => m.Fb_App)
+        <span class="hint">@T("Facebook Fb_appId: With this OpenGraph key => Your page will appear in the 'Likes and Interests' section of the user's profile, and you have the ability to publish updates to the user")</span>
+    </div>
+
+    @Display.TokenHint()
+</fieldset>

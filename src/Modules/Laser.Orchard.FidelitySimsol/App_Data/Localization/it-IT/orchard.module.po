@@ -1,0 +1,14 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "Laser.Orchard.FidelitySimsol.Services.NotificatorService"
+msgid "There are no Module fidelity base enabled "
+msgstr "Nessun modulo fedeltà base attivato."
+

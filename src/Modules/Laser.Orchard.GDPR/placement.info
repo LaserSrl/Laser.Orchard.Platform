@@ -1,0 +1,10 @@
+﻿<Placement>
+	<Place Parts_GDPRPart_ProtectionFlag="Content:5.5" />
+  <Place Parts_GDPRPart_AdminToolbarLink="-" />
+	<Match DisplayType="SummaryAdmin">
+    <Place Parts_GDPRPart_AdminToolbarLink="Actions:4.after" />
+	</Match>
+	<Match DisplayType="ProfileItemAdminSummary">
+    <Place Parts_GDPRPart_AdminToolbarLink="Actions:4.after" />
+	</Match>
+</Placement>

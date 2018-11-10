@@ -1,0 +1,22 @@
+﻿@model Laser.Orchard.Mobile.Settings.PushMobilePartSettingVM
+<fieldset>
+    <h2>@T("Settings - Mobile Push Part")</h2>
+   @* @Html.HiddenFor(m => m.HideRelated)*@
+      <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.HideRelated)
+        <label for="@Html.FieldIdFor(m => m.HideRelated)" class="forcheckbox">@T("Hide Related Content Picker Field") </label>
+        <span class="hint">@T("Default is false. Will hide the content picker field selector for related content item")</span>
+    </div>
+
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.AcceptZeroRelated)
+        <label for="@Html.FieldIdFor(m => m.AcceptZeroRelated)" class="forcheckbox">@T("Accept push with no Related content") </label>
+        <span class="hint">@T("Default is false. If selected accept 0 on idrelated (used for push with no contentitem linked)")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.QueryDevice)" >@T("Query to retrieve device") </label>
+        @Html.TextAreaFor(m => m.QueryDevice, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("If not specified push will send by default to all users")</span>
+    </div>
+     @Display.TokenHint()
+</fieldset>

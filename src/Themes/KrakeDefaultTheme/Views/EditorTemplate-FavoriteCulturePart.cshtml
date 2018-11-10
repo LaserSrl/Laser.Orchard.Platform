@@ -1,0 +1,7 @@
+@{
+    Laser.Orchard.StartupConfig.Models.FavoriteCulturePart Model2 = Model.Model;
+}
+@Html.Partial("Content.Edit-FavoriteCulturePart", Model2,
+    new ViewDataDictionary() {
+        TemplateInfo = new TemplateInfo() { HtmlFieldPrefix = Model.Prefix }
+    })

@@ -1,0 +1,1 @@
+﻿<%@ Application Inherits="Laser.Specs.Hosting.Simple.Web.MvcApplication, Laser.Specs" %>

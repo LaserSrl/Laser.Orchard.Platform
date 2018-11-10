@@ -1,0 +1,21 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="space-40"></div>
+<div class="container text-center" id="showcase-loghi">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
+            <a href="@item.ShowcaseLoghiWidget.LinkAppleStore.Value" title="@item.ShowcaseLoghiWidget.LinkAppleStore.Text" target="@item.ShowcaseLoghiWidget.LinkAppleStore.Target">
+                <img src="@item.ShowcaseLoghiWidget.LogoAppleStore.FirstMediaUrl" title="@item.ShowcaseLoghiWidget.LogoAppleStore.MediaParts[0].Title" alt="@item.ShowcaseLoghiWidget.LogoAppleStore.MediaParts[0].AlternateText" class="img-responsive">
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
+            <a href="@item.ShowcaseLoghiWidget.LinkGooglePlay.Value" title="@item.ShowcaseLoghiWidget.LinkGooglePlay.Text" target="@item.ShowcaseLoghiWidget.LinkGooglePlay.Target">
+                <img src="@item.ShowcaseLoghiWidget.LogoGooglePlay.FirstMediaUrl" title="@item.ShowcaseLoghiWidget.LogoGooglePlay.MediaParts[0].Title" alt="@item.ShowcaseLoghiWidget.LogoGooglePlay.MediaParts[0].AlternateText" class="img-responsive">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="space-40"></div>
+<div class="space-40"></div>

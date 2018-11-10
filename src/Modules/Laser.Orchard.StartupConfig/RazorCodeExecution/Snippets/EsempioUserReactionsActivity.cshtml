@@ -1,0 +1,20 @@
+﻿@{
+    string result = "Done";
+    System.IO.File.AppendAllText("c:\\Temp\\log.log", "inizo\r\n"); // custom log
+
+    // crea un nuovo content item di tipo "Partecipero"
+    var partecipero = Model.OrchardServices.ContentManager.New("Partecipero");
+    Model.OrchardServices.ContentManager.Create(partecipero);
+    dynamic ci = (dynamic)partecipero;
+
+    System.IO.File.AppendAllText("c:\\Temp\\log.log", "Type: " + ci.ContentType + "\r\n"); // custom log
+    
+    // legge i workflow token (parametri di input creati dall'evento di avvio del workflow) e il content item legato al workflow stesso
+    ci.Partecipero.Nome.Value = "Reaction ID: " + Model.Tokens["ReactionId"] + ", action: " + Model.Tokens["Action"] + ", content ID: " + Model.ContentItem.Id;
+
+    // pubblica il nuovo content item
+    Model.OrchardServices.ContentManager.Publish(partecipero);
+
+    System.IO.File.AppendAllText("c:\\Temp\\log.log", "fine\r\n"); // custom log
+}
+@result

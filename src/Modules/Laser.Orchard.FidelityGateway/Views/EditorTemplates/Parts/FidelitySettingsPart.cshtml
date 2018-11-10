@@ -1,0 +1,37 @@
+﻿@model Laser.Orchard.FidelityGateway.Models.FidelitySettingsPart
+
+<fieldset>
+    <legend>@T("FidelityGateway")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DeveloperKey)">@T("Secret Developer Key")</label>
+        @Html.TextBoxFor(m => m.DeveloperKey, new { @class = "text large" })
+        <span class="hint">@T("the secret developer key for acces to remote fidelity provider.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ApiURL)">@T("URL Base")</label>
+        @Html.TextBoxFor(m => m.ApiURL, new { @class = "text large" })
+        <span class="hint">@T("Url base for the call api.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.UserID)">@T("User Id")</label>
+        @Html.TextBoxFor(m => m.UserID, new { @class = "text-medium" })
+        <span class="hint">@T("User id.")</span>
+    </div>
+     <div>
+        <label for="@Html.FieldIdFor(m => m.Password)">@T("Password")</label>
+        @Html.TextBoxFor(m => m.Password, new { @class = "text-medium" })
+        <span class="hint">@T("Password.")</span>
+    </div>
+     <div>
+        <label for="@Html.FieldIdFor(m => m.AccountID)">@T("AccountID")</label>
+        @Html.TextBoxFor(m => m.AccountID, new { @class = "text-medium" })
+        <span class="hint">@T("AccountID.")</span>
+    </div>
+     <div>
+        <label for="@Html.FieldIdFor(m => m.DefaultCampaign)">@T("DefaultCampaign")</label>
+        @Html.TextBoxFor(m => m.DefaultCampaign, new { @class = "text-medium" })
+        <span class="hint">@T("DefaultCampaign.")</span>
+    </div>
+</fieldset>
+
+@* TODO aggiungere nome del modulo sottostante attivo (e un warning se ce ne sono due) *@

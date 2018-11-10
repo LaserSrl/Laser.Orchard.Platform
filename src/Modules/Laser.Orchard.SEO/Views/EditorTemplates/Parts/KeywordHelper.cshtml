@@ -1,0 +1,204 @@
+﻿@using Laser.Orchard.Commons.Helpers;
+@using Laser.Orchard.SEO;
+@using Laser.Orchard.SEO.ViewModels;
+
+@model Laser.Orchard.SEO.ViewModels.KeywordHelperPartViewModel
+
+@{
+    Script.Require("jQuery_NestedModels").AtHead();
+    Script.Require("Bootstrap").AtHead();
+}
+
+@using (Script.Head()) {
+    <script type="text/javascript">
+        function refreshTrends(aId) {
+            var q = document.getElementById("key_" + aId).value;
+            q = q.trim().replace(/\s+/g, ' ');
+            if (q) {
+                var date = document.getElementById("period_" + aId).value;
+                var hl = document.getElementById("lang_" + aId).value;
+                var geo = document.getElementById("region_" + aId).value;
+                var ua = '@Url.Action("RefreshTrends", "keywordhelper", new { area = "Laser.Orchard.SEO", _hl = "__hl__", _q = "__q__", _geo = "__geo__", _date = "__date__" })'
+                    .replace('__hl__', hl)
+                    .replace('__q__', q)
+                    .replace('__geo__', geo)
+                    .replace('__date__', date);
+                ua = ua.replace(/amp;/g, ''); //Url.Action() puts &amp; instead of just &
+                document.getElementById("iframe_" + aId).height = "550px";
+                document.getElementById("iframe_" + aId).src = ua;
+            }
+        }
+
+        function showTrends(keyword) {
+            if (keyword) {
+                var date = document.getElementById("period_SummaryChart").value;
+                var hl = document.getElementById("lang_SummaryChart").value;
+                var geo = document.getElementById("region_SummaryChart").value;
+                var ua = '@Url.Action("RefreshTrends", "keywordhelper", new { area = "Laser.Orchard.SEO", _hl = "__hl__", _q = "__q__", _geo = "__geo__", _date = "__date__" })'
+                    .replace('__hl__', hl)
+                    .replace('__q__', keyword)
+                    .replace('__geo__', geo)
+                    .replace('__date__', date);
+                ua = ua.replace(/amp;/g, ''); //Url.Action() puts &amp; instead of just &
+                document.getElementById("iframe_" + keyword).height = "550px";
+                document.getElementById("iframe_" + keyword).src = ua;
+            }
+        }
+
+        function hideTrends(aId) {
+            document.getElementById("iframe_" + aId).height = "1px";
+            document.getElementById("iframe_" + aId).src = "";
+        }
+
+        function summaryChart() {
+            var keyDivs = document.getElementsByClassName("j_seokeyword");
+            var i;
+            var qString = '';
+            for (i = 0; i < keyDivs.length; i++) {
+                var aId = keyDivs[i].id;
+                var del = document.getElementById("delete_" + aId);
+                if (del.value.toLowerCase() == "false") {
+                    var q = document.getElementById("key_" + aId).value;
+                    q = q.trim().replace(/\s+/g, ' ');
+                    //to handle the case where people may put a comma in the keyword, we do the following:
+                    var qArray = q.split(",");
+                    if (qArray.length == 1) {
+                        if (q) {
+                            qString += q + ',';
+                        }
+                    } else {
+                        //there actually was (at least) a comma.
+                        var j;
+                        for (j = 0; j < qArray.length; j++) {
+                            var qq = qArray[j].trim(); //multiple spaces have already been removed, but we still have to retrim
+                            if (qq) {
+                                qString += qq + ',';
+                            }
+                        }
+                    }
+                }
+            }
+            if (qString.length > 0) {
+                qString = qString.slice(0, -1); //remove trailing comma
+            }
+
+
+            var date = document.getElementById("period_SummaryChart").value;
+            var hl = document.getElementById("lang_SummaryChart").value;
+            var geo = document.getElementById("region_SummaryChart").value;
+            var ua = '@Url.Action("SummaryTrends", "keywordhelper", new { area = "Laser.Orchard.SEO", _hl = "__hl__", _q = "__q__", _geo = "__geo__", _date = "__date__" })'
+                .replace('__hl__', hl)
+                .replace('__q__', qString)
+                .replace('__geo__', geo)
+                .replace('__date__', date);
+            ua = ua.replace(/amp;/g, ''); //Url.Action() puts &amp; instead of just &
+            document.getElementById("iframe_SummaryChart").height = "360px";
+            document.getElementById("iframe_SummaryChart").src = ua;
+
+            var pathStr = window
+               .location
+               .pathname
+               .slice(0,
+                   window.location.pathname.lastIndexOf("Admin")); //e.g. Laser.Orchard/ProvaFavicon/
+            pathStr = window.location.protocol + "//" + window.location.host + pathStr + "Laser.Orchard.SEO/keywordhelper/TabbedCharts?" + "_hl=" + hl + "&_q=" + qString + "&_geo=" + geo + "&_date=" + date;
+            //e.g. pathStr = "http://localhost/Laser.Orchard/ProvaFavicon/Laser.Orchard.SEO/keywordhelper/TabbedCharts?_hl=it&_q=Lemuri,pollo&_geo=&_date=today+12-m#home"
+            //$("#SummaryTrendsActionLink").attr('href', link)
+            var uaTab = '@Url.Action("TabbedCharts", "keywordhelper", new { area = "Laser.Orchard.SEO", _hl = "__hl__", _q = "__q__", _geo = "__geo__", _date = "__date__" })'
+                .replace('__hl__', hl)
+                .replace('__q__', qString)
+                .replace('__geo__', geo)
+                .replace('__date__', date);
+            uaTab = uaTab.replace(/amp;/g, ''); //Url.Action() puts &amp; instead of just &
+            uaTab = uaTab.replace(/\s/g, '+');
+            $("#summaryTables").load(uaTab);
+        }
+
+
+    </script>
+
+}
+
+@{
+    Style.Include("~/Styles/KeywordHelper.css").AtHead();
+}
+<fieldset>
+
+    <legend>@T("Keywords selected for this content")</legend>
+
+    <div id="outerKeys" class="outerKeys">
+        <div id="allSEOKeywords">
+            @Html.EditorFor(x => x.Keywords)
+        </div>
+        <div id="addButton">
+            <div>
+                <div style="margin: 0; padding: 0 0 0 10px;">
+                    @Html.LinkToAddNestedForm(x => x.Keywords, "<i class=\"fa fa-plus\" style=\"color: green\"></i> " + T(" Add keyword").Text, "#allSEOKeywords", ".j_seokeyword")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p style="clear: both;"></p>
+
+    <div title="@T("You can add keywords and obtain the most relevant related ones on search engines.")">
+        <div title ="@T("This chart compares the keywords' trends in time")">
+            <select title="@T("Select time period.").ToString()" id="period_SummaryChart">
+                @Html.SelectOption("today+12-m", true, T("Past year").ToString());
+                @Html.SelectOption("today+3-m", false, T("Past 90 days").ToString());
+                @Html.SelectOption("today+2-m", false, T("Past 60 days").ToString());
+                @Html.SelectOption("today+1-m", false, T("Past 30 days").ToString());
+                @Html.SelectOption("today+7-d", false, T("Past week").ToString());
+            </select>
+            <select title="@T("Language").ToString()" id="lang_SummaryChart">
+                @*Insert languages from site settings*@
+                @{
+                    Orchard.Localization.Services.ICultureManager _cultureManager;
+                    if (WorkContext.TryResolve<Orchard.Localization.Services.ICultureManager>(out _cultureManager)) {
+                        var cultures = _cultureManager.ListCultures();
+                        foreach (var lCode in cultures) { 
+                            var shortLCode = lCode.Substring(0, 2);
+                            var lText = KeywordHelperKeyword.langDictionary.ContainsKey(lCode) ?
+                                KeywordHelperKeyword.langDictionary[lCode] :
+                                KeywordHelperKeyword.langDictionary.ContainsKey(shortLCode) ?
+                                KeywordHelperKeyword.langDictionary[shortLCode] : "";
+                            if (!String.IsNullOrWhiteSpace(lText)) {
+                                @Html.SelectOption(shortLCode, WorkContext.CurrentSite.SiteCulture == lCode, lText);
+                            }
+                           
+                        }
+                    }
+                }
+                @*Insert languages from file*@
+                @if (KeywordHelperKeyword.langDictionary.Count() > 0) {
+                    <option disabled>_________</option>
+                }
+                @foreach (var lang in KeywordHelperKeyword.langDictionary) {
+                    @Html.SelectOption(lang.Key, false, lang.Value);
+                }
+            </select>
+            <select title="@T("Region").ToString()" id="region_SummaryChart">
+                @Html.SelectOption("", true, T("Worldwide").ToString());
+                @*Insert regions from file*@
+                @if (KeywordHelperKeyword.regionDictionary.Count() > 0) {
+                    <option disabled>_________</option>
+                }
+                @foreach (var reg in KeywordHelperKeyword.regionDictionary) {
+                    @Html.SelectOption(reg.Key, false, reg.Value);
+                }
+            </select>
+            <a href="javascript:void(0)" onclick="summaryChart()" class="btn btn-sm" id="button_SummaryChart" title="@T("Click to refresh summary chart")">@T("Refresh summary chart")</a>
+            <div class="container">
+                <iframe style="position: relative; top: 5px; left: 5px; overflow-y: hidden; width: 100%;" height="1px" id="iframe_SummaryChart" scrolling="no" seamless="seamless"></iframe>
+            </div>
+            <div id="summaryTables"></div>
+        </div>
+
+        @*
+        <i class="fa fa-plus" style="color: green"></i>
+        @Html.LinkToAddNestedForm(x => x.Keywords, T("Add keyword").Text, "#seokeyword", ".j_seokeyword")
+        <div id="seokeyword">
+            @Html.EditorFor(x => x.Keywords)
+        </div>
+        *@
+    </div>
+</fieldset>

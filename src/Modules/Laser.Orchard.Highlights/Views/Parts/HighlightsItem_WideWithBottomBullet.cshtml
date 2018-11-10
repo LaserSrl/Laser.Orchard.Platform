@@ -1,0 +1,56 @@
+﻿@using Laser.Orchard.Highlights.Models
+@{
+    var item = Model.HighlightsItem;
+    var titleTag = Tag(Model, "h4");
+    var subtitleTag = Tag(Model, "h5");
+    if (item.TitleSize == "Principale") {
+        titleTag = Tag(Model, "h1");
+        subtitleTag = Tag(Model, "h2");
+    } else if (item.TitleSize == "MediaPriorita") {
+        titleTag = Tag(Model, "h3");
+        subtitleTag = Tag(Model, "h4");
+    } else if (item.TitleSize == "BassaPriorita") {
+        titleTag = Tag(Model, "h5");
+        subtitleTag = Tag(Model, "h6");
+    } else if (item.TitleSize == "Titoletto") {
+        titleTag = Tag(Model, "h6");
+        subtitleTag = Tag(Model, "h7");
+    } else if (item.TitleSize == "NessunTitolo") {
+        titleTag = Tag(Model, "notitle");
+        subtitleTag = Tag(Model, "notitle");
+    }
+}
+<div class="slide @(item.ItemOrder == 0 ? "active" : "")" style="background-image: url(@Url.Content(item.MediaUrl));">
+    <img src="@Display.ResizeMediaUrl(Width: 1140, Height: 714, Mode: "crop", Alignment: "middlecenter", Path: item.MediaUrl)" />
+    <div class="slide-block">
+        @{
+            if (titleTag.TagName != "notitle") {
+                if (item.Title != "") {
+            @titleTag.StartElement
+            @item.Title
+            @titleTag.EndElement
+                }
+                if (item.SubTitle != " ") {
+            @subtitleTag.StartElement
+            @item.SubTitle
+            @subtitleTag.EndElement
+                }
+            }
+            if (!String.IsNullOrEmpty(item.Body)) {
+            <div class="bodyExcerpt">
+                @Html.Raw(item.Body);
+            </div>
+            }
+        }
+        <p>
+            <a @(item.LinkTarget == Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "class=media-cbox" : "") 
+            title="@item.Title" 
+            href="@(item.LinkUrl!=null?Url.Content(item.LinkUrl):"")" 
+		    @(item.LinkTarget != Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "target=" + item.LinkTarget : "") >
+                @if (item.Video) {<span class="video_icon"></span>}
+                @item.LinkText
+            </a>
+        </p>
+
+    </div>
+</div>

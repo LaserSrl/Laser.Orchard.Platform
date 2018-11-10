@@ -1,0 +1,111 @@
+﻿@{
+    var services = WorkContext.Resolve<Orchard.IOrchardServices>();
+    var contentManager = services.ContentManager;
+    IEnumerable<object> items = Model.ContentItems;
+    var idContent = Model.ContentItem.ContainerWidgetPart.Record.ContainerId;
+    var containerItem = contentManager.Get(idContent);
+    string fasciaType = ((dynamic)containerItem).Fascia.Specializzazione.Value;
+
+
+    switch(fasciaType) {
+        
+        case "Immagine - Testo":
+            <div id="business-servizi">
+                <div class="container">
+                    @foreach (var item in items) {
+                        var ci = ((dynamic)item).ContentItem;
+                        @Display(New.ImmagineTesto(ContentItem: ci));
+                    }
+                </div>
+            </div>
+            break;
+
+        case "Dettaglio Girevole":
+            <div id="krake-info">
+                <div class="krake-info-top"></div>
+                <div class="krake-info-bottom"></div>
+                <div class="container-fluid">
+                    <div class="row">
+                        @foreach (var item in items) {
+                            var ci = ((dynamic)item).ContentItem;
+                            @Display(New.DettagliKrake(ContentItem: ci));
+                        }
+                    </div>
+                </div>
+            </div>
+            break;
+            
+        case "Fascia Business":
+            <div id="focus" class="container-fluid with-external-top with-external-bottom">
+	            <div class="focus-top"></div>
+	            <div class="row">
+                    @foreach (var item in items) {
+                            var ci = ((dynamic)item).ContentItem;
+                            @Display(New.FasciaBusiness(ContentItem: ci));
+                        }
+	            </div>
+                <div class="focus-bottom"></div>
+            </div>
+            break;
+
+        case "Fascia Krake":
+            foreach (var item in items) {
+                var ci = ((dynamic)item).ContentItem;
+                @Display(New.FasciaKrake(ContentItem: ci));
+            }
+            break;
+            
+        case "Fascia Societa":
+            <div id="nav-societa" class="with-external-bottom">
+                <div class="nav-societa-top"></div>
+                <div id="focus" class="container">
+                    <div class="row">
+                        @foreach (var item in items) {
+                            var ci = ((dynamic)item).ContentItem;
+                            @Display(New.FasciaSocieta(ContentItem: ci));
+                        }
+                    </div>
+                </div>
+                <div class="nav-societa-bottom"></div>
+            </div>
+            break;
+            
+        case "Fascia Contatti":
+            <div id="societa-footer">
+                <div class="societa-footer-top"></div>
+                <div id="focus" class="container">
+                    <div class="row">
+                        @foreach (var item in items) {
+                            var ci = ((dynamic)item).ContentItem;
+                            @Display(New.FasciaContatti(ContentItem: ci));
+                        }
+                    </div>
+                </div>
+                <div class="societa-footer-bottom"></div>
+            </div>
+            break;
+
+        case "Fascia Promessa":
+            <div class="promessa">
+                <div class="promessa-top"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-12">
+                            <h2 class="promessa-title">@containerItem.TitlePart.Title</h2>
+                        </div>
+                        <div class="col-sm-8 col-xs-12">
+                            <p class="promessa-text">@Html.Raw(containerItem.Fascia.TestoPromessa.Value)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="promessa-bottom"></div>
+            </div>
+            break;
+
+        default:
+            <div class="space-40"></div>
+            break;
+         
+    }
+
+}

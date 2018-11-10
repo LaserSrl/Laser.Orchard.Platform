@@ -1,0 +1,4 @@
+﻿<Placement>
+    <Place Parts_DynamicMenu="Content:before"/>
+    <Place Parts_DynamicMenu_Edit="Content:7.5"/>
+</Placement>

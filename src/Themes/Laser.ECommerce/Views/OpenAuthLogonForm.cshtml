@@ -1,0 +1,41 @@
+﻿@using Laser.Orchard.OpenAuthentication.Extensions
+@using Orchard.ContentManagement
+@{ 
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+
+    var userName = Request.QueryString["UserName"];
+    var externalLoginData = Request.QueryString["ExternalLoginData"];
+    var returnUrl = Request.QueryString["ReturnUrl"];
+}
+
+<div class="facts">
+    <div class="register">
+        @using (Html.BeginFormAntiForgeryPost(
+                Url.Action("LogOn", "Account",
+                    new {
+                        area = Constants.OrchardUsersArea,
+                        ReturnUrl = returnUrl,
+                        UserName = userName,
+                        ExternalLoginData = externalLoginData,
+                        @class = "login-form"
+                    }))) {
+            <div class="no-margin">
+                @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+            </div>
+            @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
+            <div class="space-20"></div>
+            @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = "Password...", @class = "input-text form-control" })
+            <div class="space-20"></div>
+            @T("Remember Me")<div class="padding-right-5"></div> @Html.CheckBox("rememberMe", new { id = "remember-me" })
+            <div class="space-20"></div>
+            <input type="submit" class="submit" value="@T("Sign In")">
+        }
+        @if (enableLostPassword) {
+            @Html.ActionLink(
+                T("Lost your Password?").Text,
+                "RequestLostPassword", null, null,
+                new { @class = "links" })
+        }
+    </div>
+</div>

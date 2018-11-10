@@ -1,0 +1,116 @@
+﻿@using Laser.Orchard.TaskScheduler.ViewModels;
+@using Laser.Orchard.Commons.Helpers;
+@using Laser.Orchard.TaskScheduler;
+@using Orchard;
+@using System.Globalization;
+
+@model Laser.Orchard.TaskScheduler.ViewModels.ScheduledTaskViewModel
+
+@{
+    Style.Require("Accordion").AtHead();
+    
+    MvcHtmlString taskBlock = Html.UniqueClientId("ScheduledTaskViewModel");
+
+    var appId = "st_" + taskBlock;
+
+    string moreDetails = T("More details").ToString();
+    string fewDetails = T("Fewer details").ToString();
+}
+
+<div id="@appId" class="j_scheduledtasks">
+    @Html.HiddenFor(m => m.Id) @*This value must be in the form to pass it forward*@
+    @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete", @id = "delete_" + @appId })
+    @Html.HiddenFor(m => m.Scheduling, new { @class = "ph-mark-for-scheduling", @id = "schedule_" + @appId })
+
+    <label for="sig_@appId">@T("Signal name")</label>
+    @Html.TextBoxFor(m => m.SignalName, new {
+        placeholder = T("Signal name").ToString(),
+        @title = T("Name of the signal that will be triggered by the task").ToString(),
+        @id = "sig_" + @appId,
+        @class = "text medium",
+        @required = "required"
+    })
+
+    @*Stuff for the Schedule/Unschedule button*@
+    @Html.HiddenFor(m => m.Running) @*I need to have the value of running somewhere in the form*@
+    @if (Model.Running > 0) {
+        <text>
+        <button id="unscheduleTask_@appId" type="submit" name="submit.UnscheduleTask" value="yes please" onclick="FlagForSchedulingEvent('@appId');">@T("Unschedule")</button>
+        @*@Html.ActionLink(T("Unschedule this task").ToString(), "IndexUnscheduleTask", "Admin", new { }, new { @class = "button" })*@
+        </text>
+    } else {
+        <text>
+        <button id="scheduleTask_@appId" type="submit" name="submit.ScheduleTask" value="yes please" onclick="FlagForSchedulingEvent('@appId');">@T("Schedule")</button>
+        </text>
+    }
+
+    <a class="accordion-section-title" role="button" data-toggle="collapse" href="#collapse_@appId" id="collapseButton_@appId">
+        @moreDetails
+    </a>
+
+    <div id="collapse_@appId"  style="display:none">
+        <label for="@Html.FieldIdFor(m => m.ScheduledStartUTC)">@T("Start Date")</label>
+        @Html.EditorFor(m => m.ScheduledStartUTCEditor)
+
+        <label>@T("Periodicity")</label>
+            @Html.TextBoxFor(m => m.PeriodicityTime, new {
+           @title = T("Amount of time that should pass between repetitions of the task (integer)").ToString(),
+           @id = "time_" + @appId,
+           @class = "text small",
+           @pattern = "[0-9]*{1,}",
+           @required = "required"
+       })
+
+        @Html.DropDownListFor(m => m.PeriodicityUnit, new SelectList(Enum.GetValues(typeof(TimeUnits))), new {
+            @title = @T("The time units for the repetitions of the task.")
+        })
+
+        <label>@T("Content Item Id")</label>
+            @Html.TextBoxFor(m => m.ContentItemId, new {
+            @class = "text small",
+            @pattern = "[0-9]*",
+            @required = "required",
+            @title = @T("Id of the Content Item that will be passed with the task. 0 for no item.")
+        })
+    </div>
+    
+
+    @*Link to remove the task*@
+    @if (Model.Running == 0) {
+        <text>
+        <br />
+        @Html.LinkToRemoveNestedForm("<i class=\"fa fa-times\" style=\"color: red\"></i> " + T(" Remove this task").ToString(), ".j_scheduledtasks", "input.ph-mark-for-delete")
+        </text>
+    } else {
+        <text>
+        <br />
+        @T("The task is scheduled for execution. Unschedule it before removing it.")
+        </text>
+    }
+
+    <hr style="margin-top:0.5em; margin-bottom:0.5em;"/>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#collapseButton_@appId').click(function () {
+                if ($('#collapse_@appId').is(":visible")) {
+                    this.innerHTML = "@moreDetails";
+                    $('#collapse_@appId').hide(400);
+                }
+                else {
+                    this.innerHTML = "@fewDetails";
+                    $('#collapse_@appId').show(400);
+                }
+                $('html, body').animate({
+                    scrollTop: $($(this).attr('href')).offset().top
+                }, 500);
+                return false;
+            });
+        });
+    </script>
+</div>
+
+
+
+
+

@@ -1,0 +1,106 @@
+﻿@model Laser.Orchard.MailCommunication.Models.MailCommunicationPart
+@{
+    Script.Require("jQuery");
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+    bool disabledElements = Model.MailMessageSent;
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#@Html.FieldIdFor(m => m.RecipientList)').focusout(function () {
+                updateSummary();
+            });
+        });
+
+        $(function () {
+            $('.rcswitcher-checkbox-email-recipients').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.UseRecipientList)') {
+                        updateSummary();
+                        $("#email-recipients-info").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.UseRecipientList)') {
+                        updateSummary();
+                        $("#email-recipients-info").hide(400);
+                    }
+                }
+            });
+        });
+            $(function () {
+                $('.rcswitcher-checkbox-mail').rcSwitcher({
+                    theme: 'flat',
+                    blobOffset: 1,
+                    onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SendToTestEmail)') {
+                        $("#test-email-container").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SendToTestEmail)') {
+                        $("#test-email-container").hide(400);
+                    }
+                }
+            });
+     });
+    </script>
+}
+@Html.HiddenFor(m => m.MailMessageSent)
+<fieldset>
+    @Html.LabelFor(m => m.SendToTestEmail, T("Send for test").Text, new { @class = "forcheckbox" })
+    @Html.CheckBoxFor(model => model.SendToTestEmail, new { @class = "rcswitcher-checkbox-mail" })
+</fieldset>
+<fieldset id="test-email-container" style="@((!Model.SendToTestEmail) ? "display:none;" : "")">
+    @Html.LabelFor(m => m.EmailForTest, T("Test Email").Text, new { @class = "forcheckbox" })
+    @Html.TextBoxFor(model => model.EmailForTest, new { @class = "text medium" })
+    <button type="submit" name="submit.Save" value="submit.MailTest">@T("Send for test")</button>
+</fieldset>
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.UseRecipientList)" class="forcheckbox">@T("Enter recipients manually") </label>
+    @Html.CheckBoxFor(m => m.UseRecipientList, new { @class = "rcswitcher-checkbox-email-recipients" })
+    <div id="email-recipients-info" style="@((!Model.UseRecipientList) ? "display:none;" : "")">
+        <div class="editor-label">@Html.LabelFor(m => m.RecipientList, T("Manual recipients:"))</div>
+        <div class="editor-field">@Html.TextAreaFor(m => m.RecipientList, new { @class = "text large" })</div>
+        <span class="hint">@T("Enter username or e-mail of the contacts to which to deliver this email. One recipient for each line.")</span>
+    </div>
+
+</fieldset>
+
+<fieldset>
+    @Html.LabelFor(m => m.SendOnNextPublish, T("Approved").Text, new { @class = "forcheckbox" })
+    @if (!disabledElements) { 
+        @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-mail" }) 
+        <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet sent.")
+    } else {
+        @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-mail", @disabled = "disabled" }) 
+        <i class="fa fa-check-circle" style="color: green"></i> @T("Message already sent.")
+    }
+    @if (disabledElements) { 
+        <div class="message message-Error">@T("This E-mail message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
+    }
+</fieldset>
+<fieldset>
+    @Html.LabelFor(m => m.RecipientsNumber, T("Number of recipients").Text, new { @class = "forcheckbox" })
+    <span style="margin-left: 20px; font-weight: bold">@Model.RecipientsNumber</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(m => m.SentMailsNumber, T("Number of sent mails").Text, new { @class = "forcheckbox" })
+    <span style="margin-left: 20px; font-weight: bold">@Model.SentMailsNumber</span>
+</fieldset>
+@if (Model.MailMessageSent) {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotal", "CountPanel", new { area = "Laser.Orchard.MailCommunication", tot = Model.RecipientsNumber })"/>
+} else {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotal", "CountPanel", new { area = "Laser.Orchard.MailCommunication" })|@Html.FieldIdFor(m => m.UseRecipientList)|@Html.FieldIdFor(m => m.RecipientList)"/>
+}

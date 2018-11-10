@@ -1,0 +1,166 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Action Id"
+msgstr "Id azione"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Action Name"
+msgstr "Nome azione"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Action Name."
+msgstr "Nome azione."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Campaign Id"
+msgstr "Id campagna"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Campaign Id."
+msgstr "Id campagna."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Points"
+msgstr "Punti"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Points."
+msgstr "Punti."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Provider"
+msgstr "Provider"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Edit.cshtml"
+msgid "Provider."
+msgstr "Provider."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Index.cshtml"
+msgid "are you using another provider"
+msgstr "un altro provider è in utilizzo"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Index.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Index.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/ActionCampaign/Index.cshtml"
+msgid "Fidelity actions"
+msgstr "Azioni di fedeltà"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "AccountID"
+msgstr "AccountID"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "AccountID."
+msgstr "AccountID."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "DefaultCampaign"
+msgstr "Campagna di default"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "DefaultCampaign."
+msgstr "Campagna di default."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "FidelityGateway"
+msgstr "FidelityGateway"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "Password."
+msgstr "Password."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "Secret Developer Key"
+msgstr "Chiave segreta sviluppatore"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "the secret developer key for acces to remote fidelity provider."
+msgstr "la chiave segreta dello sviluppatore per l'accesso al fidelity provider in remoto."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "URL Base"
+msgstr "Url Base"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "Url base for the call api."
+msgstr "Url base per la chiamata alle api."
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "User Id"
+msgstr "Id Utente"
+
+msgctxt "~/Modules/Laser.Orchard.FidelityGateway/Views/EditorTemplates/Parts/FidelitySettingsPart.cshtml"
+msgid "User id."
+msgstr "Id Utente"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.AddPointsActivity"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.AddPointsActivity"
+msgid "Fidelity"
+msgstr "Fedeltà"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.AddPointsActivity"
+msgid "Manage Adding Fidelity Points"
+msgstr "Imposta aggiunta punti fedeltà"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.AddPointsActivity"
+msgid "Success"
+msgstr "Successo"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
+msgid "Fidelity"
+msgstr "Fedeltà"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
+msgid "Manage Redeem Fidelity Reward"
+msgstr "Imposta assegnazione premi fedeltà"
+
+msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
+msgid "Success"
+msgstr "Successo"
+
+msgctxt "Laser.Orchard.FidelityGateway.Handlers.FidelitySettingsHandler"
+msgid "FidelityGateway"
+msgstr "FidelityGateway"
+
+msgctxt "Laser.Orchard.FidelityGateway.Menus.AdminMenu"
+msgid "Action Fidelity"
+msgstr "Azione di fedeltà"
+
+msgctxt "Laser.Orchard.FidelityGateway.Services.NotificatorService"
+msgid "There are no Module fidelity provider enabled "
+msgstr "Non ci sono moduli fedeltà abilitati."
+
+msgctxt "Laser.Orchard.FidelityGateway.Services.NotificatorService"
+msgid "There are too many Modules fidelity provider enabled. Module selected: "
+msgstr "Ci sono troppi moduli provider fedeltà abilitati:"
+

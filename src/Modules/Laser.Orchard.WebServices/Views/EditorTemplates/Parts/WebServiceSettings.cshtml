@@ -1,0 +1,7 @@
+﻿@model Laser.Orchard.WebServices.Models.WebServiceSettingsPart
+<fieldset>
+    <legend>@T("WebServices Settings")</legend>
+    @Html.CheckBoxFor(m => m.LogWebservice)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.LogWebservice)">@T("Log all json sent by WebServices")</label>
+    <span class="hint">@T("default is false")</span>
+</fieldset>

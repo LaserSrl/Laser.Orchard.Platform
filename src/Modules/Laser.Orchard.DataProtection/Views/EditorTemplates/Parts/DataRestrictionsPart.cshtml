@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.DataProtection.ViewModels.DataRestrictionsPartVM
+
+<fieldset>
+    <legend>@T("Data Restrictions")</legend>
+    <div class="editor-label">
+        @Html.LabelFor(m => m.DataRestrictions.Restrictions)
+    </div>
+    <div class="editor-field">
+        @Html.TextAreaFor(m => m.RestrictionsTextArea)
+        <span class="hint">@T("A data restriction per row. Each data restriction has the following form: key1=val1,key2=val2?key3=val3. Example: company=Microsoft,sector=marketing,country=italy?city=Rome. Restrictions following question mark are applied on edit only and they are optional.")<br />
+            @T("If youu leave blank, default value as set in settings will be applied on saving.")</span>
+    </div>
+</fieldset>

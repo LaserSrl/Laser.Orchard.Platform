@@ -1,0 +1,41 @@
+﻿@{
+    var contents = Model.ContentItems; 
+}
+
+<div class="row">
+    @foreach (var content in contents) {
+        MvcHtmlString mediaUrl = new MvcHtmlString("");
+        var mediaType = "image";
+        var sottotitolo = T("Reported by {0}", content.CommonPart.OwnerField.Value.UserName);
+
+        if (content.ContentType == "BlogPost") {
+            mediaUrl = new MvcHtmlString(Display.ResizeMediaUrl(Width: 820, Height: 420, Mode: "crop", PadColor: "#000000", Alignment: "middlecenter", Path: content.BlogPost.Gallery.FirstMediaUrl).ToString());
+            sottotitolo = T("Published on {0}",content.CommonPart.PublishedUtc.ToString("dd MMMM, yyyy"));
+        } else if (content.ContentType == "UserReport") {
+            if (content.UserReport.Gallery.MediaParts[0].LogicalType=="Image") {
+                mediaUrl = new MvcHtmlString(Display.ResizeMediaUrl(Width: 820, Height: 420, Mode: "crop", PadColor: "#000000", Alignment: "middlecenter", Path: content.UserReport.Gallery.FirstMediaUrl).ToString());
+            } else {
+            }
+            sottotitolo = content.UserReport.Sottotitolo.Value;            
+        }
+        <div class="col-xs-12 col-sm-6">
+            <div class="box-news">
+                <a href="@Url.ItemDisplayUrl((Orchard.ContentManagement.IContent)content)" title="@T("Go to page {0}", content.TitlePart.Title)">
+                    @if (mediaType == "image") {
+                        <span class="box-img-news" style="background-image: url('@mediaUrl')"></span>
+                    }
+                </a>
+                <p class="data">@content.CommonPart.CreatedUtc.ToString("dd MMMM, yyyy")</p>
+                <h3 class="titolo-news"><a href="@Url.ItemDisplayUrl((Orchard.ContentManagement.IContent)content)" title="@T("Go to page {0}", content.TitlePart.Title)">@content.TitlePart.Title</a></h3>
+                <h4 class="sottotitolo-news">@sottotitolo</h4>
+                @{
+                    string bodyHtml = content.BodyPart.Text;
+                    var body = new HtmlString(Html.Excerpt(bodyHtml, 190).ToString().Replace(Environment.NewLine, "</p>" + Environment.NewLine + "<p>")); 
+               
+                }
+                <p class="testo-news">@body</p>
+                <p><strong><a href="@Url.ItemDisplayUrl((Orchard.ContentManagement.IContent)content)" title="@T("Go to page {0}", content.TitlePart.Title)">@T("Read more") >>> </a></strong></p>
+            </div>
+        </div>
+    }
+</div>

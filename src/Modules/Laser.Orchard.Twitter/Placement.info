@@ -1,0 +1,15 @@
+﻿<Placement>
+  <Place Parts_TwitterAccount="Content:4" />
+  <Place Parts_TwitterPost="Content:5.2" />
+  <Match ContentType="CommunicationAdvertising">
+    <Match DisplayType="Summary">
+      <Place Parts_TwitterPost_Detail="Content:5.5" />
+    </Match>
+  </Match>
+  <Match DisplayType="Detail">
+    <Place Parts_TwitterPost_Detail="Content:after" />
+  </Match>
+  <Match ContentType="CommunicationAdvertising">
+    <Place Parts_TwitterPost="Content:5.2" />
+  </Match>
+</Placement>

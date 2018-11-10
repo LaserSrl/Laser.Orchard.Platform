@@ -1,0 +1,31 @@
+﻿@using Laser.Orchard.Questionnaires.Models
+@{
+    int devType = Model.dType;
+    Int32 gameId = Model.gId;
+    int Page = Model.page;
+    int PageSize = Model.pageSize;
+}
+<div class="zone zone-local-navigation">
+    <ul class="localmenu localmenu-local-admin" role="local-navigation">
+        <a href="@Url.Action("GetListSingleGame", "adminranking", 
+            new {area = "Laser.Orchard.Questionnaires", ID = gameId, deviceType = "General", 
+            page = 1, pageSize = PageSize})"><li @if (devType == 0){
+                @:class="selected" 
+                     }>Total</li></a>
+        <a href="@Url.Action("GetListSingleGame", "adminranking", 
+            new {area = "Laser.Orchard.Questionnaires", ID = gameId, deviceType = TipoDispositivo.Apple.ToString(), 
+            page = 1, pageSize = PageSize})"><li @if (devType == 1){
+                @:class="selected" 
+                     }>Apple</li></a>
+        <a href="@Url.Action("GetListSingleGame", "adminranking", 
+            new {area = "Laser.Orchard.Questionnaires", ID = gameId, deviceType = TipoDispositivo.Android.ToString(), 
+            page = 1, pageSize = PageSize})"><li @if (devType == 2){
+                @:class="selected" 
+                     }>Android</li></a>
+        <a href="@Url.Action("GetListSingleGame", "adminranking", 
+            new {area = "Laser.Orchard.Questionnaires", ID = gameId, deviceType = TipoDispositivo.WindowsMobile.ToString(), 
+            page = 1, pageSize = PageSize})"><li @if (devType == 3){
+                @:class="selected" 
+                     }>Windows Phone</li></a>
+    </ul>
+</div>

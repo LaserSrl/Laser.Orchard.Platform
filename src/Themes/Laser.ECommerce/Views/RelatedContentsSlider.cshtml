@@ -1,0 +1,60 @@
+﻿@using Orchard.ContentManagement
+@{
+    var contentItems = (IEnumerable<ContentItem>)Model.ContentItems;
+    var title = (string)Model.Title;
+    title = string.IsNullOrWhiteSpace(title) ? T("Related Contents").Text : title;
+
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    var guid = Guid.NewGuid().ToString();
+}
+@if (contentItems.Any()) {
+    var items = contentItems.ToList();
+    while (items.Count < 4) { //hack: the slider works best with at least 4 items
+        items.AddRange(contentItems);
+    }
+    <div class="ecommerce_related_contents">
+        <div class="container">
+            <h3>@title</h3>
+            <ul id="related-content-slider_@guid">
+                @foreach (var item in items) {
+                    var itemShape = _contentManager.BuildDisplay(item, "Summary");
+                    <li>
+                        <div class="ecommerce_related_contents_grid">
+                            @Display(itemShape)
+                        </div>
+                    </li>
+                }
+            </ul>
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $("#related-content-slider_@guid").flexisel({
+                        visibleItems: 4,
+                        animationSpeed: 1000,
+                        autoPlay: true,
+                        autoPlaySpeed: 3000,
+                        pauseOnHover: true,
+                        enableResponsiveBreakpoints: true,
+                        responsiveBreakpoints: {
+                            portrait: {
+                                changePoint: 480,
+                                visibleItems: 1
+                            },
+                            landscape: {
+                                changePoint: 640,
+                                visibleItems: 2
+                            },
+                            tablet: {
+                                changePoint: 768,
+                                visibleItems: 3
+                            }
+                        }
+                    });
+
+                });
+            </script>
+            @{
+                Script.Include("jquery.flexisel.js", "jquery.flexisel.min.js");
+            }
+        </div>
+    </div>
+}

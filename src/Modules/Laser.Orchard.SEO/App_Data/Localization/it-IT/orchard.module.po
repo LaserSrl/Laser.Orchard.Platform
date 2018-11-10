@@ -1,0 +1,422 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Add microdata for nested content"
+msgstr "Aggiungi microdata per i contenuti annidati"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "If this content type contains an aggregator (i.e. projection, taxonomy, content picker), microdata for a carousel showing its linked items will be generated."
+msgstr "Se questo tipo di contenuto contiene un aggregatore (i.e. projection, tassonomia, content picker), verrà generato il microdata per un carosello che mostri gli elementi correlati."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "If this website has a search functionality powered by Google, this tag prevents a search box from being displayed in Google's search results."
+msgstr "Se il sito ha una funzionalità di ricerca abilitata da Google, questo tag impedisce a Google di mostrare una casella per la ricerca nel sito nei suoi risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized."
+msgstr "Inserire un json-ld che descriva il contenuto. Per la lista degli elementi consentiti consultare http://schema.org/docs/schemas.html; per testare lo script utilizzare il tool all'indirizzo https://search.google.com/structured-data/testing-tool. Il testo è tokenizzabile."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Json ld Templates"
+msgstr "Modelli json ld"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Json ld text"
+msgstr "Testo json ld"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents crawlers from following page links"
+msgstr "Impedisci ai crawlers dei motori di ricerca di seguire i link nella pagina."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents displaying the cached link for a page"
+msgstr "Impedisci di mostrare link archiviati alla pagina."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents Google from providing a translation link for the page in its search results"
+msgstr "Impedisci a Google di mostrare nei risultati delle ricerche un link per tradurre la pagina"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents page snippets from being shown in search results"
+msgstr "Impedisci di mostrare parti della pagina nei risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents the alternative description from the ODP/DMOZ from being used"
+msgstr "Impedisci l'utilizzo delle descrizioni alternative della pagina prese da ODP/DMOZ"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents the page from being indexed in search engines."
+msgstr "Impedisci alla pagina di essere indicizzata dai motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Prevents the page to appear as referring page for an image that appears in search results"
+msgstr "Impedisci ai motori di ricerca di utilizzare la pagina come riferimento per le immagini che appaiono come risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Select a template of json-ld object."
+msgstr "Selezionare un modello di json-ld."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Specify the exact date to stop crawling and indexing the page"
+msgstr "Specifica la data esatta dalla quale la pagina non verrà più indicizzata."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Click to hide charts"
+msgstr "Clicca per nascondere i grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Click to refresh charts"
+msgstr "Clicca per ricaricare i grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Hide charts"
+msgstr "Nascondi grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Past 30 days"
+msgstr "Ultimi 30 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Past 60 days"
+msgstr "Ultimi 60 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Past 90 days"
+msgstr "Ultimi 90 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Past week"
+msgstr "Ultima settimana"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Past year"
+msgstr "Ultimo anno"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Refresh charts"
+msgstr "Ricarica grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Region"
+msgstr "Regione"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Select time period."
+msgstr "Seleziona il periodo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Worldwide"
+msgstr "Tutto il mondo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/Favicon.FaviconSettings.cshtml"
+msgid "current"
+msgstr "Favicon attuale"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/Favicon.FaviconSettings.cshtml"
+msgid "Favicon"
+msgstr "Favicon"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/Favicon.FaviconSettings.cshtml"
+msgid "Favicon URL"
+msgstr "Indirizzo virtuale immagine"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid " Add keyword"
+msgstr "Aggiungi parola chiave"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Add keyword"
+msgstr "Aggiungi parola chiave"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Click to refresh summary chart"
+msgstr "Clicca per ricaricare il grafico di riepilogo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Keywords selected for this content"
+msgstr "Parole chiave selezionate per questo contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Past 30 days"
+msgstr "Ultimi 30 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Past 60 days"
+msgstr "Ultimi 60 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Past 90 days"
+msgstr "Ultimi 90 giorni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Past week"
+msgstr "Ultima settimana"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Past year"
+msgstr "Ultimo anno"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Refresh summary chart"
+msgstr "Ricarica grafico di riepilogo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Region"
+msgstr "Regione"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Select time period."
+msgstr "Seleziona il periodo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "This chart compares the keywords' trends in time"
+msgstr "Questo grafico permette di confrontare l'evoluzione delle parole chiave nel tempo."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "Worldwide"
+msgstr "Tutto il mondo"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
+msgid "You can add keywords and obtain the most relevant related ones on search engines."
+msgstr "Qui si possono aggiungere parole chiave, ed ottenere quelle correlate più importanti nei motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Description"
+msgstr "META Description"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Don't show aggregated microdata for nested content"
+msgstr "Non mostrare microdata aggregati per i contenuti annidati"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Don't show microdata for this content"
+msgstr "Non mostrare microdata per questo contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Google settings"
+msgstr "Settaggi per Google"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "If this website has a search functionality powered by Google, this tag prevents a search box from being displayed in Google's search results."
+msgstr "Se il sito ha una funzionalità di ricerca abilitata da Google, questo tag impedisce a Google di mostrare una casella per la ricerca nel sito nei suoi risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Keywords"
+msgstr "META Keywords"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Microdata"
+msgstr "Microdata"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents crawlers from following page links"
+msgstr "Impedisci ai crawlers dei motori di ricerca di seguire i link nella pagina."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents displaying the cached link for a page"
+msgstr "Impedisci di mostrare link archiviati alla pagina."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents Google from providing a translation link for the page in its search results"
+msgstr "Impedisci a Google di mostrare nei risultati delle ricerche un link per tradurre la pagina"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents page snippets from being shown in search results"
+msgstr "Impedisci di mostrare parti della pagina nei risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents the alternative description from the ODP/DMOZ from being used"
+msgstr "Impedisci l'utilizzo delle descrizioni alternative della pagina prese da ODP/DMOZ"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents the page from being indexed in search engines."
+msgstr "Impedisci alla pagina di essere indicizzata dai motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Prevents the page to appear as referring page for an image that appears in search results"
+msgstr "Impedisci ai motori di ricerca di utilizzare la pagina come riferimento per le immagini che appaiono come risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Robots settings"
+msgstr "Settaggi robots"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "SEO attributes"
+msgstr "Attributi SEO"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "SEO attributes are empty!"
+msgstr "Gli attributi SEO sono vuoti!"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Specify the exact date to stop crawling and indexing the page"
+msgstr "Specifica la data esatta dalla quale la pagina non verrà più indicizzata."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "This is a list of keywords for the page. Note that this metadata tag is not used by search engines anymore."
+msgstr "Questa è una lista di parole chiave per la pagina. Nota che questo tag metadata non viene più utilizzato dai motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "This is the page description. This is the most important metadata tag for search engine crawlers."
+msgstr "Questa è la descrizione della pagina. Questo è il tag metadata più importante per i motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "This value will replace the page title."
+msgstr "Questo valore rimpiazzerà il titolo della pagina."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "TitleOverride"
+msgstr "Titolo della pagina"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "TitleOverrideDescription"
+msgstr "ATTENZIONE: lascia vuoto questo campo per usare il normale titolo del contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Add.cshtml"
+msgid "Add new Redirect rule"
+msgstr "Aggiungi una nuova regola di Redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Edit.cshtml"
+msgid "Edit Redirect rule"
+msgstr "Modifica regola di redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/EditorTemplates/RedirectRule.cshtml"
+msgid "Redirect should be permanent 301"
+msgstr "Il redirect dovrebbe essere permanente 301"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/EditorTemplates/RedirectRule.cshtml"
+msgid "Relative Url from which redirect. Do not start with '~/'"
+msgstr "L'Url relativo dal quale effettuare il redirect. Non iniziare con '~/'"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/EditorTemplates/RedirectRule.cshtml"
+msgid "Relative Url to which redirect. Do not start with '~/'"
+msgstr "L'Url relativo destinazione del redirect. Non iniziare con '~/'"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Redirects"
+msgstr "Redirezionamenti"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Actions"
+msgstr "Azioni"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Destination URL"
+msgstr "URL di destinazione"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Permanent"
+msgstr "Permanente"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Redirect rules table"
+msgstr "Tabella delle regole di redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/ListPartial.cshtml"
+msgid "Source URL"
+msgstr "URL sorgente"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RobotsAdmin/Index.cshtml"
+msgid "Manage Robots.txt File"
+msgstr "Gestisci file robots.txt"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RobotsAdmin/Index.cshtml"
+msgid "Robots.txt Content"
+msgstr "Contenuto di Robots.txt"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RobotsAdmin/Index.cshtml"
+msgid "Save Robots.txt"
+msgstr "Salva robots.txt"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RobotsAdmin/Index.cshtml"
+msgid "The default text provided will allow no content in the site to be indexed"
+msgstr "La configurazione di default è impostata per non indicizzare alcun contenuto del sito"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "A rule for this Source URL already exists."
+msgstr "Regola per l'URL di origine già presente."
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "Redirect record was deleted"
+msgstr "L'elemento di redirect è stato eliminato"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "Source url is equal to Destination url"
+msgstr "L'url sorgente è uguale all'url di destinazione"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RobotsAdminController"
+msgid "Cannot manage robots.txt file"
+msgstr "Impossibile gestire il file robots.txt"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RobotsAdminController"
+msgid "Robots.txt saved with warnings"
+msgstr "Robots.txt salvato con avvertimenti"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RobotsAdminController"
+msgid "Robots.txt settings successfully saved"
+msgstr "Impostazioni del robots.txt salvate correttamente"
+
+msgctxt "Laser.Orchard.SEO.Handlers.FaviconSettingsPartHandler"
+msgid "Favicon"
+msgstr "Favicon"
+
+msgctxt "Laser.Orchard.SEO.Navigation.AdminMenu"
+msgid "Robots.txt"
+msgstr "Robots.txt"
+
+msgctxt "Laser.Orchard.SEO.Navigation.AdminMenu"
+msgid "SEO"
+msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
+msgid "Redirects"
+msgstr "Redirezionamenti"
+
+msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
+msgid "SEO"
+msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Services.RedirectService"
+msgid "Rules with same SourceURL are not valid."
+msgstr "Regole con lo stesso URL sorgente non sono valide."
+
+msgctxt "Laser.Orchard.SEO.Services.RobotsService"
+msgid "Line {0}: {1}, {2}"
+msgstr "Linea {0}: {1}, {2}"
+

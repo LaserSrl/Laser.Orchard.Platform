@@ -1,0 +1,122 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Always"
+msgstr "Sempre"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "API URL"
+msgstr "URL API"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Create Loyalzoo Account on Login:"
+msgstr "Creare un Account LoyalZoo in fase di Login:"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Developer Secret Key"
+msgstr "Chiave Segreta Sviluppatore"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Fidelity"
+msgstr "Fedeltà"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Merchant Password"
+msgstr "Password Venditore"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Merchant Username"
+msgstr "Nome Utente Venditore"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Never"
+msgstr "Mai"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Only for external authentications"
+msgstr "Solo per le autenticazioni esterne"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The password of the merchant account."
+msgstr "La password dell'account assegnato al venditore."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The secret developer key used by Loyalzoo."
+msgstr "La chiave segreta assegnata allo sviluppatore da Loyalzoo."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The URL to use to call Loyalzoo."
+msgstr "L'URL da usare per interfacciarsi con Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "The username of the merchant account."
+msgstr "Il nome utente dell'account assegnato al venditore."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/FidelitySiteSettings.cshtml"
+msgid "Whether to create or not a Loyalzoo account at login for users not already associated to a Loyalzoo account data."
+msgstr "Se creare o meno durante la fase di login un account Loyalzoo per gli utenti di tale account."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "<b>Warning</b>: By using this button the above Loyalzoo data will be ignored and an account will be automatically created using a random password."
+msgstr "<b>Attenzione</b>: Utilizzando questo pulsante i dati Loyalzoo inseriti sopra verranno ignorati e un account verra' automaticamente creato utilizzando una password casuale."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Automatically create Loyalzoo account"
+msgstr "Crea automaticamente un account Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Customer Session ID"
+msgstr "ID Sessione Cliente Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Password"
+msgstr "Password Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo User Data"
+msgstr "Dati Utente Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "Loyalzoo Username"
+msgstr "Nome Utente Loyalzoo"
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The password of the Loyalzoo customer account."
+msgstr "La password dell'account cliente Loyalzoo."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The session ID of the Loyalzoo customer account."
+msgstr "L'ID di sessione dell'account cliente Loyalzoo."
+
+msgctxt "~/Modules/Laser.Orchard.Fidelity/Views/EditorTemplates/Parts/LoyalzooUserSettings.cshtml"
+msgid "The username of the Loyalzoo customer account."
+msgstr "Il nome utente dell'account cliente Loyalzoo."
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "Registration failed: {0}"
+msgstr "Registrazione fallita: {0}"
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "The provided part cannot be used for registration."
+msgstr "La parte fornita non pu� essere usata per la registrazione."
+
+msgctxt "Laser.Orchard.Fidelity.Controllers.FidelityController"
+msgid "Unable to register: {0}"
+msgstr "Impossibile portare a termine la registrazione: {0}"
+
+msgctxt "Laser.Orchard.Fidelity.Handlers.FidelitySiteSettingsHandler"
+msgid "Fidelity"
+msgstr "Fedeltà"
+
+msgctxt "Laser.Orchard.Fidelity.Menus.LoyalzooBackEndMenu"
+msgid "Fidelity"
+msgstr "Fedeltà"
+

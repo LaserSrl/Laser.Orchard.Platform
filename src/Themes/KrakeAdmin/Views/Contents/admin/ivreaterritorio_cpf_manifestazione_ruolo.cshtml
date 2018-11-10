@@ -1,0 +1,93 @@
+@using Orchard.ContentManagement
+@using Orchard.Environment.Configuration
+@using Orchard.MediaLibrary.Fields
+@{
+    var canPublish = Authorizer.Authorize(Orchard.Core.Contents.Permissions.PublishContent, Model.Part.ContentItem);
+	if (!canPublish){
+		<script type="text/javascript">
+		$(function () {   
+		    $("[data-selected-items-fieldname='CalendarEvent.Manifestazione.SelectedIds']").hide();
+		});
+		</script>
+
+	}
+    Script.Require("ContentPicker").AtFoot();
+    Script.Require("jQueryUI_Sortable").AtFoot();
+    Script.Require("jQueryUI_Tooltip").AtFoot();
+    Script.Require("TooltipsZoomimage").AtFoot();
+    Style.Include("content-picker-admin.css");
+    Style.Require("jQueryUI").AtHead();
+
+    var required = ((bool?)Model.Required) ?? false;
+    var multiple = ((bool?)Model.Multiple) ?? false;
+    var displayName = (string)Model.DisplayName ?? "";
+    var idsFieldId = (string)Model.IdsFieldId ?? "";
+    var selectedItemsFieldName = (string)Model.SelectedItemsFieldName ?? "";
+    var contentItems = (IEnumerable<ContentItem>)Model.ContentItems;
+    var hint = (string)Model.Hint;
+    var partName = Model.PartName;
+    var fieldName = Model.FieldName;
+    var baseUrl = Url.Content("~/") + WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+    var types = "";// String.Join(",", (IEnumerable<string>)Model.Types ?? Enumerable.Empty<string>());
+}
+
+
+<fieldset class="content-picker-field"
+          data-required="@required.ToString().ToLower()"
+          data-multiple="@multiple.ToString().ToLower()"
+          data-selected-items-fieldname="@selectedItemsFieldName"
+          data-base-url="@baseUrl"
+          data-part-name="@HttpUtility.JavaScriptStringEncode(partName)"
+          data-field-name="@HttpUtility.JavaScriptStringEncode(fieldName)"
+          data-remove-text="@T("Remove")"
+          data-not-published-text="@T("Not Published")"
+          data-types="@types">
+    @if (!String.IsNullOrWhiteSpace(displayName)) {
+        <label @if (required) { <text> class="required" </text>      }>@displayName</label>
+    }
+    <div class="message message-Warning content-picker-message">@T("You need to save your changes.")</div>
+    <table class="items content-picker" id="itemstable_@(fieldName)" summary="@displayName">
+        <colgroup>
+            <col id="Col1" style="width:20px" />
+            <col id="Col2" />
+            <col id="Col3" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">&nbsp;&darr;</th>
+                <th scope="col" colspan="2">@T("Content Item")</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contentItem in contentItems) {
+                <tr>
+                    <td>&nbsp;</td>
+                    <td style="vertical-align:top;">
+                        <span data-id="@contentItem.Id" data-fieldid="@idsFieldId" class="content-picker-item">@Html.ItemAdminLink(contentItem) @if (!contentItem.HasPublished()) {<text> - </text>@T("Not Published")}</span>
+                    </td>
+                    <td style="text-align:left;vertical-align:top;">
+                        @{
+                            var contentPart = contentItem.Parts.SingleOrDefault(x => x.PartDefinition.Name == contentItem.ContentType);
+                            if (contentPart != null) {
+                                MediaLibraryPickerField field = (MediaLibraryPickerField)contentItem.Parts.SingleOrDefault(x => x.PartDefinition.Name == contentItem.ContentType).Fields.FirstOrDefault(f => f.PartFieldDefinition.FieldDefinition.Name == "MediaLibraryPickerField");
+                                if (field != null) {
+                                    foreach (var mediapart in field.MediaParts.Take(8)) {
+                                        <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" src="@Display.ResizeMediaUrl(Width: 100, Height: 100, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" alt="" class="img-responsive img-zoomable" style="float:left;margin-right:5px;" />
+                                    }
+                                }
+                            }
+                        }
+                    </td>
+                    <td style="text-align:right; vertical-align:bottom;">
+                        <span data-id="@contentItem.Id" class="content-picker-remove button grey">@T("Remove")</span>
+                    </td>
+                </tr>
+                            }
+        </tbody>
+    </table>
+
+    <span class="button add">@T("Add")</span>
+    <input type="hidden" name="@selectedItemsFieldName" />
+    <span class="hint">@hint</span>
+</fieldset>

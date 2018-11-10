@@ -1,0 +1,54 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Common.Fields
+@using Orchard.Fields.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@functions{
+
+    ContentItem contentItem;
+    IEnumerable<ContentField> fields;
+
+    string titleOne, textOne, pictureUrl;
+
+    public string TextFieldValue(string fieldName) {
+        var field = fields.Where(fi => fi is TextField && fi.Name == fieldName)
+        .FirstOrDefault() as TextField;
+        return field == null ? string.Empty : field.Value;
+    }
+
+}
+@{
+    contentItem = (ContentItem)Model.ContentItem;
+    fields = contentItem.Parts
+       .SelectMany(pa => pa.Fields);
+
+    titleOne = TextFieldValue("TitleOne");
+    textOne = TextFieldValue("TextOne");
+
+    var targetUrlField = fields.Where(fi => fi is LinkField && fi.Name == "TargetUrl")
+        .FirstOrDefault() as LinkField;
+    var targetUrl = targetUrlField == null ? string.Empty : targetUrlField.Value;
+    targetUrl = string.IsNullOrWhiteSpace(targetUrl) ? "#" : targetUrl;
+
+    var picturesField = fields.Where(fi => fi is MediaLibraryPickerField && fi.Name == "Picture")
+.FirstOrDefault() as MediaLibraryPickerField;
+    var pictures = picturesField == null ? new MediaPart[0] : picturesField.MediaParts.ToArray();
+    pictureUrl = pictures.Any() ? pictures[0].MediaUrl : "";
+}
+@helper DrawTheDiv() {
+    if (!string.IsNullOrWhiteSpace(pictureUrl)) {
+        <img src="@Display.ResizeMediaUrl(Width: 80, Height: 80, Mode: "pad", Alignment: "middlecenter", Path: pictureUrl)" alt=" " class="img-responsive" />
+    }
+    <p>
+        @textOne
+    </p>
+    <h4>@titleOne</h4>
+}
+
+<div class="home_highlight_group_grid_left_grid1">
+    @if (string.IsNullOrWhiteSpace(targetUrl)) {
+        @DrawTheDiv()
+    } else {
+        <a href="@targetUrl">@DrawTheDiv()</a>
+    }
+</div>

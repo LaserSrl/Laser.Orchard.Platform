@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.GDPRPartEditorViewModel
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.IsProtected)
+        <label for="@Html.FieldIdFor(m => m.IsProtected)" class="forcheckbox">
+            @T("Protect this content from anonymization and erasure.")
+        </label>
+        <span class="hint">
+            @T("If this flag is set the information in this ContentItem will never be anonymized or erased.")
+        </span>
+    </div>
+</fieldset>

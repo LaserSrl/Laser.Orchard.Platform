@@ -1,0 +1,40 @@
+﻿@using Nwazet.Commerce.Models
+@using Orchard.ContentManagement
+@using Orchard.ContentPicker.Fields
+@{
+    //Related products:
+    //Get the related products of each content in the list (if any)
+    //and feed them all to the slider view
+    var wishListListPart = (WishListListPart)Model.ContentPart;
+    var wlItems = wishListListPart.WishListItems;
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    if (wlItems.Any()) {
+        var related = new List<ContentItem>();
+        foreach (var item in wlItems) {
+            var productId = item.As<WishListItemPart>().Item.ProductId;
+            var productItem = _contentManager.Get(productId);
+            var relatedFields = productItem.Parts.SelectMany(pa => pa.Fields);
+            related.AddRange(
+                relatedFields
+                    .Where(fi => fi is ContentPickerField && fi.Name == "RelatedProducts")
+                    .SelectMany(fi => (fi as ContentPickerField).ContentItems)
+            );
+        }
+        if (related.Any()) {
+            WorkContext.Layout.AfterMain.Add(New.RelatedContentsSlider(
+                    ContentItems: related.Distinct(),
+                    Title: T("Related Products").Text
+                ), "5");
+        }
+    }
+}
+
+<div class="wishListList_grid">
+
+    @foreach (var shape in Model.ElementsShapes) {
+        @Display(shape)
+    }
+</div>
+    @foreach (var shape in Model.ExtensionShapes) {
+        @Display(shape)
+    }

@@ -1,0 +1,15 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.StartupConfig.Services
+@{
+    IActivityServices _activityServices;
+    WorkContext.TryResolve(out _activityServices);
+    string name = Model.Name;
+    string inspectionType = Model.State.InspectionType;
+    var outcomes = String.Join(",", _activityServices.RequestInspectorWokflowOutcomes(inspectionType).Select(s => "'" + s.Text.Trim() + "'").ToArray());
+}
+
+<div data-outcomes="@outcomes">
+    <div class="inspector" ></div>
+    @name.CamelFriendly()
+</div>
+

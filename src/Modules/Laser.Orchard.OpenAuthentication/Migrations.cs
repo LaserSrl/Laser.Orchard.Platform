@@ -1,0 +1,190 @@
+﻿using System.Data;
+using Orchard.ContentManagement.MetaData;
+using Orchard.Data.Migration;
+
+namespace Laser.Orchard.OpenAuthentication {
+    public class Migrations : DataMigrationImpl {
+        public int Create() {
+            SchemaBuilder.CreateTable("OpenAuthenticationPartRecord",
+                table => table
+                    .ContentPartRecord()
+                    .Column<int>("UserId")
+                    .Column<string>("ExternalIdentifier", c => c.WithLength(1000))
+                    .Column<string>("ExternalDisplayIdentifier", c => c.WithLength(500))
+                    .Column<string>("OAuthToken", c => c.WithLength(1000))
+                    .Column<string>("OAuthAccessToken", c => c.WithLength(1000))
+                    .Column<int>("HashedProvider")
+                );
+
+            SchemaBuilder.CreateTable("OpenAuthenticationSettingsPartRecord", table => table
+                .ContentPartRecord()
+                .Column<bool>("OpenIdEnabled")
+                .Column<bool>("CardSpaceEnabled")
+                .Column<bool>("OAuthEnabled")
+                .Column<bool>("Birthdate")
+                .Column<bool>("Country")
+                .Column<bool>("Email")
+                .Column<bool>("FullName")
+                .Column<bool>("Gender")
+                .Column<bool>("Language")
+                .Column<bool>("Nickname")
+                .Column<bool>("PostalCode")
+                .Column<bool>("TimeZone")
+                .Column<string>("FacebookClientIdentifier")
+                .Column<string>("FacebookClientSecret")
+                .Column<string>("TwitterClientIdentifier")
+                .Column<string>("TwitterClientSecret")
+                .Column<string>("LiveIdClientIdentifier")
+                .Column<string>("LiveIdClientSecret")
+                .Column<bool>("AutoRegisterEnabled")
+               );
+
+            ContentDefinitionManager.AlterTypeDefinition("User",
+               cfg => cfg
+                   .WithPart("OpenAuthenticationPart"));
+        
+            return 1;
+        }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.AddColumn<bool>("MicrosoftConnectEnabled"));
+
+            return 2;
+        }
+
+        public int UpdateFrom2() {
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("MicrosoftConnectEnabled"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("OpenIdEnabled"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("CardSpaceEnabled"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("OAuthEnabled"));
+
+            return 3;
+        }
+
+        public int UpdateFrom3() {
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Birthdate"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Country"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Email"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("FullName"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Gender"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Language"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("Nickname"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("PostalCode"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("TimeZone"));
+
+            SchemaBuilder.CreateTable("OpenAuthenticationPermissionSettingsPartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("NamedPermission")
+                .Column<bool>("IsEnabled")
+                .Column<int>("HashedProvider")
+               );
+
+            return 4;
+        }
+
+        public int UpdateFrom4() {
+            ContentDefinitionManager.AlterTypeDefinition("OpenAuthentication",
+               cfg => cfg
+                   .WithPart("OpenAuthenticationPart"));
+
+            return 5;
+        }
+        
+        public int UpdateFrom5() {
+            SchemaBuilder.DropTable("OpenAuthenticationPermissionSettingsPartRecord");
+
+            SchemaBuilder.CreateTable("ScopeProviderPermissionRecord",
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<string>("Resource")
+                    .Column<string>("Scope")
+                    .Column<string>("Description")
+                    .Column<bool>("IsEnabled")
+                    .Column<int>("HashedProvider")
+                );
+
+            return 6;
+        }
+
+        public int UpdateFrom6() {
+            SchemaBuilder.AlterTable("ScopeProviderPermissionRecord", table => table.AlterColumn("HashedProvider", x => x.WithType(DbType.String)));
+            SchemaBuilder.AlterTable("OpenAuthenticationPartRecord", table => table.AlterColumn("HashedProvider", x => x.WithType(DbType.String)));
+            
+            return 7;
+        }
+
+        public int UpdateFrom7() {
+            ContentDefinitionManager.AlterTypeDefinition("User", cfg => cfg.RemovePart("OpenAuthenticationPart"));
+
+            SchemaBuilder.DropTable("OpenAuthenticationPartRecord");
+            SchemaBuilder.DropTable("ScopeProviderPermissionRecord");
+
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("AutoRegisterEnabled"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("FacebookClientIdentifier"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("FacebookClientSecret"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("TwitterClientIdentifier"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("TwitterClientSecret"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("LiveIdClientIdentifier"));
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.DropColumn("LiveIdClientSecret"));
+                
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.AddColumn<bool>("AutoRegistrationEnabled"));
+
+            SchemaBuilder.CreateTable("UserProviderRecord",
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<int>("UserId")
+                    .Column<string>("ProviderName")
+                    .Column<string>("ProviderUserId")
+                );
+
+            SchemaBuilder.CreateTable("ProviderConfigurationRecord",
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<int>("IsEnabled")
+                    .Column<string>("DisplayName")
+                    .Column<string>("ProviderName")
+                    .Column<string>("ProviderIdKey")
+                    .Column<string>("ProviderSecret")
+                    .Column<string>("ProviderIdentifier")
+                );
+
+            return 8;
+        }
+
+         public int UpdateFrom8() {
+              SchemaBuilder.AlterTable("ProviderConfigurationRecord",
+                  t=>t.AddColumn<string>("UserIdentifier")
+                  );
+            return 9;
+        }
+
+         public int UpdateFrom9() {
+             ContentDefinitionManager.AlterTypeDefinition("User",
+                cfg => cfg
+                    .WithPart("UserProviderDisplayPart"));
+             return 10;
+         }
+
+         public int UpdateFrom10() {
+             SchemaBuilder.AlterTable("UserProviderRecord", 
+                 t => t.AddColumn<string>("ProviderUserData"));
+             return 11;
+         }
+         public int UpdateFrom11() {
+             SchemaBuilder.AlterTable("UserProviderRecord",
+                 t => t.AlterColumn("ProviderUserData", col => col.WithType(DbType.String).Unlimited()));
+             return 12;
+         }
+        public int UpdateFrom12() {
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.AddColumn<string>("AppDirectBaseUrl"));
+            return 13;
+        }
+        public int UpdateFrom13() {
+            SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.AddColumn<bool>("AutoMergeNewUsersEnabled"));
+            return 14;
+        }
+
+        
+
+    }
+}

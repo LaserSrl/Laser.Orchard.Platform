@@ -1,0 +1,25 @@
+﻿@using Laser.Bootstrap;﻿
+@using System.Web.Mvc;
+@{
+    bool useFixedNav = WorkContext.SettingsEval(Constants.UseFixedNav);
+    var swatch = WorkContext.HttpContext.Items[Constants.UseSwatchName].ToString();
+}
+
+<ul class="nav @(useFixedNav ? "navbar-nav" : "nav-pills") pull-right" style="margin-top: @(useFixedNav ? "0" : swatch == "journal.min.css" ? "-54px" : swatch == "simplex.min.css" ? "-38px" : "-36px;")">
+    @if (WorkContext.CurrentUser != null) {
+        <li class="dropdown">
+            <a href="#" id="userDropdown" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>&nbsp;@Html.ItemDisplayText(WorkContext.CurrentUser) <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="userDropdown">
+                <li>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new { Controller = "Account", Area = "Orchard.Users" })</li>
+                <li>@Html.ActionLink(T("Sign Out").ToString(), "LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl }, new { rel = "nofollow" })</li>
+                @if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new { Area = "Dashboard", Controller = "Admin" })</li>
+                }
+            </ul>
+        </li>
+    }
+    else {
+        <li>@Html.ActionLink(T("Sign In").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) }, new { rel = "nofollow" })</li>
+    }
+</ul>

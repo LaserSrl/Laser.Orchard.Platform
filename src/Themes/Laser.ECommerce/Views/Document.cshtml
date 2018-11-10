@@ -1,0 +1,45 @@
+﻿@using Orchard.Environment.Configuration
+@{
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantName = settings.Name;
+
+    var title = @WorkContext.CurrentSite.SiteName;
+    var subthemePath = "~/Themes/Laser.ECommerce/Styles/" + tenantName + "/";
+
+    Script.Require("jQuery").AtHead();
+    Script.Require("Bootstrap").AtHead();
+    Style.Require("Bootstrap").AtHead();
+    Style.Include("Style.css", "Style.min.css").AtHead();
+    Style.Include("fasthover.css", "fasthover.min.css").AtHead();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- //for-mobile-apps -->
+    <title>@title</title>
+    @Display(Model.Head)
+    <!-- start-smooth-scrolling -->
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+</head>
+<body class="@Html.ClassForPage()">
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

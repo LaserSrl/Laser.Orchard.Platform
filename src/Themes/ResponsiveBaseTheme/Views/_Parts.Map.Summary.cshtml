@@ -1,0 +1,13 @@
+﻿@{
+    Style.Require("GoogleMaps").AtHead();
+    }
+@if (Model.Latitude > 0) {
+    <div class="map-infos">
+        @if (Model.LocationInfo != String.Empty) {
+            <span class="map-locationinfo"><i class="fa fa-map-marker" style="color:red"></i> @Model.LocationInfo</span>
+        }
+        @if (Model.LocationAddress != String.Empty) {
+            <text>&nbsp;</text><span class="map-locationaddress">@Model.LocationAddress</span>
+        }
+    </div>
+}

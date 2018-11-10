@@ -1,0 +1,9 @@
+﻿@model dynamic
+@Display(New.Parts_Title_Default(Title: T("User Registration Pending").ToString(),
+    Subtitle: T("Your user account has been created but has to be approved before it can be used.").ToString(),
+    ImageUrl: "",
+    ImageTitle: "",
+    ImageAlternateText: ""))
+@if (Url.IsLocalUrl(Request.QueryString["ReturnUrl"])) {
+    @Display(New.Parts_Body_Default(Html: Html.Link(T("Go back to where you were"), Url.Content(Request.QueryString["ReturnUrl"])).ToString()))
+}

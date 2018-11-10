@@ -1,0 +1,50 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Mvc.Html;
+@using Orchard.ContentManagement;
+<article class="post">
+
+    <div class="post-meta">
+
+        <div class="post-date">
+            <span class="day">@(((DateTime)Model.ContentItem.CommonPart.PublishedUtc).Day)</span>
+            <span class="month">@(((DateTime)Model.ContentItem.CommonPart.PublishedUtc).ToString("MMM", System.Globalization.CultureInfo.GetCultureInfo(WorkContext.CurrentCulture)))</span>
+            <span class="year">@(((DateTime)Model.ContentItem.CommonPart.PublishedUtc).Year)</span>
+        </div>
+
+        <div class="post-title">
+            <h3><a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)">@Model.ContentItem.TitlePart.Title</a></h3>
+            <ol>
+                <li class="author">@Model.ContentItem.CommonPart.OwnerField.Value.UserName</li>
+                @{
+                    if (Model.ContentItem.TagsPart.CurrentTags.Length > 0) {
+                        var tags = String.Join(", ", Model.ContentItem.TagsPart.CurrentTags);
+                    <li class="tags">
+                        @tags
+                    </li>
+                    }
+                }
+
+            </ol>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+    <div class="post-media">
+
+        <a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)">
+            <img src="@Display.ResizeMediaUrl(Width: 620, Height: 287, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.BlogPost.Gallery.MediaParts[0].MediaUrl)" alt="" /></a>
+
+    </div>
+    <div class="post-content">
+        @{ 
+            string bodyHtml = Model.ContentItem.BodyPart.Text;
+            var body = new HtmlString(Html.Excerpt(bodyHtml, 200).ToString().Replace(Environment.NewLine, "</p>" + Environment.NewLine + "<p>")); 
+        }
+        @body
+    </div>
+
+    <a href="@Url.ItemDisplayUrl((ContentItem)Model.ContentItem)" class="btn btn-primary btn-small"><i class="icon-chevron-right icon-white"></i>@T("READ MORE")</a>
+
+</article>

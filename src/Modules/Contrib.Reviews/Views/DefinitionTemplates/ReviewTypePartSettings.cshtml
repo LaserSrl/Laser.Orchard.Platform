@@ -1,0 +1,5 @@
+﻿@model Contrib.Reviews.Settings.ReviewTypePartSettings
+<fieldset>
+        @Html.EditorFor(m => m.ShowStars)
+        <label class="forcheckbox" for="@Html.FieldIdFor( m => m.ShowStars)">@T("Enable star rating")</label>
+</fieldset>

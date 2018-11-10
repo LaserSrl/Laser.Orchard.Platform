@@ -1,0 +1,20 @@
+﻿@using Laser.Orchard.InsertStuff.Settings
+@using Laser.Orchard.jQueryPlugins
+@model Laser.Orchard.InsertStuff.ViewModels.InsertStuffViewModel
+
+@{
+    Script.Require("jQuery").AtFoot();
+    Script.Require("jQuery_Validate");
+
+    Model.StyleList.ForEach(x => Style.Include(x).AtHead());
+    Model.ScriptList.ForEach(x => Script.Include(x).AtFoot());
+
+}
+@if (Model.OnFooter) {
+    using (Script.Foot()) {
+    @Html.Raw(Model.RawHtml)
+    }
+}
+else {
+    @Html.Raw(Model.RawHtml)
+}

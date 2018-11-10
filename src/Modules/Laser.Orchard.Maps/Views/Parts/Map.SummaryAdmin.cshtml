@@ -1,0 +1,13 @@
+﻿@{
+    Style.Require("GoogleMaps").AtHead();
+    }
+@if (Model.Latitude > 0) {
+    <div class="admin-map-infos">
+        @if (Model.LocationInfo != String.Empty) {
+            <span class="map-locationinfo">@Model.LocationInfo</span>
+        }
+        @if (Model.LocationAddress != String.Empty) {
+            <span class="map-locationaddress">@Model.LocationAddress</span>
+        }
+    </div>
+}

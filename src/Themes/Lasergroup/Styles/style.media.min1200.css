@@ -1,0 +1,14 @@
+﻿
+@media(min-width:1200px){ 
+    .pull-right-lg{ float:right; }
+    #team .team-item:hover .team-card{ -webkit-transform: rotateY( -180deg ); -moz-transform: rotateY( -180deg ); transform: rotateY( -180deg ); }
+    #krake-info .krake-item:hover .krake-card{ -webkit-transform: rotateY( -180deg ); -moz-transform: rotateY( -180deg ); transform: rotateY( -180deg ); }
+}
+@media(min-width: 1650px){
+    .container{ width:1600px; }
+    .col-xl-10{ width:83.3333%;}
+    .col-xl-8{ width:66.6667%;}
+    .col-xl-6{ width:50%; }
+    .col-xl-4{ width:33.3333%; }
+    .col-xl-2{ width:16.66667%; }
+}

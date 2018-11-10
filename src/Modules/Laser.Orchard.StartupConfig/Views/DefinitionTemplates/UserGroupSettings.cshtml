@@ -1,0 +1,9 @@
+﻿@using System.Web.Mvc.Html
+@using Orchard.Mvc.Html
+@model Laser.Orchard.StartupConfig.Settings.UserGroupSettings
+<fieldset>
+    @Html.CheckBoxFor(m => m.Required)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Required)">@T("Required")</label>
+    <span class="hint">@T("If checked, the part will be mandatory.")</span>
+</fieldset>
+

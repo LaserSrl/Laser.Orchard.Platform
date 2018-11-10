@@ -1,0 +1,74 @@
+﻿@using Orchard.Environment.Configuration;
+@using Orchard.Projections.Services;
+@using Orchard.Taxonomies.Fields;
+@using Orchard.Taxonomies.Services;
+@{
+    int page = 1;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+
+    var services = WorkContext.Resolve<IProjectionManager>();
+    var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    var queryItems = services.GetContentItems((int)queryId, (page - 1) * pageSize, pageSize);
+
+    var url = "~/"; //in case of errors wi will link back to home
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var prefix = settings.RequestUrlPrefix;
+
+    if (queryItems.Any()) {
+        var ci = (dynamic)(queryItems.First());
+        if (ci.Prodotto != null &&
+            ci.Prodotto.Tipologia != null) {
+            var taxField = (TaxonomyField)(ci.Prodotto.Tipologia);
+
+            if (taxField.Terms.Any()) { //a term is required, but check just in case
+                var taxonomyService = WorkContext.Resolve<ITaxonomyService>();
+                url = taxonomyService.GetTaxonomy(taxField.Terms.First().TaxonomyId).Slug;
+            }
+        }
+    }
+
+    url = (url.StartsWith("~/") ? url.Substring(2) : url).Trim('/'); //remove ~/
+    url = "~/" + (string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "/") + url;
+    url = Url.Content(url);
+}
+<div class="space-40"></div>
+<div class="space-40"></div>
+<div id="showcase" class="container-fluid">
+    <div id="showcase-slider">
+        @foreach (var item in queryItems) {
+            var resulted = (dynamic)item;
+            <div class="showcase-item">
+                <div class="row">
+                    <div class="col-xs-12 col-md-5 col-lg-4 showcase-item-img">
+                        <div class="showcase-item-logo">
+                            <a href="@resulted.AutoroutePart.Path">
+                                <img width="113" height="109" src="@resulted.Prodotto.Logo.FirstMediaUrl" class="img-responsive wp-post-image" alt="@resulted.Prodotto.TitlePart.Title.ToLower()" /></a>
+                        </div>
+                        <div class="showcase-perspective">
+                            <img src="@resulted.Prodotto.Gallery.FirstMediaUrl" class="img-responsive perspective-layer">
+                            @foreach (var tipo in resulted.Prodotto.Tipologia.Terms) {
+                                <div class="perspective-layer category-layer" style="background:@tipo.ContentItem.TipologiaProdottiTerm.Colore.Value">
+                                    <img src="@tipo.ContentItem.TipologiaProdottiTerm.Image.FirstMediaUrl" class="img-responsive category-layer-icon">
+                                    <h5 class="category-layer-title">@tipo.Name</h5>
+                                </div>
+                            }
+                            <a href="@resulted.AutoroutePart.Path" class="showcase-plus-link">+</a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-7 col-lg-8">
+                        <div class="showcase-item-contain">
+                            <h2 class="showcase-item-title"><a href="@resulted.AutoroutePart.Path">@resulted.Prodotto.TitlePart.Title</a></h2>
+                            <div class="space-10"></div>
+                            <h3 class="showcase-item-claim">@resulted.Prodotto.Sottotitolo.Value</h3>
+                            <div class="space-20"></div>
+                            <p class="showcase-item-desc">@Html.Raw(resulted.BodyPart.Text)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <a href="@url" class="text-right all-showcase-link">@T("See all projects")</a>
+    <div class="space-20"></div>
+    <div class="showcase-bottom"></div>
+</div>

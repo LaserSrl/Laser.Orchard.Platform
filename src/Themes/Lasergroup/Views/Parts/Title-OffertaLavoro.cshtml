@@ -1,0 +1,82 @@
+@using Orchard.Mvc;
+@using Orchard.Utility.Extensions;
+@{
+    Layout.Title = Model.Title;
+    dynamic item = Model.ContentItem;
+
+    Layout.BaseClass = "page page-template navbar-fixed";
+
+    var services = WorkContext.Resolve<IHttpContextAccessor>();
+    var httpContext = services.Current();
+    var baseUrl = httpContext.Request.ToApplicationRootUrlString();
+    
+    var settings = WorkContext.Resolve<Orchard.Environment.Configuration.ShellSettings>();
+    string urlPrefix = settings.RequestUrlPrefix;
+
+    if (!string.IsNullOrWhiteSpace(urlPrefix)) {
+        urlPrefix = urlPrefix + "/";
+    }
+    else {
+        urlPrefix = "";
+    }
+    baseUrl = baseUrl.TrimEnd('/');
+
+    var pathShareBar = baseUrl + "/" + urlPrefix + item.AutoroutePart.Path;
+
+    string bodyHtml = item.BodyPart.Text;
+    var description = Html.Excerpt(bodyHtml, 100).ToString().Replace("<p>", "").Replace("</p>", "");
+    if (!string.IsNullOrEmpty(item.SeoPart.Description)) {
+        description = item.SeoPart.Description;
+    }
+}
+
+@*sostituito con ShareLink
+@using (Script.Head()) {
+    <meta property="og:url" content="@pathShareBar" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:image" content="@item.OffertaLavoro.Image.FirstMediaUrl" />
+    <meta property="og:description" content="@description" />
+}*@
+
+<div id="intro">
+    <canvas id="intro-canvas"></canvas>
+    <div class="container container-desc clearfix">
+        <div class="col-xs-12 col-sm-8 col-intro-desc">
+            <h1 class="handel-got-d title">@T("WORK WITH US")</h1>
+            <h2 class="page-claim">@Model.Title</h2>
+
+            <div class="sharebar">
+                <!-- AddThis Button BEGIN -->
+                <div class="addthis_toolbox addthis_32x32_style addthis_default_style"
+                addthis:url="@pathShareBar"
+                addthis:title="@Model.Title">
+                    <a class="addthis_button_facebook"></a>
+                    <a class="addthis_button_twitter"></a>
+                    <a class="addthis_button_email"></a>
+                    <a class="addthis_button_google"></a>
+                    <a class="addthis_button_compact"></a>
+                </div>
+                <script type="text/javascript">        var addthis_config = { "data_track_clickback": true };</script>
+                <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=laser.srl.ao@gmail.com"></script>
+                <!-- AddThis Button END -->
+            </div>
+        </div>
+        @if (item.OffertaLavoro.Image.Ids.Length > 0) {
+            <div class="col-xs-12 col-sm-4 text-center">
+                <img src="@item.OffertaLavoro.Image.FirstMediaUrl"  title="@item.OffertaLavoro.Image.MediaParts[0].Title" alt="@item.OffertaLavoro.Image.MediaParts[0].AlternateText" class="img-responsive">
+            </div>
+        }
+    </div>
+</div>
+<div class="container">
+    <div class="space-40"></div>
+    <p>@Html.Raw(item.BodyPart.Text)</p>
+
+    <div class="space-20"></div>
+    <div class="news-block">
+        <div class="single-news-item-date pull-right">
+            <a href="~/lavora-con-noi" class="link-back-news">@T("Back to work with us")</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿<Placement>
+  <Place Fields_MediaLibraryPicker__MapPart-MapSourceFile="-" />
+  <Place Parts_MapsSiteSettings_Edit="Content:1" />
+  <Place Fields_MediaLibraryPicker_Edit__MapPart-MapSourceFile="Content:2.1"/>
+  <Place Parts_Map="Content:10" Parts_OsmMap="Content:10"/>
+  <Place Parts_Map_Edit="Content:2" Parts_OsmMap_Edit="Content:2" />
+  <Place Parts_CustomPin_Edit="Content:2.1" />
+  <Match DisplayType="Summary">
+    <Place Parts_Map_Summary="Content:after"/>
+  </Match>
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_Map_SummaryAdmin="Content:after"/>
+  </Match>
+</Placement>

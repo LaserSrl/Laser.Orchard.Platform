@@ -1,0 +1,79 @@
+﻿@model Laser.Orchard.ButtonToWorkflows.ViewModels.ButtonToWorkflowsSettingsVM
+<fieldset>
+    <legend>@T("Button to WorkFlows Settings")</legend>
+    <div class="editor-field">
+        @{
+            int i = 0;
+            <table class="items">
+                <thead>
+                    <tr>
+                        <th scope="col">@T("Button")</th>
+                        <th scope="col">@T("Button Label")</th>
+                        <th scope="col">@T("Activity Name")</th>
+                        <th scope="col">@T("Description")</th>
+                         <th scope="col">@T("Message on button click")</th>
+                        <th scope="col">@T("Async")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @*           @foreach (Laser.Orchard.ButtonToWorkflows.ViewModels.ButtonVM vm in Model.ListButtons) {
+              
+             <tr>
+                <td>
+                @Html.TextBoxFor(m => m.ListButtons[i].ButtonsText)</td>
+                <td>
+                @Html.TextBoxFor(m => m.ListButtons[i].ButtonsAction)</td>
+            </tr>
+               i++;
+        }*@
+                    <tr>
+                        <td>
+                            @T("Custom Button ")1</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsText1)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsAction1)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsDescription1)</td>
+                         <td>
+                            @Html.TextBoxFor(m => m.ButtonsMessage1)</td>
+                        <td>
+                            @Html.CheckBoxFor(m => m.ButtonsAsync1)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @T("Custom Button ")2</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsText2)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsAction2)</td>
+                        <td class="">
+                            @Html.TextBoxFor(m => m.ButtonsDescription2)</td>
+                               <td>
+                            @Html.TextBoxFor(m => m.ButtonsMessage2)</td>
+                        <td>
+                            @Html.CheckBoxFor(m => m.ButtonsAsync2)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @T("Custom Button ")3</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsText3)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsAction3)</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ButtonsDescription3)</td>
+                               <td>
+                            @Html.TextBoxFor(m => m.ButtonsMessage3)</td>
+                        <td>
+                            @Html.CheckBoxFor(m => m.ButtonsAsync3)
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        }
+    </div>
+</fieldset>

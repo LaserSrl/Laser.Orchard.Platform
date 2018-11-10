@@ -1,0 +1,32 @@
+﻿@model Laser.Orchard.Questionnaires.Settings.GamePartSettingVM
+
+    <h2>@T("Settings - Game Part")</h2>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.Ranking)
+        <label for="@Html.FieldIdFor(m => m.Ranking)" class="forcheckbox">@T("Ranking") </label>
+        <span class="hint">@T("Default is false. If selected post with Ranking will be enabled")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.SendEmail)
+        <label for="@Html.FieldIdFor(m => m.SendEmail)" class="forcheckbox">@T("Send Email when game end") </label>
+        <span class="hint">@T("Default is false. If selected emails will be sended at end game")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        <label for="@Html.FieldIdFor(m => m.EmailRecipe)">@T("Email address") </label>
+        @Html.TextBoxFor(m => m.EmailRecipe)
+        <span class="hint">@T("The Email with ranking will be sent at this address")</span>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="checkbox-and-label">
+        <label for="@Html.FieldIdFor(m => m.Template)">@T("Select template") </label>
+       @Html.DropDownListFor(m => m.Template, new System.Web.Mvc.SelectList(Model.ListTemplate, "Id", "Name", (int)Model.Template))
+        <span class="hint">@T("Select template to use in email message")</span>
+    </div>
+</fieldset>

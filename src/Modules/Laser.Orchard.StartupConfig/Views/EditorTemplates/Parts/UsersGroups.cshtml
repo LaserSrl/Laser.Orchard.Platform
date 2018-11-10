@@ -1,0 +1,11 @@
+﻿@model  Laser.Orchard.StartupConfig.ViewModels.UsersGroupsVM
+@using Orchard.Utility.Extensions;
+@{    var thelist = Model.ListOfGroups.ToArray();
+
+      SelectList ListOf = new SelectList(thelist.Select((x) => new SelectListItem { Text = x.GroupName, Value = x.Id.ToString(), Selected =(Model.GroupNumber==null?false: (Model.GroupNumber.Count() == 0 ? false : Model.GroupNumber.IndexOf(x.Id) != -1)) }), "Value", "Text", Model.GroupNumber);
+    @Html.LabelFor(m => m.GroupNumber, T("Select User Group"))
+    @Html.ListBoxFor(m => m.GroupNumber, ListOf, new { style = "min-width:20%;", multiple = "multiple" })  
+    @Html.HiddenFor(m => m.Required)
+}
+
+

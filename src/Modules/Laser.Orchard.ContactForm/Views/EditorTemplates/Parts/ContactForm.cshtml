@@ -1,0 +1,123 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Laser.Orchard.TemplateManagement.Services
+@model Laser.Orchard.ContactForm.ViewModels.ContactFormEditModel
+@{
+    Script.Require("jQuery");
+    ITemplateService _templateService;
+    WorkContext.TryResolve<ITemplateService>(out _templateService);
+    var listTemplate = _templateService.GetTemplates().Where(w => !w.IsLayout);
+}
+<fieldset>
+    <div class="editor-label">
+        @T("Recipient Email Address")
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ContactForm.RecipientEmailAddress, new { @class = "text large" })
+        <span class="hint">@T("Specify one or more destination addresses separated by a semicolon.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="editor-field">
+        <label>@Html.CheckBoxFor(model => model.ContactForm.UseStaticSubject) @T("Use Same Subject for All Emails"):</label>
+        <span>@Html.TextBoxFor(model => model.ContactForm.StaticSubjectMessage, new { @class = "text-box" })</span>
+        <span class="hint">@T("If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked, the subject specified in the template will be used. If no template is specified, the subject specified in the textbox above will be used.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="editor-field">
+        <label>@Html.CheckBoxFor(model => model.ContactForm.DisplayNameField) @T("Display Name Field")</label>
+        <label id="required-name-field">@Html.CheckBoxFor(model => model.ContactForm.RequireNameField) @T("Require Name Field")</label>
+        <span class="hint">@T("The name collected by this field is included in the email body.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="editor-field">
+        <label>@Html.CheckBoxFor(model => model.ContactForm.EnableUpload) @T("Enable File Upload")</label>
+        <span class="hint">@T("If checked, an upload button will be added to the form.")</span>
+        <span id="path-upload-field">@T("Upload files in the following path:") @Model.BasePath @Html.TextBoxFor(model => model.ContactForm.PathUpload, new { @class = "text"})</span>
+        <span id="path-upload-hint" class="hint">@T("If the folder does not exists, it will be created.")</span>
+        <label id="required-attachment-field">@Html.CheckBoxFor(model => model.ContactForm.RequireAttachment) @T("Require attachment")</label>
+        <span id="required-attachment-hint" class="hint"> @T("If this option is checked, every form submission or API request must have an attached file.")</span>
+        <label id="attach-files-field">@Html.CheckBoxFor(model => model.ContactForm.AttachFiles) @T("Attach files to email")</label>
+        <span id="attach-files-hint" class="hint">@T("If this option is not checked, instead of attaching the file to the email its URL will be added to the body.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="editor-label">
+        @T("Mail Template")
+    </div>
+    <div class="editor-field">
+        @Html.DropDownListFor(m => m.ContactForm.TemplateRecord_Id, new SelectList(listTemplate, "Id", "Title", Model.ContactForm.TemplateRecord_Id), "")
+    </div>
+    <span class="hint">
+        @T("Variables passed to the template through the model:")
+        <br />
+        <ul>
+            <li><u>SenderName</u> (@T("The name of the sender"))</li>
+            <li><u>SenderEmail</u> (@T("The email address of the sender"))</li>
+            <li><u>Subject</u> (@T("The subject of the email"))</li>
+            <li><u>Message</u> (@T("The text of the email"))</li>
+            <li><u>AttachmentUrl</u> (@T("The URL of the attachment"))</li>
+            <li><u>AdditionalData</u> (@T("A dictionary containing all the other data"))</li>
+        </ul>
+    </span>
+</fieldset>
+
+@using (Script.Foot())
+{
+    <script type="text/javascript">
+//<![CDATA[
+        $(function () {
+            if ('@Model.ContactForm.DisplayNameField' == 'True') {
+                $('#required-name-field').show();
+            } else {
+                $('#required-name-field').hide();
+            }
+
+
+            $('#@Html.FieldIdFor(m => m.ContactForm.DisplayNameField)').click(function () {
+                if ($('#@Html.FieldIdFor(m => m.ContactForm.DisplayNameField)').is(':checked')) {
+                    $('#required-name-field').show();
+                } else {
+                    $('#required-name-field').hide();
+                }
+            });
+
+            if ('@Model.ContactForm.EnableUpload' == 'True') {
+                $('#path-upload-field').show();
+                $('#path-upload-hint').show();
+                $('#required-attachment-field').show();
+                $('#required-attachment-hint').show();
+                $('#attach-files-field').show();
+                $('#attach-files-hint').show();
+            } else {
+                $('#path-upload-field').hide();
+                $('#path-upload-hint').hide();
+                $('#required-attachment-field').hide();
+                $('#required-attachment-hint').hide();
+                $('#attach-files-field').hide();
+                $('#attach-files-hint').hide();
+            }
+
+            $('#@Html.FieldIdFor(m => m.ContactForm.EnableUpload)').click(function () {
+                if ($('#@Html.FieldIdFor(m => m.ContactForm.EnableUpload)').is(':checked')) {
+                    $('#path-upload-field').show();
+                    $('#path-upload-hint').show();
+                    $('#required-attachment-field').show();
+                    $('#required-attachment-hint').show();
+                    $('#attach-files-field').show();
+                    $('#attach-files-hint').show();
+                } else {
+                    $('#path-upload-field').hide();
+                    $('#path-upload-hint').hide();
+                    $('#required-attachment-field').hide();
+                    $('#required-attachment-hint').hide();
+                    $('#attach-files-field').hide();
+                    $('#attach-files-hint').hide();
+                }
+            });
+        })
+//]]>
+</script>
+}

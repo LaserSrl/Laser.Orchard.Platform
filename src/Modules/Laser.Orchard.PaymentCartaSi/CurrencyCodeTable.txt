@@ -1,0 +1,39 @@
+﻿978,EUR,EURO
+036,AUD,Australian Dollar
+124,CAD,Canadian Dollar
+344,HKD,Hong Kong Dollar
+392,JPY,Japan Yen
+756,CHF,Swiss Franc
+826,GBP,Pound Sterling
+840,USD,US Dollar
+986,BRL,Brazil real (1994-)
+702,SGD,Singapore dollar
+784,AED,United Arab Emirates dirham
+901,TWD,Taiwan new dollar
+682,SAR,Saudi Arabia riyal
+360,IDR,Indonesia rupiah
+764,THB,Thailand baht
+414,KWD,Kuwait dinar
+458,MYR,Malaysia ringgit
+634,QAR,Qatar riyal
+484,MXN,Mexico peso
+710,ZAR,South Africa rand
+410,KRW,Korea, South won
+985,PLN,Polish Zloty
+356,INR,India rupee
+608,PHP,Philippines peso
+203,CZK,Czech Republic koruna
+554,NZD,New Zealand dollar
+152,CLP,Chile peso
+946,RON,Romanian New Leu
+348,HUF,Hungary forint
+170,COP,Colombia peso
+048,BHD,Bahrain dinar
+818,EGP,Egypt pound
+191,HRK,Croatia kuna
+428,LVL,Latvia lat
+862,VEF,Venezuelan Bolivar Fuerte
+400,JOD,Jordan dinar
+032,ARS,Argentina peso (1991-)
+446,MOP,Macao (Macau) pataca
+208,DKK,Corona Danese

@@ -1,0 +1,35 @@
+﻿
+@model Laser.Orchard.HiddenFields.ViewModels.HiddenStringFieldSettingsEventsViewModel
+@{ 
+    var guid = Guid.NewGuid().ToString();
+}
+
+<script type="text/javascript">
+    function checkFilled() {
+        var inputVal = document.getElementById("tbTemplateString_@guid");
+        if (inputVal.value == "") {
+            inputVal.style.backgroundColor = "yellow";
+        }
+        else {
+            inputVal.style.backgroundColor = "";
+        }
+    }
+
+    checkFilled();
+</script>
+
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m=>m.Settings.Tokenized, new { @class = "check-box" }) <label for="@Html.FieldIdFor(m=>m.Settings.Tokenized)" class="forcheckbox">@T("Tokenized")</label>
+        <span class="hint">@T("Check to enable token replacement in the field contents.")</span>
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.Settings.TemplateString, new { @class = "text large tokenized", @id = "tbTemplateString_"+guid, @onkeypress = "checkFilled();", @onchange = "checkFilled();" })
+        <span class="hint">@T("Default value.")</span>
+    </div>
+    <div>
+        @Html.DropDownListFor(m => m.ProcessVariantString, Model.ProcessVariants)
+        <span class="hint">@T("Selecting a value different than None will start a background update of these hidden fields.")</span>
+    </div>
+</fieldset>

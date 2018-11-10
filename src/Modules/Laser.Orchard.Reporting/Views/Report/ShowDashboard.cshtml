@@ -1,0 +1,81 @@
+﻿@model Laser.Orchard.Reporting.ViewModels.ShowDashboardViewModel
+@using Orchard.ContentManagement
+@using Laser.Orchard.Reporting.Models
+@{
+    Style.Include("jquery-ui.css");
+    Style.Include("jquery.jqplot.css");
+    Style.Include("reporting.css");
+    Style.Include("report.print.css").Attributes.Add("media", "print");
+    Style.Require("bootstrap-table").AtHead();
+    Script.Require("jQueryUI_Widget").AtHead();
+    Script.Require("jqplot").AtHead();
+    Script.Require("barjqplot").AtHead();
+    Script.Require("categoryAxisjqplot").AtHead();
+    Script.Require("pointLabelsjqplot").AtHead();
+    Script.Require("canvasTextjqplot").AtHead();
+    Script.Require("canvasAxisTickjqplot").AtHead();
+    Script.Require("piejqplot").AtHead();
+    Script.Require("donutRendererjqplot").AtHead();
+    Script.Require("bootstrap-table").AtHead();
+    IContentManager contentManager = null;
+    WorkContext.TryResolve<IContentManager>(out contentManager);
+}
+<h3>@Model.Title</h3>
+@if (Model.Filters != null) {
+    using (Html.BeginFormAntiForgeryPost(Url.Action("DisplayChart"))) {
+        <fieldset id="reportFilters">
+            <legend>@T("Filters")</legend>
+            <div>
+                @Display(contentManager.BuildEditor(Model.Filters))
+                <button class="primaryAction" type="button" value="Refresh" id="btnRefresh">@T("Refresh")</button>
+                <button class="primaryAction" type="button" value="Print" id="btnPrint">@T("Print")</button>
+                @if (AuthorizedFor(Laser.Orchard.Reporting.Security.Permissions.DownloadDashboardData)) {
+                    <button class="primaryAction" type="submit" formaction="@Url.Action("DownloadDashboard", new { id = Model.Id })" value="Download" id="btnDownload">@T("Download")</button>
+                }
+            </div>
+        </fieldset>
+    }
+    <div>
+        @foreach (var rep in Model.Reports.AsPart<DataReportViewerPart>()) {
+            if (rep.Record.ChartType == 7) {
+                <div data-report-id="@rep.Record.Id"></div>
+            } else {
+                <div style="float:left" data-report-id="@rep.Record.Id"></div>
+            }
+
+        }
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#reportFilters button[value='submit.Save']").hide();
+            $("#btnPrint").click(function () { window.print(); });
+            var theForm = $("#reportFilters").parent();
+            $("#btnRefresh").click(function () {
+                var formData = theForm.serialize();
+                $("div[data-report-id]").each(function (i, elem) {
+                    $(elem).html("<label style='padding:30px'>@T("Loading report...")</label>");
+                    $.post(theForm.attr("action"), formData + "&id=" + $(elem).attr("data-report-id"), function (data) {
+                        $(elem).html(data);
+                    });
+                });
+            });
+        });
+    </script>
+} else {
+    <button class="primaryAction" type="button" value="Print" id="btnPrint">@T("Print")</button>
+    if (AuthorizedFor(Laser.Orchard.Reporting.Security.Permissions.DownloadDashboardData)) {
+        <button class="primaryAction" type="button" value="Download" id="btnDownload">@T("Download")</button>
+    }
+    foreach (var rep in Model.Reports) {
+        @Display(BuildDisplay(rep, "Detail"))
+    }
+    <script type="text/javascript">
+        $(function () {
+            $("#btnPrint").click(function () { window.print(); });
+            var theForm = $("#reportFilters").parent();
+            $("#btnDownload").click(function () {
+                window.location.href = "@Url.Action("DownloadDashboard", new { id = Model.Id })";
+            });
+        });
+    </script>
+}

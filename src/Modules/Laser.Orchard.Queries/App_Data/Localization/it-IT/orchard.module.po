@@ -1,0 +1,266 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
+msgid "Caption"
+msgstr "Etichetta"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
+msgid "nothing (default) = no filter"
+msgstr "vuoto (default) = nessun filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
+msgid "Settings - Query User Filter Extension"
+msgstr "Impostazioni - Estensione per Ricerche utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
+msgid "found {0:N0} content items"
+msgstr "Trovato/i {0:N0} contenuto/i"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
+msgid "Pick a user defined query"
+msgstr "Seleziona una ricerca utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
+msgid "User defined queries picker"
+msgstr "Scelta Ricerca utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Add.cshtml"
+msgid "Add a Filter"
+msgstr "Aggiungi un Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Add.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Add.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Add.cshtml"
+msgid "There are no currently available filters"
+msgstr "Nessun filtro disponibile"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
+msgid "Edit Filter - {0}"
+msgstr "Modifica Filtro - {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
+msgid "You may optionally give a description to this filter, to be used in the dashboard screens."
+msgstr "Puoi opzionalmente, per questo filtro, fornire una descrizione che sarà visualizzata nelle schermate del Pannello Amministrativo."
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "a moment ago"
+msgstr "poco fa"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "By"
+msgstr "di"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Create New HQL Query"
+msgstr "Crea nuova query HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Create New One Shot Query"
+msgstr "Crea nuova Ricerca One Shot"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Create New One Shot UserQuery"
+msgstr "Crea nuova Ricerca One Shot"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Create New Query"
+msgstr "Crea nuova Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Create New UserQuery"
+msgstr "Crea nuova Ricerca utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "days ago"
+msgstr "giorni fa"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "hours ago"
+msgstr "Ore fa"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Last modified"
+msgstr "Ultima modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "List Queries"
+msgstr "Lista Ricerche"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "minutes ago"
+msgstr "minuti fa"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Create.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Create.cshtml"
+msgid "Title:"
+msgstr "Titolo:"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/CreateOneShot.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/CreateOneShot.cshtml"
+msgid "Title:"
+msgstr "Titolo:"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "+ Add a new Filter"
+msgstr "+ Aggiungi nuovo Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "+ Add a new Layout"
+msgstr "+ Aggiungi nuovo Layout"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "+ Add a new Sort Criteria"
+msgstr "+ Aggiungi nuovo criterio di ordinamento"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Add a new Group"
+msgstr "Aggiungi un nuovo Gruppo"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Add a new Layout"
+msgstr "Aggiungi un nuovo Layout"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Close"
+msgstr "Chiudi"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Delete group"
+msgstr "Elimina gruppo"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Down"
+msgstr "Giù"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Edit Query - {0}"
+msgstr "Modifica Ricerca - {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Filters"
+msgstr "Filtri"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Layouts"
+msgstr "Layouts"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Or"
+msgstr "O"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Preview"
+msgstr "Anteprima"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Sort Criteria"
+msgstr "Criteri di ordinamento"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
+msgid "Up"
+msgstr "Su"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Preview.cshtml"
+msgid "Manage Queries"
+msgstr "Gestisci Ricerche"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Preview.cshtml"
+msgid "The query returned no results"
+msgstr "La ricerca non ha restituito risultati"
+
+msgctxt "Laser.Orchard.Queries.Controllers.MyQueryAdminController"
+msgid "Query Removed"
+msgstr "Ricerca rimossa"
+
+msgctxt "Laser.Orchard.Queries.Controllers.MyQueryAdminController"
+msgid "Query saved"
+msgstr "Ricerca salvata"
+
+msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
+msgid "Not authorized to edit queries"
+msgstr "Non autorizzato a modificare le Ricerche"
+
+msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
+msgid "Not authorized to manage queries"
+msgstr "Non autorizzato a gestire le Ricerche"
+
+msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
+msgid "Query {0} deleted"
+msgstr "Ricerca {0} eliminata"
+
+msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
+msgid "Query saved"
+msgstr "Ricerca salvata"
+
+msgctxt "Laser.Orchard.Queries.FilterController"
+msgid "Filter deleted"
+msgstr "Filtro eliminato"
+
+msgctxt "Laser.Orchard.Queries.FilterController"
+msgid "Not authorized to manage queries"
+msgstr "Non autorizzato a gestire le Ricerche"
+
+msgctxt "Laser.Orchard.Queries.Navigation.AdminMenu"
+msgid "Custom Query"
+msgstr "Query utente"
+

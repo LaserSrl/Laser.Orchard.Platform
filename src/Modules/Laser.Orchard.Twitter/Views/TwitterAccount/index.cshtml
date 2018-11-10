@@ -1,0 +1,60 @@
+﻿@model Laser.Orchard.Twitter.ViewModels.SearchIndexVM
+@{
+    var ContentsIndexVM = Model.ContentsIndexVM;
+    Layout.Title = T("Twitter Account");
+}
+<div class="manage">
+    <a class="button primaryAction" href="@Url.Action("GetPostTokenTwitter", "TwitterAccount", new { area = "Laser.Orchard.Twitter", id = 0 })" title="@T("Add Twitter Account")">@T("Add Twitter Account")</a>
+</div>
+@using (Html.BeginForm("Index", "TwitterAccount", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    <fieldset class="bulk-actions">
+        <label for="search">@T("Search:")</label>
+        @Html.TextBoxFor(m => m.Search.Expression)
+
+        <button type="submit">@T("Search")</button>
+        <a href="@Url.Action("Index")">@T("Clear")</a>
+    </fieldset>
+
+}
+
+<fieldset class="contentItems bulk-items">
+    <ul>
+
+        @{
+            foreach (var contentIndexVM in ContentsIndexVM) {
+
+            <li>
+                <div class="summary" itemscope="itemscope" itemid="@contentIndexVM.Id" itemtype="http://orchardproject.net/data/ContentItem">
+                    <div class="properties">
+                             <div style="float:left;padding-right:15px;">
+                            <img src="@contentIndexVM.Option.GetType().GetProperty("Image").GetValue(contentIndexVM.Option)" width="50px" />
+                        </div>
+                        <h3><a href="@Url.Action("Edit", "TwitterAccount", new { area = "Laser.Orchard.Twitter", id = contentIndexVM.Id })">@contentIndexVM.Title</a></h3>
+                        <div class="contentType">
+
+                            @if (contentIndexVM.Option.GetType().GetProperty("Valid").GetValue(contentIndexVM.Option, null)) {
+                                @Html.Raw(" - Enabled")
+                            }
+                            else {
+                                @Html.Raw(" - Disabled")
+                            }
+                            @if (contentIndexVM.Option.GetType().GetProperty("Shared").GetValue(contentIndexVM.Option, null)) {
+                                @Html.Raw(" - Shared")
+                            }
+                            else {
+                                @Html.Raw(" - Not Shared")
+                            }
+                        </div>
+                    </div>
+                    <div class="related">
+                        <a href="@Url.Action("Edit", "TwitterAccount", new { area = "Laser.Orchard.Twitter", id = contentIndexVM.Id })">@T("Edit")</a>
+                        &nbsp;&vert;&nbsp;
+                        <a href="@Url.Action("Remove", "TwitterAccount", new { area = "Laser.Orchard.Twitter", id = contentIndexVM.Id })" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                    </div>
+                </div>
+            </li>
+            }
+        }
+    </ul>
+</fieldset>

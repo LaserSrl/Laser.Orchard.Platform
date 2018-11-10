@@ -1,0 +1,8 @@
+﻿@using System.Linq
+@using Laser.Orchard.TemplateManagement.Services
+@{
+	var parsers = ((IEnumerable<IParserEngine>)Model.Parsers).ToList();
+	var currentValue = ViewData.TemplateInfo.FormattedModelValue as string;
+	var options = parsers.Select(x => new SelectListItem { Text = x.DisplayText, Value = x.Id.ToString(), Selected = x.Id == currentValue });
+}
+@Html.DropDownList("", options, T("(Default)").ToString())

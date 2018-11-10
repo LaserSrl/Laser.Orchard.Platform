@@ -1,0 +1,99 @@
+﻿@model Laser.Orchard.Questionnaires.Settings.QuestionnairesPartSettingVM
+
+@Display.TokenHint()
+    <h2>@T("Settings - Questionnaire Part")</h2>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.QuestionsLimitsNumber)" >@T("Limit the number of questions") </label>
+    @Html.EditorFor(m => m.QuestionsLimitsNumber, new { @class = "text medium " })
+    <span class="hint">@T("Set the Limit of number of questions , default is 0 (No limits)")</span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.QuestionsResponseLimitsNumber)" >@T("Limit the number of answer for each questionnaire") </label>
+    @Html.EditorFor(m => m.QuestionsResponseLimitsNumber, new { @class = "text medium " })
+    <span class="hint">@T("Set the Limit of number of answer for each questionnaire , default is 0 (No limits)")</span>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.QuestionsSortedRandomlyNumber)" >@T("Number of questions sorted Randomly") </label>
+    @Html.EditorFor(m => m.QuestionsSortedRandomlyNumber, new { @class = "text medium " })
+    <span class="hint">@T("Set the Limit of number of questions sorted randomly , default is 0 (No limits)")</span>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.RandomResponse)
+        <label for="@Html.FieldIdFor(m => m.RandomResponse)" class="forcheckbox">@T("Random Response") </label>
+        <span class="hint">@T("Default is false. If selected response will be showed randomly")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.ShowCorrectResponseFlag)
+        <label for="@Html.FieldIdFor(m => m.ShowCorrectResponseFlag)" class="forcheckbox">@T("Show Correct Response Option") </label>
+        <span class="hint">@T("Default is false. If selected a Correct Response Option will be visible in back office")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.QuestionnaireContext)" >@T("Questionnaire Context") </label>
+    @Html.TextBoxFor(m => m.QuestionnaireContext, new { @class = "text medium tokenized" })
+    <span class="hint">@T("The Context this questionnaire refers to (eg. a commercial campaign name). It is usually usefull '{Content.DisplayText}'.")</span>
+</fieldset>
+<div class="checkbox-and-label">
+    @Html.EditorFor(m => m.ForceAnonymous)
+    <label for="@Html.FieldIdFor(m => m.ForceAnonymous)">@T("Force anonymous responses for authenticated users.") </label>
+    <span class="hint">@T("Check if you don't want to save the username in the answers.")</span>
+</div>
+<h2>@T("Settings - Questionnaire Part - Images")</h2>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.EnableQuestionImage)
+        <label for="@Html.FieldIdFor(m => m.EnableQuestionImage)" class="forcheckbox">@T("Enable Question's Image") </label>
+        <span class="hint">@T("Default is false. ")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.CheckBoxFor(m => m.EnableAnswerImage)
+        <label for="@Html.FieldIdFor(m => m.EnableAnswerImage)" class="forcheckbox">@T("Enable Answer's Image") </label>
+        <span class="hint">@T("Default is false.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.QuestionImageLimitNumber)
+        <label for="@Html.FieldIdFor(m => m.QuestionImageLimitNumber)" >@T("Limit the number of images for each question") </label>
+        <span class="hint">@T("Default 0 (no limit)")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AnswerImageLimitNumber)
+        <label for="@Html.FieldIdFor(m => m.AnswerImageLimitNumber)" >@T("Limit the number of images for each answer") </label>
+        <span class="hint">@T("Default 0 (no limit)")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AllowSections)
+        <label for="@Html.FieldIdFor(m => m.AllowSections)" >@T("Allow admin users to manage questionnaire sections") </label>
+        <span class="hint">@T("Check if you want the user to be able to edit section text.")</span>
+    </div>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AllowConditions)
+        <label for="@Html.FieldIdFor(m => m.AllowConditions)" >@T("Allow admin users to manage answers conditions") </label>
+        <span class="hint">@T("Check if you want the user to be able to manage questions visibility based on answers.")</span>
+    </div>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AllowSingleChoice)
+        <label for="@Html.FieldIdFor(m => m.AllowSingleChoice)" >@T("Allow admin users to manage single choice answers") </label>
+        <span class="hint">@T("Check if you want the user to be able to manage questions with single choice answers.")</span>
+    </div>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AllowMultiChoice)
+        <label for="@Html.FieldIdFor(m => m.AllowMultiChoice)" >@T("Allow admin users to manage multi choice answers") </label>
+        <span class="hint">@T("Check if you want the user to be able to manage questions with multi choice answers.")</span>
+    </div>
+    <div class="checkbox-and-label">
+        @Html.EditorFor(m => m.AllowOpenAnswers)
+        <label for="@Html.FieldIdFor(m => m.AllowOpenAnswers)" >@T("Allow admin users to manage open answers") </label>
+        <span class="hint">@T("Check if you want the user to be able to manage questions with open answers.")</span>
+    </div>
+</fieldset>

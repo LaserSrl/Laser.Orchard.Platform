@@ -1,0 +1,33 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    if (Model.Title != null) {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var tag = Tag(Model, "article");
+    string title = Model.ContentItem.TitlePart.Title;
+    string bodyHtml = Model.ContentItem.BodyPart.Text;
+    var body = new HtmlString(Html.Excerpt(bodyHtml, 100).ToString().Replace(Environment.NewLine, "</p>" + Environment.NewLine + "<p>")); 
+}
+@tag.StartElement
+<div class="col-1-4">
+    <div class="wrap-col">
+        <img src="@Display.ResizeMediaUrl(Width: 150, Height: 120, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.Prodotto.Gallery.MediaParts[0].MediaUrl)" class="img-indent-bot" alt="">
+        <dl class="def-list-1">
+            <dt>
+                @Html.ItemDisplayLink(title, (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+            </dt>
+            <dd>
+                @Html.Raw(body)
+                <br />
+                @Html.ItemDisplayLink(T("More").ToString(), (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+            </dd>
+        </dl>
+    </div>
+</div>
+@tag.EndElement

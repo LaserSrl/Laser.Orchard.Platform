@@ -1,0 +1,200 @@
+﻿@model Laser.Orchard.Mobile.ViewModels.SmsGatewayVM
+
+@{
+    Script.Require("LaserOrchardSms").AtHead();
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+
+    bool disabledElements = Model.SmsGateway.SmsMessageSent;
+
+    bool disableHaveAlias = (Model.AliasList == null || Model.AliasList.Count == 0);
+    bool isProtocolloSMPP = (Model.Protocollo == Laser.Orchard.Mobile.SmsServiceReference.enumProtocollo.SMPP);
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+
+        $(function () {
+            $('.rcswitcher-checkbox-sms').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.SendToTestNumber)') {
+                        $("#test-sms-container").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.SendToTestNumber)') {
+                        $("#test-sms-container").hide(400);
+                    }
+                }
+            });
+        });
+
+            $(function () {
+                $('.rcswitcher-checkbox-havealias').rcSwitcher({
+                    theme: 'flat',
+                    blobOffset: 1,
+                    onText: '@T("YES")',
+                    offText: '@T("NO")'
+                }).on({
+                    'turnon.rcSwitcher': function (e, dataObj) {
+                        if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.HaveAlias)') {
+                        if ('@isProtocolloSMPP' == 'True') {
+                            $("#alias-sms-container").show(400);
+                        }
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.HaveAlias)') {
+                        $("#alias-sms-container").hide(400);
+                    }
+                }
+            });
+        });
+
+            $(function () {
+                $('.rcswitcher-checkbox-recipientlistsms').rcSwitcher({
+                    theme: 'flat',
+                    blobOffset: 1,
+                    onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.SendToRecipientList)') {
+                        $("#recipientlist-sms-container").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.SmsGateway.SendToRecipientList)') {
+                        $("#recipientlist-sms-container").hide(400);
+                    }
+                }
+            });
+        });
+
+            $(function () {
+                $("#tab-folder-container ul li a").on('click', function () {
+                    if ($(this).attr("href") == '#sms-comm-container') {
+                        $('#txtTesto').focus();
+                    }
+                });
+            });
+
+            $(function () {
+                $('#txtTesto').on('focus blur keypress keyup change paste', {
+                    maxLength: '@Model.MaxLenghtSms',
+                    txtTesto: $('#txtTesto'),
+                    lblnumeroMessaggi: $('#lblnumeroMessaggi'),
+                    lblnumeroChar: $('#lblnumeroChar'),
+                    shortlinkExist: '@Model.ShortlinkExist'
+                }, ControllaMessaggio);
+        });
+
+    </script>
+}
+
+<div id="sms-comm-container" class="comm-tabbed">
+    @Html.HiddenFor(m => m.SmsGateway.SmsMessageSent)
+    <div>
+        <label class="sms-info">@T("Number of chars:")</label>
+        <span class="form-group">
+            @Html.Label("contChar", " ", new { @id = "lblnumeroChar" })
+            @if (Model.ShortlinkExist) {
+                @T(" + 16 chars campaign shortlink")
+            }
+        </span>
+    </div>
+    <div>
+        <label class="sms-info">@T("Number of messages:")</label>
+        <span class="form-group">@Html.Label("contMessage", " ", new { @id = "lblnumeroMessaggi" })</span>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.SmsGateway.Message, T("Text"))
+        <div>
+            @Html.TextAreaFor(model => model.SmsGateway.Message, new { @id = "txtTesto", @class = "text large" })
+            @Html.ValidationMessageFor(model => model.SmsGateway.Message)
+        </div>
+    </div>
+
+    @foreach (var ph in Model.Settings.PlaceholdersList.Placeholders) {
+        <button name="submit.@ph.Name" id="btn_@ph.Name" onclick="$('#txtTesto').insertAtCaret('[PH_@ph.Name]');return false;">@ph.DisplayName</button>
+    }
+
+    <div>
+        @Html.LabelFor(m => m.SmsGateway.HaveAlias, T("MAM have alias").Text, new { @class = "forcheckbox" })
+        @if (!disableHaveAlias) { 
+            @Html.CheckBoxFor(model => model.SmsGateway.HaveAlias, new { @class = "rcswitcher-checkbox-havealias" })
+        } else {
+            @Html.CheckBoxFor(model => model.SmsGateway.HaveAlias, new { @class = "rcswitcher-checkbox-havealias", @disabled = "disabled" })
+        }
+    </div>
+
+    <div id="alias-sms-container" style="@((!isProtocolloSMPP || !Model.SmsGateway.HaveAlias) ? "display:none;" : "")">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SmsGateway.Alias, T("Alias").Text, new { @class = "forcheckbox" })
+            @if (!disableHaveAlias) { 
+                @Html.DropDownListFor(model => model.SmsGateway.Alias, new SelectList(Model.AliasList, Model.SmsGateway.Alias))
+            }
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.SmsGateway.SendToTestNumber, T("Test over single phone number").Text, new { @class = "forcheckbox" })
+        @Html.CheckBoxFor(model => model.SmsGateway.SendToTestNumber, new { @class = "rcswitcher-checkbox-sms" })
+    </div>
+
+    <div id="test-sms-container" style="@((!Model.SmsGateway.SendToTestNumber) ? "display:none;" : "")">
+        <div class="form-group">
+            @Html.LabelFor(m => m.SmsGateway.PrefixForTest, T("Test Sms prefix").Text, new { @class = "forcheckbox" })
+            @Html.TextBoxFor(model => model.SmsGateway.PrefixForTest, new { @class = "text small", @placeholder = "es. +39" })
+            @Html.ValidationMessageFor(model => model.SmsGateway.PrefixForTest)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.SmsGateway.NumberForTest, T("Test Sms number").Text, new { @class = "forcheckbox" })
+            @Html.TextBoxFor(model => model.SmsGateway.NumberForTest, new { @class = "text medium" })
+            @Html.ValidationMessageFor(model => model.SmsGateway.NumberForTest)
+            <button type="submit" name="submit.Test" value="submit.SmsTest">@T("Send for test")</button>
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.SmsGateway.SendToRecipientList, T("Enter recipients manually").Text, new { @class = "forcheckbox" })
+        @Html.CheckBoxFor(model => model.SmsGateway.SendToRecipientList, new { @class = "rcswitcher-checkbox-recipientlistsms" })
+    </div>
+
+    <div id="recipientlist-sms-container" style="@((!Model.SmsGateway.SendToRecipientList) ? "display:none;" : "")">
+        <div class="form-group">
+            @Html.LabelFor(model => model.SmsGateway.RecipientList, T("Manual recipients:"))
+            @Html.TextAreaFor(model => model.SmsGateway.RecipientList, new { @id = "txtRecipientList", @class = "text large" })
+            <span class="hint">@T("Enter phone number (prefix + number) of the contacts to which to deliver this Sms. One recipient for each line.")</span>
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.SmsGateway.SendOnNextPublish, T("Approved").Text, new { @class = "forcheckbox" })
+        @if (!disabledElements) { 
+            @Html.CheckBoxFor(model => model.SmsGateway.SendOnNextPublish, new { @class = "rcswitcher-checkbox-sms" }) 
+            <i class="fa fa-times-circle" style="color: red"></i> @T("SMS not yet sent.")
+        } else {
+            @Html.CheckBoxFor(model => model.SmsGateway.SendOnNextPublish, new { @class = "rcswitcher-checkbox-sms", @disabled = "disabled" }) 
+            <i class="fa fa-check-circle" style="color: green"></i> @T("SMS already sent.")
+        }
+        @if (disabledElements) { 
+            <div class="message message-Error">@T("This SMS has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
+        }
+    </div>
+
+</div>
+
+<div class="tab-folder">
+    <a href="#sms-comm-container"><i class="fa fa-phone"></i>@T("Sms")</a>
+</div>
+@if (Model.SmsGateway.SmsMessageSent) {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalSms", "CountPanel", new { area = "Laser.Orchard.Mobile", tot = Model.SmsGateway.SmsRecipientsNumber })"/>
+} else {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalSms", "CountPanel", new { area = "Laser.Orchard.Mobile" })"/>
+}

@@ -1,0 +1,170 @@
+<div id="PanelPacchetti" style="display: block;">
+    @Display(Layout.ZoneElencoPratiche)
+</div>
+<div class="PanelProdotto" style="display: none;">
+        <textarea class="html tinymce" cols="80" data-mediapicker-title="Inserisci/Aggiorna file multimediali" data-mediapicker-uploadpath="" id="PacchettoPart_Descrizione_Text" name="PacchettoPart.Descrizione.Text" rows="25" style="width: 100%; display: none">
+</textarea>
+    <input id="PacchettoPart_Pdf_SelectedIds" name="PacchettoPart.Pdf.SelectedIds" type="hidden" value="" />
+
+
+    <fieldset class="content-picker-field"
+        data-required="true"
+        data-multiple="false"
+        data-selected-items-fieldname="Prodotti.Pacchetto.SelectedIds"
+        data-base-url="/Orchard.Community/OctoTelematics"
+        data-part-name="Prodotti"
+        data-field-name="Pacchetto"
+        data-remove-text="Elimina">
+        <input type="hidden" id="Prodotti.Pacchetto.SelectedIds" name="Prodotti.Pacchetto.SelectedIds" />
+    </fieldset>
+    <label for="PacchettoPart_PrezzoConsigliato_Value" class="required">Pacchetto:</label>
+    <input class="text" id="Prodotti_TitoloPacchetto_Text" name="Prodotti.TitoloPacchetto.Text" type="text" value="" readonly />
+    <input type="hidden" id="PacchettoPart_PrezzoConsigliato_Value" name="PacchettoPart.PrezzoConsigliato.Value" value="" />
+    <fieldset>
+        <label for="Prodotti_Prezzo_Value" class="required">Prezzo</label>
+        <input class="text small required" id="Prodotti_Prezzo_Value" min="0" name="Prodotti.Prezzo.Value" step="0.01" type="text" value="" />
+    </fieldset>
+    <fieldset>
+        <label for="Prodotti_Targa_Text">Targa</label>
+        <input class="text" id="Prodotti_Targa_Text" name="Prodotti.Targa.Text" type="text" value="" />
+    </fieldset>
+    <fieldset>
+        <label for="Prodotti_CodiceContratto_Value">Codice Contratto</label>
+        <input type="text" id="Prodotti_CodiceContratto_Value" name="Prodotti.CodiceContratto.Value" value="" class="text medium" />
+    </fieldset>
+
+    <fieldset>
+        <label for="Prodotti_Email_Value">Email</label>
+        <input type="email" id="Prodotti_Email_Value" name="Prodotti.Email.Value" value="" class="text medium" />
+    </fieldset>
+    <fieldset>
+        <label for="Prodotti_Telefono_Value">Telefono</label>
+        <input type="text" id="Prodotti_Telefono_Value" name="Prodotti.Telefono.Value" value="" class="text medium" />
+    </fieldset>
+    @*  <fieldset>
+        <label>Contratto</label>
+        <div id="save-message-Prodotti_Contratto_Field_Ids" class="message message-Warning media-library-picker-message">È necessario salvare le modifiche.</div>
+        <div id="media-library-picker-Prodotti_Contratto_Field_Ids" class="items media-library-picker" summary="Contratto">
+            <ul>
+            </ul>
+        </div>
+        <div>
+            <span id="btn-Prodotti_Contratto_Field_Ids" class="button">Aggiungi</span>
+        </div>
+
+        <input id="Prodotti_Contratto_SelectedIds" name="Prodotti.Contratto.SelectedIds" type="hidden" value=",System.Int32[]" />
+        <span class="hint"></span>
+    </fieldset>*@
+
+</div>
+
+
+@*@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+
+        (function ($) {
+
+            var multiple = false;
+            var addButton = $('#btn-Prodotti_Contratto_Field_Ids');
+            var Prodotti_Contratto_Field_Ids_Template =
+                '<li><div data-id="{contentItemId}" data-fieldid="Prodotti_Contratto_Field_Ids" class="media-library-picker-item"><div class="thumbnail">{thumbnail}<div class="overlay"><h3>{title}</h3></div></div></div><a href="#" data-id="{contentItemId}" class="media-library-picker-remove">Rimuovi</a> | <a href="{editLink}?ReturnUrl=/Orchard.Community/OctoTelematics/GestioneProdotti?page=2">Modifica</a></li>';
+
+            var refreshIds = function () {
+                var id = $('#Prodotti_Contratto_SelectedIds');
+                id.val('');
+                $("div[data-fieldid = Prodotti_Contratto_Field_Ids]").each(function () {
+                    id.val(id.val() + "," + $(this).attr("data-id"));
+                });
+
+                var itemsCount = $("div[data-fieldid = Prodotti_Contratto_Field_Ids]").length;
+
+                if (!multiple && itemsCount > 0) {
+                    addButton.hide();
+                }
+                else {
+                    addButton.show();
+                }
+            };
+
+            window.mediaLibraryDirty = false;
+            var showSaveMsg = function () {
+                $('#save-message-Prodotti_Contratto_Field_Ids').show();
+                window.mediaLibraryDirty = true;
+            };
+            if (!window.mediaLibraryNavigateAway) {
+                $(window).on("beforeunload", window.mediaLibraryNavigateAway = function () {
+                    if (window.mediaLibraryDirty) {
+                        return "Non tutte le modifiche sono state salvate. Puoi lasciare la pagina se non ti importa perdere quei cambiamenti.";
+                    }
+                });
+                $("#Prodotti_Contratto_SelectedIds").closest("form").on("submit", function () {
+                    window.mediaLibraryDirty = false;
+                });
+            }
+
+            refreshIds();
+
+
+            addButton.click(function () {
+                //     alert("Ciao");
+                var url = '/Orchard.Community/OctoTelematics/Admin/Orchard.MediaLibrary?dialog=True';
+                $.colorbox({
+                    href: url,
+                    iframe: true,
+                    reposition: true,
+                    width: "100%",
+                    height: "100%",
+                    onLoad: function () { // hide the scrollbars from the main window
+                        $('html, body').css('overflow', 'hidden');
+                        $('#cboxClose').remove();
+                    },
+                    onClosed: function () {
+                        $('html, body').css('overflow', '');
+                        var selectedData = $.colorbox.selectedData;
+                        if (selectedData == null) // Dialog cancelled, do nothing
+                            return;
+
+                        var selectionLength = multiple ? selectedData.length : Math.min(selectedData.length, 1);
+
+                        for (var i = 0; i < selectionLength ; i++) {
+                            var template = Prodotti_Contratto_Field_Ids_Template
+                                .replace(/\{contentItemId\}/g, selectedData[i].id)
+                                .replace(/\{thumbnail\}/g, selectedData[i].thumbnail)
+                                .replace(/\{title\}/g, selectedData[i].title)
+                                .replace(/\{editLink\}/g, selectedData[i].editLink);
+                            var content = $(template);
+                            $('#media-library-picker-Prodotti_Contratto_Field_Ids ul').append(content);
+                        }
+
+                        refreshIds();
+
+                        if (selectedData.length) {
+                            showSaveMsg();
+                        }
+                    }
+                });
+
+            });
+
+            $(document).on("click", '#media-library-picker-Prodotti_Contratto_Field_Ids .media-library-picker-remove', function (e) {
+                e.preventDefault();
+                if (!confirm("Vuoi davvero rimuovere questo file multimediale?")) return false;
+                $(this).closest('li').remove();
+                refreshIds();
+                showSaveMsg();
+                return false;
+            });
+
+            $("#media-library-picker-Prodotti_Contratto_Field_Ids ul").sortable({
+                handle: '.thumbnail',
+                stop: function () {
+                    refreshIds();
+                    showSaveMsg();
+                }
+            }).disableSelection();
+
+        })(jQuery);
+        //]]>
+    </script>
+}*@

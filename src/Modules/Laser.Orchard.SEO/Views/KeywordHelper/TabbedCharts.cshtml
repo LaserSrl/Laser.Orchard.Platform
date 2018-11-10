@@ -1,0 +1,76 @@
+﻿@model Laser.Orchard.SEO.ViewModels.GoogleTrendsViewModel
+
+@using (Script.Head()) {
+
+}
+
+@{
+
+    List<string> keyWords = Model.q.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+}
+
+@{
+
+    <div class="container">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            @{
+                List<string> ids = new List<string>();
+                bool first = true;
+                foreach (var kw in keyWords) {
+                    string cc = "";
+                    string decoded = System.Web.HttpUtility.UrlDecode(kw);
+                    string nospace = new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9-]").Replace(decoded, ""); // decoded.Replace(" ", "");
+                    int kwCount = ids.Where(s => s.IndexOf(nospace) >= 0).Count();  //int kwCount = ids.Where(s => s == nospace).Count();
+                    nospace = nospace + kwCount.ToString();
+                    ids.Add(nospace);
+                    if (first) {
+                        first = false;
+                        cc = "active";
+                    }
+                    <li class="@cc">
+                        <a data-toggle="tab" href="#@nospace">
+                            @decoded
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+
+        <div class="tab-content">
+            @{
+                first = true;
+                int inde = 0;
+                foreach (var kw in keyWords) {
+                    string cc = "tab-pane";
+                    if (first) {
+                        first = false;
+                        cc = "tab-pane active";
+                    }
+                    //string decoded = System.Web.HttpUtility.UrlDecode(kw);
+                    string nospace = ids.ElementAt(inde);
+                    inde++;
+                    <div id="@nospace" class="@cc" style="background-color: white;">
+                        @*<script type="text/javascript" src="//www.google.com/trends/embed.js?hl=@Model.hl&q=@kw&geo=@Model.geo&date=@Model.date&tz=Etc/GMT-2&content=1&cid=TOP_QUERIES_0_0&export=5&w=400&h=550"></script>*@
+                        @*<script type="text/javascript" src="//www.google.com/trends/embed.js?hl=@Model.hl&date=@Model.date&cmpt=q&geo=@Model.geo&q=@kw&tz=Etc/GMT-2&content=1&cid=RISING_QUERIES_0_0&export=5&w=400&h=550"></script>*@
+                        <iframe style="position:relative;top:5px;left:5px;border:none;width:100%;overflow-y: hidden; background-color:white;" height="1px" id="iframe_@kw" scrolling="no" seamless="seamless" class="myTrendsIFrame"></iframe>
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var frames = document.getElementsByClassName("myTrendsIFrame");
+            if (frames) {
+                var i;
+                for (i = 0; i < frames.length; i++) {
+                    var str = frames[i].id.slice(7);
+                    showTrends(str);
+                }
+            }
+        });
+    </script>
+}

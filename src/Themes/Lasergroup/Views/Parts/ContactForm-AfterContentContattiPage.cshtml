@@ -1,0 +1,220 @@
+﻿@using Orchard.Utility.Extensions
+@using Laser.Orchard.ContactForm.ViewModels
+@using System.Collections.Specialized
+@{
+    Script.Require("jQuery").AtHead();
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Include("ContactForm.css").AtHead();
+    const string displayNone = "style=\"display:none\"";
+    var contactForm = (ContactFormViewModel)Model.ContactForm;
+    var displaySubject = contactForm.ShowSubjectField ? string.Empty : displayNone;
+    var displayName = contactForm.ShowNameField ? string.Empty : displayNone;
+    var displayAttachmentButton = contactForm.EnableFileUpload ? string.Empty : displayNone;
+    var uniqueId = Model.ContentPart.Id;
+
+    var formData = TempData["form"];
+    var name = formData != null ? ((NameValueCollection)formData)["Name"] : "";
+    var email = formData != null ? ((NameValueCollection)formData)["Email"] : "";
+    var confirmEmail = formData != null ? ((NameValueCollection)formData)["ConfirmEmail"] : "";
+    var subject = formData != null ? ((NameValueCollection)formData)["Subject"] : "";
+    var message = formData != null ? ((NameValueCollection)formData)["Message"] : "";
+}
+
+<div class="col-sm-12 col-md-6">
+    <div id="contact-form">
+
+        @{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" })) {
+            
+            <div id="FormError" class="wpcf7-response-output wpcf7-display-none wpcf7-validation-errors" style="display:none">
+                @T("One or more fields contain errors. Please check and try again.")
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label" for="Name">@T("Name")<span class="required">*</span></label><br />
+                <span class="wpcf7-form-control-wrap">
+                    <input id="Name-@uniqueId" type="text" name="Name" value="@name" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Your Name")" />
+                    <span role="alert" id="NameError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                </span>
+            </div>
+    
+            <div class="form-group">
+                <label class="control-label" for="Email">@T("Email")<span class="required">*</span></label><br />
+                <span class="wpcf7-form-control-wrap">
+                    <input id="Email-@uniqueId" type="email" name="Email" value="@email" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Email Address")" />
+                    <span role="alert" id="EmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                    <span role="alert" id="EmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                    <span role="alert" id="EmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                </span>
+            </div>
+    
+            <div class="form-group">
+                <label class="control-label" for="ConfirmEmail">@T("Confirm Email")<span class="required">*</span></label><br />
+                <span class="wpcf7-form-control-wrap">
+                    <input id="ConfirmEmail-@uniqueId" type="email" name="ConfirmEmail" value="@confirmEmail" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Confirm Email Address")" />
+                    <span role="alert" id="ConfirmEmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                    <span role="alert" id="ConfirmEmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                    <span role="alert" id="ConfirmEmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="Message">@T("Message")<span class="required">*</span></label><br />
+                <span class="wpcf7-form-control-wrap messaggio">
+                    <textarea id="Message-@uniqueId" name="Message" cols="40" rows="4" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Comments or Inquiry")"></textarea>
+                    <span role="alert" id="MessageError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                </span>
+            </div>
+
+            <div id="AttachmentSection-@uniqueId" type="hidden">
+                <img id="AttachmentPreview-@uniqueId" ></img>
+                <label id="AttachmentNameLabel-@uniqueId"></label>
+                <br />
+            </div>
+            <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+            <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
+            <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
+            @Html.AntiForgeryTokenOrchard()
+            <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
+                
+            <p>
+                <input type="submit" id="btnInvia" value="@T("SEND")" class="btn btn-invia pull-right" />
+            </p>
+          }
+        }
+
+    </div>
+</div>
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+
+        function fnTrim(x) {
+            return x.replace(/^\s+|\s+$/gm, '');
+        }
+
+        $(document).ready(function () {
+            $('#attachment_button-@uniqueId').click(function () {
+                $.colorbox({ iframe: true, width: "40%", height: "26%", href: "@(Url.Action("Add", "FileUpload", new { Area = "Laser.Orchard.ContactForm" }) + "?ContactFormID=" + uniqueId)", title: "@T("Upload file")" });
+            });
+
+            $('#MediaId-@uniqueId').change(function () {
+                if ($('#MediaId-@uniqueId').val() != '') {
+                    $('#attachment_button-@uniqueId').attr('disabled', 'disabled');
+                }
+            });
+
+            $("#btnInvia").click(function () {
+                var errors = 0;
+
+                var name = fnTrim($('#Name-@uniqueId').val());
+                var email = fnTrim($('#Email-@uniqueId').val());
+                var confirmEmail = fnTrim($('#ConfirmEmail-@uniqueId').val());
+                var message = fnTrim($('#Message-@uniqueId').val());
+
+                // Name
+                if (name == '') {
+                    errors += 1;
+                    $("#NameError-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#Name-@uniqueId").focus();
+                    }
+                } else {
+                    $("#NameError-@uniqueId").hide();
+                }
+
+                // Email
+                if (email == '') {
+                    errors += 1;
+                    $("#EmailError-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#Email-@uniqueId").focus();
+                    }
+                } else {
+                    $("#EmailError-@uniqueId").hide();
+                }
+
+                if (IsEmail(email) == false) {
+                    errors += 1;
+                    $("#EmailErrorFormat-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#Email-@uniqueId").focus();
+                    }
+                } else {
+                    $("#EmailErrorFormat-@uniqueId").hide();
+                }
+
+                // Confirm Email
+                if (confirmEmail == '') {
+                    errors += 1;
+                    $("#ConfirmEmailError-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#ConfirmEmail-@uniqueId").focus();
+                    }
+                } else {
+                    $("#ConfirmEmailError-@uniqueId").hide();
+                }
+
+                if (IsEmail(confirmEmail) == false) {
+                    errors += 1;
+                    $("#ConfirmEmailErrorFormat-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#ConfirmEmail-@uniqueId").focus();
+                    }
+                } else {
+                    $("#ConfirmEmailErrorFormat-@uniqueId").hide();
+                }
+
+                if (email != confirmEmail) {
+                    errors += 1;
+                    $("#EmailErrorMatch-@uniqueId").show();
+                    $("#ConfirmEmailErrorMatch-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#Email-@uniqueId").focus();
+                    }
+                } else {
+                    $("#EmailErrorMatch-@uniqueId").hide();
+                    $("#ConfirmEmailErrorMatch-@uniqueId").hide();
+                }
+
+                // Message
+                if (message == '') {
+                    errors += 1;
+                    $("#MessageError-@uniqueId").show();
+
+                    if (errors == 1) {
+                        $("#Message-@uniqueId").focus();
+                    }
+                } else {
+                    $("#MessageError-@uniqueId").hide();
+                }
+
+                if (errors > 0) {
+                    //Show label generica di errore
+                    $("#FormError").css({ display: "block" });
+                    event.preventDefault();
+                } else {
+                    return;
+                }
+            });
+
+            function IsEmail(email) {
+                var regex = /^[a-z0-9\.\_%+-]+@@[a-z0-9\.\-]+\.[a-z]{2,4}$/i;
+                if (!regex.test(email)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+        });
+
+    </script>
+}

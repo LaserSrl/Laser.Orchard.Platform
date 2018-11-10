@@ -1,0 +1,81 @@
+#ricerca-wrapper .form-ricerca-autocomplete-contenitore
+{
+    background: white;
+    border: 1px solid #cfd6d8;
+    padding: 2px 1px;
+    margin: 2px 3px 0 0;
+}
+#ricerca-wrapper .form-ricerca-autocomplete-contenitore, #ricerca-wrapper .form-ricerca-autocomplete-input, #ricerca-wrapper ul.ui-autocomplete, #ricerca-wrapper ul.ui-autocomplete li, #ricerca-wrapper ul.ui-autocomplete li a
+{
+    float: left;
+}
+#ricerca-wrapper .form-ricerca-autocomplete-contenitore, #ricerca-wrapper .form-ricerca-autocomplete-input, #ricerca-wrapper ul.ui-autocomplete li, #ricerca-wrapper ul.ui-autocomplete li a
+{
+    clear: both;
+    border: none;
+}
+#ricerca-wrapper .form-ricerca-autocomplete-input
+{
+    border: 0 none;
+    width: 240px;
+    padding: 2px 0 0 3px;
+    height: 16px;
+}
+ul.ui-autocomplete li a
+{
+    color: #333;
+}
+ul.ui-autocomplete li
+{
+    font-size: 0.75em;
+}
+#ricerca-wrapper #form-ricerca-autocomplete-opener
+{
+    background: white url(images/autocomplete/fake_sel.gif) no-repeat;
+    height: 18px;
+    width: 18px;
+    float: right;
+    text-indent: -2000em;
+}
+#ricerca-wrapper #form-ricerca-autocomplete-opener, #ricerca-wrapper ul.ui-autocomplete
+{
+    cursor: default;
+}
+#ricerca-wrapper #form-ricerca-autocomplete-opener:hover
+{
+    background: white url(images/autocomplete/fake_sel_red.gif) no-repeat;
+}
+
+ul.ui-autocomplete
+{
+    background: #f1f5f8;
+    border: 1px solid #b2b2b2;
+    text-align: left;
+    position: absolute;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+ul.ui-autocomplete li a
+{
+    cursor: pointer;
+    padding: 1px 7px 1px 7px;
+    display: block;
+}
+.ui-widget-header .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-state-focus, .ui-widget-header .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-hover
+{
+    background: #39f;
+    color: #fff;
+}
+.item-lvl0
+{
+    color: #000;
+    font-size: 1em;
+    font-weight: normal;
+}
+.item-lvl1
+{
+    color: #000;
+    font-size: 1.25em;
+    font-weight: bold;
+}

@@ -1,0 +1,20 @@
+﻿@using Orchard.ContentManagement
+@using Laser.Orchard.StartupConfig.Models
+@{
+    var contentItems = (IEnumerable<ParentContent>)Model.ContentPickerConnector.ParentContentItems;
+}
+<p class="content-picker-connector">
+    <span class="name">@T("Parents"):</span>
+    @if (contentItems != null && contentItems.Any()) {
+        foreach (var contentItem in contentItems) {
+            if (contentItem.ParentContentItem != null) {
+        <span class="value">@Html.ItemDisplayLink(contentItem.ParentContentItem)</span>
+                if (contentItem != contentItems.Last()) {
+        <span>,</span>
+                }
+            }
+        }
+    } else {
+        <span class="value">@T("No content items.")</span>
+    }
+</p>

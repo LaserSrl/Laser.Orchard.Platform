@@ -1,0 +1,45 @@
+﻿@using Orchard.MediaLibrary.Fields
+@{
+    var field = (MediaLibraryPickerField)Model.ContentField;
+    string displayName = field.DisplayName;
+    string name = field.Name;
+    var contents = field.MediaParts;
+    var allUrls = contents.Select(mp => mp.MediaUrl).ToList();
+}
+@*<section class="media-library-picker-field media-library-picker-field-@name.HtmlClassify()">
+    <h3>@displayName</h3>
+    @foreach (var content in contents) {
+        <div>
+            @Display(BuildDisplay(content, "Summary"))
+        </div>
+    }
+</section>*@
+
+<div class="col-md-4 single-left">
+    <div class="flexslider">
+        <ul class="slides">
+            @foreach (var url in allUrls) {
+                <li data-thumb="@Display.ResizeMediaUrl(Width: 255, Height: 340, Mode: "pad", Alignment: "middlecenter", Path: url)">
+                    <div class="thumb-image">
+                        <img src="@url" data-imagezoom="true" class="img-responsive" />
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    @{ 
+        Script.Include("jquery.flexslider.js", "jquery.flexslider.min.js");
+        Style.Include("flexslider.css", "flexslider.min.css");
+    }
+    <script>
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: "thumbnails"
+            });
+        });
+    </script>
+    @{ 
+        Script.Include("imagezoom.js", "imagezoom.min.js");
+    }
+</div>

@@ -1,0 +1,88 @@
+﻿@using Orchard.Environment.Configuration
+@using Orchard.UI.Resources
+@using Orchard.ContentManagement
+@using Orchard.Settings
+@using Lasergroup.Models
+<!DOCTYPE html>
+@{
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantName = settings.Name;
+    Script.Require("JQuery").AtHead();
+
+    Script.Include("webfont.js", "head.deferred.min.js").SetAttribute("defer", "").AtHead();
+    Script.Include("jquery-migrate.js", "head.deferred.min.js").SetAttribute("defer", "").AtHead();
+    Script.Include("slick.js", "head.deferred.min.js")
+        .SetAttribute("defer", "").AtHead();
+
+    Style.Include("styles.css", "style.premedia.min.css").AtHead();
+    Style.Include("slick.css", "style.premedia.min.css").AtHead();
+
+    Style.Include("style.css?v=3", "style.premedia.min.css").AtHead();
+
+    Style.Include("style.media.min768.css?v=3", "style.media.min768.min.css?v=3")
+        .SetAttribute("media", "(min-width:768px)")
+        .AtHead();
+    Style.Include("style.media.min992.css", "style.media.min992.min.css")
+        .SetAttribute("media", "(min-width:992px)")
+        .AtHead();
+    Style.Include("style.media.min1200.css?v=3", "style.media.min1200.min.css?v=3")
+        .SetAttribute("media", "(min-width:1200px)")
+        .AtHead();
+
+    Style.Include("style.media.max1649.css?v=3", "style.media.max1649.min.css?v=3")
+        .SetAttribute("media", "(max-width:1649px)")
+        .AtHead();
+    Style.Include("style.media.max767.css?v=3", "style.media.max767.min.css?v=3")
+        .SetAttribute("media", "(max-width:767px)")
+        .AtHead();
+
+
+    Style.Include("css.css", "style.postmedia.min.css").AtHead();
+    Style.Include("Custom.css?v=2", "style.postmedia.min.css").AtHead();
+
+    Script.Include("jquery_002.js", "foot.deferred.min.js").SetAttribute("defer", "").AtFoot();
+    Script.Include("main.js?v=2", "foot.deferred.min.js").SetAttribute("defer", "").AtFoot();
+}
+<html lang="it-IT">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Layout.Title</title>
+    <script type="text/javascript">
+        /* You can add more configuration options to webfontloader by previously defining the WebFontConfig with your options */
+        if (typeof WebFontConfig === "undefined") {
+            WebFontConfig = new Object();
+        }
+        WebFontConfig['google'] = { families: ['Open+Sans:400', 'Roboto+Condensed:300,400'] };
+
+        (function () {
+            var wf = document.createElement('script');
+            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.3/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
+    @Display(Model.Head)
+    @{
+        // Handle additional style sheets. We add them here after the @Display(Model.Head) so we can override anything else
+        var site = WorkContext.Resolve<ISiteService>();
+        var additionalCssPart = site != null
+            ? site.GetSiteSettings().As<AdditionalCssSettingsPart>()
+            : (AdditionalCssSettingsPart)null;
+        if (additionalCssPart != null) {
+            foreach (var cssPath in additionalCssPart.StyleSheetsPaths) {
+                var path = cssPath.Trim(); // remove whitespace just in case
+                // to simplify our lives, for now assume we are referencing style sheets in the theme's Styles folder
+                <link href="@Url.Content(Html.ThemePath(WorkContext.CurrentTheme, "/Styles/"+path))" rel="stylesheet" type="text/css" />
+            }
+        }
+    }
+</head>
+<body class="@Layout.BaseClass">
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

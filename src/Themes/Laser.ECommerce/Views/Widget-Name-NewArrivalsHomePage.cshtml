@@ -1,0 +1,29 @@
+﻿@using Orchard.DisplayManagement.Shapes
+@using System.Collections.Generic
+@{ 
+
+    var tagDiv = Tag(Model, "div");
+    tagDiv.AddCssClass("col-md-3 agileinfo_new_products_grid");
+    var tagDivInner = Tag(Model, "div");
+    tagDivInner.AddCssClass("agile_ecommerce_tab_left agileinfo_new_products_grid1");
+
+
+    var projectionShape = ((IEnumerable<dynamic>)Model.Content.Items)
+        .Where((Func<dynamic, bool>)(it => it.Metadata.Prefix == "ProjectionPart"))
+        .FirstOrDefault();
+}
+<div class="new-products">
+    <div class="container">
+        <h3>@T("New Arrivals")</h3>
+        <div class="agileinfo_new_products_grids">
+            @foreach (var itemShape in projectionShape.Items) {
+                @tagDiv.StartElement;
+                @tagDivInner.StartElement;
+                @Display(itemShape)
+                @tagDivInner.EndElement;
+                @tagDiv.EndElement            ;
+            }
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    Style.Require("Contrib_Stars");
+    Script.Require("jQuery").AtHead();
+    Script.Require("Contrib_Stars");
+
+    const string viewName = "ConfirmRatingDelete";
+    if (!HttpContext.Current.Items.Contains(viewName)) {
+        HttpContext.Current.Items[viewName] = true;
+        @Display(New.ConfirmRatingDelete())
+        //WorkContext.Layout.AfterContent.Add(New.Partial(TemplateName: viewName));
+    }
+
+    var roundedResult = Math.Round(Model.ContentPart.Rating.CurrentVotingResult.Value * 2, MidpointRounding.AwayFromZero) / 2;
+    var currentResultClass = string.Format("stars-value-{0}", Math.Floor(roundedResult));
+
+    double userRating = Model.ContentPart.Rating.UserRating;
+    var canRateClass = Request.IsAuthenticated ? "stars-can-rate" : "";
+    string toolTip = Request.IsAuthenticated ? "" : "Log-in to rate this item";
+    var userRatingClass = Request.IsAuthenticated && Model.ContentPart.Rating.UserRating > 0 ? string.Format("stars-user-rating-{0}", userRating) : "";
+}
+<div class="stars-rating @canRateClass" title="@toolTip">
+    <div class="stars-current-result @currentResultClass @userRatingClass" style="display:inline;">
+        @if (roundedResult == .5){
+        <span class="star-0-5 a-half-star">@T(".").ToString()</span>
+        <span class="star-1 a-star a-half-star">@T("-").ToString()</span>
+        }
+        else{
+        <span class="star-1 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 0 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 1.5){
+        <span class="star-1-5 a-half-star">@T(".").ToString()</span>
+        <span class="star-2 a-star a-half-star">@T("-").ToString()</span>
+        }
+        else{
+        <span class="star-2 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 1 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 2.5){
+        <span class="star-2-5 a-half-star">@T(".").ToString()</span>
+        <span class="star-3 a-star a-half-star">@T("-").ToString()</span>
+        }
+        else{
+        <span class="star-3 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 2 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 3.5){
+        <span class="star-3-5 a-half-star">@T(".").ToString()</span>
+        <span class="star-4 a-star a-half-star">@T("-").ToString()</span>
+        }
+        else{
+        <span class="star-4 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 3 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        @if (roundedResult == 4.5){
+        <span class="star-4-5 a-half-star">@T(".").ToString()</span>
+        <span class="star-5 a-star a-half-star">@T("-").ToString()</span>
+        }
+        else{
+        <span class="star-5 a-star">@(Model.ContentPart.Rating.CurrentVotingResult.Value > 4 ? T("*").ToString() : T("-").ToString())</span>
+        }
+        <span id="stars-clear-btn" class="stars-clear" @*style="display:none;"*@>x</span>
+    </div>
+    @if (Request.IsAuthenticated) {
+        using (Html.BeginFormAntiForgeryPost(Url.Action("Apply", "Rate", new { area = "Contrib.Reviews" }), FormMethod.Post, new { @class = "rate" })) {
+            <label for="starsRateActions-@Model.ContentPart.ContentItem.Id">@T("Rate:")</label>
+            <select id="starsRateActions-@Model.ContentPart.ContentItem.Id" name="rating">
+                @Html.SelectOption(userRating, 0, T("give your opinion").ToString())
+                @Html.SelectOption(userRating, 1, T("*").ToString())
+                @Html.SelectOption(userRating, 2, T("**").ToString())
+                @Html.SelectOption(userRating, 3, T("***").ToString())
+                @Html.SelectOption(userRating, 4, T("****").ToString())
+                @Html.SelectOption(userRating, 5, T("*****").ToString())
+                @Html.SelectOption(userRating, -1, T("clear your opinion").ToString())
+            </select>
+            @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
+            @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+            <button type="submit" name="submit.BulkEdit" value="yes">@T("Save")</button>
+        }
+    }
+    <ul class="stars-details">
+        <li>@T("Ratings"): @Model.ContentPart.Rating.CurrentVotingResult.Count</li>
+        <li>@T("Average"): @Math.Round(Model.ContentPart.Rating.CurrentVotingResult.Value, 2)</li>
+    </ul>
+</div>

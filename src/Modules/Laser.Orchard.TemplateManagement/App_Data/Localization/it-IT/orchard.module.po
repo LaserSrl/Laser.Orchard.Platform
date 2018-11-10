@@ -1,0 +1,278 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/DefinitionTemplates/TemplatePartSettings.cshtml"
+msgid "Default Parser"
+msgstr "Analizzatore sintattico predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/DefinitionTemplates/TemplatePartSettings.cshtml"
+msgid "The template parser engine to use by default."
+msgstr "Il motore di parsing del template da usare di default."
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/CustomTemplatePicker_Edit.cshtml"
+msgid "Pick a template"
+msgstr "Seleziona un modello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/CustomTemplatePicker_Edit.cshtml"
+msgid "Template picker"
+msgstr "Scelta modello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/CustomTemplatePicker_Edit.cshtml"
+msgid "The template to use for."
+msgstr "Il modello da utilizzare."
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/SiteSettings.cshtml"
+msgid "Default Parser"
+msgstr "Analizzatore sintattico predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/SiteSettings.cshtml"
+msgid "Template Parser"
+msgstr "Analizzatore sintattico del modello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/SiteSettings.cshtml"
+msgid "The template parser engine to use by default."
+msgstr "Il motore di parsing del template da usare di default."
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Check this option to use it as the layout (a.k.a. Master Page) for other templates."
+msgstr "Selezionare l'opzione se si vuole usare il presente modello come layout (come modello Master) per altri modelli."
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Layout"
+msgstr "Layout"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Optionally select another template to use as the layout / masterpage template"
+msgstr "Opzionalmente puoi selezionare un altro modello da usare come layout / modello master"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Preview"
+msgstr "Anteprima"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Subject"
+msgstr "Oggetto"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Template. (Expected parser: {0})"
+msgstr "Modello. (Analizzatore sintattico previsto: {0})"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "The preview of the template"
+msgstr "L'anteprima del template"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "The subject to use when sending a message"
+msgstr "L'oggetto da usare quando si invia un messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "The template"
+msgstr "Il template"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "The title of the message"
+msgstr "Il titolo del messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "This is a Layout"
+msgstr "Questo è un Livello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/TemplateSettings_Edit.cshtml"
+msgid "Default Parser"
+msgstr "Analizzatore sintattico predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/TemplateSettings_Edit.cshtml"
+msgid "Template Parser"
+msgstr "Analizzatore sintattico del modello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/TemplateSettings_Edit.cshtml"
+msgid "The template parser engine to use by default."
+msgstr "Il motore di parsing del template da usare di default."
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/TemplateLayoutPicker.cshtml"
+msgid "Edit Layout"
+msgstr "Modifica Layout"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/ParserPicker.cshtml"
+msgid "(Default)"
+msgstr "(Predefinito)"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/TemplateList.cshtml"
+msgid "Select a template"
+msgstr "Seleziona un modello"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
+msgid "Error on template, mail not sent"
+msgstr "Errore nel template, mail non inviata"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
+msgid "Messaging"
+msgstr "Messaggistica"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
+msgid "Not Sent"
+msgstr "Non Inviata"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
+msgid "Sends an e-mail using a template to a specific user."
+msgstr "Invia una e-mail ad uno specifico utente usando un modello."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
+msgid "Sent"
+msgstr "Inviata"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "A default template to format your email message."
+msgstr "Un template di default per il formato del messaggio di posta elettronica."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "A template to format your email message."
+msgstr "Un modello per formattare il tuo messaggio di email."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Attachment Path List"
+msgstr "Lista dei path degli allegati"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Author"
+msgstr "Autore"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "BCC"
+msgstr "BCC"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "CC"
+msgstr "CC"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Custom template ID"
+msgstr "ID del modello personalizzato"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Default template"
+msgstr "Modello di default"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "From"
+msgstr "Da"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Notify at Read Email"
+msgstr "Notifica per l'avvenuta lettura."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Notify Read Email."
+msgstr "Notifica per l'avvenuta lettura."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Other:"
+msgstr "Altro:"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Owner"
+msgstr "Proprietario"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "ReplyTo"
+msgstr "Rispondi a"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Send to"
+msgstr "Invia a"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Site Admin"
+msgstr "Amministratore del sito"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify a comma separated list of file phisical path (e.g. c:\\Temp\\dummy_file.txt)."
+msgstr "Specificare una lista separata da virgola di path fisici (e.g. c:\\Temp\\dummy_file.txt)."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify a comma-separated list of e-mail BCC recipients."
+msgstr "Specificare una lista separata da virgola di destinatari BCC."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify a comma-separated list of e-mail CC recipients."
+msgstr "Inserire una lista di indirizzi email da mettere in copia (CC), separati da virgola."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify a comma-separated list of e-mail recipients."
+msgstr "Specificare una lista di email di destinatari separata da virgola"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify a template ID to format your email message. Leave blank to use the default template."
+msgstr "Specificare l'ID di un modello per il formato del messaggio di posta elettronica. Lasciare vuoto per usare il modello di default."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify email sender."
+msgstr "Inserire il mittente della mail."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Specify reply to."
+msgstr "Specificare "Rispondi a"."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Template"
+msgstr "Modello"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "The current user when this action executes."
+msgstr "L'utente loggato quando viene eseguita questa azione."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "The owner of the content item in context, such as a blog post's author."
+msgstr "Il proprietario del contenuto corrente, come ad esempio l'autore di un post sul blog.,"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "The site administrator."
+msgstr "L'amministratore del sito."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "You must provide an e-mail address"
+msgstr "E' necessario fornire un indirizzo e-mail"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "You must select at least one recipient"
+msgstr "E' necessario selezionare almeno un destinatario"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.WebTrackingEvent"
+msgid "A user has just loaded a tracking image."
+msgstr "Un utente ha appena caricato un'immagine utilizzata per il tracciamento (tracking)."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.WebTrackingEvent"
+msgid "Content Event"
+msgstr "Evento del Contenuto"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.WebTrackingEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.TemplateManagement.Handlers.SiteSettingsPartHandler"
+msgid "Template"
+msgstr "Modello"
+
+msgctxt "Laser.Orchard.TemplateManagement.Services.TemplateService"
+msgid "Error on template, mail not sent"
+msgstr "Errore ne template, email non inviata"
+
+msgctxt "Laser.Orchard.TemplateManagement.Services.TemplateService"
+msgid "Sent "
+msgstr "Inviato"
+

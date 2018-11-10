@@ -1,0 +1,178 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels
+@using System.Linq
+@model List<QuestionnaireStatsViewModel>
+@{
+
+    Style.Require("DateTimeEditor");
+
+    Style.Require("jQueryCalendars_Picker");
+    //Style.Require("jQueryTimeEntry");
+    //Style.Require("jQueryDateTimeEditor");
+
+    Script.Require("jQueryCalendars_Picker").AtFoot();
+    //Script.Require("jQueryTimeEntry").AtFoot();
+
+
+    const int answersToShow = 3;
+    Layout.Title = T("Questionnaire Answers");
+
+    Script.Require("jqPlotPieChart");
+    Script.Require("jqPlotEnhancedPieLegendRenderer");
+
+    Style.Require("jqPlot");
+    Style.Require("QuestionnaireAdmin");
+    var urlBack = Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] });
+
+    var width = 0;
+    var height = 0;
+    var maxAnswers = Model.OrderByDescending(o => o.Answers.Count).FirstOrDefault();
+
+    if (maxAnswers != null) {
+        if (maxAnswers.Answers.Count <= 4) {
+            width = 500;
+            height = 300;
+        } else {
+            width = 600;
+            height = 400;
+        }
+    }
+}
+
+<p class="breadcrumb">
+    <a href="@Url.Action("Index", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires" })">@T("Questionnaire Statistics")</a>
+    &#62; @Layout.Title
+</p>
+<h3><u>@Model.First().QuestionnaireTitle</u></h3>
+@using (Html.BeginForm("Detail", "QuestionnaireStats", FormMethod.Get)) {
+    <fieldset class="bulk-actions">
+        <label for="search">@T("Search:")</label>
+        @*        @Html.TextBoxFor(m => m.SearchExpression)*@
+        <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
+        <span class="date">
+            @Html.TextBox("from", Request.QueryString["from"], new { id = "dateFromResults", @class = "text" })
+        </span>
+        <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
+        <span class="date">
+            @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
+        </span>
+        @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
+        <button type="submit">@T("Filter")</button>
+        <button type="submit" name="export" value="true">@T("Export")</button>
+        <a href="@Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] })">@T("Clear")</a>
+        <span style="width:50px">&nbsp;</span>
+        <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics">@T("Show Exported Files")</a>
+    </fieldset>
+}
+
+@if (Model.Count == 1 && Model.First().Answers == null) {
+    <div style="margin-top: 15px;">@T("This questionnaire contains no answers.")</div>
+} else {
+    <div style="margin-top: 15px;">
+        @{
+            foreach (var question in Model) {
+                <div id="answer-@question.QuestionId" class="st-answer">
+                    <div id="answerlist-@question.QuestionId" class="answerlist">
+                        <h5>@question.Question</h5>
+                        @{
+                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+
+                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
+                            } else {
+                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                            }
+                        }
+
+                        @foreach (var answer in answersList) {
+                            <div>
+                                &bull; @answer.Answer
+                                <span style="font-weight: bold">( @answer.Count )</span>
+                            </div>
+                        }
+                    </div>
+
+                    @if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                        <div id="answerchart-@question.QuestionId" class="answerchart" style="width:@(width + "px"); height:@(height + "px");"></div>
+                    }
+                </div>
+
+                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                                <div style="margin-top: 5px; margin-left: 9px;">
+                                    <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
+                           new {
+                               area = "Laser.Orchard.Questionnaires",
+                               idQuestionario = Model.First().QuestionnairePart_Id,
+                               idDomanda = question.QuestionId,
+                               from = Request.QueryString["from"],
+                               to = Request.QueryString["to"]
+                           })">
+                                        @T("Show all answers")
+                                    </a>
+                                </div>
+                            }
+                            <div class="line-separator"></div>
+                            <br />
+                            }
+        }
+    </div>
+                            }
+
+@{
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                @{ <Text>
+
+                $("#dateFromResults,#dateToResults").calendarsPicker({
+                    showAnim: "",
+                    dateFormat: "dd/mm/YYYY",
+                    renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
+                        picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
+                        month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:dd MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
+                    })
+                });
+                </Text>
+                }
+                @foreach (var question in Model) {
+                    if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                        <Text>
+                var data = [];
+                var tooltips = [];
+                @if (question.Answers != null) {
+                    foreach (var answer in question.Answers) {
+                        var legendLabel = answer.Answer;
+                        if(legendLabel.Length > 20) {
+                            legendLabel = legendLabel.Substring(0, 9) + "..." + legendLabel.Substring(legendLabel.Length - 8);
+                        }
+                                <Text>data.push(['@HttpUtility.JavaScriptStringEncode(legendLabel)', @answer.Count]);</Text>
+                                <Text>tooltips.push('@HttpUtility.JavaScriptStringEncode(answer.Answer)');</Text>
+                            }
+                        }
+                $.jqplot('answerchart-@question.QuestionId', [data], {
+                    width: @width,
+                    height: @height,
+                    seriesDefaults: {
+                        renderer: jQuery.jqplot.PieRenderer,
+                        rendererOptions: {
+                            showDataLabels: true,
+                            //dataLabelFormatString: '%.2f'
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        location: 'e',
+                        renderer: $.jqplot.EnhancedPieLegendRenderer,
+                        rendererOptions: {
+                            numberColumns: 1,
+                            toolTips: tooltips
+                        }
+                    }
+                });
+                </Text>
+
+                    }
+                }
+            });
+        </script>
+    }
+}

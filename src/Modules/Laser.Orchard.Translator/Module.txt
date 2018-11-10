@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.Translator
+AntiForgery: enabled
+Author: Laser srl
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10.1
+Description: Translation module
+Features:
+    Laser.Orchard.Translator:
+        Description: Shows current and missing translations for Laser modules and allows to add or edit them
+		Dependencies: Laser.Orchard.jQueryPlugins, Laser.Orchard.StartupConfig
+		Category:Content

@@ -1,0 +1,314 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Accept"
+msgstr "Accetto"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Don't Accept"
+msgstr "Non accetto"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "I have read the regulation."
+msgstr "Ho letto il regolamento."
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Policies"
+msgstr "Informative"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "All Policies"
+msgstr "Tutte le informative"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "Include policies on registration"
+msgstr "Includi informative in fase di registrazione"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "Policy filters"
+msgstr "Filtri informative"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "Registration behaviour"
+msgstr "Comportamento durante la fare di registrazione"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "User Registration - Policies Acceptation"
+msgstr "Registrazione utente - Accettazione delle informative"
+
+msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
+msgid "Users registration - policies acceptation"
+msgstr "Registrazione utenti - accettazione informative"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Generic error"
+msgstr "Errore generico"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Invalid user."
+msgstr "Utente non valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Message rejected: too many characters. (160 max)"
+msgstr "Messaggio rigettato per superamento lunghezza max di testo (160 caratteri)"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Missing recipient"
+msgstr "Destinatario mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Missing text"
+msgstr "Testo mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Priority missing or wrong"
+msgstr "Priorità mancante o errata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Send email failed."
+msgstr "Invio email fallito"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Send SMS failed."
+msgstr "Invio SMS fallito."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Sender identifier missing"
+msgstr "Identificativo di invio mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Sender missing or wrong"
+msgstr "Mittente mancante o errato"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
+msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Users cannot recover lost password due to site settings."
+msgstr "Le impostazioni del sito non permettono il recupero della password."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Users cannot register due to site settings."
+msgstr "Le impostazioni del sito non permettono la registrazione di nuovi utenti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Generic error"
+msgstr "Errore generico"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Invalid user."
+msgstr "Utente non valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Message rejected: too many characters. (160 max)"
+msgstr "Messaggio rigettato per superamento lunghezza max di testo (160 caratteri)"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Missing recipient"
+msgstr "Destinatario mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Missing text"
+msgstr "Testo mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Priority missing or wrong"
+msgstr "Priorità mancante o errata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Send email failed."
+msgstr "Invio email fallito"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Send SMS failed."
+msgstr "Invio SMS fallito."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Sender identifier missing"
+msgstr "Identificativo di invio mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Sender missing or wrong"
+msgstr "Mittente mancante o errato"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Users cannot recover lost password due to site settings."
+msgstr "Le impostazioni del sito non permettono il recupero della password."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
+msgid "Users cannot register due to site settings."
+msgstr "Le impostazioni del sito non permettono la registrazione di nuovi utenti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Generic error"
+msgstr "Errore generico"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Invalid user."
+msgstr "Utente non valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Message rejected: too many characters. (160 max)"
+msgstr "Messaggio rigettato per superamento lunghezza max di testo (160 caratteri)"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Missing recipient"
+msgstr "Destinatario mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Missing text"
+msgstr "Testo mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Priority missing or wrong"
+msgstr "Priorità mancante o errata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Send email failed."
+msgstr "Invio email fallito"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Send SMS failed."
+msgstr "Invio SMS fallito."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Sender identifier missing"
+msgstr "Identificativo di invio mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Sender missing or wrong"
+msgstr "Mittente mancante o errato"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
+msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Users cannot recover lost password due to site settings."
+msgstr "Le impostazioni del sito non permettono il recupero della password."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsController"
+msgid "Users cannot register due to site settings."
+msgstr "Le impostazioni del sito non permettono la registrazione di nuovi utenti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Drivers.UserRegistrationPolicyPartDriver"
+msgid "User has to accept policies!"
+msgstr "L'utente deve accettare le informative!"
+
+msgctxt "Laser.Orchard.UsersExtensions.Handlers.UserRegistrationSettingsPartHandler"
+msgid "UserExtras"
+msgstr "Extra dell'Utente"
+
+msgctxt "Laser.Orchard.UsersExtensions.Handlers.UserRegistrationSettingsPartHandler"
+msgid "Users extras"
+msgstr "Informazioni supplementari utenti"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Generic error"
+msgstr "Errore generico"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Invalid user."
+msgstr "Utente non valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Message rejected: too many characters. (160 max)"
+msgstr "Messaggio rigettato per superamento lunghezza max di testo (160 caratteri)"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Missing recipient"
+msgstr "Destinatario mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Missing text"
+msgstr "Testo mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Priority missing or wrong"
+msgstr "Priorità mancante o errata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Send email failed."
+msgstr "Invio email fallito"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Send SMS failed."
+msgstr "Invio SMS fallito."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Sender identifier missing"
+msgstr "Identificativo di invio mancante"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Sender missing or wrong"
+msgstr "Mittente mancante o errato"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Users cannot recover lost password due to site settings."
+msgstr "Le impostazioni del sito non permettono il recupero della password."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UserActionMethods"
+msgid "Users cannot register due to site settings."
+msgstr "Le impostazioni del sito non permettono la registrazione di nuovi utenti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "Lost password"
+msgstr "Password dimenticata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "The email address you provided is too long."
+msgstr "Indirizzo email troppo lungo."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "The new password and confirmation password do not match."
+msgstr "La nuova password e la conferma password non sono uguali."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "The username or e-mail or password provided is incorrect."
+msgstr "Il Nome Utente, la mail o la password forniti non sono corretti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "The username you provided is too long."
+msgstr "Il nome utente è troppo lungo."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "User cannot register due to Site settings"
+msgstr "Le impostazioni del sito non permettono agli utenti di registrarsi"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "User has to accept policies!"
+msgstr "L'utente deve accettare le informative!"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "User registration failed."
+msgstr "Registrazione utente fallita."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "User with that username and/or email already exists."
+msgstr "Esiste già un utente con il nome e/o l'email indicata."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "You must specify a password of {0} or more characters."
+msgstr "E' necessario specificare una password di {0} o più caratteri."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "You must specify a username."
+msgstr "E' necessario specificare un nome utente."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "You must specify a valid email address."
+msgstr "E' necessario specificare un indirizzo email valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "You must specify an email address."
+msgstr "Devi specificare un indirizzo email."
+

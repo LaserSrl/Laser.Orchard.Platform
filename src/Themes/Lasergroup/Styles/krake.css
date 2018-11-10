@@ -1,0 +1,423 @@
+﻿/*header*/
+.navbar-default{transition: all 0.5s ease;}
+.navbar-lang {display: none;}
+.navbar-lang.navbar-nav > li > a{border-bottom: 0; padding: 0 10px}
+.navbar-lang.navbar-nav li:first-child > a{border-bottom: 0; border-right:  3px solid}
+.navbar-default{background: none;}
+.navbar-lang.navbar-nav > li{padding: 15px 0}
+body.home .navbar-lang.navbar-lang-home-intro{position: fixed; top: 20px}
+#intro-canvas{display: none;}
+
+
+body #logo{background-image: url(./images/krake/logo_krake_blu.png); width: 358px;}
+body.red #logo{background-image: url(./images/krake/logo-red.png)}
+body.yellow #logo{background-image: url(./images/krake/logo-yellow.png)}
+body.blue #logo{background-image: url(./images/krake/logo-blue.png)}
+body.green #logo{background-image: url(./images/krake/logo-green.png)}
+body.home #logo{background-image: url(./images/krake/logo.png); width: 358px;}
+@media(max-width:1199px){
+    body #logo{background-image: url(./images/krake/logo-blue.png); width: 100px;}
+    body.red #logo{background-image: url(./images/krake/logo-red.png)}
+    body.yellow #logo{background-image: url(./images/krake/logo-yellow.png)}
+    body.blue #logo{background-image: url(./images/krake/logo-blue.png)}
+    body.green #logo{background-image: url(./images/krake/logo-green.png)}
+    body.home #logo{background-image: url(./images/krake/logo.png); width: 358px;}
+}
+
+
+.navbar-fixed .navbar-nav > li > a{color: #565654 !important;}
+body.navbar-fixed #logo {width: 100px;}
+body.navbar-fixed.home{ padding-top:0; }
+@media(max-width:767px){
+    body{padding-top: 74px;}
+    body.navbar-fixed.home,body.home{ padding-top:74px; }
+    #logo{background-size: contain;width: 70px !important;height: 56px;}
+    .home #logo{background-size: cover;}
+    .navbar-default{height: 74px; background: #fff}
+    .navbar-default .navbar-header{height: 59px;}
+}
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav > li.active > a, .navbar-nav > li.active > a:hover, .navbar-nav > li.active > a:focus, .navbar-nav > li.current-page-ancestor > a, .navbar-nav > li.open > a{color: #fff !important;}
+.navbar-fixed .navbar-nav > li > a:hover, .navbar-fixed .navbar-nav > li > a:focus, .navbar-fixed .navbar-nav > li.active > a, .navbar-fixed .navbar-nav > li.active > a:hover, .navbar-fixed .navbar-nav > li.active > a:focus, .navbar-fixed .navbar-nav > li.current-page-ancestor > a, .navbar-fixed .navbar-nav > li.open > a{color: #333 !important;}
+/*body{font-size: 22px}
+@media(max-width:767px){body{font-size: 16px}}*/
+.row-krake-icons{font-size: 0; text-align: center;}
+.row-krake-icons .col-xs-6{display: inline-block; float: none;}
+
+#intro.bg-image #intro-canvas{display: none;}
+#intro.bg-image{ background-position: center center; background-repeat: no-repeat;background-size: cover;}
+#intro.bg-image .container.container-desc{color: #fff;}
+#focus .focus-item{border-color: #333;}
+@media(max-width:767px){#intro.bg-image .container.container-desc{color: #565654;} #focus .focus-item{border-right: 0 !important;}} 
+#intro.bg-image .desc{color: #fff;}
+#intro.bg-image{background-image: url(./images/krake/home_principale.jpg); height: 662px;}
+
+#main-menu-home{background: none;}
+.navbar-nav > li > a{color: #fff !important; /*font-size: 24px; line-height: 26px*/}
+.navbar-default .navbar-nav > li > a {
+    color: #333 !important;
+}
+
+@media(max-width:767){.navbar-nav > li > a{color: #333}}
+/*home*/
+.showcase-perspective{height: auto; margin-top: 0;}
+.perspective-layer {
+    display: block;
+    position: relative;
+    top: 0;
+    width: auto;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: none;
+    transform-origin: none;
+    z-index: 0;
+    box-shadow: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
+}
+#krake .krake-description{/*font-size: 27px;*/max-width: 70%;}
+@media(max-width:991px){#krake .krake-description{max-width: 100%}}
+
+.perspective-layer.category-layer {display: none;}
+.showcase-item-logo{display: none;}
+
+#loghi {padding-top: 100px; position: relative;}
+#loghi .row{font-size: 0;}
+#loghi .row .col-xs-12{display: inline-block; float: none;}
+#loghi .row .col-xs-12 .img-responsive{filter: grayscale(100%);}
+#loghi .slick-dots li button::before{background: #000;border-radius: 50%; content: ' '; height: 10px; width: 10px;}
+.loghi-bottom{
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 5;
+    bottom: -50px;
+    height: 50px;
+    border-radius: 0 0 50% 50%;
+}
+.widget-recent-blog-posts{display: none;}
+
+/*page*/
+#intro .page-desc{max-width: 70%;}
+@media(max-width:991px){#intro .page-desc{max-width: 100%;}}
+#intro .container.container-desc{position: relative; top: auto; left: auto; margin: 0 auto;}
+#foto-sfondo{min-height: 400px}
+#foto-sfondo .container{display: none;}
+#business-servizi .business-claim{display: none;}
+
+.krake-claim-container{margin-top: 9%}
+@media(max-width:767px){.krake-claim-container{margin-top: 0;}}
+
+/*#krake .krake-claim{font-size: 50px; line-height: 45px}
+@media(max-width:991px){#krake .krake-claim{font-size: 35px; line-height: 0.8}}*/
+
+.promessa{background: #00a87e;position: relative;padding-top: 100px; color: #fff; /*font-size: 24px;*/font-size: 18px; line-height: 1.2; margin-bottom: 50px;}
+.promessa-text{padding-top: 20px}
+@media(max-width:1650px){.promessa-text{padding: 0}}
+.promessa .promessa-top {
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 5;
+    top: 0;
+    height: 50px;
+    border-radius: 0 0 50% 50%;
+}
+.promessa .promessa-bottom {
+    background: #00a87e;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: -1;
+    bottom: -50px;
+    height: 50px;
+    border-radius: 0 0 50% 50%;
+}
+.promessa .promessa-title{font-weight: 300; font-size:calc(25px + 1.8vw) ; margin: 0; line-height: 1;}
+@media(max-width:767px){.promessa{font-size: 18px;} .promessa .promessa-title{margin-bottom: 20px;}}
+
+.krake-claim p{margin: 0;}
+
+/*#focus .focus-item-link{font-size: 35px; font-weight: 500}*/
+
+.row-servizi .col-xs-12 .img-responsive{padding-bottom: 10px;}
+
+/* TEAM */
+#team .team-card-back{background-color: #eaeaea; text-align: center;}
+#team .team-card{font-weight: 400;margin: 0;font-size: 18px;}
+.email-card,.email-card:hover, .email-card:focus {color: #565654}
+#team .team-item{height: 530px;}
+@media(max-width:1599px){#team .team-item{ height:500px;}}
+@media(max-width:991px){#team .team-item{height: 480px}}
+@media(max-width:767px){#team .team-item{height: 420px}}
+.color-gray{color: #565654 !important}
+/* Single */
+#intro.showcase-intro .showcase-perspective{height: auto}
+
+/* Footer */
+#footer, #footer #footer-menu > li > a{color: #565654}
+#footer #footer-menu{/*font-size: 20px;*/ border-left: 2px solid #00cded; margin-bottom: 20px;}
+@media(max-width:991px){#footer #footer-menu{border: none; font-size: 18px; padding: 0} .menu-menu-footer-container{margin-bottom: 20px}}
+@media(max-width:767px){.menu-menu-footer-container{margin-bottom: 0}}
+#footer #footer-menu > .menu-item > a {font-weight: 700;}
+#footer #footer-menu > .menu-item > ul{font-weight: 400; /*font-size: 20px; */list-style: none; margin: 0; padding: 0}
+@media(max-width:991px){#footer #footer-menu > .menu-item > ul{font-size: 16px;}}
+#footer #footer-menu > .menu-item > ul a{color: #565654;}
+#footer .widget-quad-bottom {display: inline-block; vertical-align: middle;}
+#footer .widget-quad-bottom > .space-20{display: none}
+#footer .widget-quad-bottom header{display: none;}
+@media(min-width:992px){#footer .zone-quad-first .widget-quad-first .col-md-2{width: 24.667%}}
+
+#footer .zone-quad-second .widget-quad-second .col-md-1{display: none}
+#footer .zone.zone-quad-bottom{text-align: center; margin-top: 30px;}
+#footer .zone.zone-quad-bottom ul {list-style: none; margin: 0; padding: 0;}
+#footer .zone.zone-quad-bottom ul li{float: left; margin-right: 10px; color: #565654; font-size: 20px;}
+#footer .zone.zone-quad-bottom ul li a{color: #565654; -webkit-transition: color 0.5s ease; -moz-transition: color 0.5s ease;transition: color 0.5s ease;}
+/*#footer #credits{font-weight: 300; font-size: 23px;}*/
+#footer #credits a{color: #565654;}
+#footer .widget-quad-bottom #credits{font-weight: 700; /*font-size: 25px;*/ padding: 0 15px; margin-right: 15px; border-right: 1px solid; }
+#footer .widget-quad-bottom #credits p{margin: 0;}
+/*@media(max-width:767px){#footer #credits{font-size: 18px;} #footer .widget-quad-bottom #credits{font-size: 20px;}}*/
+#footer .widget-menu-widget h1, #footer .widget-menu-widget > .col-xs-12 > .row > .col-xs-6.text-right, #footer .widget-menu-widget.widget-quad-third > .col-sm-12.col-md-1.hidden-md{ display:none; }
+#footer .widget-menu-widget > .col-xs-12 > .row{ margin:0; }
+#footer .widget-menu-widget > .col-xs-12 > .row > .col-xs-6{ width:100% }
+#footer .widget-menu-widget > .col-xs-12.col-sm-6.col-md-3{ width:37.5%; }
+@media(max-width:1199px){#footer .widget-menu-widget > .col-xs-12.col-sm-6.col-md-3{width: 75%; float: right;}}
+@media(max-width:991px){#footer .widget-menu-widget > .col-xs-12.col-sm-6.col-md-3{width: 100%;}}
+@media(min-width:1200px){#footer .widget-menu-widget.widget-quad-third #footer-menu{ border:0; }}
+#footer .widget-menu-widget > .col-xs-12 > .row > .col-xs-6 #footer-menu .menu-item{ float:left; width:33.333333%; }
+@media(max-width:767px){#footer .widget-menu-widget > .col-xs-12 > .row > .col-xs-6 #footer-menu .menu-item{width: 100%; float: none; margin-bottom: 20px}}
+#footer .fa {font-size: 0;}
+#footer .fa::before {font-size: 16px;}
+#footer .footer-bottom{background: url('./images/krake/footer-shadow.png') no-repeat center center;}
+#footer .user-display{display: none;}
+
+/* colore di default è blue */
+body #header-top{background: #00bee9}
+body #intro .claim-rosso{color: #00bee9}
+body #focus .focus-top{background: #00bee9}
+body #focus {background: #00bee9}
+body #focus .focus-bottom{background: #00bee9}
+body #focus .focus-item {border-right: 1px solid #00a0cf;}
+body #krake {background: #2a485a;}
+body #krake .krake-bottom{background: #2a485a;}
+body .navbar-nav > li > a:hover,  
+.navbar-nav > li > a:focus,  
+.navbar-nav > li.active > a,  
+.navbar-nav > li.active > a:hover,  
+.navbar-nav > li.active > a:focus,  
+.navbar-nav > li.current-page-ancestor > a,  
+.navbar-nav > li.open > a{
+    border-color:  #00bee9;
+}
+body .navbar-lang.navbar-nav li:first-child > a{border-color:  #00bee9}
+body #footer .zone.zone-quad-bottom ul li a:hover{color: #00bee9;}
+body .navbar-nav > li.current-page-ancestor > a, .navbar-nav > li.open > a{ border-color:#00bee9; }
+body .navbar-nav .dropdown-menu > li > a{ border-bottom:1px solid #00bee9;  }
+body .navbar-default .navbar-toggle .icon-bar{ background:#00bee9; }
+body #krake .krake-claim-container{border-left: 5px solid #00bee9;}
+body .all-showcase-link{color: #00bee9;}
+body #footer-menu {border-left: 2px solid #00bee9;}
+body .promessa{background: #2a485a;}
+body .promessa .promessa-bottom { background: #2a485a;}
+body #krake-info .krake-card-back{background: #00bee9}
+body .title, body .page-desc strong{color: #00bee9 !important}
+body .krake-website-link{color: #00bee9 !important}
+body #team .team-ruolo{color: #00bee9;}
+body .navbar-nav.navbar-lang .active a{color: #00bee9 !important}
+body .showcase-claim-desc{color: #00bee9;}
+body .link-back-news:hover, body .link-back-news{color: #00bee9;}
+body #team .team-plus{color: #00bee9;}
+body .team-card-face.team-card-back > p {color: #00bee9;}
+body .navbar-nav > li > a:hover, 
+body .navbar-nav > li > a:focus, 
+body .navbar-nav > li.active > a, 
+body .navbar-nav > li.active > a:hover, 
+body .navbar-nav > li.active > a:focus, 
+body .navbar-nav > li.current-page-ancestor > a, 
+body .navbar-nav .dropdown-menu > li > a{
+    color: #00bee9 !important;
+}
+.btn-invia {
+    background: #00bee9 !important;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 18px;
+}
+/* colori */
+body.blue #header-top{background: #00bee9}
+body.blue #intro .claim-rosso{color: #00bee9}
+body.blue #focus .focus-top{background: #00bee9}
+body.blue #focus {background: #00bee9}
+body.blue #focus .focus-bottom{background: #00bee9}
+body.blue #focus .focus-item {border-right: 1px solid #00a0cf;}
+body.blue #krake {background: #2a485a;}
+body.blue #krake .krake-bottom{background: #2a485a;}
+body.blue .navbar-nav > li > a:hover, 
+.blue .navbar-nav > li > a:focus,
+.blue  .navbar-nav > li.active > a, 
+.blue .navbar-nav > li.active > a:hover, 
+.blue .navbar-nav > li.active > a:focus, 
+.blue .navbar-nav > li.current-page-ancestor > a, 
+.blue .navbar-nav > li.open > a{
+    border-color:  #00bee9;
+}
+/*body.blue .navbar-nav > li > a:hover,.blue .navbar-nav > li > a:focus, .blue .navbar-nav > li.active > a, .blue .navbar-nav > li.active > a:hover, .blue .navbar-nav > li.active > a:focus, .blue .navbar-nav > li.current-page-ancestor > a, .blue .navbar-nav > li.open > a{color: #00bee9 !important;}*/
+body.blue .navbar-lang.navbar-nav li:first-child > a{border-color:  #00bee9}
+body.blue #footer .zone.zone-quad-bottom ul li a:hover{color: #00bee9;}
+body.blue .navbar-nav > li.current-page-ancestor > a, .navbar-nav > li.open > a{ border-color:#00bee9; }
+body.blue .navbar-nav .dropdown-menu > li > a{ border-bottom:1px solid #00bee9;  }
+body.blue .navbar-default .navbar-toggle .icon-bar{ background:#00bee9; }
+body.blue #krake .krake-claim-container{border-left: 5px solid #00bee9;}
+body.blue .all-showcase-link{color: #00bee9;}
+body.blue #footer-menu {border-left: 2px solid #00bee9;}
+body.blue .promessa{background: #2a485a;}
+body.blue .promessa .promessa-bottom { background: #2a485a;}
+body.blue #krake-info .krake-card-back{background: #00bee9}
+body.blue .title, body.blue .page-desc strong{color: #00bee9 !important}
+body.blue .krake-website-link{color: #00bee9 !important}
+body.blue #team .team-ruolo{color: #00bee9;}
+body.blue .navbar-nav.navbar-lang .active a{color: #00bee9 !important}
+body.blue .showcase-claim-desc{color: #00bee9;}
+body.blue .link-back-news:hover, body.blue .link-back-news{color: #00bee9;}
+body.blue #team .team-plus{color: #00bee9;}
+body.blue .team-card-face.team-card-back > p {color: #00bee9;}
+body.blue .navbar-nav > li > a:hover, 
+body.blue .navbar-nav > li > a:focus, 
+body.blue .navbar-nav > li.active > a, 
+body.blue .navbar-nav > li.active > a:hover, 
+body.blue .navbar-nav > li.active > a:focus, 
+body.blue .navbar-nav > li.current-page-ancestor > a, 
+body.blue .navbar-nav .dropdown-menu > li > a{
+    color: #00bee9 !important;
+}
+body.blue .btn-invia {
+    background: #00bee9 !important;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+body.green #header-top, body.green .navbar-default .navbar-toggle .icon-bar{ background:#00a87e !important; }
+body.green .title, body.green .page-desc strong{ color:#00a87e !important; }
+body.green .navbar-nav > li > a:hover,body.green .navbar-nav > li > a:focus,
+body.green .navbar-nav > li.active > a,body.green .navbar-nav > li.active > a:hover,body.green .navbar-nav > li.active > a:focus,
+body.green .navbar-nav > li.current-page-ancestor > a,body.green .navbar-nav .dropdown-menu > li > a{ border-color:#00a87e !important; }
+body.green .all-showcase-link{color: #00a87e}
+body.green .promessa{background: #00a87e;}
+body.green .promessa .promessa-bottom { background: #00a87e;}
+body.green #krake-info .krake-card-back{ background: #00a87e;}
+body.green .title, body.green .page-desc strong{color: #00a87e !important}
+body.green .krake-website-link{color: #00a87e !important}
+body.green #focus .focus-top{background: #00a87e}
+body.green #focus {background: #00a87e}
+body.green #focus .focus-bottom{background: #00a87e}
+body.green #team .team-ruolo{color: #00a87e;}
+body.green #intro .claim-rosso{color: #00a87e}
+body.green #krake .krake-claim-container{border-left: 5px solid #00a87e;}
+body.green #footer .zone.zone-quad-bottom ul li a:hover{color: #00a87e;}
+body.green .navbar-nav.navbar-lang .active a{color: #00a87e !important}
+body.green .showcase-claim-desc{color: #00a87e;}
+body.green .link-back-news:hover, body.green .link-back-news{color: #00a87e;}
+body.green #team .team-plus{color: #00a87e;}
+body.green .team-card-face.team-card-back > p{color: #00a87e;}
+body.green .navbar-nav > li > a:hover,
+body.green .navbar-nav > li > a:focus,
+body.green .navbar-nav > li.active > a, 
+body.green .navbar-nav > li.active > a:hover, 
+body.green .navbar-nav > li.active > a:focus, 
+body.green .navbar-nav > li.current-page-ancestor > a, 
+body.green .navbar-nav .dropdown-menu > li > a{
+    border-color: #00a87e !important;
+    color: #333 !important;
+}
+body.green .btn-invia {
+    background: #00a87e !important;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+body.yellow #header-top, body.yellow .navbar-default .navbar-toggle .icon-bar{ background:#ffa10b !important; }
+body.yellow .title, body.yellow .page-desc strong{ color:#ffa10b !important; }
+body.yellow .navbar-nav > li > a:hover,body.yellow .navbar-nav > li > a:focus,
+body.yellow .navbar-nav > li.active > a,body.yellow .navbar-nav > li.active > a:hover,body.yellow .navbar-nav > li.active > a:focus,
+body.yellow .navbar-nav > li.current-page-ancestor > a,body.yellow .navbar-nav .dropdown-menu > li > a{ border-color:#ffa10b !important; }
+body.yellow .all-showcase-link{color: #ffa10b}
+body.yellow .promessa{background: #ffa10b;}
+body.yellow .promessa .promessa-bottom { background: #ffa10b;}
+body.yellow #krake-info .krake-card-back{ background: #ffa10b;}
+body.yellow .title, body.yellow .page-desc strong{color: #ffa10b !important}
+body.yellow .krake-website-link{color: #ffa10b !important}
+body.yellow #focus .focus-top{background: #ffa10b}
+body.yellow #focus {background: #ffa10b}
+body.yellow #focus .focus-bottom{background: #ffa10b}
+body.yellow #team .team-ruolo{color: #ffa10b;}
+body.yellow #intro .claim-rosso{color: #ffa10b}
+body.yellow #krake .krake-claim-container{border-left: 5px solid #ffa10b;}
+body.yellow #footer .zone.zone-quad-bottom ul li a:hover{color: #ffa10b;}
+body.yellow .navbar-nav.navbar-lang .active a{color: #ffa10b !important}
+body.yellow .showcase-claim-desc{color: #ffa10b;}
+body.yellow .link-back-news:hover, body.yellow .link-back-news{color: #ffa10b;}
+body.yellow #team .team-plus{color: #ffa10b;}
+body.yellow .team-card-face.team-card-back > p{color: #ffa10b;}
+body.yellow .navbar-nav > li > a:hover, 
+body.yellow .navbar-nav > li > a:focus, 
+body.yellow .navbar-nav > li.active > a, 
+body.yellow .navbar-nav > li.active > a:hover, 
+body.yellow .navbar-nav > li.active > a:focus, 
+body.yellow .navbar-nav > li.current-page-ancestor > a, 
+body.yellow .navbar-nav .dropdown-menu > li > a{
+    border-color: #ffa10b !important;
+    color: #333 !important;
+}
+body.yellow .btn-invia {
+    background: #ffa10b !important;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+body.red #header-top, body.red .navbar-default .navbar-toggle .icon-bar{ background:#ff2a00 !important; }
+body.red .title, body.red .page-desc strong{ color:#ff2a00 !important; }
+body.red .navbar-nav > li > a:hover,body.red .navbar-nav > li > a:focus,
+body.red .navbar-nav > li.active > a,body.red .navbar-nav > li.active > a:hover,body.red .navbar-nav > li.active > a:focus,
+body.red .navbar-nav > li.current-page-ancestor > a,body.red .navbar-nav .dropdown-menu > li > a{ border-color:#ff2a00 !important; }
+body.red .all-showcase-link{color: #ff2a00}
+body.red .promessa{background: #ff2a00;}
+body.red .promessa .promessa-bottom { background: #ff2a00;}
+body.red #krake-info .krake-card-back{ background: #ff2a00;}
+body.red .title, body.red .page-desc strong{color: #ff2a00 !important}
+body.red .krake-website-link{color: #ff2a00 !important}
+body.red #focus .focus-top{background: #ff2a00}
+body.red #focus {background: #ff2a00}
+body.red #focus .focus-bottom{background: #ff2a00}
+body.red #team .team-ruolo{color: #ff2a00;}
+body.red #intro .claim-rosso{color: #ff2a00}
+body.red #krake .krake-claim-container{border-left: 5px solid #ff2a00;}
+body.red #footer .zone.zone-quad-bottom ul li a:hover{color: #ff2a00;}
+body.red .navbar-nav.navbar-lang .active a{color: #ff2a00 !important}
+body.red .showcase-claim-desc{color: #ff2a00;}
+body.red .link-back-news:hover, body.red .link-back-news{color: #ff2a00;}
+body.red #team .team-plus{color: #ff2a00;}
+body.red .team-card-face.team-card-back > p{color: #ff2a00;}
+body.red .navbar-nav > li > a:hover, 
+body.red .navbar-nav > li > a:focus, 
+body.red .navbar-nav > li.active > a, 
+body.red .navbar-nav > li.active > a:hover, 
+body.red .navbar-nav > li.active > a:focus, 
+body.red .navbar-nav > li.current-page-ancestor > a, 
+body.red .navbar-nav .dropdown-menu > li > a{
+    border-color: #ff2a00 !important;
+    color: #333 !important;
+}
+body.red .btn-invia {
+    background: #ff2a00 !important;
+    color: #FFFFFF;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+@media(max-width:767px){.form-contatto-vertical .col-sm-1{width: 8.33333333%; float: left;} .form-contatto-vertical .col-sm-10 {width: 83.33333333%;float: left;}}

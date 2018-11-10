@@ -1,0 +1,49 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Fields.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions
+@{
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var contentItem = (ContentItem)Model.ContentItem;
+    var title = _contentManager.GetItemMetadata(contentItem).DisplayText;
+    var productImageField = (contentItem.Parts
+        .SelectMany(pa => pa.Fields)
+        .Where(fi => fi is MediaLibraryPickerField && fi.Name == "ProductImage")
+        .FirstOrDefault() as MediaLibraryPickerField);
+    var productImages = productImageField == null ? null : productImageField.MediaParts;
+
+    var isNewField = contentItem.Parts
+        .SelectMany(pa => pa.Fields)
+        .Where(fi => fi is BooleanField && fi.Name == "IsNewProduct")
+        .FirstOrDefault() as BooleanField;
+
+}
+<div class="agile_ecommerce_tab_left products_grid">
+    @if (productImages != null && productImages.Any()) {
+        var allUrls = productImages.Select(mp => mp.MediaUrl).ToList();
+        while (allUrls.Count() < 6) { //hack: the hover animation works best with at least 6 items
+            allUrls.AddRange(productImages.Select(mp => mp.MediaUrl));
+        }
+        <a href="@Url.ItemDisplayUrl(contentItem)">
+            <div class="hs-wrapper hs-wrapper3">
+                @foreach (var imageUrl in allUrls) {
+                    <img src="@Display.ResizeMediaUrl(Width: 255, Height: 340, Mode: "pad", Alignment: "middlecenter", Path: imageUrl)" alt=" " class="img-responsive" />
+                }
+            </div>
+        </a>
+    }
+    <h5><a href="@Url.ItemDisplayUrl(contentItem)">@title</a></h5>
+    <div class="simpleCart_shelfItem">
+        @Display(Model.Content)
+    </div>
+    @if (isNewField != null && isNewField.Value.HasValue && isNewField.Value.Value) {
+        <div class="products_grid_pos">
+            <h6>New</h6>
+        </div>
+    }
+</div>

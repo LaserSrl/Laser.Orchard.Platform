@@ -1,0 +1,29 @@
+﻿@using Laser.Orchard.CulturePicker.Models;
+@using System.Globalization
+@if (((IList<ExtendedCultureRecord>)Model.AvailableCultures)
+            .Count(x => !String.IsNullOrWhiteSpace(x.DisplayName)) > 1) {
+    var translatedCultures = Model.TranslatedCultures as IList<Laser.Orchard.CulturePicker.Models.ExtendedCultureRecord>;
+    if (Model.ShowOnlyPertinentCultures && translatedCultures.Count(p => p.Equals(Model.UserCulture)) == 0) { translatedCultures.Insert(0, Model.UserCulture); }
+    var availableCultures = (Model.ShowOnlyPertinentCultures) ? translatedCultures : Model.AvailableCultures;
+    var availableCultureswithNames = new List<KeyValuePair<string, string>>(availableCultures.Count);
+    foreach (Laser.Orchard.CulturePicker.Models.ExtendedCultureRecord culture in availableCultures) {
+        try {
+            var cultureInfo = new CultureInfo(culture.CultureCode);
+            var disaplyedName = String.IsNullOrEmpty(culture.DisplayName) ? cultureInfo.NativeName : culture.DisplayName;
+            availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, disaplyedName));
+        } catch {
+            availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, culture.CultureCode));
+        }
+    }
+    var selectedCulture = Model.UserCulture == null ? WorkContext.CurrentCulture : Model.UserCulture.CultureCode;
+    if (availableCultureswithNames != null && availableCultureswithNames.Count > 0) {
+        <ul class="nav navbar-nav navbar-lang handel-got-d">
+            @foreach (var cul in availableCultureswithNames) {
+                string activeCulture = cul.Key == selectedCulture ? "active" : "";
+                <li class="@activeCulture">
+                    <a href="@Url.Action("ChangeCulture", "UserCulture", new { Area = "Laser.Orchard.CulturePicker", CultureName = cul.Key })" hreflang="@cul.Key.Substring(0, 2)">@cul.Value</a>
+                </li>
+            }
+        </ul>
+    }
+}

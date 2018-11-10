@@ -1,0 +1,9 @@
+﻿@model Laser.Orchard.Queries.Settings.QueryUserFilterExtensionPartSettingVM
+<fieldset>
+    <h2>@T("Settings - Query User Filter Extension")</h2>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.QueryUserFilter)" >@T("Caption") </label>
+        <div class="editor-label">@Html.ListBoxFor(m => m.SelezionatiElenco, Model.Elenco, new { size = 20, style = "min-width:20%;", multiple = "multiple" })</div>
+        <span class="hint">@T("nothing (default) = no filter")</span>
+    </div>
+</fieldset>

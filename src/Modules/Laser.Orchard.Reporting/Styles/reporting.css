@@ -1,0 +1,49 @@
+﻿.hidden {
+    visibility: collapse;
+}
+
+div.content-picker-message {
+    display: none !important;
+}
+
+.default-chart {
+    width: 400px;
+    height: 300px;
+}
+
+.select-medium {
+    width: 27em;
+}
+
+.field-validation-error {
+    color: red;
+}
+
+.chart-container {
+    padding: 5px;
+}
+
+table.simple-data > thead > tr > th {
+    border-bottom: 1px solid red !important;
+}
+
+div.fixed-table-toolbar button {
+    border-color: red;
+}
+
+    div.fixed-table-toolbar button > i {
+        color: red;
+    }
+
+/*------------ Custom div Template -----------*/
+
+
+/*#IpraSimpleTableDiv*/
+
+.IpraSimpleTableDiv thead th:first-child {
+    width: 230px;
+}
+
+.IpraSimpleTableDiv h3 {
+    margin: 50px 0px -30px 0px !important;
+}

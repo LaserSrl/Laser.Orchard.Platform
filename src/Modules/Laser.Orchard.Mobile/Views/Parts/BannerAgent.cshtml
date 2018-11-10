@@ -1,0 +1,67 @@
+﻿@using System.Collections.Generic;
+@{
+    Script.Require("LaserOrchardSmartbanner").AtHead();
+    Style.Require("LaserOrchardSmartbanner").AtHead();
+}
+<div class="BannerAgent">
+    @{ var resourceManager = WorkContext.Resolve<Orchard.UI.Resources.IResourceManager>();
+        var valori = new Dictionary<string, string>();
+        if (!string.IsNullOrEmpty(Model.Part.title)) {
+            valori.Add("smartbanner:title", Model.Part.title);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.author)) {
+            valori.Add("smartbanner:author", Model.Part.author);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.price)) {
+            valori.Add("smartbanner:price", Model.Part.price);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.price_suffix_apple)) {
+            valori.Add("smartbanner:price-suffix-apple", Model.Part.price_suffix_apple);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.price_suffix_google)) {
+            valori.Add("smartbanner:price-suffix-google", Model.Part.price_suffix_google);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.icon_apple)) {
+            valori.Add("smartbanner:icon-apple", Model.Part.icon_apple);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.icon_google)) {
+            valori.Add("smartbanner:icon-google", Model.Part.icon_google);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.button)) {
+            valori.Add("smartbanner:button", Model.Part.button);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.button_url_apple)) {
+            valori.Add("smartbanner:button-url-apple", Model.Part.button_url_apple);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.button_url_google)) {
+            valori.Add("smartbanner:button-url-google", Model.Part.button_url_google);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.enabled_platforms)) {
+            valori.Add("smartbanner:enabled-platforms", Model.Part.enabled_platforms);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.exclude_user_agent_regex)) {
+            valori.Add("smartbanner:exclude-user-agent-regex", Model.Part.exclude_user_agent_regex);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.include_user_agent_regex)) {
+            valori.Add("smartbanner:include-user-agent-regex", Model.Part.include_user_agent_regex);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.disable_positioning)) {
+            valori.Add("smartbanner:disable-positioning", Model.Part.disable_positioning);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.hide_ttl)) {
+            valori.Add("smartbanner:hide-ttl", Model.Part.hide_ttl);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.hide_path)) {
+            valori.Add("smartbanner:hide-path", Model.Part.hide_path);
+        }
+        if (!string.IsNullOrEmpty(Model.Part.custom_design_modifier)) {
+            valori.Add("smartbanner:custom-design-modifier", Model.Part.custom_design_modifier);
+        }
+        foreach (var kvp in valori) {
+            resourceManager.SetMeta(new Orchard.UI.Resources.MetaEntry {
+                Name = kvp.Key,
+                Content = kvp.Value
+            });
+        }
+    }
+</div>

@@ -1,0 +1,17 @@
+Name: Laser Orchard Maps
+AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10
+Description: A module that allows you to insert a map (Part or Widget) into your ContentTypes.
+Features:
+    Laser.Orchard.Maps:
+        Description: Displays a Google Map Part or Widget based on latitude and longitude. In order to use kml/kmz files remember to configure mime-types (kml => application/vnd.google-earth.kml+xml, kmz => application/vnd.google-earth.kmz) on IIS.
+        Category: Geolocation
+		Dependencies: Orchard.Resources, Orchard.MediaLibrary, Orchard.Tokens
+    Laser.Orchard.Maps.Import:
+        Name: Laser Orchard Maps Import
+		Description: Import parkings from OSM file and points of interest from Json file.
+        Category: Geolocation
+		Dependencies: Orchard.Projections

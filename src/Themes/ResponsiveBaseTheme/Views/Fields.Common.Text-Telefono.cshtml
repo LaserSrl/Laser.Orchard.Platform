@@ -1,0 +1,11 @@
+﻿@{
+    var value = Model.Value;
+    string name = Model.ContentField.DisplayName;
+    <div class="text-field icons inline">
+        @if (!string.IsNullOrEmpty(value.ToHtmlString())) {
+            <a href="tel:@value" target="_blank" title="@T(name)"><i class="fa fa-phone"></i> @value</a>    
+        } else {
+        <i class="fa fa-phone"></i>
+        }
+    </div>
+}

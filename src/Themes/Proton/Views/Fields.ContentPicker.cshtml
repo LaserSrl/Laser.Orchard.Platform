@@ -1,0 +1,30 @@
+﻿@using Orchard.ContentPicker.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    var field = (ContentPickerField)Model.ContentField;
+    string name = field.DisplayName;
+    var contentItems = field.ContentItems;
+    var i = 0;
+
+}
+@if (contentItems.Any()) {
+
+    <div class="clearfix"></div>
+
+    <!-- Related Portfolio -->
+
+    <section class="portfolio-related">
+        <h3 class="section-title">
+            @Model.ContentField.DisplayName
+        </h3>
+        <div class="row portfolio">
+            @foreach (var contentItem in contentItems) {
+                @Display(BuildDisplay(contentItem, "Summary").ListIndex(i))
+                i++;
+            }
+        </div>
+    </section>
+
+    <!-- End Related Portfolio -->
+}

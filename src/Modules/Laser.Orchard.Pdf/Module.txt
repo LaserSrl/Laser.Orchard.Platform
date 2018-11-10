@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.Pdf
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.0
+Description: PDF management capabilities.
+Features:
+    Laser.Orchard.Pdf:
+        Description: PDF management capabilities.
+		Dependencies: Laser.Orchard.TemplateManagement

@@ -1,0 +1,7 @@
+Name: Proton
+Author: Laser s.r.l.
+Website: http://www.laser-group.com
+Description: Proton theme
+Version: 1.8
+OrchardVersion: 1.10
+Zones: Navigation, Featured, InfoBox, Breadcrumb, BeforeContent, Messages, AsideFirst, Services, Content, AsideSecond, AfterContent, FooterQuadFirst, FooterQuadSecond, FooterQuadThird, FooterQuadFourth, Footer

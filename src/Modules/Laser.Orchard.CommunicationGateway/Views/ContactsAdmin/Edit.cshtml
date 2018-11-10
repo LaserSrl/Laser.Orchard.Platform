@@ -1,0 +1,6 @@
+﻿@{ Layout.Title = T("Edit Contact"); }
+<p class="breadcrumb"><a href="@Url.Action("Index")">@T("Contacts List")</a> &#62; @Layout.Title</p>
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Display(Model)
+}

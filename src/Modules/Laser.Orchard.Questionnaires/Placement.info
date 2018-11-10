@@ -1,0 +1,9 @@
+﻿<Placement>
+	<Place Parts_Questionnaire_Edit="Content:after" />
+  <Place Parts_GamePart_Edit="Content:5" />
+	<Place Parts_Questionnaire_FrontEnd_Edit="Content:after" Parts_Questionnaire_FrontEnd_Edit_Unauthorized="Content:after"/>
+	<Place Parts_Questionnaire_SummaryAdmin="-" />
+	<Place Parts_Questionnaire_Summary="-" />
+  <Place Parts_QuestionnaireModuleSettings_Edit="Content:11" />
+
+</Placement>

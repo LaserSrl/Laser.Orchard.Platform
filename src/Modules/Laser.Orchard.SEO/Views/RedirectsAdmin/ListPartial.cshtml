@@ -1,0 +1,39 @@
+﻿@using Laser.Orchard.SEO.Models
+
+@{
+    var items = (IEnumerable<RedirectRule>)Model.Redirects;
+}
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset class="contentItems bulk-items">
+        <table class="items" summary="@T("Redirect rules table")">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>@T("Date")</th>
+                    <th>@T("Source URL")</th>
+                    <th>@T("Destination URL")</th>
+                    <th>@T("Permanent")</th>
+                    <th>@T("Actions")</th>
+                </tr>
+            </thead>
+            @foreach (var redirectRule in items) {
+
+                <tr>
+                    <td><input type="checkbox" value="@redirectRule.Id" name="itemIds" /></td>
+                    <td>@redirectRule.CreatedDateTime.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>@redirectRule.SourceUrl</td>
+                    <td>@redirectRule.DestinationUrl</td>
+                    <td>@redirectRule.IsPermanent</td>
+                    <td>
+                        @Html.ActionLink(T("Edit").Text, "Edit", "RedirectsAdmin", new { id = redirectRule.Id }, null) |
+                        @Html.ActionLink(T("Delete").Text, "Delete", "RedirectsAdmin", new { id = redirectRule.Id }, new { itemprop = "RemoveUrl UnsafeUrl" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </fieldset>
+}
+
+@Display(Model.PagerShape)
+
+@Html.AntiForgeryTokenOrchard()

@@ -1,0 +1,26 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Contents
+@using Orchard.Utility.Extensions;
+@{
+    ContentItem contentItem = Model.ContentItem;
+    var returnUrl = ViewContext.RequestContext.HttpContext.Request.ToUrlString();
+}
+
+<div class="summary" itemscope="itemscope" itemid="@contentItem.Id" itemtype="http://orchardproject.net/data/ContentItem">
+    <div class="properties">
+        <h3>@(contentItem.ContentManager.GetItemMetadata(contentItem).DisplayText ?? string.Empty)</h3>
+        -
+        <div class="contentType">@contentItem.TypeDefinition.DisplayName</div>
+        @if (Model.Header != null) {
+            <div class="header">@Display(Model.Header)</div>
+        }
+        @if (Model.Meta != null) {
+            <div class="metadata">@Display(Model.Meta)</div>
+        }
+    </div>
+
+    <div class="related">
+        @Display(Model.Actions)
+    </div>
+
+</div>

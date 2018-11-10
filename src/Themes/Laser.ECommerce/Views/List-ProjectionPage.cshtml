@@ -1,0 +1,73 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.ContentPicker.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@{
+    //find banner image url
+    MediaPart mediaPart = null;
+    var contentItem = (ContentItem)Model.ContentItem;
+    //Get fields from the contentItem
+    var fields = contentItem.Parts.SelectMany(pa => pa.Fields);
+    var field = fields
+            .Where(fi => fi is MediaLibraryPickerField && fi.Name == "Banner")
+            .FirstOrDefault() as MediaLibraryPickerField;
+    if (field != null && field.MediaParts.Any()) {
+        mediaPart = field.MediaParts.First();
+    }
+
+    if (mediaPart != null) {
+        WorkContext.Layout.BeforeMain.Add(New.Banner(
+                ContentItem: (ContentItem)Model.ContentItem,
+                ImageUrl: mediaPart.MediaUrl
+            ), "5");
+    } else {
+        WorkContext.Layout.BeforeMain.Add(New.Banner(
+                ContentItem: (ContentItem)Model.ContentItem
+            ), "5");
+    }
+
+    int i = 0;
+    var tagDiv = Tag(Model, "div");
+    tagDiv.AddCssClass("products_grid_right_grid3");
+
+    //Related products:
+    //Get the related products of each content in the list (if any)
+    //and feed them all to the slider view
+    var related = new List<ContentItem>();
+    foreach (var itemShape in Model.Items) {
+        var item = (ContentItem)itemShape.ContentItem;
+        var relatedFields = item.Parts.SelectMany(pa => pa.Fields);
+        related.AddRange(
+            relatedFields
+            .Where(fi => fi is ContentPickerField && fi.Name == "RelatedProducts")
+            .SelectMany(fi => (fi as ContentPickerField).ContentItems)
+            );
+    }
+    if (related.Any()) {
+        WorkContext.Layout.AfterMain.Add(New.RelatedContentsSlider(
+                ContentItems: related.Distinct(),
+                Title: T("Related Products").Text
+            ), "5");
+    }
+}
+@foreach (var itemShape in Model.Items) {
+    if (i % 3 == 0) {
+        @tagDiv.StartElement;
+    }
+    <div class="col-md-4 agileinfo_new_products_grid agileinfo_new_products_grid_products">
+        @Display(itemShape)
+    </div>
+    if (i % 3 == 2) {
+        <div class="clearfix"> </div>
+        @tagDiv.EndElement;
+
+    }
+
+    i++;
+}
+@if (i % 3 != 2) {
+    <div class="clearfix"> </div>
+    @tagDiv.EndElement;
+}
+<div class="clearfix"> </div>
+@Display(Model.Pager)

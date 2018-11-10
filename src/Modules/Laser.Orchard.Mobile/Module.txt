@@ -1,0 +1,62 @@
+﻿AntiForgery: enabled
+Author: Laser srl - Frediani Lorenzo
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10
+Description: Push Manager
+Features:
+    Laser.Orchard.Mobile:
+		Name: Laser Mobile
+        Description: Manage mobile profile of users
+		Category: Social
+		Dependencies: Orchard.ContentPicker,Laser.Orchard.StartupConfig,Orchard.Forms,Orchard.Autoroute,Orchard.Taxonomies,Orchard.Tokens,Orchard.Users,Laser.Orchard.jQueryPlugins,Laser.Orchard.Queries
+    Laser.Orchard.Sms:
+		Name: Laser SMS
+        Description: Extends Orchard with SMS functionality. Recovery password phone number will be added to users, in order to receive a Lost Passwrd link via SMS.
+		Category: Social
+		Dependencies: Laser.Orchard.StartupConfig,Laser.Orchard.CommunicationGateway
+	Laser.Orchard.MobileCommunicationImport
+		Name: Laser Mobile Communication Import
+        Description: Link existing data communication
+		Category: Social
+		Dependencies: Laser.Orchard.Mobile
+	Laser.Orchard.SmsCommunicationImport:
+		Name: Laser SMS  Communication Import
+        Description:  Link existing data communication
+		Category: Social
+		Dependencies: Laser.Orchard.Sms
+	Laser.Orchard.SmsGateway:
+		Name: Laser SMS Gateway
+        Description:  SMS Gateway integration
+		Category: Social
+		Dependencies: Laser.Orchard.CommunicationGateway, Laser.Orchard.Sms, Laser.Orchard.jQueryPlugins, Orchard.Localization, Laser.Orchard.Queries,Laser.Orchard.Mobile
+    Laser.Orchard.Mobile.ExternalPush:
+		Name: Laser Mobile External Push
+        Description: Web API to send push from outside Orchard
+		Category: Social
+		Dependencies: Laser.Orchard.PushGateway, Laser.Orchard.StartupConfig.WebApiProtection
+	Laser.Orchard.PushGateway:
+		Name: Laser Push Gateway
+		Description: Push communication channel
+		Category: Social
+		Dependencies: Laser.Orchard.CommunicationGateway,Laser.Orchard.Mobile
+	Laser.Orchard.BannerAgent:
+		Name: Laser Banner Agent
+		Description: Generate Banner on website to download app
+		Category: Social
+	Laser.Orchard.GDPR.MobileExtension:
+		Name: GDPR Mobile Extensions
+		Description: Enables specialized handling of the information from our mobile features. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.Mobile
+	Laser.Orchard.GDPR.PushGatewayExtension:
+		Name: GDPR Push Gateway Extensions
+		Description: Enables specialized handling of the information from our PushGateway. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.PushGateway
+	Laser.Orchard.GDPR.SmsGatewayExtension:
+		Name: GDPR Sms Gateway Extensions
+		Description: Enables specialized handling of the information from our SmsGateway. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.SmsGateway
+	Laser.Orchard.GDPR.SmsExtension:
+		Name: GDPR Sms Extensions
+		Description: Enables specialized handling of the information from our Sms feature. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.Sms

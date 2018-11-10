@@ -1,0 +1,142 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/DefinitionTemplates/Parts/HighlightsGroup.Settings.cshtml"
+msgid "Leave empty if you want to use a default view"
+msgstr "Lasciare vuoto se si vuole usare una vista predefinita"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/DefinitionTemplates/Parts/HighlightsGroup.Settings.cshtml"
+msgid "Shape Name"
+msgstr "Nome Shape"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/DefinitionTemplates/Parts/HighlightsGroup.Settings.cshtml"
+msgid "The suffix view name (shape) used to render highlights. Remember to add it to Placement.info. (ex: Parts_SlideShow_suffixviewname)"
+msgstr "Il suffisso del nome della vista (shape) usato per visualizzare le evidenze Ricordarsi di aggiungerlo a Placement.info. (ad esempio: Parts_SlideShow_suffixviewname)"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "(Default Layout)"
+msgstr "(Schema predefinito)"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Display plugin"
+msgstr "Visualizzazione"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Edit Query"
+msgstr "Modifica Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "from"
+msgstr "dal"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Highlights group"
+msgstr "Gruppo di Evidenze"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Items source"
+msgstr "Sorgente degli elementi"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Not published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Premere \"Salva\" per memorizzare le modifiche."
+msgstr "Premere \"Salva\" per memorizzare le modifiche."
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Save the item before adding mini-banner!"
+msgstr "Salvare l'elemento prima di aggiungere un mini-banner!"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Save to accept order change."
+msgstr "Salvare per accettare le modifiche di ordinamento"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Save to update this list."
+msgstr "Salvare per aggiornare l'elenco"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Select a query as source"
+msgstr "Selezionare una ricerca come sorgente"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "Template type"
+msgstr "Tipo di template"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "The query to display."
+msgstr "La ricerca da visualizzare."
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "There are unsaved changes."
+msgstr "Sono presenti modifiche non salvate."
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
+msgid "to"
+msgstr "fino al"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Back"
+msgstr "Indietro"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Link Target"
+msgstr "Target del Link"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Link Text"
+msgstr "Testo del Link"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Link to video"
+msgstr "Link a video"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Link Url"
+msgstr "URL del Link"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Order"
+msgstr "Ordine"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Second line of the title"
+msgstr "Seconda riga titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsItem_Edit.cshtml"
+msgid "Title size"
+msgstr "Dimensione titolo"
+
+msgctxt "Laser.Orchard.Highlights.Drivers.HighlightsGroupDriver"
+msgid "Current Template - Display association not allowed"
+msgstr "Associazione fra Template e Visualizzazione non consentita"
+
+msgctxt "Laser.Orchard.Highlights.Services.HighlightsService"
+msgid "Details"
+msgstr "Dettagli"
+

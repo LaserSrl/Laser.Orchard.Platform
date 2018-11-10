@@ -1,0 +1,38 @@
+﻿<Placement>
+
+ 
+  <Place Parts_Banner="Content:09" Parts_Banner_1ImageAnd2ImagesPartially="Content:09" Parts_Banner_WideWithBottomBullet="Content:09"
+         Parts_Banner_Featured="Content:09" />
+  <Place Parts_SlideShow="Content:09" Parts_SlideShow_1ImageAnd2ImagesPartially="Content:09" Parts_SlideShow_WideWithBottomBullet="Content:09"
+         Parts_SlideShow_Featured="Content:09" Parts_SlideShow_Jssor="Content:09" Parts_SlideShow_Jssor_BannerSlider="Content:09" />
+
+  <Place Parts_HighlightsItem="Content:09.1" Parts_HighlightsItem_1ImageAnd2ImagesPartially="Content:09.1" 
+         Parts_HighlightsItem_WideWithBottomBullet="Content:09.1"
+         Parts_HighlightsItem_Featured="Content:09.1"
+         Parts_HighlightsItem_Jssor="Content:09.1" Parts_HighlightsItem_Jssor_BannerSlider="Content:09.1"
+         />
+  <!-- immediately following the contents module's Publish Now button -->
+  <Place Parts_PublishLater_Edit="Sidebar:10"/>
+  
+  <Place Parts_HighlightsGroup_Edit="Content:after"/>
+  <Place Parts_HighlightsItem_Edit="Content:after"/>
+
+  <!-- Recuperato da Highlights -->
+
+  <Match ContentType="HighlightsItem">
+    <Place Parts_Common_Body_Summary="-" />
+    <Place Fields_MediaPicker="-" />
+    <Place Fields_Common_Text-MediaText="-" />
+  </Match>
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_Banner="-" Parts_Banner_1ImageAnd2ImagesPartially="-" Parts_Banner_WideWithBottomBullet="-"/>
+    <Place Parts_SlideShow="-" Parts_SlideShow_1ImageAnd2ImagesPartially="-" Parts_SlideShow_WideWithBottomBullet="-" />
+    <Place Parts_HighlightsItem="-" Parts_HighlightsItem_1ImageAnd2ImagesPartially="-" Parts_HighlightsItem_WideWithBottomBullet="-"/>
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Parts_SlideShow="-"/>
+    <Place Parts_Banner="-"/>
+  </Match>
+
+</Placement>

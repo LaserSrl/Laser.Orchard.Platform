@@ -1,0 +1,43 @@
+﻿@model Laser.Orchard.Maps.Models.CustomPinPartSettings
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ReplacedColor)">@T("Insert the color to replace.")</label>
+        @Html.TextBoxFor(m => m.ReplacedColor, new { @class = "text large tokenized", placeholder = T("hex color (eg: #FF003366)") })
+        <span class="hint">@T("The string #FF003366 represents FF=alpha, 00=red, 33=green, 66=blue")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.AlternateColor)">@T("Insert the alternate color.")</label>
+        @Html.TextBoxFor(m => m.AlternateColor, new { @class = "text large tokenized", placeholder = T("hex color (eg: #FF003366)") })
+        <span class="hint">@T("The string #FF003366 represents FF=alpha, 00=red, 33=green, 66=blue")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.PinUrl)">@T("Insert the pin Url.")</label>
+        @Html.TextBoxFor(m => m.PinUrl, new { @class = "text large tokenized", placeholder = T("The url of the pin (eg: ~/Media/pin.png)") })
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.WaterMarkUrl)">@T("Insert the watermark url.")</label>
+        @Html.TextBoxFor(m => m.WaterMarkUrl, new { @class = "text large tokenized", placeholder = T("The url of the watermark (eg: ~/Media/watermark.png)") })
+    </div>
+    <div>
+        <label>@T("Insert center points and target drawable area")</label>
+        <fieldset>
+            <div>
+                <label>@T("Center X")</label>
+                @Html.TextBoxFor(m => m.TargetArea.CenterX, new { @class = "text medium tokenized", placeholder = T("x coordinate in pixel") })
+            </div>
+            <div>
+                <label>@T("Center Y")</label>
+                @Html.TextBoxFor(m => m.TargetArea.CenterY, new { @class = "text medium tokenized", placeholder = T("y coordinate in pixel") })
+            </div>
+            <div>
+                <label>@T("Drawable Width")</label>
+                @Html.TextBoxFor(m => m.TargetArea.DrawableWidth, new { @class = "text medium tokenized", placeholder = T("Drawable area width in pixel") })
+            </div>
+            <div>
+                <label>@T("Drawable Height")</label>
+                @Html.TextBoxFor(m => m.TargetArea.DrawableHeight, new { @class = "text medium tokenized", placeholder = T("Drawable area height in pixel") })
+            </div>
+        </fieldset>
+    </div>
+
+</fieldset>

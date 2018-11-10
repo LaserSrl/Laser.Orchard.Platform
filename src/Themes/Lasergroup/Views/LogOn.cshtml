@@ -1,0 +1,52 @@
+﻿@using Orchard.ContentManagement
+
+@{
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+}
+
+<div id="log-on" class="container">
+
+    <h1 class="page-title title">@Html.TitleForPage((string)Model.Title)</h1>
+    <p>
+        @T("Please enter your username and password.")
+        @if (userCanRegister) { @Html.ActionLink(T("Register").Text, "Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }) @T(" if you don't have an account.") }
+        @if (enableLostPassword) { <text> </text> @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword") }
+    </p>
+    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+
+    <div class="space-20"></div>
+
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) {
+        <fieldset class="login-form group">
+            <legend>@T("Account Information")</legend>
+
+            <div class="form-group">
+                <label class="control-label" for="username-email">@T("Username")</label>
+                <span>&nbsp;
+                @Html.TextBox("userNameOrEmail", "", new { id = "username-email", autofocus = "autofocus" })
+                    @Html.ValidationMessage("userNameOrEmail")
+                </span>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="password">@T("Password")</label>
+                <span>&nbsp;
+                @Html.Password("password")
+                    @Html.ValidationMessage("password")
+                </span>
+            </div>
+            <div class="form-group">
+                <span>
+                    @Html.CheckBox("rememberMe", new { id = "remember-me" })
+                    &nbsp;
+                </span>
+                <label class="control-label forcheckbox" for="remember-me">@T("Remember Me")</label>
+            </div>
+
+            <p>
+                <button type="submit" class="btn btn-invia primaryAction">@T("Sign In")</button>
+            </p>
+        </fieldset>
+    }
+
+</div>

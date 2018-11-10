@@ -1,0 +1,3 @@
+﻿@if (Model.ContentItem.POI.Gallery.MediaParts != null && Model.ContentItem.POI.Gallery.MediaParts.Count>0) {
+    <img src="@Display.ResizeMediaUrl(Width: 540, Height: 355, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.POI.Gallery.MediaParts[0].MediaUrl)" class="img-indent img-responsive">
+}

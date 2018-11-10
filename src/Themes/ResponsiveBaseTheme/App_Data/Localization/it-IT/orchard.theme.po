@@ -1,0 +1,206 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/BadgeOfHonor.cshtml"
+msgid "&#169; The Theme Machine 2010."
+msgstr "&#169; Il Tema Macchina 2010."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/BadgeOfHonor.cshtml"
+msgid "Powered by <a href=\"{0}\" target=\"_blank\">Orchard</a>"
+msgstr "Offerto da <a href=\"{0}\" target=\"_blank\">Orchard</a>"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-ProdottiEccellenze.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-ProdottiEccellenze.cshtml"
+msgid "No content items."
+msgstr "Nessun contenuto."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
+msgid "No content items."
+msgstr "Nessun contenuto."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.Link-WebCams-URLWebCam.cshtml"
+msgid "slm"
+msgstr "slm"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.MediaLibraryPicker.Summary-Cards.cshtml"
+msgid "Select"
+msgstr "Seleziona"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Pager.cshtml"
+msgid "<"
+msgstr "<"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Pager.cshtml"
+msgid ">"
+msgstr ">"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Pager.cshtml"
+msgid "Showing items {0} - {1} of {2}"
+msgstr "Elementi {0} - {1} di {2}"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Blogs.BlogArchives.cshtml"
+msgid "None found"
+msgstr "Non trovato"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Common.Body.Summary.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Common.Body.Summary-Prodotto.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Add attachment"
+msgstr "Aggiungi allegato"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Address of the Point of Interest"
+msgstr "Indirizzo del punto di interesse"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Confirm Email"
+msgstr "Conferma Email"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Confirm Email Address"
+msgstr "Conferma Indirizzo Email"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Coordinates"
+msgstr "Coordinate"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Description of the Point of Interest"
+msgstr "Descrizione del punto di interesse"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Email Address"
+msgstr "Indirizzo email"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Latitude"
+msgstr "Latitudine"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Longitude"
+msgstr "Longitudine"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Send"
+msgstr "Inoltra"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Subject"
+msgstr "Oggetto"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Upload file"
+msgstr "Carica file"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
+msgid "Your Name"
+msgstr "Il vostro nome"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
+msgid "No content items."
+msgstr "Nessun contenuto."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
+msgid "Producers"
+msgstr "Produttori"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Map.cshtml"
+msgid "Find us"
+msgstr "Trovaci"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Map-Itinerario.cshtml"
+msgid "more"
+msgstr "di più"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Please fill all the texts in the fields."
+msgstr "Riempire tutti i campi, grazie."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Recipient Name"
+msgstr "Nome del recipiente"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Send"
+msgstr "Invia"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Send From"
+msgstr "Mittente"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Send this postcard"
+msgstr "Invia questa cartolina"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Send To"
+msgstr "Destinatario"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Valid Email Address"
+msgstr "Indirizzo Email valido"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Your Friend Name"
+msgstr "Nome del destinatario"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Your Full Name"
+msgstr "Il tuo nome completo"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Your Message"
+msgstr "Il tuo messaggio"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Your Name"
+msgstr "Il tuo Nome"
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
+msgid "Your Valid Email Address"
+msgstr "Il tuo indirizzo Email valido"
+

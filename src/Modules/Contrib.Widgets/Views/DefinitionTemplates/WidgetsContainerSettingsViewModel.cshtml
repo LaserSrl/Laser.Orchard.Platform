@@ -1,0 +1,14 @@
+﻿@model Contrib.Widgets.ViewModels.WidgetsContainerSettingsViewModel
+
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.SelectedZones, T("Allowed zones:"))
+        @Html.ListBoxFor(m => m.SelectedZones, new MultiSelectList(Model.Zones), new { style = "display:block;" })
+        <span class="hint">@T("Select the zones where the widgets can be placed. If no zone is selected all of them will be available.")</span>
+    </div>
+    <div style="margin-top:20px;">
+        @Html.LabelFor(m => m.SelectedWidgets, T("Allowed widget types:"))
+        @Html.ListBoxFor(m => m.SelectedWidgets, new MultiSelectList(Model.Widgets), new { style = "display:block;" })
+        <span class="hint">@T("Select which types of widgets can be added to the content. If no widget type is selected all of them will be available.")</span>
+    </div>
+</fieldset>

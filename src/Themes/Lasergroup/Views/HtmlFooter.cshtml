@@ -1,0 +1,8 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="space-20"></div>
+<div id="credits" class="text-center">
+    @Html.Raw(item.BodyPart.Text)
+</div>

@@ -1,0 +1,270 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
+msgid "Payment Gateway Settings"
+msgstr "Impostazioni dei Gateways di pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
+msgid "Payment nonce duration (minutes)"
+msgstr "Durata del nonce di pagamento (minuti)."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
+msgid "Payment nonce duration in minutes (suggested value: 20)."
+msgstr "Durata in minuti del nonce di pagamento (valore suggerito: 20)."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
+msgid "Please refer to each POS tab for POS specific settings."
+msgstr "Fare riferimento alle schede di ogni POS per le relative impostazioni."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/Parts/PayButtonEdit.cshtml"
+msgid "This item is payable"
+msgstr "E' possibile pagare questo articolo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Parts/PayButton.cshtml"
+msgid "Pay"
+msgstr "Paga"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Additional informations"
+msgstr "Ulteriori informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Back to payment page"
+msgstr "Torna alla pagina di pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Payment details"
+msgstr "Dettagli pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
+msgid "Transacion ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Pay.cshtml"
+msgid "Summary"
+msgstr "Riepilogo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Abandoned"
+msgstr "Annullata"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Currency"
+msgstr "Valuta"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "No data found."
+msgstr "Nessun dato trovato."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Ok"
+msgstr "Ok"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Payments of all users"
+msgstr "Pagamenti di tutti gli utenti"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "Transaction ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
+msgid "User ID"
+msgstr "ID Utente"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Abandoned"
+msgstr "Annullata"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Anonymous"
+msgstr "Anonimo"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Currency"
+msgstr "Valuta"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "No data found."
+msgstr "Nessun dato trovato."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Ok"
+msgstr "Ok"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Payments of user"
+msgstr "Pagamenti dell'utente"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
+msgid "Transaction ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosList.cshtml"
+msgid "Loading valid payment methods. Please wait."
+msgstr "Attendere prego: caricamento dei metodi di pagamento in corso."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosList.cshtml"
+msgid "Pay using:"
+msgstr "Paga con"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosList.cshtml"
+msgid "There was an error initializing the payment. Please try again."
+msgstr "C'è stato un errore nell'inizializzazione del pagamento. È consigliato ritentare."
+
+msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
+msgid "Manage payment result"
+msgstr "Gestisce l'esito del pagamento"
+
+msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
+msgid "Payment"
+msgstr "Pagamento"
+
+msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.AdminController"
+msgid "Could not save settings."
+msgstr "Impossibile salvare le impostazioni."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.AdminController"
+msgid "Settings saved successfully."
+msgstr "Impostazioni salvate correttamente."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
+msgid "A valid currency is required. You may find a list of valid currencies in this response's data object."
+msgstr "È richiesta una valuta valida. L'oggetto Data di questa risposta contiene una lista di valute valide."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
+msgid "Could not find a POS called \"{0}\": you may find a list of available POS names in this response's data object."
+msgstr "Impossibile trovare il metodo di pagamento \"{0}\": l'oggetto Data di questa risposta contiene una lista di metodi validi."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
+msgid "The Data object contains the array of valid filter parameters. These are case-insensitive."
+msgstr "L'oggetto Data di questa risposta contiene l'elenco dei parametri validi per il filtro. Questi non sono case-sensitive."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
+msgid "There are no valid currencies for the POS, or the pos is not valid. See this response's data object for a list of valid POS names"
+msgstr "Non esistono valute valide per il metodo di pagamento selezionato, oppure il metodo non è valido. L'oggetto Data di questa risposta contiene una lista di metodi di pagamento validi."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PosAdminBaseController"
+msgid "Could not save settings."
+msgstr "Impossibile salvare le impostazioni."
+
+msgctxt "Laser.Orchard.PaymentGateway.Controllers.PosAdminBaseController"
+msgid "Settings saved successfully."
+msgstr "Impostazioni salvate correttamente."
+
+msgctxt "Laser.Orchard.PaymentGateway.Navigation"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "Laser.Orchard.PaymentGateway.Navigation"
+msgid "Payment Gateway"
+msgstr "Gateway di Pagamento"
+
+msgctxt "Laser.Orchard.PaymentGateway.Navigation"
+msgid "Settings"
+msgstr "Impostazioni"
+

@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.FidelitySimsol
+AntiForgery: enabled
+Author: Diego
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Modulo di estenzione del fidelity gateway che serve per la comunicazione con il provider Simsol.
+Features:
+    Laser.Orchard.FidelitySimsol:
+		Category: FidelityProvider
+        Description: Modulo di estenzione del fidelity gateway che serve per la comunicazione con il provider Simsol.
+		Dependencies: Laser.Orchard.FidelityGateway

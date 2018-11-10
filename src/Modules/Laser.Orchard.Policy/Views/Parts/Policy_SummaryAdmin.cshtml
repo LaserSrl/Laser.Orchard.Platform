@@ -1,0 +1,8 @@
+﻿@{
+ Style.Require("FontAwesome430").AtHead();   
+}
+@if (((Laser.Orchard.Policy.IncludePendingPolicyOptions)Model.IncludePendingPolicy)==Laser.Orchard.Policy.IncludePendingPolicyOptions.Yes){
+    <i class="fa fa-check-circle" style="color:green"></i> @T("Pending policies included")
+} else {
+    <i class="fa fa-times-circle" style="color:red"></i> @T("Pending policies NOT included")
+}

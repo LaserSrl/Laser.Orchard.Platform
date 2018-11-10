@@ -1,0 +1,3 @@
+﻿@using (Html.BeginFormAntiForgeryPost(Url.Action("Index", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" }))) {
+    <button type="submit" id="payButton" style="padding: 10px 10px">@T("Checkout")</button>
+}

@@ -1,0 +1,68 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models;
+@using Orchard.Security;
+@using Orchard.Localization.Models;
+
+@model Laser.Orchard.Questionnaires.ViewModels.QuestionnaireSearchViewModel
+
+@{
+    Layout.Title = T("Questionnaire Statistics");
+}
+
+@using (Html.BeginForm("Index", "QuestionnaireStats", FormMethod.Get)) {
+    <fieldset class="bulk-actions">
+        <label for="search">@T("Search:")</label>
+        @Html.TextBoxFor(m => m.SearchExpression)
+
+        <button type="submit">@T("Search")</button>
+        <a href="@Url.Action("Index")">@T("Clear")</a>
+    </fieldset>
+}
+
+<fieldset class="contentItems bulk-items">
+    <ul>
+        @{
+            foreach(var questionnaire in Model.Questionnaires) {
+                <li>
+                    <div class="summary" itemscope="itemscope" itemid="@questionnaire.Id" itemtype="http://orchardproject.net/data/ContentItem">
+                        <div class="properties">
+                            <h3>
+                                <a href="@Url.Action("Detail", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires", idQuestionario = questionnaire.Id })">
+                                    @(((dynamic)questionnaire).TitlePart.Title)
+                                </a>
+                            </h3>
+                            <div class="metadata">
+                                @{
+                                    CommonPart commonPart = (((dynamic)questionnaire).CommonPart);
+                                    DateTime? modifiedUtc = commonPart.As<CommonPart>() == null ? null : commonPart.As<CommonPart>().ModifiedUtc;
+                                    IUser owner = commonPart.As<CommonPart>() == null ? null : commonPart.As<CommonPart>().Owner;
+                                    //string language = commonPart.As<LocalizationPart>() == null ? null : commonPart.As<LocalizationPart>().Culture.Culture;
+                                    string language = (commonPart.As<LocalizationPart>() == null || commonPart.As<LocalizationPart>().Culture == null) ? 
+                                        null : commonPart.As<LocalizationPart>().Culture.Culture;
+                                    
+                                    <ul class="pageStatus">
+                                        <li>
+                                            @if (modifiedUtc.HasValue) {
+                                                @T("Last modified: {0}", Display.DateTimeRelative(DateTimeUtc: modifiedUtc.Value))
+                                            }
+                                            &nbsp;&#124;&nbsp;
+                                        </li>
+                                        <li>@T("By {0}", owner == null ? T("unknown").ToString() : Convert.ToString(Html.ItemDisplayText(owner)))</li>
+                                    </ul>
+                                    if (!String.IsNullOrWhiteSpace(language)) {
+                                        <br />
+                                        <ul class="pageStatus">
+                                            <li>@T("Language: {0}", language)</li>
+                                        </ul>
+                                    }
+                                 }
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</fieldset>
+
+@Display(Model.Pager)

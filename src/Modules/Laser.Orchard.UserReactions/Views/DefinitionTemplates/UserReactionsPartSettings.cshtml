@@ -1,0 +1,31 @@
+﻿@model Laser.Orchard.UserReactions.Models.UserReactionsPartSettings
+<fieldset>
+    <legend></legend>
+    <div>
+        @Html.LabelFor(m => m.UserChoiceBehaviour, T("User Choice Behaviour"))
+        @Html.EnumDropDownListFor(m => m.UserChoiceBehaviour)
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.Filtering, new { @checked = "checked", @class = "check-box" })
+        <label for="@Html.FieldIdFor(m => m.Filtering)" class="forcheckbox">@T("Required filtered reactions")</label>
+    </div>
+    <div>
+       
+         @{
+       
+             for (int x = 0; x < Model.TypeReactionsPartsSelected.Count();x++ ) {
+                 <div>
+                                @Html.HiddenFor(m => m.TypeReactionsPartsSelected[x].Id)
+                                @Html.HiddenFor(m => m.TypeReactionsPartsSelected[x].nameReaction)
+
+                                @Html.CheckBoxFor(m => m.TypeReactionsPartsSelected[x].checkReaction, new { @checked = "checked", @class = "check-box" }) 
+                    <label for="@Html.FieldIdFor(m => m.TypeReactionsPartsSelected[x].nameReaction)" class="forcheckbox">@T(Model.TypeReactionsPartsSelected[x].nameReaction.ToString())</label>   
+                 </div>
+             }
+     
+             
+            
+    } 
+    
+    </div>
+</fieldset>

@@ -1,0 +1,36 @@
+﻿/* CSS3 Styled Buttons */
+.addthis_share_btn a, .addthis_share_btn a:visited
+{
+    background: #222 url(images/btn-overlay.png) repeat-x;
+    display: inline-block;
+    padding: 6px 12px;
+    font-family: arial,helvetica,lucida,verdana,sans-serif;
+    font-size: 12px;
+    line-height: 1em;
+    color: #fff;
+    text-decoration: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    position: relative;
+    cursor: pointer;
+}
+.addthis_share_btn a:hover
+{
+    background-color: #111;
+    color: #fff;
+}
+.addthis_share_btn a:active
+{
+    top: 1px;
+}
+.addthis_share_btn a span, .addthis_share_btn:visited a span
+{
+    background: url(images/icon-addthis.gif) no-repeat left;
+    padding: 1px 0 1px 18px;
+}

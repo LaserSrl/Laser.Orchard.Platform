@@ -1,0 +1,10 @@
+﻿AntiForgery: enabled
+Author: Lorenzo Frediani - Laser srl
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.8
+Features:
+    Laser.Orchard.UserProfiler:
+		Name: Laser UserProfiler
+		Description: Tracks navigation beahaviour of the logged in user based on ContentItem's informations (Tags)
+		Dependencies: Orchard.Users, Orchard.Tags,Orchard.Projections,Orchard.Forms, Laser.Orchard.StartupConfig, Orchard.Workflows, Laser.Orchard.CommunicationGateway

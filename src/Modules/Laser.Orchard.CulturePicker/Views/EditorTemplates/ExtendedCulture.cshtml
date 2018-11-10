@@ -1,0 +1,14 @@
+﻿@model Laser.Orchard.CulturePicker.Models.ExtendedCultureRecord
+<tr>
+    <td>
+        @Model.CultureCode
+        @Html.HiddenFor(settings => settings.Id)
+        @Html.HiddenFor(settings => settings.CultureCode)
+    </td>
+    <td>
+        @Html.EditorFor(settings => settings.Priority)
+    </td>
+    <td>
+        @Html.EditorFor(settings => settings.DisplayName, new { Class = "textLarge" })
+    </td>
+</tr>

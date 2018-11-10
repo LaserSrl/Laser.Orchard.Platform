@@ -1,0 +1,6 @@
+﻿<Placement>
+  <Place Parts_UserReactions_SummaryAdmin="Content:after"/>
+  <Place Parts_UserReactions_Edit="Content:3" />
+  <Place Parts_UserReactions_Detail="Content:after" />
+  <Place Parts_UserReactions_Summary="Content:after" />
+</Placement> 

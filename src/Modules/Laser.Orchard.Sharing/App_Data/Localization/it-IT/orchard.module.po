@@ -1,0 +1,46 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Preview of available modes is available here: "
+msgstr "L'anteprima dei modi disponibili è consultabile qui:"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Share bar display style"
+msgstr "Stile di visualizzazione della barra di condivisione"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
+msgid "AddThis PubId code"
+msgstr "AddThis codice PubId"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
+msgid "AddThis service account"
+msgstr "Account del servizio AddThis"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
+msgid "Content sharing settings"
+msgstr "Impostazioni di condivisione del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
+msgid "PubId is the code that identify your AddThis account, you can find it on https://www.addthis.com/dashboard#dashboard-analytics/ in the GET YOUR CODE tab"
+msgstr "PubId è il codice che identifica l'account di AddThis, si può trovare all'indirizzo https://www.addthis.com/dashboard#dashboard-analytics/ nella pagina "GET YOUR CODE""
+
+msgctxt "Laser.Orchard.Sharing.Drivers.ShareBarSettingsPartDriver"
+msgid "Content sharing settings updated successfully"
+msgstr "le impostazioni del Content sharing sono state correttamente salvate"
+
+msgctxt "Laser.Orchard.Sharing.Drivers.ShareBarSettingsPartDriver"
+msgid "Error during content sharing settings update!"
+msgstr "Errore durante il salvataggio delle impostazioni del Content sharing!"
+
+msgctxt "Laser.Orchard.Sharing.MissingSettingsBanner"
+msgid "Content sharing settings needs to be configured."
+msgstr "E' necessario configurare le impostazioni di condivisione del contenuto."
+

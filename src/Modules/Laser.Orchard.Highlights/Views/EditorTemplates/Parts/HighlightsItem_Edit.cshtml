@@ -1,0 +1,43 @@
+﻿@using Laser.Orchard.Highlights.Enums
+@model Laser.Orchard.Highlights.Models.HighlightsItemPart
+@{
+    Style.Require("Highlights").AtHead();   
+}
+
+@{
+
+    // nel caso in cui la variabile di sessione sia vuota indica che è la prima volta che entriamo in edit sulla maschera
+    // nel caso in cui ci spostiamo per gestire la traduzione sulla stessa pagina manteniamo il valore salvato per permettere
+    // il ritorno alla pagina di gestione del gruppo di provenienza
+    
+    //if (Session["retRitorno"] == null)
+    //{
+    //    Session.Add("retRitorno", ViewContext.RequestContext.HttpContext.Request.UrlReferrer.PathAndQuery);
+    //}
+
+}
+
+<fieldset class="mb-campi-input">
+
+    @Html.HiddenFor(m => m.HighlightsGroupPartRecordId)
+
+    <div>
+        @T("Title size"): @Html.DropDownListFor(m => m.TitleSize, new SelectList(Enum.GetValues(typeof(TitleSize)), Model.TitleSize))
+    </div>
+    <div>@T("Second line of the title"): @Html.TextBoxFor(m => m.Sottotitolo, new { @class = "large text" })</div>
+    <div>
+        @T("Link Target"): @Html.DropDownListFor(m => m.LinkTarget, new SelectList(Enum.GetValues(typeof(LinkTargets)), Model.LinkTarget))
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        @T("Link to video"): @Html.CheckBoxFor(m => m.Video)
+    </div>
+    <div>@T("Link Url"): @Html.TextBoxFor(m => m.LinkUrl, new { @class = "large text" })</div>
+    <div>@T("Link Text"): @Html.TextBoxFor(m => m.LinkText, new { @class = "large text" })</div>
+
+    <div>@T("Order"): <span class="mb-campi-show">@Model.ItemOrder</span></div>
+
+    @*<!-- <div id="mb-bntRitorno">@Html.Link(T("Back").Text, Session["retRitorno"].ToString(), new { Class = "button", id = "bntRitorno" })    </div>  -->*@
+</fieldset>
+
+

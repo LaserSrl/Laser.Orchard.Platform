@@ -1,0 +1,18 @@
+﻿@using Laser.Orchard.Commons.Helpers;
+
+@model Laser.Orchard.AdminToolbarExtensions.Models.SummaryAdminToolbarPartSettings
+@{
+
+    Script.Require("jQuery_NestedModels").AtHead();
+}
+<fieldset>
+    <legend>@T("Admin action labels")</legend>
+    <div>
+        <i class="fa fa-plus" style="color: green"></i>
+        @Html.LinkToAddNestedForm(x => x.Labels, T("Add action label").Text, "#actlabel", ".j_actlabel")
+        <div id="actlabel">
+            @Html.EditorFor(x => x.Labels)
+        </div>
+    </div>
+    <span class="hint">@T("The Custom URL is a series of parameter to append to the query string (i.e. param1=value1&amp;param2=value2)")</span>
+</fieldset>

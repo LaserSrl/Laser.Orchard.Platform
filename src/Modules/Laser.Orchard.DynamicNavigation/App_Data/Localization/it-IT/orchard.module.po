@@ -1,0 +1,26 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.DynamicNavigation/Views/EditorTemplates/Parts/DynamicMenu.cshtml"
+msgid "Select how many levels to show."
+msgstr "Selezionare il numero di livelli da visualizzare."
+
+msgctxt "~/Modules/Laser.Orchard.DynamicNavigation/Views/EditorTemplates/Parts/DynamicMenu.cshtml"
+msgid "Select if you want to render first level menu item brothers."
+msgstr "Selezionare se si vuole visualizzare i fratelli del primo livello di menu."
+
+msgctxt "~/Modules/Laser.Orchard.DynamicNavigation/Views/EditorTemplates/Parts/DynamicMenu.cshtml"
+msgid "Select which menu do you want to dynamically render."
+msgstr "Selezionare quale menu si vuole visualizzare dinamicamente."
+
+msgctxt "~/Modules/Laser.Orchard.DynamicNavigation/Views/EditorTemplates/Parts/DynamicMenu.cshtml"
+msgid "Show first level menu item brothers"
+msgstr "Visualizza i fratelli del primo livello di menu"
+

@@ -1,0 +1,12 @@
+﻿@if (Model.PushSent)
+{
+    <span style="color:green;font-weight:bold"><i class="fa fa-mobile"></i>@string.Format("({0}/{1})", Model.PushSentNumber, Model.TargetDeviceNumber)</span>
+}
+else if (Model.ToPush)
+{
+    <span style="color:orange;font-weight:bold"><i class="fa fa-mobile"></i></span>
+}
+else
+{
+    <span style="color:red;font-weight:bold"><i class="fa fa-mobile"></i></span>
+}

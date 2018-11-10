@@ -1,0 +1,106 @@
+/*Vertical banners 300x600*/
+.krakebanner.vertical .krakebanner-container {
+	background-image: url('images/bannerGPFF/bg_verticale.jpg');
+	background-size: cover;
+	width:300px;
+	height:600px;
+    margin: auto;
+}
+
+.krakebanner.vertical .krakebanner-background{
+	background-image: url('images/bannerGPFF/phone.png');
+	background-size: 90%;
+	background-repeat: no-repeat;
+    background-position: 60px 395px;
+	width:300px;
+	height:600px;
+}
+.krakebanner.vertical .krakebanner-logo img {
+	width:50%;
+}
+.krakebanner.vertical .krakebanner-logo {
+	margin: auto;
+	text-align: center;
+	padding-top: 60px;
+}
+.krakebanner.vertical .krakebanner-stores {
+	margin: auto;
+	text-align: center;
+	padding-top: 30px;
+}
+.krakebanner.vertical .krakebanner-stores img {
+	margin: auto;
+	width:50%;
+}
+/*Horizontal banners 728x90*/
+.krakebanner.horizontal .krakebanner-container {
+	background-image: url('images/bannerGPFF/bg_orizzontale.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	width:728px;
+	height:90px;
+    margin: auto;
+	background-position-y: bottom;
+}
+
+.krakebanner.horizontal .krakebanner-background{
+	background-image: url('images/bannerGPFF/phone.png');
+	background-size: 25%;
+	background-repeat: no-repeat;
+    background-position: top right;
+	width:728px;
+	height:90px;
+}
+.krakebanner.horizontal .krakebanner-logo img {
+	width:70%;
+}
+.krakebanner.horizontal .krakebanner-logo {
+	float:left;
+	padding: 10px 0 0 10px;
+	width: 105px;
+}
+.krakebanner.horizontal .krakebanner-stores {
+	float:left;
+	margin: 0 0 0 50px;
+	padding: 15px 0 0 10px;
+	width: 500px;
+}
+.krakebanner.horizontal .krakebanner-stores img {
+	width:30%;
+}
+
+/*Rectangle banners 300x250*/
+.krakebanner.rectangle .krakebanner-container {
+	background-image: url('images/bannerGPFF/bg_verticale.jpg');
+	background-size: cover;
+	width:300px;
+	height:250px;
+    margin: auto;
+	background-position-y: bottom;
+}
+
+.krakebanner.rectangle .krakebanner-background{
+	background-image: url('images/bannerGPFF/phone.png');
+	background-size: 25%;
+	background-repeat: no-repeat;
+    background-position: 60px 395px;
+	width:300px;
+	height:250px;
+}
+.krakebanner.rectangle .krakebanner-logo img {
+	width:45%;
+}
+.krakebanner.rectangle .krakebanner-logo {
+	margin: auto;
+	text-align: center;
+	padding-top: 20px;
+}
+.krakebanner.rectangle .krakebanner-stores {
+	margin: auto;
+	text-align: center;
+	padding-top: 15px;
+}
+.krakebanner.rectangle .krakebanner-stores img {
+	margin: auto;
+	width:40%;
+}

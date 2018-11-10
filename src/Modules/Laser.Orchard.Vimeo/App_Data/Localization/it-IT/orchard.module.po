@@ -1,0 +1,430 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid " Add new token"
+msgstr "Aggiungi un token"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Album Name"
+msgstr "Nome dell'album"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "All Audiences"
+msgstr "Ogni tipo di pubblico"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Always upload to this album."
+msgstr "Aggiungi i video a questo album"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Always upload to this channel."
+msgstr "Aggiungi i video a questo canale"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Always upload to this group."
+msgstr "Aggiungi i video a questo gruppo"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Authorized Access Token"
+msgstr "Token di accesso autorizzato"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Can the video be added to channels, groups, or albums?"
+msgstr "Il video può essere aggiunto a canali, gruppi o album?"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Can the video be downloaded?"
+msgstr "Il video può essere scaricato?"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Categorization for the uploads"
+msgstr "Categorizzazione per gli upload"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Channel Name"
+msgstr "Nome canale"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Comma separated domains whitelist"
+msgstr "Lista di domini validi, separati da virgola"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Content ratings"
+msgstr "Valutazione dei contenuti"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Default video settings"
+msgstr "Impostazioni video di default"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Do not check the options here unless they are actually needed, to decrease the likelyhood of overloading the Vimeo API servers."
+msgstr "Non selezionare le opzioni successive a meno che non si sia sicuri di averne bisogno, in modo da limitare il numero di chiamate verso i server di Vimeo."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Get your tokens on "
+msgstr "Procurati i token su"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Group Name"
+msgstr "Nome Gruppo"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Insert your authorized Access Token. You can find it in your Vimeo App settings."
+msgstr "Inserisci il tuo Token di accesso autorizzato. Lo trovi nelle impostazioni della tua App di Vimeo."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Insert your authorized Access Token. You cna find it inr your Vimeo App settings."
+msgstr "Inserisci il tuo Token di accesso autorizzato. Lo trovi nelle impostazioni della tua App di Vimeo."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Mature"
+msgstr "Contenuti maturi"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Test"
+msgstr "Test"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Videos will be uploaded to/ read from this album. Leave blank if unused."
+msgstr "I video potranno essere caricati su e letti da questo album. Se non utilizzato, lasciare il campo vuoto."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Videos will be uploaded to/ read from this channel. Leave blank if unused."
+msgstr "I video potranno essere caricati su e letti da questo canale. Se non utilizzato, lasciare il campo vuoto."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Videos will be uploaded to/ read from this group. Leave blank if unused."
+msgstr "I video potranno essere caricati su e letti da questo gruppo. Se non utilizzato, lasciare il campo vuoto."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Where can the video be embedded?"
+msgstr "Dove può essere incluso il video?"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Who can comment on the video?"
+msgstr "Chi può commentare sul video?"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/Admin/Index.cshtml"
+msgid "Who can view the video?"
+msgstr "Chi può visualizzare il video?"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Attempts at communication with Vimeo's servers failed. Try again later."
+msgstr "Impossibile comunicare con i servers di Vimeo. Ritenta più tardi."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Click here or drop a video file"
+msgstr "Clicca qui, o trascina e rilascia un file video"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Critical error while contacting servers."
+msgstr "Errore critico nel tentativo di contattare i servers"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Critical error while uploading"
+msgstr "Errore critico durante il tentativo di upload"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Upload complete for media part"
+msgstr "Upload completato"
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
+msgid "Uploading: do not leave this page or close the browser."
+msgstr "Upload in corso: non lasciare la pagina o chiudere il browser."
+
+msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
+msgid "Vimeo"
+msgstr "Vimeo"
+
+msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
+msgid "Vimeo video has been published."
+msgstr "Il video è stato pubblicato su Vimeo."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "{0}"
+msgstr "{0}"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Access Token not valid"
+msgstr "Token di accesso non valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Access Token Valid"
+msgstr "Token di accesso valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Access Tokens are not valid: {0}{1}"
+msgstr "Gli Access Tokens non sono validi: {0}{1}"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Access Tokens are valid"
+msgstr "Gli Access Tokens sono validi."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Album Name not valid"
+msgstr "Nome dell'album non valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Album Name Valid"
+msgstr "Nome dell'album valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Channel Name not valid"
+msgstr "Nome canale non valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Channel Name Valid"
+msgstr "Nome canale valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Group Name not valid"
+msgstr "Nome del gruppo non valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Group Name Valid"
+msgstr "Nome del gruppo valido"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Not allowed to manage Vimeo settings"
+msgstr "Non autorizzato a gestire i settings per Vimeo"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
+msgid "Too many requests to Vimeo. Rate limits will reset on {0} UTC"
+msgstr "Troppe richieste a Vimeo. I limiti si resetteranno al tempo {0} UTC."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "Error: Not enough upload quota available"
+msgstr "Errore: la quota di upload disponibile non è sufficiente."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "Everything is fine"
+msgstr "Nessun errore"
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "The upload has completed, but there was an error while handling the finishing touches."
+msgstr "L'upload è completato, ma c'è stato un errore durante la gestione dei passaggi di rifinitura."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "The upload is still in progress."
+msgstr "L'upload è ancora in corso."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "The upload process has finished."
+msgstr "Il processo di upload è terminato."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "The upload was never started, or the MediaPart is not for a Vimeo video."
+msgstr "L'upload non è mai cominciato, o la MediaPart non contiene un video di Vimeo."
+
+msgctxt "Laser.Orchard.Vimeo.Controllers.VimeoUploadController"
+msgid "Unknown error."
+msgstr "Errore sconosciuto"
+
+msgctxt "Laser.Orchard.Vimeo.Navigation.AdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.Vimeo.Navigation.AdminMenu"
+msgid "Vimeo"
+msgstr "Vimeo"
+
+msgctxt "Laser.Orchard.Vimeo.Providers.VimeoMenu"
+msgid "Upload to Vimeo"
+msgstr "Carica su Vimeo"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "{0}"
+msgstr "{0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access Denied: cannot add video. {0}"
+msgstr "Accesso negato: impossibile aggiungere il video. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access Denied: user is not allowed to create a channel. {0}"
+msgstr "Accesso negato: l'utente non è autorizzato a creare un canale. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access Denied: user is not allowed to create a Group. {0}"
+msgstr "Accesso negato: l'utente non è autorizzato a creare un gruppo. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access Denied: user is not allowed to create an album. "
+msgstr "Accesso negato: l'utente non è autorizzato a creare un album."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access Denied: user is not allowed to create an album. {0}"
+msgstr "Accesso negato: impossibile creare l'album. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Access token not valid"
+msgstr "Token di accesso non valido"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Album created"
+msgstr "Album creato"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Album Name valid"
+msgstr "Nome dell'album valido"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Bad Request: on of the parameters is invalid. "
+msgstr "Errore nella richiesta: uno dei parametri non è valido."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Bad Request: one of the parameters is invalid. {0}"
+msgstr "Errore nella richiesta: uno dei parametri non è valido. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cannot access album"
+msgstr "Impossibile accedere all'album"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cannot access channel"
+msgstr "Impossibile accedere al canale"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cannot access group"
+msgstr "Impossibile accedere al gruppo"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cannot identify video"
+msgstr "Impossibile identificare il video"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Channel created"
+msgstr "Canale creato"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Channel Name valid"
+msgstr "Nome canale valido"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cleared records of complete uploads"
+msgstr "Ripuliti i records degli uploads completati"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Cleared records of uploads in progress"
+msgstr "Ripuliti i records degli uploads in corso"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Clearing references to uploads for MediaPart {0}"
+msgstr "Ripulendo i riferimenti agli uploads per la MediaPart {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Did not have to add."
+msgstr "Non c'era niente da aggiungere"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Do not tamper with the data in the page."
+msgstr "Non modificare le informazioni della pagina."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Failed to create album. Internal message: {0}"
+msgstr "Fallimento nel creare l'album. Messaggio: {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Failed to create channel. Internal message: {0}"
+msgstr "Fallimento nel creare il canale. Messaggio: {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Failed to create group. Internal message: {0}"
+msgstr "Fallimento nel creare il gruppo. Messaggio: {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Failed to read response"
+msgstr "Errore nella lettura della risposta"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Failed to remove video on Vimeo.com"
+msgstr "Tentativo di eliminare il video da vimeo.com fallito."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Group created"
+msgstr "Gruppo creato"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Group Name valid"
+msgstr "Nome del gruppo valido"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Http error when adding video to channel. Response {0}:{1}"
+msgstr "Errore http nel tentare di aggiungere il video al canale. Risposta {0}:{1}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Http error when adding video to group. Response {0}:{1}"
+msgstr "Errore http nel tentare di aggiungere il video al gruppo. Risposta {0}:{1}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Rate error on token {0}"
+msgstr "Errore di rate sul token {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Record is null"
+msgstr "Il record è null"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Removed MediaPart"
+msgstr "Rimossa MediaPart"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Removed video on Vimeo.com"
+msgstr "Video rimosso da Vimeo.com"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Resource not found. {0}"
+msgstr "Risorsa non trovata. {0}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "The password must not be an empty string."
+msgstr "La password non può essere vuota."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Token {0} not valid."
+msgstr "Token {0} non valido."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Token {0} not valid. {1}"
+msgstr "Token {0} non valido. {1}"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Too many requests to Vimeo. Rate limits will reset on {0} UTC"
+msgstr "Troppe richieste a Vimeo. I limiti si resetteranno al tempo {0} UTC."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Unknown error"
+msgstr "Errore sconosciuto"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "Video not found"
+msgstr "Video non trovato"
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "View model cannot be null."
+msgstr "Il modello non può essere null."
+
+msgctxt "Laser.Orchard.Vimeo.Services.VimeoServices"
+msgid "You need to add at least one Access Token."
+msgstr "Deve essere inserito almeno un Access Token."
+

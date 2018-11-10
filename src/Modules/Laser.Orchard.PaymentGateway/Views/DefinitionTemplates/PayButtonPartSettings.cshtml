@@ -1,0 +1,12 @@
+﻿@model Laser.Orchard.PaymentGateway.Models.PayButtonPartSettings
+@Display.TokenHint()
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.AmountField)
+        @Html.TextBoxFor(m => m.AmountField, new { required = "required", @class = "text medium tokenized" })
+        @Html.LabelFor(m => m.CurrencyField)
+        @Html.TextBoxFor(m => m.CurrencyField, new { @class = "text medium tokenized" })
+        @Html.LabelFor(m => m.DefaultCurrency)
+        @Html.TextBoxFor(m => m.DefaultCurrency, new { required = "required", @class = "text medium" })
+    </div>
+</fieldset>

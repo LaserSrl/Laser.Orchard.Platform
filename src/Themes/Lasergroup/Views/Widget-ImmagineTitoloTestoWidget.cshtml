@@ -1,0 +1,19 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="space-40"></div>
+<div class="space-40"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-5 col-lg-4 text-center">
+            <img src="@item.ImmagineTitoloTestoWidget.Image.FirstMediaUrl" title="@item.ImmagineTitoloTestoWidget.Image.MediaParts[0].Title" alt="@item.ImmagineTitoloTestoWidget.Image.MediaParts[0].AlternateText" class="img-responsive">
+        </div>
+        <div class="col-xs-12 col-md-7 col-lg-8">
+            <h4 class="business-claim">@item.ImmagineTitoloTestoWidget.TitoloDettaglio.Value</h4>
+            <div class="business-description">
+                @Html.Raw(@item.BodyPart.Text)
+            </div>
+        </div>
+    </div>
+</div>

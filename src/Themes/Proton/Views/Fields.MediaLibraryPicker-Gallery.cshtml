@@ -1,0 +1,26 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+
+@{
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    var field = (MediaLibraryPickerField)Model.ContentField;
+    string name = field.DisplayName;
+    var contents = field.MediaParts;
+    var i = 0;
+}
+@if (contents.Count() > 0) {
+    <div class="clearfix"></div>
+    <div class="gallery clearfix row-fluid">
+        @foreach (var content in contents) {
+            <div class="span4" style="@(((i + 1) % 3) == 1 ? "margin-left: 0" : "")">
+                <div class="p-thumb">
+                    <a rel="prettyPhoto[gallery]" href="@content.MediaUrl" title="@content.Title">
+                        <img src="@Display.ResizeMediaUrl(Width: 627, Height: 419, Mode: "crop", Alignment: "middlecenter", Path: content.MediaUrl)" alt="@content.AlternateText" style="opacity: 1;"></a>
+                </div>
+            </div>
+            i++;
+        }
+    </div>            
+}

@@ -1,0 +1,9 @@
+﻿@{
+    string bodyHtml = Model.ContentItem.BodyPart.Text;
+    var body = new HtmlString(Html.Excerpt(bodyHtml, 200).ToString());
+}
+<dd>
+    @Html.Raw(body)
+    <br />
+    @Html.ItemDisplayLink(T("More").ToString(), (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+</dd>

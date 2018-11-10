@@ -1,0 +1,9 @@
+﻿@model Laser.Orchard.Pdf.ViewModels.PdfButtonPartVM
+@foreach (var button in Model.ButtonsSettings.PdfButtons) {
+    if (button.PublishedVersionOfContent) {
+        <button type="button" onclick="window.location.href='@Url.Action("Generate", "Pdf", new { @area = "Laser.Orchard.Pdf", @id=Model.ContentId, @pid=button.Position })';">@button.Label</button>
+    } else {
+        <button type="button" onclick="window.location.href='@Url.Action("Preview", "Pdf", new { @area = "Laser.Orchard.Pdf", @id=Model.ContentId, @pid=button.Position })';">@button.Label</button>
+    }
+}
+

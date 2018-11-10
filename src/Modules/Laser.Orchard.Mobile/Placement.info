@@ -1,0 +1,19 @@
+﻿<Placement>
+  <Place Parts_PushMobileSettings_Edit="Content:0" SmsSettingsPart_Edit="Content:1" SmsPlaceholdersSettings_Edit="Content:2" />
+  <Place Parts_UserAgentRedirect_Edit="Content:1" Parts_UserAgentRedirect="Content"/>
+  <Place Parts_BannerAgent_Edit="Content:1" Parts_BannerAgent="Content"/>
+  <Place Parts_MobilePush_Edit="Content:5" />
+  <Place Parts_MobilePushApproved_Edit="Content:10" />
+  <Place Parts_MobileContact_Edit="Content:5" />
+  <Place Fields_ContentPicker_Edit__MobilePushPart-RelatedContent="Content:5.1" />
+  <Place Parts_UserPwdRecoveryPart_Edit="Content:2" />
+  
+  <Match ContentType="CommunicationAdvertising">
+    <Match DisplayType="Summary">
+      <Place Parts_MobilePush="Content:5.2" Parts_SmsGateway_SummaryAdmin="Content:5.3"/>
+    </Match>
+    <Place Parts_MobilePush_Edit="Content:5.4" />
+    <Place Parts_SmsGateway_Edit="Content:5.5" />
+    <Place Fields_ContentPicker_Edit__MobilePushPart-RelatedContent="-" />
+  </Match>
+</Placement>

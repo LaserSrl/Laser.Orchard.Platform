@@ -1,0 +1,22 @@
+﻿@model Laser.Orchard.InsertStuff.Settings.InsertStuffFieldSettings
+@using Laser.Orchard.InsertStuff.Settings
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.StyleList)">@T("Stylesheets")</label>
+    @Html.TextAreaFor(m => m.StyleList, new { @class = "textMedium", rows = "2" })
+    <span class="hint">@T("List of stylesheets in module's Styles folder to include on the edit page (separated by returns, full filename)")</span>
+    @Html.ValidationMessageFor(m => m.StyleList)
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.ScriptList)">@T("Scripts")</label>
+    @Html.TextAreaFor(m => m.ScriptList, new { @class = "textMedium", rows = "2" })
+    <span class="hint">@T("List of scripts in module's Scripts folder to include on the edit page (separated by returns, full filename). jquery.validate.min.js is auto-included.")</span>
+    @Html.ValidationMessageFor(m => m.ScriptList)
+</fieldset>
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.RawHtml)">@T("Raw HTML")</label>
+    @Html.TextAreaFor(m => m.RawHtml, new { @class = "textMedium", rows = "5" })
+    <span class="hint">@T("Raw Html to include in the same order this field is displayed on the edit page.")</span>
+    @Html.ValidationMessageFor(m => m.RawHtml)
+    @Html.EditorFor(x => x.OnFooter)@T("RawHtml on footer ('used for include RawHtml javascript on footer')")
+</fieldset>

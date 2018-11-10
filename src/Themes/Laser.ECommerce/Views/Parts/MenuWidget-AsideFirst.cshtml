@@ -1,0 +1,60 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Taxonomies.Models
+@using Orchard.Widgets.Models
+@{
+    var Menu = Model.Menu;
+
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+    var taxonomyItems = items.Where(it => it.Content is TermPart && it.Item.Items.Length > 0).ToArray();
+    var otherItems = items.Except(taxonomyItems);
+
+    var contentItem = (ContentItem)Model.ContentItem;
+    var widgetPart = contentItem.As<WidgetPart>(); //menu widget is a widget, of course
+    var title = widgetPart.Title;
+}
+<div class="products_grid_left_grid">
+    <h3>@title</h3>
+    <div class="products_grid_left_grid_sub">
+        @if (taxonomyItems.Any()) {
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                @for (int i = 0; i < taxonomyItems.Length; i++) {
+                    var item = taxonomyItems[i];
+                    var collapseString = "collaspe-" + i;
+                    var divId = "heading-" + i;
+                    var expanded = i == 0;
+                    var aClass = "pa_italic" + (expanded ? "" : " collapsed");
+                    var divClass = "panel-collapse collapse" + (expanded ? " in" : "");
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="@divId">
+                            <h4 class="panel-title asd">
+                                <a class="@aClass" role="button" data-toggle="collapse" data-parent="#accordion" href="#@collapseString" aria-expanded="@expanded.ToString()" aria-controls="@collapseString">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><i class="glyphicon glyphicon-minus" aria-hidden="true"></i>@item.Text
+                                </a>
+                            </h4>
+                        </div>
+                    </div>
+                    <div id="@collapseString" class="@divClass" role="tabpanel" aria-labelledby="@divId">
+                        <div class="panel-body panel_text">
+                            <ul>
+                                @foreach (var subItem in item.Items) {
+                                    <li>
+                                        @Display(subItem)
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        @if (otherItems.Any()) {
+            <ul class="panel_bottom">
+                @foreach (var item in otherItems) {
+                    <li>
+                        @Display(item)
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

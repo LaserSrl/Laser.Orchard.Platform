@@ -1,0 +1,27 @@
+﻿<Placement>
+  <Place Parts_NewsletterDefinition_Edit="Content:10.1" />
+  <Place Parts_SendNewsletterButton="Sidebar:25.1" />
+  
+  <Place Parts_Announcement_Edit="Content:10.1" />
+  <Place Fields_MediaLibraryPicker_Edit__AnnouncementPart-PreviewImage="Content:10.2"/>
+
+  <Place Fields_MediaLibraryPicker__AnnouncementPart-PreviewImage="-"/>
+  <Place Fields_MediaLibraryPicker_Summary__AnnouncementPart-PreviewImage="-"/>
+  <Place Fields_MediaLibraryPicker_SummaryAdmin__AnnouncementPart-PreviewImage="-"/>
+
+  <Place Fields_Common_Text_Edit__AnnouncementPart-Abstract="Content:10.3" />
+  <Place Fields_Common_Text__AnnouncementPart-Abstract="-" />
+  <Place Fields_Common_Text_Summary__AnnouncementPart-Abstract="-" />
+  <Place Fields_Common_Text_SummaryAdmin__AnnouncementPart-Abstract="-" />
+
+
+  <Place Parts_Announcement_SummaryAdmin="-" />
+  <Place Parts_Announcement_Summary="-" />
+  
+  <Place Parts_NewsletterEdition_Edit="Content:10.1" />
+  <Place Parts_SubscriberRegistration_SummaryAdmin="-"/>
+  <Place Parts_SubscriberRegistration_Summary="-"/>
+  <Place Parts_SubscriberRegistration="Content:10.1"/>
+  <Place Parts_SubscriberRegistration_Edit="Content:1.1"/>
+
+</Placement>

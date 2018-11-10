@@ -1,0 +1,15 @@
+﻿@using Orchard.Utility.Extensions
+@using Orchard.Workflows.Helpers
+
+@{
+    var outcomes = ((string)Model.State.RazorExecuteActivity_Outcomes).FormatOutcomesJson();
+    //string name = Model.Name;
+    //string actions = Model.State.RazorExecuteActivity_Outcomes;
+    //var outcomes = String.Join(",", actions == null ? new string[0] : actions.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => "'" + x.Trim() + "'").ToArray());
+}
+
+<div data-outcomes="@outcomes" title="@Model.State.RazorExecuteActivity_RazorView">
+    <div>Razor Execute<br />@Model.State.RazorExecuteActivity_RazorView</div>
+    @*@name.CamelFriendly()*@
+</div>
+

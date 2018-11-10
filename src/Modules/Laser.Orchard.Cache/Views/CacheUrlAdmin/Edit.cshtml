@@ -1,0 +1,40 @@
+﻿@model Laser.Orchard.Cache.Models.CacheUrlRecord
+@using (Html.BeginForm("Edit", "CacheUrlAdmin", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+
+<div class="singleCacheUrl">
+    <fieldset>
+        <label>@T("Url Scrap")</label>
+        @Html.TextBoxFor(m => m.CacheURL, new { @class = "text large" })
+        @Html.HiddenFor(m => m.Id)
+        <div style="float:left">
+            <label>@T("Duration")</label>
+            @Html.TextBoxFor(m => m.CacheDuration, new { @class = "text small" })
+            <span class="hint">@T("Seconds, enter 0 to disable caching for the url.")</span>
+        </div>
+        <div style="float:left">
+            <label>@T("Grace Time")</label>
+            @Html.TextBoxFor(m => m.CacheGraceTime, new { @class = "text small" })
+            <span class="hint">@T("Seconds, enter 0 to disable gracetime for the url.")</span>
+        </div>
+        <div>
+            <label>@T("Priority")</label>
+            @Html.TextBoxFor(m => m.Priority, new { @class = "text small" })
+        </div>
+        <br/>
+        <br />
+        <div>
+            <label>@T("User Tokens")</label>
+            @Html.TextBoxFor(m => m.CacheToken, new { @class = "text large tokenized" })
+        </div>
+         
+        @Display.TokenHint()
+    </fieldset>
+</div>
+<div style="float:right;">
+    <button name="btnDelete" type="submit" class="button primaryAction" value="Delete">@T("Delete")</button>
+    <button name="btnSave" type="submit" class="button primaryAction" value="Save">@T("Save")</button>
+
+    @*<a class="button primaryAction" href="@Url.Action("Edit", "CacheUrlAdmin", new { area = "Laser.Orchard.Cache", id = 0 })" title="@T("Save")">@T("Save")</a>*@
+</div>
+}

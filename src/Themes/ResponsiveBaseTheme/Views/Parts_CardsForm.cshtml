@@ -1,0 +1,35 @@
+﻿<form action="@Url.Action("Trigger","Signal", new { Area="Laser.Orchard.WebServices"})" method="post" class="basic-grey">
+    <input type="hidden" name="signalName" value="SendPostCard" />
+    <input type="hidden"  name="contentId" value="@Model.Id" />
+    <input type="hidden"  name="returnUrl" value="@Request.RawUrl" />
+    @Html.AntiForgeryToken()
+    <h3>@T("Send this postcard")
+        <span>@T("Please fill all the texts in the fields.")</span>
+    </h3>
+    <label>
+        <span>@T("Your Name") :</span>
+        <input id="sendername" type="text" name="sendername" placeholder="@T("Your Full Name")" />
+    </label>
+    <label>
+        <span>@T("Send From") :</span>
+        <input id="sendfrom" type="email" name="sendfrom" placeholder="@T("Your Valid Email Address")" />
+    </label>
+    
+    <label>
+        <span>@T("Recipient Name") :</span>
+        <input id="recipename" type="text" name="recipename" placeholder="@T("Your Friend Name")" />
+    </label>
+    <label>
+        <span>@T("Send To") :</span>
+        <input id="sendto" type="email" name="sendto" placeholder="@T("Valid Email Address")" />
+    </label>
+    
+    <label>
+        <span>@T("Message") :</span>
+        <textarea id="MessageText" name="MessageText" placeholder="@T("Your Message")"></textarea>
+    </label> 
+     <label>
+        <span>&nbsp;</span> 
+        <input type="submit" class="button" value="@T("Send")" /> 
+    </label>    
+</form>

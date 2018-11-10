@@ -1,0 +1,122 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/Admin/AddWidget.cshtml"
+msgid "Add Widget"
+msgstr "Aggiungi Widget"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/Admin/CreateContent.cshtml"
+msgid "New {0}"
+msgstr "Nuovo {0}"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/Admin/EditWidget.cshtml"
+msgid "Edit Widget"
+msgstr "Modifica il Widget"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Allowed widget types:"
+msgstr "Tipi di widget permessi:"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Allowed zones:"
+msgstr "Zone permesse:"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Select the zones where the widgets can be placed. If no zone is selected all of them will be available."
+msgstr "Selezionare le zone dove si potranno aggiungere dei widgets. Se nessuna zona è selezionata, saranno tutte disponibili."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Select which types of widgets can be added to the content. If no widget type is selected all of them will be available."
+msgstr "Selezionare i tipi di widget che si potrà aggiungere al contenuto. Se nessun tipo è selezionato, saranno tutti disponibili."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "-- Choose a culture to copy widgets from its version --"
+msgstr "-- Scegliere una Culture dalla cui versione copiare i widget --"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "{0} zone preview"
+msgstr "zona anteprima {0}"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Add Widgets from localized page "
+msgstr "Aggiungi i Widget dalla pagina localizzata"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item."
+msgstr "Si è sicuri di voler eliminare questo widget? Nota: il widget sarà rimosso definitivamente al salvataggio del contenuto."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Publish"
+msgstr "Pubblica"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Publish Draft"
+msgstr "Pubblica Bozza"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Unpublish"
+msgstr "Annulla Pubblicazione"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Widgets"
+msgstr "Widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Couldn't create content"
+msgstr "Non è stato possibile creare il contenuto"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Creating widget failed: {0}"
+msgstr "Creazione del widget fallita: {0}"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Editing widget failed: {0}"
+msgstr "Modifica del widget fallita: {0}"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Not authorized to manage widgets"
+msgstr "Non autorizzato alla gestione dei widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Removing Widget failed: {0}"
+msgstr "Eliminazione del widget fallita: {0}"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Widget not found: {0}"
+msgstr "Widget non trovato: {0}"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Widget was successfully deleted"
+msgstr "Il widget è stato eliminato con successo"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Your {0} has been added."
+msgstr "Il tuo {0} è stato aggiunto."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Your {0} has been created."
+msgstr "Il {0} è stato creato."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Your {0} has been saved."
+msgstr "Il tuo {0} è stato salvato."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Your content has been created."
+msgstr "Il contenuto è stato creato."
+

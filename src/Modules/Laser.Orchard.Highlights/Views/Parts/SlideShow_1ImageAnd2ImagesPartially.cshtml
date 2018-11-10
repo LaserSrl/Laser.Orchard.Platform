@@ -1,0 +1,143 @@
+﻿@using hTools = Laser.Orchard.Highlights.Shared.HelperTools;
+@using Laser.Orchard.Highlights.Models;
+@if (Model.HighlightsItems.Count > 0) {
+    var HighlightsService = WorkContext.Resolve<Laser.Orchard.Highlights.Services.IHighlightsService>();
+    Style.Require("jQuery_Cycle").AtHead();
+
+    Script.Require("jQueryColorBox").AtHead();
+    Script.Require("jQuery_CarouFredSel").AtHead();
+
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Include("slider-1ImageAnd2ImagesPartially.css").AtHead();
+
+
+    using (Script.Head()) {
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        $(document).ready(function () {
+            @{
+        var primo = ((List<dynamic>)Model.HighlightsItems).FirstOrDefault();
+                <text>var primo =  "@primo.LinkText";</text>
+                <text>var Numero = @Model.HighlightsItems.Count;</text>
+                
+        //var offsetBoxTop = "182px";
+        //var offsetBoxTopHide = "220px";
+
+        //var offsetPagTop = "0px";
+        //var offsetPagTopHide = "-38px";
+
+        //var offsetArrowPrev = "2px";
+        //var offsetArrowNext = "2px";
+        //var offsetArrowHide = "-32px";
+                
+            }
+
+
+            $('#slideshow-slider-@Model.ContentPart.Id').carouFredSel({
+                width: '100%',
+                align: false,
+                items: 3,
+                items: {
+                    width: $('#slideshow-wrapper-@Model.ContentPart.Id').width() * 0.15,
+                    height: 500,
+                    visible: 1,
+                    minimum: 1
+                },
+                scroll: {
+                    items: 1,
+                    timeoutDuration : 5000,
+                    onBefore: function(data) {
+ 
+                        //	find current and next slide
+                        var currentSlide = $('.slide.active', this),
+                            nextSlide = data.items.visible,
+                            _width = $('#slideshow-wrapper-@Model.ContentPart.Id').width();
+ 
+                        //	resize currentslide to small version
+                        currentSlide.stop().animate({
+                            width: _width * 0.15
+                        });		
+                        currentSlide.removeClass( 'active' );
+ 
+                        //	hide current block
+                        data.items.old.add( data.items.visible ).find( '.slide-block' ).stop().fadeOut();					
+ 
+                        //	animate clicked slide to large size
+                        nextSlide.addClass( 'active' );
+                        nextSlide.stop().animate({
+                            width: _width * 0.7
+                        });						
+                    },
+                    onAfter: function(data) {
+                        //	show active slide block
+                        data.items.visible.last().find( '.slide-block' ).stop().fadeIn();
+                    }
+                },
+                onCreate: function(data){
+ 
+                    //	clone images for better sliding and insert them dynamacly in slider
+                    var newitems = $('.slide',this).clone( true ),
+                        _width = $('#slideshow-wrapper-@Model.ContentPart.Id').width();
+ 
+                    $(this).trigger( 'insertItem', [newitems, newitems.length, false] );
+ 
+                    //	show images 
+                    $('.slide', this).fadeIn();
+                    $('.slide:first-child', this).addClass( 'active' );
+                    $('.slide', this).width( _width * 0.15 );
+ 
+                    //	enlarge first slide
+                    $('.slide:first-child', this).animate({
+                        width: _width * 0.7
+                    });
+ 
+                    //	show first title block and hide the rest
+                    $(this).find( '.slide-block' ).hide();
+                    $(this).find( '.slide.active .slide-block' ).stop().fadeIn();
+                }
+            });
+ 
+            //	Handle click events
+            $('#slideshow-slider-@Model.ContentPart.Id').children().click(function() {
+                $('#slideshow-slider-@Model.ContentPart.Id').trigger( 'slideTo', [this] );
+            });
+ 
+            //	Enable code below if you want to support browser resizing
+            $(window).resize(function(){
+ 
+                var slider = $('#slideshow-slider-@Model.ContentPart.Id'),
+                    _width = $('#slideshow-wrapper-@Model.ContentPart.Id').width();
+ 
+                //	show images
+                slider.find( '.slide' ).width( _width * 0.15 );
+ 
+                //	enlarge first slide
+                slider.find( '.slide.active' ).width( _width * 0.7 );
+ 
+                //	update item width config
+                slider.trigger( 'configuration', ['items.width', _width * 0.15] );
+            });
+            $("#slideshow_wrapper-@Model.ContentPart.Id .media-cbox").colorbox({ iframe: true, innerWidth: 640, innerHeight: 480 }); 
+
+        });
+        /* ]]> */
+    </script>
+    }
+    <div class="slideshow-wrapper" id="slideshow-wrapper-@Model.ContentPart.Id">
+        <div class="slideshow-slider" id="slideshow-slider-@Model.ContentPart.Id">
+            @{
+    var indexer = 0;
+            }
+            @foreach (var item in Model.HighlightsItems) {
+                indexer++;
+                if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.ByHand) {
+                @Display(item.Content)} else if (Model.ContentPart.ItemsSourceType == Laser.Orchard.Highlights.Enums.ItemsSourceTypes.FromQuery) {
+                    //FromQuery
+                    var shape = HighlightsService.CreateHighlightsItemShape(item, Model.HighlightsGroup.DisplayTemplate.ToString());
+                @Display(shape)
+                }
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}

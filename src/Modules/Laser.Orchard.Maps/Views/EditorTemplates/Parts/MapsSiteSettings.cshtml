@@ -1,0 +1,25 @@
+﻿@model Laser.Orchard.Maps.Models.MapsSiteSettingsPart
+
+<fieldset>
+    <legend>@T("Maps")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.MapsProvider)">@T("Maps provider")</label>
+        @Html.DropDownListFor(m => m.MapsProvider, new SelectList(Enum.GetNames(typeof(Laser.Orchard.Maps.MapsProviders)), Model.MapsProvider))
+        <span class="hint">@T("The maps service provider to use in entire site.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.MapsTiles)">@T("Maps tiles")</label>
+        @Html.TextBoxFor(m => m.MapsTiles, new { @class = "text large" })
+        <span class="hint">@T("The maps tiles to use in entire site.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.MaxZoom)">@T("Max. Zoom")</label>
+        @Html.TextBoxFor(m => m.MaxZoom, new { @class = "text large" })
+        <span class="hint">@T("The max supported zoom by tiles.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.GoogleApiKey)">@T("Google Api Key")</label>
+        @Html.TextBoxFor(m => m.GoogleApiKey, new { @class = "text-medium" })
+        <span class="hint">@T("Api Key provided by google.")</span>
+    </div>
+</fieldset>

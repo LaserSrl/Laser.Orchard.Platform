@@ -1,0 +1,4 @@
+﻿violence,Violence
+drugs,Drug / alcohol use
+language,Profanity / sexually suggestive content
+nudity,Nudity

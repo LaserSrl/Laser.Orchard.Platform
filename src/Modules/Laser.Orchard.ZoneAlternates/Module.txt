@@ -1,0 +1,12 @@
+﻿Name: Laser Zone Alternates
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.10
+OrchardVersion: 1.10
+Description: Zone Alternates
+Features:
+    Laser.Orchard.ZoneAlternates:
+        Description: Adds alternates for widgets based on the Zone where they are shown.
+        Dependencies: Common, Orchard.Fields, Orchard.Widgets
+        Category: Designer

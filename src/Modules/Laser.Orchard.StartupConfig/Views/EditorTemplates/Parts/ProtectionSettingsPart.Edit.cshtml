@@ -1,0 +1,46 @@
+﻿@model Laser.Orchard.StartupConfig.WebApiProtection.Models.ProtectionSettingsPart
+@using System.Security.Cryptography
+@using Orchard.Utility.Extensions
+@{
+    string encryptionAlgorithm = "AES";
+}
+<style>
+    div#extapp div:nth-child(odd) {
+        background-color: #f1efef;
+    }
+</style>
+@{
+    using (Script.Head()) {
+    <script type="text/javascript">
+        function randomString(length) {
+            var chars = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+            var result = "";
+            for (var i = length; i > 0; --i) {
+                result += chars[Math.round(Math.random() * (chars.length - 1))]
+            }
+            return result;
+        }
+    </script>
+    
+    }
+    Script.Require("jQuery_NestedModels").AtHead();
+}
+<fieldset>
+    <legend>@T("Settings - Web Api")</legend>
+    <div>
+        @Html.LabelFor(x => x.ProtectedEntries, T("Protected entries"))
+        @Html.TextAreaFor(x => x.ProtectedEntries, new { @class = "text large" })
+        @Html.ValidationMessageFor(x => x.ProtectedEntries)
+        <span class="hint">@T("A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls.")</span>
+
+    </div>
+    <div>
+        <div >
+             <span class="hint">Generated encryptionkey random : @SymmetricAlgorithm.Create(encryptionAlgorithm).Key.ToHexString() </span>
+        </div>
+        <i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(x => x.ExternalApplicationList.ExternalApplications, T("Add External Application").Text, "#extapp", ".j_extapp")
+         <div id="extapp">
+            @Html.EditorFor(x => x.ExternalApplicationList.ExternalApplications)
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46D64AD0-B443-4E74-8B84-0B319301EA78}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KrakeAdmin</RootNamespace>
+    <AssemblyName>KrakeAdmin</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\App.js" />
+    <Content Include="Scripts\App.min.js" />
+    <Content Include="Scripts\AppCard.js" />
+    <Content Include="Scripts\AppForm.js" />
+    <Content Include="Scripts\AppNavigation.js" />
+    <Content Include="Scripts\AppNavSearch.js" />
+    <Content Include="Scripts\AppOffcanvas.js" />
+    <Content Include="Scripts\AppVendor.js" />
+    <Content Include="Scripts\jquery.autosize.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.nanoscroller.min.js" />
+    <Content Include="Scripts\krake.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\overthrow.min.js" />
+    <Content Include="Scripts\TooltipsZoomimage.js" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\fonts\HANDGOTB.svg" />
+    <Content Include="Styles\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="Styles\Images\adminNavBackground.gif" />
+    <Content Include="Styles\Images\arrow-number.png" />
+    <Content Include="Styles\Images\bg-app.png" />
+    <Content Include="Styles\Images\bg-mail.png" />
+    <Content Include="Styles\Images\bg-notifiche.png" />
+    <Content Include="Styles\Images\bg-sms.png" />
+    <Content Include="Styles\Images\bg-social.png" />
+    <Content Include="Styles\Images\bg-web.png" />
+    <Content Include="Styles\Images\cms-add-cut.png" />
+    <Content Include="Styles\Images\cms-di-piu-di-meno.png" />
+    <Content Include="Styles\Images\cms-import-export.png" />
+    <Content Include="Styles\Images\cms-multi-users.png" />
+    <Content Include="Styles\Images\communication-mail.png" />
+    <Content Include="Styles\Images\communication-sms.png" />
+    <Content Include="Styles\Images\communication-social.png" />
+    <Content Include="Styles\Images\freccia-app.png" />
+    <Content Include="Styles\Images\freccia-mail.png" />
+    <Content Include="Styles\Images\freccia-notifiche.png" />
+    <Content Include="Styles\Images\freccia-sms.png" />
+    <Content Include="Styles\Images\freccia-social.png" />
+    <Content Include="Styles\Images\freccia-web.png" />
+    <Content Include="Styles\Images\icon-cms.png" />
+    <Content Include="Styles\Images\icon-communication.png" />
+    <Content Include="Styles\Images\icon-web.png" />
+    <Content Include="Styles\Images\icona-app-w.png" />
+    <Content Include="Styles\Images\icona-app.png" />
+    <Content Include="Styles\Images\icona-mail-w.png" />
+    <Content Include="Styles\Images\icona-mail.png" />
+    <Content Include="Styles\Images\icona-notifiche-w.png" />
+    <Content Include="Styles\Images\icona-notifiche.png" />
+    <Content Include="Styles\Images\icona-sms-w.png" />
+    <Content Include="Styles\Images\icona-sms.png" />
+    <Content Include="Styles\Images\icona-social-w.png" />
+    <Content Include="Styles\Images\icona-social.png" />
+    <Content Include="Styles\Images\icona-web-w.png" />
+    <Content Include="Styles\Images\icona-web.png" />
+    <Content Include="Styles\Images\img-applicazioni.jpg" />
+    <Content Include="Styles\Images\img-header.jpg" />
+    <Content Include="Styles\Images\img-perche-1.png" />
+    <Content Include="Styles\Images\img-perche-2.png" />
+    <Content Include="Styles\Images\img-perche-3.png" />
+    <Content Include="Styles\Images\img-perche-4.png" />
+    <Content Include="Styles\Images\krake-footer.png" />
+    <Content Include="Styles\Images\krake-giallo.png" />
+    <Content Include="Styles\Images\krake-rosso.png" />
+    <Content Include="Styles\Images\krake-verde.png" />
+    <Content Include="Styles\Images\list-arrow.png" />
+    <Content Include="Styles\Images\logo-laser.png" />
+    <Content Include="Styles\Images\logo.png" />
+    <Content Include="Styles\Images\logo_krake.png" />
+    <Content Include="Styles\Images\logo_krake_old.png" />
+    <Content Include="Styles\Images\mail.png" />
+    <Content Include="Styles\Images\piattaforma.png" />
+    <Content Include="Styles\Images\search-icon-dave.png" />
+    <Content Include="Styles\Images\search-icon.png" />
+    <Content Include="Styles\Images\select-arrow.png" />
+    <Content Include="Styles\Images\sfondo-krake.png" />
+    <Content Include="Styles\Images\sfondo.png" />
+    <Content Include="Styles\krake-navicon.css" />
+    <Content Include="Styles\krake.css" />
+    <Content Include="Styles\iconic-font.min.css" />
+    <Content Include="Styles\krakeadmin.css" />
+    <Content Include="Views\Dashboard\Admin\Index.cshtml" />
+    <Content Include="Views\Document.cshtml" />
+    <Content Include="Views\Layout.cshtml" />
+    <Content Include="Views\OrchardVersion.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\Web.config" />
+    <Content Include="Content\Web.config" />
+    <Content Include="Theme.txt" />
+    <Content Include="Theme.png" />
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Media-Video.Thumbnail.cshtml" />
+    <Content Include="Views\Media-Image.Thumbnail.cshtml" />
+    <Content Include="Views\Media-Audio.Thumbnail.cshtml" />
+    <Content Include="Views\Media-Document.Thumbnail.cshtml" />
+    <Content Include="Views\Media-OEmbed.Thumbnail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminThemeOverride.cs" />
+    <Compile Include="Filters\SelectContentCssFilter.cs" />
+    <Compile Include="Filters\StringWriteWithEncoding.cs" />
+    <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Settings\AdminMenu.cs" />
+    <Compile Include="Settings\Constants.cs" />
+    <Compile Include="Settings\Controllers\AdminController.cs" />
+    <Compile Include="Settings\Drivers\KrakeAdminThemeSettingsDriver.cs" />
+    <Compile Include="Settings\Handlers\KrakeAdminThemeSettingsHandler.cs" />
+    <Compile Include="Settings\Migration.cs" />
+    <Compile Include="Settings\Models\KrakeAdminThemeSettingsPart.cs" />
+    <Compile Include="Settings\Models\ThemeSettingsRecord.cs" />
+    <Compile Include="Settings\Services\ThemeSettingsService.cs" />
+    <Compile Include="Settings\ViewModels\ThemeSettingsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Content.SummaryAdmin.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\ErrorPage.cshtml" />
+    <Content Include="Views\Header.cshtml" />
+    <Content Include="Views\LocalMenu.cshtml" />
+    <Content Include="Views\Menu.cshtml" />
+    <Content Include="Views\MenuORI.cshtml" />
+    <Content Include="Views\Pager.cshtml" />
+    <Content Include="Views\Title.cshtml" />
+    <Content Include="Views\User.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\Images\brochure.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\HANDGOTB.eot" />
+    <Content Include="Styles\fonts\HANDGOTB.otf" />
+    <Content Include="Styles\fonts\HANDGOTB.ttf" />
+    <Content Include="Styles\fonts\HANDGOTB.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Localization\it-IT\orchard.theme.po" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery.nanoscroller.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Styles\fonts\FontAwesome.otf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Styles\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Styles\fonts\Material-Design-Iconic-Font.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Laser.Bootstrap\Admin\OptionsIndex.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Pager.CurrentPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PlaceholderLogo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\RecentContentTab.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\ThemeSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CustomPickerPreview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CustomPickerSummaryAdmin.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
+      <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
+      <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Themes\Orchard.Themes.csproj">
+      <Project>{cde24a24-01d3-403c-84b9-37722e18dfb7}</Project>
+      <Name>Orchard.Themes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
+      <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
+      <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
+      <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
+      <Name>Laser.Orchard.StartupConfig</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Fields\ContentPicker.Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Shared\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>45979</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

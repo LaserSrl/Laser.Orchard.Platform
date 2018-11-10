@@ -1,0 +1,16 @@
+﻿Name: Laser Orchard MailCommunication
+AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10.1
+Features:
+    Laser.Orchard.MailCommunication:
+        Description: Make your content ready to be sent via e-mail.
+		Dependencies: Laser.Orchard.CommunicationGateway, Laser.Orchard.TemplateManagement, Orchard.ContentPicker, Orchard.Fields, Orchard.Resources, Laser.Orchard.jQueryPlugins, Laser.Orchard.Queries, Orchard.Localization, Laser.Orchard.StartupConfig, Laser.Orchard.MailerUtility,Laser.Orchard.UsersExtensions
+		Category: Messaging
+	Laser.Orchard.MailerUtility:
+		Name: Mailer Utility
+		Description: Set the information for sending email via FTP.
+		Dependencies: Orchard.Localization
+		Category: Messaging

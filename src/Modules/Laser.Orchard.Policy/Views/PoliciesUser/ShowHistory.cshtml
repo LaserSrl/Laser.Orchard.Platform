@@ -1,0 +1,59 @@
+﻿@model List<Laser.Orchard.Policy.ViewModels.PolicyHistoryViewModel>
+@{
+    Style.Require("FontAwesome430").AtHead();
+    Style.Include("~/Themes/TheAdmin/Styles/Site.css").AtHead();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@T("Policy acceptance history")</title>
+    @Display(Layout.Head)
+</head>
+<body style="background-image:none;">
+    <table class="items">
+        <thead>
+            <tr>
+                <th>@T("Policy Text")</th>
+                <th>@T("Accepted")</th>
+                <th>@T("Answer date")</th>
+                <th>@T("Validity end")</th>
+                <th>@T("User")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                var acceptTypePolicy = item.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
+                                    || item.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
+                                    || item.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
+                <tr>
+                    <td>
+                        @(item.PolicyTitle)
+                    </td>
+                    <td>@if (item.Accepted) {
+                        <i class="fa fa-check-circle" style="color: green"></i> 
+                            if (item.PolicyType == null || acceptTypePolicy) {
+                        @T("Accepted")
+                            }
+                            else {
+                        @T("Read")
+                            }
+                        }
+                        else {
+                        <i class="fa fa-exclamation-triangle" style="color: red"></i> 
+                            if (item.PolicyType == null || acceptTypePolicy) {
+                        @T("Not Accepted")
+                            }
+                            else {
+                        @T("Unread")
+                            }
+                        }</td>
+                    <td>@item.AnswerDate</td>
+                    <td>@if (item.EndValidity != null) { @item.EndValidity;
+                        }</td>
+                    <td>@item.UserName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

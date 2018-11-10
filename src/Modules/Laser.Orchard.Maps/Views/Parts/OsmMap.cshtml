@@ -1,0 +1,160 @@
+﻿@using Orchard.UI.Resources;
+@using Orchard.MediaLibrary.Fields;
+
+@if (Model.Latitude > 0) {
+    Style.Require("GoogleMaps").AtHead();
+
+    string tilesType = Model.MapTiles;
+    string usedTiles = null;
+    int maxZoom = 22;
+    bool httpTiles = false;
+    if (!String.IsNullOrWhiteSpace(tilesType)) {
+        if (!tilesType.ToLower().Trim().StartsWith("http")) {
+            usedTiles = tilesType;
+        } else {
+            usedTiles = tilesType;
+            httpTiles = true;
+            maxZoom = Model.MaxZoom > 0 ? Model.MaxZoom : maxZoom = 22;
+        }
+    }
+
+    var ID = Model.ContentItem.Id;
+    var lon = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", Model.Longitude);
+    var lat = string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}", Model.Latitude);
+    var mapSourceFile = (MediaLibraryPickerField)((Laser.Orchard.Maps.Models.MapPart)Model.ContentPart).Fields.SingleOrDefault(w => w.Name == "MapSourceFile");
+    var mediaUrl = "";
+    if (mapSourceFile != null && mapSourceFile.Ids.Length > 0 && mapSourceFile.MediaParts != null && mapSourceFile.MediaParts.Count() > 0) {
+        mediaUrl = ((Orchard.MediaLibrary.Models.MediaPart)mapSourceFile.MediaParts.FirstOrDefault()).MediaUrl;
+    }
+
+
+    using (Script.Head()) {
+        Script.Require("OpenLayersAPI");
+        Script.Require("OpenStreetMapAPI");
+        Script.Require("LaserOrchardMaps");
+    }
+
+    using (Script.Foot()) {
+    <script type="text/javascript">
+
+        function @("initialize" + ID + "()") {
+            map = new OpenLayers.Map("map_canvas-@ID");
+            @if (!httpTiles) {
+                if (String.IsNullOrWhiteSpace(tilesType)) {
+                <text>
+            map.addLayer(new OpenLayers.Layer.OSM());
+                </text>
+                } else {
+                <text>
+            map.addLayer(new OpenLayers.Layer.OSM.@Html.Raw(tilesType + "(\"OSM\")"));
+                </text>
+                }
+            } else {
+
+                <text>
+            var usedTilesJS = "@usedTiles";
+            var layer_options = {
+                tileOptions: {
+                    crossOriginKeyword: null
+                },
+                sphericalMercator: true,
+                // buffer: 0,
+                transitionEffect: "resize",
+                numZoomLevels: @maxZoom
+                };
+            map.addLayer(new OpenLayers.Layer.OSM('OSM',usedTilesJS,layer_options));
+            </text>
+            }
+       
+            var kmllayer = new OpenLayers.Layer.Vector("KML", {
+                strategies: [new OpenLayers.Strategy.Fixed()],
+                protocol: new OpenLayers.Protocol.HTTP({
+                    url: "@WorkContext.CurrentSite.BaseUrl@(mediaUrl)",
+                                        format: new OpenLayers.Format.KML({
+                                            extractStyles: true, 
+                                            extractAttributes: true,
+                                            maxDepth: 2
+                                        })
+                                    })
+                                });
+        
+    
+    
+                                map.addLayer(kmllayer);
+    
+            //Set start centrepoint and zoom
+            //TODO: Is it possible to just zoom to extents of KML objects instead?
+    
+                                var lonLat = new OpenLayers.LonLat( @lon ,@lat )
+                        .transform(
+                        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                        map.getProjectionObject() // to Spherical Mercator Projection
+                        );
+                    var zoom=14;
+                    map.setCenter (lonLat, zoom);  
+    
+            // Marker
+                    var markers = new OpenLayers.Layer.Markers( "Markers" );
+                    map.addLayer(markers);
+ 
+                    markers.addMarker(new OpenLayers.Marker(lonLat));
+    
+            // A popup with some information about our location
+                    var popup = new OpenLayers.Popup.FramedCloud("Popup", lonLat, null,
+                        "<h3>@Model.LocationInfo</h3><span>@Model.LocationAddress</span>", 
+                    null,true // <-- true if we want a close (X) button, false otherwise
+                        );   
+                map.addPopup(popup);
+
+            //Add a selector control to the kmllayer with popup functions
+                var controls = {
+                    selector: new OpenLayers.Control.SelectFeature(kmllayer, { onSelect: createPopup, onUnselect: destroyPopup })
+                };
+
+                function createPopup(feature) {
+                    feature.popup = new OpenLayers.Popup.FramedCloud("pop",
+                        feature.geometry.getBounds().getCenterLonLat(),
+                        null,
+                        '<div class="markerContent">'+feature.attributes.description+'</div>',
+                        null,
+                        true,
+                        function() { controls['selector'].unselectAll(); }
+                    );
+                    //feature.popup.closeOnMove = true;
+                    map.addPopup(feature.popup);
+                }
+
+                function destroyPopup(feature) {
+                    feature.popup.destroy();
+                    feature.popup = null;
+                }
+    
+                map.addControl(controls['selector']);
+                controls['selector'].activate();
+                }
+
+
+                if (window.addEventListener) // W3C standard
+                {
+                    window.addEventListener('load', @("initialize" + ID), false); // NB **not** 'onload'
+        } 
+        else if (window.attachEvent) // Microsoft
+        {
+            window.attachEvent('onload', @("initialize" + ID));
+        }
+
+    </script>
+    }
+    <fieldset class="map">
+        <legend class="map-legend">@T("Map")</legend>
+        @if (Model.LocationInfo != String.Empty) {
+            <div class="map-locationinfo">@Model.LocationInfo</div>
+        }
+        @if (Model.LocationAddress != String.Empty) {
+            <div class="map-locationaddress">@Model.LocationAddress</div>
+        }
+        <div class="map-canvas" id="map_canvas-@ID">
+        </div>
+    </fieldset>
+
+}

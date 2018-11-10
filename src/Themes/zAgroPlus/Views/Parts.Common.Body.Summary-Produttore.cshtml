@@ -1,0 +1,12 @@
+﻿@{ 
+    Orchard.ContentManagement.ContentItem contentItem = Model.ContentPart.ContentItem;
+    string bodyHtml = Model.Html.ToString();
+    var body = new HtmlString(Html.Excerpt(bodyHtml, 370).ToString().Replace(Environment.NewLine, "</p>" + Environment.NewLine + "<p>")); 
+}
+<dd class="pad-top pad-bottom-small">
+    @body
+@*    @if (!string.IsNullOrWhiteSpace(bodyHtml)) {
+        <br />
+    }*@
+    @Html.ItemDisplayLink(T("More").ToString(), contentItem)
+</dd>

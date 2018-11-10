@@ -1,0 +1,834 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Controllers/QuestionnaireController.cs"
+msgid "Invalid captcha!"
+msgstr "reCaptcha non corretto!"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Controllers/QuestionnaireController.cs"
+msgid "Please, accept our terms and conditions!"
+msgstr "Si prega di accettare i termini e le condizioni del servizio!"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/ViewModels/ValidationProvider.cs"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/ViewModels/ValidationProvider.cs"
+msgid "Your answer to {0} must be a valid date"
+msgstr "La risposta alla domanda {0} deve essere una data valida"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/ViewModels/ValidationProvider.cs"
+msgid "Your answer to {0} must be a valid date and time"
+msgstr "La risposta alla domanda {0} deve essere una data e ora valida"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/ViewModels/ValidationProvider.cs"
+msgid "Your answer to {0} must be a valid email address"
+msgstr "La risposta alla domanda {0} deve essere un indirizzo email valido"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/ViewModels/ValidationProvider.cs"
+msgid "Your answer to {0} must be a valid internet address"
+msgstr "La risposta alla domanda {0} deve essere un indirizzo internet valido"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "AccessSecured"
+msgstr "Accesso sicuro"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "ContentIdentifier"
+msgstr "Codice gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "Device"
+msgstr "Tipo di dispositivo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "List of ranking."
+msgstr "Classifica."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "point"
+msgstr "Punteggio"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "Questionnaire Ranking"
+msgstr "Classifica questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "RegistrationDate"
+msgstr "Data di registrazione"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
+msgid "UsernameGameCenter"
+msgstr "Username nel Game Center"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "AccessSecured"
+msgstr "Accesso sicuro"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "ContentIdentifier"
+msgstr "Codice gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "Device"
+msgstr "Tipo di dispositivo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "Game Rankings for {0}"
+msgstr "Classifiche per il gioco {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "Index of games"
+msgstr "Indice dei giochi"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "List of ranking."
+msgstr "Classifica."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "point"
+msgstr "Punteggio"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "RegistrationDate"
+msgstr "Data di registrazione"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
+msgid "UsernameGameCenter"
+msgstr "Username nel Game Center"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "By {0}"
+msgstr "Di {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Index of games"
+msgstr "Indice dei giochi"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Language: {0}"
+msgstr "Lingua: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Last modified: {0}"
+msgstr "Ultima modifica: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "Send top10s by email"
+msgstr "Invia le top10 via email"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Default is false. If selected emails will be sended at end game"
+msgstr "Il valore predefinito è falso. Se selezionato, alla fine del gioco verranno inviate le email"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Default is false. If selected post with Ranking will be enabled"
+msgstr "Il valore predefinito è falso. Se selezionato, verrà abilitato il post con la Classifica"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Email address"
+msgstr "Indirizzo email"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Ranking"
+msgstr "Classifica"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Select template"
+msgstr "Seleziona il template"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Select template to use in email message"
+msgstr "Seleziona il template da usare nel messaggio email"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Send Email when game end"
+msgstr "Invia email quando il gioco finisce"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "Settings - Game Part"
+msgstr "Impostazioni - Parte Gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
+msgid "The Email with ranking will be sent at this address"
+msgstr "L'email con la classifica verrà inviata a questo indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Allow admin users to manage answers conditions"
+msgstr "Permette agli amministratori di gestire le condizioni nelle risposte"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Allow admin users to manage multi choice answers"
+msgstr "Permette agli amministratori di gestire le risposte a scelta multipla"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Allow admin users to manage open answers"
+msgstr "Permette agli amministratori di gestire le risposte libere"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Allow admin users to manage questionnaire sections"
+msgstr "Permette agli amministratori di gestire le sezioni dei questionari"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Allow admin users to manage single choice answers"
+msgstr "Permette agli amministratori di gestire le risposte a scelte mutuamente esclusive"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you don't want to save the username in the answers."
+msgstr "Selezionare se non si vuole salvare il nome utente nelle risposte."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want the user to be able to edit section text."
+msgstr "Selezionare per permettere all'utente di modificare le sezioni di testo."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want the user to be able to manage questions visibility based on answers."
+msgstr "Selezionare per permettere all'utente di gestire la visibilità delle domande in base alle risposte."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want the user to be able to manage questions with multi choice answers."
+msgstr "Selezionare per permettere all'utente di gestire domande con risposta a scelta multipla."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want the user to be able to manage questions with open answers."
+msgstr "Selezionare per permettere all'utente di gestire domande con risposta libera."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want the user to be able to manage questions with single choice answers."
+msgstr "Selezionare per permettere all'utente di gestire domande con risposta a scelta mutuamente esclusiva."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default 0 (no limit)"
+msgstr "Valore predefinito 0 (nessun limite)"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default is false."
+msgstr "Il valore predefinito è falso."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default is false. "
+msgstr "Il valore predefinito è falso."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default is false. If selected a Correct Response Option will be visible in back office"
+msgstr "Il valore predefinito è falso. Se selezionato, nel back office sarà visibile l'Opzione Risposta Corretta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default is false. If selected response will be showed randomly"
+msgstr "Il valore predefinito è falso. Se selezionato, la risposta verrà mostrata in modo casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Enable Answer's Image"
+msgstr "Abilita Immagine della Risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Enable Question's Image"
+msgstr "Abilita Immagine della Domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Force anonymous responses for authenticated users."
+msgstr "Forza risposte anonime per gli utenti autenticati."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Limit the number of answer for each questionnaire"
+msgstr "Limita il numero di risposte per ogni questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Limit the number of images for each answer"
+msgstr "Limita il numero di immagini per ogni risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Limit the number of images for each question"
+msgstr "Limita il numero di immagini per ogni domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Limit the number of questions"
+msgstr "Limita il numero di domande"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Number of questions sorted Randomly"
+msgstr "Numero di domande ordinate in modo casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Questionnaire Context"
+msgstr "Contesto del Questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Random Response"
+msgstr "Risposta Casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Set the Limit of number of answer for each questionnaire , default is 0 (No limits)"
+msgstr "Impostare il limite nel numero di risposte per ogni questionario, il default è 0 (Nessun limite)"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Set the Limit of number of questions , default is 0 (No limits)"
+msgstr "Impostare il limite nel numero di domande, il default è 0 (Nessun limite)"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Set the Limit of number of questions sorted randomly , default is 0 (No limits)"
+msgstr "Impostare il limite nel numero di domande ordinate in modo casuale, il default è 0 (Nessun limite)"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Settings - Questionnaire Part"
+msgstr "Impostazioni - Parte Questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Settings - Questionnaire Part - Images"
+msgstr "Impostazioni - Parte Questionario - Immagini"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Show Correct Response Option"
+msgstr "Visualizza Opzione Risposta Corretta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "The Context this questionnaire refers to (eg. a commercial campaign name). It is usually usefull '{Content.DisplayText}'."
+msgstr "Il Contesto a cui il questionario si riferisce (es. il titolo di una campagna commerciale). Normalmente è utile utilizzare '{Content.DisplayText}'."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/AnswerEditModel.cshtml"
+msgid "Add Picture"
+msgstr "Aggiungi Immagine"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/AnswerEditModel.cshtml"
+msgid "Answer"
+msgstr "Risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/AnswerEditModel.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/AnswerEditModel.cshtml"
+msgid "Remove the image?"
+msgstr "Vuoi rimuovere l\\'immagine?"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Abstract"
+msgstr "Riassunto"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Default is false. If selected response will be showed randomly"
+msgstr "Il valore predefinito è falso. Se selezionato, la risposta verrà mostrata in modo casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Don't change this value when Game is started or Ranking will be incorrect altered"
+msgstr "Non modificare questo valore quando il Gioco è in corso per non alterare erroneamente la Classifica"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Email sended at the end of the game"
+msgstr "Email inviata alla fine del gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Game Date"
+msgstr "Data del Gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Game Type"
+msgstr "Tipo di Gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Number of questions sorted Randomly"
+msgstr "Numero di domande ordinate in modo casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Order"
+msgstr "Ordine"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Point for answer"
+msgstr "Punti per risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Random Response"
+msgstr "Risposta Casuale"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Ranking Android Identifier"
+msgstr "Classifica Android Identifier"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Ranking IOS Identifier"
+msgstr "Classifica IOS Identifier"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Select Game Type"
+msgstr "Seleziona il Tipo di Gioco"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Set the Limit of number of questions sorted randomly , default is 0 (No limits)"
+msgstr "Impostare il limite nel numero di domande ordinate in modo casuale, il default è 0 (Nessun limite)"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "The value of this field is changed automatically by the system"
+msgstr "Il valore di questo campo è cambiato automaticamente dal sistema"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/GamePart_Edit.cshtml"
+msgid "Time for Answer"
+msgstr "Tempo per la risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Actions"
+msgstr "Azioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Add Question"
+msgstr "Nuova Domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Max number of uploadable pictures reached. Try to remove one of the existing before adding a new one."
+msgstr "È stato raggiunto il numero massimo di immagini caricabile. Provare a rimuoverne una esistente prima di aggiungerne una nuova."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Must accept terms and conditions"
+msgstr "E' necessario accettare i termini e le condizioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Question"
+msgstr "Domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Question Type"
+msgstr "Tipo domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Questionnaire questions and allowed answers"
+msgstr "Domande e risposte del questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Remove the image?"
+msgstr "Vuoi rimuovere l\\\\'immagine?"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Terms and conditions text"
+msgstr "Testo dei termini e delle condizioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
+msgid "Use recaptcha"
+msgstr "Usa recaptcha"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/QuestionnaireModuleSettings.cshtml"
+msgid "Disposable Action"
+msgstr "Risposta singola per utente"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/QuestionnaireModuleSettings.cshtml"
+msgid "If checked only one user answer is enable for each questionnaire"
+msgstr "Se selezionato, verrà abilitata una sola risposta per ogni questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/QuestionnaireModuleSettings.cshtml"
+msgid "Questionnaire Settings"
+msgstr "Impostazioni Questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid " - Choose a File to Upload - "
+msgstr "- Selezionare un File da Caricare -"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Actions"
+msgstr "Azioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Add Answer"
+msgstr "Nuova Risp."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Add File"
+msgstr "Aggiungi File"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Add Picture"
+msgstr "Aggiungi Immagine"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Answer type"
+msgstr "Tipologia risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Behaviour"
+msgstr "Comportamento"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Condition"
+msgstr "Condizione"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Must accept terms and conditions"
+msgstr "Obbligartoria accettazione dei termini e condizioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Properties"
+msgstr "Propriet&agrave"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Question text"
+msgstr "Testo della domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Question type"
+msgstr "Tipologia domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Remove the image?"
+msgstr "Vuoi rimuovere l\\'immagine?"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Required"
+msgstr "Richiesto"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Section"
+msgstr "Sezione"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Terms and conditions text"
+msgstr "Testo Termini e condizioni"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Type a section name"
+msgstr "Digita il nome della sezione"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Type the question"
+msgstr "Digita la domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
+msgid "Visible"
+msgstr "Visibile"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Continue >"
+msgstr "Avanti >"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "I accept your terms and conditions. I want to answer to your survey."
+msgstr "Accetto i termini e lecondizioni del servizio. Desidero partecipare al vostro questionario."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Please answer to all questions!"
+msgstr "Si prega di rispondere a tutte le domande!"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Previous"
+msgstr "Precedente"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Send your questionnaire"
+msgstr "Inoltra questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Thank you for submitting your feedback."
+msgstr "Grazie di averci fornito il tuo parere!"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit_Unauthorized.cshtml"
+msgid "create an account"
+msgstr "creare un nuovo account"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit_Unauthorized.cshtml"
+msgid "login"
+msgstr "accedere con le tue credenziali"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit_Unauthorized.cshtml"
+msgid "You can {0} or {1}"
+msgstr "Puoi {0} oppure {1}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit_Unauthorized.cshtml"
+msgid "You have to be logged in, before answering a questionnaire!"
+msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Date From"
+msgstr "Dalla Data"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Date To"
+msgstr "Alla Data"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Export"
+msgstr "Esporta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Filter"
+msgstr "Filtra"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Questionnaire Answers"
+msgstr "Risposte al questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Questionnaire Statistics"
+msgstr "Statistiche del questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Show all answers"
+msgstr "Mostra tutte le risposte"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Show Exported Files"
+msgstr "Mostra file esportati"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "This questionnaire contains no answers."
+msgstr "Questo questionario non ha ricevuto nessuna risposta."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "By {0}"
+msgstr "Di {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Language: {0}"
+msgstr "Lingua: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Last modified: {0}"
+msgstr "Ultima modifica: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Questionnaire Statistics"
+msgstr "Statistiche del questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/QuestionDetail.cshtml"
+msgid "Answers Detail"
+msgstr "Dettagli delle risposte"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/QuestionDetail.cshtml"
+msgid "Questionnaire Answers"
+msgstr "Risposte al questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/QuestionDetail.cshtml"
+msgid "Questionnaire Statistics"
+msgstr "Statistiche del questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.GameRankingSubmittedgEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.GameRankingSubmittedgEvent"
+msgid "Questionnaire"
+msgstr "Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.GameRankingSubmittedgEvent"
+msgid "Questionnaire - Game Ranking Submitted)."
+msgstr "Questionario - Inviata Classifica del Gioco)."
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.QuestionnaireSubmittedEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.QuestionnaireSubmittedEvent"
+msgid "Questionnaire"
+msgstr "Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Activities.QuestionnaireSubmittedEvent"
+msgid "Questionnaire is submitted."
+msgstr "Il questionario è stato inviato."
+
+msgctxt "Laser.Orchard.Questionnaires.Controllers.QuestionnaireController"
+msgid "Please, accept our terms and conditions!"
+msgstr "Si prega di accettare i termini e le condizioni!"
+
+msgctxt "Laser.Orchard.Questionnaires.Controllers.QuestionnaireController"
+msgid "Sorry, you already submitted this questionnaire."
+msgstr "Spiacente, hai già compilato questo questionario."
+
+msgctxt "Laser.Orchard.Questionnaires.Controllers.QuestionnaireController"
+msgid "Thank you for submitting your feedback."
+msgstr "Grazie per averci inviato la tua opinione."
+
+msgctxt "Laser.Orchard.Questionnaires.Controllers.QuestionnaireStatsController"
+msgid "Export started. Please check 'Show Exported Files' in a few minutes to get the result."
+msgstr "Esportazione in esecuzione. Per verificarne l'esito attendi qualche minuto e poi clicca su 'Mostra file esportati'"
+
+msgctxt "Laser.Orchard.Questionnaires.Controllers.QuestionnaireStatsController"
+msgid "Export started. Please check 'Show Exported Files' to get the result."
+msgstr "Esportazione in esecuzione. Per verificarne l'esito clicca su 'Mostra file esportati'"
+
+msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
+msgid "Cannot update questionnaire"
+msgstr "Non è possibile aggiornare il questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
+msgid "Cannot update questionnaire. "
+msgstr "Non è possibile aggiornare il questionario."
+
+msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
+msgid "Cannot update questionnaire....... "
+msgstr "Non è possibile aggiornare il questionario......."
+
+msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
+msgid "You have to be logged in, before answering a questionnaire!"
+msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireContextFilter"
+msgid "Filter for questionnaires without response for current User on a specific context."
+msgstr "Filtro per i questionari senza risposta per l'Utente corrente nel contesto indicato"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireContextFilter"
+msgid "Only unanswered Questionnare for current user on a specific context"
+msgstr "Solo questionari senza risposta per l'Utente corrente nel contesto indicato"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireContextFilter"
+msgid "Questionnaire"
+msgstr "Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireContextFilter"
+msgid "Questionnaires without response for current User on a specific context"
+msgstr "Questionari senza risposta per l'Utente corrente per il contesto indicato"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireContextFilterForm"
+msgid "Questionnaire Context"
+msgstr "Contesto del Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireFilter"
+msgid "Filter for Questionnaire with not associated response to current user"
+msgstr "Filtro per questionari che sono senza risposta per l'utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireFilter"
+msgid "Only unanswered Questionnare for current user"
+msgstr "Solo questionari a cui l'utente corrente ha risposto"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireFilter"
+msgid "Questionnaire"
+msgstr "Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireFilter"
+msgid "Questionnaire without response for current User"
+msgstr "Questionari senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Filter for specific questionnaire and context without response for current User."
+msgstr "Filtro per questionario e contesto specifico senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Filter for specific questionnaire without response for current User."
+msgstr "Filtro per un questionario indicato senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Only unanswered Questionnaire for current user"
+msgstr "Solo questionari senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Questionnaire"
+msgstr "Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Specific questionnaire and context without response for current User"
+msgstr "Questionario e contesto specifico senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilter"
+msgid "Specific questionnaire without response for current User"
+msgstr "Questionario specifico senza risposta per l'Utente corrente"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilterForm"
+msgid "Questionnaire Context"
+msgstr "Contesto del Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Handlers.QuestionnaireNotAnsweredFilterForm"
+msgid "Questionnaire Id"
+msgstr "ID del Questionario"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Games"
+msgstr "Giochi"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Multi choice Answers"
+msgstr "Risposta a scelta multipla"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Open Answers"
+msgstr "Risposta aperta"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Questionnaires"
+msgstr "Questionari"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Single choice Answers"
+msgstr "Risposta singola"
+
+msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
+msgid "Statistics"
+msgstr "Statistiche"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
+msgid "Operation Fail: Questionnaire already filled"
+msgstr "Operazione fallita: questionario già compilato"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.to"
+msgid "Operation Fail: Questionnaire already filled"
+msgstr "Operazione fallita: questionario già compilato"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
+msgid "Please, accept our terms and conditions!"
+msgstr "Si prega di accettare i termini e le condizioni!"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"
+

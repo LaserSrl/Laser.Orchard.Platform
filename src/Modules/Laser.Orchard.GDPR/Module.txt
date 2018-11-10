@@ -1,0 +1,28 @@
+﻿Name: Laser.Orchard.GDPR
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: This module contains features that enable performing some of the tasks required for GDPR compliance from Orchard's back office
+Features:
+    Laser.Orchard.GDPR:
+		Name: GDPR
+        Description: Enable tools for GDPR-compliant management of personal identifiable information.
+		Dependencies: Orchard.Users
+	Laser.Orchard.GDPR.Workflows:
+		Name: GDPR Workflows
+		Description: Enable interfacing GPDR-compliance processes with workflows.
+		Dependencies: Laser.Orchard.GDPR, Orchard.Workflows
+	Laser.Orchard.GDPR.ContentPickerFieldExtension:
+		Name: GDPR ContentPickerField Extension
+		Description: Enables specialized handling of ContentPickerFields
+		Dependencies: Laser.Orchard.GDPR, Orchard.ContentPicker
+	Laser.Orchard.GDPR.MediaExtension:
+		Name: GDPR Media Extensions
+		Description: Enables specialized handling of MediaLibraryPickerFields and Media items
+		Dependencies: Laser.Orchard.GDPR, Orchard.MediaLibrary
+	Laser.Orchard.GDPR.Scheduling:
+		Name: GDPR Scheduled processes
+		Description: Enables configuring scheduled tasks for anonymization or erasure of content items that are older than a given time-frame
+		Dependencies: Laser.Orchard.GDPR

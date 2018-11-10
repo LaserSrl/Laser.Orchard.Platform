@@ -1,0 +1,41 @@
+﻿@model Laser.Orchard.MailCommunication.ViewModels.MailerSiteSettingsVM
+
+<fieldset>
+    <legend>@T("Mailer")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.RecipientsPerJsonFile)">@T("Page Size for recipients")</label>
+        @Html.TextBoxFor(m => m.Settings.RecipientsPerJsonFile, new { @class = "text large" })
+        <span class="hint">@T("Max number of recipients in each JSON file created by massive mailer.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.MailPriority)">@T("Mail priority")</label>
+        @Html.DropDownListFor(m => m.Settings.MailPriority, new SelectList(Enum.GetNames(typeof(Laser.Orchard.MailCommunication.MailPriorityValues)), Model.Settings.MailPriority))
+        <span class="hint">@T("The priority to set on each mail.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.FtpHost)">@T("FTP host")</label>
+        @Html.TextBoxFor(m => m.Settings.FtpHost, new { @class = "text large" })
+        <span class="hint">@T("Remote FTP host (name or IP address).")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.FtpUser)">@T("FTP user")</label>
+        @Html.TextBoxFor(m => m.Settings.FtpUser, new { @class = "text large" })
+        <span class="hint">@T("User for FTP connection.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.FtpPassword)">@T("FTP password")</label>
+        @Html.TextBoxFor(m => m.Settings.FtpPassword, new { @class = "text large" })
+        <span class="hint">@T("Password for FTP connection.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.FtpPath)">@T("FTP path")</label>
+        @Html.TextBoxFor(m => m.Settings.FtpPath, new { @class = "text large" })
+        <span class="hint">@T("Remote path for FTP connection.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Settings.TokenValidity)">@T("Token validity (days)")</label>
+        @Html.TextBoxFor(m => m.Settings.TokenValidity, new { @class = "text large" })
+        <span class="hint">@T("Validity (in days) of the token used by massive mailer to return the number of sent mails.")</span>
+    </div>
+</fieldset>
+

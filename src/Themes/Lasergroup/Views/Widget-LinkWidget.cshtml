@@ -1,0 +1,8 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="container text-center">
+	<h2 class="krake-website-claim">@Html.Raw(@item.BodyPart.Text)</h2>
+	<a class="krake-website-link" href="@item.LinkWidget.Link.Value" target="_blank">@item.LinkWidget.Link.Text</a>
+</div>

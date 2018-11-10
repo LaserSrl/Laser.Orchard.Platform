@@ -1,0 +1,335 @@
+﻿@model Laser.Orchard.Vimeo.ViewModels.BackendUploadViewModel
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @{
+        Script.Require("jQuery").AtFoot();
+        Script.Require("jQueryUI").AtFoot();
+
+        Style.Include("orchard-medialibrary-admin.css");
+        Style.Include("orchard-mediaproviders-admin.css");
+        Style.Include("BackendUpload.css");
+
+        Script.Require("jQueryFileUpload").AtFoot();
+        Script.Include("knockout-2.3.0.js").AtFoot();
+    }
+
+    @Display.Metas()
+    @Display.HeadScripts()
+    @Display.HeadLinks()
+    @Display.StyleSheetLinks()
+</head>
+<body>
+
+    <div id="backendupload-main">
+        @{
+            string defaultMessage = T("Click here or drop a video file").ToString();
+            string uploadingMessage = T("Uploading: do not leave this page or close the browser.").ToString();
+        }
+        <div id="message">@defaultMessage</div>
+        <div id="fileupload">
+            <input type="file" id="videoFileInput" name="videoFile" />
+            <div class="ui-progress-bar" id="progress-bar" visible="false" >
+                <span class="ui-label" text=""></span>
+                <div class="ui-progress" style="width:0%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Display.FootScripts()
+    <script type="text/javascript">
+        /*
+        *  This code should be cleaned up and refactored, because as I am writing this I don't think I am very good
+        *  with JavaScript. I apologize for the mess.
+        */
+        $(function(){
+            //'use strict';
+
+
+            var fileInput = document.getElementById("videoFileInput");
+            var fileDropArea = document.getElementById("fileupload");
+
+            var pBar = document.getElementById("progress-bar");
+            var pBarLabel = pBar.getElementsByClassName("ui-label")[0];
+            var pBarProgress = pBar.getElementsByClassName("ui-progress")[0];
+
+            var dMessage = document.getElementById("message");
+
+            //With bad connections, some times the upload task thinks it has sent some amount of data
+            // (e.g. 25%), but Vimeo has correctly received less than that (e.g. 20%). We want to avoid
+            // the progress notification bouncing back when the actual progress is synchronized with
+            // Vimeo.
+            var progressValue = 0; //use this to "debounce" the progress bar
+
+            //when clicking anywhere on the div, trigger the click of the input element
+            $('#fileupload').click(function () {
+                $('#fileupload > input').trigger('click');
+            });
+            //when the input gets clicked (even by the above function) make sure nothing else happens
+            $('#fileupload > input').click(function (event) {
+                event.stopPropagation(); //the event here is the click
+            });
+
+            //When we have a file to upload:
+            // 1. Verify it is a video
+            // 2. Call TryStartUpload on the UploadController
+            // 3. Use the url we got to make the upload
+            // 4. Verify the upload
+            // 5. If required, resume the upload
+            // 6. Display a message saying the upload is complete, but some processing will still happen behind the scenes
+
+            function handleFileSelection() {
+                fileInput.disabled = true;
+                fileDropArea.disabled = true;
+                console.log('file selected');
+                // 1. Verify it is a video
+                if (fileInput.files.length != 0 && fileInput.files[0].type.match(/video.*/)) {
+                    //console.log('It is a video');
+                    startUpload(fileInput.files[0]);
+                    fileInput.value = null;
+                    //fileInput.files.length = 0;
+                } else {
+                    fileInput.value = null; //we do not need non-video files
+                    //console.log('CLEAR');
+                    fileInput.disabled = false;
+                    fileDropArea.disabled = false;
+                }
+            }
+
+            function handleDragOver(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'copy'; // Makes the browser display a "copy" cursor.
+            }
+
+            function handleDrop(event) {
+                fileInput.disabled = true;
+                fileDropArea.disabled = true;
+                //console.log('drop');
+                event.stopPropagation();
+                event.preventDefault();
+
+                var files = event.dataTransfer.files;
+
+                if (files.length == 0) {
+                    fileInput.disabled = false;
+                    fileDropArea.disabled = false;
+                    return;
+                }
+                else if (files.length > 1)
+                {
+                    alert("Only one file at once.");
+                    fileInput.disabled = false;
+                    fileDropArea.disabled = false;
+                    return;
+                }
+
+                var file = files[0];
+                // 1. Verify it is a video
+                if (file.type.match(/video.*/)) {
+                    //console.log('It is a video');
+                    startUpload(file);
+                } else {
+                    fileInput.disabled = false;
+                    fileDropArea.disabled = false;
+                }
+            }
+
+            //fileInput.addEventListener("onchange", handleFileSelection, false);
+            fileInput.onchange = function () {
+                handleFileSelection();
+            }           
+          
+            fileDropArea.addEventListener("dragover", handleDragOver, false);
+            fileDropArea.addEventListener("drop", handleDrop, false);
+
+            function startUpload(file) {
+                var reader = new FileReader();
+                reader.onload = function (fileRead) {
+                    //I am not using anything of the FileReader. However, if I don't wrap my upload call in the reader
+                    // the upload for some reason appears to fail.
+                    // 2. Call TryStartUpload on the UploadController
+                    pBar.style.visibility = 'visible';
+                    pBarLabel.setAttribute("text", "0%");
+                    dMessage.innerHTML = "@uploadingMessage <br />0%";
+                    pBarProgress.setAttribute("style", "width:0%;");
+                    fileInput.disabled = true;
+                    fileDropArea.disabled = true;
+                    var url = '@Url.Action("TryStartUpload", "VimeoUpload", new { area = "Laser.Orchard.Vimeo", fileSize = "__fs__" })'
+			            .replace('__fs__', file.size);
+                    var formData = {
+                        __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()'
+                    };
+                    //console.log(url);
+                    $.ajax({
+                        url: url,
+                        data: formData,
+                        type: "POST",
+                        success: function (response) {
+                            if (response.Success) {
+                                var mId = response.Data.MediaPartId; //the id of the media part, that Imay need later
+                                var uUrl = response.Data.uploadUrl; //the upload url
+                                //console.log(response);
+                                //console.log(mId),
+                                console.log(uUrl);
+                                var content = fileRead.target.result; //the blob for the file
+                                // 3. Use the url we got to make the upload
+                                uploadToVimeo(mId, uUrl, file.size, file.type, file);
+                            }
+                        },
+                        error: function (response) {
+                            pBar.style.visibility = 'hidden';
+                            dMessage.innerHTML = "@defaultMessage";
+                            alert('@T("Critical error while contacting servers.").ToString()');
+                        }
+                    });
+
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function uploadToVimeo(mediaPartId, uploadUrl, fileSize, contentType, blob, offset) {
+                //console.log('uploadToVimeo');
+                var content = blob;
+                if (offset) { //this for when we want to implement resumable uploads
+                    //console.log('offset = ' + offset);
+                    content = content.slice(offset, fileSize);
+                } else {
+                    offset = 0;
+                }
+
+                // 3. Use the url we got to make the upload
+                var uploadCall = new XMLHttpRequest();
+                uploadCall.open('PUT', uploadUrl, true);
+                uploadCall.setRequestHeader('Content-Type', contentType);
+                uploadCall.setRequestHeader('Content-Range', 'bytes ' + offset + '-' + (fileSize - 1) + '/' + fileSize);
+                uploadCall.timeout = 5000;// time in milliseconds
+                if (uploadCall.upload) { //i am not 100% about this
+                    uploadCall.upload.addEventListener('progress', function (event) {
+                        onProgress(fileSize, offset, event);
+                    }, false);
+                }
+
+                uploadCall.onload = function (response) {
+                    console.log('success on upload');
+                    terminateUpload(mediaPartId, uploadUrl, fileSize, contentType, blob);
+                };
+
+                uploadCall.onerror = function (error) {
+                    console.log('error on upload');
+                    verifyAndResume(mediaPartId, uploadUrl, fileSize, contentType, blob);
+                };
+
+                //uploadCall.onprogress = function () {
+                //    onProgress;
+                //};
+
+                uploadCall.ontimeout = function () {
+                    verifyAndResume(mediaPartId, uploadUrl, fileSize, contentType, blob);
+                };
+
+                uploadCall.send(content);
+            }
+
+            function onProgress(fileSize, offset, pEvt) {
+                //pEvt.total is the number of bytes we are trying to send
+                //pEvt.loaded is the number of bytes we have sent
+                // Those two are not "correct", in the sense that the total is not the actual file size,
+                // because with the upload being interrupted/resumed to handle timeouts we are not always
+                // trying to send the whole file.
+                var progressPercentage = Math.floor(((offset + pEvt.loaded) / fileSize) * 100);
+                progressValue = progressPercentage > progressValue ? progressPercentage : progressValue;
+                pBarLabel.setAttribute("text", progressValue + "%");
+                dMessage.innerHTML = "@uploadingMessage <br />" + progressValue + "%";
+                pBarProgress.setAttribute("style", "width:" + progressValue + "%;");
+                console.log("progress! sent " + progressPercentage + "% displayed " + progressValue + "%");
+            }
+
+            function verifyAndResume(mediaPartId, uploadUrl, fileSize, contentType, blob, times) {
+                // 4. Verify the upload
+                if (!times) {
+                    times = 0; //how many times has the verify failed?
+                }
+                //console.log('verify ' + times);
+                if (times > 10) {
+                    alert('@T("Attempts at communication with Vimeo's servers failed. Try again later.").ToString()');
+                    dMessage.innerHTML = "@defaultMessage";
+                    pBar.style.visibility = 'hidden';
+                    fileInput.disabled = false;
+                    fileDropArea.disabled = false;
+                } else {
+                    var sent = 0;
+                    var verifyCall = new XMLHttpRequest();
+                    verifyCall.open('PUT', uploadUrl, true);
+                    verifyCall.setRequestHeader('Content-Range', 'bytes */*'); // + fileSize);
+                    //verifyCall.setRequestHeader('Content-Type', contentType);
+                    verifyCall.timeout = 5000;
+                    verifyCall.onload = function (response) {
+                        var range = response.target.getResponseHeader("Range");
+                        if (range) {
+                            sent = parseInt(range.match(/\d+/g).pop(), 10);
+                        }
+                        console.log('sent = ' + sent.toString());
+                        // 5. If required, resume the upload
+                        if (sent < fileSize) {
+                            uploadToVimeo(mediaPartId, uploadUrl, fileSize, contentType, blob, sent + 1);
+                        } else {
+                            //upload finished
+                            terminateUpload(mediaPartId, uploadUrl, fileSize, contentType, blob);
+                        }
+                    };
+                    verifyCall.onerror = function (error) {
+                        console.log('error on verify');
+                        verifyAndResume(mediaPartId, uploadUrl, fileSize, contentType, blob, times + 1);
+                    };
+                    verifyCall.ontimeout = function () {
+                        verifyAndResume(mediaPartId, uploadUrl, fileSize, contentType, blob, times + 1); //try again
+                    };
+                    verifyCall.send();
+                }
+            }
+
+            function terminateUpload(mPId, uploadUrl, fileSize, contentType, blob) {
+                //console.log('terminate');
+                var url = '@Url.Action("FinishUpload", "VimeoUpload", new { area = "Laser.Orchard.Vimeo", mediaPartId = "__id__" })'
+                        .replace('__id__', mPId);
+                var formData = {
+                    __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()'
+                }
+                $.ajax({
+                    url: url,
+                    data: formData,
+                    type: "POST",
+                    success: function (response) {
+                        if (response.Success) {
+                            console.log('Upload complete for media part ' + mPId);
+                            pBar.style.visibility = 'hidden';
+                            dMessage.innerHTML = "@defaultMessage";
+                            alert('@T("Upload complete for media part").ToString()');
+                            fileInput.disabled = false;
+                            fileDropArea.disabled = false;
+                        } else {
+                            if (response.Data.ErrorCode == 4001 || response.Data.ErrorCode == 4003) {
+                                //InProgress || FinishingErrors
+                                verifyAndResume(mPId, uploadUrl, fileSize, contentType, blob);
+                            } else {
+                                pBar.style.visibility = 'hidden';
+                                dMessage.innerHTML = "@defaultMessage";
+                                alert('@T("Critical error while uploading").ToString()');
+                            }
+                        }
+                    },
+                    error: function (response) {
+                        pBar.style.visibility = 'hidden';
+                        dMessage.innerHTML = "@defaultMessage";
+                        alert('@T("Critical error while contacting servers.").ToString()');
+                    }
+                });
+            }
+
+        }());
+    </script>
+</body>
+</html>

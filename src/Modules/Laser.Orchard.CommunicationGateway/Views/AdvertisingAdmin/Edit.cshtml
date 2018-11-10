@@ -1,0 +1,27 @@
+﻿@{ Layout.Title = T("Edit Advertising"); }
+@{
+    Style.Include("CommunicationGateway-admin.css").AtHead();
+    Script.Require("jQueryUI_Tabs").AtHead();
+
+    Script.Require("JQuery").AtHead();
+    Script.Require("jQueryUI_Core").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".mail-comm-wrapper").wrapAll("<div id='mail-comm-container' class='comm-tabbed' />");
+            $(".comm-tabbed").wrapAll("<div id='tab-folder-container' />");
+            $(".tab-folder").each(function (index) {
+                $("#tab-folder-container ul").append('<li>' + $(this).html() + '</li>');
+                $(this).hide();
+            });
+            $("#tab-folder-container").tabs();
+        });
+    </script>
+}
+<p class="breadcrumb"><a href="@Url.Action("Index", new { id = Request.QueryString["idCampaign"]})">@T("List Advertising")</a> &#62; @Layout.Title</p>
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Display(Model)
+}

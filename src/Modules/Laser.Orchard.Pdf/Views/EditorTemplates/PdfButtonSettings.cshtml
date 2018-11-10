@@ -1,0 +1,92 @@
+﻿@model Laser.Orchard.Pdf.Models.PdfButtonSettings
+@using Laser.Orchard.TemplateManagement.Models;
+@using Laser.Orchard.Commons.Helpers;
+@{
+    List<SelectListItem> templateList = new List<SelectListItem>();
+    Laser.Orchard.TemplateManagement.Services.ITemplateService _templateService = null;
+    if (WorkContext.TryResolve<Laser.Orchard.TemplateManagement.Services.ITemplateService>(out _templateService)) {
+        foreach (TemplatePart tp in _templateService.GetTemplates()) {
+            templateList.Add(new SelectListItem { Text = tp.Title, Value = tp.Id.ToString(), Selected = tp.Id == Model.TemplateId });
+        }
+    }
+    MvcHtmlString pdfbuttonBlock = Html.UniqueClientId("pdfbutton");
+    var fid = "ButtonSettingsNum_" + pdfbuttonBlock;
+}
+@using (Script.Head()) {
+    <style type="text/css">
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+}
+<div id="@fid" class="j_settings clearfix">
+    <input type="hidden" class="j_idsettings" value="@fid" />
+    @Html.HiddenFor(m => m.Position, new { @class = "position-field" })
+    @Html.HiddenFor(m => m.Delete, new { @class = "mark-for-delete" })
+    <div   style="float:left">
+        <i class="fa fa-times" style="color: red"></i>
+        @Html.LinkToRemoveNestedForm(T("Remove PDF Button").Text, ".j_settings", "input.mark-for-delete", "ScriviMenuTab();")
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.Label)">@T("Label")</label>
+        @Html.TextBoxFor(m => m.Label, new { @class = "text medium tokenized" })
+        <span class="hint">@T("Label of the button.")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.TemplateId)">@T("Template ID")</label>
+        @Html.DropDownListFor(m => m.TemplateId, templateList)
+        <span class="hint">@T("Template to be used to generate a printable version of the content.")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.PublishedVersionOfContent)">@T("Published Version")</label>
+        @Html.CheckBoxFor(m => m.PublishedVersionOfContent)
+        <span class="hint">@T("Check to use published version of the content to generate PDF. Uncheck to use latest version.")</span>
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.FileNameWithoutExtension)">@T("File Name without extension")</label>
+        @Html.TextBoxFor(m => m.FileNameWithoutExtension, new { @class = "text large tokenized" })
+        <span class="hint">@T("Name of the file as downloaded by users. Extension pdf is added at the end of this name by the system.")</span>
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.Header)">@T("Header")</label>
+        @Html.TextAreaFor(m => m.Header, new { @class = "text large tokenized" })
+        <span class="hint">@T("Header of each page in PDF document. Leave blank for no header.")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.Footer)">@T("Footer")</label>
+        @Html.TextAreaFor(m => m.Footer, new { @class = "text large tokenized" })
+        <span class="hint">@T("Footer of each page in PDF document. Leave blank for no footer.")</span>
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.HeaderHeight)">@T("Header Height")</label>
+        @Html.TextBoxFor(m => m.HeaderHeight, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Top margin of the page in PDF document. Default 10. To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.FooterHeight)">@T("Footer Height")</label>
+        @Html.TextBoxFor(m => m.FooterHeight, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Bottom margin of the page in PDF document. Default 10. To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.LeftMargin)">@T("Left Margin")</label>
+        @Html.TextBoxFor(m => m.LeftMargin, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Left margin of the page in PDF document. Default 50. To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.RightMargin)">@T("Right Margin")</label>
+        @Html.TextBoxFor(m => m.RightMargin, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Right margin of the page in PDF document. Default 50. To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+    <div style="clear:both;float:left">
+        <label for="@Html.FieldIdFor(m => m.PageWidth)">@T("Page Width")</label>
+        @Html.TextBoxFor(m => m.PageWidth, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Default value: 595 (A4). To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+    <div style="float:left">
+        <label for="@Html.FieldIdFor(m => m.PageHeight)">@T("Page Height")</label>
+        @Html.TextBoxFor(m => m.PageHeight, new { @class = "text medium tokenized", @type = "number" })
+        <span class="hint">@T("Default value: 842 (A4). To get the right value use: (inch * 72) or (mm * 720 / 254).")</span>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+﻿Name: Laser Orchard Faq
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10
+Description: Frequently asked questions are listed questions and answers, all supposed to be commonly asked in some context, and pertaining to a particular topic. User can add Faq as Widget or as Part to any ContentType, a filter on FaqType locale will be automatically done if the host content is localized.
+Dependencies: Orchard.Fields, Orchard.Localization, Orchard.Resources
+Category: Content

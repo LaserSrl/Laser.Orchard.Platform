@@ -1,0 +1,27 @@
+﻿@model Laser.Orchard.Twitter.Settings.TwitterPostPartSettingVM
+<fieldset>
+    <h2>@T("Settings - Twitter Post")</h2>
+
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Title)" >@T("Title") </label>
+        @Html.TextAreaFor(m => m.Title, new { @class = "text medium tokenized", rows = "1" })
+        <span class="hint">@T("Twitter Title")</span>
+    </div>
+     <div>
+        <label for="@Html.FieldIdFor(m => m.Description)" >@T("Description") </label>
+        @Html.TextAreaFor(m => m.Description, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Twitter description")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Image)" >@T("Image") </label>
+        @Html.TextAreaFor(m => m.Image, new { @class = "text medium tokenized", rows = "1" })
+        <span class="hint">@T("Twitter Image")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ShowTwitterCurrentLink)" >@T("Show TwitterCurrentLink option") </label>
+        @Html.CheckBoxFor(m => m.ShowTwitterCurrentLink)
+        <span class="hint">@T("Twitter TwitterCurrentLink option")</span>
+    </div>
+
+     @Display.TokenHint()
+</fieldset>

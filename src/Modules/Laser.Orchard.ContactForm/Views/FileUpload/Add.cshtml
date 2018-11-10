@@ -1,0 +1,74 @@
+﻿@{
+    var enableUpload = (Model.MediaData == null) ? String.Empty : "disabled";
+    var previewHeight = 200; //height in pixel of the image preview
+    var previewWidth = 200; //width in pixel of the image preview
+    Script.Require("jQuery").AtHead();
+    Style.Include(Url.Content(Html.ThemePath(WorkContext.CurrentTheme, "/Styles/contact-form.css"))).AtHead();
+    //Style.Include("site.css").AtHead();
+}
+@using (Script.Head()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @*$("#uploadLabel-@Model.ParentID").css("display", "none");*@
+
+            @if (enableUpload != String.Empty) {
+                <text>
+                @{ var attachmentMessage = string.Format(T("The file \"{0}\" has been uploaded!").Text, Model.MediaData.FileName); };
+                @if (Model.MediaData.MimeType.Contains("image"))
+                {
+                    <text>
+                    window.parent.$('#AttachmentPreview-@Model.ParentID').attr('src', '@Display.ResizeMediaUrl(Width: previewWidth, Height: previewHeight, Mode: "crop", Alignment: "middlecenter", Path: Model.MediaData.MediaUrl)');
+                    </text>
+                }
+                window.parent.$('#AttachmentPreview-@Model.ParentID').addClass('media-thumbnail-@Model.MediaData.LogicalType.ToLower()');
+                window.parent.$('#AttachmentNameLabel-@Model.ParentID').html('@attachmentMessage');
+                window.parent.$('#AttachmentSection-@Model.ParentID').css("display", "block");
+                window.parent.$('#AttachmentPreview-@Model.ParentID').css("visibility", "visible");
+                window.parent.$("#MediaId-@Model.ParentID").val("@Model.MediaData.Id");
+                window.parent.$("#MediaId-@Model.ParentID").change();
+                parent.jQuery.colorbox.close();
+                return false;
+                </text>
+            }
+
+            $('#UploadForm-@Model.ParentID').submit(function () {
+                $('#uploadButton-@Model.ParentID').attr('disabled', 'disabled');
+                if ($('#MediaItemPath-@Model.ParentID').val() != '') {
+                    $("#uploadButton-@Model.ParentID").html('@T("Uploading...")')
+                    @*$("#uploadLabel-@Model.ParentID").css("display", "inline-block");*@
+                }
+            });
+
+            $('#checkButton').click(function () { alert($("#MediaItemPath-@Model.ParentID").val()) });
+        });
+    </script>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@T("Add")</title>
+    @Display(Layout.Head)
+</head>
+<body>
+    <div id="messages">
+        @Display(Layout.Messages)
+    </div>
+    <div class="upload-form">
+        @{using (Html.BeginForm("Add", "FileUpload", new { Area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form", enctype = "multipart/form-data", id = ("UploadForm-" + Model.ParentID) })) {
+            @Html.ValidationSummary()
+            <input name="ContactFormID" type="hidden" value="@Model.ParentID" />
+            <div>
+                <input id="MediaItemPath-@Model.ParentID" name="MediaItemPath" type="file" value="@T("Browse")" size="64"/>
+            </div>
+            <div>
+                <button id="uploadButton-@Model.ParentID" class="primaryAction" type="submit" @enableUpload>@T("Upload")</button>
+                @*<label id="uploadLabel-@Model.ParentID" style="display: none">@T("Uploading...")</label>*@
+                @Html.AntiForgeryTokenOrchard()
+            </div>
+          }
+        }
+    </div>
+</body>
+@Display(Layout.Tail)
+</html>

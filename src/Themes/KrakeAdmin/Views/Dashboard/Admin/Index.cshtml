@@ -1,0 +1,268 @@
+﻿@using Orchard.Mvc.Html;
+@using Orchard.UI.Resources;
+@using Orchard.Environment.Configuration
+
+@model dynamic
+@{ 
+    Layout.Title = "Back Office";
+    var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
+}
+<div class="container">
+	<div class="space-40"></div>
+	<div class="space-40"></div>
+	<div class="space-40"></div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-4 col-md-4">
+			<div class="dashboard-box dashboard-box-cms" ontouchstart="this.classList.toggle('hover');">
+				<div class="dashboard-card">
+					<div class="dashboard-card-face dashboard-box-front text-center ">
+						<div class="dasboard-box-icon"><img src="@folderStylePath/Images/icon-cms.png" class="img-responsive"></div>
+						<h4 class="dashboard-box-title">@T("CMS")</h4>
+						<div class="dashboard-box-content">
+							@T("A simple and transparent interface to manage content (and processes) multifaceted and heterogeneous.")
+						</div>
+					</div>
+					<div class="dashboard-card-face dashboard-box-back">
+						<div class="row no-margin">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 no-padding">
+								<img src="@folderStylePath/Images/icon-cms.png" class="img-responsive dashboard-rear-panel-icon">
+							</div>
+							<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+								<div class="space-40"></div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("Import and Export")</h4>
+									</div>
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/cms-import-export.png" class="img-responsive">
+									</div>
+								</div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("More and less")</h4>
+									</div>
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/cms-di-piu-di-meno.png" class="img-responsive">
+									</div>
+								</div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("Add & Cut")</h4>
+									</div>
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/cms-add-cut.png" class="img-responsive">
+									</div>
+								</div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("Multi Users")</h4>
+									</div>
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/cms-multi-users.png" class="img-responsive">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-4 col-md-4">
+			<div class="dashboard-box dashboard-box-web" ontouchstart="this.classList.toggle('hover');">
+				<div class="dashboard-card">
+					<div class="dashboard-card-face dashboard-box-front text-center">
+						<div class="dasboard-box-icon"><img src="@folderStylePath/Images/icon-web.png" class="img-responsive"></div>
+						<h4 class="dashboard-box-title">@T("Web&Mobile")</h4>
+						<div class="dashboard-box-content">
+							@T("Responsive websites and mobile applications: you think about the content, the rest is Krake™.")
+						</div>
+					</div>
+					<div class="dashboard-card-face dashboard-box-back">
+						<div class="row no-margin">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 no-padding">
+								<img src="@folderStylePath/Images/icon-web.png" class="img-responsive dashboard-rear-panel-icon">
+							</div>
+							<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+								<div class="space-20"></div>
+								<h5 class="dashboard-subtitle">@T("Design and development of Mobile Applications")</h5>
+								<h5 class="dashboard-subtitle">@T("Responsive Web Design (RWD)") </h5>
+								<p>@T("for affordable (and usable) solutions by any user, on any device")</p>
+                                <img class="img-responsive" src="@folderStylePath/Images/web.png">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-4 col-md-4">
+			<div class="dashboard-box dashboard-box-communication" ontouchstart="this.classList.toggle('hover');">
+				<div class="dashboard-card">
+					<div class="dashboard-card-face dashboard-box-front text-center">
+						<div class="dasboard-box-icon"><img src="@folderStylePath/Images/icon-communication.png" class="img-responsive"></div>
+						<h4 class="dashboard-box-title">@T("Communication Gateway")</h4>
+						<div class="dashboard-box-content">
+							@T("A single dashboard to manage direct marketing campaigns: SMS, MAIL, PUSH NOTIFICATION, SOCIAL.")
+						</div>
+					</div>
+					<div class="dashboard-card-face dashboard-box-back">
+						<div class="row no-margin">
+							<div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 no-padding">
+								<img src="@folderStylePath/Images/icon-communication.png" class="img-responsive dashboard-rear-panel-icon">
+							</div>
+							<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+								<div class="space-20"></div>
+								<p><strong>@T("One quick and easy way to manage targeted marketing campaigns and effective.")</strong></p>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/communication-sms.png" class="img-responsive">
+									</div>
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("SMS")</h4>
+									</div>
+								</div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/communication-social.png" class="img-responsive">
+									</div>
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("Social")</h4>
+									</div>
+								</div>
+								<div class="row no-margin dashboard-list-item">
+									<div class="col-xs-6 text-center">
+										<img src="@folderStylePath/Images/communication-mail.png" class="img-responsive">
+									</div>
+									<div class="col-xs-6 no-padding">
+										<h4 class="dashboard-list-subtitle">@T("Mail")</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+@*<div class="container roboto">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+            <img alt="piattaforma" class="img-responsive img-piattaforma" src="@folderStylePath/Images/piattaforma.png">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+            <div class="space-20"></div>
+            <div>
+                <!-- Nav tabs -->
+                <ul role="tablist" class="nav nav-tabs">
+                    <li class="active" role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="mail-home" href="#mail-home">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-mail.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-mail.png">
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="app-home" href="#app-home">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-app.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-app.png">
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="web" href="#web">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-web.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-web.png">
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="notifiche" href="#notifiche">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-notifiche.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-notifiche.png">
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="sms" href="#sms">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-sms.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-sms.png">
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" role="tab" aria-controls="social" href="#social">
+                            <span class="cont">
+                                <img class="img-responsive img-piattaforma-fasi" alt="krake" src="@folderStylePath/Images/icona-social.png"></span>
+                            <img class="img-responsive freccia" src="@folderStylePath/Images/freccia-social.png">
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div style="background-color: #A167A3" id="mail-home" class="tab-pane active" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-mail-w.png">
+                            <h2 class="titolo-icone">@T("MAIL")</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b> @T("manage through its back office aimed marketing campaigns, newsletter and much more")
+                                       
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-mail.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                    <div style="background-color: #EEB377" id="app-home" class="tab-pane" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-app-w.png">
+                            <h2 class="titolo-icone">@T("MOBILE APP")</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b> @T("Allows you to implement and manage several mobile applications") 
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-app.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                    <div style="background-color: #D26774" id="web" class="tab-pane" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-web-w.png">
+                            <h2 class="titolo-icone">@T("WEB")</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b> @T("Allows you to implement and manage several responsive websites")
+                                       
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-web.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                    <div style="background-color: #447879" id="notifiche" class="tab-pane" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-notifiche-w.png">
+                            <h2 class="titolo-icone">@T("PUSH NOTIFICATIONS")</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b>, @T("the app will remain up and vigilant thanks to custom push notifications")
+                                       
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-notifiche.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                    <div style="background-color: #A9D287" id="sms" class="tab-pane" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-sms-w.png">
+                            <h2 class="titolo-icone">SMS</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b> @T("Allows you to implement and manage marketing campaigns and communications via SMS")
+                                       
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-sms.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                    <div style="background-color: #539CB3" id="social" class="tab-pane" role="tabpanel">
+                        <div class="testo-piattaforma-fasi">
+                            <img class="img-responsive icone-bianche" src="@folderStylePath/Images/icona-social-w.png">
+                            <h2 class="titolo-icone">SOCIAL</h2>
+                            <div class="clear"></div>
+                            <b>@T("KRAKE&#8482;")</b> @T("Allows you to manage integrated communication streams through your social accounts")
+                        </div>
+                        <div style="background-image: url('@folderStylePath/Images/bg-social.png')" class="bg-piattaforma-fasi"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+

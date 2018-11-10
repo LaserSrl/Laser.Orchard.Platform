@@ -1,0 +1,10 @@
+Name: QR Codes
+AntiForgery: enabled
+Author: Proligence / Piotr Szmyd
+Website: http://www.proligence.pl	
+Version: 1.10
+OrchardVersion: 1.10
+Description: Enables attaching QR codes to content items.
+FeatureDescription: Enables attaching QR codes to content items.
+Dependencies: Orchard.Tokens, Contents
+Category: Content

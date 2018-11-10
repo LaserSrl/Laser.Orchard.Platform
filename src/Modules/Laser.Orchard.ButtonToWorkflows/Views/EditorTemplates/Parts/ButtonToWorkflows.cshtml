@@ -1,0 +1,39 @@
+﻿@model Laser.Orchard.ButtonToWorkflows.ViewModels.ButtonToWorkflowsVM
+@using Laser.Orchard.ButtonToWorkflows.ViewModels
+@using Orchard.ContentManagement;
+@using Laser.Orchard.ButtonToWorkflows.Security;
+<div style="float:right">
+@{
+    string dis="";
+   if (Model.ButtonDenied){
+       dis = "disabled";
+       }
+       
+    var permissionToTest = ButtonPermissions.ButtonToWorkFlow1;
+    for (Int32 i = 0; i < Model.ElencoButtons.Count; i++) {
+
+        switch (Model.ElencoButtons[i].ButtonNumber) {
+            case 0:
+                permissionToTest = ButtonPermissions.ButtonToWorkFlow1;
+                break;
+            case 1:
+                permissionToTest = ButtonPermissions.ButtonToWorkFlow2;
+                break;
+            case 2:
+                permissionToTest = ButtonPermissions.ButtonToWorkFlow3;
+                break;
+
+        }
+        var isAuthorized = (Authorizer.Authorize(permissionToTest));
+        if (isAuthorized) {
+            @Html.Raw("&nbsp;")<button @dis  type="submit" name="submit.Save" value="@Html.Raw("submit.CustomButton" + Model.ElencoButtons[i].ButtonText)">@T(Model.ElencoButtons[i].ButtonText)</button>
+        }
+      @Html.HiddenFor(m => m.ElencoButtons[i].ButtonNumber)  
+   @Html.HiddenFor(m => m.ElencoButtons[i].ButtonText)
+    @Html.HiddenFor(m => m.ElencoButtons[i].ButtonAction)
+    @Html.HiddenFor(m => m.ButtonDenied)
+    }
+}
+</div>
+
+

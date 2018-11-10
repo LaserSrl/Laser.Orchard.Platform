@@ -1,0 +1,17 @@
+<script type="application/ld+json">
+{{
+    "@type": "Place",
+    "name": "{Content.Parameter:MapPart-LocationInfo}",
+    "address": "{Content.Parameter:MapPart-LocationAddress}",
+    "description": "{Content.Body.StripHtml}",
+    "geo": {{
+       "@type": "GeoCoordinates",
+       "latitude": "{Content.Parameter:MapPart-Latitude}",
+       "longitude": "{Content.Parameter:MapPart-Longitude}"
+    }},
+  "image":[
+    "{Site.BaseUrl}{Content.Fields.POI.Gallery.Url}"
+   ]
+  }}
+}}
+</script>

@@ -1,0 +1,23 @@
+﻿@model Laser.Orchard.Reporting.ViewModels.ShowReportsViewModel
+<h1>@Html.TitleForPage(T("Execute Data Reports").ToString())</h1>
+@using (Html.BeginForm("ShowReports", "Report", FormMethod.Get)) {
+    @Html.AntiForgeryToken()
+    @Html.LabelFor(m => m.TitleFilter)
+    @Html.TextBoxFor(m => m.TitleFilter)
+    <button type="submit">@T("Apply Filter")</button>
+}
+<table class="items" cellpadding="0" cellspacing="0">
+    <thead>
+        <tr>
+            <th scope="col">@T("Name")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.Reports) {
+            <tr>
+                <td><a href="@Url.Action("Display", "Report", new { area = "Laser.Orchard.Reporting", Id = report.Id })">@report.Title</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Display(Model.Pager)

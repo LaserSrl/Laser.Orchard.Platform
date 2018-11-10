@@ -1,0 +1,10 @@
+﻿Name: Laser BikeSharing
+AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.BikeSharing:
+		Description: A module that allows you to display informations about bike sharing stations. BikeSharing supported providers: MobilityParc.
+		Category: Content

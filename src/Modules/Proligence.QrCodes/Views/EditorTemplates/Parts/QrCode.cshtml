@@ -1,0 +1,25 @@
+@using Orchard.ContentManagement
+@model Proligence.QrCodes.Models.QrCodePart
+<fieldset>
+    @if (AuthorizedFor(Proligence.QrCodes.Permissions.EditQrCode)) {
+        
+    <legend>@T("Set QR code parameters")</legend>
+    <div>
+        @Html.LabelFor(m => m.Value, T("Value"))
+        @Html.TextBoxFor(m => m.Value, new { @class = "textMedium tokenized" })
+        @Html.ValidationMessageFor(m => m.Value, "*")
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Size, T("Size (in pixels)"))
+        @Html.TextBoxFor(m => m.Size, new { @class = "textMedium" })
+        @Html.ValidationMessageFor(m => m.Size, "*")
+    </div>
+    }
+
+
+    <div class="qr-code">
+        <img  onerror="this.style.display='none'" src="@Html.Action("Render", "Image", new { area = "Proligence.QrCodes", id = Model.ContentItem.Id })" />
+    </div>
+</fieldset>
+
+@Display.TokenHint()

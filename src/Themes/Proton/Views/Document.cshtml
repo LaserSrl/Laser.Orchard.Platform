@@ -1,0 +1,79 @@
+﻿@using Orchard.Environment.Configuration
+@{
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantName = settings.Name;
+
+    var title = @WorkContext.CurrentSite.SiteName;
+    var subthemePath = "~/Themes/Proton/Styles/" + tenantName + "/";
+
+}
+@{
+    //if (!(File.Exists(Server.MapPath(subthemePath + "site-style.css"))) || tenantName.ToLower() == "default") {
+    //    Style.Include("Site.css").AtHead();
+    //} else {
+    //    Style.Include(tenantName + "/site-style.css").AtHead();
+    //}
+    //if (!(File.Exists(Server.MapPath(subthemePath + "custom-style.css"))) || tenantName.ToLower() == "default") {
+    //    Style.Include("Custom.css").AtHead();
+    //} else {
+    //    Style.Include(tenantName+"/custom-style.css").AtHead();
+    //}
+
+    //Styles    
+    Style.Include("bootstrap.css").AtHead();
+    Style.Include("style.css").AtHead();
+    Style.Include("responsive.css").AtHead();
+    Style.Include("colors/red.css").AtHead();
+
+    Style.Include("camera.css").AtHead();
+    Style.Include("flexslider.css").AtHead();
+    Style.Include("prettyPhoto.css").AtHead();
+
+    if (WorkContext.HttpContext.Request.QueryString["removejs"] == null) {
+        Script.Include("jquery.flexslider-min.js").AtFoot();
+        Script.Include("jquery.mobile.customized.min.js").AtFoot();
+        Script.Include("bootstrap.min.js").AtFoot();
+        Script.Include("jquery.tools.min.js").AtFoot();
+        Script.Include("jquery.easing.1.3.js").AtFoot();
+        Script.Include("jquery.quicksand.js").AtFoot();
+        Script.Include("jquery.prettyPhoto.js").AtFoot();
+        Script.Include("custom.js").AtFoot();
+        Script.Include("camera.min.js").AtFoot();
+    }
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Basic Page 
+	=============================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Page Title
+	=============================================== -->
+    <title>@title</title>
+    @Display(Model.Head)
+
+    <!-- Mobile Specific 
+	=============================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700,200italic,400italic,700italic|Economica:400,700" rel="stylesheet" type="text/css" />
+    @if (WorkContext.HttpContext.Request.QueryString["removejs"] == null) {
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.2.min.js"><\/script>')</script>
+    }
+    <!-- HTML 5 Support for IE 6-8
+	=============================================== -->
+    <!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+    @Display(Model.Body)
+    @Display(Model.Tail)
+</body>
+</html>

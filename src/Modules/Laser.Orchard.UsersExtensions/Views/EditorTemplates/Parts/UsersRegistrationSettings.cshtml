@@ -1,0 +1,28 @@
+@using Orchard.ContentManagement;
+@model Laser.Orchard.UsersExtensions.Models.UserRegistrationSettingsPart
+@{
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });
+    var selectedItems = new string[] { };
+    if (Model.PolicyTextReferences != null) {
+        selectedItems = Model.PolicyTextReferences;
+    }
+    var includePoliciesEnum = Enum.GetNames(typeof(Laser.Orchard.Policy.IncludePendingPolicyOptions)).Where(w => w != "DependsOnContent").ToArray();
+}
+<fieldset>
+    <legend>@T("User Registration - Policies Acceptation")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.IncludePendingPolicy)">@T("Registration behaviour"):</label>
+        @T("Include policies on registration"): @Html.DropDownListFor(m => m.IncludePendingPolicy, new System.Web.Mvc.SelectList(includePoliciesEnum), Model.IncludePendingPolicy)
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.IncludePendingPolicy)">@T("Policy filters"):</label>
+        <select multiple="multiple" name="@Html.FieldNameFor(m => m.PolicyTextReferences)" id="@Html.FieldIdFor(m => m.PolicyTextReferences)">
+            <option value="{All}" @(selectedItems.Contains("{All}") || selectedItems.Length == 0 ? "selected=\"selected\"" : "")>@T("All Policies")</option>
+            @foreach (var policy in items) { 
+                <option value="{@policy.ContentItem.Id}" @(selectedItems.Contains("{" + policy.ContentItem.Id + "}") ? "selected=\"selected\"" : "")>@policy.Title</option>
+            }
+        </select>
+    </div>
+</fieldset>
+

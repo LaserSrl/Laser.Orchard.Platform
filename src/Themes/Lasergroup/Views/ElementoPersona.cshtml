@@ -1,0 +1,112 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@using Orchard.Fields.Fields
+
+@helper ShowImage(MediaPart image, string additionalStyle = "") {
+    <div class="@("team-photo-mask " + additionalStyle)">
+        <img src="@image.MediaUrl" title="@image.Title" alt="@image.AlternateText" class="img-responsive" />
+    </div>
+}
+
+@{
+    dynamic item = Model.Item;
+
+    var contentItem = (ContentItem)item;
+    var personaPart = contentItem.Parts.FirstOrDefault(pa => pa.PartDefinition.Name == "Persona");
+    if (personaPart != null) { //manage case where this is called with wrong parameters
+                               // ImageFronte should be a mandatory field
+        MediaPart frontImage = null;
+        var frontImageField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "ImageFronte")
+            as MediaLibraryPickerField;
+        if (frontImageField != null && frontImageField.MediaParts.Any()) {
+            frontImage = frontImageField.MediaParts.First();
+        }
+        // ImageRetro may not be a mandatory field
+        MediaPart backImage = null;
+        var backImageField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "ImageRetro")
+            as MediaLibraryPickerField;
+        if (backImageField != null && backImageField.MediaParts.Any()) {
+            backImage = backImageField.MediaParts.First();
+        }
+        // The fields that have to do with the contacts are added for the Krake website, and
+        // they were not there for www.laser-group.com
+        var emailField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "Email")
+            as InputField;
+        var showEmail = emailField != null && !string.IsNullOrWhiteSpace(emailField.Value);
+        var phoneField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "PhoneNumber")
+            as InputField;
+        var showPhone = phoneField != null && !string.IsNullOrWhiteSpace(phoneField.Value);
+        var facebookField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "FacebookLink")
+            as LinkField;
+        var showFacebook = facebookField != null && !string.IsNullOrWhiteSpace(facebookField.Value);
+        var linkedinField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "LinkedinLink")
+            as LinkField;
+        var showLinkedin = linkedinField != null && !string.IsNullOrWhiteSpace(linkedinField.Value);
+        var twitterField = personaPart
+            .Fields
+            .FirstOrDefault(fi => fi.Name == "TwitterLink")
+            as LinkField;
+        var showTwitter = twitterField != null && !string.IsNullOrWhiteSpace(twitterField.Value);
+        var showSocial = showFacebook || showTwitter || showLinkedin;
+
+        // Actual html to display follows:
+        <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+            <div class="team-item">
+                <div class="team-card">
+                    <div class="team-card-face team-card-front rotate-mobile">
+                        @if (frontImage != null) {
+                            @ShowImage(frontImage)
+                        }
+                        <div class="space-40"></div>
+                        <h4 class="team-name rotate-mobile">@item.TitlePart.Title</h4>
+                        <h5 class="team-ruolo rotate-mobile">@item.Persona.Sottotitolo.Value</h5>
+                        <div class="team-plus rotate-mobile">+</div>
+                    </div>
+                    <div class="team-card-face team-card-back rotate-mobile">
+                        @if (backImage != null) {
+                            @ShowImage(backImage, "rotate-mobile")
+                        }
+                        <p>@Html.Raw(item.BodyPart.Text)</p>
+                        @if (showEmail) {
+		                    <p class="color-gray">
+                                <a href="mailto:@emailField.Value" class="email-card">@emailField.Value</a><br/>
+                            </p>
+	                    }
+                        @if (showPhone) {
+                            <p class="color-gray">
+                                @phoneField.Value
+                            </p>
+                        }
+                        @if (showSocial) {
+                            <p class="color-gray">
+                                @if (showFacebook) {
+                                    <a href="@facebookField.Value" target="_blank" class="color-gray"><i class="fa fa-facebook-f"></i></a>
+                                }
+                                @if (showLinkedin) {
+                                    <a href="@linkedinField.Value" target="_blank" class="color-gray"><i class="fa fa-linkedin"></i></a>
+                                }
+                                @if (showTwitter) {
+                                    <a href="@twitterField.Value" target="_blank" class="color-gray"><i class="fa fa-twitter"></i></a>
+                                }
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}

@@ -1,0 +1,54 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Ascending"
+msgstr "Crescente"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Content Type"
+msgstr "Tipo di Contenuto"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Count"
+msgstr "Conta"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Descending"
+msgstr "Decrescente"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Dimension"
+msgstr "Dimensione"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Function name"
+msgstr "Nome funzione"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Order By"
+msgstr "Ordina per"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Provide the technical name of the vote. Leave empty for 'overall' rating."
+msgstr "Fornisce il nome tecnico della votazione. Lasciare vuoto per la valutazione globale."
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Select which Content Type you want to display"
+msgstr "Selezionare il Tipo di Contenuto da visualizzare"
+
+msgctxt "~/Modules/Contrib.Voting/Views/EditorTemplates/Parts.Vote.Widget.cshtml"
+msgid "Select which function should be used for ordering"
+msgstr "Selezionare la funzione da utilizzare per l'ordinamento"
+
+msgctxt "~/Modules/Contrib.Voting/Views/Parts.VoteWidget.List.cshtml"
+msgid "There are no voted contents."
+msgstr "Non ci sono contenuti votati."
+

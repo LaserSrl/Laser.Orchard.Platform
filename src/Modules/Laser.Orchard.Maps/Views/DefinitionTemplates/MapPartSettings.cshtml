@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.Maps.Models.MapPartSettings
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.Required, new { @checked = "checked", @class = "check-box" })
+        <label for="@Html.FieldIdFor(m => m.Required)" class="forcheckbox">@T("Required latitutde and longitude")</label>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.HideMapSource, new { @checked = "checked", @class = "check-box" })
+        <label for="@Html.FieldIdFor(m => m.HideMapSource)" class="forcheckbox">@T("Hide Map Source File")</label>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.HintText)">@T("An optional help text describing what \"Location Info\" and \"Location Address\" mean in the context.")</label>
+        @Html.TextBoxFor(m => m.HintText, new { @class = "text large" })
+    </div>
+</fieldset>

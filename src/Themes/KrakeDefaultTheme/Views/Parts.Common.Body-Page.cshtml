@@ -1,0 +1,36 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Environment.Configuration;
+@using System.Web.Mvc;
+
+@{
+    /*Logica Logo WhiteLabel*/
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
+    string urlActionUser;
+}
+
+<div class="row">
+	<div class="col-xs-12 col-sm-3 col-index no-pad-right">
+        @Display(New.PlaceholderLogo())
+	</div>
+	<div class="col-xs-8 col-sm-6 col-index">
+		@Model.Html
+	</div>
+	<div class="col-xs-4 col-sm-3 col-index no-pad-left">
+         @if (WorkContext.CurrentUser != null) {
+            @*urlActionUser = Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" });
+            <a href="@urlActionUser" class="logout-button"><i class="fa fa-users fa-4x lineheight-2" aria-hidden="true"></i><h6>@T("Logged")</h6></a>*@ 
+            
+            //Se volete checked IList bottone faccia il logout commentare le righe sopra e decommentare le due sotto
+            urlActionUser = Url.Action("LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl });
+            <a href="@urlActionUser" class="logout-button"><i class="fa fa-sign-out fa-4x lineheight-2" aria-hidden="true"></i><h6>@T("Logout")</h6></a>
+        } else {
+            urlActionUser = Url.Action("LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) });
+             <a href="@urlActionUser" class="login-button"><i class="fa fa-sign-in fa-4x lineheight-2" aria-hidden="true"></i><h6>@T("Login")</h6></a>
+        }
+
+		
+	</div>
+</div>

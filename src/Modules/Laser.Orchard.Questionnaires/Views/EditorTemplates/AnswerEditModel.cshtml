@@ -1,0 +1,52 @@
+﻿@model Laser.Orchard.Questionnaires.ViewModels.AnswerEditModel
+@using Orchard.Utility.Extensions;
+@using Orchard.MediaLibrary.Models;
+@using Orchard.ContentManagement;
+@{ var contentManager = WorkContext.Resolve<IContentManager>();}
+<tr class="answer">
+    <td class="answer-col">
+        <label><i class="fa fa-arrows"></i>@T("Answer")</label>
+    </td>
+    <td class="answer-text">
+        <div>
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.Position, new { @class = "answers-position-field" })
+            @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete" })
+            @Html.HiddenFor(x => x.QuestionRecord_Id)
+            @Html.TextBoxFor(x => x.Answer, new { @maxlength = "1200", @class = "j_risposta" })
+            @{
+                if ((bool)TempData["ShowCorrectResponseFlag"]) {
+                @Html.CheckBoxFor(x => x.CorrectResponse) @Html.Raw("Right answer")
+                }
+            }
+        </div>
+        <div>
+            @{var divanteprima = "Anteprima" + Html.Raw(Html.FieldIdFor(x => x.AllFiles));
+              var imginserite = 0;
+                <div id="@divanteprima" class="hlist-container">
+                    <ul>
+                        @if (Model.AllFiles != null && Model.AllFiles.Split(',').Count() > 0) {
+                            foreach (int ciId in Model.AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                            <li>
+                                <img alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 100, Height: 100, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                <a href="#" onclick="javascript:if(confirm('@T("Remove the image?")')){$('#@Html.FieldIdFor(x => x.AllFiles)').val(removeValue($('#@Html.FieldIdFor(x => x.AllFiles)').val(),@mediaPart.Id,','));$(this).closest('li').remove();return(false);}">@T("Remove")</a>
+                            </li>
+                                imginserite++;
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+            <span>
+                @Html.HiddenFor(x => x.AllFiles)</span>
+            @if ((bool)TempData["EnableAnswerImage"] == true) {
+                <span class="button add "onclick="javascript:AddMedia(this, '@Html.FieldIdFor(x => x.AllFiles)', @TempData["AnswerImageLimitNumber"])">@T("Add Picture")</span>
+            }
+
+        </div>
+    </td>
+    <td class="answer-col">@Html.CheckBoxFor(m => m.Published) Visible</td>
+    <td class="answer-col"><i class="fa fa-times" style="color: red"></i>@Html.LinkToRemoveNestedForm(T("Remove").Text, "tr.answer", "input.mark-for-delete", "RefreshAnswerPostions('#'+$(this).closest('tbody').attr('id'))")</td>
+    @*Prendo il più vicino tbody per decrementare la position*@
+</tr>

@@ -1,0 +1,38 @@
+﻿@model Laser.Orchard.ButtonToWorkflows.ViewModels.DynamicButtonToWorkflowsEdit
+
+<div class="j_btw" style="border: solid #eaeaea 1px; padding: 10px;">
+    <table class="btwtable" style="margin-top:5px; width:100%;">
+        <tr>
+            <td class="leftside" style="width:10%; padding-right:10px;">
+                @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete preserve-on-clean" })
+                @Html.HiddenFor(x => x.Id, new { @class = "preserve-on-clean" })
+                <label>@T("Button Name")</label>
+                @Html.TextBoxFor(m => m.ButtonName)
+            </td>
+            <td style="width:10%; padding-right:10px;">
+                <label>@T("Button Label")</label>
+                @Html.TextBoxFor(m => m.ButtonText)
+            </td>
+            <td style="width:10%; padding-right:10px;">
+                <label>@T("Description")</label>
+                @Html.TextBoxFor(m => m.ButtonDescription)
+            </td>
+            <td style="width:10%; padding-right:10px;">
+                <label>@T("Async")</label>
+                @Html.CheckBoxFor(m => m.ButtonAsync)
+            </td>
+            <td style="text-align:right; width:25%;">
+                <i class="fa fa-times" style="color:red; margin-right:2px;"></i>
+                @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_btw", "input.mark-for-delete", "CleanFieldsOnRemove(this);")
+            </td>
+        </tr>
+        <tr>
+            <td class="leftside" colspan="4">
+                <label>@T("Message on button click")</label>
+                @Html.TextBoxFor(m => m.ButtonMessage, new { @class = "text large" })
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>

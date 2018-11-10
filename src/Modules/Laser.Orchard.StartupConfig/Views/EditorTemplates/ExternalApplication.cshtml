@@ -1,0 +1,19 @@
+﻿@model Laser.Orchard.StartupConfig.WebApiProtection.Models.ExternalApplication
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("externalapplication"); }
+@{
+    var appId = "phNum_" + answerBlock;
+}
+<div id="@appId" class="j_extapp">
+    <fieldset>
+        <br/>
+        @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+        @Html.TextBoxFor(m => m.Name, new { placeholder = T("Name"), @class = "text medium" })
+        @Html.TextBoxFor(m => m.ApiKey, new { placeholder = T("Api Secret Key"), @class = "text medium" })
+        <br/>
+        @Html.CheckBoxFor(m => m.EnableTimeStampVerification) @Html.LabelFor(m => m.EnableTimeStampVerification, T("Verify TimeStamp").Text, new { @class = "forcheckbox" })
+        @Html.TextBoxFor(m => m.Validity, new { placeholder = T("Validity in minutes"), @class = "text small" })
+        <a class="button" onclick="javascript:var key=randomString(22);$('#@Html.FieldIdFor(m => m.ApiKey)').val(key);return(false);">@T("Generate")</a>
+        <i class="fa fa-times" style="color: red"></i>
+        @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_extapp", "input.ph-mark-for-delete")
+    </fieldset>
+</div>

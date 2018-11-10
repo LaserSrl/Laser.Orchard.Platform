@@ -1,0 +1,7 @@
+@{
+    Orchard.Core.Common.ViewModels.TextFieldDriverViewModel Model2 = Model.Model;
+}
+@Html.Partial("Content.Edit-User-TextField", Model2,
+    new ViewDataDictionary() {
+        TemplateInfo = new TemplateInfo() { HtmlFieldPrefix = Model.Prefix }
+    })

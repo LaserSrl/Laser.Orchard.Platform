@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>Install dependent modules</Name>
+    <Description>Ensures dependent modules are installed.</Description>
+    <Author>Santiago Burbano</Author>
+    <WebSite>http://extendedregistration.codeplex.com</WebSite>
+    <Tags></Tags>
+    <Version>1.0</Version>
+  </Recipe>
+  <Module packageId="Orchard.Module.Contrib.Profile" />
+  <Feature enable="Orchard.jQuery,Contrib.Profile" />
+  <Migration features="*"/>
+</Orchard>

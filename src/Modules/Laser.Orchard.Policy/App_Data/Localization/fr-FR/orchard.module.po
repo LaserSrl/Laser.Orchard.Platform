@@ -1,0 +1,132 @@
+# Orchard resource strings - fr-FR
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/PolicyPartDriver"
+msgid "PolicyPart Error"
+msgstr "Erreur PolicyPart"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/PolicyTextInfoPartDriver"
+msgid "PolicyTextInfo Error"
+msgstr "Erreur PolicyTextInfo"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/UserPolicyPartDriver"
+msgid "UserPolicyPart Error"
+msgstr "Erreur UserPolicyPart "
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "All Policies"
+msgstr "Toutes les déclarations"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Depends on content"
+msgstr "Dépend du contenu"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Include policies"
+msgstr "Inclure déclarations"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Policy filters"
+msgstr "Filtres déclarations"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Policy part behaviour"
+msgstr "Comportement Policy part"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "All Policies"
+msgstr "Toutes les déclarations"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Pending policies included"
+msgstr "Informatives pendentifs comprises"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Pending policies NOT included"
+msgstr "Informatives pendentifs compris NON comprises"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy"
+msgstr "Informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy filters"
+msgstr "Filtres déclarations"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy filters ruled by settings."
+msgstr "Filtres déclarations définis par les paramètres"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy part behaviour"
+msgstr "Comportement de la parte informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Priority"
+msgstr "Priorité
+
+msgctxt "
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "User have to accept this policy"
+msgstr "L'utilisateur doit accepter cette déclaration"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Without acceptation on this policy, contents under policies will not be displayed."
+msgstr "Ne pas accepter cette déclaration, le contenu à l'acceptation de l'information ne seront pas affiché"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Accepted"
+msgstr "Accepté"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Not Accepted"
+msgstr "Non accepté"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Policy acceptances"
+msgstr "Acceptation informatives"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Policy Text"
+msgstr "Texte del'informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "User never accepted policies."
+msgstr "L'utilizateur n'a jamais accepté aucune déclaration"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/Policy_SummaryAdmin.cshtml"
+msgid "Pending policies included"
+msgstr "Déclaration non acceptées incluses"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/Policy_SummaryAdmin.cshtml"
+msgid "Pending policies NOT included"
+msgstr "Déclaration non acceptées NON incluses"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/PolicyTextInfo_SummaryAdmin.cshtml"
+msgid "Optional policy"
+msgstr "Déclaration facultative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/PolicyTextInfo_SummaryAdmin.cshtml"
+msgid "Required policy."
+msgstr "Déclaration obligatoire."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Accept"
+msgstr "J'accepte"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Don't Accept"
+msgstr "Je n'accepte pas"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Save"
+msgstr "Enregistrer"
+

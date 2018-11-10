@@ -1,0 +1,182 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/DefinitionTemplates/ButtonsSetting.cshtml"
+msgid "Go on Setting -> Buttons to configure module"
+msgstr "Vai su Impstazioni -> Pulsanti per configurare il modulo"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/DefinitionTemplates/ButtonsSetting.cshtml"
+msgid "Select Button Type"
+msgstr "Selezionare il tipo di pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/DefinitionTemplates/DynamicButtonsSetting.cshtml"
+msgid "Buttons to display:"
+msgstr "Pulsanti da mostrare:"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Async"
+msgstr "Asincrono"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Button Label"
+msgstr "Etichetta del Pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Button Name"
+msgstr "Nome del pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Message on button click"
+msgstr "Messaggio per il clic del pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflows.cshtml"
+msgid "Custom actions:"
+msgstr "Azioni personalizzate:"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Activity Name"
+msgstr "Nome Attività"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Async"
+msgstr "Asincrono"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Button"
+msgstr "Pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Button Label"
+msgstr "Etichetta del Pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Button to WorkFlows Settings"
+msgstr "Pulsante per le Impostazioni Flussi di Lavoro"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Custom Button "
+msgstr "Pulsante Personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
+msgid "Message on button click"
+msgstr "Messaggio alla pressione del pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/DynamicButtonToWorkflowsSettings.cshtml"
+msgid "Add Button"
+msgstr "Aggiungi pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/DynamicButtonToWorkflowsSettings.cshtml"
+msgid "Add Buttons Dynamically"
+msgstr "Aggiungi pulsanti dinamicamente"
+
+msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/DynamicButtonToWorkflowsSettings.cshtml"
+msgid "The Button Name field should be a unique identifier for the button."
+msgstr "Il nome del bottone deve essere un identificatore univoco del pulsante."
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsEvent"
+msgid "Content Event"
+msgstr "Evento del Contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsEvent"
+msgid "Custom Button"
+msgstr "Pulsante Personalizzato"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
+msgid "Any"
+msgstr "Qualsiasi"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
+msgid "Content types"
+msgstr "Tipi di Contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
+msgid "Select some content types."
+msgstr "Selezionare i tipi di contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
+msgid "Content Event"
+msgstr "Evento del Contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
+msgid "Dynamic button is clicked."
+msgstr "Il bottone dinamico è stato premuto."
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
+msgid "Any"
+msgstr "Tutti"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
+msgid "Content types"
+msgstr "Tipi di Contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
+msgid "Dynamic Button"
+msgstr "Bottone Dinamico"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
+msgid "Select a dynamic button."
+msgstr "Seleziona un bottone dinamico"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
+msgid "Select some content types."
+msgstr "Selezionare i tipi di contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.ButtonToWorkflowsDriver"
+msgid "Error Saving Content Item"
+msgstr "Errore durante il salvataggio del contenuto"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.DynamicButtonToWorkflowsSettingsPartDriver"
+msgid "Cannot have multiple buttons with the same name ({0})"
+msgstr "Non è possibile avere più pulsanti con lo stesso nome ({0})"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Handlers.DynamicButtonToWorkflowsSettingsHandler"
+msgid "Buttons"
+msgstr "Pulsanti"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Handlers.SiteSettingsPartHandler"
+msgid "Buttons"
+msgstr "Pulsanti"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Services.DynamicButtonToWorkflowsService"
+msgid "{0} Dynamic Button Permission"
+msgstr "Permessi del pulsante dinamico {0}"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Services.DynamicButtonToWorkflowsService"
+msgid "Dynamic Button to Workflow Feature"
+msgstr "Funzionalità Bottone Dinamico per i Flussi di Lavoro."
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Settings.ButtonsEvents"
+msgid "Setting -> Buttons : must be configured"
+msgstr "E' necessario configurare Impostazioni -> Pulsanti"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.ViewModels.ValidationProviders.ValidateDynamicButtonData"
+msgid "The Button Name field is required."
+msgstr "Il nome di bottone è richiesto"
+

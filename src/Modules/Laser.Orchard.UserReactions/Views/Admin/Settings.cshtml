@@ -1,0 +1,53 @@
+﻿@using Laser.Orchard.UserReactions.ViewModels;
+@model  UserReactionsTypes
+@{
+    Script.Require("jQuery_NestedModels").AtHead();
+    Script.Require("jQueryUI").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+}
+
+
+@{ using (Html.BeginFormAntiForgeryPost()) {
+   
+    <div class="manage">
+        <button class="primaryAction" type="submit">@T("Update settings")</button>
+    </div>
+    <br />
+    
+       Layout.Title = T("User Reactions Types Settings").ToString(); 
+
+    <h2>
+        <p><b>@T("Settings - User Reactions Types")</b></p>
+    </h2>
+
+    <div>
+        @Html.DropDownListFor(m => m.CssName, new SelectList(Enum.GetNames(typeof(Laser.Orchard.UserReactions.StyleFileNameProviders)), Model.CssName))
+        <span style="padding-left:50px">
+            @Html.CheckBoxFor(m => m.AllowMultipleChoices)
+            @Html.LabelFor(m => m.AllowMultipleChoices, T("Allow multiple choices"))
+        </span>
+    </div>
+    <br />
+    <fieldset>
+        <legend></legend>
+        @*<i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(x => x.UserReactionsType, T("Add Reaction").Text, "#reactions", ".j_reaction", "reaction-add-new")*@
+        <div id="reactions">
+
+            @Html.EditorFor(x => x.UserReactionsType)
+        </div>
+
+
+    </fieldset>
+   } 
+    
+}
+@using (Script.Foot()) {
+    @Html.MakeSortable("#reactions", ".reaction-position-field");
+    <script type="text/javascript">
+        $(".reaction-add-new").click(function () {
+            $(".reaction-position-field").each(function (i) {
+                $(this).val((i + 1).toString());
+            });
+        });
+    </script>
+}

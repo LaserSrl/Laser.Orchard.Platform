@@ -1,0 +1,7 @@
+﻿@model Laser.Orchard.StartupConfig.Models.TaxonomyExtensionPart
+<fieldset>
+    <legend>@T("Order contents by")</legend>
+    <div>
+        @Html.DropDownListFor(m => m.OrderBy, new SelectList(Enum.GetValues(typeof(Laser.Orchard.StartupConfig.OrderType)), Model.OrderBy))
+    </div>
+</fieldset>

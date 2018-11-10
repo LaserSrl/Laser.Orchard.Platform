@@ -1,0 +1,9 @@
+﻿@{
+    var dateTimeField = (Orchard.Fields.Fields.DateTimeField)Model.Field;
+}
+<fieldset>
+    <legend>@dateTimeField.DisplayName</legend>
+    @if (dateTimeField.DateTime != DateTime.MinValue) {
+        @dateTimeField.DateTime
+    }
+</fieldset>

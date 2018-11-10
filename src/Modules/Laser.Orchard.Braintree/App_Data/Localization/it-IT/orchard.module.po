@@ -1,0 +1,122 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Braintree PayPal Settings"
+msgstr "Impostazioni Braintree PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Currency Code"
+msgstr "Codice Valuta"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Currency code bound to the merchant ID in Braintree configuration."
+msgstr "Codice valuta associato all'ID del negoziante nella configurazione di Braintree."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "If checked, it means this is a production environment."
+msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Merchant ID"
+msgstr "ID del negoziante (Merchant ID)"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Private Key"
+msgstr "Chiave privata"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Production Environment"
+msgstr "Ambiente di produzione"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Public Key"
+msgstr "Chiave pubblica"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The Merchant ID assigned by Braintree during merchant registration."
+msgstr "L'ID del negoziante (Merchant ID) assegnato da Braintree durante la registrazione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The Private Key assigned by Braintree during merchant registration."
+msgstr "La chiave privata assegnata da Braintree durante la registrazione del negoziante"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The Public Key assigned by Braintree during merchant registration."
+msgstr "La chiave pubblica assegnata da Braintree durante la registrazione del negoziante"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
+msgid "Loading..."
+msgstr "Caricamento in corso..."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
+msgid "Pay now"
+msgstr "Paga adesso"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
+msgid "Pay with Braintree and PayPal"
+msgstr "Paga con Braintree e PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "Braintree PayPal Settings"
+msgstr "Impostazioni Braintree PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "If checked, it means this is a production environment."
+msgstr "Se selezionato, imposta l'ambiente come ambiente di produzione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "Merchant ID"
+msgstr "ID del negoziante (Merchant ID)"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "Private Key"
+msgstr "Chiave privata"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "Production Environment"
+msgstr "Ambiente di produzione"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "Public Key"
+msgstr "Chiave pubblica"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "The Merchant ID assigned by Braintree during merchant registration."
+msgstr "L'ID del negoziante (Merchant ID) assegnato da Braintree durante la registrazione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "The Private Key assigned by Braintree during merchant registration."
+msgstr "La chiave privata assegnata da Braintree durante la registrazione del negoziante"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
+msgid "The Public Key assigned by Braintree during merchant registration."
+msgstr "La chiave pubblica assegnata da Braintree durante la registrazione del negoziante"
+
+msgctxt "Laser.Orchard.Braintree.Handlers.BraintreeSiteSettingsHandler"
+msgid "Braintree PayPal"
+msgstr "Braintree PayPal"
+
+msgctxt "Laser.Orchard.Braintree.Services.BraintreePosService"
+msgid "An SDK is available for BrainTree."
+msgstr "Braintree ha una sua SDK."
+
+msgctxt "Laser.Orchard.Braintree.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}\">Braintree PayPal</a> settings need to be configured."
+msgstr "Le impostazioni del modulo <a href=\"{0}\">Braintree PayPal</a> devono ancora essere configurate."
+

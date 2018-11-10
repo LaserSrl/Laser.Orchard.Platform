@@ -1,0 +1,170 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.ContentManagement;
+@using Orchard.Mvc.Html;
+
+@{
+    if (Model.Title != null) {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var tag = Tag(Model, "article");
+
+    List<dynamic> breadcrumbElements = new List<dynamic>();
+    dynamic contentsForBreadcrumb;
+    try {
+        contentsForBreadcrumb = Model.ContentItem.Prodotto.Breadcrumb.ContentItems;
+    } catch {
+        contentsForBreadcrumb = null;
+    }
+    if (contentsForBreadcrumb != null) {
+        if (contentsForBreadcrumb.Length == 0) {
+            if (Model.ContentItem.Prodotto.Tipoprodotto.Value == "Prodotto") {
+                breadcrumbElements.Add(new { Name = "Portfolio", Url = "./portfolio", Active = false });
+                breadcrumbElements.Add(new { Name = Model.ContentItem.TitlePart.Title, Url = Url.ItemDisplayUrl((IContent)Model.ContentItem), Active = true });
+            }
+        } else {
+            foreach (var item in contentsForBreadcrumb) {
+                breadcrumbElements.Add(new { Name = item.TitlePart.Title, Url = Url.ItemDisplayUrl((IContent)item), Active = true });
+            }
+            breadcrumbElements.Add(new { Name = Model.ContentItem.TitlePart.Title, Url = Url.ItemDisplayUrl((IContent)Model.ContentItem), Active = true });
+        }
+    }
+
+    WorkContext.Layout.Zones["Breadcrumb"].Items.Clear();
+    WorkContext.Layout.Zones["Breadcrumb"].Add(New.PortfolioBreadcrumb(MenuItems: breadcrumbElements), "0");
+}
+<!-- BEGIN = Row Wrapper -->
+<div class="row portfolio-wrap">
+
+    <div class="span12">
+        <h2 class="section-title">@Model.ContentItem.TitlePart.Title</h2>
+    </div>
+
+    <!-- Portfolio Detail Slider -->
+    <section class="portfolio-detail span7">
+        <ul class="slides">
+            @foreach (var imageMediaPart in Model.ContentItem.Prodotto.Gallery.MediaParts) {
+
+                <li>
+                    <img src="@Display.ResizeMediaUrl(Width: 700, Height: 467, Mode: "crop", Alignment: "middlecenter", Path: imageMediaPart.MediaUrl)" alt="" />
+                    <span class="image-overlay-bg"><a href="@imageMediaPart.MediaUrl" data-rel="prettyPhoto[portfolio-slider]" title="@imageMediaPart.Title" class="image-lightbox"></a></span>
+                </li>
+            }
+
+        </ul>
+    </section>
+    <!-- End Portfolio Detail Slider -->
+
+    <!-- Portfolio Detail Description -->
+    <section class="portfolio-media span5">
+        @{
+            var bodyHtml = Model.ContentItem.BodyPart.Text;
+            bodyHtml = bodyHtml.Replace("<ul>", "<div class=\"check2-list\"><ul>");
+            bodyHtml = bodyHtml.Replace("</ul>", "</ul></div>");
+        }
+        @Html.Raw(bodyHtml)
+        @try {
+            if (Model.ContentItem.Prodotto.LinkVisualizzazione != null && !String.IsNullOrWhiteSpace(Model.ContentItem.Prodotto.LinkVisualizzazione.Text)) {
+            <a href="@Model.ContentItem.Prodotto.LinkVisualizzazione.Value" class="btn btn-small" target="@Model.ContentItem.Prodotto.LinkVisualizzazione.Target">@Model.ContentItem.Prodotto.LinkVisualizzazione.Text</a>
+            }
+        } catch { }
+    </section>
+    <!-- End Portfolio Detail Description -->
+
+    <div class="clearfix"></div>
+    @try {
+        if (Model.ContentItem.Prodotto.Video != null && Model.ContentItem.Prodotto.Video.Ids.Length > 0) {
+        <section class="span12 portfolio-related">
+            <h3 class="section-title">@Model.ContentItem.Prodotto.Video.ContentItems[0].TitlePart.Title</h3>
+            @{    string link = Model.ContentItem.Prodotto.Video.ContentItems[0].YoutubeVideo.VideoUrl.Value.ToString();
+                  var codiceYoutube = "";
+                  if (link.Contains("v=")) {
+                      codiceYoutube = link.Split(new string[] { "v=" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                      link = String.Format("https://www.youtube.com/embed/{0}", codiceYoutube);
+                  } else if (link.Contains("/embed/")) {
+
+                  }
+            }
+            <iframe width="560" height="315" src="@link" frameborder="0" allowfullscreen></iframe>
+        </section>
+        }
+    } catch { }
+@*<!-- Related Portfolio -->
+    <section class="span12 portfolio-related">
+
+        <h3 class="section-title">Related Works</h3>
+
+        <div class="row portfolio">
+
+            <article class="span3">
+
+                <div class="p-thumb">
+                    <img src="media/portfolio/small/portfolio-small-1.jpg" alt="Parrot" />
+                    <div class="image-overlay-bg">
+                        <a href="http://vimeo.com/1084537" data-rel="prettyPhoto[portfolio]" title="Lorem Ipsum Dolor" class="image-lightbox"></a>
+                        <a href="portfolio-detail.html" title="Lorem Ipsum Dolor" class="image-link"></a>
+                    </div>
+                </div>
+
+                <div class="p-text"><a href="portfolio-detail.html">Lorem ipsum dolor</a><p>Category Name</p>
+                </div>
+
+            </article>
+
+            <article class="span3">
+
+                <div class="p-thumb">
+                    <img src="media/portfolio/small/portfolio-small-2.jpg" alt="Images" />
+                    <div class="image-overlay-bg">
+                        <a href="http://www.youtube.com/watch?v=eRsGyueVLvQ" data-rel="prettyPhoto[portfolio]" title="Lorem Ipsum Dolor" class="image-lightbox"></a>
+                        <a href="portfolio-detail.html" title="Lorem Ipsum Dolor" class="image-link"></a>
+                    </div>
+                </div>
+
+                <div class="p-text"><a href="portfolio-detail.html">Lorem ipsum dolor</a><p>Category Name</p>
+                </div>
+
+            </article>
+
+            <article class="span3">
+
+                <div class="p-thumb">
+                    <img src="media/portfolio/small/portfolio-small-3.jpg" alt="Images" />
+                    <div class="image-overlay-bg">
+                        <a href="media/portfolio/big/portfolio-3.jpg" data-rel="prettyPhoto[portfolio]" title="Lorem Ipsum Dolor" class="image-lightbox"></a>
+                        <a href="portfolio-detail.html" title="Lorem Ipsum Dolor" class="image-link"></a>
+                    </div>
+                </div>
+
+                <div class="p-text"><a href="portfolio-detail.html">Lorem ipsum dolor</a><p>Category Name</p>
+                </div>
+
+            </article>
+
+            <article class="span3">
+
+                <div class="p-thumb">
+                    <img src="media/portfolio/small/portfolio-small-4.jpg" alt="Images" />
+                    <div class="image-overlay-bg">
+                        <a href="media/portfolio/big/portfolio-4.jpg" data-rel="prettyPhoto[portfolio]" title="Lorem Ipsum Dolor" class="image-lightbox"></a>
+                        <a href="portfolio-detail.html" title="Lorem Ipsum Dolor" class="image-link"></a>
+                    </div>
+                </div>
+
+                <div class="p-text"><a href="portfolio-detail.html">Lorem ipsum dolor</a><p>Category Name</p>
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>*@
+    <!-- End Related Portfolio -->
+
+</div>
+<!-- END = Row Wrapper -->

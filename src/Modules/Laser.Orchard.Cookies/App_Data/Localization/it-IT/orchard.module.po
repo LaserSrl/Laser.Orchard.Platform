@@ -1,0 +1,114 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Cookie Accept Button"
+msgstr "Pulsante Accetta Cookies"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Cookie Analytics Mode"
+msgstr "Modalità Cookie Analytics"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Cookie Decline Button"
+msgstr "Pulsante Rifiuta Cookies"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Cookie Reset Button"
+msgstr "Pulsante Reimposta Cookies"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "CookieLaw Settings"
+msgstr "Impostazione legge sui cookies"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "'Discreet' position (This positions Discreet Link and Discreet Reset)"
+msgstr "Posizione 'Riservata' (Questo fa comparire Link Riservato e Pulisci Riservato)"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Display the notification at the bottom of the page?"
+msgstr "Visualizzare la notifica a fondo pagina?"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "If the user accepts the cookies, it will display a reset cookies line."
+msgstr "Se l'utente accetta i cookie, visualizza una linea per pulire i cookie."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "If you are just using a simple analytics package you can set this to true, it displays a simple default message with no privacy policy link."
+msgstr "Se state usando un semplice pacchetto per gli Analytics, potete impostare questo controllo a Vero: visualizza un semplice messaggio predefinito senza link all'informativa sulla privacy."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "It will also force the discreet position setting to bottom (left or right)."
+msgstr "Forza le impostazioni della posizione riservata al fondo (a sinistra o a destra)."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "It will show a green button for the user to accept cookies."
+msgstr "Visualizza un pulsante verde che permette all'utente di accettare i cookie."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "It will show a red button for the user to decline cookies."
+msgstr "Visualizza un pulsante rosso che permette all'utente di rifiutare i cookie."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "It will show a small reset link instead of a full liner."
+msgstr "Visualizza un link Pulisci piccolo invece di uno grande."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Make the reset button discreet?"
+msgstr "Rendere riservato il pulsante Pulisci?"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Set to topleft by default, you can also set topright, bottomleft, bottomright."
+msgstr "Impostato a 'in alto a sinistra' come valore predefinito, è però possibile modificarlo in 'in alto a destra', 'in basso a sinistra', 'in basso a destra'."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Analytics Message (this is the default message)"
+msgstr "Analytics Message (questo è il messaggio prdefinito)"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Change 'Accept Cookies' button text"
+msgstr "Modifica il testo del pulsante 'Accetta i Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Change 'Decline Cookies' button text"
+msgstr "Modifica il testo del pulsante 'Rifiuta i Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Change 'Reset Cookies' button text"
+msgstr "Modifica il testo del pulsante 'Pulisci i Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Change 'What are Cookies' link text"
+msgstr "Modifica il testo del link 'Cosa sono i Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "'Cookie Privacy link' Message"
+msgstr "Messaggio 'link Riservatezza Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "CookieLaw Settings"
+msgstr "Impostazione legge sui cookies"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Remember to keep the {{cookiePolicyLink}} variable intact."
+msgstr "Ricordarsi di mantenere intatta la variabile {{cookiePolicyLink}}."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "'What are Cookies' link"
+msgstr "Link 'Cosa sono i Cookie'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Your privacy policy / Cookie policy link"
+msgstr "Link Informativa sulla Privacy / Informativa sui Cookie"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieSettingsPartHandler"
+msgid "Cookies"
+msgstr "Cookies"
+

@@ -1,0 +1,28 @@
+﻿@model Laser.Orchard.Sharing.Settings.ShareBarTypePartSettings
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.Title, T("Share bar title"))
+        @Html.TextBoxFor(m => m.Title, new { @class = "text medium tokenized" })
+        <span class="hint">
+            @T("Leave empty to use the browser title.")
+        </span>
+        @Html.LabelFor(m => m.Description, T("Share bar description"))
+        @Html.TextBoxFor(m => m.Description, new { @class = "text large tokenized" })
+        <span class="hint">
+            @T("Leave empty to use the default.")
+        </span>
+        @Html.LabelFor(m => m.Media, T("Share bar media url"))
+        @Html.TextBoxFor(m => m.Media, new { @class = "text large tokenized" })
+        <span class="hint">
+            @T("Leave empty to use the default.")
+        </span>
+        @Html.LabelFor(m => m.Mode, T("Share bar display style"))
+        @Html.DropDownListFor(m => m.Mode,
+        new System.Web.Mvc.SelectList(Enum.GetNames(typeof(Laser.Orchard.Sharing.Settings.ShareBarMode)), Model.Mode))
+        <span class="hint">
+            @T("Preview of available modes is available here: ")&nbsp;<a href="//www.addthis.com/Gallery">AddThis gallery</a>.
+        </span>
+    </div>
+</fieldset>
+
+@Display.TokenHint()

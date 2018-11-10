@@ -1,0 +1,51 @@
+﻿@model Laser.Orchard.NewsLetters.ViewModels.NewsletterEditionViewModel
+@{           
+    Style.Include("newsletter-admin").AtHead();
+}
+<fieldset>
+    <legend>@T("Newsletter Edition")</legend>
+
+    <div class="editor-label">
+        @T("Newsletter Edition Infos")
+    </div>
+    @if (Model.NewsletterEditionPart.Dispatched) {
+        <div class="editor-field newsletter-sent">
+            <span id="newsletter-sent-icon"></span>@T("Newsletter edition") <strong>@Model.NewsletterEditionPart.Number</strong> @T("sent on") <strong>@Model.NewsletterEditionPart.DispatchDate</strong>
+        </div>
+    } else {
+        <div class="editor-field newsletter-notsent">
+            <span id="newsletter-notset-icon"></span>@T("Newsletter not yet sent")
+        </div>
+    }
+    <div class="editor-field">
+        <table class="items" summary="@T("Proposed Announcements")">
+            <colgroup>
+                <col id="Col1" style="width: 20px" />
+                <col id="Col2" />
+                <col id="Col3" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">&nbsp;&darr;</th>
+                    <th scope="col">@T("Announcement Item")</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (int i = 0; i < Model.AnnouncementToAttach.Count(); i++) { 
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m.AnnouncementToAttach[i].Id)
+                            @Html.HiddenFor(m => m.AnnouncementToAttach[i].Title)
+                            @Html.CheckBoxFor(m => m.AnnouncementToAttach[i].Selected, new { @id = "ann-" + Model.AnnouncementToAttach[i].Id })
+                        </td>
+                        <td>
+                            <label class="forcheckbox" for="ann-@Model.AnnouncementToAttach[i].Id">@Model.AnnouncementToAttach[i].Title</label>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</fieldset>

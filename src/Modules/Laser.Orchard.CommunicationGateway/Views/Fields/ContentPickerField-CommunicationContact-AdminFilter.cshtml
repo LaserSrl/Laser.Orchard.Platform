@@ -1,0 +1,24 @@
+﻿@{
+    var contentPickerField = (Orchard.ContentPicker.Fields.ContentPickerField)Model.Field;
+    string title = "";
+}
+<fieldset>
+    <legend>@contentPickerField.DisplayName</legend>
+    <ul>
+    @foreach (var ci in contentPickerField.ContentItems) {
+        if (ci.Has(typeof(Orchard.Core.Title.Models.TitlePart))) {
+            title = (ci.Get(typeof(Orchard.Core.Title.Models.TitlePart)) as Orchard.Core.Title.Models.TitlePart).Title;
+        }
+        else {
+            var aux = ci.Parts.FirstOrDefault(x => x.GetType().GetProperty("Title") != null);
+            if (aux != null) {
+                title = ((dynamic)aux).Title;
+            }
+            else {
+                title = T("Content") + " " + ci.Id.ToString();
+            }
+        }
+        <li style="list-style-type:disc;list-style-position:inside"><a href="@Url.ItemDisplayUrl(ci)" target="_blank">@title</a></li>
+    }
+    </ul>
+</fieldset>

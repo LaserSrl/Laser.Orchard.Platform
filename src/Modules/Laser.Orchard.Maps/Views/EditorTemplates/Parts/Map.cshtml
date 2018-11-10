@@ -1,0 +1,236 @@
+﻿@using Orchard.MediaLibrary.Fields;
+@using Laser.Orchard.Maps.Models;
+    @model Laser.Orchard.Maps.ViewModels.MapEditModel
+    @{
+        MapPartSettings partSettings = Model.Map.Settings.GetModel<MapPartSettings>();
+        string tilesType = Model.MapTiles;
+        string usedTiles = "google.maps.MapTypeId.TERRAIN";
+        int maxZoom = 22;
+        bool httpTiles = false;
+        if (!String.IsNullOrWhiteSpace(tilesType)) {
+            if (!tilesType.ToLower().Trim().StartsWith("http")) {
+                usedTiles = "google.maps.MapTypeId." + tilesType;
+            } else {
+                usedTiles = tilesType;
+                httpTiles = true;
+                maxZoom = Model.MaxZoom > 0 ? Model.MaxZoom : maxZoom = 22;
+            }
+        }
+
+        var mapSourceFile = (MediaLibraryPickerField)Model.Map.Fields.SingleOrDefault(w => w.Name == "MapSourceFile");
+        var mediaUrl = "";
+        try {
+            if (mapSourceFile != null && mapSourceFile.Ids.Length > 0 && mapSourceFile.MediaParts != null && mapSourceFile.MediaParts.Count() > 0) {
+                mediaUrl = ((Orchard.MediaLibrary.Models.MediaPart)mapSourceFile.MediaParts.FirstOrDefault()).MediaUrl;
+            }
+        } catch { }
+    }
+    @using (Script.Head()) {
+        Script.Require("GoogleMapsPlacesLib");
+        Script.Require("LaserOrchardMaps");
+
+        <style>
+            body {
+                font-family: sans-serif;
+                font-size: 14px;
+            }
+
+            #map_canvas {
+                height: 400px;
+                width: 600px;
+                margin-top: 0.6em;
+            }
+
+            input {
+                border: 1px solid rgba(0, 0, 0, 0.5);
+            }
+
+                input.notfound {
+                    border: 2px solid rgba(255, 0, 0, 0.4);
+                }
+        </style>
+    }
+    @using (Script.Foot()) {
+        <script type="text/javascript">
+        @if (partSettings.HideMapSource) {
+        <text>$("input[name='MapPart.MapSourceFile.SelectedIds']").parent().hide();</text>
+        }
+            function showcoords(){
+                var latField = document.getElementById("@Html.FieldIdFor(model => model.Map.Latitude)");
+                var lonField = document.getElementById("@Html.FieldIdFor(model => model.Map.Longitude)");
+                if (latField.attributes["type"].value=="hidden"){
+                    latField.attributes["type"].value="text";
+                    lonField.attributes["type"].value="text";
+                } else {
+                    latField.attributes["type"].value="hidden";
+                    lonField.attributes["type"].value="hidden";
+                }
+                return false;
+            }
+
+            function initialize() {
+                var mapOptions = {
+                    center: new google.maps.LatLng(@Model.Map.Latitude.ToString().Replace(",", "."), @Model.Map.Longitude.ToString().Replace(",", ".")),
+                    zoom: 13,
+                    mapTypeId: @Html.Raw(!httpTiles ? usedTiles : "'OSM'")
+                                    @if (httpTiles) {
+                <text>,
+                    mapTypeControl: false,
+                    streetViewControl: false
+                    </text>
+                }
+
+                };
+
+
+                var map = new google.maps.Map(document.getElementById('maparea'),
+                  mapOptions);
+
+                @if (httpTiles) {
+                        //Define OSM map type pointing at the OpenStreetMap tile server
+                <text>
+                map.mapTypes.set("OSM", new google.maps.ImageMapType({
+                    getTileUrl: function(coord, zoom) {
+                        var usedTilesJS = "@usedTiles";
+                        var values = [zoom,coord.x,coord.y];
+
+                        var result = switch_url(format(usedTilesJS, zoom, coord.x, coord.y));
+
+                        return result; //"http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+                    },
+                    tileSize: new google.maps.Size(256, 256),
+                    name: "OpenStreetMap",
+                    maxZoom: @maxZoom
+                    }));
+                </text>
+                    }
+
+                @if (!String.IsNullOrWhiteSpace(mediaUrl)) {
+        <text>var ctaLayer = new google.maps.KmlLayer({
+                    url: '@WorkContext.CurrentSite.BaseUrl@(mediaUrl)'
+                });
+                ctaLayer.setMap(map);
+                </text>
+        }
+
+
+                var pointXY =  new google.maps.LatLng(@Model.Map.Latitude.ToString().Replace(",", "."), @Model.Map.Longitude.ToString().Replace(",", "."));
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable:true,
+                    animation: google.maps.Animation.DROP,
+                    position: map.getCenter()
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+                infowindow.setContent("<h3>@Model.Map.LocationInfo</h3><span>@Model.Map.LocationAddress</span>");
+                infowindow.setPosition(pointXY);
+                infowindow.open(map, marker);
+
+                var input = document.getElementById('maplocation');
+                var autocomplete = new google.maps.places.Autocomplete(input);
+
+                autocomplete.bindTo('bounds', map);
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    if('@Model.DecimalSeparator' == ',') {
+                        $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(marker.getPosition().lat().toString().replace('.',','));
+                        $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(marker.getPosition().lng().toString().replace('.',','));
+                    }
+                    else {
+                        $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(marker.getPosition().lat().toString().replace(',','.'));
+                        $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(marker.getPosition().lng().toString().replace(',','.'));
+                    }
+                });
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    infowindow.close();
+                    marker.setVisible(false);
+                    input.className = '';
+                    var place = autocomplete.getPlace();
+                    if (!place.geometry) {
+                        // Inform the user that the place was not found and return.
+                        input.className = 'notfound';
+                        return;
+                    }
+
+                    // If the place has a geometry, then present it on a map.
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);  // Why 17? Because it looks good.
+                    }
+                    /*var image = new google.maps.MarkerImage(
+                      place.icon,
+                      new google.maps.Size(71, 71),
+                      new google.maps.Point(0, 0),
+                      new google.maps.Point(17, 34),
+                      new google.maps.Size(35, 35));
+                    marker.setIcon(image);*/
+                    marker.setPosition(place.geometry.location);
+                    if('@Model.DecimalSeparator' == ',') {
+                        $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(place.geometry.location.lat().toString().replace('.',','));
+                        $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(place.geometry.location.lng().toString().replace('.',','));
+                    }
+                    else {
+                        $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(place.geometry.location.lat().toString().replace(',','.'));
+                        $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(place.geometry.location.lng().toString().replace(',','.'));
+                    }
+                    var address = '';
+                    if (place.address_components) {
+                        address = [
+                      (place.address_components[0] && place.address_components[0].short_name || ''),
+                      (place.address_components[1] && place.address_components[1].short_name || ''),
+                      (place.address_components[2] && place.address_components[2].short_name || '')
+                        ].join(' ');
+                    }
+                    $('#@Html.FieldIdFor(model => model.Map.LocationInfo)').val(place.name);
+                    $('#@Html.FieldIdFor(model => model.Map.LocationAddress)').val(address);
+
+                    infowindow.setContent("<h3>"+place.name+"</h3><span>"+address+"</span>");
+                    marker.setVisible(true);
+                    infowindow.open(map, marker);
+                });
+
+
+            }
+
+            //function initialize2() {
+            //    var chicago = new google.maps.LatLng(41.875696, -87.624207);
+            //    var mapOptions = {
+            //        zoom: 11,
+            //        center: chicago
+            //    }
+
+            //    var map = new google.maps.Map(document.getElementById('maparea'), mapOptions);
+
+            //    var ctaLayer = new google.maps.KmlLayer({
+            //        url: 'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml'
+            //    });
+            //    ctaLayer.setMap(map);
+            //}
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    }
+    <fieldset>
+        <legend>@T("Map Fields")</legend>
+        <p>
+            @T("Type a Location"):
+        <input type="text" id="maplocation" size="50" class="text-medium" />
+        <a id="show_coords" href="#show_coords" onclick="javascript:showcoords();" class="button">@T("Show Coords")</a>
+    </p>
+    <div class="location-infos">
+        <span class="location-info">
+            <label class="sub">@T("Location Info"): </label>@Html.TextBoxFor(model => model.Map.LocationInfo, new { @class = "text-medium" })
+        </span>
+        <span class="location-address">
+            <label class="sub">@T("Location Address"): </label>@Html.TextBoxFor(model => model.Map.LocationAddress, new { @class = "text-medium" })
+        </span>
+        @if (!String.IsNullOrWhiteSpace(partSettings.HintText)) {
+            <span class="hint">@partSettings.HintText</span>
+        }
+    </div>
+    <div id="maparea" style="width: 700px; height: 450px;">
+    </div>
+    @Html.HiddenFor(model => model.Map.Latitude, new { placeHolder = T("Latitude"), @class = "text" })
+    @Html.HiddenFor(model => model.Map.Longitude, new { placeHolder = T("Longitude"), @class = "text" })
+</fieldset>

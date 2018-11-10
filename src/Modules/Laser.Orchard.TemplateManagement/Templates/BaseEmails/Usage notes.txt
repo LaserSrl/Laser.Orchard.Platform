@@ -1,0 +1,27 @@
+﻿USING THE TEMPLATES
+
+The html templates in this folder can be used as starting points to design custom templates for email. 
+Their html has been tested on several different email clients, including different versions of Outlook, that is generally the most troublesome.
+
+As they are, they have no content, and that should be added by using the appropriate Razor code.
+Note that when the templates are used for email, they are passed an object as follows:
+	Model.WorkContext :: this is the normal WorkContext object we use around the code everywhere. You can use it to resolve services like so:
+		IServiceInterface myService = ((WorkContext)Model.WorkContext).Resolve<IServiceInterface>();
+	Model.Urls.BaseUrl :: this corresponds to CurrentSite.BaseUrl
+	Model.Urls.MediaUrl :: this is a path used when we want to use media extensions to load and change media
+	Model.Urls.Domain :: this is the host url
+	Model.Content :: this is the ContentItem passed to the template. In general you will want to work with
+		Model.Content.MailCommunicationPart
+		Model.Content.TitlePart
+		Model.Content.CommunicationAdvertisingPart
+		(note that these part here are referenced using a notation that works only with Model being considered a dynamic object. As soon as it is
+		cast to something else, you may have to start using actual notation and look for thos parts in Model.Content.Parts)
+
+Do not forget that dynamic objects do not always support Linq and lambda expressions. For example, myDynamicList.Where(lambda) will fail to execute
+in Razor Engine. In those cases, you may need to explicitly cast the dynamic object, relinquishing the ability to use dynamic notation.
+
+Note that the code in the html templates does not compile in Razor Engine as it is, because it contains some @ character that needs to be escaped
+as @@.
+
+The file "ValliCanavesaneExample.html" is a cshtml example that was developed and tested for a specific tenant. It can be used as reference when
+creating cshtml templates for specific applications.

@@ -1,0 +1,12 @@
+﻿Name: Laser Highlights
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.8
+Description: Modulo di gestione formati multimediali
+Features:
+    Laser.Orchard.Highlights:
+        Description: Gestione degli elementi multimediali.
+        Dependencies: Common, Orchard.Fields, Orchard.Widgets, Orchard.MediaLibrary, Orchard.Resources, Orchard.PublishLater, Orchard.ArchiveLater, Orchard.Projections, Laser.Orchard.jQueryPlugins, Laser.Orchard.StartupConfig
+        Category: Content

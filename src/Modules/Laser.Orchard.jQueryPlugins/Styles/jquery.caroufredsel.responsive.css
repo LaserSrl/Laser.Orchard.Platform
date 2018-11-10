@@ -1,0 +1,52 @@
+﻿.html_carousel {
+    position: relative;
+}
+.html_carousel div.slide {
+	position: relative;
+}	
+.html_carousel div.slide img {
+	width: 100%;
+	height: 100%;
+}
+.html_carousel div.slide div {
+	background-color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 10px 0 10px 30px;
+}
+.html_carousel div.slide h4 {
+	font-size: 35px;
+}
+.html_carousel div.slide p {
+	font-size: 16px;
+}
+.html_carousel div.slide h4, .html_carousel div.slide p {
+	color: white;
+	margin: 0;
+}
+a.slideshow_prev, a.slideshow_next {
+    background: url(images/caroufredsel/arrows.png) no-repeat;
+	width: 50px;
+	height: 50px;
+	display: block;
+    position: absolute;
+    top: 50%;
+    z-index: 100;
+}
+a.slideshow_prev {
+    background-position: 100% 50%; 
+}
+/*a.slideshow_prev:hover {		background-position: 0 -50px; }*/
+a.slideshow_next {
+    right:0;
+    background-position: 0 50%; }
+/*a.slideshow_next:hover {		background-position: -50px -50px; }*/
+
+a.slideshow_prev span, a.slideshow_next span {
+	display: none;
+}
+.clearfix {
+	float: none;
+	clear: both;
+}

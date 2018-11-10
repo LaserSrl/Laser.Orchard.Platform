@@ -1,0 +1,39 @@
+﻿@using (Script.Head()) {
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(function () {
+            changeurl(document.getElementById("rcswitcher-checkbox-url"));
+        });
+   @* </script>
+}
+@using (Script.Head()) {
+    <script type="text/javascript">*@
+        $(function () {
+            $('#rcswitcher-checkbox-url').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("Internal Link")',
+                offText: '@T("External Link")',
+                width: 150
+            });
+        });
+        function changeurl(element) {
+            if (element.checked) {
+                $(".urlSwitch:first").show();
+                $(".urlSwitch:last").hide();
+            } else {
+                $(".urlSwitch:first").hide();
+                $(".urlSwitch:last").show();
+            }
+        }
+    </script>
+}
+@if ((bool)Model) {
+    <input type="checkbox" name="linkinterno" value="1" id="rcswitcher-checkbox-url" checked="checked" onchange="javascript:changeurl(this)" />
+}
+else {
+    <input type="checkbox" name="linkinterno" value="1" id="rcswitcher-checkbox-url" onchange="javascript: changeurl(this)" />
+}

@@ -1,0 +1,16 @@
+<script type="application/ld+json">
+{{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{Content.DisplayText}",
+  "image": [
+    "{Site.BaseUrl}{Content.Fields.CONTENTNAME.GALLERY.Url}"
+   ],
+  "description": "{Content.Fields.CONTENTNAME.FIELDDESCRIPTION}",
+  "offers": {{
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "{Content.Parameter:(ProductPart-Price).Replace:(,|.)}"
+  }}
+}}
+</script>

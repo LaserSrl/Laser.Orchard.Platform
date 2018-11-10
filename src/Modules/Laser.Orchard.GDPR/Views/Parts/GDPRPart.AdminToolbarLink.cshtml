@@ -1,0 +1,14 @@
+﻿@using Laser.Orchard.GDPR
+@using Laser.Orchard.GDPR.ViewModels
+@using Orchard.Utility.Extensions;
+
+@{ 
+    var vm = (GDPRPartAdminToolbarLinkViewModel)Model.Model;
+}
+@if (string.IsNullOrWhiteSpace(vm.LinkAction)) {
+    <text>@vm.LinkText</text>
+} else {
+    @Html.ActionLink(vm.LinkText, vm.LinkAction, vm.LinkController, new { area = vm.LinkArea, id = vm.ItemId, returnUrl = Request.ToUrlString() }, new { itemprop = "UnsafeUrl" })
+
+}
+@T(" | ")

@@ -1,0 +1,22 @@
+﻿@model Laser.Orchard.Questionnaires.ViewModels.QuestionnaireStatsDetailViewModel
+
+@{
+    Layout.Title = T("Answers Detail");
+}
+
+<p class="breadcrumb">
+    <a href="@Url.Action("Index", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires" })">@T("Questionnaire Statistics")</a>
+    &#62; <a href="@Url.Action("Detail", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires", idQuestionario = Model.AnswersStats.QuestionnairePart_Id })">@T("Questionnaire Answers")</a>
+    &#62; @Layout.Title
+</p>
+
+@{
+    <h3><u>@Model.AnswersStats.Question</u></h3> 
+    
+    foreach (var risposta in Model.AnswersStats.Answers) {
+        <div>&bull; @risposta.Answer <span style="font-weight: bold">( @risposta.Count )</span> </div>
+    }
+}
+
+<br />
+@Display(Model.Pager)

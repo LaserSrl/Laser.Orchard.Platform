@@ -1,0 +1,13 @@
+﻿.navicon-newsletter {
+    background-image: url(images/menu.newsletter.png) !important;
+}
+
+.navicon-newsletter:hover {
+    background-position: 0 -30px !important;
+}
+
+.newsletter-notsent {
+    border: 1px solid #fccf7d;
+    padding: 10px;
+    background-color: #FFFFCC;
+}

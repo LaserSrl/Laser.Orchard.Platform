@@ -1,0 +1,28 @@
+﻿@model Laser.Orchard.ContentExtension.Models.ContentTypePermissionRecord
+<tr>
+    <td style="padding:1px;">
+        @*Html.EditorFor(settings => settings.ContentType)*@
+         @Html.DropDownListFor(settings => settings.ContentType,(SelectList) ViewData["ListContentTypes"], new {style="width:150px;" }) 
+        @Html.HiddenFor(settings => settings.Id)
+
+    </td>
+    <td style="padding:1px;">
+        @*Html.EditorFor(settings => settings.GetPermission)*@
+        @Html.DropDownListFor(settings => settings.GetPermission, (SelectList)ViewData["ListPermissions"], new {style="width:150px;" }) 
+    </td>
+    <td style="padding:1px;">
+        @*Html.EditorFor(settings => settings.PostPermission)*@
+         @Html.DropDownListFor(settings => settings.PostPermission,(SelectList) ViewData["ListPermissions"], new {style="width:150px;" }) 
+    </td>
+    <td style="padding:1px;">
+        @*Html.EditorFor(settings => settings.PublishPermission)*@
+          @Html.DropDownListFor(settings => settings.PublishPermission,(SelectList) ViewData["ListPermissions"], new {style="width:150px;" }) 
+    </td>
+    <td style="padding:1px;">
+       @*Html.EditorFor(settings => settings.DeletePermission)*@
+          @Html.DropDownListFor(settings => settings.DeletePermission,(SelectList) ViewData["ListPermissions"], new {style="width:150px;" }) 
+    </td>
+    <td>
+
+    </td>
+</tr>

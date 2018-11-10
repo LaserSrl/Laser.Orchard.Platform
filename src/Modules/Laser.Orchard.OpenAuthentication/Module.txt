@@ -1,0 +1,16 @@
+﻿Name: Laser OpenAuthentication
+AntiForgery: enabled
+Author: Laser srl
+Website: http://laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.OpenAuthentication:
+		Name: Laser OpenAuthentication
+		Description: Provides OAuth functionality to Orchard Site
+		Dependencies: Laser.Orchard.StartupConfig, Orchard.Users
+		Category:Security
+	Laser.Orchard.GDPR.OpenAuthExtension:
+		Name: GDPR OpenAuthentication Extensions
+		Description: Enables specialized handling of the information related to oAuth. This feature is enabled automatically when its dependecies are, unless it's been disabled.
+		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.OpenAuthentication

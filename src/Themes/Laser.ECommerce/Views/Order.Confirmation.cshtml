@@ -1,0 +1,143 @@
+﻿@using Nwazet.Commerce.Models
+@using Nwazet.Commerce.Services
+@using Orchard.ContentManagement
+@using Orchard.Mvc.Html
+@using System.Globalization
+@{
+    var title = Layout.Title = T("Order #{0}", Model.OrderId);
+    var items = (Model.CheckoutItems as IEnumerable<CheckoutItem> ?? new CheckoutItem[] { }).ToList();
+    Currency currencyInUse = Currency.Currencies[Model.CurrencyCode];
+    CultureInfo cultureInUse = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+}
+<div class="order-confirmation">
+    <h3><span>@title</span></h3>
+    <p class="order-status">@T("Status: {0}", Model.Status)</p>
+    @if (!String.IsNullOrWhiteSpace(Model.PurchaseOrder)) {
+        <p class="order-purchase-order">@T("Purchase Order, Invoice, or Reference Order: {0}", Model.PurchaseOrder)</p>
+    }
+    <div class="checkout-right">
+        @if (items.Any()) {
+            <h4>@T("Products:")</h4>
+            <table class="timetable_sub">
+                <thead>
+                    <tr>
+                        <th class="quantity"><abbr title="@T("Quantity")">@T("Qty")</abbr></th>
+                        <th class="description">@T("Product")</th>
+                        <th class="price">@T("Price")</th>
+                        <th class="adjustment">@T("Adjustment")</th>
+                    </tr>
+                </thead>
+                <tfoot class="timetable_sub_footer">
+                    <tr class="remX">
+                        <td colspan="2" class="invert">@T("Subtotal")</td>
+                        <td class="invert price">@currencyInUse.PriceAsString(Model.SubTotal, cultureInUse)</td>
+                    </tr>
+                    <tr class="remX">
+                        <td colspan="2" class="invert">@T("Taxes {0}", string.IsNullOrWhiteSpace(Model.Taxes.Name) ? "" : Model.Taxes.Name)</td>
+                        <td class="invert price" @currencyInUse.PriceAsString(Model.Taxes.Amount, cultureInUse)></td>
+                    </tr>
+                    <tr class="remX">
+                        <td colspan="2" class="invert">@T("{0} {1}", Model.ShippingOption.ShippingCompany, Model.ShippingOption.Description)</td>
+                        <td class="invert price">@currencyInUse.PriceAsString(Model.ShippingOption.Price, cultureInUse)</td>
+                    </tr>
+                    <tr class="remX">
+                        <td colspan="2" class="invert">@T("Total")</td>
+                        <td class="invert price">@currencyInUse.PriceAsString(Model.Total, cultureInUse)</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in items) {
+                        <tr class="remX">
+                            <td class="quantity">@item.Quantity &times;</td>
+                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])">@item.Title</a></td>
+                            <td class="price">@currencyInUse.PriceAsString(item.Price, cultureInUse)</td>
+                            <td class="price">@currencyInUse.PriceAsString(item.LinePriceAdjustment, cultureInUse)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            Script.Require("jQuery");
+            using (Script.Foot()) {
+                <script>
+                    // Clear the cart contents in localStorage
+                    jQuery(function ($) {
+                        var nwazetCart = "nwazet.cart",
+                            emptyCart = function () {
+                                if (hasLocalStorage()) {
+                                    localStorage.removeItem(nwazetCart);
+                                }
+                            },
+                            hasLocalStorage = function () {
+                                try {
+                                    return "localStorage" in window && window.localStorage !== null;
+                                } catch (e) {
+                                    return false;
+                                }
+                            }
+
+                        emptyCart();
+                    });
+                </script>
+            }
+        } else {
+            <p class="total">@T("Total: {0}", currencyInUse.PriceAsString(Model.Total, cultureInUse)) </p>
+            Script.Require("jQuery");
+            using (Script.Foot()) {
+                <script>
+            // Clear the purchase order number from localStorage
+            jQuery(function($) {
+                var purchaseOrder = "PurchaseOrder",
+                    removePo = function() {
+                        if (hasLocalStorage()) {
+                            localStorage.removeItem(purchaseOrder);
+                        }
+                    },
+                    hasLocalStorage = function() {
+                        try {
+                            return "localStorage" in window && window.localStorage !== null;
+                        } catch (e) {
+                            return false;
+                        }
+                    }
+
+                removePo();
+            });
+                </script>
+            }
+        }
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<div class="order-confirmation">
+    <div class="order-confirmation-block">
+        <h4>@T("Charged to:")</h4>
+        <p>@Html.Raw(Html.Encode(Model.BillingAddress).Replace(Environment.NewLine, "<br/>"))</p>
+        <p>@Model.ChargeText</p>
+    </div>
+    <div class="order-confirmation-block">
+        <h4>@T("Shipping to:")</h4>
+        @Html.Raw(Html.Encode(Model.ShippingAddress).Replace(Environment.NewLine, "<br/>"))
+
+        @if (!String.IsNullOrWhiteSpace(Model.TrackingUrl)) {
+            <p>@T("Tracking URL: <a href=\"{0}\">{0}</a>", Model.TrackingUrl)</p>
+        }
+    </div>
+    <div class="order-confirmation-block">
+        <h4>@T("Contacts:")</h4>
+        <p>@T("E-mail:") <a href="@("mailto:" + Model.CustomerEmail)">@Model.CustomerEmail</a></p>
+        <p>@T("Phone:") <a href="@("tel:" + Model.CustomerPhone)">@Model.CustomerPhone</a></p>
+    </div>
+    <div class="clearfix"> </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.SpecialInstructions)) {
+    <div class="order-confirmation">
+        <h4>@T("Special instructions:")</h4>
+        <p>@Model.SpecialInstructions</p>
+    </div>
+}
+
+<div class="order-link">
+    @T("You may view this order at a later time by going to this address: <a href=\"{0}\">{0}</a>, using this password: \"{1}\".",
+                            Url.Action("Show", "OrderSsl", new { id = Model.OrderId, area = "Nwazet.Commerce" }), Model.Password)
+</div>

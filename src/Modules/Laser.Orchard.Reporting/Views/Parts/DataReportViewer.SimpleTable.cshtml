@@ -1,0 +1,69 @@
+﻿@using Laser.Orchard.Reporting.ViewModels;
+@using System.Collections;
+@using System.Text;
+@using System.Globalization;
+@{
+    DataReportViewerViewModel dataReportViewerViewModel = Model.Model;
+    string chartId = "chart" + dataReportViewerViewModel.HtmlId;
+}
+<div class="@dataReportViewerViewModel.ContainerCssClass">
+    <h3>@dataReportViewerViewModel.ReportTitle</h3>
+    @if (dataReportViewerViewModel.Data.Count == 0) {
+        <div>@T("There is no data")</div>
+    } else {
+        Array array = null;
+        var headers = new List<string>();
+        var headersList = new List<string>();
+        var jsHeaders = "";
+        var dataList = new List<string>();
+        var jsData = "";
+        var isHeader = true;
+        var itemList = new List<string>();
+        foreach (var item in dataReportViewerViewModel.Data) {
+            array = item.Other as Array;
+            if (isHeader) {
+                foreach (var element in array) {
+                    headersList.Add(string.Format("{{field: \"{0}\", title:\"{0}\"}}", element));
+                    headers.Add(element.ToString());
+                }
+                jsHeaders = "[" + string.Join(",", headersList) + "]";
+                isHeader = false;
+            } else {
+                var idx = 0;
+                foreach (var element in array) {
+                    if(element != null) {
+                        switch (element.GetType().Name) {
+                            case "Decimal":
+                            case "Double":
+                            case "Float":
+                                itemList.Add(string.Format("{0}: {1}", headers[idx], Convert.ToString(element, CultureInfo.InvariantCulture)));
+                                break;
+                            default:
+                                itemList.Add(string.Format("{0}: \"{1}\"", headers[idx], element));
+                                break;
+                        }
+                    } else {
+                        itemList.Add(string.Format("{0}: null", headers[idx]));
+                    }
+                    idx++;
+                }
+                dataList.Add("{" + string.Join(",", itemList) + "}");
+            }
+        }
+        jsData = "[" + string.Join(",", dataList.ToArray()) + "]";
+        <table id="@chartId" class="simple-data"></table>
+        <script type="text/javascript">
+            (function () {
+                $("#@chartId").bootstrapTable({
+                    columns: @(Html.Raw(jsHeaders)),
+                    data: @(Html.Raw(jsData)),
+                    showColumns: true,
+                    rowStyle: function(row, index) {
+                        return { css: {"white-space":"nowrap", "padding":"5px"}};
+                    },
+                    classes: "table-no-bordered"
+                });
+            })();
+        </script>
+    }
+</div>

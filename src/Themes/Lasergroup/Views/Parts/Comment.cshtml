@@ -1,0 +1,35 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Comments
+@using Orchard.Comments.Models
+
+@{
+    CommentPart comment = Model.ContentPart;
+    CommentsPart comments = comment.CommentedOnContentItem.As<CommentsPart>();
+    var isAuthorized = AuthorizedFor(Permissions.AddComment, Model.ContentItem);
+    
+    var children = New.List(Items: Model.Items);
+    children.Classes.Add("comments");
+
+    if (Model.Items.Count > 0) {
+        Model.Classes.Add("has-replies");
+    }
+    
+    Model.Classes.Add("comment");
+
+    Model.Id = "comment-" + comment.Id;
+    var tag = Tag(Model, "article");
+}
+@tag.StartElement
+    <header>
+        <div class="comments">
+            <div class="media-body">
+                <h4 class="media-heading">
+                    @Display.CommentAuthor(ContentPart: comment)
+                    <small>@Display.CommentMetadata(ContentPart: comment)</small>
+                </h4>
+                @Display.CommentText(ContentPart: Model.ContentPart, ContentItem: Model.ContentItem)
+            </div>
+        </div>
+    </header>
+    @Display(children)
+@tag.EndElement

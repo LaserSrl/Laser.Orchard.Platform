@@ -1,0 +1,16 @@
+@using KrakeAdmin.Settings.Services;
+
+@{
+    /*Logica Logo WhiteLabel*/
+    IThemeSettingsService _themeSettingsService;
+
+    WorkContext.TryResolve<IThemeSettingsService>(out _themeSettingsService);
+    var version = new System.Reflection.AssemblyName(typeof(Orchard.ContentManagement.ContentItem).Assembly.FullName).Version.ToString();
+    var baseLine = _themeSettingsService.GetSettings().BaseLineText;
+}
+@if (String.IsNullOrWhiteSpace(baseLine)) {
+    <div id="orchard-version">@T("Krake v.{0}", version)</div>
+} else {
+    <div id="orchard-version">@String.Format("{1} v.{0}", version, baseLine)</div>
+
+}

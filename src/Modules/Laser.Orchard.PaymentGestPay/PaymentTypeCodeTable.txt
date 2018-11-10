@@ -1,0 +1,16 @@
+BON,Money Transfer
+CREDITCARD,Credit Card
+PAYPAL,PayPal
+MYBANK,MyBank
+UPMOBILE,Mobile - QRCode
+MASTERPASS,MasterPass
+CONSEL,Consel
+S2PALI,ALIPAY (Alternatives)
+S2PKLA,KLARNA (Alternatives)
+S2PQIW,QIWI (Alternatives)
+S2PYAN,YANDEX (Alternatives)
+S2PSOF,SOFORT (Alternatives)
+S2PIDE,IDEAL (Alternatives)
+COMPASS,COMPASS C-PAY
+SOFORT,SOFORT
+IDEAL,IDEAL

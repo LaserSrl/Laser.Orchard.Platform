@@ -1,0 +1,52 @@
+﻿@using Orchard.Environment.Configuration
+@using Orchard.UI.Resources;
+@{
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var tenantName = settings.Name;
+
+    var title = String.Concat(Layout.Title, " - ", WorkContext.CurrentSite.SiteName);
+    var subthemePath = "~/Themes/KrakeDefaultTheme/Styles/";
+    @*Change favicon*@
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    var tenantLogo = Url.Content(String.Format("~/Media/{0}/AdminResources/Logo/{1}-logo.ico", _shellsettings.Name, tenantname));
+    if (File.Exists(Server.MapPath(tenantLogo))) {
+        RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(tenantLogo) });
+    } else {
+        RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(subthemePath + "/Images/logo_krake.ico") });
+    }
+}
+@{
+      
+
+    //Styles    
+    Style.Include("https://fonts.googleapis.com/css?family=Istok+Web").AtHead();
+    Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700").AtHead();
+    Style.Include("bootstrap.min.css").AtHead();
+    Style.Include("style.css").AtHead();
+    Style.Include("toggle.css").AtHead();
+    Style.Include("fonts/font-awesome-4.6.2/css/font-awesome.min.css").AtHead();
+
+    //Scripts
+    Script.Require("jQuery");
+    Script.Include("bootstrap.min.js").AtFoot();   
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@title</title>
+
+    @Display(Model.Head)
+
+</head>
+<body>
+    @Display(Model.Body)
+    @Display(Model.Tail)
+
+</body>
+</html>
+

@@ -1,0 +1,546 @@
+﻿
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione generica                                                                            */
+/*                                                                                              */
+/************************************************************************************************/
+
+.edit-item fieldset.publish-later-datetime {
+    clear: both;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-bottom: 5px;
+}
+
+#PublishLater_ScheduledPublishDate {
+    margin: 0 0 0 0px !important;
+    width: 10em;
+}
+
+.archive-later-datetime div {
+    float: right;
+}
+
+.tooltip-640 {
+    min-width: 640px!important;
+    height: auto;
+    overflow-x: auto;
+}
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Editor Media Viewer                                                                 */
+/*                                                                                              */
+/************************************************************************************************/
+
+div.mini-banner-combo {
+    position: relative;
+    margin-top: 0.2em;
+    margin-bottom: 0.5em;
+}
+
+div.mini-banner-combo select {
+    position: absolute;
+    left: 110px;
+    margin-top: 0.2em;
+    width: 200px;
+}
+
+
+div.mini-banner-combo span {
+    margin-top: 0.0em;
+}
+
+div.mini-banner-combo div {
+    margin-top: 0.0em;
+    height: 2.2em;
+}
+
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Mini Banner                                                                          */
+/*                                                                                              */
+/************************************************************************************************/
+
+
+div.mini-banner-wrapper-div {
+    width: 170px;
+    height: 170px;
+    background-color: transparent;
+    vertical-align: middle;
+    /*
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+*/
+    cursor: pointer;
+    /* border: 2px solid yellow; */
+}
+
+div.mini-banner-wrapper-div img {
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: 2px solid white; */
+}
+
+div.mini-banner-wrapper-div div.mini-banner-overflow-div {
+    position: relative;
+    top: 20px;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    width: 130px;
+    height: 125px;
+    /* border: 1px solid blue; */
+}
+
+/*
+div.post-it-wrapper-div.yellow {
+  background-image: url('images/postit_yellow.jpg');
+}
+
+div.post-it-wrapper-div.orange {
+  background-image: url('images/postit_orange.jpg');
+}
+*/
+
+
+
+.mv-mb-cont_record_home {
+    float: left;
+    /*width:490px;*/
+    width: 100%;
+    /*margin:10px 0 0 0;*/
+    /*margin: 0.2em 0 0 0;*/
+}
+
+.mv-mb-cont_record_home .mv-mb-rh_bottom .mv-mb-img_rh img /*.mv-mb-cont_record_home img*/ {
+    width: 255px;
+    height: 44px;
+}
+
+.mv-mb-record_home {
+    float: left;
+    width: 490px;
+    border-bottom: 1px solid #DBDBDB;
+    padding: 12px 0 15px 0;
+}
+
+.mv-mb-record_home_topseparator {
+    float: left;
+    /*width:490px;*/
+    /*border-top:1px solid #DBDBDB;*/
+    /*padding:12px 0 15px 0;*/
+}
+
+.mv-mb-record_home_noseparator {
+    float: left;
+    width: 490px;
+    /*padding:12px 0 15px 0;*/
+}
+
+.mv-mb-rh_bottom {
+    float: left;
+    width: 942px;
+    /*margin:5px 0 0 0;*/
+    margin: 0 0 0 0;
+}
+
+.mv-mb-img_rh {
+    float: left;
+    width: 255px;
+    /*width:126px;*/
+    /*margin:5px 10px 0 0;*/
+    margin: 0.1em 0 0 0;
+    padding: 0;
+}
+
+.mv-mb-rh_bottom .mv-mb-img_rh img {
+    width: 942px;
+    height: 219px;
+}
+
+.mv-mb-rh_dx {
+    text-align: left;
+}
+
+.mv-mb-tit_rh {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: left;
+}
+
+.mv-mb-tit_rh a {
+    color: #000;
+}
+
+.mv-mb-tit_rh a:hover {
+    color: #136CAE;
+}
+
+.mv-mb-testo_rh {
+    font-size: 0.75em;
+    text-align: left;
+    color: #333;
+    margin: 2px 0 0 0;
+}
+
+.mv-mb-imageListing {
+    float: left;
+    list-style-image: none;
+    list-style-type: none;
+    width: 100% !important;
+    padding: 0;
+    margin: 0;
+    display: table;
+    position: relative;
+    float: left;
+}
+
+.mv-mb-imageListing li {
+    padding: 0;
+    list-style-type: none;
+    float: left;
+    padding-top: 0em;
+    padding-left: 0;
+    padding-right: 0.125em;
+    padding-bottom: 0px;
+    margin: 0px;
+    display: table-cell;
+    margin-top: 0.2em;
+}
+
+.mv-mb-quattroImg,
+.mv-mb-unaImg,
+.mv-mb-dueImg,
+.mv-mb-treImg,
+.mv-mb-cinqueImg {
+    padding: 0;
+    margin: 0;
+    position: relative !important;
+    float: left;
+}
+
+.mv-mb-unaImg,
+.mv-mb-unaImg img {
+    /*width:596px;*/
+    position: relative;
+}
+
+.mv-mb-dueImg,
+.mv-mb-dueImg img {
+    /*width:296px;*/
+    position: relative;
+    /*height:183px;*/
+}
+
+.mv-mb-treImg,
+.mv-mb-treImg img {
+    /*width:196px;*/
+    position: relative;
+    /*height:121px;*/
+}
+
+.mv-mb-treImg dd {
+    width: 255px;
+    position: relative;
+}
+
+.mv-mb-quattroImg,
+.mv-mb-quattroImg img {
+    /*width:146px;*/
+    /*height:91px;*/
+    position: relative;
+}
+
+.mv-mb-cinqueImg,
+.mv-mb-cinqueImg img {
+    position: relative;
+    /*width:116px;*/
+    /*height:72px;*/
+}
+
+.mv-mb-unaImg dd {
+    /*width:586px;*/
+    padding: 0px 5px;
+}
+
+.mv-mb-dueImg dd {
+    /*width:286px;*/
+    padding: 0px 5px;
+}
+
+.mv-mb-treImg dd {
+    /*width:186px;*/
+    padding: 0px 5px;
+}
+
+.mv-mb-quattroImg dd {
+    /*width:136px;*/
+    padding: 0px 5px;
+}
+
+.mv-mb-cinqueImg dd {
+    /*width:106px;*/
+    padding: 0px 5px;
+}
+
+.mv-mb-quattroImg dl,
+.mv-mb-unaImg dl,
+.mv-mb-dueImg dl,
+.mv-mb-treImg dl,
+.mv-mb-cinqueImg dl {
+    padding: 0;
+    margin: 0;
+}
+
+.mv-mb-unaImg dd,
+.mv-mb-dueImg dd,
+.mv-mb-treImg dd,
+.mv-mb-quattroImg dd,
+.mv-mb-cinqueImg dd {
+    text-align: left;
+    line-height: 1.25em;
+    display: block;
+    /*padding: auto;*/
+    margin: 0 auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: url('bg_tit_gg.png') repeat-x scroll left top!important;
+    background: url('bg_tit_gg.gif') repeat-x scroll left top;
+    color: #fff;
+}
+
+.mv-mb-quattroImg a,
+.mv-mb-unaImg a,
+.mv-mb-dueImg a,
+.mv-mb-treImg a,
+.mv-mb-cinqueImg a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    display: block;
+    font-size: 0.75em;
+}
+
+.mv-mb-quattroImg dt a,
+.mv-mb-unaImg dt a,
+.mv-mb-dueImg dt a,
+.mv-mb-treImg dt a,
+.mv-mb-cinqueImg dt a {
+    line-height: 0;
+}
+
+.mv-mb-quattroImg a:hover,
+.mv-mb-unaImg a:hover,
+.mv-mb-dueImg a:hover,
+.mv-mb-treImg a:hover,
+.mv-mb-cinqueImg a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+.mv-mb-quattroImg a:visited,
+.mv-mb-unaImg a:visited,
+.mv-mb-dueImg a:visited,
+.mv-mb-treImg a:visited,
+.mv-mb-cinqueImg a:visited {
+    color: #fff;
+}
+
+/*Porzione aggiunta per spostamento items*/
+
+#mb-items-controls {
+    display: block;
+}
+
+#mb-items-controls form, #mb-items-controls fieldset {
+    display: inline;
+}
+
+#mb-save-message {
+    display: none;
+}
+
+#mb-update-button {
+    display: none;
+    width: 100px;
+}
+
+.mv-mb-sections {
+}
+
+.mv-mb-primary {
+    float: left;
+    width: 100%;
+}
+
+.mv-mb-container {
+    margin-right: 200px;
+}
+
+.mv-mb-nav-menu ol ol {
+    margin: 0;
+    padding: 0;
+    padding-left: 30px; /* gap between each level */
+}
+
+.mv-mb-nav-menu ol.sortable, .mv-mb-nav-menu ol.sortable ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.mv-mb-nav-menu ol.sortable {
+}
+
+.mv-mb-nav-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.mv-mb-nav-menu li div {
+    border: 1px solid #ccc;
+    cursor: move;
+    padding: 3px 10px 3px 20px;
+    margin: 2px;
+    background: #eee;
+    display: inline-block;
+    /*min-width: 200px;*/
+    width: 100%;
+}
+
+.mv-mb-nav-menu li div:hover {
+    background: #eee url(images/move.gif) no-repeat 9px 7px;
+    border: 1px solid #999;
+}
+
+.mv-mb-nav-menu-item h2 {
+    display: inline;
+    font-size: 1.077em;
+}
+
+.mv-mb-nav-position {
+    display: none;
+}
+
+.mv-mb-nav-url {
+}
+
+.mv-mb-nav-menu .mv-mb-nav-riga {
+    padding-left: 5px;
+}
+
+.mv-mb-nav-menu .mv-mb-nav-nome {
+    /*float: left;*/
+    /*background-color: blue;*/
+    left: 50px;
+}
+
+/*.mv-mb-nav-riga
+{
+    background-color: fuchsia;
+}*/
+
+.mv-mb-nav-menu .mv-mb-nav-sinistra {
+    /*background-color: green;*/
+    border: none;
+    width: 250px;
+    padding: 0px;
+}
+
+/*.mv-mb-nav-menu .mv-mb-nav-status*/ /*div, span, li*/
+.mv-mb-nav-menu .mv-mb-nav-status {
+    /*float: right;*/
+    position: absolute;
+    margin-left: 10px;
+    font-size: 0.9em;
+    /*background-color: red;*/
+    /*display:none;*/
+}
+
+.mv-mb-nav-actions {
+    float: right;
+    left: -100px;
+}
+
+/* style for the dynamically created placeholder */
+.mv-mb-nav-menu li.mv-mb-nav-placeholder {
+    background: #dadada;
+}
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Midi Banner                                                                          */
+/*                                                                                              */
+/************************************************************************************************/
+
+.mv-midi-cont_record_home {
+    float: left;
+}
+
+.add-localization {
+    font-weight: bold;
+}
+
+.mv-mb-campi-input div {
+    padding-top: 5px;
+}
+
+.mv-mb-campi-show {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Home Banner                                                                          */
+/*                                                                                              */
+/************************************************************************************************/
+
+/*.mv-hb-cont_record_home .mv-mb-rh_bottom .mv-mb-img_rh img */ /*.mv-mb-cont_record_home img*/
+
+
+/*
+.mv-mb-rh_bottom .mv-mb-img_rh img
+{
+    width: 942px;
+    height: 219px;
+}
+*/
+/*.banner-first .left-side img      
+{
+    width: 305px;
+    height: 313px;
+}
+
+
+.banner-first .right-side img      
+{
+    width: 645px;
+    height: 313px;
+}
+
+
+.banner-second .left-side img      
+{
+    width: 305px;
+    height: 113px;
+}
+
+
+.banner-second .right-side img     
+{
+    width: 645px;
+    height: 113px;
+}*/
+

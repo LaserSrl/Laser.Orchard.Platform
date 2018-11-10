@@ -1,0 +1,87 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Common.Fields
+@using Orchard.Fields.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@functions{
+
+    ContentItem contentItem;
+    IEnumerable<ContentField> fields;
+
+    public string TextFieldValue(string fieldName) {
+        var field = fields.Where(fi => fi is TextField && fi.Name == fieldName)
+        .FirstOrDefault() as TextField;
+        return field == null ? string.Empty : field.Value;
+    }
+}
+@{
+    Style.Include("jquery.countdown.css", "jquery.countdown.min.css").AtFoot();
+
+    contentItem = (ContentItem)Model.ContentItem;
+    fields = contentItem.Parts
+       .SelectMany(pa => pa.Fields);
+
+    var endTimeField = fields.Where(fi => fi is DateTimeField && fi.Name == "EndDate")
+        .FirstOrDefault() as DateTimeField;
+    var endTime = endTimeField == null ? (DateTime?)null : endTimeField.DateTime;
+    var rightNow = DateTime.Now;
+    endTime = endTime.HasValue && endTime.Value > rightNow ? endTime : null;
+
+    var titleOne = TextFieldValue("TitleOne");
+    var titleTwo = TextFieldValue("TitleTwo");
+    var textOne = TextFieldValue("TextOne");
+    var textTwo = TextFieldValue("TextTwo");
+    var textThree = TextFieldValue("TextThree");
+
+    var targetUrlField = fields.Where(fi => fi is LinkField && fi.Name == "TargetUrl")
+        .FirstOrDefault() as LinkField;
+    var targetUrl = targetUrlField == null ? "#" : targetUrlField.Value;
+    targetUrl = string.IsNullOrWhiteSpace(targetUrl) ? "#" : targetUrl;
+    textTwo = targetUrlField == null ?
+        textTwo : string.IsNullOrWhiteSpace(targetUrlField.Text) ?
+            textTwo : targetUrlField.Text;
+
+    var picturesField = fields.Where(fi => fi is MediaLibraryPickerField && fi.Name == "Picture")
+        .FirstOrDefault() as MediaLibraryPickerField;
+    var pictures = picturesField == null ? new MediaPart[0] : picturesField.MediaParts.ToArray();
+
+    var divClass = "col-md-7 agileinfo_banner_bottom1_grid_left";
+    if (pictures.Count() < 2) {
+        divClass = "agileinfo_banner_bottom1_grid_left";
+    }
+
+    var divStyleFormat = @"background: url({0}) no-repeat 0px 0px; min-height: 400px;";
+    var divStyle1 = pictures.Any() ? string.Format(divStyleFormat, pictures[0].MediaUrl) : "";
+    var divStyle2 = pictures.Length > 1 ? string.Format(divStyleFormat, pictures[1].MediaUrl) : "";
+
+
+    var guid = Guid.NewGuid().ToString(); //make ids unique
+}
+<div class="banner-bottom1">
+    <div class="agileinfo_banner_bottom1_grids">
+        <div class="@divClass" style="@divStyle1">
+            <h3>@textOne<span>@titleOne<i>@titleTwo</i></span></h3>
+            <a href="@targetUrl">@textTwo</a>
+        </div>
+        @if (pictures.Length > 1) {
+            <div class="col-md-5 agileinfo_banner_bottom1_grid_right" style="@divStyle2">
+                <h4>@textThree</h4>
+                @if (endTime.HasValue) {
+                    Script.Include("jquery.countdown.js", "jquery.countdown.min.js");
+                    
+                    <div class="timer_wrap">
+                        <div id="counter_@guid" class="counter_timer"> </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#counter_@guid').countdown({
+                                timestamp: @endTime.Value.Subtract(new System.DateTime(1970, 1, 1, 0, 0, 0)).TotalMilliseconds
+                                });
+                        });
+                    </script>
+                }
+            </div>
+        }
+        <div class="clearfix"> </div>
+    </div>
+</div>

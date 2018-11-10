@@ -1,0 +1,14 @@
+﻿@{
+    var contentPickerField = (Orchard.ContentPicker.Fields.ContentPickerField)Model.ContentField;
+    string text = "";
+    if(contentPickerField.ContentItems.Count() > 0) {
+        Orchard.ContentManagement.ContentItem item = contentPickerField.ContentItems.FirstOrDefault();
+        dynamic titlePart = item.Parts.FirstOrDefault(x => x.PartDefinition.Name == "TitlePart");
+        if(titlePart != null) {
+            text = titlePart.Title;
+        }
+    }
+}
+@if(string.IsNullOrWhiteSpace(text) == false) {
+    <text>@contentPickerField.DisplayName: @text<br /></text>
+}

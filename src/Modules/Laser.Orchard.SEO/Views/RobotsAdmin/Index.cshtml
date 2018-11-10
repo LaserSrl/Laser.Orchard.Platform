@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.SEO.ViewModels.RobotsFileViewModel
+
+<h1>@Html.TitleForPage(T("Manage Robots.txt File").ToString())</h1>
+@Html.ValidationSummary()
+@using (Html.BeginFormAntiForgeryPost()) {
+	<fieldset>
+		<div>
+			<label for="@Html.FieldIdFor(m => m.Text)">@T("Robots.txt Content")</label>
+			@Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
+			@Html.ValidationMessage("Text", "*")
+			<span class="hint">@T("The default text provided will allow no content in the site to be indexed")</span>
+		</div>
+	</fieldset>
+	<button class="primaryAction" type="submit">@T("Save Robots.txt")</button>
+}

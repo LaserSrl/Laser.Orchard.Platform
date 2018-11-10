@@ -1,0 +1,33 @@
+﻿@using Laser.Orchard.ButtonToWorkflows.Services
+
+@model Laser.Orchard.ButtonToWorkflows.Settings.DynamicButtonsSetting
+
+@{
+    IDynamicButtonToWorkflowsService _dbtfServices;
+    WorkContext.TryResolve<IDynamicButtonToWorkflowsService>(out _dbtfServices);
+
+    var items = _dbtfServices.GetButtons();
+
+    var selectedItems = new string[] { };
+    if (Model.Buttons != null) {
+        selectedItems = Model.List;
+    }
+}
+
+<fieldset>
+    <label>@T("Buttons to display:")</label>
+    <div>
+        <select multiple="multiple" name="@Html.FieldNameFor(m => m.List)" id="@Html.FieldIdFor(m => m.List)" style="min-width:300px;">
+            @foreach (var button in items) {
+                var buttonLabel = button.ButtonName;
+                if (!string.IsNullOrWhiteSpace(button.ButtonDescription)) {
+                    buttonLabel = buttonLabel + " (" + button.ButtonDescription + ")";
+                }
+
+                <option value="{@button.GlobalIdentifier}" @(selectedItems.Contains("{" + button.GlobalIdentifier + "}") ? "selected=\"selected\"" : "")>
+                    @buttonLabel
+                </option>
+            }
+        </select>
+    </div>
+</fieldset>

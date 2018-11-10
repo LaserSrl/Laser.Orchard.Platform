@@ -1,0 +1,438 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Create External Provider"
+msgstr "Crea Provider Esterno"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Display Name"
+msgstr "Nome Visualizzato"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Is Login enabled"
+msgstr "È abilitata la Login"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Key"
+msgstr "Chiave"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Secret"
+msgstr "Secret"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "Technical Name"
+msgstr "Technical Name"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "The name that will be used internally."
+msgstr "Nome che verrà usato internamente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "This is the url to the end point."
+msgstr "Questo è l'URL dell'end point."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "This is the User Name."
+msgstr "Questo è il Nome Utente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "This is the value that is shown to the User."
+msgstr "Questo è il valore mostrato all'Utente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "User Name (used for twitter post)"
+msgstr "Nome Utente (usato nei post Twitter)"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Display Name"
+msgstr "Nome Visualizzato"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Edit External Provider"
+msgstr "Modifica Provider Esterno"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Is Login enabled"
+msgstr "È abilitata la Login"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Key"
+msgstr "Chiave"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Secret"
+msgstr "Secret"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "Technical Name"
+msgstr "Technical Name"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "The name that will be used internally."
+msgstr "Nome che verrà usato internamente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "This is the url to the end point."
+msgstr "Questo è l'URL dell'end point."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "This is the User Name."
+msgstr "Questo è il Nome Utente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "This is the value that is shown to the User."
+msgstr "Questo è il valore mostrato all'Utente."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "User Name (used for twitter post)"
+msgstr "Nome Utente (usato nei post Twitter)"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "A provider identifier may not be shown if not supplied by an internal library. Also A key and secret are not required for every mechanism"
+msgstr "Non può essere visualizzato un identificativo del provider se non viene fornito da una libreria interna. Non tutti i meccanismi richiedono una chiave segreta"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Actions"
+msgstr "Azioni"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "App Direct BaseUrl"
+msgstr "Url di base di AppDirect"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Auto merge new users Enabled"
+msgstr "Abilita il merge automatico degli utenti"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Auto Registration Enabled"
+msgstr "Registrazione Automatica Abilitata"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Base Url like https://marketplace.appdirect.com"
+msgstr "Url di base (es: https://marketplace.appdirect.com)"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Enable Login"
+msgstr "Abilita la Login"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Enabled Providers"
+msgstr "Provider Abilitati"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "In order to enable \"Auto merge\", Users registration settings have to be in one of these status:"
+msgstr "Per potere abilitare la funzionalità di merge automatico degli utenti, le impostazioni per la registrazione utenti devono essere in uno di questi stati:"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Key"
+msgstr "Chiave"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Note: Remember to enable \"Users can create new accounts on the site\" in Settings > Users"
+msgstr "Nota: Ricordarsi di abilitare \"Gli utenti possono creare nuovi account sul sito\" in Impostazioni > Utenti"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Open Authentication Settings"
+msgstr "Impostazioni Open Authentication"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Register a new provider"
+msgstr "Registra un nuovo provider"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Secret"
+msgstr "Secret"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "There are no providers registered. Why not <a href=\"{0}\">register one</a>?"
+msgstr "Non sono presenti provider registrati. Perché non <a href=\"{0}\">registrarne uno</a>?"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "User"
+msgstr "Utente"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Users can create new accounts on the site"
+msgstr "Gli utenti possono creare nuovi accounts sul sito."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Users must be approved before they can log in"
+msgstr "Gli utenti devono essere approvati prima di potersi autenticare"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Users must verify their email address"
+msgstr "Gli utenti devono verificare il loro indirizzo email."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "When checked, if the user who is authenticating does not have an account then a local account will be created and a username will be created based on claims."
+msgstr "Quando selezionato, se l'utente che si sta validando non ha un account, ne verrà creato uno locale con il nome utente basato sulle informazioni disponibili."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "When checked, the system will try to merge new users to exixting users based on their e-mail."
+msgstr "Selezionando questa opzione, il sistema proverà a fondere nuovi utenti su utenti attuali in base all'indirizzo email."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid " if you don't have an account."
+msgstr "se non hai un account."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "External Service Association"
+msgstr "Associazione Servizi Esterni"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Log in using your {0} account"
+msgstr "Accedi con il tuo account {0}"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Login was unsuccessful. Please correct the errors and try again."
+msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Login with another service"
+msgstr "Accedi con un altro servizio"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Please enter your username and password."
+msgstr "Inserire utente e password."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Confirm password:"
+msgstr "Conferma password:"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Create a New Account"
+msgstr "Creare un nuovo Account"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Email:"
+msgstr "Email:"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "External Service Association"
+msgstr "Associazione Servizi Esterni"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Password:"
+msgstr "Password"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Use the form below to create a new account."
+msgstr "Usare il modulo sottostante per creare un nuovo account."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Username:"
+msgstr "Nome utente:"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Done"
+msgstr "Done"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Events"
+msgstr "Eventi"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Open Auth User is created."
+msgstr "Utente open auth creato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Open Auth User is creating."
+msgstr "Creazione in corso dell'utente open auth."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Open Auth UserProviderRecord is created."
+msgstr "UserProviderRecord creato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
+msgid "Open Auth UserProviderRecord is updated."
+msgstr "UserProviderRecord aggiornato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.AdminMenu"
+msgid "Open Authentication"
+msgstr "Open Authentication"
+
+msgctxt "Laser.Orchard.OpenAuthentication.AdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "Login failed."
+msgstr "Accesso non riuscito."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "One or more of the required parameters was not provided or was an empty string."
+msgstr "Uno o più parametri obbligatori non è stato fornito oppure è un valore vuoto."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "Token authentication failed."
+msgstr "Autenticazione del token fallita."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "Unable to send back a cookie."
+msgstr "Impossibile rimandare indietro un cookie."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "You have been logged in using your {0} account. We have created a local account for you with the name '{1}'"
+msgstr "Hai effettuato l'accesso con il tuo account {0}. Ti abbiamo creato un account locale con il nome '{1}'"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "You have been logged using your {0} account."
+msgstr "Hai effettuato l'accesso con il tuo account {0}."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "Your {0} account has been attached to your local account."
+msgstr "Il tuo account {0} è stato collegato al tuo account locale."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AccountController"
+msgid "Your authentication request failed."
+msgstr "La tua richiesta di autenticazione non è andata a buon fine."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
+msgid "Not allowed to manage open authentication settings"
+msgstr "Non è permesso modificare le impostazioni di open authentication"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
+msgid "Provider name already exists"
+msgstr "Il nome del provider esiste già"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
+msgid "Your configuration has been saved."
+msgstr "La tua configurazione è stata salvata."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.BaseAccountController"
+msgid "You have been logged in using your {0} account."
+msgstr "Hai effettuato l'accesso con il tuo account {0}."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.BaseAccountController"
+msgid "You have been logged in using your {0} account. We have created a local account for you with the name '{1}'"
+msgstr "Hai effettuato l'accesso con il tuo account {0}. Ti abbiamo creato un account locale con il nome '{1}'"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.BaseAccountController"
+msgid "You have been logged using your {0} account."
+msgstr "Hai effettuato l'accesso con il tuo account {0}."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.BaseAccountController"
+msgid "Your {0} account has been attached to your local account."
+msgstr "Il tuo account {0} è stato collegato al tuo account locale."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.BaseAccountController"
+msgid "Your authentication request failed."
+msgstr "La tua richiesta di autenticazione non è andata a buon fine."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.OpenIdController"
+msgid "You have been logged using your OpenId account."
+msgstr "Hai fatto accesso con il tuo account OpenId"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.OpenIdController"
+msgid "Your authentication request canceled."
+msgstr "La tua richiesta di autenticazione è stata annullata."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.OpenIdController"
+msgid "Your authentication request failed."
+msgstr "La tua richiesta di autenticazione non è andata a buon fine."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Events.OpenAuthUserEventHandler"
+msgid "Your account has been merged with your previous account."
+msgstr "Il tuo account è stato unito al tuo account precedente."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.OpenAuthMembershipServices"
+msgid "Auto Registered User"
+msgstr "Utente Registrato Automaticamente"
+

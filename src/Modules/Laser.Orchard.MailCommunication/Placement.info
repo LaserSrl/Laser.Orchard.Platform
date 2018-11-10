@@ -1,0 +1,23 @@
+﻿<Placement>
+  <Place
+    Parts_MailCommunication_Edit="Content:5.3"
+    Fields_Common_Text_Edit__MailCommunicationPart-Message="Content:5.3.1;Wrapper=MailCommunicationWrapper"
+    Fields_ContentPicker_Edit__MailCommunicationPart-RelatedMailContent="Content:5.3.2;Wrapper=MailCommunicationWrapper"
+    Parts_MailCommunicationActions_Edit="Content:5.3.4;Wrapper=MailCommunicationWrapper"
+    Parts_CustomTemplatePickerOverride_Edit="Content:5.3.3;Wrapper=MailCommunicationWrapper"
+    />
+  <Place Parts_MailerSiteSettings_Edit="Content:1"/>
+  <Place Parts_MailCommunication="Content:2" />
+  <Place Parts_MailCommunicationSettings_Edit="Content:1"/>
+  <Match ContentType="CommunicationAdvertising">
+    <Place Parts_CustomTemplatePicker_Edit="-" />
+    <Place Parts_MailCommunication_Edit="Content:5.3"/>
+  </Match>
+  <Match ContentType="CommunicationAdvertising">
+    <Match DisplayType="Summary">
+      <Place Fields_Common_Text-Message="-" />
+      <Place Fields_Link="-" />
+      <Place Parts_MailCommunication="Content:5.1"/>
+    </Match>
+  </Match>
+</Placement>

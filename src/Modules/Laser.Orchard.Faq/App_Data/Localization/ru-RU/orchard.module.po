@@ -1,0 +1,106 @@
+# Orchard resource strings - ru-RU
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "ChooseType"
+msgstr "Выберите раздел"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "FaqType"
+msgstr "Раздел"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "Question"
+msgstr "Вопрос"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/FaqType.cshtml"
+msgid "Title"
+msgstr "Название"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/LastFaqWidget.cshtml"
+msgid "Page"
+msgstr "Разделять на страницы"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/LastFaqWidget.cshtml"
+msgid "ViewCount"
+msgstr "Показывать вопросов"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/Faq.cshtml"
+msgid "FaqType"
+msgstr "Название раздела"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/Faq.cshtml"
+msgid "Question"
+msgstr "Вопрос"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqType.cshtml"
+msgid "Title"
+msgstr "Название"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidget.cshtml"
+msgid "NoItems"
+msgstr " Не создано ни одной категории "
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "Answer"
+msgstr "Ответ"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "FAQ"
+msgstr "Вопрос-Ответ"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "FirstPage"
+msgstr "первая"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "Hide"
+msgstr "Скрыть"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "LastPage"
+msgstr "последняя"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "NextPage"
+msgstr "следующая"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "NoItems"
+msgstr "Не найдено ни одного вопроса"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "PreviousPage"
+msgstr "предыдущая"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
+msgid "Section"
+msgstr "Раздел"
+
+msgctxt "Laser.Orchard.Faq.DataMigrations.Migrations"
+msgid "Faq"
+msgstr "Вопрос-Oтвет"
+
+msgctxt "Laser.Orchard.Faq.DataMigrations.Migrations"
+msgid "FaqType"
+msgstr "Тип 'Вопрос-Ответ'"
+
+msgctxt "Laser.Orchard.Faq.DataMigrations.Migrations"
+msgid "FaqWidget"
+msgstr "Вопрос-Ответ"
+
+msgctxt "Laser.Orchard.Faq.DataMigrations.Migrations"
+msgid "LastFaqWidget"
+msgstr "Вопросы-Ответы"
+
+msgctxt "Laser.Orchard.Faq.Drivers.FaqTypeDriver"
+msgid "Faq Type with the same name already exists."
+msgstr "Тип Вопрос-Ответ с таким именем уже существует"
+

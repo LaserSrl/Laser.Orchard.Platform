@@ -1,0 +1,12 @@
+@using Laser.Orchard.NewsLetters.Extensions;
+@using Laser.Orchard.NewsLetters.Models;
+
+@{ Layout.Title = T("New Newsletter Edition").ToString(); }
+
+<p class="breadcrumb"><a href="@Url.NewsLettersForAdmin()">@T("Newsletter List")</a>@T(" &#62; ")<a href="@Url.NewsLetterEditionsForAdmin((int)Model.ContentItem.NewsletterEditionPart.NewsletterDefinitionPartRecord_Id)">@T("Newsletter Edition List")</a>@T(" &#62; ")@T("Create Newsletter Edition")</p>
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    // Model is a Shape, calling Display() so that it is rendered using the most specific template for its Shape type
+    @Display(Model)
+}

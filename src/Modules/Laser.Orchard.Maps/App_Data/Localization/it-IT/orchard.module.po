@@ -1,0 +1,266 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
+msgid "New POIs"
+msgstr "Nuovi POI"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
+msgid "Succesfully elaborated POIs"
+msgstr "POI elaborati correttaemnte"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
+msgid "Tot POIs"
+msgstr "Tot POI"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Center X"
+msgstr "X del centro"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Center Y"
+msgstr "Y del centro"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Drawable area height in pixel"
+msgstr "Altezza in pixel dell'area disegnabile"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Drawable area width in pixel"
+msgstr "Larghezza in pixel dell'area disegnabile"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Drawable Height"
+msgstr "Altezza disegnabile"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Drawable Width"
+msgstr "Larghezza disegnabile"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "hex color (eg: #FF003366)"
+msgstr "Colore in esadecimale (es: #FF003366)"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Insert center points and target drawable area"
+msgstr "Inserire i punti centrali a l'area disegnabile"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Insert the alternate color."
+msgstr "Inserire il colore sostitutivo."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Insert the color to replace."
+msgstr "Inserire il colore da sostituire."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Insert the pin Url."
+msgstr "Inserire l'url del pin."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "Insert the watermark url."
+msgstr "Inserire l'url dell'immagine da sovrapporre (Watermark)"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "The string #FF003366 represents FF=alpha, 00=red, 33=green, 66=blue"
+msgstr "La stringa #FF003366 rappresenta FF=alfa, 00=rosso, 33=verde, 66=blu"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "The url of the pin (eg: ~/Media/pin.png)"
+msgstr "L'url del pin (es: ~/Media/pin.png)"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "The url of the watermark (eg: ~/Media/watermark.png)"
+msgstr "L'url dell'immagine (watermark) da sovrapporre (es: ~/Media/watermark.png)"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "x coordinate in pixel"
+msgstr "Coordinata x in pixel"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
+msgid "y coordinate in pixel"
+msgstr "Coordinata y in pixel"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
+msgid "An optional help text describing what \"Location Info\" and \"Location Address\" mean in the context."
+msgstr "Un testo opzionale di supporto che descrive il significato di \"Informazioni\" e \"Informazioni sull'indirizzo\"."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
+msgid "Hide Map Source File"
+msgstr "Nascondi il campo Map Source File"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
+msgid "Required latitutde and longitude"
+msgstr "Latitudine e longitudine sono obbligatorie"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Latitude"
+msgstr "Latitudine"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Location Address"
+msgstr "Informazioni sull'indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Location Info"
+msgstr "Informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Longitude"
+msgstr "Longitudine"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Map Fields"
+msgstr "Definizione della Mappa"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Show Coords"
+msgstr "Mostra coordinate"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Type a Location"
+msgstr "Scrivi un punto da ricercare"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Api Key provided by google."
+msgstr "Api Key fornita da google"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Google Api Key"
+msgstr "Apy Key di google"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Maps"
+msgstr "Mappe"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Maps provider"
+msgstr "Fornitore delle mappe"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Maps tiles"
+msgstr "Mattonelle delle mappe"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Max. Zoom"
+msgstr "Zoom massimo"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "The maps service provider to use in entire site."
+msgstr "Il fornitore dei servizi di georeferenziazione da utilizzare all'interno del sito."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "The maps tiles to use in entire site."
+msgstr "Le mattonelle delle mappe da usare in tutto il sito."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "The max supported zoom by tiles."
+msgstr "Lo zoom massimo supportato dalle mattonelle."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
+msgid "Latitude"
+msgstr "Latitudine"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
+msgid "Location Address"
+msgstr "Indirizzo della località"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
+msgid "Location Info"
+msgstr "Informazioni sulla località"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
+msgid "Longitude"
+msgstr "Longitudine"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
+msgid "Map Fields"
+msgstr "Campi della mappa"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/GoogleMapForProjections.cshtml"
+msgid "more"
+msgstr "leggi tutto"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
+msgid "new Parkings"
+msgstr "Nuovi parcheggi"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
+msgid "Tot Parkings"
+msgstr "Tot Parcheggi"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
+msgid "Tot unnamed Parkings"
+msgstr "Tot Parcheggi senza nome"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/Parts/Map.cshtml"
+msgid "Map"
+msgstr "Mappa"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/Parts/OsmMap.cshtml"
+msgid "Map"
+msgstr "Mappa"
+
+msgctxt "Laser.Orchard.Maps.Drivers.MapPartDriver"
+msgid "A point on the map is required."
+msgstr "Il punto su mappa è obbligatorio."
+
+msgctxt "Laser.Orchard.Maps.Handlers.MapsSiteSettingsHandler"
+msgid "Maps"
+msgstr "Mappe"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Around Me"
+msgstr "Intorno a me"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Content Items contained in area with center {0} , {1} and distance {2}"
+msgstr "ContentItems contenuti in un area con centro {0} , {1} e distanza {2}"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Content Items contained in the specified area"
+msgstr "Contenuti compresi in una determinata area"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Maps"
+msgstr "Mappe"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Search for Content Items contained in an area"
+msgstr "Cerca i contenuti compresi in una determinata area"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeFilter"
+msgid "Validation Parameters: Latitude, Longitude, Dist not correct"
+msgstr "Validazione parametri: Latitudine, Longitudine, Distanza (Latitude, Longitude, Dist) non corrette"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeForm"
+msgid "Comma separated Latitude,Longitude central position."
+msgstr "Latitudine,Longitudine separate da virgola della posizione centrale."
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeForm"
+msgid "Distance"
+msgstr "Distanza"
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeForm"
+msgid "Distance from position in meters."
+msgstr "Distanza in metri dalla posizione fornita."
+
+msgctxt "Laser.Orchard.Maps.Projections.AroundMeForm"
+msgid "Position coords"
+msgstr "Coordinate della posizione"
+

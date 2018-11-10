@@ -1,0 +1,27 @@
+﻿@using Orchard.Taxonomies.Models;
+@{
+    string taxoName = "";
+    TaxonomyPart taxoPart = null;
+    Orchard.Taxonomies.Models.TermPart term = null;
+    var taxonomyField = (Orchard.Taxonomies.Fields.TaxonomyField)(Model.Field);
+    if (taxonomyField != null) {
+        var taxoSettings = taxonomyField.PartFieldDefinition.Settings;
+        taxoName = taxoSettings.Where(x => x.Key == "TaxonomyFieldSettings.Taxonomy").Select(x => x.Value).FirstOrDefault();
+        taxoPart = WorkContext.Resolve<Orchard.Taxonomies.Services.ITaxonomyService>().GetTaxonomyByName(taxoName);
+    }
+}
+@if (taxonomyField != null) {
+    <fieldset>
+        <legend>@taxonomyField.DisplayName</legend>
+        <ul>
+            @foreach (var val in taxonomyField.Terms) {
+                <li style="list-style-type: disc; list-style-position: inside">
+                    @foreach (var path in val.Path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries)) {
+                        term = taxoPart.Terms.FirstOrDefault(x => x.Id.ToString() == path);
+                        <text>@term.Name -> </text>
+                    }
+                    @val.Name</li>
+            }
+        </ul>
+    </fieldset>
+}

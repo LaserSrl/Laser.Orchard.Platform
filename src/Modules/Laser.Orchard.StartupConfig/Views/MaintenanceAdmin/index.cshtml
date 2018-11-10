@@ -1,0 +1,54 @@
+﻿@model Laser.Orchard.StartupConfig.ViewModels.MaintenanceIndexVM
+@{
+    Layout.Title = T("Maintenance").ToString();
+}
+
+@using (Html.BeginForm("Index", "MaintenanceAdmin", FormMethod.Get)) {
+    <fieldset class="bulk-actions">
+        @*        <label for="search">@T("Search:")</label>
+        @Html.TextBoxFor(m => m.Search.Expression)
+        <button type="submit">@T("Search")</button>
+        <a href="@Url.Action("Index")">@T("Clear")</a>*@
+    </fieldset>
+}
+<table class="items" summary="@T("This is a table of the maintenances of your tenant")">
+    <colgroup>
+        <col id="Col1" />
+        <col id="Col2" />
+        <col id="Col3" />
+    </colgroup>
+    <thead>
+        <tr>
+            @* <th scope="col">&nbsp;&darr;</th>*@
+            <th scope="col">@T("Notification Message")</th>
+            <th scope="col">@T("Published")</th>
+            <th scope="col" width="140px">@T("Action")</th>
+        </tr>
+    </thead>
+    @foreach (var maintenance in Model.Maintenance) {
+@*    <a href="@Url.Action("Edit", new {maintenance.IDcontentitem})" title="@T("Edit")"> *@
+        <tr>
+            <td>
+                @maintenance.MaintenanceNotify
+            </td>
+            <td>
+                @if (maintenance.Published) {
+                    @Html.ActionLink(T("Unpublish").Text, "Unpublish", "MaintenanceAdmin", new { Area = "Laser.Orchard.StartupConfig", Id = maintenance.IDcontentitem }, new { @class = "button primaryAction" })
+                }
+                else {
+                    @Html.Raw(" - ")
+                }
+            </td>
+            <td>@Html.ActionLink(T("Delete").Text, "Delete", "MaintenanceAdmin", new { Area = "Laser.Orchard.StartupConfig", Id = maintenance.IDcontentitem }, new { @class = "button primaryAction" })
+                &nbsp;| &nbsp;
+                @Html.ActionLink(T("Edit").Text, "Edit", "Admin", new { Area = "Contents", Id = maintenance.IDcontentitem }, new { @class = "button primaryAction" })
+            </td>
+        </tr> 
+@* </a>*@
+        <br />
+    }
+</table>
+@*                @T("Edit")</a>@T(" | ")
+                    <a href="@Url.Action("ListAddresses", "CustomerAdmin", new {id = customer.Id})" title="@T("Addresses")">@T("Addresses")</a>
+     *@
+

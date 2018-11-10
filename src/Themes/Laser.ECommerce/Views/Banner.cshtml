@@ -1,0 +1,85 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Common.Fields
+@using Orchard.Fields.Fields
+@using Orchard.MediaLibrary.Fields
+@using Orchard.Utility.Extensions;
+@{
+    /*
+     Model.ContentItem: the item calling this view
+     Model.ImageUrl: the url of the image to use for the banner
+     Model.H3Text: text to be displayed on the banner
+     Model.H2Text: text to be displayed on the banner
+     Model.MinHeight: min-height for the banner
+     */
+    var contentItem = (ContentItem)Model.ContentItem;
+    //Get fields from the contentItem
+    var fields = contentItem.Parts.SelectMany(pa => pa.Fields);
+    //MediaLibraryPickerField called Banner for the image
+    var imageUrl = (string)Model.ImageUrl;
+    if (string.IsNullOrWhiteSpace(imageUrl)) {
+        var field = fields
+            .Where(fi => fi is MediaLibraryPickerField && fi.Name == "Banner")
+            .FirstOrDefault() as MediaLibraryPickerField;
+        if (field != null && field.MediaParts.Any()) {
+            var mediaPart = field.MediaParts.First();
+            imageUrl = mediaPart.MediaUrl;
+        }
+    }
+}
+@if (!string.IsNullOrWhiteSpace(imageUrl)) {
+    //TextField called BannerH3 for h3 text
+    var h3Text = (HtmlString)Model.H3Text;
+    if (h3Text == null) {
+        var field = fields
+            .Where(fi => fi is TextField && fi.Name == "BannerH3")
+            .FirstOrDefault() as TextField;
+        if (field != null && !string.IsNullOrWhiteSpace(field.Value)) {
+            h3Text = new HtmlString(field.Value);
+        }
+    }
+    //TextField called BannerH2 for the h2 text
+    var h2Text = (HtmlString)Model.H2Text;
+    if (h2Text == null) {
+        var field = fields
+            .Where(fi => fi is TextField && fi.Name == "BannerH2")
+            .FirstOrDefault() as TextField;
+        if (field != null && !string.IsNullOrWhiteSpace(field.Value)) {
+            h2Text = new HtmlString(field.Value);
+        }
+    }
+    if (h2Text == null) {
+        //fall back on title text
+        string title = null;
+        try {
+            title = ((dynamic)contentItem).TitlePart.Title;
+        } catch (Exception) { }
+        if (!string.IsNullOrWhiteSpace(title)) {
+            h2Text = new HtmlString(title);
+        }
+    }
+    //NumericField called BannerHeight for the min-height
+    var minHeight = (int?)Model.MinHeight;
+    if (!minHeight.HasValue) {
+        var field = fields
+            .Where(fi => fi is NumericField && fi.Name == "BannerHeight")
+            .FirstOrDefault() as NumericField;
+        if (field!= null && field.Value.HasValue) {
+            minHeight = (int)Math.Round(field.Value.Value);
+        } else {
+            minHeight = 400;
+        }
+    }
+    var divStyle = string.Format("background: url({0}) no-repeat center; min-height: {1}px;", imageUrl, minHeight);
+
+    <div class="banner" style="@divStyle">
+        <div class="container">
+            @if (h3Text != null) {
+                <h3>@h3Text</h3>
+            }
+            @if (h2Text != null) {
+                <h2>@h2Text</h2>
+            }
+
+        </div>
+    </div>
+}

@@ -1,0 +1,58 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models;
+@using Orchard.Security;
+@using Orchard.Localization.Models;
+@using Laser.Orchard.Questionnaires.ViewModels;
+
+@model List<Laser.Orchard.Questionnaires.ViewModels.DisplaRankingTemplateVM>
+
+@{
+    Layout.Title = T("Questionnaire Ranking");
+}
+
+@foreach(DisplaRankingTemplateVM drt in Model){
+    @Html.Raw("Game :" + drt.Title);
+<table class="items" summary="@T("List of ranking.")">
+  
+    <thead>
+        <tr>
+              <th scope="col">@T("Identifier")</th>
+            <th scope="col">@T("name")</th>
+            <th scope="col">@T("point")</th>
+            <th scope="col">@T("RegistrationDate")</th>
+            <th scope="col">@T("UsernameGameCenter")</th>
+            <th scope="col">@T("AccessSecured")</th>
+            <th scope="col">@T("Device")</th>
+            <th scope="col">@T("ContentIdentifier")</th>
+        </tr>
+    </thead>
+    @foreach(RankingTemplateVM rt in drt.ListRank){
+    <tr>
+        <td>
+            @rt.Identifier
+        </td>
+               <td>
+            @rt.name
+        </td>
+               <td>
+            @rt.Point
+        </td>
+               <td>
+            @rt.RegistrationDate
+        </td>
+               <td>
+            @rt.UsernameGameCenter
+        </td>
+               <td>
+            @rt.AccessSecured
+        </td>
+               <td>
+            @rt.Device
+        </td>
+               <td>
+            @rt.ContentIdentifier
+        </td>
+    </tr>
+    }
+</table>
+}

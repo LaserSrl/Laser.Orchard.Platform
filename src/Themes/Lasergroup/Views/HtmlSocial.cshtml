@@ -1,0 +1,13 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+    @if (string.IsNullOrWhiteSpace(item.BodyPart.Text)) {
+        <ul class="social-nav">
+            <li><a href="https://www.facebook.com/LaserInformaticaSrl/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="https://www.linkedin.com/company-beta/1094993" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="https://twitter.com/LaserMobile?lang=it" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+    } else {
+        @Html.Raw(item.BodyPart.Text)
+    }

@@ -1,0 +1,66 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Environment.Configuration;
+@using KrakeAdmin.Settings.Services;
+
+@{
+    /*Logica Logo WhiteLabel*/
+    ShellSettings _shellsettings;
+    IThemeSettingsService _themeSettingsService;
+
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    WorkContext.TryResolve<IThemeSettingsService>(out _themeSettingsService);
+    string tenantname = _shellsettings.Name.ToLower();
+
+    string basePath = "";
+    string tenantPath = _shellsettings.RequestUrlPrefix ?? "";
+    string appPath = HttpContext.Current.Request.ApplicationPath;
+    var themeSettings = _themeSettingsService.GetSettings();
+
+    if (tenantPath == "") {
+        basePath = appPath;
+    } else {
+        appPath = (appPath.EndsWith("/")) ? appPath : appPath + "/";
+        basePath = appPath + tenantPath;
+    }
+    basePath = (basePath.EndsWith("/")) ? basePath : basePath + "/";
+    var backgroundImage = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo.png", tenantname));
+    var backgroundImageMinimized = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-minimized.png", tenantname));
+    var isLocalLogo = true;
+    var isLocalLogoSmall = true;
+    if (!String.IsNullOrEmpty(themeSettings.PlaceholderLogoUrl)) {
+        isLocalLogo = !themeSettings.PlaceholderLogoUrl.StartsWith("http");
+        if (isLocalLogo) {
+            backgroundImage = Url.Content(themeSettings.PlaceholderLogoUrl);
+        } else {
+            backgroundImage = themeSettings.PlaceholderLogoUrl;
+        }
+    }
+    if (isLocalLogo && !File.Exists(Server.MapPath(backgroundImage))) {
+
+        backgroundImage = "";
+    }
+    if (!String.IsNullOrEmpty(themeSettings.PlaceholderSmallLogoUrl)) {
+        isLocalLogoSmall = !themeSettings.PlaceholderSmallLogoUrl.StartsWith("http");
+        if (isLocalLogoSmall) {
+            backgroundImageMinimized = Url.Content(themeSettings.PlaceholderSmallLogoUrl);
+        } else {
+            backgroundImageMinimized = themeSettings.PlaceholderSmallLogoUrl;
+        }
+    }
+    if (isLocalLogoSmall && !File.Exists(Server.MapPath(backgroundImageMinimized))) {
+
+        backgroundImageMinimized = "";
+    }
+}
+
+
+@if (!String.IsNullOrWhiteSpace(backgroundImage)) {
+    <div class="logo-icon">
+        <img src="@backgroundImage" class="img-responsive" />
+    </div>
+}
+@if (!String.IsNullOrWhiteSpace(backgroundImageMinimized)) {
+    <div class="logo-icon-minimized">
+        <img src="@backgroundImageMinimized" class="img-responsive" />
+    </div>
+}

@@ -1,0 +1,9 @@
+﻿@using System.Web.Mvc.Html
+@model Laser.Orchard.CommunicationGateway.ViewModels.QueryFilterVM
+<fieldset>
+    <legend>@T("Select Filter")</legend>
+    <div class="editor-label">@Html.LabelFor(m => m.QueryId, T("Query List"))</div>
+    <div class="editor-field">@Html.DropDownListFor(m => m.QueryId, Model.ElencoQuery)</div>
+</fieldset>
+<ul class="comm-tabbed">
+</ul>

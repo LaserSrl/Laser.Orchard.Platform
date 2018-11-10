@@ -1,0 +1,130 @@
+﻿.slideshow-wrapper {
+    width: 100%;
+    max-height: 500px;
+    margin-bottom: 37px;
+}
+
+.slideshow-slider .slide {
+    height: 500px;
+}
+
+.slideshow-slider {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+
+.slideshow-slider .slide-block {
+    text-align: center;
+    width: 600px;
+    height: 200px;
+    margin: 0 auto;
+    top: 50%;
+    position: absolute;
+    background-color: #fff;
+    background-color: rgba(0,0,0, 0.65);
+    overflow: hidden;
+    border-radius: 4px;
+    padding: 15px;
+    display: none;
+    left: 100px;
+    overflow: hidden;
+}
+
+.slideshow-slider .slide.active .slide-block {
+    display: block;
+}
+
+.slideshow-slider .slide img {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.slideshow-slider .slide-block h1,
+.slideshow-slider .slide-block h2,
+.slideshow-slider .slide-block h3,
+.slideshow-slider .slide-block h4,
+.slideshow-slider .slide-block h5 {
+    text-shadow: 0 3px 3px rgba( 0, 0, 0, 0.3 ), 0 -3px 3px rgba( 0, 0, 0, 0.3 ), 3px 0 3px rgba( 0, 0, 0, 0.3 ), -3px 0 3px rgba( 0, 0, 0, 0.3 );
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.1em;
+    color: #fff;
+    margin: 0;
+}
+
+.slideshow-slider .slide-block h4 {
+    font-size: 28px;
+}
+
+.slideshow-slider .slide-block p {
+    color: white;
+}
+
+.slideshow-slider .slide-block a {
+    font-weight: bold;
+    float: right;
+    margin-right:30px;
+}
+
+.slideshow-pager {
+    border-radius: 20px;
+    background: #fff;
+    text-align: center;
+    width: 120px;
+    padding-top: 2px;
+    margin: 0 0 0 -5%;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+}
+
+.slideshow-pager a.selected span {
+    background: #666;
+}
+
+.slideshow-pager a {
+    display: inline-block;
+    padding: 5px;
+}
+
+.slideshow-pager span {
+    border-radius: 10px;
+    background: #ccc;
+    text-indent: -100px;
+    line-height: 0;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    overflow: hidden;
+}
+
+.bodyExcerpt {
+    height:100px;
+    overflow: hidden;
+}
+
+@media screen and (min-width: 96px) and (max-width: 768px) {
+    .slideshow-slider {
+        /*margin: 100px 0 0 0;*/
+        height: 300px!important;
+        max-height: 300px!important;
+    }
+
+    .slideshow-slider .slide {
+        height: 300px!important;
+        max-height: 300px!important;
+    }
+
+
+    .slideshow-slider .slide-block {
+        left: 10px;
+        bottom: 15px;
+        width: 90%;
+        font-size: 11px;
+    }
+
+    .slideshow-slider .slide-block h4 {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,21 @@
+﻿@{
+    string title = @Model.ContentItem.TitlePart.Title;
+    string bodyHtml = Model.ContentItem.BodyPart.Text;
+    var body = new HtmlString(Html.Excerpt(bodyHtml, 400).ToString().Replace(Environment.NewLine, "<br />"));
+}
+
+<div class="wrapper p2 hr-border-1">
+    @if (Model.ContentItem.BlogPost.Gallery.MediaParts.Count != 0) {
+        <img src="@Display.ResizeMediaUrl(Width: 150, Height: 150, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.BlogPost.Gallery.MediaParts[0].MediaUrl)" class="img-indent" />
+    }
+    <dl class="extra-wrap def-list-1">
+        <dt>
+            @Html.ItemDisplayLink(title, (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+        </dt>
+        <dd class="pad-left-small">
+            @Html.Raw(body)
+            <br />
+            @Html.ItemDisplayLink(T("More").ToString(), (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+        </dd>
+    </dl>
+</div>

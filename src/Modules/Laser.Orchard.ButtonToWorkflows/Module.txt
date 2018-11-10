@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.ButtonToWorkflows
+AntiForgery: enabled
+Author: Laser srl - Lorenzo Frediani
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Description: Description for the module
+Features:
+	Laser.Orchard.ButtonToWorkflows:
+		Description: Description for feature Laser.Orchard.ButtonToWorkflows
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig,Orchard.Workflows,Orchard.Forms,Laser.Orchard.jQueryPlugins

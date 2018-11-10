@@ -1,0 +1,11 @@
+﻿Name: Laser Users Extensions
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10.1
+Features:
+    Laser.Orchard.UsersExtensions:
+        Description: Exposes Register/Login/Logout actions via WebApi, Integrate policy acceptation if policy module is enabled
+        Dependencies: Orchard.Users, Orchard.Localization, Laser.Orchard.StartupConfig, Laser.Orchard.Policy, itWORKS.ExtendedRegistration
+        Category: Security

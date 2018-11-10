@@ -1,0 +1,374 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Action"
+msgstr "Azione"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Clicked"
+msgstr "Selezionato"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Creation date"
+msgstr "Data di creazione"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Reaction type"
+msgstr "Tipo di reazione"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Reactions list summary"
+msgstr "Elenco reazioni"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "Unclicked"
+msgstr "Deselezionato"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
+msgid "User"
+msgstr "Utente"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/Settings.cshtml"
+msgid "Add Reaction"
+msgstr "Aggiungi Reazione"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/Settings.cshtml"
+msgid "Allow multiple choices"
+msgstr "Consenti scelte multiple"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/Settings.cshtml"
+msgid "Settings - User Reactions Types"
+msgstr "Impostazioni - Tipi di reazione"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/Settings.cshtml"
+msgid "Update settings"
+msgstr "Aggiorna le impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/Settings.cshtml"
+msgid "User Reactions Types Settings"
+msgstr "Impostazione tipi di reazioni"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/DefinitionTemplates/UserReactionsPartSettings.cshtml"
+msgid "Required filtered reactions"
+msgstr "Filtro reazioni"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/DefinitionTemplates/UserReactionsPartSettings.cshtml"
+msgid "User Choice Behaviour"
+msgstr "Tipo di scelta utente"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/Parts/UserReactionsEdit.cshtml"
+msgid "Open summary"
+msgstr "Apri lista"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/Parts/UserReactionsEdit.cshtml"
+msgid "User Reactions"
+msgstr "Reazioni utente"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "Activating"
+msgstr "Attivo"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "Active"
+msgstr "Attiva"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "CssName"
+msgstr "Nome stile"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "Order"
+msgstr "Ordine"
+
+msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/EditorTemplates/UserReactionsTypeVM.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "A user reaction is clicked."
+msgstr "Una reazione utente è stata cliccata"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "A user reaction is clicked. Sets the following values in workflow state: ReactionId, Action, ReactionUserEmail, ReactionUserId."
+msgstr "Una reazione utente è stata cliccata. Imposta i seguenti valori nel workflow state: ReactionId, Action, ReactionUserEmail, ReactionUserId."
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "Clicked"
+msgstr "Cliccato"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "NothingToDo"
+msgstr "NessunaAzione"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "Social"
+msgstr "Social"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedActivity"
+msgid "Unclicked"
+msgstr "Non cliccato"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedForm"
+msgid "Reaction list"
+msgstr "Lista reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedForm"
+msgid "Reactions"
+msgstr "Reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Activities.ReactionClickedForm"
+msgid "Select one or more reactions"
+msgstr "Seleziona una o più reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
+msgid "A task has been scheduled to update reaction summaries for existing contents."
+msgstr "Un attività in background si sta occupando di aggiornare i totali per i contenuti esistenti."
+
+msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
+msgid "Settings update failed: {0}"
+msgstr "Aggiornamento impostazioni fallito: {0}"
+
+msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
+msgid "UserReaction settings updating"
+msgstr "Impostazioni reazioni aggiornate"
+
+msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
+msgid "Yout have to be an Administrator to edit Reaction types settings!"
+msgstr "E' necessario essere amministratori per modificare le impostazioni dei tipi di reazione!"
+
+msgctxt "Laser.Orchard.UserReactions.Navigation.AdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Navigation.AdminMenu"
+msgid "User Reactions Types"
+msgstr "Tipi di reazione"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedFilterForm"
+msgid "List of available reactions"
+msgstr "Elenco delle reazioni disponibili"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedFilterForm"
+msgid "Reaction type"
+msgstr "Tipo di reazione"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedFilterForm"
+msgid "Tokenized Content ID"
+msgstr "ID Contenuto con token"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedQueryFilter"
+msgid "Contacts who clicked on a specific reaction."
+msgstr "Contatti che hanno selezionato una particolare reazione."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedQueryFilter"
+msgid "Filter for a specific reaction."
+msgstr "Filtro per una specifica reazione."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedQueryFilter"
+msgid "Reaction clicked filter"
+msgstr "Filtro sulla reazione clickata"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedQueryFilter"
+msgid "Search reactions"
+msgstr "Ricerca reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.ReactionClickedQueryFilter"
+msgid "Users who clicked on a specific reaction."
+msgstr "Utenti che hanno selezionato una particolare reazione."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilter"
+msgid "Content items having the specified reactions."
+msgstr "Elementi di contenuto che hanno la reazioni specificate"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilter"
+msgid "Filter for user reactions."
+msgstr "Filtro per le reazioni utente."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilter"
+msgid "Reactions filter"
+msgstr "Filtro reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilter"
+msgid "Search reactions"
+msgstr "Ricerca reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is between to"
+msgstr "Compreso tra"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is equal to"
+msgstr "Uguale a"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is greater than"
+msgstr "È maggiore di"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is greater than or equal"
+msgstr "È maggiore o uguale a"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is less than"
+msgstr "È minore di"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is less than or equal"
+msgstr "È minore o uguale a"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Is not equal to"
+msgstr "NON è uguale"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "List of available reactions"
+msgstr "Elenco delle reazioni disponibili"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Max"
+msgstr "Max"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Min"
+msgstr "Min"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Not between"
+msgstr "Non compreso"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Reactions types"
+msgstr "Tipi di reazione"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "The field {0} is required."
+msgstr "Il campo {0} è obbligatorio."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "The field {0} should contain a valid input."
+msgstr "Il campo {0} deve contenere un valore valido."
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "The field {0} should contain a valid number"
+msgstr "Il campo {0} deve contenere un numero"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
+msgid "Ordered by {0}, ascending"
+msgstr "Ordinato per {0}, crescente"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
+msgid "Ordered by {0}, descending"
+msgstr "Ordinato per {0}, decrescente"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
+msgid "Reaction on content"
+msgstr "Reazione relativa al contenuto"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
+msgid "Reactions"
+msgstr "Reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
+msgid "Reactions number"
+msgstr "Numero reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySortForm"
+msgid "Reaction"
+msgstr "Reazione"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySortForm"
+msgid "Sort order ascending"
+msgstr "Ordinamento crescente"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySortForm"
+msgid "Sort order descending"
+msgstr "Ordinamento decrescente"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Angry"
+msgstr "Arrabbiato"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Boring"
+msgstr "Noioso"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Exahausted"
+msgstr "Esausto"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Exhausted"
+msgstr "Esausto"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Happy"
+msgstr "Felice"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "I Like"
+msgstr "Mi piace"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "I Was There"
+msgstr "Ci sono stato"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Joke"
+msgstr "Scherzo"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Kiss"
+msgstr "Bacio"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Love"
+msgstr "Amore"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "None"
+msgstr "Nessuno"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Pain"
+msgstr "Panico"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Sad"
+msgstr "Triste"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Shocked"
+msgstr "Scioccato"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Silent"
+msgstr "Silenzioso"
+
+msgctxt "Laser.Orchard.UserReactions.Settings.UserReactionsSettingsHooks"
+msgid "Please verify authorization for UserReactions on this Content Type."
+msgstr "Verifica le autorizzazioni delle Reazioni utente su questo tipo di contenuto."
+
+msgctxt "Laser.Orchard.UserReactions.ViewModels.ValidateUserReactionsTypeVM"
+msgid "Type Name field is required."
+msgstr "Il campo Nome è obbligatorio."
+

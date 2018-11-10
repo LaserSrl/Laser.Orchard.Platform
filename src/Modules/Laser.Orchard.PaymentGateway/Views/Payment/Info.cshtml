@@ -1,0 +1,23 @@
+﻿@model Laser.Orchard.PaymentGateway.ViewModels.PaymentVM
+
+<h2>@T("Payment details")</h2>
+@T("POS"): @Model.Record.PosName<br />
+@T("Reason"): @Model.Record.Reason<br />
+@T("Amount"): @Model.Record.Amount.ToString("0.00") @Model.Record.Currency<br />
+@T("Date"): @Model.Record.UpdateDate.ToString("yyyy-MM-dd HH:mm")<br />
+
+@if(Model.Record.Success) {
+    <text>@T("Outcome"): @T("Succeeded")<br />
+    @T("Transacion ID"): @Model.Record.TransactionId<br /></text>
+} else {
+    <text>@T("Outcome"): <span style="color:red;font-weight:700">@T("Failed")</span><br />
+    @T("Error"): @Model.Record.Error<br />
+    @T("Additional informations"): @Model.Record.Info<br />
+    @{
+        var payUrl = Url.Action("Pay", "Payment", new { area = "Laser.Orchard.PaymentGateway" }) + "?nonce=" + Model.PaymentNonce;    
+    }
+    <br />
+    @Html.Link(T("Back to payment page"), payUrl)<br />
+    </text>
+}
+<br />

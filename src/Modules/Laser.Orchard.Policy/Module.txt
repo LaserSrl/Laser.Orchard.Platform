@@ -1,0 +1,12 @@
+﻿Name: Laser Orchard Policies
+AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.10.1
+Description: Manage policy logics in your site and your contents.
+Features:
+    Laser.Orchard.Policy:
+        Description: Define policies textes, and make any content under policies and regulation acceptance.
+        Category: Content
+		Dependencies: Orchard.Resources, Orchard.Localization, Orchard.Fields, Orchard.Users, Laser.Orchard.StartupConfig

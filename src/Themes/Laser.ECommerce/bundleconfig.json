@@ -1,0 +1,116 @@
+[
+  {
+    "outputFileName": "Styles/Site.min.css",
+    "inputFiles": [
+      "Styles/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/Style.min.css",
+    "inputFiles": [
+      "Styles/Style.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/fasthover.min.css",
+    "inputFiles": [
+      "Styles/fasthover.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.flexisel.min.js",
+    "inputFiles": [
+      "Scripts/jquery.flexisel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/shoppingcart.widget.min.js",
+    "inputFiles": [
+      "Scripts/shoppingcart.widget.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.iframe-transport.min.js",
+    "inputFiles": [
+      "Scripts/jquery.iframe-transport.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.flexslider.min.js",
+    "inputFiles": [
+      "Scripts/jquery.flexslider.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/imagezoom.min.js",
+    "inputFiles": [
+      "Scripts/imagezoom.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/flexslider.min.css",
+    "inputFiles": [
+      "Styles/flexslider.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/easyResponsiveTabs.min.js",
+    "inputFiles": [
+      "Scripts/easyResponsiveTabs.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/fonts/font-awesome-4.6.2/css/font-awesome.min.css",
+    "inputFiles": [
+      "Styles/fonts/font-awesome-4.6.2/css/font-awesome.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/shoppingcart.min.js",
+    "inputFiles": [
+      "Scripts/shoppingcart.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/ship.min.js",
+    "inputFiles": [
+      "Scripts/ship.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/wishlists.min.js",
+    "inputFiles": [
+      "Scripts/wishlists.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.countdown.min.js",
+    "inputFiles": [
+      "Scripts/jquery.countdown.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/jquery.countdown.min.css",
+    "inputFiles": [
+      "Styles/jquery.countdown.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.wmuSlider.min.js",
+    "inputFiles": [
+      "Scripts/jquery.wmuSlider.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/popup-box.min.css",
+    "inputFiles": [
+      "Styles/popup-box.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.magnific-popup.min.js",
+    "inputFiles": [
+      "Scripts/jquery.magnific-popup.js"
+    ]
+  }
+]

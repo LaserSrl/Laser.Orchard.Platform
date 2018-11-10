@@ -1,0 +1,8 @@
+﻿@{
+    var linkField = (Orchard.Fields.Fields.LinkField)Model.ContentField;
+    string text = string.IsNullOrWhiteSpace(linkField.Text) ? linkField.Value : linkField.Text;
+}
+@if(string.IsNullOrWhiteSpace(text) == false) {
+    <text>@linkField.DisplayName: <a href="@linkField.Value" target="@linkField.Target">@text</a>
+    <br /></text>
+}

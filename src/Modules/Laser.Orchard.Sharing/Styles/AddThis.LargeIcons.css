@@ -1,0 +1,15 @@
+﻿/* Custom Icons */.addthis_toolbox .custom_images a
+{
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    padding: 0;
+}
+.addthis_toolbox .custom_images a img
+{
+    opacity: 1.0;
+}
+.addthis_toolbox .custom_images a:hover img
+{
+    opacity: 0.75;
+}

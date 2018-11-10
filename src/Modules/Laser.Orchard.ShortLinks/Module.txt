@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.ShortLinks
+AntiForgery: enabled
+Author: Laser srl - Manuela Bonanno
+Website: https://www.laser-group.com
+Version: 1.10
+OrchardVersion: 1.10
+Description: A module that allows you to insert a Short Link into your ContentTypes.
+Features:
+    Laser.Orchard.ShortLinks:
+        Description: Enables the ability to generate a shortlink for the content.
+		Category: Content

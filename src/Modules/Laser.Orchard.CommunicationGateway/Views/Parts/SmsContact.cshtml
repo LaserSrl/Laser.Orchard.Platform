@@ -1,0 +1,18 @@
+﻿@*@model Laser.Orchard.CommunicationGateway.ViewModels.View_SmsVM*@
+<fieldset>
+    <legend> @T("Sms")</legend>
+        <div id="MasterSms">
+            @if (Model.Elenco.Count == 0) {
+                <text>-</text>
+            } else {
+                <ul style="list-style-type:disc;list-style-position: inside">
+                    @foreach (var sms in Model.Elenco) {
+                        <li>@sms.Prefix / @sms.Sms<br />
+                            &nbsp;&nbsp; (@T("Valid"): @(sms.Validated ? T("Yes") : T("No")), @T("Production"): @(sms.Produzione ? T("Yes") : T("No")), 
+                            @T("Commercial use"): @(sms.AccettatoUsoCommerciale ? T("Yes") : T("No")), @T("Third party"): @(sms.AutorizzatoTerzeParti ? T("Yes") : T("No")),
+                            @T("Creation date"): @sms.DataInserimento, @T("Modified"): @sms.DataModifica)</li>
+                    }
+                </ul>
+            }
+        </div>
+</fieldset>

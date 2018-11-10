@@ -1,0 +1,8 @@
+﻿@using Laser.Orchard.Highlights.Models
+@{
+    var item = Model.HighlightsItem;
+}
+
+<div>
+    <img u="image" src="@Display.ResizeMediaUrl(Width: 350, Height: 197, Mode: "crop", Alignment: "middlecenter", Path: item.MediaUrl)" />
+</div>

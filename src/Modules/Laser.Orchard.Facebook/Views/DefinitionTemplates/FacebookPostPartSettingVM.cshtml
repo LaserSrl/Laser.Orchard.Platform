@@ -1,0 +1,37 @@
+﻿@model Laser.Orchard.Facebook.Settings.FacebookPostPartSettingVM
+<fieldset>
+    <h2>@T("Settings - Facebook Post")</h2>
+
+    <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookCaption)" >@T("Caption") </label>
+        @Html.TextAreaFor(m => m.FacebookCaption, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Caption")</span>
+    </div>
+
+        <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookMessage)" >@T("Message") </label>
+        @Html.TextAreaFor(m => m.FacebookMessage, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Message")</span>
+    </div>
+        <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookDescription)" >@T("Description") </label>
+        @Html.TextAreaFor(m => m.FacebookDescription, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Description")</span>
+    </div>
+        <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookName)" >@T("Name") </label>
+        @Html.TextAreaFor(m => m.FacebookName, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Name")</span>
+    </div>
+     <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookPicture)" >@T("Picture") </label>
+        @Html.TextAreaFor(m => m.FacebookPicture, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Picture")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.FacebookLink)" >@T("Link") </label>
+        @Html.TextAreaFor(m => m.FacebookLink, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("Facebook Link")</span>
+    </div>
+     @Display.TokenHint()
+</fieldset>

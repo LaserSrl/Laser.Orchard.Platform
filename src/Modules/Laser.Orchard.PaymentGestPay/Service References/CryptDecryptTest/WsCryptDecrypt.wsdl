@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://ecomm.sella.it/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://ecomm.sella.it/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://ecomm.sella.it/">
+      <s:element name="Encrypt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="shopLogin" nillable="true" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="uicCode" nillable="true" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" nillable="true" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="shopTransactionId" nillable="true" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cardNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="expiryMonth" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="expiryYear" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="buyerName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="buyerEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="languageId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="cvv" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="customInfo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="requestToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ppSellerProtection" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="shippingDetails" type="tns:ShippingDetails" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentTypes" type="tns:PaymentTypes" />
+            <s:element minOccurs="0" maxOccurs="1" name="paymentTypeDetail" type="tns:PaymentTypeDetail" />
+            <s:element minOccurs="0" maxOccurs="1" name="redFraudPrevention" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_CustomerInfo" type="tns:RedCustomerInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_ShippingInfo" type="tns:RedShippingInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_BillingInfo" type="tns:RedBillingInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_CustomerData" type="tns:RedCustomerData" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_CustomInfo" type="tns:RedCustomInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="Red_Items" type="tns:RedItems" />
+            <s:element minOccurs="0" maxOccurs="1" name="Consel_MerchantPro" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Consel_CustomerInfo" type="tns:ConselCustomerInfo" />
+            <s:element minOccurs="0" maxOccurs="1" name="payPalBillingAgreementDescription" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderDetails" type="tns:EcommGestpayPaymentDetails" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ShippingDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="shipToName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToStreet" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToCity" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToState" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToCountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToZip" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="shipToStreet2" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentTypes">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="paymentType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PaymentTypeDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MyBankBankCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdealBankCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedCustomerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Surname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Address2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_StateCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_PostalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_Phone" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedShippingInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Surname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Address2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_StateCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_PostalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_HomePhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_MobilePhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_FaxPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Shipping_TimeToDeparture" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedBillingInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Surname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_DateOfBirth" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Address2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_StateCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_Country" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_PostalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_HomePhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_WorkPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Billing_MobilePhone" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedCustomerData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MerchantWebSite" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Customer_IPAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PC_FingerPrint" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PreviousCustomer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Red_Merchant_ID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Red_ServiceType" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedCustomInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="UserCustomData" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedItems">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="NumberOfItems" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Red_Item" type="tns:RedItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="RedItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Item_ProductCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_StockKeepingUnit" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_Quantity" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_UnitCost" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_TotalCost" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_ShippingNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_GiftMessage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_PartEAN_Number" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Item_ShippingComments" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ConselCustomerInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Surname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TaxationCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MobilePhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MunicipalCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateBirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BirthDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MunicipalDocumentCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Employment" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkingAddress" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MunicipalWorkingCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentState" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MunicipalBirthCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="VisaExpiryDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Iban" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkingTelNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WorkingState" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MonthlyPay" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="EcommGestpayPaymentDetails">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FraudPrevention" type="tns:FraudPrevention" />
+          <s:element minOccurs="0" maxOccurs="1" name="CustomerDetail" type="tns:CustomerDetail" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShippingAddress" type="tns:ShippingAddress" />
+          <s:element minOccurs="0" maxOccurs="1" name="BillingAddress" type="tns:BillingAddress" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDetails" type="tns:ArrayOfProductDetail" />
+          <s:element minOccurs="0" maxOccurs="1" name="DiscountCodes" type="tns:ArrayOfDiscountCode" />
+          <s:element minOccurs="0" maxOccurs="1" name="ShippingLines" type="tns:ArrayOfShippingLine" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FraudPrevention">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SubmitForReview" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderDateTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OrderNote" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Source" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubmissionReason" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BeaconSessionID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProfileID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MerchantCustomerID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondaryEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateOfBirth" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Gender" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SocialSecurityNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CreatedAtDate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="VerifiedEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Social" type="tns:CustomerSocial" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomerSocial">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Network" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PublicUsername" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CommunityScore" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProfilePicture" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Bio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AccountUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Following" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Followed" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Posts" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AuthToken" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SocialData" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ShippingAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProfileID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Streetname2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseExtention" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BillingAddress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProfileID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MiddleName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Lastname" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StreetNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StreetName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Streetname2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HouseExtention" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ZipCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="State" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CountryCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PrimaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondaryPhone" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Company" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StateCode" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductDetail" nillable="true" type="tns:ProductDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ProductDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ProductCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SKU" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Quantity" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitPrice" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Vat" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Discount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RequiresShipping" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Condition" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Seller" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Category" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubCategory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Brand" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeliveryAt" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDiscountCode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DiscountCode" nillable="true" type="tns:DiscountCode" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DiscountCode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Amount" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfShippingLine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ShippingLine" nillable="true" type="tns:ShippingLine" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ShippingLine">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="EncryptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Decrypt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="shopLogin" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CryptedString" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DecryptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DecryptResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EncryptSoapIn">
+    <wsdl:part name="parameters" element="tns:Encrypt" />
+  </wsdl:message>
+  <wsdl:message name="EncryptSoapOut">
+    <wsdl:part name="parameters" element="tns:EncryptResponse" />
+  </wsdl:message>
+  <wsdl:message name="DecryptSoapIn">
+    <wsdl:part name="parameters" element="tns:Decrypt" />
+  </wsdl:message>
+  <wsdl:message name="DecryptSoapOut">
+    <wsdl:part name="parameters" element="tns:DecryptResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSCryptDecryptSoap">
+    <wsdl:operation name="Encrypt">
+      <wsdl:input message="tns:EncryptSoapIn" />
+      <wsdl:output message="tns:EncryptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Decrypt">
+      <wsdl:input message="tns:DecryptSoapIn" />
+      <wsdl:output message="tns:DecryptSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSCryptDecryptSoap" type="tns:WSCryptDecryptSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Encrypt">
+      <soap:operation soapAction="https://ecomm.sella.it/Encrypt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Decrypt">
+      <soap:operation soapAction="https://ecomm.sella.it/Decrypt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSCryptDecryptSoap12" type="tns:WSCryptDecryptSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Encrypt">
+      <soap12:operation soapAction="https://ecomm.sella.it/Encrypt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Decrypt">
+      <soap12:operation soapAction="https://ecomm.sella.it/Decrypt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSCryptDecrypt">
+    <wsdl:port name="WSCryptDecryptSoap" binding="tns:WSCryptDecryptSoap">
+      <soap:address location="https://testecomm.sella.it/gestpay/GestPayWS/WsCryptDecrypt.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSCryptDecryptSoap12" binding="tns:WSCryptDecryptSoap12">
+      <soap12:address location="https://testecomm.sella.it/gestpay/GestPayWS/WsCryptDecrypt.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,43 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Models
+@using Orchard.Utility.Extensions;
+@{
+    MediaPart mediaPart = Model.ContentItem.MediaPart;
+
+    var imagePart = mediaPart.As<ImagePart>();
+    // max width is 750px. Scale image accordingly.
+    var w = imagePart.Width;
+    var h = imagePart.Height;
+    var mode = "pad";
+    if (w != 750) {
+        // scale down the image
+        h = (int)((750.0 / (double)w) * h);
+        w = 750;
+        mode = w > 750 ? "resize" : "pad";
+    }
+    
+}
+<div class="col-md-2 col-sm-4 col-xs-12" style="">
+    @Display.ImageTag(
+        MediaPart: mediaPart, Width: w, Height: h, Mode: mode, Alignment: "middlecenter",
+        StubWidth: 80, StubHeight: 80, StubMode: "resize",
+        htmlAttributes: new Dictionary<string, object>() { { "class", "img-responsive" } })
+    
+    
+    <div class="space-40"></div><div class="space-40 hidden-xs"></div>
+</div>
+
+@using (Script.Foot()) {
+    <script>
+        // this is not really lazy load, but simply a deferral of image loading
+        function init() {
+            var imgDefer = document.getElementsByTagName('img');
+            for (var i=0; i<imgDefer.length; i++) {
+                if(imgDefer[i].getAttribute('data-src')) {
+                    imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+                }
+            }
+        }
+        window.onload = init;
+    </script>
+}

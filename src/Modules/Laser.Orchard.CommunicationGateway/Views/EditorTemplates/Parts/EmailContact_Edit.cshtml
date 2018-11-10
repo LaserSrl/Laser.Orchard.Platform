@@ -1,0 +1,21 @@
+﻿@using Laser.Orchard.CommunicationGateway.ViewModels
+@using Orchard.Security
+@using Laser.Orchard.Commons.Helpers
+@model View_EmailVM
+@*if (Authorizer.Authorize(StandardPermissions.SiteOwner)) {
+}
+*@
+@{    Script.Require("JQuery").AtHead();
+      Script.Require("jQueryUI_Core").AtHead();
+      Script.Require("jQuery_NestedModels").AtHead();
+      Style.Require("FontAwesome430").AtHead();
+      }
+<fieldset>
+    <legend> @T("Email")</legend>
+        <div id="MasterEmail">
+        @Html.EditorFor(x => x.Elenco)
+    </div>
+   <p id="AddEmailButton">
+   <i class="fa fa-plus" style="color: #6db7e5;"></i> @Html.LinkToAddNestedForm(x=>x.Elenco, T("Add Email").Text, "#MasterEmail", ".singleemail", "", null)
+    </p>
+</fieldset>

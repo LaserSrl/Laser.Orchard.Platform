@@ -1,0 +1,29 @@
+﻿Name: Laser.Orchard.TemplateManagement
+AntiForgery: enabled
+Author:  Laser srl
+Website: 
+Version: 1.8
+OrchardVersion: 1.10
+Description: Template Management features.
+Features:
+    Laser.Orchard.TemplateManagement:
+        Name:  Laser Orchard Template Management
+        Description: Template Management features.
+		Category: Content
+		Dependencies: Orchard.Tokens, Orchard.JobsQueue, Orchard.Email		
+	Laser.Orchard.TemplateManagement.Parsers.Razor:
+        Name:  Laser Orchard Template Management Razor Parser
+        Description: Implements Razor as the parser engine for  templates.
+        Category: Parsers
+        Dependencies: Laser.Orchard.TemplateManagement
+    Laser.Orchard.TemplateEmailActivities:
+        Name:  Laser Orchard Template Email Activities
+        Description: Add some tasks to send a Templated Email Messages.
+		Category: Messaging
+		Dependencies: Laser.Orchard.TemplateManagement, Orchard.Workflows,Laser.Orchard.StartupConfig, Orchard.Email
+    Laser.Orchard.WebTracking:
+        Name:  Laser Orchard Web Tracking
+        Description: Api Controller to track users on web contents (e.g. web pages, e-mail).
+		Category: Social
+		Dependencies: Orchard.Workflows,Laser.Orchard.StartupConfig
+		

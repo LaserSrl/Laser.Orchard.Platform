@@ -1,0 +1,414 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "Activity Part Label"
+msgstr "Etichetta per l'attività (Activity Part)"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "Allow user set only one date."
+msgstr "Impedisci agli utenti di configurare più di una data."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "Allow user to configure recurrences for activities."
+msgstr "Permetti all'utente di configurare la ripetizione delle attività."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "Date End Label"
+msgstr "Etichetta per la data di fine dell'attività"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "Date Start Label"
+msgstr "Etichetta per la data di inizio dell'attività"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/DefinitionTemplates/ActivityPartSettings.cshtml"
+msgid "DateTime Types"
+msgstr "Tipo permesso"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "All day"
+msgstr "Intera giornata"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Date and time end"
+msgstr "Data e ora di fine"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Date and time start"
+msgstr "Data e ora di inizio"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Day number"
+msgstr "Numero di giorno"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Day of the week"
+msgstr "Giorno della settimana"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "days"
+msgstr "giorni"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "End date"
+msgstr "Data di fine"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Event Data"
+msgstr "Dati Evento"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "For example, selecting Monday 12/08/2014, Day Number means 'Repeat the 8th of the month' and Day of the Week means 'Repeat the 2nd Monday of the month'"
+msgstr "Ad esempio, selezionando Lunedi 08/12/2014, Numero di Giorno significa 'Ripeti il giorno 8 del mese' mentre Giorno della Settimana significa 'Ripeti il secondo Lunedi del mese'"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Friday"
+msgstr "Venerdi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "In date:"
+msgstr "In data:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Monday"
+msgstr "Lunedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "months"
+msgstr "mesi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Never"
+msgstr "Mai"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Repeat"
+msgstr "Ripeti"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Repeat by:"
+msgstr "Ripeti per:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Repeat every:"
+msgstr "Ripeti ogni:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Saturday"
+msgstr "Sabato"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Start date"
+msgstr "Data di inizio"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Stop repeating:"
+msgstr "Finisci ripetizione:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Sunday"
+msgstr "Domenica"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Thursday"
+msgstr "Giovedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Tuesday"
+msgstr "Martedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "Wednesday"
+msgstr "Mercoledi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "weeks"
+msgstr "settimane"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Activity.cshtml"
+msgid "years"
+msgstr "anni"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid " - Repeat until the day: "
+msgstr "- Ripeti fino al giorno:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "days"
+msgstr "giorni"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Friday"
+msgstr "Venerdi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Monday"
+msgstr "Lunedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "months"
+msgstr "mesi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Repeat every: "
+msgstr "Ripeti ogni:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Saturday"
+msgstr "Sabato"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Sunday"
+msgstr "Domenica"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Thursday"
+msgstr "Giovedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Tuesday"
+msgstr "Martedi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "Wednesday"
+msgstr "Mercoledi"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "weeks"
+msgstr "settimane"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/ActivityDisplay.cshtml"
+msgid "years"
+msgstr "anni"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "({0})"
+msgstr "({0})"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "(Default Layout)"
+msgstr "(Schema predefinito)"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Calendar"
+msgstr "Calendario"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Check to add a pager to the list."
+msgstr "Seleziona per aggiungere i pulsanti di paginazione alla lista."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Display events as:"
+msgstr "Mostra eventi come:"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Edit Query"
+msgstr "Modifica Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "For Query"
+msgstr "Per la Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Items to display"
+msgstr "Elementi da visualizzare"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "List"
+msgstr "Lista"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "List start date"
+msgstr "Data inizio lista"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Number of days"
+msgstr "Numero di giorni"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Optional. Provide a suffix to use when multiple pagers are displayed on the same page, e.g., when using multiple Projection Widgets, or to define alternates."
+msgstr "Opzionale. Inserire un suffisso da utilizzare quando più numeratori di pagina vengono visualizzati contemporaneamente. Es. quando si utilizzano più widget di proiezione, o quando si definiscono delle alternative."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Show pager"
+msgstr "Visualizza i pulsanti di paginazione"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "Suffix"
+msgstr "Suffisso"
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "The list will display events from this date."
+msgstr "La lista mostrerà gli eventi a partire da questa data."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "The number of days displayed in the list."
+msgstr "Il numero di giorni visualizzati nella lista."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "The query to display."
+msgstr "La ricerca da visualizzare."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "The shape to use to display the events."
+msgstr "Il formato da usare per visualizzare gli eventi."
+
+msgctxt "~/Modules/Laser.Orchard.Events/Views/EditorTemplates/Parts/Calendar.cshtml"
+msgid "When using pagination, this is the number of items per page. If 0, the default value in the site settings will be used."
+msgstr "Quando si utilizza la paginazione, questo è il numero di oggetti per pagina. Se vale 0, verrà usato il valore inserito nelle impostazioni del sito."
+
+msgctxt "Laser.Orchard.Events.Drivers.ActivityPartDriver"
+msgid "The ending date is greater than the starting date."
+msgstr "La data di fine deve essere maggiore della data di inizio."
+
+msgctxt "Laser.Orchard.Events.Drivers.ActivityPartDriver"
+msgid "The repeat date is not valid."
+msgstr "La data di ripetizione non è valida."
+
+msgctxt "Laser.Orchard.Events.Drivers.ActivityPartDriver"
+msgid "The repeat end date is required."
+msgstr "La data di fine ripetizione è obbligatoria."
+
+msgctxt "Laser.Orchard.Events.Drivers.ActivityPartDriver"
+msgid "The starting date and ending date of the event are required."
+msgstr "Le date di inizio e fine evento sono obbligatorie."
+
+msgctxt "Laser.Orchard.Events.Drivers.ActivityPartDriver"
+msgid "The starting date or ending date are not valid."
+msgstr "La data di inizio o quella di fine non sono valide."
+
+msgctxt "Laser.Orchard.Events.Drivers.CalendarPartDriver"
+msgid "Suffix should not contain special characters."
+msgstr "Il suffisso non può contenere caratteri speciali."
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Activity Part Record"
+msgstr "Record della parte Actvity"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "End Date"
+msgstr "Data di fine"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Ending date of the activity"
+msgstr "Data di fine dell'attività"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Ending date of the event"
+msgstr "Data di conclusione dell'evento"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Event End Date"
+msgstr "Data Fine Evento"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Ordered by {0}, ascending"
+msgstr "Ordinato per {0}, crescente"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Ordered by {0}, descending"
+msgstr "Ordinato per {0}, decrescente"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
+msgid "Position in the list of activities"
+msgstr "Posizione nella lista di attivita'"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeFilter"
+msgid "Activities contained in a specified range of dates"
+msgstr "Attivita' contenute in un intervallo di date specificato"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeFilter"
+msgid "Activity Dates"
+msgstr "Date dell'attività"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeFilter"
+msgid "Activity Range"
+msgstr "Intervallo Attivita'"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeFilter"
+msgid "Calendar Event"
+msgstr "Eventi del Calendario"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
+msgid "Activities from date"
+msgstr "Attivita' da data"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
+msgid "Activities to date"
+msgstr "Attivita' fino a data"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
+msgid "At least one date must be provided"
+msgstr "Almeno una tra le date dev'essere specificata"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
+msgid "Retrieve activities beginning in or after this date"
+msgstr "Recupera attivita' che iniziano in o successivamente a questa data"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
+msgid "Retrieve activities ending in or before this date"
+msgstr "Recupera attivita' che finiscono in o precedentemente a questa data"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Activity Part Record"
+msgstr "Record della parte Actvity"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Activity Start Date"
+msgstr "Data di inizio dell'attività"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Event Start Date"
+msgstr "Data Inizio Evento"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Ordered by {0}, ascending"
+msgstr "Ordinato per {0}, crescente"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Ordered by {0}, descending"
+msgstr "Ordinato per {0}, decrescente"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Position in the list of activities"
+msgstr "Posizione nella lista di attivita'"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Start Date"
+msgstr "Data di inizio"
+
+msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
+msgid "Starting date of the event"
+msgstr "Data di inizio dell'evento"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "End date of the parent Calendar"
+msgstr "Data di fine del Calendario padre"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "Event List"
+msgstr "Lista Eventi"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "List End Date"
+msgstr "Data Fine Lista"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "List Start Date"
+msgstr "Data Inizio Lista"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "Start date of the parent Calendar"
+msgstr "Data di inizio del Calendario padre"
+
+msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
+msgid "Tokens for Calendars (list shape)"
+msgstr "Token per Calendari (in forma di lista)"
+

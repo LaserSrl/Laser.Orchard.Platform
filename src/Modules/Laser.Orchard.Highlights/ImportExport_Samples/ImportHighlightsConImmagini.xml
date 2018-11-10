@@ -1,0 +1,47 @@
+<!--Exported from Orchard-->
+<Orchard>
+  <Data>
+	<Image Id="/Identifier=provaidentmanuale" Status="Published">
+      <IdentityPart Identifier="provaidentmanuale" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2013-10-21T12:00:00Z" PublishedUtc="2013-10-21T12:00:01Z" ModifiedUtc="2013-10-21T12:00:02Z" />
+      <TitlePart Title="temp_slider_brd" />
+      <ImagePart Height="732" Width="1230" />
+      <MediaPart MimeType="image/jpeg" FolderPath="Test_Tema_LoveVda" FileName="temp_slider.jpg" />
+    </Image>
+    <Image Id="/Identifier=immagineDue" Status="Published">
+      <IdentityPart Identifier="immagineDue" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2013-10-21T12:00:00Z" PublishedUtc="2013-10-21T12:00:01Z" ModifiedUtc="2013-10-21T12:00:02Z" />
+      <TitlePart Title="temp_cartografia_brd" />
+      <ImagePart Height="733" Width="1230" />
+      <MediaPart MimeType="image/jpeg" FolderPath="Test_Tema_LoveVda" FileName="temp_cartografia.jpg" />
+    </Image>
+    <HighlightsGroupWidget Id="/Identifier=GrpPadreHomeBanner" Status="Published">
+      <WidgetPart Title="HomeBanner import" Position="1" Zone="BigBanner" RenderTitle="false" Name="HomeBannerImport" />
+      <IdentityPart Identifier="GrpPadreHomeBanner" />
+      <CommonPart Owner="/User.UserName=admin" Container="/Layer.LayerName=Default" CreatedUtc="2013-10-21T11:30:15Z" PublishedUtc="2013-10-21T11:30:15Z" ModifiedUtc="2013-10-21T11:30:15Z" />
+      <HighlightsGroupPart Id="21" DisplayPlugin="Slideshow" DisplayTemplate="Banner" />
+    </HighlightsGroupWidget>
+    <HighlightsItem Id="/Identifier=FiglioHomeBanner_01" Status="Published">
+      <TextField.MediaText Text="&lt;p&gt;Immagine Home Banner import uno&lt;/p&gt;" />
+      <MediaLibraryPickerField.MediaObject ContentItems="/Identifier=provaidentmanuale" />
+      <IdentityPart Identifier="FiglioHomeBanner_01" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2013-10-21T11:31:00Z" PublishedUtc="2013-10-21T11:31:26Z" ModifiedUtc="2013-10-21T11:31:30Z" />
+      <TitlePart Title="Immagine Home Banner import uno" />
+      <HighlightsItemPart Id="22" HighlightsGroupPartRecordId="/Identifier=GrpPadreHomeBanner" LinkText="regione" LinkUrl="http://www.regione.vda.it" Video="false" Sottotitolo="sottotitolo uno" TitleSize="Predefinito" ItemOrder="0" LinkTarget="_self" />
+    </HighlightsItem>
+    <HighlightsGroupWidget Id="/Identifier=GrpPadreHomeBannerDue" Status="Published">
+      <WidgetPart Title="HomeBanner import due" Position="1" Zone="BigBanner" RenderTitle="false" Name="HomeBannerImportDue" />
+      <IdentityPart Identifier="GrpPadreHomeBannerDue" />
+      <CommonPart Owner="/User.UserName=admin" Container="/Layer.LayerName=Default" CreatedUtc="2013-10-21T11:30:15Z" PublishedUtc="2013-10-21T11:30:15Z" ModifiedUtc="2013-10-21T11:30:15Z" />
+      <HighlightsGroupPart Id="21" DisplayPlugin="Slideshow" DisplayTemplate="Banner" />
+    </HighlightsGroupWidget>
+    <HighlightsItem Id="/Identifier=FiglioHomeBanner_02" Status="Published">
+      <TextField.MediaText Text="&lt;p&gt;Immagine Home Banner import due&lt;/p&gt;" />
+      <MediaLibraryPickerField.MediaObject ContentItems="/Identifier=immagineDue" />
+      <IdentityPart Identifier="FiglioHomeBanner_02" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2013-10-21T11:31:00Z" PublishedUtc="2013-10-21T11:31:26Z" ModifiedUtc="2013-10-21T11:31:30Z" />
+      <TitlePart Title="Immagine Home Banner import due" />
+      <HighlightsItemPart Id="24" HighlightsGroupPartRecordId="/Identifier=GrpPadreHomeBannerDue" LinkText="Microsoft" LinkUrl="http://www.microsoft.com" Video="true" Sottotitolo="sottotitolo due" TitleSize="Principale" ItemOrder="0" LinkTarget="_modal" />
+    </HighlightsItem>
+	</Data>
+</Orchard>

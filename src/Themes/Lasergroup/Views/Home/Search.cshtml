@@ -1,0 +1,79 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Mvc;
+@model Orchard.Tags.ViewModels.TagsSearchViewModel
+@{
+
+    Html.AddTitleParts(T("Tags").ToString());
+    Html.AddTitleParts(T("Contents tagged with {0}", Model.TagName).ToString());
+    Model.List.Classes.Add("tagged-posts");
+    Model.List.Classes.Add("content-items");
+    Layout.BaseClass = "page page-template navbar-fixed";
+
+    Layout.Title = "NEWS " + Model.TagName;
+
+    var services = WorkContext.Resolve<IHttpContextAccessor>();
+    var httpContext = services.Current();
+    var baseUrl = httpContext.Request.ToApplicationRootUrlString();
+
+    var settings = WorkContext.Resolve<Orchard.Environment.Configuration.ShellSettings>();
+    string urlPrefix = settings.RequestUrlPrefix;
+
+    dynamic blogPosts = Model.List.Items;
+}
+<div id="intro">
+    <canvas id="intro-canvas"></canvas>
+    <div class="container container-desc clearfix">
+        <div class="col-xs-12 col-sm-6 col-intro-desc">
+            <h1 class="handel-got-d title">NEWS</h1>
+            <h2 class="page-claim">@T("Tagged with <span>{0}</span>", Model.TagName)</h2>
+            <div class="page-desc">
+            </div>
+        </div>
+
+        @if (blogPosts.Count > 0 && blogPosts[0].Blog.Blog.Gallery.Ids.Length > 0) {
+            <div class="col-xs-12 col-sm-6 text-center">
+                <img src="@blogPosts[0].Blog.Blog.Gallery.FirstMediaUrl" title="@blogPosts[0].Blog.Blog.Gallery.MediaParts[0].Title" alt="@blogPosts[0].Blog.Blog.Gallery.MediaParts[0].AlternateText" class="img-responsive">
+            </div>
+        }
+    </div>
+</div>
+</div>
+
+<div id="news">
+    <div class="news-top"></div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var postContent in blogPosts) {
+                dynamic post = postContent.ContentItem;
+                if (post.ContentType.Equals("BlogPost")) {
+                    <div class="col-xs-12 col-sm-6 col-md-4 box-all-news">
+                        <div class="news-item">
+                            <div class="news-item-photo-mask">
+                                @{
+                                    string path = baseUrl + "/" + urlPrefix + "/" + post.AutoroutePart.Path;
+                                }
+                                <a href="@path">
+                                    <img src="@Display.ResizeMediaUrl(Width: 600, Height: 300, Mode: "crop", Alignment: "middlecenter", Path: post.BlogPost.Image.MediaParts[0].MediaUrl)" title="@post.BlogPost.Image.MediaParts[0].Title" alt="@post.BlogPost.Image.MediaParts[0].AlternateText" class="img-responsive wp-post-image" alt="@post.BlogPost.Image.MediaParts[0].Title">
+                                </a>
+                            </div>
+                            <div class="space-40"></div>
+                            <h4 class="news-item-title"><a href="@path">@post.TitlePart.Title</a></h4>
+                            <h5 class="news-item-date">@post.CommonPart.CreatedUtc.Date.ToString("dd/MM/yyyy")</h5>
+                            <div class="space-10"></div>
+                            <p class="news-item-desc">@post.BlogPost.Sottotitolo.Value</p>
+                            <div class="news-item-plus text-center"><a href="@path">+</a></div>
+                        </div>
+                    </div>
+                                    } else {
+                                        <div class="col-xs-12 col-sm-6 col-md-4 box-all-news">
+                                            <div class="news-item">
+                                                <div class="space-40"></div>
+                                                <h4 class="news-item-title">@post.TitlePart.Title</h4>
+                                            </div>
+                                        </div>
+                                        }
+                                    }
+        </div>
+    </div>
+</div>
+@Display(Model.Pager)

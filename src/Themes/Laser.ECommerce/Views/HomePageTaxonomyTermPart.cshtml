@@ -1,0 +1,19 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.ContentPicker.Models
+@using Orchard.Taxonomies.Models
+@using Orchard.Taxonomies.Services
+@{ 
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    var _taxonomyService = WorkContext.Resolve<ITaxonomyService>();
+
+    var termPart = (TermPart)Model.TermPart;
+
+    var taxonomy = _taxonomyService.GetTaxonomy(termPart.TaxonomyId);
+    var termContentItems = _taxonomyService.GetContentItems(termPart, 0, 3)
+        .Select(c => _contentManager.BuildDisplay(c, "Summary").Taxonomy(taxonomy).Term(termPart));
+}
+@foreach (var itemShape in termContentItems) {
+    <div class="col-md-4">
+        @Display(itemShape)
+    </div>
+}

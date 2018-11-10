@@ -1,0 +1,12 @@
+﻿Name: Laser SummaryAdmin Toolbar
+AntiForgery: enabled
+Author: Laser srl - Matteo Piovanelli
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.AdminToolbarExtensions:
+		Name: Laser SummaryAdmin Toolbar
+        Description: Adds a part for interactive labels to the SummaryAdmin views of contents
+		Category: Administration
+		Dependencies: Laser.Orchard.AdvancedSearch, Orchard.Tokens

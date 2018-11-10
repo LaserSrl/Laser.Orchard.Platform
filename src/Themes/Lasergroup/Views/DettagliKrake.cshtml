@@ -1,0 +1,31 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+	<div class="krake-item">
+		<div class="krake-card">
+			<div class="krake-card-face krake-card-front">
+				<div class="space-40"></div>
+				<div class="space-40"></div>
+				<div class="krake-icon-mask text-center">
+					<img src="@item.DettaglioKrake.Gallery.FirstMediaUrl"  title="@item.DettaglioKrake.Gallery.MediaParts[0].Title" alt="@item.DettaglioKrake.Gallery.MediaParts[0].AlternateText" class="img-responsive">
+				</div>
+				<div class="space-40"></div>
+				<h4 class="krake-title">@item.TitlePart.Title</h4>
+				<div class="krake-plus">+</div>
+			</div>
+			<div class="krake-card-face krake-card-back">
+				<div class="space-40"></div>
+				<div class="space-40"></div>
+				<div class="krake-icon-mask text-center">
+					<img src="@item.DettaglioKrake.Gallery.FirstMediaUrl"  title="@item.DettaglioKrake.Gallery.MediaParts[0].Title" alt="@item.DettaglioKrake.Gallery.MediaParts[0].AlternateText" class="img-responsive">
+				</div>
+				<p></p>
+                <p>
+                    @Html.Raw(item.BodyPart.Text)
+                </p>
+				<p></p>
+			</div>
+		</div>
+	</div>
+</div>

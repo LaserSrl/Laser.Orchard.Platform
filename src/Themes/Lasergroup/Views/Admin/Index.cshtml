@@ -1,0 +1,16 @@
+﻿@model  Lasergroup.ViewModels.AdditionalCssSettingsPartEditorViewModel
+@{
+    Layout.Title = T("Settings").ToString();
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    <fieldset>
+        <legend>Additional style sheets</legend>
+        @Html.TextAreaFor(m => m.AdditionalCss, new { @class = "text medium" })
+        @Html.LabelFor(m => m.AdditionalCss, T("Type the paths to the additional CSS files that will be added to the site's frontend, one per line."))
+    </fieldset>
+    <fieldset>
+        <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
+    </fieldset>
+}

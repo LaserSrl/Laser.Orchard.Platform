@@ -1,0 +1,220 @@
+﻿@using (Script.Head()) {
+    Script.Require("jQueryUI_Core").AtHead();
+    Script.Require("jQueryUI_Widget").AtHead();
+    Script.Require("jQueryUI_Dialog").AtHead();
+}
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        function GetMessage() {
+            message = "<ul style='list-style-type:disc;padding-left:18px'>";
+            if (($("#CommunicationAdvertisingPart_UrlLinked_Value").val() == "" || $("#CommunicationAdvertisingPart_UrlLinked_Value").val() == null) && ($("#CommunicationAdvertisingPart.ContentLinked.SelectedIds").val() == "" || $("#CommunicationAdvertisingPart.ContentLinked.SelectedIds").val() == null)) {
+                message += "<li><i class='fa fa-exclamation-triangle' style='color:red;'></i> Campaign link not inserted</li>";
+            }
+            
+            messageSomething=false;
+            try{
+                if ($("#Laser_Orchard_Facebook_SendOnNextPublish").is(':checked') && $("#Laser_Orchard_Facebook_FacebookMessageSent").val() != "True" && $("#Laser_Orchard_Facebook_SelectedList").val()!=null) {
+                    list_account = $('#Laser_Orchard_Facebook_SelectedList').find(":selected").map(function () {
+                        return $(this).text();
+                    }).get().join().split(',');
+                    for (var account in list_account) {
+                        message += "<li><i class='fa fa-facebook'></i> Post on Facebook " +list_account[account] + "</li>";
+                        messageSomething = true;
+                    }
+                   
+                }
+            }catch(e){}
+            try{
+                if ($("#Laser_Orchard_Twitter_SendOnNextPublish").is(':checked') && $("#Laser_Orchard_Twitter_TwitterMessageSent").val() != "True" && $("#Laser_Orchard_Twitter_SelectedList").val()!=null) {
+                    list_account = $('#Laser_Orchard_Twitter_SelectedList').find(":selected").map(function () {
+                        return $(this).text();
+                    }).get().join().split(',');
+                    for (var account in list_account) {
+                        message += "<li><i class='fa fa-twitter'></i> Post on twitter " + list_account[account] + "</li>";
+                        messageSomething = true;
+                    }
+                }
+            }catch(e){}
+           
+            try{
+                if ($("#MailCommunicationPart_SendOnNextPublish").is(':checked') && $("#MailCommunicationPart_MailMessageSent").val() != "True" ) {
+                    message += "<li><i class='fa fa-envelope'></i> Send Email</li>";
+                    messageSomething = true;
+                }
+            } catch (e) { }
+
+            try{
+                if ($("#Laser_Mobile_MobilePush_ToPush").is(':checked') && $("#Laser_Mobile_MobilePush_PushSent").val() != "True" ) {
+                    message += "<li><i class='fa fa-mobile'></i> Send Push</li>";
+                    messageSomething = true;
+                }
+            } catch (e) { }
+
+            try{
+                if ($("#Laser_Orchard_SmsGateway_SmsGateway_SendOnNextPublish").is(':checked') && $("#Laser_Orchard_SmsGateway_SmsGateway_SmsMessageSent").val() != "True" ) {
+                    message += "<li><i class='fa fa-phone'></i> Send SMS</li>";
+                    messageSomething = true;
+                }
+            } catch (e) { }
+
+            message += "</ul><br/>";
+            message += "@T("Are you sure?")";
+            if (!messageSomething) {
+                message = "";
+            }
+            return message;
+        }
+        $(document).ready(function () {
+            $('button[name="submit.Publish"]').on("click", function (e) {
+                var formtosubmit = $(this).closest('form');
+                message = GetMessage();
+             
+                if (message != "") {
+
+                    $("#dialog-message").html(GetMessage());
+
+                    $("#dialog-confirm").dialog({
+                        resizable: false,
+                        height: 240,
+                        modal: true,
+                        buttons: {
+                            "Confirm Publish": function () {
+                                formtosubmit.append("<input type='hidden' name='submit.Publish' value='submit.Publish' />");
+                                $(this).dialog("close");
+                                formtosubmit.submit();
+
+                            },
+                            Cancel: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+        });
+    </script>
+}
+<div id="dialog-confirm" title="Publish action" style="display: none">
+
+    @T("Actions to be performed:")<br />
+
+    <div id="dialog-message"></div>
+
+
+</div>
+<ul class="comm-tabbed">
+</ul>
+
+<script type="text/javascript">
+    var antiForgeryToken, locCtrl, locSummary, locUrls;
+    var idRun = 0;
+    var arrUrl = [];
+    var arrFieldForUseManualRecipientList= [];
+    var arrFieldForManualRecipientList = [];
+    var arrOutput = [];
+    var arrFunc = [];
+    var locSummary;
+    var locUrls; 
+
+    function updateSummary() {
+        idRun++;
+        // pulisce il summary
+        for (var i = 0; i < arrOutput.length; i++) {
+            arrOutput[i] = "";
+        }
+        refresh();
+
+        var locSelected = locCtrl.find("option:checked");
+        var elencoIds = [];
+        for (var i = 0; i < locSelected.length; i++) {
+            elencoIds[i] = parseInt(locSelected.eq(i).val());
+        }
+        //alert(elencoIds);
+
+        if (arrUrl.length > 0) {
+            updateCounter(idRun, elencoIds, 0);
+        }
+    }
+
+    function updateCounter(pIdRun, elencoIds, idx) {
+        var manualValidRecipients = [];
+        if ($('#'+arrFieldForUseManualRecipientList[idx]).length) {
+            if ($('#'+arrFieldForUseManualRecipientList[idx]).is(":checked")){// check if the recipient list should be used
+                manualValidRecipients = $('#'+arrFieldForManualRecipientList[idx]).val().split(/(?:\r\n|\r|\n)/g);
+                if (manualValidRecipients.length==0) { // if the recipient list should be used but no user name is available force one element in the array
+                    manualValidRecipients[0] = "[none]";
+                }
+            }
+        }
+
+        $.ajax({
+            myIdx: idx, // parametro custom per la function success
+            type: "POST",
+            url: arrUrl[idx],
+            traditional: true,
+            data:{__RequestVerificationToken:antiForgeryToken, ids:elencoIds, manualRecipients: manualValidRecipients, contentId: @Model["ContentItemId"], idlocalization:@Model["LocalizationId"] },
+            dataType: "json",
+            success: function (data, status, jqXHR) {
+                if(pIdRun == idRun) {
+                    // aggiorna il summary se nel frattempo non è stato chiamato un altro updateSummary()
+                    arrOutput[this.myIdx] = data.Key + " " + data.Value;
+                    refresh();
+                }
+            },
+            complete: function(xhr,status) {
+                if(pIdRun == idRun) {
+                    // parte il counter successivo se nel frattempo non è stato chiamato un altro updateSummary()
+                    var newIdx = this.myIdx + 1;
+                    if(newIdx < arrUrl.length) {
+                        updateCounter(pIdRun, elencoIds, newIdx);
+                    }
+                }
+            }
+            //error: function (jqXHR, textStatus) {
+            //    locMsg = locMsg + textStatus;
+            //    var locSummary = $("#summary-totals");
+            //    //locSummary.text(aux3 + "; urls: " + aux4 + "; msg: " + locMsg);
+            //    locSummary.text("msg: " + locMsg);
+            //}
+        });
+    }
+
+    function refresh() {
+        var locMsg = "Totals: ";
+        for(var i=0; i<arrOutput.length;i++) {
+            locMsg = locMsg + arrOutput[i] + " ";
+        }
+        locSummary.html(locMsg);
+    }
+
+    $(document).ready(function () {
+        antiForgeryToken = $("input[name=__RequestVerificationToken]:first").val();
+        locCtrl = $("#QueryPickerPart_SelectedIds");
+        locCtrl.parent().after("<div id='summary-totals' style='border: solid 1px rgb(189, 188, 188)'></div>");
+        locSummary = $("#summary-totals");
+        locUrls = $("input[name=CountUrl]");
+
+        $("#QueriesTotal").hide();
+
+        for (var i = 0; i < locUrls.length; i++) {
+            arrUrl[i] = locUrls.eq(i).val().split('|')[0];
+            if (locUrls.eq(i).val().split('|').length>2){
+                arrFieldForUseManualRecipientList[i] = locUrls.eq(i).val().split('|')[1];
+                arrFieldForManualRecipientList[i] = locUrls.eq(i).val().split('|')[2];
+            } else {
+                arrFieldForUseManualRecipientList[i] = "";
+                arrFieldForManualRecipientList[i] = "";
+            }
+            arrOutput[i] = "";
+        }
+        updateSummary();
+        var aux1 = locCtrl.change(function () {
+            updateSummary();
+        });
+
+    });
+</script>

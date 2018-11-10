@@ -1,0 +1,78 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel
+
+@{
+    var anonymizationId = Model.AnonymizationDivId + "_MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel";
+    var erasureId = Model.ErasureDivId + "_MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel";
+}
+
+<fieldset>
+    <div id="@anonymizationId">
+        <div>
+            @Html.CheckBoxFor(m => m.AttemptToAnonymizeItems)
+            <label for="@Html.FieldIdFor(m => m.AttemptToAnonymizeItems)" class="forcheckbox">
+                @T("We will attempt to anonymize items selected in the field.")
+            </label>
+            <span class="hint">
+                @T("Setting this flag casues Anonymization to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions.")
+            </span>
+        </div>
+        <div>
+            @Html.CheckBoxFor(m => m.DetachGDPRItemsOnAnonymize)
+            <label for="@Html.FieldIdFor(m => m.DetachGDPRItemsOnAnonymize)" class="forcheckbox">
+                @T("Detach items with personal identifiable information after anonymization.")
+            </label>
+            <span class="hint">
+                @T("If this flag is set, after anonymizing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect those items that have a GDPRPart.")
+            </span>
+        </div>
+        <div>
+            @Html.CheckBoxFor(m => m.DetachAllItemsOnAnonymize)
+            <label for="@Html.FieldIdFor(m => m.DetachAllItemsOnAnonymize)" class="forcheckbox">
+                @T("Detach all items after anonymization.")
+            </label>
+            <span class="hint">
+                @T("If this flag is set, after anonymizing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect all items.")
+            </span>
+        </div>
+    </div>
+    <div id="@erasureId">
+        <div>
+            @Html.CheckBoxFor(m => m.AttemptToEraseItems)
+            <label for="@Html.FieldIdFor(m => m.AttemptToEraseItems)" class="forcheckbox">
+                @T("We will attempt to erase items selected in the field.")
+            </label>
+            <span class="hint">
+                @T("Setting this flag casues Erasure to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions.")
+            </span>
+        </div>
+        <div>
+            @Html.CheckBoxFor(m => m.DetachGDPRItemsOnErase)
+            <label for="@Html.FieldIdFor(m => m.DetachGDPRItemsOnErase)" class="forcheckbox">
+                @T("Detach items with personal identifiable information after erasure.")
+            </label>
+            <span class="hint">
+                @T("If this flag is set, after erasing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect those items that have a GDPRPart.")
+            </span>
+        </div>
+        <div>
+            @Html.CheckBoxFor(m => m.DetachAllItemsOnErase)
+            <label for="@Html.FieldIdFor(m => m.DetachAllItemsOnErase)" class="forcheckbox">
+                @T("Detach all items after erasure.")
+            </label>
+            <span class="hint">
+                @T("If this flag is set, after erasing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect all items.")
+            </span>
+        </div>
+    </div>
+</fieldset>
+
+@using (Script.Foot()) {
+    <script>
+        document
+            .getElementById('@Model.AnonymizationDivId')
+            .appendChild(document.getElementById('@anonymizationId'));
+        document
+            .getElementById('@Model.ErasureDivId')
+            .appendChild(document.getElementById('@erasureId'));
+    </script>
+}

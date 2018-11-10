@@ -1,0 +1,38 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Contrib.Profile/Views/DefinitionTemplates/ProfileFrontEndSettings.cshtml"
+msgid "Allow display on front end"
+msgstr "Permetti la visualizzazione sul front-end"
+
+msgctxt "~/Modules/Contrib.Profile/Views/DefinitionTemplates/ProfileFrontEndSettings.cshtml"
+msgid "Allow edit on front end"
+msgstr "Permetti la modifica sul front-end"
+
+msgctxt "~/Modules/Contrib.Profile/Views/DefinitionTemplates/ProfileFrontEndSettings.cshtml"
+msgid "Check to allow displaying this part/field on the front-end, e.g. when viewing a user's profile."
+msgstr "Selezionare per permettere la visualizzazione di questa parte/campo sul front-end, per esempio quando si visualizza il profilo utente."
+
+msgctxt "~/Modules/Contrib.Profile/Views/DefinitionTemplates/ProfileFrontEndSettings.cshtml"
+msgid "Check to allow editing the contents of this part/field from the front-end, e.g. upon registration or editing a user's own profile."
+msgstr "Selezionare per permettere la modifica dei contenuti di questa parte/campo sul front-end, per esempio in fase di registrazione o quando si modifica il proprio profilo utente."
+
+msgctxt "~/Modules/Contrib.Profile/Views/Home/Edit.cshtml"
+msgid "Edit Profile"
+msgstr "Modifica Profilo"
+
+msgctxt "~/Modules/Contrib.Profile/Views/Profile.Head.cshtml"
+msgid "Edit your profile"
+msgstr "Modifica il tuo profilo"
+
+msgctxt "Contrib.Profile.Controllers.HomeController"
+msgid "Your profile has been saved."
+msgstr "Il tuo profilo è stato salvato."
+

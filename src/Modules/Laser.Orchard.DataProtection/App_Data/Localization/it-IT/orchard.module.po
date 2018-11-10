@@ -1,0 +1,90 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataProtectionContextPartSettings.cshtml"
+msgid "A data context in the following form: ,key1=val1,key2=val2,. Example: ,company=Microsoft,sector=marketing,country=italy,."
+msgstr "Un contesto dei dati nella forma: ,chiave1=valore1,chiave2=valore2,. Esempio: ,company=Microsoft,sector=marketing,country=italy,."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataProtectionContextPartSettings.cshtml"
+msgid "Check to force default value on saving and to disable user editing on data context."
+msgstr "Spunta per forzare il valore di default al momento del salvataggio, e per disabilitare la possibilità che l'utente modifichi il contesto dei dati."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataProtectionContextPartSettings.cshtml"
+msgid "Default data context"
+msgstr "Contesto di default dei dati"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataProtectionContextPartSettings.cshtml"
+msgid "Force default value"
+msgstr "Forza il valore di default"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataRestrictionsPartSettings.cshtml"
+msgid "A data restriciton per row. Each data restriction has the following form: key1=val1,key2=val2?key3=val3. Example: company=Microsoft,sector=marketing,country=italy?city=Rome. Restrictions following question mark are applied on edit only and they are optional."
+msgstr "Una restrizione dei dati per linea. Ogni restrizione dei dati ha la forma: chiave1=valore1,chiave2=valore2?chiave3=valore3. Esempio: company=Microsoft,sector=marketing,country=italy?city=Rome. Le restrizioni dopo un punto interrogativo sono applicate solo al momento di una modifica, e sono opzionali."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataRestrictionsPartSettings.cshtml"
+msgid "Check to force default value on saving and to disable user editing on data restrictions."
+msgstr "Spunta per forzare il valore di default al momento del salvataggio, e per disabilitare la possibilità che l'utente modifichi le restrizioni sui dati."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataRestrictionsPartSettings.cshtml"
+msgid "Default data restrictions"
+msgstr "Restrizioni di default sui dati"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/DefinitionTemplates/DataRestrictionsPartSettings.cshtml"
+msgid "Force default value"
+msgstr "Forza il valore di default"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataProtectionContextPart.cshtml"
+msgid "A data context in the following form: ,key1=val1,key2=val2,. Example: ,company=Microsoft,sector=marketing,country=italy,."
+msgstr "Un contesto dei dati nella forma: ,chiave1=valore1,chiave2=valore2,. Esempio: ,company=Microsoft,sector=marketing,country=italy,."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataProtectionContextPart.cshtml"
+msgid "If youu leave blank, default value as set in settings will be applied on saving."
+msgstr "Se non valorizzato, al momento del salvataggio verrà usato il valore di default dalle impostazioni."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataProtectionSiteSettings.cshtml"
+msgid "Data Protection"
+msgstr "Protezione dati"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataRestrictionsPart.cshtml"
+msgid "A data restriction per row. Each data restriction has the following form: key1=val1,key2=val2?key3=val3. Example: company=Microsoft,sector=marketing,country=italy?city=Rome. Restrictions following question mark are applied on edit only and they are optional."
+msgstr "Una restrizione dei dati per linea. Ogni restrizione dei dati ha la forma: chiave1=valore1,chiave2=valore2?chiave3=valore3. Esempio: company=Microsoft,sector=marketing,country=italy?city=Rome. Le restrizioni dopo un punto interrogativo sono applicate solo al momento di una modifica, e sono opzionali."
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataRestrictionsPart.cshtml"
+msgid "Data Restrictions"
+msgstr "Restrizioni sui dati"
+
+msgctxt "~/Modules/Laser.Orchard.DataProtection/Views/EditorTemplates/Parts/DataRestrictionsPart.cshtml"
+msgid "If youu leave blank, default value as set in settings will be applied on saving."
+msgstr "Se non valorizzato, al momento del salvataggio verrà usato il valore di default dalle impostazioni."
+
+msgctxt "Laser.Orchard.DataProtection.Handlers.DataProtectionSiteSettingsHandler"
+msgid "DataProtection"
+msgstr "Protezione dati"
+
+msgctxt "Laser.Orchard.DataProtection.Projections.ApplyDataProtectionQueryFilter"
+msgid "Apply Data Protection"
+msgstr "Applica la protezione dei dati"
+
+msgctxt "Laser.Orchard.DataProtection.Projections.ApplyDataProtectionQueryFilter"
+msgid "Apply Data Protection to current query."
+msgstr "Applica la protezione dei dati alla ricerca corrente."
+
+msgctxt "Laser.Orchard.DataProtection.Projections.ApplyDataProtectionQueryFilter"
+msgid "Apply user data restrictions to current query."
+msgstr "Applica le restrizioni sui dati per l'utente alla ricerca corrente."
+
+msgctxt "Laser.Orchard.DataProtection.Projections.ApplyDataProtectionQueryFilter"
+msgid "Data Protection"
+msgstr "Protezione dati"
+
+msgctxt "Laser.Orchard.DataProtection.Projections.ApplyDataProtectionQueryFilter"
+msgid "DataProtection"
+msgstr "Protezione dati"
+

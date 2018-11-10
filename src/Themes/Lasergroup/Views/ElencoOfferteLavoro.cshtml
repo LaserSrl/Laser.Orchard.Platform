@@ -1,0 +1,38 @@
+﻿@using Orchard.Projections.Services;
+@{
+    int page = 1;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+
+    var services = WorkContext.Resolve<IProjectionManager>();
+    var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    var queryItems = services.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
+}
+
+<div id="offerte">
+    <div class="team-top"></div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var item in queryItems) {
+                
+                <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+                    <div class="team-item">
+                        <div class="team-card">
+                            <div class="team-card-face">
+                                @if (item.OffertaLavoro.Image.Ids.Length > 0) {
+                                    <div class="team-photo-mask">
+                                        <img src="@item.OffertaLavoro.Image.MediaParts[0].MediaUrl"  title="@item.OffertaLavoro.Image.MediaParts[0].Title" alt="@item.OffertaLavoro.Image.MediaParts[0].AlternateText" class="img-responsive"/>
+                                    </div>
+                                }
+                                <div class="space-40"></div>
+                                <h5 class="team-ruolo">@item.CommonPart.CreatedUtc.Date.ToString("dd/MM/yyyy")</h5>
+                                <h4 class="team-name"><a href="@item.AutoroutePart.Path">@item.TitlePart.Title</a></h4>
+                                <div class="team-plus text-center"><a href="@item.AutoroutePart.Path">+</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            }
+        </div>
+    </div>
+</div>

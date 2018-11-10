@@ -1,0 +1,37 @@
+﻿@{
+    var Menu = Model.Menu;
+
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+
+    if (items.Any()) {
+    }
+}
+<div class="box-menu-footer">
+    @foreach (var item in items) {
+        if (!HasText(item.Text)) {
+        @DisplayChildren(item)
+        } else {
+            if ((bool)item.Selected) {
+                item.Classes.Add("active");
+            }
+
+@* morphing the shape to keep Model untouched*@
+            item.Metadata.Alternates.Clear();
+            item.Metadata.Type = "MenuItemLink";
+            
+@* render the menu item only if it has some content *@
+            var renderedMenuItemLink = Display(item);
+            if (HasText(renderedMenuItemLink)) {
+                item.Classes.Add("titolo-footer");
+                var tagMenu = Tag(item, "h3");
+        @tagMenu.StartElement
+        @renderedMenuItemLink 
+        @tagMenu.EndElement
+            }
+        }
+    }
+</div>
+<div class="space-40"></div>
+<div class="box-accedi-home">
+    @Display.User()
+</div>

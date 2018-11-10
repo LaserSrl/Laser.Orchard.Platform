@@ -1,0 +1,12 @@
+@using System.ComponentModel.DataAnnotations
+@using System.Web.Mvc.Html
+@model Laser.Orchard.Faq.Models.FaqTypePart
+
+<fieldset>
+    <label class="sub @(IsPropertyRequired(typeof(Laser.Orchard.Faq.Models.FaqTypePart), "Title"))" for="Title">@T("Title")</label><br />
+    @Html.TextBoxFor(m => m.Title, new { @class = "large text", @maxlength = "512"  })<br />
+</fieldset>
+
+@helper IsPropertyRequired(Type type, string property){
+    @(Attribute.IsDefined(type.GetProperty(property),typeof(RequiredAttribute)) ?" required":"")
+}

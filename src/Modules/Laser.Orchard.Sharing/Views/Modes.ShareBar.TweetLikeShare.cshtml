@@ -1,0 +1,32 @@
+﻿@{
+    Script.Require("jQuery").AtHead();
+}
+@using (Script.Foot()) {
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=@(Model.ViewModel.Account as string)"></script>
+
+}
+@using (Script.Foot())
+{
+                               
+                           <script type='text/javascript'>
+                               var addthis_config = { "data_track_clickback": true, "data_track_addressbar": true }; 
+                               function initAddThis() {
+                                   addthis.init();
+                               }
+                               $(document).ready(initAddThis);
+        </script>
+}
+<div class="sharebar">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style" addthis:url="@(Model.ViewModel.Link as string)" addthis:title="@(Model.ViewModel.Title as string)"
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Description)){
+             <text>addthis:description="@(Model.ViewModel.Description as string)"</text>}
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Media)){
+             <text>addthis:media="@(Model.ViewModel.Media as string)"</text>}
+         >
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_counter addthis_pill_style"></a>
+    </div>
+    <!-- AddThis Button END -->
+</div>

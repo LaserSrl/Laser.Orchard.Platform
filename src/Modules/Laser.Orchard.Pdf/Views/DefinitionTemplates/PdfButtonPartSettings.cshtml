@@ -1,0 +1,78 @@
+﻿@model Laser.Orchard.Pdf.Models.PdfButtonPartSettings
+@using Laser.Orchard.TemplateManagement.Models;
+@using Laser.Orchard.Commons.Helpers;
+@{
+    Script.Require("jQueryUI_Sortable").AtHead();
+    Script.Require("jQuery_NestedModels").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+    Style.Require("jQuery_UI_Multiselect_Widget").AtHead();
+    List<SelectListItem> templateList = new List<SelectListItem>();
+    Laser.Orchard.TemplateManagement.Services.ITemplateService _templateService = null;
+    if (WorkContext.TryResolve<Laser.Orchard.TemplateManagement.Services.ITemplateService>(out _templateService)) {
+        foreach (TemplatePart tp in _templateService.GetTemplates()) {
+            templateList.Add(new SelectListItem { Text = tp.Title, Value = tp.Id.ToString() });
+        }
+    }
+}
+@using (Script.Head()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tabs = $("#buttonstabs").tabs();
+            tabs.find(".ui-tabs-nav").sortable({
+                axis: "x",
+                stop: function () {
+                    tabs.tabs("refresh");
+                },
+                start: function (event, ui) {
+                    ui.item.startPos = ui.item.index();
+                },
+                update: function (event, ui) {
+                    var numberOfItems = ui.item.context.parentElement.children.length;
+                    laquestion = ui.item.find("a").attr("href");
+                    $(laquestion).find('.position-field').val(ui.item.index());
+                    for (var i = 0; i < numberOfItems; i++) {
+                        var element = $(ui.item.context.parentElement.children[i]).find("a").attr("href");
+                        var positionField = $(element).find('.position-field');
+                        if (positionField != null) {
+                            positionField.val(i);
+                        }
+                    }
+                }
+            });
+            ScriviMenuTab();
+        });
+
+        function ScriviMenuTab() {
+            var menutab = "";
+            var numdom = 0;
+            $('div.j_settings').each(function () {
+                if ($(this).find("input.mark-for-delete").val() == "False") {
+                    numdom++;
+                    var idsettings = $(this).find(".j_idsettings").val();
+                    menutab += "<li><a href='#" + idsettings + "'>" + numdom + "</a></li>";
+                    $(this).find("input.position-field").val(numdom);
+                }
+            });
+
+            $("#j_menusettings").html(menutab);
+            var tabs = $("#buttonstabs").tabs();
+            tabs.tabs("refresh");
+            if (numdom > 0) {
+                tabs = $("#buttonstabs").tabs("option", "active", numdom - 1);
+            }
+            tabs.tabs("refresh");
+        }
+    </script>
+}
+<fieldset>
+    <legend></legend>
+    <p id="AddButton">
+        <i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(m => m.PdfButtons, T("Add PDF Button").Text, "#buttonstabs", ".j_settings", null, null, "ScriviMenuTab();")
+    </p>
+    <div id="buttonstabs">
+        <ul id="j_menusettings" class="ui-tabs-nav">
+        </ul>
+        @Html.EditorFor(m => m.PdfButtons)
+    </div>
+</fieldset>
+@Display.TokenHint()

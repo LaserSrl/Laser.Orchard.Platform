@@ -1,0 +1,138 @@
+﻿@using Laser.Orchard.UserReactions.Models
+@using Laser.Orchard.UserReactions.ViewModels
+@using Orchard.ContentManagement
+@using Laser.Orchard.UserReactions.Services
+@using Laser.Orchard.UserReactions
+
+@{
+    IUserReactionsService _reactionService;
+    WorkContext.TryResolve<IUserReactionsService>(out _reactionService);
+
+    //Setta i dati della vista collegandoli al modello settato dal controller che richiama la vista
+    List<UserReactionsVM> part = Model.UserReaction;
+    //Aggiungi il foglio di stile CSS definito nel file ResourceManifest.cs ed inserito nella cartella Styles
+
+    var settings = WorkContext.CurrentSite.As<UserReactionsSettingsPart>();
+    Style.Require(settings.StyleFileNameProvider.ToString());
+}
+
+@{    
+    //Aggiungi in testata la libreria jQuery
+    Script.Require("jQuery").AtHead();
+    string cssPermissionsClass="";
+    if (Model.RequireLogin) {
+        cssPermissionsClass = "require-login";
+    } else if (!Model.Authorized){
+        cssPermissionsClass = "disabled";
+    }
+}
+
+@Html.AntiForgeryToken()
+
+
+<div class="reaction-wrapper @cssPermissionsClass">
+@{foreach (var item in part) {
+      var quantità = "(" + @item.Quantity + ")";
+      var itemName = " " + _reactionService.GetReactionEnumTranslations((ReactionsNames)Enum.Parse(typeof(ReactionsNames), item.TypeName)) + " ";
+      string attCSS = string.Format("reaction-icon-{0}", item.TypeName.ToLowerInvariant());
+      var id = @item.TypeId;
+      
+       
+    <div class="reaction-container" id="@id">
+        <div class="reaction-icon @attCSS"></div>
+        @{var itemNameCount = "itemName" + @id; }
+        @{var itemQtyCount = "itemQuantity" + @id; }
+        <div>
+            <span class="reaction-name" id="@itemNameCount">@itemName</span>
+            <span class="reaction-qty" id="@itemQtyCount">@quantità</span>
+        </div>
+    </div>
+      
+  }
+}
+</div>
+<script type="text/javascript">
+    //Aggiungo il valore del campo nascosto AntiForgeryToken al valore data della funzione 
+    //richiamata di JQuery
+    function addRequestVerificationToken(data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    };
+
+    $(document).ready(function () {
+        function refreshSummary(status) {
+            for (var i = 0; i < status.Reactions.length; i++) {
+                var nameitem = "#itemQuantity" + status.Reactions[i].TypeId;
+                var total = status.Reactions[i].Quantity;
+                $(nameitem).html("(" + total + ")");
+                //se già cliccato
+                if (status.Reactions[i].Clicked == 1) {
+                    $(nameitem).parents('.reaction-container').addClass('selected');
+                }
+                else {
+                    $(nameitem).parents('.reaction-container').removeClass('selected');
+                }
+            }
+        }
+
+        //Esegui chiamata Ajax per calcolare la somma delle reactions al loading della page
+        //per ovviare al problema della cache di pagina di Orchard
+        var PageId = "@Model.ContentItem.Id";
+
+        $.ajax(
+        {
+            url: "@Url.Action("GetSummaryReaction", "ReactionAjax", new { Area = "Laser.Orchard.UserReactions" })",
+            success: function (result) {
+                refreshSummary(result);
+            },
+            type: "POST",
+            data: addRequestVerificationToken({ pageId: PageId })
+        });
+
+        //////////////////////////////////////////////////////////////////
+
+        @if (Model.Authorized) {
+            <text>
+
+        //$("div.reaction-container").hover(
+        //    function () {
+        //        $(this).css('cursor', 'pointer');
+        //        $(this).css('opacity', '0.4');
+        //    },
+        //    function () {
+        //        $(this).css('opacity', '1');
+        //    });
+
+        //Assegnazione evento click a div reaction-container
+        $("div.reaction-container").bind("click", function (event) {
+            //Parameters     
+            var PageId = "@Model.ContentItem.Id";
+                var ReactionTypeId = this.id;
+
+                //Chiamata ajax richiama metodo server GetReactionClicked nel controller ReactionAjax 
+                //che verifica se l'utente deve fare un click in aggiunta oppure in decremento, quale icona cliccata 
+                $.ajax(
+                {
+                    url: "@Url.Action("GetReactionClicked", "ReactionAjax", new { Area = "Laser.Orchard.UserReactions" })",
+                    success: function (result) {
+                        refreshSummary(result.Status);
+                    },
+                    type: "POST",
+                    data: addRequestVerificationToken({ reactionTypeId: ReactionTypeId, pageId: PageId })
+                });
+            });
+            </text>
+        } else if (Model.RequireLogin) {
+            // utente anonimo non autorizzato: sul click chiede login
+            <text>
+
+        //Assegnazione evento click a div reaction-container
+        $("div.reaction-container").bind("click", function (event) {
+            var showReviewUri = '@Url.Action("LogOn", "Account", new { area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })';
+                window.location = showReviewUri;
+            });
+        </text>
+        }
+
+    });
+</script>

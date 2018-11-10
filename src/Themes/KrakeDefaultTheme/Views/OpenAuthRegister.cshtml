@@ -1,0 +1,70 @@
+﻿@{
+    var userName = Request.QueryString["UserName"];
+    var externalLoginData = Request.QueryString["ExternalLoginData"];
+}
+
+<div class="row">
+    @using (Html.BeginFormAntiForgeryPost()) {
+        <div class="col-xs-12 col-sm-12 col-padding-low">
+            <div class="no-margin">
+                <h3>@Html.TitleForPage(T("Create a New Account").ToString())</h3>
+                <p>@T("Account informations")</p>
+                @if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(externalLoginData)) {
+                    <p>@T("This user account will be linked to <b>{0}</b> when you login.", userName)</p>
+                }
+                <p>@T("Use the form below to create a new account.")</p>
+                <p>@T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"])</p>
+                @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
+            </div>
+
+            <div class="space-20"></div>
+
+            @Html.TextBox("username", "", new { id = "form-username", autofocus = "autofocus", placeholder = T("Username") + "...", @class = "form-username input-text form-control" })
+            @Html.ValidationMessage("username")
+            <div class="space-20"></div>
+            @Html.TextBox("email", "", new { id = "form-email", autofocus = "autofocus", placeholder = T("Email") + "...", @class = "form-email input-text form-control" })
+            @Html.ValidationMessage("email")
+            <div class="space-20"></div>
+            @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = T("Password") + "...", @class = "form-password input-text form-control" })
+            @Html.ValidationMessage("password")
+            <div class="space-20"></div>
+            @Html.Password("confirmPassword", "", new { id = "form-confirmPassword", autofocus = "autofocus", placeholder = T("Confirm password") + "...", @class = "form-confirmPassword input-text form-control" })
+            @Html.ValidationMessage("confirmPassword")
+
+            <hr>
+
+            @if (Model.UserProfile != null) { // if UserProfile && ExtendedRegistration are enabled, it shows all user parts/fields
+                @Display(Model.UserProfile)
+            }
+            <hr>
+            <input type="submit" class="submit" value="@T("Register")">
+        </div>
+    }
+</div>
+@*<script>
+    function colorCheckbox() {
+        if (jQuery('label span').hasClass('accepted')) {
+            jQuery('label span').removeClass('accepted');
+            jQuery('label span').text('@T("I Disagree").Text.Replace("'", "\\'")');
+        } else {
+            jQuery('label span').addClass('accepted');
+            jQuery('label span').text('@T("I Agree").Text.Replace("'", "\\'")');
+        }
+    }
+</script>*@
+
+
+@if (Model.UserProfile != null) {
+    Script.Require("jQuery");
+    using (Script.Foot()) {
+        // calling EditorFor(Part) -> will render a Publish button
+        // in this case we don't have a publish button, so we just hide it!
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('.save-button').hide();
+        });
+    </script>
+    }
+}
+
+

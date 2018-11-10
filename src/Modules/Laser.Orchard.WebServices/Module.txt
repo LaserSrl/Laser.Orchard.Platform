@@ -1,0 +1,11 @@
+﻿AntiForgery: enabled
+Author: Laser srl - Hermes Sbicego
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.WebServices:
+		Name: Laser WebServices
+		Description: Expose your contents in Json format
+		Dependencies:  Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies
+		Category: Services

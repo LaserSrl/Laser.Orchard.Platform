@@ -1,0 +1,86 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "Ask New Short Link"
+msgstr "Richiedi un nuovo Link breve"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "Current content full URL:"
+msgstr "Url completo del contenuto:"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "Short Link"
+msgstr "Link breve"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "Test Short Link"
+msgstr "Prova il link breve"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "Valid for:"
+msgstr "Valido per:"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "You must save a valid Google API KEY on settings before be able to create short link."
+msgstr "Prima di poter creare un link breve (short link) sevi inserire una API KEY di Google valida nelle impostazioni."
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "You must save content before be able to create short link."
+msgstr "Prima di poter creare un nuovo link breve (short link) devi salvare il contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "ApiKey"
+msgstr "ApiKey"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Consider url to have sensitive data"
+msgstr "Considerare che l'url possa contenere dati sensibili"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Dynamic link domain"
+msgstr "Dominio del link dinamico (Dynamic link)"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Set <a target=\"_blank\" href=\"{0}\">the domain and the apikey</a> of your application."
+msgstr "Imposta <a target=\"_blank\" href=\"{0}\">il dominio e l'apikey</a> per l'applicazione."
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Set the <a target=\"_blank\" href=\"{0}\">apikey</a> , on the google site select the project from upside menu's dropdownlist and create a Server Keys, remember to enable the service by going to Overview -> Other popular APIs ->URL Shortener Api"
+msgstr "Controlla la <a target=\"_blank\" href=\"{0}\">apikey</a>: sul sito google di riferimento seleziona il progetto dalla lista del menu in alto e crea una Chiave Server ("Server Keys"). Ricordati di abilitare anche l'opportuno servizio andando su Overview -> Other popular APIs ->URL Shortener Api"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Short Link Settings"
+msgstr "Impostazioni modulo Short Link"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/Parts/ShortLinks.cshtml"
+msgid "Short Link"
+msgstr "Link breve"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/Parts/ShortLinks.SummaryAdmin.cshtml"
+msgid "no Short link"
+msgstr "Nessun link breve"
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/Parts/ShortLinks.SummaryAdmin.cshtml"
+msgid "Short Link"
+msgstr "Link breve"
+
+msgctxt "Laser.Orchard.ShortLinks.Handlers.ShortLinksHandler"
+msgid "The short link is not associated to this page!"
+msgstr "Questo link breve (short link) non è attualmente associato alla presente pagina!"
+
+msgctxt "Laser.Orchard.ShortLinks.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}#shortlinksetting\">ShortLinks settings</a> need to be configured."
+msgstr "Le impostazioni del <a href=\"{0}#shortlinksetting\">modulo ShortLink</a> devono ancora essere configurate."
+
+msgctxt "Laser.Orchard.ShortLinks.Services.ShortLinksService"
+msgid "No Shorturl Setting Found"
+msgstr "Nessuna impostazione trovata per il modulo Short Link"
+

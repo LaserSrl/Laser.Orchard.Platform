@@ -1,0 +1,30 @@
+﻿@using Laser.Orchard.Reporting.ViewModels
+@model HqlReportViewModel
+@{
+    Style.Include("reporting");
+}
+@using (Html.BeginFormAntiForgeryPost(Url.Action("CreateHqlPost", "Report", new { area = "Laser.Orchard.Reporting" }), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    <h1>@T("Create")</h1>
+    <div class="group">
+        <fieldset>
+            <label for="Name">@T("Name")</label>
+            <input id="Name" name="Name" value="@Model.Name" type="text" maxlength="50" class="text-medium" />
+            @Html.ValidationMessageFor(c => c.Name)
+        </fieldset>
+        <fieldset>
+            <label for="Title">@T("Title")</label>
+            <input id="Title" name="Title" value="@Model.Title" type="text" maxlength="50" class="text-medium" />
+            @Html.ValidationMessageFor(c => c.Title)
+        </fieldset>
+        <fieldset>
+            <label for="QueryId">@T("Query")</label>
+            @Html.DropDownListFor(c => c.QueryId, Model.Queries, new { @class = "select-medium" })
+            <span class="hint">@T("You can specify filters in your HQL query using tokens like {Request.Form:*}. Then you have to add a field for each filter to your Data Report Viewer Content Type to enable users to set filters.")</span>
+            @Html.ValidationMessageFor(c => c.QueryId)
+</fieldset>
+        <fieldset class="save-button">
+            <button class="primaryAction" type="submit" value="@T("Save")">@T("Save")</button>
+        </fieldset>
+    </div>
+
+}

@@ -1,0 +1,85 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models;
+@using Orchard.Security;
+@using Orchard.Localization.Models;
+@using Laser.Orchard.Questionnaires.ViewModels;
+@using Laser.Orchard.Questionnaires.Models
+
+@* @model List<Laser.Orchard.Questionnaires.ViewModels.DisplaRankingTemplateVM>--> *@
+@model DisplayRankingTemplateVMModel
+
+@{
+    int devType = 0;
+    string devStr = Model.drtvm.Device;
+    if (devStr == TipoDispositivo.Apple.ToString()) { devType = 1; }
+    else if (devStr == TipoDispositivo.Android.ToString()) { devType = 2; }
+    else if (devStr == TipoDispositivo.WindowsMobile.ToString()) { devType = 3; }
+}
+
+@{
+    Layout.LocalNavigation.Add(Display.LocalNavRankings
+        (dType: devType, gId: Model.drtvm.GameID, page: Model.Pager.Page, pageSize: Model.Pager.PageSize));
+}
+
+
+
+@{
+    //Model is a list which contains the rankings tables for a given game 
+    Layout.Title = T("Game Rankings for {0}", Model.drtvm.Title);
+}
+
+<p class="breadcrumb">
+    <a href="@Url.Action("Index", "adminranking", new { area = "Laser.Orchard.Questionnaires" })">@T("Index of games")</a>
+    &#62; @Layout.Title
+</p>
+    
+@*@foreach(DisplaRankingTemplateVM drt in Model){*@
+@{
+    DisplaRankingTemplateVM drt = Model.drtvm;
+    //@Html.Raw("Device: " + drt.Device);
+<table class="items" summary="@T("List of ranking.")">
+  
+    <thead>
+        <tr>
+              <th scope="col">@T("Identifier")</th>
+            <th scope="col">@T("name")</th>
+            <th scope="col">@T("point")</th> <!--//make this clickable to set the order to descending/ascending-->
+            <th scope="col">@T("RegistrationDate")</th>
+            <th scope="col">@T("UsernameGameCenter")</th>
+            <th scope="col">@T("AccessSecured")</th>
+            <th scope="col">@T("Device")</th>
+            <th scope="col">@T("ContentIdentifier")</th>
+        </tr>
+    </thead>
+    @foreach(RankingTemplateVM rt in drt.ListRank){
+    <tr>
+        <td>
+            @rt.Identifier
+        </td>
+               <td>
+            @rt.name
+        </td>
+               <td>
+            @rt.Point
+        </td>
+               <td>
+            @rt.RegistrationDate
+        </td>
+               <td>
+            @rt.UsernameGameCenter
+        </td>
+               <td>
+            @rt.AccessSecured
+        </td>
+               <td>
+            @rt.Device
+        </td>
+               <td>
+            @rt.ContentIdentifier
+        </td>
+    </tr>
+    }
+</table>
+}
+
+@Display(Model.Pager)

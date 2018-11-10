@@ -1,0 +1,14 @@
+﻿@model Laser.Orchard.DataProtection.Models.DataProtectionContextPart
+
+<fieldset>
+    <legend></legend>
+    <div class="editor-label">
+        @Html.LabelFor(m => m.Context)
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(m => m.Context, new { @class = "text medium" })
+        <span class="hint">@T("A data context in the following form: ,key1=val1,key2=val2,. Example: ,company=Microsoft,sector=marketing,country=italy,.")<br />
+        @T("If youu leave blank, default value as set in settings will be applied on saving.")
+    </span>
+    </div>
+</fieldset>

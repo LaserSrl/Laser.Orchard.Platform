@@ -1,0 +1,13 @@
+Name: Contrib.Reviews
+AntiForgery: enabled
+Author: NimblePros
+Website: http://bitbucket.org/nimblepros/orchard-reviews
+Version: 1.0.2
+OrchardVersion: 1.10
+Description: Allows users to leave ratings and reviews on content items. A review consists of a 5-star rating and a comment. Requires Contrib.Voting to be installed.
+Features:
+    Contrib.Reviews:
+        Name: Reviews
+        Category: Statistics
+        Description: Allows users to leave ratings and reviews on content items. A review consists of a 5-star rating and a comment.
+        Dependencies: Contrib.Voting, Orchard.Resources

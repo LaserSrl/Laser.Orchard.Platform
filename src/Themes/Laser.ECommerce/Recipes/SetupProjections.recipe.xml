@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Orchard>
+  <Recipe>
+    <Name>SetupProjections</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the queries and projections for the ecommerce theme.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Content>
+    <ProjectionPage Id="/alias=homepagevideos" Status="Published">
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <AutoroutePart Alias="homepagevideos" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart />
+      <ProjectionPart Items="1" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="1" DisplayPager="false" Query="/Identifier=85cc372479e04778b9e487489d28de03" LayoutIndex="-1" />
+      <TitlePart Title="HomePageVideos" />
+    </ProjectionPage>
+    <ProjectionPage Id="/alias=my-orders" Status="Published">
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <AutoroutePart Alias="my-orders" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart />
+      <ProjectionPart Items="0" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="true" Query="/Identifier=e9e51924f29549a4902590ec74163693" LayoutIndex="-1" />
+      <TitlePart Title="My Orders" />
+    </ProjectionPage>
+    <ProjectionPage Id="/alias=products\/new-arrivals" Status="Published">
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <AutoroutePart Alias="products/new-arrivals" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart />
+      <ProjectionPart Items="9" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="true" Query="/Identifier=f9be7b28670d4a62a09f91bda0a07b75" LayoutIndex="-1" />
+      <TitlePart Title="New Arrivals" />
+    </ProjectionPage>
+    <Query Id="/Identifier=58d9e6a6c4cc4febb211b64af9401285" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="58d9e6a6c4cc4febb211b64af9401285" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;HomePageHighlight&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="HomePageHighlightContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;NotEquals&lt;/Operator&gt;&lt;Value&gt;Banner&lt;/Value&gt;&lt;/Form&gt;" Type="HomePageHighlight.DisplayStyle." />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="CommonPartRecord" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;false&lt;/Sort&gt;&lt;/Form&gt;" Type="PublishedUtc" />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="Other HighLights" />
+    </Query>
+    <Query Id="/Identifier=5d89636078914968a0c0fe0bad84d96d" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="5d89636078914968a0c0fe0bad84d96d" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;TopBrand&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria />
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="Top Brands" />
+    </Query>
+    <Query Id="/Identifier=85cc372479e04778b9e487489d28de03" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="85cc372479e04778b9e487489d28de03" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;HomePageVideo&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="CommonPartRecord" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;false&lt;/Sort&gt;&lt;/Form&gt;" Type="PublishedUtc" />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="HomePageVideos" />
+    </Query>
+    <Query Id="/Identifier=ac05fa9f948543bcaf4ec3d18714fcd0" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="ac05fa9f948543bcaf4ec3d18714fcd0" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;HomePageHighlight&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="HomePageHighlightContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;Equals&lt;/Operator&gt;&lt;Value&gt;Banner&lt;/Value&gt;&lt;/Form&gt;" Type="HomePageHighlight.DisplayStyle." />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="CommonPartRecord" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;false&lt;/Sort&gt;&lt;/Form&gt;" Type="PublishedUtc" />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="HighLight Banner" />
+    </Query>
+    <Query Id="/Identifier=e9e51924f29549a4902590ec74163693" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="e9e51924f29549a4902590ec74163693" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;Order&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="CommonPartContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;Equals&lt;/Operator&gt;&lt;Value&gt;{User.Id}&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" Type="CommonPart.Creator." />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria />
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="My Orders" />
+    </Query>
+    <Query Id="/Identifier=f9be7b28670d4a62a09f91bda0a07b75" Status="Published">
+      <BooleanField.UserQuery Value="false" />
+      <BooleanField.OneShotQuery Value="false" />
+      <CommonPart />
+      <IdentityPart Identifier="f9be7b28670d4a62a09f91bda0a07b75" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;Product&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="ProductContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Value&gt;true&lt;/Value&gt;&lt;/Form&gt;" Type="Product.IsNewProduct." />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria />
+        <Layouts />
+      </QueryPart>
+      <TitlePart Title="New Arrivals" />
+    </Query>
+  </Content>
+</Orchard>

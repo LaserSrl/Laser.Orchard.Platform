@@ -1,0 +1,910 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "{0} is required."
+msgstr "{0} è obbligatorio."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Back"
+msgstr "Indietro"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Bill me at the shipping address."
+msgstr "Fatturazione all'indirizzo di spedizione."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Checkout: Shipping & Billing Addresses"
+msgstr "Checkout: indirizzi di spedizione e fatturazione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "International Phone Prefix"
+msgstr "Prefisso telefonico internazionale"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Phone"
+msgstr "Telefono"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries."
+msgstr "Per favore, inserite un numero telefonico a cui vi si possa raggiungere nel caso servano informazioni addizionali. Questo è necessario per la spedizione verso alcuni stati."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Please provide an e-mail address for us to use in order to give you updates on your order."
+msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Please provide an international phone prefix, For example 0039 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Required information"
+msgstr "Informazioni richieste"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
+msgid "Special Instructions"
+msgstr "Istruzioni speciali"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid " Remove inserted data"
+msgstr "Rimuovi i dati inseriti"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Address2"
+msgstr "Indirizzo 2"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "First Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Last Name"
+msgstr "Cognome"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "none"
+msgstr "Nessuno"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Please include middle name or initial as appropriate."
+msgstr "Per favore, includete il secondo nome o l'iniziale in maniera opportuna."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'WA' per lo stato di Washington negli Stati Uniti d'America."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "State, province, prefecture, republic or region"
+msgstr "Stato, provincia, prefettura, repubblica o regione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Stored Billing Address"
+msgstr "Indirizzo di fatturazione salvato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Stored Shipping Address"
+msgstr "Indirizzo di spedizione salvato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
+msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "You may leave this blank for the United States."
+msgstr "Lasciare vuoto per gli Stati Uniti d'America."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
+msgid "Loading..."
+msgstr "Caricamento in corso..."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
+msgid "Pay now"
+msgstr "Paga adesso"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Braintree/Index.cshtml"
+msgid "Pay with Braintree and PayPal"
+msgstr "Paga con Braintree e PayPal"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Address 2"
+msgstr "Indirizzo 2"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "First Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Last Name"
+msgstr "Cognome"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Please include middle name or initial as appropriate."
+msgstr "Per favore, includete il secondo nome o l'iniziale in maniera opportuna."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'WA' per lo stato di Washington negli Stati Uniti d'America."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "State, province, prefecture, republic or region"
+msgstr "Stato, provincia, prefettura, repubblica o regione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
+msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/CommerceAddressForm.cshtml"
+msgid "You may leave this blank for the United States."
+msgstr "Lasciare vuoto per gli Stati Uniti d'America."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Fields.ContentPicker-RelatedProducts.cshtml"
+msgid "No content items."
+msgstr "Nessun contenuto."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Fields.ContentPicker-RelatedProducts.cshtml"
+msgid "Related Products"
+msgstr "Prodotti correlati"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/List-ProjectionPage.cshtml"
+msgid "Related Products"
+msgstr "Prodotti correlati"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOn.cshtml"
+msgid "Login now"
+msgstr "Accedi ora"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOn.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOn.cshtml"
+msgid "Sign up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/LogOnForm.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "...or login with:"
+msgstr "...oppure esegui la login con:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "Log in with"
+msgstr "Accedi con"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "Login now"
+msgstr "Accedi ora"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "Sign up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogOn.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
+msgid "Login was unsuccessful. Please correct the errors and try again."
+msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthLogonForm.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "...or login with:"
+msgstr "...oppure esegui la login con:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "Log in with"
+msgstr "Accedi con"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "Login now"
+msgstr "Accedi ora"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "Sign up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegister.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Confirm password"
+msgstr "Conferma password"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Sign Up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/OpenAuthRegisterForm.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "{0} {1}"
+msgstr "{0} {1}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Adjustment"
+msgstr "Correzione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Charged to:"
+msgstr "Addebitato a:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Contacts:"
+msgstr "Contatti:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "E-mail:"
+msgstr "E-mail:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Order #{0}"
+msgstr "Ordine #{0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Phone:"
+msgstr "Telefono:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Price"
+msgstr "Prezzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Product"
+msgstr "Prodotto"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Products:"
+msgstr "Prodotti:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Purchase Order, Invoice, or Reference Order: {0}"
+msgstr "Numero ordine, fattura, o riferimento dell'ordine: {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Qty"
+msgstr "Qtà"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Quantity"
+msgstr "Quantità"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Shipping to:"
+msgstr "Spedizione a:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Special instructions:"
+msgstr "Istruzioni speciali:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Status: {0}"
+msgstr "Stato: {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Subtotal"
+msgstr "Subtotale"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Taxes {0}"
+msgstr "Tasse {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Total"
+msgstr "Totale"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Total: {0}"
+msgstr "Totale: {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Tracking URL: <a href=\"{0}\">{0}</a>"
+msgstr "URL per il tracking: <a href=\"{0}\">{0}</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "You may view this order at a later time by going to this address: <a href=\"{0}\">{0}</a>, using this password: \"{1}\"."
+msgstr "Potrai consultare questo ordine al seguente indirizzo: <a href=\"{0}\">{0}</a>, usando questa password: \"{1}\"."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ListOfWishLists.cshtml"
+msgid "Your Wish Lists:"
+msgstr "Le tue liste:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AdditionalInfo.Detail.cshtml"
+msgid "Product Information"
+msgstr "Informazioni prodotto"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AdditionalInfo.Detail.cshtml"
+msgid "Reviews"
+msgstr "Recensioni"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.cshtml"
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.RemoveFromWishList.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "-"
+msgstr "-"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "({0}) Reviews"
+msgstr "({0}) Recensioni"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "*"
+msgstr "*"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "**"
+msgstr "**"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "***"
+msgstr "***"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "****"
+msgstr "****"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "*****"
+msgstr "*****"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Add a Review"
+msgstr "Aggiungi una recensione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Add Your Review"
+msgstr "Aggiungi la tua recensione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Are you sure you wish to delete your review? Your Rating will also be deleted."
+msgstr "Sei sicuro di voler rimuovere la tua recensione? Contestualmente sarà rimosso anche il tuo voto."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "character(s) remaining"
+msgstr "Carattere(i) rimanenti"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "clear your opinion"
+msgstr "Cancella la tua opinione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "give your opinion"
+msgstr "Dai la tua opinione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "No reviews yet."
+msgstr "Nessun commento."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Rate:"
+msgstr "Vota:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.Reviews.Detail.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.cshtml"
+msgid "Add to WishList"
+msgstr "Aggiungi alla lista dei desideri"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.cshtml"
+msgid "WishList (default)"
+msgstr "Lista dei desideri (default)"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.Detail.cshtml"
+msgid "Add to WishList"
+msgstr "Aggiungi alla lista dei desideri"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.Detail.cshtml"
+msgid "WishList (default)"
+msgstr "Lista dei desideri (default)"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.cshtml"
+msgid "This product is currently out of stock."
+msgstr "Questo prodotto non è al momento disponibile."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.Detail.cshtml"
+msgid "This product is currently out of stock."
+msgstr "Questo prodotto non è al momento disponibile."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Stars.Details-Product.cshtml"
+msgid "-"
+msgstr "-"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Stars.Details-Product.cshtml"
+msgid "*"
+msgstr "*"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Stars.Details-Product.cshtml"
+msgid "."
+msgstr "."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/SubscriberRegistration.cshtml"
+msgid "Newsletter"
+msgstr "Newsletter"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/TermPart.cshtml"
+msgid "Related Products"
+msgstr "Prodotti correlati"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/WishListList.cshtml"
+msgid "Related Products"
+msgstr "Prodotti correlati"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/WishListsActions.cshtml"
+msgid "New wishlist"
+msgstr "Nuova lista dei desideri"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/WishListsActions.cshtml"
+msgid "Wish lists' settings"
+msgstr "Impostazioni liste dei desideri"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Additional informations"
+msgstr "Ulteriori informazioni"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Back to payment page"
+msgstr "Torna alla pagina di pagamento"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Payment details"
+msgstr "Dettagli pagamento"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Payment/Info.cshtml"
+msgid "Transacion ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/PosList.cshtml"
+msgid "Loading valid payment methods. Please wait."
+msgstr "Attendere prego: caricamento dei metodi di pagamento in corso."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/PosList.cshtml"
+msgid "Pay using:"
+msgstr "Paga con"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/PosList.cshtml"
+msgid "There was an error initializing the payment. Please try again."
+msgstr "C'è stato un errore nell'inizializzazione del pagamento. È consigliato ritentare."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Register.cshtml"
+msgid "Login now"
+msgstr "Accedi ora"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Register.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Register.cshtml"
+msgid "Sign up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Confirm password"
+msgstr "Conferma password"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Sign Up"
+msgstr "Registra"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RegisterForm.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/RelatedContentsSlider.cshtml"
+msgid "Related Contents"
+msgstr "Contenuti correlati"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "{0}"
+msgstr "{0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "{0} Products"
+msgstr "{0} Prodotti"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "{1} {0}"
+msgstr "{1} {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Click <a href=\"{0}\">here</a> to choose a different shipping option."
+msgstr "Clicca <a href=\"{0}\">qui</a> per scegliere opzioni di spedizione diverse."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Continue Shopping"
+msgstr "Continua con gli acquisti"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Failed to load the cart"
+msgstr "Impossibile caricare il carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Minimum order of {0} required."
+msgstr "È richiesto un ordine di almeno {0}."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "No shipping options available for {0} {1}. Click <a href=\"{2}\">here</a> to change your shipping destination."
+msgstr "Non ci sono opzioni di spedizione disponibili per {0} {1}. Clicca <a href=\"{2}\">qui</a> per cambiare la destinazione."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Please wait while we restore your shopping cart..."
+msgstr "Attendere mentre il carrello viene ripristinato..."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Price"
+msgstr "Prezzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Product"
+msgstr "Prodotto"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Product Name"
+msgstr "Nome prodotto"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Quantity"
+msgstr "Quantità"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "SL No."
+msgstr "Numero linea"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>"
+msgstr "Alcuni prodotti nel tuo carrello hanno bisogno di autenticazione. <a href=\"{0}\">Per favore fai login per completare l'ordine.</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Subtotal:"
+msgstr "Subtotale:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Taxes {0}"
+msgstr "Tasse {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Total:"
+msgstr "Totale:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Update All"
+msgstr "Aggiorna tutto"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "You don't have any items in your shopping cart."
+msgstr "Non hai oggetti nel carrello."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Your shopping cart contains: "
+msgstr "Il tuo carrello contiene:"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.Summary.cshtml"
+msgid "items"
+msgstr "Oggetti"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCartWidget.cshtml"
+msgid "Failed to load the cart"
+msgstr "Impossibile caricare il carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCartWidget.cshtml"
+msgid "Please wait while we restore your shopping cart..."
+msgstr "Attendere mentre il carrello viene ripristinato..."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe.cshtml"
+msgid "Checkout"
+msgstr "Checkout"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe.cshtml"
+msgid "Secure Checkout with VISA, Mastercard, American Express, Discover, Diners, or JCB (payment handled by Stripe)"
+msgstr "Checkout sicuro con VISA, Mastercard, American Express, Discover, Diners, o JCB (pagamenti gestiti da Stripe)"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid " / "
+msgstr "/"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "< Back"
+msgstr "< Indietro"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "a 3-digit code on the back of your card, or a 4-digit code on the front if your card is an American Express."
+msgstr "Un codice a 3 cifre sul retro della tua carta, oppure un codice a 4 cifre davanti alla tua carta se è una America Express."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "as it appears on your card."
+msgstr "come appare sulla carta."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Card Number"
+msgstr "Numero della carta"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
+msgstr "Checkout con <a href=\"https://stripe.com/\">Stripe</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Checkout with Stripe"
+msgstr "Checkout con Stripe"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "CVC"
+msgstr "CVC"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Expiration date (MM/YYYY)"
+msgstr "Data di scadenza (MM/AAAA)"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Invalid card number"
+msgstr "Numero di carta non valido"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Invalid CVC"
+msgstr "CVC non valido"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Invalid expiration date"
+msgstr "Data di scadenza non valida"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Next >"
+msgstr "Prossimo >"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "{0} is required."
+msgstr "{0} è obbligatorio."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "< Back"
+msgstr "< Indietro"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Bill me at the shipping address."
+msgstr "Fatturazione all'indirizzo di spedizione."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
+msgstr "Checkout con <a href=\"https://stripe.com/\">Stripe</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Checkout with Stripe"
+msgstr "Checkout con Stripe"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Next >"
+msgstr "Prossimo >"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries."
+msgstr "Per favore, inserite un numero telefonico a cui vi si possa raggiungere nel caso servano informazioni addizionali. Questo è necessario per la spedizione verso alcuni stati."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Please provide an e-mail address for us to use in order to give you updates on your order."
+msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Required information"
+msgstr "Informazioni richieste"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Widget-Name-DiscountedProductsProjectionWidget.cshtml"
+msgid "Sales"
+msgstr "Offerte"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Widget-Name-LinkToWishlist.cshtml"
+msgid "Your wishlists"
+msgstr "Le tue liste"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Widget-Name-NewArrivalsHomePage.cshtml"
+msgid "New Arrivals"
+msgstr "Nuovi arrivi"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Widget-Name-TopBrandsHomePage.cshtml"
+msgid "Top Brands"
+msgstr "Marche Top"
+

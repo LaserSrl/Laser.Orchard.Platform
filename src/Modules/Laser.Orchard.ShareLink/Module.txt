@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.ShareLink
+AntiForgery: enabled
+Author: Laser srl - Lorenzo Frediani
+Website: http://orchardproject.net
+Version: 1.10
+OrchardVersion: 1.10
+Features:
+    Laser.Orchard.ShareLink:
+        Description: Adds tokenizable social sharing metadata and exposes them via web api REST.
+		Dependencies: Orchard.Tokens,Orchard.MediaLibrary,Laser.Orchard.jQueryPlugins
+		Category: Social

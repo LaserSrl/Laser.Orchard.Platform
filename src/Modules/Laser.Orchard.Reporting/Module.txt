@@ -1,0 +1,10 @@
+﻿Name: Laser.Orchard.Reporting
+AntiForgery: enabled
+Author: Siyamand Ayubi and Laser srl
+Website: http://orchardcollaboration.com/how-to-use-orchard-reporting-module
+Version: 2.0
+OrchardVersion: 1.9.2
+Description: The module allows users to view the data of Orchard queries in Pie charts
+Dependencies: Orchard.Tokens, Orchard.Projections, Laser.Orchard.Queries
+FeatureDescription: The module allows users to view the data of Orchard queries in Pie charts
+Category: Reportings

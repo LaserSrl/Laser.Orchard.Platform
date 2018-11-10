@@ -1,0 +1,22 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.BikeSharing/Views/EditorTemplates/Parts/BikeStation.cshtml"
+msgid "Bike Station Universal Name"
+msgstr "Nome Universale della Stazione Biciclette"
+
+msgctxt "~/Modules/Laser.Orchard.BikeSharing/Views/Parts/BikeStation.cshtml"
+msgid "Battery level"
+msgstr "Livello Batteria"
+
+msgctxt "~/Modules/Laser.Orchard.BikeSharing/Views/Parts/BikeStation.cshtml"
+msgid "Bike Sharing Station Infos"
+msgstr "Informazioni della Stazione Condivisione Biciclette"
+

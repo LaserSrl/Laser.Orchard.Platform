@@ -1,0 +1,210 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Image"
+msgstr "Immagine"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Settings - Twitter Post"
+msgstr "Impostazioni - Post Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Show TwitterCurrentLink option"
+msgstr "Mostra l'opzione Link corrente di Twitter (TwitterCurrentLink)"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Twitter description"
+msgstr "Descrizione Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Twitter Image"
+msgstr "Immagine Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Twitter Title"
+msgstr "Titolo del Tweet"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/DefinitionTemplates/TwitterPostPartSettingVM.cshtml"
+msgid "Twitter TwitterCurrentLink option"
+msgstr "Opzione Link corrente di Twitter (TwitterCurrentLink)"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "Enable"
+msgstr "Abilita"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "NO"
+msgstr "NO"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "Only Enabled account can be used to post on Twitter"
+msgstr "Solo gli Account abilitati possono eseguire post su Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "Shared = This account can be used by other user to generate Twitter Post"
+msgstr "Condiviso = Questo Account puà essere utilizzato dagli altri utente per effettuare Post su Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "Shared Account"
+msgstr "Account condiviso"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "Twitter Account"
+msgstr "Account Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterAccount.cshtml"
+msgid "YES"
+msgstr "SI"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "AccountList"
+msgstr "LIsta degli account"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Approved"
+msgstr "Approvato"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Each link is counted 22 characters"
+msgstr "Ogni link sarà conteggiato con 22 caratteri"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Insert a twitter account "
+msgstr "Inserisci un account Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Link current page"
+msgstr "Collega la pagina corrente"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Message already posted."
+msgstr "Messaggio già postato."
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Message not yet posted."
+msgstr "Messaggio non ancora postato."
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Meta twitter description"
+msgstr "Meta description per Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Meta twitter picture Url"
+msgstr "Url dell'immagine per Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Meta twitter title"
+msgstr "Titolo per Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "NO"
+msgstr "NO"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Post on next publish"
+msgstr "Posta alla prossima pubblicaizone"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "This Twitter message has been already posted. You will be able to edit and save it, but it will not be posted anymore on next publish."
+msgstr "Questo messaggio è già stato postato. Potrai modificarlo e risalvarlo, ma non sarà più postato."
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "Twitter"
+msgstr "Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/EditorTemplates/Parts/TwitterPost.cshtml"
+msgid "YES"
+msgstr "SI"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Add Twitter Account"
+msgstr "Aggiungi un account Twitter"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
+msgid "Twitter Account"
+msgstr "Account Twitter"
+
+msgctxt "Laser.Orchard.Twitter.Controllers.TwitterAccountController"
+msgid "No twitter account setting added, add one in Settings -> Open Authentication"
+msgstr "Nessun Account Twtitter presente, aggiungine uno in Impostazioni -> Open Authentication"
+
+msgctxt "Laser.Orchard.Twitter.Controllers.TwitterAccountController"
+msgid "Twitter Account Added"
+msgstr "Account Twitter aggiunto"
+
+msgctxt "Laser.Orchard.Twitter.Controllers.TwitterAccountController"
+msgid "User Twitter Account added"
+msgstr "l'account utente di Twitter è stato aggiunto"
+
+msgctxt "Laser.Orchard.Twitter.Controllers.TwitterAccountController"
+msgid "User Twitter Account can't be added, is duplicated"
+msgstr "l'account utente di Twitter non può essere aggiunt, in quanto già presente"
+
+msgctxt "Laser.Orchard.Twitter.Handlers.TwitterPostHandler"
+msgid "No Twitter account specified."
+msgstr "Nessun account Twitter specificato."
+
+msgctxt "Laser.Orchard.Twitter.Handlers.TwitterPostHandler"
+msgid "Twitter error:"
+msgstr "Twitter errore:"
+
+msgctxt "Laser.Orchard.Twitter.Navigation.AdminMenu"
+msgid "Social Twitter Account"
+msgstr "Account social Twitter"
+
+msgctxt "Laser.Orchard.Twitter.Services.TwitterService"
+msgid "Can't post on twitter: {0} {1}"
+msgstr "Impossibile effettuare Post su Twitter: {0} {1}"
+
+msgctxt "Laser.Orchard.Twitter.Services.TwitterService"
+msgid "Twitter posted"
+msgstr "Tweet postato"
+
+msgctxt "Laser.Orchard.Twitter.Services.TwitterService"
+msgid "Twitter Posting {0}  Error Message: {1}"
+msgstr "Errore durante il Post di {0} su Twitter"
+

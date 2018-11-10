@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.Braintree
+AntiForgery: enabled
+Author: Laser srl - Giuseppe Musso
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10
+Features: 
+	Laser.Orchard.Braintree:
+		Description: This module enable Braintree-PayPal payment method.
+		Dependencies: Laser.Orchard.StartupConfig,Laser.Orchard.PaymentGateway
+		Category: Content
+		FeatureDescription:This module enable Braintree-PayPal payment method

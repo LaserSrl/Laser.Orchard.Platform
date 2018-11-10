@@ -1,0 +1,30 @@
+﻿@model Laser.Orchard.StartupConfig.ViewModels.MaintenanceVM
+@using Orchard.Utility.Extensions;
+@using Laser.Orchard.StartupConfig.Security;
+@{ 
+    
+    var isAuthorized = (Authorizer.Authorize(MaintenancePermission.Maintenance));
+    if (isAuthorized) {
+
+
+        //Enum.GetValues(typeof(Orchard.UI.Notify.NotifyType)).Cast<Orchard.UI.Notify.NotifyType>().Select(v => new SelectListItem {
+        //    Text = v.ToString(),
+        //    Value = ((int)v).ToString()
+        //}).ToList(); 
+    @Html.LabelFor(m => m.MaintenanceNotifyType, T("Notify Type"))
+    @Html.DropDownListFor(m => m.MaintenanceNotifyType, new SelectList(Enum.GetValues(typeof(Orchard.UI.Notify.NotifyType)), Model.MaintenanceNotifyType))
+    @Html.LabelFor(m => m.MaintenanceNotify, T("Notify Message"))
+    @Html.TextAreaFor(m => m.MaintenanceNotify)
+        if (Model.CurrentTenant != "Default") {
+    @Html.Raw("<div style='display:none;'>");
+        }   
+    @Html.LabelFor(m => m.MaintenanceNotify, T("Select Tenant"))
+    @Html.ListBoxFor(m => m.Selected_TenantVM, Model.List_Tenant, new { size = 20, style = "min-width:20%;", multiple = "multiple" })
+        if (Model.CurrentTenant != "Default") {
+    @Html.Raw("</div>");
+        }
+        //  @Html.TextAreaFor(m => m.Selected_Tenant)
+        // @Html.LabelFor(m => m.Enabled, T("Notify Enabled"))
+        // @Html.CheckBoxFor(m => m.Enabled)
+    }
+}

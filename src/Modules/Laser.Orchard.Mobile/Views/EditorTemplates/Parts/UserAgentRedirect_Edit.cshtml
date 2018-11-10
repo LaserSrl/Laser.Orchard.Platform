@@ -1,0 +1,29 @@
+﻿@{
+    Script.Require("jQuery_NestedModels").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+}
+@model Laser.Orchard.Mobile.ViewModels.UserAgentRedirectEdit
+<fieldset>
+    <legend>@T("User Agent redirect"):</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.AppName)">@T("App name"):</label>
+        @Html.EditorFor(m => m.AppName)
+        @Html.ValidationMessageFor(m => m.AppName)
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        @Html.HiddenFor(m => m.Id)
+        @Html.EditorFor(m => m.AutoRedirect)
+        <label for="@Html.FieldIdFor(m => m.AutoRedirect)" class="forcheckbox">@T("Auto Redirect")</label>
+    </div>
+    <p style="margin-top: 10px;">
+        <i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(x => x.Stores, " " + T("Add Redirect").Text, "#redirects", ".j_redirect", "redirect")
+    </p>
+    <div id="redirects">
+        <ul id="j_menuquestion">
+        </ul>
+        @Html.EditorFor(x => x.Stores)
+    </div>
+
+</fieldset>

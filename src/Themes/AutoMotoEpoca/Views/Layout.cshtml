@@ -1,0 +1,145 @@
+﻿@functions {
+    // To support the layout classifaction below. Implementing as a razor function because we can, could otherwise be a Func<string[], string, string> in the code block following.
+    string CalcuClassify(string[] zoneNames, string classNamePrefix) {
+        var zoneCounter = 0;
+        var zoneNumsFilled = string.Join("", zoneNames.Select(zoneName => { ++zoneCounter; return Model[zoneName] != null ? zoneCounter.ToString() : ""; }).ToArray());
+        return HasText(zoneNumsFilled) ? classNamePrefix + zoneNumsFilled : "";
+    }
+}
+@{
+    /* Global includes for the theme moved to Document.cshtml
+    ***************************************************************/
+
+
+    /* Some useful shortcuts or settings
+    ***************************************************************/
+
+    Func<dynamic, dynamic> Zone = x => Display(x); // Zone as an alias for Display to help make it obvious when we're displaying zones
+
+    /* Layout classification based on filled zones
+    ***************************************************************/
+
+    //Add classes to the wrapper div to toggle aside widget zones on and off
+    var asideClass = CalcuClassify(new[] { "AsideFirst", "AsideSecond" }, "aside-"); // for aside-1, aside-2 or aside-12 if any of the aside zones are filled
+    if (HasText(asideClass)) {
+        Model.Classes.Add(asideClass);
+    }
+
+    //Add classes to the wrapper div to toggle tripel widget zones on and off
+    var tripelClass = CalcuClassify(new[] { "TripelFirst", "TripelSecond", "TripelThird" }, "tripel-"); // for tripel-1, triple-2, etc. if any of the tripel zones are filled
+    if (HasText(tripelClass)) {
+        Model.Classes.Add(tripelClass);
+    }
+
+    //Add classes to the wrapper div to toggle quad widget zones on and off
+    var footerQuadClass = CalcuClassify(new[] { "FooterQuadFirst", "FooterQuadSecond", "FooterQuadThird", "FooterQuadFourth" }, "split-"); // for quad-1, quad-2, etc. if any of the quad zones are filled
+    if (HasText(footerQuadClass)) {
+        Model.Classes.Add(footerQuadClass);
+    }
+
+    /* Inserting some ad hoc shapes
+    ***************************************************************/
+    //WorkContext.Layout.Footer.Add(New.BadgeOfHonor(), "5"); // Powered by Orchard
+    //WorkContext.Layout.Footer.Add(New.User(), "10"); // Login and dashboard links
+
+    /* Last bit of code to prep the layout wrapper
+    ***************************************************************/
+
+    Model.Id = "layout-wrapper";
+    Model.Classes.Add("main-bg");
+    var tag = Tag(Model, "div"); // using Tag so the layout div gets the classes, id and other attributes added to the Model
+    var themeBasePath = Url.Content(Html.ThemePath(WorkContext.CurrentTheme, ""));   
+}
+<div id="page" class="hfeed site">
+    <header id="header" class="site-header" role="banner">
+        <nav role="navigation" class="navbar navbar-default">
+            <div class="container container-nav">
+                @Display.UserTop()
+                <div class="navbar-header">
+                    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" rel="home" title="Auto e Moto d'Epoca" href="@(Url.Content(WorkContext.CurrentCulture != "en-US" ? "~/" : "~/en/home"))">
+                        <img class="logo img-responsive" alt="Auto e Moto d'Epoca" src="~/themes/automotoepoca/styles/images/logo.png">
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    @if (Model.Navigation != null) {
+                        @Zone(Model.Navigation)
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+</div>
+<div id="content" class="site-content">
+    @if (Model.BeforeMain != null) {
+        @Zone(Model.BeforeMain)
+    }
+    <div class="space-40"></div>
+    <div class="container">
+        @if (Model.BeforeContent != null) { 
+            @Zone(Model.BeforeContent)
+            <div class="space-20"></div>
+        }
+        @if (Model.Content != null) { 
+            @Zone(Model.Content)
+        }
+        @if (Model.AfterContent != null) { 
+            <div class="space-20"></div>
+            @Zone(Model.AfterContent)
+        }
+        @if (Model.NewsArea != null) {
+            <div class="row">
+                @Zone(Model.NewsArea)
+            </div>
+        }
+        @if (Model.TripelFirst != null || Model.TripelSecond != null) {
+            <div class="row">
+                @if (Model.TripelFirst != null) {
+                    <div class="col-xs-12 col-sm-7 col-md-8">
+                        @Zone(Model.TripelFirst)
+                    </div>
+                }
+                @if (Model.TripelSecond != null) {
+                    <div class="col-xs-12 col-sm-5 col-md-4">
+                        @Zone(Model.TripelSecond)
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="space-20"></div>
+</div>
+<div id="footer">
+    @if (Model.FooterQuadFirst != null || Model.FooterQuadSecond != null || Model.FooterQuadThird != null) {
+
+        <div class="container">
+            <div class="row">
+                @if (Model.FooterQuadFirst != null) {
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="box-vodafone">
+                            <h2>@T("Auto e Moto d'Epoca")</h2>
+                            @T("In collaboration with") &nbsp;
+                            <img src="~/Media/AutoMotoEpoca/Home/vodafone.png" class="img-responsive" alt="vodafone">
+                        </div>
+                        @Zone(Model.FooterQuadFirst)
+                    </div>
+                }
+                @if (Model.FooterQuadSecond != null) {
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        @Zone(Model.FooterQuadSecond)
+                    </div>
+                }
+                @if (Model.FooterQuadThird != null) {
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        @Zone(Model.FooterQuadThird)
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <div class="space-40"></div>
+</div>

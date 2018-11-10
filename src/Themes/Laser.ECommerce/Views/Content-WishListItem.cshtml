@@ -1,0 +1,88 @@
+﻿@using Nwazet.Commerce.Models
+@using Orchard.ContentManagement
+@using Orchard.MediaLibrary.Fields
+@using Orchard.MediaLibrary.Models
+@using Orchard.Taxonomies.Fields
+@using Orchard.Utility.Extensions;
+@{
+    if (Model.Title != null) {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var tag = Tag(Model, "article");
+
+    //if the content does not have a banner, look for one.
+    var title = Layout.Title.ToString();
+    if (string.IsNullOrWhiteSpace(title)) {
+        var _contentManager = WorkContext.Resolve<IContentManager>();
+        title = _contentManager.GetItemMetadata(Model.ContentItem).DisplayText;
+    }
+    MediaPart mediaPart = null;
+    var contentItem = (ContentItem)Model.ContentItem;
+    var fields = contentItem.Parts.SelectMany(pa => pa.Fields);
+    var field = fields
+            .Where(fi => fi is MediaLibraryPickerField && fi.Name == "Banner")
+            .FirstOrDefault() as MediaLibraryPickerField;
+    if (field != null && field.MediaParts.Any()) {
+        mediaPart = field.MediaParts.First();
+    }
+
+    if (mediaPart == null) {
+        //The case where the ContentItem has a MLPF called Banner is handled by
+        //the alternate for the MLPF itself
+        //if the content has a taxonomy field and a selected term,
+        //we get its banner
+        var taxField = fields
+            .Where(fi => fi is TaxonomyField)
+            .FirstOrDefault() as TaxonomyField;
+        if (taxField != null && taxField.Terms.Any()) {
+            WorkContext.Layout.BeforeMain.Add(New.Banner(
+                ContentItem: (ContentItem)taxField.Terms.FirstOrDefault().ContentItem,
+                H2Text: new HtmlString(title)
+            ), "5");
+        }
+    }
+
+    var shapes = (IEnumerable<dynamic>)Model.Content.Items;
+    //Get the shape for WishListItemPart
+    //Get the shapes for WishListItemPart
+    var wliShapes = shapes.Where(sh => sh.ContentPart is WishListItemPart); //these are all the item shapes
+    var otherShapes = shapes.Except(wliShapes);
+
+    var itemShapeEnum = wliShapes.Where(sh => sh.Metadata.Type == "Parts_WishListItem");
+    var otherItemShapes = wliShapes.Except(itemShapeEnum);
+    var itemShape = itemShapeEnum.FirstOrDefault();
+}
+@tag.StartElement
+<header>
+    @Display(Model.Header)
+    @if (Model.Meta != null) {
+        <div class="metadata">
+            @Display(Model.Meta)
+        </div>
+    }
+</header>
+<div class="wishlist_grid_item">
+    <div class="item_shape">
+        @Display(itemShape)
+    </div>
+    <div class="other_shapes">
+        @foreach (var shape in otherItemShapes) {
+            <div class="other_shape">
+                @Display(shape)
+            </div>
+        }
+    </div>
+    <div class="clearfix"> </div>
+</div>
+@if (Model.Footer != null) {
+    <footer>
+        @Display(Model.Footer)
+    </footer>
+}
+@tag.EndElement

@@ -1,0 +1,28 @@
+﻿@using Laser.Orchard.SEO;
+@using Laser.Orchard.SEO.ViewModels;
+@using Laser.Orchard.Commons.Helpers;
+@using Orchard;
+
+
+@model Laser.Orchard.SEO.ViewModels.KeywordHelperKeyword
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("KeywordHelperKeyword"); }
+@{
+    var appId = "phNum_" + answerBlock;
+
+}
+
+@using (Script.Head()) {
+    
+}
+
+<div id="@appId" class="j_seokeyword">
+    <div id="inner_@appId" style="margin:0; padding: 0 0 0 10px; cursor:pointer;">
+        @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete", @id="delete_"+@appId })
+        @Html.TextBoxFor(m=>m.Keyword, new {placeholder=T("Keyword").ToString(), @title=T("Keyword").ToString(), @id="key_"+@appId })
+        @*<i class="fa fa-times" style="color: red"></i>*@
+        @*@Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_seokeyword", "input.ph-mark-for-delete")*@
+        @Html.LinkToRemoveNestedForm("<i class=\"fa fa-times\" style=\"color: red\"></i>", ".j_seokeyword", "input.ph-mark-for-delete")
+    </div>
+
+</div>
+

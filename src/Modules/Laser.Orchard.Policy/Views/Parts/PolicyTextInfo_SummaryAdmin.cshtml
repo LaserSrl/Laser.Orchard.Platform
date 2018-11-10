@@ -1,0 +1,8 @@
+﻿@{
+ Style.Require("FontAwesome430").AtHead();   
+}
+@if (Model.PolicyTextInfoPart.UserHaveToAccept) {
+    <i class="fa fa-exclamation-circle" style="color:orange"></i> @T("Required policy.")
+} else { 
+    <i class="fa fa-question-circle" style="color:green"></i> @T("Optional policy")
+}

@@ -1,0 +1,50 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Orchard.Captcha/Views/EditorTemplates/Parts.Captcha.SiteSettings.cshtml"
+msgid "Captcha"
+msgstr "Captcha"
+
+msgctxt "Orchard.Captcha.Drivers.CaptchaSettingsDriver"
+msgid "Captcha settings not saved"
+msgstr "Impostazioni Captcha non salvate"
+
+msgctxt "Orchard.Captcha.Handlers.CaptchaSettingsPartHandler"
+msgid "ReCaptcha"
+msgstr "ReCaptcha"
+
+msgctxt "Orchard.Captcha.Handlers.CaptchaSettingsPartHandler"
+msgid "Re-Captcha"
+msgstr "Re-Captcha"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Enter the numbers you hear:"
+msgstr "Inserisci i numeri che senti:"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Enter the words above"
+msgstr "Inserisci le parole soprastanti"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Get an audio CAPTCHA"
+msgstr "Ottieni un CAPTCHA audio"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Get an image CAPTCHA"
+msgstr "Ottieni un CAPTCHA immagine"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Get another CAPTCHA"
+msgstr "Ottieni un altro CAPTCHA"
+
+msgctxt "Orchard.Captcha.Services.CaptchaService"
+msgid "Incorrect please try again"
+msgstr "Non corretto prego riprovare"
+

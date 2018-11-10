@@ -1,0 +1,9 @@
+﻿<Placement>
+	<Place Parts_PolicyTextInfo_SummaryAdmin="Content:1" />
+  <Place Parts_PolicyTextInfo_Summary="-"/>
+  <Place Parts_PolicyTextInfo="-"/>
+  <Place Parts_PolicyTextInfo_Edit="Content:3"/>
+  
+  <Place Parts_UserPolicy_Edit ="Content:2"/>
+  <Place Parts_Policy_Edit ="Content:5" Parts_Policy_SummaryAdmin="Content:2" Parts_Policy="Content:1"/>
+</Placement>

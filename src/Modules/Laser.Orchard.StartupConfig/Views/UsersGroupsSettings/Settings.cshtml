@@ -1,0 +1,43 @@
+﻿@model Laser.Orchard.StartupConfig.ViewModels.UsersGroupsSettingsVM
+@{ Layout.Title = T("User Groups Settings").ToString(); }
+@using (Html.BeginFormAntiForgeryPost()) {
+    var i = 0;
+    <div class="manage">
+        <button class="primaryAction" type="submit">@T("Update settings")</button>
+    </div>
+    <fieldset>
+
+        <div class="editor-field">
+            <table class="items">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 350px;">@T("Group ID")</th>
+                        <th scope="col">@T("Group Name")</th>
+                        <th scope="col">@T("Delete")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (Int32 y = 0; y < Model.ExtendedUsersGroupsListVM.Count(); y++) {
+                    
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m.ExtendedUsersGroupsListVM[y].Id)
+                                @((Model.ExtendedUsersGroupsListVM[y].Id != 0) ? Model.ExtendedUsersGroupsListVM[y].Id.ToString() : "New Group ->")
+                                @if (Model.ExtendedUsersGroupsListVM[y].Id == 0) { 
+                                    <span class="hint">@T("Separate group names with || for massive insertions ( e.g. \"Group 1||Group 2||Group 3\" )")</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m.ExtendedUsersGroupsListVM[y].GroupName, new { @class = "text large" })</td>
+                            <td>
+                                @if (Model.ExtendedUsersGroupsListVM[y].Id != 0) {
+                                    @Html.CheckBoxFor(m => m.ExtendedUsersGroupsListVM[y].Delete)
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+}

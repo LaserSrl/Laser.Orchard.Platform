@@ -1,0 +1,15 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+
+<div class="space-40"></div>
+<h3 class="showcase-claim text-center">@item.ShowcaseDettaglioWidget.TitoloProdotto.Value</h3>
+<div class="space-40"></div>
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <h2 class="showcase-claim-desc">@item.ShowcaseDettaglioWidget.SottotitoloProdotto.Value</h2>
+    </div>
+    <div class="col-sm-12 col-md-8">
+        <p>@Html.Raw(item.BodyPart.Text)</p>
+    </div>
+</div>

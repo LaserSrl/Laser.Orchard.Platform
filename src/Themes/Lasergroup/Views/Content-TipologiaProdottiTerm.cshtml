@@ -1,0 +1,48 @@
+﻿@using Orchard.Alias
+@using Orchard.Autoroute.Models
+@using Orchard.ContentManagement
+@using Orchard.Environment.Configuration;
+@using Orchard.Localization.Models
+@using Orchard.Localization.Services
+@using Orchard.Taxonomies.Models
+@{
+    var contentItem = (IContent)Model.ContentItem;
+    var term = contentItem.As<TermPart>();
+    var localization = contentItem.As<LocalizationPart>();
+
+    var _aliasService = WorkContext.Resolve<IAliasService>();
+    var _localizationService = WorkContext.Resolve<ILocalizationService>();
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+
+    var showcaseAlias = "showcase";
+    var showcaseRoute = _aliasService.Get(showcaseAlias);
+    if (localization != null &&
+        localization.Culture != null &&
+        !string.IsNullOrWhiteSpace(localization.Culture.Culture)) {
+        //get the localized version of the alias
+        if (showcaseRoute.ContainsKey("Id")) {
+            var showcaseId = int.Parse(showcaseRoute["Id"].ToString());
+            var showcaseCI = _localizationService
+                .GetLocalizedContentItem(_contentManager.Get(showcaseId), localization.Culture.Culture);
+            if (showcaseCI != null) {
+                var showcaseAutoroute = showcaseCI.As<AutoroutePart>();
+                if (showcaseAutoroute != null) {
+                    showcaseAlias = showcaseAutoroute.Path;
+                    showcaseRoute = _aliasService.Get(showcaseAlias);
+                }
+            }
+        }
+    }
+
+    if (term == null) {
+        //redirect to showcase without terms selected
+        Response.RedirectToRoute(showcaseRoute);
+    } else {
+        //redirect to showcase with selected terms
+        var urlPrefix = WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+        showcaseAlias = string.IsNullOrWhiteSpace(urlPrefix) ? showcaseAlias : urlPrefix + "/" + showcaseAlias;
+        var termid = term.Id;
+        Response.Redirect("~/" + showcaseAlias  +"?termid=" + termid.ToString());
+    }
+    
+}

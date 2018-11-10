@@ -1,0 +1,14 @@
+<div id="intro">
+    <canvas id="intro-canvas"></canvas>
+    <div class="container container-desc clearfix">
+        <div class="col-xs-12 col-sm-8 col-intro-desc">
+            <h1 class="handel-got-d title">@Model.Title</h1>
+            <h2 class="page-claim">@Model.Subtitle</h2>
+        </div>
+        @if (Model.ImageUrl!="") {
+            <div class="col-xs-12 col-sm-4 text-center">
+                <img src="@Model.ImageUrl" title="@Model.ImageTitle" alt="@Model.ImageAlternateText" class="img-responsive">
+            </div>
+        }
+    </div>
+</div>

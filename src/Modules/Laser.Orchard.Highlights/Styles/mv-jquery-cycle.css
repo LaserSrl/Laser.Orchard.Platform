@@ -1,0 +1,371 @@
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Mini Banner                                                                          */
+/*                                                                                              */
+/************************************************************************************************/
+
+.mv-ss-mini-banner_wrapper
+{
+    position: relative;
+    width: 255px;
+    height: 105px;
+    margin: 0 0 20px 0;
+    overflow: hidden;
+    z-index:0;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow
+{
+    position: relative;
+    width: 255px;
+    height: 44px;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_item
+{
+    width: 255px;
+    height: 44px;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_item img
+{
+    width: 255px;
+    height: 44px;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_item .mv-mb-data
+{
+    display: none;
+}
+
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_prev
+{
+    position: absolute;
+    left: -32px;
+    top: 10px;
+    z-index: 100;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    background: url(trans-black-70.png);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+    box-shadow: 0 0 2px #222;
+}
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_prev:hover
+{
+    background: #000;
+}
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_prev span
+{
+    display: block;
+    margin-top:4px;
+    width: 20px;
+    height: 16px;
+    background: url(arrows.png) no-repeat -63px 50%;
+    text-indent: -9999px;
+}
+
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_next
+{
+    position: absolute;
+    right: -32px;
+    top: 10px;
+    z-index: 100;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    background: url(trans-black-70.png);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+    box-shadow: 0 0 2px #222;
+}
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_next:hover
+{
+    background: #000;
+}
+.mv-ss-mini-banner_wrapper a.mv-mb-slideshow_next span
+{
+    display: block;
+    margin-top:4px;
+    width: 20px;
+    height: 16px;
+    background: url(arrows.png) no-repeat -15px 50%;
+    text-indent: -9999px;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_paging
+{
+    position: absolute;
+    top: -24px;
+    right: 30px;
+    width: 200px;       /* era 140 */
+    z-index: 101;
+    font-size: 12px;
+    padding: 3px 2px;
+    background: url(trans-black-60.png);
+    opacity:0.8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px RED; /* #222;*/
+    -webkit-box-shadow: 0 0 2px green; /*#222;*/
+    box-shadow: 0 0 2px yellow; /*#222;*/
+}
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_paging a
+{
+    display: block;
+    float: left;
+    margin: 0 1px;
+    padding: 3px 7px;
+    color: #ccc;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_paging a:hover
+{
+    color:  #fff;
+    background: #000;
+}
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_paging a.activeSlide
+{
+    background: #eee;
+    color: #222;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_box
+{
+    position: absolute;
+    top: -30px;
+    left: 0;
+    bottom: 0;
+    background: url(trans-black-70.png);
+    width: 100%;
+    height: 24px;
+    z-index: 100;
+}
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_box .mv-mb-data
+{
+    padding: 3px 5px;
+    color: #ccc;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_box .mv-mb-data h4
+{
+    color: #fff;
+    top:-10px;
+    font: normal 14px arial, sans-serif;
+    padding: 0;
+    margin: 0 0 0px 0;
+    z-index:200;
+}
+
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_box .mv-mb-data p
+{
+    padding: 0;
+    margin: 0;
+    line-height: 140%;
+}
+.mv-ss-mini-banner_wrapper .mv-mb-slideshow_box .mv-mb-data a
+{
+    color: #fff;
+}
+
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Midi Banner                                                                         */
+/*                                                                                              */
+/************************************************************************************************/
+
+.mv-ss-midi-banner_wrapper
+{
+    position: relative;
+    width: 942px;
+    height: 219px;
+    margin: 0 0 0px 0;
+    overflow: hidden;
+    z-index:0;
+}
+
+.mv-ss-midi-banner_wrapper .mv-mb-slideshow_item img
+{
+    width: 942px;
+    height: 219px;
+}
+
+.mv-ss-midi-banner_wrapper .mv-mb-slideshow
+{
+    position: relative;
+    width: 942px;
+    height: 219px;
+}
+
+.mv-ss-midi-banner_wrapper .mv-mb-slideshow_item
+{
+    width: 942px;
+    height: 219px;
+}
+
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_box
+{
+    position: absolute;
+    /*top: -30px;*/
+    top: 264px;
+    left: 0;
+    bottom: 0;
+    background: url(trans-black-70.png);
+    /*background-color:green;*/
+    
+    width: 100%;
+    height: 36px;
+    z-index: 100;
+}
+
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_box .mv-mb-data
+{
+    padding: 3px 5px;
+    color: #ccc;
+}
+
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_box .mv-mb-data h4
+{
+    color: #fff;
+    font: normal 14px arial, sans-serif;
+    padding: 0;
+    margin: 0 0 0px 0;
+}
+
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_box .mv-mb-data p
+{
+    padding: 0;
+    margin: 0;
+    line-height: 140%;
+}
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_box .mv-mb-data a
+{
+    color: #fff;
+}
+
+.mv-ss-midi-banner_wrapper .mv-mb-slideshow_item .mv-mb-data
+{
+    display: none;
+}
+
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_prev
+{
+    position: absolute;
+    left: -32px;
+    top: 97px;
+    z-index: 100;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    background: url(trans-black-70.png);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+    box-shadow: 0 0 2px #222;
+}
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_prev:hover
+{
+    background: #000;
+}
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_prev span
+{
+    display: block;
+    margin-top:4px;
+    width: 20px;
+    height: 16px;
+    background: url(arrows.png) no-repeat -63px 50%;
+    text-indent: -9999px;
+}
+
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_next
+{
+    position: absolute;
+    right: -32px;
+    top: 97px;
+    z-index: 100;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    background: url(trans-black-70.png);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+    box-shadow: 0 0 2px #222;
+}
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_next:hover
+{
+    background: #000;
+}
+.mv-ss-midi-banner_wrapper a.mv-midi-slideshow_next span
+{
+    display: block;
+    margin-top:4px;
+    width: 20px;
+    height: 16px;
+    background: url(arrows.png) no-repeat -15px 50%;
+    text-indent: -9999px;
+}
+
+
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_paging
+{
+    position: absolute;
+    top: -24px;
+    right: 0px;
+    /*width: 50px;*/
+    z-index: 101;
+    font-size: 12px;
+    padding: 3px 2px;
+    background: url(trans-black-60.png);
+    opacity:0.8;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 0 2px #222;
+    -webkit-box-shadow: 0 0 2px #222;
+    box-shadow: 0 0 2px #222;
+}
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_paging a
+{
+    display: block;
+    float: left;
+    margin: 0 1px;
+    padding: 3px 7px;
+    color: #ccc;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_paging a:hover
+{
+    color:  #fff;
+    background: #000;
+}
+.mv-ss-midi-banner_wrapper .mv-midi-slideshow_paging a.activeSlide
+{
+    background: #eee;
+    color: #222;
+}
+
+/************************************************************************************************/
+/*                                                                                              */
+/* gestione Home Banner                                                                          */
+/*                                                                                              */
+/************************************************************************************************/

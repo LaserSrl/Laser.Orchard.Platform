@@ -1,0 +1,338 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "Base line text"
+msgstr "Testo base"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "Header logo URL"
+msgstr "URL del logo dell'intestazione"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "Krake default theme settings"
+msgstr "Impostazioni del tema di default Krake"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "Placeholder logo URL"
+msgstr "URL del logo placeholder"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "type a base line text."
+msgstr "digitare un testo di base."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "type an URL for the header logo."
+msgstr "digitare un URL per il logo dell'intestazione."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Admin/ThemeSettings.cshtml"
+msgid "type an URL for the placeholder logo."
+msgstr "digitare un URL per il logo placeholder."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Content.Edit-FavoriteCulturePart.cshtml"
+msgid "Favorite Culture"
+msgstr "Cultura Preferenziale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Content.Summary.cshtml"
+msgid "View Content"
+msgstr "Visualizza contenuto"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/FavoriteCulturePart_Edit.cshtml"
+msgid "Favorite Culture"
+msgstr "Cultura Preferenziale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/FavoriteCulturePart_Edit.cshtml"
+msgid "Select your favorite culture"
+msgstr "Seleziona la tua lingua preferenziale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/ThemeSettings.cshtml"
+msgid "Krake Default Theme Options"
+msgstr "Opzioni del tema di default Krake"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Accept"
+msgstr "Accetto"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Don't Accept"
+msgstr "Non accetto"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "I have read the regulation."
+msgstr "Ho letto il regolamento."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Policies"
+msgstr "Informative"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Privacy policy"
+msgstr "Informativa privacy"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistrationPolicy_Edit.cshtml"
+msgid "Read carefully the following policies"
+msgstr "Leggi attentamente queste informative"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Layout.cshtml"
+msgid "I Agree"
+msgstr "Sono d'accordo"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Layout.cshtml"
+msgid "I Disagree"
+msgstr "Non sono d'accordo"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Layout.cshtml"
+msgid "Powered by Krake"
+msgstr "Powered by Krake"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid " if you don't have an account."
+msgstr "se non hai un account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Enter username and password"
+msgstr "Inserisci nome utente e password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Login was unsuccessful. Please correct the errors and try again."
+msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid " if you don't have an account."
+msgstr "se non hai un account."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "...or login with:"
+msgstr "...oppure esegui la login con:"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Enter username and password"
+msgstr "Inserisci nome utente e password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Log in with"
+msgstr "Accedi con"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Login was unsuccessful. Please correct the errors and try again."
+msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai dimenticato la tua password?"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Remember Me"
+msgstr "Ricordami"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "Sign In"
+msgstr "Accedi"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Account informations"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Confirm password"
+msgstr "Conferma password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Create a New Account"
+msgstr "Creare un nuovo Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "I Agree"
+msgstr "Sono d'accordo"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "I Disagree"
+msgstr "Non sono d'accordo"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "This user account will be linked to <b>{0}</b> when you login."
+msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Use the form below to create a new account."
+msgstr "Usare il modulo sottostante per creare un nuovo account."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Confirm Password"
+msgstr "Conferma password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Current Password"
+msgstr "Password corrente"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "New Password"
+msgstr "Nuova Password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "New passwords are required to be a minimum of {0} characters in length."
+msgstr "La password deve essere almeno di {0} caratteri."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Utilizza il modulo sottostante per cambiare la tua password."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Lost Password"
+msgstr "Password dimenticata"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr "Inserisci il tuo Username o il tuo indirizzo email. Riceverai una e-mail con un link per creare una nuova password."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Send Request"
+msgstr "Invia richiesta"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.Common.Body-Page.cshtml"
+msgid "Logged"
+msgstr "Loggato"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.Common.Body-Page.cshtml"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.Common.Body-Page.cshtml"
+msgid "Logout"
+msgstr "Esci"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
+msgid "Dashboard"
+msgstr "Pannello di controllo"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
+msgid "Logoff"
+msgstr "Esci"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
+msgid "Welcome,"
+msgstr "Benvenuto,"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.Title_Summary.cshtml"
+msgid "View Content"
+msgstr "Visualizza contenuto"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Create a New Account"
+msgstr "Creare un nuovo Account"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Use the form below to create a new account."
+msgstr "Utilizzare il modulo seguente per creare un nuovo account."
+
+msgctxt "KrakeDefaultTheme.Settings.AdminMenu"
+msgid "Krake default theme options"
+msgstr "Opzioni del tema di default Krake"
+
+msgctxt "KrakeDefaultTheme.Settings.AdminMenu"
+msgid "Themes"
+msgstr "Temi"
+
+msgctxt "KrakeDefaultTheme.Settings.Controllers.AdminController"
+msgid "Couldn't update theme settings"
+msgstr "Impossibile aggiornare le impostazioni del tema"
+
+msgctxt "KrakeDefaultTheme.Settings.Controllers.AdminController"
+msgid "Your settings have been saved."
+msgstr "Le impostazioni sono state salvate."
+

@@ -1,0 +1,17 @@
+﻿@using Laser.Orchard.StartupConfig.Services
+@{
+    ICommonsServices commons;
+    WorkContext.TryResolve(out commons);
+    var brand = commons.GetDeviceBrandByUserAgent();
+    switch (brand) {
+        case Laser.Orchard.StartupConfig.DevicesBrands.Apple:
+            Response.Clear();
+            Response.Redirect("https://itunes.apple.com/app/tic-toc-pesariis/id893144830");
+            break;
+        case Laser.Orchard.StartupConfig.DevicesBrands.Google:
+            Response.Clear();
+            Response.Redirect("https://play.google.com/store/apps/details?id=com.lasergroup.tictoc");
+            break;
+    }
+}
+@T("REDIRECT PAGE FOR MOBILE DEVICES")

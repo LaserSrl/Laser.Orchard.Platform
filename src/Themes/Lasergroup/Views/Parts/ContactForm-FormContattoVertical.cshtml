@@ -1,0 +1,204 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Fields;
+@using Orchard.Fields.Fields;
+@using Orchard.Utility.Extensions
+@using Laser.Orchard.ContactForm.ViewModels
+@using System.Collections.Specialized
+@{
+    Script.Require("jQuery").AtHead();
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    Style.Include("ContactForm.css").AtHead();
+
+    var contentItem = (ContentItem)Model.ContentItem;
+    /*
+     Add TextField NoteInterne come campo hidden
+     Add LinkField Privacy
+     They are added in this shape, because we need to have them both inside the form
+     */
+
+
+    var noteInterneField = contentItem.Parts
+        .SelectMany(pa => pa.Fields)
+        .OfType<TextField>()
+        .FirstOrDefault(fi => fi.Name == "NoteInterne");
+    var noteInterne = noteInterneField != null
+        ? (noteInterneField.Value ?? string.Empty)
+        : string.Empty;
+
+    var privacyField = contentItem.Parts
+        .SelectMany(pa => pa.Fields)
+        .OfType<LinkField>()
+        .FirstOrDefault(fi => fi.Name == "Privacy");
+    var privacyUrl = "";
+    var privacyLinkText = ""; // text for the link here
+    var prePrivacyText = T("By clicking \"SEND\" I declare that I have read and understood ").Text;
+    var privacyTarget = "";
+    if (privacyField != null) {
+        privacyUrl = privacyField.Value ?? string.Empty;
+        privacyLinkText = privacyField.Text ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(privacyUrl) && string.IsNullOrWhiteSpace(privacyLinkText)) {
+            privacyLinkText = T("the privacy policy.").Text;
+        }
+        privacyTarget = privacyField.Target ?? "_blank";
+    }
+
+    const string displayNone = "style=\"display:none\"";
+    var contactForm = (ContactFormViewModel)Model.ContactForm;
+    var displaySubject = contactForm.ShowSubjectField ? string.Empty : displayNone;
+    var displayName = contactForm.ShowNameField ? string.Empty : displayNone;
+    var displayAttachmentButton = contactForm.EnableFileUpload ? string.Empty : displayNone;
+    var uniqueId = Model.ContentPart.Id;
+
+    var formData = TempData["form"];
+    var name = formData != null ? ((NameValueCollection)formData)["Name"] : "";
+    var surname = formData != null ? ((NameValueCollection)formData)["Surname"] : "";
+    var email = formData != null ? ((NameValueCollection)formData)["Email"] : "";
+    var confirmEmail = formData != null ? ((NameValueCollection)formData)["ConfirmEmail"] : "";
+    var subject = formData != null ? ((NameValueCollection)formData)["Subject"] : "";
+    var message = formData != null ? ((NameValueCollection)formData)["Message"] : "";
+    var mobile = formData != null ? ((NameValueCollection)formData)["Mobile"] : "";
+    var company = formData != null ? ((NameValueCollection)formData)["Company"] : "";
+    var jobPosition = formData != null ? ((NameValueCollection)formData)["JobPosition"] : "";
+}
+
+<div class="row">
+    <div class="col-sm-1 col-md-2">
+        &nbsp;
+    </div>
+
+    <div class="col-sm-10 col-md-8">
+        @{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" })) {
+
+                <div id="FormError" class="wpcf7-response-output wpcf7-display-none wpcf7-validation-errors" style="display:none">
+                    @T("One or more fields contain errors. Please check and try again.")
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Name">@T("Name")<span class="required">*</span></label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Name-@uniqueId" type="text" name="Name" value="@name" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Your Name")" />
+                                <span role="alert" id="NameError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Surname">@T("Surname")<span class="required">*</span></label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Surname-@uniqueId" type="text" name="Surname" value="@surname" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Your Family Name")" />
+                                <span role="alert" id="SurnameError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="Email">@T("Email")<span class="required">*</span></label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Email-@uniqueId" type="email" name="Email" value="@email" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Email Address")" />
+                                <span role="alert" id="EmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                                <span role="alert" id="EmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                                <span role="alert" id="EmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="ConfirmEmail">@T("Confirm Email")<span class="required">*</span></label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="ConfirmEmail-@uniqueId" type="email" name="ConfirmEmail" value="@confirmEmail" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Confirm Email Address")" />
+                                <span role="alert" id="ConfirmEmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                                <span role="alert" id="ConfirmEmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                                <span role="alert" id="ConfirmEmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="Mobile">@T("Mobile")</label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Mobile-@uniqueId" type="text" name="Mobile" value="@mobile" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="false" aria-invalid="false" placeholder="@T("Your Mobile Number")" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="Company">@T("Company")</label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Company-@uniqueId" type="text" name="Company" value="@company" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="false" aria-invalid="false" placeholder="@T("Your Company")" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="JobPosition">@T("Role")</label><br />
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="JobPosition-@uniqueId" type="text" name="JobPosition" value="@jobPosition" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="false" aria-invalid="false" placeholder="@T("Your Job Position")" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="Message">@T("Message")<span class="required">*</span></label><br />
+                    <span class="wpcf7-form-control-wrap messaggio">
+                        <textarea id="Message-@uniqueId" name="Message" cols="40" rows="4" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Comments or Inquiry")"></textarea>
+                        <span role="alert" id="MessageError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                    </span>
+                </div>
+
+
+
+                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
+                <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
+                if (!string.IsNullOrEmpty(noteInterne)) {
+                    <input id="NoteInterne-@uniqueId" name="NoteInterne" type="hidden" value="@noteInterne" />
+                }
+                @Html.AntiForgeryTokenOrchard()
+                <div class="row">
+                    @if (!string.IsNullOrWhiteSpace(privacyUrl)) {
+                        <div class="col-md-10">
+                            <p>
+                                @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
+                            </p>
+                        </div>
+                    }
+                    <div class="col-md-2">
+                        <p>
+                            <input type="submit" id="btnInvia" value="@T("SEND")" class="btn btn-invia pull-right" />
+                        </p>
+                    </div>
+                </div>
+                
+
+            }
+        }
+    </div>
+
+    <div class="col-sm-1 col-md-2">
+        &nbsp;
+    </div>
+</div>
+
+
+@using (Script.Head()) {
+    <script type="text/javascript">
+         $(document).ready(function () {
+             $('#attachment_button-@uniqueId').click(function () {
+                 $.colorbox({ iframe: true, width: "40%", height: "26%", href: "@(Url.Action("Add", "FileUpload", new { Area = "Laser.Orchard.ContactForm" }) + "?ContactFormID=" + uniqueId)", title: "@T("Upload file")" });
+             });
+
+             $('#MediaId-@uniqueId').change(function () {
+                 if ($('#MediaId-@uniqueId').val() != '') {
+                     $('#attachment_button-@uniqueId').attr('disabled', 'disabled');
+                 }
+             });
+         });
+    </script>
+}

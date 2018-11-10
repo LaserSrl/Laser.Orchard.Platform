@@ -1,0 +1,44 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Fields.Fields
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":button.primaryAction").hide();
+        $("#FormAjaxList").submit(function (e) {
+            var url_old = "~/Modules/Laser.Orchard.ContentExtension/View/DynamicProjectionDisplay/AjaxList.cshtml";
+            var url = '@Url.Action("AjaxList", "DynamicProjectionDisplay", new { area = "Laser.Orchard.ContentExtension"})'
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: $("#FormAjaxList").serialize(),
+                success: function (data) {
+                    $("#AjaxList").html(data);
+                }
+            });
+            e.preventDefault();
+        });
+        $("#FormAjaxList").submit();
+    });
+</script>
+@{
+    IContentManager _contentManager;
+    WorkContext.TryResolve<IContentManager>(out _contentManager);
+    Layout.Title = Model.Part.AdminMenuText;
+}
+
+<form id="FormAjaxList" method="get">
+    <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
+    <input type='hidden' name='page' value='1' />
+    @if (!String.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
+        if (!String.IsNullOrEmpty(Model.Form)) {
+            @Html.Partial((string)(Model.Form))
+        }
+        if (Model.FilterContent != null) {
+            @Display(_contentManager.BuildEditor(Model.FilterContent));
+        }
+        <button type="submit" value="submit">Applica</button>
+    }
+</form>
+
+<div id="AjaxList">
+
+</div>

@@ -1,0 +1,49 @@
+﻿.message-Error {
+    background: #b30404;
+    border: 1px solid #990808;
+    color: white;
+    text-align: center;
+    margin: 15px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.message-Information {
+    background: #009900;
+    border: 1px solid #009900;
+    color: white;
+    text-align: center;
+    margin: 15px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.cc-cookies {
+    width: 100%;
+}
+.questionnaire-container ul li ul li label {
+    display: block;
+}
+
+.questionnaire-container ul {
+    list-style-type: none;
+}
+
+.ul-cultures {
+    width: 100%;
+    text-align: center;
+}
+
+.ul-cultures li {
+    list-style: none;
+    display: inline-block;
+    width: 32px;
+    height: 24px;
+}
+
+.ul-cultures li.it {
+    background: url('images/748049 - flag italy.png');
+}
+.ul-cultures li.en {
+    background: url('images/748024 - flag kingd.png');
+}

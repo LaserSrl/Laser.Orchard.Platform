@@ -1,0 +1,142 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Enable user to select a Description"
+msgstr "Permetti all'utente di selezionare una descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Enable user to select a Link"
+msgstr "Consenti all'utente la selezione di un link"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Enable user to select a picture"
+msgstr "Consenti all'utente la selezione di un'immagine"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Enable user to select a Text"
+msgstr "Consenti all'utente la selezione di un testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Link to share"
+msgstr "Link da condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Picture"
+msgstr "Foto"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Picture to Share: use tokens to define the MediaLibraryPickerField to use as source list."
+msgstr "Foto da condividere: utilizza i tokens per definire il campo MediaLibraryPicker da utilizzare come lista di immagini."
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Show Description Choise"
+msgstr "Mostra la scelta per la descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Show Image Choise"
+msgstr "Mostra la scelta di un'immagine"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Show Link Choise"
+msgstr "Mostra la scelta di un Link"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Show Text Choise"
+msgstr "Mostra la scelta di un testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Text"
+msgstr "Testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Text to Share"
+msgstr "Testo da Condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "User only for Open Graph - Text to Share"
+msgstr "Utente solo per Open Graph - Testo da condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "Description - OpenGraph"
+msgstr "Descrizione - OpenGraph"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "Image"
+msgstr "Immagine"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "ImageList"
+msgstr "Lista di immagini"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "Sharing"
+msgstr "Condivisione"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLink.cshtml"
+msgid "Text"
+msgstr "Testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Facebook Fb_appId: With this OpenGraph key => Your page will appear in the 'Likes and Interests' section of the user's profile, and you have the ability to publish updates to the user"
+msgstr "Facebook Fb_appId: Con questa chiave OpenGraph => La tua pagina comparirà nella sezione 'Mi Piace' del profilo dell'utente, e avrai l'abilità di pubblicare aggiornamenti per l'utente"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Fb_appId"
+msgstr "Fb_appId"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Link to share"
+msgstr "Link da condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Picture"
+msgstr "Foto"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Picture to Share"
+msgstr "Foto da condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Text"
+msgstr "Testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Text to Share"
+msgstr "Testo da Condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/EditorTemplates/Parts/ShareLinkModuleSetting.cshtml"
+msgid "Text to Share used on OpenGraph"
+msgstr "Testo da condividere usato su OpenGraph"
+
+msgctxt "Laser.Orchard.ShareLink.Handlers.ShareLinkModuleSettingHandler"
+msgid "ShareLink"
+msgstr "Link di condivisione"
+

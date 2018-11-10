@@ -1,0 +1,24 @@
+﻿<Placement>
+  <Place Parts_Activity_Edit="Content:2" Place="" Parts_Calendar_Edit="Content:2"/>
+  <Place Parts_Calendar="Content:2" Parts_EventList="Content:2"/>
+  <Place Parts_Common_Metadata_Summary="-"/>
+
+  <Place Parts_Activity="Content:3" />
+  <Place Parts_ActivityDisplay="Content:3" />
+
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_Calendar="-" Parts_EventList="-" />
+  </Match>
+  <Match DisplayType="SummaryAdmin">
+    <Place Parts_ActivityDisplay="Content:after" />
+  </Match>
+
+  <Match ContentType="CalendarEvent">
+    <Match DisplayType="Summary">
+      <Place Fields_MediaLibraryPicker="Content:1"/>
+    </Match>
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Parts_ActivityDisplay="Content:after" />
+  </Match>
+</Placement>

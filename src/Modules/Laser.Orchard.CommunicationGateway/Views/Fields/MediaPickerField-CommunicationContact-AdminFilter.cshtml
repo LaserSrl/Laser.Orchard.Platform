@@ -1,0 +1,19 @@
+﻿@{
+    var mediaPickerField = (Orchard.MediaLibrary.Fields.MediaLibraryPickerField)Model.Field;
+    var contentManager = WorkContext.Resolve<Orchard.ContentManagement.IContentManager>();
+    Style.Include("media-library-picker-admin.css");
+}
+
+<fieldset>
+    <legend>@mediaPickerField.DisplayName</legend>
+    <div style="display:block">
+        <ul style="list-style-position:outside;vertical-align:baseline">
+            @foreach (var media in mediaPickerField.MediaParts) {
+                <li style="display:list-item;float:left;width:200px;height:200px;overflow:hidden;border: 1px solid grey;text-align:center">
+                    <a href="@media.MediaUrl" target="_blank" style="display:block;font-weight:700">@media.Title</a>
+                    @Html.Raw(Display(contentManager.BuildDisplay(media, "Thumbnail")).ToString())
+                </li>
+            }
+        </ul>
+    </div>
+</fieldset>

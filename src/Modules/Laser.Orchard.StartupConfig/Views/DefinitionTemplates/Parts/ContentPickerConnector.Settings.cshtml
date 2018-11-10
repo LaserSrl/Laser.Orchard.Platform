@@ -1,0 +1,8 @@
+﻿@model Laser.Orchard.StartupConfig.Settings.ContentPickerConnectorSettings
+<fieldset>
+	<div class="editor-field">
+		@Html.LabelFor(m => m.FieldsFilter, T("Fields Filter"))
+        @Html.TextBoxFor(m => m.FieldsFilter, new { @class="text large"})
+		<span class="hint">@T("Comma separated value ex: ContentType.ContentFieldName, ContentType2.ContentFieldName2, ...")</span>
+	</div>
+</fieldset>

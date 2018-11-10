@@ -1,0 +1,26 @@
+@using Orchard.ContentManagement
+@{
+    Layout.Title = Model.Title;
+    ContentItem content = Model.ContentItem;
+    dynamic item = Model.ContentItem;
+    var contentType = content.ContentType;
+    ContentPart contentGenericPart = null;
+    ContentField sottoTitoloField = null;
+    ContentField imageField = null;
+    var imageSrc = "";
+    var imageAlt = "";
+    var imageTitle = "";
+    contentGenericPart = content.Parts.Where(x => x.PartDefinition.Name == contentType).FirstOrDefault();
+    if (contentGenericPart != null) {
+        sottoTitoloField = contentGenericPart.Fields.Where(f => f.Name == "Sottotitolo").FirstOrDefault();
+        imageField = contentGenericPart.Fields.Where(f => f.Name == "ImageFronte").FirstOrDefault();
+        if (imageField != null && ((dynamic)imageField).MediaParts.Count > 0) {
+            imageSrc = ((dynamic)imageField).FirstMediaUrl;
+            imageAlt = ((dynamic)imageField).MediaParts[0].Title;
+            imageTitle = ((dynamic)imageField).MediaParts[0].AlternateText;
+        }
+    }
+    Layout.BaseClass = "page page-template navbar-fixed";
+}
+@Display(New.Parts_Title_Default(Title: Model.Title, Subtitle: ((dynamic)sottoTitoloField).Value, ImageUrl: imageSrc, ImageTitle: imageTitle, ImageAlternateText: imageAlt))
+@Display(New.Parts_Body_Default(Html: item.BodyPart.Text))

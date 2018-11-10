@@ -1,0 +1,64 @@
+﻿@using Laser.Orchard.OpenAuthentication.Extensions
+@using Laser.Orchard.OpenAuthentication.Models
+@using Orchard.ContentManagement
+@using Orchard.Utility.Extensions
+@using Orchard.Environment.Configuration
+@using Orchard.Security
+@{
+    var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
+    var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
+    
+    /*Logica Logo WhiteLabel*/
+    ShellSettings _shellsettings;
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    string tenantname = _shellsettings.Name.ToLower();
+    var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
+
+}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-index">
+        @if (File.Exists(Server.MapPath(whitelabelLogo))) {
+            <img src="@whitelabelLogo" alt="@tenantname" class="img-responsive" />
+        } else {
+            <div class="placeholder-logo"></div>
+        }
+        <h3>@T("Login now")</h3>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-index">
+        @if (userCanRegister) {
+            <div class="sap_tabs">
+                <div id="horizontalTab1" style="display: block; width: 100%; margin: 0px;">
+                    <ul>
+                        <li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>@T("Sign in")</span></li>
+                        <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>@T("Sign up")</span></li>
+                    </ul>
+
+                    <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+                        @Display.LogonForm()
+                    </div>
+
+                    <div class="tab-2 resp-tab-content" aria-labelledby="tab_item-1">
+                        @Display.RegisterForm()
+                    </div>
+                </div>
+            </div>
+
+            Script.Include("easyResponsiveTabs.js", "easyResponsiveTabs.min.js");
+
+            <script type="text/javascript">
+                $(window).load(function () {
+                    $('#horizontalTab1').easyResponsiveTabs({
+                        type: 'default', //Types: default, vertical, accordion
+                        width: 'auto', //auto or any width like 600px
+                        fit: true   // 100% fit in a container
+                    });
+                });
+            </script>
+
+        } else {
+            @Display.LogonForm()
+        }
+    </div>
+
+</div>

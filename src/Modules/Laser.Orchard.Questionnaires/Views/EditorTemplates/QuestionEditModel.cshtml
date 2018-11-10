@@ -1,0 +1,140 @@
+﻿@using Laser.Orchard.Questionnaires
+@model Laser.Orchard.Questionnaires.ViewModels.QuestionEditModel
+@using Orchard.Utility.Extensions;
+@using Orchard.MediaLibrary.Models;
+@using Orchard.ContentManagement;
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("answer"); }
+@{
+    Laser.Orchard.Questionnaires.Settings.QuestionnairesPartSettingVM partSettings = ViewBag.QuestionnairesPartSettings;
+    var qid = "QuestionNum_" + answerBlock;
+    var contentManager = WorkContext.Resolve<IContentManager>();
+}
+<div id="@qid" class="j_question">
+    <table width="100%" class="questiontable">
+        @*Question zone*@
+        <tr>
+            <td class="leftside">
+             
+                @{
+                    <span class="quest_label">@T("Question type")</span>
+                    var qTypes = new List<string>();
+                    if (partSettings.AllowSingleChoice) {
+                        qTypes.Add(QuestionType.SingleChoice.ToString());
+                    }
+                    if (partSettings.AllowMultiChoice) {
+                        qTypes.Add(QuestionType.MultiChoice.ToString());
+                    }
+                    if (partSettings.AllowOpenAnswers) {
+                        qTypes.Add(QuestionType.OpenAnswer.ToString());
+                    }
+                    if (qTypes.Count == 0) {
+                        qTypes.Add(QuestionType.SingleChoice.ToString());
+                    }
+                }
+
+                @Html.DropDownListFor(x => x.QuestionType, new SelectList(qTypes, Model.QuestionType), new { @class = "leftside" })<br />
+                <span class="quest_label">@T("Answer type")</span>
+                @Html.DropDownListFor(x => x.AnswerType, new SelectList(Enum.GetNames(typeof(AnswerType)), Model.AnswerType), new { @class = "leftside" })<br />
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.QuestionnairePartRecord_Id)
+                <input type="hidden" class = "j_iddomanda" value="@qid"  />
+                @Html.HiddenFor(x => x.Position, new { @class = "position-field" })
+                @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete" })
+
+                @{var divanteprima = "Anteprima" + Html.Raw(Html.FieldIdFor(x => x.AllFiles));
+                    var imginserite = 0;
+                    <div id="@divanteprima" class="hlist-container">
+                        <ul>
+                            @if (Model.AllFiles != null && Model.AllFiles.Split(',').Count() > 0) {
+                                foreach (int ciId in Model.AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                    MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                    imginserite++;
+                                    <li>
+                                        <img alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 100, Height: 100, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                        <a href="#" onclick="javascript:if(confirm('@T("Remove the image?")')){$('#@Html.FieldIdFor(x => x.AllFiles)').val(removeValue($('#@Html.FieldIdFor(x => x.AllFiles)').val(),@mediaPart.Id,','));$(this).closest('li').remove();return(false);}">@T("Remove")</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                    </div>
+                }
+                <span>
+                    @Html.HiddenFor(x => x.AllFiles)
+                </span>
+
+                @if ((bool)TempData["EnableQuestionImage"] == true) {
+                    <span class="button add " onclick="javascript:AddMedia(this, '@Html.FieldIdFor(x => x.AllFiles)', @TempData["QuestionImageLimitNumber"])">@T("Add Picture")</span>
+                }
+                @if (partSettings.AllowSections) {
+                    <span class="quest_label">@T("Section")</span>
+                    @Html.TextBoxFor(x => x.Section, new { @maxlength = "200", @placeholder = T("Type a section name") })
+                }
+                <br />
+            </td>
+            <td>
+                <span class="quest_label">@T("Question text")</span>
+                @Html.TextAreaFor(x => x.Question, new { @maxlength = "500", @placeholder = T("Type the question"), @class = "domanda " })
+            </td>
+
+            <td class="rightside">
+                <span class="quest_label">@T("Properties")</span>
+                @Html.CheckBoxFor(m => m.Published) @T("Visible")<br />
+                @Html.CheckBoxFor(m => m.IsRequired) @T("Required")<br />
+                @if (partSettings.AllowConditions) {
+                    <i class="fa fa-cogs"></i><a onclick="javascript:PannelloCondition(this);return false;" href="#" class="j_cond_link">@T("Condition")<br />
+                    </a>
+                }
+                <span class="quest_label">@T("Actions")</span>
+                <i class="fa fa-times" style="color: red"></i>
+                @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_question", "input.mark-for-delete", "ScriviMenuTab();TestQuestionNumber();")
+                <br />
+                @{
+                    string styleanswer = "inline";
+                    if ((int)Model.Answers.Count >= (int)TempData["AnswersLimitsNumber"] && (int)TempData["AnswersLimitsNumber"] > 0) {
+                        styleanswer = "none";
+                    }
+                   
+                }
+                <span class="addanswer" style="display:@styleanswer">
+                    <i class="fa fa-plus" style="color: green">&nbsp;</i>@Html.LinkToAddNestedForm(x => x.Answers, T("Add Answer").Text, "#" + answerBlock, ".answer", "answer", null, "RefreshAnswerPostions('#" + answerBlock + "')")
+                    <br />
+                </span>
+            </td>
+        </tr>
+        @*Condition zone*@
+        <tr class="questioncondition">
+            <td colspan="2">
+                <div class="j_costruiscicondition"></div>
+                @Html.TextAreaFor(x => x.Condition, new { @placeholder = T("Condition"), @class = "j_condizione" })
+            </td>
+            <td>
+                <label>@T("Behaviour")</label>
+                @Html.DropDownListFor(x => x.ConditionType, new SelectList(Enum.GetNames(typeof(ConditionType)), Model.ConditionType))<br />
+            </td>
+        </tr>
+        @*Response zone*@
+        <tr>
+            <td colspan="3">
+                <table width="100%;" class="answertable">
+                    <tbody id="@answerBlock">
+                        @Html.EditorFor(x => x.Answers)
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        @*        <tr>
+            <td colspan="3">
+                 <button onclick="javascript:colorboxclick('@Html.Raw(Url.Action("Index", "UploadFile", new { area = "Laser.Orchard.OrdersManagement", field = Html.FieldIdFor(x => x.ListFiles), filenumber = 0, folderfield = "order", subfolder = "id_ordine" }))','@T(" - Choose a File to Upload - ")','200','500');if ( document.getElementById('@buttonid') != undefined){document.getElementById('@buttonid').style.display='none';} return false;"  class="primaryAction" id="btnaddfile">@T("Add File")</button>
+            </td>
+        </tr>*@
+    </table>
+    @*    </td>
+</tr>*@
+
+</div>
+
+@using (Script.Foot()) {
+    @Html.MakeSortable("#" + @answerBlock, ".answers-position-field");
+}
+

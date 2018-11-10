@@ -1,0 +1,25 @@
+﻿@{
+    var message = Html.Raw(Html.Encode(Model.Message).Replace("\n", "<br />"));
+}
+@if (Model.Type == Orchard.UI.Notify.NotifyType.Error) {
+    <div class="alert alert-error fade in">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <strong>@T("ERROR")!</strong> @message
+    </div>
+} else if (Model.Type == Orchard.UI.Notify.NotifyType.Information) {
+    <div class="alert alert-success fade in">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <strong>@T("SUCCESS")!</strong> @message
+    </div>
+} else if (Model.Type == Orchard.UI.Notify.NotifyType.Warning) {
+    <div class="alert fade in">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <strong>@T("WARNING")!</strong> @message
+    </div>
+} else {
+    <div class="alert alert-info fade in">
+        <button type="button" class="close" data-dismiss="alert"></button>
+        <strong>@T("INFO")!</strong> @message
+    </div>
+}
+

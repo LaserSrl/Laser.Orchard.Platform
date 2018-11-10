@@ -1,0 +1,21 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.GDPRAdminViewModel
+@{ 
+    Layout.Title = T("Manage ProfileItems");
+}
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset class="bulk-actions">
+        <div style="float: left; margin-right:25px">
+            <label for="search">@T("Search:")</label>
+            @Html.TextBoxFor(m => m.SearchExpression)
+        </div>
+        <div style="float: right; display:flex;">
+            <div id="profile-item-search-button">
+                <button type="submit" name="submit.Search" value="yes please">@T("Search")</button>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="contentItems bulk-items">
+        @Display(Model.ContentItems)
+    </fieldset>
+    @Display(Model.Pager)
+}

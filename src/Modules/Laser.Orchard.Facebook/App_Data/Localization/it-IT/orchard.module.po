@@ -1,0 +1,242 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/ActivatingSocial_old/Facebook.cshtml"
+msgid "Post on this Facebook's page - Select a page "
+msgstr "Posta su questa pagina Facebbok -  Seleziona una pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/ActivatingSocial_old/Facebook.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/ActivatingSocial_old/Facebook.cshtml"
+msgid "Select a element of the page list"
+msgstr "Seleziona un elemento dalla lista di pagine"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Caption"
+msgstr "Etichetta"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Caption"
+msgstr "Etichetta Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Description"
+msgstr "Descrizione su Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Link"
+msgstr "Link su Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Message"
+msgstr "Messaggio su Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Name"
+msgstr "Nome di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Facebook Picture"
+msgstr "Foto del profilo facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Picture"
+msgstr "Foto"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
+msgid "Settings - Facebook Post"
+msgstr "Impostazioni - Facebook post"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "Enable"
+msgstr "Abilita"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "Facebook Account"
+msgstr "Account Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "NO"
+msgstr "NO"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "Only Enabled account can be used to post on Facebook"
+msgstr "Solo gli account abilitati possono essere utilizzati per fare un post su Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "Shared = This account can be used by other user to generate Facebook Post"
+msgstr "Condiviso significa che l'account potrà essere usato anche da altri utenti per effettuare nuovi Post"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "Shared Account"
+msgstr "Account condiviso"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookAccount.cshtml"
+msgid "YES"
+msgstr "SI"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "AccountList"
+msgstr "LIsta degli account"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Approved"
+msgstr "Approvato"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Caption"
+msgstr "Etichetta"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Facebook"
+msgstr "Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Insert a facebook account "
+msgstr "Inserisci un account Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Link"
+msgstr "Link"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Message"
+msgstr "Messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Message already posted."
+msgstr "Messaggio già postato."
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Message not yet posted."
+msgstr "Messaggio non ancora postato."
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "NO"
+msgstr "NO"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Picture Url"
+msgstr "Url della foto"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Post"
+msgstr "Post"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "Post on next publish"
+msgstr "Posta alla prossima pubblicaizone"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "ShareLink"
+msgstr "Link to share"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "This Facebook message has been already posted. You will be able to edit and save it, but it will not be posted anymore on next publish."
+msgstr "Questo messaggio è già stato postato. Potrai modificarlo e risalvarlo, ma non sarà più postato."
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "With Image"
+msgstr "Utilizza un'immagine"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
+msgid "YES"
+msgstr "SI"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Add Facebook Account"
+msgstr "Aggiungi un Account Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Clear"
+msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Facebook Account"
+msgstr "Account Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "Facebook Account Added"
+msgstr "Account Facebook Aggiunto"
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "Facebook Page {0} added"
+msgstr "La pagina Facebook {0} è stata aggiunta"
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "Facebook Page {0} can't be added, is duplicated"
+msgstr "La pagina Facebook {0} non può essere aggiunta, in quanto già presente."
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "No facebook account setting added, add one in Settings -> Open Authentication"
+msgstr "Nessun account Facebook, aggiungine uno in Impostazioni -> Open Authentication"
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "User Facebook Account added"
+msgstr "L'account Facebook dell'utente è stato aggiunto"
+
+msgctxt "Laser.Orchard.Facebook.Controllers.FacebookAccountController"
+msgid "User Facebook Account can't be added, is duplicated"
+msgstr "L'account Facebook dell'utente non può essere aggiunto, in quanto già presente"
+
+msgctxt "Laser.Orchard.Facebook.Handlers.FacebookPostHandler"
+msgid "Advertising can't be published, see campaign validation date"
+msgstr "Il comunicato non può essere pubblicato. Controllare le date di validità della campagna."
+
+msgctxt "Laser.Orchard.Facebook.Handlers.FacebookPostHandler"
+msgid "Facebook error:"
+msgstr "Errore durante l'operazione su Facebook:"
+
+msgctxt "Laser.Orchard.Facebook.Navigation.AdminMenu"
+msgid "Social Facebook Account"
+msgstr "Account social Facebook"
+

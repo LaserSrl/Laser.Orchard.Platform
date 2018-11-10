@@ -1,0 +1,36 @@
+@{
+    var customView = !WorkContext.CurrentTheme.Id.ToLower().Equals("theadmin") && Request.Url.ToString().ToLower().Contains("contents/item/display");
+    var baseUrl = "http://" + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port) +"/";
+}
+
+@{
+    Style.Include("Laser.Orchard.Faq.css");
+}
+
+@if (!customView)
+{
+    
+    @(T("Faq Type") + ": ")
+    <b>@Model.FaqType</b>
+    <br />
+    @(T("Question") + ": ")
+    <b>@Model.Question</b>
+    <br />
+}
+else
+{
+    <div class="list_docs">
+        <div class="list_docs_item">
+            <ul class="list_docs_item_info">
+                <li>@T("Faq Type"): <a href="@baseUrl@Model.UrlToType">@Model.FaqType</a></li>
+            </ul>
+            <div class="faq-question">
+                <a class="list_docs_item_title faq-title">@Model.Question</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

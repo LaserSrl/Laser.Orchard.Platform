@@ -1,0 +1,27 @@
+﻿@using Orchard.Environment.Configuration;
+@using Orchard.Taxonomies.Fields;
+@using Orchard.Taxonomies.Services;
+@{
+    var item = Model.ContentItem;
+
+    if (item.Prodotto != null &&
+        item.Prodotto.Tipologia != null) {
+        var taxField = (TaxonomyField)(item.Prodotto.Tipologia);
+
+        if (taxField.Terms.Any()) { //a term is required, but check just in case
+            var taxonomyService = WorkContext.Resolve<ITaxonomyService>();
+            var settings = WorkContext.Resolve<ShellSettings>();
+            var prefix = settings.RequestUrlPrefix;
+            var url = taxonomyService.GetTaxonomy(taxField.Terms.First().TaxonomyId).Slug;
+            url = (url.StartsWith("~/") ? url.Substring(2) : url).Trim('/'); //remove ~/
+            url = "~/" + (string.IsNullOrWhiteSpace(prefix) ? "" : prefix + "/") + url;
+            url = Url.Content(url);
+
+            <div class="" style="margin-top:10px;height:20px">
+                <div class="pull-right">
+                    <a href="@url" class="link-back-news">@T("Show all showcases")</a>
+                </div>
+            </div>
+        }
+    }
+}

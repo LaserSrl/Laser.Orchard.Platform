@@ -1,0 +1,22 @@
+﻿@model Orchard.Comments.Models.CommentPart
+@{
+    var subthemePath = Url.Content("~/Themes/Lasergroup/Styles");
+
+    }
+    
+    @if (WorkContext.CurrentUser == null) {
+        @Html.TextBoxFor(m => m.Author, new { @class = "partecipa", placeholder = "Inscerisci il tuo nome..." })
+        @Html.TextBoxFor(m => m.Email, new { @class = "partecipa", placeholder = "Inscerisci la tua email..." })
+    } else {
+        @Html.Hidden("Name", WorkContext.CurrentUser.UserName ?? "")
+        @Html.Hidden("Email", WorkContext.CurrentUser.Email ?? "")
+    }
+    @if (WorkContext.CurrentUser != null) { <h4 id="commenter">@if (WorkContext.CurrentUser != null) { @T("Hi, {0}!", Convert.ToString(Html.ItemDisplayText(WorkContext.CurrentUser)))}</h4>}
+
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.CommentText, new { @class = "form-control", placeholder = "Partecipa alla discussione..." })
+    </div>
+
+    @Html.HiddenFor(m => m.CommentedOn)
+    @Html.HiddenFor(m => m.RepliedOn)
+

@@ -1,0 +1,11 @@
+@using Orchard.ContentManagement
+@model dynamic
+@{
+    var item = (IContent)Model.ContentItem;
+}
+
+    <div class="qr-code">
+        <img  onerror="this.style.display='none'" src="@Html.Action("Render", "Image", new { area = "Proligence.QrCodes", id = item.Id })" />
+    </div>
+
+

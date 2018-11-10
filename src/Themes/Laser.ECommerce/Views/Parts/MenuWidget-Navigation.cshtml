@@ -1,0 +1,44 @@
+﻿@using Orchard.Taxonomies.Models
+@{
+    var Menu = Model.Menu;
+
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+}
+<div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        @foreach (var item in items) {
+            if (!HasText(item.Text)) {
+                @DisplayChildren(item)
+            } else {
+                if ((bool)item.Selected) {
+                    item.Classes.Add("active");
+                }
+                //morphing the shape to keep Model untouched
+                item.Metadata.Alternates.Clear();
+                item.Metadata.Type = "MenuItemLink";
+
+                //render the menu item only if it has some content
+                var renderedMenuItemLink = Display(item);
+                if (HasText(renderedMenuItemLink)) {
+                    var tagLI = Tag(item, "li");
+                    @tagLI.StartElement
+                    if (item.Item.Items.Length > 0) {
+                        item.Classes.Add("dropdown");
+                    }
+                    if (item.Content != null && item.Content is TermPart && item.Item.Items.Length > 0) {
+                        <a href="#" data-toggle="dropdown">@item.Text <b class="caret"></b></a>
+                        @Display.NavigationTaxonomyMenuLink(Item: item)
+                    } else {
+                        @renderedMenuItemLink
+                        if (item.Item.Items.Length > 0) {
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel-@(item.Content.Id)">
+                                @DisplayChildren(item)
+                            </ul>
+                        }
+                    }
+                    @tagLI.EndElement
+                }
+            }
+        }
+    </ul>
+</div>

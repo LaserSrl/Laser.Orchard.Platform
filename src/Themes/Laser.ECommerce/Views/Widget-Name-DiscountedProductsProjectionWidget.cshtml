@@ -1,0 +1,16 @@
+﻿@using Orchard.DisplayManagement.Shapes
+@using System.Collections.Generic
+@using Orchard.ContentManagement
+@{
+
+    var projectionShape = ((IEnumerable<dynamic>)Model.Content.Items)
+        .Where((Func<dynamic, bool>)(it => it.Metadata.Prefix == "ProjectionPart"))
+        .FirstOrDefault();
+
+    var contentItems = ((IEnumerable<dynamic>)projectionShape.Items).Select((Func<dynamic, ContentItem>)(it => it.ContentItem as ContentItem));
+
+    WorkContext.Layout.AfterMain.Add(New.RelatedContentsSlider(
+        ContentItems: contentItems,
+        Title: T("Sales").Text
+    ), "6");
+}

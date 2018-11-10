@@ -1,0 +1,1709 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Orchard>
+  <Recipe>
+    <Name>SetupWineDemo</Name>
+    <Description>This recipes configures the wine store demo and creates its contents. Remember to paste the correct media.</Description>
+    <Category>Demo</Category>
+    <IsSetupRecipe>false</IsSetupRecipe>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+  </Recipe>
+  <ContentDefinition></ContentDefinition>
+  <Content>
+    <Image Id="/Identifier=03a5351511d54fbe90de250ac14a5132" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:02:16.7804167Z" PublishedUtc="2017-07-14T10:02:16.7987357Z" ModifiedUtc="2017-07-14T10:02:16.7804167Z" />
+      <IdentityPart Identifier="03a5351511d54fbe90de250ac14a5132" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RosèeWines" FileName="Rosè de Provence.jpg" LogicalType="Image" />
+      <TitlePart Title="Rosè de Provence" />
+    </Image>
+    <Image Id="/Identifier=0440a764b6a84a848f5367afe888f53a" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:21.1442608Z" PublishedUtc="2017-07-14T09:03:21.1442608Z" ModifiedUtc="2017-07-14T09:03:21.1442608Z" />
+      <IdentityPart Identifier="0440a764b6a84a848f5367afe888f53a" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="Caberlot2.jpg" LogicalType="Image" />
+      <TitlePart Title="Caberlot2" />
+    </Image>
+    <Image Id="/Identifier=08ffd7497ca84447b52c1b60b914a9d3" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:21.6337837Z" PublishedUtc="2017-07-14T09:03:21.6824113Z" ModifiedUtc="2017-07-14T09:03:21.6337837Z" />
+      <IdentityPart Identifier="08ffd7497ca84447b52c1b60b914a9d3" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="Solaia.jpg" LogicalType="Image" />
+      <TitlePart Title="Solaia" />
+    </Image>
+    <Image Id="/Identifier=0e885d4a4545420abd622a12076256e9" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:12:36.1863045Z" PublishedUtc="2017-07-14T10:12:36.1973054Z" ModifiedUtc="2017-07-14T10:12:36.1863045Z" />
+      <IdentityPart Identifier="0e885d4a4545420abd622a12076256e9" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\ItalianSpumante" FileName="Franciacorta Cuvè Annamaria Clementi.jpg" LogicalType="Image" />
+      <TitlePart Title="Franciacorta Cuvè Annamaria Clementi" />
+    </Image>
+    <Image Id="/Identifier=0f8f018729544162830eaa2141e3629f" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:36:51.1110247Z" PublishedUtc="2017-07-14T10:36:51.1255472Z" ModifiedUtc="2017-07-14T10:36:51.1110247Z" />
+      <IdentityPart Identifier="0f8f018729544162830eaa2141e3629f" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits" FileName="Vodka Intense.jpg" LogicalType="Image" />
+      <TitlePart Title="Vodka Intense" />
+    </Image>
+    <Image Id="/Identifier=12c2825190914325b784248d1e29e0fc" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:36:56.8920223Z" PublishedUtc="2017-07-14T09:36:56.9211001Z" ModifiedUtc="2017-07-14T09:36:56.8920223Z" />
+      <IdentityPart Identifier="12c2825190914325b784248d1e29e0fc" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="Taurasi.jpg" LogicalType="Image" />
+      <TitlePart Title="Taurasi" />
+    </Image>
+    <Image Id="/Identifier=158b8188f39f412da8d3652982256d40" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:18:27.240006Z" PublishedUtc="2017-07-14T10:18:27.2589322Z" ModifiedUtc="2017-07-14T10:18:27.240006Z" />
+      <IdentityPart Identifier="158b8188f39f412da8d3652982256d40" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Armagnac" FileName="Millesimè 1974.jpg" LogicalType="Image" />
+      <TitlePart Title="Millesimè 1974" />
+    </Image>
+    <Image Id="/Identifier=15f2b12cd5b54dc4b1ab0fb31573375d" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:50:42.8853465Z" PublishedUtc="2017-07-14T13:50:42.9289321Z" ModifiedUtc="2017-07-14T13:50:42.8853465Z" />
+      <IdentityPart Identifier="15f2b12cd5b54dc4b1ab0fb31573375d" />
+      <ImagePart Height="80" Width="80" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images" FileName="1.png" LogicalType="Image" />
+      <TitlePart Title="1" />
+    </Image>
+    <Image Id="/Identifier=17a45cd35abb4376a5465806e5063caf" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:56:42.5845248Z" PublishedUtc="2017-07-14T12:56:42.5914479Z" ModifiedUtc="2017-07-14T12:56:42.5845248Z" />
+      <IdentityPart Identifier="17a45cd35abb4376a5465806e5063caf" />
+      <ImagePart Height="1192" Width="1800" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="conso-120701-2-piscine.jpg" LogicalType="Image" />
+      <TitlePart Title="conso-120701-2-piscine" />
+    </Image>
+    <Image Id="/Identifier=2295f2af9a514a3186edc0e903be4c99" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:20:11.1514395Z" PublishedUtc="2017-07-14T10:20:11.1634925Z" ModifiedUtc="2017-07-14T10:20:11.1514395Z" />
+      <IdentityPart Identifier="2295f2af9a514a3186edc0e903be4c99" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Armagnac" FileName="Bas Armagnac.jpg" LogicalType="Image" />
+      <TitlePart Title="Bas Armagnac" />
+    </Image>
+    <Image Id="/Identifier=2365b7b9072542c98d45ac5d0494f1bc" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:59:55.1306595Z" PublishedUtc="2017-07-14T13:59:55.1431887Z" ModifiedUtc="2017-07-14T13:59:55.1306595Z" />
+      <IdentityPart Identifier="2365b7b9072542c98d45ac5d0494f1bc" />
+      <ImagePart Height="600" Width="400" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images" FileName="Champagne-Bottle-4.png" LogicalType="Image" />
+      <TitlePart Title="Champagne-Bottle-4" />
+    </Image>
+    <Image Id="/Identifier=23b79c90b41b45c9a473dfa7c9ee8269" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:44:32.5085942Z" PublishedUtc="2017-07-14T10:44:32.519403Z" ModifiedUtc="2017-07-14T10:44:32.5085942Z" />
+      <IdentityPart Identifier="23b79c90b41b45c9a473dfa7c9ee8269" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Whisky" FileName="Single Malt 12.jpg" LogicalType="Image" />
+      <TitlePart Title="Single Malt 12" />
+    </Image>
+    <Image Id="/Identifier=2d745564161047a3bf29b0841a34727c" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:04:03.4365633Z" PublishedUtc="2017-07-14T15:04:03.4488619Z" ModifiedUtc="2017-07-14T15:04:03.4365633Z" />
+      <IdentityPart Identifier="2d745564161047a3bf29b0841a34727c" />
+      <ImagePart Height="63" Width="127" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="logo-age-gate.png" LogicalType="Image" />
+      <TitlePart Title="logo-age-gate" />
+    </Image>
+    <Image Id="/Identifier=333ce072583c45ddb296c47dfaabd7da" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:44:25.520156Z" PublishedUtc="2017-07-14T09:44:25.5465521Z" ModifiedUtc="2017-07-14T09:44:25.520156Z" />
+      <IdentityPart Identifier="333ce072583c45ddb296c47dfaabd7da" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Montrachet Grand Cru.jpg" LogicalType="Image" />
+      <TitlePart Title="Montrachet Grand Cru" />
+    </Image>
+    <Image Id="/Identifier=34993f7495e745f3a1665c648ae0304c" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:09:15.1720996Z" PublishedUtc="2017-07-14T13:09:15.1991795Z" ModifiedUtc="2017-07-14T13:09:15.1720996Z" />
+      <IdentityPart Identifier="34993f7495e745f3a1665c648ae0304c" />
+      <ImagePart Height="1067" Width="1600" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="enoteca-banner.jpg" LogicalType="Image" />
+      <TitlePart Title="enoteca-banner" />
+    </Image>
+    <Image Id="/Identifier=382deb5c8f03402f8f1951781660690e" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:10:14.8861008Z" PublishedUtc="2017-07-14T10:10:14.8986203Z" ModifiedUtc="2017-07-14T10:10:14.8861008Z" />
+      <IdentityPart Identifier="382deb5c8f03402f8f1951781660690e" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\ItalianSpumante" FileName="Cuveè Imperiale Brut.jpg" LogicalType="Image" />
+      <TitlePart Title="Cuveè Imperiale Brut" />
+    </Image>
+    <Image Id="/Identifier=38c4e6726b21433cb4fb21ff4fc10e4e" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:54:00.2933656Z" PublishedUtc="2017-07-14T12:54:00.324444Z" ModifiedUtc="2017-07-14T12:54:00.2933656Z" />
+      <IdentityPart Identifier="38c4e6726b21433cb4fb21ff4fc10e4e" />
+      <ImagePart Height="550" Width="1280" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="whiteWineBanner.jpg" LogicalType="Image" />
+      <TitlePart Title="whiteWineBanner" />
+    </Image>
+    <Image Id="/Identifier=38fe6df5fba742dea722ef9d930d4e5b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:41:35.6887769Z" PublishedUtc="2017-07-14T12:41:35.729872Z" ModifiedUtc="2017-07-14T12:41:35.6887769Z" />
+      <IdentityPart Identifier="38fe6df5fba742dea722ef9d930d4e5b" />
+      <ImagePart Height="1333" Width="2000" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="banner-devecchi-1.jpg" LogicalType="Image" />
+      <TitlePart Title="banner-devecchi-1" />
+    </Image>
+    <Image Id="/Identifier=3f225c9f49cc47cdbddae4d56c9bede0" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:15:57.4524919Z" PublishedUtc="2017-07-14T10:15:57.5337031Z" ModifiedUtc="2017-07-14T10:15:57.4524919Z" />
+      <IdentityPart Identifier="3f225c9f49cc47cdbddae4d56c9bede0" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spumante" FileName="Riesling Brut.jpg" LogicalType="Image" />
+      <TitlePart Title="Riesling Brut" />
+    </Image>
+    <Image Id="/Identifier=43f10c8492fb408b816337b541c05830" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:54:29.5272332Z" PublishedUtc="2017-07-14T09:54:29.5382716Z" ModifiedUtc="2017-07-14T09:54:29.5272332Z" />
+      <IdentityPart Identifier="43f10c8492fb408b816337b541c05830" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Falanghina Via del Campo.jpg" LogicalType="Image" />
+      <TitlePart Title="Falanghina Via del Campo" />
+    </Image>
+    <Image Id="/Identifier=44f49b5565534a9d9eabcde22c96118f" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:01:23.9951381Z" PublishedUtc="2017-07-14T15:01:24.010474Z" ModifiedUtc="2017-07-14T15:01:23.9951381Z" />
+      <IdentityPart Identifier="44f49b5565534a9d9eabcde22c96118f" />
+      <ImagePart Height="63" Width="123" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="balvenie-logo.jpg" LogicalType="Image" />
+      <TitlePart Title="balvenie-logo" />
+    </Image>
+    <Image Id="/Identifier=45e09113ce92432290de0e2c1e7d883b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:50:58.4575921Z" PublishedUtc="2017-07-14T09:50:58.4671Z" ModifiedUtc="2017-07-14T09:50:58.4575921Z" />
+      <IdentityPart Identifier="45e09113ce92432290de0e2c1e7d883b" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Fiano Exultet.jpg" LogicalType="Image" />
+      <TitlePart Title="Fiano Exultet" />
+    </Image>
+    <Image Id="/Identifier=4677ebf2536a4225826729fc3cbb791b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:48:31.6322033Z" PublishedUtc="2017-07-14T12:48:31.6472382Z" ModifiedUtc="2017-07-14T12:48:31.6322033Z" />
+      <IdentityPart Identifier="4677ebf2536a4225826729fc3cbb791b" />
+      <ImagePart Height="567" Width="2560" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="banner-grappa-ifavati.jpg" LogicalType="Image" />
+      <TitlePart Title="banner-grappa-ifavati" />
+    </Image>
+    <Image Id="/Identifier=474c0cf9dfe64971bd86fc391a65ee2d" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:05:41.8163187Z" PublishedUtc="2017-07-14T10:05:41.8321251Z" ModifiedUtc="2017-07-14T10:05:41.8163187Z" />
+      <IdentityPart Identifier="474c0cf9dfe64971bd86fc391a65ee2d" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Champagne" FileName="Brut Imperial 2.jpg" LogicalType="Image" />
+      <TitlePart Title="Brut Imperial 2" />
+    </Image>
+    <Image Id="/Identifier=4779088ace9f4706afd01f3703daadd2" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:36:14.8818345Z" PublishedUtc="2017-07-14T12:36:14.90593Z" ModifiedUtc="2017-07-14T12:36:14.8818345Z" />
+      <IdentityPart Identifier="4779088ace9f4706afd01f3703daadd2" />
+      <ImagePart Height="474" Width="1920" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="sparklingBanner.jpg" LogicalType="Image" />
+      <TitlePart Title="sparklingBanner" />
+    </Image>
+    <Image Id="/Identifier=48e582bb83bc4e969128cd9ba6420fdb" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:59:37.3792794Z" PublishedUtc="2017-07-14T09:59:37.3948255Z" ModifiedUtc="2017-07-14T09:59:37.3792794Z" />
+      <IdentityPart Identifier="48e582bb83bc4e969128cd9ba6420fdb" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RosèeWines" FileName="Rosato.jpg" LogicalType="Image" />
+      <TitlePart Title="Rosato" />
+    </Image>
+    <Image Id="/Identifier=5688d74817e94cbe91d105307fe1eb54" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:24.4743479Z" PublishedUtc="2017-07-14T09:03:24.4891615Z" ModifiedUtc="2017-07-14T09:03:24.4743479Z" />
+      <IdentityPart Identifier="5688d74817e94cbe91d105307fe1eb54" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="PremierGrandCruClasse3.jpg" LogicalType="Image" />
+      <TitlePart Title="PremierGrandCruClasse3" />
+    </Image>
+    <Image Id="/Identifier=5e2fbc042f6547399e26b85b3549866f" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:26:43.2570754Z" PublishedUtc="2017-07-14T13:26:43.2691208Z" ModifiedUtc="2017-07-14T13:26:43.2570754Z" />
+      <IdentityPart Identifier="5e2fbc042f6547399e26b85b3549866f" />
+      <ImagePart Height="400" Width="765" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images" FileName="red-wine-glasses.jpg" LogicalType="Image" />
+      <TitlePart Title="red-wine-glasses" />
+    </Image>
+    <Image Id="/Identifier=6418de944b1348d6ae90cdb0926f9f18" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:53:16.2180651Z" PublishedUtc="2017-07-14T09:53:16.231044Z" ModifiedUtc="2017-07-14T09:53:16.2180651Z" />
+      <IdentityPart Identifier="6418de944b1348d6ae90cdb0926f9f18" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Greco Giallo d'Arles Magnum.jpg" LogicalType="Image" />
+      <TitlePart Title="Greco Giallo d'Arles Magnum" />
+    </Image>
+    <Image Id="/Identifier=65a5822a3746490baf367cdfaccdcd20" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:05:58.5385953Z" PublishedUtc="2017-07-14T14:05:58.5727657Z" ModifiedUtc="2017-07-14T14:05:58.5385953Z" />
+      <IdentityPart Identifier="65a5822a3746490baf367cdfaccdcd20" />
+      <ImagePart Height="450" Width="690" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images" FileName="Cognac-whiskey-brandy-drink--e1457695910892_690x450_crop_80.jpeg" LogicalType="Image" />
+      <TitlePart Title="Cognac-whiskey-brandy-drink--e1457695910892_690x450_crop_80" />
+    </Image>
+    <Image Id="/Identifier=669436e72d4845f78872ddb79617f476" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:25:31.8243179Z" PublishedUtc="2017-07-14T10:25:31.8774145Z" ModifiedUtc="2017-07-14T10:25:31.8243179Z" />
+      <IdentityPart Identifier="669436e72d4845f78872ddb79617f476" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Cognac" FileName="Cristallo Extra.jpg" LogicalType="Image" />
+      <TitlePart Title="Cristallo Extra" />
+    </Image>
+    <Image Id="/Identifier=683123e7c06c4786a34f26963406b762" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:50:42.3713919Z" PublishedUtc="2017-07-14T13:50:42.381487Z" ModifiedUtc="2017-07-14T13:50:42.3713919Z" />
+      <IdentityPart Identifier="683123e7c06c4786a34f26963406b762" />
+      <ImagePart Height="80" Width="80" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images" FileName="2.png" LogicalType="Image" />
+      <TitlePart Title="2" />
+    </Image>
+    <Image Id="/Identifier=6c2cd8d394444f98b3d3d9580ff052a7" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:55:43.8790782Z" PublishedUtc="2017-07-14T09:55:43.8950904Z" ModifiedUtc="2017-07-14T09:55:43.8790782Z" />
+      <IdentityPart Identifier="6c2cd8d394444f98b3d3d9580ff052a7" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Chateau la Nerthe blanc.jpg" LogicalType="Image" />
+      <TitlePart Title="Chateau la Nerthe blanc" />
+    </Image>
+    <Image Id="/Identifier=6d31db4f54044c0c846a9ab85c2ac887" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:29.2804516Z" PublishedUtc="2017-07-14T09:03:29.3000403Z" ModifiedUtc="2017-07-14T09:03:29.2804516Z" />
+      <IdentityPart Identifier="6d31db4f54044c0c846a9ab85c2ac887" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="ClosVougeot.jpg" LogicalType="Image" />
+      <TitlePart Title="ClosVougeot" />
+    </Image>
+    <Image Id="/Identifier=71771370137245848e851458c4b76667" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:16.8219337Z" PublishedUtc="2017-07-14T09:03:16.9024125Z" ModifiedUtc="2017-07-14T09:03:16.8219337Z" />
+      <IdentityPart Identifier="71771370137245848e851458c4b76667" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="AlZero.jpg" LogicalType="Image" />
+      <TitlePart Title="AlZero" />
+    </Image>
+    <Image Id="/Identifier=7289b4cb1dea4381af603843dbbf1d80" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:33:01.8246355Z" PublishedUtc="2017-07-14T10:33:01.8514511Z" ModifiedUtc="2017-07-14T10:33:01.8246355Z" />
+      <IdentityPart Identifier="7289b4cb1dea4381af603843dbbf1d80" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits" FileName="Riserva Carlo Bocchino.jpg" LogicalType="Image" />
+      <TitlePart Title="Riserva Carlo Bocchino" />
+    </Image>
+    <Image Id="/Identifier=72a2a8890ac447d6926e15957930d660" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:46:16.7200236Z" PublishedUtc="2017-07-14T09:46:16.7460921Z" ModifiedUtc="2017-07-14T09:46:16.7200236Z" />
+      <IdentityPart Identifier="72a2a8890ac447d6926e15957930d660" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Pouilly Fume.jpg" LogicalType="Image" />
+      <TitlePart Title="Pouilly Fume" />
+    </Image>
+    <Image Id="/Identifier=7456d0f92c714ea4ac0b829548408ba6" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:31:06.4111392Z" PublishedUtc="2017-07-14T10:31:06.4291398Z" ModifiedUtc="2017-07-14T10:31:06.4111392Z" />
+      <IdentityPart Identifier="7456d0f92c714ea4ac0b829548408ba6" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Cognac" FileName="X.O..jpg" LogicalType="Image" />
+      <TitlePart Title="X.O." />
+    </Image>
+    <Image Id="/Identifier=7c8f6b2cac4e4770afb82b7e3303afa7" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:00:56.6360256Z" PublishedUtc="2017-07-14T10:00:56.6453447Z" ModifiedUtc="2017-07-14T10:00:56.6360256Z" />
+      <IdentityPart Identifier="7c8f6b2cac4e4770afb82b7e3303afa7" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RosèeWines" FileName="Pinot Nero Rose.jpg" LogicalType="Image" />
+      <TitlePart Title="Pinot Nero Rose" />
+    </Image>
+    <Image Id="/Identifier=7dd42e7e4d9d42cf8c25415deb6c37da" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:38:39.0628383Z" PublishedUtc="2017-07-14T10:38:39.0709327Z" ModifiedUtc="2017-07-14T10:38:39.0628383Z" />
+      <IdentityPart Identifier="7dd42e7e4d9d42cf8c25415deb6c37da" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Rum" FileName="Ron 23 Solera.jpg" LogicalType="Image" />
+      <TitlePart Title="Ron 23 Solera" />
+    </Image>
+    <Image Id="/Identifier=7de72d25d7b04e9f8c1f5950f204bdcb" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:41:15.6333416Z" PublishedUtc="2017-07-14T10:41:15.6444535Z" ModifiedUtc="2017-07-14T10:41:15.6333416Z" />
+      <IdentityPart Identifier="7de72d25d7b04e9f8c1f5950f204bdcb" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Rum" FileName="Rum Old Cask.jpg" LogicalType="Image" />
+      <TitlePart Title="Rum Old Cask" />
+    </Image>
+    <Image Id="/Identifier=7f7fb476ca874c08bfe91b75db476b62" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:07:58.0333363Z" PublishedUtc="2017-07-14T10:07:58.1186822Z" ModifiedUtc="2017-07-14T10:07:58.0333363Z" />
+      <IdentityPart Identifier="7f7fb476ca874c08bfe91b75db476b62" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Champagne" FileName="Cristal.jpg" LogicalType="Image" />
+      <TitlePart Title="Cristal" />
+    </Image>
+    <Image Id="/Identifier=822453030b104aed9b0cbb17c25a0e07" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:06:50.2525117Z" PublishedUtc="2017-07-14T10:06:50.2683521Z" ModifiedUtc="2017-07-14T10:06:50.2525117Z" />
+      <IdentityPart Identifier="822453030b104aed9b0cbb17c25a0e07" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Champagne" FileName="Clos du Mesnil.jpg" LogicalType="Image" />
+      <TitlePart Title="Clos du Mesnil" />
+    </Image>
+    <Image Id="/Identifier=8b8d3261b5e9463b8921f8159eb66694" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:26:45.2246906Z" PublishedUtc="2017-07-14T13:26:45.2332634Z" ModifiedUtc="2017-07-14T13:26:45.2246906Z" />
+      <IdentityPart Identifier="8b8d3261b5e9463b8921f8159eb66694" />
+      <ImagePart Height="400" Width="825" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images" FileName="vineyard-grapes-home-slideshow.jpg" LogicalType="Image" />
+      <TitlePart Title="vineyard-grapes-home-slideshow" />
+    </Image>
+    <Image Id="/Identifier=918e02a4ee7344fda1da12ee508d7df1" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:24:03.4288043Z" PublishedUtc="2017-07-14T12:24:03.4288043Z" ModifiedUtc="2017-07-14T12:24:03.4288043Z" />
+      <IdentityPart Identifier="918e02a4ee7344fda1da12ee508d7df1" />
+      <ImagePart Height="430" Width="1500" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="WineBanner.jpg" LogicalType="Image" />
+      <TitlePart Title="WineBanner" />
+    </Image>
+    <Image Id="/Identifier=99eb26290d59436099b9380cbbfe33e5" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:14:20.1586285Z" PublishedUtc="2017-07-14T10:14:20.1720523Z" ModifiedUtc="2017-07-14T10:14:20.1586285Z" />
+      <IdentityPart Identifier="99eb26290d59436099b9380cbbfe33e5" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spumante" FileName="Puro Rosè.jpg" LogicalType="Image" />
+      <TitlePart Title="Puro Rosè" />
+    </Image>
+    <Image Id="/Identifier=9dd3b68651bf418a81eb3ef1f44cede1" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:57:25.3144731Z" PublishedUtc="2017-07-14T09:57:25.3320079Z" ModifiedUtc="2017-07-14T09:57:25.3144731Z" />
+      <IdentityPart Identifier="9dd3b68651bf418a81eb3ef1f44cede1" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RosèeWines" FileName="Bandol Rose.jpg" LogicalType="Image" />
+      <TitlePart Title="Bandol Rose" />
+    </Image>
+    <Image Id="/Identifier=a01bc9dfddee45e0bb8c925a4850eb2b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:37:11.8928444Z" PublishedUtc="2017-07-14T12:37:11.9048808Z" ModifiedUtc="2017-07-14T12:37:11.8928444Z" />
+      <IdentityPart Identifier="a01bc9dfddee45e0bb8c925a4850eb2b" />
+      <ImagePart Height="419" Width="1439" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="holiday-banner-sparkling-wine.jpg" LogicalType="Image" />
+      <TitlePart Title="holiday-banner-sparkling-wine" />
+    </Image>
+    <Image Id="/Identifier=a347df25b42148ab8389d0843f4b044d" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:46:16.5237301Z" PublishedUtc="2017-07-14T14:46:16.5352568Z" ModifiedUtc="2017-07-14T14:46:16.5237301Z" />
+      <IdentityPart Identifier="a347df25b42148ab8389d0843f4b044d" />
+      <ImagePart Height="579" Width="1280" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images" FileName="1078a08e3467c849db631802fe1670e2_large-1.jpeg" LogicalType="Image" />
+      <TitlePart Title="1078a08e3467c849db631802fe1670e2_large-1" />
+    </Image>
+    <Image Id="/Identifier=b076bc6e78be4a82ad35fed57382ad9d" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:48:57.7669569Z" PublishedUtc="2017-07-14T09:48:57.7825184Z" ModifiedUtc="2017-07-14T09:48:57.7669569Z" />
+      <IdentityPart Identifier="b076bc6e78be4a82ad35fed57382ad9d" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Chassagne Montrachet.jpg" LogicalType="Image" />
+      <TitlePart Title="Chassagne Montrachet" />
+    </Image>
+    <Image Id="/Identifier=b27d130b653d4997b6125c8ac5b6b157" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:33:10.0221127Z" PublishedUtc="2017-07-14T13:33:10.0846668Z" ModifiedUtc="2017-07-14T13:33:10.0221127Z" />
+      <IdentityPart Identifier="b27d130b653d4997b6125c8ac5b6b157" />
+      <ImagePart Height="600" Width="401" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images" FileName="champagnebottle.jpgcd168be3-56d8-4bdc-b4ef-84d1614a1568Original.jpg" LogicalType="Image" />
+      <TitlePart Title="champagnebottle.jpgcd168be3-56d8-4bdc-b4ef-84d1614a1568Original" />
+    </Image>
+    <Image Id="/Identifier=b2f074bd9f7e418e8548b8a85d1df13c" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:50:41.5057133Z" PublishedUtc="2017-07-14T13:50:41.5163649Z" ModifiedUtc="2017-07-14T13:50:41.5057133Z" />
+      <IdentityPart Identifier="b2f074bd9f7e418e8548b8a85d1df13c" />
+      <ImagePart Height="80" Width="80" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images" FileName="3.png" LogicalType="Image" />
+      <TitlePart Title="3" />
+    </Image>
+    <Image Id="/Identifier=b55cf217cdac423fb55c435f9a102986" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:11:22.6858828Z" PublishedUtc="2017-07-14T10:11:22.6984264Z" ModifiedUtc="2017-07-14T10:11:22.6858828Z" />
+      <IdentityPart Identifier="b55cf217cdac423fb55c435f9a102986" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\ItalianSpumante" FileName="Trento Brut.jpg" LogicalType="Image" />
+      <TitlePart Title="Trento Brut" />
+    </Image>
+    <Image Id="/Identifier=b5779c082398464eb095e72812ba2e1f" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:43:19.5187002Z" PublishedUtc="2017-07-14T10:43:19.5316563Z" ModifiedUtc="2017-07-14T10:43:19.5187002Z" />
+      <IdentityPart Identifier="b5779c082398464eb095e72812ba2e1f" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Whisky" FileName="Adelphi's Liddesdale18.jpg" LogicalType="Image" />
+      <TitlePart Title="Adelphi's Liddesdale18" />
+    </Image>
+    <Image Id="/Identifier=c3cdc5f9fd21431581ec2562fe117a76" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:24:00.7889227Z" PublishedUtc="2017-07-14T12:24:00.8094754Z" ModifiedUtc="2017-07-14T12:24:00.7889227Z" />
+      <IdentityPart Identifier="c3cdc5f9fd21431581ec2562fe117a76" />
+      <ImagePart Height="530" Width="1600" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="ChampagneBanner.jpg" LogicalType="Image" />
+      <TitlePart Title="ChampagneBanner" />
+    </Image>
+    <Image Id="/Identifier=c8310996480d470fb5254a34608ffb03" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:02:15.6602072Z" PublishedUtc="2017-07-14T15:02:15.6763119Z" ModifiedUtc="2017-07-14T15:02:15.6602072Z" />
+      <IdentityPart Identifier="c8310996480d470fb5254a34608ffb03" />
+      <ImagePart Height="63" Width="123" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="CORPORATE_LOGO.jpg" LogicalType="Image" />
+      <TitlePart Title="CORPORATE_LOGO" />
+    </Image>
+    <Image Id="/Identifier=ca56545c1ff34489a2fe6cb77c7c78a0" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:55:25.9745439Z" PublishedUtc="2017-07-14T14:55:25.9871219Z" ModifiedUtc="2017-07-14T14:55:25.9745439Z" />
+      <IdentityPart Identifier="ca56545c1ff34489a2fe6cb77c7c78a0" />
+      <ImagePart Height="63" Width="148" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="logoBocchino.png" LogicalType="Image" />
+      <TitlePart Title="logoBocchino" />
+    </Image>
+    <Image Id="/Identifier=d0ccecc1f2a14529b12f3268c551a32b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:03:08.5171697Z" PublishedUtc="2017-07-14T15:03:08.5297318Z" ModifiedUtc="2017-07-14T15:03:08.5171697Z" />
+      <IdentityPart Identifier="d0ccecc1f2a14529b12f3268c551a32b" />
+      <ImagePart Height="63" Width="94" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="FRAPIN-Cognac-Logo.jpg" LogicalType="Image" />
+      <TitlePart Title="FRAPIN-Cognac-Logo" />
+    </Image>
+    <Image Id="/Identifier=d4ba863ec9d34ba9891b3db38f53fc09" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:40:09.6355645Z" PublishedUtc="2017-07-14T12:40:09.6476005Z" ModifiedUtc="2017-07-14T12:40:09.6355645Z" />
+      <IdentityPart Identifier="d4ba863ec9d34ba9891b3db38f53fc09" />
+      <ImagePart Height="600" Width="1600" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="banner-image-whiskey-pelican-hill-magazine.jpg" LogicalType="Image" />
+      <TitlePart Title="banner-image-whiskey-pelican-hill-magazine" />
+    </Image>
+    <Image Id="/Identifier=da74410837964fc6b1bd2ef4a0d17495" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:45:47.5939369Z" PublishedUtc="2017-07-14T10:45:47.6024825Z" ModifiedUtc="2017-07-14T10:45:47.5939369Z" />
+      <IdentityPart Identifier="da74410837964fc6b1bd2ef4a0d17495" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Whisky" FileName="Single Malt 18.jpg" LogicalType="Image" />
+      <TitlePart Title="Single Malt 18" />
+    </Image>
+    <Image Id="/Identifier=db43ad3d92d547cd9bc087cab780f2f6" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:40:04.2356189Z" PublishedUtc="2017-07-14T10:40:04.2466328Z" ModifiedUtc="2017-07-14T10:40:04.2356189Z" />
+      <IdentityPart Identifier="db43ad3d92d547cd9bc087cab780f2f6" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Rum" FileName="Ron Gran Reserva 18.jpg" LogicalType="Image" />
+      <TitlePart Title="Ron Gran Reserva 18" />
+    </Image>
+    <Image Id="/Identifier=e1ff5b1f88ea4c9493a191fd3a9d7fa9" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:26.1193665Z" PublishedUtc="2017-07-14T09:03:26.1437849Z" ModifiedUtc="2017-07-14T09:03:26.1193665Z" />
+      <IdentityPart Identifier="e1ff5b1f88ea4c9493a191fd3a9d7fa9" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="PremierGrandCruClasse.jpg" LogicalType="Image" />
+      <TitlePart Title="PremierGrandCruClasse" />
+    </Image>
+    <Image Id="/Identifier=ee27f6e75d4746a5907ec05d8e386008" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:47:44.0507901Z" PublishedUtc="2017-07-14T09:47:44.0663911Z" ModifiedUtc="2017-07-14T09:47:44.0507901Z" />
+      <IdentityPart Identifier="ee27f6e75d4746a5907ec05d8e386008" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\WhiteWines" FileName="Pouilly Fume2.jpg" LogicalType="Image" />
+      <TitlePart Title="Pouilly Fume2" />
+    </Image>
+    <Image Id="/Identifier=ee9d9553df464686be0046769e20e585" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:59:27.4771187Z" PublishedUtc="2017-07-14T14:59:27.4889188Z" ModifiedUtc="2017-07-14T14:59:27.4771187Z" />
+      <IdentityPart Identifier="ee9d9553df464686be0046769e20e585" />
+      <ImagePart Height="63" Width="94" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="image-bonollo2-B17A_588246AA.png" LogicalType="Image" />
+      <TitlePart Title="image-bonollo2-B17A_588246AA" />
+    </Image>
+    <Image Id="/Identifier=ef461f53ded0426c8312f8d6a1cbb5af" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:35:36.8618882Z" PublishedUtc="2017-07-14T10:35:36.8750031Z" ModifiedUtc="2017-07-14T10:35:36.8618882Z" />
+      <IdentityPart Identifier="ef461f53ded0426c8312f8d6a1cbb5af" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits" FileName="Storica.jpg" LogicalType="Image" />
+      <TitlePart Title="Storica" />
+    </Image>
+    <Image Id="/Identifier=f1b260f8abe64cb680a923600be85082" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:04:17.5860321Z" PublishedUtc="2017-07-14T10:04:17.5975849Z" ModifiedUtc="2017-07-14T10:04:17.5860321Z" />
+      <IdentityPart Identifier="f1b260f8abe64cb680a923600be85082" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Champagne" FileName="Brut Imperial.jpg" LogicalType="Image" />
+      <TitlePart Title="Brut Imperial" />
+    </Image>
+    <Image Id="/Identifier=f3b972b32af74dbd961da7014ebd874b" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:47:08.592105Z" PublishedUtc="2017-07-14T12:47:08.6634563Z" ModifiedUtc="2017-07-14T12:47:08.592105Z" />
+      <IdentityPart Identifier="f3b972b32af74dbd961da7014ebd874b" />
+      <ImagePart Height="527" Width="1793" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="CategoryHeaderTablet_Courvosier_v2.jpg" LogicalType="Image" />
+      <TitlePart Title="CategoryHeaderTablet_Courvosier_v2" />
+    </Image>
+    <Image Id="/Identifier=f3d575a14d7d4a3fa78b88ca665c5165" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:34:19.4183593Z" PublishedUtc="2017-07-14T10:34:19.4283781Z" ModifiedUtc="2017-07-14T10:34:19.4183593Z" />
+      <IdentityPart Identifier="f3d575a14d7d4a3fa78b88ca665c5165" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits" FileName="Riserva del Fondatore.jpg" LogicalType="Image" />
+      <TitlePart Title="Riserva del Fondatore" />
+    </Image>
+    <Image Id="/Identifier=f4aef07d19d0483d917ef833a4bde9f8" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:29:12.1554771Z" PublishedUtc="2017-07-14T10:29:12.1692604Z" ModifiedUtc="2017-07-14T10:29:12.1554771Z" />
+      <IdentityPart Identifier="f4aef07d19d0483d917ef833a4bde9f8" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Spirits\Cognac" FileName="Fine.jpg" LogicalType="Image" />
+      <TitlePart Title="Fine" />
+    </Image>
+    <Image Id="/Identifier=f855109257d94e4a9dbe1ba767831ed1" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:00:24.1900559Z" PublishedUtc="2017-07-14T15:00:24.202238Z" ModifiedUtc="2017-07-14T15:00:24.1900559Z" />
+      <IdentityPart Identifier="f855109257d94e4a9dbe1ba767831ed1" />
+      <ImagePart Height="63" Width="128" />
+      <MediaPart MimeType="image/png" Caption="" AlternateText="" FolderPath="Images\Logos" FileName="Glendronach.png" LogicalType="Image" />
+      <TitlePart Title="Glendronach" />
+    </Image>
+    <Image Id="/Identifier=f994853880f344aa85d9fc611fce69c2" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:52:46.2154974Z" PublishedUtc="2017-07-14T12:52:46.2154974Z" ModifiedUtc="2017-07-14T12:52:46.2154974Z" />
+      <IdentityPart Identifier="f994853880f344aa85d9fc611fce69c2" />
+      <ImagePart Height="750" Width="1500" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\Banner" FileName="boston_rum_banner_b.jpg" LogicalType="Image" />
+      <TitlePart Title="boston_rum_banner_b" />
+    </Image>
+    <Image Id="/Identifier=fc4abe563a87428c8523b5792b85b790" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:17.1129245Z" PublishedUtc="2017-07-14T09:03:17.1678708Z" ModifiedUtc="2017-07-14T09:03:17.1129245Z" />
+      <IdentityPart Identifier="fc4abe563a87428c8523b5792b85b790" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="Caberlot.jpg" LogicalType="Image" />
+      <TitlePart Title="Caberlot" />
+    </Image>
+    <Image Id="/Identifier=fdcd3aa0f81e44588b69e747676d64f1" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:03:25.2404925Z" PublishedUtc="2017-07-14T09:03:25.2593701Z" ModifiedUtc="2017-07-14T09:03:25.2404925Z" />
+      <IdentityPart Identifier="fdcd3aa0f81e44588b69e747676d64f1" />
+      <ImagePart Height="400" Width="320" />
+      <MediaPart MimeType="image/jpeg" Caption="" AlternateText="" FolderPath="Images\RedWines" FileName="PremierGrandCruClasse2.jpg" LogicalType="Image" />
+      <TitlePart Title="PremierGrandCruClasse2" />
+    </Image>
+    <OEmbed Id="/Identifier=6ec376be6bd644318d031e2f0ba76053" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:15:56.5667175Z" PublishedUtc="2017-07-14T13:15:56.5841283Z" ModifiedUtc="2017-07-14T13:15:56.5667175Z" />
+      <IdentityPart Identifier="6ec376be6bd644318d031e2f0ba76053" />
+      <MediaPart MimeType="text/html" Caption="" AlternateText="" FolderPath="HomeVideos" FileName="" LogicalType="OEmbed" />
+      <OEmbedPart>
+        <Source>https://www.youtube.com/watch?v=uvWL6_A7uQc</Source>
+        <provider_url>https://www.youtube.com/</provider_url>
+        <thumbnail_url>https://i.ytimg.com/vi/uvWL6_A7uQc/hqdefault.jpg</thumbnail_url>
+        <type>video</type>
+        <thumbnail_height>360</thumbnail_height>
+        <width>480</width>
+        <provider_name>YouTube</provider_name>
+        <version>1.0</version>
+        <html>&lt;iframe width="480" height="270" src="https://www.youtube.com/embed/uvWL6_A7uQc?feature=oembed" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</html>
+        <author_name>betterbooktv</author_name>
+        <height>270</height>
+        <title>Pinot Noir, Merlot, Cabernet Sauvignon, Shiraz, Syrah - Red Wine Guide</title>
+        <author_url>https://www.youtube.com/user/betterbooktv</author_url>
+        <thumbnail_width>480</thumbnail_width>
+        <url>https://www.youtube.com/watch?v=uvWL6_A7uQc</url>
+      </OEmbedPart>
+      <TitlePart Title="Pinot Noir, Merlot, Cabernet Sauvignon, Shiraz, Syrah - Red Wine Guide" />
+    </OEmbed>      
+    <HomePage Id="/alias=" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=34993f7495e745f3a1665c648ae0304c" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <NumericField.BannerHeight Value="700" />
+      <TextField.BannerH3 Text="Quality wines &lt;span&gt;and spirits&lt;/span&gt;" />
+      <AutoroutePart Alias="" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="true" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:00:05.0652863Z" PublishedUtc="2017-07-14T13:14:07.3974617Z" ModifiedUtc="2017-07-14T13:14:07.2004461Z" />
+    </HomePage>
+    <HomePageHighlight Id="/Identifier=4e97687194254f4bbbc8a34347d632bb" Status="Published">
+      <HomePageHighlight.EndDate Value="2001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Zoom" />
+      <LinkField.TargetUrl Url="products/products/spirits/cognac" Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=a347df25b42148ab8389d0843f4b044d" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Best" />
+      <TextField.TextThree />
+      <TextField.TextTwo Text="Cognac" />
+      <TextField.TitleOne Text="Peruse our Selection" />
+      <TextField.TitleTwo />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:07:50.0121469Z" PublishedUtc="2017-07-14T14:46:28.9224768Z" ModifiedUtc="2017-07-14T14:46:28.9130964Z" />
+      <IdentityPart Identifier="4e97687194254f4bbbc8a34347d632bb" />
+      <TitlePart Title="Zoom" />
+    </HomePageHighlight>
+    <HomePageHighlight Id="/Identifier=6f0c5ded9a9d41fa9fe2a0868c469b96" Status="Published">
+      <HomePageHighlight.EndDate Value="2001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Vertical" />
+      <LinkField.TargetUrl Url="products/products/wine/whites" Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=2365b7b9072542c98d45ac5d0494f1bc" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Quality" />
+      <TextField.TextThree Text="bottles" />
+      <TextField.TextTwo />
+      <TextField.TitleOne Text="Season" />
+      <TextField.TitleTwo Text="Special" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:37:06.1581018Z" PublishedUtc="2017-07-14T14:04:52.1225094Z" ModifiedUtc="2017-07-14T14:04:52.1176268Z" />
+      <IdentityPart Identifier="6f0c5ded9a9d41fa9fe2a0868c469b96" />
+      <TitlePart Title="Vertical" />
+    </HomePageHighlight>
+    <HomePageHighlight Id="/Identifier=764052b337234d6ebfb4d1d26e6d9b29" Status="Published">
+      <HomePageHighlight.EndDate Value="2001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Review" />
+      <LinkField.TargetUrl Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=15f2b12cd5b54dc4b1ab0fb31573375d" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <TextField.TextThree />
+      <TextField.TextTwo />
+      <TextField.TitleOne Text="Jane" />
+      <TextField.TitleTwo />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:02:30.3317373Z" PublishedUtc="2017-07-14T14:03:21.5619883Z" ModifiedUtc="2017-07-14T14:03:21.5501051Z" />
+      <IdentityPart Identifier="764052b337234d6ebfb4d1d26e6d9b29" />
+      <TitlePart Title="Review2" />
+    </HomePageHighlight>
+    <HomePageHighlight Id="/Identifier=bcff9285b27941d98f57e93ae089dbe1" Status="Published">
+      <HomePageHighlight.EndDate Value="0001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Review" />
+      <LinkField.TargetUrl Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=b2f074bd9f7e418e8548b8a85d1df13c" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <TextField.TextThree />
+      <TextField.TextTwo />
+      <TextField.TitleOne Text="Diana" />
+      <TextField.TitleTwo />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:03:05.9166641Z" PublishedUtc="2017-07-14T14:03:05.9644123Z" ModifiedUtc="2017-07-14T14:03:05.9547118Z" />
+      <IdentityPart Identifier="bcff9285b27941d98f57e93ae089dbe1" />
+      <TitlePart Title="Review3" />
+    </HomePageHighlight>
+    <HomePageHighlight Id="/Identifier=c8d9401bf5104d9da757aa10271b1a4a" Status="Published">
+      <HomePageHighlight.EndDate Value="2001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Review" />
+      <LinkField.TargetUrl Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=683123e7c06c4786a34f26963406b762" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta" />
+      <TextField.TextThree />
+      <TextField.TextTwo />
+      <TextField.TitleOne Text="Mark" />
+      <TextField.TitleTwo />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:01:57.39686Z" PublishedUtc="2017-07-14T14:02:41.9898325Z" ModifiedUtc="2017-07-14T14:02:41.9819157Z" />
+      <IdentityPart Identifier="c8d9401bf5104d9da757aa10271b1a4a" />
+      <TitlePart Title="Review1" />
+    </HomePageHighlight>
+    <HomePageHighlight Id="/Identifier=d5614fe740e649d8b731eebf254c7bc6" Status="Published">
+      <HomePageHighlight.EndDate Value="2001-01-01T00:00:00Z" />
+      <EnumerationField.DisplayStyle Value="Banner" />
+      <LinkField.TargetUrl Url="products/products/wine/reds" Target="_top" />
+      <MediaLibraryPickerField.Picture ContentItems="/Identifier=8b8d3261b5e9463b8921f8159eb66694,/Identifier=5e2fbc042f6547399e26b85b3549866f" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TextField.TextOne Text="Your number 1" />
+      <TextField.TextThree Text="shop now" />
+      <TextField.TextTwo Text="Our reds" />
+      <TextField.TitleOne Text="Online" />
+      <TextField.TitleTwo Text="Vineyard" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:27:06.0861243Z" PublishedUtc="2017-07-14T13:48:12.8424128Z" ModifiedUtc="2017-07-14T13:48:12.8268264Z" />
+      <IdentityPart Identifier="d5614fe740e649d8b731eebf254c7bc6" />
+      <TitlePart Title="Wide highlight" />
+    </HomePageHighlight>
+    <HomePageVideo Id="/Identifier=e715013d73a044b8939211ca460e2b6a" Status="Published">
+      <MediaLibraryPickerField.Video ContentItems="/Identifier=6ec376be6bd644318d031e2f0ba76053" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T13:16:07.5077984Z" PublishedUtc="2017-07-14T13:16:07.571465Z" ModifiedUtc="2017-07-14T13:16:07.5615517Z" />
+      <IdentityPart Identifier="e715013d73a044b8939211ca460e2b6a" />
+    </HomePageVideo>
+    <HomePageVideoAndCategories Id="/Identifier=" Status="Published">
+      <ContentPickerField.Categories ContentItems="/alias=products\/products" />
+      <ContentPickerField.Video ContentItems="/alias=homepagevideos" />
+      <NumericField.Creator Value="" />
+      <NumericField.LastModifier Value="" />
+      <CommonPart Owner="/User.UserName=admin" Container="/Layer.LayerName=TheHomepage" CreatedUtc="2017-07-14T08:31:53.0874688Z" PublishedUtc="2017-07-14T08:31:53.1618933Z" ModifiedUtc="2017-07-14T08:31:53.0874688Z" />
+      <IdentityPart Identifier="" />
+      <WidgetPart Title="VideoCategoriesHomePage" Position="1" Zone="Content" RenderTitle="false" Name="VideoCategoriesHomePage" CssClasses="" />
+    </HomePageVideoAndCategories>
+    <NewsletterDefinition Id="/Identifier=bebba3c58be144efb55927db611cadbd" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <BodyPart Text="&lt;p&gt;Body&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T12:18:34.3274521Z" PublishedUtc="2017-07-14T12:18:34.4151972Z" ModifiedUtc="2017-07-14T12:18:34.3896486Z" />
+      <IdentityPart Identifier="bebba3c58be144efb55927db611cadbd" />
+      <TitlePart Title="Wine and Dine" />
+    </NewsletterDefinition>
+    <WeightBasedShippingMethod Id="/Identifier=e926e4b119b7466eb8559c2dbe4e01ab" Status="Published">
+      <IdentityPart Identifier="e926e4b119b7466eb8559c2dbe4e01ab" />
+      <TitlePart Title="Laser deliveries" />
+      <WeightBasedShippingMethodPart Name="LaserDeliveries" ShippingCompany="Laser srl" MinimumWeight="0" MaximumWeight="null" IncludedShippingAreas="world" ExcludedShippingAreas="" Price="€ 5,00" />
+    </WeightBasedShippingMethod>
+    <Page Id="/alias=about" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=34993f7495e745f3a1665c648ae0304c" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <NumericField.BannerHeight Value="" />
+      <TextField.BannerH2 />
+      <TextField.BannerH3 />
+      <AutoroutePart Alias="about" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:27:00Z" PublishedUtc="2017-07-14T15:28:53.5889727Z" ModifiedUtc="2017-07-14T15:28:53.575481Z" />
+      <LayoutPart>
+        <LayoutData>{"elements":[{"typeName":"Orchard.Layouts.Elements.Canvas","data":"","exportableData":"","index":0,"elements":[{"typeName":"Orchard.Layouts.Elements.Grid","data":"","exportableData":"","index":0,"elements":[{"typeName":"Orchard.Layouts.Elements.Row","data":"","exportableData":"","index":0,"elements":[{"typeName":"Orchard.Layouts.Elements.Column","data":"Width=12&amp;Offset=0&amp;Collapsible=null","exportableData":"","index":0,"elements":[{"typeName":"Orchard.Layouts.Elements.Paragraph","data":"Content=Lorem+ipsum+dolor+sit+amet%2c+consectetur+adipiscing+elit.+Etiam+vulputate+ipsum+vitae+nulla+rutrum%2c+eu+laoreet+sem+dapibus.+Nulla+ligula+nulla%2c+faucibus+non+purus+eget%2c+aliquet+consequat+dolor.+Duis+pharetra+nunc+ut+risus+blandit+vulputate.+Suspendisse+non+tellus+consequat%2c+interdum+augue+id%2c+dignissim+lectus.+Vivamus+sollicitudin+magna+orci%2c+gravida+accumsan+enim+hendrerit+vel.+Vivamus+pellentesque+feugiat+leo+quis+dapibus.+Donec+lobortis+bibendum+tellus+a+luctus.+Sed+id+bibendum+orci.+Duis+vitae+faucibus+neque%2c+id+luctus+neque.","exportableData":"","index":0,"elements":[],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""},{"typeName":"Orchard.Layouts.Elements.Paragraph","data":"Content=In+eleifend+consectetur+eros+quis+feugiat.+Nam+non+metus+iaculis%2c+ullamcorper+metus+eu%2c+imperdiet+arcu.+Donec+euismod+lacinia+feugiat.+Proin+vel+ex+eros.+Fusce+nec+sapien+vitae+lectus+facilisis+imperdiet+sit+amet+imperdiet+ex.+Nullam+nec+rhoncus+justo%2c+et+iaculis+lectus.+Ut+finibus+nulla+leo.+Fusce+ut+libero+nec+neque+tincidunt+ornare+vitae+non+nisi.+Donec+dignissim+eget+quam+in+bibendum.+Nunc+quis+elit+non+enim+rutrum+hendrerit+in+quis+elit.+Integer+nec+nisi+vel+tortor+mattis+hendrerit.+Vivamus+ullamcorper+dui+vitae+vulputate+porttitor.+Proin+pellentesque+semper+sapien+at+viverra.+In+porttitor+erat+nec+dictum+porttitor.+Nunc+suscipit+faucibus+convallis.+Curabitur+mattis+sit+amet+ex+id+cursus.","exportableData":"","index":1,"elements":[],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""},{"typeName":"Orchard.Layouts.Elements.Paragraph","data":"Content=Maecenas+vitae+molestie+odio.+Proin+nulla+ipsum%2c+faucibus+id+magna+sit+amet%2c+accumsan+convallis+quam.+Cras+finibus+risus+at+sem+lacinia+viverra.+Fusce+malesuada+convallis+nibh%2c+nec+varius+sem+rutrum+quis.+Donec+maximus+nunc+et+eros+imperdiet+mollis.+Vestibulum+ultricies+turpis+pretium+elit+vulputate+rutrum.+Ut+molestie+placerat+ligula+fermentum+viverra.+Vivamus+est+nisl%2c+blandit+ut+elit+nec%2c+congue+commodo+quam.+Curabitur+laoreet%2c+odio+et+sagittis+viverra%2c+enim+velit+elementum+libero%2c+vel+facilisis+turpis+nisl+quis+erat.+Nullam+egestas%2c+nisi+vestibulum+pretium+elementum%2c+mauris+sapien+consectetur+dolor%2c+id+varius+tellus+diam+a+sapien.+Quisque+porttitor+blandit+dolor+accumsan+sollicitudin.+Aliquam+sit+amet+diam+ac+ipsum+viverra+finibus+sit+amet+vel+augue.+Nulla+elit+eros%2c+consectetur+vitae+lacus+vitae%2c+viverra+suscipit+lectus.+In+et+mi+id+odio+dignissim+consequat.","exportableData":"","index":2,"elements":[],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""},{"typeName":"Orchard.Layouts.Elements.Paragraph","data":"Content=Fusce+ornare+elit+nulla%2c+posuere+commodo+sem+sodales+id.+Suspendisse+in+varius+sem.+In+aliquam+mauris+eget+orci+imperdiet+tempus.+Vestibulum+scelerisque%2c+lacus+et+aliquam+facilisis%2c+risus+augue+scelerisque+urna%2c+ut+faucibus+dolor+metus+vitae+eros.+Suspendisse+urna+ante%2c+consectetur+in+aliquet+molestie%2c+blandit+eget+felis.+In+hac+habitasse+platea+dictumst.+Ut+et+blandit+tellus.+Pellentesque+et+feugiat+mauris.+Curabitur+hendrerit+diam+vitae+turpis+elementum%2c+ut+malesuada+eros+rhoncus.","exportableData":"","index":3,"elements":[],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""}],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""}],"isTemplated":false,"htmlId":"","htmlClass":"ecommerce_about_grids","htmlStyle":"","rule":""}],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""}],"isTemplated":false,"htmlId":"","htmlClass":"","htmlStyle":"","rule":""}]}</LayoutData>
+      </LayoutPart>
+      <TitlePart Title="About Us" />
+    </Page>
+    <ProductsTerm Id="/alias=products\/products\/bubbles" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/bubbles" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:22.4773399Z" PublishedUtc="2017-07-14T12:24:31.9493062Z" ModifiedUtc="2017-07-14T12:24:31.9142165Z" />
+      <TermPart Count="9" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <TitlePart Title="Bubbles" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/bubbles\/champagne" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=c3cdc5f9fd21431581ec2562fe117a76" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/bubbles/champagne" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:54.2321677Z" PublishedUtc="2017-07-14T12:26:14.0880025Z" ModifiedUtc="2017-07-14T12:26:14.0549437Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <TitlePart Title="Champagne" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/bubbles\/italian-spumante" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=4779088ace9f4706afd01f3703daadd2" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/bubbles/italian-spumante" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:44:18.7081926Z" PublishedUtc="2017-07-14T12:36:26.1039199Z" ModifiedUtc="2017-07-14T12:36:26.0818383Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <TitlePart Title="Italian Spumante" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/bubbles\/spumante" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=a01bc9dfddee45e0bb8c925a4850eb2b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/bubbles/spumante" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:38.1128581Z" PublishedUtc="2017-07-14T12:37:25.7793756Z" ModifiedUtc="2017-07-14T12:37:25.761584Z" />
+      <TermPart Count="2" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <TitlePart Title="Spumante" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:47.9582234Z" PublishedUtc="2017-07-14T12:24:57.5598336Z" ModifiedUtc="2017-07-14T12:24:57.5317408Z" />
+      <TermPart Count="15" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <TitlePart Title="Spirits" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits\/armagnac" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=38fe6df5fba742dea722ef9d930d4e5b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits/armagnac" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:48.8871686Z" PublishedUtc="2017-07-14T12:41:45.49609Z" ModifiedUtc="2017-07-14T12:41:45.4795271Z" />
+      <TermPart Count="2" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <TitlePart Title="Armagnac" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits\/cognac" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=f3b972b32af74dbd961da7014ebd874b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits/cognac" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:27.6536166Z" PublishedUtc="2017-07-14T12:47:18.6818847Z" ModifiedUtc="2017-07-14T12:47:18.6172068Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <TitlePart Title="Cognac" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits\/other-spirits" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=4677ebf2536a4225826729fc3cbb791b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits/other-spirits" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:46.8155159Z" PublishedUtc="2017-07-14T12:48:40.574149Z" ModifiedUtc="2017-07-14T12:48:40.5556278Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <TitlePart Title="Other Spirits" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits\/rum" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=f994853880f344aa85d9fc611fce69c2" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits/rum" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:05.8511319Z" PublishedUtc="2017-07-14T12:52:57.1340822Z" ModifiedUtc="2017-07-14T12:52:57.1175448Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <TitlePart Title="Rum" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/spirits\/whisky" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=d4ba863ec9d34ba9891b3db38f53fc09" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/spirits/whisky" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:23.3069434Z" PublishedUtc="2017-07-14T12:40:19.1438065Z" ModifiedUtc="2017-07-14T12:40:19.1207594Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <TitlePart Title="Whisky" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/wine" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/wine" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:06.0200154Z" PublishedUtc="2017-07-14T12:25:13.8116202Z" ModifiedUtc="2017-07-14T12:25:13.6546053Z" />
+      <TermPart Count="21" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <TitlePart Title="Wine" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/wine\/reds" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=918e02a4ee7344fda1da12ee508d7df1" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/wine/reds" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:31.4376777Z" PublishedUtc="2017-07-14T12:26:33.8945108Z" ModifiedUtc="2017-07-14T12:26:33.877985Z" />
+      <TermPart Count="9" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <TitlePart Title="Reds" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/wine\/rosee" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=17a45cd35abb4376a5465806e5063caf" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/wine/rosee" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:49:08.2216403Z" PublishedUtc="2017-07-14T12:56:51.645569Z" ModifiedUtc="2017-07-14T12:56:51.6266578Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <TitlePart Title="Rosèe" />
+    </ProductsTerm>
+    <ProductsTerm Id="/alias=products\/products\/wine\/whites" Status="Published">
+      <MediaLibraryPickerField.Banner ContentItems="/Identifier=38c4e6726b21433cb4fb21ff4fc10e4e" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="products/products/wine/whites" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:47.3989861Z" PublishedUtc="2017-07-14T12:54:20.3826061Z" ModifiedUtc="2017-07-14T12:54:20.3588329Z" />
+      <TermPart Count="8" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <TitlePart Title="Whites" />
+    </ProductsTerm>
+    <Product Id="/alias=adelphi-s-liddesdale18/Sku=SKU-adelphi-s-liddesdale18" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=b5779c082398464eb095e72812ba2e1f" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/whisky" />
+      <TextField.Description Text="Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus." />
+      <AutoroutePart Alias="adelphi-s-liddesdale18" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:44:00.5983233Z" PublishedUtc="2017-07-14T14:50:59.4260645Z" ModifiedUtc="2017-07-14T14:50:59.1563682Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-adelphi-s-liddesdale18" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="56" Price="¤123.49" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Adelphi's Liddesdale18" />
+    </Product>
+    <Product Id="/alias=al-zero/Sku=SKU-al-zero" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=71771370137245848e851458c4b76667" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor" />
+      <AutoroutePart Alias="al-zero" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:34:14.117416Z" PublishedUtc="2017-07-14T09:34:14.4448387Z" ModifiedUtc="2017-07-14T09:34:14.3295416Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-al-zero" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="9" Price="¤292.30" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Al Zero" />
+    </Product>
+    <Product Id="/alias=bandol-rose/Sku=SKU-bandol-rose" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=9dd3b68651bf418a81eb3ef1f44cede1" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/rosee" />
+      <TextField.Description Text="Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem" />
+      <AutoroutePart Alias="bandol-rose" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:58:15.611194Z" PublishedUtc="2017-07-14T09:58:16.0197943Z" ModifiedUtc="2017-07-14T09:58:15.8673551Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-bandol-rose" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="56" Price="¤27.63" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Bandol Rosè" />
+    </Product>
+    <Product Id="/alias=bas-armagnac/Sku=SKU-bas-armagnac" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=2295f2af9a514a3186edc0e903be4c99" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/armagnac" />
+      <TextField.Description Text=" Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="bas-armagnac" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:21:30.1077951Z" PublishedUtc="2017-07-14T10:21:30.4687522Z" ModifiedUtc="2017-07-14T10:21:30.3549626Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-bas-armagnac" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤49.01" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Bas Armagnac" />
+    </Product>
+    <Product Id="/alias=brut-imperial/Sku=SKU-brut-imperial" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=f1b260f8abe64cb680a923600be85082" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/champagne" />
+      <TextField.Description Text="Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta" />
+      <AutoroutePart Alias="brut-imperial" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:04:59.7754938Z" PublishedUtc="2017-07-14T10:05:00.0547032Z" ModifiedUtc="2017-07-14T10:04:59.9459328Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-brut-imperial" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="1" Price="¤1,485.20" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Brut Imperial " />
+    </Product>
+    <Product Id="/alias=brut-imperial-2/Sku=SKU-brut-imperial" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=474c0cf9dfe64971bd86fc391a65ee2d" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/champagne" />
+      <TextField.Description Text="ue, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam v" />
+      <AutoroutePart Alias="brut-imperial-2" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:06:22.4359008Z" PublishedUtc="2017-07-14T10:06:22.909637Z" ModifiedUtc="2017-07-14T10:06:22.6770227Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-brut-imperial" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤917.85" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Brut Imperial " />
+    </Product>
+    <Product Id="/alias=caberlot/Sku=SKU-caberlot" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=fc4abe563a87428c8523b5792b85b790" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor." />
+      <AutoroutePart Alias="caberlot" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:33:11.1965923Z" PublishedUtc="2017-07-14T09:33:11.5908634Z" ModifiedUtc="2017-07-14T09:33:11.4382317Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-caberlot" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="8" Price="¤293.41" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Caberlot" />
+    </Product>
+    <Product Id="/alias=caberlot-2/Sku=SKU-caberlot" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=0440a764b6a84a848f5367afe888f53a" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor" />
+      <AutoroutePart Alias="caberlot-2" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:35:10.7752015Z" PublishedUtc="2017-07-14T09:35:11.2541097Z" ModifiedUtc="2017-07-14T09:35:11.0110619Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-caberlot" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="98" Price="¤261.69" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Caberlot" />
+    </Product>
+    <Product Id="/alias=chassagne-montrachet/Sku=SKU-chassagne-montrachet" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=b076bc6e78be4a82ad35fed57382ad9d" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Eleganza, armonia e grazia unite a ricchezza e complessità di aromi.La sua eccellente struttura ne fa un vino da invecchiamento, che con gli anni stupisce per la ricchezza e la profondità." />
+      <AutoroutePart Alias="chassagne-montrachet" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;&lt;strong&gt;Denominazione&lt;/strong&gt;: Chassagne Montrachet&lt;br /&gt;&lt;strong&gt;Produttore&lt;/strong&gt;: Regnard&lt;br /&gt;&lt;strong&gt;Regione&lt;/strong&gt;: BORGOGNA&lt;br /&gt;&lt;strong&gt;Nazione&lt;/strong&gt;: Francia&lt;br /&gt;&lt;strong&gt;Tipologia&lt;/strong&gt;: VINO BIANCO&lt;br /&gt;&lt;strong&gt;Uve&lt;/strong&gt;: Chardonnay&lt;br /&gt;&lt;strong&gt;Bottiglia&lt;/strong&gt;: 75.00 cl&lt;br /&gt;&lt;strong&gt;Gradazione&lt;/strong&gt;: 13&lt;br /&gt;&lt;strong&gt;Certificazione&lt;/strong&gt;: aoc&lt;br /&gt;&lt;strong&gt;Annata&lt;/strong&gt;: 2009&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:50:05.1000219Z" PublishedUtc="2017-07-14T09:51:47.7932724Z" ModifiedUtc="2017-07-14T09:51:47.7180242Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-chassagne-montrachet" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="3" Price="¤87.23" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Chassagne Montrachet" />
+    </Product>
+    <Product Id="/alias=chateau-la-nerthe-blanc/Sku=SKU-chateau-la-nerthe-blanc" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=6c2cd8d394444f98b3d3d9580ff052a7" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="chateau-la-nerthe-blanc" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:56:18.8315068Z" PublishedUtc="2017-07-14T09:56:19.3158069Z" ModifiedUtc="2017-07-14T09:56:19.0997291Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-chateau-la-nerthe-blanc" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤65.82" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Chateau la Nerthe blanc" />
+    </Product>
+    <Product Id="/alias=clos-du-mesnil/Sku=SKU-clos-du-mesnil" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=822453030b104aed9b0cbb17c25a0e07" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/champagne" />
+      <TextField.Description Text="entesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="clos-du-mesnil" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:07:27.4669831Z" PublishedUtc="2017-07-14T10:07:27.8489571Z" ModifiedUtc="2017-07-14T10:07:27.6283345Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-clos-du-mesnil" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤821.98" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Clos du Mesnil" />
+    </Product>
+    <Product Id="/alias=clos-vougeot/Sku=SKU-clos-vougeot" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=6d31db4f54044c0c846a9ab85c2ac887" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada" />
+      <AutoroutePart Alias="clos-vougeot" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:38:44.4341677Z" PublishedUtc="2017-07-14T09:38:45.0032077Z" ModifiedUtc="2017-07-14T09:38:44.8287157Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-clos-vougeot" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="54" Price="¤171.29" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Clos Vougeot" />
+    </Product>
+    <Product Id="/alias=cristal/Sku=SKU-cristal" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7f7fb476ca874c08bfe91b75db476b62" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/champagne" />
+      <TextField.Description Text="r sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus." />
+      <AutoroutePart Alias="cristal" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:08:37.6435211Z" PublishedUtc="2017-07-14T10:08:38.0521732Z" ModifiedUtc="2017-07-14T10:08:37.897808Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-cristal" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="7" Price="¤502.76" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Cristal " />
+    </Product>
+    <Product Id="/alias=cristallo-extra/Sku=SKU-cristallo-extra" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=669436e72d4845f78872ddb79617f476" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/cognac" />
+      <TextField.Description Text="Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="cristallo-extra" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:27:02.9396585Z" PublishedUtc="2017-07-14T10:27:03.4044338Z" ModifiedUtc="2017-07-14T10:27:03.2531284Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-cristallo-extra" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤417.12" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Cristallo Extra" />
+    </Product>
+    <Product Id="/alias=cuvee-imperiale-brut/Sku=SKU-cuvee-imperiale-brut" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=382deb5c8f03402f8f1951781660690e" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/italian-spumante" />
+      <TextField.Description Text="utrum hendrerit in quis elit. Integer nec nisi vel tortor mattis hendrerit. Vivamus ullamcorper dui vitae vulputate porttitor. Proin pellentesque semper sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus." />
+      <AutoroutePart Alias="cuvee-imperiale-brut" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;In eleifend consectetur eros quis feugiat. Nam non metus iaculis, ullamcorper metus eu, imperdiet arcu. Donec euismod lacinia feugiat. Proin vel ex eros. Fusce nec sapien vitae lectus facilisis imperdiet sit amet imperdiet ex. Nullam nec rhoncus justo, et iaculis lectus. Ut finibus nulla leo. Fusce ut libero nec neque tincidunt ornare vitae non nisi. Donec dignissim eget quam in bibendum. Nunc quis elit non enim rutrum hendrerit in quis elit. Integer nec nisi vel tortor mattis hendrerit. Vivamus ullamcorper dui vitae vulputate porttitor. Proin pellentesque semper sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:10:55.2326587Z" PublishedUtc="2017-07-14T10:10:55.5901092Z" ModifiedUtc="2017-07-14T10:10:55.4552624Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-cuvee-imperiale-brut" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤730.45" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Cuveè Imperiale Brut" />
+    </Product>
+    <Product Id="/alias=falanghina-via-del-campo/Sku=SKU-falanghina-via-del-campo" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=43f10c8492fb408b816337b541c05830" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulpu" />
+      <AutoroutePart Alias="falanghina-via-del-campo" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:55:13.9864357Z" PublishedUtc="2017-07-14T09:55:14.4057794Z" ModifiedUtc="2017-07-14T09:55:14.2920984Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-falanghina-via-del-campo" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="7" Price="¤68.52" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Falanghina Via del Campo" />
+    </Product>
+    <Product Id="/alias=fiano-exultet/Sku=SKU-fiano-exultet" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=45e09113ce92432290de0e2c1e7d883b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eg" />
+      <AutoroutePart Alias="fiano-exultet" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:52:37.3821519Z" PublishedUtc="2017-07-14T09:52:37.8283222Z" ModifiedUtc="2017-07-14T09:52:37.6368576Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-fiano-exultet" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="0" Price="¤77.71" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Fiano Exultet" />
+    </Product>
+    <Product Id="/alias=fine/Sku=SKU-fine" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=f4aef07d19d0483d917ef833a4bde9f8" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/cognac" />
+      <TextField.Description Text="Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="fine" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:29:58.4283848Z" PublishedUtc="2017-07-14T10:29:58.8344694Z" ModifiedUtc="2017-07-14T10:29:58.7006367Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-fine" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="4" Price="¤36.60" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Fine" />
+    </Product>
+    <Product Id="/alias=franciacorta-cuve-annamaria-clementi/Sku=SKU-franciacorta-cuve-annamaria-clementi" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=0e885d4a4545420abd622a12076256e9" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/italian-spumante" />
+      <TextField.Description Text="Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="franciacorta-cuve-annamaria-clementi" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:13:18.2473498Z" PublishedUtc="2017-07-14T14:51:45.8450901Z" ModifiedUtc="2017-07-14T14:51:45.7553539Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-franciacorta-cuve-annamaria-clementi" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤80.89" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Franciacorta Cuvè Annamaria Clementi" />
+    </Product>
+    <Product Id="/alias=greco-giallo-d-arles-magnum/Sku=SKU-greco-giallo-d-arles-magnum" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=6418de944b1348d6ae90cdb0926f9f18" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="pellentesque semper sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus." />
+      <AutoroutePart Alias="greco-giallo-d-arles-magnum" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:54:00.400047Z" PublishedUtc="2017-07-14T09:54:00.804129Z" ModifiedUtc="2017-07-14T09:54:00.6626812Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-greco-giallo-d-arles-magnum" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="4" Price="¤71.37" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Greco Giallo d'Arles Magnum" />
+    </Product>
+    <Product Id="/alias=millesime-1974/Sku=SKU-millesime-1974" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=158b8188f39f412da8d3652982256d40" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/armagnac" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui." />
+      <AutoroutePart Alias="millesime-1974" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:19:11.3185648Z" PublishedUtc="2017-07-14T14:51:36.0710409Z" ModifiedUtc="2017-07-14T14:51:35.9622326Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-millesime-1974" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤106.64" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Millesimè 1974" />
+    </Product>
+    <Product Id="/alias=montrachet-grand-cru/Sku=SKU-montrachet-grand-cru" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=333ce072583c45ddb296c47dfaabd7da" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat." />
+      <AutoroutePart Alias="montrachet-grand-cru" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:45:14.385295Z" PublishedUtc="2017-07-14T09:45:14.7422695Z" ModifiedUtc="2017-07-14T09:45:14.6184031Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-montrachet-grand-cru" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="8" Price="¤539.24" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Montrachet Grand Cru" />
+    </Product>
+    <Product Id="/alias=pinot-nero-rose/Sku=SKU-pinot-nero-rose" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7c8f6b2cac4e4770afb82b7e3303afa7" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/rosee" />
+      <TextField.Description Text="enean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam conv" />
+      <AutoroutePart Alias="pinot-nero-rose" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:01:42.8658306Z" PublishedUtc="2017-07-14T10:01:43.2445958Z" ModifiedUtc="2017-07-14T10:01:43.1475588Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-pinot-nero-rose" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤16.49" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Pinot Nero Rosè" />
+    </Product>
+    <Product Id="/alias=pouilly-fume/Sku=SKU-pouilly-fume" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=72a2a8890ac447d6926e15957930d660" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat." />
+      <AutoroutePart Alias="pouilly-fume" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Dal colore dorato-verde pallido ha una considerevole intensit&amp;agrave; al naso con una gamma di aromi eccezionale dove si riconoscono gli agrumi floreali, i fiori bianchi, ed il pompelmo bianco. Queste note sono aumentate e rinforzate dal caratteristico sentore minerale della pietra focaia. Il sapore &amp;egrave; piacevole e vivace, con una buona rotondit&amp;agrave; al gusto di frutta di pere, mele verdi e agrumi, che viene amplificato dalla complessit&amp;agrave; minerale tipica di questo vino.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:47:10.7893277Z" PublishedUtc="2017-07-14T09:47:11.1888894Z" ModifiedUtc="2017-07-14T09:47:11.0705993Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-pouilly-fume" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="8" Price="¤132.43" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Pouilly Fumè" />
+    </Product>
+    <Product Id="/alias=pouilly-fume-2/Sku=SKU-pouilly-fume" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=ee27f6e75d4746a5907ec05d8e386008" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/whites" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tor" />
+      <AutoroutePart Alias="pouilly-fume-2" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum,&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:48:24.5941029Z" PublishedUtc="2017-07-14T09:48:25.0523379Z" ModifiedUtc="2017-07-14T09:48:24.8252202Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-pouilly-fume" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="56" Price="¤94.37" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Pouilly Fumè" />
+    </Product>
+    <Product Id="/alias=premier-grand-cru-classe/Sku=SKU-premier-grand-cru-classe" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=e1ff5b1f88ea4c9493a191fd3a9d7fa9" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor." />
+      <AutoroutePart Alias="premier-grand-cru-classe" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:27:58.8944232Z" PublishedUtc="2017-07-14T09:27:59.5887551Z" ModifiedUtc="2017-07-14T09:27:59.3974304Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-premier-grand-cru-classe" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤1,030.90" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Premier Grand Cru Classè" />
+    </Product>
+    <Product Id="/alias=premier-grand-cru-classe-2/Sku=SKU-premier-grand-cru-classe" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=fdcd3aa0f81e44588b69e747676d64f1" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor" />
+      <AutoroutePart Alias="premier-grand-cru-classe-2" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:29:51.4534397Z" PublishedUtc="2017-07-14T09:29:52.1956866Z" ModifiedUtc="2017-07-14T09:29:51.8210477Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-premier-grand-cru-classe" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤758.90" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Premier Grand Cru Classè" />
+    </Product>
+    <Product Id="/alias=premier-grand-cru-classe-3/Sku=SKU-premier-grand-cru-classe" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=5688d74817e94cbe91d105307fe1eb54" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor." />
+      <AutoroutePart Alias="premier-grand-cru-classe-3" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:31:56.9895196Z" PublishedUtc="2017-07-14T09:31:57.4437219Z" ModifiedUtc="2017-07-14T09:31:57.2251363Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-premier-grand-cru-classe" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="3" Price="¤666.12" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Premier Grand Cru Classè" />
+    </Product>
+    <Product Id="/alias=puro-rose/Sku=SKU-puro-rose" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=99eb26290d59436099b9380cbbfe33e5" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/spumante" />
+      <TextField.Description Text="Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="puro-rose" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:14:56.266841Z" PublishedUtc="2017-07-14T10:14:56.7471343Z" ModifiedUtc="2017-07-14T10:14:56.5170015Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-puro-rose" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤25.94" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Puro Rosè" />
+    </Product>
+    <Product Id="/alias=riesling-brut/Sku=SKU-riesling-brut" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=3f225c9f49cc47cdbddae4d56c9bede0" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/spumante" />
+      <TextField.Description Text="Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat." />
+      <AutoroutePart Alias="riesling-brut" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:16:36.9074084Z" PublishedUtc="2017-07-14T10:16:37.2773745Z" ModifiedUtc="2017-07-14T10:16:37.1711057Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-riesling-brut" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤21.41" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Riesling Brut" />
+    </Product>
+    <Product Id="/alias=riserva-carlo-bocchino/Sku=SKU-riserva-carlo-bocchino" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7289b4cb1dea4381af603843dbbf1d80" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/other-spirits" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui." />
+      <AutoroutePart Alias="riserva-carlo-bocchino" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:33:41.2416538Z" PublishedUtc="2017-07-14T10:33:41.6040521Z" ModifiedUtc="2017-07-14T10:33:41.4631957Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-riserva-carlo-bocchino" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤100.27" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Riserva" />
+      <TitlePart Title="Riserva Carlo Bocchino" />
+    </Product>
+    <Product Id="/alias=riserva-del-fondatore/Sku=SKU-riserva-del-fondatore" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=f3d575a14d7d4a3fa78b88ca665c5165" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/other-spirits" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. " />
+      <AutoroutePart Alias="riserva-del-fondatore" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;In eleifend consectetur eros quis feugiat. Nam non metus iaculis, ullamcorper metus eu, imperdiet arcu. Donec euismod lacinia feugiat. Proin vel ex eros. Fusce nec sapien vitae lectus facilisis imperdiet sit amet imperdiet ex. Nullam nec rhoncus justo, et iaculis lectus. Ut finibus nulla leo. Fusce ut libero nec neque tincidunt ornare vitae non nisi. Donec dignissim eget quam in bibendum. Nunc quis elit non enim rutrum hendrerit in quis elit. Integer nec nisi vel tortor mattis hendrerit. Vivamus ullamcorper dui vitae vulputate porttitor. Proin pellentesque semper sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:35:08.1939079Z" PublishedUtc="2017-07-14T14:51:26.935754Z" ModifiedUtc="2017-07-14T14:51:26.7908446Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-riserva-del-fondatore" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤144.58" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Riserva" />
+      <TitlePart Title="Riserva del Fondatore" />
+    </Product>
+    <Product Id="/alias=ron-23-solera/Sku=SKU-ron-23-solera" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7dd42e7e4d9d42cf8c25415deb6c37da" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/rum" />
+      <TextField.Description Text="Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium" />
+      <AutoroutePart Alias="ron-23-solera" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:39:17.9474914Z" PublishedUtc="2017-07-14T10:39:18.2592965Z" ModifiedUtc="2017-07-14T10:39:18.1535464Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-ron-23-solera" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤97.59" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Riserva" />
+      <TitlePart Title="Ron 23 Solera" />
+    </Product>
+    <Product Id="/alias=ron-gran-reserva-18/Sku=SKU-ron-gran-reserva-18" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=db43ad3d92d547cd9bc087cab780f2f6" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/rum" />
+      <TextField.Description Text="mst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus." />
+      <AutoroutePart Alias="ron-gran-reserva-18" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:40:40.0618166Z" PublishedUtc="2017-07-14T10:40:40.3405365Z" ModifiedUtc="2017-07-14T10:40:40.2202383Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-ron-gran-reserva-18" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="4" Price="¤85.64" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Riserva" />
+      <TitlePart Title="Ron Gran Reserva 18 " />
+    </Product>
+    <Product Id="/alias=rosato/Sku=SKU-rosato" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=48e582bb83bc4e969128cd9ba6420fdb" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/rosee" />
+      <TextField.Description Text="Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, ma" />
+      <AutoroutePart Alias="rosato" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;In eleifend consectetur eros quis feugiat. Nam non metus iaculis, ullamcorper metus eu, imperdiet arcu. Donec euismod lacinia feugiat. Proin vel ex eros. Fusce nec sapien vitae lectus facilisis imperdiet sit amet imperdiet ex. Nullam nec rhoncus justo, et iaculis lectus. Ut finibus nulla leo. Fusce ut libero nec neque tincidunt ornare vitae non nisi. Donec dignissim eget quam in bibendum. Nunc quis elit non enim rutrum hendrerit in quis elit. Integer nec nisi vel tortor mattis hendrerit. Vivamus ullamcorper dui vitae vulputate porttitor. Proin pellentesque semper sapien at viverra. In porttitor erat nec dictum porttitor. Nunc suscipit faucibus convallis. Curabitur mattis sit amet ex id cursus.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:00:24.0385128Z" PublishedUtc="2017-07-14T10:00:24.4506386Z" ModifiedUtc="2017-07-14T10:00:24.2375602Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-rosato" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="2" Price="¤24.74" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Rosato" />
+      <TitlePart Title="Rosato" />
+    </Product>
+    <Product Id="/alias=rose-de-provence/Sku=SKU-rose-de-provence" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=03a5351511d54fbe90de250ac14a5132" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/rosee" />
+      <TextField.Description Text="Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat." />
+      <AutoroutePart Alias="rose-de-provence" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliquam facilisis, risus augue scelerisque urna, ut faucibus dolor metus vitae eros. Suspendisse urna ante, consectetur in aliquet molestie, blandit eget felis. In hac habitasse platea dictumst. Ut et blandit tellus. Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:03:00.7688015Z" PublishedUtc="2017-07-14T10:03:01.2298474Z" ModifiedUtc="2017-07-14T10:03:01.0776341Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-rose-de-provence" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="85" Price="¤15.70" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Rosato" />
+      <TitlePart Title="Rosè de Provence" />
+    </Product>
+    <Product Id="/alias=rum-old-cask/Sku=SKU-rum-old-cask" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7de72d25d7b04e9f8c1f5950f204bdcb" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/rum" />
+      <TextField.Description Text="Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel " />
+      <AutoroutePart Alias="rum-old-cask" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:41:53.7462134Z" PublishedUtc="2017-07-14T14:51:07.745136Z" ModifiedUtc="2017-07-14T14:51:07.5518778Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-rum-old-cask" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤83.35" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino , Rum" />
+      <TitlePart Title="Rum Old Cask" />
+    </Product>
+    <Product Id="/alias=single-malt-12/Sku=SKU-single-malt-12" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=23b79c90b41b45c9a473dfa7c9ee8269" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/whisky" />
+      <TextField.Description Text="Pellentesque et feugiat mauris. Curabitur hendrerit diam vitae turpis elementum, ut malesuada eros rhoncus." />
+      <AutoroutePart Alias="single-malt-12" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:45:12.4917227Z" PublishedUtc="2017-07-14T10:45:12.920895Z" ModifiedUtc="2017-07-14T10:45:12.701782Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-single-malt-12" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤96.37" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Single Malt 12" />
+    </Product>
+    <Product Id="/alias=single-malt-18/Sku=SKU-single-malt-18" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=da74410837964fc6b1bd2ef4a0d17495" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/whisky" />
+      <TextField.Description Text="raesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta." />
+      <AutoroutePart Alias="single-malt-18" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:46:28.5478376Z" PublishedUtc="2017-07-14T10:46:29.0190919Z" ModifiedUtc="2017-07-14T10:46:28.7874381Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-single-malt-18" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="6" Price="¤79.32" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Single Malt 18" />
+    </Product>
+    <Product Id="/alias=solaia/Sku=SKU-solaia" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=08ffd7497ca84447b52c1b60b914a9d3" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="In eleifend consectetur eros quis feugiat. Nam non metus iaculis, ullamcorper metus eu, imperdiet arcu. Donec euismod lacinia feugiat. Proin vel ex eros" />
+      <AutoroutePart Alias="solaia" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:36:07.5227113Z" PublishedUtc="2017-07-14T09:36:07.9302671Z" ModifiedUtc="2017-07-14T09:36:07.7893703Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-solaia" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="0" Price="¤204.12" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Solaia" />
+    </Product>
+    <Product Id="/alias=storica/Sku=SKU-storica" Status="Published">
+      <BooleanField.IsNewProduct Value="true" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=ef461f53ded0426c8312f8d6a1cbb5af" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/other-spirits" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. " />
+      <AutoroutePart Alias="storica" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:36:21.1000531Z" PublishedUtc="2017-07-14T14:51:17.072616Z" ModifiedUtc="2017-07-14T14:51:16.9242447Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-storica" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤150.67" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Storica" />
+    </Product>
+    <Product Id="/alias=taurasi/Sku=SKU-taurasi" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=12c2825190914325b784248d1e29e0fc" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/wine\/reds" />
+      <TextField.Description Text="Fusce ornare elit nulla, posuere commodo sem sodales id. Suspendisse in varius sem. In aliquam mauris eget orci imperdiet tempus. Vestibulum scelerisque, lacus et aliq" />
+      <AutoroutePart Alias="taurasi" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ipsum vitae nulla rutrum, eu laoreet sem dapibus. Nulla ligula nulla, faucibus non purus eget, aliquet consequat dolor. Duis pharetra nunc ut risus blandit vulputate. Suspendisse non tellus consequat, interdum augue id, dignissim lectus. Vivamus sollicitudin magna orci, gravida accumsan enim hendrerit vel. Vivamus pellentesque feugiat leo quis dapibus. Donec lobortis bibendum tellus a luctus. Sed id bibendum orci. Duis vitae faucibus neque, id luctus neque.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T09:37:47.1606551Z" PublishedUtc="2017-07-14T09:37:47.5190585Z" ModifiedUtc="2017-07-14T09:37:47.4085258Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-taurasi" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="0" Price="¤183.82" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino" />
+      <TitlePart Title="Taurasi" />
+    </Product>
+    <Product Id="/alias=trento-brut/Sku=SKU-trento-brut" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=b55cf217cdac423fb55c435f9a102986" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/bubbles\/italian-spumante" />
+      <TextField.Description Text="Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin." />
+      <AutoroutePart Alias="trento-brut" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:12:01.829507Z" PublishedUtc="2017-07-14T10:12:02.3178043Z" ModifiedUtc="2017-07-14T10:12:02.1974741Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-trento-brut" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="7" Price="¤248.84" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vino, Brut" />
+      <TitlePart Title="Trento Brut" />
+    </Product>
+    <Product Id="/alias=vodka-intense/Sku=SKU-vodka-intense" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=0f8f018729544162830eaa2141e3629f" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/other-spirits" />
+      <TextField.Description Text="Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum" />
+      <AutoroutePart Alias="vodka-intense" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui. Cras maximus tortor vitae quam mollis finibus. Aenean ac blandit diam, ac maximus sem. Praesent nec nunc in neque egestas vehicula vel id lorem. Suspendisse ut viverra massa. Nullam convallis magna ut justo euismod porta.&lt;/p&gt;&#xD;&#xA;&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:37:29.5241639Z" PublishedUtc="2017-07-14T10:37:29.8414707Z" ModifiedUtc="2017-07-14T10:37:29.7542359Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-vodka-intense" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤50.25" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="Vodka" />
+      <TitlePart Title="Vodka Intense" />
+    </Product>
+    <Product Id="/alias=x-o/Sku=SKU-x-o" Status="Published">
+      <BooleanField.IsNewProduct Value="false" />
+      <MediaLibraryPickerField.ProductImage ContentItems="/Identifier=7456d0f92c714ea4ac0b829548408ba6" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <TaxonomyField.Category Terms="/alias=products\/products\/spirits\/cognac" />
+      <TextField.Description Text="Maecenas at iaculis massa. Mauris laoreet tortor et nisi vehicula, eget suscipit sapien dignissim. Pellentesque id tincidunt mauris, sed auctor dui." />
+      <AutoroutePart Alias="x-o" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <BodyPart Text="&lt;p&gt;Maecenas vitae molestie odio. Proin nulla ipsum, faucibus id magna sit amet, accumsan convallis quam. Cras finibus risus at sem lacinia viverra. Fusce malesuada convallis nibh, nec varius sem rutrum quis. Donec maximus nunc et eros imperdiet mollis. Vestibulum ultricies turpis pretium elit vulputate rutrum. Ut molestie placerat ligula fermentum viverra. Vivamus est nisl, blandit ut elit nec, congue commodo quam. Curabitur laoreet, odio et sagittis viverra, enim velit elementum libero, vel facilisis turpis nisl quis erat. Nullam egestas, nisi vestibulum pretium elementum, mauris sapien consectetur dolor, id varius tellus diam a sapien. Quisque porttitor blandit dolor accumsan sollicitudin. Aliquam sit amet diam ac ipsum viverra finibus sit amet vel augue. Nulla elit eros, consectetur vitae lacus vitae, viverra suscipit lectus. In et mi id odio dignissim consequat.&lt;/p&gt;" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T10:31:51.5140519Z" PublishedUtc="2017-07-14T10:31:51.9923308Z" ModifiedUtc="2017-07-14T10:31:51.7816789Z" />
+      <ProductAttributesPart Attributes="" Ids="" />
+      <ProductPart Sku="SKU-x-o" OutOfStockMessage="" AllowBackOrder="false" IsDigital="false" ConsiderInventory="false" Weight="0" OverrideTieredPricing="false" MinimumOrderQuantity="1" AuthenticationRequired="false" Inventory="5" Price="¤161.24" DiscountPrice="(¤1.00)" PriceTiers="" />
+      <TagsPart Tags="" />
+      <TitlePart Title="X.O." />
+    </Product>
+    <SubscriberRegistrationWidget Id="/Identifier=e6a770a087d14b489982d768df2e50d8" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" Container="/Layer.LayerName=Default" CreatedUtc="2017-07-14T08:31:53.3112359Z" PublishedUtc="2017-07-14T12:18:54.9296602Z" ModifiedUtc="2017-07-14T12:18:54.9050811Z" />
+      <IdentityPart Identifier="e6a770a087d14b489982d768df2e50d8" />
+      <SubscriberRegistrationPart NewsletterDefinitionIds="/Identifier=bebba3c58be144efb55927db611cadbd" PermitCumulativeRegistrations="false" />
+      <WidgetPart Title="Newsletter" Position="7" Zone="AfterMain" RenderTitle="false" Name="" CssClasses="" />
+    </SubscriberRegistrationWidget>
+    <TopBrand Id="/Identifier=1387832cc42348a182a17eb76adfc865" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=f855109257d94e4a9dbe1ba767831ed1" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:00:32.5704026Z" PublishedUtc="2017-07-14T15:00:32.6049603Z" ModifiedUtc="2017-07-14T15:00:32.5944635Z" />
+      <IdentityPart Identifier="1387832cc42348a182a17eb76adfc865" />
+      <TitlePart Title="Glendronach" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=1b1b7d293aaf46dfb6de75d814061ee9" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=d0ccecc1f2a14529b12f3268c551a32b" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:03:15.731871Z" PublishedUtc="2017-07-14T15:03:15.7639559Z" ModifiedUtc="2017-07-14T15:03:15.758958Z" />
+      <IdentityPart Identifier="1b1b7d293aaf46dfb6de75d814061ee9" />
+      <TitlePart Title="Frapin" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=3857be48ee614df38bfee2fd4fbca58e" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=2d745564161047a3bf29b0841a34727c" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:04:11.4717506Z" PublishedUtc="2017-07-14T15:04:11.5006762Z" ModifiedUtc="2017-07-14T15:04:11.4947768Z" />
+      <IdentityPart Identifier="3857be48ee614df38bfee2fd4fbca58e" />
+      <TitlePart Title="Hennessy" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=4c28506ead8343548cc75cc73b68f1c4" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=44f49b5565534a9d9eabcde22c96118f" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:01:32.5632441Z" PublishedUtc="2017-07-14T15:01:32.5948246Z" ModifiedUtc="2017-07-14T15:01:32.588291Z" />
+      <IdentityPart Identifier="4c28506ead8343548cc75cc73b68f1c4" />
+      <TitlePart Title="Blavenie" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=a6e7f7c9193b4f298448e754fbb42eaf" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=ee9d9553df464686be0046769e20e585" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:59:37.6908004Z" PublishedUtc="2017-07-14T14:59:37.7198766Z" ModifiedUtc="2017-07-14T14:59:37.7133359Z" />
+      <IdentityPart Identifier="a6e7f7c9193b4f298448e754fbb42eaf" />
+      <TitlePart Title="Bonollo" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=cd8f1f5a13984060aafdcb83da5b2802" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=ca56545c1ff34489a2fe6cb77c7c78a0" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T14:55:36.524073Z" PublishedUtc="2017-07-14T14:55:36.5606099Z" ModifiedUtc="2017-07-14T14:55:36.5531226Z" />
+      <IdentityPart Identifier="cd8f1f5a13984060aafdcb83da5b2802" />
+      <TitlePart Title="Grappa Bocchino" />
+    </TopBrand>
+    <TopBrand Id="/Identifier=e7f1edbaddc54f2b9f49ea46309e57da" Status="Published">
+      <MediaLibraryPickerField.Logo ContentItems="/Identifier=c8310996480d470fb5254a34608ffb03" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2017-07-14T15:02:24.4938255Z" PublishedUtc="2017-07-14T15:02:24.5351695Z" ModifiedUtc="2017-07-14T15:02:24.5183027Z" />
+      <IdentityPart Identifier="e7f1edbaddc54f2b9f49ea46309e57da" />
+      <TitlePart Title="Camus" />
+    </TopBrand>
+  </Content>
+  <Command>
+  </Command>
+</Orchard>

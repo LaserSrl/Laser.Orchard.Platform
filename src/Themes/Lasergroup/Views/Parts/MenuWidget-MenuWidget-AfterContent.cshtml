@@ -1,0 +1,93 @@
+﻿@using Orchard.Localization.Services;
+@using Laser.Orchard.CulturePicker.Services;
+@using Orchard.Environment.Configuration;
+@{
+    var Menu = Model.Menu;
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+
+    int position = 0;
+    var linkHome = items[0].Href;
+
+    string modalitaMenu = Model.ContentItem.MenuWidgetPart.MenuWidget.Modalita.Value;
+}
+@if (modalitaMenu == "Navigazione") {
+    <div class="menu-menu-principale-container">
+        <ul id="main-menu-home" class="nav navbar-nav handel-got-d hidden-xs">
+            @foreach (var item in items) {
+                if (position > 0) {
+                    bool hasChildren = (item.Item.Items.Length > 0);
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page @((hasChildren) ? "menu-item-has-children dropdown" : "")">
+                        @if (hasChildren) {
+                            <a href="@item.Href" class="dropdown-toggle" data-toggle="dropdown">@item.Text<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @DisplayChildren(item)
+                            </ul>
+                        } else {
+                            <a href="@item.Href">@item.Text</a>
+                        }
+                    </li>
+                }
+                position = position + 1;
+            }
+        </ul>
+        @*Threating Culturepicker as embedded functionality and not as a widget*@
+        @{
+            ICultureManager _cultureManager;
+            ICulturePickerSettingsService _extendedCultureService;
+            ILocalizableContentService _localizableContentService;
+            WorkContext.TryResolve(out _cultureManager);
+            WorkContext.TryResolve(out _extendedCultureService);
+            WorkContext.TryResolve(out _localizableContentService);
+            var settings = _extendedCultureService.ReadSettings();
+            var baseUrl = WorkContext.CurrentSite.BaseUrl;
+            var availableCultures = settings.ExtendedCulturesList;
+            var showOnlyPertinentCultures = settings.Settings.ShowOnlyPertinentCultures;
+            var showLabel = settings.Settings.ShowLabel;
+            var cleanUrl = WorkContext.HttpContext.Request.Url.AbsoluteUri.Replace(baseUrl, "");
+            cleanUrl = WorkContext.HttpContext.Server.UrlDecode(cleanUrl);
+            cleanUrl = cleanUrl.StartsWith("/") ? cleanUrl.Substring(1) : cleanUrl;
+
+            var urlPrefix = WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+            if (!String.IsNullOrWhiteSpace(urlPrefix)) {
+                cleanUrl = cleanUrl.StartsWith(urlPrefix, StringComparison.OrdinalIgnoreCase) ? cleanUrl.Substring(urlPrefix.Length) : cleanUrl;
+            }
+            cleanUrl = HttpUtility.UrlDecode(cleanUrl);
+            cleanUrl = cleanUrl.StartsWith("/") ? cleanUrl.Substring(1) : cleanUrl;
+            var isHomePage = String.IsNullOrWhiteSpace(cleanUrl);
+
+            var siteAvailableCultures = _cultureManager.ListCultures().AsQueryable();
+            var userCulture = _extendedCultureService.GetExtendedCulture(_cultureManager.GetCurrentCulture(WorkContext.HttpContext));
+            var translatedCultures = _localizableContentService.AvailableTranslations(cleanUrl, isHomePage);
+
+        }
+        @Display(New.Parts_CulturePicker_AfterContent(AvailableCultures: availableCultures,
+                           TranslatedCultures: translatedCultures,
+                           UserCulture: userCulture,
+                           ShowOnlyPertinentCultures: showOnlyPertinentCultures,
+                           ShowLabel: showLabel
+                           ))
+    </div>
+} else if (modalitaMenu == "Filtro") {
+    var services = WorkContext.Resolve<Orchard.IOrchardServices>();
+    var contentManager = services.ContentManager;
+    <div class="overflow-hidden">
+        <div id="filter" class="clearfix">
+            <a class="filter-label handel-got-d" href="#">@T("Filter")<i class="fa fa-angle-down"></i></a>
+            <ul class="nav">
+                @foreach (var item in items) {                  
+                if (item.Text.Text == "Tutti" || item.Text.Text == "All") {
+                    <li><a id="nofilter" href="#all">@item.Text</a></li>
+                    } else {
+                        var term = contentManager.Get(item.Content.Id);
+                        if (term != null) { //term may be draft
+                            string slug = term.AutoroutePart.DisplayAlias;
+                            var slugTerms = slug.Split('/');
+
+                            <li><a id="@item.Content.Id" href="#@slugTerms[1]">@item.Text</a></li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+}

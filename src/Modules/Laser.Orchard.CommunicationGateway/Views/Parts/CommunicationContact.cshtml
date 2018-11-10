@@ -1,0 +1,9 @@
+﻿@foreach (var field in Model.ContentPart.Fields) {
+    if(field.FieldDefinition.Name == "TaxonomyField") {
+        @Display.Fields_TaxonomyField__CommunicationContact__AdminFilter(Field: field)
+    }
+}
+<fieldset>
+    <legend>@T("Logs")</legend>
+    <span class="text large">@Model.Logs</span>
+</fieldset>

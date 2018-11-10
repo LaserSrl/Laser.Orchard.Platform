@@ -1,0 +1,85 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2017 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
+msgid "Cache Url added: {0}"
+msgstr "Cache Url aggiunta: {0}"
+
+msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
+msgid "Cache Url removed: {0}"
+msgstr "Cache Url cancellata: {0}"
+
+msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
+msgid "Cache Url updated: {0}"
+msgstr "Cache Url aggiornata: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Url Scrap"
+msgstr "Parte dell'url"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Duration"
+msgstr "Durata"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Seconds, enter 0 to disable caching for the url."
+msgstr "Secondi, 0 per disabilitare la cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Grace Time"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Seconds, enter 0 to disable gracetime for the url."
+msgstr "Secondi, 0 per disabilitare il tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Priority"
+msgstr "Priorità"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "User Tokens"
+msgstr "Token dello User"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Create New CacheUrl"
+msgstr "Aggiungi nuovo url di cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Search"
+msgstr "Trova"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Search:"
+msgstr "Ricerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Clear"
+msgstr "Pulisci"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Duration"
+msgstr "Durata"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Grace Time"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Url Scrap"
+msgstr "Parte dell'url"

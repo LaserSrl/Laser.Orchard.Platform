@@ -1,0 +1,13 @@
+﻿@using Laser.Orchard.Meteo.Models
+@{
+    var meteo = (MeteoPart)Model.Meteo;
+}
+@meteo.ForecastDate<br />
+@meteo.Situation<br />
+@foreach (var det in meteo.Details) { 
+    <hr />
+    @det.ForecastDate<br />
+    @det.ForecastDescription<br />
+    @det.Advertise<br />
+    <img src="@det.ImageUrl" width="100%"/><br />
+}

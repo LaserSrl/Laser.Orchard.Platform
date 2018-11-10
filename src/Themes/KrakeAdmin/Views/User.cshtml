@@ -1,0 +1,90 @@
+﻿@model dynamic
+@using Orchard.Mvc.Html;
+@using Orchard.UI.Resources;
+@using Orchard.Environment.Configuration
+@using KrakeAdmin.Settings.Services;
+
+@{
+    /*Logica Logo WhiteLabel*/
+    IThemeSettingsService _themeSettingsService;
+    WorkContext.TryResolve<IThemeSettingsService>(out _themeSettingsService);
+    var themeSettings = _themeSettingsService.GetSettings();
+    var backgroundImage = "";
+    var isLocalLogo = false;
+    if (!String.IsNullOrEmpty(themeSettings.HeaderLogoUrl)) {
+        isLocalLogo = !themeSettings.HeaderLogoUrl.StartsWith("http");
+        if (isLocalLogo) {
+            backgroundImage = Url.Content(themeSettings.HeaderLogoUrl);
+        } else {
+            backgroundImage = themeSettings.HeaderLogoUrl;
+        }
+    }
+    if (isLocalLogo && !File.Exists(Server.MapPath(backgroundImage))) {
+        backgroundImage = "";
+    }
+
+    var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
+    var siteName = WorkContext.CurrentSite.SiteName;
+    var siteLinkText = !string.IsNullOrWhiteSpace(siteName) ? siteName : T("Your site").Text;
+    var appLinkText = !string.IsNullOrWhiteSpace(siteName) ? siteName : T("Project Krake").Text;
+}
+
+<div class="headerbar-left">
+    <ul class="header-nav header-nav-options">
+        <li>
+            <div class="krake-header">
+                @if (!String.IsNullOrWhiteSpace(backgroundImage)) {
+                    <a class="krake-logo" href="~/" style="background-image:url('@backgroundImage')!important"></a>
+                } else {
+                    <a class="krake-logo" href="~/"></a>
+
+                }
+            </div>
+        </li>
+        <li>
+            <a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
+                <i class="fa fa-bars"></i>
+            </a>
+        </li>
+        <li class="header-nav-brand">
+            <div class="brand-holder">
+                <span class="text-lg text-bold text-primary">@siteLinkText - @Layout.Title</span>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+@if (Model.CurrentUser != null) {
+    @*<div id="login">@T("User:") @Html.ItemDisplayText((Orchard.ContentManagement.IContent)Model.CurrentUser) | @Html.ActionLink(T("Logout").ToString(), "LogOff", new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") })</div>*@
+    <div class="headerbar-right">
+        <!--ul class="header-nav header-nav-options">
+            <li>
+                <form class="navbar-search" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="headerSearch" placeholder="Enter your keyword">
+                    </div>
+                    <button type="submit" class="btn btn-icon-toggle ink-reaction"><i class="fa fa-search"></i></button>
+                </form>
+            </li>
+        </ul-->
+        <ul class="header-nav header-nav-profile">
+            <li class="dropdown">
+                <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
+                    <img src="@folderStylePath/Images/avatar1.png?1403934956" alt="" />
+                    <span class="profile-info">
+                        @Html.ItemDisplayText((Orchard.ContentManagement.IContent)Model.CurrentUser)
+                        <small>@T("User")</small>
+                    </span>
+                </a>
+                <ul class="dropdown-menu animation-dock">
+                    <li><i class="fa fa-fw fa-power-off text-danger"></i>@Html.ActionLink(T("Logout").ToString(), "LogOff", new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") })</li>
+                </ul>
+                <!--end .dropdown-menu -->
+            </li>
+            <!--end .dropdown -->
+        </ul>
+        <!--end .header-nav-profile -->
+    </div>
+
+}

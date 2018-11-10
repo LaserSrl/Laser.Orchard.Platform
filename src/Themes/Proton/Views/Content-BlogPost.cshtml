@@ -1,0 +1,90 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    if (Model.Title != null) {
+        Layout.Title = Model.Title;
+    }
+
+    Model.Classes.Add("content-item");
+
+    var contentTypeClassName = ((string)Model.ContentItem.ContentType).HtmlClassify();
+    Model.Classes.Add(contentTypeClassName);
+
+    var tag = Tag(Model, "article");
+    WorkContext.Layout.Zones["InfoBox"].Add(New.Parts_Title(Title: Model.Blog.ContentItem.TitlePart.Title), "0");
+    WorkContext.Layout.Zones["InfoBox"].Add(New.Fields_Common_Text__Sottotitolo(Value: Model.Blog.ContentItem.Blog.Sottotitolo.Value), "1");
+}
+<!-- Single Post -->
+<article class="post-full">
+
+    <!-- Post Meta -->
+    <div class="post-meta">
+
+        <div class="post-title-full">
+            <h3>@Model.ContentItem.TitlePart.Title</h3>
+            <img src="~/themes/proton/styles/images/author-placeholder.png" alt="" class="post-author img-polaroid" />
+            <ol>
+                <li class="post-title-meta">@(((DateTime)Model.ContentItem.CommonPart.PublishedUtc).ToLocalTime().ToString()) @T("by") @Model.ContentItem.CommonPart.OwnerField.Value.UserName</li>
+                                @{
+                    if (Model.ContentItem.TagsPart.CurrentTags.Length > 0) {
+                        var tags = String.Join(", ", Model.ContentItem.TagsPart.CurrentTags);
+                    <li class="post-title-tag">
+                        @tags
+                    </li>
+                    }
+                }
+            </ol>
+        </div>
+
+        <div class="clearfix"></div>
+
+    </div>
+
+    <!-- Post Media -->
+    <div class="post-media">
+            <img src="@Display.ResizeMediaUrl(Width: 620, Height: 287, Mode: "crop", Alignment: "middlecenter", Path: Model.ContentItem.BlogPost.Gallery.MediaParts[0].MediaUrl)" alt="" />
+    </div>
+
+    <!-- Post Content -->
+    <div class="post-content">
+        @Html.Raw(Model.ContentItem.BodyPart.Text)			
+    </div>
+
+</article>
+
+<!-- Social Share Buttons -->
+@*<div class="social-share">
+
+    <!-- Facebook Share -->
+    <div class="facebook-share">
+        <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2FLaserInformaticaSrl&amp;send=false&amp;layout=button_count&amp;width=110&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font=tahoma&amp;height=22" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 110px; height: 22px;" allowtransparency="true"></iframe>
+    </div>
+
+    <!-- Twitter Share -->
+    <div class="twitter-share">
+        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+    </div>
+
+    <!-- Google Plus Share -->
+    <div class="gplus-share">
+        <div class="g-plusone" data-size="medium"></div>
+        <script type="text/javascript">
+            (function () {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+						</script>
+    </div>
+
+    <!-- Pinterest Share -->
+    <div class="pinterest-share">
+        <a href="http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.facebook.com%2Fvespercreative&media=http%3A%2F%2Fwww.facebook.com%2Fvespercreative" class="pin-it-button" count-layout="horizontal">
+            <img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>
+        <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>*@
+<!-- End Social Share -->

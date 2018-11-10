@@ -1,0 +1,14 @@
+# Orchard resource strings - fr-FR
+# Copyright (c) 2015 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "ContestoProva"
+msgid "MessaggioProvaFrancese"
+msgstr "Messaggio Prova Francese"
+

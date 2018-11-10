@@ -1,0 +1,26 @@
+﻿@using System.Globalization
+@{
+    var translatedCultures = Model.TranslatedCultures as IList<Orchard.CulturePicker.Models.ExtendedCultureRecord>;
+    if (Model.ShowOnlyPertinentCultures && translatedCultures.Count(p => p.Equals(Model.UserCulture)) == 0) { translatedCultures.Insert(0, Model.UserCulture); }
+    var availableCultures = (Model.ShowOnlyPertinentCultures) ? translatedCultures : Model.AvailableCultures;
+    var availableCultureswithNames = new List<KeyValuePair<string, string>>(availableCultures.Count);
+    foreach (Orchard.CulturePicker.Models.ExtendedCultureRecord culture in availableCultures) {
+        try {
+            var cultureInfo = new CultureInfo(culture.CultureCode);
+            var disaplyedName = String.IsNullOrEmpty(culture.DisplayName) ? cultureInfo.NativeName : culture.DisplayName;
+            availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, disaplyedName));
+        } catch {
+            availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, culture.CultureCode));
+        }
+    }
+}
+
+@if (Model.ShowLabel) {
+    <label for="CultureName">@T("Language")</label>
+}
+<ul class="change-culture">
+    @foreach (var cultureItem in availableCultureswithNames) { 
+        <li><a href="@Url.Action("ChangeCulture", "UserCulture", new { Area = "Orchard.CulturePicker", CultureName = cultureItem.Key })">@cultureItem.Value</a></li>
+    }
+</ul>
+

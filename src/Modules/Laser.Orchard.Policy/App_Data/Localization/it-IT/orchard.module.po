@@ -1,0 +1,234 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/PolicyPartDriver"
+msgid "PolicyPart Error"
+msgstr "Errore PolicyPart"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/PolicyTextInfoPartDriver"
+msgid "PolicyTextInfo Error"
+msgstr "Errore PolicyTextInfo"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/UserPolicyPartDriver"
+msgid "UserPolicyPart Error"
+msgstr "Errore UserPolicyPart "
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "All Policies"
+msgstr "Tutte le informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Depends on content"
+msgstr "Dipende dal contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Include policies"
+msgstr "Includi informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Policy filters"
+msgstr "Filtri informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
+msgid "Policy part behaviour"
+msgstr "Comportamento Policy part"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "All Policies"
+msgstr "Tutte le informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Pending policies included"
+msgstr "Informative pendenti incluse"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Pending policies NOT included"
+msgstr "Informative pendenti NON incluse"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy"
+msgstr "Informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy filters"
+msgstr "Filtri informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy filters ruled by settings."
+msgstr "Filtri informative definiti dai settings"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/Policy_Edit.cshtml"
+msgid "Policy part behaviour"
+msgstr "Comportamento part informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "For the \"Policy\" option an Accept/Don't Accept option will be proposed to end user."
+msgstr "Per l'opzione \"Informativa\" verrà proposta all'utente finale una opzione Accetto/Non Accetto."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "For the \"Policy\", \"CommercialUse\" and \"ThirdParty\" options an Accept/Don't Accept choice will be proposed to the end user."
+msgstr "Per le opzioni \"Policy\", \"CommercialUse\" e \"ThirdParty\" verrà proposta all'utente finale una scelta Accetto/Non Accetto."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "For the \"Regulation\" option a \"I have read the regulation\" flag will be proposed to the end user."
+msgstr "Per l'opzione "Regulation" verrà proposta all'utente finale una casella "Ho letto il regolamento" da spuntare."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "For the \"Regulation\" option a \"I have read the regulation\" option will be proposed to end user."
+msgstr "Per l'opzione \"Regolamento\" verrà proposta all'utente finale una opzione \"Ho letto il regolamento\"."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Policy type"
+msgstr "Tipo di informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Priority"
+msgstr "Priorità"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Set a priority. This information is used to order policy textes."
+msgstr "Impostare una priorità. Questa informazione viene utilizzata per ordinare i testi dell'informativa."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Set a priority. This information is used to order policy texts in a descending priority order."
+msgstr "Impostare una priorità. Questa informazione viene utilizzata per ordinare i testi dell'informativa in ordine di priorità decrescente."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "User have to accept this policy"
+msgstr "L'utente deve accettare questa informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Without acceptation on this policy, contents under policies will not be displayed."
+msgstr "Non accettando questa informativa, i contenuti soggetti all'accettazione delle informative non saranno visualizzati."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Accepted"
+msgstr "Accettata"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Answer date"
+msgstr "Data risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Not Accepted"
+msgstr "Non accettata"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Policy acceptances"
+msgstr "Accettazione informative"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Policy Acceptances History"
+msgstr "Storico accettazione policy"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Policy Text"
+msgstr "Testo informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Read"
+msgstr "Letto"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Show full history"
+msgstr "Mostra storico completo"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "Unread"
+msgstr "Da leggere"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "User"
+msgstr "Utente"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/UserPolicy_Edit.cshtml"
+msgid "User never accepted policies."
+msgstr "L'utente non ha mai accettato nessuna informativa."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/Policy_SummaryAdmin.cshtml"
+msgid "Pending policies included"
+msgstr "Informative pendenti incluse"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/Policy_SummaryAdmin.cshtml"
+msgid "Pending policies NOT included"
+msgstr "Informative pendenti NON incluse"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/PolicyTextInfo_SummaryAdmin.cshtml"
+msgid "Optional policy"
+msgstr "Informativa opzionale"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Parts/PolicyTextInfo_SummaryAdmin.cshtml"
+msgid "Required policy."
+msgstr "Informativa obbligatoria."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Accept"
+msgstr "Accetto"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Don't Accept"
+msgstr "Non accetto"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "I have read the regulation."
+msgstr "Ho letto il regolamento."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/Policies/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Accepted"
+msgstr "Accettata"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Answer date"
+msgstr "Data risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Not Accepted"
+msgstr "Non accettata"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Policy acceptance history"
+msgstr "Storico accettazione policy"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Policy Text"
+msgstr "Testo informativa"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Read"
+msgstr "Letto"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Unread"
+msgstr "Da leggere"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "User"
+msgstr "Utente"
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/PoliciesUser/ShowHistory.cshtml"
+msgid "Validity end"
+msgstr "Fine validità"
+
+msgctxt "Laser.Orchard.Policy.Drivers.PolicyPartDriver"
+msgid "PolicyPart Error"
+msgstr "Errore PolicyPart"
+
+msgctxt "Laser.Orchard.Policy.Drivers.PolicyTextInfoPartDriver"
+msgid "PolicyTextInfo Error"
+msgstr "Errore PolicyTextInfo"
+
+msgctxt "Laser.Orchard.Policy.Drivers.UserPolicyPartDriver"
+msgid "UserPolicyPart Error"
+msgstr "Errore UserPolicyPart "
+

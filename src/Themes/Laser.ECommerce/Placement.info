@@ -1,0 +1,57 @@
+<Placement>
+  <!-- Customize where the shapes are rendered -->
+
+  <!-- 
+  <Place Parts_Blogs_BlogArchives="Content:before"/>
+  <Place Parts_Blogs_RecentBlogPosts="Content:after"/>
+  <Match ContentType="Blog">
+    <Match DisplayType="Summary">
+      <Place Parts_Blogs_Blog_Description="Content:before"
+             Parts_Blogs_Blog_BlogPostCount="Meta:3"/>
+    </Match>
+  </Match>
+  <Match Path="/About">
+    <Place Parts_Common_Metadata="-"/>
+  </Match>
+-->
+  <Place Fields_Common_Text__BannerH2="-" />
+  <Place Fields_Common_Text__BannerH3="-" />
+  <Place Fields_Numeric__BannerHeight="-" />
+  <Place Fields_TaxonomyField="-" />
+  <Place Fields_Boolean__IsNewProduct="-" />
+  <Place Parts_Common_Metadata_Summary="-" />
+  <Place Parts_Common_Metadata="-" />
+  <Match ContentType="ProductsTerm">
+    <Place Parts_Common_Metadata="-"
+           Fields_MediaLibraryPicker__Banner="-" />
+  </Match>
+  <Match ContentType="ProjectionPage">
+    <Place Parts_Common_Metadata="-"
+           Fields_MediaLibraryPicker__Banner="-" />
+  </Match>
+  <Match ContentType="Product" DisplayType="Detail">
+    <Place Fields_MediaLibraryPicker__ProductImage="Content:0;Alternate=ProductGallery" 
+           Parts_Title="Content:1"
+           Parts_Stars_Details="Content:2"
+           Fields_Common_Text__Description="Content:3"
+           Parts_Product="Content:4.1;Alternate=Parts_ProductPart_Detail" 
+           Parts_Product_AddButton="Content:4.2;Alternate=Parts_ProductPart_AddButton_Detail"
+           Parts_Product_AddToWishListButton="Content:4.3;Alternate=Parts_ProductPart_AddToWishListButton_Detail"
+           Parts_Common_Body="Content:5;Alternate=Parts_Product_AdditionalInfo_Detail"
+           Parts_Reviews="-" />
+  </Match>
+  <Match DisplayType="Summary">
+    <Place Parts_Product="Content:3.1;Alternate=Parts_ProductPart" />
+    <Place Parts_Product_AddButton="Content:3.3;Alternate=Parts_ProductPart_AddButton" />
+    <Place Parts_Product_AddToWishListButton="Content:4.3;Alternate=Parts_ProductPart_AddToWishListButton" />
+    <Place Parts_Common_Body_Summary="-" />
+    <Place Fields_ContentPicker__RelatedProducts="-" />
+    <Place Fields_Common_Text__Description="-" />
+  </Match>
+  <Match ContentType="HomePageHighlight" DisplayType="Summary">
+    <Place Fields_Common_Text="-" 
+           Fields_DateTime="-"
+           Fields_Enumeration="-" 
+           Fields_Link="-" />
+  </Match>
+</Placement>

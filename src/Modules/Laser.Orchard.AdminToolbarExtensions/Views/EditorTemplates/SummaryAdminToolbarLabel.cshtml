@@ -1,0 +1,25 @@
+﻿@using Laser.Orchard.AdminToolbarExtensions;
+@using Laser.Orchard.Commons.Helpers;
+
+@model Laser.Orchard.AdminToolbarExtensions.Models.SummaryAdminToolbarLabel
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("SummaryAdminToolbarLabel"); }
+@{
+    var appId = "phNum_" + answerBlock;
+}
+
+<div id="@appId" class="j_actlabel">
+    @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+    @Html.TextBoxFor(m => m.Label, new { placeholder = T("Label"), @class = "text medium tokenized", @style = "width:100%"  })
+    @*@Html.TextBoxFor(m => m.Area, new { placeholder = T("Area"), @class = "text medium tokenized", @style = "width:100%" })*@
+    @*@Html.TextBoxFor(m => m.Controller, new { placeholder = T("Controller"), @class = "text medium tokenized", @style = "width:100%" })*@
+    @*@Html.TextBoxFor(m => m.Action, new { placeholder = T("Action"), @class = "text medium tokenized", @style = "width:100%" })*@
+    @*@Html.TextBoxFor(m => m.Parameters, new { placeholder = T("Parameters"), @class = "text medium tokenized", @style = "width:100%" })*@
+    @Html.TextBoxFor(m => m.CustomUrl, new { placeholder = T("Custom URL"), @class = "text medium tokenized", @style = "width:100%" })
+    @Html.DropDownListFor(m => m.Target, new SelectListItem[] { 
+        new SelectListItem{Selected = true, Text = ValidLabelTargets._self.ToString(), Value = ValidLabelTargets._self.ToString()}, 
+        new SelectListItem{Selected = false, Text = ValidLabelTargets._blank.ToString(), Value = ValidLabelTargets._blank.ToString()} 
+    })
+    <i class="fa fa-times" style="color: red"></i>
+    @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_actlabel", "input.ph-mark-for-delete")
+
+</div>

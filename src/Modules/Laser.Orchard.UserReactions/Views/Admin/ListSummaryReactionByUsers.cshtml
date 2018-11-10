@@ -1,0 +1,102 @@
+﻿@using Laser.Orchard.UserReactions.Models
+@using Laser.Orchard.UserReactions.ViewModels
+@using Orchard.ContentManagement
+@using Laser.Orchard.UserReactions.Services
+@using Laser.Orchard.UserReactions
+@model dynamic
+@{
+    IUserReactionsService _reactionService;
+    WorkContext.TryResolve<IUserReactionsService>(out _reactionService);
+    Layout.Title = T("Reactions list summary");
+    Script.Require("jQuery").AtHead();
+}
+
+@{       
+    Style.Include("~/Themes/TheAdmin/Styles/Site.css").AtHead();
+}
+
+@* <style type="text/css" media="screen">
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        iframe {
+            width: 800px;
+            height: 100%;
+            overflow: hidden;
+            border: none;
+        }
+    </style>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#layout-content").css('width', '800px');
+    });
+
+</script>*@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@T("Reactions list summary")</title>
+    @Display(Layout.Head)
+</head>
+
+
+<body style="background-image: none;">
+    <table class="items">
+        <thead>
+            <tr>
+                <th>@T("Creation date")</th>
+                <th>@T("User")</th>
+                <th>@T("Reaction type")</th>
+                <th>@T("Action")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ContentItems.Items) {
+                var space = " ";
+
+                var creationData = item.CreatedUtc + space;
+                var reactionType = _reactionService.GetReactionEnumTranslations((ReactionsNames)Enum.Parse(typeof(ReactionsNames), item.UserReactionsTypesRecord.TypeName)) + space;
+
+                string username = string.Empty;
+                string clicked = "";
+
+                if (item.UserPartRecord == null) {
+                    username = item.UserGuid;
+                } else {
+                    username = item.UserPartRecord.UserName;
+                }
+
+                if (item.ActionType == 1) {
+                    clicked = T("Clicked").Text;
+                } else {
+                    clicked = T("Unclicked").Text;
+                }
+          
+                <tr>
+                    <td>@creationData</td>
+                    <td>@username</td>
+                    <td>@reactionType</td>
+                    <td style="color: @((item.ActionType == 1) ? "#91B9FD" : "#F7685C")">@clicked</td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+
+
+    @using (Html.BeginForm("ListSummaryReactionByUsers", "Routes", FormMethod.Post)) {
+        @Display(Model.Pager)
+    }
+</body>
+</html>

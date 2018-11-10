@@ -1,0 +1,454 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/DefinitionTemplates/DataReportViewerPartSettings.cshtml"
+msgid "ChartTag Css Class"
+msgstr "Classe CSS ChartTag"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/DefinitionTemplates/DataReportViewerPartSettings.cshtml"
+msgid "Container Css Class"
+msgstr "Classe CSS Container"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/DefinitionTemplates/DataReportViewerPartSettings.cshtml"
+msgid "Selected Report"
+msgstr "Report Selezionato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/DefinitionTemplates/DataReportViewerPartSettings.cshtml"
+msgid "You can configure the default values of the Part, so that the instances by default inherit these settings"
+msgstr "È possibile configurare i valori di default della Parte in modo che le istanze li ereditino"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "Chart Type"
+msgstr "Tipo di Grafico"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "ChartTag Css Class"
+msgstr "Classe CSS ChartTag"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "Color Style"
+msgstr "Stile Colore"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "Container Css Class"
+msgstr "Classe CSS Container"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "Report:"
+msgstr "Report"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/EditorTemplates/Parts/DataReportViewer.cshtml"
+msgid "Start Color"
+msgstr "Colore Iniziale"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.Donut.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.Histogram.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.HorizontalBars.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.LineChart.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.PieChart.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.SimpleList.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Parts/DataReportViewer.SimpleTable.cshtml"
+msgid "There is no data"
+msgstr "Nessun dato"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Aggregate Method"
+msgstr "Metodo di Aggregazione"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Chart Types"
+msgstr "Tipi di Grafico"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Group By field"
+msgstr "Raggruppa Per Campo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Query"
+msgstr "Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Create.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Chart Types"
+msgstr "Tipi di Grafico"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Query"
+msgstr "Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "You can specify filters in your HQL query using tokens like {Request.Form:*}. Then you have to add a field for each filter to your Data Report Viewer Content Type to enable users to set filters."
+msgstr "È possibile specificare filtri nella query HQL usando token come {Request.Form:*}. Quindi è necessario aggiungere un campo per ogni filtro nel Tipo di Contenuto Data Report Viewer per permettere agli utenti di impostare il valore dei filtri."
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "Apply Filter"
+msgstr "Applica Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "Dashboards"
+msgstr "Dashboard"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Download"
+msgstr "Download"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Execute report"
+msgstr "Esegui Report"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Loading report..."
+msgstr "Caricamento report in corso..."
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Print"
+msgstr "Stampa"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Refresh"
+msgstr "Aggiorna"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
+msgid "Reports List"
+msgstr "Elenco Report"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Aggregate Method"
+msgstr "Metodo di Aggregazione"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Chart Types"
+msgstr "Tipi di Grafico"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Description"
+msgstr "Descrizione"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Group By field"
+msgstr "Raggruppa Per Campo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Query"
+msgstr "Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Edit.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Chart Types"
+msgstr "Tipi di Grafico"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Query"
+msgstr "Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "You can specify filters in your HQL query using tokens like {Request.Form:*}. Then you have to add a field for each filter to your Data Report Viewer Content Type to enable users to set filters."
+msgstr "È possibile specificare filtri nella query HQL usando token come {Request.Form:*}. Quindi è necessario aggiungere un campo per ogni filtro nel Tipo di Contenuto Data Report Viewer per permettere agli utenti di impostare il valore dei filtri."
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Create HQL"
+msgstr "Crea HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Manage Data Reports"
+msgstr "Gestione Report Dati"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Index.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
+msgid "Download"
+msgstr "Download"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
+msgid "Filters"
+msgstr "Filtri"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
+msgid "Loading report..."
+msgstr "Caricamento report in corso..."
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
+msgid "Print"
+msgstr "Stampa"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
+msgid "Refresh"
+msgstr "Aggiorna"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Apply Filter"
+msgstr "Applica Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Execute Data Reports"
+msgstr "Esegui Report Dati"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid " - "
+msgstr "-"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Charts"
+msgstr "Grafici"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Charts & Reports"
+msgstr "Grafici e Report"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Dashboard Definitions"
+msgstr "Definizione Dashboard"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Dashboards"
+msgstr "Dashboard"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Data Report Dashboards"
+msgstr "Dashboard Report Dati"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Data Reports"
+msgstr "Report Dati"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Execute Data Reports"
+msgstr "Esegui Report Dati"
+
+msgctxt "Laser.Orchard.Reporting.AdminMenu"
+msgid "Query Report Definition"
+msgstr "Definizione Report"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "[No Name]"
+msgstr "[Nessun Nome]"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Average"
+msgstr "Media"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Count"
+msgstr "Conta"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Donut Chart"
+msgstr "Grafico a Ciambella"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Histogram"
+msgstr "Istogramma"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Line Chart"
+msgstr "Grafico a Linee"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Maximum"
+msgstr "Massimo"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Minimum"
+msgstr "Minimo"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Not authorized"
+msgstr "Non autorizzato"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Not authorized to execute this dashboard"
+msgstr "Non autorizzato a eseguire questa dashboard"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Not authorized to list Reports"
+msgstr "Non autorizzato a visualizzare l'elenco dei Report"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Pie Chart"
+msgstr "Grafico a Torta"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Simple List"
+msgstr "Elenco Semplice"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "Sum"
+msgstr "Somma"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "The selected field does't support the selected Aggregate method"
+msgstr "Il campo selezionato non supporta questo metodo di Aggregazione"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "There is no dashboard with the Id"
+msgstr "Nessuna dashboard con Id"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "There is no GroupBy field matched with the given parameters"
+msgstr "Nessun campo di Raggruppamento coincide con i parametri specificati"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "There is no report with the given Id"
+msgstr "Nessuna report con l'Id specificato"
+
+msgctxt "Laser.Orchard.Reporting.Controllers.ReportController"
+msgid "There is no report with the Id"
+msgstr "Nessuna report con Id"
+
+msgctxt "Laser.Orchard.Reporting.Drivers.DataReportViewerDriver"
+msgid "Please select a Report"
+msgstr "Selezionare un Report"
+
+msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
+msgid "{0} ({1})"
+msgstr "{0} ({1})"
+
+msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
+msgid "{0} Content Fields"
+msgstr "{0} Campi di contenuto"
+
+msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
+msgid "Content Fields for {0}"
+msgstr "Campo di {0}"
+
+msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
+msgid "group the result by '{0}' values"
+msgstr "raggruppa il risultato per '{0}' valori"
+
+msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
+msgid "group the result by '{0}' values {1}"
+msgstr "raggruppa il risultato per '{0}' valori {1}"
+
+msgctxt "Laser.Orchard.Reporting.Security.Permissions"
+msgid "[No Title]"
+msgstr "[Nessun Titolo]"
+
+msgctxt "Laser.Orchard.Reporting.Services.FieldAggregateQueryService"
+msgid "[{0}]"
+msgstr "[{0}]"
+
+msgctxt "Laser.Orchard.Reporting.Services.FieldAggregateQueryService"
+msgid "{0} between {1}-{2}"
+msgstr "{0} compreso fra {1}-{2}"
+
+msgctxt "Laser.Orchard.Reporting.Services.FieldAggregateQueryService"
+msgid "Select an option"
+msgstr "Selezionare una opzione"
+
+msgctxt "Laser.Orchard.Reporting.Services.ReportManager"
+msgid "[No Title]"
+msgstr "[Nessun Titolo]"
+

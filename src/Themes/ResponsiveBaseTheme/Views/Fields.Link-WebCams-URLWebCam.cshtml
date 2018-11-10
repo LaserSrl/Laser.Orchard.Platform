@@ -1,0 +1,37 @@
+﻿@using Orchard.Fields.Settings
+@using Orchard.Utility.Extensions;
+@{
+    Script.Require("jQueryColorBox").AtHead();
+    Style.Require("jQueryColorBox").AtHead();
+    string name = Model.ContentField.DisplayName;
+    LinkFieldSettings settings = Model.ContentField.PartFieldDefinition.Settings.GetModel<LinkFieldSettings>();
+    string text = Model.ContentField.Text;
+    switch (settings.LinkTextMode) {
+        case LinkTextMode.Static:
+            text = settings.StaticText;
+            break;
+        case LinkTextMode.Url:
+            text = Model.ContentField.Value;
+            break;
+        case LinkTextMode.Optional:
+            if (String.IsNullOrWhiteSpace(text)) {
+                text = Model.ContentField.Value;
+            }
+            break;
+    }
+}
+<div class="gallery_wrapper">
+    <a rel="gallery-@Model.ContentPart.Id" href="@Model.ContentField.Value" title="@Model.ContentItem.TitlePart.Title">
+        <h3>@Model.ContentItem.TitlePart.Title</h3>
+        <div>@T("slm"): @Model.ContentItem.WebCams.slm.Value</div>
+        <img src="@Model.ContentField.Value@((Model.ContentField.Value.Contains("?") ? "&" : "?"))width=200&height=150" style="width:200px"/>
+    </a>
+</div>
+@using (Script.Foot()) { 
+    <script type="text/javascript">
+        $("a[rel='gallery-@Model.ContentPart.Id']").colorbox({
+            innerWidth: '80%',
+            innerHeight: '60%',
+        });
+    </script>
+}

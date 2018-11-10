@@ -1,0 +1,18 @@
+﻿@model Laser.Orchard.DataProtection.Models.DataProtectionContextPartSettings
+
+<fieldset>
+    <legend></legend>
+    <div>
+        @Html.LabelFor(m => m.ForceDefault, T("Force default value"))
+        @Html.CheckBoxFor(m => m.ForceDefault)
+        <span class="hint">@T("Check to force default value on saving and to disable user editing on data context.")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ContextDefault, T("Default data context"))
+        @Html.TextBoxFor(m => m.ContextDefault, new { @class = "text medium tokenized" })
+        <span class="hint">
+            @T("A data context in the following form: ,key1=val1,key2=val2,. Example: ,company=Microsoft,sector=marketing,country=italy,.")<br />
+        </span>
+    </div>
+</fieldset>
+@Display.TokenHint()

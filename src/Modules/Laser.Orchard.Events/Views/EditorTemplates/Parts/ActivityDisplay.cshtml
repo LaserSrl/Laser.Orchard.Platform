@@ -1,0 +1,78 @@
+﻿@model Laser.Orchard.Events.ViewModels.ActivityViewModel
+
+@{
+    var repeatTypes = new Dictionary<string, string>
+    ();
+    repeatTypes.Add("D", T("days").ToString());
+    repeatTypes.Add("W", T("weeks").ToString());
+    repeatTypes.Add("M", T("months").ToString());
+    repeatTypes.Add("Y", T("years").ToString());
+}
+<div class="activityPart">
+    @{
+        var eventDates = "";
+        var dataInizio = Model.DateStart;
+        var dataFine = Model.DateEnd;
+        var oraInizio = Model.TimeStart;
+        var oraFine = Model.TimeEnd;
+        if (Model.AllDay) {
+            if (dataInizio == dataFine) {
+                eventDates = dataInizio;
+            } else {
+                eventDates = String.Format("{0} - {1}", dataInizio, dataFine);
+            }
+        } else {
+            if (dataInizio == dataFine) {
+                if (!oraFine.ToString().EndsWith("59")) {
+                    eventDates = String.Format("{0}, {1} / {2}", dataInizio, oraInizio, oraFine);
+                } else {
+                    eventDates = String.Format("{0}, {1}", dataInizio, oraInizio);
+                }
+            } else {
+                if (!oraFine.EndsWith("59")) {
+                    eventDates = String.Format("{0} - {1}, {2} - {3}", dataInizio, oraInizio, dataFine, oraFine);
+                } else {
+                    eventDates = String.Format("{0} - {1}, {2}", dataInizio, dataFine, oraInizio);
+                }
+            }
+        }
+    }
+
+    @if (!String.IsNullOrWhiteSpace(eventDates)) {
+        @eventDates
+    }
+    @if (Model.Repeat) {
+        <br />
+            @T("Repeat every: ") @Model.RepeatValue @(" ") @repeatTypes[Model.RepeatType];
+        if (Model.RepeatType.Equals("W")) {
+            List<string> days = new List<string>();
+            if (Model.Monday) {
+                days.Add(T("Monday").ToString());
+            }
+            if (Model.Thursday) {
+                days.Add(T("Thursday").ToString());
+            }
+            if (Model.Wednesday) {
+                days.Add(T("Wednesday").ToString());
+            }
+            if (Model.Tuesday) {
+                days.Add(T("Tuesday").ToString());
+            }
+            if (Model.Friday) {
+                days.Add(T("Friday").ToString());
+            }
+            if (Model.Saturday) {
+                days.Add(T("Saturday").ToString());
+            }
+            if (Model.Sunday) {
+                days.Add(T("Sunday").ToString());
+            }
+            @(" (" + String.Join(", ", days.ToArray()) + ")");
+        }
+        if (Model.RepeatEnd) {
+            @T(" - Repeat until the day: ") @Model.RepeatEndDate
+        }
+    }
+</div>
+
+

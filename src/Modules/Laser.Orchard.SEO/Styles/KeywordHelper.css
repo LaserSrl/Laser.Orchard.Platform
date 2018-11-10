@@ -1,0 +1,36 @@
+﻿.outerKeys {
+    float: left;
+    padding-bottom: 1px;
+}
+
+#allSEOKeywords {
+    overflow: hidden;
+    float: left;
+}
+
+    #allSEOKeywords div {
+        float: left;
+        background: #fff;
+        margin-bottom: -100%;
+        padding-bottom: 100%;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+#addButton {
+    overflow: hidden;
+    float: left;
+}
+
+    #addButton div {
+        float: left;
+        background: #fff;
+        margin-bottom: -100%;
+        padding-bottom: 100%;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+#summaryTables {
+    background-color: transparent;
+}

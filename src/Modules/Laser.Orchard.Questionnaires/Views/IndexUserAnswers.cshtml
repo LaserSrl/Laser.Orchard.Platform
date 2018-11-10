@@ -1,0 +1,17 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels
+@model List<QuestStatViewModel>
+@{
+    string qTitle = "", qQuest = "";
+    foreach (var q in Model) {
+        if (qTitle != q.QuestionnaireTitle) {
+            <hr />
+            qTitle = q.QuestionnaireTitle;
+    <h4>@q.QuestionnaireTitle</h4> 
+        }
+        if (qQuest != q.Question) {
+            qQuest = q.Question;
+    <h5>@q.Question</h5> 
+        }
+    <div>&bull; @q.Answer <span style="font-weight:bold">( @q.Count )</span> </div>
+    }
+}

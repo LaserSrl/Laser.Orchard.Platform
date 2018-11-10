@@ -1,0 +1,45 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.GDPRPartTypeSchedulingSettingsViewModel
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.ScheduleAnonymization)
+        <label for="@Html.FieldIdFor(m => m.ScheduleAnonymization)" class="forcheckbox">
+            @T("ContentItems will be anonymized automatically after a time.")
+        </label>
+        <span class="hint">
+            @T("Setting this flag causes ContentItems of this type to be analyzed periodically, and based on the setting here eventually anonymized if they are old enough.")
+        </span>
+    </div>
+    <div data-controllerid="@Html.FieldIdFor(m => m.ScheduleAnonymization)">
+        <div>
+            @Html.DropDownListFor(m => m.EventForAnonymization, Model.AnonymizationEvents)
+            <label for="@Html.FieldIdFor(m => m.EventForAnonymization)" class="forcheckbox">@T("Select whether the scheduled anonymization should check for the date of item creation or its latest update.")</label>
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.AnonymizationDaysToWait, new { @class = "text" })
+            <label for="@Html.FieldIdFor(m => m.AnonymizationDaysToWait)">@T("The number of days waited before the automated anonymization.")</label>
+        </div>
+    </div>
+
+    <div>
+        @Html.CheckBoxFor(m => m.ScheduleErasure)
+        <label for="@Html.FieldIdFor(m => m.ScheduleErasure)" class="forcheckbox">
+            @T("ContentItems will be erased automatically after a time.")
+        </label>
+        <span class="hint">
+            @T("Setting this flag causes ContentItems of this type to be analyzed periodically, and based on the setting here eventually erased if they are old enough.")
+        </span>
+    </div>
+    <div data-controllerid="@Html.FieldIdFor(m => m.ScheduleErasure)">
+        <div>
+            @Html.DropDownListFor(m => m.EventForErasure, Model.ErasureEvents)
+            <label for="@Html.FieldIdFor(m => m.EventForErasure)" class="forcheckbox">@T("Select whether the scheduled erasure should check for the date of item creation or its latest update.")</label>
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.ErasureDaysToWait, new { @class = "text" })
+            <label for="@Html.FieldIdFor(m => m.ErasureDaysToWait)">@T("The number of days waited before the automated erasure.")</label>
+        </div>
+    </div>
+
+    
+</fieldset>

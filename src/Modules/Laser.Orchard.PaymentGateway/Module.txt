@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.PaymentGateway
+AntiForgery: enabled
+Author: Laser srl
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.0
+Description: Gateway di pagamento
+Features:
+    Laser.Orchard.PaymentGateway:
+        Description: Gateway di pagamento.
+		Dependencies: Laser.Orchard.StartupConfig

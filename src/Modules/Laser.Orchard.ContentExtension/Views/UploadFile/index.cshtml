@@ -1,0 +1,103 @@
+﻿@model Laser.Orchard.ContentExtension.ViewModels.UploadFileVM
+@using Orchard.MediaLibrary.Models;
+@using Orchard.ContentManagement;
+@using Orchard.Utility.Extensions;
+@using (Html.BeginFormAntiForgeryPost(Url.Action("Index", "UploadFile", new { area = "Laser.Orchard.ContentExtension" }), FormMethod.Post, new { enctype = "multipart/form-data" })) {
+    var oggetto = Model.IdField;
+    var listfile = Model.ElencoUrl;
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    //"Index", "UploadFile", FormMethod.Post))
+    <label for="file">Upload File:</label>
+    if (listfile.Count < Model.FileNumber || Model.FileNumber <= 0) {
+    <input type="file" name="file" id="file" onchange="this.form.submit();" />
+    }
+@*
+    <input id="submitfile" type="submit" value="Upload"  />*@
+    <div id="elementoflist">
+        <div style="display: none;">
+            @Html.EditorFor(x => x.ElencoUrl)
+            @Html.EditorFor(x => x.ElencoId)
+        </div>
+        @{
+    var i = 0;
+    var urlaggiunta = "";
+    //  foreach (var urlstring in listfile) {
+    foreach (var ciId in Model.ElencoId) {
+@*       @Display(contentManager.BuildDisplay(contentManager.Get(ciId), "Thumbnail")) *@
+            
+        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+        urlaggiunta = mediaPart.MediaUrl;
+            <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+@*         <img src="@Href("~")@Model.ElencoUrl[i]" width="100" height="100"/>
+        Html.HiddenFor(x => x.ElencoUrl[i]); *@
+        i++;
+    }
+        }
+    </div>  
+    @Html.HiddenFor(x => x.FileNumber)  
+    @Html.HiddenFor(x => x.IdField)     
+    @Html.HiddenFor(x => x.FolderField) 
+    @Html.HiddenFor(x => x.SubFolder) 
+    <script type="text/javascript">
+        function writeparent() {
+            var vrows = document.getElementById('elementoflist').getElementsByTagName('input');
+            var tmptxt = "";
+            if (vrows.length>0){       
+                // alert(String.Join(',',vrows));
+                if (window.parent.$('#@Model.IdField').val() != "" && @Model.FileNumber!=1) {
+                    window.parent.$('#@Model.IdField').val(window.parent.$('#@Model.IdField').val() + ',' + vrows[vrows.length - 1].value);//String.Join(',', vrows)
+                } else {
+                    window.parent.$('#@Model.IdField').val( vrows[vrows.length - 1].value);//String.Join(',', vrows)
+                }
+                //  for( i=0;i<vrows.length;i++){
+                if("@urlaggiunta"!=""){
+                    var elem = document.createElement("img");
+                    elem.src ="@urlaggiunta"; @*'@Href("~")'+vrows[vrows.length - 1].value;*@
+                    elem.setAttribute("height", "100");
+                    elem.setAttribute("width", "100");
+                    window.parent.$('#Anteprima'+'@Model.IdField').append(elem);
+                }
+                window.parent.postMessage(
+                 {
+                     "Valore1": @Model.FileNumber,
+                     "Valore2": '@Model.IdField'
+                 },
+                 document.referrer
+               );
+                elenco-produttor
+            }
+
+        };
+        window.onclose = writeparent();
+    </script>
+@*            var ultimofileinserito= vrows[vrows.length-1].value;// vrows[vrows.length-1].value;
+                tmptxt = ultimofileinserito + "|[{}]|";
+                var numerofile=@Model.FileNumber;
+                if (numerofile == 1 && tmptxt != "")
+                {
+                   
+                    window.parent.postMessage(
+                         {
+                             "Valore1": tmptxt.replace('|[{}]|',''),
+                             "Valore2": 'Valore2'
+                         },
+                         document.referrer
+                       );
+           
+                    window.parent.$.colorbox.close();
+                }
+                else{
+                    if (numerofile!=1){
+
+                        window.parent.postMessage(
+                        {
+                            "Valore1": tmptxt,
+                            "FieldID": '@Html.Raw(oggetto)'
+                        },
+                        document.referrer
+                      );
+
+                    }
+                }*@
+
+}

@@ -1,0 +1,36 @@
+﻿@model Laser.Orchard.ButtonToWorkflows.ViewModels.DynamicButtonToWorkflowsSettingsVM
+
+@{
+    Script.Require("jQuery_NestedModels").AtHead();
+    Style.Require("FontAwesome430").AtHead();
+}
+
+<fieldset>
+    <legend>@T("Add Buttons Dynamically")</legend>
+    <div id="btw">
+        <ul id="j_menuquestion"></ul>
+        @Html.EditorFor(x => x.Buttons)
+    </div>
+    <p style="margin: 10px 0px 10px 0px;">
+        <i class="fa fa-plus" style="color: green; margin-right:5px;"></i>@Html.LinkToAddNestedForm(x => x.Buttons, T("Add Button").Text, "#btw", ".j_btw", "btw")
+    </p>
+    <span class="hint">
+        @T("The Button Name field should be a unique identifier for the button.")
+    </span>
+</fieldset>
+
+@{
+    using (Script.Head()) {
+        <script type="text/javascript">
+                 function CleanFieldsOnRemove(caller)
+                 {
+                     $(caller).parent().parent().find(':text').each(function () {
+                         if (!$(this).hasClass("preserve-on-clean"))
+                         {
+                             $(this).val("");
+                         }
+                     })
+                 }
+        </script>
+    }
+}

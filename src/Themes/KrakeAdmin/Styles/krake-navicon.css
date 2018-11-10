@@ -1,0 +1,339 @@
+﻿.gui-icon .fa:before {
+    content: "\f192";
+}
+
+.gui-icon .fa {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-dashboard:before {
+    content: "\f015";
+}
+
+.gui-icon .navicon-dashboard {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-new:before {
+    content: "";
+}
+
+.gui-icon .navicon-new:before {
+    content: "\f040";
+}
+
+.gui-icon .navicon-new {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-maintenance:before {
+    content: "\f0ad";
+}
+
+.gui-icon .navicon-maintenance {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-dev-tools:before {
+    content: "\f121";
+}
+
+.gui-icon .navicon-dev-tools {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-content:before {
+    content: "\f0ca";
+}
+
+.gui-icon .navicon-content {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-content-definition:before {
+    content: "\f1b3";
+}
+
+.gui-icon .navicon-content-definition {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-blog:before {
+    content: "\f09e";
+}
+
+.gui-icon .navicon-blog {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-communication:before {
+    content: "";
+}
+
+.gui-icon .navicon-communication:before {
+    content: "\f086";
+}
+
+.gui-icon .navicon-communication {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-newsletters:before {
+    content: "\f0e0";
+}
+
+.gui-icon .navicon-newsletters {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-custom-query:before {
+    content: "\f0b0";
+}
+
+.gui-icon .navicon-custom-query {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-charts-reports:before {
+    content: "\f080";
+}
+
+.gui-icon .navicon-charts-reports {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-social-facebook-account:before {
+    content: "\f09a";
+}
+
+.gui-icon .navicon-social-facebook-account {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-social-twitter-account:before {
+    content: "\f099";
+}
+
+.gui-icon .navicon-social-twitter-account {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-queries:before {
+    content: "\f002";
+}
+
+.gui-icon .navicon-queries {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-aliasies:before {
+    content: "\f0c1";
+}
+
+.gui-icon .navicon-aliasies {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-comments:before {
+    content: "\f075";
+}
+
+.gui-icon .navicon-comments {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-custom-forms:before {
+    content: "\f14b";
+}
+
+.gui-icon .navicon-custom-forms {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-rules:before {
+    content: "\f0ae";
+}
+
+.gui-icon .navicon-rules {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-taxonomies:before {
+    content: "\f1ab";
+}
+
+.gui-icon .navicon-taxonomies {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-spam:before {
+    content: "\f05e";
+}
+
+.gui-icon .navicon-spam {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-widgets:before {
+    content: "\f108";
+}
+
+.gui-icon .navicon-widgets {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-templates:before {
+    content: "\f0c5";
+}
+
+.gui-icon .navicon-templates {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-media:before {
+    content: "\f03e";
+}
+
+.gui-icon .navicon-media {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-navigation:before {
+    content: "\f161";
+}
+
+.gui-icon .navicon-navigation {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-tags:before {
+    content: "\f02b";
+}
+
+.gui-icon .navicon-tags {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-modules:before {
+    content: "\f1d8";
+}
+
+.gui-icon .navicon-modules {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-statistics:before {
+    content: "";
+}
+
+.gui-icon .navicon-statistics:before {
+    content: "\f200";
+}
+
+.gui-icon .navicon-statistics {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-themes:before {
+    content: "\f1c5";
+}
+
+.gui-icon .navicon-themes {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-workflows:before {
+    content: "\f0e8";
+}
+
+.gui-icon .navicon-workflows {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-lists:before {
+    content: "\f0cb";
+}
+
+.gui-icon .navicon-lists {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-users:before {
+    content: "\f0c0";
+}
+
+.gui-icon .navicon-users {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-reports:before {
+    content: "\f080";
+}
+
+.gui-icon .navicon-reports {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-jobs-queue:before {
+    content: "\f145";
+}
+
+.gui-icon .navicon-jobs-queue {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-translator:before {
+    content: "\f024";
+}
+
+.gui-icon .navicon-translator {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-import-export:before {
+    content: "\f0ec";
+}
+
+.gui-icon .navicon-import-export {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-settings:before {
+    content: "\f085";
+}
+
+.gui-icon .navicon-settings {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-tenants:before {
+    content: "\f16c";
+}
+
+.gui-icon .navicon-tenants {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-layouts:before {
+    content: "\f00a";
+}
+
+.gui-icon .navicon-layouts {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-commerce:before {
+    content: "\f07a";
+}
+
+.gui-icon .navicon-commerce {
+    background-image: none !important;
+}
+
+.gui-icon .navicon-s-e-o:before {
+    content: "\f277";
+}
+
+.gui-icon .navicon-s-e-o {
+    background-image: none !important;
+}

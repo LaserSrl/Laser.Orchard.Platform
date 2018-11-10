@@ -1,0 +1,13 @@
+﻿Name: Orchard.Captcha
+AntiForgery: enabled
+Author: Will Comeaux
+Website: http://www.orchardproject.net
+Version: 1.0.01
+OrchardVersion: 1.10.1
+Description: A module that exposes Captcha functionality for Orchard Modules.
+Features:
+    Orchard.Captcha:
+        Name: Orchard.Captcha
+        Description: A module that exposes Captcha functionality for Orchard Modules.
+		Dependencies: Settings
+        Category: Content

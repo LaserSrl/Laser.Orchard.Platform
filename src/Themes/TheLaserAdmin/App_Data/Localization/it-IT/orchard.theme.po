@@ -1,0 +1,50 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Allow"
+msgstr "Permetti"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Edit Role"
+msgstr "Modifica Ruolo"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Effective"
+msgstr "Effettivo"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Information"
+msgstr "Informazioni"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Permission"
+msgstr "Permesso"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Permissions"
+msgstr "Permessi"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Role Name:"
+msgstr "Nome del Ruolo:"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/Orchard.Roles/Admin/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Themes/TheLaserAdmin/Views/OrchardVersion.cshtml"
+msgid "Laser Web Services v.{0}"
+msgstr "Laser Web Services v.{0}"
+

@@ -1,0 +1,31 @@
+﻿@{
+    var blogPosts = Model.ContentItems.Items;
+}
+
+<div id="news">
+    <div class="news-top"></div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var postContent in blogPosts) {
+
+                dynamic post = postContent.ContentItem;
+                
+                <div class="col-xs-12 col-sm-6 col-md-4 box-all-news">
+	                <div class="news-item">
+		                <div class="news-item-photo-mask">
+			                <a href="@post.AutoroutePart.Path">
+				                <img src="@Display.ResizeMediaUrl(Width: 600, Height: 300, Mode: "crop", Alignment: "middlecenter", Path: post.BlogPost.Image.MediaParts[0].MediaUrl)" title="@post.BlogPost.Image.MediaParts[0].Title" alt="@post.BlogPost.Image.MediaParts[0].AlternateText"  class="img-responsive wp-post-image" alt="@post.BlogPost.Image.MediaParts[0].Title">
+			                </a>
+		                </div>
+		                <div class="space-40"></div>
+		                <h4 class="news-item-title"><a href="@post.AutoroutePart.Path">@post.TitlePart.Title</a></h4>
+		                <h5 class="news-item-date">@post.CommonPart.CreatedUtc.Date.ToString("dd/MM/yyyy")</h5>
+		                <div class="space-10"></div>
+		                <p class="news-item-desc">@post.BlogPost.Sottotitolo.Value</p>
+		                <div class="news-item-plus text-center"><a href="@post.AutoroutePart.Path">+</a></div>
+	                </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

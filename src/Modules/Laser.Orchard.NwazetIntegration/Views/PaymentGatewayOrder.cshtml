@@ -1,0 +1,6 @@
+﻿@using Nwazet.Commerce.Models
+@{
+    var items = (IEnumerable<CheckoutItem>)Model.OrderedProducts;
+}
+<div class="order-contents">@(Html.Raw(String.Join(", ", items.Select(i => String.Format(T("{0} &times; {1}").Text, i.Quantity, i.Title)))))</div>
+<a href="@Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce"})">@T("Back to cart")</a>

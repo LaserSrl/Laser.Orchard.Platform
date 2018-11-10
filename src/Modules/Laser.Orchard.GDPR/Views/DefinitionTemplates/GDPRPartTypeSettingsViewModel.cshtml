@@ -1,0 +1,22 @@
+﻿@model Laser.Orchard.GDPR.ViewModels.GDPRPartTypeSettingsViewModel
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.IsProfileItemType)
+        <label for="@Html.FieldIdFor(m => m.IsProfileItemType)" class="forcheckbox">
+            @T("Set this type as a Profile Item type.")
+        </label>
+        <span class="hint">
+            @T("Profile Items are ContentItems that will act as a node of sorts for a user's personal identifiable information. They are the ones anonymization and erasure should start from, because they allow identifying all other items. Functionally, this means they are the ones for whom the PrivacyManagers will see the links to the actions to start the anonymization and erasure processes.")
+        </span>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.DeleteItemsAfterErasure)
+        <label for="@Html.FieldIdFor(m => m.DeleteItemsAfterErasure)" class="forcheckbox">
+            @T("Delete ContentItems after the information has been erased.")
+        </label>
+        <span class="hint">
+            @T("Setting this flag causes ContentItems of this type to be deleted after erasure of personal identifiable information has been handled for them.")
+        </span>
+    </div>
+</fieldset>

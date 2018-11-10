@@ -1,0 +1,16 @@
+@{
+    Layout.Title = Model.Title;
+    dynamic item = Model.ContentItem;
+
+    Layout.BaseClass = "page page-template page-template-page-" + item.AutoroutePart.DisplayAlias + " navbar-fixed";
+}
+<div id="intro">
+	<canvas id="intro-canvas"></canvas>
+	<div class="container container-desc clearfix">
+		<div class="col-xs-12 col-sm-6 col-intro-desc">
+			<h1 class="handel-got-d title">@Model.Title</h1>
+		</div>
+		<div class="col-xs-12 col-sm-6 text-center">
+		</div>
+	</div>
+</div>

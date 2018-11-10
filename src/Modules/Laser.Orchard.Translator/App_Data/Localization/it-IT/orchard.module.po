@@ -1,0 +1,202 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of modules that must be translated."
+msgstr "Elenco separato da virgola dei moduli da tradurre."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of themes that must be translated."
+msgstr "Elenco separato da virgola dei temi da tradurre."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Modules to Translate"
+msgstr "Moduli da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Themes to Translate"
+msgstr "Temi da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Translator Settings"
+msgstr "Impostazioni Traduttore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Back"
+msgstr "Indietro"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Translations"
+msgstr "Traduzioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Translator"
+msgstr "Traduttore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "Deprecated"
+msgstr "Deprecata"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "If checked, translations for this module won't be exported anymore."
+msgstr "Se selezionato, le traduzioni per questo modulo non verranno più esportate."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "If checked, translations for this theme won't be exported anymore."
+msgstr "Se selezionato, le traduzioni per questo tema non verranno più esportate."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "Translations settings"
+msgstr "Impostazioni di traduzione"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "WARNING: this setting is applied to all languages."
+msgstr "ATTENZIONE: questa impostazione verrà applicata a tutte le lingue."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Click to use this translation"
+msgstr "Clicca per usare questa traduzione"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Context"
+msgstr "Contesto"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Suggestions"
+msgstr "Suggerimenti"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "This operation will completely remove any association between the message and the module. You won't be able to translate this message for this module anymore until it's imported again. Do you want to continue?"
+msgstr "Questa operazione rimuoverà completamente qualsiasi associazione tra il messaggio e il modulo. Non sarà più possibile tradurre questo messaggio per questo modulo fino a quando non verrà importato nuovamente. Vuoi continuare?"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Translate"
+msgstr "Traduci"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Translation"
+msgstr "Traduzione"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Advanced Operations"
+msgstr "Operazioni Avanzate"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Deprecated"
+msgstr "Deprecato"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Export Translations"
+msgstr "Esporta Traduzioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Import Translations"
+msgstr "Importa le Traduzioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Language: "
+msgstr "Lingua:"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Legend"
+msgstr "Legenda"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Nothing to translate for this element."
+msgstr "Nessuna traduzione necessaria per questo elemento."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Please select a language"
+msgstr "Selezionare una lingua"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Please select a module or a theme."
+msgstr "Si prega di selezionare un modulo o un tema."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Show Details"
+msgstr "Visualizza Dettagli"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "This operation will delete all current translations and replace them with the translations currently contained in the .po files. Do You want to continue?"
+msgstr "Questa operazione eliminerà tutte le traduzioni e le sostituirà con le traduzioni contenute nei file con estensione .po. Vuoi continuare?"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Translation Status"
+msgstr "Stato della Traduzione"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Translator"
+msgstr "Traduttore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Used"
+msgstr "Usato"
+
+msgctxt "Laser.Orchard.Translator.AdminMenu"
+msgid "Translator"
+msgstr "Traduttore"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
+msgid "An error occurred while saving the translation folder settings. Please reload the page and retry."
+msgstr "Si è verificato un errore nel salvataggio delle impostazioni di traduzione della cartella. Ricaricare la pagina prima di riprovare."
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
+msgid "An error occurred while saving the translation. Please reload the page and retry."
+msgstr "Si è verificato un errore durante il salvataggio della traduzione. Si prega di ricaricare la pagina e riprovare."
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
+msgid "Unable to delete the translation."
+msgstr "Impossibile eliminare la traduzione."
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Modules"
+msgstr "Moduli"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "N/D"
+msgstr "N/D"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Themes"
+msgstr "Temi"
+
+msgctxt "Laser.Orchard.Translator.Handlers.TranslatorSettingsHandler"
+msgid "Translator"
+msgstr "Traduttore"
+
+msgctxt "Laser.Orchard.Translator.Services.TranslatorServices"
+msgid "The requested translation does not exists."
+msgstr "La traduzione richiesta non esiste."
+

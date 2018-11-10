@@ -1,0 +1,36 @@
+﻿@{
+    var Menu = Model.Menu;
+
+    var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
+
+}
+@if (items.Any()) {
+    <ul class="breadcrumb">
+        <li><a href="~/">@T("Home")</a></li>
+        @foreach (var item in items) {
+            if (!HasText(item.Text)) {
+            @DisplayChildren(item)
+            } else {
+                if ((bool)item.Selected) {
+                    item.Classes.Add("active");
+                }
+
+@* morphing the shape to keep Model untouched*@
+                item.Metadata.Alternates.Clear();
+                item.Metadata.Type = "MenuItemLink";
+            
+@* render the menu item only if it has some content *@
+                var renderedMenuItemLink = Display(item);
+                if (HasText(renderedMenuItemLink)) {
+                    if (item.Item.Items.Length > 0) {
+                        item.Classes.Add("dropdown");
+                    }
+                    var tagLI = Tag(item, "li");
+            @tagLI.StartElement
+            @renderedMenuItemLink 
+            @tagLI.EndElement
+                }
+            }
+        }
+    </ul>
+}

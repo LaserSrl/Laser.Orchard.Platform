@@ -1,0 +1,10 @@
+﻿VISA
+MasterCard
+Amex
+Diners
+Jcb
+Maestro
+MYBANK
+SCT
+SDD
+MYSI

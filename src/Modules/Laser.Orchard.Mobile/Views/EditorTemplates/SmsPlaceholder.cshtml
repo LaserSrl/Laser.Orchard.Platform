@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.Mobile.Models.SmsPlaceholder
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("placeholder"); }
+@{
+    var phId = "phNum_" + answerBlock;
+}
+<div id="@phId" class="j_ph">
+    @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+    PH_@Html.TextBoxFor(m => m.Name, new { placeholder = T("Name"), @class = "text small" })
+    @Html.TextBoxFor(m => m.DisplayName, new { placeholder = T("Display Name"), @class = "text medium" })
+    @Html.TextBoxFor(m => m.Value, new { placeholder = T("Value"), @class = "text medium tokenized" })
+    <i class="fa fa-times" style="color: red"></i>
+    @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_ph", "input.ph-mark-for-delete")
+</div>

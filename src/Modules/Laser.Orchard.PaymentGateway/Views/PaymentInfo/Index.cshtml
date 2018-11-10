@@ -1,0 +1,53 @@
+﻿@model Laser.Orchard.PaymentGateway.ViewModels.UserPayments
+@{
+    string name = Model.UserName;
+    if(string.IsNullOrWhiteSpace(name)){
+        name = T("Anonymous").ToString();
+    }
+    string outcome = "";
+}
+<h2>@T("Payments of user") &quot;@name&quot;</h2>
+
+<table style="border: 1px solid black">
+    <thead>
+        <tr style="border-bottom:1px solid black">
+            <th style="padding-right:10px">@T("Date")</th>
+            <th style="padding-right:10px">@T("POS")</th>
+            <th style="padding-right:10px">@T("Reason")</th>
+            <th style="padding-right:10px">@T("Amount")</th>
+            <th style="padding-right:10px">@T("Currency")</th>
+            <th style="padding-right:10px">@T("Outcome")</th>
+            <th style="padding-right:10px">@T("Transaction ID")</th>
+        </tr>
+    </thead>
+    @if(Model.Records.Count > 0) {
+        <tbody>
+            @foreach(var rec in Model.Records) {
+                outcome = T("Failed").ToString();
+                if (rec.Success) {
+                    outcome = T("Ok").ToString();
+                }
+                else {
+                    if (string.IsNullOrWhiteSpace(rec.PosName)) {
+                        outcome = T("Abandoned").ToString();
+                    }
+                }
+                <tr>
+                    <td style="padding-right:10px">@rec.UpdateDate.ToString("yyyy-MM-dd HH.mm")</td>
+                    <td style="padding-right:10px">@rec.PosName</td>
+                    <td style="padding-right:10px">@rec.Reason</td>
+                    <td style="text-align:right">@rec.Amount.ToString("0.00")</td>
+                    <td style="padding-right:10px;text-align:center">@rec.Currency</td>
+                    <td style="text-align:center">@outcome</td>
+                    <td>@rec.TransactionId</td>
+                </tr>
+            }
+        </tbody>
+    } else {
+        <tbody>
+            <tr>
+                <td colspan="7">@T("No data found.")</td>
+            </tr>
+        </tbody>
+    }
+</table>

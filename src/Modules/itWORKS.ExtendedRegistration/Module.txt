@@ -1,0 +1,10 @@
+Name: Extended Registration
+AntiForgery: enabled
+Author: Santiago Burbano
+Website: http://extendedregistration.codeplex.com/
+Version: 1.0.9
+OrchardVersion: 1.10
+Description: This module provides an extended registration page that will display any parts defined in the User ContentType.
+Dependencies: Contrib.Profile, Orchard.Resources
+FeatureDescription: Displays any parts added to User Content Type in the Registration Page.
+Category: Social

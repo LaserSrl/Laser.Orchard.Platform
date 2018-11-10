@@ -1,0 +1,30 @@
+﻿@using Laser.Orchard.NewsLetters.Services
+@model Laser.Orchard.NewsLetters.Models.SubscriberRegistrationPart
+@{
+    Style.Include("newsletter-admin").AtHead();
+    INewsletterServices _newsServices;
+    WorkContext.TryResolve<INewsletterServices>(out _newsServices);
+    var newsList = _newsServices.GetNewsletterDefinition(Orchard.ContentManagement.VersionOptions.Published);
+}
+
+<fieldset>
+    <legend>@T("Newsletter Subscription")</legend>
+
+    <div class="editor-field">
+        @Html.EditorFor(model => model.PermitCumulativeRegistrations)
+        <label for="@Html.FieldIdFor(model => model.PermitCumulativeRegistrations)" class="forcheckbox">@T("Permit Cumulative Registrations")</label>
+
+    </div>
+
+    <div class="editor-label">
+        @T("Subscription for this/theese Newsletter(s)")
+    </div>
+    <div class="editor-field">
+        @foreach (dynamic news in newsList) { 
+            @Html.CheckBox("Subscription_Newsletters_Ids",
+            Model.NewsletterDefinitionIds != null ? Model.NewsletterDefinitionIds.Split(',').Contains<string>((string)news.Id.ToString()) : false,
+            new { @id = "newsletter-" + news.Id.ToString(), @value = news.Id.ToString() })
+            <label for="newsletter-@news.Id.ToString()" class="forcheckbox">@news.TitlePart.Title</label>
+        }
+    </div>
+</fieldset>

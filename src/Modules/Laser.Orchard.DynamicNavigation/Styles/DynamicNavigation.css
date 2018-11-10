@@ -1,0 +1,109 @@
+﻿/* Navigation */
+
+nav ul.dynamic-menu {
+  padding: 0px;
+  margin: 0px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+nav ul.dynamic-menu li {
+  background: #f6f6f6;
+  display: block;
+  margin: 0 2px -1px 0;
+}
+
+nav > ul.dynamic-menu li.current {
+  font-weight: bold;
+}
+
+nav > ul.dynamic-menu li {
+  font-weight: normal;
+}
+
+nav ul.dynamic-menu li a {
+  padding: 0 18px;
+  display: block;
+  color: #333;
+  font-size: 1.077em;
+  text-decoration: none;
+  line-height: 24px;
+}
+
+
+/* first level */
+nav > ul.dynamic-menu > li {
+  float: none;
+  border: 0;
+}
+
+nav > ul.dynamic-menu > li > a {
+  float: none;
+  background-color: #eee;
+  color: #333;
+}
+
+nav > ul.dynamic-menu > li:hover > ul {
+  display: inherit;
+}
+
+nav > ul.dynamic-menu > li:hover {
+}
+
+
+/* second level */
+nav > ul.dynamic-menu > li > ul {
+  margin: 0;
+  padding: 0px;
+  display: inherit;
+  position: inherit;
+  border: 0;
+}
+
+nav > ul.dynamic-menu > li > ul > li {
+  list-style-type: inherit;
+  margin: 0px;
+  border-left: 7px solid #ddd;
+}
+
+nav > ul.dynamic-menu > li > ul > li > a {
+  display: inherit;
+  text-decoration: none;
+}
+
+nav > ul.dynamic-menu > li > ul > li:hover > a {
+}
+
+nav > ul.dynamic-menu > li > ul > li:hover > ul {
+  display: block;
+}
+
+
+/* third level */
+nav > ul.dynamic-menu > li > ul > li > ul {
+  margin: 0 2px;
+  padding: 0px;
+  display: inherit;
+  position: inherit;
+  border: 0;
+}
+
+nav > ul.dynamic-menu > li > ul > li > ul > li {
+  list-style-type: inherit;
+  margin: 0px;
+  border-left: 7px solid #999;
+}
+
+nav > ul.dynamic-menu > li > ul > li > ul > li > a {
+  display: block;
+  text-decoration: none;
+}
+
+nav > ul.dynamic-menu > li > ul > li > ul > li:hover > a {
+}
+
+
+/* deeper levels */
+nav > ul.dynamic-menu > li > ul > li > ul ul {
+  display: inherit;
+}

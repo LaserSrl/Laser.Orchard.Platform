@@ -1,0 +1,28 @@
+Name: Laser Orchard Culture Picker
+AntiForgery: disabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.8
+OrchardVersion: 1.8
+Description: Allows users to pick a preferred site culture, instead of using a default site culture.
+Features:
+    Laser.Orchard.CulturePicker:
+		Name: Laser Culture Picker
+        Description: Allows users to pick a preferred culture, instead of using a default site culture.
+        Dependencies: Settings, Orchard.Widgets, Orchard.Localization, Orchard.Autoroute
+        Category: Localization
+    Laser.Orchard.CulturePicker.MainMenu:
+		Name: Laser Culture Picker Main Menu Filtering
+        Description: Provides Main menu filtering.
+        Dependencies: Orchard.Localization
+        Category: Localization
+    Laser.Orchard.CulturePicker.HomePageRedirect:
+		Name: Laser Culture Picker Home Page Auto Redirect
+        Description: Automatically redirects a user to the translated home page
+        Dependencies: Orchard.Localization, Orchard.Alias
+        Category: Localization
+	Laser.Orchard.CulturePicker.TranslateMenuItems:
+		Name: Laser Culture Picker Menu Translation
+		Description: Enable semi-automated menu translations
+		Dependencies: Orchard.Localization
+		Category: Localization

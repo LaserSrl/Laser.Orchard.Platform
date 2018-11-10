@@ -1,0 +1,47 @@
+﻿/*
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+*/
+
+.map-canvas {
+  width: 100%;
+  height: 400px;
+}
+
+.map-canvas img {
+    max-width: initial;
+}
+.map-infos, .admin-map-infos 
+{
+    background-image: url(images/map-pin.png);
+    background-position: right middle;
+    background-repeat: no-repeat;
+    padding-left: 23px;
+}
+
+.map-locationinfo-marker
+{
+    color: #aaa;
+    font-size: 123%;
+    font-weight: bold;
+	display: block;
+}
+.map-locationaddress-marker {
+    color: #ccc;
+}
+
+.map-detaillink-marker a {
+    color: #aaa;
+}
+
+.map-detaillink-marker {
+    margin-top: 1.7em;
+	display: block;
+}

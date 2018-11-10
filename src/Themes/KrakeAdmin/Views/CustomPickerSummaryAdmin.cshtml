@@ -1,0 +1,84 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Core.Contents
+@using Orchard.Utility.Extensions
+@using Orchard.MediaLibrary.Fields
+@{
+    Script.Require("jQueryUI_Tooltip").AtFoot();
+    Script.Require("TooltipsZoomimage").AtFoot();
+    Style.Require("jQueryUI").AtHead();
+
+foreach (var item in Model.ContentItems.Items) {
+    ContentItem contentItem = item.ContentItem;
+        <div class="summary" itemscope="itemscope" itemid="@contentItem.Id" itemtype="http://orchardproject.net/data/ContentItem">
+            <input type="checkbox" class="content-picker-itemCheck" />
+            <div class="container content-picker-item">
+                <div class="row">
+                    <div class="properties">
+                        @*<input type="checkbox" value="@contentItem.Id" name="itemIds"/>*@
+                        <h3>@Html.ItemDisplayText(contentItem)</h3> - <div class="contentType">@contentItem.TypeDefinition.DisplayName</div>
+                        @if (Model.Header != null) {
+                            <div class="header">@Display(Model.Header)</div>
+                        }
+                        @if (Model.Meta != null) {
+                            <div class="metadata">@Display(Model.Meta)</div>
+                        }
+                    </div>
+                </div>
+                @{
+                    //
+                    var contentPart = contentItem.Parts.SingleOrDefault(x => x.PartDefinition.Name == contentItem.ContentType);
+                    if (contentPart != null) {
+                        MediaLibraryPickerField field = (MediaLibraryPickerField)contentItem.Parts.SingleOrDefault(x => x.PartDefinition.Name == contentItem.ContentType).Fields.FirstOrDefault(f => f.PartFieldDefinition.FieldDefinition.Name == "MediaLibraryPickerField");
+                        if (field != null) {
+                            string displayName = field.DisplayName;
+                            string name = field.Name;
+                            var contents = field.MediaParts;
+                            var allUrls = contents.Select(mp => mp.MediaUrl).ToList();
+                            <div class="row">
+                                <div style="margin-top: 10px;">
+                                    @foreach (var url in allUrls) {
+                                        <div class="col-xs-3">
+                                            <div class="thumb-image">
+                                                <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: url)" src="@Display.ResizeMediaUrl(Width: 175, Height: 175, Mode: "resize", Alignment: "middlecenter", Path: url)" data-imagezoom="true" class="img-responsive" />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            @*Script.Include("jquery.flexslider.js", "jquery.flexslider.min.js").AtHead();
+                            Style.Include("flexslider.css", "flexslider.min.css").AtHead();
+                            Script.Include("imagezoom.js", "imagezoom.min.js").AtHead();
+                            <script>
+                                $(window).load(function () {
+                                    $('.flexslider').flexslider({
+                                        animation: "slide",
+                                        controlNav: "thumbnails"
+                                    });
+                                });
+                            </script>*@
+                        }
+                    }
+                }
+                <div class="row">
+                    <div class="col">
+                        <div class="related"
+                             data-display-text="@Html.ItemDisplayText(contentItem)"
+                             data-id="@contentItem.Id"
+                             data-edit-link="@Html.Encode(Html.ItemEditLink(contentItem))"
+                             data-edit-url="@Html.Encode(Url.ItemEditUrl(contentItem))"
+                             data-admin-url="@Html.Encode(Url.ItemAdminUrl(contentItem))"
+                             data-display-link="@Html.Encode(Html.ItemDisplayLink(contentItem))"
+                             data-published="@contentItem.VersionRecord.Published.ToString().ToLower()">
+
+                            @Html.Link(T("Select").Text, "#", new { @class = "button select" })
+                        </div>
+                        @if (Model.Content != null) {
+
+                            <div class="primary">@Display(Model.Content)</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+                    }
+}

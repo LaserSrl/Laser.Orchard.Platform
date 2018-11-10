@@ -1,0 +1,108 @@
+﻿.leftside {
+    width: 250px;
+    padding-right: 10px;
+}
+
+.questiontable {
+    font-size: 83%;
+}
+
+.questiontable tr td {
+    vertical-align: top;
+    background-color: #fff;
+}
+
+.questioncondition td {
+    padding: 5px 0;
+    border-top: 2px dotted #ccc;
+    border-bottom: 2px dotted #ccc;
+}
+
+.answertable tr td {
+    padding: 0 10px;
+    background-color: #fff;
+}
+
+.answertable tr td label {
+    float: right;
+}
+
+.rightside {
+    width: 100px;
+    padding-left: 10px;
+}
+
+.quest_label {
+    font-size: 1.0em;
+    margin-top: 5px;
+    display: block;
+}
+
+.j_risposta {
+    width: 100%;
+}
+
+.domanda {
+    width: 100%;
+}
+
+.j_condizione {
+    width: 50%;
+}
+
+[data-icon]:before {
+    font-family: 'FontAwesome';
+    font-size: 130%;
+    color: gray;
+    margin-right: .5em;
+    content: attr(data-icon);
+    speak: none;
+}
+
+.icon-alone {
+    display: inline-block;
+}
+
+.questioncondition {
+    display: none;
+}
+
+.hlist-container li {
+    width: 100px;
+    display: inline-block;
+    margin-right:3px;
+}
+
+.hlist-container img {
+    width: 100px;
+}
+
+.answer-text {
+    width: auto;
+}
+
+.answer-col {
+    width: 60px;
+}
+
+/*Statistiche*/
+
+.st-answer {
+    display: inline-block;
+    width: 100%;
+}
+
+.answerlist {
+    float: left;
+}
+
+.answerchart {
+    height: 200px;
+    width: 300px;
+    float:right;
+}
+
+.line-separator:not(:last-of-type) {
+    height:1px;
+    border-bottom:1px solid #D3D3D3;
+}

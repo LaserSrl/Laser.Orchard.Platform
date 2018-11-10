@@ -1,0 +1,50 @@
+﻿@model Laser.Orchard.FidelityGateway.ViewModels.EditAction
+@using Laser.Orchard.FidelityGateway.Models
+@using Laser.Orchard.FidelityGateway.ViewModels
+
+@{ Layout.Title = "Edit Fidelity Action"; }
+<div>
+
+    @using (Html.BeginForm("Save", "ActionCampaign", FormMethod.Post, new { editedAction = Model }))
+    {
+        @Html.AntiForgeryToken();
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Id)">@T("Action Id")</label>
+            @Html.TextBoxFor(m => m.Id, new { @class = "text-medium", @readonly = "true", style = "min-width:100px; width:100px;" })
+        </div>
+        <br />
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Action)">@T("Action Name")</label>
+            @Html.TextBoxFor(m => m.Action, new { @class = "text-medium" })
+            <span class="hint">@T("Action Name.")</span>
+        </div>
+        <br />
+        <div>
+            <label for="@Html.FieldIdFor(m => m.CampaignId)">@T("Campaign Id")</label>
+            @if (Model.CampaignList != null)
+            {
+                @Html.DropDownListFor(m => m.CampaignId, new SelectList(Model.CampaignList)) 
+            }
+            else
+            {                
+            @Html.TextBoxFor(m => m.CampaignId, new { @class = "text-medium" })         
+            }
+            <span class="hint">@T("Campaign Id.")</span>
+           
+        </div>
+        <br />
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Points)">@T("Points")</label>
+            @Html.TextBoxFor(m => m.Points, new { @class = "text-medium", @type = "number", style = "min-width:100px; width:100px;" })
+            <span class="hint">@T("Points.")</span>
+        </div>
+        <br />
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Provider)">@T("Provider")</label>
+            @Html.TextBoxFor(m => m.Provider, new { @readonly = "true", @class = "text-medium" })
+            <span class="hint">@T("Provider.")</span>
+        </div>
+        <br />
+        <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">Save</button>
+    }
+</div>

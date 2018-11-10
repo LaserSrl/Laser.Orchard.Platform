@@ -1,0 +1,13 @@
+﻿@{
+    Script.Require("jQuery").AtHead();
+}
+@using (Script.Head()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#payButton").click(function () {
+                self.location = "@Url.Action("Pay", "Payment", new { area = "Laser.Orchard.PaymentGateway" })?nonce=@Model.Nonce";    
+            });
+        });
+    </script>
+}
+<button type="button" id="payButton" style="padding: 10px 10px">@T("Pay")</button>

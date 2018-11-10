@@ -1,0 +1,89 @@
+﻿@model Laser.Orchard.Translator.ViewModels.TranslationDetailViewModel
+
+@{
+    Script.Require("jQueryUI");
+
+    Style.Require("jQueryUI");
+    Style.Require("MediaManagerAdmin");
+    Style.Require("Laser.Orchard.Translator");
+    Style.Require("FontAwesome");
+
+    Layout.Title = T("Translator").ToString();
+}
+
+<div id="media-library">
+    <div id="media-library-toolbar">
+        @{
+            if (!string.IsNullOrWhiteSpace(Model.containerName))
+            {
+                <span id="folder-name">@Model.containerName</span>
+                <span id="language">@Model.language</span>
+            }
+        }
+    </div>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">@T("Translations")</a></li>
+            <li><a href="#tabs-2">@T("Settings")</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div id="media-library-main" class="translator-media-library">
+                <div id="media-library-main-navigation">
+                    <ul>
+                        <li id="media-library-main-navigation-tree">
+                            <ul>
+                                @foreach (var messageData in Model.messages) {
+                                    <li>
+                                        <div class="media-library-folder">
+                                            <div id="message-@messageData.id" class="media-library-folder-title">
+                                                @if (messageData.localized) { <i class="fa fa-check"></i> } else { <i class="fa fa-times"></i> }
+                                                <span data-id="@messageData.id">@messageData.message</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="media-library-main-list-wrapper">
+                    <div id="media-library-main-list">
+                        <iframe id="translator-form-frame" src="@Url.Action("TranslatorForm", "Translator", new { id = 0 })"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div id="translation-settings-frame">
+                <iframe id="translator-settings-form-frame" src="@Url.Action("TranslatorFolderSettings", "Translator", new { folderName = Model.containerName, folderType = Model.containerType, language = Model.language })"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="media-library-bottom-toolbar">
+    <a class="button" href="@Url.Action("Index", "TranslatorTree", new { selectedCulture = Model.language,
+                                                                         selectedFolderName = Model.containerName,
+                                                                         selectedFolderType = Model.containerType })">
+        @T("Back")
+    </a>
+</div>
+
+@{
+    using (Script.Foot())
+    {
+    <script type="text/javascript">
+        $(function () {
+            $('.media-library-folder-title').click(function () {
+                $('.selected').removeClass('selected');
+                $(this).addClass('selected');
+
+                var iFrameUrl = '@Url.Action("TranslatorForm", "Translator", new { id = "idPlaceholder" })';
+                iFrameUrl = iFrameUrl.replace("idPlaceholder", $(this).find("span").attr("data-id"));
+                $('#translator-form-frame').attr('src', iFrameUrl);
+            });
+
+            $("#tabs").tabs({ heightStyle: "content" });
+        });
+    </script>
+    }
+}

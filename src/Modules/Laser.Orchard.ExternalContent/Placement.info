@@ -1,0 +1,13 @@
+﻿<Placement>
+	<Place Fields_FieldExternal_Edit="Content:2.5"/>
+
+	<Match DisplayType="SummaryAdmin">
+		<Place Fields_FieldExternal="-"/>
+	</Match>
+
+	<Match DisplayType="Summary">
+		<Place Fields_FieldExternal="-"/>
+	</Match>
+
+	<Place Fields_FieldExternal="Content:after"/>
+</Placement>

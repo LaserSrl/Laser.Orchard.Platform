@@ -1,0 +1,23 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Fields;
+@{ 
+    var item = (ContentItem)Model.ContentItem;
+
+    var titleField = item.Parts
+        .SelectMany(pa => pa.Fields)
+        .OfType<TextField>()
+        .FirstOrDefault(fi => fi.Name == "TitoloDaMostrare");
+    var title = "";
+    if (titleField != null) {
+        title = titleField.Value ?? string.Empty;
+    }
+}
+@if (!string.IsNullOrWhiteSpace(title)) {
+    <div class="space-40"></div>
+    <h3 class="showcase-claim text-center">@title</h3>
+    <div class="space-40"></div>
+}
+
+<div class="row form-contatto-vertical">
+    @Display(Model.Content)
+</div>

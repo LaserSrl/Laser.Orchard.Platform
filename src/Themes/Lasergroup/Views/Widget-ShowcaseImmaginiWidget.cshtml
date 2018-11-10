@@ -1,0 +1,16 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+
+    var medias = item.ShowcaseImmaginiWidget.Gallery.MediaParts;
+}
+
+<div class="space-40"></div>
+<div class="row">
+
+    @for (int i = 0; i < medias.Count; i++) {
+        <div class="col-xs-12 col-sm-6 text-center">
+		    <img src="@medias[i].MediaUrl" alt="@medias[i].AlternateText" title="@medias[i].Title" class="img-responsive">
+	    </div>
+    }
+
+</div>

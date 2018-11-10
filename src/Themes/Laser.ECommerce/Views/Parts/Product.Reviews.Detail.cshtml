@@ -1,0 +1,235 @@
+﻿@using Contrib.Reviews.Models
+@using Orchard.ContentManagement
+@using Orchard.Localization.Services
+@using Orchard.Utility.Extensions;
+@{
+    var reviewsPart = (ReviewsPart)Model.ReviewsPart;
+
+    var _dateLocalizationServices = WorkContext.Resolve<IDateLocalizationServices>();
+
+    Style.Require("Contrib_Stars");
+    Style.Require("jQueryUI").AtHead();
+    Script.Require("jQuery");
+    Script.Require("jQueryUI");
+    Script.Require("Contrib_Stars");
+}
+@if (reviewsPart.Reviews.Any()) {
+    <h4>@T("({0}) Reviews", reviewsPart.Reviews.Count)</h4>
+    foreach (var review in reviewsPart.Reviews) {
+        double userRating = review.Rating.UserRating;
+        var userResultClass = string.Format("stars-value-{0}", userRating);
+        <div class="additional_info_sub_grids">
+            <div class="col-xs-2 additional_info_sub_grid_left">
+                <span class="glyphicon glyphicon-user"></span>
+            </div>
+            <div class="col-xs-10 additional_info_sub_grid_right">
+                <div class="additional_info_sub_grid_rightl">
+                    <a>@review.UserName</a>
+                    <h5>@_dateLocalizationServices.ConvertToLocalizedDateString(review.CreatedUtc)</h5>
+                    <p>@review.Comment</p>
+                </div>
+                <div class="additional_info_sub_grid_rightr">
+                    <div class="rating">
+                        <div class="stars-rating">
+                            <div class="stars-current-result @userResultClass">
+                                <span class="star-1 a-star">@(review.Rating.UserRating > 0 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-2 a-star">@(review.Rating.UserRating > 1 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-3 a-star">@(review.Rating.UserRating > 2 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-4 a-star">@(review.Rating.UserRating > 3 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-5 a-star">@(review.Rating.UserRating > 4 ? T("*").ToString() : T("-").ToString())</span>
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    @if (review.IsCurrentUsersReview) {
+                        <a href="#" id="deleteReviewLink" data-review-id="@review.Id">@T("Delete")</a>
+                    }
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    }
+} else {
+    <h4>@T("No reviews yet.")</h4>
+}
+@if (!reviewsPart.UserHasReviewed) {
+    if (ContentExtensions.IsPublished(reviewsPart.ContentItem)) {
+        double userRating = reviewsPart.Rating.UserRating;
+        <div class="review_grids">
+            @if (!Request.IsAuthenticated) {
+                <h5><a href="@Url.Action("LogOn", "Account", new { area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">@T("Add a Review")</a></h5>
+            } else {
+                <h5>@T("Add a Review")</h5>
+                <div class="stars-rating stars-can-rate">
+                    <div class="stars-current-result stars-value-0" style="display:inline;">
+                        <span class="star-1 a-star">@T("-").ToString()</span>
+                        <span class="star-2 a-star">@T("-").ToString()</span>
+                        <span class="star-3 a-star">@T("-").ToString()</span>
+                        <span class="star-4 a-star">@T("-").ToString()</span>
+                        <span class="star-5 a-star">@T("-").ToString()</span>
+                    </div>
+                    <div style="display: none;">
+                        @using (Html.BeginFormAntiForgeryPost(Url.Action("Apply", "Rate", new { area = "Contrib.Reviews" }), FormMethod.Post, new { @class = "rate" })) {
+                            <label for="starsRateActions-@reviewsPart.ContentItem.Id">@T("Rate:")</label>
+                            <select id="starsRateActions-@reviewsPart.ContentItem.Id" name="rating">
+                                @Html.SelectOption(userRating, 0, T("give your opinion").ToString())
+                                @Html.SelectOption(userRating, 1, T("*").ToString())
+                                @Html.SelectOption(userRating, 2, T("**").ToString())
+                                @Html.SelectOption(userRating, 3, T("***").ToString())
+                                @Html.SelectOption(userRating, 4, T("****").ToString())
+                                @Html.SelectOption(userRating, 5, T("*****").ToString())
+                                @Html.SelectOption(userRating, -1, T("clear your opinion").ToString())
+                            </select>
+                            @Html.Hidden("contentId", (int)reviewsPart.ContentItem.Id)
+                            @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+                            <button type="submit" name="submit.BulkEdit" value="yes">@T("Save")</button>
+                        }
+                    </div>
+                </div>
+                using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post)) {
+                    @Html.TextArea(
+                        "comment",
+                        (TempData["Comment"] ?? "").ToString(),
+                        new { maxLength = 1200, rows = 4, placeholder = T("Add Your Review").Text, required = "" })
+                    <p class="review-character-limit"><span id="commentCharactersLeft"></span> @T("character(s) remaining")</p>
+                    @Html.Hidden("contentId", (int)reviewsPart.ContentItem.Id)
+                    @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+                    
+                    <input id="createReviewButton" type="submit" value="Submit Review" />
+                }
+            }
+        </div>
+    }
+}
+
+
+<div id="deleteReviewConfirmationDialogDiv" title="Confirm Deletion" style="display:none">
+    <p>@T("Are you sure you wish to delete your review? Your Rating will also be deleted.")</p>
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post, new { id = "deleteReviewForm" })) {
+        <input type="hidden" id="reviewId" name="reviewId" />
+        <input type="hidden" id="returnUrl" name="returnUrl" value="@Context.Request.ToUrlString()" />
+        <div class="buttons">
+            <input type="submit" value="Yes" />
+            <input type="button" value="No" id="cancelDeleteReviewButton" />
+        </div>
+    }
+</div>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        (function () {
+
+            var numberOfReviewsToShowByDefault = 5;
+            var $showAllReviewsLink = $('#showAllReviewsLink');
+            var $deleteReviewConfirmationDialogDiv = $('#deleteReviewConfirmationDialogDiv');
+
+            $(function () {
+                $deleteReviewConfirmationDialogDiv.dialog({ autoOpen: false, modal: true, resizable: false, dialogClass: 'no-close review-dialog' });
+                $('#deleteReviewLink').click(function () {
+                    $('#reviewId').val($(this).attr("data-review-id"));
+                    ShowDeleteReviewDialog();
+                    return false;
+                });
+                @if (Request.IsAuthenticated)
+            {
+            <text>$('#showReviewFormLink').click(function () {
+                    $('#createReviewLinkDiv').slideToggle('fast', function () { $('#reviewFormDiv').slideToggle('fast'); });
+                    return false;
+                });
+                $('#cancelCreateReviewLink').click(function () {
+                    $('#reviewFormDiv').slideToggle('fast', function () { $('#createReviewLinkDiv').slideToggle('fast'); });
+                    return false;
+                });</text>
+            }
+                $('#deleteReviewForm').submit(function () {
+                    $('input[type=submit]', this).attr('disabled', 'disabled');
+                });
+                $('#cancelDeleteReviewButton').click(function () {
+                    CloseConfirmationDialogDiv();
+                    return false;
+                });
+                var rowCount = $('#reviewsList li').length;
+                if (rowCount > numberOfReviewsToShowByDefault) {
+                    SetupToggle();
+                }
+
+                if (document.location.hash === '#Reviews') {
+                    var topPx = $('#reviews-heading').position().top;
+                    $('body,html').animate({ scrollTop: topPx }, 'slow');
+                }
+
+                if ($("#comment").length) {
+                    var characterCountUpdater = new CharacterCountUpdater($("#comment"), $("#commentCharactersLeft"));
+                    setInterval(function () { characterCountUpdater.UpdateCharacterCount(); }, 100);
+                    $("#comment").keypress(function (event) {
+                        var regex = new RegExp("^[a-zA-Z0-9\\s]+$");
+                        var specialkey = !event.charCode ? event.which : event.charCode
+                        if (!(specialkey == 37 || specialkey == 38 || specialkey == 39 || specialkey == 40 || specialkey == 8 || specialkey == 46)) {
+                            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                            if (!regex.test(key)) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        }
+                        characterCountUpdater.UpdateCharacterCount();
+                    });
+                    if ($("#comment").val().length) {
+                        $("#showReviewFormLink").trigger("click");
+                    }
+                }
+            });
+
+            function CharacterCountUpdater(commentBox, charactersLeftBox) {
+                this.commentBox = commentBox;
+                this.charactersLeftBox = charactersLeftBox;
+                this.maxLength = commentBox.attr("maxlength");
+                commentBox.removeAttr("maxlength");
+                return this;
+            }
+
+            CharacterCountUpdater.prototype.UpdateCharacterCount = function () {
+                var remainingLength = this.maxLength - this.commentBox.val().length;
+                this.charactersLeftBox.text(remainingLength);
+                if (remainingLength < 0) {
+                    this.charactersLeftBox.addClass("negative");
+                    this.charactersLeftBox.css('color', 'red');
+                } else {
+                    this.charactersLeftBox.removeClass("negative");
+                    this.charactersLeftBox.css('color', 'black');
+                }
+            }
+
+            function ShowDeleteReviewDialog() {
+                $deleteReviewConfirmationDialogDiv.dialog('open');
+                return false;
+            }
+
+            function CloseConfirmationDialogDiv() {
+                $deleteReviewConfirmationDialogDiv.dialog('close');
+                return false;
+            }
+
+            function SetupToggle() {
+                var rowsToHide = $('#reviewsList li').slice(numberOfReviewsToShowByDefault);
+                rowsToHide.addClass('reviewHidden').hide();
+                $showAllReviewsLink.css('display', 'block');
+                $showAllReviewsLink.click(ToggleExtraReviewRows);
+            }
+
+            function ToggleExtraReviewRows() {
+                $newText = 'Show All';
+                $showAllReviewsLink.toggleClass('less');
+                if ($showAllReviewsLink.text() === $newText) {
+                    $newText = 'Show Less';
+                }
+                $showAllReviewsLink.text($newText);
+                $('#reviewsList li.reviewHidden').toggle();
+                return false;
+            }
+        })();
+        //]]>
+    </script>
+}
+

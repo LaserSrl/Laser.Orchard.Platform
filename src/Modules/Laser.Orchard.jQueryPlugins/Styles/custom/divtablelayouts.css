@@ -1,0 +1,27 @@
+﻿
+.table-container {
+    display: table;
+    width: 90%;
+    border-collapse: collapse;
+}
+
+.table-heading {
+    font-weight: bold;
+    display: table-row;
+    background-color: #C91622;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+    font-family: georgia;
+    color: #fff;
+}
+
+.table-row {
+    display: table-row;
+    text-align: center;
+}
+
+.table-col {
+    display: table-cell;
+    border: 1px solid #CCC;
+}

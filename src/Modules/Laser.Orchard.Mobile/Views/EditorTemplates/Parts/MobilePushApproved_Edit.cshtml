@@ -1,0 +1,16 @@
+﻿@model Laser.Orchard.Mobile.ViewModels.MobilePushVM
+@{
+    bool disabledElements = Model.PushSent;
+}
+<fieldset>
+    @Html.LabelFor(m => m.ToPush, T("Approved").Text, new { @class = "forcheckbox" })
+    @if (disabledElements == false) { 
+        @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push" }) 
+        <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet sent.")
+    }
+    else {
+        @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push", @disabled = "disabled" }) 
+        <i class="fa fa-check-circle" style="color: green"></i> @T("Message already sent.")
+        <div class="message message-Error">@T("This Push message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
+    }
+</fieldset>

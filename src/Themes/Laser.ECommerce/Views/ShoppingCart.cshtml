@@ -1,0 +1,225 @@
+﻿@using Nwazet.Commerce.Models
+@using Orchard.ContentManagement
+@using System.Collections.Generic
+@{
+    Script.Require("jQuery");
+    Script.Include("shoppingcart.js", "shoppingcart.min.js");
+    var items = (IList<dynamic>)Model.ShopItems;
+    var subtotal = (decimal)Model.Subtotal;
+    var readOnly = Model.ReadOnly != null && Model.ReadOnly == true;
+
+}
+<article class="shoppingcart">
+    <div class="checkout">
+        <div class="container">
+            @if (items.Any(it => !string.IsNullOrEmpty(it.Messages))) {
+                string allMessages = string.Join(Environment.NewLine, items.Where(it => !string.IsNullOrEmpty(it.Messages)));
+                <div id="shopping-cart-notification" class="message-Information">
+                    @allMessages
+                </div>
+            } else {
+                <div id="shopping-cart-notification" class="message-Information hide"></div>
+            }
+            @using (Html.BeginFormAntiForgeryPost(Url.Action("Update", "ShoppingCart", new { area = "Nwazet.Commerce" }))) {
+                if (!items.Any()) {
+                    <p id="shopping-cart-main-container" class="shopping-cart-container" data-got-cart="false"
+                       data-use-local-storage="@Url.Action("UseLocalStorage", "ShoppingCart", new {area="Nwazet.Commerce"})">
+                        <h3>@T("You don't have any items in your shopping cart.")</h3>
+                    </p>
+                    <script type="text/javascript">
+                        var Nwazet = window.Nwazet || {};
+                        Nwazet.WaitWhileWeRestoreYourCart = "@T("Please wait while we restore your shopping cart...")";
+                        Nwazet.FailedToLoadCart = "@T("Failed to load the cart")";
+                    </script>
+                } else {
+                    <div id="shopping-cart-main-container" class="shopping-cart-container"
+                         data-use-local-storage="@Url.Action("UseLocalStorage", "ShoppingCart", new {area="Nwazet.Commerce"})">
+                        <h3>@T("Your shopping cart contains: ")<span>@T("{0} Products", items.Sum(it => it.Quantity))</span></h3>
+
+                        <div class="checkout-right">
+                            <table class="timetable_sub">
+                                <thead>
+                                    <tr>
+                                        <th>@T("SL No.")</th>
+                                        <th>@T("Product")</th>
+                                        <th>@T("Product Name")</th>
+                                        <th>@T("Quantity")</th>
+                                        <th>@T("Price")</th>
+                                        @if (!readOnly) {
+                                            <th>@T("Remove")</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tfoot class="timetable_sub_footer">
+                                    <tr class="remX">
+                                        <td class="invert" colspan="4">@T("Subtotal:")</td>
+                                        <td class="invert">@Model.CurrencyProvider.GetPriceString(subtotal)</td>
+                                        @if (!readOnly) {
+                                            <td class="invert"><button name="command" value="Update" type="submit" class="update-button">@T("Update All")</button></td>
+                                        }
+                                    </tr>
+                                    @if (Model.Taxes != null && Model.Taxes.Name != null) {
+                                        <tr class="remX">
+                                            <td class="invert" colspan="4">@T("Taxes {0}", Model.Taxes.Name):</td>
+                                            <td class="invert">@Model.CurrencyProvider.GetPriceString(Model.Taxes.Amount)</td>
+                                        </tr>
+                                    }
+                                    @if (!Model.ShopItemsAllDigital && Model.ShippingOption != null) {
+                                        var shippingOption = (ShippingOption)Model.ShippingOption;
+                                        <tr class="remX">
+                                            <td class="invert" colspan="4">@T("{1} {0}", Html.Raw(shippingOption.Description), shippingOption.ShippingCompany):</td>
+                                            <td class="invert">@Model.CurrencyProvider.GetPriceString(shippingOption.Price)</td>
+                                        </tr>
+                                        <tr class="remX">
+                                            <td class="invert" colspan="4">@T("Total:")</td>
+                                            <td class="invert">@Model.CurrencyProvider.GetPriceString(Model.Total)</td>
+                                        </tr>
+                                    }
+                                </tfoot>
+                                <tbody>
+                                    @for (var i = 0; i < items.Count; i++) {
+                                        var item = items[i];
+                                        var propertyNamePrefix = string.Format("items[{0}]", i);
+                                        string imageUrl = (item.ProductImage != null && item.ProductImage.MediaParts.Count > 0) ? item.ProductImage.MediaParts[0].MediaUrl : null;
+                                        var contentItem = (IContent)item.Product;
+                                        var product = (IProduct)item.Product;
+                                        var title = item.Title
+                                                        + (item.ProductAttributes == null || item.ProductAttributes.Count == 0
+                                                               ? "" : " (" + string.Join(", ", ((Dictionary<int, ProductAttributeValueExtended>)item.ProductAttributes).Values
+                                                                    .Select(v => v.Value + (v.ExtensionProviderInstance != null ? v.ExtensionProviderInstance.DisplayString(v.ExtendedValue) : ""))) + ")");
+                                        var quantity = (int)item.Quantity;
+                                        var unitPrice = (decimal)item.DiscountedPrice;
+                                        var unitPriceOriginal = (decimal)item.OriginalPrice;
+                                        var linePriceAdjustment = (decimal)item.LinePriceAdjustment;
+                                        var totalPrice = quantity * unitPrice + linePriceAdjustment;
+                                        var minimumOrderQuantity = item.MinimumOrderQuantity;
+                                        var remClass = "rem-" + i;
+                                        var closeClass = "close-" + i;
+                                        <tr class="remX @remClass">
+                                            <td class="invert">@T("{0}", i + 1)</td>
+                                            @if (imageUrl != null) {
+                                                <td class="invert-image">
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)"><img src="@Href(imageUrl)" alt="@title" class="img-responsive" /></a>
+                                                </td>
+                                                <td class="invert">
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-name">@title</a>
+                                                </td>
+                                            } else {
+                                                <td colspan="2" class="invert"><a href="@Url.ItemDisplayUrl(contentItem)">@title</a></td>
+                                            }
+                                            <td class="invert">
+                                                <div class="quantity">
+                                                    @if (readOnly) {
+                                                        <span class="quantity">@quantity</span>
+                                                        if (minimumOrderQuantity > quantity) {
+                                                            <br /><strong>@T("Minimum order of {0} required.", minimumOrderQuantity)</strong>
+                                                        }
+                                                    } else {
+                                                        if (item.ProductAttributes != null) {
+                                                            var attrIndex = 0;
+                                                            foreach (KeyValuePair<int, ProductAttributeValueExtended> attribute in item.ProductAttributes) {
+                                                                var attributeNamePrefix = propertyNamePrefix + ".AttributeIdsToValues[" + attrIndex + "]";
+                                                                <input type="hidden" name="@(attributeNamePrefix).Key" value="@attribute.Key" />
+                                                                <input type="hidden" name="@(attributeNamePrefix).Value.Value" value="@attribute.Value.Value" />
+                                                                <input type="hidden" name="@(attributeNamePrefix).Value.ExtendedValue" value="@attribute.Value.ExtendedValue" />
+                                                                <input type="hidden" name="@(attributeNamePrefix).Value.ExtensionProvider" value="@attribute.Value.ExtensionProvider" />
+                                                                attrIndex++;
+                                                            }
+                                                        }
+                                                        <input name="@(propertyNamePrefix + ".ProductId")" type="hidden" value="@product.Id" />
+                                                        <input name="@(propertyNamePrefix + ".Quantity")" type="hidden" class="quantity addtocart-quantity" value="@quantity" min="0" />
+                                                        <div class="entry value-minus">&nbsp;</div>
+                                                        <div class="entry value"><span>@quantity</span></div>
+                                                        <div class="entry value-plus active">&nbsp;</div>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td class="invert">@Model.CurrencyProvider.GetPriceString(totalPrice)</td>
+                                            @if (!readOnly) {
+                                                <td class="invert">
+                                                    <a class="delete" href="#">
+                                                        <div class="rem">
+                                                            <div class="closeX @closeClass"> </div>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                                <!--quantity-->
+                                @if (!readOnly) {
+                                    <script>
+                                        $('.value-plus').on('click', function () {
+                                            var divUpd = $(this).parent().find('.value'),
+                                                hiddenQ = $(this).parent().find('.addtocart-quantity'),
+                                                newVal = parseInt(divUpd.text(), 10) + 1;
+                                            divUpd.text(newVal);
+                                            hiddenQ.val(newVal);
+                                        });
+
+                                        $('.value-minus').on('click', function () {
+                                            var divUpd = $(this).parent().find('.value'),
+                                                hiddenQ = $(this).parent().find('.addtocart-quantity'),
+                                                newVal = parseInt(divUpd.text(), 10) - 1;
+                                            if (newVal >= 0) {
+                                                divUpd.text(newVal);
+                                                hiddenQ.val(newVal);
+                                            }
+                                        });
+                                    </script>
+                                }
+                                <!--quantity-->
+                            </table>
+                        </div>
+                        <div class="checkout-left">
+                            <div class="checkout-left-basket">
+                                @if (!Model.ShopItemsAllDigital) {
+                                    if (Model.ShippingOption != null) { //we selected shipping options
+                                        <p>
+                                            @T("Click <a href=\"{0}\">here</a> to choose a different shipping option.",
+                                                Url.Action("ResetShippingOption", "ShoppingCart", new { area = "Nwazet.Commerce" }))
+                                        </p>
+                                    } else if (Model.ShippingOptions != null && Model.ShippingOptions.Count > 0) {
+                                        @Display.ShippingOptions(ShippingOptions: Model.ShippingOptions, Country: Model.Country, ZipCode: Model.ZipCode, CurrencyProvider: Model.CurrencyProvider)
+                                    } else if (!String.IsNullOrWhiteSpace(Model.Country) && !String.IsNullOrWhiteSpace(Model.ZipCode)) {
+                                        <p>
+                                            @T("No shipping options available for {0} {1}. Click <a href=\"{2}\">here</a> to change your shipping destination.",
+                                                Model.Country,
+                                                Model.ZipCode,
+                                                Url.Action("ResetDestination", "ShoppingCart", new { area = "Nwazet.Commerce" }))
+                                        </p>
+                                    } else {
+                                        @Display.ShippingInfoForm()
+                                    }
+                                }
+
+                                @if (Model.ShopItemsAuthenticationRequired && !HttpContext.Current.User.Identity.IsAuthenticated) {
+                                    <p>
+                                        @T("Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>",
+                                            Url.Action("LogOn", "Account", new { area = "Orchard.Users" }))
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                }
+            }
+            <div class="checkout-right-basket">
+                @if (items.Any() && Model.CheckoutButtons != null && (
+                                        Model.ShippingOption != null || Model.ShopItemsAllDigital)) { // && !String.IsNullOrWhiteSpace(Model.Country) && !String.IsNullOrWhiteSpace(Model.ZipCode)))) {
+                    <ul class="checkout">
+                        @foreach (var checkoutButton in Model.CheckoutButtons) {
+                            <li>
+                                @Display(checkoutButton)
+                            </li>
+                        }
+                    </ul>
+                }
+                <a href="~/"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>@T("Continue Shopping")</a>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</article>

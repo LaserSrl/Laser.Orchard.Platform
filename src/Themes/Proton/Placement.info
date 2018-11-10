@@ -1,0 +1,39 @@
+<Placement>
+  <!-- Customize where the shapes are rendered -->
+
+  <!-- 
+  <Place Parts_Blogs_BlogArchives="Content:before"/>
+  <Place Parts_Blogs_RecentBlogPosts="Content:after"/>
+  <Match ContentType="Blog">
+    <Match DisplayType="Summary">
+      <Place Parts_Blogs_Blog_Description="Content:before"
+             Parts_Blogs_Blog_BlogPostCount="Meta:3"/>
+    </Match>
+  </Match>
+  <Match Path="/About">
+    <Place Parts_Common_Metadata="-"/>
+  </Match>
+-->
+  <Place Parts_Common_Metadata="-"/>
+  <Place Fields_Input__WidgetContatto-Email="-" Fields_Input__WidgetContatto-Telefono="-" Fields_Input__WidgetContatto-Telefono2="-"  Fields_Common_Text__WidgetContatto-Indirizzo2="-" Fields_Common_Text-EtichettaProdotti="-"/>
+  <Match DisplayType="Summary">
+    <Place Fields_MediaLibraryPicker-Gallery="Content:2" />
+    <Match ContentType="BlogPost">
+      <Place Parts_Common_Metadata="Content:1" Fields_MediaLibraryPicker="Content:2" Parts_Title="Content:3" Parts_Body="Content:4"/>
+    </Match>
+  </Match>
+  <Match DisplayType="Detail">
+    <Place Parts_Title="/InfoBox:1" Fields_Common_Text-Sottotitolo="/InfoBox:2" Fields_ContentPicker-Prodottiassociati="/AfterContent:1"
+           Fields_MediaLibraryPicker-Gallery="Content:1" />
+    <Match ContentType="BlogPost">
+      <Place Parts_Title="Header:1" />
+    </Match>
+    <Match ContentType="PaginaContatto">
+      <Place Parts_Map="/BeforeContent:1" Parts_Common_Body="/AsideFirst:1" Parts_ContactForm="Content:1"/>
+    </Match>
+    <Match ContentType="Page">
+      <Place Fields_MediaLibraryPicker__Page-Gallery="Content:1" Parts_Common_Body="Content:2" />
+    </Match>
+
+  </Match>
+</Placement>

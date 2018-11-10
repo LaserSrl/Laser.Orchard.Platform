@@ -1,0 +1,173 @@
+﻿@using System.Web.Mvc.Html
+@model Laser.Orchard.Facebook.ViewModels.FacebookPostVM
+@using (Script.Head()) {
+    Script.Require("jQuery_ImagePicker").AtHead();
+    Style.Require("jQuery_ImagePicker").AtHead();
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(function () {
+            $("#@Html.FieldIdFor(m => m.SelectedList)").imagepicker({
+                show_label: true
+            });
+            @if (Model.ListOption.Count > 0) {
+                <text>
+            $('.rcswitcher-checkbox-fb').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            });
+            </text>
+            }
+
+
+        });
+    </script>
+}
+
+<div id="facebook-comm-container" class="comm-tabbed">
+    @if (Model.ListOption.Count == 0) {
+        <br />   <a href="@Url.Action("Index", "FacebookAccount", new { area = "Laser.Orchard.Facebook" })">@T("Insert a facebook account ")</a> <br /> 
+    } 
+    else {
+
+
+        @Html.Raw("Style")        
+        if (Model.FacebookType == FacebookType.Post) {
+           
+        <input type="checkbox" name="FacebookType" value="1" id="rcswitcher-checkbox-facebooktype" checked="checked" onchange="javascript:changefacebooktype(this)" />
+        } 
+        else {
+        <input type="checkbox" name="FacebookType" value="1" id="rcswitcher-checkbox-facebooktype" onchange="javascript: changefacebooktype(this)" />
+        }
+        
+        <fieldset class="FacebookPost">
+            <div class="editor-label">@Html.LabelFor(m => m.FacebookMessageToPost, T("Message"))</div>
+            <div class="editor-label">@Html.TextAreaFor(m => m.FacebookMessageToPost)</div>
+            <div class="editor-label">@Html.LabelFor(m => m.HasImage, T("With Image"))@Html.CheckBoxFor(m => m.HasImage)</div>
+        </fieldset>
+        
+        <fieldset class="FacebookShareLink">
+            @Html.HiddenFor(m => m.FacebookMessageSent)
+            @if (Model.ShowFacebookMessage) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookMessage, T("Message"))</div>
+                <div class="editor-label">@Html.TextAreaFor(m => m.FacebookMessage)</div>
+            } 
+            else {
+                @Html.HiddenFor(m => m.FacebookMessage)
+            }
+            @if (Model.ShowFacebookCaption) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookCaption, T("Caption"))</div>
+                <div class="editor-label">@Html.TextBoxFor(m => m.FacebookCaption, new { @class = "text large" })</div>
+            } 
+            else {
+                @Html.HiddenFor(m => m.FacebookCaption)
+            }
+            @if (Model.ShowFacebookDescription) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookDescription, T("Description"))</div>
+                <div class="editor-label">@Html.TextAreaFor(m => m.FacebookDescription)</div>
+            } 
+            else {
+                @Html.HiddenFor(m => m.FacebookDescription)
+            }
+            @if (Model.ShowFacebookLink) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookLink, T("Link"))</div>
+                <div class="editor-label">@Html.TextBoxFor(m => m.FacebookLink, new { @class = "text large" })</div>
+            } 
+            else {
+                @Html.HiddenFor(m => m.FacebookLink)
+            }
+            @if (Model.ShowFacebookName) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookName, T("Name"))</div>
+                <div class="editor-label">@Html.TextBoxFor(m => m.FacebookName, new { @class = "text large" })</div>
+            } 
+            else {
+                @Html.HiddenFor(m => m.FacebookName)
+            }
+            @if (Model.ShowFacebookPicture) {
+                <div class="editor-label">@Html.LabelFor(m => m.FacebookPicture, T("Picture Url"))</div>
+                <div class="editor-label">@Html.TextBoxFor(m => m.FacebookPicture, new { @class = "text large" })</div>          
+            }
+            else {
+                @Html.HiddenFor(m => m.FacebookPicture)
+            }
+            @*        @{
+        if (Model.FacebookAccountList != null) {
+            <div class="editor-label">@Html.LabelFor(m => m.SelectedList, T("AccountList"))</div>
+            <div class="editor-label">@Html.ListBoxFor(m => m.SelectedList, Model.FacebookAccountList)</div>
+        }
+        }*@
+        </fieldset>
+        <fieldset>
+            @{
+            if (Model.ListOption.Count > 0) {
+                <div class="editor-label">@Html.LabelFor(m => m.SelectedList, T("AccountList"))</div>
+                <select multiple="multiple" name="@Html.FieldNameFor(m => m.SelectedList)" id="@Html.FieldIdFor(m => m.SelectedList)"  class="image-picker show-labels show-html">
+                    @foreach (var item in Model.ListOption) {
+                        <option data-img-src="@item.ImageUrl" data-img-label="@item.Text" value="@item.Value" @(item.Selected)>@item.Text</option>
+                    }
+                </select>
+            }
+            }
+        </fieldset>
+        <fieldset>
+            @Html.LabelFor(m => m.SendOnNextPublish, T("Approved").Text, new { @class = "forcheckbox" })
+            @if (!Model.FacebookMessageSent) { 
+                @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-fb" })
+                <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet posted.")
+            } 
+            else {
+                @Html.CheckBoxFor(model => model.SendOnNextPublish, new { @class = "rcswitcher-checkbox-fb", @disabled = "disabled" })
+                <i class="fa fa-check-circle" style="color: green"></i> @T("Message already posted.")
+                <div class="message message-Error">@T("This Facebook message has been already posted. You will be able to edit and save it, but it will not be posted anymore on next publish.")</div>
+            }
+        </fieldset>
+ 
+    }
+</div>
+<div class="tab-folder">
+    <a href="#facebook-comm-container"><i class="fa fa-facebook"></i>@T("Facebook")</a>
+</div>
+
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(function () {
+            if ('@Model.ListOption.Count' > 0) {
+                changefacebooktype(document.getElementById("rcswitcher-checkbox-facebooktype"));
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        @if (Model.ListOption.Count > 0) {
+                <text>
+        $(function () {
+            $('#rcswitcher-checkbox-facebooktype').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("Post")',
+                offText: '@T("ShareLink")',
+                width: 150
+            });
+        });
+         </text>
+        }
+
+        function changefacebooktype(element) {
+            if (element != null) {
+                if (element.checked) {
+                    $(".FacebookShareLink").hide();
+                    $(".FacebookPost").show();
+                } else {
+                    $(".FacebookShareLink").show();
+                    $(".FacebookPost").hide();
+                }
+            }
+        }
+    </script>
+}

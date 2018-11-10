@@ -1,0 +1,28 @@
+﻿@using Laser.Orchard.Mobile
+@model Laser.Orchard.Mobile.ViewModels.AppStoreEdit
+@{ 
+    MvcHtmlString answerBlock = Html.UniqueClientId("AppStore");
+    var qid = "RedirectNum_" + answerBlock;
+}
+<div id="@qid" class="j_redirect">
+    <table width="100%" class="redirecttable" style="margin-top:5px;">
+        @*Question zone*@
+        <tr>
+            <td class="leftside">
+                <label>@T("Store")</label>
+                @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete" })
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.UserAgentRedirectPartRecord_Id)
+                @Html.DropDownListFor(x => x.AppStoreKey, new SelectList(Enum.GetNames(typeof(Laser.Orchard.Mobile.MobileAppStores)), Model != null ? Model.AppStoreKey : MobileAppStores.GooglePlay), new { @class = "leftside" })<br />
+            </td>
+            <td>
+                <label>@T("Redirect Url")</label>
+                @Html.TextBoxFor(x => x.RedirectUrl, new { @placeholder = T("Type the mobile App url"), @class = "text large" })
+                @Html.ValidationMessageFor(x => x.RedirectUrl)
+            </td>
+            <td style="text-align:right;">
+                <i class="fa fa-times" style="color:red;"></i>
+                @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_redirect", "input.mark-for-delete")
+            </td>
+    </table>
+</div>

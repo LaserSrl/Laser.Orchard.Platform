@@ -1,0 +1,9 @@
+﻿@{
+    dynamic item = Model.ContentItem;
+}
+@if (item.HtmlWidget.Image.FirstMediaUrl != null) {
+    <div class="col-xs-12 col-sm-4 col-md-2 text-center">
+        <img src="@item.HtmlWidget.Image.FirstMediaUrl" title="@item.HtmlWidget.Image.MediaParts[0].Title" alt="@item.HtmlWidget.Image.MediaParts[0].AlternateText" class="img-responsive">
+        <div class="space-20 visible-xs"></div>
+    </div>
+}

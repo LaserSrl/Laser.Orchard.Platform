@@ -1,0 +1,8 @@
+﻿@model Laser.Orchard.Queries.Controllers.prebuilder
+@{ Layout.Title = "New One Shot Query"; }
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <label for="search">@T("Title:")</label>
+    @Html.TextBoxFor(m => m.Title)
+    <button type="submit">@T("Save")</button>
+}

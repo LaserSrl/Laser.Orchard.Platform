@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Orchard>
+  <Recipe>
+    <Name>NwazetIntegration</Name>
+    <Description>This recipes configures a Nwazet Integration with CommunicationGateway and PaymenteGateway and UserProfiler.</Description>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Default</Category>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Laser.Orchard.NwazetIntegration,
+                   Laser.Orchard.UserProfiler,
+                   Laser.Orchard.Braintree"
+          disable="Stripe"/>
+  <Metadata/>
+  <Settings>
+    <PaymentGatewaySiteSettingsPart NonceMinutesDuration="20" />
+    <BraintreeSiteSettingsPart CurrencyCode="EUR" MerchantId="rt56ycy7kqwbk2s8" PrivateKey="f1d8bb2e24fa81a400a6327231b832c1" ProductionEnvironment="false" PublicKey="tzptwscv223xgjy4" />
+  </Settings>
+  <ContentDefinition>
+    <Types>
+      <Product ContentTypeSettings.Creatable="True" TypeIndexing.Indexes="" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="False" ContentTypeLayoutSettings.Placeable="False" DisplayName="Product">
+        <TrackingPart />
+      </Product>
+    </Types>
+  </ContentDefinition>
+</Orchard>
+

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Orchard>
+  <Recipe>
+    <Name>SetupTaxonomies</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the products taxonomy for the ecommerce theme.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Content>
+    <Taxonomy Id="/alias=products" Status="Published">
+      <NumericField.Creator Value="" />
+      <NumericField.LastModifier Value="" />
+      <AutoroutePart Alias="products" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <TaxonomyPart TermTypeName="ProductsTerm" />
+      <TitlePart Title="Products" />
+    </Taxonomy>
+    <ProductsTerm Id="/alias=products\/products" Status="Published">
+      <NumericField.Creator Value="" />
+      <NumericField.LastModifier Value="" />
+      <AutoroutePart Alias="products/products" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Container="/alias=products" />
+      <TermPart Count="0" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products" />
+      <TitlePart Title="Products" />
+    </ProductsTerm>
+  </Content>
+</Orchard>

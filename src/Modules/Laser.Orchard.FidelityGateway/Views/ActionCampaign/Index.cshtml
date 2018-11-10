@@ -1,0 +1,44 @@
+﻿@model Laser.Orchard.FidelityGateway.ViewModels.ActionCampaign
+@using Laser.Orchard.FidelityGateway.Models
+
+@{ Layout.Title = "Fidelity Actions"; }
+<div>
+    <div>
+        <h2>@T("Fidelity actions")
+
+            <a class="button primaryAction" style="margin-left: 8%;" href="@Url.Action("Edit", "ActionCampaign", new { area = "Laser.Orchard.FidelityGateway", id = 0 })">@T("Create")</a></h2>
+    </div>
+    <table class="items" summary="This is a table of the fidelity action stored">
+        <tr>
+            <th style="width: 5%">Id </th>
+            <th style="width: 15%">Action Name </th>
+            <th style="width: 25%">CampaignId </th>
+            <th style="width: 10%">Points </th>
+            <th style="width: 20%">Provider </th>
+            <th style="width: 30%">Actions </th>
+        </tr>
+
+        @for (int i = 0; i < Model.actions.Count; i++)
+        {
+           <tr>
+                <td>@Model.actions[i].Id:</td>
+                <td>@Model.actions[i].Action </td>
+                <td>@Model.actions[i].CampaignId </td>
+                <td>@Model.actions[i].Points </td>
+                <td>@Model.actions[i].Provider </td>
+                <td>
+                    @if (Model.actions[i].Provider == Model.usedProvider)
+                    {
+                        <a href="@Url.Action("Edit", "ActionCampaign", new { area = "Laser.Orchard.FidelityGateway", id = Model.actions[i].Id })">@T("Edit")</a>
+                    }
+                    else
+                    {
+                        @T("are you using another provider")
+                    }
+                    | 
+                    <a href="@Url.Action("Delete", "ActionCampaign", new { area = "Laser.Orchard.FidelityGateway", id = Model.actions[i].Id })">@T("Delete")</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

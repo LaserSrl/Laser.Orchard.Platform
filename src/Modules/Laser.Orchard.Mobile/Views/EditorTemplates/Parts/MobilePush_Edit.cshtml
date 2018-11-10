@@ -1,0 +1,217 @@
+﻿@model Laser.Orchard.Mobile.ViewModels.MobilePushVM
+@{
+    Script.Require("jQuery");
+    Script.Require("jQueryUI_Core");
+    Script.Require("jQueryUI_Autocomplete");
+    Style.Require("jQuery_Autocomplete");
+    Script.Require("rcswitcher").AtHead();
+    Style.Require("rcswitcher").AtHead();
+    bool disabledElements = Model.PushSent;
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var aft = $("input[name=__RequestVerificationToken]:first").val();
+            $("#contact-to-push").change(function () {
+                var a = 2;
+            });
+            $("#contact-to-push").autocomplete({
+                open: function (event, ui) {
+                    disable = true;
+                },
+                close: function (event, ui) {
+                    disable = false; $(this).focus();
+                },
+                messages: {
+                    noResults: "@T("No search results.")",
+                    results: function (amount) {
+                        return amount + " @T("result(s)")";
+                    }
+                },
+                source: function (request, response) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("Search", "ContactList", new { area = "Laser.Orchard.Mobile" })",
+                        data: { term: request.term, __RequestVerificationToken: aft },
+                        success: function (dataAutocomplete) {
+                            response(dataAutocomplete);
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    this.value = ui.item.value;
+                },
+                minLength: 3
+            });
+
+            $('#@Html.FieldIdFor(m => m.RecipientList)').focusout(function () {
+                updateSummary();
+            });
+        });
+
+        $(function () {
+            $('.rcswitcher-checkbox-push').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            });
+        });
+
+        $(function () {
+            $('.rcswitcher-checkbox-pushtest').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.TestPush)') {
+                        $("#test-push-info").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.TestPush)') {
+                        $("#test-push-info").hide(400);
+                    }
+                }
+            });
+        });
+        @if (Model.PushAdvertising) { // Show only if the content is a Communication Advertising
+        <text>
+        $(function () {
+            $('.rcswitcher-checkbox-push-recipients').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.UseRecipientList)') {
+                        updateSummary();
+                        $("#push-recipients-info").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.UseRecipientList)') {
+                        updateSummary();
+                        $("#push-recipients-info").hide(400);
+                    }
+                }
+            });
+        });
+        </text>
+    }
+        $(function () {
+            $('.rcswitcher-checkbox-push-singlecontact').rcSwitcher({
+                theme: 'flat',
+                blobOffset: 1,
+                onText: '@T("YES")',
+                offText: '@T("NO")'
+            }).on({
+                'turnon.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.TestPushToDevice)') {
+                        $("#push-singlecontact-info").show(400);
+                    }
+                },
+                'turnoff.rcSwitcher': function (e, dataObj) {
+                    if (e.target.id == '@Html.FieldIdFor(m => m.TestPushToDevice)') {
+                        $("#push-singlecontact-info").hide(400);
+                    }
+                }
+            });
+        });
+        @if(Model.HideRelated) {
+            <text>
+        $(function () {
+            $("fieldset[data-field-name=RelatedContent][data-part-name=MobilePushPart]").hide();
+        });
+        </text>
+        }
+    </script>
+
+}
+<div id="mobile-comm-container" class="comm-tabbed">
+
+    <fieldset>
+        @Html.HiddenFor(m => m.PushSent)
+        @Html.HiddenFor(m => m.TitlePush)
+        <div class="editor-label">@Html.LabelFor(m => m.TextPush, T("Text"))</div>
+        <div class="editor-field">@Html.TextAreaFor(m => m.TextPush, new { @class = "text large", @maxlength = 160 })</div>
+        <span class="hint">@T("Push text max length: 160 characters.")</span>
+    </fieldset>
+    <fieldset id="test-push-container" style="@((!Model.ShowTestOptions) ? "display:none;" : "")">
+        <div class="checkbox-and-label">
+            <label for="@Html.FieldIdFor(m => m.TestPush)" class="forcheckbox">@T("Test over developer devices") </label>
+            @Html.CheckBoxFor(m => m.TestPush, new { @class = "rcswitcher-checkbox-pushtest" })
+            <div id="test-push-info" style="@((!Model.TestPush) ? "display:none;" : "")">
+                <div class="form-group">
+                    <span class="hint">@T("Number push test:") @Model.PushTestNumber</span>
+                    <button type="submit" name="submit.Save" value="submit.PushTest">@T("Send for test")</button>
+                </div>
+            </div>
+
+            <span class="hint">@T("Mask to make test for Push... this option is set by settings of module")</span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <label for="@Html.FieldIdFor(m => m.TestPushToDevice)" class="forcheckbox">@T("Test over single contact devices") </label>
+        @Html.CheckBoxFor(m => m.TestPushToDevice, new { @class = "rcswitcher-checkbox-push-singlecontact" })
+        <div id="push-singlecontact-info" style="@((!Model.TestPushToDevice) ? "display:none;" : "")">
+            <div>
+                <label for="contact-to-push">@T("Contact"): </label>
+                <input id="contact-to-push" name="contact-to-push" placeholder="@T("Type user's first 3 chars...")" class="text-medium" />
+                &nbsp;
+                <button type="submit" name="submit.Save" value="submit.PushContact" id="submit-PushContact">@T("Send push to selected contact")</button>
+            </div>
+            <div>
+                <span class="hint">@T("Use \"token:\" prefix to send a push to specific device.")</span>
+            </div>
+        </div>
+
+    </fieldset>
+
+    @if (Model.PushAdvertising) { // Show only if the content is a Communication Advertising
+        <fieldset>
+            <label for="@Html.FieldIdFor(m => m.UseRecipientList)" class="forcheckbox">@T("Enter recipients manually") </label>
+            @Html.CheckBoxFor(m => m.UseRecipientList, new { @class = "rcswitcher-checkbox-push-recipients" })
+            <div id="push-recipients-info" style="@((!Model.UseRecipientList) ? "display:none;" : "")">
+                <div class="editor-label">@Html.LabelFor(m => m.RecipientList, T("Manual recipients:"))</div>
+                <div class="editor-field">@Html.TextAreaFor(m => m.RecipientList, new { @class = "text large" })</div>
+                <span class="hint">@T("Enter username or e-mail of the contacts to which to deliver this Push notification. One recipient for each line.")</span>
+            </div>
+
+        </fieldset>
+    }
+    <fieldset>
+        <div class="editor-label">@Html.LabelFor(m => m.DevicePush, T("To Device"))</div>
+        <div class="editor-field">
+            @Html.DropDownListFor(m => m.DevicePush, Model.ListOfDevice)
+        <span class="hint">@T("Select Devices")</span>
+    </div>
+</fieldset>
+@if (Model.PushAdvertising) {
+    <fieldset>
+        @Html.LabelFor(m => m.ToPush, T("Approved").Text, new { @class = "forcheckbox" })
+        @if (disabledElements == false) {
+            @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push" })
+            <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet sent.")
+        } else {
+            @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push", @disabled = "disabled" })
+            <i class="fa fa-check-circle" style="color: green"></i> @T("Message already sent.")
+            <div class="message message-Error">@T("This Push message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
+        }
+    </fieldset>
+}
+
+</div>
+@if (Model.PushAdvertising) {
+    <div class="tab-folder">
+        <a href="#mobile-comm-container"><i class="fa fa-mobile"></i>@T("Push notification")</a>
+    </div>
+}
+@if (Model.PushSent) {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalPush", "CountPanel", new { area = "Laser.Orchard.Mobile", tot = Model.TargetDeviceNumber })|@Html.FieldIdFor(m => m.UseRecipientList)|@Html.FieldIdFor(m => m.RecipientList)" />
+} else {
+    <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalPush", "CountPanel", new { area = "Laser.Orchard.Mobile" })|@Html.FieldIdFor(m => m.UseRecipientList)|@Html.FieldIdFor(m => m.RecipientList)" />
+}

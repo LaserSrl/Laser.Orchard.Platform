@@ -1,0 +1,7 @@
+@{
+    string title = @Model.ContentItem.TitlePart.Title;
+}
+
+<dt class="list_title">
+    @Html.ItemDisplayLink(title, (Orchard.ContentManagement.ContentItem)Model.ContentItem)
+</dt>

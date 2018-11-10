@@ -1,0 +1,10 @@
+﻿@{
+    string name = Model.ContentField.DisplayName;
+}
+
+@if (HasText(name) && HasText(Model.Value)) {
+    var urls = Model.Value.ToHtmlString().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+    foreach (var url in urls) { 
+    <iframe width="400" height="300" style="width:100%; height:300px" src="@url.Replace("<br />", "")" frameborder="0" allowfullscreen></iframe>
+    }
+}

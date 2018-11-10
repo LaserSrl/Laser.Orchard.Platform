@@ -1,0 +1,79 @@
+﻿@using Laser.Orchard.Highlights.Models
+@{
+    var item = Model.HighlightsItem;
+    var titleTag = Tag(Model, "h4");
+    var subtitleTag = Tag(Model, "h5");
+    if (item.TitleSize == "Principale") {
+        titleTag = Tag(Model, "h1");
+        subtitleTag = Tag(Model, "h2");
+    } else if (item.TitleSize == "MediaPriorita") {
+        titleTag = Tag(Model, "h3");
+        subtitleTag = Tag(Model, "h4");
+    } else if (item.TitleSize == "BassaPriorita") {
+        titleTag = Tag(Model, "h5");
+        subtitleTag = Tag(Model, "h6");
+    } else if (item.TitleSize == "Titoletto") {
+        titleTag = Tag(Model, "h6");
+        subtitleTag = Tag(Model, "h7");
+    } else if (item.TitleSize == "NessunTitolo") {
+        titleTag = Tag(Model, "notitle");
+        subtitleTag = Tag(Model, "notitle");
+    }
+
+    //BEGIN: Logica Slider
+    var firstBlockClass = "fadeFromTop";
+    var secondBlockClass = "fadeFromBottom";
+    var caption = "caption-r";
+    if (item.TitleSize == "Predefinito") {
+        firstBlockClass = "fadeFromBottom";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-l";
+    } else if (item.TitleSize == "Principale") {
+        firstBlockClass = "moveFromBottom";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-l";
+    } else if (item.TitleSize == "MediaPriorita") {
+        firstBlockClass = "moveFromTop";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-r";
+    } else if (item.TitleSize == "BassaPriorita") {
+        firstBlockClass = "fadeFromBottom";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-l";
+    } else if (item.TitleSize == "Titoletto") {
+        firstBlockClass = "fadeFromBottom";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-r";
+    } else if (item.TitleSize == "NessunTitolo") {
+        firstBlockClass = "fadeFromBottom";
+        secondBlockClass = "moveFromTop";
+        caption = "caption-r";
+    }
+
+    //END: Logica Slider
+}
+
+
+
+<div data-src="@Display.ResizeMediaUrl(Width: 940, Height: 400, Mode: "crop", Alignment: "middlecenter", Path: item.Content.HighlightsItem.Background.MediaParts[0].MediaUrl)">
+    <div class="container">
+        <div class="caption-slide1 @firstBlockClass">
+            <div class="caption-container @caption">
+                <h1>@item.Title</h1>
+                <h2>@item.SubTitle</h2>
+                @if (!String.IsNullOrEmpty(item.LinkText)) {
+                    <a class="btn btn-primary btn-large @(item.LinkTarget == Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "media-cbox" : "")"  
+                title="@item.Title" 
+                href="@(item.LinkUrl != null ? Url.Content(item.LinkUrl) : "")" 
+		        @(item.LinkTarget != Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "target=" + item.LinkTarget : "")>+  @item.LinkText
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="caption-slide2 @secondBlockClass">
+            <div class="caption-container @caption">
+@*                    <img src="@Display.ResizeMediaUrl(Width: 900, Height: 325, Mode: "pad", PadColor: "transparent", Alignment: "middlecenter", Path: item.MediaUrl)" class="caption-head" />*@
+            </div>
+        </div>
+    </div>
+</div>

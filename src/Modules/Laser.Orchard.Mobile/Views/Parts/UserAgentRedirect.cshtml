@@ -1,0 +1,22 @@
+﻿@using Laser.Orchard.Mobile;
+@using System.Collections.Generic;
+<div class="user-agent-redirect">
+  @{
+       var storeName = "";
+        if (Model.Store.AppStoreKey == MobileAppStores.GooglePlay) {
+            storeName = "Google Play Store";
+        }
+        else if (Model.Store.AppStoreKey == MobileAppStores.iTunes) {
+            storeName = "Apple Store";
+        }
+        else if (Model.Store.AppStoreKey == MobileAppStores.WindowsPhone) {
+            storeName = "Windows Phone Store";
+        }
+        else if (Model.Store.AppStoreKey == MobileAppStores.Amazon) {
+            storeName = "Amazon";
+        }
+    }
+    @String.Format(T("For this site exists the '{0}' mobile App on {1}. Do you want to download it?").Text, Model.AppName, storeName)
+    @Html.ActionLink(T("Yes").Text, "Url", "AppStoreRedirect", new { Area = "Laser.Orchard.Mobile", url = Model.Store.RedirectUrl, appName = Model.AppName }, null)
+    @Html.ActionLink(T("No").Text, "Url", "AppStoreRedirect", new { Area = "Laser.Orchard.Mobile", url = "", appName = Model.AppName }, null)*@
+</div>

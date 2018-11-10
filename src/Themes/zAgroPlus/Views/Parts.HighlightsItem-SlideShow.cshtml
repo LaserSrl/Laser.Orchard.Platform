@@ -1,0 +1,26 @@
+﻿@using Laser.Orchard.Highlights.Models
+@{
+    var item = Model.HighlightsItem;
+}
+<li>
+    <img src="@Display.ResizeMediaUrl(Width: 950, Height: 511, Mode: "crop", Alignment: "middlecenter", Path: item.MediaUrl)" alt="" style="width:951px;height:511px;"/>
+    <div class="banner mp-ban-1">
+        <span class="row-1">@item.Title</span>
+        <span class="row-2">@item.SubTitle</span>
+        <span class="row-3">
+            @if (!String.IsNullOrEmpty(item.LinkUrl)) {
+                <a @(item.LinkTarget == Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "class=media-cbox" : "") 
+            title="@item.Title" 
+            href="@(item.LinkUrl != null ? Url.Content(item.LinkUrl) : "")" 
+		    @(item.LinkTarget != Laser.Orchard.Highlights.Enums.LinkTargets._modal ? "target=" + item.LinkTarget : "") >
+                    @if (item.Video) {<span class="video_icon"></span>}
+                    @item.LinkText
+                </a>
+            } else {
+                @item.LinkText
+            }
+        </span>
+    </div>
+</li>
+
+

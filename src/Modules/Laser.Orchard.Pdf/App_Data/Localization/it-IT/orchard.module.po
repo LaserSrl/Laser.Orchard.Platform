@@ -1,0 +1,114 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/DefinitionTemplates/PdfButtonPartSettings.cshtml"
+msgid "Add PDF Button"
+msgstr "Aggiungi pulsante PDF"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Bottom margin of the page in PDF document. Default 10. To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Margine inferiore della pagina nel documento PDF. Default 10. Per calcolare il valore usare (inch * 72) oppure (mm * 720 /254)"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Check to use published version of the content to generate PDF. Uncheck to use latest version."
+msgstr "Abilitare per usare la versione pubblicata del contenuto per generare il pdf, disabilitare per usare l'ultima versione del contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Default value: 595 (A4). To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Valore di default: 595 (A4). Per ottenere il giusto valore usare : (inch * 72) or (mm * 720 / 254)."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Default value: 842 (A4). To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Valore di default: 842 (A4). Per ottenere il giusto valore usare : (inch * 72) or (mm * 720 / 254)."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "File Name without extension"
+msgstr "Nome del file senza estensione"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Footer"
+msgstr "Piè di pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Footer Height"
+msgstr "Altezza piè di pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Footer of each page in PDF document. Leave blank for no footer."
+msgstr "Piè di pagina di ogni pagina del documento PDF. Lasciare vuoto per nessun piè di pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Header"
+msgstr "Intestazione"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Header Height"
+msgstr "Altezza intestazione"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Header of each page in PDF document. Leave blank for no header."
+msgstr "Intestazione di tutte le pagine del documento PDF. Lasciare vuoto per nessuna intestazione"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Label"
+msgstr "Etichetta"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Label of the button."
+msgstr "Etichetta del pulsante"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Left Margin"
+msgstr "Margine sinistro"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Left margin of the page in PDF document. Default 50. To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Margine sinistro della pagina del documento PDF. Default 50. Per ottenere il giusto valore usare : (inch * 72) or (mm * 720 / 254)."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Name of the file as downloaded by users. Extension pdf is added at the end of this name by the system."
+msgstr "Nome del file scaricato dall'utente. L'estensione pdf è aggiunta al nome file dal sistema."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Page Height"
+msgstr "Altezza Pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Page Width"
+msgstr "Larghezza pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Published Version"
+msgstr "Versione Pubblicata"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Remove PDF Button"
+msgstr "Cancella il pulsante PDF"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Right Margin"
+msgstr "Margine destro"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Right margin of the page in PDF document. Default 50. To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Margine destro della pagina del documento PDF. Default 50. Per ottenere il giusto valore usare : (inch * 72) or (mm * 720 / 254)."
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Template ID"
+msgstr "Id del Modello"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Template to be used to generate a printable version of the content."
+msgstr "Modello da usare per generare la versione stampabile del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.Pdf/Views/EditorTemplates/PdfButtonSettings.cshtml"
+msgid "Top margin of the page in PDF document. Default 10. To get the right value use: (inch * 72) or (mm * 720 / 254)."
+msgstr "Margine superiore della pagina nel documento PDF. Default 10. Per calcolare il valore usare (inch * 72) oppure (mm * 720 /254)"
+

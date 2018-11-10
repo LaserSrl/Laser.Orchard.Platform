@@ -1,0 +1,14 @@
+﻿@using Orchard.Fields.Settings;
+@using Orchard.Utility.Extensions;
+@{
+    string value = (string)Model.ContentField.Value;
+    string name = Model.ContentField.DisplayName;
+    <div class="text-field icons inline">
+        @if (!string.IsNullOrEmpty(value)) {
+            <a href="@value" target="_blank" title="@T(name)"><i class="fa fa-twitter"></i></a>    
+        } else {
+        <i class="fa fa-twitter"></i>
+        }
+    </div>
+    <div class="clear"></div>
+}

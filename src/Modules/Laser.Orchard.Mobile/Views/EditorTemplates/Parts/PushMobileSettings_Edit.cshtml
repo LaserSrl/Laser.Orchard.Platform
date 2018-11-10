@@ -1,0 +1,100 @@
+﻿@model Laser.Orchard.Mobile.ViewModels.PushMobileSettingsVM
+<fieldset>
+    <legend>@T("Push Mobile Settings")</legend>
+    <div class="editor-field">
+        <fieldset>
+            <h2>Android</h2>
+            @Html.LabelFor(m => m.AndroidApiKey, T("Android ApiKey"))
+            @Html.TextBoxFor(m => m.AndroidApiKey)
+        </fieldset>
+
+        <fieldset>
+            <h2>Android Development</h2>
+            @Html.LabelFor(m => m.AndroidApiKeyDevelopment, T("Android ApiKey Development"))
+            @Html.TextBoxFor(m => m.AndroidApiKeyDevelopment)
+        </fieldset>
+        <fieldset>
+            <h2>Android Push Service URL</h2>
+            @Html.LabelFor(m => m.AndroidPushServiceUrl, T("Push service URL"))
+            @Html.TextBoxFor(m => m.AndroidPushServiceUrl)
+            <span class="hint">@T("Leave blank to use Firebase default URL or set to the Gcm Service URL: https://gcm-http.googleapis.com/gcm/send")</span>
+        </fieldset>
+        <fieldset>
+            <h2>Android Push Notification Icon</h2>
+            @Html.LabelFor(m => m.AndroidPushNotificationIcon, T("Push notification icon"))
+            @Html.TextBoxFor(m => m.AndroidPushNotificationIcon)
+            <span class="hint">@T("Optional icon in push notification section of the payload. Leave blank to suppress notification section.")</span>
+        </fieldset>
+        <fieldset>
+            <h2>Apple</h2>
+            @Html.LabelFor(m => m.ApplePushSound, T("Apple Push Sound"))
+            @Html.TextBoxFor(m => m.ApplePushSound)
+        </fieldset>
+        <fieldset>
+            <h2>@T("Apple Production")</h2>
+            @Html.LabelFor(m => m.AppleCertificatePassword, T("Apple Certificate Password"))
+            @Html.TextBoxFor(m => m.AppleCertificatePassword)
+            @Html.LabelFor(m => m.ApplePathCertificateFile, T("Apple Path Certificate File"))
+            @Html.DropDownListFor(m => m.ApplePathCertificateFile, Model.ListOfCertificates, "")
+        </fieldset>
+        <fieldset>
+            <h2>@T("Apple Development")</h2>
+            @Html.LabelFor(m => m.AppleCertificatePasswordDevelopment, T("Apple Certificate Password Development"))
+            @Html.TextBoxFor(m => m.AppleCertificatePasswordDevelopment)
+            @Html.LabelFor(m => m.ApplePathCertificateFileDevelopment, T("Apple Path Certificate File Development"))
+            @Html.DropDownListFor(m => m.ApplePathCertificateFileDevelopment, Model.ListOfCertificatesDevelopment, "")
+        </fieldset>
+        <fieldset>
+            <h2>Windows Mobile</h2>
+            @Html.LabelFor(m => m.WindowsAppPackageName, T("Windows App Package Name"))
+            @Html.TextBoxFor(m => m.WindowsAppPackageName)
+            @Html.LabelFor(m => m.WindowsAppSecurityIdentifier, T("Windows App Security Identifier"))
+            @Html.TextBoxFor(m => m.WindowsAppSecurityIdentifier)
+            @Html.LabelFor(m => m.WindowsEndPoint, T("Windows EndPoint"))
+            @Html.TextBoxFor(m => m.WindowsEndPoint)
+        </fieldset>
+
+        <fieldset>
+            <h2>@T("Setting Backoffice")</h2>
+
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.ShowTestOptions)
+                <label for="@Html.FieldIdFor(m => m.ShowTestOptions)" class="forcheckbox">@T("Show Test Options") </label>
+                <span class="hint">@T("Will able back office to send push to development device")</span>
+            </div>
+            <div class="checkbox-and-label">
+                @Html.LabelFor(m => m.PushSendBufferSize, T("Max number of push messages to send in each database transaction"))
+                @Html.TextBoxFor(m => m.PushSendBufferSize)
+                <span class="hint">@T("0 means default value (50).")</span>
+            </div>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.CommitSentOnly)
+                <label for="@Html.FieldIdFor(m => m.CommitSentOnly)" class="forcheckbox">@T("Commit sent recipients only") </label>
+                <span class="hint">@T("Check if you prefer to send some push message twice rather than loose some push message in case of system error.")</span>
+            </div>
+            <div class="checkbox-and-label">
+                @Html.LabelFor(m => m.DelayMinutesBeforeRetry, T("Delay in minutes before next iteration or retry"))
+                @Html.TextBoxFor(m => m.DelayMinutesBeforeRetry)
+                <span class="hint">@T("0 means default value (5).")</span>
+            </div>
+            <div class="checkbox-and-label">
+                @Html.LabelFor(m => m.MaxNumRetry, T("Max number of retries in case of errors"))
+                @Html.TextBoxFor(m => m.MaxNumRetry)
+                <span class="hint">@T("Suggested value: 2. Set to 0 for no retries in case of errors on first sending.")</span>
+            </div>
+            <div class="checkbox-and-label">
+                @Html.LabelFor(m => m.MaxPushPerIteration, T("Max number of push per iteration"))
+                @Html.TextBoxFor(m => m.MaxPushPerIteration)
+                <span class="hint">@T("0 means default value (1000).")</span>
+            </div>
+</fieldset>
+        <fieldset>
+            <h2>@T("Setting Taxonomy")</h2>
+            @Html.LabelFor(m => m.TaxonomyName, T("Enter Taxonomy Name used"))
+      @*    //  @Html.TextBoxFor(m => m.TaxonomyName)*@
+                    @Html.DropDownListFor(m => m.TaxonomyName, Model.ListOfTaxonomies, "")
+
+
+        </fieldset>
+</div>
+</fieldset>

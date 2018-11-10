@@ -1,0 +1,166 @@
+﻿@model Laser.Orchard.Events.ViewModels.ActivityViewModel
+@{
+    var repeatTypes = new Dictionary<string, string>();
+    repeatTypes.Add(T("days").ToString(), "D");
+    repeatTypes.Add(T("weeks").ToString(), "W");
+    repeatTypes.Add(T("months").ToString(), "M");
+    repeatTypes.Add(T("years").ToString(), "Y");
+    var repeatTypeList = new SelectList(repeatTypes, "Value", "Key", Model.RepeatType);
+    var useRecurrences = Model.Settings.UseRecurrences;
+
+    string labelStartDate = String.IsNullOrEmpty(Model.Settings.DateStartLabel) ? (Model.Settings.SingleDate ? "Date" : "Start Date") : Model.Settings.DateStartLabel;
+    string labelEndDate = String.IsNullOrEmpty(Model.Settings.DateEndLabel) ? "End date" : Model.Settings.DateEndLabel;
+    string activityPartLabel = String.IsNullOrEmpty(Model.Settings.ActivityPartLabel) ? "Event Data" : Model.Settings.ActivityPartLabel;
+
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+     
+        $(function () {
+            //The AllDay field determines whether the time fields should be displayed
+            if(!@Model.Settings.DateTimeType.ToString().Equals("PermitAll").ToString().ToLower()){
+                $('#allday-checkbox-div').hide();
+            if(@Model.Settings.DateTimeType.ToString().Equals("ForceAllDay").ToString().ToLower()){
+                $('#@Html.FieldIdFor(m => m.AllDay)').prop("checked", true);
+        }
+                if(@Model.Settings.DateTimeType.ToString().Equals("ForceTime").ToString().ToLower()){
+                    $('#@Html.FieldIdFor(m => m.AllDay)').prop("checked", false);
+        }
+        if(@Model.Settings.DateTimeType.ToString().Equals("FromToOnSameDate").ToString().ToLower()){
+            $('#@Html.FieldIdFor(m => m.AllDay)').prop("checked", false);
+            $('#Activity_DateEndEditor_Date').hide();
+           // $('#Activity_DateEndEditor_Date').css('visibility', 'hidden');
+        }
+        }
+
+        HideShowTime();
+
+        $('#@Html.FieldIdFor(m => m.AllDay)').click(function () {
+            HideShowTime();
+        });
+
+        //Visualizzo la sezione con le opzioni di ripetizione in base alla selezione o meno del campo Repeat
+        HideShowRepeate();
+        $('#@Html.FieldIdFor(m => m.Repeat)').click(function () {
+            HideShowRepeate();
+        });
+
+        //Visualizzo la data di fine solo se è disabilitato il flag single date
+        if (@Model.Settings.SingleDate.ToString().ToLower()) {
+            $('#Activity_Activity_DateEndEditor').hide();
+        }
+
+        //Visualizzo la sezione con le scelte di dettaglio sulla ripetizione degli eventi in base al tipo di ripetizione
+        if ('@Model.RepeatType' == 'W') {
+            $('#weekrepeatdetails').show();
+            $('#monthrepeatdetails').hide();
+        } else {
+            $('#weekrepeatdetails').hide();
+            $('#monthrepeatdetails').show();
+        }
+
+        if ('@Model.RepeatType' == 'M') {
+            $('#monthrepeatdetails').show();
+        } else {
+            $('#monthrepeatdetails').hide();
+        }
+
+        $('#@Html.FieldIdFor(m => m.RepeatType)').change(function () {
+
+            if ($('#@Html.FieldIdFor(m => m.RepeatType)').val() == 'W') {
+                $('#weekrepeatdetails').show();
+                $('#monthrepeatdetails').hide();
+                if (!$('#weekrepeatdetails input[type=checkbox]:checked').length) {
+                    $('#@Html.FieldIdFor(m => m.Monday)').prop("checked", true);
+                }
+            } else {
+                $('#weekrepeatdetails').hide();
+                $('#monthrepeatdetails').show();
+            }
+
+            if ($('#@Html.FieldIdFor(m => m.RepeatType)').val() == 'M') {
+                $('#monthrepeatdetails').show();
+            } else {
+                $('#monthrepeatdetails').hide();
+            }
+        });
+
+
+        })
+
+
+        function HideShowRepeate() {
+            if ($('#@Html.FieldIdFor(m => m.Repeat)').is(':checked')) {
+                $('#repeat').show();
+            } else {
+                $('#repeat').hide();
+            }
+        }
+
+        function HideShowTime() {
+            if ($('#@Html.FieldIdFor(m => m.AllDay)').is(':checked')) {
+                $('#@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateStartEditor)').find('.time').hide();
+                $('#@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateEndEditor)').find('.time').hide();
+            } else {
+                $('#@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateStartEditor)').find('.time').show();
+                $('#@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateEndEditor)').find('.time').show();
+            }
+        }
+
+    </script>
+}
+
+<fieldset>
+    <legend>@T(activityPartLabel).ToString()</legend>
+
+    <div style="margin: 0 0 5px 0;" id="@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateStartEditor)">        
+        @Html.LabelFor(m => m.DateStart, T(labelStartDate))
+        @Html.EditorFor(m => m.DateStartEditor)
+    </div>
+    <div style="margin: 0 0 5px 0;" id="@Html.FieldIdFor(m => m)_@Html.FieldIdFor(m => m.DateEndEditor)">
+        @Html.LabelFor(m => m.DateEnd, T(labelEndDate))
+        @Html.EditorFor(m => m.DateEndEditor)
+    </div>
+    <div id="allday-checkbox-div" class="editor-field">
+        <label>@Html.CheckBoxFor(m => m.AllDay) @T("All day")</label>
+    </div>
+    <div class="editor-field">
+        @if (useRecurrences) {
+            <label>@Html.CheckBoxFor(m => m.Repeat) @T("Repeat")</label>
+        } else {
+            @Html.HiddenFor(m => m.Repeat)
+            @Html.HiddenFor(m => m.RepeatEndDate)
+            @Html.HiddenFor(m => m.RepeatValue)
+        }
+    </div>
+    @if (useRecurrences) {
+        <div id="repeat">
+            @Html.LabelFor(m => m.RepeatType, T("Repeat every:"))
+            @Html.TextBoxFor(m => m.RepeatValue, new { @class = "text-small" })
+            @Html.DropDownListFor(m => m.RepeatType, repeatTypeList)
+            <div id="weekrepeatdetails" style="margin: 5px 0 0 0;">
+                @Html.CheckBoxFor(m => m.Monday) @T("Monday")&nbsp
+                @Html.CheckBoxFor(m => m.Tuesday) @T("Tuesday")&nbsp
+                @Html.CheckBoxFor(m => m.Wednesday) @T("Wednesday")&nbsp
+                @Html.CheckBoxFor(m => m.Thursday) @T("Thursday")&nbsp
+                @Html.CheckBoxFor(m => m.Friday) @T("Friday")&nbsp
+                @Html.CheckBoxFor(m => m.Saturday) @T("Saturday")&nbsp
+                @Html.CheckBoxFor(m => m.Sunday) @T("Sunday")&nbsp
+            </div>
+            <div id="monthrepeatdetails" style="margin: 3px 0 0 0;">
+                @T("Repeat by:")
+                @Html.RadioButtonFor(m => m.RepeatByDayNumber, "true") @T("Day number")
+                @Html.RadioButtonFor(m => m.RepeatByDayNumber, "false") @T("Day of the week")
+                <span class="hint">@T("For example, selecting Monday 12/08/2014, Day Number means 'Repeat the 8th of the month' and Day of the Week means 'Repeat the 2nd Monday of the month'")</span>
+            </div>
+            <div style="margin: 5px 0 0 0;">
+                @Html.LabelFor(m => m.RepeatEnd, T("Stop repeating:"))
+                @Html.RadioButtonFor(m => m.RepeatEnd, "false") @T("Never")<br />
+                @Html.RadioButtonFor(m => m.RepeatEnd, "true") @T("In date:")
+                @Html.EditorFor(m => m.RepeatEndDate)
+            </div>
+        </div>
+    }
+</fieldset>
+
+

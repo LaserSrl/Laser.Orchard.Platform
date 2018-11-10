@@ -1,0 +1,67 @@
+﻿@model Laser.Orchard.SEO.Models.SeoPartSettings
+@{
+    Script.Require("jQuery");
+}
+
+
+@helper CbAndLabelFor(System.Linq.Expressions.Expression<Func<Laser.Orchard.SEO.Models.SeoPartSettings, bool>> expression, string titleTag = "") {
+    @Html.CheckBoxFor(expression, new { @title = titleTag })
+    <label for="@Html.FieldIdFor(expression)" class="forcheckbox" style="font-weight: normal;" title="@titleTag">@Html.DisplayNameFor(expression)</label>
+    <text>&nbsp;&nbsp;</text>
+}
+
+<fieldset>
+    <div>
+        @CbAndLabelFor(m => m.RobotsNoIndex, @T("Prevents the page from being indexed in search engines.").ToString())
+
+        @CbAndLabelFor(m => m.RobotsNoFollow, @T("Prevents crawlers from following page links").ToString())
+
+        @CbAndLabelFor(m => m.RobotsNoSnippet, @T("Prevents page snippets from being shown in search results").ToString())
+
+        @CbAndLabelFor(m => m.RobotsNoOdp, @T("Prevents the alternative description from the ODP/DMOZ from being used").ToString())
+
+        @CbAndLabelFor(m => m.RobotsNoArchive, @T("Prevents displaying the cached link for a page").ToString())
+
+        @CbAndLabelFor(m => m.RobotsUnavailableAfter, @T("Specify the exact date to stop crawling and indexing the page").ToString())
+
+        @CbAndLabelFor(m => m.RobotsNoImageIndex, @T("Prevents the page to appear as referring page for an image that appears in search results").ToString())
+
+        @CbAndLabelFor(m => m.GoogleNoSiteLinkSearchBox, @T("If this website has a search functionality powered by Google, this tag prevents a search box from being displayed in Google's search results.").ToString())
+
+        @CbAndLabelFor(m => m.GoogleNoTranslate, @T("Prevents Google from providing a translation link for the page in its search results").ToString())
+
+    </div>
+
+    <br />
+    <h4>MicroData:</h4>
+    <label for="@Html.FieldIdFor(m => m.JsonLd)">@T("Json ld text")</label>
+    <div>
+        @Html.TextAreaFor(m => m.JsonLd, new { @id = "templateArea", @class = "textMedium", rows = "20"})
+        <span class="hint">@T("Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized.")</span>
+    </div>
+
+    <label for="@Html.FieldIdFor(m => m.Templates)">@T("Json ld Templates")</label>
+    @Html.DropDownListFor(m => m.Templates, new SelectList(Model.Templates.OrderBy(x => x.Key), "Value", "Key"), "", new { @id = "dropDownTemplate" })
+    <span class="hint">@T("Select a template of json-ld object.")</span>
+
+    @Html.CheckBoxFor(m => m.ShowAggregatedMicrodata)
+    <label for="@Html.FieldIdFor(m => m.ShowAggregatedMicrodata)" class="forcheckbox" style="font-weight: normal;">@T("Add microdata for nested content")</label>
+    <span class="hint">@T("If this content type contains an aggregator (i.e. projection, taxonomy, content picker), microdata for a carousel showing its linked items will be generated.")</span>
+	
+	
+    <label for="@Html.FieldIdFor(m => m.CanonicalUrl)" style="font-weight: normal;">@T("Canonical Url")</label>
+    @Html.TextBoxFor(m => m.CanonicalUrl, new { @class = "large text tokenized", @title = T("Canonical Url.") })
+  	<span class="hint">@T("Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}")</span>
+</fieldset>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#dropDownTemplate").change(function () {
+                var data = $("#dropDownTemplate option:selected").val();
+                $("#templateArea").val(data);
+            });
+        });
+
+    </script>
+}

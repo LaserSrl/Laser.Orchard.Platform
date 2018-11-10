@@ -1,0 +1,33 @@
+﻿@model Laser.Orchard.GoogleAnalytics.Models.GoogleAnalyticsSettingsPart
+@using Laser.Orchard.GoogleAnalytics.Models;
+
+<fieldset><a name="googleanalitycssetting"></a>
+	<legend>@T("Google Analytics")</legend>
+	<div>
+		<label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Analytics Tracking Key (UA-XXXXXXX-X)")</label>
+		@Html.EditorFor(m => m.GoogleAnalyticsKey)
+		@Html.ValidationMessage("GoogleAnalyticsKey", "*")
+	</div>
+	<div>
+		<label for="@Html.FieldIdFor(m => m.DomainName)">@T("Override Domain Name (optional)")</label>
+		@Html.EditorFor(m => m.DomainName)
+	</div>
+    <br/>
+	<div>
+		@Html.EditorFor(m => m.AnonymizeIp)
+		<label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">@T("Track but anonymize ip (optional)")</label>
+	</div>
+	<div>
+		@Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>
+        @*<label for="@Html.FieldIdFor(m => m.UseAsyncTracking)" class="forcheckbox">@T("Use Async Tracking")</label>*@
+	</div>
+    <br/>
+    <div>
+        @Html.EditorFor(m => m.TrackOnAdmin)
+        <label for="@Html.FieldIdFor(m => m.TrackOnAdmin)" class="forcheckbox">@T("Include on /Admin Pages")</label>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.TrackOnFrontEnd)
+        <label for="@Html.FieldIdFor(m => m.TrackOnFrontEnd)" class="forcheckbox">@T("Include on front end Pages")</label>
+	</div>
+</fieldset>

@@ -1,0 +1,65 @@
+﻿<Placement>
+  <!--
+  Place  aaFields_Numeric_Edit__CommonPart-Creator="Content:1;Alternate:FieldCreator"/>
+  Place  aaFields_Numeric_Edit__CommonPart-LastModifier="-"/
+  Place  aaFields_Numeric__CommonPart-Creator="-"/>
+  Place  aaFields_Numeric__CommonPart-LastModifier="-"/>
+  -->
+  <Place Parts_JsonDataTable_Edit="Content:2"/>
+  <Place Parts_FavoriteCulturePart_Edit="Content:2" />
+  
+  <Place Fields_Numeric__CommonPart-Creator="-"/>
+  <Place Fields_Numeric__CommonPart-LastModifier="-"/>
+
+  <Place Fields_Numeric_Edit__CommonPart-Creator="Content:10;Wrapper=displaynone"/>
+  <Place Fields_Numeric_Edit__CommonPart-LastModifier="Content:10;Wrapper=displaynone"/>
+  <Place Parts_Common_Container_Edit="Content:5;Wrapper=displaynone"/>
+
+
+  <Place Parts_ContentPickerConnector="Content:1"/>
+
+  <!-- Taxonomies: Start -->
+  <Place Parts_TaxonomyExtension_Edit="Content:6"/>
+  <Place Parts_TaxonomyExtensionsSiteSettings_Edit="Content:10" />
+
+
+  <!-- Display terms in front-end summaries -->
+  <Match DisplayType="Summary">
+    <Place Fields_TaxonomyField="Content:after"/>
+  </Match>
+
+  <!-- Display terms in content item details -->
+  <Match DisplayType="Detail">
+    <Place Fields_TaxonomyField="Content:5"/>
+    <Place Parts_JsonDataTable="Content:5" />
+  </Match>
+
+  <!-- Display terms in admin summaries -->
+  <Match DisplayType="SummaryAdmin">
+    <Place Fields_TaxonomyField="Content:5"/>
+  </Match>
+
+  <!-- Display in admin -->
+  <Place Parts_Taxonomies_Term_Fields="Content:2"/>
+
+  <!-- New Shapes -->
+  <Place Parts_TaxonomyPart="Content:5" />
+  <Place Parts_TermPart_Feed="Content" />
+
+  <!-- Navigation -->
+  <Place Parts_Navigation_Taxonomy_Edit="Content:5"/>
+  <!-- Taxonomies: End -->
+
+  <!-- Permission Extension-->
+  <Place Parts_UsersGroupsSettings_Edit="Content:0"/>
+  <Place Parts_UsersGroups="Content:0"/>
+  <!-- Permission Extension:End-->
+  <Place Parts_Maintenance_Edit="Content:0"/>
+
+  <Place Fields_Custom_ColorPicker_Edit="Content:2.5"/>
+  <Place Fields_Custom_ColorPicker="Content:2.5"/>
+  
+  <!-- Settings -->
+  <Place Parts_EnvironmentVariablesSettings_Edit="Content:1" />
+  
+</Placement>

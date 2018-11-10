@@ -1,0 +1,274 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/CustomTemplatePickerOverride_Edit.cshtml"
+msgid "Pick a template"
+msgstr "Seleziona un modello"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/CustomTemplatePickerOverride_Edit.cshtml"
+msgid "Template picker"
+msgstr "Scelta modello"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/CustomTemplatePickerOverride_Edit.cshtml"
+msgid "The template to use for."
+msgstr "Il modello da utilizzare."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunication_Edit.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Approved"
+msgstr "Approvato"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Enter recipients manually"
+msgstr "Inserire lista dei destinatari manualmente"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Enter username or e-mail of the contacts to which to deliver this email. One recipient for each line."
+msgstr "Inserire il nome utente o la mail dei contatti ai quali si desidera inviare questa mail. Un destinatario per riga."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Manual recipients:"
+msgstr "Lista destinatari manuale:"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Message already sent."
+msgstr "Messaggio già inviato."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Message not yet sent."
+msgstr "Messaggio non ancora inviato."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "NO"
+msgstr "NO"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Number of recipients"
+msgstr "Numero di destinatari"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Number of sent mails"
+msgstr "Numero di email inviate"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Send for test"
+msgstr "Invio di test"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Send on next publish"
+msgstr "Invia alla prossima pubblicazione"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "Test Email"
+msgstr "Email di test"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "This E-mail message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish."
+msgstr "Questo messaggio E-Mail è già stato inoltrato. Sarà  possibile modificarlo e salvarlo, ma non sarà più inoltrato."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationActions_Edit.cshtml"
+msgid "YES"
+msgstr "SI"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
+msgid "Pick a template Unsubscribe"
+msgstr "Seleziona il template da utilizzare per la revoca del servizio"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
+msgid "The template to use for."
+msgstr "Il modello da utilizzare."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
+msgid "UNSUBSCRIPTION"
+msgstr "REVOCA DEL SERVIZIO"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
+msgid "You can use this placeholder \"[UNSUBSCRIBE]\" in order to render the unsubscription link in your template."
+msgstr "Puoi utilizzare nel tuo template il segnaposto \"[UNSUBSCRIBE]\" per scrivere il link della revoca del servizio."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "FTP host"
+msgstr "Host FTP"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "FTP password"
+msgstr "Password FTP"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "FTP path"
+msgstr "Path della cartella FTP"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "FTP user"
+msgstr "Utente FTP"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Mail priority"
+msgstr "Priorità della mail"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Mailer"
+msgstr "Mailer"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Max number of recipients in each JSON file created by massive mailer."
+msgstr "Numero massimo di destinatari in ciascun JSON creato per l'invio massivo via Mailer"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Page Size for recipients"
+msgstr "Grandezza della pagina per i destinatari"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Password for FTP connection."
+msgstr "La password per la connessione FTP."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Remote FTP host (name or IP address)."
+msgstr "Host FTP remoto (Nome dell'host o indirizzo IP)."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Remote path for FTP connection."
+msgstr "Path remota della cartella FTP."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "The priority to set on each mail."
+msgstr "La priorità da impostare per ciascuna email."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Token validity (days)"
+msgstr "Validità del Token (in giorni)"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "User for FTP connection."
+msgstr "Utente della connessione FTP"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
+msgid "Validity (in days) of the token used by massive mailer to return the number of sent mails."
+msgstr "Validità (in giorni) del Token utilizzato dal Mailer per restituire il numero delle email inoltrate."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Email Address"
+msgstr "Indirizzo Email"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Email Confirmation"
+msgstr "Conferma Email"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Email unsubscription"
+msgstr "Rimozione Email a uso commerciale"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Unsubscribe"
+msgstr "Rimozione"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
+msgid "Unsubscribe Confirm"
+msgstr "Conferma rimozione"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.EmailSent.cshtml"
+msgid "A confirmation email was sent to your email address.<br/>Please confirm your unsubscription by clicking on link in your email."
+msgstr "Una email di conferma è stata inviata al tuo indirizzo di posta elettronica.<br/>Conferma l'annullamento della ricezione cliccando sul link presente nel testo dell'email."
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.EmailSent.cshtml"
+msgid "Email unsubscription"
+msgstr "Rimozione Email a uso commerciale"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.EmailSuccess.cshtml"
+msgid "Mail unsubscription"
+msgstr "Rimozione Email a uso commerciale"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.EmailSuccess.cshtml"
+msgid "Your Email address has been removed! Thank you!"
+msgstr "Il tuo indirizzo email ha completato la rimozione! Grazie!"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Error.cshtml"
+msgid "Email unsubscribe"
+msgstr "Rimozione Email a uso commerciale"
+
+msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Error.cshtml"
+msgid "No email address found!"
+msgstr "Indirizzo email non trovato!"
+
+msgctxt "Laser.Orchard.MailCommunication.Controllers.UnsubscribeController"
+msgid "Email and email confirmation must match!"
+msgstr "Email e Conferma Email devono essere uguali!"
+
+msgctxt "Laser.Orchard.MailCommunication.Controllers.UnsubscribeController"
+msgid "Please insert mail and confirm mail"
+msgstr "Inserisci Email e Conferma Email"
+
+msgctxt "Laser.Orchard.MailCommunication.Controllers.UnsubscribeController"
+msgid "Unsubscription success"
+msgstr "Rimozione email a uso commerciale avvenuta con successo"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailCommunicationPartHandler"
+msgid "Click here to stop receiving email for commercial use"
+msgstr "Clicca per non ricevere più mail di uso commerciale"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailCommunicationPartHandler"
+msgid "Select or create a template for e-mail"
+msgstr "Seleziona il template per la Email"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailCommunicationPartHandler"
+msgid "Sent e-mail test!"
+msgstr "Email di test inviata!"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailCommunicationSettingsPartHandler"
+msgid "Mail Communication"
+msgstr "Mail Communication"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailerScheduledTaskHandler"
+msgid "Click here to stop receiving email for commercial use"
+msgstr "Clicca per non ricevere più mail di uso commerciale"
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailerScheduledTaskHandler"
+msgid "Error parsing mail template."
+msgstr "Errore durante la compilazione del template."
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailerScheduledTaskHandler"
+msgid "No recipients selected."
+msgstr "Nessun destinatario selezionato."
+
+msgctxt "Laser.Orchard.MailCommunication.Handlers.MailerSiteSettingsHandler"
+msgid "Mailer"
+msgstr "Mailer"
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MailUnsubscribeService"
+msgid "Email not found!"
+msgstr "Email non trovata!"
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MailUnsubscribeService"
+msgid "Select in settings or create a template for e-mail unsubscribe"
+msgstr "Seleziona nelle impostazioni il template per rimozione e-mail"
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MailUnsubscribeService"
+msgid "Unsubscribe impossible. Please try again."
+msgstr "Rimozione non eseguita. Si prega di riprovare."
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}\"> Mailer</a> settings need to be configured."
+msgstr "Le impostazioni del <a href=\"{0}\"> Mailer</a> devono essere ancora configurate."
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}\">Mail Communication</a> settings need to be configured."
+msgstr "Le impostazioni del modulo <a href=\"{0}\">Mail Communication</a> devono essere configurate."
+
+msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}\">Mailer</a> settings need to be configured."
+msgstr "Le impostazioni del modulo <a href=\"{0}\">Mailer</a> devono essere configurate."
+

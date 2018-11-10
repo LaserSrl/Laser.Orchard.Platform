@@ -1,0 +1,49 @@
+﻿@{
+    var projectionShape = ((IEnumerable<dynamic>)Model.Content.Items)
+        .Where((Func<dynamic, bool>)(it => it.Metadata.Prefix == "ProjectionPart"))
+        .FirstOrDefault();
+}
+<div class="top-brands">
+    <div class="container">
+        <h3>@T("Top Brands")</h3>
+        <div class="sliderfig">
+            <ul id="flexiselTopBrandsHomePage">
+                @foreach (var itemShape in projectionShape.Items) {
+                    <li>
+                        @Display(itemShape)
+                    </li>
+                }
+            </ul>
+        </div>
+        <script type="text/javascript">
+            $(window).load(function () {
+                $("#flexiselTopBrandsHomePage").flexisel({
+                    visibleItems: 4,
+                    animationSpeed: 1000,
+                    autoPlay: true,
+                    autoPlaySpeed: 3000,
+                    pauseOnHover: true,
+                    enableResponsiveBreakpoints: true,
+                    responsiveBreakpoints: {
+                        portrait: {
+                            changePoint: 480,
+                            visibleItems: 1
+                        },
+                        landscape: {
+                            changePoint: 640,
+                            visibleItems: 2
+                        },
+                        tablet: {
+                            changePoint: 768,
+                            visibleItems: 3
+                        }
+                    }
+                });
+
+            });
+        </script>
+        @{
+            Script.Include("jquery.flexisel.js", "jquery.flexisel.min.js");
+        }
+    </div>
+</div>

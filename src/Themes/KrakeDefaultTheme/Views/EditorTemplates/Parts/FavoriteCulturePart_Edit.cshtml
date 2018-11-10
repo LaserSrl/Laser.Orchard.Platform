@@ -1,0 +1,20 @@
+﻿@using Orchard.Localization.Services
+@model Laser.Orchard.StartupConfig.Models.FavoriteCulturePart
+@{
+    Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord> _cultureRepository;
+    if (WorkContext.TryResolve<Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord>>(out _cultureRepository)) {
+        var siteAvailableCultures = _cultureRepository.Table.ToList();
+    <fieldset>
+        <h3>@Html.TitleForPage(T("Favorite Culture").ToString())</h3>
+        <p>@T("Select your favorite culture")</p>
+        @if (siteAvailableCultures.Count() > 1) {
+            @Html.DropDownListFor(m => m.Culture_Id, new SelectList(siteAvailableCultures, "Id", "Culture", siteAvailableCultures.SingleOrDefault(w => w.Id.Equals(Model.Culture_Id))))
+        } else {
+            Model.Culture_Id = siteAvailableCultures.Single().Id;
+            @Html.HiddenFor(m => m.Culture_Id) @siteAvailableCultures.Single().Culture
+        }
+        @Html.ValidationMessageFor(m => m.Culture_Id)
+    </fieldset>
+    }
+}
+<hr>

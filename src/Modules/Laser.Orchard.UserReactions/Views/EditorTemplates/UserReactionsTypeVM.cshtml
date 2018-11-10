@@ -1,0 +1,28 @@
+﻿@model Laser.Orchard.UserReactions.ViewModels.UserReactionsTypeVM
+
+
+
+@{ MvcHtmlString answerBlock = Html.UniqueClientId("UserReactionType"); }
+@{ var phId = "phNum_" + answerBlock;
+
+   var styleAcronime = new Laser.Orchard.UserReactions.StyleAcroName();
+   string styleAcronimeName = styleAcronime.StyleAcronime;
+}
+
+<div id="@phId" class="j_reaction row">
+    <div class="col-sm-6">
+        <i class="fa fa-arrows"></i>
+        @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete" })
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Priority, new { placeholder = T("Order"), @class = "text medium reaction-position-field" })
+        @Html.HiddenFor(m => m.TypeName)
+        @Html.DisplayFor(m => m.TypeName)
+        @*@Html.DropDownListFor(m => m.TypeName, new SelectList(Enum.GetNames(typeof(Laser.Orchard.UserReactions.ReactionsNames))), Model.TypeName)*@
+    </div>
+    <div class="col-sm-3">@Html.CheckBoxFor(m => m.Activating) @Html.LabelFor(m => m.Activating, T("Active").Text, new { @class = "forcheckbox" })
+    </div>
+@*    <div class="col-sm-3">
+        <i class="fa fa-times" style="color: red"></i>
+        @Html.LinkToRemoveNestedForm(T("Remove").Text, ".j_reaction", "input.ph-mark-for-delete")
+    </div>*@
+</div>

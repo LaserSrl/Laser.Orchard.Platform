@@ -1,0 +1,33 @@
+﻿@foreach (var field in Model.ContentPart.Fields) {
+    string fieldName = field.FieldDefinition.Name;
+    if (fieldName == "BooleanField") {
+        @Display.Fields_BooleanField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "DateTimeField") {
+        @Display.Fields_DateTimeField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "EnumerationField") {
+        @Display.Fields_EnumerationField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "LinkField") {
+        @Display.Fields_LinkField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "NumericField") {
+        @Display.Fields_NumericField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "TextField") {
+        @Display.Fields_TextField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "InputField") {
+        @Display.Fields_InputField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "TaxonomyField") {
+        @Display.Fields_TaxonomyField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "ContentPickerField") {
+        @Display.Fields_ContentPickerField__CommunicationContact__AdminFilter(Field: field)
+    }
+    else if (fieldName == "MediaLibraryPickerField") {
+        @Display.Fields_MediaPickerField__CommunicationContact__AdminFilter(Field: field)
+    }
+}

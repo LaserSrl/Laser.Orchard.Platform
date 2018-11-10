@@ -1,0 +1,82 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceLoginSettings.cshtml"
+msgid "Format string for login link. Placeholder {0} is used to insert the nonce. Example 1: myapp://{0} . Example 2: https://myapp.mydomain.com/mycontroller?n={0}"
+msgstr "Stringa di formato per il link di accesso. Il segnaposto {0} è utilizzato per inserire il nonce. Esempio 1: myapp://{0} . Esempio 2: https://myapp.mydomain.com/mycontroller?n={0}"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceLoginSettings.cshtml"
+msgid "Login link format"
+msgstr "Formato del link per l'accesso"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceLoginSettings.cshtml"
+msgid "Nonce Login Settings"
+msgstr "Impostazioni per l'accesso tramite nonce"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceLoginSettings.cshtml"
+msgid "Nonce validity (minutes)"
+msgstr "Validità del nonce (minuti)"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceLoginSettings.cshtml"
+msgid "Nonce validity in minutes (60 minutes = 1 hour, 1440 minutes = 1 day)."
+msgstr "Validità del nonce in minuti (60 minuti = 1 ora, 1440 minuti = 1 giorno)."
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceTemplateSettings.cshtml"
+msgid "Nonce template"
+msgstr "Modello per l'invio del nonce"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/EditorTemplates/Parts/NonceTemplateSettings.cshtml"
+msgid "The template to use for."
+msgstr "Il modello da utilizzare."
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/NonceLoginAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.MultiStepAuthentication/Views/NonceLoginAdmin/Index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Controllers.NonceLoginAdminController"
+msgid "Nonce Login"
+msgstr "Accesso tramite nonce"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Controllers.NonceLoginAdminController"
+msgid "Nonce login settings updated"
+msgstr "Impostazioni aggiornate per l'accesso tramite nonce"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Controllers.NonceLoginAdminController"
+msgid "Not authorized to manage settings for multi-step authentication"
+msgstr "Non si è autorizzati a gestire le impostazioni per l'autenticazione multi-step"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Handlers.NonceTemplateSettingsPartHandler"
+msgid "NonceLoginSettings"
+msgstr "NonceLoginSettings"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Navigation.MultiStepAuthenticationNavigation"
+msgid "MultiStep Authentication"
+msgstr "Autenticazione MultiStep"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Navigation.MultiStepAuthenticationNavigation"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Services.DefaultNonceLinkDeliveryByMailService"
+msgid "{0} - Login"
+msgstr "{0} - Accesso"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Services.DefaultNonceLinkDeliveryByMailService"
+msgid "<html><body>To login on \"{0}\", please open the following link: <a href=\"{1}\">Login</a></body></html>"
+msgstr "<html><body>Per accedere su \"{0}\", utilizzare il link seguente: <a href=\"{1}\">Accesso</a></body></html>"
+
+msgctxt "Laser.Orchard.MultiStepAuthentication.Services.NonceLoginNonceService"
+msgid "Context.User cannot be null."
+msgstr "Context.User non può essere nullo."
+

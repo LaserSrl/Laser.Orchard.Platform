@@ -1,0 +1,10 @@
+﻿@model Laser.Orchard.StartupConfig.Models.EnvironmentVariablesSettingsPart
+
+<fieldset>
+    <legend>@T("Razor environement variables")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.FallbackTenants)">@T("Fallback tenants")</label>
+        @Html.TextBoxFor(m => m.FallbackTenants, new { @class = "text large" })
+        <span class="hint">@T("Insert tenants' name separated by semicolon ';'. If the razor file is missing in its default path, the compiler will look for code in these other tenants: the order also indicates the priority.")</span>
+    </div>
+</fieldset>

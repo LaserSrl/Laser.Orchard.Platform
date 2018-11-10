@@ -1,0 +1,7 @@
+Name: Laser.ECommerce
+Author: Laser s.r.l.
+Website: http://www.laser-group.com
+Description: Base e-commerce theme
+Version: 1.0
+OrchardVersion: 1.10.2
+Zones: HeaderLeft, Header, HeaderRight, Navigation, Featured, BeforeMain, AsideFirst, Messages, BeforeContent, Content, AfterContent, AsideSecond, AfterMain, TripelFirst, TripelSecond, TripelThird, FooterQuadFirst, FooterQuadSecond, FooterQuadThird, FooterQuadFourth, Footer

@@ -1,0 +1,154 @@
+# Orchard resource strings - fr-FR
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "Cascade Publish Action"
+msgstr "Publier en Cascade"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "If checked, when the ContentItem is published also other ContentItems connected to it through the Content Picker Field will be published."
+msgstr "Si cochée, quand le ContentItem est publié aussi les autres ContentItem qu'il y sont liés par le Content Picker Field seront publiés."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "If checked, when the ContentItem is saved all the ContentItems connected to it through the Content Picker Field will also be changed with their localized version in the same culture, if it exists."
+msgstr "Si cochée, quand le ContentItem est enregistré tous les ContentItem qu'il y sont liés par le Content Picker Field seront changés avec leur version traduite dans la même culture, s'il existe."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "Translate Items"
+msgstr "Traduire Objets"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "Delete"
+msgstr "Effacer"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "Group ID"
+msgstr "ID du groupe"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "Group Name"
+msgstr "Nom du groupe"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "New Group ->"
+msgstr "Nouveau groupe ->"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "Update settings"
+msgstr "Paramètres de mise à jour"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "User Groups Settings"
+msgstr "Paramètres Groupes d'utilisateurs"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
+msgid "Settings update failed: {0}"
+msgstr "Mise à jour des paramètres a échoué: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
+msgid "Settings updated."
+msgstr "Paramètres mis à jour."
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
+msgid "The {0} term has been created."
+msgstr "Le terme {0} a été créé."
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
+msgid "The field {0} is mandatory."
+msgstr "Le champ {0} est obligatoire."
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
+msgid "You're not allowed to create new terms for this taxonomy"
+msgstr "Vous n'êtes pas autorisé à créer de nouveaux termes pour cette taxonomie"
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
+msgid "A localization of the parent term in the specified language does not exist. Please create it first."
+msgstr "Une localisation du terme parent dans la langue specifiée n'existe pas. Il est necessaire de la créer auparavant."
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
+msgid "The parent term is not localized. Please localize it first."
+msgstr "Le terme parent n'est pas localisé. Il est necessaire de le localiser auparavant."
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
+msgid "The term {0} already exists at this level"
+msgstr "Le terme {0} existe déjà à ce niveau"
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
+msgid "The term {0} already exists at this level in the destination taxonomy ({1})"
+msgstr "Le terme {0} existe déjà à ce niveau dans la taxonomie de destination ({1})"
+
+msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
+msgid "Unknown taxonomy: {0}"
+msgstr "Taxonomie inconnue : {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Handlers.ContentPickerFieldExtensionHandler"
+msgid "The items in the Content Picker Field have been changed to their localized version for the language {0}"
+msgstr "Les objets dans le Content Picker Field ont été changés avec leur version traduite pour la langue {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
+msgid "A localized taxonomy for the culture {0} does not exist. The term has been associated to the master taxonomy ({1})."
+msgstr "Une version localisée de la taxonomie pour la culture {0} n'existe pas. Le terme a été associé à la taxonomie principale ({1})."
+
+msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
+msgid "New terms can only be created for the master language ({0}). The term has been automatically moved to the corresponding taxonomy."
+msgstr "On peut créer des nouveaux termes seulement pour la langue principale ({0}). Le terme a été automatiquement placé dans la taxonomie correspondante."
+
+msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
+msgid "The parent taxonomy has been changed to its localized version associated to the culture {0}."
+msgstr "La taxonomie parent a été changée avec sa version localisée associée à la culture {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
+msgid "The parent term has been changed to its localized version associated to the culture {0}."
+msgstr "Le terme parent a été changé avec sa version localisée associée à la culture {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Navigation.UsersGroupsSettingsProvider"
+msgid "Users Groups"
+msgstr "Groupes d'utilisateurs"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
+msgid "Categorized content items (search by token)"
+msgstr "Catégoriser les éléments de contenu (cherche avec token)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
+msgid "Categorized with terms specified by token"
+msgstr "Catégorisé avec les termes spécifiés en utilizant les tokens"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
+msgid "Has terms (tokenized)"
+msgstr "A les termes (avec tokens)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
+msgid "Taxonomy"
+msgstr "Taxonomie"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
+msgid "Automatically include children terms in filtering"
+msgstr "Comprend automatiquement les termes enfants dans le filtre"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
+msgid "Is associated to all the specified terms"
+msgstr "Est associé a tous les termes spécifiés"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
+msgid "Is associated to one of the specified terms"
+msgstr "Est associé a un des termes spécifiés"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
+msgid "Source Token"
+msgstr "Token Source"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
+msgid "The token used as a source for term identifiers"
+msgstr "Le token utilisé comme source des identificateurs des termes"
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "It seems you have not yet accepted the required policies"
+msgstr "Vous n'avez pas encore accepté les conditions d’utilisation."
+

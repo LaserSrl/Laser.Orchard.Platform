@@ -1,0 +1,106 @@
+﻿@model Laser.Orchard.CommunicationGateway.ViewModels.SearchIndexVM
+@{
+    Style.Require("FontAwesome430").AtHead();
+    var ContentsIndexVM = Model.ContentsIndexVM;
+    Layout.Title = T("Campaign");
+}
+<div class="manage">
+    <a class="button primaryAction" href="@Url.Action("Edit", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = 0 })" title="@T("Create New Campaign")">@T("Create New Campaign")</a>
+</div>
+@using (Html.BeginForm("Index", "CampaignAdmin", FormMethod.Get)) {
+   @Html.AntiForgeryToken()
+    <fieldset class="bulk-actions">
+        <label for="search">@T("Search:")</label>
+        @Html.TextBoxFor(m => m.Search.Expression)
+
+        <button type="submit">@T("Search")</button>
+        <a href="@Url.Action("Index")">@T("Clear")</a>
+    </fieldset>
+
+}
+
+<fieldset class="contentItems bulk-items">
+    <ul>
+
+        @{
+            foreach (var contentIndexVM in ContentsIndexVM) {
+
+            <li>
+                <div class="summary" itemscope="itemscope" itemid="@contentIndexVM.Id" itemtype="http://orchardproject.net/data/ContentItem">
+                    <div class="properties">
+                    
+                        <h3><a href="@Url.Action("Index", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@contentIndexVM.Title</a></h3>
+                        @*Url.Action("Edit", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })*@
+                        <div class="contentType">
+                        </div>
+                        <div class="metadata">
+                            <ul class="pageStatus">
+                
+                                @{
+                DateTime scadenza = ((dynamic)contentIndexVM.ContentItem).CommunicationCampaignPart.ToDate.DateTime;
+                string nolimit = T("No Expiration").ToString();
+                                }
+                                <li>@T("Validity"): @(((dynamic)contentIndexVM.ContentItem).CommunicationCampaignPart.FromDate.DateTime.ToShortDateString()) - @(scadenza == null || scadenza == DateTime.MinValue ? nolimit : scadenza.ToShortDateString())&nbsp;|&nbsp;</li>
+                               
+                                <li>@T("Status"):
+                                                        @{
+                var contentIsActive = ((dynamic)contentIndexVM.ContentItem).Id <= 0 || (((dynamic)contentIndexVM.ContentItem).CommunicationCampaignPart.ToDate.DateTime == DateTime.MinValue || ((dynamic)contentIndexVM.ContentItem).CommunicationCampaignPart.ToDate.DateTime == null || ((dynamic)contentIndexVM.ContentItem).CommunicationCampaignPart.ToDate.DateTime > DateTime.UtcNow);
+                if (contentIsActive) {
+                            <i class="fa fa-unlock" title="@T("Campaign is open")"></i>
+                }
+                else {
+                            <i class="fa fa-lock" title="@T("Campaign is expired")" ></i>}
+                        }
+                               &nbsp;|&nbsp;</li>
+                                 <li>@T("Last modified"): 
+                    @{TimeSpan tp = DateTime.UtcNow - (contentIndexVM.ModifiedUtc ?? DateTime.UtcNow);// content.CommonPart.ModifiedUtc;
+
+                      if (tp.Days > 0) {
+                        @Html.Raw(tp.Days.ToString() + " " + T("days ago"))
+                      }
+                      else if (tp.Hours > 0) {
+                        @Html.Raw(tp.Hours.ToString() + " " + T("hours ago"))
+                      }
+                      else if (tp.Minutes > 0) {
+                        @Html.Raw(tp.Minutes.ToString() + " " + T("minutes ago"))
+                      }
+                      else if (tp.Seconds > 0) {
+                        @Html.Raw(T("a moment ago"))
+                      }
+                        @Html.Raw("&nbsp;&vert;&nbsp;")
+                    }
+                                </li>
+                                <li>@T("By") @contentIndexVM.UserName
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="related">
+                        <a href="@Url.Action("Index", "AdvertisingAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@T("View Advertising")</a>
+                        &nbsp;&vert;&nbsp;
+                        <a href="@Url.Action("Edit", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })">@T("Edit")</a>
+                        &nbsp;&vert;&nbsp;
+                        <a href="@Url.Action("Remove", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", id = contentIndexVM.Id })" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                    </div>
+                </div>
+            </li>
+            }
+        }
+    </ul>
+</fieldset>
+@if (Model.Option.ShowVideo == true) {
+    if (Model.Option.VideoContent != null) {
+    @Display(BuildDisplay(Model.Option.VideoContent, "Detail"));
+    }
+
+}
+else {
+    <br />
+    //using (Html.BeginForm("Index", "Routes", FormMethod.Post)) {
+
+    //}
+    @Display(Model.Pager)
+    if (Model.Option.ShowVideo == false) {
+    <a  href="@Url.Action("Index", "CampaignAdmin", new { area = "Laser.Orchard.CommunicationGateway", Showvideo = true })" title="@T("Show video tutorial")">@T("Show video tutorial")</a>
+    }
+}

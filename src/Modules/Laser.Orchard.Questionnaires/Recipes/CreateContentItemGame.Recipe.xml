@@ -1,0 +1,117 @@
+﻿<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>Create ContentItem Game</Name>
+    <Description>
+      Create ContentItem with GamePart , ranking template, query and projection
+      Remember to set Razor engine as Default Parser and configure gameparted 
+    </Description>
+    <Author>Lorenzo Frediani Laser srl</Author>
+    <WebSite>Laser-group.com</WebSite>
+    <Tags></Tags>
+    <Version>1.0</Version>
+  </Recipe>
+  <Feature enable="Laser.Orchard.Events,Laser.Orchard.Questionnaires" />
+  <Metadata>
+    <Types>
+      <Game ContentTypeSettings.Draftable="True" ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True"   TypeIndexing.Indexes="Search">
+        <GamePart />
+        <TitlePart />
+        <CommonPart />
+        <AutoroutePart />
+        <ActivityPart />
+        <LocalizationPart />
+       <Game/>
+      </Game>
+    </Types>
+    <Parts>
+      <Game ContentPartSettings.Attachable="True">
+        <Questionari.ContentPickerField DisplayName="Questionari" ContentPickerFieldSettings.Required="True" ContentPickerFieldSettings.Multiple="False" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="Questionnaire" ContentPickerFieldExtensionSettings.CascadePublish="False" ContentPickerFieldExtensionSettings.TranslateContents="True" />
+        <Gallery.MediaLibraryPickerField DisplayName="Gallery" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="True" />
+      </Game>
+    </Parts>
+  </Metadata>
+  <Data>
+    <Query Id="/Identifier=b6277e6d6ed547e4b3a1ec0afefbca93" Status="Published">
+      <IdentityPart Identifier="b6277e6d6ed547e4b3a1ec0afefbca93" />
+      <TitlePart Title="AllValidGames" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;Game&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="CalendarEvent" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;DateFrom&gt;{Date.Long}&lt;/DateFrom&gt;&lt;DateTo&gt;{Date.Long}&lt;/DateTo&gt;&lt;/Form&gt;" Type="ActivityRange" />
+            <Filter Category="Localization" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;/Form&gt;" Type="ForCurrentCultureWithUntranslated" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="GameContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;true&lt;/Sort&gt;&lt;/Form&gt;" Type="Game.Order." />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+    </Query>
+    <Query Id="/Identifier=c1dc258bb5434be48bc9258c53350bc5" Status="Published">
+      <IdentityPart Identifier="c1dc258bb5434be48bc9258c53350bc5" />
+      <TitlePart Title="AllGames" />
+      <QueryPart>
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;Game&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="Localization" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;/Form&gt;" Type="ForCurrentCultureWithUntranslated" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="GameContentFields" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Sort&gt;true&lt;/Sort&gt;&lt;/Form&gt;" Type="Game.Order." />
+        </SortCriteria>
+        <Layouts />
+      </QueryPart>
+    </Query>
+    <ProjectionPage Id="/alias=allgames" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-04T08:45:58.7537611Z" PublishedUtc="2015-06-04T08:46:50.0857465Z" ModifiedUtc="2015-06-04T08:46:50.0276784Z" />
+      <TitlePart Title="AllGames" />
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <ProjectionPart Items="0" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="false" Query="/Identifier=c1dc258bb5434be48bc9258c53350bc5" LayoutIndex="-1" />
+      <AutoroutePart Alias="allgames" UseCustomPattern="false" />
+    </ProjectionPage>
+    <ProjectionPage Id="/alias=allvalidgames" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-04T08:47:13.1984065Z" PublishedUtc="2015-06-04T08:47:48.7017104Z" ModifiedUtc="2015-06-04T08:47:48.6436862Z" />
+      <TitlePart Title="AllValidGames" />
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <ProjectionPart Items="0" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="20" DisplayPager="false" Query="/Identifier=b6277e6d6ed547e4b3a1ec0afefbca93" LayoutIndex="-1" />
+      <AutoroutePart Alias="allvalidgames" UseCustomPattern="false" />
+    </ProjectionPage>
+    <CustomTemplate Id="/Identifier=50b88cfb0d7a41458781b10fe64a9fc5" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <IdentityPart Identifier="50b88cfb0d7a41458781b10fe64a9fc5" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-08T09:57:11.8403783Z" PublishedUtc="2015-06-09T09:22:09.8769625Z" ModifiedUtc="2015-06-09T09:22:09.8599572Z" />
+      <TemplatePart Title="GameRanking" Subject="GameRanking" Text="Termionato il gioco &lt;br /&gt;&#xD;&#xA;id gioco: @Model[&quot;Content&quot;].Id &lt;br /&gt;&#xD;&#xA;Title : @Model[&quot;Content&quot;].TitlePart.Title &lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;La Classifica&lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;&#xD;&#xA;&lt;table&gt;&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;ListRanking&quot;]){&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;}&#xD;&#xA;&#xD;&#xA;&lt;/table&gt;" IsLayout="false" Layout="/Identifier=5647ea718d5e4358bbc6d5da9b9a1442" />
+    </CustomTemplate>
+    <CustomTemplate Id="/Identifier=5647ea718d5e4358bbc6d5da9b9a1442" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <IdentityPart Identifier="5647ea718d5e4358bbc6d5da9b9a1442" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-08T09:59:04.9147268Z" PublishedUtc="2015-06-08T15:11:00.8604988Z" ModifiedUtc="2015-06-08T15:11:00.8457848Z" />
+      <TemplatePart Title="MasterTemplateGame" Subject="Layout Template" Text="&lt;html&gt;&#xD;&#xA;&#x9;&lt;head&gt;&lt;/head&gt;&#xD;&#xA;&#x9;&lt;body style=&quot;color: #666052; max-width:700px; font-size:13px; line-height:18px;  font-family: 'Oswald','Trebuchet MS', sans-serif;&quot;&gt;&#xD;&#xA;&#x9;&lt;br/&gt;&#xD;&#xA;&#x9;@RenderBody()&#xD;&#xA;&#x9;&lt;/body&gt;&#xD;&#xA;&lt;/html&gt;&#x9;" IsLayout="true" />
+    </CustomTemplate>
+    <CustomTemplate Id="/Identifier=0d6addefcf1c4c308b0bb7644b955db4" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <IdentityPart Identifier="0d6addefcf1c4c308b0bb7644b955db4" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-09T13:27:21.9739359Z" PublishedUtc="2015-06-09T13:54:41.848921Z" ModifiedUtc="2015-06-09T13:54:41.647769Z" />
+      <TemplatePart Title="Laser Ranking" Subject="Laser Ranking" Text="&lt;html&gt;&#xD;&#xA;&#x9;&lt;head&gt;&lt;/head&gt;&#xD;&#xA;&#x9;&lt;body style=&quot;margin:0 auto;padding:0;font-family:Arial,Verdana;color:#000;&quot;&gt;&#xD;&#xA;&#x9;&#x9;&lt;br /&gt;&#xD;&#xA;&lt;p style=&quot;font-size:1.4em;font-weight:bold&quot;&gt;&#xD;&#xA;&#x9;&#x9;&#xD;&#xA;@Model[&quot;Content&quot;].GamePart.AbstractText &amp;nbsp;&amp;nbsp; @Model[&quot;Content&quot;].GamePart.GameDate.ToString()&#xD;&#xA;&lt;/p&gt;&#xD;&#xA;&#x9;&lt;table border=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;5&quot; style=&quot;border-collapse:collapse;width:100%;font-family:Arial,Verdana;&quot;&gt;&#xD;&#xA;&lt;tr style=&quot;font-weight:bold;background-color:#7AB249;font-size:1.3em &quot;&gt;&#xD;&#xA;&lt;td colspan=&quot;4&quot;&gt;Piattaforma IOS&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;/tr&gt;&#xD;&#xA;&lt;tr style=&quot;font-weight:bold;background-color:#7AB249;font-size:0.9em; &quot;&gt;&#xD;&#xA;&lt;td&gt;Punteggio&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Contatto&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Username&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Data&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;ListRanking&quot;]){&#xD;&#xA;&#x9;&#x9;if (rmp.Device.ToString()==&quot;Apple&quot;){&#x9;&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;&#x9;&lt;tr style=&quot;font-size:0.9em;&quot;&gt;&#xD;&#xA;&lt;td align=&quot;right&quot;&gt;@rmp.Point&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;@rmp.Identifier&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;@rmp.UsernameGameCenter&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td align=&quot;center&quot;&gt;@rmp.RegistrationDate&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&lt;/table&gt;&#xD;&#xA;&#x9;&#x9;&lt;br /&gt;&#xD;&#xA;&#x9;&#x9;&lt;br /&gt;&#xD;&#xA;&#x9;&lt;table border=&quot;1&quot; cellspacing=&quot;0&quot; cellpadding=&quot;5&quot; style=&quot;border-collapse:collapse;width:100%;font-family:Arial,Verdana;&quot;&gt;&#xD;&#xA;&lt;tr style=&quot;font-weight:bold;background-color:#7AB249;font-size:1.3em &quot;&gt;&#xD;&#xA;&lt;td colspan=&quot;4&quot;&gt;Piattaforma ANDROID&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;/tr&gt;&#xD;&#xA;&lt;tr style=&quot;font-weight:bold;background-color:#7AB249;font-size:0.9em; &quot;&gt;&#xD;&#xA;&lt;td&gt;Punteggio&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Contatto&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Username&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;Data&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;ListRanking&quot;]){&#xD;&#xA;&#x9;&#x9;if (rmp.Device.ToString()==&quot;Android&quot;){&#x9;&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;&#x9;&lt;tr style=&quot;font-size:0.9em;&quot;&gt;&#xD;&#xA;&lt;td align=&quot;right&quot;&gt;@rmp.Point&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;@rmp.Identifier&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td&gt;@rmp.UsernameGameCenter&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&lt;td align=&quot;center&quot;&gt;@rmp.RegistrationDate&#xD;&#xA;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&lt;/table&gt;&#x9;&#xD;&#xA;&#x9;&lt;/body&gt;&#xD;&#xA;&lt;/html&gt;" IsLayout="false" />
+    </CustomTemplate>
+    <CustomTemplate Id="/Identifier=50b88cfb0d7a41458781b10fe64a9fc5" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <IdentityPart Identifier="50b88cfb0d7a41458781b10fe64a9fc5" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2015-06-08T09:57:11.8403783Z" PublishedUtc="2016-05-27T08:12:28.5759284Z" ModifiedUtc="2016-05-27T08:12:28.4328713Z" />
+      <TemplatePart Title="GameMultiRanking" Subject="GameMultiRanking" Text="Terminato il gioco &lt;br /&gt;&#xD;&#xA;id gioco: @Model[&quot;Content&quot;].Id &lt;br /&gt;&#xD;&#xA;Title : @Model[&quot;Content&quot;].TitlePart.Title &lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;General - Top 10&lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;&#xD;&#xA;&lt;table border=&quot;1&quot;&gt;&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;GeneralRanking&quot;]){&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;}&#xD;&#xA;&#xD;&#xA;&lt;/table&gt;&#xD;&#xA;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;iOs - Top 10&lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;&#xD;&#xA;&lt;table border=&quot;1&quot;&gt;&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;AppleRanking&quot;]){&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;}&#xD;&#xA;&#xD;&#xA;&lt;/table&gt;&#xD;&#xA;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;Android - Top 10&lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;&#xD;&#xA;&lt;table border=&quot;1&quot;&gt;&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;AndroidRanking&quot;]){&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;}&#xD;&#xA;&#xD;&#xA;&lt;/table&gt;&#xD;&#xA;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;Windows Phone - Top 10&lt;br /&gt;&#xD;&#xA;&lt;br /&gt;&#xD;&#xA;&#xD;&#xA;&lt;table border=&quot;1&quot;&gt;&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&#x9;&lt;th&gt;&#xD;&#xA;&#x9;&#x9;RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/th&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;@foreach(var rmp in Model[&quot;WindowsRanking&quot;]){&#xD;&#xA;&#x9;&lt;tr&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Point&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Device&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.Identifier&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.name&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.UsernameGameCenter&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.AccessSecured&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&#x9;&lt;td&gt;&#xD;&#xA;&#x9;&#x9;@rmp.RegistrationDate&#x9;&#xD;&#xA;&#x9;&#x9;&lt;/td&gt;&#xD;&#xA;&#x9;&lt;/tr&gt;&#xD;&#xA;&#x9;}&#xD;&#xA;&#xD;&#xA;&lt;/table&gt;" IsLayout="false" Layout="/Identifier=5647ea718d5e4358bbc6d5da9b9a1442" />
+    </CustomTemplate>
+  </Data>
+  <Migration features="*"/>
+</Orchard>
+

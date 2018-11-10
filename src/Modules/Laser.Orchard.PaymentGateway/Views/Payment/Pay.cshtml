@@ -1,0 +1,6 @@
+﻿@model Laser.Orchard.PaymentGateway.ViewModels.PaymentVM
+<h2>@T("Summary")</h2>
+<hr style="border-width:2px;border-style:dashed" />
+@Display(BuildDisplay(Model.ContentItem, "Summary"))
+<hr style="border-width:2px;border-style:dashed" />
+@Display(New.PosList(Model))

@@ -1,0 +1,86 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "ChooseType"
+msgstr "Scegli una tipologia"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "FaqType"
+msgstr "Tipo di Faq"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/Faq.cshtml"
+msgid "Question"
+msgstr "Domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/FaqType.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/FaqWidget.cshtml"
+msgid "this content has a FAQ Widget"
+msgstr "In questa pagina sono presenti Faq"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/EditorTemplates/Parts/FaqWidgetAjax.cshtml"
+msgid "this content has a FAQ Widget"
+msgstr "In questa pagina sono presenti Faq"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/Faq.cshtml"
+msgid "Faq Type"
+msgstr "Tipo di Faq"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/Faq.cshtml"
+msgid "FaqType"
+msgstr "Tipo di Faq"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/Faq.cshtml"
+msgid "Question"
+msgstr "Domanda"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqType.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidget.cshtml"
+msgid "Answer"
+msgstr "Risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidget.cshtml"
+msgid "Hide"
+msgstr "Nascondi"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidget.cshtml"
+msgid "NoItems"
+msgstr "Nessun elemento"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidgetAjax.cshtml"
+msgid "Answer"
+msgstr "Risposta"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidgetAjax.cshtml"
+msgid "Hide"
+msgstr "Nascondi"
+
+msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidgetAjax.cshtml"
+msgid "NoItems"
+msgstr "Nessun elemento"
+
+msgctxt "Belitsoft.Orchard.Faq.Navigation.FaqNavigationProvider"
+msgid "Faq"
+msgstr "Faq"
+
+msgctxt "Laser.Orchard.Faq.Drivers.FaqDriver"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "Laser.Orchard.Faq.Drivers.FaqTypeDriver"
+msgid "Faq Type with the same name already exists."
+msgstr "Nome del tipo di Faq già esistente"
+

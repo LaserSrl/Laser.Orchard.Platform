@@ -1,0 +1,12 @@
+﻿@{
+    var bikeStationModel = (Laser.Orchard.BikeSharing.Models.BikeStationPart)Model.BikeStation;
+}
+@if (bikeStationModel.Info != null) {
+    @T("Bike Sharing Station Infos")
+    <div>@bikeStationModel.Info.AvailableBikes / @bikeStationModel.Info.Capacity</div>
+    <ul>
+        @foreach (var terminal in bikeStationModel.Info.Terminals) { 
+            <li>@terminal.TerminalNumber) @terminal.BikeName [@T("Battery level"): @terminal.BatteryLevel]</li>
+        }
+    </ul>
+}

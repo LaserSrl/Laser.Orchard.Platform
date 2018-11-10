@@ -1,0 +1,74 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again."
+msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Account Information"
+msgstr "Informazioni Account"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Confirm password:"
+msgstr "Conferma password:"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Create a New Account"
+msgstr "Creare un nuovo Account"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Email:"
+msgstr "Email:"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Password:"
+msgstr "Password:"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length."
+msgstr "Le password devono essere lunghe almeno {0} caratteri."
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Register"
+msgstr "Registra"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Use the form below to create a new account."
+msgstr "Utilizzare il modulo seguente per creare un nuovo account."
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Username:"
+msgstr "Nome Utente:"
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The new password and confirmation password do not match."
+msgstr "La nuova password e la conferma password non sono uguali."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "User with that username and/or email already exists."
+msgstr "Esiste già un utente con il nome e/o l'email indicata."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "You must specify a password of {0} or more characters."
+msgstr "E' necessario specificare una password di {0} o più caratteri."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "You must specify a username."
+msgstr "E' necessario specificare un nome utente."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "You must specify a valid email address."
+msgstr "E' necessario specificare un indirizzo email valido."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "You must specify an email address."
+msgstr "E' necessario specificare un indirizzo email."
+

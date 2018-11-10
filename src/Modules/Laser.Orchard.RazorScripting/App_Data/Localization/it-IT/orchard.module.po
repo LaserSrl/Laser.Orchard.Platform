@@ -1,0 +1,46 @@
+# Orchard resource strings - it-IT
+# Copyright (c) 2018 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorValidationPartSettings.cshtml"
+msgid "Script"
+msgstr "Script"
+
+msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorValidationPartSettings.cshtml"
+msgid "The script to run everytime the content item is edited. You can use ContentItem, Services, WorkContext, T() and AddModelError()."
+msgstr "Lo script che viene eseguito ogni volta che un contenuto è modificato. Si possono usare: ContentItem, Services, WorkContext, T() and AddModelError()."
+
+msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
+msgid "Evaluates an expression."
+msgstr "Valuta un'espressione"
+
+msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
+msgid "Misc"
+msgstr "Varie"
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "A comma-separated list of possible outcomes."
+msgstr "Un una lista di possibili risultati, separati da una virgola."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "Possible Outcomes."
+msgstr "Possibili risultati."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "RazorScript"
+msgstr "RazorScript"
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "The script to run every time the Razor Decision Activity is invoked. You can use ContentItem, Services, WorkContext, and T(). Call SetOutcome(string outcome) to define the outcome of the activity."
+msgstr "Lo script da eseguire ogni volta che il Razor Decision Activity è invocato. Si possono usare: ContentItem, Services, WorkContext, e T(). Chiamare SetOutcome (string outcome ) per definire i risultati dell'attività."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "You must provide a Script"
+msgstr "È necessario fornire uno Script"
+

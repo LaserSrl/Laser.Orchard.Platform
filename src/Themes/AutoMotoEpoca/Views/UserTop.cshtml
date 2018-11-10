@@ -1,0 +1,23 @@
+﻿@using System.Web.Mvc;
+@{
+string activeIT = "active";
+string activeEN = "";
+if (WorkContext.CurrentCulture=="en-US"){   
+    activeIT = "";
+    activeEN = "active";
+}
+}
+
+<div class="lang btn-it btn-header @activeIT"><a href="@Url.Action("ChangeCulture", "UserCulture", new {Area = "Laser.Orchard.CulturePicker", CultureName = "it-IT"})">it</a></div>
+<div class="lang btn-en btn-header @activeEN"><a href="@Url.Action("ChangeCulture", "UserCulture", new {Area = "Laser.Orchard.CulturePicker", CultureName = "en-US"})">en</a></div>
+<div class="accedi btn-header">
+    @if (WorkContext.CurrentUser != null) {
+        @T("Welcome, <strong>{0}</strong>!", Html.Raw("<a href=\"" + @Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" }) + "\">" + Html.ItemDisplayText(WorkContext.CurrentUser) + "</a>"))<text> | </text>
+        @Html.ActionLink(T("Sign Out").ToString(), "LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl }, new { rel = "nofollow" })
+            if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
+        <text> | </text> @Html.ActionLink(T("Dashboard").ToString(), "Index", new {Area = "Dashboard", Controller = "Admin"})
+            }
+    } else {
+        <i>@Html.ActionLink(T("Sign In").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) }, new { rel = "nofollow" })</i>
+    }
+</div>

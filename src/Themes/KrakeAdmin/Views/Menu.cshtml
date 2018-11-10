@@ -1,0 +1,436 @@
+﻿@using Orchard.Utility.Extensions;
+@using Orchard.Environment.Configuration;
+@{
+    ShellSettings _shellsettings;
+
+    WorkContext.TryResolve<ShellSettings>(out _shellsettings);
+    Script.Require("jQuery");
+    //Script.Include("admin.js").AtFoot();
+    IEnumerable<dynamic> firstLevelMenuItems = Model;
+
+    if (Model.ImageSets != null) {
+        foreach (var imageSet in Model.ImageSets) {
+            RegisterImageSet("menu." + imageSet, Model.MenuName /* style */, 16 /* bounding box */);
+        }
+    }
+
+    //Model.Attributes.Add("role", "navigation");
+    Model.Attributes.Remove("class");
+    Model.Attributes.Add("class", "gui-controls");
+    Model.Attributes.Add("id", "main-menu");
+
+    var tag = Tag(Model, "ul");
+
+    string basePath = "";
+    string tenantPath = _shellsettings.RequestUrlPrefix ?? "";
+    string appPath = HttpContext.Current.Request.ApplicationPath;
+
+    if (tenantPath == "") {
+        basePath = appPath;
+    } else {
+        appPath = (appPath.EndsWith("/")) ? appPath : appPath + "/";
+        basePath = appPath + tenantPath;
+    }
+    basePath = (basePath.EndsWith("/")) ? basePath : basePath + "/";
+}
+
+<div id="menubar" class="menubar-inverse ">
+    <div class="menubar-fixed-panel">
+        <div class="krake-header">
+            <a class="krake-logo" href="~/"></a>
+        </div>
+    </div>
+    <div class="menubar-scroll-panel">
+        @Display(New.PLaceholderLogo())
+        ﻿@tag.StartElement
+        @foreach (var firstLevelMenuItem in Model) {
+            IEnumerable<dynamic> secondLevelMenuItems = firstLevelMenuItem;
+
+            string sectionHeaderText = firstLevelMenuItem.Text.Text;
+            string sectionHeaderTextHint = firstLevelMenuItem.Text.TextHint;
+            var firstOfTheSecond = secondLevelMenuItems.FirstOrDefault();
+            var firstLevelMenuItemUrl = firstLevelMenuItem.Href;
+
+            var itemClassName = HasText(sectionHeaderTextHint)
+                ? "navicon-" + sectionHeaderTextHint.HtmlClassify()
+                : "navicon";
+            var itemId = HasText(firstLevelMenuItem.IdHint)
+                ? "navicon-" + firstLevelMenuItem.IdHint
+                : null;
+
+            var icon_class = "fa " + itemClassName;
+
+            var stringUrlFirstChild = "";
+            var stringLabelFirstChild = "";
+
+            string classSelected = "";
+            IHtmlString sectionHeaderMarkup;
+
+            if (firstOfTheSecond != null && (firstOfTheSecond.RouteValues != null || HasText(firstOfTheSecond.Url))) {
+                //firstLevelMenuItemUrl = firstOfTheSecond.Href;
+                //sectionHeaderText = "<div class=\"gui-icon\"><i class=\"md md-home\"></i></div><span class=\"title\">" + sectionHeaderText + "</span>";
+
+                if (firstLevelMenuItem.Selected) {
+                    classSelected = "active";
+                } else {
+                    classSelected = "";
+                }
+
+                //***** Elimino il link sull'apertura del sottomenu *****//
+                if (secondLevelMenuItems.Count(menuItem => !menuItem.LocalNav) > 1 || !firstLevelMenuItem.LinkToFirstChild) {
+                    sectionHeaderMarkup = new HtmlString(string.Format(@"<a><div class=""gui-icon""><i class=""{2}""></i></div><span class=""title"">{0}</span></a>", sectionHeaderText, Html.Encode(itemClassName), icon_class));
+                } else {
+                    sectionHeaderMarkup = HasText(itemId)
+                        ? new HtmlString(string.Format(@"<a href=""{0}"" class=""{1}"" id=""{2}""><div class=""gui-icon""><i class=""{4}""></i></div><span class=""title"">{3}</span></a>", (string)firstOfTheSecond.Href, Html.Encode(classSelected), Html.Encode(itemId), sectionHeaderText, icon_class))
+                        : new HtmlString(string.Format(@"<a href=""{0}"" class=""{1}""><div class=""gui-icon""><i class=""{3}""></i></div><span class=""title"">{2}</span></a>", (string)firstOfTheSecond.Href, Html.Encode(classSelected), sectionHeaderText, icon_class));
+                }
+
+                if (secondLevelMenuItems.Count(menuItem => !menuItem.LocalNav) > 1 && firstLevelMenuItemUrl != firstOfTheSecond.Href) {
+                    stringUrlFirstChild = (string)firstOfTheSecond.Href;
+                    stringLabelFirstChild = sectionHeaderText;
+                } else if (!firstLevelMenuItem.LinkToFirstChild) {
+                    if (firstLevelMenuItemUrl != basePath) {
+                        stringUrlFirstChild = (string)firstLevelMenuItem.Href;
+                    } else {
+                        stringUrlFirstChild = (string)firstOfTheSecond.Href;
+                    }
+                    stringLabelFirstChild = sectionHeaderText;
+                }
+
+            } else if (firstLevelMenuItem.RouteValues != null || HasText(firstLevelMenuItem.Url)) {
+                sectionHeaderMarkup = HasText(itemId)
+                    ? new HtmlString(string.Format(@"<a href=""{0}"" class=""{1}"" id=""{2}""><div class=""gui-icon""><i class=""{4}""></i></div><span class=""title"">{3}</span></a>", (string)firstLevelMenuItem.Href, Html.Encode(classSelected), Html.Encode(itemId), sectionHeaderText, icon_class))
+                    : new HtmlString(string.Format(@"<a href=""{0}"" class=""{1}""><div class=""gui-icon""><i class=""{3}""></i></div><span class=""title"">{2}</span></a>", (string)firstLevelMenuItem.Href, Html.Encode(classSelected), sectionHeaderText, icon_class));
+            } else {
+                // if the header isn't linked and there are no children there's no reason for this item in the menu other than to look pretty
+                if (!secondLevelMenuItems.Any()) {
+                    continue;
+                }
+
+                sectionHeaderMarkup = HasText(itemId)
+                    ? new HtmlString(string.Format(@"<span class=""{1}"" id=""{2}"">{0}</span>", Html.Encode(sectionHeaderText), Html.Encode(itemClassName), Html.Encode(itemId)))
+                    : new HtmlString(string.Format(@"<a><div class=""gui-icon""><i class=""{2}""></i></div><span class=""title {1}"">{0}</span></a>", Html.Encode(sectionHeaderText), Html.Encode(itemClassName), icon_class));
+            }
+
+            if (firstLevelMenuItem.Selected) {
+                firstLevelMenuItem.Classes.Add("active");
+            }
+
+            if (secondLevelMenuItems.Count(menuItem => !menuItem.LocalNav) > 1 || !firstLevelMenuItem.LinkToFirstChild) {
+                firstLevelMenuItem.Classes.Add("gui-folder");
+            }
+
+            var firstLevelTag = Tag(firstLevelMenuItem, "li");
+
+            @firstLevelTag.StartElement
+            @sectionHeaderMarkup
+            if (secondLevelMenuItems.Count(menuItem => !menuItem.LocalNav) > 1 || !firstLevelMenuItem.LinkToFirstChild) {
+                <ul>
+                    @{
+                        var first = true;
+                        var countChild = 0;
+                    }
+                    @foreach (var secondLevelMenuItem in secondLevelMenuItems.Where(menuItem => !menuItem.LocalNav)) {
+                        if (first && firstLevelMenuItem.LinkToFirstChild && String.Equals(firstLevelMenuItemUrl, secondLevelMenuItem.Href)) {
+                            first = false;
+                            continue;
+                        }
+
+                        if (countChild == 0 && !String.Equals(stringUrlFirstChild, secondLevelMenuItem.Href) && stringUrlFirstChild != "") {
+                            <li><a href="@stringUrlFirstChild"><span class="title">@stringLabelFirstChild</span></a></li>
+                        }
+
+                        string secondLevelTextHint = secondLevelMenuItem.Text.TextHint;
+                        var firstOfTheThird = ((IEnumerable<dynamic>)secondLevelMenuItem.Items).FirstOrDefault();
+
+                        var secondLevelItemClassName = HasText(secondLevelTextHint)
+                            ? "subnavicon-" + secondLevelTextHint.HtmlClassify()
+                            : "subnavicon";
+                        var secondLevelItemId = HasText(secondLevelMenuItem.IdHint)
+                            ? "subnavicon-" + secondLevelMenuItem.IdHint
+                            : null;
+
+                        if (secondLevelMenuItem.Selected) {
+                            secondLevelMenuItem.Classes.Add("selected");
+                        }
+
+                        var secondLevelTag = Tag(secondLevelMenuItem, "li");
+                        var secondLevelUrl = secondLevelMenuItem.Href;
+                        if (firstOfTheThird != null && secondLevelMenuItem.LinkToFirstChild && (firstOfTheThird.RouteValues != null || HasText(firstOfTheThird.Url))) {
+                            secondLevelUrl = firstOfTheThird.Href;
+                        }
+                        @secondLevelTag.StartElement
+                        if (HasText(secondLevelItemId)) {
+                            <a href="@secondLevelUrl" id="@secondLevelItemId"><span class="title">@secondLevelMenuItem.Text</span></a>
+                        } else {
+                            <a href="@secondLevelUrl"><span class="title">@secondLevelMenuItem.Text</span></a>
+                        }
+                        @secondLevelTag.EndElement
+
+                        countChild++;
+                    }
+
+                </ul>
+                        }
+                        @firstLevelTag.EndElement
+
+                            stringUrlFirstChild = "";
+                            stringLabelFirstChild = "";
+                        }
+        @tag.EndElement
+    </div>
+</div>
+
+
+@*@using(Script.Foot()) {
+    <script type="text/javascript">
+    //<![CDATA[
+        (function ($) {
+            $("@string.Format(".{0} h3", string.Join(".", Model.Classes))").expandoControl(function(controller) { return controller.next(); }, { key: "N42", path: "@Url.Content("~/")" });
+        })(jQuery);
+    //]]>
+    </script>
+    }*@
+
+@*<div id="menubar" class="menubar-inverse ">
+        <div class="menubar-scroll-panel">
+
+            <!-- BEGIN MAIN MENU -->
+            <ul id="main-menu" class="gui-controls">
+
+                <!-- BEGIN DASHBOARD -->
+                <li>
+                    <a href="../../html/dashboards/dashboard.html" class="active">
+                        <div class="gui-icon"><i class="md md-home"></i></div>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li><!--end /menu-li -->
+                <!-- END DASHBOARD -->
+
+                <!-- BEGIN EMAIL -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><i class="md md-email"></i></div>
+                        <span class="title">Email</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="../../html/mail/inbox.html" ><span class="title">Inbox</span></a></li>
+                        <li><a href="../../html/mail/compose.html" ><span class="title">Compose</span></a></li>
+                        <li><a href="../../html/mail/reply.html" ><span class="title">Reply</span></a></li>
+                        <li><a href="../../html/mail/message.html" ><span class="title">View message</span></a></li>
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END EMAIL -->
+
+                <!-- BEGIN DASHBOARD -->
+                <li>
+                    <a href="../../html/layouts/builder.html" >
+                        <div class="gui-icon"><i class="md md-web"></i></div>
+                        <span class="title">Layouts</span>
+                    </a>
+                </li><!--end /menu-li -->
+                <!-- END DASHBOARD -->
+
+                <!-- BEGIN UI -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><i class="fa fa-puzzle-piece fa-fw"></i></div>
+                        <span class="title">UI elements</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="../../html/ui/colors.html" ><span class="title">Colors</span></a></li>
+                        <li><a href="../../html/ui/typography.html" ><span class="title">Typography</span></a></li>
+                        <li><a href="../../html/ui/cards.html" ><span class="title">Cards</span></a></li>
+                        <li><a href="../../html/ui/buttons.html" ><span class="title">Buttons</span></a></li>
+                        <li><a href="../../html/ui/lists.html" ><span class="title">Lists</span></a></li>
+                        <li><a href="../../html/ui/tabs.html" ><span class="title">Tabs</span></a></li>
+                        <li><a href="../../html/ui/accordions.html" ><span class="title">Accordions</span></a></li>
+                        <li><a href="../../html/ui/messages.html" ><span class="title">Messages</span></a></li>
+                        <li><a href="../../html/ui/offcanvas.html" ><span class="title">Off-canvas</span></a></li>
+                        <li><a href="../../html/ui/grid.html" ><span class="title">Grid</span></a></li>
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Icons</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="../../html/ui/icons/materialicons.html" ><span class="title">Material Design Icons</span></a></li>
+                                <li><a href="../../html/ui/icons/fontawesome.html" ><span class="title">Font Awesome</span></a></li>
+                                <li><a href="../../html/ui/icons/glyphicons.html" ><span class="title">Glyphicons</span></a></li>
+                                <li><a href="../../html/ui/icons/skycons.html" ><span class="title">Skycons</span></a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-li -->
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END UI -->
+
+                <!-- BEGIN TABLES -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><i class="fa fa-table"></i></div>
+                        <span class="title">Tables</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="../../html/tables/static.html" ><span class="title">Static Tables</span></a></li>
+                        <li><a href="../../html/tables/dynamic.html" ><span class="title">Dynamic Tables</span></a></li>
+                        <li><a href="../../html/tables/responsive.html" ><span class="title">Responsive Table</span></a></li>
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END TABLES -->
+
+                <!-- BEGIN FORMS -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><span class="glyphicon glyphicon-list-alt"></span></div>
+                        <span class="title">Forms</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="../../html/forms/basic.html" ><span class="title">Form basic</span></a></li>
+                        <li><a href="../../html/forms/advanced.html" ><span class="title">Form advanced</span></a></li>
+                        <li><a href="../../html/forms/layouts.html" ><span class="title">Form layouts</span></a></li>
+                        <li><a href="../../html/forms/editors.html" ><span class="title">Editors</span></a></li>
+                        <li><a href="../../html/forms/validation.html" ><span class="title">Form validation</span></a></li>
+                        <li><a href="../../html/forms/wizard.html" ><span class="title">Form wizard</span></a></li>
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END FORMS -->
+
+                <!-- BEGIN PAGES -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><i class="md md-computer"></i></div>
+                        <span class="title">Pages</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Contacts</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="../../html/pages/contacts/search.html" ><span class="title">Search</span></a></li>
+                                <li><a href="../../html/pages/contacts/details.html" ><span class="title">Contact card</span></a></li>
+                                <li><a href="../../html/pages/contacts/add.html" ><span class="title">Insert contact</span></a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-li -->
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Search</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="../../html/pages/search/results-text.html" ><span class="title">Results - Text</span></a></li>
+                                <li><a href="../../html/pages/search/results-text-image.html" ><span class="title">Results - Text and Image</span></a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-li -->
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Blog</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="../../html/pages/blog/masonry.html" ><span class="title">Blog masonry</span></a></li>
+                                <li><a href="../../html/pages/blog/list.html" ><span class="title">Blog list</span></a></li>
+                                <li><a href="../../html/pages/blog/post.html" ><span class="title">Blog post</span></a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-li -->
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Error pages</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="../../html/pages/404.html" ><span class="title">404 page</span></a></li>
+                                <li><a href="../../html/pages/500.html" ><span class="title">500 page</span></a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-li -->
+                        <li><a href="../../html/pages/profile.html" ><span class="title">User profile<span class="badge style-accent">42</span></span></a></li>
+                        <li><a href="../../html/pages/invoice.html" ><span class="title">Invoice</span></a></li>
+                        <li><a href="../../html/pages/calendar.html" ><span class="title">Calendar</span></a></li>
+                        <li><a href="../../html/pages/pricing.html" ><span class="title">Pricing</span></a></li>
+                        <li><a href="../../html/pages/timeline.html" ><span class="title">Timeline</span></a></li>
+                        <li><a href="../../html/pages/maps.html" ><span class="title">Maps</span></a></li>
+                        <li><a href="../../html/pages/locked.html" ><span class="title">Lock screen</span></a></li>
+                        <li><a href="../../html/pages/login.html" ><span class="title">Login</span></a></li>
+                        <li><a href="../../html/pages/blank.html" ><span class="title">Blank page</span></a></li>
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END FORMS -->
+
+                <!-- BEGIN CHARTS -->
+                <li>
+                    <a href="../../html/charts/charts.html" >
+                        <div class="gui-icon"><i class="md md-assessment"></i></div>
+                        <span class="title">Charts</span>
+                    </a>
+                </li><!--end /menu-li -->
+                <!-- END CHARTS -->
+
+                <!-- BEGIN LEVELS -->
+                <li class="gui-folder">
+                    <a>
+                        <div class="gui-icon"><i class="fa fa-folder-open fa-fw"></i></div>
+                        <span class="title">Menu levels demo</span>
+                    </a>
+                    <!--start submenu -->
+                    <ul>
+                        <li><a href="#"><span class="title">Item 1</span></a></li>
+                        <li><a href="#"><span class="title">Item 1</span></a></li>
+                        <li class="gui-folder">
+                            <a href="javascript:void(0);">
+                                <span class="title">Open level 2</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="#"><span class="title">Item 2</span></a></li>
+                                <li class="gui-folder">
+                                    <a href="javascript:void(0);">
+                                        <span class="title">Open level 3</span>
+                                    </a>
+                                    <!--start submenu -->
+                                    <ul>
+                                        <li><a href="#"><span class="title">Item 3</span></a></li>
+                                        <li><a href="#"><span class="title">Item 3</span></a></li>
+                                        <li class="gui-folder">
+                                            <a href="javascript:void(0);">
+                                                <span class="title">Open level 4</span>
+                                            </a>
+                                            <!--start submenu -->
+                                            <ul>
+                                                <li><a href="#"><span class="title">Item 4</span></a></li>
+                                                <li class="gui-folder">
+                                                    <a href="javascript:void(0);">
+                                                        <span class="title">Open level 5</span>
+                                                    </a>
+                                                    <!--start submenu -->
+                                                    <ul>
+                                                        <li><a href="#"><span class="title">Item 5</span></a></li>
+                                                        <li><a href="#"><span class="title">Item 5</span></a></li>
+                                                    </ul><!--end /submenu -->
+                                                </li><!--end /submenu-li -->
+                                            </ul><!--end /submenu -->
+                                        </li><!--end /submenu-li -->
+                                    </ul><!--end /submenu -->
+                                </li><!--end /submenu-li -->
+                            </ul><!--end /submenu -->
+                        </li><!--end /submenu-li -->
+                    </ul><!--end /submenu -->
+                </li><!--end /menu-li -->
+                <!-- END LEVELS -->
+
+            </ul><!--end .main-menu -->
+            <!-- END MAIN MENU -->
+
+            <div class="menubar-foot-panel">
+                <small class="no-linebreak hidden-folded">
+                    <span class="opacity-75">Copyright &copy; 2014</span> <strong>CodeCovers</strong>
+                </small>
+            </div>
+        </div><!--end .menubar-scroll-panel-->
+    </div><!--end #menubar-->
+    <!-- END MENUBAR -->*@

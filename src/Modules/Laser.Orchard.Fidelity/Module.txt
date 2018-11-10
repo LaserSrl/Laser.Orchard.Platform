@@ -1,0 +1,12 @@
+﻿Name: Laser.Orchard.Fidelity
+AntiForgery: enabled
+Author: Laser srl
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10.1
+Description: A module that allows to use the Loyalzoo fidelity service.
+Features:
+    Laser.Orchard.Fidelity:
+        Description: Allows the site to use the Loyalzoo fidelity service.
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig

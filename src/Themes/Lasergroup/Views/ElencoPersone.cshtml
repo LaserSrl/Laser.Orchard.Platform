@@ -1,0 +1,20 @@
+﻿@using Orchard.Projections.Services;
+@{
+    int page = 1;
+    int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
+    
+    var services = WorkContext.Resolve<IProjectionManager>();
+    var queryId = Model.ContentItem.ProjectionPart.Record.QueryPartRecord.Id;
+    var queryItems = services.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
+}
+<div id="team">
+	<div class="team-top"></div>
+	<div class="container-fluid">
+		<div class="row">
+            @foreach (var item in queryItems) {
+                @Display(New.ElementoPersona(Item: item))
+                
+            }
+        </div>
+    </div>
+</div>

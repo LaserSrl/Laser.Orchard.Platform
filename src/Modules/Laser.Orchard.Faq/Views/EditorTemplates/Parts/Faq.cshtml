@@ -1,0 +1,23 @@
+@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+@using System.Web.Mvc.Html
+@using Laser.Orchard.Faq
+@model Laser.Orchard.Faq.ViewModels.EditFaqViewModel
+
+<fieldset>
+    <label class="sub @IsPropertyRequired(typeof(Laser.Orchard.Faq.ViewModels.EditFaqViewModel), "FaqType")" for="FaqType">@T("FaqType")</label><br />
+    @Html.DropDownListFor(model => model.FaqType,
+                          Model.FaqTypes.Select(s => new SelectListItem {
+                              Selected = s.Id == Model.FaqType,
+                              Text = s.Title,
+                              Value = s.Id.ToString(CultureInfo.InvariantCulture)
+                          }),
+                          T("ChooseType").Text, new{style="width: 100%;"})<br /><br />
+    <label class="sub @IsPropertyRequired(typeof(Laser.Orchard.Faq.ViewModels.EditFaqViewModel), "Question")" for="Question">@T("Question")</label><br />
+    @Html.TextAreaFor(m => m.Question, new { @class = "large text",@maxlength = "10000"  })<br />
+   
+</fieldset>
+
+@helper IsPropertyRequired(Type type, string property){
+    @(Attribute.IsDefined(type.GetProperty(property),typeof(RequiredAttribute)) ?" required":"")
+}
