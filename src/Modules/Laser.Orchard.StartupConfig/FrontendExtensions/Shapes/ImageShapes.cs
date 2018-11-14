@@ -114,7 +114,7 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
             if (stubImage == null) {
                 stubImage = ImageInfo.New(StubImagePath, StubWidth, StubHeight);
             }
-            // Lastly, we may want to generate a stub base on the main image:
+            // Lastly, we may want to generate a stub based on the main image:
             if (stubImage == null && StubWidth > 0 && StubHeight > 0) {
                 stubImage = new ImageInfo() {
                     ContentItem = mainImage.ContentItem,
@@ -184,6 +184,10 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
             string Mode,
             string Alignment,
             string PadColor) {
+
+            if (imageInfo.ContentItem == null) {
+                return imageInfo.ImagePath;
+            }
 
             var filter = Filter(imageInfo.Width, imageInfo.Height, Mode, Alignment, PadColor);
             var profile = Profile(imageInfo.Width, imageInfo.Height, Mode, Alignment, PadColor);
@@ -283,8 +287,9 @@ namespace Laser.Orchard.StartupConfig.FrontendExtensions.Shapes {
                 int height) {
 
                 // validate information
-                if (string.IsNullOrWhiteSpace(imagePath)
-                    || width <= 0 || height <= 0) {
+                if (string.IsNullOrWhiteSpace(imagePath)) {
+                    // since this is for external path, we won't be able to resize it, so it makes
+                    // no sense to strictly require width and height
                     return null;
                 }
 
