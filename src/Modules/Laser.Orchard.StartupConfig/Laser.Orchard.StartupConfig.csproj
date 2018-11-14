@@ -283,6 +283,7 @@
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
+    <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
     <Compile Include="IdentityProvider\RolesIdentityProvider.cs" />
