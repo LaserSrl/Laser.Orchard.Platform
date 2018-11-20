@@ -91,6 +91,7 @@
         }
 
         google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+        google.maps.event.trigger(map, 'resize');
     </script>
     }
     <fieldset class="map">
