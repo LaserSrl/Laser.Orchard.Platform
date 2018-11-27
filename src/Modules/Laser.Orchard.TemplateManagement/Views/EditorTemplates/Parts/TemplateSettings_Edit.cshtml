@@ -1,0 +1,12 @@
+﻿@model Laser.Orchard.TemplateManagement.ViewModels.TemplateSettingsViewModel
+@{
+    Style.Include("Common.css", "Common.min.css");
+}
+<fieldset>
+    <legend>@T("Template Parser")</legend>
+    <div class="editor-field">
+        @Html.LabelFor(m => m.ParserIdSelected, T("Default Parser"))
+        @Html.EditorFor(m => m.ParserIdSelected)
+        <span class="hint">@T("The template parser engine to use by default.")</span>
+    </div>
+</fieldset>
