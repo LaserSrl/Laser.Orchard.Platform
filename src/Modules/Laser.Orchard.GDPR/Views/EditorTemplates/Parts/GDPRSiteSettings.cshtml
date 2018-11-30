@@ -1,0 +1,10 @@
+﻿@model Laser.Orchard.GDPR.Models.GDPRSiteSettingsPart
+
+<fieldset>
+    <legend>@T("Impostazioni GDPR")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisableCookieManagement)">@T("Disable GDPR Cookie Management")</label>
+        @Html.CheckBoxFor(m => m.DisableCookieManagement)
+        <span class="hint">@T("Check to disable GDPR Banner for cookie management")</span>
+    </div>
+</fieldset>

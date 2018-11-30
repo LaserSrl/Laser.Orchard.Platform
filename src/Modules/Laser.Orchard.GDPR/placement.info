@@ -1,4 +1,5 @@
 ﻿<Placement>
+  <Place Parts_GDPRSiteSettings_Edit="Content:1" />
 	<Place Parts_GDPRPart_ProtectionFlag="Content:5.5" />
   <Place Parts_GDPRPart_AdminToolbarLink="-" />
 	<Match DisplayType="SummaryAdmin">

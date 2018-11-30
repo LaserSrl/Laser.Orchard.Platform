@@ -29,7 +29,6 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-    
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -108,6 +107,7 @@
     <Compile Include="Activities\SelectContentItemForm.cs" />
     <Compile Include="Controllers\GDPRAdminController.cs" />
     <Compile Include="Drivers\GDPRPartDriver.cs" />
+    <Compile Include="Drivers\GDPRSiteSettingsDriver.cs" />
     <Compile Include="Extensions\Constants.cs" />
     <Compile Include="Extensions\Enums.cs" />
     <Compile Include="Features\BaseKeyFeaturesProvider.cs" />
@@ -121,6 +121,7 @@
     <Compile Include="Handlers\GDPRFilterBase.cs" />
     <Compile Include="Handlers\GDPRPartGDPRHandler.cs" />
     <Compile Include="Handlers\GDPRPartHandler.cs" />
+    <Compile Include="Handlers\GDPRSiteSettingsHandler.cs" />
     <Compile Include="Handlers\GDPRTaskHandler.cs" />
     <Compile Include="Handlers\IContentGDPRFilter.cs" />
     <Compile Include="Handlers\IContentGDPRHandler.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Migrations\GDPRMigrations.cs" />
     <Compile Include="Models\GDPRPart.cs" />
     <Compile Include="Models\GDPRPartRecord.cs" />
+    <Compile Include="Models\GDPRSiteSettingsPart.cs" />
     <Compile Include="Navigation\GDPRAdminMenu.cs" />
     <Compile Include="Permissions\GDPRPermissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,9 +142,12 @@
     <Compile Include="Services\DefaultGDPRScheduleManager.cs" />
     <Compile Include="Services\GDPRPartProtectedProvider.cs" />
     <Compile Include="Services\GDPRProtectAdminsProvider.cs" />
+    <Compile Include="Services\GDPRScript.cs" />
     <Compile Include="Services\IContentGDPRManager.cs" />
+    <Compile Include="Services\ICookieGDPR.cs" />
     <Compile Include="Services\IGDPRProcessAllowedProvider.cs" />
     <Compile Include="Services\IGDPRScheduleManager.cs" />
+    <Compile Include="Services\IGDPRScript.cs" />
     <Compile Include="Settings\ContentPickerFieldGDPRPartFieldEditorEvents.cs" />
     <Compile Include="Settings\ContentPickerFieldGDPRPartFieldSettings.cs" />
     <Compile Include="Settings\GDPRPartFieldEditorEvents.cs" />
@@ -246,6 +251,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\GDPRSiteSettings.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -274,5 +282,4 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  
 </Project>
