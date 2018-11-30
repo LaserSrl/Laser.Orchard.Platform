@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Laser.Orchard.GDPR.Services {
     public interface IGDPRScript : IDependency {
-        List<CookieType> GetCurrentGDPR();
-        void SetCurrentGDPR(List<CookieType> cookieTypes);
+        IList<CookieType> GetCurrentGDPR();
+        void SetCurrentGDPR(IList<CookieType> cookieTypes);
         string GetBannerChoice();
     }
 }
