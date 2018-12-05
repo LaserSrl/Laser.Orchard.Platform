@@ -10,8 +10,4 @@
     public enum ScheduledProcess {
         Anonymization, Erasure
     }
-
-    public enum CookieType {
-        Technical, Preference, Statistical, Marketing
-    }
 }

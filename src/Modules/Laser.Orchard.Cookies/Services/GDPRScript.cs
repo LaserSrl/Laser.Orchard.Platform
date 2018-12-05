@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Laser.Orchard.GDPR.Extensions;
+using System.Web;
 
-namespace Laser.Orchard.GDPR.Services {
+namespace Laser.Orchard.Cookies.Services {
     public class GDPRScript : IGDPRScript {
         private IEnumerable<ICookieGDPR> _cookies;
         public GDPRScript(IEnumerable<ICookieGDPR> cookies) {
@@ -14,7 +14,7 @@ namespace Laser.Orchard.GDPR.Services {
         /// <returns></returns>
         public string GetBannerChoice() {
             // cicla sui tipi di cookie e crea il banner in modo da visualizzare solo le checkbox necessarie
-            foreach(var cookie in _cookies) {
+            foreach (var cookie in _cookies) {
 
             }
             throw new NotImplementedException();
@@ -24,7 +24,24 @@ namespace Laser.Orchard.GDPR.Services {
         /// </summary>
         /// <returns></returns>
         public IList<CookieType> GetCurrentGDPR() {
-            throw new NotImplementedException();
+            List<CookieType> result = new List<CookieType>();
+            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
+            if (cookie != null) {
+                foreach (string kv in cookie.Values) {
+                    switch (kv) {
+                        case "Preference":
+                            result.Add(CookieType.Preference);
+                            break;
+                        case "Statistical":
+                            result.Add(CookieType.Statistical);
+                            break;
+                        case "Marketing":
+                            result.Add(CookieType.Marketing);
+                            break;
+                    }
+                }
+            }
+            return result;
         }
         /// <summary>
         /// Set choices of the user about cookies according to GDPR.

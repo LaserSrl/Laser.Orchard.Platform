@@ -84,7 +84,7 @@
         var cookieDiscreetPosition = options.cookieDiscreetPosition;
         var cookieNoMessage = options.cookieNoMessage;
         // cookie identifier
-        var $cookieAccepted = $.cookie('cc_cookie_accept') == "cc_cookie_accept";
+        var $cookieAccepted = $.cookie('cc_cookie_accept') != undefined && $.cookie('cc_cookie_accept').startsWith("cc_cookie_accept");
         $.cookieAccepted = function () {
             return $cookieAccepted;
         };
@@ -249,7 +249,17 @@
                 $.cookie("cc_cookie_decline", null, {
                     path: '/'
                 });
-                $.cookie("cc_cookie_accept", "cc_cookie_accept", {
+                var aux1 = "";
+                if ($("#chkPreference").prop("checked")) {
+                    aux1 = aux1 + "&Preference=1";
+                }
+                if ($("#chkStatistical").prop("checked")) {
+                    aux1 = aux1 + "&Statistical=1";
+                }
+                if ($("#chkMarketing").prop("checked")) {
+                    aux1 = aux1 + "&Marketing=1";
+                }
+                $.cookie("cc_cookie_accept", "cc_cookie_accept" + aux1, {
                     expires: cookieExpires,
                     path: '/'
                 });

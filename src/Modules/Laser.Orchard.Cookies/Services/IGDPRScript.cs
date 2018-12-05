@@ -1,8 +1,7 @@
-﻿using Laser.Orchard.GDPR.Extensions;
-using Orchard;
+﻿using Orchard;
 using System.Collections.Generic;
 
-namespace Laser.Orchard.GDPR.Services {
+namespace Laser.Orchard.Cookies.Services {
     public interface IGDPRScript : IDependency {
         IList<CookieType> GetCurrentGDPR();
         void SetCurrentGDPR(IList<CookieType> cookieTypes);

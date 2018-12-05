@@ -122,6 +122,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Drivers\CookieLawPartDriver.cs" />
     <Compile Include="Drivers\CookieSettingsPartDriver.cs" />
@@ -130,6 +131,9 @@
     <Compile Include="Models\CookieLawPart.cs" />
     <Compile Include="Models\CookieSettingsPart.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\GDPRScript.cs" />
+    <Compile Include="Services\ICookieGDPR.cs" />
+    <Compile Include="Services\IGDPRScript.cs" />
     <Compile Include="ViewModels\CookieLawEditModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,5 +17,12 @@ namespace Laser.Orchard.Cookies.Models
         public bool showCookieResetButton { get { return this.Retrieve(x => x.showCookieResetButton); } set { this.Store(x => x.showCookieResetButton, value); } }
         public bool cookieOverlayEnabled { get { return this.Retrieve(x => x.cookieOverlayEnabled); } set { this.Store(x => x.cookieOverlayEnabled, value); } }
         public bool cookieCutter { get { return this.Retrieve(x => x.cookieCutter); } set { this.Store(x => x.cookieCutter, value); } }
+        public bool DisableCookieGDPRManagement {
+            get {
+                return this.Retrieve(x => x.DisableCookieGDPRManagement);
+            }
+            set { this.Store(x => x.DisableCookieGDPRManagement, value); }
+        }
+
     }
 }

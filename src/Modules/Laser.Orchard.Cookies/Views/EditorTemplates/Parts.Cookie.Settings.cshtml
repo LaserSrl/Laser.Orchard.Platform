@@ -47,6 +47,14 @@
     </div>
 </fieldset>
 
+<fieldset>
+    <legend>@T("Impostazioni GDPR")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisableCookieGDPRManagement)">@T("Disable GDPR Cookie Management")</label>
+        @Html.CheckBoxFor(m => m.DisableCookieGDPRManagement)
+        <span class="hint">@T("Check to disable cookie management according to GDPR Banner options")</span>
+    </div>
+</fieldset>
 @using (Script.Foot())
 {
     <script type="text/javascript">

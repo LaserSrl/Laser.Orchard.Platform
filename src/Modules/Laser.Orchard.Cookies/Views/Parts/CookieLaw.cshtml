@@ -13,8 +13,7 @@
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
 
-    using (Script.Foot())
-    {
+    using (Script.Foot()) {
 <script type="text/javascript">
     $(document).ready(function () {
         var cookiesettings = {};
@@ -31,11 +30,18 @@
                 cookiesettings.cookieWhatAreTheyLink = '@part.cookieWhatAreTheyLink';
         }
         else {
-            if ('@part.cookieMessage'.length > 0)
-                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage)';
+            if (@(part.cookieMessage.Length) > 0)
+                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
             if ('@part.cookiePolicyLink'.length > 0)
                 cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
         }
+        // user options
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<div style="border:solid 1px black">';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkTechnical" value="Technical" checked disabled/><label for="chkTechnical">@T("Technical")</label>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkPreference" value="Preference"/><label for="chkPreference">@T("Preference")</label>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkStatistical" value="Statistical"/><label for="chkStatistical">@T("Statistical")</label>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkMarketing" value="Marketing"/><label for="chkMarketing">@T("Marketing")</label>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div>';
         // positioning
         cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
         cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
