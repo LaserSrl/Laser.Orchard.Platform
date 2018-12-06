@@ -1,5 +1,6 @@
 
 using Laser.Orchard.Cookies.Models;
+using Laser.Orchard.Cookies.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -19,10 +20,11 @@ namespace Laser.Orchard.Cookies.Drivers {
 
         protected override DriverResult Display(CookieLawPart part, string displayType, dynamic shapeHelper) {
             var workContext = _workContextAccessor.GetContext();
+            var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
 
             return ContentShape("Parts_CookieLaw",
-                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part));
+                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice));
         }
 
         protected override DriverResult Editor(CookieLawPart part, dynamic shapeHelper) {

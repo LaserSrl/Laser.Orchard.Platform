@@ -130,6 +130,7 @@
     <Compile Include="Handlers\CookieSettingsPartHandler.cs" />
     <Compile Include="Models\CookieLawPart.cs" />
     <Compile Include="Models\CookieSettingsPart.cs" />
+    <Compile Include="Prove\Prove.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\GDPRScript.cs" />
     <Compile Include="Services\ICookieGDPR.cs" />

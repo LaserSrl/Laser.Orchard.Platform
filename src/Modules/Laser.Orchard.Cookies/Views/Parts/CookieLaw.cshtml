@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Laser.Orchard.Cookies.Services
+@{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
     // before the DOMLoadedEvent
@@ -12,6 +13,7 @@
     var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
+    var gdprScriptService = Model.GDPRScriptservice;
 
     using (Script.Foot()) {
 <script type="text/javascript">
@@ -36,12 +38,10 @@
                 cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
         }
         // user options
-        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<div style="border:solid 1px black">';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="border:solid 1px black">';
         cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkTechnical" value="Technical" checked disabled/><label for="chkTechnical">@T("Technical")</label>';
-        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkPreference" value="Preference"/><label for="chkPreference">@T("Preference")</label>';
-        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkStatistical" value="Statistical"/><label for="chkStatistical">@T("Statistical")</label>';
-        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<input type="checkbox" id="chkMarketing" value="Marketing"/><label for="chkMarketing">@T("Marketing")</label>';
-        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></form>';
         // positioning
         cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
         cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
