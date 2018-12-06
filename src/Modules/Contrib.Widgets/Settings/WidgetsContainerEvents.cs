@@ -8,6 +8,7 @@ using Orchard.Themes.Services;
 using Orchard.Widgets.Services;
 using System.Linq;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace Contrib.Widgets.Settings {
     public class WidgetsContainerEvents : ContentDefinitionEditorEventsBase {
@@ -31,6 +32,8 @@ namespace Contrib.Widgets.Settings {
                 allowedViewModel.Zones = _widgetsService.GetZones(currentTheme).ToList();
                 allowedViewModel.SelectedWidgets = model.AllowedWidgets != null ? model.AllowedWidgets.Split(',') : new string[] { };
                 allowedViewModel.Widgets = _widgetsService.GetWidgetTypeNames().OrderBy(o => o).ToList();
+                allowedViewModel.UseHierarchicalAssociation = model.UseHierarchicalAssociation;
+                allowedViewModel.HierarchicalAssociationJson = model.HierarchicalAssociationJson;
 
                 yield return DefinitionTemplate(allowedViewModel);
             }
@@ -43,6 +46,9 @@ namespace Contrib.Widgets.Settings {
             if (updateModel.TryUpdateModel(allowedViewModel, "WidgetsContainerSettingsViewModel", null, null)) {
                 builder.WithSetting("WidgetsContainerSettings.AllowedZones", allowedViewModel.SelectedZones != null ? string.Join(",", allowedViewModel.SelectedZones) : "");
                 builder.WithSetting("WidgetsContainerSettings.AllowedWidgets", allowedViewModel.SelectedWidgets != null ? string.Join(",", allowedViewModel.SelectedWidgets) : "");
+                builder.WithSetting("WidgetsContainerSettings.UseHierarchicalAssociation", allowedViewModel.UseHierarchicalAssociation.ToString());
+                builder.WithSetting("WidgetsContainerSettings.HierarchicalAssociationJson", allowedViewModel.HierarchicalAssociationJson);
+
             }
 
             yield return DefinitionTemplate(allowedViewModel);

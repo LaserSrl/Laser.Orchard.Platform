@@ -2,6 +2,15 @@
 
 <fieldset>
     <div>
+        @Html.CheckBoxFor(m => m.UseHierarchicalAssociation)
+        @Html.LabelFor(m => m.UseHierarchicalAssociation, T("Use hierarchical association").Text, new { @class="forcheckbox"})
+    </div>
+    <div data-controllerid="@Html.FieldIdFor(m => m.UseHierarchicalAssociation)">
+        @Html.LabelFor(m => m.HierarchicalAssociationJson, T("Hierarchical association:"))
+        @Html.TextAreaFor(m => m.HierarchicalAssociationJson, new { @class = "text large" })
+        <span class="hint">@T("Insert the JSON object defining Zones and Widgets. JSON example: [{ \"ZoneName\":\"AsideFirst\",\"Widgets\":[{\"WidgetType\":\"ContentWidget\"}]},{ \"ZoneName\":\"AfterContent\",\"Widgets\":[{\"WidgetType\":\"HtmlWidget\"},{\"WidgetType\":\"TextWidget\"}]}]")</span>
+    </div>
+    <div>
         @Html.LabelFor(m => m.SelectedZones, T("Allowed zones:"))
         @Html.ListBoxFor(m => m.SelectedZones, new MultiSelectList(Model.Zones), new { style = "display:block;" })
         <span class="hint">@T("Select the zones where the widgets can be placed. If no zone is selected all of them will be available.")</span>
