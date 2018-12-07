@@ -20,7 +20,7 @@ namespace Laser.Orchard.Cookies.Prove {
         }
 
         public string GetScript() {
-            return "";
+            return "<script type=\"text/javascript\" src=\"//prova.it/js/prova_widget.js#key=55\"></script>";
         }
     }
 }

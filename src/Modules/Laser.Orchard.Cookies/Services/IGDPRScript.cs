@@ -6,5 +6,8 @@ namespace Laser.Orchard.Cookies.Services {
         IList<CookieType> GetCurrentGDPR();
         //void SetCurrentGDPR(IList<CookieType> cookieTypes);
         string GetBannerChoices();
+        string GetCurrentCookiePrefix();
+        int IsCookieAccepted();
+        IList<ICookieGDPR> GetAllowedCookies();
     }
 }
