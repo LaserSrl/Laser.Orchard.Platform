@@ -53,11 +53,15 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             _cpServices.SaveCultureCookie(cultureName, Services.WorkContext.HttpContext);
             context.UrlLocalized = context.UrlLocalized ?? context.UrlToLocalize;
             context.QuerystringLocalized = SanitizeQuerystring(context.QuerystringLocalized) ?? context.QuerystringToLocalize;
-            return this.RedirectLocal(string.Format("~/{0}{1}", context.UrlLocalized,!string.IsNullOrWhiteSpace(context.QuerystringLocalized)?"?"+ context.QuerystringLocalized:""));
+            return this.RedirectLocal(string.Format("~/{0}{1}", context.UrlLocalized, !string.IsNullOrWhiteSpace(context.QuerystringLocalized) ? "?" + context.QuerystringLocalized : ""));
         }
 
         private string SanitizeQuerystring(string querystring) {
-            return !string.IsNullOrWhiteSpace(querystring) && querystring.StartsWith("?") ? querystring.Substring(1) : null;
+            var sanitized = querystring;
+            if (!string.IsNullOrWhiteSpace(querystring)) {
+                sanitized = querystring.StartsWith("?") ? querystring.Substring(1) : querystring;
+            }
+            return sanitized;
         }
     }
 }
