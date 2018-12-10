@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Laser.Orchard.Cookies.Services {
     public class GDPRScript : IGDPRScript {
-        private List<CookieType> orderedTypes = new List<CookieType>() { CookieType.Preference, CookieType.Statistical, CookieType.Marketing };
+        private List<CookieType> orderedTypes = new List<CookieType>() { CookieType.Technical, CookieType.Preference, CookieType.Statistical, CookieType.Marketing };
         private IEnumerable<ICookieGDPR> _cookies;
         public Localizer T { get; set; }
 
@@ -20,52 +20,36 @@ namespace Laser.Orchard.Cookies.Services {
         public string GetBannerChoices() {
             string result = "";
             string checkedDisabled = "";
+            var activeCookieTypes = GetActiveCookieTypes();
             // cicla sui tipi di cookie e crea il banner in modo da visualizzare solo le checkbox necessarie
-            foreach (var cookieType in GetActiveCookieTypes()) {
-                if(cookieType == CookieType.Technical) {
-                    checkedDisabled = "checked disabled";
-                } else {
-                    checkedDisabled = "";
-                }
-                result += "<input type=\"checkbox\" id=\"chk" + cookieType.ToString() + "\" value=\"1\" " + checkedDisabled + "/><label for=\"chk" + cookieType.ToString() + "\">" + T(cookieType.ToString()) + "</label>";
-            }
-            return result;
-        }
-        /// <summary>
-        /// Get choices of the user about cookies according to GDPR.
-        /// </summary>
-        /// <returns></returns>
-        public IList<CookieType> GetCurrentGDPR() {
-            List<CookieType> result = new List<CookieType>();
-            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
-            if (cookie != null) {
-                foreach (string kv in cookie.Values) {
-                    switch (kv) {
-                        case "Preference":
-                            result.Add(CookieType.Preference);
-                            break;
-                        case "Statistical":
-                            result.Add(CookieType.Statistical);
-                            break;
-                        case "Marketing":
-                            result.Add(CookieType.Marketing);
-                            break;
+            foreach (var cookieType in orderedTypes) {
+                if (activeCookieTypes.Contains(cookieType)) {
+                    if (cookieType == CookieType.Technical) {
+                        checkedDisabled = "checked disabled";
+                    } else {
+                        checkedDisabled = "";
                     }
+                    result += "<input type=\"checkbox\" id=\"chk" + cookieType.ToString() + "\" value=\"1\" " + checkedDisabled + "/><label for=\"chk" + cookieType.ToString() + "\">" + T(cookieType.ToString()) + "</label>";
                 }
             }
             return result;
         }
         public string GetCurrentCookiePrefix() {
             string result = "cc_cookie_accept";
-            var activeTypes = GetActiveCookieTypes();
+            var activeCookieTypes = GetActiveCookieTypes();
             foreach (var cookieType in orderedTypes) {
-                if (cookieType != CookieType.Technical && activeTypes.Contains(cookieType)) {
+                if (cookieType != CookieType.Technical && activeCookieTypes.Contains(cookieType)) {
                     result += "_" + cookieType.ToString();
                 }
             }
             result += ".";
             return result;
         }
+        /// <summary>
+        /// Check whether current user made his choice about cookies according to GDPR.
+        /// If new cookie types were introduced after user's choice, then user has to be notified as if he never made his choice before.
+        /// </summary>
+        /// <returns></returns>
         public int IsCookieAccepted() {
             int result = 0;
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
@@ -76,9 +60,13 @@ namespace Laser.Orchard.Cookies.Services {
             }
             return result;
         }
+        /// <summary>
+        /// Get all allowed cookies according to current user's choice.
+        /// </summary>
+        /// <returns></returns>
         public IList<ICookieGDPR> GetAllowedCookies() {
             var result = new List<ICookieGDPR>();
-            var types = GetAcceptedTypes();
+            var types = GetAcceptedCookieTypes();
             var accepted = false;
             foreach (var cookie in _cookies) {
                 accepted = true;
@@ -113,20 +101,24 @@ namespace Laser.Orchard.Cookies.Services {
             }
             return result;
         }
-        private IList<CookieType> GetAcceptedTypes() {
+        /// <summary>
+        /// Get cookie types accepted by the current user.
+        /// </summary>
+        /// <returns></returns>
+        private IList<CookieType> GetAcceptedCookieTypes() {
             var result = new List<CookieType>();
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
             if (cookie != null) {
                 var arrVal = cookie.Value.Split('.');
                 if (arrVal != null && arrVal.Length > 1) {
-                    var arrCheck = arrVal[1].Split('_');
-                    if (arrCheck.Length > 1 && arrCheck[1] == "1") {
+                    var arrCheck = arrVal[1];
+                    if (arrCheck.Length > 0 && arrCheck[0] == '1') {
                         result.Add(CookieType.Preference);
                     }
-                    if (arrCheck.Length > 2 && arrCheck[2] == "1") {
+                    if (arrCheck.Length > 1 && arrCheck[1] == '1') {
                         result.Add(CookieType.Statistical);
                     }
-                    if (arrCheck.Length > 3 && arrCheck[3] == "1") {
+                    if (arrCheck.Length > 2 && arrCheck[2] == '1') {
                         result.Add(CookieType.Marketing);
                     }
                 }

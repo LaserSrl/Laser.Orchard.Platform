@@ -254,19 +254,19 @@
                 });
                 var aux1 = "";
                 if ($("#chkPreference").prop("checked")) {
-                    aux1 = aux1 + "_1";
+                    aux1 = aux1 + "1";
                 } else {
-                    aux1 = aux1 + "_0";
+                    aux1 = aux1 + "0";
                 }
                 if ($("#chkStatistical").prop("checked")) {
-                    aux1 = aux1 + "_1";
+                    aux1 = aux1 + "1";
                 } else {
-                    aux1 = aux1 + "_0";
+                    aux1 = aux1 + "0";
                 }
                 if ($("#chkMarketing").prop("checked")) {
-                    aux1 = aux1 + "_1";
+                    aux1 = aux1 + "1";
                 } else {
-                    aux1 = aux1 + "_0";
+                    aux1 = aux1 + "0";
                 }
                 $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
                     expires: cookieExpires,
