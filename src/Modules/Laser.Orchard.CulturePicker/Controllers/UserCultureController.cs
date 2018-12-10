@@ -27,6 +27,7 @@ namespace Laser.Orchard.CulturePicker.Controllers {
         }
 
         public IOrchardServices Services { get; set; }
+
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ChangeCulture(string cultureName) {
             var translatedUrlFound = false;

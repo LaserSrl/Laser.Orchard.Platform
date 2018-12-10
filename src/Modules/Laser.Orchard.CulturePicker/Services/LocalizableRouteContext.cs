@@ -6,13 +6,25 @@ using System.Web;
 
 namespace Laser.Orchard.CulturePicker.Services {
     public class LocalizableRouteContext {
+
+        /// <summary>
+        /// private variable to store the querystring to localize. This variable is set when the QuerystringToLocalizeCollection is set;
+        /// </summary>
         private NameValueCollection _querystringToLocalizeCollection;
+
+        /// <summary>
+        /// private variable to store the querystring after a localization action. This variable is set when the QuerystringLocalizedCollection is set;
+        /// </summary>
         private NameValueCollection _querystringLocalizedCollection;
+
         public LocalizableRouteContext(string urlToLocalize, string querystringToLocalize, string culture) {
             QuerystringToLocalizeCollection = HttpUtility.ParseQueryString(querystringToLocalize);
             UrlToLocalize = urlToLocalize;
             Culture = culture;
         }
+
+        public bool UrlIsLocalized { get; private set; }
+        public bool QuerystringIsLocalized { get; private set; }
 
         public NameValueCollection QuerystringToLocalizeCollection {
             get { return _querystringToLocalizeCollection; }
@@ -20,13 +32,13 @@ namespace Laser.Orchard.CulturePicker.Services {
                 _querystringToLocalizeCollection = value;
             }
         }
+        /// <summary>
+        /// returns the localized querystring collection if a localization provider has been fired. 
+        /// </summary>
         public NameValueCollection QuerystringLocalizedCollection {
-            get { return _querystringLocalizedCollection; }
+            get { return QuerystringIsLocalized ? _querystringLocalizedCollection : _querystringToLocalizeCollection; }
             set {
-                if (_querystringLocalizedCollection == null) {
-                    _querystringLocalizedCollection = new NameValueCollection();
-
-                }
+                QuerystringIsLocalized = true;
                 _querystringLocalizedCollection = value;
             }
         }
@@ -38,19 +50,25 @@ namespace Laser.Orchard.CulturePicker.Services {
         }
         public string UrlToLocalize { get; set; }
         public string Culture { get; set; }
-        public string UrlLocalized { get; set; }
+        private string _ulrlLocalized;
+        public string UrlLocalized {
+            get {
+                return UrlIsLocalized ? _ulrlLocalized : UrlToLocalize;
+            }
+            set {
+                UrlIsLocalized = true;
+                _ulrlLocalized = value;
+            }
+        }
         public string QuerystringLocalized {
             get {
-                if (_querystringLocalizedCollection == null) { return ""; }
-                return SanitizeQuerystring(string.Join("&", _querystringLocalizedCollection.AllKeys.Where(key => !string.IsNullOrWhiteSpace(_querystringLocalizedCollection[key])).Select(key => string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(_querystringLocalizedCollection[key])))));
+                if (QuerystringLocalizedCollection == null) { return ""; }
+                return SanitizeQuerystring(string.Join("&", QuerystringLocalizedCollection.AllKeys.Where(key => !string.IsNullOrWhiteSpace(QuerystringLocalizedCollection[key])).Select(key => string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(QuerystringLocalizedCollection[key])))));
             }
         }
         public string RedirectLocalUrl {
             get {
-                UrlLocalized = UrlLocalized ?? UrlToLocalize;
-                var querystring = QuerystringLocalized ?? QuerystringToLocalize;
-
-                return string.Format("~/{0}{1}", UrlLocalized, !string.IsNullOrWhiteSpace(querystring) ? "?" + querystring : "");
+                return string.Format("~/{0}{1}", UrlLocalized, !string.IsNullOrWhiteSpace(QuerystringLocalized) ? "?" + QuerystringLocalized : "");
             }
         }
         private static string SanitizeQuerystring(string querystring) {
