@@ -13,6 +13,11 @@
 
 <fieldset class="buttons">
     <div>
+        @Html.EditorFor(m => m.cookieOverlayEnabled)
+        <label class="forcheckbox" for="CookieSettings_cookieOverlayEnabled">@T("Banner overlay")</label>
+        <span class="hint">@T("The banner will cover the whole page and users will have to dismiss it il order to navigate the site.")</span>
+    </div>
+    <div>
         @Html.EditorFor(m => m.showCookieAcceptButton)
         <label class="forcheckbox" for="CookieSettings_showCookieAcceptButton">@T("Cookie Accept Button")</label>
         <span class="hint">@T("It will show a green button for the user to accept cookies.")</span>

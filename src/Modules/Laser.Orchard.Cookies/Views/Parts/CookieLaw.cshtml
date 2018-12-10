@@ -13,6 +13,7 @@
     var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
+    var cookieOverlayEnabled = settings.cookieOverlayEnabled.ToString().ToLower();
     var gdprScriptService = Model.GDPRScriptservice;
 
     using (Script.Foot()) {
@@ -58,6 +59,7 @@
             cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
         cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
         cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
+        cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
 
         $.cookieCuttr(cookiesettings);
     });
