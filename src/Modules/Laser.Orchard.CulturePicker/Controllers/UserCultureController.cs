@@ -27,22 +27,19 @@ namespace Laser.Orchard.CulturePicker.Controllers {
         }
 
         public IOrchardServices Services { get; set; }
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ChangeCulture(string cultureName) {
             var translatedUrlFound = false;
             if (Services.WorkContext.HttpContext.Request.UrlReferrer == null) {
                 return new HttpStatusCodeResult(404);
             }
             if (string.IsNullOrEmpty(cultureName)) {
-                throw new ArgumentNullException(cultureName);
+                return new HttpStatusCodeResult(404);
             }
             var urlPrefix = Services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
             var requestUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
             var requestQuerystring = Services.WorkContext.HttpContext.Request.UrlReferrer.Query;
-            var context = new LocalizableRouteContext {
-                Culture = cultureName,
-                UrlToLocalize = requestUrl,
-                QuerystringToLocalize = SanitizeQuerystring(requestQuerystring) //removes "?"
-            };
+            var context = new LocalizableRouteContext(requestUrl, requestQuerystring, cultureName);
             foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
                 if (provider.TryFindLocalizedUrl(context)) {
                     translatedUrlFound = true;
@@ -51,17 +48,8 @@ namespace Laser.Orchard.CulturePicker.Controllers {
 
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
             _cpServices.SaveCultureCookie(cultureName, Services.WorkContext.HttpContext);
-            context.UrlLocalized = context.UrlLocalized ?? context.UrlToLocalize;
-            context.QuerystringLocalized = SanitizeQuerystring(context.QuerystringLocalized) ?? context.QuerystringToLocalize;
-            return this.RedirectLocal(string.Format("~/{0}{1}", context.UrlLocalized, !string.IsNullOrWhiteSpace(context.QuerystringLocalized) ? "?" + context.QuerystringLocalized : ""));
+            return this.RedirectLocal(context.RedirectLocalUrl);
         }
 
-        private string SanitizeQuerystring(string querystring) {
-            var sanitized = querystring;
-            if (!string.IsNullOrWhiteSpace(querystring)) {
-                sanitized = querystring.StartsWith("?") ? querystring.Substring(1) : querystring;
-            }
-            return sanitized;
-        }
     }
 }

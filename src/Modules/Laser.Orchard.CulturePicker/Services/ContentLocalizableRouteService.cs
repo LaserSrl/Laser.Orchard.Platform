@@ -32,7 +32,7 @@ namespace Laser.Orchard.CulturePicker.Services {
             bool translatedUrlFound = false;
 
             if (string.IsNullOrEmpty(localizableRouteContext.Culture)) {
-                throw new ArgumentNullException(localizableRouteContext.Culture);
+                return translatedUrlFound;
             }
             var urlPrefix = Services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
 
@@ -46,7 +46,6 @@ namespace Laser.Orchard.CulturePicker.Services {
                 if (_localizableContentService.TryFindLocalizedRoute(currentRoutePart.ContentItem, localizableRouteContext.Culture, out localizedRoutePart)) {
                     returnUrl = localizedRoutePart.PromoteToHomePage ? "" : localizedRoutePart.Path;
                     if (!String.IsNullOrWhiteSpace(urlPrefix) && !returnUrl.StartsWith(urlPrefix)) {
-                        //returnUrl = urlPrefix + "/" + returnUrl;
                         returnUrl = "~/" + returnUrl;
                     }
                     localizableRouteContext.UrlLocalized = returnUrl;
