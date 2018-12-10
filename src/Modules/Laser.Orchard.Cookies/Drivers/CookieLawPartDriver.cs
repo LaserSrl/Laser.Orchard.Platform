@@ -5,12 +5,15 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard.OutputCache;
 using System;
+using System.Text;
+using System.Web;
 
 namespace Laser.Orchard.Cookies.Drivers {
 
     
-    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart> {
+    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart>, ICachingEventHandler {
 
         private readonly IWorkContextAccessor _workContextAccessor;
 
@@ -102,17 +105,6 @@ namespace Laser.Orchard.Cookies.Drivers {
             }
             return default(TV);
         }
-
-
-       
-
-       
-
-      
-       
-      
-
-
         protected override void Cloning(CookieLawPart originalPart, CookieLawPart clonePart, CloneContentContext context) {
             clonePart.cookieDiscreetLinkText = originalPart.cookieDiscreetLinkText;
             clonePart.cookiePolicyPageMessage = originalPart.cookiePolicyPageMessage;
@@ -125,6 +117,17 @@ namespace Laser.Orchard.Cookies.Drivers {
             clonePart.cookiePolicyLink = originalPart.cookiePolicyLink;
             clonePart.cookieMessage = originalPart.cookieMessage;
             clonePart.cookieWhatAreTheyLink = originalPart.cookieWhatAreTheyLink;
+        }
+
+        public void KeyGenerated(StringBuilder key) {
+            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
+            if (cookie != null) {
+                var arrVal = cookie.Value.Split('.');
+                if (arrVal != null && arrVal.Length > 1) {
+                    var arrCheck = arrVal[1];
+                    key.AppendFormat("CookieLaw={0};", arrCheck);
+                }
+            }
         }
     }
 }
