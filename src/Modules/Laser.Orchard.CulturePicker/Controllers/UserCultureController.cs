@@ -48,7 +48,7 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             }
 
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
-            _cpServices.SaveCultureCookie(cultureName, Services.WorkContext.HttpContext);
+            _cpServices.SaveCultureCookie(cultureName, this.HttpContext);
             return this.RedirectLocal(context.RedirectLocalUrl);
         }
 

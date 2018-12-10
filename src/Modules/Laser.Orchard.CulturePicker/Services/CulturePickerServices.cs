@@ -24,7 +24,8 @@ namespace Laser.Orchard.CulturePicker.Services {
                 // '.' prefix means, that cookie will be shared to sub-domains
                 cultureCookie.Domain = "." + request.Url.Host;
             }
-
+            context.Request.Cookies.Remove(cultureCookie.Name);
+            context.Response.Cookies.Remove(cultureCookie.Name);
             context.Response.Cookies.Add(cultureCookie);
         }
 
