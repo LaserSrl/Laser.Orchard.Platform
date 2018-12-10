@@ -1,7 +1,11 @@
 ﻿using Orchard.Localization;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
+using System.Linq;
 
 namespace Laser.Orchard.Cookies.Services {
     public class GDPRScript : IGDPRScript {
@@ -35,14 +39,21 @@ namespace Laser.Orchard.Cookies.Services {
             return result;
         }
         public string GetCurrentCookiePrefix() {
-            string result = "cc_cookie_accept";
-            var activeCookieTypes = GetActiveCookieTypes();
-            foreach (var cookieType in orderedTypes) {
-                if (cookieType != CookieType.Technical && activeCookieTypes.Contains(cookieType)) {
-                    result += "_" + cookieType.ToString();
+            string result = "";
+            var textToHash = new StringBuilder("cc_cookie_accept");
+            var orderedCookies = from cc in _cookies orderby cc.GetCookieName() select cc;
+            foreach (var cookie in orderedCookies) {
+                textToHash.Append(cookie.GetCookieName());
+                foreach(var ct in orderedTypes) {
+                    if (cookie.GetCookieTypes().Contains(ct)) {
+                        textToHash.Append(ct.ToString());
+                    }
+                    textToHash.AppendLine();
                 }
             }
-            result += ".";
+            var md5 = MD5.Create();
+            var arr = md5.ComputeHash(Encoding.UTF8.GetBytes(textToHash.ToString()));
+            result =  BitConverter.ToString(arr).Replace("-", "") + ".";
             return result;
         }
         /// <summary>

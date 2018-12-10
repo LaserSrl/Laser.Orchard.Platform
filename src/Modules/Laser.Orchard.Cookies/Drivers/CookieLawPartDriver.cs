@@ -119,13 +119,16 @@ namespace Laser.Orchard.Cookies.Drivers {
             clonePart.cookieWhatAreTheyLink = originalPart.cookieWhatAreTheyLink;
         }
 
+        /// <summary>
+        /// Per generare la key utilizza il valore del cookie che dipende dai cookie abilitati e dalle scelte dell'utente.
+        /// </summary>
+        /// <param name="key"></param>
         public void KeyGenerated(StringBuilder key) {
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
             if (cookie != null) {
-                var arrVal = cookie.Value.Split('.');
-                if (arrVal != null && arrVal.Length > 1) {
-                    var arrCheck = arrVal[1];
-                    key.AppendFormat("CookieLaw={0};", arrCheck);
+                var val = cookie.Value;
+                if (string.IsNullOrWhiteSpace(val) == false) {
+                    key.AppendFormat("CookieLaw={0};", val);
                 }
             }
         }

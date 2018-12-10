@@ -23,4 +23,17 @@ namespace Laser.Orchard.Cookies.Prove {
             return "<script type=\"text/javascript\" src=\"//prova.it/js/prova_widget.js#key=55\"></script>";
         }
     }
+    public class Prova2 : ICookieGDPR {
+        public string GetCookieName() {
+            return "Prova2";
+        }
+
+        public IList<CookieType> GetCookieTypes() {
+            return new List<CookieType>() { CookieType.Statistical };
+        }
+
+        public string GetScript() {
+            return "<script type=\"text/javascript\" src=\"//prova.it/js/prova_widget2.js#key=55\"></script>";
+        }
+    }
 }
