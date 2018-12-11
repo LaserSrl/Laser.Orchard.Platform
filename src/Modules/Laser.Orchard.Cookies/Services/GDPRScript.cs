@@ -93,6 +93,21 @@ namespace Laser.Orchard.Cookies.Services {
             }
             return result;
         }
+        /// <summary>
+        /// Get if cookie module is acceptable according to current user's choices. 
+        /// </summary>
+        /// <param name="cookieModule"></param>
+        /// <returns></returns>
+        public bool IsAcceptableForUser(ICookieGDPR cookieModule) {
+            var result = true;
+            var okCookies = GetAcceptedCookieTypes();
+            foreach(var ct in cookieModule.GetCookieTypes()) {
+                if(okCookies.Contains(ct) == false) {
+                    result = false;
+                }
+            }
+            return result;
+        }
         ///// <summary>
         ///// Set choices of the user about cookies according to GDPR.
         ///// </summary>

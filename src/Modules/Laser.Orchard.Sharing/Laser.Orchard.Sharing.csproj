@@ -117,6 +117,7 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="MissingSettingsBanner.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\CookieGDPR.cs" />
     <Compile Include="Settings\ShareBarMode.cs" />
     <Compile Include="Models\ShareBarPart.cs" />
     <Compile Include="Models\ShareBarSettingsPart.cs" />
@@ -159,6 +160,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{BDB0CD8D-7C6C-46F0-A041-6B2E1E0F9C9E}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

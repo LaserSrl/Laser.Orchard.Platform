@@ -10,4 +10,4 @@ Features:
         Description: Adds content sharing functionality via AddThis sharing service.
         Name: Content sharing
         Category: Social
-		Dependencies: Orchard.Tokens
+		Dependencies: Orchard.Tokens, Laser.Orchard.Cookies
