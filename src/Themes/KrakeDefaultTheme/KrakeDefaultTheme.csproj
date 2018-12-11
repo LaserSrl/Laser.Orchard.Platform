@@ -220,7 +220,6 @@
     <Compile Include="Settings\Models\ThemeSettingsRecord.cs" />
     <Compile Include="Settings\Services\ThemeSettingsService.cs" />
     <Compile Include="Settings\ViewModels\ThemeSettingsViewModel.cs" />
-    <Compile Include="TermidsLocalizableRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\ThemeSettings.cshtml" />
