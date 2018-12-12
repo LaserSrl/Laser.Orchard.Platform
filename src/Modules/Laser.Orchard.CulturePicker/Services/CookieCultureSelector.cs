@@ -55,8 +55,6 @@ namespace Laser.Orchard.CulturePicker.Services {
             if (String.IsNullOrEmpty(currentCultureName)) {
                 return null;
             }
-
-            _cpServices.SaveCultureCookie(currentCultureName, context);
             return new CultureSelectorResult { Priority = SelectorPriority, CultureName = currentCultureName };
         }
 

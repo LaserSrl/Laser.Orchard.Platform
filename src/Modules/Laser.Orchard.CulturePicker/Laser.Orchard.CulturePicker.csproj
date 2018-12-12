@@ -167,7 +167,10 @@
     </Compile>
     <Compile Include="Migrations.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\ContentLocalizableRouteService.cs" />
+    <Compile Include="Services\ILocalizableRouteService.cs" />
     <Compile Include="Services\ITranslateMenuItemsServices.cs" />
+    <Compile Include="Services\LocalizableRouteContext.cs" />
     <Compile Include="Services\TranslateMenuItemServices.cs" />
     <Compile Include="TranslateMenuItemPartMigrations.cs" />
     <Compile Include="Models\CulturePickerPart.cs" />
