@@ -133,6 +133,7 @@
     <Compile Include="Prove\Prove.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\GDPRScript.cs" />
+    <Compile Include="Services\HubSpotCookieGDPR.cs" />
     <Compile Include="Services\ICookieGDPR.cs" />
     <Compile Include="Services\IGDPRScript.cs" />
     <Compile Include="ViewModels\CookieLawEditModel.cs" />
