@@ -32,7 +32,10 @@ namespace Laser.Orchard.Maps {
 
             manifest.DefineScript("GoogleMapsPlacesLib")
                 .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + "&libraries=places");
-           
+
+            manifest.DefineScript("GoogleMapsGeometryLib")
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + "&libraries=geometry");
+
             manifest.DefineScript("MarkerClusterer")
                 .SetUrl("MarkerClusterer.js");
             // CSS

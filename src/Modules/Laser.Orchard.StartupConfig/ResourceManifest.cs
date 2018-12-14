@@ -11,9 +11,10 @@ namespace Laser.Orchard.StartupConfig {
             //maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css
 
             // color picker
-            builder.Add().DefineScript("spectrum").SetUrl("spectrum.js").SetDependencies("jQuery");
-            // tabulator
-            builder.Add().DefineScript("tabulator").SetUrl("tabulator.min.js").SetDependencies("jQueryUI");
+            manifest.DefineScript("spectrum").SetUrl("spectrum.js").SetDependencies("jQuery");
+            // tabulator (currently v3.4.4)
+            manifest.DefineScript("tabulator").SetUrl("tabulator.min.js").SetDependencies("jQueryUI");
+            manifest.DefineStyle("tabulator").SetUrl("tabulator.min.css");
         }
     }
 }

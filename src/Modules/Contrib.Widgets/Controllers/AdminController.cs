@@ -63,10 +63,13 @@ namespace Contrib.Widgets.Controllers {
 
             var widgetsContainerPart = _contentManager.Get(hostId, VersionOptions.Latest).As<WidgetsContainerPart>();
             var settings = widgetsContainerPart.Settings.GetModel<WidgetsContainerSettings>();
-
-            if (!string.IsNullOrWhiteSpace(settings.AllowedWidgets))
-                widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x)).ToList();
-
+            if (!settings.UseHierarchicalAssociation) {
+                if (!string.IsNullOrWhiteSpace(settings.AllowedWidgets))
+                    widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x)).ToList();
+            } else {
+                var allowedWidgetsForZone = settings.HierarchicalAssociation.Where(x => x.ZoneName == zone).SelectMany(z=>z.Widgets.Select(w=>w.WidgetType));
+                widgetTypes = widgetTypes.Where(x => allowedWidgetsForZone.Contains(x)|| allowedWidgetsForZone.Contains("All")).ToList();
+            }
             var viewModel = _services.New.ViewModel()
                 .WidgetTypes(widgetTypes)
                 .HostId(hostId)

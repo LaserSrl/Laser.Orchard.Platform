@@ -151,8 +151,10 @@
     <Compile Include="Services\ILayerManager.cs" />
     <Compile Include="Services\WidgetContainerPartDumperService.cs" />
     <Compile Include="Services\WidgetManager.cs" />
+    <Compile Include="Settings\Widget.cs" />
     <Compile Include="Settings\WidgetsContainerEvents.cs" />
     <Compile Include="Settings\WidgetsContainerSettings.cs" />
+    <Compile Include="Settings\Zone.cs" />
     <Compile Include="ViewModels\WidgetsContainerSettingsViewModel.cs" />
     <Compile Include="ViewModels\WidgetsContainerViewModel.cs" />
     <Compile Include="Drivers\WidgetsContainerPartDriver.cs" />
