@@ -102,7 +102,6 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.cookie.min.js" />
     <Content Include="Scripts\jquery.cookiecuttr.js" />
-    <Content Include="Scripts\jquery.cookiecuttr.min.js" />
     <Content Include="Styles\cookiecuttr.css" />
     <Content Include="Styles\cookiecuttr.min.css">
       <DependentUpon>cookiecuttr.css</DependentUpon>
