@@ -83,8 +83,11 @@
         var cookieDiscreetLinkText = options.cookieDiscreetLinkText;
         var cookieDiscreetPosition = options.cookieDiscreetPosition;
         var cookieNoMessage = options.cookieNoMessage;
+        var cookieExpectedValue = options.cookieExpectedValue;
+        var cookieAccepted = options.cookieAccepted;
         // cookie identifier
-        var $cookieAccepted = $.cookie('cc_cookie_accept') == "cc_cookie_accept";
+
+        var $cookieAccepted = cookieAccepted;
         $.cookieAccepted = function () {
             return $cookieAccepted;
         };
@@ -249,7 +252,23 @@
                 $.cookie("cc_cookie_decline", null, {
                     path: '/'
                 });
-                $.cookie("cc_cookie_accept", "cc_cookie_accept", {
+                var aux1 = "";
+                if ($("#chkPreference").prop("checked")) {
+                    aux1 = aux1 + "1";
+                } else {
+                    aux1 = aux1 + "0";
+                }
+                if ($("#chkStatistical").prop("checked")) {
+                    aux1 = aux1 + "1";
+                } else {
+                    aux1 = aux1 + "0";
+                }
+                if ($("#chkMarketing").prop("checked")) {
+                    aux1 = aux1 + "1";
+                } else {
+                    aux1 = aux1 + "0";
+                }
+                $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
                     expires: cookieExpires,
                     path: '/'
                 });

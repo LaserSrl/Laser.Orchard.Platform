@@ -1,15 +1,19 @@
 
 using Laser.Orchard.Cookies.Models;
+using Laser.Orchard.Cookies.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard.OutputCache;
 using System;
+using System.Text;
+using System.Web;
 
 namespace Laser.Orchard.Cookies.Drivers {
 
     
-    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart> {
+    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart>, ICachingEventHandler {
 
         private readonly IWorkContextAccessor _workContextAccessor;
 
@@ -19,10 +23,11 @@ namespace Laser.Orchard.Cookies.Drivers {
 
         protected override DriverResult Display(CookieLawPart part, string displayType, dynamic shapeHelper) {
             var workContext = _workContextAccessor.GetContext();
+            var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
 
             return ContentShape("Parts_CookieLaw",
-                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part));
+                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice));
         }
 
         protected override DriverResult Editor(CookieLawPart part, dynamic shapeHelper) {
@@ -100,17 +105,6 @@ namespace Laser.Orchard.Cookies.Drivers {
             }
             return default(TV);
         }
-
-
-       
-
-       
-
-      
-       
-      
-
-
         protected override void Cloning(CookieLawPart originalPart, CookieLawPart clonePart, CloneContentContext context) {
             clonePart.cookieDiscreetLinkText = originalPart.cookieDiscreetLinkText;
             clonePart.cookiePolicyPageMessage = originalPart.cookiePolicyPageMessage;
@@ -123,6 +117,20 @@ namespace Laser.Orchard.Cookies.Drivers {
             clonePart.cookiePolicyLink = originalPart.cookiePolicyLink;
             clonePart.cookieMessage = originalPart.cookieMessage;
             clonePart.cookieWhatAreTheyLink = originalPart.cookieWhatAreTheyLink;
+        }
+
+        /// <summary>
+        /// Per generare la key utilizza il valore del cookie che dipende dai cookie abilitati e dalle scelte dell'utente.
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyGenerated(StringBuilder key) {
+            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
+            if (cookie != null) {
+                var val = cookie.Value;
+                if (string.IsNullOrWhiteSpace(val) == false) {
+                    key.AppendFormat("CookieLaw={0};", val);
+                }
+            }
         }
     }
 }

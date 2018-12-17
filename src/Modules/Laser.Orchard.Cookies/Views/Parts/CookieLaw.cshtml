@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Laser.Orchard.Cookies.Services
+@{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
     // before the DOMLoadedEvent
@@ -12,9 +13,10 @@
     var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
+    var cookieOverlayEnabled = settings.cookieOverlayEnabled.ToString().ToLower();
+    var gdprScriptService = Model.GDPRScriptservice;
 
-    using (Script.Foot())
-    {
+    using (Script.Foot()) {
 <script type="text/javascript">
     $(document).ready(function () {
         var cookiesettings = {};
@@ -31,11 +33,15 @@
                 cookiesettings.cookieWhatAreTheyLink = '@part.cookieWhatAreTheyLink';
         }
         else {
-            if ('@part.cookieMessage'.length > 0)
-                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage)';
+            if (@(part.cookieMessage.Length) > 0)
+                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
             if ('@part.cookiePolicyLink'.length > 0)
                 cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
         }
+        // user options
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div>';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></form>';
         // positioning
         cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
         cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
@@ -51,9 +57,16 @@
         cookiesettings.cookieResetButton = @cookieResetButton;
         if ('@part.cookieResetButtonText'.length > 0)
             cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+        cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
+        cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
+        cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
 
         $.cookieCuttr(cookiesettings);
     });
 </script>
+
+        foreach(var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetScript())</text>
+        }
     }
 }

@@ -15,7 +15,19 @@ namespace Laser.Orchard.Cookies.Models
         public bool showCookieDeclineButton { get { return this.Retrieve(x => x.showCookieDeclineButton); } set { this.Store(x => x.showCookieDeclineButton, value); } }
         public bool showCookieAcceptButton { get { return this.Retrieve(x => x.showCookieAcceptButton, true); } set { this.Store(x => x.showCookieAcceptButton, value); } }
         public bool showCookieResetButton { get { return this.Retrieve(x => x.showCookieResetButton); } set { this.Store(x => x.showCookieResetButton, value); } }
-        public bool cookieOverlayEnabled { get { return this.Retrieve(x => x.cookieOverlayEnabled); } set { this.Store(x => x.cookieOverlayEnabled, value); } }
+        public bool cookieOverlayEnabled {
+            get {
+                // default value: true
+                return this.Retrieve(x => x.cookieOverlayEnabled, true);
+            }
+            set { this.Store(x => x.cookieOverlayEnabled, value); } }
         public bool cookieCutter { get { return this.Retrieve(x => x.cookieCutter); } set { this.Store(x => x.cookieCutter, value); } }
+        public bool DisableCookieGDPRManagement {
+            get {
+                return this.Retrieve(x => x.DisableCookieGDPRManagement);
+            }
+            set { this.Store(x => x.DisableCookieGDPRManagement, value); }
+        }
+
     }
 }
