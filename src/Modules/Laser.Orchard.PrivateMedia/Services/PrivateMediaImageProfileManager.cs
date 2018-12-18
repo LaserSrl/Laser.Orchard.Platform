@@ -4,14 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
-using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
 using Orchard.Forms.Services;
 using Orchard.Logging;
@@ -24,8 +22,7 @@ using Orchard.Utility.Extensions;
 
 namespace Laser.Orchard.PrivateMedia.Services {
 
-    // [OrchardSuppressDependency("Orchard.MediaProcessing.Services.ImageProfileManager")]
-    public class PrivateMediaImageProfileManager : IImageProfileManager {
+      public class PrivateMediaImageProfileManager : IImageProfileManager {
 
         private readonly IStorageProvider _storageProvider;
         private readonly IImageProcessingFileNameProvider _fileNameProvider;

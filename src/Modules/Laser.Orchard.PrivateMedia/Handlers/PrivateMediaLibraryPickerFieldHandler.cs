@@ -9,7 +9,6 @@ using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Environment.Extensions;
 using Orchard.MediaLibrary.Fields;
-using Orchard.MediaLibrary.Handlers;
 using Orchard.MediaLibrary.Models;
 
 namespace Laser.Orchard.PrivateMedia.Handlers {

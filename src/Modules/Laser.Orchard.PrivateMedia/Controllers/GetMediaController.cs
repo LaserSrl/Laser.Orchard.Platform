@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Services;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Orchard;
-using Orchard.Environment.Extensions;
-using Orchard.FileSystems.Media;
-using Orchard.Security;
 
 namespace Laser.Orchard.PrivateMedia.Controllers {
     public class GetMediaController : Controller {
@@ -26,18 +18,15 @@ namespace Laser.Orchard.PrivateMedia.Controllers {
             if (!_orchardServices.Authorizer.Authorize(PrivateMediaPermissions.AccessAllPrivateMedia)) {
                 return null;
             }
-           // WebImage img;
+          //  WebImage img;
             lock (String.Intern(filename)) {
-                //  filename = @"C:\Sviluppo\Laser.Orchard\Orchard\src\Orchard.Web\Media\SaisTrasporti\Azienda\dumbbells-2465478_1920.jpg";
-                // var realfile = _storageProvider.GetStoragePath(_storageProvider.GetPublicUrl(filename));
                 var _storagePath = HostingEnvironment.IsHosted
                 ? HostingEnvironment.MapPath("~/Media/") ?? ""
                 : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
                 filename = filename.Substring(filename.IndexOf("/Media/") + 7);
                 filename = filename.Replace("/", @"\");
                 filename = _storagePath + filename;
-                // var realfile = Directory.GetFiles(_storagePath, "*", SearchOption.AllDirectories).AsEnumerable().Select(f => new FileInfo(f));
-            //    img = new WebImage(filename);
+           //    img = new WebImage(filename);
 
             }
             return base.File(filename, MimeMapping.GetMimeMapping(filename));

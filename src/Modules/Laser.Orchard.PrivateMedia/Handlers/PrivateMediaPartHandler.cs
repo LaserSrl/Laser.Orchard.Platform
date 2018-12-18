@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Laser.Orchard.PrivateMedia.Models;
-using Orchard.ContentManagement.Handlers;
-using Orchard.MediaLibrary.Models;
+﻿using Laser.Orchard.PrivateMedia.Models;
 using Orchard.ContentManagement;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
+using Orchard.MediaLibrary.Models;
 
 namespace Laser.Orchard.PrivateMedia.Handlers {
     public class PrivateMediaPartHandler : ContentHandler {

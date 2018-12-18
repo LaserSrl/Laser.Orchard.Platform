@@ -7,7 +7,6 @@ using Orchard.Security.Permissions;
 namespace Laser.Orchard.PrivateMedia {
     public class PrivateMediaPermissions : IPermissionProvider {
 
-
         public static readonly Permission AccessAllPrivateMedia = new Permission {
             Description = "Access all private Media",
             Name = "AccessAllPrivateMedia",
