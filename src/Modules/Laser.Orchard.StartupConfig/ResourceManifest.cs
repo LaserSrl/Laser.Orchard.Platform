@@ -13,8 +13,14 @@ namespace Laser.Orchard.StartupConfig {
             // color picker
             manifest.DefineScript("spectrum").SetUrl("spectrum.js").SetDependencies("jQuery");
             // tabulator (currently v3.4.4)
-            manifest.DefineScript("tabulator").SetUrl("tabulator.min.js").SetDependencies("jQueryUI");
-            manifest.DefineStyle("tabulator").SetUrl("tabulator.min.css");
+            manifest.DefineScript("tabulator")
+                .SetUrl("tabulator\\tabulator.min.js", "tabulator\\tabulator.js")
+                .SetDependencies("jQueryUI");
+            manifest.DefineStyle("tabulator")
+                .SetUrl("tabulator\\tabulator.min.css", "tabulator\\tabulator.css");
+            manifest.DefineStyle("tabulatorBootstrap")
+                .SetUrl("tabulator\\bootstrap\\tabulator_bootstrap.min.css", "tabulator\\bootstrap\\tabulator_bootstrap.css")
+                .SetDependencies("Bootstrap");
         }
     }
 }
