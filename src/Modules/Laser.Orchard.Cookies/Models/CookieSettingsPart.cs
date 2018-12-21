@@ -21,6 +21,24 @@ namespace Laser.Orchard.Cookies.Models
                 return this.Retrieve(x => x.cookieOverlayEnabled, true);
             }
             set { this.Store(x => x.cookieOverlayEnabled, value); } }
+        public bool defaultValuePreferences {
+            get {
+                return this.Retrieve(x => x.defaultValuePreferences, true);
+            }
+            set { this.Store(x => x.defaultValuePreferences, value); }
+        }
+        public bool defaultValueStatistical {
+            get {
+                return this.Retrieve(x => x.defaultValueStatistical, true);
+            }
+            set { this.Store(x => x.defaultValueStatistical, value); }
+        }
+        public bool defaultValueMarketing {
+            get {
+                return this.Retrieve(x => x.defaultValueMarketing, true);
+            }
+            set { this.Store(x => x.defaultValueMarketing, value); }
+        }
         public bool cookieCutter { get { return this.Retrieve(x => x.cookieCutter); } set { this.Store(x => x.cookieCutter, value); } }
         public bool DisableCookieGDPRManagement {
             get {

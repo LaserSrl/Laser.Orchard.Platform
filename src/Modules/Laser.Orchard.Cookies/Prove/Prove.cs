@@ -13,7 +13,7 @@
 //        public IList<CookieType> GetCookieTypes() {
 //            var result = new List<CookieType>();
 //            result.Add(CookieType.Statistical);
-//            result.Add(CookieType.Preference);
+//            result.Add(CookieType.Preferences);
 //            result.Add(CookieType.Technical);
 //            result.Add(CookieType.Marketing);
 //            return result;
