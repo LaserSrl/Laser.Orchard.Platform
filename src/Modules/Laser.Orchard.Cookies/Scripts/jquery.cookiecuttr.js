@@ -253,7 +253,7 @@
                     path: '/'
                 });
                 var aux1 = "";
-                if ($("#chkPreference").prop("checked")) {
+                if ($("#chkPreferences").prop("checked")) {
                     aux1 = aux1 + "1";
                 } else {
                     aux1 = aux1 + "0";
