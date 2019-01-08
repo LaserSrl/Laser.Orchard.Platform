@@ -46,6 +46,5 @@ namespace Laser.Orchard.Cookies.Models
             }
             set { this.Store(x => x.DisableCookieGDPRManagement, value); }
         }
-
     }
 }

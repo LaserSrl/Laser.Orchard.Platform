@@ -91,7 +91,15 @@ namespace Laser.Orchard.Cookies.Services {
         /// <returns></returns>
         public IList<ICookieGDPR> GetAllowedCookies() {
             var result = new List<ICookieGDPR>();
-            var types = GetAcceptedCookieTypes();
+            IList<CookieType> types = new List<CookieType>();
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CookieSettingsPart>();
+            if (settings.DisableCookieGDPRManagement) {
+                types.Add(CookieType.Preferences);
+                types.Add(CookieType.Statistical);
+                types.Add(CookieType.Marketing);
+            } else {
+                types = GetAcceptedCookieTypes();
+            }
             var accepted = false;
             foreach (var cookie in _cookies) {
                 accepted = true;
