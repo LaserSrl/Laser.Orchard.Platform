@@ -68,7 +68,7 @@ namespace Laser.Orchard.CulturePicker.Services {
         }
         public string RedirectLocalUrl {
             get {
-                return string.Format("~/{0}{1}", UrlLocalized, !string.IsNullOrWhiteSpace(QuerystringLocalized) ? "?" + QuerystringLocalized : "");
+                return string.Format("~/{0}{1}", UrlLocalized.StartsWith("~/")? UrlLocalized.Substring(2) : UrlLocalized, !string.IsNullOrWhiteSpace(QuerystringLocalized) ? "?" + QuerystringLocalized : "");
             }
         }
         private static string SanitizeQuerystring(string querystring) {
