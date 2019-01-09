@@ -55,27 +55,27 @@
 <fieldset>
     <div>
         @Html.EditorFor(m => m.defaultValuePreferences)
-        <label class="forcheckbox" for="CookieSettings_defaultValuePreferences">@T("Propose Preferences choice as selected")</label>
-        <span class="hint">@T("Check to suggest the user to accept Preferences cookies.")</span>
+        <label class="forcheckbox" for="CookieSettings_defaultValuePreferences">@T("Default value for Preferences cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Preference cookies as default.")</span>
     </div>
     <div>
         @Html.EditorFor(m => m.defaultValueStatistical)
-        <label class="forcheckbox" for="CookieSettings_defaultValueStatistical">@T("Propose Statistical choice as selected")</label>
-        <span class="hint">@T("Check to suggest the user to accept Statistical cookies.")</span>
+        <label class="forcheckbox" for="CookieSettings_defaultValueStatistical">@T("Default value for Statistical cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Statistical cookies as default.")</span>
     </div>
     <div>
         @Html.EditorFor(m => m.defaultValueMarketing)
-        <label class="forcheckbox" for="CookieSettings_defaultValueMarketing">@T("Propose Marketing choice as selected")</label>
-        <span class="hint">@T("Check to suggest the user to accept Marketing cookies.")</span>
+        <label class="forcheckbox" for="CookieSettings_defaultValueMarketing">@T("Default value for Marketing cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Marketing cookies as default.")</span>
     </div>
 </fieldset>
 
 <fieldset>
-    <legend>@T("Impostazioni GDPR")</legend>
+    <legend>@T("GDPR Settings")</legend>
     <div>
-        <label for="@Html.FieldIdFor(m => m.DisableCookieGDPRManagement)">@T("Disable GDPR Cookie Management")</label>
+        <label for="@Html.FieldIdFor(m => m.DisableCookieGDPRManagement)">@T("Disable Cookie Management according to GDPR")</label>
         @Html.CheckBoxFor(m => m.DisableCookieGDPRManagement)
-        <span class="hint">@T("Check to disable cookie management according to GDPR Banner options")</span>
+        <span class="hint">@T("Check to disable cookie management according to GDPR regulations")</span>
     </div>
 </fieldset>
 @using (Script.Foot())
