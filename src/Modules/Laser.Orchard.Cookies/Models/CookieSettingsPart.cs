@@ -7,7 +7,7 @@ namespace Laser.Orchard.Cookies.Models
         public string cookieDiscreetPosition { get { return this.Retrieve(x => x.cookieDiscreetPosition, "topleft"); } set { this.Store(x => x.cookieDiscreetPosition, value); } }
         public string cookieDomain { get { return this.Retrieve(x => x.cookieDomain); } set { this.Store(x => x.cookieDomain, value); } }
         public bool cookieDiscreetLink { get { return this.Retrieve(x => x.cookieDiscreetLink); } set { this.Store(x => x.cookieDiscreetLink, value); } }
-        public bool cookieDiscreetReset { get { return this.Retrieve(x => x.cookieDiscreetReset); } set { this.Store(x => x.cookieDiscreetReset, value); } }
+        public bool cookieDiscreetReset { get { return this.Retrieve(x => x.cookieDiscreetReset, true); } set { this.Store(x => x.cookieDiscreetReset, value); } }
         public bool cookiePolicyPage { get { return this.Retrieve(x => x.cookiePolicyPage); } set { this.Store(x => x.cookiePolicyPage, value); } }
         public string cookieDisable { get { return this.Retrieve(x => x.cookieDisable); } set { this.Store(x => x.cookieDisable, value); } }
         public bool cookieAnalytics { get { return this.Retrieve(x => x.cookieAnalytics, true); } set { this.Store(x => x.cookieAnalytics, value); } }

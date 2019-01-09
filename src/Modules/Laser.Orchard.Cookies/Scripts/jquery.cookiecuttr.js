@@ -97,26 +97,21 @@
                         $('body').prepend('<div class="cc-cookies-reset cc-discreet"><a class="cc-cookie-reset" href="#" title="' + options.cookieResetButtonText + '">' + options.cookieResetButtonText + '</a></div>');
                     }
                     //add appropriate CSS depending on position chosen
-                    var positionSet = false;
+                    if (options.cookieDiscreetPosition == "topleft") {
+                        $('div.cc-cookies-reset').css("top", "0");
+                        $('div.cc-cookies-reset').css("left", "0");
+                    }
                     if (options.cookieDiscreetPosition == "topright") {
                         $('div.cc-cookies-reset').css("top", "0");
                         $('div.cc-cookies-reset').css("right", "0");
-                        positionSet = true;
                     }
                     if (options.cookieDiscreetPosition == "bottomleft") {
                         $('div.cc-cookies-reset').css("bottom", "0");
                         $('div.cc-cookies-reset').css("left", "0");
-                        positionSet = true;
                     }
                     if (options.cookieDiscreetPosition == "bottomright") {
                         $('div.cc-cookies-reset').css("bottom", "0");
                         $('div.cc-cookies-reset').css("right", "0");
-                        positionSet = true;
-                    }
-                    if (positionSet == false) {
-                        // default position
-                        $('div.cc-cookies-reset').css("top", "0");
-                        $('div.cc-cookies-reset').css("left", "0");
                     }
                 } else if (options.cookieResetButton) {
                     if (appOrPre) {
@@ -124,8 +119,6 @@
                     } else {
                         $('body').prepend('<div class="cc-cookies-reset"><a href="#" class="cc-cookie-reset">' + options.cookieResetButtonText + '</a></div>');
                     }
-                    $('div.cc-cookies-reset').css("top", "0");
-                    $('div.cc-cookies-reset').css("left", "0");
                 } else {
                     options.cookieResetButton = "";
                 }
