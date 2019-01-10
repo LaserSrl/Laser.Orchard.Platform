@@ -94,23 +94,19 @@ namespace Laser.Orchard.Cookies.Services {
             IList<CookieType> types = new List<CookieType>();
             var settings = _orchardServices.WorkContext.CurrentSite.As<CookieSettingsPart>();
             if (settings.DisableCookieGDPRManagement) {
+                types.Add(CookieType.Technical);
                 types.Add(CookieType.Preferences);
                 types.Add(CookieType.Statistical);
                 types.Add(CookieType.Marketing);
             } else {
                 types = GetAcceptedCookieTypes();
             }
-            var accepted = false;
             foreach (var cookie in _cookies) {
-                accepted = true;
                 foreach (var cookieType in cookie.GetCookieTypes()) {
-                    if (types.Contains(cookieType) == false && cookieType != CookieType.Technical) {
-                        accepted = false;
+                    if (types.Contains(cookieType)) {
+                        result.Add(cookie);
                         break;
                     }
-                }
-                if (accepted) {
-                    result.Add(cookie);
                 }
             }
             return result;
@@ -121,11 +117,12 @@ namespace Laser.Orchard.Cookies.Services {
         /// <param name="cookieModule"></param>
         /// <returns></returns>
         public bool IsAcceptableForUser(ICookieGDPR cookieModule) {
-            var result = true;
+            var result = false;
             var okCookies = GetAcceptedCookieTypes();
             foreach(var ct in cookieModule.GetCookieTypes()) {
-                if(okCookies.Contains(ct) == false) {
-                    result = false;
+                if(okCookies.Contains(ct)) {
+                    result = true;
+                    break;
                 }
             }
             return result;
@@ -153,8 +150,11 @@ namespace Laser.Orchard.Cookies.Services {
         /// Get cookie types accepted by the current user.
         /// </summary>
         /// <returns></returns>
-        private IList<CookieType> GetAcceptedCookieTypes() {
+        public IList<CookieType> GetAcceptedCookieTypes() {
             var result = new List<CookieType>();
+            // accepted by default
+            result.Add(CookieType.Technical);
+
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
             if (cookie != null) {
                 var arrVal = cookie.Value.Split('.');

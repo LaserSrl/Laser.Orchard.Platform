@@ -9,5 +9,6 @@ namespace Laser.Orchard.Cookies.Services {
         IList<ICookieGDPR> GetAllowedCookies();
         bool IsAcceptableForUser(ICookieGDPR cookieModule);
         IList<CookieType> GetActiveCookieTypes();
+        IList<CookieType> GetAcceptedCookieTypes();
     }
 }

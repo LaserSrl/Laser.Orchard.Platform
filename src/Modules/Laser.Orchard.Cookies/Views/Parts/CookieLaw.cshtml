@@ -73,7 +73,7 @@
         }
 
         foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
-            <text>@Html.Raw(cookie.GetScript())</text>
+            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes()))</text>
         }
     }
 }
