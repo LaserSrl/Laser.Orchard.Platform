@@ -19,10 +19,10 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         public IList<CookieType> GetCookieTypes() {
-            return new List<CookieType>() { CookieType.Statistical };
+            return new List<CookieType>() { CookieType.Technical, CookieType.Statistical };
         }
 
-        public string GetScript() {
+        public string GetScript(IList<CookieType> allowedTypes) {
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
@@ -41,7 +41,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             } else {
                 script.AppendLine("ga('create', '" + part.GoogleAnalyticsKey + "', {'cookieDomain': '" + part.DomainName + "'});");
             }
-            if (part.AnonymizeIp) {
+            if (part.AnonymizeIp || allowedTypes.Contains(CookieType.Statistical) == false) {
                 script.AppendLine("ga('set', 'anonymizeIp', true);");
             }
             script.AppendLine("ga('send', 'pageview');");

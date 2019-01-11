@@ -1,20 +1,24 @@
 ﻿using Orchard.Localization;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Linq;
+using Orchard;
+using Laser.Orchard.Cookies.Models;
+using Orchard.ContentManagement;
 
 namespace Laser.Orchard.Cookies.Services {
     public class GDPRScript : IGDPRScript {
-        private List<CookieType> orderedTypes = new List<CookieType>() { CookieType.Technical, CookieType.Preference, CookieType.Statistical, CookieType.Marketing };
+        private readonly IOrchardServices _orchardServices;
+        private List<CookieType> orderedTypes = new List<CookieType>() { CookieType.Technical, CookieType.Preferences, CookieType.Statistical, CookieType.Marketing };
         private IEnumerable<ICookieGDPR> _cookies;
         public Localizer T { get; set; }
 
-        public GDPRScript(IEnumerable<ICookieGDPR> cookies) {
+        public GDPRScript(IEnumerable<ICookieGDPR> cookies, IOrchardServices orchardServices) {
             _cookies = cookies;
+            _orchardServices = orchardServices;
             T = NullLocalizer.Instance;
         }
         /// <summary>
@@ -25,15 +29,25 @@ namespace Laser.Orchard.Cookies.Services {
             string result = "";
             string checkedDisabled = "";
             var activeCookieTypes = GetActiveCookieTypes();
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CookieSettingsPart>();
             // cicla sui tipi di cookie e crea il banner in modo da visualizzare solo le checkbox necessarie
-            foreach (var cookieType in orderedTypes) {
-                if (activeCookieTypes.Contains(cookieType)) {
-                    if (cookieType == CookieType.Technical) {
-                        checkedDisabled = "checked disabled";
-                    } else {
-                        checkedDisabled = "";
+            foreach (var cType in orderedTypes) {
+                if (activeCookieTypes.Contains(cType)) {
+                    switch (cType) {
+                        case CookieType.Technical:
+                            checkedDisabled = "checked disabled";
+                            break;
+                        case CookieType.Preferences:
+                            checkedDisabled = (settings.defaultValuePreferences)? "checked" : "";
+                            break;
+                        case CookieType.Statistical:
+                            checkedDisabled = (settings.defaultValueStatistical) ? "checked" : "";
+                            break;
+                        case CookieType.Marketing:
+                            checkedDisabled = (settings.defaultValueMarketing) ? "checked" : "";
+                            break;
                     }
-                    result += "<input type=\"checkbox\" id=\"chk" + cookieType.ToString() + "\" value=\"1\" " + checkedDisabled + "/><label for=\"chk" + cookieType.ToString() + "\">" + T(cookieType.ToString()) + "</label>";
+                    result += "<label for=\"chk" + cType.ToString() + "\" style=\"margin-right:0.5em;\"><input type=\"checkbox\" id=\"chk" + cType.ToString() + "\" value=\"1\" " + checkedDisabled + " style=\"margin-right:0.5em;\"/>" + T(cType.ToString()) + "</label>";
                 }
             }
             return result;
@@ -77,18 +91,22 @@ namespace Laser.Orchard.Cookies.Services {
         /// <returns></returns>
         public IList<ICookieGDPR> GetAllowedCookies() {
             var result = new List<ICookieGDPR>();
-            var types = GetAcceptedCookieTypes();
-            var accepted = false;
+            IList<CookieType> types = new List<CookieType>();
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CookieSettingsPart>();
+            if (settings.DisableCookieGDPRManagement) {
+                types.Add(CookieType.Technical);
+                types.Add(CookieType.Preferences);
+                types.Add(CookieType.Statistical);
+                types.Add(CookieType.Marketing);
+            } else {
+                types = GetAcceptedCookieTypes();
+            }
             foreach (var cookie in _cookies) {
-                accepted = true;
                 foreach (var cookieType in cookie.GetCookieTypes()) {
-                    if (types.Contains(cookieType) == false && cookieType != CookieType.Technical) {
-                        accepted = false;
+                    if (types.Contains(cookieType)) {
+                        result.Add(cookie);
                         break;
                     }
-                }
-                if (accepted) {
-                    result.Add(cookie);
                 }
             }
             return result;
@@ -99,11 +117,12 @@ namespace Laser.Orchard.Cookies.Services {
         /// <param name="cookieModule"></param>
         /// <returns></returns>
         public bool IsAcceptableForUser(ICookieGDPR cookieModule) {
-            var result = true;
+            var result = false;
             var okCookies = GetAcceptedCookieTypes();
             foreach(var ct in cookieModule.GetCookieTypes()) {
-                if(okCookies.Contains(ct) == false) {
-                    result = false;
+                if(okCookies.Contains(ct)) {
+                    result = true;
+                    break;
                 }
             }
             return result;
@@ -115,7 +134,7 @@ namespace Laser.Orchard.Cookies.Services {
         //public void SetCurrentGDPR(IList<CookieType> cookieTypes) {
         //    throw new NotImplementedException();
         //}
-        private IList<CookieType> GetActiveCookieTypes() {
+        public IList<CookieType> GetActiveCookieTypes() {
             List<CookieType> result = new List<CookieType>();
             result.Add(CookieType.Technical);
             foreach (var cookie in _cookies) {
@@ -131,15 +150,18 @@ namespace Laser.Orchard.Cookies.Services {
         /// Get cookie types accepted by the current user.
         /// </summary>
         /// <returns></returns>
-        private IList<CookieType> GetAcceptedCookieTypes() {
+        public IList<CookieType> GetAcceptedCookieTypes() {
             var result = new List<CookieType>();
+            // accepted by default
+            result.Add(CookieType.Technical);
+
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
             if (cookie != null) {
                 var arrVal = cookie.Value.Split('.');
                 if (arrVal != null && arrVal.Length > 1) {
                     var arrCheck = arrVal[1];
                     if (arrCheck.Length > 0 && arrCheck[0] == '1') {
-                        result.Add(CookieType.Preference);
+                        result.Add(CookieType.Preferences);
                     }
                     if (arrCheck.Length > 1 && arrCheck[1] == '1') {
                         result.Add(CookieType.Statistical);

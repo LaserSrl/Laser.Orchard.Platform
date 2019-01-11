@@ -14,7 +14,7 @@ namespace Laser.Orchard.HubSpot.Services {
             return new List<CookieType>() { CookieType.Marketing };
         }
 
-        public string GetScript() {
+        public string GetScript(IList<CookieType> allowedTypes) {
             string result = "<!-- Start of HubSpot Embed Code -->\r\n<script type=\"text/javascript\" id=\"hs - script - loader\" async defer src=\"//js.hs-scripts.com/2170079.js\"></script>\r\n<!-- End of HubSpot Embed Code -->";
             return result;
         }

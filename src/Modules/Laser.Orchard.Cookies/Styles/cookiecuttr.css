@@ -2,7 +2,7 @@
 
 /*TODO: risolvere il problema per cui, se la pagina è più lunga dello schermo, la barra si sovrappone al fondo della pagina*/
 
-.cc-cookies {
+.cc-cookies, .cc-cookies-reset {
     position: fixed;
     width: 90%;
     left: 0;
@@ -20,14 +20,14 @@
     opacity: 0.9;
 }
 
-    .cc-cookies a, .cc-cookies a:hover {
-        color: #fff;
-        text-decoration: underline;
-    }
+.cc-cookies a, .cc-cookies a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
 
-        .cc-cookies a:hover {
-            text-decoration: none;
-        }
+.cc-cookies a:hover {
+    text-decoration: none;
+}
 
 .cc-overlay {
     height: 100%;
@@ -46,30 +46,30 @@
     color: #333;
 }
 
-    .cc-cookies a.cc-cookie-accept, .cc-cookies-error a.cc-cookie-accept, .cc-cookies a.cc-cookie-decline, .cc-cookies-error a.cc-cookie-decline, .cc-cookies a.cc-cookie-reset {
-        display: inline-block;
-        color: #fff;
-        text-decoration: none;
-        background: #7DAF3B;
-        padding: 0.5em 0.75em;
-        border-radius: 3px;
-        box-shadow: 0 0 2px rgba(0,0,0,0.25);
-        text-shadow: 0 -1px 0 rgba(0,0,0,0.35);
-        -o-transition: background 0.5s ease-in;
-        -webkit-transition: background 0.25s ease-in;
-        -moz-transition: background 0.25s ease-in;
-    }
+.cc-cookies a.cc-cookie-accept, .cc-cookies-error a.cc-cookie-accept, .cc-cookies a.cc-cookie-decline, .cc-cookies-error a.cc-cookie-decline, .cc-cookies-reset a.cc-cookie-reset {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    background: #7DAF3B;
+    padding: 0.5em 0.75em;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.25);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.35);
+    -o-transition: background 0.5s ease-in;
+    -webkit-transition: background 0.25s ease-in;
+    -moz-transition: background 0.25s ease-in;
+}
 
-    .cc-cookies a.cc-cookie-decline, .cc-cookies-error a.cc-cookie-decline {
-        background: #af3b3b;
-        margin-left: 0.5em;
-    }
+.cc-cookies a.cc-cookie-decline, .cc-cookies-error a.cc-cookie-decline {
+    background: #af3b3b;
+    margin-left: 0.5em;
+}
 
-.cc-cookies a.cc-cookie-reset {
+.cc-cookies-reset a.cc-cookie-reset {
     background: #f15b00;
 }
 
-.cc-cookies a:hover.cc-cookie-accept, .cc-cookies-error a:hover.cc-cookie-accept, .cc-cookies a:hover.cc-cookie-decline, .cc-cookies-error a:hover.cc-cookie-decline, .cc-cookies a:hover.cc-cookie-reset {
+.cc-cookies a:hover.cc-cookie-accept, .cc-cookies-error a:hover.cc-cookie-accept, .cc-cookies a:hover.cc-cookie-decline, .cc-cookies-error a:hover.cc-cookie-decline, .cc-cookies-reset a:hover.cc-cookie-reset {
     background: #000;
     -o-transition: background 0.5s ease-in;
     -webkit-transition: background 0.25s ease-in;
@@ -81,33 +81,33 @@
     margin-top: 1em;
 }
 
-.cc-cookies.cc-discreet {
+.cc-cookies.cc-discreet, .cc-cookies-reset.cc-discreet {
     width: auto;
     padding: 0.5em 1em;
     left: auto;
     top: auto;
 }
 
-    .cc-cookies.cc-discreet a.cc-cookie-reset {
-        background: none;
-        text-shadow: none;
-        padding: 0;
-        text-decoration: underline;
-    }
+.cc-cookies-reset.cc-discreet a.cc-cookie-reset {
+    background: none;
+    text-shadow: none;
+    padding: 0;
+    text-decoration: underline;
+}
 
-    .cc-cookies.cc-discreet a:hover.cc-cookie-reset {
-        text-decoration: none;
-    }
+.cc-cookies-reset.cc-discreet a:hover.cc-cookie-reset {
+    text-decoration: none;
+}
 
 @media screen and (max-width: 768px) {
-    .cc-cookies a.cc-cookie-accept, .cc-cookies a.cc-cookie-decline, .cc-cookies a.cc-cookie-reset {
+    .cc-cookies a.cc-cookie-accept, .cc-cookies a.cc-cookie-decline, .cc-cookies-reset a.cc-cookie-reset {
         display: block;
         margin: 1em 0;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .cc-cookies {
+    .cc-cookies, .cc-cookies-reset {
         /* position: relative; */
         float: left;
     }

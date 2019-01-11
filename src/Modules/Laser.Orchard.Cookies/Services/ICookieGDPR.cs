@@ -5,6 +5,11 @@ namespace Laser.Orchard.Cookies.Services {
     public interface ICookieGDPR : IDependency {
         string GetCookieName();
         IList<CookieType> GetCookieTypes();
-        string GetScript();
+        /// <summary>
+        /// Get the script to use according to cookieTypes allowed (Technical + accepted by the user).
+        /// </summary>
+        /// <param name="allowedTypes"></param>
+        /// <returns></returns>
+        string GetScript(IList<CookieType> allowedTypes);
     }
 }

@@ -16,18 +16,28 @@ namespace Laser.Orchard.Cookies.Drivers {
     public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart>, ICachingEventHandler {
 
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IGDPRScript _gdprScriptService;
 
-        public CookieLawPartDriver(IWorkContextAccessor workContextAccessor) {
+        public CookieLawPartDriver(IWorkContextAccessor workContextAccessor, IGDPRScript gdprScriptService) {
             _workContextAccessor = workContextAccessor;
+            _gdprScriptService = gdprScriptService;
         }
 
         protected override DriverResult Display(CookieLawPart part, string displayType, dynamic shapeHelper) {
             var workContext = _workContextAccessor.GetContext();
             var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
+            var isPolicyPage = "false";
+            if(string.IsNullOrWhiteSpace(part.cookiePolicyLink) == false && HttpContext.Current.Request.Url.AbsoluteUri.EndsWith(part.cookiePolicyLink)) {
+                isPolicyPage = "true";
+            }
 
-            return ContentShape("Parts_CookieLaw",
-                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice));
+            if(_gdprScriptService.GetActiveCookieTypes().Count > 1) {
+                return ContentShape("Parts_CookieLaw",
+                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage));
+            } else {
+                return null;
+            }
         }
 
         protected override DriverResult Editor(CookieLawPart part, dynamic shapeHelper) {
