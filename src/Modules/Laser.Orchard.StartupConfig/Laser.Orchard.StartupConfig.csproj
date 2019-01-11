@@ -256,8 +256,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activities\FieldSetValueActivity.cs" />
-    <Compile Include="Activities\FieldSetValueForm.cs" />
     <Compile Include="Activities\WebApiResponseActivity.cs" />
     <Compile Include="Activities\WebApiResponseEditForm.cs" />
     <Compile Include="Activities\RequestInspectorActivity.cs" />
