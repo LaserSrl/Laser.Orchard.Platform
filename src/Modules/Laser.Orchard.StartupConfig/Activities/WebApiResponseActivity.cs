@@ -54,10 +54,12 @@ namespace Laser.Orchard.StartupConfig.Activities {
             if (workflowContext.Tokens.ContainsKey(tokenWebApiResponseName)  && workflowContext.Tokens[tokenWebApiResponseName] != null) {
                 bool success = activityContext.GetState<bool>("Successful");
                 string message = activityContext.GetState<string>("Message");
+                var data = activityContext.GetState<object>("Data");
                 ErrorCode errorCode = activityContext.GetState<ErrorCode>("ErrorCode");
                 ResolutionAction resolutionAction = activityContext.GetState<ResolutionAction>("ResolutionAction");
                 ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Success = success;
                 ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Message = message;
+                ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Data = data;
                 if (!success) {
                     ((Response)workflowContext.Tokens[tokenWebApiResponseName]).ErrorCode = errorCode;
                     ((Response)workflowContext.Tokens[tokenWebApiResponseName]).ResolutionAction = resolutionAction;
