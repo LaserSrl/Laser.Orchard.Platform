@@ -358,23 +358,24 @@ namespace Laser.Orchard.StartupConfig.Services {
                                     TermPart termine_selezionato = taxo_sended_user.Terms.Where(x => x.Id == idtermine).FirstOrDefault();
 
                                     #region [ Tassonomia in Lingua ]
-
-                                    if (theContentItem.As<LocalizationPart>() == null || theContentItem.ContentType == "User") { // se il contenuto non ha localization oppure è user salvo il mastercontent del termine
-                                        Int32 idmaster = 0;
-                                        if (termine_selezionato.ContentItem.As<LocalizationPart>() == null) {
-                                            idmaster = termine_selezionato.ContentItem.Id;
-                                        } else if (termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem == null)
-                                            idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().Id;
-                                        else
-                                            idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem.Id;
-                                        TermPart toAdd = taxobase.Terms.Where(x => x.Id == idmaster).FirstOrDefault();
-                                        if (toAdd == null)
-                                            toAdd = taxobase.Terms.Where(x => x.ContentItem.As<LocalizationPart>().MasterContentItem.Id == idmaster).FirstOrDefault();
-                                        ListTermPartToAdd.Add(toAdd);
-                                    } else { // se il contenuto ha localization e non è user salvo il termine come mi viene passato
-                                             // TODO: testare pertinenza della lingua Contenuto in italianao=>termine in italiano
-                                        TermPart toAdd = termine_selezionato;
-                                        ListTermPartToAdd.Add(toAdd);
+                                    if(termine_selezionato != null) {
+                                        if (theContentItem.As<LocalizationPart>() == null || theContentItem.ContentType == "User") { // se il contenuto non ha localization oppure è user salvo il mastercontent del termine
+                                            Int32 idmaster = 0;
+                                            if (termine_selezionato.ContentItem.As<LocalizationPart>() == null) {
+                                                idmaster = termine_selezionato.ContentItem.Id;
+                                            } else if (termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem == null)
+                                                idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().Id;
+                                            else
+                                                idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem.Id;
+                                            TermPart toAdd = taxobase.Terms.Where(x => x.Id == idmaster).FirstOrDefault();
+                                            if (toAdd == null)
+                                                toAdd = taxobase.Terms.Where(x => x.ContentItem.As<LocalizationPart>().MasterContentItem.Id == idmaster).FirstOrDefault();
+                                            ListTermPartToAdd.Add(toAdd);
+                                        } else { // se il contenuto ha localization e non è user salvo il termine come mi viene passato
+                                                 // TODO: testare pertinenza della lingua Contenuto in italianao=>termine in italiano
+                                            TermPart toAdd = termine_selezionato;
+                                            ListTermPartToAdd.Add(toAdd);
+                                        }
                                     }
 
                                     #endregion [ Tassonomia in Lingua ]
