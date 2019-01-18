@@ -13,6 +13,11 @@
 
 <fieldset class="buttons">
     <div>
+        @Html.EditorFor(m => m.cookieOverlayEnabled)
+        <label class="forcheckbox" for="CookieSettings_cookieOverlayEnabled">@T("Banner overlay")</label>
+        <span class="hint">@T("The banner will cover the whole page and users will have to dismiss it il order to navigate the site.")</span>
+    </div>
+    <div>
         @Html.EditorFor(m => m.showCookieAcceptButton)
         <label class="forcheckbox" for="CookieSettings_showCookieAcceptButton">@T("Cookie Accept Button")</label>
         <span class="hint">@T("It will show a green button for the user to accept cookies.")</span>
@@ -47,6 +52,32 @@
     </div>
 </fieldset>
 
+<fieldset>
+    <div>
+        @Html.EditorFor(m => m.defaultValuePreferences)
+        <label class="forcheckbox" for="CookieSettings_defaultValuePreferences">@T("Default value for Preferences cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Preference cookies as default.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.defaultValueStatistical)
+        <label class="forcheckbox" for="CookieSettings_defaultValueStatistical">@T("Default value for Statistical cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Statistical cookies as default.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.defaultValueMarketing)
+        <label class="forcheckbox" for="CookieSettings_defaultValueMarketing">@T("Default value for Marketing cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Marketing cookies as default.")</span>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>@T("GDPR Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisableCookieGDPRManagement)">@T("Disable Cookie Management according to GDPR")</label>
+        @Html.CheckBoxFor(m => m.DisableCookieGDPRManagement)
+        <span class="hint">@T("Check to disable cookie management according to GDPR regulations")</span>
+    </div>
+</fieldset>
 @using (Script.Foot())
 {
     <script type="text/javascript">

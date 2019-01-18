@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Laser.Orchard.Cookies.Services
+@{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
     // before the DOMLoadedEvent
@@ -12,10 +13,13 @@
     var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
+    var cookieOverlayEnabled = settings.cookieOverlayEnabled.ToString().ToLower();
+    var gdprScriptService = Model.GDPRScriptservice;
+    var isPolicyPage = Model.isPolicyPage;
 
-    using (Script.Foot())
-    {
-<script type="text/javascript">
+    using (Script.Foot()) {
+        if (settings.DisableCookieGDPRManagement == false) {
+            <script type="text/javascript">
     $(document).ready(function () {
         var cookiesettings = {};
         cookiesettings.cookieAnalytics = @cookieAnalytics;
@@ -31,11 +35,15 @@
                 cookiesettings.cookieWhatAreTheyLink = '@part.cookieWhatAreTheyLink';
         }
         else {
-            if ('@part.cookieMessage'.length > 0)
-                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage)';
+            if (@(part.cookieMessage.Length) > 0)
+                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
             if ('@part.cookiePolicyLink'.length > 0)
                 cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
         }
+        // user options
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;"><div style="float:left;margin:0 10px;">';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
+        cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
         // positioning
         cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
         cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
@@ -51,9 +59,21 @@
         cookiesettings.cookieResetButton = @cookieResetButton;
         if ('@part.cookieResetButtonText'.length > 0)
             cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+        cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
+        cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
+        if(@isPolicyPage){
+            cookiesettings.cookieOverlayEnabled = false;
+        } else {
+            cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
+        }
 
         $.cookieCuttr(cookiesettings);
     });
-</script>
+            </script>
+        }
+
+        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes()))</text>
+        }
     }
 }
