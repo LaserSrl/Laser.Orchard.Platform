@@ -31,7 +31,8 @@
 
 .cc-overlay {
     height: 100%;
-    padding-top: 25%;
+    width: 100%;
+    padding-top: 15vh;
 }
 
 .cc-cookies-error {
@@ -50,7 +51,7 @@
     display: inline-block;
     color: #fff;
     text-decoration: none;
-    background: #7DAF3B;
+    background: #00bee9;
     padding: 0.5em 0.75em;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0,0,0,0.25);
@@ -97,6 +98,14 @@
 
 .cc-cookies-reset.cc-discreet a:hover.cc-cookie-reset {
     text-decoration: none;
+}
+
+.cc-cookie-frame {
+    width: 90%;
+    max-width:670px;
+    background-color:black;
+    top:0px;
+    margin:0 auto;
 }
 
 @media screen and (max-width: 768px) {

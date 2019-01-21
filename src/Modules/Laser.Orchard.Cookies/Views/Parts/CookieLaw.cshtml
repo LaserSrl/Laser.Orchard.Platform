@@ -1,4 +1,5 @@
-﻿@using Laser.Orchard.Cookies.Services
+﻿@using Laser.Orchard.Cookies;
+@using Laser.Orchard.Cookies.Services
 @{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
@@ -7,39 +8,47 @@
 
     var settings = Model.CookieSettings;
     var part = Model.CookieLawPart;
-    var cookieAnalytics = settings.cookieAnalytics.ToString().ToLower();
-    var cookieNotificationLocationBottom = settings.cookieNotificationLocationBottom.ToString().ToLower();
-    var cookieAcceptButton = settings.showCookieAcceptButton.ToString().ToLower();
-    var cookieDeclineButton = settings.showCookieDeclineButton.ToString().ToLower();
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
-    var cookieOverlayEnabled = settings.cookieOverlayEnabled.ToString().ToLower();
+
+    // banner position
+    var cookieOverlayEnabled = "true";
+    var cookieDiscreetPosition = "";
+    var cookieNotificationLocationBottom = "false";
+    switch (settings.cookiePosition)
+    {
+        case CookieBannerPosition.Top:
+            cookieOverlayEnabled = "false";
+            cookieDiscreetPosition = "top";
+            cookieNotificationLocationBottom = "false";
+            break;
+        case CookieBannerPosition.Bottom:
+            cookieOverlayEnabled = "false";
+            cookieDiscreetPosition = "bottom";
+            cookieNotificationLocationBottom = "true";
+            break;
+        default: // Overlay
+            cookieOverlayEnabled = "true";
+            cookieDiscreetPosition = "";
+            cookieNotificationLocationBottom = "false";
+            break;
+    }
+
     var gdprScriptService = Model.GDPRScriptservice;
     var isPolicyPage = Model.isPolicyPage;
 
-    using (Script.Foot()) {
-        if (settings.DisableCookieGDPRManagement == false) {
-            <script type="text/javascript">
-    $(document).ready(function () {
-        var cookiesettings = {};
-        cookiesettings.cookieAnalytics = @cookieAnalytics;
-        if (cookiesettings.cookieAnalytics) {
-            if ('@part.cookieAnalyticsMessage.Replace(System.Environment.NewLine, "")'.length > 0)
-            {
-                var analyticsMessage = '@Html.Raw(part.cookieAnalyticsMessage.Replace(System.Environment.NewLine, "{{space}}"))';
-                cookiesettings.cookieAnalyticsMessage = analyticsMessage.replace("{{space}}", "<br/>");
-            }
-            if ('@part.cookieWhatAreLinkText'.length > 0)
-                cookiesettings.cookieWhatAreLinkText = '@part.cookieWhatAreLinkText';
-            if ('@part.cookieWhatAreTheyLink'.length > 0)
-                cookiesettings.cookieWhatAreTheyLink = '@part.cookieWhatAreTheyLink';
-        }
-        else {
-            if (@(part.cookieMessage.Length) > 0)
-                cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
-            if ('@part.cookiePolicyLink'.length > 0)
-                cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
-        }
+    using (Script.Foot())
+    {
+        if (settings.DisableCookieGDPRManagement == false)
+        {
+    <script type = "text/javascript">
+    $(document).ready(function() {
+        var cookiesettings = { };
+        cookiesettings.cookieAnalytics = false;
+        if (@(part.cookieMessage.Length) > 0)
+            cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
+        if ('@part.cookiePolicyLink'.length > 0)
+            cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
         // user options
         cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;"><div style="float:left;margin:0 10px;">';
         cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
@@ -50,30 +59,31 @@
         if ('@settings.cookieDiscreetPosition'.length > 0)
             cookiesettings.cookieDiscreetPosition = '@settings.cookieDiscreetPosition';
         // buttons
-        cookiesettings.cookieAcceptButton = @cookieAcceptButton;
+        cookiesettings.cookieAcceptButton = true;
         if ('@part.cookieAcceptButtonText'.length > 0)
             cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
-        cookiesettings.cookieDeclineButton = @cookieDeclineButton;
-        if ('@part.cookieDeclineButtonText'.length > 0)
-            cookiesettings.cookieDeclineButtonText = '@part.cookieDeclineButtonText';
+        cookiesettings.cookieDeclineButton = false;
         cookiesettings.cookieResetButton = @cookieResetButton;
         if ('@part.cookieResetButtonText'.length > 0)
             cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
         cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
         cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
-        if(@isPolicyPage){
+        if (@isPolicyPage)
+        {
             cookiesettings.cookieOverlayEnabled = false;
-        } else {
+        }
+        else
+        {
             cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
         }
-
         $.cookieCuttr(cookiesettings);
     });
-            </script>
+    </script>
         }
 
-        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
-            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes()))</text>
+        foreach (var cookie in gdprScriptService.GetAllowedCookies())
+        {
+            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
         }
     }
 }
