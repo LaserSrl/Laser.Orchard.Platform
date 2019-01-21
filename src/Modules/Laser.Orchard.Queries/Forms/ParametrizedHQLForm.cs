@@ -38,7 +38,7 @@ namespace Laser.Orchard.Queries.Forms {
                             Name: "Query",
                             Title: T("HQL Query"),
                             Classes: new[] { "tokenized" },
-                            Description: T("Enter the HQL query. You may use parameters with the following syntax: ( :paramN ). N is the line number (0-based) for the parameter configuration above. The parantheses and whitespace around :paramN are mandatory."))
+                            Description: T("Enter the HQL query. You may use parameters with the following syntax: ( :paramN ). N is the line number (0-based) for the parameter configuration above. The parentheses and whitespace around :paramN are mandatory. The query should return the Ids of the selected ContentItems."))
                     );
 
                 return f;
