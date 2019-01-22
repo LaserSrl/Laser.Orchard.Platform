@@ -9,6 +9,7 @@
     var settings = Model.CookieSettings;
     var part = Model.CookieLawPart;
     var siteName = Model.siteName;
+    var iconUrl = Model.iconUrl;
     var cookieResetButton = settings.showCookieResetButton.ToString().ToLower();
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
 
@@ -77,6 +78,7 @@ $(document).ready(function() {
             cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
         }
         cookiesettings.cookiePoweredBy = "@siteName";
+        cookiesettings.cookiePoweredByIcon = "@iconUrl";
         $.cookieCuttr(cookiesettings);
     });
 </script>

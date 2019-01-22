@@ -49,7 +49,7 @@
                 cookieNoMessage: false, // change to true hide message from all pages apart from your policy page
 				cookieDomain: "",
 				cookiePoweredBy: "",
-				cookiePoweredByLink: ""
+				cookiePoweredByIcon: ""
             };
             var options = $.extend(defaults, options);
 			var message = defaults.cookieMessage; //.replace('{{cookiePolicyLink}}', defaults.cookiePolicyLink);
@@ -81,7 +81,7 @@
             var cookieExpectedValue = options.cookieExpectedValue;
 			var cookieAccepted = options.cookieAccepted;
 			var cookiePoweredBy = options.cookiePoweredBy;
-			var cookiePoweredByLink = options.cookiePoweredByLink;
+			var cookiePoweredByIcon = options.cookiePoweredByIcon;
             // cookie identifier
 
             var manageCookieResetButton = function (options) {
@@ -192,9 +192,9 @@
                     }
                 } else if (!cookieDiscreetLink) { // show privacy policy option
                     if (appOrPre) {
-						$('body').append('<div class="cc-cookies ' + cookieOverlay + '"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy"><a href=\"' + cookiePoweredByLink + '\">' + cookiePoweredBy + '</a></p></div></div></div>');
+						$('body').append('<div class="cc-cookies ' + cookieOverlay + '"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy">GDPR Cookies <img src="' + cookiePoweredByIcon + '" style="width:20px"> ' + cookiePoweredBy + '</p></div></div></div>');
                     } else {
-						$('body').prepend('<div class="cc-cookies ' + cookieOverlay + '"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy"><a href=\"' + cookiePoweredByLink + '\">' + cookiePoweredBy + '</a></p></div></div></div>');
+						$('body').prepend('<div class="cc-cookies ' + cookieOverlay + '"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy">GDPR Cookies <img src="' + cookiePoweredByIcon + '" style="width:20px"> ' + cookiePoweredBy + '</p></div></div></div>');
                     }
                 }
             }

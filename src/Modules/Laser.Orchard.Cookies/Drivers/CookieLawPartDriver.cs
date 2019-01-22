@@ -5,6 +5,8 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Environment.Configuration;
+using Orchard.FileSystems.VirtualPath;
 using Orchard.OutputCache;
 using System;
 using System.Text;
@@ -28,13 +30,14 @@ namespace Laser.Orchard.Cookies.Drivers {
             var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
             var isPolicyPage = "false";
-            if(string.IsNullOrWhiteSpace(part.cookiePolicyLink) == false && HttpContext.Current.Request.Url.AbsoluteUri.EndsWith(part.cookiePolicyLink)) {
+            var iconUrl = string.Format("{0}/{1}", HttpContext.Current.Request.ApplicationPath, "Modules/Laser.Orchard.Cookies/Contents/cookie.png");
+            if (string.IsNullOrWhiteSpace(part.cookiePolicyLink) == false && HttpContext.Current.Request.Url.AbsoluteUri.EndsWith(part.cookiePolicyLink)) {
                 isPolicyPage = "true";
             }
 
             if (_gdprScriptService.GetActiveCookieTypes().Count > 1) {
                 return ContentShape("Parts_CookieLaw",
-                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage, siteName: workContext.CurrentSite.SiteName));
+                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage, siteName: workContext.CurrentSite.SiteName, iconUrl: iconUrl));
             } else {
                 return null;
             }
