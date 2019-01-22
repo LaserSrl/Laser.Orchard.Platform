@@ -32,9 +32,9 @@ namespace Laser.Orchard.Cookies.Drivers {
                 isPolicyPage = "true";
             }
 
-            if(_gdprScriptService.GetActiveCookieTypes().Count > 1) {
+            if (_gdprScriptService.GetActiveCookieTypes().Count > 1) {
                 return ContentShape("Parts_CookieLaw",
-                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage));
+                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage, siteName: workContext.CurrentSite.SiteName));
             } else {
                 return null;
             }
