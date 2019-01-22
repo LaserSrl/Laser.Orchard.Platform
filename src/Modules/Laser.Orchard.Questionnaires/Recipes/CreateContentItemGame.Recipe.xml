@@ -3,8 +3,8 @@
   <Recipe>
     <Name>Create ContentItem Game</Name>
     <Description>
-      Create ContentItem with GamePart , ranking template, query and projection
-      Remember to set Razor engine as Default Parser and configure gameparted 
+      Creates ContentItem with GamePart, custom questionnaire for games, ranking template, query and projection.
+      Remember to set "Razor engine" as Default Parser and configure GamePart.
     </Description>
     <Author>Lorenzo Frediani Laser srl</Author>
     <WebSite>Laser-group.com</WebSite>
@@ -14,19 +14,27 @@
   <Feature enable="Laser.Orchard.Events,Laser.Orchard.Questionnaires" />
   <Metadata>
     <Types>
-      <Game ContentTypeSettings.Draftable="True" ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True"   TypeIndexing.Indexes="Search">
+      <Game ContentTypeSettings.Draftable="True" ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Securable="True" TypeIndexing.Indexes="Search">
         <GamePart />
         <TitlePart />
         <CommonPart />
         <AutoroutePart />
         <ActivityPart />
         <LocalizationPart />
-       <Game/>
+        <Game/>
       </Game>
+	  <GameQuestions ContentTypeSettings.Creatable="True" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="True" DisplayName="GameQuestions">
+        <AutoroutePart />
+        <BodyPart />
+        <CommonPart />
+        <LocalizationPart />
+        <QuestionnairePart />
+        <TitlePart />
+      </GameQuestions>
     </Types>
     <Parts>
       <Game ContentPartSettings.Attachable="True">
-        <Questionari.ContentPickerField DisplayName="Questionari" ContentPickerFieldSettings.Required="True" ContentPickerFieldSettings.Multiple="False" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="Questionnaire" ContentPickerFieldExtensionSettings.CascadePublish="False" ContentPickerFieldExtensionSettings.TranslateContents="True" />
+        <Questionari.ContentPickerField DisplayName="Domande" ContentPickerFieldSettings.Required="True" ContentPickerFieldSettings.Multiple="False" ContentPickerFieldSettings.ShowContentTab="True" ContentPickerFieldSettings.DisplayedContentTypes="GameQuestions" ContentPickerFieldExtensionSettings.CascadePublish="False" ContentPickerFieldExtensionSettings.TranslateContents="True" />
         <Gallery.MediaLibraryPickerField DisplayName="Gallery" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="True" />
       </Game>
     </Parts>
