@@ -1,17 +1,14 @@
-﻿using Laser.Orchard.StartupConfig.Projections;
+﻿using NHibernate;
+using Orchard.ContentManagement;
+using Orchard.Data;
 using Orchard.Environment.Extensions;
-using Orchard.Projections.Services;
+using Orchard.Localization;
+using Orchard.Projections.Descriptors.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using OPServices = Orchard.Projections.Services;
-using Orchard.Projections.Descriptors.Filter;
-using Orchard.Localization;
-using Orchard.ContentManagement;
-using NHibernate;
-using Orchard.Data;
 using System.Text.RegularExpressions;
+using OPServices = Orchard.Projections.Services;
 
 namespace Laser.Orchard.Queries.Providers {
     [OrchardFeature("Laser.Orchard.HQLProjectionFilter")]
