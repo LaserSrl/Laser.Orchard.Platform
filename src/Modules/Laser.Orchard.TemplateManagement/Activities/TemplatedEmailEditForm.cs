@@ -7,24 +7,28 @@ using Laser.Orchard.TemplateManagement.Services;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
 using Orchard.DisplayManagement;
+using Orchard.Environment.Features;
 using Orchard.Forms.Services;
 using Orchard.Localization;
 
 namespace Laser.Orchard.TemplateManagement.Activities {
     public class TemplatedEmailEditForm : IFormProvider {
         private readonly ITemplateService _templateServices;
+        private readonly IFeatureManager _featureManager;
         protected dynamic Shape { get; set; }
         public Localizer T { get; set; }
 
-        public TemplatedEmailEditForm(IShapeFactory shapeFactory, ITemplateService templateServices) {
+        public TemplatedEmailEditForm(IShapeFactory shapeFactory, ITemplateService templateServices, IFeatureManager featureManager) {
             Shape = shapeFactory;
             _templateServices = templateServices;
+            _featureManager = featureManager;
             T = NullLocalizer.Instance;
         }
 
         public void Describe(DescribeContext context) {
             Func<IShapeFactory, dynamic> form =
                 shape => {
+                    var jobsQueueEnabled = _featureManager.GetEnabledFeatures().Any(x => x.Id == "Orchard.JobsQueue");
                     var f = Shape.Form(
                         Id: "ActionEmail",
                         _Type: Shape.FieldSet(
@@ -121,7 +125,24 @@ namespace Laser.Orchard.TemplateManagement.Activities {
                                 Classes: new[] { "large", "text", "tokenized" }
                         )
                     );
+                    if (jobsQueueEnabled) {
+                        f._Type._Queued(Shape.Checkbox(
+                                Id: "Queued", Name: "Queued",
+                                Title: T("Queued"),
+                                Checked: false, Value: "true",
+                                Description: T("Check send it as a queued job.")));
 
+                        f._Type._Priority(Shape.SelectList(
+                                Id: "priority",
+                                Name: "Priority",
+                                Title: T("Priority"),
+                                Description: ("The priority of this message.")
+                            ));
+
+                        f._Type._Priority.Add(new SelectListItem { Value = "-50", Text = T("Low").Text });
+                        f._Type._Priority.Add(new SelectListItem { Value = "0", Text = T("Normal").Text });
+                        f._Type._Priority.Add(new SelectListItem { Value = "50", Text = T("High").Text });
+                    }
                     var allTemplates = _templateServices.GetTemplates().Where(w => !w.IsLayout);
 
                     foreach (var template in allTemplates) {
