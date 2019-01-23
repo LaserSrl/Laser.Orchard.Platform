@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Orchard.UI.Notify;
 using System.Collections.Specialized;
+using Orchard.JobsQueue.Services;
 
 namespace Laser.Orchard.TemplateManagement.Activities {
 
@@ -28,6 +29,7 @@ namespace Laser.Orchard.TemplateManagement.Activities {
         private readonly IMembershipService _membershipService;
         private readonly ITemplateService _templateServices;
         private readonly INotifier _notifier;
+        private readonly IJobsQueueService _jobsQueueService;
 
         public const string MessageType = "ActionTemplatedEmail";
 
@@ -36,11 +38,14 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             IOrchardServices orchardServices,
             IMembershipService membershipService,
             ITemplateService templateServices,
-            INotifier notifier) {
+            INotifier notifier,
+            IJobsQueueService jobsQueueService
+) {
             _messageService = messageService;
             _orchardServices = orchardServices;
             _membershipService = membershipService;
             _templateServices = templateServices;
+            _jobsQueueService = jobsQueueService;
             T = NullLocalizer.Instance;
             _notifier = notifier; ;
         }
@@ -78,6 +83,8 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             string emailTemplate = activityContext.GetState<string>("EmailTemplate");
             bool NotifyReadEmail = activityContext.GetState<string>("NotifyReadEmail") == "NotifyReadEmail";
             string attachmentList = activityContext.GetState<string>("AttachmentList");
+            var queued = activityContext.GetState<bool>("Queued");
+            var priority = activityContext.GetState<int>("Priority");
             List<string> sendTo = new List<string>();
             List<string> sendCC = new List<string>();
             List<string> sendBCC = new List<string>();
@@ -137,7 +144,7 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             if (!String.IsNullOrWhiteSpace(attachmentList)) {
                 attachments.AddRange(SplitList(attachmentList));
             }
-            if (SendEmail(contentModel, templateId, sendTo, sendCC, sendBCC, NotifyReadEmail, fromEmail, replyTo, attachments))
+            if (SendEmail(contentModel, templateId, sendTo, sendCC, sendBCC, NotifyReadEmail, fromEmail, replyTo, attachments,queued,priority))
 
                 yield return T("Sent");
             else
@@ -149,7 +156,7 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             return commaSeparated.Split(new[] { ',', ';' });
         }
 
-        private bool SendEmail(dynamic contentModel, int templateId, IEnumerable<string> sendTo, IEnumerable<string> cc, IEnumerable<string> bcc, bool NotifyReadEmail, string fromEmail = null, string replyTo = null, IEnumerable<string> attachments = null) {
+        private bool SendEmail(dynamic contentModel, int templateId, IEnumerable<string> sendTo, IEnumerable<string> cc, IEnumerable<string> bcc, bool NotifyReadEmail, string fromEmail = null, string replyTo = null, IEnumerable<string> attachments = null,bool queued=false,int priority=0) {
             var template = _templateServices.GetTemplate(templateId);
             var body = _templateServices.RitornaParsingTemplate(contentModel, templateId);
             if (body.StartsWith("Error On Template")) {
@@ -181,7 +188,15 @@ namespace Laser.Orchard.TemplateManagement.Activities {
                     data.Add("Attachments", attachments);
                 }
             }
-            _messageService.Send(SmtpMessageChannel.MessageType, data);
+           
+
+            if (!queued) {
+                _messageService.Send(SmtpMessageChannel.MessageType, data);
+            }
+            else {
+                _jobsQueueService.Enqueue("IMessageService.Send", new { type = SmtpMessageChannel.MessageType, parameters = data }, priority);
+            }
+
             return true;
         }
     }
