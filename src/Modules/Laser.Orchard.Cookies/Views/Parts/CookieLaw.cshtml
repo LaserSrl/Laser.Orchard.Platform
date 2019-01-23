@@ -72,6 +72,7 @@ $(document).ready(function() {
         cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
         cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
         if (@isPolicyPage) {
+            cookiesettings.cookiePolicyPage = true;
             cookiesettings.cookieOverlayEnabled = false;
         }
         else {

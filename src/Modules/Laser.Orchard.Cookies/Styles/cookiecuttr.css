@@ -4,9 +4,9 @@
 
 .cc-cookies, .cc-cookies-reset {
     position: fixed;
-    width: 90%;
+    width: 100%;
     left: 0;
-    top: 0;
+    /*top: 0;*/
     padding: 0.5em 5%;
     background: #565656;
     background: rgba(86,86,86,0.95);
@@ -162,6 +162,7 @@ a.cc-cookie-accept {
     width:100%;
     text-align:center;
     font-weight:bold;
+    font-size:14px;
 }
 
 p#ccPoweredBy, p#ccPoweredBy a:link, p#ccPoweredBy a:visited, p#ccPoweredBy a:hover, p#ccPoweredBy a:active {
@@ -169,6 +170,16 @@ p#ccPoweredBy, p#ccPoweredBy a:link, p#ccPoweredBy a:visited, p#ccPoweredBy a:ho
     color:#fff;
     text-decoration:none;
     font-weight:normal;
+}
+
+.cc-cookie-checks label input[type=checkbox] {
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    margin: -2px 2px 0 10px;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-appearance: checkbox;
 }
 
 @media screen and (max-width: 768px) {
