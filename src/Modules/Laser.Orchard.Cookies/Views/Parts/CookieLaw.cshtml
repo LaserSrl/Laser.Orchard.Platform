@@ -14,25 +14,17 @@
     var cookieDiscreetReset = settings.cookieDiscreetReset.ToString().ToLower();
 
     // banner position
-    var cookieOverlayEnabled = "true";
-    var cookieDiscreetPosition = "";
-    var cookieNotificationLocationBottom = "false";
+    var cookieBannerPosition = "overlay";
     switch (settings.cookiePosition)
     {
         case CookieBannerPosition.Top:
-            cookieOverlayEnabled = "false";
-            cookieDiscreetPosition = "top";
-            cookieNotificationLocationBottom = "false";
+            cookieBannerPosition = "top";
             break;
         case CookieBannerPosition.Bottom:
-            cookieOverlayEnabled = "false";
-            cookieDiscreetPosition = "bottom";
-            cookieNotificationLocationBottom = "true";
+            cookieBannerPosition = "bottom";
             break;
         default: // Overlay
-            cookieOverlayEnabled = "true";
-            cookieDiscreetPosition = "";
-            cookieNotificationLocationBottom = "false";
+            cookieBannerPosition = "overlay";
             break;
     }
 
@@ -57,15 +49,11 @@ $(document).ready(function() {
         cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
         cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
         // positioning
-        cookiesettings.cookieNotificationLocationBottom = @cookieNotificationLocationBottom;
         cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
-        if ('@settings.cookieDiscreetPosition'.length > 0)
-            cookiesettings.cookieDiscreetPosition = '@settings.cookieDiscreetPosition';
         // buttons
         cookiesettings.cookieAcceptButton = true;
         if ('@part.cookieAcceptButtonText'.length > 0)
             cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
-        cookiesettings.cookieDeclineButton = false;
         cookiesettings.cookieResetButton = @cookieResetButton;
         if ('@part.cookieResetButtonText'.length > 0)
             cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
@@ -73,11 +61,8 @@ $(document).ready(function() {
         cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
         if (@isPolicyPage) {
             cookiesettings.cookiePolicyPage = true;
-            cookiesettings.cookieOverlayEnabled = false;
         }
-        else {
-            cookiesettings.cookieOverlayEnabled = @cookieOverlayEnabled;
-        }
+        cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
         cookiesettings.cookiePoweredBy = "@siteName";
         cookiesettings.cookiePoweredByIcon = "@iconUrl";
         $.cookieCuttr(cookiesettings);
