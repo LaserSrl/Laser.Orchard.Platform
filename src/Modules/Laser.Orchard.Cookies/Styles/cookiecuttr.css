@@ -185,7 +185,7 @@ p#ccPoweredBy, p#ccPoweredBy a:link, p#ccPoweredBy a:visited, p#ccPoweredBy a:ho
 @media screen and (max-width: 768px) {
     .cc-cookies a.cc-cookie-accept, .cc-cookies a.cc-cookie-decline, .cc-cookies-reset a.cc-cookie-reset {
         display: block;
-        margin: 1em 0;
+        margin: 0;
     }
 }
 
