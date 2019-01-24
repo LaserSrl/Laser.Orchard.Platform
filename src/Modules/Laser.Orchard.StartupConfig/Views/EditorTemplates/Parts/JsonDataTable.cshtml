@@ -1,7 +1,7 @@
 ﻿@model Laser.Orchard.StartupConfig.Models.JsonDataTablePart
 @using Laser.Orchard.StartupConfig.Models;
 @{ 
-    Style.Include("tabulator.min.css");
+    Style.Require("tabulator").AtHead();
     Script.Require("tabulator").AtHead();
 
     var settings = Model.Settings.GetModel<JsonDataTablePartSettings>();
@@ -20,10 +20,11 @@
 @using (Script.Foot()) {
         <script>
             $(function () {
-                var $table = $("#table-@Model.Id");
+                var tableId = "#table-@Model.Id";
+                var $table; // = $("#table-@Model.Id");
                 var $hidden = $("#@Html.FieldIdFor(m => m.TableData)");
 
-                $table.tabulator({
+                $table = new Tabulator(tableId, {
                     height:"300px",
                     layout:"fitColumns",
                     movableRows: true,
@@ -43,21 +44,21 @@
                     data: @Html.Raw(Model.TableData)
                 });
                 $("#btnAddTop").click(function(){
-                    var rows = $table.tabulator("getRows");
+                    var rows = $table.getRows();
                     if(@(settings.MaxRows) > 0 && rows.length >= @(settings.MaxRows)) {
                         alert("@T("Max number of rows reached.")");
                     }
                     else {
-                        $table.tabulator('addRow', {}, true);
+                        $table.addRow({}, true);
                     }
                 });
                 $("#btnAddBottom").click(function(){
-                    var rows = $table.tabulator("getRows");
+                    var rows = $table.getRows();
                     if(@(settings.MaxRows) > 0 && rows.length >= @(settings.MaxRows)) {
                         alert("@T("Max number of rows reached.")");
                     }
                     else {
-                        $table.tabulator('addRow', {}, false);
+                        $table.addRow({}, false);
                     }
                 });
             });

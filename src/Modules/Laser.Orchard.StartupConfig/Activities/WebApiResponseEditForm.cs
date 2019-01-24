@@ -37,6 +37,11 @@ namespace Laser.Orchard.StartupConfig.Activities {
                                 Title: T("Message"),
                                 Description: T("The text message of the response."),
                                 Classes: new[] { "large", "text", "tokenized" }),
+                            _Data: Shape.Textbox(
+                                Id: "data", Name: "Data",
+                                Title: T("Data"),
+                                Description: T("The data object of the response."),
+                                Classes: new[] { "large", "text", "tokenized" }),
                             _ErrorCode: Shape.SelectList(
                                 Id: "error-code",
                                 Name: "ErrorCode",
