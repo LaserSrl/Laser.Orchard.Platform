@@ -118,6 +118,7 @@
     <Compile Include="Drivers\QueryPickerPartDriver.cs" />
     <Compile Include="Forms\ParametrizedHQLForm.cs" />
     <Compile Include="Forms\SelectCultureForm.cs" />
+    <Compile Include="Forms\SelectTermsForm.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\QueryPickerPart.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Permissions.cs" />
     <Compile Include="Providers\HQLQueryFilterProvider.cs" />
     <Compile Include="Providers\OptionalCultureFilterProvider.cs" />
+    <Compile Include="Providers\OptionalTermsFilterProvider.cs" />
     <Compile Include="Services\ICustomQuery.cs" />
     <Compile Include="Services\IQueryPickerService.cs" />
     <Compile Include="Settings\QueryUserFilterExtensionPartEditEvents.cs" />
@@ -186,6 +188,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
       <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
       <Name>Orchard.Projections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
+      <Project>{E649EA64-D213-461B-87F7-D67035801443}</Project>
+      <Name>Orchard.Taxonomies</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
