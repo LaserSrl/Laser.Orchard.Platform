@@ -30,7 +30,12 @@ namespace Laser.Orchard.Cookies.Drivers {
             var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
             var isPolicyPage = "false";
-            var iconUrl = string.Format("{0}/{1}", HttpContext.Current.Request.ApplicationPath, "Modules/Laser.Orchard.Cookies/Contents/cookie.png");
+            var webAppPath = HttpContext.Current.Request.ApplicationPath;
+            if(webAppPath == "/")
+            {
+                webAppPath = "";
+            }
+            var iconUrl = string.Format("{0}/{1}", webAppPath, "Modules/Laser.Orchard.Cookies/Contents/cookie.png");
             if (string.IsNullOrWhiteSpace(part.cookiePolicyLink) == false && HttpContext.Current.Request.Url.AbsoluteUri.EndsWith(part.cookiePolicyLink)) {
                 isPolicyPage = "true";
             }
