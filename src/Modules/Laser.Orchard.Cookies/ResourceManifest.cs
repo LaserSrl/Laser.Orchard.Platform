@@ -14,7 +14,7 @@ namespace Laser.Orchard.Cookies
                 .SetVersion("1.4.0");
 
             manifest.DefineScript("CookieCuttr")
-                .SetUrl("jquery.cookiecuttr.min.js", "jquery.cookiecuttr.js")
+                .SetUrl("jquery.cookiecuttr.js", "jquery.cookiecuttr.js")
                 .SetDependencies("jQueryCookie", "jQuery")
                 .SetVersion("1.0.0");
 

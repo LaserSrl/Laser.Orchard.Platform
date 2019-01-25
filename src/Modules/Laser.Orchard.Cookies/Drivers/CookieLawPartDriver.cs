@@ -1,28 +1,51 @@
 
 using Laser.Orchard.Cookies.Models;
+using Laser.Orchard.Cookies.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Environment.Configuration;
+using Orchard.FileSystems.VirtualPath;
+using Orchard.OutputCache;
 using System;
+using System.Text;
+using System.Web;
 
 namespace Laser.Orchard.Cookies.Drivers {
 
     
-    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart> {
+    public class CookieLawPartDriver : ContentPartCloningDriver<CookieLawPart>, ICachingEventHandler {
 
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IGDPRScript _gdprScriptService;
 
-        public CookieLawPartDriver(IWorkContextAccessor workContextAccessor) {
+        public CookieLawPartDriver(IWorkContextAccessor workContextAccessor, IGDPRScript gdprScriptService) {
             _workContextAccessor = workContextAccessor;
+            _gdprScriptService = gdprScriptService;
         }
 
         protected override DriverResult Display(CookieLawPart part, string displayType, dynamic shapeHelper) {
             var workContext = _workContextAccessor.GetContext();
+            var gdprScriptservice = workContext.Resolve<IGDPRScript>();
             var cookieSettings = workContext.CurrentSite.As<CookieSettingsPart>();
+            var isPolicyPage = "false";
+            var webAppPath = HttpContext.Current.Request.ApplicationPath;
+            if(webAppPath == "/")
+            {
+                webAppPath = "";
+            }
+            var iconUrl = string.Format("{0}/{1}", webAppPath, "Modules/Laser.Orchard.Cookies/Contents/cookie.png");
+            if (string.IsNullOrWhiteSpace(part.cookiePolicyLink) == false && HttpContext.Current.Request.Url.AbsoluteUri.EndsWith(part.cookiePolicyLink)) {
+                isPolicyPage = "true";
+            }
 
-            return ContentShape("Parts_CookieLaw",
-                () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part));
+            if (_gdprScriptService.GetActiveCookieTypes().Count > 1) {
+                return ContentShape("Parts_CookieLaw",
+                    () => shapeHelper.Parts_CookieLaw(CookieSettings: cookieSettings, CookieLawPart: part, GDPRScriptservice: gdprScriptservice, isPolicyPage: isPolicyPage, siteName: workContext.CurrentSite.SiteName, iconUrl: iconUrl));
+            } else {
+                return null;
+            }
         }
 
         protected override DriverResult Editor(CookieLawPart part, dynamic shapeHelper) {
@@ -64,10 +87,8 @@ namespace Laser.Orchard.Cookies.Drivers {
             element.SetAttributeValue("cookiePolicyPageMessage", part.cookiePolicyPageMessage);
             element.SetAttributeValue("cookieErrorMessage", part.cookieErrorMessage);
             element.SetAttributeValue("cookieAcceptButtonText", part.cookieAcceptButtonText);
-            element.SetAttributeValue("cookieDeclineButtonText", part.cookieDeclineButtonText);
             element.SetAttributeValue("cookieResetButtonText", part.cookieResetButtonText);
             element.SetAttributeValue("cookieWhatAreLinkText", part.cookieWhatAreLinkText);
-            element.SetAttributeValue("cookieAnalyticsMessage", part.cookieAnalyticsMessage);
             element.SetAttributeValue("cookiePolicyLink", part.cookiePolicyLink);
             element.SetAttributeValue("cookieMessage", part.cookieMessage);
             element.SetAttributeValue("cookieWhatAreTheyLink", part.cookieWhatAreTheyLink);
@@ -83,10 +104,8 @@ namespace Laser.Orchard.Cookies.Drivers {
             part.cookiePolicyPageMessage = GetAttribute<string>(context, partName, "cookiePolicyPageMessage");
             part.cookieErrorMessage = GetAttribute<string>(context, partName, "cookieErrorMessage");
             part.cookieAcceptButtonText = GetAttribute<string>(context, partName, "cookieAcceptButtonText");
-            part.cookieDeclineButtonText = GetAttribute<string>(context, partName, "cookieDeclineButtonText");
             part.cookieResetButtonText = GetAttribute<string>(context, partName, "cookieResetButtonText");
             part.cookieWhatAreLinkText = GetAttribute<string>(context, partName, "cookieWhatAreLinkText");
-            part.cookieAnalyticsMessage = GetAttribute<string>(context, partName, "cookieAnalyticsMessage");
             part.cookiePolicyLink = GetAttribute<string>(context, partName, "cookiePolicyLink");
             part.cookieMessage = GetAttribute<string>(context, partName, "cookieMessage");
             part.cookieWhatAreTheyLink = GetAttribute<string>(context, partName, "cookieWhatAreTheyLink");
@@ -100,29 +119,30 @@ namespace Laser.Orchard.Cookies.Drivers {
             }
             return default(TV);
         }
-
-
-       
-
-       
-
-      
-       
-      
-
-
         protected override void Cloning(CookieLawPart originalPart, CookieLawPart clonePart, CloneContentContext context) {
             clonePart.cookieDiscreetLinkText = originalPart.cookieDiscreetLinkText;
             clonePart.cookiePolicyPageMessage = originalPart.cookiePolicyPageMessage;
             clonePart.cookieErrorMessage = originalPart.cookieErrorMessage;
             clonePart.cookieAcceptButtonText = originalPart.cookieAcceptButtonText;
-            clonePart.cookieDeclineButtonText = originalPart.cookieDeclineButtonText;
             clonePart.cookieResetButtonText = originalPart.cookieResetButtonText;
             clonePart.cookieWhatAreLinkText = originalPart.cookieWhatAreLinkText;
-            clonePart.cookieAnalyticsMessage = originalPart.cookieAnalyticsMessage;
             clonePart.cookiePolicyLink = originalPart.cookiePolicyLink;
             clonePart.cookieMessage = originalPart.cookieMessage;
             clonePart.cookieWhatAreTheyLink = originalPart.cookieWhatAreTheyLink;
+        }
+
+        /// <summary>
+        /// Per generare la key utilizza il valore del cookie che dipende dai cookie abilitati e dalle scelte dell'utente.
+        /// </summary>
+        /// <param name="key"></param>
+        public void KeyGenerated(StringBuilder key) {
+            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
+            if (cookie != null) {
+                var val = cookie.Value;
+                if (string.IsNullOrWhiteSpace(val) == false) {
+                    key.AppendFormat("CookieLaw={0};", val);
+                }
+            }
         }
     }
 }
