@@ -21,13 +21,11 @@ namespace Laser.Orchard.Cookies.Handlers
             T = NullLocalizer.Instance;
 
             OnInitializing<CookieLawPart>((context, part) => {
-                part.cookieAnalyticsMessage = cookieanalyticsmsg;
                 part.cookiePolicyLink = string.Empty;
                 part.cookieMessage = cookiemsg;
                 part.cookieWhatAreTheyLink = whatarecookieslink;
                 part.cookieErrorMessage = errormsg;
                 part.cookieAcceptButtonText = acceptmsg;
-                part.cookieDeclineButtonText = declinemsg;
                 part.cookieResetButtonText = resetmsg;
                 part.cookieWhatAreLinkText = whataremsg;
                 part.cookiePolicyPageMessage = string.Empty;
