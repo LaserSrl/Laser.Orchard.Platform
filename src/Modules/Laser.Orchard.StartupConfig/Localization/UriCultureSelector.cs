@@ -52,7 +52,7 @@ namespace Laser.Orchard.StartupConfig.Localization {
                 var cultureToken = requestPath.Substring(0, requestPath.IndexOf('/'));
                 // Recupero la cultura indicata 
                 var fullCultureName = CultureInfo.GetCultures(CultureTypes.AllCultures).
-                    Where(w => w.Name.StartsWith(cultureToken)).Select(s => s.Name).FirstOrDefault();
+                    Where(w => w.Name.StartsWith(cultureToken, StringComparison.InvariantCultureIgnoreCase)).Select(s => s.Name).FirstOrDefault();
                 if (fullCultureName != null) {
 
                     var cultureInfo = CultureInfo.GetCultureInfo(fullCultureName);
