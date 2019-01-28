@@ -23,6 +23,8 @@
     IContentManager _contentManager;
     WorkContext.TryResolve<IContentManager>(out _contentManager);
     Layout.Title = Model.Part.AdminMenuText;
+
+    Script.Require("JQuery").AtHead();
 }
 
 <form id="FormAjaxList" method="get">
