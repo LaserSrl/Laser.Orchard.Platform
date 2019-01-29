@@ -125,6 +125,9 @@
 </div>
 <div id="footer">
     <div class="container container-footer">
+        @if (Model.Footer != null) {
+            @Zone(Model.Footer)
+        }
         <div class="footer-text">@WorkContext.CurrentSite.SiteName - @(String.IsNullOrWhiteSpace(themeSettings.BaseLineText) ? T("Powered by Krake").ToString() : themeSettings.BaseLineText)</div>
     </div>
 </div>

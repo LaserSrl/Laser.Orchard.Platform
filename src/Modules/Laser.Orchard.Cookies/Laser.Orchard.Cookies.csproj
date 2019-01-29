@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,6 +96,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Contents\cookie.png" />
     <Content Include="Scripts\CloudScripts\cookie_management_js.js" />
     <Content Include="Scripts\CloudScripts\informativebanner_cm_js.js" />
     <Content Include="Scripts\CloudScripts\jquery.min.js" />
@@ -102,7 +104,6 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.cookie.min.js" />
     <Content Include="Scripts\jquery.cookiecuttr.js" />
-    <Content Include="Scripts\jquery.cookiecuttr.min.js" />
     <Content Include="Styles\cookiecuttr.css" />
     <Content Include="Styles\cookiecuttr.min.css">
       <DependentUpon>cookiecuttr.css</DependentUpon>
@@ -122,6 +123,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Drivers\CookieLawPartDriver.cs" />
     <Compile Include="Drivers\CookieSettingsPartDriver.cs" />
@@ -130,6 +132,10 @@
     <Compile Include="Models\CookieLawPart.cs" />
     <Compile Include="Models\CookieSettingsPart.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\GDPRScript.cs" />
+    <Compile Include="Services\HubSpotCookieGDPR.cs" />
+    <Compile Include="Services\ICookieGDPR.cs" />
+    <Compile Include="Services\IGDPRScript.cs" />
     <Compile Include="ViewModels\CookieLawEditModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -144,17 +150,23 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <Content Include="packages.config" />
+    <Content Include="Contents\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.OutputCache\Orchard.OutputCache.csproj">
+      <Project>{6E444FF1-A47C-4CF6-BB3F-507C8EBD776D}</Project>
+      <Name>Orchard.OutputCache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
