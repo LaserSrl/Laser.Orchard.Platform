@@ -10,3 +10,8 @@ Features:
 		Description: Functionalities for cookie management
 		Category: Input Editor
 		Dependencies: Orchard.Resources
+	Laser.Orchard.HubSpot:
+		Name: Laser Orchard HubSpot
+		Description: Functionalities for marketing cookie
+		Category: Marketing
+		Dependencies: Laser.Orchard.Cookies

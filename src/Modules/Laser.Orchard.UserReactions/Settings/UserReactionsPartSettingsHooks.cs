@@ -32,7 +32,7 @@ namespace Laser.Orchard.UserReactions.Settings {
             
             if(definition.Settings.Count>0)
             {
-                SettingType = new JavaScriptSerializer().Deserialize<List<UserReactionsSettingTypesSel>>(definition.Settings.Values.ElementAt(1));
+                SettingType = new JavaScriptSerializer().Deserialize<List<UserReactionsSettingTypesSel>>(definition.Settings["UserReactionsPartSettings.TypeReactionsPartsSelected"]);
             }
 
             model.TypeReactionsPartsSelected = SettingType;   

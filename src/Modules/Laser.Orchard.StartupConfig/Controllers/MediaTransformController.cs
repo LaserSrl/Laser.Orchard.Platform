@@ -20,11 +20,13 @@ namespace Laser.Orchard.StartupConfig.Controllers {
 
     [OrchardFeature("Laser.Orchard.StartupConfig.MediaExtensions")]
     public class MediaTransformController : Controller {
-        private readonly Work<IImageProfileManager> _imageProfileManager;
+       // private readonly Work<IImageProfileManager> _imageProfileManager;
+        private readonly IImageProfileManager _imageProfileManager;
         private readonly IOrchardServices _orchardServices;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MediaTransformController(Work<IImageProfileManager> imageProfileManager, IOrchardServices orchardServices, IHttpContextAccessor httpContextAccessor) {
+        //  public MediaTransformController(Work<IImageProfileManager> imageProfileManager, IOrchardServices orchardServices, IHttpContextAccessor httpContextAccessor) {
+        public MediaTransformController(IImageProfileManager imageProfileManager, IOrchardServices orchardServices, IHttpContextAccessor httpContextAccessor) {
             _imageProfileManager = imageProfileManager;
             _orchardServices = orchardServices;
             _httpContextAccessor = httpContextAccessor;
@@ -73,7 +75,8 @@ namespace Laser.Orchard.StartupConfig.Controllers {
                     + "_a_" + Convert.ToString(Alignment)
                     + "_c_" + Convert.ToString(PadColor);
                 Path = HttpUtility.UrlDecode(Path);
-                url = _imageProfileManager.Value.GetImageProfileUrl(Path, profile, filter);
+                //  url = _imageProfileManager.Value.GetImageProfileUrl(Path, profile, filter);
+                url = _imageProfileManager.GetImageProfileUrl(Path, profile, filter);
             }
             if (url == null) {
                 return null;
