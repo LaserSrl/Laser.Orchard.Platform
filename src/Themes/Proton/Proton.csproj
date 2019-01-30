@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -330,7 +331,7 @@
     <Content Include="Views\PortfolioBreadcrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts.CookieLaw.cshtml" />
+    <Content Include="Views\_Parts.CookieLaw.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Fields.ContentPicker.cshtml" />
