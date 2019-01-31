@@ -9,7 +9,7 @@ Features:
     Laser.Orchard.CulturePicker:
 		Name: Laser Culture Picker
         Description: Allows users to pick a preferred culture, instead of using a default site culture.
-        Dependencies: Settings, Orchard.Widgets, Orchard.Localization, Orchard.Autoroute
+        Dependencies: Settings, Orchard.Widgets, Orchard.Localization, Orchard.Autoroute, Orchard.Forms, Orchard.Projections, Orchard.Tokens
         Category: Localization
     Laser.Orchard.CulturePicker.MainMenu:
 		Name: Laser Culture Picker Main Menu Filtering

@@ -48,9 +48,19 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -106,12 +116,14 @@
     <Compile Include="Controllers\MyQueryAdminController.cs" />
     <Compile Include="Controllers\UserQueryAdminController.cs" />
     <Compile Include="Drivers\QueryPickerPartDriver.cs" />
+    <Compile Include="Forms\ParametrizedHQLForm.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\QueryPickerPart.cs" />
     <Compile Include="Models\QueryUserFilterExtensionPart.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions.cs" />
+    <Compile Include="Providers\HQLQueryFilterProvider.cs" />
     <Compile Include="Services\ICustomQuery.cs" />
     <Compile Include="Services\IQueryPickerService.cs" />
     <Compile Include="Settings\QueryUserFilterExtensionPartEditEvents.cs" />
@@ -173,6 +185,10 @@
       <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
       <Name>Orchard.Projections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
+      <Project>{E649EA64-D213-461B-87F7-D67035801443}</Project>
+      <Name>Orchard.Taxonomies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>
       <Name>Orchard.Tokens</Name>
@@ -181,10 +197,15 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
+      <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
+      <Name>Laser.Orchard.StartupConfig</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
