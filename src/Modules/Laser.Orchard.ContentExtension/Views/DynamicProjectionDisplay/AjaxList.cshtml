@@ -8,12 +8,9 @@
     $(document).ready(function () {
         $("ul.pager > li > a").click(function(e){
             var url=$(this).attr('href');
-           // var url_old = "~/Modules/Laser.Orchard.ContentExtension/View/DynamicProjectionDisplay/AjaxList.cshtml";
-           // var url = '@Url.Action("AjaxList", "DynamicProjectionDisplay", new { area = "Laser.Orchard.ContentExtension"})'
             $.ajax({
                 type: "GET",
                 url: url,
-             //   data: $("#FormAjaxList").serialize(),
                 success: function (data) {
                     $("#AjaxList").html(data);
                  }

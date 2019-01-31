@@ -1,11 +1,16 @@
 ﻿Name: Laser.Orchard.Queries
 AntiForgery: enabled
 Author: Laser srl - Frediani Lorenzo
-Website: http://orchardproject.net
+Website: https://www.laser-group.com
 Version: 1.0
-OrchardVersion: 1.8
+OrchardVersion: 1.10
 Features:
     Laser.Orchard.Queries:
         Description: Extends native query features.
 		Dependencies:	Orchard.Forms, Orchard.Projections, Orchard.Fields, Orchard.Tokens, Orchard.Localization
+		Category: Developer
+	Laser.Orchard.HQLProjectionFilter:
+		Name: HQL Query Filter
+		Description: Provides a way to use HQL for complex filters in Orchard Queries.
+		Dependencies: Orchard.Forms, Orchard.Projections, Orchard.Tokens
 		Category: Developer
