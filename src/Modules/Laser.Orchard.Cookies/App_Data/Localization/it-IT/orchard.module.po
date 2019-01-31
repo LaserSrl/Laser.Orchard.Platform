@@ -105,12 +105,20 @@ msgid "Make the reset button discreet?"
 msgstr "Rendere meno invasivo il pulsante Pulisci?"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "Position of the Cookie Banner"
+msgstr "Posizione del banner dei cookie"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "Set to topleft by default, you can also set topright, bottomleft, bottomright."
 msgstr "Impostato a "topleft" (in alto a sinistra) come valore predefinito, è però possibile modificarlo in '"topright" (in alto a destra), "bottomleft" (in basso a sinistra), "bottomright" (in basso a destra)."
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "The banner will cover the whole page and users will have to dismiss it il order to navigate the site."
 msgstr "Il banner coprirà tutta la pagine web e l'utente dovrà chiuderlo per poter navigare sul sito."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
+msgid "The position of the Cookie Banner."
+msgstr "La posizione del banner dei cookie."
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "Analytics Message (this is the default message)"
@@ -143,6 +151,10 @@ msgstr "Impostazione legge sui cookies"
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "Remember to keep the {{cookiePolicyLink}} variable intact."
 msgstr "Ricordarsi di mantenere intatta la variabile {{cookiePolicyLink}}."
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Text of your privacy policy / Cookie policy link"
+msgstr "Testo del link della policy di riservatezza / policy dei cookie"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "'What are Cookies' link"
