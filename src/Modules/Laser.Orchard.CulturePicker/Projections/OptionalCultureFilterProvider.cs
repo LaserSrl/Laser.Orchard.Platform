@@ -1,16 +1,12 @@
-﻿using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using OPServices = Orchard.Projections.Services;
-using Orchard.Projections.Descriptors.Filter;
-using Orchard.Localization;
-using Orchard.Localization.Services;
+﻿using Orchard.Localization;
 using Orchard.Localization.Models;
+using Orchard.Localization.Services;
+using Orchard.Projections.Descriptors.Filter;
+using System;
+using System.Linq;
+using OPServices = Orchard.Projections.Services;
 
-namespace Laser.Orchard.Queries.Providers {
-    [OrchardFeature("Laser.Orchard.OptionalFilters")]
+namespace Laser.Orchard.CulturePicker.Projections {
     public class OptionalCultureFilterProvider : OPServices.IFilterProvider {
         private readonly ICultureManager _cultureManager;
 

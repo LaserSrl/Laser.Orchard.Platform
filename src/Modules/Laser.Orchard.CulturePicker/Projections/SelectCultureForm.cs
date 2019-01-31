@@ -1,14 +1,9 @@
 ﻿using Orchard.DisplayManagement;
-using Orchard.Environment.Extensions;
 using Orchard.Forms.Services;
 using Orchard.Localization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Laser.Orchard.Queries.Forms {
-    [OrchardFeature("Laser.Orchard.OptionalFilters")]
+namespace Laser.Orchard.CulturePicker.Projections {
     public class SelectCultureForm : IFormProvider {
 
         protected dynamic Shape { get; set; }

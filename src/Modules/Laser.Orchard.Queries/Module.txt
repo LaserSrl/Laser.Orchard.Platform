@@ -14,8 +14,3 @@ Features:
 		Description: Provides a way to use HQL for complex filters in Orchard Queries.
 		Dependencies: Orchard.Forms, Orchard.Projections, Orchard.Tokens
 		Category: Developer
-	Laser.Orchard.OptionalFilters:
-		Name: Query Filters with Optional Values
-		Description: Provides filters for Orchard Queries that allow handling optional values.
-		Dependencies: Orchard.Forms, Orchard.Projections, Orchard.Tokens, Orchard.Localization
-		Category: Developer

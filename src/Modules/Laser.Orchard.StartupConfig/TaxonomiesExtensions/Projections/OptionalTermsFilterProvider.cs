@@ -1,5 +1,4 @@
-﻿using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
+﻿using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Projections.Descriptors.Filter;
 using Orchard.Taxonomies.Models;
@@ -7,11 +6,10 @@ using Orchard.Taxonomies.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using OPServices = Orchard.Projections.Services;
 
-namespace Laser.Orchard.Queries.Providers {
-    [OrchardFeature("Laser.Orchard.OptionalFilters")]
+namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
+    [OrchardFeature("Laser.Orchard.StartupConfig.TaxonomiesExtensions")]
     public class OptionalTermsFilterProvider : OPServices.IFilterProvider {
         private readonly ITaxonomyService _taxonomyService;
 
@@ -65,7 +63,7 @@ namespace Laser.Orchard.Queries.Providers {
                 if (termIds.Any()) {
                     // if there are no term ids, it makes no sense to be here
                     Func<int, IEnumerable<TermPart>> selectManyExpression;
-                    if(context.State.IncludeChidren != null) {
+                    if (context.State.IncludeChidren != null) {
                         selectManyExpression = tid => termsWithChildren(_taxonomyService, tid);
                     } else {
                         selectManyExpression = tid => termsWithoutChildren(_taxonomyService, tid);

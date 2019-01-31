@@ -117,8 +117,6 @@
     <Compile Include="Controllers\UserQueryAdminController.cs" />
     <Compile Include="Drivers\QueryPickerPartDriver.cs" />
     <Compile Include="Forms\ParametrizedHQLForm.cs" />
-    <Compile Include="Forms\SelectCultureForm.cs" />
-    <Compile Include="Forms\SelectTermsForm.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\QueryPickerPart.cs" />
@@ -126,8 +124,6 @@
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Providers\HQLQueryFilterProvider.cs" />
-    <Compile Include="Providers\OptionalCultureFilterProvider.cs" />
-    <Compile Include="Providers\OptionalTermsFilterProvider.cs" />
     <Compile Include="Services\ICustomQuery.cs" />
     <Compile Include="Services\IQueryPickerService.cs" />
     <Compile Include="Settings\QueryUserFilterExtensionPartEditEvents.cs" />
