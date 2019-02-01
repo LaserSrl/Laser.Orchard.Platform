@@ -48,12 +48,10 @@
 				cookiePoweredByIcon: ""
             };
             var options = $.extend(defaults, options);
-			var message = defaults.cookieMessage; //.replace('{{cookiePolicyLink}}', defaults.cookiePolicyLink);
-            defaults.cookieMessage = 'We use cookies on this website, you can <a href="' + defaults.cookiePolicyLink + '" title="read about our cookies">read about them here</a>. To use the website as intended please...';
             //convert options
 			var cookieBannerPosition = options.cookieBannerPosition;
 			var cookieTitle = options.cookieTitle;
-            var cookieMessage = message;
+			var cookieMessage = options.cookieMessage;
             var cookieExpires = options.cookieExpires;
             var cookieAcceptButtonText = options.cookieAcceptButtonText;
             var cookiePolicyPage = options.cookiePolicyPage;
