@@ -9,9 +9,14 @@
     <div>
         <legend style="margin-top: 30px; margin-bottom: 10px;">Messages</legend>
         <div>
-            <label for="CookieSettings_cookieMessage">@T("'Cookie Privacy link' Message")</label>
+            <label for="CookieSettings_cookieTitle">@T("Cookie Banner Title")</label>
+            @Html.TextBoxFor(m => m.CookieLaw.cookieTitle, new { @class = "text medium" })
+            <span class="hint">@T("Title of the cookie banner.")</span>
+        </div>
+        <div>
+            <label for="CookieSettings_cookieMessage">@T("Cookie Banner Message")</label>
             @Html.TextAreaFor(m => m.CookieLaw.cookieMessage, new { @class = "text medium" })
-            <span class="hint">@T("Remember to keep the {{cookiePolicyLink}} variable intact.")</span>
+            <span class="hint">@T("Message of the cookie banner.")</span>
         </div>
         <legend style="margin-top: 20px; margin-bottom: 10px;">Links</legend>
         <div>
@@ -28,11 +33,11 @@
 <fieldset class="buttons">
     <legend style="margin-top: 30px; margin-bottom: 10px;">Buttons Text</legend>
     <div>
-        <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'Accept Cookies' button text")</label>
+        <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'OK' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieAcceptButtonText, new { @class = "text medium" })
     </div>
     <div @(settings.showCookieResetButton ? "" : "style=display:none")>
-        <label for="CookieSettings_cookieResetButtonText">@T("Change 'Reset Cookies' button text")</label>
+        <label for="CookieSettings_cookieResetButtonText">@T("Change 'GDPR Cookies' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieResetButtonText, new { @class = "text medium" })
     </div>
 </fieldset>
