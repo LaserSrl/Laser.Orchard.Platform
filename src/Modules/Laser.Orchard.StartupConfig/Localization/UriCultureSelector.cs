@@ -55,7 +55,7 @@ namespace Laser.Orchard.StartupConfig.Localization {
                 requestPath = (requestPath.StartsWith("/"))
                     ? requestPath.Substring(1)
                     : requestPath;
-                if (requestPath.StartsWith(UrlPrefix)) {
+                if (!string.IsNullOrWhiteSpace(UrlPrefix) && requestPath.StartsWith(UrlPrefix)) {
                     requestPath = requestPath.Substring(UrlPrefix.Length);
                 }
             } else {
