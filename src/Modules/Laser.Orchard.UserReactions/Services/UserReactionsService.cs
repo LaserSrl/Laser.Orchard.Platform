@@ -491,6 +491,15 @@ namespace Laser.Orchard.UserReactions.Services {
             else if (reactionName.Equals(ReactionsNames.silent)) {
                 return T("Silent");
             }
+            else if (reactionName.Equals(ReactionsNames.exciting)) {
+                return T("Exciting");
+            }
+            else if (reactionName.Equals(ReactionsNames.peculiar)) {
+                return T("Peculiar");
+            }
+            else if (reactionName.Equals(ReactionsNames.interesting)) {
+                return T("Interesting");
+            }
             else {
                 return T("None");
             }
