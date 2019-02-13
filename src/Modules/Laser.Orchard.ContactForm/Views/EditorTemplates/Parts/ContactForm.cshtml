@@ -25,6 +25,25 @@
     </div>
 </fieldset>
 <fieldset>
+    <legend></legend>
+    <div class="editor-field">
+        <label>@Html.CheckBoxFor(model => model.ContactForm.AcceptPolicy) @T("Accept policy required")</label>
+        <label id="required-name-field">@Html.CheckBoxFor(model => model.ContactForm.AcceptPolicy) @T("Agree policy will be required to post form")</label>
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ContactForm.AcceptPolicyText, new { @class = "text large", placeholder = T("I have read and agree to the ") })
+        <span class="hint">@T("Specify text before accept policy.")</span>
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ContactForm.AcceptPolicyUrlText, new { @class = "text large", placeholder = T("Privacy Policy") })
+        <span class="hint">@T("Text with link.")</span>
+    </div>
+    <div class="editor-field">
+        @Html.TextBoxFor(model => model.ContactForm.AcceptPolicyUrl, new { @class = "text large" })
+        <span class="hint">@T("Policy Url.")</span>
+    </div>
+</fieldset>
+<fieldset>
     <div class="editor-field">
         <label>@Html.CheckBoxFor(model => model.ContactForm.DisplayNameField) @T("Display Name Field")</label>
         <label id="required-name-field">@Html.CheckBoxFor(model => model.ContactForm.RequireNameField) @T("Require Name Field")</label>

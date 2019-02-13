@@ -94,5 +94,23 @@ namespace Laser.Orchard.ContactForm.Models {
             set { this.Store(x => x.RequireAttachment, value); }
 
         }
+
+        public bool AcceptPolicy {
+            get { return this.Retrieve(x => x.AcceptPolicy); }
+            set { this.Store(x => x.AcceptPolicy, value); }
+
+        }
+        public string AcceptPolicyUrl {
+            get { return this.Retrieve(x => x.AcceptPolicyUrl); }
+            set { this.Store(x => x.AcceptPolicyUrl, value); }
+        }
+        public string AcceptPolicyUrlText {
+            get { return this.Retrieve(x => x.AcceptPolicyUrlText); }
+            set { this.Store(x => x.AcceptPolicyUrlText, value); }
+        }
+        public string AcceptPolicyText {
+            get { return this.Retrieve(x => x.AcceptPolicyText); }
+            set { this.Store(x => x.AcceptPolicyText, value); }
+        }
     }
 }
