@@ -8,6 +8,16 @@
     Style.Include("ContactForm.css").AtHead();
     const string displayNone = "style=\"display:none\"";
     var contactForm = (ContactFormViewModel)Model.ContactForm;
+
+
+    var privacyUrl = @"https://laser-group.com/privacy-policy";
+    var privacyLinkText = "Privacy Policy"; // text for the link here
+    var prePrivacyText = T("I declare that I have read and understood ").Text;
+    var privacyTarget = "_blank";
+
+
+
+
     var displaySubject = contactForm.ShowSubjectField ? string.Empty : displayNone;
     var displayName = contactForm.ShowNameField ? string.Empty : displayNone;
     var displayAttachmentButton = contactForm.EnableFileUpload ? string.Empty : displayNone;
@@ -25,62 +35,68 @@
     <div id="contact-form">
 
         @{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" })) {
-            
-            <div id="FormError" class="wpcf7-response-output wpcf7-display-none wpcf7-validation-errors" style="display:none">
-                @T("One or more fields contain errors. Please check and try again.")
-            </div>
-            
-            <div class="form-group">
-                <label class="control-label" for="Name">@T("Name")<span class="required">*</span></label><br />
-                <span class="wpcf7-form-control-wrap">
-                    <input id="Name-@uniqueId" type="text" name="Name" value="@name" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Your Name")" />
-                    <span role="alert" id="NameError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
-                </span>
-            </div>
-    
-            <div class="form-group">
-                <label class="control-label" for="Email">@T("Email")<span class="required">*</span></label><br />
-                <span class="wpcf7-form-control-wrap">
-                    <input id="Email-@uniqueId" type="email" name="Email" value="@email" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Email Address")" />
-                    <span role="alert" id="EmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
-                    <span role="alert" id="EmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
-                    <span role="alert" id="EmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
-                </span>
-            </div>
-    
-            <div class="form-group">
-                <label class="control-label" for="ConfirmEmail">@T("Confirm Email")<span class="required">*</span></label><br />
-                <span class="wpcf7-form-control-wrap">
-                    <input id="ConfirmEmail-@uniqueId" type="email" name="ConfirmEmail" value="@confirmEmail" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Confirm Email Address")" />
-                    <span role="alert" id="ConfirmEmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
-                    <span role="alert" id="ConfirmEmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
-                    <span role="alert" id="ConfirmEmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
-                </span>
-            </div>
 
-            <div class="form-group">
-                <label class="control-label" for="Message">@T("Message")<span class="required">*</span></label><br />
-                <span class="wpcf7-form-control-wrap messaggio">
-                    <textarea id="Message-@uniqueId" name="Message" cols="40" rows="4" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Comments or Inquiry")"></textarea>
-                    <span role="alert" id="MessageError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
-                </span>
-            </div>
+                <div id="FormError" class="wpcf7-response-output wpcf7-display-none wpcf7-validation-errors" style="display:none">
+                    @T("One or more fields contain errors. Please check and try again.")
+                </div>
 
-            <div id="AttachmentSection-@uniqueId" type="hidden">
-                <img id="AttachmentPreview-@uniqueId" ></img>
-                <label id="AttachmentNameLabel-@uniqueId"></label>
-                <br />
-            </div>
-            <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
-            <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
-            <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
-            @Html.AntiForgeryTokenOrchard()
-            <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
-                
-            <p>
-                <input type="submit" id="btnInvia" value="@T("SEND")" class="btn btn-invia pull-right" />
-            </p>
-          }
+                <div class="form-group">
+                    <label class="control-label" for="Name">@T("Name")<span class="required">*</span></label><br />
+                    <span class="wpcf7-form-control-wrap">
+                        <input id="Name-@uniqueId" type="text" name="Name" value="@name" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Your Name")" />
+                        <span role="alert" id="NameError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="Email">@T("Email")<span class="required">*</span></label><br />
+                    <span class="wpcf7-form-control-wrap">
+                        <input id="Email-@uniqueId" type="email" name="Email" value="@email" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Email Address")" />
+                        <span role="alert" id="EmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                        <span role="alert" id="EmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                        <span role="alert" id="EmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="ConfirmEmail">@T("Confirm Email")<span class="required">*</span></label><br />
+                    <span class="wpcf7-form-control-wrap">
+                        <input id="ConfirmEmail-@uniqueId" type="email" name="ConfirmEmail" value="@confirmEmail" size="40" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Confirm Email Address")" />
+                        <span role="alert" id="ConfirmEmailError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                        <span role="alert" id="ConfirmEmailErrorFormat-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Email address in invalid format")</span>
+                        <span role="alert" id="ConfirmEmailErrorMatch-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The email and confirmation do not match")</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="Message">@T("Message")<span class="required">*</span></label><br />
+                    <span class="wpcf7-form-control-wrap messaggio">
+                        <textarea id="Message-@uniqueId" name="Message" cols="40" rows="4" class="wpcf7-form-control wpcf7-validates-as-required form-control" aria-required="true" aria-invalid="false" placeholder="@T("Comments or Inquiry")"></textarea>
+                        <span role="alert" id="MessageError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("The field is required.")</span>
+                    </span>
+                </div>
+
+                <div id="AttachmentSection-@uniqueId" type="hidden">
+                    <img id="AttachmentPreview-@uniqueId"></img>
+                    <label id="AttachmentNameLabel-@uniqueId"></label>
+                    <br />
+                </div>
+                <div class="form-group">
+                    <span class="wpcf7-form-control-wrap">
+                        <input id="Accept-@uniqueId" name="Accept" type="checkbox" required aria-invalid="false" value="1" /><span class="required">*</span>
+                        @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
+                    </span>
+                </div>
+                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
+                <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
+                @Html.AntiForgeryTokenOrchard()
+                <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
+
+                <p>
+                    <input type="submit" id="btnInvia" value="@T("SEND")" class="btn btn-invia pull-right" />
+                </p>
+            }
         }
 
     </div>
