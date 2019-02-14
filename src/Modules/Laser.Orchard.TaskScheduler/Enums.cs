@@ -7,17 +7,17 @@ namespace Laser.Orchard.TaskScheduler {
     /// <summary>
     /// These are used to determine the time when a task is to be executed next.
     /// </summary>
-    public enum TimeUnits { Seconds, Minutes, Hours, Days, Weeks, Months, Years }
-
-
-    static class EnumExtension {
-        public static TimeUnits ParseEnum(string value) {
+    public enum TimeUnits { Seconds=1, Minutes=0, Hours=2, Days=3, Weeks=4, Months=5, Years=6 }
+    public enum ExecutionTypes {WorkFlow=0, Razor=1 }
+    static class EnumExtension<T> {
+        public static T ParseEnum(string value) {
             if (string.IsNullOrWhiteSpace(value))
-                return TimeUnits.Minutes;
+                return default(T);
             try {
-                return (TimeUnits)Enum.Parse(typeof(TimeUnits), value);
-            } catch (Exception) {
-                return TimeUnits.Minutes;
+                return (T)Enum.Parse(typeof(T), value);
+            }
+            catch (Exception) {
+                return default(T);
             }
         }
     }

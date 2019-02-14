@@ -13,7 +13,9 @@ using Orchard.Workflows.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
 using System.Web;
+using Orchard.Tasks;
 
 namespace Laser.Orchard.TaskScheduler.Handlers {
     [UsedImplicitly]
@@ -24,18 +26,25 @@ namespace Laser.Orchard.TaskScheduler.Handlers {
         private readonly IScheduledTaskService _scheduledTaskService;
         private readonly IRepository<ScheduledTaskRecord> _repoTasks;
         private readonly IWorkflowManager _workflowManager;
+        private readonly IRazorExecuteService _razorExecuteService;
+        private readonly ISweepGenerator _sweepGenerator;
+
         public ILogger Logger { get; set; }
 
         public ScheduledTaskTasksHandler(IOrchardServices orchardServices,
             IScheduledTaskManager taskManager,
             IScheduledTaskService scheduledTaskService,
             IRepository<ScheduledTaskRecord> repoTasks,
-            IWorkflowManager workflowManager) {
+            IWorkflowManager workflowManager,
+            IRazorExecuteService razorExecuteService,
+            ISweepGenerator sweepGenerator) {
             _orchardServices = orchardServices;
             _taskManager = taskManager;
             _scheduledTaskService = scheduledTaskService;
             _repoTasks = repoTasks;
             _workflowManager = workflowManager;
+            _razorExecuteService = razorExecuteService;
+            _sweepGenerator = sweepGenerator;
             Logger = NullLogger.Instance;
         }
 
@@ -54,13 +63,44 @@ namespace Laser.Orchard.TaskScheduler.Handlers {
                     else {
                         //Trigger the event
                         //get the signal name for from the part to track edits that may have been done.
-                        _workflowManager.TriggerEvent(
-                            SignalActivity.SignalEventName,
-                            context.Task.ContentItem,
-                            () => new Dictionary<string, object> {
+                        if (part.ExecutionType == ExecutionTypes.WorkFlow) {
+
+                            _workflowManager.TriggerEvent(
+                                SignalActivity.SignalEventName,
+                                context.Task.ContentItem,
+                                () => new Dictionary<string, object> {
                         { "Content", context.Task.ContentItem },
                         { SignalActivity.SignalEventName, part.SignalName }}
-                            );
+                                );
+                        }
+                        else {
+                            if (part.ExecutionType == ExecutionTypes.Razor) {
+                                if (part.LongTask) {
+                                    _sweepGenerator.Terminate();
+                                    try {
+                                        var result = _razorExecuteService.Execute(part.SignalName, context.Task.ContentItem, new Dictionary<string, object>() {
+                                            { "Content", context.Task.ContentItem },
+                                            { SignalActivity.SignalEventName, part.SignalName }
+                                            }).Trim();
+                                    }
+                                    catch (Exception ex) {
+                                        Logger.Error(ex, "ScheduledTaskTasksHandler -> Long Task Error on " + taskTypeStr + ex.Message);
+                                    }
+                                    finally {
+                                        if (part.LongTask) {
+                                            _sweepGenerator.Activate();
+                                        }
+                                    }
+                                }
+                                else {
+                                    var result = _razorExecuteService.Execute(part.SignalName, context.Task.ContentItem, new Dictionary<string, object>() {
+                                        { "Content", context.Task.ContentItem },
+                                        { SignalActivity.SignalEventName, part.SignalName }
+                                        }).Trim();
+                                }
+                            }
+                        }
+
                         if (part.Autodestroy) {
                             var sc = new ScheduledTaskViewModel(part);
                             sc.Delete = true;
