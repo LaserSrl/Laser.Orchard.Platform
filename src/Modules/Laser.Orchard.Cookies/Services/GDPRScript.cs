@@ -30,6 +30,11 @@ namespace Laser.Orchard.Cookies.Services {
             string checkedDisabled = "";
             var activeCookieTypes = GetActiveCookieTypes();
             var settings = _orchardServices.WorkContext.CurrentSite.As<CookieSettingsPart>();
+            // esplicita le traduzioni delle tipologie di cookie a beneficio del tool di traduzione
+            var Technical = T("Technical");
+            var Preferences = T("Preferences");
+            var Statistical = T("Statistical");
+            var Marketing = T("Marketing");
             // cicla sui tipi di cookie e crea il banner in modo da visualizzare solo le checkbox necessarie
             foreach (var cType in orderedTypes) {
                 if (activeCookieTypes.Contains(cType)) {

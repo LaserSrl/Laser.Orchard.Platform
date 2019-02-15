@@ -14,6 +14,8 @@ namespace Laser.Orchard.TaskScheduler.Models {
         public virtual int ContentItemId { get; set; }
         public virtual int RunningTaskId { get; set; }
         public virtual bool Autodestroy { get; set; }
-        
+        public virtual string ExecutionType { get; set; }
+        public virtual bool LongTask { get; set; }
+
     }
 }

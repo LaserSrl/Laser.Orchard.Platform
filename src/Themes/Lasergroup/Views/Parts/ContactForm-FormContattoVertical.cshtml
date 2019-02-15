@@ -30,9 +30,11 @@
         .SelectMany(pa => pa.Fields)
         .OfType<LinkField>()
         .FirstOrDefault(fi => fi.Name == "Privacy");
-    var privacyUrl = "";
-    var privacyLinkText = ""; // text for the link here
+    var privacyUrl = "informativa-sulla-privacy";
+    var privacyLinkText = T("the privacy policy.").Text; // text for the link here
     var prePrivacyText = T("By clicking \"SEND\" I declare that I have read and understood ").Text;
+
+
     var privacyTarget = "";
     if (privacyField != null) {
         privacyUrl = privacyField.Value ?? string.Empty;
@@ -163,11 +165,14 @@
                 @Html.AntiForgeryTokenOrchard()
                 <div class="row">
                     @if (!string.IsNullOrWhiteSpace(privacyUrl)) {
-                        <div class="col-md-10">
-                            <p>
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <span class="wpcf7-form-control-wrap">
+                                <input id="Accept-@uniqueId" name="Accept" type="checkbox" required aria-invalid="false" value="1" /><span class="required">*</span>
                                 @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
-                            </p>
+                            </span>
                         </div>
+                    </div>
                     }
                     <div class="col-md-2">
                         <p>
