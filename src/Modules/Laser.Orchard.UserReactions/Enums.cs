@@ -30,9 +30,9 @@ namespace Laser.Orchard.UserReactions {
         silent,
         like,
         iwasthere,
-        exciting,
-        peculiar,
-        interesting
+        excited,
+        curious,
+        interested
     }; // Se si aggiungono enumeratori, provvedere opportuna traduzione in UserReactionsService.GetReactionEnumTranslations
 
       

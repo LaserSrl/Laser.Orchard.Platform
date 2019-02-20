@@ -313,12 +313,16 @@ msgid "Boring"
 msgstr "Noioso"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Curious"
+msgstr "Curioso"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Exahausted"
 msgstr "Esausto"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
-msgid "Exciting"
-msgstr "Emozionante"
+msgid "Excited"
+msgstr "Emozionato"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Exhausted"
@@ -337,8 +341,8 @@ msgid "I Was There"
 msgstr "Ci sono stato"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
-msgid "Interesting"
-msgstr "Interessante"
+msgid "Interested"
+msgstr "Interessato"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Joke"
@@ -359,10 +363,6 @@ msgstr "Nessuno"
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Pain"
 msgstr "Panico"
-
-msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
-msgid "Peculiar"
-msgstr "Curioso"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Sad"
