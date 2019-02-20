@@ -1,0 +1,22 @@
+[
+  {
+    "outputFileName": "Styles/styles.min.css",
+    "inputFiles": [
+      "Styles/reactions.css",
+      "Styles/custom.css"
+    ],
+	  "minify":{
+		  "enabled":true
+	  }
+  },
+  {
+    "outputFileName": "Styles/styles.css",
+    "inputFiles": [
+      "Styles/reactions.css",
+      "Styles/custom.css"
+    ],
+	  "minify":{
+		  "enabled":false
+	  }
+  }
+]
