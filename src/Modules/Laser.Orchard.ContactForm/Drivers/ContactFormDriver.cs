@@ -47,6 +47,11 @@ namespace Laser.Orchard.ContactForm.Drivers {
                 viewModel.ShowNameField = part.DisplayNameField;
                 viewModel.RequireNameField = part.RequireNameField;
                 viewModel.EnableFileUpload = part.EnableUpload;
+                viewModel.AcceptPolicy = part.AcceptPolicy;
+                viewModel.AcceptPolicyText = part.AcceptPolicyText;
+                viewModel.AcceptPolicyUrl = part.AcceptPolicyUrl;
+                viewModel.AcceptPolicyUrlText = part.AcceptPolicyUrlText;
+
             }
             return ContentShape("Parts_ContactForm",
                 () => shapeHelper.Parts_ContactForm(

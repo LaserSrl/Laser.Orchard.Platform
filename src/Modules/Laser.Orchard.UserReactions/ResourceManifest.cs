@@ -6,7 +6,7 @@ namespace Laser.Orchard.UserReactions {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
             // CSS
-            manifest.DefineStyle("Reactions").SetUrl("styles.css");
+            manifest.DefineStyle("Reactions").SetUrl("styles.min.css?v=2", "styles.min.css?v=2");
         }
     }
 }

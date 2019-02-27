@@ -1,5 +1,5 @@
 # Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -313,8 +313,16 @@ msgid "Boring"
 msgstr "Noioso"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Curious"
+msgstr "Curioso"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Exahausted"
 msgstr "Esausto"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Excited"
+msgstr "Emozionato"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Exhausted"
@@ -331,6 +339,10 @@ msgstr "Mi piace"
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "I Was There"
 msgstr "Ci sono stato"
+
+msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
+msgid "Interested"
+msgstr "Interessato"
 
 msgctxt "Laser.Orchard.UserReactions.Services.UserReactionsService"
 msgid "Joke"

@@ -17,20 +17,23 @@ using System.ComponentModel.DataAnnotations;
 namespace Laser.Orchard.UserReactions {
     public enum StyleFileNameProviders { Reactions };
     public enum ReactionsNames {
-                    angry,
-                    boring,
-                    exhausted,
-                    happy,
-                    joke,
-                    kiss,
-                    love,
-                    pain,
-                    sad,
-                    shocked,
-                    silent,
-                    like,
-                    iwasthere
-            }; // Se si aggiungono enumeratori, provvedere opportuna traduzione in UserReactionsService.GetReactionEnumTranslations
+        angry,
+        boring,
+        exhausted,
+        happy,
+        joke,
+        kiss,
+        love,
+        pain,
+        sad,
+        shocked,
+        silent,
+        like,
+        iwasthere,
+        excited,
+        curious,
+        interested
+    }; // Se si aggiungono enumeratori, provvedere opportuna traduzione in UserReactionsService.GetReactionEnumTranslations
 
       
     public enum UserChoiceBehaviourValues {

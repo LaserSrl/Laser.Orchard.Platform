@@ -31,7 +31,7 @@ namespace Laser.Orchard.TaskScheduler.Models {
         /// use to reschedule periodic task
         /// </summary>
         public TimeUnits PeriodicityUnit {
-            get { return EnumExtension.ParseEnum(this.Retrieve(x => x.PeriodicityUnit)); }
+            get { return EnumExtension<TimeUnits>.ParseEnum(this.Retrieve(x => x.PeriodicityUnit)); }
             set { this.Store(x => x.PeriodicityUnit, value.ToString()); }
         }
         /// <summary>
@@ -52,6 +52,14 @@ namespace Laser.Orchard.TaskScheduler.Models {
         public bool Autodestroy {
             get { return this.Retrieve(x => x.Autodestroy); }
             set { this.Store(x => x.Autodestroy, value); }
+        }
+        public ExecutionTypes ExecutionType {
+            get { return EnumExtension<ExecutionTypes>.ParseEnum(this.Retrieve(x => x.ExecutionType)); }
+            set { this.Store(x => x.ExecutionType, value.ToString()); }
+        }
+        public bool LongTask {
+            get { return this.Retrieve(x => x.LongTask); }
+            set { this.Store(x => x.LongTask, value); }
         }
     }
 }

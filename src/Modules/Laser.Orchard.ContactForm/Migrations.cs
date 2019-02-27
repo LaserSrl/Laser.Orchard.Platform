@@ -96,6 +96,21 @@ namespace Laser.Orchard.ContactForm {
 
             return 6;
         }
+        public int UpdateFrom6() {
+            SchemaBuilder.AlterTable("ContactFormRecord", table => table
+                .AddColumn<bool>("AcceptPolicy", column => column.WithDefault(false))
+            );
+            SchemaBuilder.AlterTable("ContactFormRecord", table => table
+                 .AddColumn<string>("AcceptPolicyuRL")
+            );
+            SchemaBuilder.AlterTable("ContactFormRecord", table => table
+                   .AddColumn<string>("AcceptPolicyUrlText")
+            );
+            SchemaBuilder.AlterTable("ContactFormRecord", table => table
+               .AddColumn<string>("AcceptPolicyText")
+            );
+            return 7;
+        }
 
     }
 }
