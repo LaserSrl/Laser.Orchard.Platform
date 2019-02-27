@@ -1,0 +1,78 @@
+﻿@using Contrib.Widgets.Models;
+@using Orchard.ContentManagement;
+@using Contrib.Widgets.Settings;
+
+
+@model Orchard.Widgets.Models.WidgetPart
+
+<h2>@Model.TypeDefinition.DisplayName</h2>
+
+<fieldset>
+    @Html.LabelFor(widget => widget.Zone, T("Zone"))
+    @{
+        var wexPart = Model.As<WidgetExPart>();
+        var hostId = (wexPart == null)
+            ? (int?)null
+            : wexPart.Record.HostId;
+        var currentThemesZones = ((IEnumerable<string>)Model.AvailableZones);
+
+        if ((!hostId.HasValue || hostId.Value == 0) &&
+        WorkContext.HttpContext.Items["CurrentController"] is Contrib.Widgets.Controllers.AdminController) {
+            if (!String.IsNullOrEmpty(WorkContext.HttpContext.Request.QueryString["hostId"])) {
+                hostId = Convert.ToInt32(WorkContext.HttpContext.Request.QueryString["hostId"]);
+            }
+        }
+
+        if (hostId.HasValue && hostId > 0) {
+            var widgetContainerPart = Model.ContentItem.ContentManager.Get(hostId.Value)
+                    .As<WidgetsContainerPart>();
+            WidgetsContainerSettings settings = new WidgetsContainerSettings();
+            if (widgetContainerPart != null) {
+                settings = widgetContainerPart.Settings.GetModel<WidgetsContainerSettings>();
+            }
+
+            if (settings != null) {
+                if (!settings.UseHierarchicalAssociation) {
+                    if (!string.IsNullOrWhiteSpace(settings.AllowedZones)) {
+                        currentThemesZones = currentThemesZones.Where(x => settings.AllowedZones.Split(',').Contains(x)).ToList();
+                    }
+                } else if (settings.HierarchicalAssociation != null && settings.HierarchicalAssociation.Count() > 0) {
+                    currentThemesZones = currentThemesZones.Where(ctz => settings.HierarchicalAssociation.Select(x => x.ZoneName)
+                        .Contains(ctz)).ToList();
+                }
+            }
+
+        }
+
+        @Html.DropDownListFor(widget => widget.Zone, new SelectList(currentThemesZones))
+    }
+
+    <span class="hint">@T("The Zone in the Layout where the Widget will be rendered.")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.LayerId, T("Layer"))
+    @Html.DropDownListFor(widget => widget.LayerId, new SelectList(Model.AvailableLayers, "Id", "Name"))
+    <span class="hint">@T("The Layer where the Widget will be rendered.")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.Position, T("Position"))
+    @Html.TextBoxFor(widget => widget.Position, new { @class = "text small" })
+    <span class="hint">@T("The position of the Widget inside the Zone.")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.Title, T("Title"))
+    @Html.TextBoxFor(widget => widget.Title, new { @class = "text large" })
+    <span class="hint">@T("The title of the Widget.")</span>
+    @Html.EditorFor(widget => widget.RenderTitle)
+    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.RenderTitle)">@T("Check to render the title on the front-end, uncheck to hide")</label>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.Name, T("Name"))
+    @Html.TextBoxFor(widget => widget.Name, new { @class = "text large" })
+    <span class="hint">@T("The technical name of the Widget, used for css class and alternates.")</span>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(widget => widget.CssClasses, T("Css classes"))
+    @Html.TextBoxFor(widget => widget.CssClasses, new { @class = "text large" })
+    <span class="hint">@T("Add custom css classes for the widget separated by spaces.")</span>
+</fieldset>
