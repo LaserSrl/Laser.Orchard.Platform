@@ -1,0 +1,49 @@
+﻿/* Reactions */
+.reaction-wrapper {
+    clear: both;
+    overflow: auto;
+    position: relative;
+    margin: 5px 0 5px 0;
+}
+
+    .reaction-wrapper.disabled .reaction-container {
+        cursor: not-allowed !important;
+    }
+
+    .reaction-wrapper.require-login .reaction-container {
+        cursor: alias !important;
+    }
+
+.reaction-container {
+    display: inline-block;
+    padding: 0 5px 0 5px;
+    margin: 1px;
+    cursor: pointer;
+}
+
+    .reaction-container:hover {
+        color: #ff6a00;
+    }
+
+    .reaction-container.selected {
+        color: red;
+    }
+
+        .reaction-container.selected .reaction-icon {
+            font-size: 3.7em;
+        }
+
+.reaction-icon {
+    font-size: 3.5em;
+    height: 100% !important;
+    width: 100% !important;
+    line-height: 100% !important;
+    background-image: none !important;
+    text-align: center !important;
+}
+
+.button.reaction-summary {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

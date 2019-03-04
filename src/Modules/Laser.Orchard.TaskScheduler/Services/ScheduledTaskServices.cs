@@ -23,6 +23,7 @@ namespace Laser.Orchard.TaskScheduler.Services {
         private readonly IRepository<ScheduledTaskRecord> _repoTasks;
         private readonly IDateLocalizationServices _dateServices;
         private readonly IDateLocalization _dateLocalization;
+        
 
         public ScheduledTaskService(IRepository<LaserTaskSchedulerRecord> repoLaserTaskScheduler,
             IOrchardServices orchardServices,
@@ -84,11 +85,14 @@ namespace Laser.Orchard.TaskScheduler.Services {
                     SignalName = formData[thisObject + "SignalName"],
                     ScheduledStartUTC = inputDate,
                     PeriodicityTime = int.Parse(formData[thisObject + "PeriodicityTime"]),
-                    PeriodicityUnit = EnumExtension.ParseEnum(formData[thisObject + "PeriodicityUnit"]),
+                    ExecutionType = EnumExtension<ExecutionTypes>.ParseEnum(formData[thisObject + "ExecutionType"]),
+                    PeriodicityUnit = EnumExtension<TimeUnits>.ParseEnum(formData[thisObject + "PeriodicityUnit"]),
                     ContentItemId = int.Parse(formData[thisObject + "ContentItemId"]),
                     Running = int.Parse(formData[thisObject + "Running"]),
                     Delete = Convert.ToBoolean(formData[thisObject + "Delete"]),
-                    Scheduling = Convert.ToBoolean(formData[thisObject + "Scheduling"])
+                    Scheduling = Convert.ToBoolean(formData[thisObject + "Scheduling"]),
+                    Autodestroy= (formData[thisObject + "Autodestroy"]).Contains("true"),
+                    LongTask = (formData[thisObject + "LongTask"]).Contains("true")
                 });
             }
 
@@ -149,6 +153,59 @@ namespace Laser.Orchard.TaskScheduler.Services {
             _taskManager.CreateTask(taskTypeStr, part.ScheduledStartUTC ?? DateTime.UtcNow, ci);
             part.RunningTaskId = _repoTasks.Get(str => str.TaskType.Equals(taskTypeStr)).Id;
         }
+
+        public void UpdateRecordsAndSchedule(List<ScheduledTaskViewModel> vms) {
+            foreach (ScheduledTaskViewModel vm in vms) {
+                //if Id != 0 the task was already in the db
+                if (vm.Id != 0) {
+                    //Should we try to delete?
+                    if (vm.Delete) {
+                        //if there is a corresponding task that is running, we should stop it first
+                        if (vm.Running > 0) {
+                            //stop the task with id == vm.Running
+                            UnscheduleTask(vm);
+                        }
+                        //the task is definitely not running, so we may safely remove the scheduler
+                        _orchardServices.ContentManager.Remove(_orchardServices.ContentManager.Get(vm.Id));
+                        //(note that a handler is invoked to clean up the repositor)
+                    } else {
+                        //update the part
+                        ScheduledTaskPart part = (ScheduledTaskPart)_orchardServices.ContentManager.Get<ScheduledTaskPart>(vm.Id);
+                        vm.UpdatePart(part);
+                    }
+                } else {
+                    //we have to create a new record
+                    if (!vm.Delete) {
+                        //we only create it if it was not also deleted already
+                        ScheduledTaskPart part = (ScheduledTaskPart)_orchardServices.ContentManager.New<ScheduledTaskPart>("ScheduledTask");
+                        vm.UpdatePart(part);
+                        _orchardServices.ContentManager.Create(part);
+                        vm.Id = part.Id;
+
+                        string taskTypeStr = Constants.TaskTypeBase + "_" + part.SignalName + "_" + part.Id;
+                        if (vm.LinkedContent==null && part.ContentItemId > 0) {
+                            vm.LinkedContent = _orchardServices.ContentManager.Get(part.ContentItemId);
+                        }
+                        part.RunningTaskId = CreateTask(taskTypeStr, part.ScheduledStartUTC ?? DateTime.UtcNow,vm.LinkedContent);
+                    }
+                }
+            }
+        }
+
+        private int CreateTask(string action, DateTime scheduledUtc, ContentItem contentItem) {
+            var taskRecord = new ScheduledTaskRecord {
+                TaskType = action,
+                ScheduledUtc = scheduledUtc,
+            };
+            if (contentItem != null) {
+                taskRecord.ContentItemVersionRecord = contentItem.VersionRecord;
+            }
+            _repoTasks.Create(taskRecord);
+            return taskRecord.Id;
+        }
+
+
+
 
         /// <summary>
         /// Unschedule an existing task based on the view model

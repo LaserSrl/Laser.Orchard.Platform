@@ -136,3 +136,19 @@ msgctxt "Laser.Orchard.Cookies.Handlers.CookieSettingsPartHandler"
 msgid "Cookies"
 msgstr "Cookies"
 
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Marketing"
+msgstr "Marketing"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Preferences"
+msgstr "Preferenze"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Statistical"
+msgstr "Statistici"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Technical"
+msgstr "Tecnici"
+

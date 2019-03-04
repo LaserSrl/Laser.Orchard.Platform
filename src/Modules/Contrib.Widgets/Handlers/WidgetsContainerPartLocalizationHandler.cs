@@ -12,7 +12,7 @@ namespace Contrib.Widgets.Handlers {
         private readonly IWidgetManager _widgetManager;
         private readonly IWorkContextAccessor _wca;
 
-        public WidgetsContainerPartLocalizationHandler(
+        public WidgetsContainerPartLocalizationHandler (
             IWidgetManager widgetManager,
             IWorkContextAccessor wca) {
 
