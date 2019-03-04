@@ -93,10 +93,10 @@ button, .button, a.button {
     min-width: 110px;
     font-size: 14px;
 }
-/* style buttons for google maps*/
-button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
-    min-width: 0px; 
-}
+    /* style buttons for google maps*/
+    button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
+        min-width: 0px;
+    }
 
 .mce-btn button {
     color: initial !important;
@@ -493,7 +493,7 @@ legend {
 }
 
 
-.location-info{
+.location-info {
     display: block;
     margin-bottom: 5px;
 }
@@ -589,7 +589,7 @@ legend {
 }
 
 .widgets-this-layer h3 {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .widgets-move-somewhere button {
@@ -1319,13 +1319,28 @@ fieldset {
     clear: right;
 }
 
-.widgets-listed .widgets-zone-widgets h3 a,
-.widgets-none h2,
-.properties h3 a {
-    color: #1c2a37;
-    font-size: 14px;
-    font-family: 'Roboto';
+#widgets-zones-orphans.widgets-listed li {
+    padding: 0 1em 0.75em 1em;
 }
+
+.widgets-listed li {
+    padding: 0 1em 0.25em 1em;
+}
+
+.widgets-listed h2 {
+    font-size: 1.0em;
+}
+
+    .widgets-listed .widgets-zone-widgets h3 a,
+    .widgets-listed h2,
+    .properties h3 a {
+        color: #1c2a37;
+        font-weight: bolder;
+    }
+
+    .widgets-listed .widgets-none h2 {
+        font-weight: normal;
+    }
 
     .widgets-listed .widgets-zone-widgets h3 a:hover,
     .properties h3 a:hover {
@@ -1353,6 +1368,9 @@ fieldset {
     padding: 5px;
 }
 
+.layout-widgets-placement ul.widgets li h3 {
+    float: left;
+}
 .zone-local-navigation a {
     color: #1c2a37 !important;
 }
@@ -1578,13 +1596,13 @@ div#appliedFilters {
 }
 
 /*summary admin padding*/
-.primary{
-    padding-top:10px;
+.primary {
+    padding-top: 10px;
 }
 
 /*seo script text area*/
-#templateArea{
-    height:auto;
+#templateArea {
+    height: auto;
 }
 
 .is-calendarsPicker, .is-timeEntry {
