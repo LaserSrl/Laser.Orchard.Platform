@@ -1000,6 +1000,32 @@ input[type="number"]:focus {
 
 /*+++++++++++ KRAKE NEW LAYOUT +++++++++++*/
 
+/**** media queries ****/
+@media (min-width: 768px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+@media (min-width: 992px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+
 /**** dashboard ****/
 .dashboard-box {
     position: relative;
@@ -1404,14 +1430,6 @@ fieldset {
 
 .switch-for-switchable.detail-switched .summary-view {
     background: rgba(0, 0, 0, 0) url("Images/summary-view-on.png") no-repeat scroll left top;
-}
-
-.sections .primary {
-    width: auto;
-}
-
-.navigation-menu {
-    width: 85%;
 }
 
 .answer {
