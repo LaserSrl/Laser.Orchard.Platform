@@ -144,8 +144,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\LocalizationPartDriver.cs" />
     <Compile Include="Drivers\WidgetExPartDriver.cs" />
-    <Compile Include="Handlers\LocalizationPartHandler.cs" />
     <Compile Include="Handlers\WidgetExPartHandler.cs" />
+    <Compile Include="Handlers\WidgetPartHandler.cs" />
     <Compile Include="Handlers\WidgetsContainerPartHandler.cs" />
     <Compile Include="Handlers\WidgetsContainerPartLocalizationHandler.cs" />
     <Compile Include="Models\WidgetExPart.cs" />
