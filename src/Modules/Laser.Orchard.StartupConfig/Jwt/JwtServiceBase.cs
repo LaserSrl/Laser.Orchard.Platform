@@ -2,7 +2,9 @@
 using Orchard.Localization;
 using Orchard.Logging;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,6 +23,7 @@ namespace Laser.Orchard.StartupConfig.Jwt
         public abstract void JwtLogin();
         public abstract void JwtTokenRenew();
         public abstract string GetBaseUrl();
+        public abstract KeyValuePair<string, string> GetAuthHeader();
         public JwtServiceBase(IOrchardServices orchardServices)
         {
             _orchardServices = orchardServices;
@@ -55,26 +58,29 @@ namespace Laser.Orchard.StartupConfig.Jwt
             var url = ComposeUrl(resource, parameters);
             if (JwtToken != null)
             {
-                var authHeader = new AuthenticationHeaderValue("Bearer", JwtToken.RawData);
-                result = CallWebApi(url, authHeader, HttpMethod.Get);
+                //var authHeader = new AuthenticationHeaderValue("Bearer", JwtToken.RawData);
+                result = CallWebApi(url, GetAuthHeader(), HttpMethod.Get);
             }
             return result;
         }
-        protected CallResult ResultFromCaligooApiPost(string resource, string content, string parameters = null)
+        protected CallResult ResultFromApiPost(string resource, string content, string queryStringParameters = null, string contentMimeType = "application/json", string responseMimeType = "application/json", int requestTimeoutMillis = 30000)
         {
             var result = CallResult.Failure;
             EnsureJwtToken();
-            var url = ComposeUrl(resource, parameters);
+            var url = ComposeUrl(resource, queryStringParameters);
             if (JwtToken != null)
             {
-                var authHeader = new AuthenticationHeaderValue("Bearer", JwtToken.RawData);
-                result = CallWebApi(url, authHeader, HttpMethod.Post, content);
+                result = CallWebApi(url, GetAuthHeader(), HttpMethod.Post, content, contentMimeType, responseMimeType, requestTimeoutMillis);
             }
             return result;
         }
         private string ComposeUrl(string resource, string urlParameters = null)
         {
-            var url = string.Format("{0}/{1}", GetBaseUrl().TrimEnd('/'), resource);
+            var url = GetBaseUrl().TrimEnd('/');
+            if(string.IsNullOrWhiteSpace(resource) == false)
+            {
+                url = string.Format("{0}/{1}", url, resource);
+            }
             if (urlParameters != null)
             {
                 url += string.Format("?{0}", urlParameters);
@@ -82,15 +88,15 @@ namespace Laser.Orchard.StartupConfig.Jwt
             return url;
         }
 
-        protected CallResult CallWebApi(string url, AuthenticationHeaderValue auth, HttpMethod method, string content = null, int requestTimeoutMillis = 30000)
+        protected CallResult CallWebApi(string url, KeyValuePair<string, string> authHeader, HttpMethod method, string content = null, string contentMimeType = "application/json", string responseMimeType = "application/json", int requestTimeoutMillis = 30000)
         {
             var result = CallResult.Failure;
             try
             {
                 WebApiClient.DefaultRequestHeaders.Clear();
-                if (auth != null)
+                if (authHeader.Key != null)
                 {
-                    WebApiClient.DefaultRequestHeaders.Authorization = auth;
+                    WebApiClient.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
                 }
                 // specify to use TLS 1.2 as default connection if needed
                 if (url.ToLowerInvariant().StartsWith("https:"))
@@ -105,8 +111,10 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 }
                 else if (method == HttpMethod.Post)
                 {
-                    WebApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    t = WebApiClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json"));
+                    //WebApiClient.DefaultRequestHeaders.Add("JWT", auth.Parameter);
+                    WebApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(responseMimeType));
+                    ServicePointManager.Expect100Continue = false;
+                    t = WebApiClient.PostAsync(url, new StringContent(content, Encoding.UTF8, contentMimeType));
                 }
                 if (t != null)
                 {

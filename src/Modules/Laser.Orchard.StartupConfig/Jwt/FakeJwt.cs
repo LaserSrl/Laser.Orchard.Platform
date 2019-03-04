@@ -1,4 +1,5 @@
-﻿using Orchard;
+﻿using System.Collections.Generic;
+using Orchard;
 
 namespace Laser.Orchard.StartupConfig.Jwt
 {
@@ -12,6 +13,12 @@ namespace Laser.Orchard.StartupConfig.Jwt
         {
 
         }
+
+        public override KeyValuePair<string, string> GetAuthHeader()
+        {
+            return new KeyValuePair<string, string>(null, "");
+        }
+
         public override string GetBaseUrl()
         {
             return "http://www.laser-group.com";
