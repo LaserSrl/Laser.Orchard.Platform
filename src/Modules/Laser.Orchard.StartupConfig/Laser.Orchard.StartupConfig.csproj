@@ -337,6 +337,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessManagement\BadgeInfo.cs" />
     <Compile Include="Activities\WebApiResponseActivity.cs" />
     <Compile Include="Activities\WebApiResponseEditForm.cs" />
     <Compile Include="Activities\RequestInspectorActivity.cs" />
