@@ -13,6 +13,7 @@ using Orchard.Logging;
 using Orchard.Projections.Services;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
+using Orchard.Themes;
 
 [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
 public class DynamicProjectionDisplayController : Controller {
@@ -40,7 +41,8 @@ public class DynamicProjectionDisplayController : Controller {
         _shellSettings = shellSettings;
     }
 
-
+    [Admin]
+    [Themed(false)]
     public ActionResult AjaxList(int contentid, PagerParameters pagerParameters) {
         Pager pager = new Pager(_orchardServices.WorkContext.CurrentSite, pagerParameters);
         var ci = _orchardServices.ContentManager.Get(contentid);
