@@ -3,35 +3,37 @@
     var items = Enumerable.Cast<dynamic>((System.Collections.IEnumerable)Model);
 }
 @{
-    if (!HasText(Model.Text)) {
-        @DisplayChildren(Model)
-    } else {
-        if ((bool)Model.Selected) {
-            Model.Classes.Add("current");
-        }
 
-        if (items.Any()) {
-            Model.Classes.Add("dropdown");
-        }
-        
-        @* morphing the shape to keep Model untouched*@
-        Model.Metadata.Alternates.Clear();
-        Model.Metadata.Type = "MenuItemLink";
+     if (!HasText(Model.Text)) {
+         @DisplayChildren(Model)
+     } else {
+         if ((bool)Model.Selected) {
+             Model.Classes.Add("current");
+         }
 
-        @* render the menu item only if it has some content *@
-        var renderedMenuItemLink = Display(Model);
-        if (HasText(renderedMenuItemLink)) {
-            var tag = Tag(Model, "li");
-            @tag.StartElement
-            @renderedMenuItemLink
+         if (items.Any()) {
+             Model.Classes.Add("dropdown");
+         }
 
-            if (items.Any()) {
-                <ul class="submenu">
-                    @DisplayChildren(Model)
-                </ul>
-            }
+         @* morphing the shape to keep Model untouched*@
+         Model.Metadata.Alternates.Clear();
+         Model.Metadata.Type = "MenuItemLink";
 
-            @tag.EndElement
-        }
-    }
+         @* render the menu item only if it has some content *@
+         var renderedMenuItemLink = Display(Model);
+         if (HasText(renderedMenuItemLink)) {
+             var tag = Tag(Model, "li");
+             @tag.StartElement
+
+             @renderedMenuItemLink
+
+             if (items.Any()) {
+                 <ul class="submenu">
+                     @DisplayChildren(Model)
+                 </ul>
+             }
+
+             @tag.EndElement
+         }
+     }
 }
