@@ -54,23 +54,37 @@ namespace Laser.Orchard.StartupConfig.Jwt
         protected CallResult ResultFromApiGet(string resource, string parameters = null)
         {
             var result = CallResult.Failure;
-            EnsureJwtToken();
-            var url = ComposeUrl(resource, parameters);
-            if (JwtToken != null)
+            try
             {
-                //var authHeader = new AuthenticationHeaderValue("Bearer", JwtToken.RawData);
-                result = CallWebApi(url, GetAuthHeader(), HttpMethod.Get);
+                EnsureJwtToken();
+                var url = ComposeUrl(resource, parameters);
+                if (JwtToken != null)
+                {
+                    //var authHeader = new AuthenticationHeaderValue("Bearer", JwtToken.RawData);
+                    result = CallWebApi(url, GetAuthHeader(), HttpMethod.Get);
+                }
+            }
+            catch
+            {
+                // return with Failure
             }
             return result;
         }
         protected CallResult ResultFromApiPost(string resource, string content, string queryStringParameters = null, string contentMimeType = "application/json", string responseMimeType = "application/json", int requestTimeoutMillis = 30000)
         {
             var result = CallResult.Failure;
-            EnsureJwtToken();
-            var url = ComposeUrl(resource, queryStringParameters);
-            if (JwtToken != null)
+            try
             {
-                result = CallWebApi(url, GetAuthHeader(), HttpMethod.Post, content, contentMimeType, responseMimeType, requestTimeoutMillis);
+                EnsureJwtToken();
+                var url = ComposeUrl(resource, queryStringParameters);
+                if (JwtToken != null)
+                {
+                    result = CallWebApi(url, GetAuthHeader(), HttpMethod.Post, content, contentMimeType, responseMimeType, requestTimeoutMillis);
+                }
+            }
+            catch
+            {
+                // return with Failure
             }
             return result;
         }
