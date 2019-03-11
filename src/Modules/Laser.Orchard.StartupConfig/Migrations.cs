@@ -75,6 +75,17 @@ namespace Laser.Orchard.StartupConfig {
             ContentDefinitionManager.AlterTypeDefinition("AuthenticatedProjection", type => type.Listable());
             return 7;
         }
+        public int UpdateFrom7() {
+            ContentDefinitionManager.AlterPartDefinition("ScheduledTaskParametersPart", part => part
+                .WithField("Parameters", cfg => cfg.OfType("TextField")));
+            ContentDefinitionManager.AlterTypeDefinition("ScheduledTaskParameters", cfg => cfg
+                .WithPart("ScheduledTaskParametersPart")
+                .Creatable(false)
+                .Draftable(false)
+                .Listable(false)
+                .Securable(false));
+            return 8;
+        }
     }
 
     [OrchardFeature("Laser.Orchard.StartupConfig.PermissionExtension")]
