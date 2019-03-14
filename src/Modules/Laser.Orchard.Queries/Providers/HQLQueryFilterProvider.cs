@@ -45,17 +45,17 @@ namespace Laser.Orchard.Queries.Providers {
                 // parameters here have already had tokens replaced by values
                 var parameters = (string)context.State.Parameters;
                 Dictionary<string, object> queryParams = new Dictionary<string, object>();
-                if (!string.IsNullOrWhiteSpace(parameters)) {
-                    var ps = parameters.Split(
-                        new string[] { Environment.NewLine, "\n" },
-                        StringSplitOptions.None)
-                        .Select(p => p.Trim())
-                        .Select((v, i) => new Tuple<int, string>(i, v));
-                    foreach (var tuple in ps) {
-                        queryParams.Add($"param{tuple.Item1.ToString()}", tuple.Item2);
-                    }
+                // Parse parameters:
+                // The correct way to input parameters in the text area is to have one parameter
+                // per line and end each line with a comma.
+                var splitParameters = parameters.Split(
+                    new string[] { ",\n", "," + Environment.NewLine },
+                    StringSplitOptions.None); // keep empty entries
+                // we don't trim values in case whitespace is desired.
+                foreach (var kvp in splitParameters.Select((val, i) => new { i, val })) {
+                    queryParams.Add($"param{kvp.i.ToString()}", kvp.val);
                 }
-                
+
                 // This will be a filter on ContentItems
                 Action<IAliasFactory> alias = af => af.ContentItem();
                 Action<IHqlExpressionFactory> predicate = ef => ef.InSubquery("Id", query, queryParams);
@@ -114,7 +114,7 @@ namespace Laser.Orchard.Queries.Providers {
         //    //that we are basically assuming that the query has been written to return Ids.
         //    ef.InG(propertyName, hqlQuery.List<int>());
         //}
-        
+
         public LocalizedString DisplayFilter(FilterContext context) {
             return T("Filter ContentItems using a parametrized query.");
         }
