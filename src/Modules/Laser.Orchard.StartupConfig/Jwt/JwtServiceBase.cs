@@ -132,24 +132,24 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 }
                 if (t != null)
                 {
-                    t.Wait(requestTimeoutMillis);
-                    if (t.Status == System.Threading.Tasks.TaskStatus.RanToCompletion)
-                    {
-                        var aux = t.Result.Content.ReadAsStringAsync();
-                        aux.Wait();
-                        result.Body = aux.Result;
-                        if (t.Result.IsSuccessStatusCode)
-                        {
-                            result.Success = true;
+                    if (t.Wait(requestTimeoutMillis)) {
+                        if (t.Status == System.Threading.Tasks.TaskStatus.RanToCompletion) {
+                            var aux = t.Result.Content.ReadAsStringAsync();
+                            aux.Wait();
+                            result.Body = aux.Result;
+                            if (t.Result.IsSuccessStatusCode) {
+                                result.Success = true;
+                            }
+                            else {
+                                Logger.Error("CallWebApi: Error {1} - {2} on request {0}.", url, (int)(t.Result.StatusCode), t.Result.ReasonPhrase);
+                            }
                         }
-                        else
-                        {
-                            Logger.Error("CallWebApi: Error {1} - {2} on request {0}.", url, (int)(t.Result.StatusCode), t.Result.ReasonPhrase);
+                        else {
+                            Logger.Error("CallWebApi: request {0} not completed and ended in status {1}.", url, t.Status);
                         }
                     }
-                    else
-                    {
-                        Logger.Error("CallWebApi: Timeout on request {0}.", url);
+                    else {
+                        Logger.Error("CallWebApi: Timeout on request {0}. Timeout value (millis): {1}", url, requestTimeoutMillis);
                     }
                 }
             }
