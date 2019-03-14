@@ -108,6 +108,7 @@ namespace Laser.Orchard.StartupConfig.Jwt
             try
             {
                 WebApiClient.DefaultRequestHeaders.Clear();
+                WebApiClient.DefaultRequestHeaders.CacheControl.NoCache = true;
                 if (authHeader.Key != null)
                 {
                     WebApiClient.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
