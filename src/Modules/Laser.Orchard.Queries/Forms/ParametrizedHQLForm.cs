@@ -32,7 +32,7 @@ namespace Laser.Orchard.Queries.Forms {
                             Name: "Parameters",
                             Title: T("Parameters"),
                             Classes: new[] { "tokenized" },
-                            Description: T("Enter the values for the parameters. You may use tokens. Enter one value per line, and end each line with a comma: they will each map to a different parameter. This does not support multiline string parameters.")),
+                            Description: T("Enter the values for the parameters. You may use tokens. Enter one value per line, and end each line with a comma: they will each map to a different parameter. This does not support multiline string parameters. All parameters are parsed as strings.")),
                     _Query: Shape.TextArea(
                             Id: "query", 
                             Name: "Query",
