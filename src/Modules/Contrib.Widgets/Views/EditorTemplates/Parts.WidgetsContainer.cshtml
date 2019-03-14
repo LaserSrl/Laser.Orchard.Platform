@@ -57,7 +57,7 @@
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
                                             <li data-widget-id="@widget.Id">
-                                                <h3><a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget)</a></h3>
+                                                <h3><a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget)</a></h3><div class="contentType"> - @widget.TypeDefinition.DisplayName</div>
                                                 <div class="widget-actions">
                                                     @if (widget.IsPublished) {
                                                         if (widget.HasDraft) {
