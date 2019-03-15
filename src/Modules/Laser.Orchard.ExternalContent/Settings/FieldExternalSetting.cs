@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Mvc;
+
 namespace Laser.Orchard.ExternalContent.Settings {
     public class FieldExternalSetting {
         public FieldExternalSetting() {
@@ -23,5 +23,6 @@ namespace Laser.Orchard.ExternalContent.Settings {
         public bool CacheToFileSystem { get; set; }
         public Int32 ScheduledMinute { get; set; } 
         public OriginData DataType { get; set; }
+        public string AdditionalHeadersText { get; set; }
     }
 }

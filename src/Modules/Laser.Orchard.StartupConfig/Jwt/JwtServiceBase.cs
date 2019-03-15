@@ -51,6 +51,15 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 JwtLogin();
             }
         }
+        public string GetJwtToken() {
+            EnsureJwtToken();
+            if(JwtToken != null) {
+                return JwtToken.RawData ?? "";
+            }
+            else {
+                return "";
+            }
+        }
         protected CallResult ResultFromApiGet(string resource, string parameters = null)
         {
             var result = CallResult.Failure;

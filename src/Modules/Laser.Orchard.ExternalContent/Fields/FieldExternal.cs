@@ -1,7 +1,6 @@
 ﻿using Laser.Orchard.ExternalContent.Settings;
 using Orchard.ContentManagement;
 
-
 namespace Laser.Orchard.ExternalContent.Fields {
     public class FieldExternal : ContentField {
         private dynamic _contentObject;
@@ -53,6 +52,10 @@ namespace Laser.Orchard.ExternalContent.Fields {
         public dynamic ContentUrl{
             get { return _ContentUrl; }
             set { _ContentUrl = value; }
+        }
+        public string AdditionalHeadersText {
+            get { return Storage.Get<string>("AdditionalHeadersText"); }
+            set { Storage.Set("AdditionalHeadersText", value); }
         }
     }
 }
