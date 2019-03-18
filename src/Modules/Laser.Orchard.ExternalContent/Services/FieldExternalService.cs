@@ -135,7 +135,9 @@ namespace Laser.Orchard.ExternalContent.Services {
 
             return finalUrl;
         }
-
+        private string GetHeadersText(Dictionary<string, object> contesto, string additionalHeadersText) {
+            return _tokenizer.Replace(additionalHeadersText, contesto, new ReplaceOptions() { Encoding = ReplaceOptions.NoEncode });
+        }
         private JObject jsonflusher(JObject jsonObject) {
             JObject newJsonObject = new JObject();
             JProperty property;
@@ -164,12 +166,14 @@ namespace Laser.Orchard.ExternalContent.Services {
             return newJsonObject;
         }
 
-        public dynamic GetContentfromField(Dictionary<string, object> contesto, string externalUrl, string nomexlst, FieldExternalSetting settings, string contentType = "", HttpVerbOptions httpMethod = HttpVerbOptions.GET, HttpDataTypeOptions httpDataType = HttpDataTypeOptions.JSON, string additionalHeadersText = "", string bodyRequest = "") {
+        public dynamic GetContentfromField(Dictionary<string, object> contesto, string externalUrl, string nomexlst, FieldExternalSetting settings, string contentType = "", HttpVerbOptions httpMethod = HttpVerbOptions.GET, HttpDataTypeOptions httpDataType = HttpDataTypeOptions.JSON, string tokenizedAdditionalHeadersText = "", string bodyRequest = "") {
             dynamic ci = null;
             string UrlToGet = "";
+            string additionalHeadersText = "";
             string prefix = _shellSetting.Name + "_";
             try {
                 UrlToGet = GetUrl(contesto, externalUrl);
+                additionalHeadersText = GetHeadersText(contesto, tokenizedAdditionalHeadersText);
                 string chiavecache = UrlToGet;
                 chiavecache = Path.GetInvalidFileNameChars().Aggregate(chiavecache, (current, c) => current.Replace(c.ToString(), string.Empty));
                 chiavecache = chiavecache.Replace('&', '_');

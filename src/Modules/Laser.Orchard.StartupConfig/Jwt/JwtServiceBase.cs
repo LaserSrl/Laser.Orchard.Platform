@@ -117,7 +117,7 @@ namespace Laser.Orchard.StartupConfig.Jwt
             try
             {
                 WebApiClient.DefaultRequestHeaders.Clear();
-                WebApiClient.DefaultRequestHeaders.CacheControl.NoCache = true;
+                WebApiClient.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
                 if (authHeader.Key != null)
                 {
                     WebApiClient.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
@@ -135,7 +135,6 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 }
                 else if (method == HttpMethod.Post)
                 {
-                    //WebApiClient.DefaultRequestHeaders.Add("JWT", auth.Parameter);
                     WebApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(responseMimeType));
                     ServicePointManager.Expect100Continue = false;
                     t = WebApiClient.PostAsync(url, new StringContent(content, Encoding.UTF8, contentMimeType));
