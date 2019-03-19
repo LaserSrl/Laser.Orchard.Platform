@@ -16,6 +16,7 @@ namespace Laser.Orchard.Reporting {
             builder.Add(menu => {
                 menu.Caption(T("Charts & Reports"))
                     .Permission(Security.Permissions.ShowDataDashboard)
+                    .Permission(Security.Permissions.ShowDataReports)
                     .Position("3.07");
                 menu.Add(T("Query Report Definition"), "1.0", sub1 => sub1
                     .Action("Index", "Report", new { area = "Laser.Orchard.Reporting" })

@@ -12,3 +12,4 @@ Features:
         Name:  Dynamic Projection
         Description: Add  Dynamic Projection ContentType and DynamicProjectionPart to customize projection.
 	    Category: Content
+		Dependencies: Orchard.Resources, Orchard.Projections

@@ -1,0 +1,99 @@
+﻿@charset "UTF-8";
+
+@font-face {
+    font-family: "reactions";
+    src: url("fonts/reactions.eot");
+    src: url("fonts/reactions.eot?#iefix") format("embedded-opentype"), url("fonts/reactions.woff") format("woff"), url("fonts/reactions.ttf") format("truetype"), url("fonts/reactions.svg#reactions") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[data-icon]:before {
+    font-family: "reactions" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="reaction-icon-"]:before,
+[class*=" reaction-icon-"]:before {
+    font-family: "reactions" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.reaction-icon-like:before {
+    content: "\69";
+}
+
+.reaction-icon-angry:before {
+    content: "\61";
+}
+
+.reaction-icon-boring:before {
+    content: "\62";
+}
+
+.reaction-icon-exhausted:before {
+    content: "\63";
+}
+
+.reaction-icon-happy:before {
+    content: "\64";
+}
+
+.reaction-icon-iwasthere:before {
+    content: "\65";
+}
+
+.reaction-icon-joke:before {
+    content: "\66";
+}
+
+.reaction-icon-kiss:before {
+    content: "\67";
+}
+
+.reaction-icon-love:before {
+    content: "\69";
+}
+
+.reaction-icon-pain:before {
+    content: "\6a";
+}
+
+.reaction-icon-sad:before {
+    content: "\6b";
+}
+
+.reaction-icon-silent:before {
+    content: "\6c";
+}
+
+.reaction-icon-curious:before {
+    content: "\6d";
+}
+
+.reaction-icon-excited:before {
+    content: "\6e";
+}
+
+.reaction-icon-interested:before {
+    content: "\6f";
+}
+
+.reaction-icon-shocked:before {
+    content: "\70";
+}

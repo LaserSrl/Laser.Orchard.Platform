@@ -11,5 +11,9 @@
         public bool RequireNameField { get; set; }
 
         public bool EnableFileUpload { get; set; }
+        public bool AcceptPolicy { get; set; }
+        public string AcceptPolicyUrl { get; set; }
+        public string AcceptPolicyUrlText { get; set; }
+        public string AcceptPolicyText { get; set; }
     }
 }

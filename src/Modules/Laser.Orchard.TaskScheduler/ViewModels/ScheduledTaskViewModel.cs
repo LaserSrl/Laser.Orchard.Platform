@@ -5,12 +5,16 @@ using System.Linq;
 using System.Web;
 using Laser.Orchard.TaskScheduler.Models;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Core.Common.ViewModels;
 using Orchard.Localization.Services;
 
 namespace Laser.Orchard.TaskScheduler.ViewModels {
+
+  
     public class ScheduledTaskViewModel {
 
+        public ContentItem LinkedContent { get; set; }
         //properties corresponding to the part
         public int Id;
         public string SignalName { get; set; }
@@ -85,6 +89,8 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
         public bool Scheduling;
         public bool Autodestroy{get;set;}
 
+        public ExecutionTypes ExecutionType { get; set; }
+        public bool LongTask { get; set; }
         //these properties are public so that reflection can get at them when generating nested forms
         public readonly IDateLocalizationServices _dateServices;
         public CultureInfo culture;
@@ -94,8 +100,10 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
             //there we have to pass the cultureInffo and the date service as well
             _scheduledStartUTC = DateTime.UtcNow.ToLocalTime();
             PeriodicityUnit = TimeUnits.Minutes;
+            ExecutionType = ExecutionTypes.WorkFlow;
             Running = 0;
             Delete = false;
+            LinkedContent = null;
         }
         public ScheduledTaskViewModel(ScheduledTaskPart part) {
             Id = part.Id;
@@ -108,6 +116,8 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
             Running = part.RunningTaskId;
             Delete = false;
             Autodestroy = part.Autodestroy;
+            ExecutionType = part.ExecutionType;
+            LongTask = part.LongTask;
         }
 
         public ScheduledTaskViewModel(IOrchardServices orchardServices, IDateLocalizationServices dateServices) {
@@ -116,8 +126,10 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
 
             _scheduledStartUTC = DateTime.UtcNow;
             PeriodicityUnit = TimeUnits.Minutes;
+            ExecutionType = ExecutionTypes.WorkFlow;
             Running = 0;
             Delete = false;
+            LongTask = false;
         }
 
         public ScheduledTaskViewModel(ScheduledTaskPart part, IOrchardServices orchardServices, IDateLocalizationServices dateServices) : this(orchardServices, dateServices) {
@@ -131,6 +143,8 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
             Running = part.RunningTaskId;
             Delete = false;
             Autodestroy = part.Autodestroy;
+            ExecutionType = part.ExecutionType;
+            LongTask = part.LongTask;
         }
 
         //public ScheduledTaskPart CreatePartFromVM() {
@@ -178,6 +192,8 @@ namespace Laser.Orchard.TaskScheduler.ViewModels {
             part.ContentItemId = this.ContentItemId;
             part.RunningTaskId = this.Running;
             part.Autodestroy = this.Autodestroy;
+            part.ExecutionType = this.ExecutionType;
+            part.LongTask = this.LongTask;
         }
     }
 }

@@ -1,82 +1,103 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: "reactions";
-  src:url("fonts/reactions.eot");
-  src:url("fonts/reactions.eot?#iefix") format("embedded-opentype"),
-    url("fonts/reactions.woff") format("woff"),
-    url("fonts/reactions.ttf") format("truetype"),
-    url("fonts/reactions.svg#reactions") format("svg");
-  font-weight: normal;
-  font-style: normal;
-
+    font-family: "reactions";
+    src: url("fonts/reactions.eot");
+    src: url("fonts/reactions.eot?#iefix") format("embedded-opentype"), url("fonts/reactions.woff") format("woff"), url("fonts/reactions.ttf") format("truetype"), url("fonts/reactions.svg#reactions") format("svg");
+    font-weight: normal;
+    font-style: normal;
 }
 
 [data-icon]:before {
-  font-family: "reactions" !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "reactions" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 [class^="reaction-icon-"]:before,
 [class*=" reaction-icon-"]:before {
-  font-family: "reactions" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: "reactions" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.reaction-icon-like:before {
+    content: "\69";
 }
 
 .reaction-icon-angry:before {
-  content: "\61";
+    content: "\61";
 }
-.reaction-icon-exhausted:before {
-  content: "\62";
-}
+
 .reaction-icon-boring:before {
-  content: "\63";
+    content: "\62";
 }
+
+.reaction-icon-exhausted:before {
+    content: "\63";
+}
+
 .reaction-icon-happy:before {
-  content: "\64";
+    content: "\64";
 }
+
 .reaction-icon-iwasthere:before {
-  content: "\65";
+    content: "\65";
 }
+
 .reaction-icon-joke:before {
-  content: "\66";
+    content: "\66";
 }
+
 .reaction-icon-kiss:before {
-  content: "\67";
+    content: "\67";
 }
-.reaction-icon-like:before {
-  content: "\68";
-}
+
 .reaction-icon-love:before {
-  content: "\69";
+    content: "\69";
 }
+
 .reaction-icon-pain:before {
-  content: "\6a";
+    content: "\6a";
 }
+
 .reaction-icon-sad:before {
-  content: "\6b";
+    content: "\6b";
 }
-.reaction-icon-shocked:before {
-  content: "\6c";
-}
+
 .reaction-icon-silent:before {
-  content: "\6d";
+    content: "\6c";
 }
+
+.reaction-icon-curious:before {
+    content: "\6d";
+}
+
+.reaction-icon-excited:before {
+    content: "\6e";
+}
+
+.reaction-icon-interested:before {
+    content: "\6f";
+}
+
+.reaction-icon-shocked:before {
+    content: "\70";
+}
+
 /* Reactions */
 .reaction-wrapper {
     clear: both;
@@ -86,11 +107,11 @@
 }
 
     .reaction-wrapper.disabled .reaction-container {
-        cursor: not-allowed!important;
+        cursor: not-allowed !important;
     }
 
     .reaction-wrapper.require-login .reaction-container {
-        cursor: alias!important;
+        cursor: alias !important;
     }
 
 .reaction-container {
@@ -114,11 +135,11 @@
 
 .reaction-icon {
     font-size: 3.5em;
-    height: 100%!important;
-    width: 100%!important;
-    line-height: 100%!important;
-    background-image: none!important;
-    text-align: center!important;
+    height: 100% !important;
+    width: 100% !important;
+    line-height: 100% !important;
+    background-image: none !important;
+    text-align: center !important;
 }
 
 .button.reaction-summary {

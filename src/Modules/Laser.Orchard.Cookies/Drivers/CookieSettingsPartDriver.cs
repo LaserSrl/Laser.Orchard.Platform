@@ -39,17 +39,11 @@ namespace Laser.Orchard.Cookies.Drivers
         {
             var element = context.Element(part.PartDefinition.Name);
 
-            element.SetAttributeValue("cookieDiscreetPosition", part.cookieDiscreetPosition);
+            element.SetAttributeValue("cookiePosition", part.cookiePosition);
             element.SetAttributeValue("cookieDomain", part.cookieDomain);
-            element.SetAttributeValue("cookieDiscreetLink", part.cookieDiscreetLink);
             element.SetAttributeValue("cookieDiscreetReset", part.cookieDiscreetReset);
             element.SetAttributeValue("cookieDisable", part.cookieDisable);
-            element.SetAttributeValue("cookieAnalytics", part.cookieAnalytics);
-            element.SetAttributeValue("cookieNotificationLocationBottom", part.cookieNotificationLocationBottom);
-            element.SetAttributeValue("showCookieDeclineButton", part.showCookieDeclineButton);
-            element.SetAttributeValue("showCookieAcceptButton", part.showCookieAcceptButton);
             element.SetAttributeValue("showCookieResetButton", part.showCookieResetButton);
-            element.SetAttributeValue("cookieOverlayEnabled", part.cookieOverlayEnabled);
             element.SetAttributeValue("cookieCutter", part.cookieCutter);
         }
 
@@ -57,18 +51,12 @@ namespace Laser.Orchard.Cookies.Drivers
         {
             var partName = part.PartDefinition.Name;
 
-            part.cookieDiscreetPosition = GetAttribute<string>(context, partName, "cookieDiscreetPosition");
+            part.cookiePosition = GetAttribute<CookieBannerPosition>(context, partName, "cookiePosition");
             part.cookieDomain = GetAttribute<string>(context, partName, "cookieDomain");
             part.cookieDisable = GetAttribute<string>(context, partName, "cookieDisable");
-            part.cookieDiscreetLink = GetAttribute<bool>(context, partName, "cookieDiscreetLink");
             part.cookieDiscreetReset = GetAttribute<bool>(context, partName, "cookieDiscreetReset");
             part.cookiePolicyPage = GetAttribute<bool>(context, partName, "cookiePolicyPage");
-            part.cookieAnalytics = GetAttribute<bool>(context, partName, "cookieAnalytics");
-            part.cookieNotificationLocationBottom = GetAttribute<bool>(context, partName, "cookieNotificationLocationBottom");
-            part.showCookieDeclineButton = GetAttribute<bool>(context, partName, "showCookieDeclineButton");
-            part.showCookieAcceptButton = GetAttribute<bool>(context, partName, "showCookieAcceptButton");
             part.showCookieResetButton = GetAttribute<bool>(context, partName, "showCookieResetButton");
-            part.cookieOverlayEnabled = GetAttribute<bool>(context, partName, "cookieOverlayEnabled");
             part.cookieCutter = GetAttribute<bool>(context, partName, "cookieCutter");
         }
 

@@ -7,6 +7,9 @@ namespace Laser.Orchard.ContactForm.Models
     /// </summary>
     public class ContactFormRecord : ContentPartRecord 
     {
+        public ContactFormRecord() {
+            AcceptPolicy = false;
+        }
         /// <summary>
         /// Gets or sets the recipient email address- the address the form will send an email to.
         /// </summary>
@@ -56,5 +59,9 @@ namespace Laser.Orchard.ContactForm.Models
         /// Gets or sets a value indicating whether to require the attachment.
         /// </summary>
         public virtual bool RequireAttachment { get; set; }
+        public virtual bool AcceptPolicy { get; set; }
+        public virtual string AcceptPolicyUrl { get; set; }
+        public virtual string AcceptPolicyUrlText { get; set; }
+        public virtual string AcceptPolicyText { get; set; }
     }
 }

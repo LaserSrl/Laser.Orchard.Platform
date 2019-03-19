@@ -1,27 +1,9 @@
-﻿@model Laser.Orchard.Cookies.Models.CookieSettingsPart
+﻿@using Laser.Orchard.Cookies;
+@model Laser.Orchard.Cookies.Models.CookieSettingsPart
 
 <legend style="margin-bottom:10px;">@T("CookieLaw Settings")</legend>
 
-<fieldset class="analytics">
-    <div>
-        @Html.EditorFor(m => m.cookieAnalytics)
-        <label class="forcheckbox" for="CookieSettings_cookieAnalytics">@T("Cookie Analytics Mode")</label>
-        @Html.ValidationMessage("cookieAnalytics", "*")
-        <span class="hint">@T("If you are just using a simple analytics package you can set this to true, it displays a simple default message with no privacy policy link.")</span>
-    </div>
-</fieldset>
-
 <fieldset class="buttons">
-    <div>
-        @Html.EditorFor(m => m.showCookieAcceptButton)
-        <label class="forcheckbox" for="CookieSettings_showCookieAcceptButton">@T("Cookie Accept Button")</label>
-        <span class="hint">@T("It will show a green button for the user to accept cookies.")</span>
-    </div>
-    <div>
-        @Html.EditorFor(m => m.showCookieDeclineButton)
-        <label class="forcheckbox" for="CookieSettings_showCookieDeclineButton">@T("Cookie Decline Button")</label>
-        <span class="hint">@T("It will show a red button for the user to decline cookies.")</span>
-    </div>
     <div>
         @Html.EditorFor(m => m.showCookieResetButton)
         <label class="forcheckbox" for="CookieSettings_showCookieResetButton">@T("Cookie Reset Button")</label>
@@ -36,25 +18,35 @@
 
 <fieldset class="position">
     <div>
-        <label for="CookieSettings_cookieDiscreetPosition">@T("'Discreet' position (This positions Discreet Link and Discreet Reset)")</label>
-        @Html.EditorFor(m => m.cookieDiscreetPosition)
-        <span class="hint">@T("Set to topleft by default, you can also set topright, bottomleft, bottomright.")</span>
-    </div>
-    <div>
-        @Html.EditorFor(m => m.cookieNotificationLocationBottom)
-        <label class="forcheckbox" for="CookieSettings_cookieNotificationLocationBottom">@T("Display the notification at the bottom of the page?")</label>
-        <span class="hint">@T("It will also force the discreet position setting to bottom (left or right).")</span>
+        <label for="CookieSettings_cookiePosition">@T("Position of the Cookie Banner")</label>
+        @Html.EnumDropDownListFor(m => m.cookiePosition)
+        <span class="hint">@T("The position of the Cookie Banner.")</span>
     </div>
 </fieldset>
 
-@using (Script.Foot())
-{
-    <script type="text/javascript">
-        // hack to make the base.js script work with controller ids
-        (function ($) {
-            $(document).ready(function () {
-                $(".analytics").find("input[name='CookieSettings.cookieAnalytics']").click().click();
-            });
-        })(jQuery);
-    </script>
-}
+<fieldset>
+    <div>
+        @Html.EditorFor(m => m.defaultValuePreferences)
+        <label class="forcheckbox" for="CookieSettings_defaultValuePreferences">@T("Default value for Preferences cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Preference cookies as default.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.defaultValueStatistical)
+        <label class="forcheckbox" for="CookieSettings_defaultValueStatistical">@T("Default value for Statistical cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Statistical cookies as default.")</span>
+    </div>
+    <div>
+        @Html.EditorFor(m => m.defaultValueMarketing)
+        <label class="forcheckbox" for="CookieSettings_defaultValueMarketing">@T("Default value for Marketing cookies acceptance")</label>
+        <span class="hint">@T("Check to set acceptance of Marketing cookies as default.")</span>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>@T("GDPR Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisableCookieGDPRManagement)">@T("Disable Cookie Management according to GDPR")</label>
+        @Html.CheckBoxFor(m => m.DisableCookieGDPRManagement)
+        <span class="hint">@T("Check to disable cookie management according to GDPR regulations")</span>
+    </div>
+</fieldset>

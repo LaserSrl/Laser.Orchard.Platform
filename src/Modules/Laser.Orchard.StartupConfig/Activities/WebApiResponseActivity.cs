@@ -8,6 +8,7 @@ using Orchard.Localization;
 using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
+using Newtonsoft.Json;
 
 namespace Laser.Orchard.StartupConfig.Activities {
     public class WebApiResponseActivity : Task {
@@ -54,6 +55,11 @@ namespace Laser.Orchard.StartupConfig.Activities {
             if (workflowContext.Tokens.ContainsKey(tokenWebApiResponseName)  && workflowContext.Tokens[tokenWebApiResponseName] != null) {
                 bool success = activityContext.GetState<bool>("Successful");
                 string message = activityContext.GetState<string>("Message");
+                var dataString = activityContext.GetState<string>("Data");
+                if (!string.IsNullOrWhiteSpace(dataString)) {
+                    ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Data = 
+                        JsonConvert.DeserializeObject(dataString);
+                }
                 ErrorCode errorCode = activityContext.GetState<ErrorCode>("ErrorCode");
                 ResolutionAction resolutionAction = activityContext.GetState<ResolutionAction>("ResolutionAction");
                 ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Success = success;

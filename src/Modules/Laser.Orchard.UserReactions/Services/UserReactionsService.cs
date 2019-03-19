@@ -254,7 +254,7 @@ namespace Laser.Orchard.UserReactions.Services {
             List<UserReactionsSettingTypesSel> SettingType = new List<UserReactionsSettingTypesSel>();
 
             if (part.Settings.Count > 0) {
-                SettingType = new JavaScriptSerializer().Deserialize<List<UserReactionsSettingTypesSel>>(part.Settings.Values.ElementAt(1));
+                SettingType = new JavaScriptSerializer().Deserialize<List<UserReactionsSettingTypesSel>>(part.Settings["UserReactionsPartSettings.TypeReactionsPartsSelected"]);
             }
             /////////////////////////////////////////////////
 
@@ -490,6 +490,15 @@ namespace Laser.Orchard.UserReactions.Services {
             }
             else if (reactionName.Equals(ReactionsNames.silent)) {
                 return T("Silent");
+            }
+            else if (reactionName.Equals(ReactionsNames.excited)) {
+                return T("Excited");
+            }
+            else if (reactionName.Equals(ReactionsNames.curious)) {
+                return T("Curious");
+            }
+            else if (reactionName.Equals(ReactionsNames.interested)) {
+                return T("Interested");
             }
             else {
                 return T("None");

@@ -6,54 +6,38 @@
 
 <legend>@T("CookieLaw Settings")</legend>
 <fieldset class="analytics">
-
-    @if (settings.cookieAnalytics) {
+    <div>
+        <legend style="margin-top: 30px; margin-bottom: 10px;">Messages</legend>
         <div>
-            <legend style="margin-top: 20px; margin-bottom: 10px;">Messages</legend>
-            <div>
-                <label for="CookieSettings_cookieAnalyticsMessage">@T("Analytics Message (this is the default message)")</label>
-                @Html.TextAreaFor(m => m.CookieLaw.cookieAnalyticsMessage, new { @class = "text medium" })
-            </div>
-            <legend style="margin-top: 20px; margin-bottom: 10px;">Links</legend>
-            <div>
-                <label for="CookieSettings_cookieAnalyticsMessage">@T("Change 'What are Cookies' link text")</label>
-                @Html.TextBoxFor(m => m.CookieLaw.cookieWhatAreLinkText, new { @class = "text medium" })
-            </div>
-            <div>
-                <label for="CookieSettings_cookieWhatAreTheyLink">@T("'What are Cookies' link")</label>
-                @Html.TextBoxFor(m => m.CookieLaw.cookieWhatAreTheyLink, new { @class = "text medium" })
-            </div>
+            <label for="CookieSettings_cookieTitle">@T("Cookie Banner Title")</label>
+            @Html.TextBoxFor(m => m.CookieLaw.cookieTitle, new { @class = "text medium" })
+            <span class="hint">@T("Title of the cookie banner.")</span>
         </div>
-    } else {
         <div>
-            <legend style="margin-top: 30px; margin-bottom: 10px;">Messages</legend>
-            <div>
-                <label for="CookieSettings_cookieMessage">@T("'Cookie Privacy link' Message")</label>
-                @Html.TextAreaFor(m => m.CookieLaw.cookieMessage, new { @class = "text medium" })
-                <span class="hint">@T("Remember to keep the {{cookiePolicyLink}} variable intact.")</span>
-            </div>
-            <legend style="margin-top: 20px; margin-bottom: 10px;">Links</legend>
-            <div>
-                <label for="CookieSettings_cookiePolicyLink">@T("Your privacy policy / Cookie policy link")</label>
-                @Html.TextBoxFor(m => m.CookieLaw.cookiePolicyLink, new { @class = "text medium" })
-            </div>
+            <label for="CookieSettings_cookieMessage">@T("Cookie Banner Message")</label>
+            @Html.TextAreaFor(m => m.CookieLaw.cookieMessage, new { @class = "text medium" })
+            <span class="hint">@T("Message of the cookie banner.")</span>
         </div>
-    }
-
+        <legend style="margin-top: 20px; margin-bottom: 10px;">Links</legend>
+        <div>
+            <label for="CookieSettings_cookiePolicyLink">@T("Your privacy policy / Cookie policy link")</label>
+            @Html.TextBoxFor(m => m.CookieLaw.cookiePolicyLink, new { @class = "text medium" })
+        </div>
+        <div>
+            <label for="CookieSettings_cookiePolicyPageMessage">@T("Text of your privacy policy / Cookie policy link")</label>
+            @Html.TextBoxFor(m => m.CookieLaw.cookiePolicyPageMessage, new { @class = "text medium" })
+        </div>
+    </div>
 </fieldset>
 
 <fieldset class="buttons">
     <legend style="margin-top: 30px; margin-bottom: 10px;">Buttons Text</legend>
-    <div @(settings.showCookieAcceptButton ? "" : "style=display:none")>
-        <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'Accept Cookies' button text")</label>
+    <div>
+        <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'OK' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieAcceptButtonText, new { @class = "text medium" })
     </div>
-    <div @(settings.showCookieDeclineButton ? "" : "style=display:none")>
-        <label for="CookieSettings_cookieDeclineButtonText">@T("Change 'Decline Cookies' button text")</label>
-        @Html.TextBoxFor(m => m.CookieLaw.cookieDeclineButtonText, new { @class = "text medium" })
-    </div>
     <div @(settings.showCookieResetButton ? "" : "style=display:none")>
-        <label for="CookieSettings_cookieResetButtonText">@T("Change 'Reset Cookies' button text")</label>
+        <label for="CookieSettings_cookieResetButtonText">@T("Change 'GDPR Cookies' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieResetButtonText, new { @class = "text medium" })
     </div>
 </fieldset>

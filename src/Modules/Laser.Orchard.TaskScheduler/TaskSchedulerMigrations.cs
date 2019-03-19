@@ -80,5 +80,16 @@ namespace Laser.Orchard.TaskScheduler {
             );
             return 6;
         }
+        public int UpdateFrom6() {
+            SchemaBuilder.AlterTable("LaserTaskSchedulerRecord", cfg => cfg
+                .AddColumn<string>("ExecutionType", c => c.WithDefault("WorkFlow")));
+            return 7;
+        }
+        public int UpdateFrom7() {
+            SchemaBuilder.AlterTable("LaserTaskSchedulerRecord", cfg => cfg
+                .AddColumn<bool>("LongTask", c => c.WithDefault(false)));
+            return 8;
+        }
+        
     }
 }

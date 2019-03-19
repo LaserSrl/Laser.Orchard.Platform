@@ -32,11 +32,14 @@ namespace Laser.Orchard.ContactForm.Controllers
         /// <param name="subject">The subject.</param>
         /// <param name="message">The message.</param>
         
-        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1)
+        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1, int Accept = 0)
         {
             try {
                 ContactFormRecord contactForm = _contactFormService.GetContactForm(id);
-
+                if (contactForm.AcceptPolicy && Accept != 1) {
+                    TempData["form"] = Request.Form;
+                    return this.RedirectLocal(Request.UrlReferrer.ToString());
+                }
                 if (contactForm != null) {
                     // If a static subject message was specified, use that value for the email subject.
                     if (contactForm.UseStaticSubject) {
