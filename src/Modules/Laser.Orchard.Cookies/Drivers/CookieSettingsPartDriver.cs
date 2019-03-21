@@ -43,11 +43,11 @@ namespace Laser.Orchard.Cookies.Drivers {
             var partName = part.PartDefinition.Name;
             // Properties of an enum type cannot be treated like the others
             var cookiePos = context.Attribute(partName, "cookiePosition");
-            var cbp = CookieBannerPosition.Overlay;
+            var cbp = CookieBannerPosition.Top; // default value
             if (Enum.TryParse(cookiePos, out cbp)) {
                 part.cookiePosition = cbp;
             } else {
-                part.cookiePosition = CookieBannerPosition.Overlay;
+                part.cookiePosition = CookieBannerPosition.Top;
             }
             part.cookieDomain = GetAttribute<string>(context, partName, "cookieDomain");
             part.cookieDisable = GetAttribute<string>(context, partName, "cookieDisable");
