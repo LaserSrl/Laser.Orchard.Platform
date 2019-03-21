@@ -45,17 +45,18 @@ namespace Laser.Orchard.Queries.Providers {
                 // parameters here have already had tokens replaced by values
                 var parameters = (string)context.State.Parameters;
                 Dictionary<string, object> queryParams = new Dictionary<string, object>();
-                if (!string.IsNullOrWhiteSpace(parameters)) {
-                    var ps = parameters.Split(
-                        new string[] { Environment.NewLine, "\n" },
-                        StringSplitOptions.None)
-                        .Select(p => p.Trim())
-                        .Select((v, i) => new Tuple<int, string>(i, v));
-                    foreach (var tuple in ps) {
-                        queryParams.Add($"param{tuple.Item1.ToString()}", tuple.Item2);
-                    }
+                // Parse parameters:
+                // The correct way to input parameters in the text area is to have one parameter
+                // per line and end each line with a comma.
+                var splitParameters = parameters.Split(
+                    new string[] { ",\n", "," + Environment.NewLine },
+                    StringSplitOptions.None); // keep empty entries
+                // we don't trim values in case whitespace is desired.
+                // Parameters are always assumed to be strings.
+                foreach (var kvp in splitParameters.Select((val, i) => new { i, val })) {
+                    queryParams.Add($"param{kvp.i.ToString()}", kvp.val);
                 }
-                
+
                 // This will be a filter on ContentItems
                 Action<IAliasFactory> alias = af => af.ContentItem();
                 Action<IHqlExpressionFactory> predicate = ef => ef.InSubquery("Id", query, queryParams);
@@ -63,58 +64,6 @@ namespace Laser.Orchard.Queries.Providers {
             }
         }
 
-        //private void SafeSubQuery(
-        //    IHqlExpressionFactory ef,
-        //    string propertyName,
-        //    string subquery, 
-        //    Dictionary<string, object> parameters) {
-
-        //    // NHibernate fails to assign values to all instances of a same parameter.
-        //    // As a workaround, we create a new "copy" of the query, to handle multiplicity.
-        //    var qString = subquery;
-        //    // We use the base query to compute the substitutions in the actual query.
-        //    var baseQuery = _session.CreateQuery(subquery);
-        //    // Dictionary of the substitutions. Keys are the parameter names in the "new" query.
-        //    // Values are the "old" parameter names. 
-        //    var substitutionMap = new Dictionary<string, string>();
-        //    foreach (var para in baseQuery.NamedParameters)
-        //    {
-        //        var pCode = $":{para}"; // Parameters in the query are prepended by :
-        //        var rgx = new Regex(pCode);
-        //        // while there is a match with the original parameter, replace it
-        //        for (Match match = rgx.Match(qString); match.Success; match = rgx.Match(qString))
-        //        {
-        //            var newParam = $"param_{substitutionMap.Count}";
-        //            qString = rgx.Replace(
-        //                qString,
-        //                $":{newParam}",
-        //                1,
-        //                (match.Index - 1) < 0 ? 0 : (match.Index));
-        //            // add the information on the substitution to the map
-        //            substitutionMap.Add(newParam, para);
-        //        }
-        //    }
-        //    // Now create the actual query
-        //    var hqlQuery = _session.CreateQuery(qString);
-        //    foreach (var para in hqlQuery.NamedParameters)
-        //    {
-        //        // get the original parameter name
-        //        var oldPara = substitutionMap[para];
-        //        // OWASP says nhibernate's SetParameter is safe
-        //        if (parameters.ContainsKey(oldPara))
-        //        {
-        //            hqlQuery.SetParameter(para, parameters[oldPara]);
-        //        }
-        //        else
-        //        {
-        //            hqlQuery.SetParameter(para, "");
-        //        }
-        //    }
-        //    // A lot of assumptions here that are not enforced in code.The main thing is
-        //    //that we are basically assuming that the query has been written to return Ids.
-        //    ef.InG(propertyName, hqlQuery.List<int>());
-        //}
-        
         public LocalizedString DisplayFilter(FilterContext context) {
             return T("Filter ContentItems using a parametrized query.");
         }
