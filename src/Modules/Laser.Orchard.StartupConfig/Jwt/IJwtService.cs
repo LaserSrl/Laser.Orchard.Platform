@@ -7,5 +7,6 @@ namespace Laser.Orchard.StartupConfig.Jwt
         void JwtLogin();
         void JwtTokenRenew();
         string GetBaseUrl();
+        string GetJwtToken();
     }
 }

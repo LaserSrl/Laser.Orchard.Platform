@@ -79,12 +79,14 @@ namespace Laser.Orchard.ExternalContent.Drivers {
             context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("ExternalUrl", field.ExternalUrl);
             context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("HttpDataTypeCode", field.HttpDataTypeCode);
             context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("HttpVerbCode", field.HttpVerbCode);
+            context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("AdditionalHeadersText", field.AdditionalHeadersText);
         }
         protected override void Cloning(ContentPart part, FieldExternal originalField, FieldExternal cloneField, CloneContentContext context) {
             cloneField.ExternalUrl = originalField.ExternalUrl;
             cloneField.HttpVerbCode = originalField.HttpVerbCode;
             cloneField.HttpDataTypeCode = originalField.HttpDataTypeCode;
             cloneField.BodyRequest = originalField.BodyRequest;
+            cloneField.AdditionalHeadersText = originalField.AdditionalHeadersText;
         }
         protected override void Importing(ContentPart part, FieldExternal field, ImportContentContext context) {
             var BodyRequest = context.Attribute(field.FieldDefinition.Name + "." + field.Name, "BodyRequest");
@@ -102,6 +104,10 @@ namespace Laser.Orchard.ExternalContent.Drivers {
             var HttpVerbCode = context.Attribute(field.FieldDefinition.Name + "." + field.Name, "HttpVerbCode");
             if (HttpVerbCode != null) {
                 field.HttpVerbCode = HttpVerbCode;
+            }
+            var AdditionalHeadersText = context.Attribute(field.FieldDefinition.Name + "." + field.Name, "AdditionalHeadersText");
+            if (AdditionalHeadersText != null) {
+                field.AdditionalHeadersText = AdditionalHeadersText;
             }
         }
     }

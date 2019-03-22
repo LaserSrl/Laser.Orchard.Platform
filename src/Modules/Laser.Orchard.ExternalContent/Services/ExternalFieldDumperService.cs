@@ -2,11 +2,9 @@
 using Laser.Orchard.ExternalContent.Fields;
 using Laser.Orchard.ExternalContent.Settings;
 using Laser.Orchard.StartupConfig.Exceptions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace Laser.Orchard.ExternalContent.Services {
     public class ExternalFieldDumperService : IDumperService {
@@ -42,12 +40,12 @@ namespace Laser.Orchard.ExternalContent.Services {
                                 externalField.ContentObject = _fieldExternalService
                                     .GetContentfromField(Myobject, externalField.ExternalUrl, externalField.Name, 
                                         settings, context.Content.ContentItem.ContentType, externalField.HttpVerb,
-                                        externalField.HttpDataType, externalField.BodyRequest);
+                                        externalField.HttpDataType, externalField.AdditionalHeadersText, externalField.BodyRequest);
                             } else {
                                 externalField.ContentObject = _fieldExternalService
                                     .GetContentfromField(Myobject, settings.ExternalURL, externalField.Name, 
                                         settings, context.Content.ContentItem.ContentType, settings.HttpVerb,
-                                        settings.HttpDataType, settings.BodyRequest);
+                                        settings.HttpDataType, settings.AdditionalHeadersText, settings.BodyRequest);
                             }
                         } catch (ExternalFieldRemoteException ex) {
                             externalField.ContentObject = ex;
@@ -74,6 +72,5 @@ namespace Laser.Orchard.ExternalContent.Services {
                 }
             return objec;
         }
-
     }
 }

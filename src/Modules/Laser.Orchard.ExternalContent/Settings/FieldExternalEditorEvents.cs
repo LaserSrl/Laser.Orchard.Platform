@@ -42,6 +42,7 @@ namespace Laser.Orchard.ExternalContent.Settings {
                 builder.WithSetting("FieldExternalSetting.CacheToFileSystem", model.CacheToFileSystem.ToString());
                 builder.WithSetting("FieldExternalSetting.ScheduledMinute", model.ScheduledMinute.ToString());
                 builder.WithSetting("FieldExternalSetting.DataType", model.DataType.ToString());
+                builder.WithSetting("FieldExternalSetting.AdditionalHeadersText", model.AdditionalHeadersText);
 
                 if (model.CertificatePrivateKey == "(none)") { // empty private key
                     builder.WithSetting("FieldExternalSetting.CertificatePrivateKey", "");

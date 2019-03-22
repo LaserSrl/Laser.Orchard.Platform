@@ -51,6 +51,15 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 JwtLogin();
             }
         }
+        public string GetJwtToken() {
+            EnsureJwtToken();
+            if(JwtToken != null) {
+                return JwtToken.RawData ?? "";
+            }
+            else {
+                return "";
+            }
+        }
         protected CallResult ResultFromApiGet(string resource, string parameters = null)
         {
             var result = CallResult.Failure;
@@ -108,6 +117,7 @@ namespace Laser.Orchard.StartupConfig.Jwt
             try
             {
                 WebApiClient.DefaultRequestHeaders.Clear();
+                WebApiClient.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
                 if (authHeader.Key != null)
                 {
                     WebApiClient.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
@@ -125,7 +135,6 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 }
                 else if (method == HttpMethod.Post)
                 {
-                    //WebApiClient.DefaultRequestHeaders.Add("JWT", auth.Parameter);
                     WebApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(responseMimeType));
                     ServicePointManager.Expect100Continue = false;
                     t = WebApiClient.PostAsync(url, new StringContent(content, Encoding.UTF8, contentMimeType));

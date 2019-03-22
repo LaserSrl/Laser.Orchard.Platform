@@ -22,6 +22,11 @@
 </fieldset>
         @Display.TokenHint()
 <fieldset>
+    <label for="@Html.FieldIdFor(m => m.Field.HttpVerb)">@T("Additional headers for web request")</label>
+    @Html.TextAreaFor(m => m.Field.AdditionalHeadersText, new { @class = "text large tokenized" })
+    <span class="hint">@T("One header per line. Each header must have the form 'header_name: header_value'.")</span>
+</fieldset>
+<fieldset>
     <label for="@Html.FieldIdFor(m => m.Field.HttpVerb)">@T("Use this HttpVerb")</label>
     @Html.DropDownListFor(m => m.Field.HttpVerbCode, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.HttpVerbOptions)), Model.Field.HttpVerbCode), new { @class = "text", onchange = "verbChanged(this);" })
     <span class="hint">@T("Default is GET")</span>
