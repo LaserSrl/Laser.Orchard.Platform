@@ -5,4 +5,4 @@ Website: http://www.laser-group.com
 Description: Krake Admin Theme
 Version: 2.0
 OrchardVersion: 1.10
-BaseTheme: TheLaserAdmin
+BaseTheme: TheAdmin
