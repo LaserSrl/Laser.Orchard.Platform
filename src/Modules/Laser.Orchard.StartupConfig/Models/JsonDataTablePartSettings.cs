@@ -1,4 +1,7 @@
-﻿namespace Laser.Orchard.StartupConfig.Models {
+﻿using Orchard.Environment.Extensions;
+
+namespace Laser.Orchard.StartupConfig.Models {
+    [OrchardFeature("Laser.Orchard.StartupConfig.JsonDataTablePart")]
     public class JsonDataTablePartSettings {
         private string _columnsDefinition = "[{field:'name',title:'Name'},{field:'description',title:'Description'}]"; // default value
         public string ColumnsDefinition {
