@@ -2,14 +2,15 @@
 @{ 
     var tableField = Model.Table;
     JArray arr = JArray.Parse(tableField.TableData);
-    JArray settings = new JArray();
+    var settings = Model.Settings;
+    JArray columns = new JArray();
     if (!String.IsNullOrWhiteSpace(Model.Settings.ColumnsDefinition)) {
         var normalizedSettings = System.Text.RegularExpressions.Regex.Replace(Model.Settings.ColumnsDefinition, "\"editor\":[^},\"]+", "\"editor\":false");
-        settings = JArray.Parse(normalizedSettings);
+        columns = JArray.Parse(normalizedSettings);
     }
     var headers = new List<string>();
     var fields = new List<string>();
-    foreach (var token in settings) {
+    foreach (var token in columns) {
         headers.Add(token.Value<string>("title"));
         fields.Add(token.Value<string>("field"));
     }
@@ -24,8 +25,8 @@
         }
     </style>
 }
-<h2>@tableField.DisplayName</h2>
 <table class="json-data-table">
+    <caption>@tableField.DisplayName</caption>
     <thead>
         <tr class="json-data-table-header">
             @foreach (var header in headers) {
@@ -36,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in arr) {
+        @foreach (var obj in arr) {
             <tr>
                 @foreach (var field in fields) {
                     <td>

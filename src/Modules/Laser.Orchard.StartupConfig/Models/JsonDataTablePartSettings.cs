@@ -9,7 +9,7 @@ namespace Laser.Orchard.StartupConfig.Models {
                 return _columnsDefinition;
             }
             set {
-                if(string.IsNullOrWhiteSpace(value) == false) {
+                if (string.IsNullOrWhiteSpace(value) == false) {
                     _columnsDefinition = value;
                 }
             }

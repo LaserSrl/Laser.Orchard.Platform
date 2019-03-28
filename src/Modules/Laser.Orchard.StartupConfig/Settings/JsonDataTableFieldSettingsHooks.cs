@@ -10,7 +10,7 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Handlers {
-    public class JsonDataTableFieldEditorEvents : ContentDefinitionEditorEventsBase {
+    public class JsonDataTableFieldSettingsHooks : ContentDefinitionEditorEventsBase {
         public override IEnumerable<TemplateViewModel> PartFieldEditor(ContentPartFieldDefinition definition) {
             if (definition.FieldDefinition.Name == "JsonDataTableField") {
                 var model = definition.Settings.GetModel<JsonDataTableFieldSettings>();
