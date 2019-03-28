@@ -17,18 +17,22 @@ namespace Laser.Orchard.StartupConfig.Drivers {
                    .Replace(" ", "_");
         }
 
+        private static string GetDifferentiator(ContentField field, ContentPart part) {
+            return field.Name;
+        }
+
 
         protected override DriverResult Display(ContentPart part, JsonDataTableField field, string displayType, dynamic shapeHelper) {
             if (displayType == "Detail") {
                 var settings = field.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
-                return ContentShape("Fields_JsonDataTable", () => shapeHelper.Fields_JsonDataTable(Table: field, Settings: settings));
+                return ContentShape("Fields_JsonDataTable", GetDifferentiator(field, part), () => shapeHelper.Fields_JsonDataTable(Table: field, Settings: settings));
             }
             else {
                 return null;
             }
         }
         protected override DriverResult Editor(ContentPart part, JsonDataTableField field, dynamic shapeHelper) {
-            return ContentShape("Fields_JsonDataTable_Edit",
+            return ContentShape("Fields_JsonDataTable_Edit", GetDifferentiator(field, part),
             () => shapeHelper.EditorTemplate(
             TemplateName: "Fields/JsonDataTable",
             Model: field,
