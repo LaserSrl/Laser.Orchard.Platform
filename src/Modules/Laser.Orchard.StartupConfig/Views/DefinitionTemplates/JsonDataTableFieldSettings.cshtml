@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.StartupConfig.Models.JsonDataTableFieldSettings
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ColumnsDefinition)">@T("Columns Definition")</label>
+        @Html.TextAreaFor(m => m.ColumnsDefinition, new { @class = "text large tokenized" })
+        <span class="hint">@T("Columns definition of the bootstrap-table as a json array. Example: [{field:'name',title:'Name'},{field:'description',title:'Description'}]")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.MaxRows)">@T("Max Number of Rows")</label>
+        @Html.TextBoxFor(m => m.MaxRows, new { @class = "text large tokenized", @type = "number" })
+        <span class="hint">@T("Limit number of rows in the table. 0 means no limit.")</span>
+    </div>
+</fieldset>
+@Display.TokenHint()

@@ -4,11 +4,13 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.ViewModels;
+using Orchard.Environment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace Laser.Orchard.StartupConfig.Settings {
+    [OrchardFeature("Laser.Orchard.StartupConfig.JsonDataTablePart")]
     public class JsonDataTablePartSettingsHooks : ContentDefinitionEditorEventsBase {
         public override IEnumerable<TemplateViewModel> TypePartEditor(ContentTypePartDefinition definition) {
             if (definition.PartDefinition.Name != "JsonDataTablePart") yield break;
