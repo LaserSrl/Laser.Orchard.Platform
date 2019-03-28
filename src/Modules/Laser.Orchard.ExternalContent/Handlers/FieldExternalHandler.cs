@@ -3,18 +3,11 @@ using Laser.Orchard.ExternalContent.Services;
 using Laser.Orchard.ExternalContent.Settings;
 using Laser.Orchard.StartupConfig.Exceptions;
 using Orchard;
-using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
-using Orchard.DisplayManagement;
-using Orchard.DisplayManagement.Descriptors;
-using Orchard.DisplayManagement.Implementation;
 using Orchard.Logging;
-using Orchard.OutputCache.Filters;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Routing;
 
 namespace Laser.Orchard.ExternalContent.Handlers {
     public class FieldExternalHandler : ContentHandler {
@@ -64,9 +57,9 @@ namespace Laser.Orchard.ExternalContent.Handlers {
                             else if (context.DisplayType == "Detail") {
                                 try {
                                     if (string.IsNullOrEmpty(settings.ExternalURL))
-                                        field.ContentObject = _fieldExternalService.GetContentfromField(Myobject, field.ExternalUrl, field.Name, settings, context.ContentItem.ContentType, field.HttpVerb, field.HttpDataType, field.BodyRequest);
+                                        field.ContentObject = _fieldExternalService.GetContentfromField(Myobject, field.ExternalUrl, field.Name, settings, context.ContentItem.ContentType, field.HttpVerb, field.HttpDataType, field.AdditionalHeadersText, field.BodyRequest);
                                     else
-                                        field.ContentObject = _fieldExternalService.GetContentfromField(Myobject, settings.ExternalURL, field.Name, settings, context.ContentItem.ContentType, settings.HttpVerb, settings.HttpDataType, settings.BodyRequest);
+                                        field.ContentObject = _fieldExternalService.GetContentfromField(Myobject, settings.ExternalURL, field.Name, settings, context.ContentItem.ContentType, settings.HttpVerb, settings.HttpDataType, settings.AdditionalHeadersText, settings.BodyRequest);
                                     //               Logger.Error("Field get fine:" + DateTime.Now.ToString());
                                 }
                                 catch (ExternalFieldRemoteException ex) {
