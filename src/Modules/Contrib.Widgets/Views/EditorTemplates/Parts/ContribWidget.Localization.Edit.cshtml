@@ -1,0 +1,11 @@
+﻿@{
+    Script.Require("JQuery").AtHead();
+}
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Localization_SelectedCulture").val("@Model");
+        });
+    </script>
+}
