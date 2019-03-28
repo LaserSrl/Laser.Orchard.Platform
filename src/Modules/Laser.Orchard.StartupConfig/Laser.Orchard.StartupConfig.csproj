@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -348,13 +349,17 @@
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
+    <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
     <Compile Include="IdentityProvider\RolesIdentityProvider.cs" />
     <Compile Include="IdentityProvider\UserIdentityProvider.cs" />
+    <Compile Include="Models\JsonDataTableField.cs" />
     <Compile Include="Models\JsonDataTablePart.cs" />
+    <Compile Include="Models\JsonDataTableFieldSettings.cs" />
     <Compile Include="Models\JsonDataTablePartSettings.cs" />
     <Compile Include="RazorBase\Drivers\EnvironmentVariablesSettingsPartDriver.cs" />
     <Compile Include="Drivers\FavoriteCulturePartDriver.cs" />
@@ -576,6 +581,9 @@
     <Content Include="Styles\tabulator\semantic-ui\tabulator_semantic-ui.min.css.map" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap.min.css.map" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap4.min.css.map" />
+    <Content Include="Views\EditorTemplates\Fields\JsonDataTable.cshtml" />
+    <Content Include="Views\DefinitionTemplates\JsonDataTableFieldSettings.cshtml" />
+    <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
