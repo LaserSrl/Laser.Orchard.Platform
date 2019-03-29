@@ -588,7 +588,7 @@ legend {
     min-width: 22px !important;
 }
 
-.widgets-this-layer h3 {
+.widgets-this-layer h3, .widgets-other-layer h3 {
     font-size: 15px;
 }
 
@@ -1362,6 +1362,12 @@ fieldset {
     .properties h3 a {
         color: #1c2a37;
         font-weight: bolder;
+    }
+
+    .widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a,
+    .widgets-listed h2,
+    .properties h3 a {
+        color: #888;
     }
 
     .widgets-listed .widgets-none h2 {
