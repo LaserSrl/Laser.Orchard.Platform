@@ -1,3 +1,4 @@
 ﻿<Placement>
-    <Place Parts_WidgetsContainer="Content:after" />
+    <Place Parts_WidgetsContainer="Content:after" Parts_ContribWidget_Localization_Edit="Content:after"/>
+  
 </Placement>
