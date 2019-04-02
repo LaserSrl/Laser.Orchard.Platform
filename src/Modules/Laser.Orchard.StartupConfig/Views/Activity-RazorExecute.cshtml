@@ -2,7 +2,7 @@
 @using Orchard.Workflows.Helpers
 
 @{
-    var outcomes = ((string)Model.State.RazorExecuteActivity_Outcomes).FormatOutcomesJson();
+    var outcomes = ((string)Model.State.RazorExecuteActivity_Outcomes).FormatOutcomesJson(T);
     //string name = Model.Name;
     //string actions = Model.State.RazorExecuteActivity_Outcomes;
     //var outcomes = String.Join(",", actions == null ? new string[0] : actions.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => "'" + x.Trim() + "'").ToArray());
