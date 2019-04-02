@@ -1364,9 +1364,7 @@ fieldset {
         font-weight: bolder;
     }
 
-    .widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a,
-    .widgets-listed h2,
-    .properties h3 a {
+    .widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a {
         color: #888;
     }
 
