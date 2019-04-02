@@ -5,11 +5,10 @@
     ShellSettings _shellsettings;
     WorkContext.TryResolve<ShellSettings>(out _shellsettings);
     string tenantname = _shellsettings.Name.ToLower();
-    
+
     var Menu = Model.Menu;
     var items = (IList<dynamic>)Enumerable.Cast<dynamic>(Menu.Items);
-    if (items.Any()) {
-    }
+
 }
 
 <nav class="navbar navbar-default">
@@ -27,17 +26,39 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right navbar-blue">
                 @foreach (var item in items) {
-                    <li><a href="@item.Href">@item.Text</a></li>
+                    //se la voce di menu ha figli
+                    /*
+                     * Secondo metodo risoluzione
+                     *
+                     * @Display(item)
+                     *
+                     * */
+
+                    //metodo funzionante
+                    if (item.Items.Count > 0) {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@item.Text<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @DisplayChildren(item)
+                            </ul>
+                        </li>
+                    } else {
+                        // se la voce di menu non ha figli
+                        <li>
+                            <a href="@item.Href">@item.Text</a>
+                        </li>
+                    }
                 }
+
                 @if (WorkContext.CurrentUser != null) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@T("Welcome,") @Html.ItemDisplayText(WorkContext.CurrentUser)<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="@Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" })">@T("Change Password")</a></li>
                             <li><a href="@Url.Action("LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">@T("Logoff")</a></li>
-                             @if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
-                                <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new {Area = "Dashboard", Controller = "Admin"})</li>
-                             }
+                            @if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
+                                <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new { Area = "Dashboard", Controller = "Admin" })</li>
+                            }
                         </ul>
                     </li>
                 } else {
