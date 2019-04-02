@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -172,6 +173,7 @@
     <Compile Include="Controllers\UserActionsAPIController.cs" />
     <Compile Include="Controllers\UserActionsController.cs" />
     <Compile Include="Drivers\UserRegistrationPolicyPartDriver.cs" />
+    <Compile Include="Drivers\UserRegistrationSettingsPartDriver.cs" />
     <Compile Include="Enumerators.cs" />
     <Compile Include="Filters\PolicyApiFilterAttribute.cs" />
     <Compile Include="Filters\PolicyFilter.cs" />
