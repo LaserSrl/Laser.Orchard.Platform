@@ -40,7 +40,8 @@
 
                 @if (!String.IsNullOrEmpty(Model.CertificatePrivateKey)) {
                     <span class="hint">@T("The certificate private key. Insert (none) if no key is required. A private key has already been set, leave empty to keep it unchanged.")</span>
-                } else {
+                }
+                else {
                     <span class="hint">@T("The certificate private key. The key is empty.")</span>
                 }
             </div>
@@ -49,8 +50,8 @@
 </fieldset>
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.DataType)">@T("Data Type")</label>
-       @Html.DropDownListFor(m => m.DataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.OriginData)), Model.DataType), new { @class = "text" })
-      <span class="hint">@T("Default is RestWebService")</span>
+    @Html.DropDownListFor(m => m.DataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.OriginData)), Model.DataType), new { @class = "text" })
+    <span class="hint">@T("Default is RestWebService")</span>
 </fieldset>
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.ExternalURL)">@T("External URL / executable string")</label>
@@ -59,6 +60,11 @@
     @Html.ValidationMessageFor(m => m.ExternalURL)
 </fieldset>
 @Display.TokenHint()
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.AdditionalHeadersText)">@T("Additional headers for web request")</label>
+    @Html.TextAreaFor(m => m.AdditionalHeadersText, new { @class = "text large tokenized" })
+    <span class="hint">@T("One header per line. Each header must have the form 'header_name: header_value'.")</span>
+</fieldset>
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.CacheMinute)">@T("Cache duration")</label>
     @Html.TextBoxFor(m => m.CacheMinute)
