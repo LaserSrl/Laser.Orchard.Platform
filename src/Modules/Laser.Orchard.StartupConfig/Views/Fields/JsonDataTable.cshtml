@@ -1,11 +1,10 @@
 ﻿@using Newtonsoft.Json.Linq;
 @{ 
-    var tableData = Model.Table;
-    JArray arr = JArray.Parse(tableData.TableData);
+    var tableField = Model.Table;
+    JArray arr = JArray.Parse(tableField.TableData);
     var settings = Model.Settings;
     JArray columns = new JArray();
-
-    if (!String.IsNullOrWhiteSpace(settings.ColumnsDefinition)) {
+    if (!String.IsNullOrWhiteSpace(Model.Settings.ColumnsDefinition)) {
         var normalizedSettings = System.Text.RegularExpressions.Regex.Replace(Model.Settings.ColumnsDefinition, "\"editor\":[^},\"]+", "\"editor\":false");
         columns = JArray.Parse(normalizedSettings);
     }
@@ -27,7 +26,7 @@
     </style>
 }
 <table class="json-data-table">
-    <caption></caption>
+    <caption>@tableField.DisplayName</caption>
     <thead>
         <tr class="json-data-table-header">
             @foreach (var header in headers) {
@@ -38,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var obj in arr) {
+        @foreach (var obj in arr) {
             <tr>
                 @foreach (var field in fields) {
                     <td>

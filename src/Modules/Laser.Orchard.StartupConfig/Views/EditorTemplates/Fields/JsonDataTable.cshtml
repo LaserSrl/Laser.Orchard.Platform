@@ -1,0 +1,69 @@
+﻿@model Laser.Orchard.StartupConfig.Models.JsonDataTableField
+@using Laser.Orchard.StartupConfig.Models;
+@{
+    Style.Require("tabulator").AtHead();
+    Script.Require("tabulator").AtHead();
+
+    var settings = Model.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
+    var columns = settings.ColumnsDefinition;
+    var uniqueId = Model.PartFieldDefinition.Name + "-" + Model.Name;
+    columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
+}
+<fieldset>
+    <legend>@Model.DisplayName</legend>
+    <div>
+        @Html.HiddenFor(m => m.TableData)
+        <div class="btn-group" role="group" aria-label="Basic example" id="toolbar-@uniqueId">
+            <button type="button" class="btn btn-secondary" id="btnAddTop-@uniqueId" style="margin-right:10px" title="@T("Insert a row at the top of the list")">@T("Insert")</button>
+            <button type="button" class="btn btn-secondary" id="btnAddBottom-@uniqueId" style="margin-right:10px" title="@T("Insert a row at the bottom of the list")">@T("Add")</button>
+        </div>
+        <div id="table-@uniqueId"></div>
+        @using (Script.Foot()) {
+            <script>
+            $(function () {
+                var tableId = "#table-@uniqueId";
+                var $table; // = $("#table-@uniqueId");
+                var $hidden = $("#@Html.FieldIdFor(m => m.TableData)");
+
+                $table = new Tabulator(tableId, {
+                    height:"300px",
+                    layout:"fitColumns",
+                    movableRows: true,
+                    columns: @Html.Raw(columns),
+                    dataEdited:function(newData){
+                        var newVal = JSON.stringify(newData);
+                        $hidden.val(newVal);
+                    },
+                    rowMoved:function(row){
+                        var rows = $("#table-@uniqueId").tabulator("getRows");
+                        for (var i=0; i < rows.length; i++){
+                            this.data[i] = rows[i].getData();
+                        }
+                        var newVal = JSON.stringify(this.data);
+                        $hidden.val(newVal);
+                    },
+                    data: @Html.Raw(Model.TableData)
+                });
+                $("#btnAddTop-@uniqueId").click(function(){
+                    var rows = $table.getRows();
+                    if(@(settings.MaxRows) > 0 && rows.length >= @(settings.MaxRows)) {
+                        alert("@T("Max number of rows reached.")");
+                    }
+                    else {
+                        $table.addRow({}, true);
+                    }
+                });
+                $("#btnAddBottom-@uniqueId").click(function(){
+                    var rows = $table.getRows();
+                    if(@(settings.MaxRows) > 0 && rows.length >= @(settings.MaxRows)) {
+                        alert("@T("Max number of rows reached.")");
+                    }
+                    else {
+                        $table.addRow({}, false);
+                    }
+                });
+            });
+            </script>
+        }
+    </div>
+</fieldset>

@@ -93,10 +93,10 @@ button, .button, a.button {
     min-width: 110px;
     font-size: 14px;
 }
-/* style buttons for google maps*/
-button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
-    min-width: 0px; 
-}
+    /* style buttons for google maps*/
+    button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
+        min-width: 0px;
+    }
 
 .mce-btn button {
     color: initial !important;
@@ -493,7 +493,7 @@ legend {
 }
 
 
-.location-info{
+.location-info {
     display: block;
     margin-bottom: 5px;
 }
@@ -588,8 +588,8 @@ legend {
     min-width: 22px !important;
 }
 
-.widgets-this-layer h3 {
-    font-size: 20px;
+.widgets-this-layer h3, .widgets-other-layer h3 {
+    font-size: 15px;
 }
 
 .widgets-move-somewhere button {
@@ -1000,6 +1000,32 @@ input[type="number"]:focus {
 
 /*+++++++++++ KRAKE NEW LAYOUT +++++++++++*/
 
+/**** media queries ****/
+@media (min-width: 768px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+@media (min-width: 992px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .primary .container {
+        margin: 0;
+        min-width: 534px;
+        width: calc(100% - 320px);
+    }
+}
+
+
 /**** dashboard ****/
 .dashboard-box {
     position: relative;
@@ -1319,13 +1345,32 @@ fieldset {
     clear: right;
 }
 
-.widgets-listed .widgets-zone-widgets h3 a,
-.widgets-none h2,
-.properties h3 a {
-    color: #1c2a37;
-    font-size: 14px;
-    font-family: 'Roboto';
+#widgets-zones-orphans.widgets-listed li {
+    padding: 0 1em 0.75em 1em;
 }
+
+.widgets-listed li {
+    padding: 0 1em 0.25em 1em;
+}
+
+.widgets-listed h2 {
+    font-size: 1.0em;
+}
+
+    .widgets-listed .widgets-zone-widgets h3 a,
+    .widgets-listed h2,
+    .properties h3 a {
+        color: #1c2a37;
+        font-weight: bolder;
+    }
+
+    .widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a {
+        color: #888;
+    }
+
+    .widgets-listed .widgets-none h2 {
+        font-weight: normal;
+    }
 
     .widgets-listed .widgets-zone-widgets h3 a:hover,
     .properties h3 a:hover {
@@ -1353,6 +1398,9 @@ fieldset {
     padding: 5px;
 }
 
+.layout-widgets-placement ul.widgets li h3 {
+    float: left;
+}
 .zone-local-navigation a {
     color: #1c2a37 !important;
 }
@@ -1386,14 +1434,6 @@ fieldset {
 
 .switch-for-switchable.detail-switched .summary-view {
     background: rgba(0, 0, 0, 0) url("Images/summary-view-on.png") no-repeat scroll left top;
-}
-
-.sections .primary {
-    width: auto;
-}
-
-.navigation-menu {
-    width: 85%;
 }
 
 .answer {
@@ -1578,13 +1618,13 @@ div#appliedFilters {
 }
 
 /*summary admin padding*/
-.primary{
-    padding-top:10px;
+.primary {
+    padding-top: 10px;
 }
 
 /*seo script text area*/
-#templateArea{
-    height:auto;
+#templateArea {
+    height: auto;
 }
 
 .is-calendarsPicker, .is-timeEntry {

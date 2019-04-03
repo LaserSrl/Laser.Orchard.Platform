@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,11 +84,16 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -331,6 +337,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessManagement\BadgeInfo.cs" />
     <Compile Include="Activities\WebApiResponseActivity.cs" />
     <Compile Include="Activities\WebApiResponseEditForm.cs" />
     <Compile Include="Activities\RequestInspectorActivity.cs" />
@@ -348,13 +355,20 @@
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
+    <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
     <Compile Include="IdentityProvider\RolesIdentityProvider.cs" />
     <Compile Include="IdentityProvider\UserIdentityProvider.cs" />
+    <Compile Include="Jwt\FakeJwt.cs" />
+    <Compile Include="Jwt\IJwtService.cs" />
+    <Compile Include="Jwt\JwtServiceBase.cs" />
+    <Compile Include="Models\JsonDataTableField.cs" />
     <Compile Include="Models\JsonDataTablePart.cs" />
+    <Compile Include="Models\JsonDataTableFieldSettings.cs" />
     <Compile Include="Models\JsonDataTablePartSettings.cs" />
     <Compile Include="RazorBase\Drivers\EnvironmentVariablesSettingsPartDriver.cs" />
     <Compile Include="Drivers\FavoriteCulturePartDriver.cs" />
@@ -576,6 +590,9 @@
     <Content Include="Styles\tabulator\semantic-ui\tabulator_semantic-ui.min.css.map" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap.min.css.map" />
     <Content Include="Styles\tabulator\bootstrap\tabulator_bootstrap4.min.css.map" />
+    <Content Include="Views\EditorTemplates\Fields\JsonDataTable.cshtml" />
+    <Content Include="Views\DefinitionTemplates\JsonDataTableFieldSettings.cshtml" />
+    <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

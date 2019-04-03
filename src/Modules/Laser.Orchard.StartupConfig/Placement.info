@@ -5,7 +5,8 @@
   Place  aaFields_Numeric__CommonPart-Creator="-"/>
   Place  aaFields_Numeric__CommonPart-LastModifier="-"/>
   -->
-  <Place Parts_JsonDataTable_Edit="Content:2"/>
+  <Place Parts_JsonDataTable_Edit="Content:2" Fields_JsonDataTable_Edit="Content:3"/>
+  
   <Place Parts_FavoriteCulturePart_Edit="Content:2" />
   
   <Place Fields_Numeric__CommonPart-Creator="-"/>
@@ -31,7 +32,7 @@
   <!-- Display terms in content item details -->
   <Match DisplayType="Detail">
     <Place Fields_TaxonomyField="Content:5"/>
-    <Place Parts_JsonDataTable="Content:5" />
+    <Place Parts_JsonDataTable="Content:5" Fields_JsonDataTable="Content:6"/>
   </Match>
 
   <!-- Display terms in admin summaries -->

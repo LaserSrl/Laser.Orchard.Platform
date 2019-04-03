@@ -30,6 +30,7 @@ namespace Laser.Orchard.StartupConfig.ColorPicker {
         }
         protected override DriverResult Editor(ContentPart part, ColorPickerField field, dynamic shapeHelper) {
             return ContentShape("Fields_Custom_ColorPicker_Edit",
+                field.Name,
                 () => shapeHelper.EditorTemplate(
                           TemplateName: TemplateName,
                           Model: field,

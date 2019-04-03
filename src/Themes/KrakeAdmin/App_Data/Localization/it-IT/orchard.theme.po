@@ -1,5 +1,5 @@
 # Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -157,8 +157,8 @@ msgid "KRAKE&#8482;"
 msgstr "KRAKE&#8482;"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
-msgid "MAIL"
-msgstr "MAIL"
+msgid "Mail"
+msgstr "Mail"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
 msgid "manage through its back office aimed marketing campaigns, newsletter and much more"
@@ -423,6 +423,10 @@ msgstr "Progetto Krake"
 msgctxt "~/Themes/KrakeAdmin/Views/Title.cshtml"
 msgid "Your site"
 msgstr "Il tuo sito"
+
+msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
 
 msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
 msgid "Logout"
