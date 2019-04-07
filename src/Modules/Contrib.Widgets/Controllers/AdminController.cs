@@ -229,7 +229,7 @@ namespace Contrib.Widgets.Controllers {
         }
 
         private bool IsAuthorizedToManageWidgets() {
-            return _services.Authorizer.Authorize(Permissions.ManageWidgets, T("Not authorized to manage widgets"));
+            return _services.Authorizer.Authorize(Permissions.ManageContainerWidgets, T("Not authorized to manage container widgets"));
         }
 
         bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) {
