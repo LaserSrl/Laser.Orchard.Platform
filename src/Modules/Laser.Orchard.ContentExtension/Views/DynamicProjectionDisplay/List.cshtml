@@ -25,7 +25,6 @@
 
     Script.Require("JQuery").AtHead();
 }
-
 <form id="FormAjaxList" method="get">
     <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
     <input type='hidden' name='page' value='1' />
@@ -39,7 +38,7 @@
         <button type="submit" value="submit">Applica</button>
     }
 </form>
-
-<div id="AjaxList">
-
-</div>
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div id="AjaxList">
+    </div>
+}
