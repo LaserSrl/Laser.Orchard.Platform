@@ -10,7 +10,15 @@
                 url: url,
                 data: $("#FormAjaxList").serialize(),
                 success: function (data) {
-                    $("#AjaxList").html(data);
+                    // Handle the fact that returnUrls have likely been generated using the 
+                    // ajax request, hence following them is wrong.
+                    var retUrlRegex = /returnUrl=\S*AjaxList/g;
+                    var result = data.replace(retUrlRegex, function (x) {
+                        // the returnUrl should point to the List action, rather than the
+                        // one for the ajax request.
+                        return x.replace("AjaxList", "List");
+                    });
+                    $("#AjaxList").html(result);
                 }
             });
             e.preventDefault();
@@ -25,7 +33,6 @@
 
     Script.Require("JQuery").AtHead();
 }
-
 <form id="FormAjaxList" method="get">
     <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
     <input type='hidden' name='page' value='1' />
@@ -39,7 +46,7 @@
         <button type="submit" value="submit">Applica</button>
     }
 </form>
-
-<div id="AjaxList">
-
-</div>
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div id="AjaxList">
+    </div>
+}
