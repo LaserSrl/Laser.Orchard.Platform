@@ -12,7 +12,15 @@
                 type: "GET",
                 url: url,
                 success: function (data) {
-                    $("#AjaxList").html(data);
+                    // Handle the fact that returnUrls have likely been generated using the 
+                    // ajax request, hence following them is wrong.
+                    var retUrlRegex = /returnUrl=\S*AjaxList/g;
+                    var result = data.replace(retUrlRegex, function (x) {
+                        // the returnUrl should point to the List action, rather than the
+                        // one for the ajax request.
+                        return x.replace("AjaxList", "List");
+                    });
+                    $("#AjaxList").html(result);
                  }
             });
             e.preventDefault();
