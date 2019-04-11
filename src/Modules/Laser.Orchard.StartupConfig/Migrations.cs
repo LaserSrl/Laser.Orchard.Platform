@@ -86,6 +86,25 @@ namespace Laser.Orchard.StartupConfig {
                 .Securable(false));
             return 8;
         }
+        public int UpdateFrom8() {
+            ContentDefinitionManager.AlterPartDefinition("HeaderFooterWidget",
+                p => p
+                    .WithField("HtmlHeader", cfg => cfg.OfType("TextField")
+                        .WithDisplayName("Html Header")
+                        .WithSetting("TextFieldSettings.Flavor", "Textarea"))
+                    .WithField("HtmlFooter", cfg => cfg.OfType("TextField")
+                        .WithDisplayName("Html Footer")
+                        .WithSetting("TextFieldSettings.Flavor", "Textarea")));
+
+            ContentDefinitionManager.AlterTypeDefinition("HeaderFooterWidget",
+            cfg => cfg
+                .WithPart("CommonPart")
+                .WithPart("HeaderFooterWidget")
+                .WithPart("WidgetPart")
+                .WithSetting("Stereotype", "Widget")
+            );
+            return 9;
+        }
     }
 
     [OrchardFeature("Laser.Orchard.StartupConfig.PermissionExtension")]
@@ -125,6 +144,8 @@ namespace Laser.Orchard.StartupConfig {
             SchemaBuilder.AlterTable("ExtendedUsersGroupsRecord", table => table.AlterColumn("GroupName", col => col.WithType(System.Data.DbType.String).WithLength(150)));
             return 3;
         }
+
+
     }
 
     /// <summary>
