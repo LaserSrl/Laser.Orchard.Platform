@@ -53,6 +53,10 @@ namespace Laser.Orchard.SEO.Drivers {
             context.Element(part.PartDefinition.Name).SetAttributeValue("FaviconUrl", part.FaviconUrl);
         }
         protected override void Importing(FaviconSettingsPart part, ImportContentContext context) {
+            var root = context.Data.Element(part.PartDefinition.Name);
+            if (root == null) {
+                return;
+            }
             var importedFaviconUrl = context.Attribute(part.PartDefinition.Name, "FaviconUrl");
             if (importedFaviconUrl != null) {
                 part.FaviconUrl = importedFaviconUrl;

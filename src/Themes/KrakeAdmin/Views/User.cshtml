@@ -78,7 +78,7 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu animation-dock">
-                    <li><i class="fa fa-fw text-danger"></i>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new { Area = "Orchard.Users", Controller = "Account" })</li>
+                    <li><i class="fa fa-fw fa-key text-warning"></i>@Html.ActionLink(T("Change Password").ToString(), "ChangePassword", new { Area = "Orchard.Users", Controller = "Account" })</li>
                     <li><i class="fa fa-fw fa-power-off text-danger"></i>@Html.ActionLink(T("Logout").ToString(), "LogOff", new { Area = "Orchard.Users", Controller = "Account", ReturnUrl = Href("~/") })</li>
                 </ul>
                 <!--end .dropdown-menu -->

@@ -6,11 +6,11 @@
     </label>
     @{
         string classS = "text large";
-        if (Model.Settings.Tokenized) {
-            classS += " tokenized";
-        }
         object tbAttributes;
         if (Model.IsEditAuthorized) {
+            if (Model.Settings.Tokenized) {
+                classS += " tokenized";
+            }
             tbAttributes = new { @class = classS };
         }
         else {

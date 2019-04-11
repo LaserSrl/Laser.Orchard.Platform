@@ -5,7 +5,7 @@
                 return this;
 
             var _this = $(this);
-            var __cookieName = "Exp";
+            var __cookieName = options.context != null ? options.context: "Exp";
             var settings = $.extend({
                 path: "/",
                 key: _this.selector,

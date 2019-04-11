@@ -111,9 +111,13 @@
   <ItemGroup>
     <Content Include="Placement.info" />
     <Content Include="Scripts\admin.edit-widget.js" />
-    <Content Include="Scripts\admin.edit-widget.min.js" />
+    <Content Include="Scripts\admin.edit-widget.min.js">
+      <DependentUpon>admin.edit-widget.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\admin.widgets-container.js" />
-    <Content Include="Scripts\admin.widgets-container.min.js" />
+    <Content Include="Scripts\admin.widgets-container.min.js">
+      <DependentUpon>admin.widgets-container.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Type\the-admin.d.ts" />
     <Content Include="Scripts\Type\jqueryui.d.ts" />
     <Content Include="Scripts\Type\jquery.d.ts" />
@@ -139,6 +143,7 @@
     <Compile Include="Handlers\WidgetsContainerPartHandler.cs" />
     <Compile Include="Handlers\WidgetsContainerPartLocalizationHandler.cs" />
     <Compile Include="Models\WidgetExPart.cs" />
+    <Compile Include="Permissions.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\IWidgetManager.cs" />
     <Compile Include="Services\ILayerManager.cs" />
@@ -214,6 +219,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\ContribWidget.Localization.Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bundleconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
