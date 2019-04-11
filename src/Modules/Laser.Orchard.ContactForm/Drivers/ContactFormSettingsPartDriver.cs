@@ -46,6 +46,9 @@ namespace Laser.Orchard.ContactForm.Drivers
 
         protected override void Importing(ContactFormSettingsPart part, ImportContentContext context) {
             var root = context.Data.Element(part.PartDefinition.Name);
+            if (root == null) {
+                return;
+            }
             part.EnableSpamEmail = bool.Parse(root.Attribute("EnableSpamEmail").Value);
             part.EnableSpamProtection = bool.Parse(root.Attribute("EnableSpamProtection").Value);
             part.SpamEmail = root.Attribute("SpamEmail").Value;

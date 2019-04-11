@@ -90,6 +90,10 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
 
         protected override void Importing(UserRegistrationSettingsPart part, ImportContentContext context) {
             var partName = part.PartDefinition.Name;
+            var root = context.Data.Element(partName);
+            if (root == null) {
+                return;
+            }
             // enum
             var includePending = context.Attribute(partName, "IncludePendingPolicy");
             var ipp = IncludePendingPolicyOptions.Yes; // default value

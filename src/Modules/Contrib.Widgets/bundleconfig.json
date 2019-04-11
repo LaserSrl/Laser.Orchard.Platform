@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "Scripts/admin.widgets-container.min.js",
+    "inputFiles": [
+      "Scripts/admin.widgets-container.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/admin.edit-widget.min.js",
+    "inputFiles": [
+      "Scripts/admin.edit-widget.js"
+    ]
+  }
+]

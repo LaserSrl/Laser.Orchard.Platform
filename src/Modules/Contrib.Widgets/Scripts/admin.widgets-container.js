@@ -62,8 +62,9 @@ var WidgetsContainer;
         $("#widgetsPlacement legend").expandoControl(function (controller) {
             return controller.nextAll(".expando");
         }, {
-            collapse: true,
-            remember: true
+            collapse: false,
+            remember: true,
+            context: "widget-container" 
         });
     });
 })(WidgetsContainer || (WidgetsContainer = {}));

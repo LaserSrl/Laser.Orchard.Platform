@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Contrib.Widgets.Models;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
@@ -9,7 +10,7 @@ using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Localization.ViewModels;
 
-namespace Orchard.Localization.Drivers {
+namespace Contrib.Widgets.Drivers {
     public class LocalizationPartDriver : ContentPartDriver<LocalizationPart> {
         private const string TemplatePrefix = "Contrib.Widget";
         private readonly IContentManager _contentManager;
@@ -26,7 +27,7 @@ namespace Orchard.Localization.Drivers {
             var hostId = (int?)null;
             if (widgetExPart == null) {
                 //the localization part is not used in widgets 
-                //return;
+                return null;
             }
 
             if (widgetExPart.Record != null) {
