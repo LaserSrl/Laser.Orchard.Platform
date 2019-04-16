@@ -102,6 +102,8 @@ namespace Laser.Orchard.ContactForm.Services {
                                         ? string.Empty : ":" + _orchardServices.WorkContext.HttpContext.Request.Url.Port);
 
                 var smtpSettings = _orchardServices.WorkContext.CurrentSite.As<SmtpSettingsPart>();
+                var smtpLogger = new SmtpLogger();
+                ((Component)_messageManager).Logger = smtpLogger;
 
                 if (smtpSettings != null && smtpSettings.IsValid()) {
                     var mailClient = BuildSmtpClient(smtpSettings);
@@ -207,6 +209,9 @@ namespace Laser.Orchard.ContactForm.Services {
 
                                 _messageManager.Process(data);
                             }
+                            if (!string.IsNullOrWhiteSpace(smtpLogger.ErrorMessage)) {
+                                throw new Exception(smtpLogger.ErrorMessage, smtpLogger.Exception);
+                            }
 
                             Logger.Debug(T("Contact form message sent to {0} at {1}").Text, sendTo, DateTime.Now.ToLongDateString());
                             _notifier.Information(T("Operation completed successfully."));
@@ -307,5 +312,25 @@ namespace Laser.Orchard.ContactForm.Services {
             return validationError;
         }
 
+        private class SmtpLogger : ILogger {
+            public SmtpLogger() {
+            }
+
+            public string ErrorMessage { get; set; }
+            public Exception Exception { get; set; }
+            public bool IsEnabled(LogLevel level) {
+                return true;
+            }
+
+            public void Log(LogLevel level, Exception exception, string format, params object[] args) {
+                if (level == LogLevel.Error || level == LogLevel.Fatal) { // populate message only if the Level is Error
+                    ErrorMessage = exception == null ? format : exception.Message;
+                    Exception = exception;
+                }
+            }
+        }
+
     }
+
+    
 }

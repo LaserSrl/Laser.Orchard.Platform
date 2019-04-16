@@ -101,7 +101,7 @@ namespace Laser.Orchard.ContactForm {
                 .AddColumn<bool>("AcceptPolicy", column => column.WithDefault(false))
             );
             SchemaBuilder.AlterTable("ContactFormRecord", table => table
-                 .AddColumn<string>("AcceptPolicyuRL")
+                 .AddColumn<string>("AcceptPolicyUrl")
             );
             SchemaBuilder.AlterTable("ContactFormRecord", table => table
                    .AddColumn<string>("AcceptPolicyUrlText")
@@ -111,6 +111,11 @@ namespace Laser.Orchard.ContactForm {
             );
             return 7;
         }
-
+        public int UpdateFrom7() {
+            SchemaBuilder.AlterTable("ContactFormRecord", table => table
+                .AddColumn<string>("ThankyouPage", column => column.WithLength(2000))
+            );
+            return 8;
+        }
     }
 }
