@@ -112,5 +112,10 @@ namespace Laser.Orchard.ContactForm.Models {
             get { return this.Retrieve(x => x.AcceptPolicyText); }
             set { this.Store(x => x.AcceptPolicyText, value); }
         }
+
+        public string ThankyouPage {
+            get { return this.Retrieve(x => x.ThankyouPage); }
+            set { this.Store(x => x.ThankyouPage, value); }
+        }
     }
 }
