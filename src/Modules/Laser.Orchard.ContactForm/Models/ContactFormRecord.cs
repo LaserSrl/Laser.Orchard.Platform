@@ -63,5 +63,6 @@ namespace Laser.Orchard.ContactForm.Models
         public virtual string AcceptPolicyUrl { get; set; }
         public virtual string AcceptPolicyUrlText { get; set; }
         public virtual string AcceptPolicyText { get; set; }
+        public virtual string ThankyouPage { get; set; }
     }
 }
