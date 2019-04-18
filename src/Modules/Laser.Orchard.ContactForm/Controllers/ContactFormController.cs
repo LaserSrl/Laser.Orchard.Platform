@@ -34,6 +34,7 @@ namespace Laser.Orchard.ContactForm.Controllers
         
         public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1, int Accept = 0)
         {
+            var redirectionUrl = returnUrl;
             try {
                 ContactFormRecord contactForm = _contactFormService.GetContactForm(id);
                 if (contactForm.AcceptPolicy && Accept != 1) {
@@ -50,14 +51,18 @@ namespace Laser.Orchard.ContactForm.Controllers
                     }
 
                     _contactFormService.SendContactEmail(name, confirmEmail, email, subject, message, mediaid, contactForm, _orchardServices.WorkContext.HttpContext.Request.Form);
+                    if (!string.IsNullOrWhiteSpace(contactForm.ThankyouPage)) {
+                        redirectionUrl = contactForm.ThankyouPage;
+                    }
                 }
             } catch 
             {
                 // L'eccezione serve solo per la chiamata via APIController, mentre per la chiamata via form è già stata loggata e salvata nel Notifier
                 TempData["form"] = Request.Form;
+                redirectionUrl = returnUrl;
             }
 
-            return this.RedirectLocal(returnUrl, "~/");
+            return this.RedirectLocal(redirectionUrl, "~/");
         }
     }
 }
