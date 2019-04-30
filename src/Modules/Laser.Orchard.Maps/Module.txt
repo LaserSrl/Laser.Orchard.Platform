@@ -15,3 +15,7 @@ Features:
 		Description: Import parkings from OSM file and points of interest from Json file.
         Category: Geolocation
 		Dependencies: Orchard.Projections
+    Laser.Orchard.Maps.OpenLayers:
+		Description: Resources for OpenLayers maps
+        Category: Geolocation
+		Dependencies: Orchard.Resources
