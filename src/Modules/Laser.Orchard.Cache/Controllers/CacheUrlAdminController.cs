@@ -62,7 +62,6 @@ namespace Laser.Orchard.Cache.Controllers {
             if (!_orchardServices.Authorizer.Authorize(Permissions.UrlCache)) {
                 return new HttpUnauthorizedResult();
             }
-            IEnumerable<CacheUrlRecord> searchrecords;
             var setting = _cacheUrlSetting.Table.ToList().FirstOrDefault();
             setting.ActiveLog = Request.Form["Option.ActiveLog"].Contains("true");
             setting.PreventDefaultAuthenticatedCache = Request.Form["Option.PreventDefaultAuthenticatedCache"].Contains("true");
