@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,8 +105,10 @@
     <Content Include="Contents\default-pin.png" />
     <Content Include="Scripts\maps.js" />
     <Content Include="Scripts\markerclusterer.js" />
+    <Content Include="Scripts\ol.js" />
     <Content Include="Styles\GoogleMaps.css" />
     <Content Include="Styles\images\map-pin.png" />
+    <Content Include="Styles\ol.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -131,6 +134,7 @@
     <Compile Include="Models\GoogleGeoCoding.cs" />
     <Compile Include="Models\MapPart.cs" />
     <Compile Include="Models\MapPartSettings.cs" />
+    <Compile Include="OpenLayersManifest.cs" />
     <Compile Include="OsmMath.cs" />
     <Compile Include="Projections\AroundMeFilter.cs" />
     <Compile Include="Projections\AroundMeForm.cs" />
