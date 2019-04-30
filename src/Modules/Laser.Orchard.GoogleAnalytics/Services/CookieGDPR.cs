@@ -9,7 +9,10 @@ using OUI = Orchard.UI;
 using Laser.Orchard.GoogleAnalytics.Models;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
-    public class CookieGDPR : ICookieGDPR {
+    public interface IGoogleAnalyticsCookie : ICookieGDPR {
+
+    }
+    public class CookieGDPR : IGoogleAnalyticsCookie {
         private readonly IOrchardServices _orchardServices;
         public CookieGDPR(IOrchardServices orchardServices) {
             _orchardServices = orchardServices;

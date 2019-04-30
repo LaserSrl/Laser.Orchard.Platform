@@ -1,0 +1,13 @@
+﻿@{
+    Model.Metadata.Wrappers.Clear();
+    var header = Model.ContentItem.HeaderFooterWidget.HtmlHeader;
+    var footer = Model.ContentItem.HeaderFooterWidget.HtmlFooter;
+    var headerValue = header.Value;
+    var footerValue = footer.Value;
+}
+@using (Script.Head()) {
+    @Html.Raw(headerValue);
+}
+@using (Script.Foot()) {
+    @Html.Raw(footerValue);
+}

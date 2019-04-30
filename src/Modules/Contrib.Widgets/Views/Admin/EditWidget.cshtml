@@ -1,7 +1,23 @@
-﻿@{ Layout.Title = T("Edit Widget").ToString(); }
+﻿@using Contrib.Widgets
+@{
+    Script.Require("AdminEditWidget");
+    Layout.Title = T("Edit Widget").ToString();
+}
 
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
     @Html.Hidden("HostId", (int)Model.HostId)
     @Display(Model)
+}
+
+@if (!Authorizer.Authorize(Permissions.ManageTechnicalAttributesForContainerWidgets)) {
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            $(function () {
+                HideTechElements();
+            });
+
+        </script>
+
+    }
 }

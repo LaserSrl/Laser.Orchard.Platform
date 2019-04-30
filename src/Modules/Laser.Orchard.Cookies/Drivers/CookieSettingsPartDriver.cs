@@ -40,6 +40,10 @@ namespace Laser.Orchard.Cookies.Drivers {
         }
 
         protected override void Importing(CookieSettingsPart part, ImportContentContext context) {
+            var root = context.Data.Element(part.PartDefinition.Name);
+            if (root == null) {
+                return;
+            }
             var partName = part.PartDefinition.Name;
             // Properties of an enum type cannot be treated like the others
             var cookiePos = context.Attribute(partName, "cookiePosition");

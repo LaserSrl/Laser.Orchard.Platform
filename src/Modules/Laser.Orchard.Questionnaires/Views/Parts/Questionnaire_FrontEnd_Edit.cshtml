@@ -8,6 +8,7 @@
     var sections = Questionnaire.QuestionsWithResults.Select(s => s.Section).Distinct();
     bool HasAcceptedTerms = Questionnaire.HasAcceptedTerms;
     var contentManager = WorkContext.Resolve<IContentManager>();
+    int j = 0;
 }
 @using (Script.Head()) { 
     <script type="text/javascript">
@@ -127,7 +128,7 @@ else {
             }
             var ultimaSection = "no-section";
             progSection = 0;
-            for (int j = 0; j < Questionnaire.QuestionsWithResults.Count(); j++) {
+            for (j = 0; j < Questionnaire.QuestionsWithResults.Count(); j++) {
                 if (Questionnaire.QuestionsWithResults[j].Section != ultimaSection) {
                     progSection++;
                     if (ultimaSection != "no-section") {

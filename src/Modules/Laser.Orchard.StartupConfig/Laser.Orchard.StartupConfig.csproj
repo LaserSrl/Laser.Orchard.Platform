@@ -593,6 +593,7 @@
     <Content Include="Views\EditorTemplates\Fields\JsonDataTable.cshtml" />
     <Content Include="Views\DefinitionTemplates\JsonDataTableFieldSettings.cshtml" />
     <Content Include="Views\Fields\JsonDataTable.cshtml" />
+    <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
