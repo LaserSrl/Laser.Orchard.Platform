@@ -12,7 +12,6 @@ using System.Web.Mvc;
 
 namespace Laser.Orchard.CulturePicker.Controllers {
     public class UserCultureController : Controller {
-        private readonly ILocalizableContentService _localizableContentService;
         private readonly ICulturePickerServices _cpServices;
         private IEnumerable<ILocalizableRouteService> _localizableRouteService;
 
@@ -30,7 +29,6 @@ namespace Laser.Orchard.CulturePicker.Controllers {
 
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ChangeCulture(string cultureName) {
-            var translatedUrlFound = false;
             if (Services.WorkContext.HttpContext.Request.UrlReferrer == null) {
                 return new HttpStatusCodeResult(404);
             }
@@ -41,11 +39,6 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             var requestUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
             var requestQuerystring = Services.WorkContext.HttpContext.Request.UrlReferrer.Query;
             var context = new LocalizableRouteContext(requestUrl, requestQuerystring, cultureName);
-            foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
-                if (provider.TryFindLocalizedUrl(context)) {
-                    translatedUrlFound = true;
-                }
-            }
 
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
             _cpServices.SaveCultureCookie(cultureName, this.HttpContext);

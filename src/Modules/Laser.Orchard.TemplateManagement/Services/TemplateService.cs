@@ -171,7 +171,7 @@ namespace Laser.Orchard.TemplateManagement.Services {
                     _tagForCache.Add(contentModel.Id);
                 }
             }
-            catch (Exception ex) { }
+            catch { }
             if (templateId > 0)
                 _tagForCache.Add(templateId);
             ParseTemplateContext templatectx = new ParseTemplateContext();
