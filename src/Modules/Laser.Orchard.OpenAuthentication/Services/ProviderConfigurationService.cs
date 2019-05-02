@@ -7,7 +7,7 @@ using System;
 using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
-    public interface IProviderConfigurationService : ISingletonDependency {
+    public interface IProviderConfigurationService : IDependency {
         IEnumerable<ProviderConfigurationRecord> GetAll();
         ProviderConfigurationRecord Get(string providerName);
         void Delete(int id);
