@@ -434,8 +434,8 @@ namespace Laser.Orchard.UserReactions.Services {
                         { "Content", contentItem },
                         { "ReactionId", iconTypeId },
                         { "Action", actionType },
-                        { "UserEmail", currentUser.Email },
-                        { "UserId", currentUser.Id }
+                        { "UserEmail", (currentUser != null ? currentUser.Email : "") },
+                        { "UserId", (currentUser != null ? currentUser.Id : 0) }
                     });
                 }
                 catch (Exception) {
