@@ -28,10 +28,11 @@
                             <li class="menu-item menu-item-type-post_type menu-item-object-page @(((bool)item.Selected) ? "current-page-ancestor active" : "") @((hasChildren) ? "menu-item-has-children dropdown" : "")">
                                 @if (hasChildren) {
                                     <a href="@item.Href" class="dropdown-toggle" data-toggle="dropdown">@item.Text<b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            @DisplayChildren(item)
-                                        </ul>
-                                } else {
+                                    <ul class="dropdown-menu">
+                                        @DisplayChildren(item)
+                                    </ul>
+                                }
+                                else {
                                     <a href="@item.Href">@item.Text</a>
                                 }
                             </li>
@@ -40,11 +41,11 @@
                     }
                 </ul>
                 @*Threating Culturepicker as embedded functionality and not as a widget*@
-                @{ 
+                @{
                     ICultureManager _cultureManager;
                     ICulturePickerSettingsService _extendedCultureService;
                     ILocalizableContentService _localizableContentService;
-                    WorkContext.TryResolve(out _cultureManager );
+                    WorkContext.TryResolve(out _cultureManager);
                     WorkContext.TryResolve(out _extendedCultureService);
                     WorkContext.TryResolve(out _localizableContentService);
                     var settings = _extendedCultureService.ReadSettings();
@@ -52,7 +53,7 @@
                     var availableCultures = settings.ExtendedCulturesList;
                     var showOnlyPertinentCultures = settings.Settings.ShowOnlyPertinentCultures;
                     var showLabel = settings.Settings.ShowLabel;
-                    var cleanUrl = WorkContext.HttpContext.Request.Url.AbsoluteUri.Replace(baseUrl, "");
+                    var cleanUrl = string.IsNullOrWhiteSpace(baseUrl) ? "" : WorkContext.HttpContext.Request.Url.AbsoluteUri.Replace(baseUrl, "");
                     cleanUrl = WorkContext.HttpContext.Server.UrlDecode(cleanUrl);
                     cleanUrl = cleanUrl.StartsWith("/") ? cleanUrl.Substring(1) : cleanUrl;
 
@@ -68,13 +69,13 @@
                     var userCulture = _extendedCultureService.GetExtendedCulture(_cultureManager.GetCurrentCulture(WorkContext.HttpContext));
                     var translatedCultures = _localizableContentService.AvailableTranslations(cleanUrl, isHomePage);
 
-                    }
-                    @Display(New.Parts_CulturePicker(AvailableCultures: availableCultures, 
-                           TranslatedCultures: translatedCultures, 
-                           UserCulture: userCulture, 
-                           ShowOnlyPertinentCultures: showOnlyPertinentCultures, 
-                           ShowLabel: showLabel
-                           ))
+                }
+                @Display(New.Parts_CulturePicker(AvailableCultures: availableCultures,
+                       TranslatedCultures: translatedCultures,
+                       UserCulture: userCulture,
+                       ShowOnlyPertinentCultures: showOnlyPertinentCultures,
+                       ShowLabel: showLabel
+                       ))
             </div>
         </div>
     </div>

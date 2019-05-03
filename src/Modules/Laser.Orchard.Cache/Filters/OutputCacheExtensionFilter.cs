@@ -54,7 +54,6 @@ namespace Laser.Orchard.Cache.Filters {
         private readonly ITokenizer _tokenizer;//Added
         private readonly ITagForCache _tagForCache;//Added
 
-        public ILogger Logger { get; set; }
 
         public OutputCacheExtensionFilter(
             ICacheAliasServices cacheAliasServices, //Added
@@ -91,7 +90,7 @@ namespace Laser.Orchard.Cache.Filters {
         private bool _transformRedirect;
         private bool _isCachingRequest;
 
-        public void OnActionExecuting(ActionExecutingContext filterContext) {
+        public new void OnActionExecuting(ActionExecutingContext filterContext) {
 
             Logger.Debug("Incoming request for URL '{0}'.", filterContext.RequestContext.HttpContext.Request.RawUrl);
 
@@ -217,14 +216,14 @@ namespace Laser.Orchard.Cache.Filters {
             }
         }
 
-        public void OnActionExecuted(ActionExecutedContext filterContext) {
+        public new void OnActionExecuted(ActionExecutedContext filterContext) {
             _transformRedirect = TransformRedirect(filterContext);
         }
 
-        public void OnResultExecuting(ResultExecutingContext filterContext) {
+        public new void OnResultExecuting(ResultExecutingContext filterContext) {
         }
 
-        public void OnResultExecuted(ResultExecutedContext filterContext) {
+        public new void OnResultExecuted(ResultExecutedContext filterContext) {
             // This filter is not reentrant (multiple executions within the same request are
             // not supported) so child actions are ignored completely.
             if (filterContext.IsChildAction)
@@ -324,7 +323,7 @@ namespace Laser.Orchard.Cache.Filters {
             }
         }
 
-        protected virtual bool RequestIsCacheable(ActionExecutingContext filterContext) {
+        protected override bool RequestIsCacheable(ActionExecutingContext filterContext) {
 
             var itemDescriptor = string.Empty;
 
@@ -392,7 +391,7 @@ namespace Laser.Orchard.Cache.Filters {
             return true;
         }
 
-        protected virtual bool ResponseIsCacheable(ResultExecutedContext filterContext) {
+        protected override bool ResponseIsCacheable(ResultExecutedContext filterContext) {
 
             if (filterContext.HttpContext.Request.Url == null) {
                 return false;
@@ -414,7 +413,7 @@ namespace Laser.Orchard.Cache.Filters {
             return true;
         }
 
-        protected virtual IDictionary<string, object> GetCacheKeyParameters(ActionExecutingContext filterContext) {
+        protected override IDictionary<string, object> GetCacheKeyParameters(ActionExecutingContext filterContext) {
             var result = new Dictionary<string, object>();
 
             // Vary by action parameters.
@@ -462,7 +461,7 @@ namespace Laser.Orchard.Cache.Filters {
             return result;
         }
 
-        protected virtual bool TransformRedirect(ActionExecutedContext filterContext) {
+        protected override bool TransformRedirect(ActionExecutedContext filterContext) {
 
             // Removes the target of the redirection from cache after a POST.
 
@@ -620,7 +619,7 @@ namespace Laser.Orchard.Cache.Filters {
             }
         }
 
-        protected virtual bool IsIgnoredUrl(string url, IEnumerable<string> ignoredUrls) {
+        protected override bool IsIgnoredUrl(string url, IEnumerable<string> ignoredUrls) {
             if (ignoredUrls == null || !ignoredUrls.Any()) {
                 return false;
             }
@@ -646,12 +645,12 @@ namespace Laser.Orchard.Cache.Filters {
             return false;
         }
 
-        protected virtual string ComputeCacheKey(ControllerContext controllerContext, IEnumerable<KeyValuePair<string, object>> parameters) {
+        protected override string ComputeCacheKey(ControllerContext controllerContext, IEnumerable<KeyValuePair<string, object>> parameters) {
             var url = controllerContext.HttpContext.Request.Url.AbsolutePath;
             return ComputeCacheKey(_shellSettings.Name, url, parameters);
         }
 
-        protected virtual string ComputeCacheKey(string tenant, string absoluteUrl, IEnumerable<KeyValuePair<string, object>> parameters) {
+        protected override string ComputeCacheKey(string tenant, string absoluteUrl, IEnumerable<KeyValuePair<string, object>> parameters) {
             var keyBuilder = new StringBuilder();
 
             keyBuilder.AppendFormat("tenant={0};url={1};", tenant, absoluteUrl.ToLowerInvariant());
@@ -668,7 +667,7 @@ namespace Laser.Orchard.Cache.Filters {
             return keyBuilder.ToString();
         }
 
-        protected virtual CacheItem GetCacheItem(string key) {
+        protected override CacheItem GetCacheItem(string key) {
             try {
                 var cacheItem = _cacheStorageProvider.GetCacheItem(key);
                 return cacheItem;
@@ -680,12 +679,12 @@ namespace Laser.Orchard.Cache.Filters {
             return null;
         }
 
-        public void Dispose() {
+        public new void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing) {
             if (!_isDisposed) {
                 if (disposing) {
                     // Free other state (managed objects).

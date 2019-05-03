@@ -58,19 +58,19 @@ namespace Laser.Orchard.PrivateMedia.Services {
 
         public ILogger Logger { get; set; }
 
-        public new string GetImageProfileUrl(string path, string profileName) {
+        public string GetImageProfileUrl(string path, string profileName) {
             return GetImageProfileUrl(path, profileName, null, new FilterRecord[] { });
         }
 
-        public new string GetImageProfileUrl(string path, string profileName, ContentItem contentItem) {
+        public string GetImageProfileUrl(string path, string profileName, ContentItem contentItem) {
             return GetImageProfileUrl(path, profileName, null, contentItem);
         }
 
-        public new string GetImageProfileUrl(string path, string profileName, FilterRecord customFilter) {
+        public string GetImageProfileUrl(string path, string profileName, FilterRecord customFilter) {
             return GetImageProfileUrl(path, profileName, customFilter, null);
         }
 
-        public new string GetImageProfileUrl(string path, string profileName, FilterRecord customFilter, ContentItem contentItem) {
+        public string GetImageProfileUrl(string path, string profileName, FilterRecord customFilter, ContentItem contentItem) {
             var customFilters = customFilter != null ? new FilterRecord[] { customFilter } : null;
             return GetImageProfileUrl(path, profileName, contentItem, customFilters);
         }
@@ -89,7 +89,7 @@ namespace Laser.Orchard.PrivateMedia.Services {
                 }
         }
 
-        public new string GetImageProfileUrl(string path, string profileName, ContentItem contentItem, params FilterRecord[] customFilters) {
+        public string GetImageProfileUrl(string path, string profileName, ContentItem contentItem, params FilterRecord[] customFilters) {
             bool isMediaPrivate = _mediaPrivateFolder.IsPrivate(path);
             if (isMediaPrivate && !_services.Authorizer.Authorize(PrivateMediaPermissions.AccessAllPrivateMedia)) {
                 return null;

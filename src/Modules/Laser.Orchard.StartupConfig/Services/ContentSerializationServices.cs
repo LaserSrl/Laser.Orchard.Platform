@@ -297,12 +297,14 @@ namespace Laser.Orchard.StartupConfig.Services {
             else if (field.FieldDefinition.Name == "TextField") {
                 var textField = field as TextField;
                 object val = textField.Value;
-                if (textField.PartFieldDefinition.Settings.ContainsKey("TextFieldSettings.Flavor")) {
-                    var flavor = textField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"];
-                    // markdownFilter acts only if flavor is "markdown"
-                    val = _markdownFilter.ProcessContent(val.ToString(), flavor);
+                if(val != null) {
+                    if (textField.PartFieldDefinition.Settings.ContainsKey("TextFieldSettings.Flavor")) {
+                        var flavor = textField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"];
+                        // markdownFilter acts only if flavor is "markdown"
+                        val = _markdownFilter.ProcessContent(val.ToString(), flavor);
+                    }
+                    FormatValue(ref val);
                 }
-                FormatValue(ref val);
                 return new JProperty(field.Name + field.FieldDefinition.Name, val);
             }
             else if (field.FieldDefinition.Name == "InputField") {
