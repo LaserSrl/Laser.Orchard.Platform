@@ -1,5 +1,5 @@
 # Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -151,6 +151,10 @@ msgstr "Visualizza Dettagli"
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
 msgid "This operation will delete all current translations and replace them with the translations currently contained in the .po files. Do You want to continue?"
 msgstr "Questa operazione eliminerà tutte le traduzioni e le sostituirà con le traduzioni contenute nei file con estensione .po. Vuoi continuare?"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "This operation will replace all current translations with the translations currently contained in the .po files. Do You want to continue?"
+msgstr "Questa operazione sostituirà tutte le attuali traduzioni con quelle contenute nei file .po. Continuare?"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
 msgid "Translation Status"
