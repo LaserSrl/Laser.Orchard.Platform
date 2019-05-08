@@ -1,5 +1,5 @@
 # Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,10 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Additional headers for web request"
+msgstr "Ulteriori header per la richiesta web"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Attach certificate to request"
@@ -50,7 +54,7 @@ msgstr "Il valore di default è JSON"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Default is RestWebService"
-msgstr "Il default è "Rest Web Service""
+msgstr "Il default è RestWebService"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "External URL"
@@ -101,6 +105,10 @@ msgid "No Follow"
 msgstr "Non Seguire"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "One header per line. Each header must have the form 'header_name: header_value'."
+msgstr "Inserire un header per riga. Ogni header deve avere la forma 'nome_header: valore_header'."
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Private key."
 msgstr "Chiave privata."
 
@@ -145,6 +153,10 @@ msgid "Used only on mobile communication. If checked, the linked content will be
 msgstr "Usato solo per la comunicazione mobile. Se selezionato, il contenuto collegato sarà messo nel campo"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
+msgid "Additional headers for web request"
+msgstr "Ulteriori header per la richiesta web"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Body Request"
 msgstr "Corpo della richiesta"
 
@@ -163,6 +175,10 @@ msgstr "Inserire il corpo della richiesta"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Insert url and token"
 msgstr "Inserire URL e token"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
+msgid "One header per line. Each header must have the form 'header_name: header_value'."
+msgstr "Inserire un header per riga. Ogni header deve avere la forma 'nome_header: valore_header'."
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Start Schedule"
