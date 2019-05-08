@@ -6,22 +6,19 @@ using Orchard.Localization;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Laser.Orchard.CulturePicker.Projections
-{
-    public interface IFilterProvider : IEventHandler
-    {
+namespace Laser.Orchard.CulturePicker.Projections {
+    public interface IFilterProvider : IEventHandler {
         void Describe(dynamic describe);
     }
 
-    public class CurrentCultureFilter : IFilterProvider
-    {
+    public class CurrentCultureFilter : IFilterProvider {
         private readonly ICultureManager _cultureManager;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IContentManager _contentManager;
-        public CurrentCultureFilter(IWorkContextAccessor workContextAccessor, ICultureManager cultureManager, IContentManager contentManager)
-        {
+        public CurrentCultureFilter(IWorkContextAccessor workContextAccessor, ICultureManager cultureManager, IContentManager contentManager) {
             _workContextAccessor = workContextAccessor;
             _cultureManager = cultureManager;
             _contentManager = contentManager;
@@ -32,8 +29,7 @@ namespace Laser.Orchard.CulturePicker.Projections
 
         #region IFilterProvider Members
 
-        public void Describe(dynamic describe)
-        {
+        public void Describe(dynamic describe) {
             Version orchardVersion = Utils.GetOrchardVersion();
             describe.For("Localization", T("Localization"), T("Localization"))
                 .Element("ForCurrentCultureOrDefault", T("For current or default culture"), T("Localized content items for current or default culture"),
@@ -45,8 +41,7 @@ namespace Laser.Orchard.CulturePicker.Projections
 
         #endregion
 
-        public void ApplyFilter(dynamic context)
-        {
+        public void ApplyFilter(dynamic context) {
             string siteCulture = _workContextAccessor.GetContext().CurrentSite.SiteCulture;
             int siteCultureId = _cultureManager.GetCultureByName(siteCulture).Id;
             string currentCulture = _workContextAccessor.GetContext().CurrentCulture;
@@ -55,40 +50,61 @@ namespace Laser.Orchard.CulturePicker.Projections
             if (currentCultureRecord != null) {
                 currentCultureId = currentCultureRecord.Id;
             }
-
             var query = (IHqlQuery)context.Query;
-            if (currentCultureId == siteCultureId)
-            {
+            if (currentCultureId == siteCultureId) {
                 context.Query = query.Where(x => x.ContentPartRecord<LocalizationPartRecord>(), x => x.Or(c => c.Eq("CultureId", currentCultureId), nc => nc.Eq("CultureId", 0)));
             }
-            else
-            {
-                var listIdsQ = _contentManager.HqlQuery()
-                    .ForPart<LocalizationPart>()
-                    .Where(alias => alias.ContentPartRecord<LocalizationPartRecord>(), x => x.Or(expr => expr.Eq("CultureId", currentCultureId), expr2 => expr2.Eq("CultureId", 0))).List();
-                var listIds = new int[] { 0 };
-                if (listIdsQ != null)
-                {
-                    listIds = listIdsQ.Where(w => w.MasterContentItem != null).Select(s => s.MasterContentItem.Id).ToArray();
-                }
+            else {
+
+                //     var listIdsQ = _contentManager.HqlQuery()
+                //.ForPart<LocalizationPart>()
+                //.Where(alias => alias.ContentPartRecord<LocalizationPartRecord>(), x => x.Or(expr => expr.Eq("CultureId", currentCultureId), expr2 => expr2.Eq("CultureId", 0))).List();
+                //     var listIds = new int[] { 0 };
+                //     if (listIdsQ != null) {
+                //         listIds = listIdsQ.Where(w => w.MasterContentItem != null).Select(s => s.MasterContentItem.Id).ToArray();
+                //     }
+
+                //   var subquery = @"SELECT loca.MasterContentItemId FROM Orchard.Localization.Models.LocalizationPartRecord as loca ";
+                //  subquery += " WHERE ((loca.CultureId= :parCultureId OR loca.CultureId=0) and MasterContentItemId>0)";
+
+                var subquery = @"SELECT MasterContentItemId FROM localizationPartRecord ";
+                subquery += " WHERE ((CultureId= :parCultureId OR CultureId=0) and MasterContentItemId>0)";
+
+
+                Dictionary<string, object> parameters = new Dictionary<string, object>();
+                parameters.Add("parCultureId", currentCultureId);
 
                 context.Query = query.Where(x => x.ContentPartRecord<LocalizationPartRecord>(),
-                                            x => x.Or(
+                                            c => c.Or(
                                                         y => y.Or(
-                                                            z => z.Eq("CultureId", currentCultureId),
-                                                            h => h.And(
-                                                                       z => z.Eq("CultureId", siteCultureId),
-                                                                       z => z.Not(a => a.InG("Id", listIds))
-                                                                       )
+                                                             h => h.And(w => w.Eq("CultureId", siteCultureId),
+                                                                         u => u.Not(a => a.InSubquery("Id", subquery, parameters))
+                                                                   //p => p.Or(u => u.Not(a => a.InSubquery("Id", subquery, parameters)),
+                                                                   //           q => q.Not(a => a.InSubquery("MasterContentItemId", subquery, parameters))
+                                                                   //        )
+                                                                       ),
+                                                            z => z.Eq("CultureId", currentCultureId)
                                                                   ),
-                                                        y => y.Eq("CultureId", 0)
+                                                        r => r.Eq("CultureId", 0)
                                                      )
                                             );
-            }
-        }
 
-        public LocalizedString DisplayFilter(dynamic context)
-        {
+                //context.Query = query.Where(x => x.ContentPartRecord<LocalizationPartRecord>(),
+                //        e => e.And(
+                //             w => w.Eq("CultureId", siteCultureId),
+                //                p => p.Or(
+                //                        u => u.Not(a => a.InSubquery("Id", subquery, parameters)),
+                //                        q => q.Not(v => v.InSubquery("MasterContentItemId", subquery, parameters))
+                //                         )
+
+
+                //                        ));
+
+
+            }
+       }
+
+        public LocalizedString DisplayFilter(dynamic context) {
             return T("For current or default culture");
         }
     }
