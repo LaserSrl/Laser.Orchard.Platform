@@ -152,7 +152,7 @@
                 }
             });
 
-            $('#importForm').submit(function () { return confirm("@T("This operation will delete all current translations and replace them with the translations currently contained in the .po files. Do You want to continue?")"); });
+            $('#importForm').submit(function () { return confirm("@T("This operation will replace all current translations with the translations currently contained in the .po files. Do You want to continue?")"); });
 
             $('#folderTree').on('dblclick','.jstree-anchor', function (e) {
                 $('#showDetailsForm').submit();

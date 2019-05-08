@@ -132,20 +132,20 @@ namespace Laser.Orchard.Cache.Filters {
 
             // filtro per archiviare il log delle chiamate autenticate loggate e non gestite dalla cache laser.
             if (_cacheAliasServices.Setting().ActiveLog && _workContext.CurrentUser != null && CacheSettings.CacheAuthenticatedRequests && keyToAdd =="") {
-                Logger.Error("Cache con chiave  => {0}", String.Intern(ComputeCacheKey(filterContext, GetCacheKeyParameters(filterContext))));
+                Logger.Information("Cache con chiave  => {0}", String.Intern(ComputeCacheKey(filterContext, GetCacheKeyParameters(filterContext))));
              }
  
             // filtro per PREVENIRE la cache delle chiamate autenticate loggate e non gestite dalla cache laser.
             if (_cacheAliasServices.Setting().PreventDefaultAuthenticatedCache && _workContext.CurrentUser != null && CacheSettings.CacheAuthenticatedRequests && keyToAdd == "") {
                 if (_cacheAliasServices.Setting().ActiveLog) {
-                    Logger.Error(" bloccata ");
+                    Logger.Information("cache key vuota bloccata ");
                 }
                 return;
             }
 
             if (_cacheAliasServices.Setting().PreventDefaultNotContentItemAuthenticatedCache && _workContext.CurrentUser != null && CacheSettings.CacheAuthenticatedRequests && keyToAdd == "" && (!((filterContext.ActionDescriptor.ActionName == "Display" && filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Item") || filterContext.RequestContext.HttpContext.Request.RawUrl.ToLower().Contains("displayalias")))) {
                 if (_cacheAliasServices.Setting().ActiveLog) {
-                    Logger.Error(" bloccata ");
+                    Logger.Information("cache key vuota bloccata ");
                 }
                 return;
             }

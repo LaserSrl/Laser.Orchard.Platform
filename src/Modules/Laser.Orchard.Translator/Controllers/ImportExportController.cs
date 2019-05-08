@@ -30,7 +30,7 @@ namespace Laser.Orchard.Translator.Controllers
 
         public ActionResult ImportTranslations()
         {
-            _translatorServices.DeleteAllTranslations();
+          //  _translatorServices.DeleteAllTranslations();
 
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
 
