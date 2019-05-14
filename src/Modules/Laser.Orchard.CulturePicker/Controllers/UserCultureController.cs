@@ -39,6 +39,9 @@ namespace Laser.Orchard.CulturePicker.Controllers {
             var requestUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
             var requestQuerystring = Services.WorkContext.HttpContext.Request.UrlReferrer.Query;
             var context = new LocalizableRouteContext(requestUrl, requestQuerystring, cultureName);
+            foreach (var provider in _localizableRouteService.OrderBy(x => x.Priority)) {
+                provider.TryFindLocalizedUrl(context);
+            }
 
             // Set the cookie even if a translatedUrl has not been found (for coeherence with the user choice)
             _cpServices.SaveCultureCookie(cultureName, this.HttpContext);

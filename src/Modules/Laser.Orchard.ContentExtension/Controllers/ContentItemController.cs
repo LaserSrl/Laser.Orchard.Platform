@@ -101,8 +101,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
 
         }
 
-        public IEnumerable<IContentHandler> Handlers
-        {
+        public IEnumerable<IContentHandler> Handlers {
             get { return _handlers.Value; }
         }
 
@@ -168,11 +167,11 @@ namespace Laser.Orchard.ContentExtension.Controllers {
 
                         var taxobase = _taxonomyService.GetTaxonomyByName(singleField.Settings["TaxonomyFieldSettings.Taxonomy"]);
                         int idmaster = taxobase.Id;
-                        if(taxobase.ContentItem.As<LocalizationPart>() != null) {
+                        if (taxobase.ContentItem.As<LocalizationPart>() != null) {
                             if (((dynamic)taxobase.ContentItem).LocalizationPart.MasterContentItem != null) {
                                 idmaster = ((dynamic)taxobase.ContentItem).LocalizationPart.MasterContentItem.Id;
                             }
-                            if(((dynamic)taxobase.ContentItem).LocalizationPart.Culture != null) {
+                            if (((dynamic)taxobase.ContentItem).LocalizationPart.Culture != null) {
                                 if (((dynamic)taxobase.ContentItem).LocalizationPart.Culture.Culture != Language) {
                                     taxobase = _taxonomyService.GetTaxonomies().Where(x => (x.Id == idmaster || (((dynamic)x.ContentItem).LocalizationPart.MasterContentItem != null && ((dynamic)x.ContentItem).LocalizationPart.MasterContentItem.Id == idmaster)) && ((dynamic)x.ContentItem).LocalizationPart.Culture.Culture == Language).FirstOrDefault();
                                 }
@@ -406,22 +405,27 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             Response rsp = new Response();
             string validateMessage = "";
             if (IdContentToModify > 0) {
-                List<ContentItem> li = _orchardServices.ContentManager.GetAllVersions(IdContentToModify).ToList();
-                if (li.Count() == 0)
-                    return _utilsServices.GetResponse(ResponseType.Validation, "No content with this Id");
-                else {
-                    var typeSettings = li[0].TypeDefinition.Settings.TryGetModel<ContentTypeSettings>();
+                var ctypeDefinition = _orchardServices.ContentManager.GetContentTypeDefinitions().Where(x => x.Name == tipoContent).FirstOrDefault();
+                if (ctypeDefinition != null) {
+                    var typeSettings = ctypeDefinition.Settings.TryGetModel<ContentTypeSettings>();
                     if (typeSettings.Draftable) {
                         NewOrModifiedContent = _orchardServices.ContentManager.Get(IdContentToModify, VersionOptions.DraftRequired); // quando edito estraggo sempre il draftrequired (come in Orchard.Core.Contents.Controllers)
                     }
                     else {
                         NewOrModifiedContent = _orchardServices.ContentManager.Get(IdContentToModify, VersionOptions.Latest);
                     }
+                    if (NewOrModifiedContent == null) {
+                        return _utilsServices.GetResponse(ResponseType.Validation, "No content with this Id");
+                    }
+
+                    if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.EditContent, NewOrModifiedContent))
+                        if (!_contentExtensionService.HasPermission(tipoContent, Methods.Post, NewOrModifiedContent))
+                            return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                    validateMessage = ValidateMessage(NewOrModifiedContent, "Modified");
                 }
-                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.EditContent, NewOrModifiedContent))
-                    if (!_contentExtensionService.HasPermission(tipoContent, Methods.Post, NewOrModifiedContent))
-                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                validateMessage = ValidateMessage(NewOrModifiedContent, "Modified");
+                else {
+                    return _utilsServices.GetResponse(ResponseType.Validation, "Invalid ContentType");
+                }
             }
             else {
                 NewOrModifiedContent = _orchardServices.ContentManager.New(tipoContent);
