@@ -51,7 +51,12 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         public Localizer T { get; set; }
         public ILogger Logger { get; set; }
 
-        public PaymentController(IRepository<PaymentRecord> repository, IOrchardServices orchardServices, IEnumerable<IPosService> posServices, IPaymentService paymentService) {
+        public PaymentController(
+            IRepository<PaymentRecord> repository, 
+            IOrchardServices orchardServices, 
+            IEnumerable<IPosService> posServices, 
+            IPaymentService paymentService) {
+
             _repository = repository;
             _orchardServices = orchardServices;
             _paymentService = paymentService;
