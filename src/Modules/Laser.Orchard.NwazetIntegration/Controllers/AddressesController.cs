@@ -195,6 +195,46 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return View(newAddress);
             }
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
+        }
+
+
+        [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
+        public ActionResult Edit(int id) {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to manage your saved addresses.").Text);
+            }
+            var address = _nwazetCommunicationService.GetAddress(id, user);
+            if (address == null) {
+                return HttpNotFound();
+            }
+            return View(new AddressEditViewModel(address));
+        }
+
+        [HttpPost, Themed,
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Edit")]
+        public ActionResult EditPost(int id) {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
+            }
+            var address = _nwazetCommunicationService.GetAddress(id, user);
+            if (address == null) {
+                return HttpNotFound();
+            }
+
+            var newAddress = new AddressEditViewModel(id);
+            if (!TryUpdateModel(newAddress)) {
+                _transactionManager.Cancel();
+                return View(newAddress);
+            }
+            _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
             return View(newAddress);
         }
     }

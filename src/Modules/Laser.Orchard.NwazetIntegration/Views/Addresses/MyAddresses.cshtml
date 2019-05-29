@@ -21,7 +21,7 @@
             form.css({ "position": "absolute", "left": "-9999em" });
             $("body").append(form);
 
-            if (!confirm("@T("Do you really want to delete this address")")) {
+            if (!confirm("@T("Do you really want to delete this address?")")) {
                 return false;
             }
 
@@ -66,6 +66,9 @@
             </div>
         </div>
         <div class="address-actions">
+            @Html.Link(T("Edit").Text,
+                    Url.Action("Edit", "Addresses",
+                        new { area = "Laser.Orchard.NwazetIntegration", id = address.Id })) | 
             @Html.Link(T("Delete").Text,
                     Url.Action("Delete", "Addresses",
                         new { area = "Laser.Orchard.NwazetIntegration", id = address.Id }),

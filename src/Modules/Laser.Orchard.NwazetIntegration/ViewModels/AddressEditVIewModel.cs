@@ -11,6 +11,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public AddressEditViewModel() {
             AddressRecord = new AddressRecord();
         }
+        public AddressEditViewModel(AddressRecord address) {
+            AddressRecord = address;
+        }
+        public AddressEditViewModel(int id) {
+            AddressRecord = new AddressRecord() { Id = id };
+        }
 
         public AddressRecord AddressRecord { get; set; }
 

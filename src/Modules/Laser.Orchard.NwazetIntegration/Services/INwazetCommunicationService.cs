@@ -170,7 +170,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             addressToStore.NwazetContactPartRecord_Id = contact.Id;
             bool AddNewAddress = true;
             foreach (var existingAddressRecord in contact.As<NwazetContactPart>().NwazetAddressRecord) {
-                if (addressToStore.Equals(existingAddressRecord)) {
+                if (addressToStore.Id == existingAddressRecord.Id) {
                     AddNewAddress = false;
                     existingAddressRecord.TimeStampUTC = DateTime.UtcNow;
                     _addressRecord.Update(existingAddressRecord);
