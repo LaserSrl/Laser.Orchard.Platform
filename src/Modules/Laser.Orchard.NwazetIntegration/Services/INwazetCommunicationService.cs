@@ -20,6 +20,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         List<AddressRecord> GetBillingByUser(IUser user);
         string[] GetPhone(IUser user);
 
+        // In the following CRUD methods, the ones that do not have a IUser parameter
+        // are generally to be used for admin functionalities. The other methods are 
+        // generally geared towards management of personal information.
+        AddressRecord GetAddress(int id);
+        AddressRecord GetAddress(int id, IUser user);
+
+        void DeleteAddress(int id);
+        void DeleteAddress(int id, IUser user);
+
+        void AddAddress(AddressRecord newAddress, IUser user);
     }
 
 
@@ -30,7 +40,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly ICommunicationService _communicationService;
         private readonly IRepository<AddressRecord> _addressRecord;
         private readonly IRepository<CommunicationSmsRecord> _repositoryCommunicationSmsRecord;
+
+
         public ILogger _Logger { get; set; }
+
         public NwazetCommunicationService(
             IOrchardServices orchardServices
             , ICommunicationService communicationService
@@ -51,14 +64,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     contactpart = _communicationService.GetContactFromUser(user.Id);
                 }
                 if (contactpart != null) {
-                    return _addressRecord.Fetch(c => c.AddressType == type && c.NwazetContactPartRecord_Id == contactpart.Id).OrderByDescending(z => z.TimeStampUTC).ToList();
+                    return _addressRecord
+                        .Fetch(c =>
+                            c.AddressType == type
+                            && c.NwazetContactPartRecord_Id == contactpart.Id)
+                        .OrderByDescending(z => z.TimeStampUTC)
+                        .ToList();
                 }
             }
             return new List<AddressRecord>();
         }
+
         public List<AddressRecord> GetShippingByUser(IUser user) {
             return GetAddressByUser(user, AddressRecordType.ShippingAddress);
         }
+
         public List<AddressRecord> GetBillingByUser(IUser user) {
             return GetAddressByUser(user, AddressRecordType.BillingAddress);
         }
@@ -84,6 +104,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             return new string[2];
         }
+
         public void OrderToContact(OrderPart order) {
             // tutto in try catch perchè viene scatenato appena finito il pagamento e quindi non posso permettermi di annullare la transazione
             try {
@@ -97,13 +118,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                         contactpart = _communicationService.GetContactFromUser(currentUser.Id);
                     }
                     ContactList.Add(contactpart.ContentItem);
-                }
-                else {
+                } else {
                     var contacts = _communicationService.GetContactsFromMail(order.CustomerEmail);
                     if (contacts.Count > 0) {
                         ContactList = contacts;
-                    }
-                    else {
+                    } else {
                         var newcontact = _orchardServices.ContentManager.Create("CommunicationContact", VersionOptions.Draft);
                         ((dynamic)newcontact).CommunicationContactPart.Master = false;
                         ContactList.Add(newcontact);
@@ -113,31 +132,26 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     // nel caso in cui una sincro fallisce continua con 
                     try {
                         StoreAddress(order.BillingAddress, "BillingAddress", contactItem);
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> BillingAddress -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
                     try {
                         StoreAddress(order.ShippingAddress, "ShippingAddress", contactItem);
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> ShippingAddress -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
                     try {
                         _communicationService.AddEmailToContact(order.CustomerEmail, contactItem);
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> AddEmailToContact -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
                     try { // non sovrascrivo se dato già presente
                         _communicationService.AddSmsToContact((order.CustomerPhone + ' ').Split(' ')[0], (order.CustomerPhone + ' ').Split(' ')[1], contactItem, false);
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> AddSmsToContact -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
                 }
-            }
-            catch (Exception myex) {
+            } catch (Exception myex) {
                 _Logger.Error("OrderToContact -> order id= " + order.Id.ToString() + " Error: " + myex.Message);
             }
         }
@@ -150,10 +164,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var addressToStore = new AddressRecord();
             Mapper.Map<Address, AddressRecord>(address, addressToStore);
             addressToStore.AddressType = typeAddressValue;
+            StoreAddress(addressToStore, contact);
+        }
+        private void StoreAddress(AddressRecord addressToStore, ContentItem contact) {
             addressToStore.NwazetContactPartRecord_Id = contact.Id;
             bool AddNewAddress = true;
             foreach (var existingAddressRecord in contact.As<NwazetContactPart>().NwazetAddressRecord) {
-                if (addressToStore.Equals(existingAddressRecord)) {
+                if (addressToStore.Id == existingAddressRecord.Id) {
                     AddNewAddress = false;
                     existingAddressRecord.TimeStampUTC = DateTime.UtcNow;
                     _addressRecord.Update(existingAddressRecord);
@@ -164,6 +181,51 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 _addressRecord.Create(addressToStore);
                 _addressRecord.Flush();
             }
+        }
+
+        public AddressRecord GetAddress(int id) {
+            return _addressRecord.Get(id);
+        }
+        public AddressRecord GetAddress(int id, IUser user) {
+            var contactpart = ContactFromUser(user);
+            if (contactpart == null) {
+                return null;
+            }
+            var result = GetAddress(id);
+
+            return result.NwazetContactPartRecord_Id == contactpart.Id
+                ? result : null; ;
+        }
+
+        public void DeleteAddress(int id) {
+            var address = GetAddress(id);
+            Delete(address);
+        }
+        public void DeleteAddress(int id, IUser user) {
+            var address = GetAddress(id, user);
+            Delete(address);
+        }
+        private void Delete(AddressRecord address) {
+            if (address != null) {
+                _addressRecord.Delete(address);
+            }
+        }
+
+        public void AddAddress(AddressRecord newAddress, IUser user) {
+            var contactPart = ContactFromUser(user);
+            StoreAddress(newAddress, contactPart.ContentItem);
+        }
+
+        private CommunicationContactPart ContactFromUser(IUser user) {
+            if (user == null) {
+                throw new ArgumentNullException("user");
+            }
+            var contactpart = _communicationService.GetContactFromUser(user.Id);
+            if (contactpart == null) { // non dovrebbe mai succedere (inserito nel caso cambiassimo la logica già implementata)
+                _communicationService.UserToContact(user);
+                contactpart = _communicationService.GetContactFromUser(user.Id);
+            }
+            return contactpart;
         }
     }
 }

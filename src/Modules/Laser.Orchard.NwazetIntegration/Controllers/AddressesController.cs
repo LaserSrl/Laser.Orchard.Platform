@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
-using Orchard.Themes;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
-using Laser.Orchard.NwazetIntegration.Models;
-using Orchard;
-using Laser.Orchard.PaymentGateway.Models;
+using Orchard.Data;
+using Orchard.DisplayManagement;
+using Orchard.Localization;
+using Orchard.Mvc.Extensions;
+using Orchard.Themes;
+using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
     public class AddressesController : Controller {
@@ -21,14 +25,23 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ICurrencyProvider _currencyProvider;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IPaymentService _paymentService;
+        private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly ITransactionManager _transactionManager;
+
+        private readonly dynamic _shapeFactory;
+
         public AddressesController(
-            IOrderService orderService
-            , IPosServiceIntegration posServiceIntegration
-            , IPaymentService paymentService
-            , IShoppingCart shoppingCart
-            , IOrchardServices orchardServices
-            , ICurrencyProvider currencyProvider
-            , INwazetCommunicationService nwazetCommunicationService) {
+            IOrderService orderService,
+            IPosServiceIntegration posServiceIntegration,
+            IPaymentService paymentService,
+            IShoppingCart shoppingCart,
+            IOrchardServices orchardServices,
+            ICurrencyProvider currencyProvider,
+            INwazetCommunicationService nwazetCommunicationService,
+            IWorkContextAccessor workContextAccessor,
+            IShapeFactory shapeFactory,
+            ITransactionManager transactionManager) {
+
             _orderService = orderService;
             _posServiceIntegration = posServiceIntegration;
             _paymentService = paymentService;
@@ -36,7 +49,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _orchardServices = orchardServices;
             _currencyProvider = currencyProvider;
             _nwazetCommunicationService = nwazetCommunicationService;
+            _workContextAccessor = workContextAccessor;
+            _shapeFactory = shapeFactory;
+            _transactionManager = transactionManager;
+            T = NullLocalizer.Instance;
         }
+
+        public Localizer T { get; set; }
+
         [Themed]
         public ActionResult Index(AddressesVM model) {
             ActionResult result = null;
@@ -120,6 +140,102 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     break;
             }
             return result;
+        }
+
+        [Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
+        public ActionResult MyAddresses() {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to visualize your saved addresses.").Text);
+            }
+            var billingAddresses = _nwazetCommunicationService.GetBillingByUser(user);
+            var shippingAddresses = _nwazetCommunicationService.GetShippingByUser(user);
+
+            return View((object)_shapeFactory.VewiModel()
+                .BillingAddresses(billingAddresses)
+                .ShippingAddresses(shippingAddresses));
+        }
+
+        [HttpPost,
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Delete")]
+        public ActionResult Delete(int id, string returnUrl = "") {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to manage your saved addresses.").Text);
+            }
+
+            _nwazetCommunicationService.DeleteAddress(id, user);
+
+            return this.RedirectLocal(returnUrl, () => RedirectToAction("MyAddresses"));
+        }
+
+        [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
+        public ActionResult Create() {
+            return View(new AddressEditViewModel());
+        }
+        [HttpPost, Themed, 
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Create")]
+        public ActionResult CreatePost() {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
+            }
+
+            var newAddress = new AddressEditViewModel();
+            if (!TryUpdateModel(newAddress)) {
+                _transactionManager.Cancel();
+                return View(newAddress);
+            }
+            _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
+        }
+
+
+        [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
+        public ActionResult Edit(int id) {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to manage your saved addresses.").Text);
+            }
+            var address = _nwazetCommunicationService.GetAddress(id, user);
+            if (address == null) {
+                return HttpNotFound();
+            }
+            return View(new AddressEditViewModel(address));
+        }
+
+        [HttpPost, Themed,
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Edit")]
+        public ActionResult EditPost(int id) {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
+            }
+            var address = _nwazetCommunicationService.GetAddress(id, user);
+            if (address == null) {
+                return HttpNotFound();
+            }
+
+            var newAddress = new AddressEditViewModel(id);
+            if (!TryUpdateModel(newAddress)) {
+                _transactionManager.Cancel();
+                return View(newAddress);
+            }
+            _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            return View(newAddress);
         }
     }
 }
