@@ -28,6 +28,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         void DeleteAddress(int id);
         void DeleteAddress(int id, IUser user);
+
+        void AddAddress(AddressRecord newAddress, IUser user);
     }
 
 
@@ -162,6 +164,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var addressToStore = new AddressRecord();
             Mapper.Map<Address, AddressRecord>(address, addressToStore);
             addressToStore.AddressType = typeAddressValue;
+            StoreAddress(addressToStore, contact);
+        }
+        private void StoreAddress(AddressRecord addressToStore, ContentItem contact) {
             addressToStore.NwazetContactPartRecord_Id = contact.Id;
             bool AddNewAddress = true;
             foreach (var existingAddressRecord in contact.As<NwazetContactPart>().NwazetAddressRecord) {
@@ -182,9 +187,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return _addressRecord.Get(id);
         }
         public AddressRecord GetAddress(int id, IUser user) {
-            if (user == null) {
-                throw new ArgumentNullException("user");
-            }
             var contactpart = ContactFromUser(user);
             if (contactpart == null) {
                 return null;
@@ -209,7 +211,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
+        public void AddAddress(AddressRecord newAddress, IUser user) {
+            var contactPart = ContactFromUser(user);
+            StoreAddress(newAddress, contactPart.ContentItem);
+        }
+
         private CommunicationContactPart ContactFromUser(IUser user) {
+            if (user == null) {
+                throw new ArgumentNullException("user");
+            }
             var contactpart = _communicationService.GetContactFromUser(user.Id);
             if (contactpart == null) { // non dovrebbe mai succedere (inserito nel caso cambiassimo la logica già implementata)
                 _communicationService.UserToContact(user);

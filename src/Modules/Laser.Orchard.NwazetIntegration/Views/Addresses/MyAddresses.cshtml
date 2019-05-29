@@ -1,4 +1,36 @@
 ﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using (Script.Foot()) {
+    // script for the correct use of anchor links to the delete action
+    <script type="text/javascript">
+        $(function () {
+        var magicToken = $("input[name=__RequestVerificationToken]").first();
+        if (!magicToken) { return; } // no sense in continuing if form POSTS will fail
+        $("body").on("click", "a[itemprop~=UnsafeUrl], a[data-unsafe-url]", function() {
+            var _this = $(this);
+            var hrefParts = _this.attr("href").split("?");
+            var form = $("<form action=\"" + hrefParts[0] + "\" method=\"POST\" />");
+            form.append(magicToken.clone());
+            if (hrefParts.length > 1) {
+                var queryParts = hrefParts[1].split("&");
+                for (var i = 0; i < queryParts.length; i++) {
+                    var queryPartKVP = queryParts[i].split("=");
+                    //trusting hrefs in the page here
+                    form.append($("<input type=\"hidden\" name=\"" + decodeURIComponent(queryPartKVP[0]) + "\" value=\"" + decodeURIComponent(queryPartKVP[1]) + "\" />"));
+                }
+            }
+            form.css({ "position": "absolute", "left": "-9999em" });
+            $("body").append(form);
+
+            if (!confirm("@T("Do you really want to delete this address")")) {
+                return false;
+            }
+
+            form.submit();
+            return false;
+        });
+    });
+    </script>
+}
 @helper DrawAddress(AddressRecord address) {
     <div class="address-record">
         <div class="address-info">
@@ -34,27 +66,29 @@
             </div>
         </div>
         <div class="address-actions">
-            @Html.ActionLink(T("Delete").Text, "Delete", "Addresses",
-                new { area = "Laser.Orchard.NwazetIntegration" },
-                new { itemprop = "RemoveUrl UnsafeUrl" })
+            @Html.Link(T("Delete").Text,
+                    Url.Action("Delete", "Addresses",
+                        new { area = "Laser.Orchard.NwazetIntegration", id = address.Id }),
+                    new { itemprop = "RemoveUrl UnsafeUrl" })
         </div>
     </div>
 }
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset class="actions">
 
-<fieldset class="actions">
-
-    @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",
-        new { area = "Laser.Orchard.NwazetIntegration" })
-</fieldset>
-<fieldset class="contentItems bulk-items">
-    <legend>@T("Shipping Addresses")</legend>
-    @foreach (var address in Model.ShippingAddresses) {
-        @DrawAddress(address)
-    }
-</fieldset>
-<fieldset class="contentItems bulk-items">
-    <legend>@T("Billing Addresses")</legend>
-    @foreach (var address in Model.BillingAddresses) {
-        @DrawAddress(address)
-    }
-</fieldset>
+        @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",
+            new { area = "Laser.Orchard.NwazetIntegration" })
+    </fieldset>
+    <fieldset class="contentItems bulk-items">
+        <legend>@T("Shipping Addresses")</legend>
+        @foreach (var address in Model.ShippingAddresses) {
+            @DrawAddress(address)
+        }
+    </fieldset>
+    <fieldset class="contentItems bulk-items">
+        <legend>@T("Billing Addresses")</legend>
+        @foreach (var address in Model.BillingAddresses) {
+            @DrawAddress(address)
+        }
+    </fieldset>
+}

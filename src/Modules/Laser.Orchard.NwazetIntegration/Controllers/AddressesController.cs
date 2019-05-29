@@ -7,6 +7,7 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
+using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Mvc.Extensions;
@@ -25,6 +26,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IPaymentService _paymentService;
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly ITransactionManager _transactionManager;
 
         private readonly dynamic _shapeFactory;
 
@@ -37,7 +39,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ICurrencyProvider currencyProvider,
             INwazetCommunicationService nwazetCommunicationService,
             IWorkContextAccessor workContextAccessor,
-            IShapeFactory shapeFactory) {
+            IShapeFactory shapeFactory,
+            ITransactionManager transactionManager) {
 
             _orderService = orderService;
             _posServiceIntegration = posServiceIntegration;
@@ -48,6 +51,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _nwazetCommunicationService = nwazetCommunicationService;
             _workContextAccessor = workContextAccessor;
             _shapeFactory = shapeFactory;
+            _transactionManager = transactionManager;
             T = NullLocalizer.Instance;
         }
 
@@ -144,7 +148,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (user == null) {
                 // we should never be here, because the AuthorizeAttribute should
                 // take care of anonymous users.
-                return new HttpUnauthorizedResult(T("Sign In to visualize your order history.").Text);
+                return new HttpUnauthorizedResult(T("Sign In to visualize your saved addresses.").Text);
             }
             var billingAddresses = _nwazetCommunicationService.GetBillingByUser(user);
             var shippingAddresses = _nwazetCommunicationService.GetShippingByUser(user);
@@ -154,13 +158,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 .ShippingAddresses(shippingAddresses));
         }
 
-        [HttpPost, Authorize]
-        public ActionResult Delete(int id, string returnUrl) {
+        [HttpPost,
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Delete")]
+        public ActionResult Delete(int id, string returnUrl = "") {
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (user == null) {
                 // we should never be here, because the AuthorizeAttribute should
                 // take care of anonymous users.
-                return new HttpUnauthorizedResult(T("Sign In to visualize your order history.").Text);
+                return new HttpUnauthorizedResult(T("Sign In to manage your saved addresses.").Text);
             }
 
             _nwazetCommunicationService.DeleteAddress(id, user);
@@ -171,6 +177,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
         public ActionResult Create() {
             return View(new AddressEditViewModel());
+        }
+        [HttpPost, Themed, 
+            OutputCache(NoStore = true, Duration = 0), Authorize,
+            ActionName("Create")]
+        public ActionResult CreatePost() {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
+            }
+
+            var newAddress = new AddressEditViewModel();
+            if (!TryUpdateModel(newAddress)) {
+                _transactionManager.Cancel();
+                return View(newAddress);
+            }
+            _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            return View(newAddress);
         }
     }
 }

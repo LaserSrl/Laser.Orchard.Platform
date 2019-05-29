@@ -2,53 +2,11 @@
 @using Orchard.Localization;
 @using System.Linq.Expressions;
 @model AddressEditViewModel
-@helper EditorForString(
-    Expression<Func<AddressEditViewModel, string>> property,
-    LocalizedString label,
-    LocalizedString hint = null,
-    bool required=false) {
-<div class="address-input address-text-input">
-    @Html.LabelFor(property, label.Text, new { @class = required ? "" : "required" })
-    @Html.EditorFor(property)
-    @if (hint != null) {
-        <div class="hint">@hint</div>
-    }
-</div>
-}
+
 @using (Html.BeginFormAntiForgeryPost()) {
 <div class="edit-address">
     <div class="edit-address new-address">
-        <div class="address-input">
-            @Html.LabelFor(m => m.AddressType, T("Address Type").Text, new { })
-            @Html.EnumDropDownListFor(m => m.AddressType)
-        </div>
-        @EditorForString(m => m.Honorific,
-            T("Title"),
-            T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc."))
-        @EditorForString(m => m.FirstName,
-            T("First Name"),
-            T("Please include middle name or initial as appropriate."),
-            true)
-        @EditorForString(m => m.LastName,
-            T("Last Name"),
-            T("Please include middle name or initial as appropriate."),
-            true)
-        @EditorForString(m => m.Company,
-            T("Company"))
-        <div class="address-input address-text-input">
-            @Html.LabelFor(m => m.Address1, T("Address").Text, new { @class = "required" })
-            @Html.EditorFor(m => m.Address1)
-            @Html.EditorFor(m => m.Address2)
-        </div>
-        @EditorForString(m => m.City,
-            T("City"))
-        @EditorForString(m => m.Province,
-            T("State, province, prefecture, republic or region"),
-            T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."))
-        @EditorForString(m => m.PostalCode,
-            T("Postal or ZIP code"))
-        @EditorForString(m => m.Country,
-            T("Country"))
+        @Html.Partial("AddressEditor")
     </div>
     <div class="action save-button">
         <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
