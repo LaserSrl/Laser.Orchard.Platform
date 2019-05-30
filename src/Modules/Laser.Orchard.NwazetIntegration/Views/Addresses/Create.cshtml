@@ -5,6 +5,20 @@
 
 @using (Html.BeginFormAntiForgeryPost()) {
 <div class="edit-address">
+    @if (Model.Errors.Any()) {
+        <div class="errors">
+            @foreach (var err in Model.Errors) {
+                <p>@err</p>
+            }
+        </div>
+    }
+    @if (Model.Information.Any()) {
+        <div class="information">
+            @foreach (var info in Model.Information) {
+                <p>@info</p>
+            }
+        </div>
+    }
     <div class="edit-address new-address">
         @Html.Partial("AddressEditor")
     </div>

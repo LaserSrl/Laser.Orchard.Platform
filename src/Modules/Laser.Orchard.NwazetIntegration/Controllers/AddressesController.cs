@@ -192,6 +192,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var newAddress = new AddressEditViewModel();
             if (!TryUpdateModel(newAddress)) {
                 _transactionManager.Cancel();
+                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
@@ -232,9 +233,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var newAddress = new AddressEditViewModel(id);
             if (!TryUpdateModel(newAddress)) {
                 _transactionManager.Cancel();
+                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            newAddress.Errors.Add(T("Address updated.").Text);
             return View(newAddress);
         }
     }
