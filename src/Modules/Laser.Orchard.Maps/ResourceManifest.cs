@@ -47,6 +47,11 @@ namespace Laser.Orchard.Maps {
 
             manifest.DefineScript("OpenStreetMapAPI")
              .SetUrl("http://www.openstreetmap.org/openlayers/OpenStreetMap.js");
+
+            // OSM Maps
+            manifest.DefineScript("OpenRouteAPI")
+              .SetUrl("https://github.com/GIScience/openrouteservice-js/blob/master/dist/ors-js-client.js");
+            
         }
     }
 }
