@@ -446,6 +446,7 @@
     <Compile Include="Services\MaintenanceService.cs" />
     <Compile Include="TaxonomiesExtensions\Projections\OptionalTermsFilterProvider.cs" />
     <Compile Include="TaxonomiesExtensions\Projections\SelectTermsForm.cs" />
+    <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
