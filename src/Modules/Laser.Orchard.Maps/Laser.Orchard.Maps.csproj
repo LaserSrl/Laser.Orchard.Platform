@@ -107,6 +107,7 @@
     <Content Include="Scripts\markerclusterer.js" />
     <Content Include="Scripts\ol-geocoder.js" />
     <Content Include="Scripts\ol.js" />
+    <Content Include="Scripts\ors-client.js" />
     <Content Include="Styles\GoogleMaps.css" />
     <Content Include="Styles\images\map-pin.png" />
     <Content Include="Styles\ol-geocoder.css" />
@@ -126,9 +127,11 @@
     <Compile Include="Controllers\OsmImportController.cs" />
     <Compile Include="Drivers\CustomPinPartDriver.cs" />
     <Compile Include="Drivers\MapPartDriver.cs" />
+    <Compile Include="Drivers\OpenRouteSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\SiteSettingsPartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Handlers\MapPartHandler.cs" />
+    <Compile Include="Handlers\OpenRouteSiteSettingsHandler.cs" />
     <Compile Include="Handlers\MapsSiteSettingsHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\CustomPinPart.cs" />
@@ -136,6 +139,8 @@
     <Compile Include="Models\GoogleGeoCoding.cs" />
     <Compile Include="Models\MapPart.cs" />
     <Compile Include="Models\MapPartSettings.cs" />
+    <Compile Include="Models\OpenRouteSiteSettings.cs" />
+    <Compile Include="OpenRouteManifest.cs" />
     <Compile Include="OpenLayersManifest.cs" />
     <Compile Include="OsmMath.cs" />
     <Compile Include="Projections\AroundMeFilter.cs" />
@@ -198,6 +203,7 @@
     <Content Include="Views\AmiImport\Pois.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\CustomPin_Edit.cshtml" />
     <Content Include="Views\DefinitionTemplates\CustomPinPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\OpenRouteSiteSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
