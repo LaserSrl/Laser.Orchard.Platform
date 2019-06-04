@@ -68,7 +68,7 @@
         <div class="address-actions">
             @Html.Link(T("Edit").Text,
                     Url.Action("Edit", "Addresses",
-                        new { area = "Laser.Orchard.NwazetIntegration", id = address.Id })) | 
+                        new { area = "Laser.Orchard.NwazetIntegration", id = address.Id })) |
             @Html.Link(T("Delete").Text,
                     Url.Action("Delete", "Addresses",
                         new { area = "Laser.Orchard.NwazetIntegration", id = address.Id }),
@@ -77,6 +77,7 @@
     </div>
 }
 @using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
     <fieldset class="actions">
 
         @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",

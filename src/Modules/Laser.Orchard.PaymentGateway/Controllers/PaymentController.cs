@@ -83,7 +83,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             }
             ContentItem item = null;
             if (record.ContentItemId > 0) {
-                item = _orchardServices.ContentManager.Get(record.ContentItemId);
+                item = _orchardServices.ContentManager.Get(record.ContentItemId, VersionOptions.Latest);
             }
             PaymentVM model = new PaymentVM {
                 Record = record,

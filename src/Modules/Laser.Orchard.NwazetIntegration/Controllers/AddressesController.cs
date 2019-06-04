@@ -12,6 +12,7 @@ using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Mvc.Extensions;
 using Orchard.Themes;
+using Orchard.UI.Notify;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -27,6 +28,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IPaymentService _paymentService;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ITransactionManager _transactionManager;
+        private readonly IContentManager _contentManager;
+        private readonly INotifier _notifier;
 
         private readonly dynamic _shapeFactory;
 
@@ -40,7 +43,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             INwazetCommunicationService nwazetCommunicationService,
             IWorkContextAccessor workContextAccessor,
             IShapeFactory shapeFactory,
-            ITransactionManager transactionManager) {
+            ITransactionManager transactionManager,
+            IContentManager contentManager,
+            INotifier notifier) {
 
             _orderService = orderService;
             _posServiceIntegration = posServiceIntegration;
@@ -52,6 +57,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _workContextAccessor = workContextAccessor;
             _shapeFactory = shapeFactory;
             _transactionManager = transactionManager;
+            _contentManager = contentManager;
+            _notifier = notifier;
+
             T = NullLocalizer.Instance;
         }
 
@@ -102,7 +110,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         model.Email,
                         model.PhonePrefix + " " + model.Phone,
                         model.SpecialInstructions,
-                        OrderPart.Cancelled,
+                        OrderPart.Pending, //.Cancelled,
                         null,
                         false,
                         userId,
@@ -110,6 +118,20 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         "",
                         currency);
                     order.LogActivity(OrderPart.Event, "Order created");
+                    // we unpublish the order here. The service from Nwazet create it
+                    // and publish it it. This would cause issues whenever a user leaves
+                    // mid checkout rather than completing the entire process, because we
+                    // would end up having unprocessed orders that are created and published.
+                    // By unpublishing, we practically turn the order in a draft. Later,
+                    // after processing payments, we publish the order again so it shows
+                    // in the "normal" queries and lists.
+                    // Note that this is a workaround for order management that only really
+                    // works as long as payments are processed and the order published there.
+                    // In cases where we may not wish to have payments happen when a new order
+                    // is created, this system should be reworked properly.
+                    _contentManager.Unpublish(order.ContentItem);
+                    // save the addresses for the contact doing the order.
+                    _nwazetCommunicationService.OrderToContact(order);
                     var reason = string.Format("Purchase Order {0}", _posServiceIntegration.GetOrderNumber(order.Id));
                     var payment = new PaymentRecord {
                         Reason = reason,
@@ -118,7 +140,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         ContentItemId = order.Id
                     };
                     var nonce = _paymentService.CreatePaymentNonce(payment);
-                    result = RedirectToAction("Pay", "Payment", new { area = "Laser.Orchard.PaymentGateway", nonce = nonce, newPaymentGuid = paymentGuid });
+                    result = RedirectToAction("Pay", "Payment", 
+                        new { area = "Laser.Orchard.PaymentGateway",
+                            nonce = nonce,
+                            newPaymentGuid = paymentGuid });
                     break;
                 default:
                     model.ShippingAddress = new Address();
@@ -153,7 +178,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var billingAddresses = _nwazetCommunicationService.GetBillingByUser(user);
             var shippingAddresses = _nwazetCommunicationService.GetShippingByUser(user);
 
-            return View((object)_shapeFactory.VewiModel()
+            return View((object)_shapeFactory.ViewModel()
                 .BillingAddresses(billingAddresses)
                 .ShippingAddresses(shippingAddresses));
         }
@@ -171,6 +196,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             _nwazetCommunicationService.DeleteAddress(id, user);
 
+            _notifier.Information(T("That address has been removed."));
             return this.RedirectLocal(returnUrl, () => RedirectToAction("MyAddresses"));
         }
 
@@ -196,9 +222,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return View(newAddress);
             }
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
+            _notifier.Information(T("Address created successfully."));
             return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
         }
-
 
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
         public ActionResult Edit(int id) {
@@ -214,7 +240,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             return View(new AddressEditViewModel(address));
         }
-
         [HttpPost, Themed,
             OutputCache(NoStore = true, Duration = 0), Authorize,
             ActionName("Edit")]
@@ -237,7 +262,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return View(newAddress);
             }
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
-            newAddress.Errors.Add(T("Address updated.").Text);
+
+            _notifier.Information(T("Address updated successfully."));
             return View(newAddress);
         }
     }

@@ -19,6 +19,7 @@
             }
         </div>
     }
+    @Html.ValidationSummary()
     <div class="edit-address edit-address">
         @Html.Partial("AddressEditor")
     </div>
@@ -28,7 +29,7 @@
             var returnUrl = Url.Action("MyAddresses", "Addresses");
         }
 
-        <a id="button-cancel" href="@returnUrl" class="button">@T("Cancel")</a>
+        <a id="button-cancel" href="@returnUrl" class="button">@T("Back to List")</a>
     </div>
 </div>
 }
