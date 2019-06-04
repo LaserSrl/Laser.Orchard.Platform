@@ -5,6 +5,21 @@
 
 @using (Html.BeginFormAntiForgeryPost()) {
 <div class="edit-address">
+    @if (Model.Errors.Any()) {
+        <div class="errors">
+            @foreach (var err in Model.Errors) {
+                <p>@err</p>
+            }
+        </div>
+    }
+    @if (Model.Information.Any()) {
+        <div class="information">
+            @foreach (var info in Model.Information) {
+                <p>@info</p>
+            }
+        </div>
+    }
+    @Html.ValidationSummary()
     <div class="edit-address new-address">
         @Html.Partial("AddressEditor")
     </div>
@@ -14,7 +29,7 @@
             var returnUrl = Url.Action("MyAddresses", "Addresses");
         }
 
-        <a id="button-cancel" href="@returnUrl" class="button">@T("Cancel")</a>
+        <a id="button-cancel" href="@returnUrl" class="button">@T("Back to List")</a>
     </div>
 </div>
 }

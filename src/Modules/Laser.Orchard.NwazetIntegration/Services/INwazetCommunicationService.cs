@@ -170,10 +170,14 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             addressToStore.NwazetContactPartRecord_Id = contact.Id;
             bool AddNewAddress = true;
             foreach (var existingAddressRecord in contact.As<NwazetContactPart>().NwazetAddressRecord) {
-                if (addressToStore.Id == existingAddressRecord.Id) {
+                if (addressToStore.Id == existingAddressRecord.Id 
+                    || addressToStore.Equals(existingAddressRecord)) {
                     AddNewAddress = false;
                     existingAddressRecord.TimeStampUTC = DateTime.UtcNow;
-                    _addressRecord.Update(existingAddressRecord);
+                    // little trick to cause nHibernate to "replace" the old address
+                    // with the updated one:
+                    addressToStore.Id = existingAddressRecord.Id;
+                    _addressRecord.Update(addressToStore);
                     _addressRecord.Flush();
                 }
             }

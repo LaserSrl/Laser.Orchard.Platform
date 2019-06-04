@@ -3,6 +3,8 @@ using Nwazet.Commerce.Services;
 using Nwazet.Commerce.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using System.Collections.Generic;
+using Orchard.ContentManagement;
+using Orchard.Workflows.Services;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class PaymentEventHandler : IPaymentEventHandler {
@@ -12,20 +14,35 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         private readonly IPosServiceIntegration _posServiceIntegration;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IEnumerable<ICartLifeCycleEventHandler> _cartLifeCycleEventHandlers;
+        private readonly IContentManager _contentManager;
+        private readonly IWorkflowManager _workflowManager;
 
-        public PaymentEventHandler(IOrderService orderService, IPaymentService paymentService, IShoppingCart shoppingCart, IPosServiceIntegration posServiceIntegration, INwazetCommunicationService nwazetCommunicationService, IEnumerable<ICartLifeCycleEventHandler> cartLifeCycleEventHandlers) {
+        public PaymentEventHandler(
+            IOrderService orderService, 
+            IPaymentService paymentService, 
+            IShoppingCart shoppingCart, 
+            IPosServiceIntegration posServiceIntegration, 
+            INwazetCommunicationService nwazetCommunicationService, 
+            IEnumerable<ICartLifeCycleEventHandler> cartLifeCycleEventHandlers,
+            IContentManager contentManager,
+            IWorkflowManager workflowManager) {
+
             _orderService = orderService;
             _paymentService = paymentService;
             _shoppingCart = shoppingCart;
             _posServiceIntegration = posServiceIntegration;
             _nwazetCommunicationService = nwazetCommunicationService;
             _cartLifeCycleEventHandlers = cartLifeCycleEventHandlers;
+            _contentManager = contentManager;
+            _workflowManager = workflowManager;
         }
         public void OnError(int paymentId, int contentItemId) {
             var payment = _paymentService.GetPayment(paymentId);
             if (payment != null) {
-                var order = _orderService.Get(payment.ContentItemId);
+                var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest);
                 order.Status = OrderPart.Cancelled;
+                _contentManager.Publish(order.ContentItem);
+                TriggerEvent(order, "NewOrder");
                 order.LogActivity(OrderPart.Error, string.Format("Transaction failed (payment id: {0}).", payment.Id));
             }
         }
@@ -33,8 +50,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         public void OnSuccess(int paymentId, int contentItemId) {
             var payment = _paymentService.GetPayment(paymentId);
             if (payment != null) {
-                var order = _orderService.Get(payment.ContentItemId);
-                // agggiorna l'odine in base al pagamento effettuato
+                var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest); // _orderService.Get(payment.ContentItemId);
+                // aggiorna l'odine in base al pagamento effettuato
                 order.Status = OrderPart.Pending;
                 order.AmountPaid = payment.Amount;
                 order.PurchaseOrder = _posServiceIntegration.GetOrderNumber(order.Id);
@@ -45,8 +62,24 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                     handler.Finalized();
                 }
                 _shoppingCart.Clear();
-                _nwazetCommunicationService.OrderToContact(order);
+                // raise order and payment events
+                _contentManager.Publish(order.ContentItem);
+                TriggerEvents(order);
             }
-        }   
+        }
+        
+        private void TriggerEvents(OrderPart order) {
+            TriggerEvent(order, "NewOrder");
+            TriggerEvent(order, "NewPayment");
+        }
+        private void TriggerEvent(OrderPart order, string eventName) {
+            _workflowManager.TriggerEvent(
+                   eventName,
+                   order,
+                   () => new Dictionary<string, object> {
+                        {"Content", order},
+                        {"Order", order}
+                   });
+        }
     }
 }

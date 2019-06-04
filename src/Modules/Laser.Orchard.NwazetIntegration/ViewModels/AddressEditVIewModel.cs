@@ -10,13 +10,19 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public AddressEditViewModel() {
             AddressRecord = new AddressRecord();
+
+            Errors = new List<string>();
+            Information = new List<string>();
         }
-        public AddressEditViewModel(AddressRecord address) {
+        public AddressEditViewModel(AddressRecord address) : this(){
             AddressRecord = address;
         }
-        public AddressEditViewModel(int id) {
+        public AddressEditViewModel(int id) :this(){
             AddressRecord = new AddressRecord() { Id = id };
         }
+
+        public List<string> Errors { get; set; }
+        public List<string> Information { get; set; }
 
         public AddressRecord AddressRecord { get; set; }
 
