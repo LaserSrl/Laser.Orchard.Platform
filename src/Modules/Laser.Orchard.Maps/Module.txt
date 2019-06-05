@@ -19,3 +19,7 @@ Features:
 		Description: Resources for OpenLayers maps
         Category: Geolocation
 		Dependencies: Orchard.Resources
+	Laser.Orchard.Maps.OpenRoute:
+		Description: Resources for OpenRoutes api
+        Category: Geolocation
+		Dependencies: Orchard.Resources

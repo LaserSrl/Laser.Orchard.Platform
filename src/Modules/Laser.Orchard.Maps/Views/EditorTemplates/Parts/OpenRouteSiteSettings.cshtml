@@ -1,0 +1,9 @@
+﻿@model Laser.Orchard.Maps.Models.OpenRouteSiteSettingsPart
+
+<fieldset>
+    <legend>@T("Open Route Service")</legend>
+        <label for="@Html.FieldIdFor(m => m.ApiKey)">@T("Api Key")</label>
+        @Html.TextBoxFor(m => m.ApiKey, new { @class = "text-medium" })
+        <span class="hint">@T("Api Key provided by open route service.")</span>
+    </div>
+</fieldset>
