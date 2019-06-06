@@ -104,6 +104,7 @@
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
+    <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
