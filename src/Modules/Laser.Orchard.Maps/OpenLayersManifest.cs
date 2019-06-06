@@ -16,6 +16,8 @@ namespace Laser.Orchard.Maps {
                 .SetUrl("ol.css");
             manifest.DefineScript("OpenLayersContextMenu")
                 .SetUrl("ol-contextmenu.js");
+            manifest.DefineStyle("OpenLayersContextMenu")
+                .SetUrl("ol-contextmenu.css");
             manifest.DefineScript("OL-Geocoder")
               .SetUrl("ol-geocoder.js");
             manifest.DefineStyle("OL-Geocoder")
