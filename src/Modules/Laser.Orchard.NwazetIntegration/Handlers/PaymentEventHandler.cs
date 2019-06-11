@@ -42,7 +42,14 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest);
                 order.Status = OrderPart.Cancelled;
                 _contentManager.Publish(order.ContentItem);
-                TriggerEvent(order, "NewOrder");
+                _workflowManager.TriggerEvent(
+                    "OrderError", 
+                    order,
+                    () => new Dictionary<string, object> {
+                        {"Content", order},
+                        {"Order", order},
+                        {"CheckoutError", payment.Error}
+                    });
                 order.LogActivity(OrderPart.Error, string.Format("Transaction failed (payment id: {0}).", payment.Id));
             }
         }
