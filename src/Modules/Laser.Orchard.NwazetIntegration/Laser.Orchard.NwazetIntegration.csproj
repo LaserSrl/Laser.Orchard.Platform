@@ -103,6 +103,7 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
+    <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Migrations.cs" />
