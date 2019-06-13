@@ -348,9 +348,11 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
-    <Compile Include="Controllers\ClientStorageController.cs" />
+    <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
+    <Compile Include="Controllers\FrontEndContentController.cs" />
     <Compile Include="Controllers\MaintenanceAdminController.cs" />
+    <Compile Include="Controllers\FrontEndTagsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
@@ -594,7 +596,7 @@
     <Content Include="Views\DefinitionTemplates\JsonDataTableFieldSettings.cshtml" />
     <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
-    <Content Include="Views\ClientStorage\Index.cshtml" />
+    <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

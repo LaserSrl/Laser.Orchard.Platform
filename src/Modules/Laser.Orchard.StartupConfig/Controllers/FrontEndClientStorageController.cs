@@ -22,13 +22,13 @@ namespace Laser.Orchard.StartupConfig.Controllers
 {
     [OrchardFeature("Laser.Orchard.StartupConfig.ExtendAdminControllerToFrontend")]
 
-    public class ClientStorageController : Controller
+    public class FrontEndClientStorageController : Controller
     {
 
         private readonly IMediaLibraryService _mediaLibraryService;
         private readonly IMimeTypeProvider _mimeTypeProvider;
 
-        public ClientStorageController(
+        public FrontEndClientStorageController(
             IMediaLibraryService mediaManagerService,
             IOrchardServices orchardServices,
             IMimeTypeProvider mimeTypeProvider)

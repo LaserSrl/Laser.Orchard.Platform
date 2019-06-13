@@ -149,7 +149,7 @@
 
                     data.context.label('@HttpUtility.JavaScriptStringEncode(T("Loading thumbnail...").Text)');
 
-                    var url = '@HttpUtility.JavaScriptStringEncode(Url.Action("MediaItem", "ClientStorage"))/' + result.id + '?displayType=Thumbnail';
+                    var url = '@HttpUtility.JavaScriptStringEncode(Url.Action("MediaItem", "FrontEndClientStorage"))/' + result.id + '?displayType=Thumbnail';
 
                     $.ajax({
                         type: "GET",
