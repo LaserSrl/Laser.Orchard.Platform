@@ -30,6 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ITransactionManager _transactionManager;
         private readonly IContentManager _contentManager;
         private readonly INotifier _notifier;
+        private readonly IProductPriceService _productPriceService;
 
         private readonly dynamic _shapeFactory;
 
@@ -45,7 +46,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IShapeFactory shapeFactory,
             ITransactionManager transactionManager,
             IContentManager contentManager,
-            INotifier notifier) {
+            INotifier notifier,
+            IProductPriceService productPriceService) {
 
             _orderService = orderService;
             _posServiceIntegration = posServiceIntegration;
@@ -59,6 +61,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _transactionManager = transactionManager;
             _contentManager = contentManager;
             _notifier = notifier;
+            _productPriceService = productPriceService;
 
             T = NullLocalizer.Instance;
         }
@@ -81,7 +84,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             Attributes = prod.AttributeIdsToValues,
                             LinePriceAdjustment = prod.LinePriceAdjustment,
                             OriginalPrice = prod.OriginalPrice,
-                            Price = prod.Price,
+                            Price = _productPriceService.GetPrice(prod.Product),
                             ProductId = prod.Product.Id,
                             PromotionId = prod.Promotion == null ? null : (int?)(prod.Promotion.Id),
                             Quantity = prod.Quantity,
