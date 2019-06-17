@@ -155,9 +155,6 @@
                         type: "GET",
                         url: url,
                     }).done(function (html) {
-  
-                        window.parent.postMessage("uploaded");
-                        
                         data.context.thumbnail(html);
                         data.context.status('success');
                         @if(Model.Replace != null) {
@@ -165,6 +162,7 @@
                         window.parent.$("a.button.close")[0].click();
                         </text>
                         }
+                        window.parent.postMessage("uploaded");
                     });
                 },
                 fail: function (e, data) {
