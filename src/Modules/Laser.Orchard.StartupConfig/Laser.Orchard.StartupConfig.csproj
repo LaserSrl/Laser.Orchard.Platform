@@ -360,6 +360,7 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
