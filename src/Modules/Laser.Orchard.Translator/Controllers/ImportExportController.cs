@@ -11,26 +11,22 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.Translator.Controllers
-{
-    public class ImportExportController : Controller
-    {
+namespace Laser.Orchard.Translator.Controllers {
+    public class ImportExportController : Controller {
         private readonly IOrchardServices _orchardServices;
         private readonly ITranslatorServices _translatorServices;
         private readonly IUtilsServices _utilsServices;
 
         private const string pattern = "msgctxt\\s+\"([^\\s]+)\"\\s+msgid\\s+\"([^\"]*)\"\\s+msgstr\\s+\"([^\"]*)\"";
 
-        public ImportExportController(IOrchardServices orchardServices, ITranslatorServices translatorServices, IUtilsServices utilsServices)
-        {
+        public ImportExportController(IOrchardServices orchardServices, ITranslatorServices translatorServices, IUtilsServices utilsServices) {
             _orchardServices = orchardServices;
             _translatorServices = translatorServices;
             _utilsServices = utilsServices;
         }
 
-        public ActionResult ImportTranslations()
-        {
-          //  _translatorServices.DeleteAllTranslations();
+        public ActionResult ImportTranslations() {
+            //  _translatorServices.DeleteAllTranslations();
 
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
 
@@ -47,18 +43,16 @@ namespace Laser.Orchard.Translator.Controllers
             return Redirect(returnUrl);
         }
 
-        public ActionResult ExportTranslations()
-        {
-            using (ZipFile zip = new ZipFile())
-            {
+        public ActionResult ExportTranslations() {
+            using (ZipFile zip = new ZipFile()) {
                 var filename = "ExportTranslations_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".zip";
 
                 Response.Clear();
                 Response.BufferOutput = false;
                 Response.ContentType = "application/zip";
                 Response.AppendHeader("content-disposition", "attachment; filename=" + filename);
-
-                var deprecatedFolders = _translatorServices.GetTranslationFoldersSettings().Where(m => m.Deprecated).Select(s => new { s.ContainerName, s.ContainerType/*, s.Language*/ });
+                var settings = _translatorServices.GetTranslationFoldersSettings();
+                var deprecatedFolders = settings.Where(m => m.Deprecated).Select(s => new { s.ContainerName, s.ContainerType/*, s.Language*/ });
 
                 var messagesToExport = _translatorServices.GetTranslations().Where(m => m.TranslatedMessage != null
                                                                                      && m.TranslatedMessage != string.Empty);
@@ -68,7 +62,7 @@ namespace Laser.Orchard.Translator.Controllers
 
                 foreach (var folder in foldersToExport) {
                     if (!deprecatedFolders.Where(item => /*item.Language == folder.Language &&*/ item.ContainerName == folder.ContainerName && item.ContainerType == folder.ContainerType).Any()) {
-
+                        var settingsForFolder = settings.SingleOrDefault(item => item.ContainerName == folder.ContainerName && item.ContainerType == folder.ContainerType);
                         var folderMessages = messagesToExport.Where(m => m.ContainerName == folder.ContainerName
                                                                       && m.ContainerType == folder.ContainerType
                                                                       && m.Language == folder.Language)
@@ -76,7 +70,6 @@ namespace Laser.Orchard.Translator.Controllers
 
                         MemoryStream stream = new MemoryStream();
                         StreamWriter streamWriter = new StreamWriter(stream);
-
                         streamWriter.WriteLine("# Orchard resource strings - " + folder.Language);
                         streamWriter.WriteLine("# Copyright (c) " + DateTime.Now.Year + " Laser s.r.l.");
                         streamWriter.WriteLine(Environment.NewLine);
@@ -100,17 +93,28 @@ namespace Laser.Orchard.Translator.Controllers
 
                         string parentFolder = "";
                         string fileName = "";
-
+                        string outputPath = "Sources";
                         if (folder.ContainerType == "M") {
-                            parentFolder = "Modules";
+                            parentFolder = "Deploy/Modules";
                             fileName = "orchard.module.po";
-                        } else if (folder.ContainerType == "T") {
-                            parentFolder = "Themes";
+                        }
+                        else if (folder.ContainerType == "T") {
+                            parentFolder = "Deploy/Themes";
                             fileName = "orchard.theme.po";
                         }
+                        if (settingsForFolder != null && !string.IsNullOrWhiteSpace(settingsForFolder.OutputPath)) {
+                            outputPath = Path.Combine(outputPath, (settingsForFolder.OutputPath.StartsWith("/")) ? settingsForFolder.OutputPath.Substring(1) : settingsForFolder.OutputPath);
+                        }
+                        if (!String.IsNullOrWhiteSpace(fileName) && !String.IsNullOrWhiteSpace(parentFolder)) {
+                            StreamReader streamReader = new StreamReader(stream);
+                            var finalContent = streamReader.ReadToEnd();
+                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, finalContent);
+                            zip.AddEntry(Path.Combine(new string[] { outputPath, folder.ContainerName, "App_Data/Localization", folder.Language, fileName }), finalContent);
 
-                        if (!String.IsNullOrWhiteSpace(fileName) && !String.IsNullOrWhiteSpace(parentFolder))
-                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, stream);
+                            streamReader.Dispose();
+                        }
+                        streamWriter.Dispose();
+                        stream.Dispose();
                     }
                 }
 
@@ -123,38 +127,30 @@ namespace Laser.Orchard.Translator.Controllers
             return new EmptyResult();
         }
 
-        private void ImportFromPO(List<string> foldersToImport, ElementToTranslate type)
-        {
+        private void ImportFromPO(List<string> foldersToImport, ElementToTranslate type) {
             string parentFolder = "";
             string fileName = "";
 
-            if (type == ElementToTranslate.Module)
-            {
+            if (type == ElementToTranslate.Module) {
                 parentFolder = "Modules";
                 fileName = "orchard.module.po";
             }
-            else if (type == ElementToTranslate.Theme)
-            {
+            else if (type == ElementToTranslate.Theme) {
                 parentFolder = "Themes";
                 fileName = "orchard.theme.po";
             }
             else
                 return;
 
-            foreach (var folder in foldersToImport)
-            {
+            foreach (var folder in foldersToImport) {
                 var path = Path.Combine(_utilsServices.TenantPath, parentFolder, folder, "App_Data", "Localization");
-                if (Directory.Exists(path))
-                {
+                if (Directory.Exists(path)) {
                     var languages = Directory.GetDirectories(path).Select(d => new DirectoryInfo(d).Name);
-                    foreach (var language in languages)
-                    {
+                    foreach (var language in languages) {
                         var filePath = Path.Combine(path, language, fileName);
-                        if (System.IO.File.Exists(filePath))
-                        {
+                        if (System.IO.File.Exists(filePath)) {
                             string fileContent = System.IO.File.ReadAllText(filePath);
-                            foreach (Match match in Regex.Matches(fileContent, pattern, RegexOptions.IgnoreCase))
-                            {
+                            foreach (Match match in Regex.Matches(fileContent, pattern, RegexOptions.IgnoreCase)) {
                                 TranslationRecord translation = new TranslationRecord();
 
                                 translation.ContainerName = folder;

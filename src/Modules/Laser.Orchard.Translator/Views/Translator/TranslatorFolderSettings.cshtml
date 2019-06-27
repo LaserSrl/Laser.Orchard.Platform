@@ -36,15 +36,22 @@
                     <h2>@T("Translations settings")</h2>
 
                     <div id="translation-text-container">
-                        @Html.CheckBoxFor(m => m.Deprecated)
-                        <label class="forcheckbox">@T("Deprecated")</label>
-                        @if (Model.ContainerType.Equals("M")) {
-                            <span class="hint">@T("If checked, translations for this module won't be exported anymore.")</span>
-                            <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
-                        } else if (Model.ContainerType.Equals("T")) {
-                            <span class="hint">@T("If checked, translations for this theme won't be exported anymore.")</span>
-                            <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
-                        }
+                        <div>
+                            @Html.CheckBoxFor(m => m.Deprecated)
+                            <label class="forcheckbox">@T("Deprecated")</label>
+                            @if (Model.ContainerType.Equals("M")) { //Modules
+                                <span class="hint">@T("If checked, translations for this module won't be exported anymore.")</span>
+                                <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
+                            }
+                            else if (Model.ContainerType.Equals("T")) { //Themes
+                                <span class="hint">@T("If checked, translations for this theme won't be exported anymore.")</span>
+                                <span class="hint">@T("WARNING: this setting is applied to all languages.")</span>
+                            }
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.OutputPath, new {@class="text large" })
+                            <span class="hint">@T("e.g /Laser.Orchard.Platform/src/Modules/")</span>
+                        </div>
                     </div>
 
                     @Html.HiddenFor(m => m.Id);
