@@ -70,7 +70,6 @@ namespace Laser.Orchard.Translator.Controllers {
 
                         MemoryStream stream = new MemoryStream();
                         StreamWriter streamWriter = new StreamWriter(stream);
-
                         streamWriter.WriteLine("# Orchard resource strings - " + folder.Language);
                         streamWriter.WriteLine("# Copyright (c) " + DateTime.Now.Year + " Laser s.r.l.");
                         streamWriter.WriteLine(Environment.NewLine);
@@ -107,9 +106,15 @@ namespace Laser.Orchard.Translator.Controllers {
                             outputPath = Path.Combine(outputPath, (settingsForFolder.OutputPath.StartsWith("/")) ? settingsForFolder.OutputPath.Substring(1) : settingsForFolder.OutputPath);
                         }
                         if (!String.IsNullOrWhiteSpace(fileName) && !String.IsNullOrWhiteSpace(parentFolder)) {
-                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, stream);
+                            StreamReader streamReader = new StreamReader(stream);
+                            var finalContent = streamReader.ReadToEnd();
+                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, finalContent);
+                            zip.AddEntry(Path.Combine(new string[] { outputPath, folder.ContainerName, "App_Data/Localization", folder.Language, fileName }), finalContent);
+
+                            streamReader.Dispose();
                         }
-                        zip.AddEntry(Path.Combine(new string[] { outputPath, folder.ContainerName, "App_Data/Localization", folder.Language, fileName }), stream);
+                        streamWriter.Dispose();
+                        stream.Dispose();
                     }
                 }
 
