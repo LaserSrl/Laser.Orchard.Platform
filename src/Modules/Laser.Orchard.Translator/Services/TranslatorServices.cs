@@ -123,7 +123,7 @@ namespace Laser.Orchard.Translator.Services {
                 TranslationFolderSettingsRecord existingFolderSettings = existingSettings.FirstOrDefault();
 
                 existingFolderSettings.Deprecated = translationSettings.Deprecated;
-
+                existingFolderSettings.OutputPath = translationSettings.OutputPath;
                 _translationFoldersSettingsRecordRepository.Update(existingFolderSettings);
                 _translationFoldersSettingsRecordRepository.Flush();
             } else {
