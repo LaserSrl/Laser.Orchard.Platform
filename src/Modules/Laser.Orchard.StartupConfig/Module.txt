@@ -58,3 +58,7 @@ Features:
 		Description: Part to show and edit a data table in json format
 		Category: Content
 		Dependencies: Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.ExtendAdminControllerToFrontend
+		Name: Laser Extend Admin Controller To Frontend
+		Description: Replicate some admin controller to Frontend
+		Category: Frontend
