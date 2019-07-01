@@ -33,6 +33,7 @@ namespace Contrib.Widgets.Drivers {
             if (widgetExPart.Record != null) {
                 hostId = widgetExPart.Record.HostId;
             }
+
             if (!hostId.HasValue) {
                 if (_workContext.GetContext().HttpContext.Items["CurrentController"] is Contrib.Widgets.Controllers.AdminController) {
                     if (!String.IsNullOrEmpty(_workContext.GetContext().HttpContext.Request.QueryString["hostId"])) {
@@ -40,7 +41,10 @@ namespace Contrib.Widgets.Drivers {
                     }
                 }
             }
-            var hostLocPart = _contentManager.Get<LocalizationPart>(hostId.Value, VersionOptions.Latest);
+
+            LocalizationPart hostLocPart = null;
+            if (hostId.HasValue)
+                hostLocPart = _contentManager.Get<LocalizationPart>(hostId.Value, VersionOptions.Latest);
             var hostCulture = (hostLocPart != null) ? ((hostLocPart.Culture != null) ? hostLocPart.Culture.Culture : "") : "";
 
             return ContentShape("Parts_ContribWidget_Localization_Edit",
