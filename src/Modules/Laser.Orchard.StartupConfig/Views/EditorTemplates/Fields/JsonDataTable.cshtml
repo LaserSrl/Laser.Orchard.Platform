@@ -22,10 +22,9 @@
             <script>
             $(function () {
                 var tableId = "#table-@uniqueId";
-                var $table; // = $("#table-@uniqueId");
                 var $hidden = $("#@Html.FieldIdFor(m => m.TableData)");
 
-                $table = new Tabulator(tableId, {
+                var $table = new Tabulator(tableId, {
                     height:"300px",
                     layout:"fitColumns",
                     movableRows: true,
@@ -35,11 +34,12 @@
                         $hidden.val(newVal);
                     },
                     rowMoved:function(row){
-                        var rows = $("#table-@uniqueId").tabulator("getRows");
+                        var newData = row.getTable().getData();
+                        var rows = row.getTable().getRows();
                         for (var i=0; i < rows.length; i++){
-                            this.data[i] = rows[i].getData();
+                            newData[i] = rows[i].getData();
                         }
-                        var newVal = JSON.stringify(this.data);
+                        var newVal = JSON.stringify(newData);
                         $hidden.val(newVal);
                     },
                     data: @Html.Raw(Model.TableData)

@@ -1,30 +1,29 @@
 ﻿@model Laser.Orchard.StartupConfig.Models.JsonDataTablePart
 @using Laser.Orchard.StartupConfig.Models;
-@{ 
-    Style.Require("tabulator").AtHead();
-    Script.Require("tabulator").AtHead();
+@{
+  Style.Require("tabulator").AtHead();
+  Script.Require("tabulator").AtHead();
 
-    var settings = Model.Settings.GetModel<JsonDataTablePartSettings>();
-    var columns = settings.ColumnsDefinition;
-    columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
+  var settings = Model.Settings.GetModel<JsonDataTablePartSettings>();
+  var columns = settings.ColumnsDefinition;
+  columns = "[{rowHandle:true,formatter:\"handle\",headerSort:false,width:30,minWidth:30}," + columns.TrimStart('[').TrimEnd(']') + ",{rowHandle:true,formatter:\"buttonCross\",headerSort:false,width:30,minWidth:30,cellClick:function(e, cell){cell.getRow().delete();}}]";
 }
 <fieldset>
-    <legend></legend>
-    <div>
-        @Html.HiddenFor(m => m.TableData)
-        <div class="btn-group" role="group" aria-label="Basic example" id="toolbar-@Model.Id">
-            <button type="button" class="btn btn-secondary" id="btnAddTop" style="margin-right:10px" title="@T("Insert a row at the top of the list")">@T("Insert")</button>
-            <button type="button" class="btn btn-secondary" id="btnAddBottom" style="margin-right:10px" title="@T("Insert a row at the bottom of the list")">@T("Add")</button>
-        </div>
-        <div id="table-@Model.Id"></div>
-@using (Script.Foot()) {
-        <script>
-            $(function () {
+  <legend></legend>
+  <div>
+    @Html.HiddenFor(m => m.TableData)
+    <div class="btn-group" role="group" aria-label="Basic example" id="toolbar-@Model.Id">
+      <button type="button" class="btn btn-secondary" id="btnAddTop" style="margin-right:10px" title="@T("Insert a row at the top of the list")">@T("Insert")</button>
+      <button type="button" class="btn btn-secondary" id="btnAddBottom" style="margin-right:10px" title="@T("Insert a row at the bottom of the list")">@T("Add")</button>
+    </div>
+    <div id="table-@Model.Id"></div>
+    @using(Script.Foot()) {
+      <script>
+          $(function () {
                 var tableId = "#table-@Model.Id";
-                var $table; // = $("#table-@Model.Id");
                 var $hidden = $("#@Html.FieldIdFor(m => m.TableData)");
 
-                $table = new Tabulator(tableId, {
+                var $table = new Tabulator(tableId, {
                     height:"300px",
                     layout:"fitColumns",
                     movableRows: true,
@@ -33,13 +32,14 @@
                         var newVal = JSON.stringify(newData);
                         $hidden.val(newVal);
                     },
-                    rowMoved:function(row){
-                        var rows = $("#table-@Model.Id").tabulator("getRows");
-                        for (var i=0; i < rows.length; i++){
-                            this.data[i] = rows[i].getData();
-                        }
-                        var newVal = JSON.stringify(this.data);
-                        $hidden.val(newVal);
+                  rowMoved: function (row) {
+                    var newData = row.getTable().getData();
+                    var rows = row.getTable().getRows();
+                    for (var i=0; i < rows.length; i++){
+                      newData[i] = rows[i].getData();
+                    }
+                    var newVal = JSON.stringify(newData);
+                    $hidden.val(newVal);
                     },
                     data: @Html.Raw(Model.TableData)
                 });
@@ -62,7 +62,7 @@
                     }
                 });
             });
-        </script>
-}
-    </div>
+      </script>
+    }
+  </div>
 </fieldset>
