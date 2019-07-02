@@ -287,6 +287,7 @@ namespace Laser.Orchard.ExternalContent.Services {
                             dvb.Add("CachedData", new XmlDocument());
                         }
                         dvb.Add("externalUrl", UrlToGet);
+                        dvb.Add("OrchardServices", _orchardServices);
                         ci = RazorTransform(webpagecontent.Replace(" xmlns=\"\"", ""), nomexlst, contentType, dvb);
 
                         _cacheStorageProvider.Remove(chiavecache);
