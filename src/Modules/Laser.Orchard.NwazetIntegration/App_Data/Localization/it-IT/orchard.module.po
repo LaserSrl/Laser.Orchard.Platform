@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,74 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Address Type"
+msgstr "Tipo di Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "First Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Last Name"
+msgstr "Cognome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Please include middle name or initial as appropriate."
+msgstr "Per favore, includete il secondo nome o l'iniziale in maniera opportuna."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'WA' per lo stato di Washington negli Stati Uniti d'America."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "State, province, prefecture, republic or region"
+msgstr "Stato, provincia, prefettura, repubblica o regione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
+msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Create.cshtml"
+msgid "Back to List"
+msgstr "Ritorna alla Lista"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Create.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Edit.cshtml"
+msgid "Back to List"
+msgstr "Ritorna alla Lista"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
 msgid "{0} is required."
@@ -67,6 +135,30 @@ msgstr "Indirizzo di spedizione"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
 msgid "Special Instructions"
 msgstr "Istruzioni speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Add Address"
+msgstr "Aggiungi Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Billing Addresses"
+msgstr "Indirizzo di Fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Do you really want to delete this address?"
+msgstr "Vuoi davvero cancellare questo indirizzo?"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
+msgid "Shipping Addresses"
+msgstr "Indirizzi di Spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Address"
@@ -147,4 +239,32 @@ msgstr "Torna al carrello"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
 msgid "Checkout"
 msgstr "Checkout"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Address created successfully."
+msgstr "Indirizzo creato con successo."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Address updated successfully."
+msgstr "Indirizzo aggiornato con successo."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "It was impossible to validate your address."
+msgstr "Non è stato possibile validare l'indirizzo."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Sign In to  manage your saved addresses."
+msgstr "Eseguire l'accesso per gestire i propri indirizzi salvati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Sign In to manage your saved addresses."
+msgstr "Eseguire l'accesso per gestire i propri indirizzi salvati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Sign In to visualize your saved addresses."
+msgstr "Eseguire l'accesso per visualizzare i propri indirizzi salvati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "That address has been removed."
+msgstr "L'indirizzo è stato rimosso."
 
