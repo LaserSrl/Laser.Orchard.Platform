@@ -237,8 +237,8 @@ msgid "Default 0 (no limit)"
 msgstr "Valore predefinito 0 (nessun limite)"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
-msgid "Default is false. "
-msgstr "Il valore predefinito è falso."
+msgid "Default is false."
+msgstr "Il valore di default è falso."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
 msgid "Default is false. If selected a Correct Response Option will be visible in back office"

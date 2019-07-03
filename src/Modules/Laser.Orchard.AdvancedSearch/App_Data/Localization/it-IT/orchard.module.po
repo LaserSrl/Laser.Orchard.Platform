@@ -133,7 +133,7 @@ msgid "Manage {0} Content"
 msgstr "Gestire Contenuto {0}"
 
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
-msgid "Manage Content"
+msgid "Manage content"
 msgstr "Gestisci contenuto"
 
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"

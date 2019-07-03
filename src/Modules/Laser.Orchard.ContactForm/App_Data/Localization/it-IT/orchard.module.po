@@ -157,6 +157,10 @@ msgid "Browse"
 msgstr "Sfoglia"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
+msgid "The file \"{0}\" has been uploaded!"
+msgstr "Il file \"{0}\" è stato caricato!"
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/FileUpload/Add.cshtml"
 msgid "Upload"
 msgstr "Carica"
 

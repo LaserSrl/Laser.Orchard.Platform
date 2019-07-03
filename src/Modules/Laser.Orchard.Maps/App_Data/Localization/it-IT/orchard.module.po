@@ -93,6 +93,10 @@ msgid "y coordinate in pixel"
 msgstr "Coordinata y in pixel"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
+msgid "An optional help text describing what \"Location Info\" and \"Location Address\" mean in the context."
+msgstr "Un testo opzionale che descriva il significato di \"Informazioni\" e \"Indirizzo della località\" nel contesto."
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
 msgid "Hide Map Source File"
 msgstr "Nascondi il campo Map Source File"
 

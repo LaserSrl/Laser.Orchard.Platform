@@ -53,6 +53,10 @@ msgid "If Google Analytics is enabled for the front end or the back end, the tra
 msgstr "Se Google Analytics è abilitato per il front end o il back end, la tracking key è obbligatoria."
 
 msgctxt "Laser.Orchard.GoogleAnalytics.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}#googleanalitycssetting\"> Google Analytics</a> settings need to be configured."
+msgstr "Le impostazioni di <a href=\"{0}#googleanalitycssetting\">Google Analytics</a> devono essere configurate."
+
+msgctxt "Laser.Orchard.GoogleAnalytics.Services.MissingSettingsBanner"
 msgid "The Google Analytics settings need to be configured."
 msgstr "E' necessario configurare le impostazioni di Google Analytics."
 

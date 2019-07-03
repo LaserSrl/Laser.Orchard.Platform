@@ -129,8 +129,8 @@ msgid "Announcement Item"
 msgstr "Comunicati"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
-msgid "Newsletter edition"
-msgstr "Edizione newsletter"
+msgid "Newsletter Edition"
+msgstr "Edizione Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
 msgid "Newsletter Edition Infos"

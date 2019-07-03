@@ -13,6 +13,18 @@ msgid "Add microdata for nested content"
 msgstr "Aggiungi microdata per i contenuti annidati"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical Url"
+msgstr "Url Canonico"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}"
+msgstr "Url Canonico es: {Site.BaseUrl}{Content.DisplayUrl}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical Url."
+msgstr "Url Canonico."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "If this content type contains an aggregator (i.e. projection, taxonomy, content picker), microdata for a carousel showing its linked items will be generated."
 msgstr "Se questo tipo di contenuto contiene un aggregatore (i.e. projection, tassonomia, content picker), verrà generato il microdata per un carosello che mostri gli elementi correlati."
 
@@ -199,6 +211,18 @@ msgstr "Tutto il mondo"
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
 msgid "You can add keywords and obtain the most relevant related ones on search engines."
 msgstr "Qui si possono aggiungere parole chiave, ed ottenere quelle correlate più importanti nei motori di ricerca."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical Url"
+msgstr "Url Canonico"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}"
+msgstr "Url Canonico es: {Site.BaseUrl}{Content.DisplayUrl}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical Url."
+msgstr "Url Canonico."
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
 msgid "Description"

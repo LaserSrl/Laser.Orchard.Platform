@@ -124,3 +124,7 @@ msgctxt "Laser.Orchard.Braintree.Services.BraintreePosService"
 msgid "An SDK is available for BrainTree."
 msgstr "Braintree ha una sua SDK."
 
+msgctxt "Laser.Orchard.Braintree.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}\">Braintree PayPal</a> settings need to be configured."
+msgstr "Le impostazioni di <a href=\"{0}\">Braintree PayPal</a> devono essere configurate."
+

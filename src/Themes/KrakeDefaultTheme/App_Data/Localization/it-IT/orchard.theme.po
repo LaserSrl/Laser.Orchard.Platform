@@ -245,6 +245,10 @@ msgid "New passwords are required to be a minimum of {0} characters in length."
 msgstr "La password deve essere almeno di {0} caratteri."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Password change was unsuccessful. Please correct the errors and try again."
+msgstr "La modifica della password è fallita. Correggere gli errori e provare di nuovo."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Use the form below to change your password."
 msgstr "Utilizza il modulo sottostante per cambiare la tua password."
 

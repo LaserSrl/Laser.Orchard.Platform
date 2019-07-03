@@ -45,6 +45,10 @@ msgid "User Tokens"
 msgstr "Token dello User"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Clear"
 msgstr "Pulisci"
 
@@ -67,6 +71,10 @@ msgstr "Trova"
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Search:"
 msgstr "Ricerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Url Scrap"

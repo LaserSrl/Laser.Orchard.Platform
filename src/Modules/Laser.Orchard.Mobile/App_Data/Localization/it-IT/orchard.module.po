@@ -97,6 +97,10 @@ msgid "Enabled platforms"
 msgstr "Piattaforme abilitate"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
+msgid "Exclude \"User-Agent\" regex"
+msgstr "Regex di esclusione per \"User Agent\""
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "For settings look at project:"
 msgstr "Per le impostazioni vedi il progetto:"
 
@@ -115,6 +119,10 @@ msgstr "Nascondi percorso"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "Hide ttl"
 msgstr "Nascondi ttl"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
+msgid "Include \"User-Agent\" regex"
+msgstr "Regex di inclusione per \"User Agent\""
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "Price"
@@ -781,8 +789,8 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User device"
-msgstr "Dispositivo utente"
+msgid "User Device"
+msgstr "Dispositivo Utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeFilter"
 msgid "Communication Contacts"
@@ -807,6 +815,10 @@ msgstr "Tipo del dispositivo"
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeForm"
 msgid "The type of the device the contact registered with (i.e. Android, Apple, Windows)."
 msgstr "Il tipo del dispositivo con cui si è registrato il contatto (i.e. Android, Apple, WIndows)."
+
+msgctxt "Laser.Orchard.Mobile.Services.MissingSmsSettingsBanner"
+msgid "The <a href=\"{0}\">SMS settings</a> need to be configured."
+msgstr "Le <a href=\"{0}\">impostazioni SMS</a> devono essere configurate."
 
 msgctxt "Laser.Orchard.Mobile.Services.PushGatewayService"
 msgid "Apple message payload exceeds the limit"

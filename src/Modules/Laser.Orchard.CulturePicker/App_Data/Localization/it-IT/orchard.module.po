@@ -112,6 +112,18 @@ msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedF
 msgid "Localized content items for current culture (untranslated included in default culture)"
 msgstr "Versione tradotta dei contenuti nella lingua corrente (non tradotti inclusi nella lingua di default)"
 
+msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
+msgid "For the selected culture (or any)"
+msgstr "Per la cultura selezionata (o una qualsiasi)"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
+msgid "Localization"
+msgstr "Localizzazione"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.SelectCultureForm"
+msgid "Culture"
+msgstr "Cultura"
+
 msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
 msgid "The content for a Term in Taxonomy Item {0} could not be found."
 msgstr "Impossibile trovare il contenuto corrispondente ad un Termine nella Tassonomia {0}."

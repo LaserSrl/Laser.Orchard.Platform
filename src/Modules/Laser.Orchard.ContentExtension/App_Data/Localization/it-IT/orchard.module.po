@@ -196,6 +196,14 @@ msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
 msgid "No content with this Id"
 msgstr "Contenuto inesistente"
 
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.testpostController"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
+
 msgctxt "Laser.Orchard.ContentExtension.Controllers.UploadFileController"
 msgid "The file extension in the filename is not allowed or has not been provided."
 msgstr "L'estensione del file non è tra quelle autorizzate o non è contenuta nel nome del file."
