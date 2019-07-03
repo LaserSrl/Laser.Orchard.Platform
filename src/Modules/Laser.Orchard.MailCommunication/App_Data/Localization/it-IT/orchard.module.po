@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -91,10 +91,6 @@ msgstr "Il modello da utilizzare."
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
 msgid "UNSUBSCRIPTION"
 msgstr "REVOCA DEL SERVIZIO"
-
-msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailCommunicationSettings.cshtml"
-msgid "You can use this placeholder \"[UNSUBSCRIBE]\" in order to render the unsubscription link in your template."
-msgstr "Puoi utilizzare nel tuo template il segnaposto \"[UNSUBSCRIBE]\" per scrivere il link della revoca del servizio."
 
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/EditorTemplates/Parts/MailerSiteSettings.cshtml"
 msgid "FTP host"
@@ -259,16 +255,4 @@ msgstr "Seleziona nelle impostazioni il template per rimozione e-mail"
 msgctxt "Laser.Orchard.MailCommunication.Services.MailUnsubscribeService"
 msgid "Unsubscribe impossible. Please try again."
 msgstr "Rimozione non eseguita. Si prega di riprovare."
-
-msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
-msgid "The <a href=\"{0}\"> Mailer</a> settings need to be configured."
-msgstr "Le impostazioni del <a href=\"{0}\"> Mailer</a> devono essere ancora configurate."
-
-msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
-msgid "The <a href=\"{0}\">Mail Communication</a> settings need to be configured."
-msgstr "Le impostazioni del modulo <a href=\"{0}\">Mail Communication</a> devono essere configurate."
-
-msgctxt "Laser.Orchard.MailCommunication.Services.MissingSettingsBanner"
-msgid "The <a href=\"{0}\">Mailer</a> settings need to be configured."
-msgstr "Le impostazioni del modulo <a href=\"{0}\">Mailer</a> devono essere configurate."
 

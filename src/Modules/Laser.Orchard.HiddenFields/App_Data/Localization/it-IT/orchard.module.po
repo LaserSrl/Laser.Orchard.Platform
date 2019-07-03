@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -151,10 +151,6 @@ msgstr "{0} proprietà di {1}"
 msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
 msgid "Content Fields for {0}"
 msgstr "Campo di {0}"
-
-msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
-msgid "Field {0} {1} \"{2}\""
-msgstr "Campo {0} {1} \"{2}\""
 
 msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
 msgid "All fields"

@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -9,12 +9,32 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Leave empty to use the browser title."
+msgstr "Lasciare in bianco per utilizzare il titolo del browser."
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Leave empty to use the default."
+msgstr "Lasciare in bianco per utilizzare il predefinito."
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
 msgid "Preview of available modes is available here: "
 msgstr "L'anteprima dei modi disponibili è consultabile qui:"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Share bar description"
+msgstr "Descrizione della barra di condivisione"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
 msgid "Share bar display style"
 msgstr "Stile di visualizzazione della barra di condivisione"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Share bar media url"
+msgstr "Url del media della barra di condivisione"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Share bar title"
+msgstr "Titolo della barra di condivisione"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
 msgid "AddThis PubId code"
@@ -30,7 +50,7 @@ msgstr "Impostazioni di condivisione del contenuto"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
 msgid "PubId is the code that identify your AddThis account, you can find it on https://www.addthis.com/dashboard#dashboard-analytics/ in the GET YOUR CODE tab"
-msgstr "PubId è il codice che identifica l'account di AddThis, si può trovare all'indirizzo https://www.addthis.com/dashboard#dashboard-analytics/ nella pagina "GET YOUR CODE""
+msgstr "PubId è il codice che identifica l'account di AddThis, si può trovare all'indirizzo https://www.addthis.com/dashboard#dashboard-analytics/ nella pagina"
 
 msgctxt "Laser.Orchard.Sharing.Drivers.ShareBarSettingsPartDriver"
 msgid "Content sharing settings updated successfully"

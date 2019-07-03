@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -59,10 +59,6 @@ msgstr "Sorgente degli elementi"
 msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
 msgid "Not published"
 msgstr "Non pubblicato"
-
-msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
-msgid "Premere \"Salva\" per memorizzare le modifiche."
-msgstr "Premere \"Salva\" per memorizzare le modifiche."
 
 msgctxt "~/Modules/Laser.Orchard.Highlights/Views/EditorTemplates/Parts/HighlightsGroup_Edit.cshtml"
 msgid "Published"

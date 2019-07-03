@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -91,10 +91,6 @@ msgstr "Coordinata x in pixel"
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/CustomPinPartSettings.cshtml"
 msgid "y coordinate in pixel"
 msgstr "Coordinata y in pixel"
-
-msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
-msgid "An optional help text describing what \"Location Info\" and \"Location Address\" mean in the context."
-msgstr "Un testo opzionale di supporto che descrive il significato di \"Informazioni\" e \"Informazioni sull'indirizzo\"."
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/DefinitionTemplates/MapPartSettings.cshtml"
 msgid "Hide Map Source File"

@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -11,10 +11,6 @@
 msgctxt "!=.AuthenticationRequiredPartDriver"
 msgid "You do not have permission to access this content."
 msgstr "Mancano i permessi per accedere a questo contenuto."
-
-msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
-msgid "Command Line"
-msgstr "Linea di comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
@@ -540,10 +536,6 @@ msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
 msgid "Settings updated."
 msgstr "Impostazioni aggiornate."
 
-msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
-msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
-
 msgctxt "Laser.Orchard.StartupConfig.CultureCommands.CultureCommandsExtension"
 msgid "Cannot remove current culture {0} from site. Change current culture first."
 msgstr "Impossibile rimuovere la cultura principale {0} dal sito. Prima è necessario cambiare la cultura principale."
@@ -833,10 +825,6 @@ msgid "Has terms (tokenized)"
 msgstr "Ha termini (con token)"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
-msgid "None of the ids \"{0}\" is a term."
-msgstr "Nessuno degli id \"{0}\" è un termine."
-
-msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenFilter"
 msgid "Taxonomy"
 msgstr "Tassonomia"
 
@@ -921,12 +909,8 @@ msgid "Razor View"
 msgstr "Vista Razor"
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
-msgid "The razor view to run every time the Decision Activity is invoked. You can use Model.ContentItem, Model.T, Model.OrchardServices, Model.Tokens, Model.Tokens[\"Workflow\"] (to get WorkflowContext and call HasState, GetState, SetState). The razor output (e.g. 'Success', 'Error' or 'Empty') should be used to define the 'texthint' outcome of the activity."
-msgstr "La vista Razor da eseguire quando la Decision Activity viene invocata. Si può usare: Model.ContentItem, Model.T, Model.OrchardServices, Model.Tokens, Model.Tokens[\"Workflow\"] (per accedere al WorkflowContext e chiamare HasState, GetState, SetState). L'output del Razor (e.g. 'Success', 'Error' or 'Empty') deve essere usato per definire il risultato 'texthint' dell'attività."
-
-msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
 msgid "The razor view to run every time the Decision Activity is invoked. You can use Model.ContentItem, Model.T, Model.OrchardServices. The razor output (e.g. 'Success', 'Error' or 'Empty') should be used to define the 'texthint' outcome of the activity."
-msgstr "La Vista Razor da eseguire ogni volta che la Decision Activity viene invocata. E' possibile usare Model.ContentItem, Model.T, Model.OrchardServices. L'output Razor (es. "Successo", "Errore" o "Vuoto") dev'essere usato per definire il risultato 'texthint' dell'attività."
+msgstr "La Vista Razor da eseguire ogni volta che la Decision Activity viene invocata. E' possibile usare Model.ContentItem, Model.T, Model.OrchardServices. L'output Razor (es."
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
 msgid "You must provide a Razor View"
@@ -991,10 +975,6 @@ msgstr "Catalogati con i termini specificati tramite token"
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Has terms (tokenized)"
 msgstr "Ha termini (tokenized)"
-
-msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
-msgid "None of the ids \"{0}\" is a term."
-msgstr "Nessuno degli id \"{0}\" è un termine."
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Taxonomy"
@@ -1123,10 +1103,6 @@ msgstr "Api Web"
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Handlers.ProtectionSettingsHandler"
 msgid "WebApi"
 msgstr "WebApi"
-
-msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Migration"
-msgid "A default app named \"{0}\" has been created. Its Api Key is {1}."
-msgstr "E' stata creata un'App di default chiamata \"{0}\". La sua Api Key è {1}."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "ApiKey field is required."

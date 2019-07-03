@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -97,10 +97,6 @@ msgid "Enabled platforms"
 msgstr "Piattaforme abilitate"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
-msgid "Exclude \"User-Agent\" regex"
-msgstr "Regex di esclusione \"User-Agent\""
-
-msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "For settings look at project:"
 msgstr "Per le impostazioni vedi il progetto:"
 
@@ -119,10 +115,6 @@ msgstr "Nascondi percorso"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "Hide ttl"
 msgstr "Nascondi ttl"
-
-msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
-msgid "Include \"User-Agent\" regex"
-msgstr "Regex di inclusione \"User-Agent\""
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/BannerAgent_Edit.cshtml"
 msgid "Price"
@@ -263,6 +255,10 @@ msgstr "Dispositivi"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Type user's first 3 chars..."
 msgstr "Digitare i primi 3 caratteri dell'utente..."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Use \"token:\" prefix to send a push to specific device."
+msgstr "Utilizzare il prefisso \"token:\" per spedire una push ad uno specifico device."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "YES"
@@ -785,10 +781,6 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User Device"
-msgstr "Dispositivo Utente"
-
-msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
 msgid "User device"
 msgstr "Dispositivo utente"
 
@@ -815,10 +807,6 @@ msgstr "Tipo del dispositivo"
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeForm"
 msgid "The type of the device the contact registered with (i.e. Android, Apple, Windows)."
 msgstr "Il tipo del dispositivo con cui si è registrato il contatto (i.e. Android, Apple, WIndows)."
-
-msgctxt "Laser.Orchard.Mobile.Services.MissingSmsSettingsBanner"
-msgid "The <a href=\"{0}\">SMS settings</a> need to be configured."
-msgstr "E' necessario configurare le <a href=\"{0}\">impostazioni SMS</a>."
 
 msgctxt "Laser.Orchard.Mobile.Services.PushGatewayService"
 msgid "Apple message payload exceeds the limit"

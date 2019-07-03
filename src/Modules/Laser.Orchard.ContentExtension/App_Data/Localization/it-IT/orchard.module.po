@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -188,10 +188,6 @@ msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "Yout have to be an Administrator to edit ContentTypePermission settings!"
 msgstr "Devi essere un Amministratore per poter modificare le impostazioni dei Permessi"
 
-msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentController"
-msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
-
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
 msgid "ContentType not exist"
 msgstr "Il tipo di contenuto non esiste"
@@ -199,14 +195,6 @@ msgstr "Il tipo di contenuto non esiste"
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
 msgid "No content with this Id"
 msgstr "Contenuto inesistente"
-
-msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
-msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
-
-msgctxt "Laser.Orchard.ContentExtension.Controllers.testpostController"
-msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.UploadFileController"
 msgid "The file extension in the filename is not allowed or has not been provided."

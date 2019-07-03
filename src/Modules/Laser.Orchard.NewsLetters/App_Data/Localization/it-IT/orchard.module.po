@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -62,7 +62,7 @@ msgstr "Errore nell'Edizione della Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Drivers/SubscriberRegistrationPartDriver.cs"
 msgid "SubscriberRegistration Error"
-msgstr "Errore nella fase di registrazione "
+msgstr "Errore nella fase di registrazione"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Navigation/AdminMenu.cs"
 msgid "newsletter"
@@ -127,10 +127,6 @@ msgstr "Modello di cancellazione"
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
 msgid "Announcement Item"
 msgstr "Comunicati"
-
-msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
-msgid "Newsletter Edition"
-msgstr "Edizione Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
 msgid "Newsletter edition"
@@ -244,7 +240,7 @@ msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Properties"
 msgstr "Proprietà
 
-msgctxt "
+msgctxt"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Subscribers"
@@ -333,10 +329,6 @@ msgstr "Elenco Edizioni"
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterEditionAdmin/Index.cshtml"
 msgid "Newsletter edition nr. {0}"
 msgstr "Edizione Newnsletter n. {0}"
-
-msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterEditionAdmin/Index.cshtml"
-msgid "Newsletter Editions List"
-msgstr "Elenco Edizioni"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterEditionAdmin/Index.cshtml"
 msgid "Newsletter Editions List "

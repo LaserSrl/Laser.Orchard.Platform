@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -51,10 +51,6 @@ msgstr "Errore nell'aggiornamento delle impostazioni di Google Analytics"
 msgctxt "GoogleAnalytics.Drivers.GoogleAnalyticsSettingsPartDriver"
 msgid "If Google Analytics is enabled for the front end or the back end, the tracking key is required."
 msgstr "Se Google Analytics è abilitato per il front end o il back end, la tracking key è obbligatoria."
-
-msgctxt "Laser.Orchard.GoogleAnalytics.Services.MissingSettingsBanner"
-msgid "The <a href=\"{0}#googleanalitycssetting\"> Google Analytics</a> settings need to be configured."
-msgstr "Le impostazioni di <a href=\"{0}#googleanalitycssetting\"> Google Analytics</a> devono essere configurate."
 
 msgctxt "Laser.Orchard.GoogleAnalytics.Services.MissingSettingsBanner"
 msgid "The Google Analytics settings need to be configured."
