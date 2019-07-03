@@ -152,3 +152,6 @@ msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
 msgid "Technical"
 msgstr "Tecnici"
 
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
+msgid "Change your choice"
+msgstr "Cambia la tua scelta"
