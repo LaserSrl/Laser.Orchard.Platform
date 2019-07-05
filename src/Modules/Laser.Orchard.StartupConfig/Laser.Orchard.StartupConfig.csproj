@@ -348,6 +348,9 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />
@@ -528,6 +531,7 @@
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="App_Data\Localization\fr-FR\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="Views\DefinitionTemplates\CPContentCreationSettings.cshtml" />
     <None Include="Properties\PublishProfiles\OrchardModuleRelease.pubxml" />
     <Content Include="Views\Parts\ContentPickerConnector.cshtml" />
     <Content Include="Views\DefinitionTemplates\Parts\ContentPickerConnector.Settings.cshtml" />
@@ -599,6 +603,7 @@
     <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
+    <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -607,7 +612,9 @@
     </None>
     <None Include="Views\EditorTemplates\Parts\ProtectionSettingsPart.Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ContentPickerContentCreation\Models\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
