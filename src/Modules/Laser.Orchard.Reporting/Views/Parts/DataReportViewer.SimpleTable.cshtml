@@ -18,7 +18,6 @@
         var dataList = new List<string>();
         var jsData = "";
         var isHeader = true;
-        var itemList = new List<string>();
         foreach (var item in dataReportViewerViewModel.Data) {
             array = item.Other as Array;
             if (isHeader) {
@@ -29,6 +28,7 @@
                 jsHeaders = "[" + string.Join(",", headersList) + "]";
                 isHeader = false;
             } else {
+                var itemList = new List<string>();
                 var idx = 0;
                 foreach (var element in array) {
                     if(element != null) {
@@ -36,10 +36,13 @@
                             case "Decimal":
                             case "Double":
                             case "Float":
+                            case "Int16":
+                            case "Int32":
+                            case "Int64":
                                 itemList.Add(string.Format("{0}: {1}", headers[idx], Convert.ToString(element, CultureInfo.InvariantCulture)));
                                 break;
                             default:
-                                itemList.Add(string.Format("{0}: \"{1}\"", headers[idx], element));
+                                itemList.Add(string.Format("{0}: \"{1}\"", headers[idx], Html.Encode(element.ToString())));
                                 break;
                         }
                     } else {
