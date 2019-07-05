@@ -49,6 +49,10 @@ msgid "Dynamic link domain"
 msgstr "Dominio del link dinamico (Dynamic link)"
 
 msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Set <a target=\"_blank\" href=\"{0}\">the domain and the apikey</a> of your application."
+msgstr "Impostare <a target=\"_blank\" href=\"{0}\">il dominio e l'ApiKey</a> dell'applicazione."
+
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
 msgid "Short Link Settings"
 msgstr "Impostazioni modulo Short Link"
 
@@ -67,6 +71,10 @@ msgstr "Link breve"
 msgctxt "Laser.Orchard.ShortLinks.Handlers.ShortLinksHandler"
 msgid "The short link is not associated to this page!"
 msgstr "Questo link breve (short link) non è attualmente associato alla presente pagina!"
+
+msgctxt "Laser.Orchard.ShortLinks.Services.MissingSettingsBanner"
+msgid "The <a href=\"{0}#shortlinksetting\">ShortLinks settings</a> need to be configured."
+msgstr "Le <a href=\"{0}#shortlinksetting\">impostazione ShortLinks</a> devono essere configurate."
 
 msgctxt "Laser.Orchard.ShortLinks.Services.ShortLinksService"
 msgid "No Shorturl Setting Found"

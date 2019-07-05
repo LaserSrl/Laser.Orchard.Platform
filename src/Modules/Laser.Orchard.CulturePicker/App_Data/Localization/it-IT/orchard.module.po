@@ -120,9 +120,21 @@ msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
 msgid "Localization"
 msgstr "Localizzazione"
 
+msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
+msgid "Localized content items for a given culture (or any culture if none provided)."
+msgstr "Contenuti tradotti per una data cultura (oppure qualsiasi cultura se nessuna è presente)"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
+msgid "Selected culture or any"
+msgstr "Cultura selezionata oppure ogni cultura"
+
 msgctxt "Laser.Orchard.CulturePicker.Projections.SelectCultureForm"
 msgid "Culture"
 msgstr "Cultura"
+
+msgctxt "Laser.Orchard.CulturePicker.Projections.SelectCultureForm"
+msgid "Insert the desired culture name, in the usual form (e.g. it-IT). If the value does not match any configured culture, all content items will be included in the results. You may use tokens, but be careful as it's possible to accidentally set the culture of the WorkContext, for example with the 'lang' querystring parameter."
+msgstr "Inserire la cultura desiderata, nel formato consueto (es: it-IT). Se il valore non rappresentasse una cultura configurata a sistema, i risultati includeranno tutti i contenuti. E' possibile utilizzare i tokens, facendo attenzione al fatto che alcuni di questi possono accidentalmente impostare la cultura corrente del WorkContext, ad esempio con il parametro 'lang' della querystring."
 
 msgctxt "Laser.Orchard.CulturePicker.Services.TranslateMenuItemServices"
 msgid "The content for a Term in Taxonomy Item {0} could not be found."

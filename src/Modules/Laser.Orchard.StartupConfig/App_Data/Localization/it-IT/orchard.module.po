@@ -12,6 +12,10 @@ msgctxt "!=.AuthenticationRequiredPartDriver"
 msgid "You do not have permission to access this content."
 msgstr "Mancano i permessi per accedere a questo contenuto."
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
+msgid "Command Line"
+msgstr "Linea di comando"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
 msgstr "Per aiuto consultare {0}"
@@ -55,6 +59,22 @@ msgstr "Testo da mostrare"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text to show in back-end lists."
 msgstr "Testo dal mostrare nelle liste di back-end."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "Columns Definition"
+msgstr "Definizione colonne"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "Columns definition of the bootstrap-table as a json array. Example: [{field:'name',title:'Name'},{field:'description',title:'Description'}]"
+msgstr "Definizione delle colonne come vettore json es: [{filed:'nome',title:'Nome'},{filed:'descrizione'.title:'Descrizione'}]"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "Limit number of rows in the table. 0 means no limit."
+msgstr "Limite numero di righe della tablella, 0 per nessun limite"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
+msgid "Max Number of Rows"
+msgstr "Numero massimo di righe"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTablePartSettings.cshtml"
 msgid "Columns Definition"
@@ -111,6 +131,26 @@ msgstr "Validità in minuti"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
+msgid "Add"
+msgstr "Aggiungi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
+msgid "Insert"
+msgstr "Inserisci"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
+msgid "Insert a row at the bottom of the list"
+msgstr "Inserire una riga al fondo della lista"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
+msgid "Insert a row at the top of the list"
+msgstr "Inserire una riga in cima alla lista"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
+msgid "Max number of rows reached."
+msgstr "Numero massimo di righe raggiunto"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/EnvironmentVariablesSettings.cshtml"
 msgid "Fallback tenants"
@@ -223,6 +263,14 @@ msgstr "Nessun dato trovato."
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FileDownloader/Index.cshtml"
 msgid "The file process is in progress. Refresh the page in a few seconds."
 msgstr "Il processo del file è in corso. Aggiorna la pagina tra qualche secondo."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FrontEndClientStorage/Index.cshtml"
+msgid "Click here, Drop files or Paste images"
+msgstr "Clicca qui, Trascina i file oppure Copia le immagini"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FrontEndClientStorage/Index.cshtml"
+msgid "Loading thumbnail..."
+msgstr "Aggiornamento anteprima..."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
 msgid "Action"
@@ -429,6 +477,10 @@ msgid "Check if the the activity should return a success response."
 msgstr "Spuntare nel caso in cui l'attività debba restituire una risposta di successo."
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
+msgid "Data"
+msgstr "Dati"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Error Code"
 msgstr "Codice dell'errore"
 
@@ -447,6 +499,10 @@ msgstr "Risposta"
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Success"
 msgstr "Successo"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
+msgid "The data object of the response."
+msgstr "L'oggetto della risposta."
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "The text message of the response."
@@ -500,6 +556,58 @@ msgctxt "Laser.Orchard.StartupConfig.Controllers.CommandsController"
 msgid "Not authorized to use the web console"
 msgstr "Non autorizzato a usare la web console"
 
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
+msgid "Cannot replace {0} with {1}"
+msgstr "Impossibile sostituire {0} con {1}"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
+msgid "Cannot select media"
+msgstr "Impossibile selezionare il contenuto multimediale"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
+msgid "Couldn't delete media items"
+msgstr "Non è stato possibile eliminare i contenuti multimediali"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
+msgid "This file is not allowed: {0}"
+msgstr "Questo tipo di file non è consentito: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "Couldn't publish content"
+msgstr "Non è stato possibile pubblicare il contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "Couldn't remove content"
+msgstr "Non è stato possibile eliminare il contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "Couldn't unpublish content"
+msgstr "Non è stato possibile annullare la pubblicazione del contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That {0} has been published."
+msgstr "Il {0} è stato pubblicato."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That {0} has been removed."
+msgstr "Il {0} è stato rimosso."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That {0} has been unpublished."
+msgstr "Il {0} è stato spubblicato."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That content has been published."
+msgstr "Il contenuto è stato pubblicato."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That content has been removed."
+msgstr "Il contenuto è stato rimosso."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
+msgid "That content has been unpublished."
+msgstr "La pubblicazione del contenuto è stata annullata."
+
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "Couldn't remove content"
 msgstr "Non è stato possibile eliminare il contenuto"
@@ -535,6 +643,10 @@ msgstr "Aggiornamento impostazioni fallito: {0}"
 msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
 msgid "Settings updated."
 msgstr "Impostazioni aggiornate."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
+msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
+msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
 
 msgctxt "Laser.Orchard.StartupConfig.CultureCommands.CultureCommandsExtension"
 msgid "Cannot remove current culture {0} from site. Change current culture first."
@@ -909,6 +1021,10 @@ msgid "Razor View"
 msgstr "Vista Razor"
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
+msgid "The razor view to run every time the Decision Activity is invoked. You can use Model.ContentItem, Model.T, Model.OrchardServices, Model.Tokens, Model.Tokens[\"Workflow\"] (to get WorkflowContext and call HasState, GetState, SetState). The razor output (e.g. 'Success', 'Error' or 'Empty') should be used to define the 'texthint' outcome of the activity."
+msgstr "Il razor da eseguire ogni volta  che la Decision Activity viene invocata. Puoi usare Model.ContentItem, Model.T, Model.OrchardServices, Model.Tokens, Model.Tokens[\"Workflow\"] (per ottenere il WorkflowContext a richiamare HasState, GetState, SetState). l'output del razor (es: 'Success', 'Error' o 'Empty') può essere usato come 'textint' uscita (outcome) dell'Activity."
+
+msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
 msgid "The razor view to run every time the Decision Activity is invoked. You can use Model.ContentItem, Model.T, Model.OrchardServices. The razor output (e.g. 'Success', 'Error' or 'Empty') should be used to define the 'texthint' outcome of the activity."
 msgstr "La Vista Razor da eseguire ogni volta che la Decision Activity viene invocata. E' possibile usare Model.ContentItem, Model.T, Model.OrchardServices. L'output Razor (es."
 
@@ -964,6 +1080,42 @@ msgctxt "Laser.Orchard.StartupConfig.Settings.IdentityPartOnEveryTypeContentDefi
 msgid "The content type must have a form of identity. IdentityPart was added."
 msgstr "Il tipo deve avere una Identity. È stata aggiunta IdentityPart"
 
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.OptionalTermsFilterProvider"
+msgid "ContentItems with the given terms, or any ContentItem if no term si provided to the query."
+msgstr "Contenuti con i termini proposti, oppure tutti i contenuti se non è passato alla query alcun termine."
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.OptionalTermsFilterProvider"
+msgid "For the selected terms (or any)"
+msgstr "Per i termini selezionati (oppure qualsiasi termine)"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.OptionalTermsFilterProvider"
+msgid "Has the selected terms (if any was selected)"
+msgstr "Ha i termini selezionati (se almeno uno è selezionato)"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.OptionalTermsFilterProvider"
+msgid "Taxonomy"
+msgstr "Tassonomia"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
+msgid "Automatically include children terms in filtering"
+msgstr "Includi automaticamente i termini figli nel filtro"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
+msgid "Is associated to all the specified terms"
+msgstr "E' associato a tutti i termini specificati"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
+msgid "Is associated to one of the specified terms"
+msgstr "E' associato a uno dei termini specificati"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
+msgid "Terms"
+msgstr "Termini"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
+msgid "The term identifiers. If no valid term is provided, all content items will be included in the results."
+msgstr "Gli identificativi dei termini. Se viene fornito un termine non valido, nei risultati verranno inclusi tutti i contenuti."
+
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Categorized content items (search by token)"
 msgstr "Elementi di contenuto catalogati (ricerca tramite token)"
@@ -975,6 +1127,10 @@ msgstr "Catalogati con i termini specificati tramite token"
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Has terms (tokenized)"
 msgstr "Ha termini (tokenized)"
+
+msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
+msgid "None of the ids \"{0}\" is a term."
+msgstr "Nessuna dei seguenti id \"{0}\" è un termine."
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Taxonomy"
@@ -1103,6 +1259,10 @@ msgstr "Api Web"
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Handlers.ProtectionSettingsHandler"
 msgid "WebApi"
 msgstr "WebApi"
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Migration"
+msgid "A default app named \"{0}\" has been created. Its Api Key is {1}."
+msgstr "È stata creata un'app di default denominata \"{0}\". La sua Api Key è {1}."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "ApiKey field is required."
