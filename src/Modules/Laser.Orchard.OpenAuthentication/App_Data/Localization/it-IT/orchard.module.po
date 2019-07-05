@@ -153,12 +153,20 @@ msgid "Identifier"
 msgstr "Identificativo"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "In order to enable \"Auto merge\", Users registration settings have to be in one of these status:"
+msgstr "Per poter abilitare il \"merge automatico\", l'impostazione di registrazione degli utenti deve essere in uno dei seguenti stati:"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Key"
 msgstr "Chiave"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Name"
 msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "Note: Remember to enable \"Users can create new accounts on the site\" in Settings > Users"
+msgstr "Nota: Ricordarsi di abilitare \"Gli utenti possono creare nuovi account sul sito\" in Impostazioni > Utenti"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Open Authentication Settings"
@@ -179,6 +187,10 @@ msgstr "Salva"
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Secret"
 msgstr "Secret"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
+msgid "There are no providers registered. Why not <a href=\"{0}\">register one</a>?"
+msgstr "Nessun servizio registrato. Vuoi <a href=\"{0}\">registrarne uno</a>?"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "User"

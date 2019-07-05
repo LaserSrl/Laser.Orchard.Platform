@@ -72,6 +72,10 @@ msgctxt "Laser.Orchard.MultiStepAuthentication.Services.DefaultNonceLinkDelivery
 msgid "{0} - Login"
 msgstr "{0} - Accesso"
 
+msgctxt "Laser.Orchard.MultiStepAuthentication.Services.DefaultNonceLinkDeliveryByMailService"
+msgid "<html><body>To login on \"{0}\", please open the following link: <a href=\"{1}\">Login</a></body></html>"
+msgstr "<html><body>Per effettuare la login su \"{0}\", aprire il seguente link: <a href=\"{1}\">Login</a></body></html>"
+
 msgctxt "Laser.Orchard.MultiStepAuthentication.Services.NonceLoginNonceService"
 msgid "Context.User cannot be null."
 msgstr "Context.User non può essere nullo."

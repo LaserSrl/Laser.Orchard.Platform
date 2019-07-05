@@ -152,6 +152,10 @@ msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
 msgid "Content Fields for {0}"
 msgstr "Campo di {0}"
 
+msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
+msgid "Field {0} {1} \"{2}\""
+msgstr "Campo (Field) {0} {1} \"{2}\""
+
 msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
 msgid "All fields"
 msgstr "Tutti i campi"

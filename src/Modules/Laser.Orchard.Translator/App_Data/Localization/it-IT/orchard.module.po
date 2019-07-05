@@ -49,6 +49,10 @@ msgid "Deprecated"
 msgstr "Deprecata"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
+msgid "e.g /Laser.Orchard.Platform/src/Modules/"
+msgstr "es. /Laser.Orchard.Platform/src/Modules/"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorFolderSettings.cshtml"
 msgid "If checked, translations for this module won't be exported anymore."
 msgstr "Se selezionato, le traduzioni per questo modulo non verranno più esportate."
 

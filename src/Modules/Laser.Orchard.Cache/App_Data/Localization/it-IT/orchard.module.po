@@ -45,6 +45,10 @@ msgid "User Tokens"
 msgstr "Token dello User"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Active Log for Authenticated Cache"
+msgstr "Attivare il log delle cache per utenti autenticati"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Cache"
 msgstr "Cache"
 
@@ -63,6 +67,18 @@ msgstr "Durata"
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Grace Time"
 msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "GraceTime"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Prevent Default Authenticated Cache"
+msgstr "Non usare la cache di default per utenti autenticati"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Prevent Default Not ContentItem Authenticated Cache"
+msgstr "Impedire la generazione della cache per utenti autenticati quando l'url non corrisponde ad un contenuto"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Search"
@@ -91,4 +107,8 @@ msgstr "Cache Url cancellata: {0}"
 msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
 msgid "Cache Url updated: {0}"
 msgstr "Cache Url aggiornata: {0}"
+
+msgctxt "Laser.Orchard.Cache.Navigation.AdminMenu"
+msgid "Cache URL"
+msgstr "URL Cache"
 
