@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -238,7 +238,7 @@ msgstr "È richiesta una valuta valida. L'oggetto Data di questa risposta contie
 
 msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
 msgid "Could not find a POS called \"{0}\": you may find a list of available POS names in this response's data object."
-msgstr "Impossibile trovare il metodo di pagamento \"{0}\": l'oggetto Data di questa risposta contiene una lista di metodi validi."
+msgstr "Impossibile trovare un POS chiamato \"{0}\": puoi trovare un elenco di POS utilizzabili nell'oggetto dati di questa riposta."
 
 msgctxt "Laser.Orchard.PaymentGateway.Controllers.PaymentGatewayAPIController"
 msgid "The Data object contains the array of valid filter parameters. These are case-insensitive."

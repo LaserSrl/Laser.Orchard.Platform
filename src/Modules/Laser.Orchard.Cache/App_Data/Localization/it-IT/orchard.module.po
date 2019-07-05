@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2017 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,94 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Duration"
+msgstr "Durata"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Grace Time"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Priority"
+msgstr "Priorità"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Seconds, enter 0 to disable caching for the url."
+msgstr "Secondi, 0 per disabilitare la cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Seconds, enter 0 to disable gracetime for the url."
+msgstr "Secondi, 0 per disabilitare il tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "Url Scrap"
+msgstr "Parte dell'url"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
+msgid "User Tokens"
+msgstr "Token dello User"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Active Log for Authenticated Cache"
+msgstr "Attivare il log delle cache per utenti autenticati"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Cache"
+msgstr "Cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Clear"
+msgstr "Pulisci"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Create New CacheUrl"
+msgstr "Aggiungi nuovo url di cache"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Duration"
+msgstr "Durata"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Grace Time"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "GraceTime"
+msgstr "Tempo di dilazione"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Prevent Default Authenticated Cache"
+msgstr "Non usare la cache di default per utenti autenticati"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Prevent Default Not ContentItem Authenticated Cache"
+msgstr "Impedire la generazione della cache per utenti autenticati quando l'url non corrisponde ad un contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Search"
+msgstr "Trova"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Search:"
+msgstr "Ricerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
+msgid "Url Scrap"
+msgstr "Parte dell'url"
 
 msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
 msgid "Cache Url added: {0}"
@@ -20,66 +108,7 @@ msgctxt "Laser.Orchard.Cache.Controllers.CacheURLAdminController"
 msgid "Cache Url updated: {0}"
 msgstr "Cache Url aggiornata: {0}"
 
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Url Scrap"
-msgstr "Parte dell'url"
+msgctxt "Laser.Orchard.Cache.Navigation.AdminMenu"
+msgid "Cache URL"
+msgstr "URL Cache"
 
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Duration"
-msgstr "Durata"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Seconds, enter 0 to disable caching for the url."
-msgstr "Secondi, 0 per disabilitare la cache"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Grace Time"
-msgstr "Tempo di dilazione"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Seconds, enter 0 to disable gracetime for the url."
-msgstr "Secondi, 0 per disabilitare il tempo di dilazione"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Priority"
-msgstr "Priorità"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "User Tokens"
-msgstr "Token dello User"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Delete"
-msgstr "Elimina"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
-msgid "Save"
-msgstr "Salva"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Create New CacheUrl"
-msgstr "Aggiungi nuovo url di cache"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Search"
-msgstr "Trova"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Search:"
-msgstr "Ricerca:"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Clear"
-msgstr "Pulisci"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Duration"
-msgstr "Durata"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Grace Time"
-msgstr "Tempo di dilazione"
-
-msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
-msgid "Url Scrap"
-msgstr "Parte dell'url"

@@ -1,4 +1,4 @@
-# Orchard resource strings - it-IT
+﻿# Orchard resource strings - it-IT
 # Copyright (c) 2019 Laser s.r.l.
 
 
@@ -111,6 +111,10 @@ msgstr "Titolo del banner dei cookie."
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "Your privacy policy / Cookie policy link"
 msgstr "Link Informativa sulla Privacy / Informativa sui Cookie"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
+msgid "Change your choice"
+msgstr "Cambia la tua scelta"
 
 msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
 msgid "GDPR Cookie"

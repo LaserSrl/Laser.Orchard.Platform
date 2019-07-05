@@ -1,5 +1,5 @@
-# Orchard resource strings - fr-FR
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - fr-FR
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -18,7 +18,7 @@ msgstr "Erreur PolicyTextInfo"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/UserPolicyPartDriver"
 msgid "UserPolicyPart Error"
-msgstr "Erreur UserPolicyPart "
+msgstr "Erreur UserPolicyPart"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
 msgid "All Policies"
@@ -72,7 +72,7 @@ msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextIn
 msgid "Priority"
 msgstr "Priorité
 
-msgctxt "
+msgctxt"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "User have to accept this policy"

@@ -1,4 +1,4 @@
-# Orchard resource strings - it-IT
+﻿# Orchard resource strings - it-IT
 # Copyright (c) 2019 Laser s.r.l.
 
 
@@ -346,7 +346,7 @@ msgstr "Aggiungi allegato"
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
 msgid "By clicking \"SEND\" I declare that I have read and understood "
-msgstr "Cliccando su "Invia" dichiaro di avere letto e compreso"
+msgstr "Cliccando su \"Invia\" dichiaro di avere letto e compreso"
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
 msgid "Comments or Inquiry"

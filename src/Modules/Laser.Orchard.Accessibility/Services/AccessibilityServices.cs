@@ -43,7 +43,9 @@ namespace Laser.Orchard.Accessibility.Services
             {
                 cook.Expires = DateTime.UtcNow.AddMonths(1);
             }
-            _orchardServices.WorkContext.HttpContext.Response.SetCookie(cook);
+            if(_orchardServices.WorkContext.HttpContext.Response.HeadersWritten == false) {
+                _orchardServices.WorkContext.HttpContext.Response.SetCookie(cook);
+            }
         }
 
         public void SetTextOnly()

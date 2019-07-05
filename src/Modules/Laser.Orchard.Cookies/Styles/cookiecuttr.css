@@ -140,12 +140,27 @@
     display: block;
 }
 
-a.cc-cookie-accept {
-    width:100%;
-    text-align:center;
-    font-weight:bold;
-    font-size:14px;
+.cc-cookie-box form {
+    display: none;
 }
+
+a.cc-cookie-accept {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+a.cc-expand {
+    text-decoration: none;
+    font-weight: normal !important;
+    cursor: pointer;
+    color: #fff;
+}
+
+    a.cc-expand:hover {
+        text-decoration: underline !important;
+    }
 
 p#ccPoweredBy, p#ccPoweredBy a:link, p#ccPoweredBy a:visited, p#ccPoweredBy a:hover, p#ccPoweredBy a:active {
     text-align: right;

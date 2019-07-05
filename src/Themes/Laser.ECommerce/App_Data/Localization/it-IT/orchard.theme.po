@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -420,14 +420,6 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
 msgid "Total: {0}"
 msgstr "Totale: {0}"
 
-msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
-msgid "Tracking URL: <a href=\"{0}\">{0}</a>"
-msgstr "URL per il tracking: <a href=\"{0}\">{0}</a>"
-
-msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
-msgid "You may view this order at a later time by going to this address: <a href=\"{0}\">{0}</a>, using this password: \"{1}\"."
-msgstr "Potrai consultare questo ordine al seguente indirizzo: <a href=\"{0}\">{0}</a>, usando questa password: \"{1}\"."
-
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ListOfWishLists.cshtml"
 msgid "Your Wish Lists:"
 msgstr "Le tue liste:"
@@ -697,10 +689,6 @@ msgid "{1} {0}"
 msgstr "{1} {0}"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
-msgid "Click <a href=\"{0}\">here</a> to choose a different shipping option."
-msgstr "Clicca <a href=\"{0}\">qui</a> per scegliere opzioni di spedizione diverse."
-
-msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Continue Shopping"
 msgstr "Continua con gli acquisti"
 
@@ -711,10 +699,6 @@ msgstr "Impossibile caricare il carrello"
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Minimum order of {0} required."
 msgstr "È richiesto un ordine di almeno {0}."
-
-msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
-msgid "No shipping options available for {0} {1}. Click <a href=\"{2}\">here</a> to change your shipping destination."
-msgstr "Non ci sono opzioni di spedizione disponibili per {0} {1}. Clicca <a href=\"{2}\">qui</a> per cambiare la destinazione."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Please wait while we restore your shopping cart..."
@@ -743,10 +727,6 @@ msgstr "Rimuovi"
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "SL No."
 msgstr "Numero linea"
-
-msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
-msgid "Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>"
-msgstr "Alcuni prodotti nel tuo carrello hanno bisogno di autenticazione. <a href=\"{0}\">Per favore fai login per completare l'ordine.</a>"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Subtotal:"
@@ -813,10 +793,6 @@ msgid "Card Number"
 msgstr "Numero della carta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
-msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
-msgstr "Checkout con <a href=\"https://stripe.com/\">Stripe</a>"
-
-msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
 msgid "Checkout with Stripe"
 msgstr "Checkout con Stripe"
 
@@ -863,10 +839,6 @@ msgstr "Fatturazione all'indirizzo di spedizione."
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
 msgid "Billing Address"
 msgstr "Indirizzo di fatturazione"
-
-msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
-msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
-msgstr "Checkout con <a href=\"https://stripe.com/\">Stripe</a>"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
 msgid "Checkout with Stripe"
