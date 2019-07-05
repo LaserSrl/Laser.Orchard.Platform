@@ -14,7 +14,6 @@ using Orchard.Users.Models;
 using Orchard.Users.Services;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -25,7 +24,6 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         private readonly IMembershipService _membershipService;
         private readonly IUserService _userService;
         private readonly IOrchardServices _orchardServices;
-        //private readonly IShapeFactory shapeFactory;
         private readonly IContentManager _contentManager;
         private readonly IFrontEndProfileService _frontEndProfileService;
         private readonly ShellSettings _shellSettings;
@@ -68,6 +66,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
             _accountValidationService = accountValidationService;
         }
 
+        [AlwaysAccessible]
         public ActionResult Register() {
             // ensure users can register
             var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
@@ -91,6 +90,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         }
 
         [HttpPost]
+        [AlwaysAccessible]
         public ActionResult Register(string userName, string email, string password, string confirmPassword, string returnUrl = null,bool createPersistentCookie=false) {
             if (string.IsNullOrEmpty(returnUrl)) {
                 returnUrl = Request.QueryString["ReturnUrl"];
