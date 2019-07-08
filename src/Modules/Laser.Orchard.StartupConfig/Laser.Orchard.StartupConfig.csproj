@@ -351,6 +351,7 @@
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />

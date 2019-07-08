@@ -1,1 +1,15 @@
-﻿<button>Create New Item</button>
+﻿@*js che apre fa linestra*@
+
+
+<div>
+    <div>
+        <button id="rerun">Create New Item</button>
+        <button id="select">Select a Content Type</button>
+    </div>
+    <ul id="ulCT">
+        @foreach (var ctName in Model.contentTypeList) {
+            <li>@ctName</li>
+        }
+
+    </ul>
+</div>
