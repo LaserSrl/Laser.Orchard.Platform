@@ -105,11 +105,13 @@
     <Content Include="Contents\default-pin.png" />
     <Content Include="Scripts\maps.js" />
     <Content Include="Scripts\markerclusterer.js" />
+    <Content Include="Scripts\ol-contextmenu.js" />
     <Content Include="Scripts\ol-geocoder.js" />
     <Content Include="Scripts\ol.js" />
     <Content Include="Scripts\ors-client.js" />
     <Content Include="Styles\GoogleMaps.css" />
     <Content Include="Styles\images\map-pin.png" />
+    <Content Include="Styles\ol-contextmenu.css" />
     <Content Include="Styles\ol-geocoder.css" />
     <Content Include="Styles\ol.css" />
     <Content Include="Web.config" />
