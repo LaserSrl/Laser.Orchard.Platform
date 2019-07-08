@@ -1524,7 +1524,8 @@ a.text-success:hover {
         .header-nav > li > a {
             position: relative;
             display: block;
-            margin-top: 10px;
+            /*margin-top: 10px;*/
+            margin-top: 6px;
         }
 
             .header-nav > li > a:hover,
@@ -1593,7 +1594,8 @@ a.text-success:hover {
         position: relative;
         min-height: 64px;
         min-width: 210px;
-        padding: 12px;
+        /*padding: 12px;*/
+        padding: 16px;
         border-left: 1px solid transparent;
         border-right: 1px solid transparent;
     }
@@ -1616,22 +1618,25 @@ a.text-success:hover {
         }
 
     .header-nav-profile .dropdown img {
-        width: 40px;
-        height: 40px;
+        /*width: 40px;
+        height: 40px;*/
+        width: 30px;
+        height: 30px;
+        vertical-align: baseline;
         border-radius: 40px;
     }
 
     .header-nav-profile .dropdown .profile-info {
         display: inline-block;
-        vertical-align: middle !important;
-        padding: 0 20px 0 10px;
+        /*vertical-align: middle !important;*/
+        padding: 0 30px 0 10px;
         line-height: 15px;
     }
 
-        .header-nav-profile .dropdown .profile-info small {
-            display: block;
-            opacity: 0.5;
-        }
+    .header-nav-profile .dropdown .profile-info small {
+        display: block;
+        opacity: 0.5;
+    }
 
     .header-nav-profile .dropdown .dropdown-menu {
         min-width: 100%;
@@ -1643,8 +1648,10 @@ a.text-success:hover {
     }
 
         .header-nav-profile .dropdown.open > a {
-            margin-top: 6px;
-            padding: 6px 12px 12px 12px;
+            /*margin-top: 6px;*/
+            /*padding: 6px 12px 12px 12px;*/
+            margin-top: 0px;
+            padding: 12px 12px 12px 12px;
             min-height: 58px;
             background-color: #ffffff;
             border-color: rgba(255, 255, 255, 0.9);
@@ -9683,4 +9690,20 @@ ul.widgets h3 {
 /* Navigation */
 #local-navigation ul.localmenu.group {
     margin-bottom: 8px;
+}
+
+/* Article dialog, for position calculate from jquery, change starded top for calculate correct position  */
+.dialog-wrapper .dialog {
+    top: 0px !important;
+}
+
+.dialog-wrapper .overlay {
+    position: fixed;
+    z-index: 99999;
+    background: transparent;
+}
+
+.orchard-layouts .zone-messages {
+    margin: 0;
+    padding: 0;
 }
