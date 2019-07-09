@@ -1,18 +1,11 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Localization;
-using Orchard.Localization.Models;
-using Orchard.Localization.Services;
 using Orchard.Tokens;
 using System;
 using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.Tokens {
     public class ParameterToken : ITokenProvider {
-        private readonly IDateLocalizationServices _dateLocalizationServices;
-        public ParameterToken(IDateLocalizationServices dateLocalizationServices) { 
-            _dateLocalizationServices = dateLocalizationServices;
-        } 
-
         //_cultureInfo = new Lazy<CultureInfo>(() => CultureInfo.GetCultureInfo(_workContextAccessor.GetContext().CurrentCulture));
         public Localizer T { get; set; }
 
@@ -23,7 +16,7 @@ namespace Laser.Orchard.StartupConfig.Tokens {
 
         public void Evaluate(EvaluateContext context) {
             //If you want to Chain TextTokens you have to use the (PartName-PropertyName).SomeOtherTextToken
-            //Fix for dates content parameter format - add chain of type Date
+            //(09-07-19)Fix for dates content parameter format - add chain of type Date
             context.For<IContent>("Content")
                 .Token(FilterTokenParam, //t.StartsWith("Parameter:", StringComparison.OrdinalIgnoreCase) ? t.Substring("Parameter:".Length) : null,
                     (fullToken, data) => { return FindProperty(fullToken, data, context); })
