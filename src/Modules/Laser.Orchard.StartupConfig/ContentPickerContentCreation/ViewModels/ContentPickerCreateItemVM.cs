@@ -8,5 +8,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels {
 
         public List<String> contentTypeList { get; set; }
 
+        public String nameCPField { get; set; }
+       
     }
 }

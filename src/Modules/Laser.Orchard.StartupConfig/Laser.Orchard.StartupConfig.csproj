@@ -137,6 +137,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\spectrum.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.min.js" />
@@ -198,6 +199,7 @@
     <Content Include="Scripts\tabulator\tabulator.min.js" />
     <Content Include="Scripts\tabulator\tabulator_core.js" />
     <Content Include="Scripts\tabulator\tabulator_core.min.js" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerCreation.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.min.css" />
     <Content Include="Styles\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -615,6 +617,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ContentPickerContentCreation\Models\" />
+    <Folder Include="ContentPickerContentCreation\Style\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

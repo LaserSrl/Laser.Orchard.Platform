@@ -1,14 +1,29 @@
-﻿@*js che apre fa linestra*@
+﻿@using Orchard.Environment.Configuration;
 
 
-<div>
-    <div>
-        <button id="rerun">Create New Item</button>
-        <button id="select">Select a Content Type</button>
+@{
+    Style.Require("ContentPickerCreation").AtHead();
+    Script.Require("ContentPickerCreation").AtHead();
+
+    var correcturl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var prefix = settings.RequestUrlPrefix;
+    if (!string.IsNullOrEmpty(prefix)) {
+        correcturl += '/' + prefix;
+    }
+}
+
+
+<div id="divCreateNewButton_@Model.nameCPField" class="divCreateNewButton">
+    <div id="divCTNewButton_@Model.nameCPField" class="divCTNewButton">
+        <input type="button" value="Create New Item" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" class="selectContentTypeBtn button add ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+               onclick="divCreateNewButton.onSelectCTClick.apply(this)" />
+
     </div>
-    <ul id="ulCT">
+    <ul id="ulNewCT_@Model.nameCPField" class="ContentTypeOptions ui-corner-bottom contentItems">
         @foreach (var ctName in Model.contentTypeList) {
-            <li>@ctName</li>
+            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-correctUrl="@correcturl" data-nameCPField="@Model.nameCPField"
+                data-nameCType="@ctName" onclick="$('#ulNewCT_@Model.nameCPField').toggle(); divCreateNewButton.CTOptionChoice.apply(this)">@ctName</li>
         }
 
     </ul>

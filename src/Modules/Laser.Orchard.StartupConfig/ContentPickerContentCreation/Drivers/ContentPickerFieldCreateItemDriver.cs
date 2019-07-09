@@ -66,7 +66,8 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             return ContentShape("Fields_ContentPickerCreateItem_Edit", GetDifferentiator(field, part),
                 () => {
                     var model = new ContentPickerCreateItemVM {
-                        contentTypeList = contentTypeNames
+                        contentTypeList = contentTypeNames,
+                        nameCPField = field.Name
                     };
                     return shapeHelper.EditorTemplate(TemplateName: "Fields/ContentPickerCreateItem.Edit", Model: model, Prefix: GetPrefix(field, part));
                 });
