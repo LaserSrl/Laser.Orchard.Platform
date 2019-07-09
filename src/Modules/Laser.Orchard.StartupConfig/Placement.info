@@ -63,6 +63,7 @@
   <!-- Settings -->
   <Place Parts_EnvironmentVariablesSettings_Edit="Content:1" />
 
-
+  <!-- Content Picker Creation-->
   <Place Fields_ContentPickerCreateItem_Edit="Content:2.3.1" />
+  <Place Parts_ContentPickerCreateItem_EditExtension="Sidebar:25.1" />
 </Placement>

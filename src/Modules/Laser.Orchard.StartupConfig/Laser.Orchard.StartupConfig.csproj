@@ -351,6 +351,7 @@
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreationWindowDriver.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
@@ -607,6 +608,7 @@
     <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

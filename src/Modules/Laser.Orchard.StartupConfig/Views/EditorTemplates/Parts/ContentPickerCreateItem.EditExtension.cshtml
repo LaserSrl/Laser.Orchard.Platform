@@ -1,0 +1,35 @@
+﻿<button type="submit" id="btn-cp-creation">@T("Select")</button>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+
+        // Aggiungo il parametro di callback al form per mantenerlo in postback
+        @if(Request.QueryString["callback"] != null) {
+            <text>
+            var formUrl = $('#content form').attr('action');
+            formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+            formUrl += 'callback=@Request.QueryString["callback"]';
+
+            $('#content form').attr('action', formUrl);
+            </text>
+        }
+
+        // Non è stato possibile eliminare le zone del tema di admin tramite filter.
+        // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
+        // Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite jQuery. Da eliminare una volta trovata una soluzione migliore.
+        $('.zone-navigation').hide();
+        $('#branding').hide();
+        $('#login').hide();
+        $('#footer').hide();
+        $('#header').css('background', 'none');
+        $('#layout-content').css('background', 'none');
+        $('body').css('background', 'none');
+        $('html').css('background', 'none');
+        $('#layout-main').css('padding-bottom', '0px');
+        $('#page-title').css('padding-left', '30px');
+        $('#main').css('margin-left', '20px');
+        $('#main').css('margin-right', '20px');
+        //]]>
+    </script>
+}
