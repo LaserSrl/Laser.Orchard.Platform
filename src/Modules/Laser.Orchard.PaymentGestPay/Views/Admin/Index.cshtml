@@ -1,25 +1,22 @@
-﻿@model Laser.Orchard.PaymentGestPay.Models.PaymentGestPaySettingsPart
+﻿@model Laser.Orchard.PaymentGestPay.Models.PaymentGestPaySettingsPart 
 
 @helper FullActionUrl(string aName) {
-
-    var correcturl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
-    var settings = WorkContext.Resolve<ShellSettings>();
-    var prefix = settings.RequestUrlPrefix;
-    if (!string.IsNullOrEmpty(prefix)) {
-        correcturl += '/' + prefix;
-    }
-
-    @correcturl
+    string area = Laser.Orchard.PaymentGestPay.Extensions.Constants.LocalArea;
+    string sName = WorkContext.CurrentSite.SiteName;
+    string bUrl = WorkContext.CurrentSite.BaseUrl;
+    string aPath = Url.Action(aName, "Transactions", new { Area = area });
+    int cut = aPath.ToUpperInvariant().IndexOf(sName.ToUpperInvariant()) - 1;
+    string fUrl = bUrl + aPath.Substring(cut);
+    @fUrl
 }
 
-@helper GetServerIp() {
+@helper GetServerIp(){
     string sIP = "";
     try {
         HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://api.ipify.org");
         WebResponse resp = req.GetResponse();
         sIP = new StreamReader(resp.GetResponseStream()).ReadToEnd();
-    }
-    catch (Exception) {
+    } catch (Exception) {
         sIP = T("It was impossible to verify the server's IP.").Text;
     }
     @sIP
@@ -28,11 +25,11 @@
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.TextBoxFor(m => m.GestPayShopLogin, new { placeholder = T("GestPay Shop Login"), @class = "text medium" })
     <span class="hint">@T("Insert your GestPay Shop Login.")</span>
-
-    @Html.CheckBoxFor(m => m.UseTestEnvironment)
+    
+     @Html.CheckBoxFor(m => m.UseTestEnvironment)
     <label for="@Html.FieldIdFor(m => m.UseTestEnvironment)" class="forcheckbox">@T("Use test environment.")</label>
     <span class="hint">@T("Selecting this checkbox will mean that we are using GestPay's test environment. Payments there are fake.")</span>
-
+    
     <fieldset>
         <legend>@T("GestPay back-office settings.")</legend>
         <p>@T("You should insert this information in the corresponding sections of GestPay's back-office, under the configuration tab for your shop.")</p>
@@ -42,7 +39,7 @@
         <br /><label>@T("Server to Server URL: ")</label> @FullActionUrl("GestPayS2SEndpoint")
 
     </fieldset>
-
+    
     <div class="box-footer align-right padding-right-35">
         <button id="saveSettings" type="submit" name="submit.SaveSettings" value="yes please">@T("Save")</button>
     </div>
