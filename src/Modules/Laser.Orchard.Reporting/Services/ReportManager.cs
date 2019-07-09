@@ -22,6 +22,7 @@ using Orchard.Security.Permissions;
 using Orchard.Logging;
 using System.Text;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Laser.Orchard.Reporting.Services {
     public class ReportManager : IReportManager
@@ -153,8 +154,9 @@ namespace Laser.Orchard.Reporting.Services {
             IQuery hql = null;
             Dictionary<string, AggregationResult> returnValue = new Dictionary<string, AggregationResult>();
             IEnumerable result = null;
-            // check on hql query
-            if (query.StartsWith("select ", StringComparison.InvariantCultureIgnoreCase) == false) {
+            // check on hql query: must start with the word "select"
+            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            if (startsWithSelect.IsMatch(query) == false) {
                 throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
             } 
             try {
