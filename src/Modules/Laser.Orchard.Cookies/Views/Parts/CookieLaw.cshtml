@@ -51,6 +51,7 @@ $(document).ready(function() {
     cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
     // positioning
     cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
+    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
     // buttons
     cookiesettings.cookieAcceptButton = true;
     if ('@part.cookieAcceptButtonText'.length > 0)
@@ -63,9 +64,11 @@ $(document).ready(function() {
     if (@isPolicyPage) {
         cookiesettings.cookiePolicyPage = true;
     }
-    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
+    // footer
+    cookiesettings.cookieExpandMessage = "@T("Change your choice")";
     cookiesettings.cookiePoweredBy = "@siteName";
     cookiesettings.cookiePoweredByIcon = "@iconUrl";
+
     $.cookieCuttr(cookiesettings);
 });
 </script>

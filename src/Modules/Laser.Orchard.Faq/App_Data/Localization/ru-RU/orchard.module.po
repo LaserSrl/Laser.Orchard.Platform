@@ -1,5 +1,5 @@
-# Orchard resource strings - ru-RU
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -46,7 +46,7 @@ msgstr "Название"
 
 msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/FaqWidget.cshtml"
 msgid "NoItems"
-msgstr " Не создано ни одной категории "
+msgstr "Не создано ни одной категории"
 
 msgctxt "~/Modules/Laser.Orchard.Faq/Views/Parts/LastFaqWidget.cshtml"
 msgid "Answer"

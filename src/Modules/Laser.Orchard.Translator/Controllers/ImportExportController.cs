@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
@@ -69,7 +70,7 @@ namespace Laser.Orchard.Translator.Controllers {
                                                              .OrderBy(m => m.Context).ThenBy(m => m.Message);
 
                         MemoryStream stream = new MemoryStream();
-                        StreamWriter streamWriter = new StreamWriter(stream);
+                        StreamWriter streamWriter = new StreamWriter(stream, Encoding.UTF8);
                         streamWriter.WriteLine("# Orchard resource strings - " + folder.Language);
                         streamWriter.WriteLine("# Copyright (c) " + DateTime.Now.Year + " Laser s.r.l.");
                         streamWriter.WriteLine(Environment.NewLine);
@@ -106,10 +107,10 @@ namespace Laser.Orchard.Translator.Controllers {
                             outputPath = Path.Combine(outputPath, (settingsForFolder.OutputPath.StartsWith("/")) ? settingsForFolder.OutputPath.Substring(1) : settingsForFolder.OutputPath);
                         }
                         if (!String.IsNullOrWhiteSpace(fileName) && !String.IsNullOrWhiteSpace(parentFolder)) {
-                            StreamReader streamReader = new StreamReader(stream);
+                            StreamReader streamReader = new StreamReader(stream, Encoding.UTF8);
                             var finalContent = streamReader.ReadToEnd();
-                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, finalContent);
-                            zip.AddEntry(Path.Combine(new string[] { outputPath, folder.ContainerName, "App_Data/Localization", folder.Language, fileName }), finalContent);
+                            zip.AddEntry(parentFolder + "/" + folder.ContainerName + "/App_Data/Localization/" + folder.Language + "/" + fileName, finalContent, Encoding.UTF8);
+                            zip.AddEntry(Path.Combine(new string[] { outputPath, folder.ContainerName, "App_Data/Localization", folder.Language, fileName }), finalContent, Encoding.UTF8);
 
                             streamReader.Dispose();
                         }

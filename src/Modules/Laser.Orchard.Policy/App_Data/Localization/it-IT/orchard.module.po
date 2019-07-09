@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -18,7 +18,7 @@ msgstr "Errore PolicyTextInfo"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Drivers/UserPolicyPartDriver"
 msgid "UserPolicyPart Error"
-msgstr "Errore UserPolicyPart "
+msgstr "Errore UserPolicyPart"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/DefinitionTemplates/PolicyPartSettings.cshtml"
 msgid "All Policies"
@@ -69,20 +69,12 @@ msgid "Policy part behaviour"
 msgstr "Comportamento part informativa"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
-msgid "For the \"Policy\" option an Accept/Don't Accept option will be proposed to end user."
-msgstr "Per l'opzione \"Informativa\" verrà proposta all'utente finale una opzione Accetto/Non Accetto."
-
-msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "For the \"Policy\", \"CommercialUse\" and \"ThirdParty\" options an Accept/Don't Accept choice will be proposed to the end user."
-msgstr "Per le opzioni \"Policy\", \"CommercialUse\" e \"ThirdParty\" verrà proposta all'utente finale una scelta Accetto/Non Accetto."
+msgstr "Per le opzioni \"Policy\", \"CommercialUse\" e \"ThirdParty\" verrà proposta all'utente la scelta Accetto/Non accetto."
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "For the \"Regulation\" option a \"I have read the regulation\" flag will be proposed to the end user."
-msgstr "Per l'opzione "Regulation" verrà proposta all'utente finale una casella "Ho letto il regolamento" da spuntare."
-
-msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
-msgid "For the \"Regulation\" option a \"I have read the regulation\" option will be proposed to end user."
-msgstr "Per l'opzione \"Regolamento\" verrà proposta all'utente finale una opzione \"Ho letto il regolamento\"."
+msgstr "Per l'opzione \"Regulation\" verrà proposta all'utente la casella di spunta \"Ho letto l'informativa\"."
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "Policy type"
@@ -230,5 +222,5 @@ msgstr "Errore PolicyTextInfo"
 
 msgctxt "Laser.Orchard.Policy.Drivers.UserPolicyPartDriver"
 msgid "UserPolicyPart Error"
-msgstr "Errore UserPolicyPart "
+msgstr "Errore UserPolicyPart"
 

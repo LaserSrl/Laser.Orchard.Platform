@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -74,7 +74,7 @@ msgstr "{0} - Accesso"
 
 msgctxt "Laser.Orchard.MultiStepAuthentication.Services.DefaultNonceLinkDeliveryByMailService"
 msgid "<html><body>To login on \"{0}\", please open the following link: <a href=\"{1}\">Login</a></body></html>"
-msgstr "<html><body>Per accedere su \"{0}\", utilizzare il link seguente: <a href=\"{1}\">Accesso</a></body></html>"
+msgstr "<html><body>Per effettuare la login su \"{0}\", aprire il seguente link: <a href=\"{1}\">Login</a></body></html>"
 
 msgctxt "Laser.Orchard.MultiStepAuthentication.Services.NonceLoginNonceService"
 msgid "Context.User cannot be null."
