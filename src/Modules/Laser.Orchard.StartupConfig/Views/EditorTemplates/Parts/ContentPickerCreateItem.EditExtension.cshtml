@@ -1,4 +1,8 @@
-﻿<button type="submit" id="btn-cp-creation">@T("Select")</button>
+﻿@model Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels.SelectButton
+<input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
+@Html.HiddenFor(m => m.Callback)
+
+@{ Style.Require("jQueryUI_Orchard").AtHead(); Script.Require("jQueryUI_Tabs").AtHead(); }
 
 @using (Script.Foot()) {
     <script type="text/javascript">
@@ -41,5 +45,29 @@
         $('#main').css('margin-left', '20px');
         $('#main').css('margin-right', '20px');
         //]]>
+
+        $("#btn-cp-creation").on("click", function () {
+            //try {
+            var container = $(this).closest("[data-id]");
+            var result = {
+                id: container.data("id"),
+                displayText: container.data("display-text"),
+                editLink: container.data("edit-link"),
+                editUrl: container.data("edit-url"),
+                adminUrl: container.data("admin-url"),
+                displayLink: container.data("display-link"),
+                published: container.data("published")
+            };
+
+            window.opener.CallParent(result);
+            //window.opener.jQuery[callBack](result);
+            //} catch (ex) {
+            //    alert($.contentPicker.cannotPerformMsg);
+            //    alert(ex);
+            //}
+            window.close();
+        });
+
+
     </script>
 }
