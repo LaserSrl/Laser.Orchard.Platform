@@ -1524,7 +1524,6 @@ a.text-success:hover {
         .header-nav > li > a {
             position: relative;
             display: block;
-            /*margin-top: 10px;*/
             margin-top: 6px;
         }
 
@@ -1594,7 +1593,6 @@ a.text-success:hover {
         position: relative;
         min-height: 64px;
         min-width: 210px;
-        /*padding: 12px;*/
         padding: 16px;
         border-left: 1px solid transparent;
         border-right: 1px solid transparent;
@@ -1618,8 +1616,6 @@ a.text-success:hover {
         }
 
     .header-nav-profile .dropdown img {
-        /*width: 40px;
-        height: 40px;*/
         width: 30px;
         height: 30px;
         vertical-align: baseline;
@@ -1628,7 +1624,6 @@ a.text-success:hover {
 
     .header-nav-profile .dropdown .profile-info {
         display: inline-block;
-        /*vertical-align: middle !important;*/
         padding: 0 30px 0 10px;
         line-height: 15px;
     }
@@ -1648,8 +1643,6 @@ a.text-success:hover {
     }
 
         .header-nav-profile .dropdown.open > a {
-            /*margin-top: 6px;*/
-            /*padding: 6px 12px 12px 12px;*/
             margin-top: 0px;
             padding: 12px 12px 12px 12px;
             min-height: 58px;
