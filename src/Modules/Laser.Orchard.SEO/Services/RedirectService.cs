@@ -84,7 +84,7 @@ namespace Laser.Orchard.SEO.Services {
         }
 
         public RedirectRule GetRedirect(string path) {
-            //path = path.TrimStart('/');
+            path = path.TrimStart('/');
             try {
                 var rule = _repository.Get(x => x.SourceUrl == path);
                 return rule == null ? null :
