@@ -1,4 +1,6 @@
-﻿/*.divCreateNewButton {
+﻿.divCreateNewButton {
+    display: inline-block;
+    padding-left: 12px;
 }
 
     .divCreateNewButton .ContentTypeOptions {
@@ -30,4 +32,4 @@
 
 #ulNewCT {
     max-width: 50%;
-}*/
+}

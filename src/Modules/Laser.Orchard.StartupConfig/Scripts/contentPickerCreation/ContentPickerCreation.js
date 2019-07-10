@@ -3,9 +3,7 @@
     $(".buttonset").buttonset();
 
     //$('#selectContentTypeBtn').button({ icons: { primary: "ui-icon-plusthick" } });
-    $('.ContentTypeOptions').toggle();
-
-
+    //$('.ContentTypeOptions').toggle();
 
     $("#layout-content").on("orchard-admin-contentpicker-create", "form", function (ev, data) {
         data = data || {};
@@ -17,6 +15,14 @@
         window.open(url + data.CTName + callbackName + cPFName, "_blank ", "width=1500,height=700");
     });
 
+    $('.divCreateNewButton').each(function () {
+        var buttonPrefix = "divCreateNewButton_";
+
+        var buttonId = $(this).attr('id');
+        var relatedFieldName = buttonId.substring(buttonId.indexOf(buttonPrefix) + buttonPrefix.length);
+
+        $(this).insertAfter('.content-picker-field[data-field-name=' + relatedFieldName + '] > .button.add');
+    });
 });
 
 function CallParent(data) {

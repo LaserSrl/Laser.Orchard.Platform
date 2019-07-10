@@ -50,10 +50,10 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
         }
 
         protected override DriverResult Editor(ContentPart part, ContentPickerField field, dynamic shapeHelper) {
-                   
+
             var settings = field.PartFieldDefinition.Settings.GetModel<CPContentCreationSettings>();
 
-            if(!settings.EnableContentCreation){
+            if (!settings.EnableContentCreation) {
                 return null;
             }
 
@@ -73,5 +73,8 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
                 });
         }
 
+        protected override DriverResult Editor(ContentPart part, ContentPickerField field, IUpdateModel updater, dynamic shapeHelper) {
+            return Editor(part, field, shapeHelper);
+        }
     }
 }
