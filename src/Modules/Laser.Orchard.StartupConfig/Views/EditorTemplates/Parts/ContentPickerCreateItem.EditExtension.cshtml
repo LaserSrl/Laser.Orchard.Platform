@@ -4,14 +4,23 @@
     <script type="text/javascript">
         //<![CDATA[
 
-        // Aggiungo il parametro di callback al form per mantenerlo in postback
+        // Aggiungo i parametri di querystring ai form per mantenerli in caso di errore in fase di salvataggio
         @if(Request.QueryString["callback"] != null) {
+            var queryString = "";
+            foreach(string key in Request.QueryString.AllKeys) {
+                if (!string.IsNullOrWhiteSpace(queryString)) {
+                    queryString += "&";
+                }
+                queryString += key + "=" + @Request.QueryString[key];
+            }
             <text>
-            var formUrl = $('#content form').attr('action');
-            formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
-            formUrl += 'callback=@Request.QueryString["callback"]';
+            $('#content form').each(function () {
+                var formUrl = $(this).attr('action');
+                formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                formUrl += '@Html.Raw(queryString)';
 
-            $('#content form').attr('action', formUrl);
+                $(this).attr('action', formUrl);
+            });
             </text>
         }
 
@@ -19,15 +28,16 @@
         // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
         // Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite jQuery. Da eliminare una volta trovata una soluzione migliore.
         $('.zone-navigation').hide();
-        $('#branding').hide();
-        $('#login').hide();
+        $('#menubar').hide();
         $('#footer').hide();
-        $('#header').css('background', 'none');
+        $('#header').hide();
         $('#layout-content').css('background', 'none');
         $('body').css('background', 'none');
         $('html').css('background', 'none');
         $('#layout-main').css('padding-bottom', '0px');
         $('#page-title').css('padding-left', '30px');
+        $('.zone-messages').css('padding-top', '0px');
+        $('#base').css('padding-left', '30px');
         $('#main').css('margin-left', '20px');
         $('#main').css('margin-right', '20px');
         //]]>
