@@ -4,6 +4,7 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Core.Common.Models;
+using Orchard.Core.Title.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +35,24 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             var model = new SelectButton();
             var callbackUrl = (string)_controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] ?? "";
             if (callbackUrl == "") {
-                callbackUrl = request.QueryString["callback"];
+                callbackUrl = request.QueryString.ToString();
+                model.NameCPFiels = request.QueryString["namecpfield"];
+            }
+            else if(_controllerContextAccessor.Context.Controller.TempData["namecpfield"] != null) {
+                model.NameCPFiels = _controllerContextAccessor.Context.Controller.TempData["namecpfield"].ToString();
             }
             model.Callback = callbackUrl;
-            var isContentPickerCreation = callbackUrl.StartsWith("_contentpickercreate_");
+            model.IdContent = part.ContentItem.Id;
+            var tPart = (TitlePart)part.ContentItem.Parts.Single(p => p is TitlePart);
+            if (tPart != null) {
+                model.TitleContent = tPart.Title;
+            }
+            else {
+                model.TitleContent = Convert.ToString(part.ContentItem.Id);
+            }
+            model.Published = part.ContentItem.IsPublished();
+
+            var isContentPickerCreation = callbackUrl.Contains("_contentpickercreate_");
             if (isContentPickerCreation) {
                 return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
                                                                                                        Model: model,
@@ -51,6 +66,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             var model = new SelectButton();
             updater.TryUpdateModel(model, Prefix, null, null);
             _controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] = model.Callback;
+            _controllerContextAccessor.Context.Controller.TempData["namecpfield"] = model.NameCPFiels;
             //quando è in postback.. richiama 
             return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
                                                                                                    Model: model,

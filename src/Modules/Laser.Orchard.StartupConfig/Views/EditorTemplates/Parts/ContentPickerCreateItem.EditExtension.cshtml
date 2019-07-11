@@ -1,14 +1,26 @@
 ﻿@model Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels.SelectButton
+
+@using Orchard.Environment.Configuration;
+
 <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
 @Html.HiddenFor(m => m.Callback)
+@Html.HiddenFor(m => m.IdContent)
+@Html.HiddenFor(m => m.NameCPFiels)
 
-@{ Style.Require("jQueryUI_Orchard").AtHead(); Script.Require("jQueryUI_Tabs").AtHead(); }
+@{ Style.Require("jQueryUI_Orchard").AtHead(); Script.Require("jQueryUI_Tabs").AtHead();
+    var correcturl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
+    var settings = WorkContext.Resolve<ShellSettings>();
+    var prefix = settings.RequestUrlPrefix;
+    if (!string.IsNullOrEmpty(prefix)) {
+        correcturl += '/' + prefix;
+    }
+}
 
 @using (Script.Foot()) {
     <script type="text/javascript">
         //<![CDATA[
-
-        // Aggiungo i parametri di querystring ai form per mantenerli in caso di errore in fase di salvataggio
+        $(document).ready(function () {
+            // Aggiungo i parametri di querystring ai form per mantenerli in caso di errore in fase di salvataggio
         @if(Request.QueryString["callback"] != null) {
             var queryString = "";
             foreach(string key in Request.QueryString.AllKeys) {
@@ -26,48 +38,57 @@
                 $(this).attr('action', formUrl);
             });
             </text>
+        }else if(Model.Callback != null && Model.Callback != ""){
+            <text>
+            $('#content form').each(function () {
+                var formUrl = $(this).attr('action');
+                formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                formUrl += '@Html.Raw(Model.Callback)';
+
+                $(this).attr('action', formUrl);
+            });
+            </text>
         }
 
-        // Non è stato possibile eliminare le zone del tema di admin tramite filter.
-        // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
-        // Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite jQuery. Da eliminare una volta trovata una soluzione migliore.
-        $('.zone-navigation').hide();
-        $('#menubar').hide();
-        $('#footer').hide();
-        $('#header').hide();
-        $('#layout-content').css('background', 'none');
-        $('body').css('background', 'none');
-        $('html').css('background', 'none');
-        $('#layout-main').css('padding-bottom', '0px');
-        $('#page-title').css('padding-left', '30px');
-        $('.zone-messages').css('padding-top', '0px');
-        $('#base').css('padding-left', '30px');
-        $('#main').css('margin-left', '20px');
-        $('#main').css('margin-right', '20px');
-        //]]>
+            // Non è stato possibile eliminare le zone del tema di admin tramite filter.
+            // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
+            // Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite jQuery. Da eliminare una volta trovata una soluzione migliore.
+            $('.zone-navigation').hide();
+            $('#menubar').hide();
+            $('#footer').hide();
+            $('#header').hide();
+            $('#layout-content').css('background', 'none');
+            $('body').css('background', 'none');
+            $('html').css('background', 'none');
+            $('#layout-main').css('padding-bottom', '0px');
+            $('#page-title').css('padding-left', '30px');
+            $('.zone-messages').css('padding-top', '0px');
+            $('#base').css('padding-left', '30px');
+            $('#main').css('margin-left', '20px');
+            $('#main').css('margin-right', '20px');
 
-        $("#btn-cp-creation").on("click", function () {
-            //try {
-            var container = $(this).closest("[data-id]");
-            var result = {
-                id: container.data("id"),
-                displayText: container.data("display-text"),
-                editLink: container.data("edit-link"),
-                editUrl: container.data("edit-url"),
-                adminUrl: container.data("admin-url"),
-                displayLink: container.data("display-link"),
-                published: container.data("published")
-            };
 
-            window.opener.CallParent(result);
-            //window.opener.jQuery[callBack](result);
-            //} catch (ex) {
-            //    alert($.contentPicker.cannotPerformMsg);
-            //    alert(ex);
-            //}
-            window.close();
+            $("#btn-cp-creation").on("click", function () {
+                //try {
+                var container = $(this).closest("[data-id]");
+                var result = {
+                    idcontent: '@Model.IdContent',
+                    namecpfiels: '@Model.NameCPFiels',
+                    edit_link: '@(correcturl + "/" + Model.IdContent)',
+                    title_content: '@Model.TitleContent',
+                    published: '@Model.Published'.toLowerCase(),
+                    remove_text: '@T("Remove")',
+                    not_published: '@T("Not Published")'
+                };
+
+                window.opener.CallParent(result);
+                //} catch (ex) {
+                //    alert($.contentPicker.cannotPerformMsg);
+                //    alert(ex);
+                //}
+                window.close();
+            });
         });
-
-
+    //]]>
     </script>
 }
