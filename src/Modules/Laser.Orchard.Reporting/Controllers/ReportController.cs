@@ -63,23 +63,24 @@ namespace Laser.Orchard.Reporting.Controllers {
                 return new HttpUnauthorizedResult();
 
             var siteSettings = this.siteService.GetSiteSettings();
-
-            int page = pagerParameters.Page ?? 1;
-            int pageSize = pagerParameters.PageSize ?? siteSettings.PageSize;
-            var reports = this.reportRepository.Table.OrderByDescending(c => c.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            pagerParameters.PageSize = pagerParameters.PageSize ?? siteSettings.PageSize;
+            pagerParameters.Page = pagerParameters.Page ?? 1;
             var pager = new Pager(siteSettings, pagerParameters);
-
+            List<ReportRecord> reports = null;
+            if (pager.PageSize == 0) { // visualizza tutti gli elementi
+                reports = this.reportRepository.Table.OrderByDescending(c => c.Id).ToList();
+            }
+            else {
+                reports = this.reportRepository.Table.OrderByDescending(c => c.Id).Skip(pager.GetStartIndex()).Take(pager.PageSize).ToList();
+            }
             var model = new ReportListViewModel();
             model.Pager = Shape.Pager(pager).TotalItemCount(this.reportRepository.Table.Count());
-
             model.Reports.AddRange(reports.Select(c => new ReportViewModel
             {
                 ReportId = c.Id,
                 Name = c.Title,
                 CategoryAndType = c.GroupByCategory
             }));
-
             return this.View(model);
         }
 
@@ -426,12 +427,19 @@ namespace Laser.Orchard.Reporting.Controllers {
             };
         }
         public ActionResult ShowReports(ShowReportsViewModel model) {
+            var siteSettings = this.siteService.GetSiteSettings();
+            var pagerParameters = new PagerParameters();
+            pagerParameters.PageSize = model.pageSize ?? siteSettings.PageSize;
+            pagerParameters.Page = model.page ?? 1;
             var list = reportManager.GetReportListForCurrentUser(model.TitleFilter);
-            model.PagerParameters.Page = model.page;
-            Pager pager = new Pager(services.WorkContext.CurrentSite, model.PagerParameters);
-            var pagerShape = services.New.Pager(pager).TotalItemCount(list.Count());
-            model.Pager = pagerShape;
-            model.Reports = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            var pager = new Pager(siteSettings, pagerParameters);
+            model.Pager = Shape.Pager(pager).TotalItemCount(list.Count());
+            if (pager.PageSize == 0) { // visualizza tutti gli elementi
+                model.Reports = list;
+            }
+            else {
+                model.Reports = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            }
             return View(model);
         }
         public ActionResult ShowDashboard(ShowDashboardViewModel model) {
@@ -468,12 +476,19 @@ namespace Laser.Orchard.Reporting.Controllers {
             return View(model);
         }
         public ActionResult DashboardList(DashboardListViewModel model) {
+            var siteSettings = this.siteService.GetSiteSettings();
+            var pagerParameters = new PagerParameters();
+            pagerParameters.PageSize = model.pageSize ?? siteSettings.PageSize;
+            pagerParameters.Page = model.page ?? 1;
             var list = reportManager.GetDashboardListForCurrentUser(model.TitleFilter);
-            model.PagerParameters.Page = model.page;
-            Pager pager = new Pager(services.WorkContext.CurrentSite, model.PagerParameters);
-            var pagerShape = services.New.Pager(pager).TotalItemCount(list.Count());
-            model.Pager = pagerShape;
-            model.Dashboards = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            var pager = new Pager(siteSettings, pagerParameters);
+            model.Pager = Shape.Pager(pager).TotalItemCount(list.Count());
+            if (pager.PageSize == 0) { // visualizza tutti gli elementi
+                model.Dashboards = list;
+            }
+            else {
+                model.Dashboards = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            }
             return View(model);
         }
         private string EncodeGroupByCategoryAndGroupByType(string category, string type)
