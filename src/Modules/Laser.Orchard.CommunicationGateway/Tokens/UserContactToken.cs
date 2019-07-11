@@ -31,13 +31,13 @@ namespace Laser.Orchard.CommunicationGateway.Tokens {
                 .Chain("CommunicationContact", "Content", user => GetContact(user)); // il primo parametro di .Chain deve essere uguale al primo parametro del .Token che lo precede
         }
         private IContent GetContact(IUser user) {
-            var contact = _communicationService.GetContactFromUser(user.Id);
-            if (contact != null) {
-                return contact.ContentItem;
+            if(user != null) {
+                var contact = _communicationService.GetContactFromUser(user.Id);
+                if (contact != null) {
+                    return contact.ContentItem;
+                }
             }
-            else {
-                return null;
-            }
+            return null;
         }
         private string GetContactName(IUser user) {
             var contact = GetContact(user);
