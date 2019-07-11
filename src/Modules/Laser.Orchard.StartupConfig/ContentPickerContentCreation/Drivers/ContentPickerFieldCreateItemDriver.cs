@@ -52,15 +52,24 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
         protected override DriverResult Editor(ContentPart part, ContentPickerField field, dynamic shapeHelper) {
 
             var settings = field.PartFieldDefinition.Settings.GetModel<CPContentCreationSettings>();
+            var fieldSettings = field.PartFieldDefinition.Settings.GetModel<ContentPickerFieldSettings>();
 
             if (!settings.EnableContentCreation) {
                 return null;
             }
 
-            var CTs = GetCreatableTypes(false).ToList();
-            List<String> contentTypeNames = new List<string>();
-            foreach (var ct in CTs) {
-                contentTypeNames.Add(ct.Name);
+            List<string> contentTypeNames = new List<string>();
+            if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes)) {
+                var CTs = fieldSettings.DisplayedContentTypes.Split(',');
+                foreach (string ct in CTs) {
+                    if (!string.IsNullOrWhiteSpace(ct))
+                        contentTypeNames.Add(ct.Trim());
+                }
+            } else {
+                var CTs = GetCreatableTypes(false).ToList();
+                foreach (var ct in CTs) {
+                    contentTypeNames.Add(ct.Name);
+                }
             }
 
             return ContentShape("Fields_ContentPickerCreateItem_Edit", GetDifferentiator(field, part),
