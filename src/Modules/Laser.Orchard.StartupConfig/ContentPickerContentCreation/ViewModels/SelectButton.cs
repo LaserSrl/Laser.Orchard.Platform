@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels {
+    [OrchardFeature("Laser.Orchard.StartupConfig.ContentPickerContentCreation")]
+
     public class SelectButton {
         public string Callback { get; set; }
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Orchard.Environment.Extensions;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels {
+    [OrchardFeature("Laser.Orchard.StartupConfig.ContentPickerContentCreation")]
+
     public class ContentPickerCreateItemVM {
 
         public List<String> contentTypeList { get; set; }
