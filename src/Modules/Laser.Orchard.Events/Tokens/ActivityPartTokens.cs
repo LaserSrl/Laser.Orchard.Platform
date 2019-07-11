@@ -21,7 +21,7 @@ namespace Laser.Orchard.Events.Tokens
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly Lazy<CultureInfo> _cultureInfo;
         private readonly IDateLocalizationServices _dateLocalizationServices;
-
+        private string _fullTokenName;
         public Localizer T { get; set; }
 
         public ActivityPartTokens(
@@ -54,8 +54,23 @@ namespace Laser.Orchard.Events.Tokens
             context.For<IContent>("Content") 
                    .Token(
                         token => GetDateFormat(token), 
-                        (token, content) => GetStartDate(content, token))
-                    .Chain(FilterChainParam, "Date", (token, data) => { return FindProperty(token, data, context); })
+                        (token, content) => {
+                            return GetStartDateString(content, token);
+                        }
+                   )
+                   .Token(
+                        "ActivityDateStart", 
+                        content => {
+                            return GetStartDate(content);
+                        }
+                   )
+                   .Chain(
+                        FilterChainDateStartParam,
+                        "Date",  
+                        (token, content) => {
+                            return GetStartDate(content); 
+                        }
+                   )
                    .Token("EndDate", content => "endDate");
         }
 
@@ -68,16 +83,16 @@ namespace Laser.Orchard.Events.Tokens
         //Chain > DateTime
         //    StartDate:(dd-MM-yyyyThh:mm:ss).Add:Days,2 => 2019
         private string GetDateFormat(string token) {
-            if (token.StartsWith("ActivityStartDate:", StringComparison.OrdinalIgnoreCase)) {
-                return token.Substring("ActivityStartDate:".Length);
-            } else if(token.StartsWith("ActivityStartDate", StringComparison.OrdinalIgnoreCase)) {
-                return token.Substring("ActivityStartDate".Length);
+            if (token.StartsWith("ActivityStartDateString:", StringComparison.OrdinalIgnoreCase)) {
+                return token.Substring("ActivityStartDateString:".Length);
+            } else if(token.StartsWith("ActivityStartDateString", StringComparison.OrdinalIgnoreCase)) {
+                return token.Substring("ActivityStartDateString".Length);
             } else {
                 return null;
             }
         }
 
-        private string GetStartDate(IContent content, string token)
+        private string GetStartDateString(IContent content, string token)
         {
             ActivityPart activity = content == null ? null : content.As<ActivityPart>();
             if (activity == null)
@@ -85,6 +100,17 @@ namespace Laser.Orchard.Events.Tokens
             else {
                 return ParseDate(activity, token, activity.DateTimeStart.Value);
             }
+        }
+
+        private object GetStartDate(IContent content) {
+            ActivityPart activity = content == null ? null : content.As<ActivityPart>();
+            if (activity == null)
+                return null;
+            else if(activity.DateTimeStart.Value != DateTime.MinValue) { 
+                return activity.DateTimeStart.Value;
+            }
+
+            return null; 
         }
 
         private string ParseDate(ActivityPart activity, string token, DateTime date) {
@@ -96,38 +122,13 @@ namespace Laser.Orchard.Events.Tokens
                 } else {
                     dateFormat = "yyyy-MM-ddTHH:mm";
                 }
-                return _dateLocalizationServices.ConvertToLocalizedString(date, dateFormat, new DateLocalizationOptions() { EnableTimeZoneConversion = false });
             } else {
                 dateFormat = token;
             }
 
             return _dateLocalizationServices.ConvertToLocalizedString(date, dateFormat, new DateLocalizationOptions() { EnableTimeZoneConversion = false });
         }
-
-        private object FindProperty(string fullToken, IContent data, EvaluateContext context) {
-            string[] names = fullToken.Split('-');
-            ContentItem content = data.ContentItem;
-
-            if (names.Length < 2) {
-                return "";
-            }
-
-            string partName = names[0];
-            string propName = names[1];
-            try {
-                foreach (var part in content.Parts) {
-                    string partType = part.GetType().ToString().Split('.').Last();
-                    if (partType.Equals(partName, StringComparison.InvariantCultureIgnoreCase)) {
-                        return part.GetType().GetProperty(propName).GetValue(part, null);
-                    }
-                }
-            } catch {
-                return "parameter error";
-            }
-            return "parameter not found";
-        }
-
-        private static Tuple<string, string> FilterChainParam(string token) {
+        private static Tuple<string, string> FilterChainDateStartParam(string token) {
             string tokenPrefix;
             int chainIndex, tokenLength;
 
@@ -135,7 +136,7 @@ namespace Laser.Orchard.Events.Tokens
                 return null;
             }
             tokenPrefix = token.Substring(0, token.IndexOf(":"));
-            if (!tokenPrefix.Equals("Parameter", StringComparison.InvariantCultureIgnoreCase)) {
+            if (!tokenPrefix.Equals("ActivityDateStart", StringComparison.InvariantCultureIgnoreCase)) {
                 return null;
             }
 
@@ -149,7 +150,6 @@ namespace Laser.Orchard.Events.Tokens
                 return null;
             }
             return new Tuple<string, string>(token.Substring(tokenLength, chainIndex - tokenLength).Trim(new char[] { '(', ')' }), token.Substring(chainIndex + 1));
-
         }
     }
 }
