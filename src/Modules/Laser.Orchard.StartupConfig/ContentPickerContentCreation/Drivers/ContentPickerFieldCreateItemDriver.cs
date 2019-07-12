@@ -76,7 +76,8 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
                 () => {
                     var model = new ContentPickerCreateItemVM {
                         contentTypeList = contentTypeNames,
-                        nameCPField = field.Name
+                        nameCPField = field.Name,
+                        multiple = fieldSettings.Multiple
                     };
                     return shapeHelper.EditorTemplate(TemplateName: "Fields/ContentPickerCreateItem.Edit", Model: model, Prefix: GetPrefix(field, part));
                 });

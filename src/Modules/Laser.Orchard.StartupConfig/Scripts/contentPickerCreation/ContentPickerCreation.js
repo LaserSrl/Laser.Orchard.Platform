@@ -2,6 +2,8 @@
     $(".button").button();
     $(".buttonset").buttonset();
 
+    //refreshIdsCreateBtn();
+
     //$('#selectContentTypeBtn').button({ icons: { primary: "ui-icon-plusthick" } });
     //$('.ContentTypeOptions').toggle();
 
@@ -23,16 +25,48 @@
 
         $(this).insertAfter('.content-picker-field[data-field-name=' + relatedFieldName + '] > .button.add');
     });
+
+    mutationObserverCPF();
 });
 
-function CallParent(data) {
-    alert(" Parent window Alert " + data.idcontent + ", " + data.namecpfiels);
+var callbackMutation = function (mutationsList, observer) {
+    refreshIdsCreateBtn();
+};
 
+var mutationObserverCPF = function () {
+    $("table.content-picker").each(function () {
+        var config = { attributes: true, childList: true, subtree: true };
+        var observer = new MutationObserver(callbackMutation);
+        observer.observe(this, config);
+    });
+}; 
+
+var refreshIdsCreateBtn = function () {
+    $(".selectContentTypeBtn").each(function () {
+        var name = this.dataset.namecpfield;
+        var datafieldidSelector = 'table.content-picker[summary=' + name + '] tr';
+        console.log(new Date().getTime());
+        console.log(name);
+        console.log($(datafieldidSelector).length -1);
+
+        if (this.dataset.multiple == "False" && ($(datafieldidSelector).length -1) > 0) {
+            $(this).hide();
+            $('.content-picker-field[data-field-name=' + name + '] > .button.add').hide();
+        }
+        else {
+            $(this).show();
+            $('.content-picker-field[data-field-name=' + name + '] > .button.add').show();
+        }
+    });
+};
+
+
+function CallParent(data) {
 
     var oldValue = $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > input').val();
     $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > input').val(oldValue + ',' + data.idcontent);
 
-    var template = '<tr><td>&nbsp;</td><td><span data-id="{contentItemId}" data-fieldid=" idsFieldId" class="content-picker-item" >{edit-link} {status-text}</span ></td > <td><span data-id="{contentItemId}" class="content-picker-remove button grey">' + data.remove_text + '</span></td></tr > ';
+    var template = '<tr><td>&nbsp;</td><td><span data-id="{contentItemId}" data-fieldid="@idsFieldId" class="content-picker-item" >{edit-link} {status-text}</span ></td > <td><span data-id="{contentItemId}" class="content-picker-remove button grey">' + data.remove_text + '</span></td></tr > ';
     var editLink = '<a href = "' + data.edit_link + '"> ' + data.title_content + '</a>';
 
     var status = "";
@@ -43,14 +77,13 @@ function CallParent(data) {
     var tmpl = template.replace('{contentItemId}', data.idcontent)
         .replace('{edit-link}', editLink)
         .replace('{status-text}', status);
-    //var content = $(tmpl);
 
     $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > table.items > tbody').append(tmpl);
 
+    $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > .content-picker-message').show();
 
-    ////refreshIds();
-    //$(self).find('.content-picker-message').show();
 }
+
 
 var divCreateNewButton = {
     isHoverMenu: false,
