@@ -62,3 +62,8 @@ Features:
 		Name: Laser Extend Admin Controller To Frontend
 		Description: Replicate some admin controller to Frontend
 		Category: Frontend
+	Laser.Orchard.StartupConfig.ContentPickerContentCreation
+		Name: Content Picker Field Content Creation
+		Description: Enable feature to create contents when using a Content Picker Field
+		Category: Content
+		Dependencies: Orchard.ContentPicker

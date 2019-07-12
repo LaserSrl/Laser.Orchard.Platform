@@ -1,23 +1,23 @@
-﻿using System;
-using System.Linq;
-using Orchard.ContentPicker.Settings;
+﻿using Laser.Orchard.StartupConfig.ContentPickerContentCreation.Settings;
+using Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.ContentManagement.Handlers;
-using Orchard.ContentPicker.ViewModels;
+using Orchard.ContentManagement.MetaData;
+using Orchard.ContentManagement.MetaData.Models;
+using Orchard.ContentPicker.Fields;
+using Orchard.ContentPicker.Settings;
+using Orchard.Core.Contents;
+using Orchard.Core.Contents.Settings;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Utility.Extensions;
-using Orchard.ContentPicker.Fields;
-using Laser.Orchard.StartupConfig.ContentPickerContentCreation.Settings;
 using System.Collections.Generic;
-using Orchard.ContentManagement.MetaData.Models;
-using Orchard.Core.Contents;
-using Orchard;
-using Orchard.ContentManagement.MetaData;
-using Orchard.Core.Contents.Settings;
-using Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels;
+using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
+    [OrchardFeature("Laser.Orchard.StartupConfig.ContentPickerContentCreation")]
+
     public class ContentPickerFieldCreateItemDriver : ContentFieldDriver<ContentPickerField> {
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;

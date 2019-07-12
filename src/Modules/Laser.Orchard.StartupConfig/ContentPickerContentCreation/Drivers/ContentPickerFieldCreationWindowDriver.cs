@@ -5,13 +5,13 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
+using Orchard.Environment.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Routing;
 
 namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
+    [OrchardFeature("Laser.Orchard.StartupConfig.ContentPickerContentCreation")]
+
     public class ContentPickerFieldCreationWindowDriver : ContentPartDriver<CommonPart> {
 
         private readonly IOrchardServices _orchardServices;

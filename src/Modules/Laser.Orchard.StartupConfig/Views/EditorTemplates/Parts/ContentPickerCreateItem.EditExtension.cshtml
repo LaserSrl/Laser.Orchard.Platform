@@ -2,12 +2,17 @@
 
 @using Orchard.Environment.Configuration;
 
-<input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
+<fieldset id="cp-creation">
+    <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
+</fieldset>
 @Html.HiddenFor(m => m.Callback)
 @Html.HiddenFor(m => m.IdContent)
 @Html.HiddenFor(m => m.NameCPFiels)
 
-@{ Style.Require("jQueryUI_Orchard").AtHead(); Script.Require("jQueryUI_Tabs").AtHead();
+@{
+    Script.Require("jQueryUI_Tabs").AtHead();
+    Style.Require("ContentPickerCreation").AtHead();
+
     var correcturl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
     var settings = WorkContext.Resolve<ShellSettings>();
     var prefix = settings.RequestUrlPrefix;
@@ -21,34 +26,40 @@
         //<![CDATA[
         $(document).ready(function () {
             // Aggiungo i parametri di querystring ai form per mantenerli in caso di errore in fase di salvataggio
-        @if(Request.QueryString["callback"] != null) {
-            var queryString = "";
-            foreach(string key in Request.QueryString.AllKeys) {
-                if (!string.IsNullOrWhiteSpace(queryString)) {
-                    queryString += "&";
+            @if(Request.QueryString["callback"] != null) {
+                var queryString = "";
+                foreach(string key in Request.QueryString.AllKeys) {
+                    if (!string.IsNullOrWhiteSpace(queryString)) {
+                        queryString += "&";
+                    }
+                    queryString += key + "=" + @Request.QueryString[key];
                 }
-                queryString += key + "=" + @Request.QueryString[key];
+                <text>
+                $('#content form').each(function () {
+                    var formUrl = $(this).attr('action');
+                    formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                    formUrl += '@Html.Raw(queryString)';
+
+                    $(this).attr('action', formUrl);
+                });
+                </text>
+            }else if(Model.Callback != null && Model.Callback != ""){
+                <text>
+                $('#content form').each(function () {
+                    var formUrl = $(this).attr('action');
+                    formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                    formUrl += '@Html.Raw(Model.Callback)';
+
+                    $(this).attr('action', formUrl);
+                });
+                </text>
             }
-            <text>
-            $('#content form').each(function () {
-                var formUrl = $(this).attr('action');
-                formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
-                formUrl += '@Html.Raw(queryString)';
 
-                $(this).attr('action', formUrl);
-            });
-            </text>
-        }else if(Model.Callback != null && Model.Callback != ""){
-            <text>
-            $('#content form').each(function () {
-                var formUrl = $(this).attr('action');
-                formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
-                formUrl += '@Html.Raw(Model.Callback)';
-
-                $(this).attr('action', formUrl);
-            });
-            </text>
-        }
+            // Disabilito il tasto di selezione se il contenuto non è stato ancora salvato
+            if (@Model.IdContent == 0) {
+                $('#btn-cp-creation').addClass('disabled');
+                $('#btn-cp-creation').attr('title', '@T("To select a content you need to save it first.")');
+            }
 
             // Non è stato possibile eliminare le zone del tema di admin tramite filter.
             // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.

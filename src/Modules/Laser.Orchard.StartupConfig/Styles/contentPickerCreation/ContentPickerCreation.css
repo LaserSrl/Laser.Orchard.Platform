@@ -33,3 +33,8 @@
 #ulNewCT {
     max-width: 50%;
 }
+
+#cp-creation {
+    float: right;
+    clear: none;
+}
