@@ -91,6 +91,7 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 return null;
             }
             return new Tuple<string, string>(token.Substring(tokenLength, chainIndex - tokenLength).Trim(new char[] { '(', ')' }), token.Substring(chainIndex + 1));
+
         }
     }
 }

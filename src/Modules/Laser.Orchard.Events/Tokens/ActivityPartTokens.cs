@@ -51,57 +51,51 @@ namespace Laser.Orchard.Events.Tokens
             //    return;
             //else if (_currentContentAccessor.CurrentContentItem.As<ActivityPart>() == null)
             //    return;
-            context.For<IContent>("Content") 
-                   .Token(
-                        token => GetDateFormat(token), 
-                        (token, content) => {
-                            return GetStartDateString(content, token);
-                        }
-                   )
-                   .Token(
-                        "ActivityDateStart", 
-                        content => {
-                            return GetStartDate(content);
-                        }
-                   )
-                   .Chain(
-                        FilterChainDateStartParam,
-                        "Date",  
-                        (token, content) => {
-                            return GetStartDate(content); 
-                        }
-                   )
-                   .Token("EndDate", content => "endDate");
+            context.For<IContent>("Content")
+                .Token(token =>
+                    token.Equals("ActivityStartDateString", StringComparison.InvariantCultureIgnoreCase) ? String.Empty : null,
+                    (token, content) => {
+                        return GetStartDateString(content, token);
+                    }
+                )
+                .Token(token => TokenStartDateStringParam(token),
+                    (token, content) => {
+                        return GetStartDateString(content, token);
+                    }
+                )
+                .Token(token =>
+                    token.Equals("ActivityEndDateString", StringComparison.InvariantCultureIgnoreCase) ? String.Empty : null,
+                    (token, content) => {
+                        return GetStartDateString(content, token);
+                    }
+                )
+                .Token(token => TokenEndDateStringParam(token),
+                    (token, content) => {
+                        return GetEndDateString(content, token);
+                    }
+                )
+                .Token(token =>
+                    token.Equals("ActivityStartDate", StringComparison.InvariantCultureIgnoreCase) ? String.Empty : null,
+                    (token, content) => {
+                        return GetStartDate(content);
+                    }
+                )
+                .Chain(
+                    StartDateChainParam, 
+                    "Date", 
+                    (token, data) => {
+                        return GetStartDate(data);
+                    }
+                )
+                .Token(token =>
+                    token.Equals("ActivityEndDate", StringComparison.InvariantCultureIgnoreCase) ? String.Empty : null,
+                    (token, content) => {
+                        return GetEndDate(content);
+                    }
+                );
         }
 
-        //StartDate:dd-MM-yyyyThh:mm:ss
-        //    Se AllDay > non formattare il time
-        //    sennò formatta
-
-        //StartDate:yyyy-MM-ddThh:mm
-
-        //Chain > DateTime
-        //    StartDate:(dd-MM-yyyyThh:mm:ss).Add:Days,2 => 2019
-        private string GetDateFormat(string token) {
-            if (token.StartsWith("ActivityStartDateString:", StringComparison.OrdinalIgnoreCase)) {
-                return token.Substring("ActivityStartDateString:".Length);
-            } else if(token.StartsWith("ActivityStartDateString", StringComparison.OrdinalIgnoreCase)) {
-                return token.Substring("ActivityStartDateString".Length);
-            } else {
-                return null;
-            }
-        }
-
-        private string GetStartDateString(IContent content, string token)
-        {
-            ActivityPart activity = content == null ? null : content.As<ActivityPart>();
-            if (activity == null)
-                return null;
-            else {
-                return ParseDate(activity, token, activity.DateTimeStart.Value);
-            }
-        }
-
+        //get datetime from start date of activity
         private object GetStartDate(IContent content) {
             ActivityPart activity = content == null ? null : content.As<ActivityPart>();
             if (activity == null)
@@ -112,31 +106,109 @@ namespace Laser.Orchard.Events.Tokens
 
             return null; 
         }
+        
+        //get datetime from end date of activity
+        private object GetEndDate(IContent content) {
+            ActivityPart activity = content == null ? null : content.As<ActivityPart>();
+            if (activity == null)
+                return null;
+            else if (activity.DateTimeEnd.Value != DateTime.MinValue) {
+                return activity.DateTimeEnd.Value;
+            }
 
-        private string ParseDate(ActivityPart activity, string token, DateTime date) {
+            return null;
+        }
+
+        //methods to get string of formatted date           
+        private object GetStartDateString(IContent content, string dateFormat) {
+            ActivityPart activity = content == null ? null : content.As<ActivityPart>();
+            if (activity == null)
+                return null;
+            else {
+                return ParseDate(activity, activity.DateTimeStart.Value, dateFormat);
+            }
+        }
+        private object GetEndDateString(IContent content, string dateFormat) {
+            ActivityPart activity = content == null ? null : content.As<ActivityPart>();
+            if (activity == null)
+                return null;
+            else {
+                return ParseDate(activity, activity.DateTimeEnd.Value, dateFormat);
+            }
+        }
+
+        //method to parse date with passed format or not
+        private string ParseDate(ActivityPart activity, DateTime date, string format) {
             bool allDay = activity.AllDay;
             string dateFormat = string.Empty;
-            if (String.IsNullOrEmpty(token)) {
-                if(allDay == true) {
+            if (String.IsNullOrEmpty(format)) {
+                if (allDay == true) {
                     dateFormat = "yyyy-MM-dd";
                 } else {
                     dateFormat = "yyyy-MM-ddTHH:mm";
                 }
             } else {
-                dateFormat = token;
+                dateFormat = format;
             }
-
             return _dateLocalizationServices.ConvertToLocalizedString(date, dateFormat, new DateLocalizationOptions() { EnableTimeZoneConversion = false });
         }
-        private static Tuple<string, string> FilterChainDateStartParam(string token) {
+
+        private static string TokenStartDateStringParam(string token) {
             string tokenPrefix;
             int chainIndex, tokenLength;
 
-            if (token.IndexOf(":") == -1) {
+            //check if token equal to token start date string
+            if (!token.StartsWith(("ActivityStartDateString:"), StringComparison.OrdinalIgnoreCase)) {
                 return null;
             }
-            tokenPrefix = token.Substring(0, token.IndexOf(":"));
-            if (!tokenPrefix.Equals("ActivityDateStart", StringComparison.InvariantCultureIgnoreCase)) {
+
+            // use ")." as chars combination to discover the end of the parameter
+            chainIndex = token.IndexOf(").") + 1;
+            tokenLength = token.Length;
+            if (chainIndex == 0) {// ")." has not be found
+                //if chain has not value get part of token with date format
+                tokenPrefix = token.Substring(0, token.IndexOf(":"));
+                tokenLength = (tokenPrefix + ":").Length;
+                return token.Substring(tokenLength).Trim(new char[] { '(', ')' });
+            }
+
+            if (chainIndex <= tokenLength) {
+                return null;
+            }
+            return token.Substring(tokenLength, chainIndex - tokenLength).Trim(new char[] { '(', ')' });
+        }
+
+        private static string TokenEndDateStringParam(string token) {
+            string tokenPrefix;
+            int chainIndex, tokenLength;
+
+            //check if token equal to token start date string
+            if (!token.StartsWith(("ActivityEndDateString:"), StringComparison.OrdinalIgnoreCase)) {
+                return null;
+            }
+
+            // use ")." as chars combination to discover the end of the parameter
+            chainIndex = token.IndexOf(").") + 1;
+            tokenLength = token.Length;
+            if (chainIndex == 0) {// ")." has not be found
+                //if chain has not value get part of token with date format
+                tokenPrefix = token.Substring(0, token.IndexOf(":"));
+                tokenLength = (tokenPrefix + ":").Length;
+                return token.Substring(tokenLength).Trim(new char[] { '(', ')' });
+            }
+
+            if (chainIndex <= tokenLength) {
+                return null;
+            }
+            return token.Substring(tokenLength, chainIndex - tokenLength).Trim(new char[] { '(', ')' });
+        }
+
+        private static Tuple<string, string> StartDateChainParam(string token) {
+            string tokenPrefix;
+            int chainIndex, tokenLength;
+
+            tokenPrefix = token.Substring(0, token.IndexOf(")."));
+            if (!tokenPrefix.Equals("ActivityStartDate", StringComparison.InvariantCultureIgnoreCase)) {
                 return null;
             }
 
