@@ -1,30 +1,30 @@
-﻿@using Orchard.Environment.Configuration;
-
+﻿@using Orchard;
+@using Orchard.ContentManagement;
 
 @{
     Style.Require("ContentPickerCreation").AtHead();
     Script.Require("ContentPickerCreation").AtHead();
 
-    var correcturl = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/');
-    var settings = WorkContext.Resolve<ShellSettings>();
-    var prefix = settings.RequestUrlPrefix;
-    if (!string.IsNullOrEmpty(prefix)) {
-        correcturl += '/' + prefix;
-    }
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
 }
 
 
 <div id="divCreateNewButton_@Model.nameCPField" class="divCreateNewButton">
     <div id="divCTNewButton_@Model.nameCPField" class="divCTNewButton">
-        <input type="button" value="Create New Item" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" class="selectContentTypeBtn button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" 
+        <input type="button" value="Create New Item" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" class="selectContentTypeBtn button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
                onclick="divCreateNewButton.onSelectCTClick.apply(this)" data-multiple="@Model.multiple" />
 
     </div>
     <ul id="ulNewCT_@Model.nameCPField" class="ContentTypeOptions ui-corner-bottom contentItems">
         @foreach (var ctName in Model.contentTypeList) {
-            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-correctUrl="@correcturl" data-nameCPField="@Model.nameCPField"
-                data-nameCType="@ctName" onclick="$('#ulNewCT_@Model.nameCPField').toggle(); divCreateNewButton.CTOptionChoice.apply(this)">@ctName</li>
-        }
+            var content = _orchardServices.ContentManager.New(ctName);
+            ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(content);
+            var url = Url.RouteUrl(metadata.CreateRouteValues);
+
+            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-createurl="@url" data-namecpfield="@Model.nameCPField"
+                onclick="$('#ulNewCT_@Model.nameCPField').toggle(); divCreateNewButton.CTOptionChoice.apply(this)">@ctName</li>
+            }
 
     </ul>
 </div>

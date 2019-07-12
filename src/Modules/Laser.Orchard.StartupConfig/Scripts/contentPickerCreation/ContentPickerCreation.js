@@ -2,19 +2,14 @@
     $(".button").button();
     $(".buttonset").buttonset();
 
-    //refreshIdsCreateBtn();
-
-    //$('#selectContentTypeBtn').button({ icons: { primary: "ui-icon-plusthick" } });
-    //$('.ContentTypeOptions').toggle();
-
     $("#layout-content").on("orchard-admin-contentpicker-create", "form", function (ev, data) {
         data = data || {};
 
         var callbackName = "?callback=_contentpickercreate_" + new Date().getTime();
         var cPFName = "&namecpfield=" + data.namecpfield;
-        var url = data.correctUrl + "/Admin/Contents/Create/";
+        var url = data.createUrl;
 
-        window.open(url + data.CTName + callbackName + cPFName, "_blank ", "width=1500,height=700");
+        window.open(url + callbackName + cPFName, "_blank ", "width=1500,height=700");
     });
 
     $('.divCreateNewButton').each(function () {
@@ -29,7 +24,7 @@
     mutationObserverCPF();
 });
 
-var callbackMutation = function (mutationsList, observer) {
+var callbackMutation = function () {
     refreshIdsCreateBtn();
 };
 
@@ -42,12 +37,11 @@ var mutationObserverCPF = function () {
 }; 
 
 var refreshIdsCreateBtn = function () {
+    $('ul.ContentTypeOptions').hide();
+
     $(".selectContentTypeBtn").each(function () {
         var name = this.dataset.namecpfield;
-        var datafieldidSelector = 'table.content-picker[summary=' + name + '] tr';
-        console.log(new Date().getTime());
-        console.log(name);
-        console.log($(datafieldidSelector).length -1);
+        var datafieldidSelector = 'fieldset[data-field-name="' + name + '"] > table.content-picker tr';
 
         if (this.dataset.multiple == "False" && ($(datafieldidSelector).length -1) > 0) {
             $(this).hide();
@@ -59,7 +53,6 @@ var refreshIdsCreateBtn = function () {
         }
     });
 };
-
 
 function CallParent(data) {
 
@@ -81,13 +74,10 @@ function CallParent(data) {
     $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > table.items > tbody').append(tmpl);
 
     $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > .content-picker-message').show();
-
 }
-
 
 var divCreateNewButton = {
     isHoverMenu: false,
-
     onSelectCTClick: function () {
         var name = this.dataset.namecpfield;
         $('#ulNewCT_' + name).toggle();
@@ -98,16 +88,13 @@ var divCreateNewButton = {
         var btnWidth = $('#divCTNewButton_' + name).outerWidth();
         $('#ulNewCT_' + name).css('left', btnLeft).css('top', btnTop);
     },
-
     CTOptionChoice: function () {
-
         var idSelector = '#' + this.id;
         var name = this.dataset.namecpfield;
         $('#ulNewCT_' + name).hide();
 
         $(idSelector).trigger("orchard-admin-contentpicker-create", {
-            CTName: this.textContent,
-            correctUrl: this.dataset.correcturl,
+            createUrl: this.dataset.createurl,
             namecpfield: this.dataset.namecpfield
         });
     }

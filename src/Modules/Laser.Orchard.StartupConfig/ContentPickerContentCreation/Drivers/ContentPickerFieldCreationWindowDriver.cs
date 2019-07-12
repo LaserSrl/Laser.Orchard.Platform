@@ -33,6 +33,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
 
             var routeData = request.RequestContext.RouteData;
             var model = new SelectButton();
+
             var callbackUrl = (string)_controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] ?? "";
             if (callbackUrl == "") {
                 callbackUrl = request.QueryString.ToString();
@@ -41,6 +42,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             else if(_controllerContextAccessor.Context.Controller.TempData["namecpfield"] != null) {
                 model.NameCPFiels = _controllerContextAccessor.Context.Controller.TempData["namecpfield"].ToString();
             }
+
             model.Callback = callbackUrl;
             model.IdContent = part.ContentItem.Id;
             var tPart = (TitlePart)part.ContentItem.Parts.Single(p => p is TitlePart);
