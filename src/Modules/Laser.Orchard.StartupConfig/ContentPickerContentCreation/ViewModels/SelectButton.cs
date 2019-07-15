@@ -8,7 +8,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels {
 
        public int IdContent { get; set; }
 
-       public string NameCPFiels { get; set; }
+       public string NameCPField { get; set; }
 
        public string TitleContent { get; set; }
 

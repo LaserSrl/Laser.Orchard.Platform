@@ -28,3 +28,15 @@
 
     </ul>
 </div>
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            if ($('#ulNewCT_@Model.nameCPField li').length == 0) {
+                $('#selectContentTypeBtn_@Model.nameCPField').addClass('disabled');
+                $('#selectContentTypeBtn_@Model.nameCPField').attr('title', '@T("You are not authorized to create the content types associated to this field.")');
+            }
+        });
+    //]]>
+    </script>
+}

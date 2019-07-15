@@ -27,6 +27,8 @@ namespace Laser.Orchard.StartupConfig {
                 .SetDependencies("jQueryUI");
             manifest.DefineStyle("ContentPickerCreation")
                 .SetUrl("contentPickerCreation\\ContentPickerCreation.css", "contentPickerCreation\\ContentPickerCreation.css");
+            manifest.DefineStyle("ContentPickerThemeHiding")
+                .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.css", "contentPickerCreation\\ContentPickerThemeHiding.css");
         }
     }
 }

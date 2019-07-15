@@ -30,17 +30,16 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
 
             var request = _orchardServices.WorkContext.HttpContext.Request;
 
-
             var routeData = request.RequestContext.RouteData;
             var model = new SelectButton();
 
             var callbackUrl = (string)_controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] ?? "";
             if (callbackUrl == "") {
                 callbackUrl = request.QueryString.ToString();
-                model.NameCPFiels = request.QueryString["namecpfield"];
+                model.NameCPField = request.QueryString["namecpfield"];
             }
             else if(_controllerContextAccessor.Context.Controller.TempData["namecpfield"] != null) {
-                model.NameCPFiels = _controllerContextAccessor.Context.Controller.TempData["namecpfield"].ToString();
+                model.NameCPField = _controllerContextAccessor.Context.Controller.TempData["namecpfield"].ToString();
             }
 
             model.Callback = callbackUrl;
@@ -67,12 +66,17 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
         protected override DriverResult Editor(CommonPart part, IUpdateModel updater, dynamic shapeHelper) {
             var model = new SelectButton();
             updater.TryUpdateModel(model, Prefix, null, null);
-            _controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] = model.Callback;
-            _controllerContextAccessor.Context.Controller.TempData["namecpfield"] = model.NameCPFiels;
-            //quando è in postback.. richiama 
-            return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
-                                                                                                   Model: model,
-                                                                                                   Prefix: Prefix));
+
+            if (!string.IsNullOrWhiteSpace(model.Callback)) {
+                _controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] = model.Callback;
+                _controllerContextAccessor.Context.Controller.TempData["namecpfield"] = model.NameCPField;
+
+                return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
+                                                                                                       Model: model,
+                                                                                                       Prefix: Prefix));
+            }
+
+            return null;
         }
     }
 }

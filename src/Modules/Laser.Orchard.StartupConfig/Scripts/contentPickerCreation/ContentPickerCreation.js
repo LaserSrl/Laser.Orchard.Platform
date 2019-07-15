@@ -55,9 +55,8 @@ var refreshIdsCreateBtn = function () {
 };
 
 function CallParent(data) {
-
-    var oldValue = $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > input').val();
-    $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > input').val(oldValue + ',' + data.idcontent);
+    var oldValue = $('.content-picker-field[data-field-name=' + data.namecpfield + '] > input').val();
+    $('.content-picker-field[data-field-name=' + data.namecpfield + '] > input').val(oldValue + ',' + data.idcontent);
 
     var template = '<tr><td>&nbsp;</td><td><span data-id="{contentItemId}" data-fieldid="@idsFieldId" class="content-picker-item" >{edit-link} {status-text}</span ></td > <td><span data-id="{contentItemId}" class="content-picker-remove button grey">' + data.remove_text + '</span></td></tr > ';
     var editLink = '<a href = "' + data.edit_link + '"> ' + data.title_content + '</a>';
@@ -71,22 +70,34 @@ function CallParent(data) {
         .replace('{edit-link}', editLink)
         .replace('{status-text}', status);
 
-    $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > table.items > tbody').append(tmpl);
+    $('.content-picker-field[data-field-name=' + data.namecpfield + '] > table.items > tbody').append(tmpl);
 
-    $('.content-picker-field[data-field-name=' + data.namecpfiels + '] > .content-picker-message').show();
+    $('.content-picker-field[data-field-name=' + data.namecpfield + '] > .content-picker-message').show();
 }
 
 var divCreateNewButton = {
     isHoverMenu: false,
     onSelectCTClick: function () {
         var name = this.dataset.namecpfield;
-        $('#ulNewCT_' + name).toggle();
 
-        var btnLeft = $('#divCTNewButton_' + name).offset().left;
-        var btnTop = $('#divCTNewButton_' + name).offset().top +
-            $('#divCTNewButton_' + name).outerHeight();
-        var btnWidth = $('#divCTNewButton_' + name).outerWidth();
-        $('#ulNewCT_' + name).css('left', btnLeft).css('top', btnTop);
+        $('ul.ContentTypeOptions').not($('#ulNewCT_' + name)).hide();
+
+        if ($('#ulNewCT_' + name + ' li').length > 1) {
+            $('#ulNewCT_' + name).toggle();
+
+            var btnLeft = $('#divCTNewButton_' + name).offset().left;
+            var btnTop = $('#divCTNewButton_' + name).offset().top +
+                $('#divCTNewButton_' + name).outerHeight();
+
+            $('#ulNewCT_' + name).css('left', btnLeft).css('top', btnTop);
+        } else {
+            var onlyElement = $('#ulNewCT_' + name + ' li').first();
+
+            onlyElement.trigger("orchard-admin-contentpicker-create", {
+                createUrl: onlyElement.data('createurl'),
+                namecpfield: onlyElement.data('namecpfield')
+            });
+        }
     },
     CTOptionChoice: function () {
         var idSelector = '#' + this.id;

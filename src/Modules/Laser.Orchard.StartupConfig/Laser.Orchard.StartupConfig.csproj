@@ -199,6 +199,7 @@
     <Content Include="Scripts\tabulator\tabulator.min.js" />
     <Content Include="Scripts\tabulator\tabulator_core.js" />
     <Content Include="Scripts\tabulator\tabulator_core.min.js" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerThemeHiding.css" />
     <Content Include="Styles\contentPickerCreation\ContentPickerCreation.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.min.css" />

@@ -41,7 +41,6 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             return field.Name;
         }
 
-
         private IEnumerable<ContentTypeDefinition> GetCreatableTypes(bool andContainable) {
             return _contentDefinitionManager.ListTypeDefinitions().Where(ctd =>
                 Services.Authorizer.Authorize(Permissions.EditContent, _contentManager.New(ctd.Name)) &&
@@ -59,16 +58,17 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             }
 
             List<string> contentTypeNames = new List<string>();
+            List<string> creatableTypes = GetCreatableTypes(false).Select(x => x.Name).ToList();
+
             if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes)) {
-                var CTs = fieldSettings.DisplayedContentTypes.Split(',');
-                foreach (string ct in CTs) {
-                    if (!string.IsNullOrWhiteSpace(ct))
-                        contentTypeNames.Add(ct.Trim());
+                var associatedContentTypes = fieldSettings.DisplayedContentTypes.Split(',');
+                foreach (string contentTypeName in associatedContentTypes) {
+                    if (!string.IsNullOrWhiteSpace(contentTypeName) && creatableTypes.Contains(contentTypeName.Trim()))
+                        contentTypeNames.Add(contentTypeName.Trim());
                 }
             } else {
-                var CTs = GetCreatableTypes(false).ToList();
-                foreach (var ct in CTs) {
-                    contentTypeNames.Add(ct.Name);
+                foreach (var creatableTypeName in creatableTypes) {
+                    contentTypeNames.Add(creatableTypeName);
                 }
             }
 

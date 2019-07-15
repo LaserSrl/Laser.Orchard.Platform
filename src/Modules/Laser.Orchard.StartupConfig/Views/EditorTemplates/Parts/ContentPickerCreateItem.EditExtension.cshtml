@@ -9,11 +9,12 @@
 </fieldset>
 @Html.HiddenFor(m => m.Callback)
 @Html.HiddenFor(m => m.IdContent)
-@Html.HiddenFor(m => m.NameCPFiels)
+@Html.HiddenFor(m => m.NameCPField)
 
 @{
     Script.Require("jQueryUI_Tabs").AtHead();
     Style.Require("ContentPickerCreation").AtHead();
+    Style.Require("ContentPickerThemeHiding").AtHead();
 
     IOrchardServices _orchardServices;
     WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
@@ -59,25 +60,8 @@
                 $('#btn-cp-creation').attr('title', '@T("To select a content you need to save it first.")');
             }
 
-            // Non è stato possibile eliminare le zone del tema di admin tramite filter.
-            // L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
-            // Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite jQuery. Da eliminare una volta trovata una soluzione migliore.
-            $('.zone-navigation').hide();
-            $('#menubar').hide();
-            $('#footer').hide();
-            $('#header').hide();
-            $('#layout-content').css('background', 'none');
-            $('body').css('background', 'none');
-            $('html').css('background', 'none');
-            $('#layout-main').css('padding-bottom', '0px');
-            $('#page-title').css('padding-left', '30px');
-            $('.zone-messages').css('padding-top', '0px');
-            $('#base').css('padding-left', '30px');
-            $('#main').css('margin-left', '20px');
-            $('#main').css('margin-right', '20px');
-
             // Preparo oggetto per callback
-            $("#btn-cp-creation").on("click", function () {
+            $("#btn-cp-creation:not(.disabled)").on("click", function () {
                 @{
                     var editUrl = "";
                     if (Model.IdContent != 0) {
@@ -91,7 +75,7 @@
 
                 var result = {
                     idcontent: '@Model.IdContent',
-                    namecpfiels: '@Model.NameCPFiels',
+                    namecpfield: '@Model.NameCPField',
                     edit_link: '@editUrl',
                     title_content: '@Model.TitleContent',
                     published: '@Model.Published'.toLowerCase(),
@@ -100,7 +84,7 @@
 
                 };
 
-                    window.opener.CallParent(result);
+                window.opener.CallParent(result);
                 window.close();
             });
         });
