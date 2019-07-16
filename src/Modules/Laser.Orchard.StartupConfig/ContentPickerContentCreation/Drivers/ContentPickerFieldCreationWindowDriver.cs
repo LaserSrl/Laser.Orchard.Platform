@@ -44,13 +44,11 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
 
             model.Callback = callbackUrl;
             model.IdContent = part.ContentItem.Id;
-            var tPart = (TitlePart)part.ContentItem.Parts.Single(p => p is TitlePart);
-            if (tPart != null) {
-                model.TitleContent = tPart.Title;
+            TitlePart titlePart = part.ContentItem.As<TitlePart>();
+            if (titlePart != null && !string.IsNullOrWhiteSpace(titlePart.Title)) {
+                model.TitleContent = titlePart.Title;
             }
-            else {
-                model.TitleContent = Convert.ToString(part.ContentItem.Id);
-            }
+
             model.Published = part.ContentItem.IsPublished();
 
             var isContentPickerCreation = callbackUrl.Contains("_contentpickercreate_");
@@ -65,15 +63,18 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
 
         protected override DriverResult Editor(CommonPart part, IUpdateModel updater, dynamic shapeHelper) {
             var model = new SelectButton();
-            updater.TryUpdateModel(model, Prefix, null, null);
+            var updateSuccess = updater.TryUpdateModel(model, Prefix, null, null);
 
             if (!string.IsNullOrWhiteSpace(model.Callback)) {
                 _controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] = model.Callback;
                 _controllerContextAccessor.Context.Controller.TempData["namecpfield"] = model.NameCPField;
 
-                return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
+                if (updateSuccess)
+                    return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
                                                                                                        Model: model,
                                                                                                        Prefix: Prefix));
+                else
+                    return Editor(part, shapeHelper);
             }
 
             return null;

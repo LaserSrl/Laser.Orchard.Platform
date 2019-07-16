@@ -7,9 +7,10 @@
 <fieldset id="cp-creation">
     <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
 </fieldset>
-@Html.HiddenFor(m => m.Callback)
-@Html.HiddenFor(m => m.IdContent)
-@Html.HiddenFor(m => m.NameCPField)
+@Html.HiddenFor(m => m.Callback);
+@Html.HiddenFor(m => m.IdContent);
+@Html.HiddenFor(m => m.NameCPField);
+@Html.HiddenFor(m => m.TitleContent, new { id = "Laser_Orchard_ContentPickerContentCreation_TitleContent" });
 
 @{
     Script.Require("jQueryUI_Tabs").AtHead();
@@ -77,7 +78,7 @@
                     idcontent: '@Model.IdContent',
                     namecpfield: '@Model.NameCPField',
                     edit_link: '@editUrl',
-                    title_content: '@Model.TitleContent',
+                    title_content: $('#Laser_Orchard_ContentPickerContentCreation_TitleContent').val(),
                     published: '@Model.Published'.toLowerCase(),
                     remove_text: '@T("Remove")',
                     not_published: '@T("Not Published")',
