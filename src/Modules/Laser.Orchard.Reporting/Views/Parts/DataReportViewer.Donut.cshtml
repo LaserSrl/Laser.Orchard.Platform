@@ -5,28 +5,31 @@
     string chartContainerId = "chartContainer" + dataReportViewerViewModel.HtmlId; // Model.ContentItem.Id.ToString();
     string chartId = "chart" + dataReportViewerViewModel.HtmlId; //Model.ContentItem.Id.ToString();
     string chartClass = string.IsNullOrEmpty(dataReportViewerViewModel.ChartCssClass) ? "default-chart" : dataReportViewerViewModel.ChartCssClass;
+    var additionalChartWidth = dataReportViewerViewModel.AdditionalChartWidth;
 }
 <div class="chart-container @dataReportViewerViewModel.ContainerCssClass" id="@chartContainerId">
-    <div class="chart @chartClass" id="@chartId" style="height:300px; width:400px;"></div>
+    <div class="chart @chartClass" id="@chartId" style="height:300px; width:calc(400px + @(additionalChartWidth)em);"></div>
     @if (dataReportViewerViewModel.Data.Count == 0) {
         <h3>@T("There is no data")</h3>
     }
 </div>
 <script language="javascript" type="text/javascript">
     (function(){
-        var s1 = @Html.Raw(dataReportViewerViewModel.JsonData);
-        $('#@chartId').jqplot([s1], {
+        $('#@chartId').jqplot([@Html.Raw(dataReportViewerViewModel.JsonData)], {
             title: "@dataReportViewerViewModel.ReportTitle",
             seriesColors: @Html.Raw(dataReportViewerViewModel.ColorsArray),
             seriesDefaults: {
-                renderer: jQuery.jqplot.DonutRenderer,
+                renderer: $.jqplot.DonutRenderer,
                 rendererOptions: {
                     // Put data labels on the pie slices.
                     // By default, labels show the percentage of the slice.
                     showDataLabels: true,
                 }
             },
-            legend: { show: true, location: 'e' }
+            legend: {
+                show: true,
+                location: 'e'
+            }
         });
     })();
 </script>
