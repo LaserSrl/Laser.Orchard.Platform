@@ -269,6 +269,10 @@ namespace Laser.Orchard.Events.Tokens
 
             tokenPrefix = token.Substring(0, tokenLimit);
             tokenLength = tokenPrefix.Length;
+
+            if (chainIndex <= tokenLength) {
+                return null;
+            }
             //ActivityStartDate).Format:yyyy-MM-dd
             return new Tuple<string, string>(
                 // ActivityStartDate
@@ -297,7 +301,7 @@ namespace Laser.Orchard.Events.Tokens
             tokenPrefix = token.Substring(0, tokenLimit);
             tokenLength = tokenPrefix.Length;
 
-            if (chainIndex <= token.Length) {
+            if (chainIndex <= tokenLength) {
                 return null;
             }
             //ActivityStartDate).Format:yyyy-MM-dd
