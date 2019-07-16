@@ -95,7 +95,8 @@ namespace Laser.Orchard.Reporting.Drivers {
                     ChartCssClass = partSettings.ChartTagCssClass,
                     ContainerCssClass = partSettings.ContainerTagCssClass,
                     ColorsArray = serializer.Serialize(colors),
-                    HtmlId = part.Record.Id
+                    HtmlId = part.Record.Id,
+                    AdditionalChartWidth = Convert.ToInt32(Math.Floor(reportData.Max(x => x.Label.Length) * 0.33)) //0.33: empirical value to adjust chart width
                 };
 
                 if (part.Record.ChartType == (int)ChartTypes.PieChart)
