@@ -21,9 +21,9 @@ using Orchard.Themes;
 using Orchard.ContentPicker.Fields;
 using Orchard.Security;
 using System.Text;
-using System.IO;
 using Laser.Orchard.Commons.Services;
 using System.Collections.Generic;
+using occ = Orchard.Core.Contents;
 
 namespace Laser.Orchard.Reporting.Controllers {
     [ValidateInput(false), Admin]
@@ -440,6 +440,12 @@ namespace Laser.Orchard.Reporting.Controllers {
             else {
                 model.Reports = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
             }
+            foreach(var report in list) {
+                if(model.ContentTypes.Contains(report.ContentItem.ContentType) == false) {
+                    model.ContentTypes.Add(report.ContentItem.ContentType);
+                }
+            }
+            model.BaseUrlForCreate = GetBaseUrlForCreate();
             return View(model);
         }
         public ActionResult ShowDashboard(ShowDashboardViewModel model) {
@@ -488,6 +494,10 @@ namespace Laser.Orchard.Reporting.Controllers {
             }
             else {
                 model.Dashboards = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            }
+            var dummyContent = services.ContentManager.New("DataReportDashboard");
+            if (_authorizer.Authorize(occ.Permissions.CreateContent, dummyContent)) {
+                model.UrlForCreateDashboard = GetBaseUrlForCreate() + "DataReportDashboard";
             }
             return View(model);
         }
@@ -566,6 +576,11 @@ namespace Laser.Orchard.Reporting.Controllers {
                     Value = query.Id.ToString()
                 });
             }
+        }
+        private string GetBaseUrlForCreate() {
+            var dummyContent = services.ContentManager.New("DataReportDashboard");
+            ContentItemMetadata metadata = services.ContentManager.GetItemMetadata(dummyContent);
+            return Url.RouteUrl(metadata.CreateRouteValues).Replace("DataReportDashboard", "");
         }
     }
 }

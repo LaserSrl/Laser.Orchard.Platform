@@ -10,8 +10,11 @@ namespace Laser.Orchard.Reporting.ViewModels {
         public PagerParameters PagerParameters { get; set; }
         public int? page { get; set; }
         public int? pageSize { get; set; }
+        public List<string> ContentTypes { get; set; }
+        public string BaseUrlForCreate { get; set; }
         public ShowReportsViewModel() {
             PagerParameters = new PagerParameters();
+            ContentTypes = new List<string>();
         }
     }
 }

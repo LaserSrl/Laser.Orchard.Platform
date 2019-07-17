@@ -19,9 +19,10 @@
         <fieldset>
             <label for="QueryId">@T("Query")</label>
             @Html.DropDownListFor(c => c.QueryId, Model.Queries, new { @class = "select-medium" })
+            <a class="button primaryAction" href="@Url.Action("Edit", "MyQueryAdmin", new { area = "Laser.Orchard.Queries", @Id="0" })">@T("New HQL Query")</a>
             <span class="hint">@T("You can specify filters in your HQL query using tokens like {Request.Form:*}. Then you have to add a field for each filter to your Data Report Viewer Content Type to enable users to set filters.")</span>
             @Html.ValidationMessageFor(c => c.QueryId)
-</fieldset>
+        </fieldset>
         <fieldset class="save-button">
             <button class="primaryAction" type="submit" value="@T("Save")">@T("Save")</button>
         </fieldset>
