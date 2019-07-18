@@ -440,10 +440,9 @@ namespace Laser.Orchard.Reporting.Controllers {
             else {
                 model.Reports = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
             }
-            foreach(var report in list) {
-                if(model.ContentTypes.Contains(report.ContentItem.ContentType) == false) {
-                    model.ContentTypes.Add(report.ContentItem.ContentType);
-                }
+            var ctList = services.ContentManager.GetContentTypeDefinitions().Where(t => t.Parts.Any(p => p.PartDefinition.Name == "DataReportViewerPart"));
+            foreach(var ct in ctList) {
+                model.ContentTypes.Add(ct);
             }
             model.BaseUrlForCreate = GetBaseUrlForCreate();
             return View(model);
