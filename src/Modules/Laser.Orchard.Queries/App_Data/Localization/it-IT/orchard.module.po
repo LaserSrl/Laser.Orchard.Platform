@@ -64,6 +64,10 @@ msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
 msgid "You may optionally give a description to this filter, to be used in the dashboard screens."
 msgstr "Puoi opzionalmente, per questo filtro, fornire una descrizione che sarà visualizzata nelle schermate del Pannello Amministrativo."
 
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/Edit.cshtml"
+msgid "Edit HQL Query"
+msgstr "Modifica Query HQL"
+
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "a moment ago"
 msgstr "poco fa"
