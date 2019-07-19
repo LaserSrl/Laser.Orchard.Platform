@@ -39,6 +39,9 @@ namespace Laser.Orchard.Policy.Handlers {
         public void Approved(IUser user) {
         }
 
+        public void Moderate(IUser user) {
+        }
+
         public void Created(UserContext context) {
         }
 
