@@ -7,10 +7,10 @@
 <fieldset id="cp-creation">
     <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
 </fieldset>
-@Html.HiddenFor(m => m.Callback);
-@Html.HiddenFor(m => m.IdContent);
-@Html.HiddenFor(m => m.NameCPField);
-@Html.HiddenFor(m => m.TitleContent, new { id = "Laser_Orchard_ContentPickerContentCreation_TitleContent" });
+@Html.HiddenFor(m => m.Callback)
+@Html.HiddenFor(m => m.IdContent)
+@Html.HiddenFor(m => m.NameCPField)
+@Html.HiddenFor(m => m.TitleContent, new { id = "Laser_Orchard_ContentPickerContentCreation_TitleContent" })
 
 @{
     Script.Require("jQueryUI_Tabs").AtHead();
@@ -73,7 +73,7 @@
                         }
                     }
                 }
-
+                try {
                 var result = {
                     idcontent: '@Model.IdContent',
                     namecpfield: '@Model.NameCPField',
@@ -85,7 +85,10 @@
 
                 };
 
-                window.opener.CallParent(result);
+                    window.opener.CallParent(result);
+                } catch (ex) {
+                    alert("@T("Cannot perform requested operation")");
+                }
                 window.close();
             });
         });

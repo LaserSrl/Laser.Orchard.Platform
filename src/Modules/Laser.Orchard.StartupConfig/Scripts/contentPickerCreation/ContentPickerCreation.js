@@ -9,7 +9,7 @@
         var cPFName = "&namecpfield=" + data.namecpfield;
         var url = data.createUrl;
 
-        window.open(url + callbackName + cPFName, "_blank ", "width=1500,height=700");
+        window.open(url + callbackName + cPFName, "_blank", "width=1500,height=700");
     });
 
     $('.divCreateNewButton').each(function () {
