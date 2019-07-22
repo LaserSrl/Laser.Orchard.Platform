@@ -137,6 +137,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\spectrum.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.min.js" />
@@ -198,6 +199,8 @@
     <Content Include="Scripts\tabulator\tabulator.min.js" />
     <Content Include="Scripts\tabulator\tabulator_core.js" />
     <Content Include="Scripts\tabulator\tabulator_core.min.js" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerThemeHiding.css" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerCreation.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.min.css" />
     <Content Include="Styles\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -348,6 +351,12 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreationWindowDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\SelectButton.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />
@@ -528,6 +537,7 @@
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="App_Data\Localization\fr-FR\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="Views\DefinitionTemplates\CPContentCreationSettings.cshtml" />
     <None Include="Properties\PublishProfiles\OrchardModuleRelease.pubxml" />
     <Content Include="Views\Parts\ContentPickerConnector.cshtml" />
     <Content Include="Views\DefinitionTemplates\Parts\ContentPickerConnector.Settings.cshtml" />
@@ -599,6 +609,8 @@
     <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
+    <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -607,7 +619,10 @@
     </None>
     <None Include="Views\EditorTemplates\Parts\ProtectionSettingsPart.Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ContentPickerContentCreation\Models\" />
+    <Folder Include="ContentPickerContentCreation\Style\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
