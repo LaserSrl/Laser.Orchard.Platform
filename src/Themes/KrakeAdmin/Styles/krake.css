@@ -1222,7 +1222,8 @@ fieldset {
 .button.grey,
 #btn-CalendarEvent_Gallery_Field_Ids.button,
 .ui-datepicker-current,
-.ui-datepicker-close {
+.ui-datepicker-close,
+.selectContentTypeBtn {
     background: #00a65a !important;
     border-radius: 3px;
 }

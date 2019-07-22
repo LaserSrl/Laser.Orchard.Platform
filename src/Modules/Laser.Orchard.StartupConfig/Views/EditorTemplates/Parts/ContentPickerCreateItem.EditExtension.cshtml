@@ -1,0 +1,97 @@
+﻿@model Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels.SelectButton
+
+@using Orchard;
+@using Orchard.ContentManagement;
+@using Orchard.Environment.Configuration;
+
+<fieldset id="cp-creation">
+    <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
+</fieldset>
+@Html.HiddenFor(m => m.Callback)
+@Html.HiddenFor(m => m.IdContent)
+@Html.HiddenFor(m => m.NameCPField)
+@Html.HiddenFor(m => m.TitleContent, new { id = "Laser_Orchard_ContentPickerContentCreation_TitleContent" })
+
+@{
+    Script.Require("jQueryUI_Tabs").AtHead();
+    Style.Require("ContentPickerCreation").AtHead();
+    Style.Require("ContentPickerThemeHiding").AtHead();
+
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+}
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            // Aggiungo i parametri di querystring ai form per mantenerli in caso di errore in fase di salvataggio
+            @if(Request.QueryString["callback"] != null) {
+                var queryString = "";
+                foreach(string key in Request.QueryString.AllKeys) {
+                    if (!string.IsNullOrWhiteSpace(queryString)) {
+                        queryString += "&";
+                    }
+                    queryString += key + "=" + @Request.QueryString[key];
+                }
+                <text>
+                $('#content form').each(function () {
+                    var formUrl = $(this).attr('action');
+                    formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                    formUrl += '@Html.Raw(queryString)';
+
+                    $(this).attr('action', formUrl);
+                });
+                </text>
+            }else if(Model.Callback != null && Model.Callback != ""){
+                <text>
+                $('#content form').each(function () {
+                    var formUrl = $(this).attr('action');
+                    formUrl += formUrl.indexOf('?') != -1 ? '&' : '?';
+                    formUrl += '@Html.Raw(Model.Callback)';
+
+                    $(this).attr('action', formUrl);
+                });
+                </text>
+            }
+
+            // Disabilito il tasto di selezione se il contenuto non è stato ancora salvato
+            if (@Model.IdContent == 0) {
+                $('#btn-cp-creation').addClass('disabled');
+                $('#btn-cp-creation').attr('title', '@T("To select a content you need to save it first.")');
+            }
+
+            // Preparo oggetto per callback
+            $("#btn-cp-creation:not(.disabled)").on("click", function () {
+                @{
+                    var editUrl = "";
+                    if (Model.IdContent != 0) {
+                        var content = _orchardServices.ContentManager.Get(Model.IdContent, VersionOptions.Latest);
+                        if (content != null) {
+                            ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(content);
+                            editUrl = Url.RouteUrl(metadata.EditorRouteValues);
+                        }
+                    }
+                }
+                try {
+                var result = {
+                    idcontent: '@Model.IdContent',
+                    namecpfield: '@Model.NameCPField',
+                    edit_link: '@editUrl',
+                    title_content: $('#Laser_Orchard_ContentPickerContentCreation_TitleContent').val(),
+                    published: '@Model.Published'.toLowerCase(),
+                    remove_text: '@T("Remove")',
+                    not_published: '@T("Not Published")',
+
+                };
+
+                    window.opener.CallParent(result);
+                } catch (ex) {
+                    alert("@T("Cannot perform requested operation")");
+                }
+                window.close();
+            });
+        });
+    //]]>
+    </script>
+}
