@@ -3,8 +3,10 @@ using Contrib.Widgets.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
+using Orchard.Core.Contents.Settings;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
+using Orchard.PublishLater.Models;
 
 namespace Contrib.Widgets.Handlers {
     [OrchardFeature("Contrib.Widgets")]
@@ -29,7 +31,7 @@ namespace Contrib.Widgets.Handlers {
         }
 
         private void PublishWidget(UpdateContentContext context, WidgetExPart part) {
-            if (!context.ContentItem.TypeDefinition.Settings.ContainsKey("Stereotype") || context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget")
+            if (!context.ContentItem.TypeDefinition.Settings.ContainsKey("Stereotype") || context.ContentItem.TypeDefinition.Settings["Stereotype"] != "Widget" || part.ContentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable || part.ContentItem.Has<PublishLaterPart>())
                 return;
 
             _contentManager.Publish(part.ContentItem);

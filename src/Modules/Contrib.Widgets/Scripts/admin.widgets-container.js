@@ -7,6 +7,12 @@ var WidgetsContainer;
             var hostId = $(this).data("host-id");
             var form = $(this).parents("form:first");
             var fieldset = $(this).parents("fieldset:first");
+
+            var hiddenSubmitSave = $("#hiddenSubmitSave")[0];   
+            var attHSS = document.createAttribute("name");       
+            attHSS.value = "submit.Save";                           
+            hiddenSubmitSave.setAttributeNode(attHSS);   
+
             var formActionValue = fieldset.find("input[name='submit.Save']");
             var url = $(this).attr("href");
             if(hostId === 0) {
