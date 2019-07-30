@@ -7,9 +7,10 @@
 
         var callbackName = "?callback=_contentpickercreate_" + new Date().getTime();
         var cPFName = "&namecpfield=" + data.namecpfield;
+        var ctName = "&selectedct=" + data.ctName;
         var url = data.createUrl;
 
-        window.open(url + callbackName + cPFName, "_blank", "width=1500,height=700");
+        window.open(url + callbackName + cPFName + ctName, "_blank", "width=1500,height=700");
     });
 
     $('.divCreateNewButton').each(function () {
@@ -95,7 +96,8 @@ var divCreateNewButton = {
 
             onlyElement.trigger("orchard-admin-contentpicker-create", {
                 createUrl: onlyElement.data('createurl'),
-                namecpfield: onlyElement.data('namecpfield')
+                namecpfield: onlyElement.data('namecpfield'),
+                ctName: onlyElement.data('ctname')
             });
         }
     },
@@ -106,7 +108,8 @@ var divCreateNewButton = {
 
         $(idSelector).trigger("orchard-admin-contentpicker-create", {
             createUrl: this.dataset.createurl,
-            namecpfield: this.dataset.namecpfield
+            namecpfield: this.dataset.namecpfield,
+            ctName: this.dataset.ctname
         });
     }
 };

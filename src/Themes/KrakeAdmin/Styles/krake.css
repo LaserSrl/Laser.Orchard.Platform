@@ -139,6 +139,10 @@ button:hover, .button:hover, a.button:hover {
     color: #fff !important;
 }
 
+.button.disabled, .button.disabled:visited, .button.disabled:hover, .button.disabled:active, .button.disabled:focus {
+    color: #ababab !important;
+}
+
 select, textarea, input.text, input.textMedium, input.text-medium, input.text-small, input.text-box, .ui-autocomplete-input {
     color: #555 !important;
     height: 30px;

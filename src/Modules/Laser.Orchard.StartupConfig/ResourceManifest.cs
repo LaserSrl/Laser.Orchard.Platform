@@ -12,6 +12,7 @@ namespace Laser.Orchard.StartupConfig {
 
             // color picker
             manifest.DefineScript("spectrum").SetUrl("spectrum.js").SetDependencies("jQuery");
+
             // tabulator (currently v3.4.4)
             manifest.DefineScript("tabulator")
                 .SetUrl("tabulator\\tabulator.min.js", "tabulator\\tabulator.js")
@@ -22,11 +23,15 @@ namespace Laser.Orchard.StartupConfig {
                 .SetUrl("tabulator\\bootstrap\\tabulator_bootstrap.min.css", "tabulator\\bootstrap\\tabulator_bootstrap.css")
                 .SetDependencies("Bootstrap");
 
+            // content picker creation
             manifest.DefineScript("ContentPickerCreation")
                 .SetUrl("contentPickerCreation\\ContentPickerCreation.js", "contentPickerCreation\\ContentPickerCreation.js")
                 .SetDependencies("jQueryUI");
             manifest.DefineStyle("ContentPickerCreation")
                 .SetUrl("contentPickerCreation\\ContentPickerCreation.css", "contentPickerCreation\\ContentPickerCreation.css");
+            manifest.DefineScript("ContentPickerThemeHiding")
+                .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.js", "contentPickerCreation\\ContentPickerThemeHiding.js")
+                .SetDependencies("jQueryUI");
             manifest.DefineStyle("ContentPickerThemeHiding")
                 .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.css", "contentPickerCreation\\ContentPickerThemeHiding.css");
         }
