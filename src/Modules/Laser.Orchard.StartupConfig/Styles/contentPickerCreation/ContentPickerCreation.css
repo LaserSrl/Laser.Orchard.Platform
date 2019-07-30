@@ -37,4 +37,5 @@
 #cp-creation {
     float: right;
     clear: none;
+    display: none;
 }
