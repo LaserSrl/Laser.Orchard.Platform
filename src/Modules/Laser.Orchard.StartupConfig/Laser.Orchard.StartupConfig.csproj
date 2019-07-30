@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
+    <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
     <Content Include="Scripts\spectrum.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.min.js" />
@@ -356,7 +357,7 @@
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
-    <Compile Include="ContentPickerContentCreation\ViewModels\SelectButton.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />

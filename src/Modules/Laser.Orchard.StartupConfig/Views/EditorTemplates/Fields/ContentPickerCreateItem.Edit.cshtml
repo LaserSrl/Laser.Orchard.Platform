@@ -22,7 +22,7 @@
             ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(content);
             var url = Url.RouteUrl(metadata.CreateRouteValues);
 
-            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-createurl="@url" data-namecpfield="@Model.nameCPField"
+            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-createurl="@url" data-namecpfield="@Model.nameCPField" data-ctname="@ctName"
                 onclick="$('#ulNewCT_@Model.nameCPField').toggle(); divCreateNewButton.CTOptionChoice.apply(this)">@ctName</li>
             }
 

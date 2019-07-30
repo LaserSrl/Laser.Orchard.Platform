@@ -63,8 +63,7 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
             if (fieldSettings != null && !string.IsNullOrWhiteSpace(fieldSettings.DisplayedContentTypes)) {
                 var associatedContentTypes = fieldSettings.DisplayedContentTypes.Split(',');
                 foreach (string contentTypeName in associatedContentTypes) {
-                    if (!string.IsNullOrWhiteSpace(contentTypeName) && creatableTypes.Contains(contentTypeName.Trim()))
-                        contentTypeNames.Add(contentTypeName.Trim());
+                    if (!string.IsNullOrWhiteSpace(contentTypeName)) contentTypeNames.Add(contentTypeName.Trim());
                 }
             } else {
                 foreach (var creatableTypeName in creatableTypes) {

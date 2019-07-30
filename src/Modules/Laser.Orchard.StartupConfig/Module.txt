@@ -66,4 +66,4 @@ Features:
 		Name: Content Picker Field Content Creation
 		Description: Enable feature to create contents when using a Content Picker Field
 		Category: Content
-		Dependencies: Orchard.ContentPicker
+		Dependencies: Orchard.ContentPicker, Laser.Orchard.StartupConfig
