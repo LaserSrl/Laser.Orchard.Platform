@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -146,6 +147,7 @@
     <Compile Include="Models\UserPolicyAnswersRecord.cs" />
     <Compile Include="Models\UserPolicyPart.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="Security\Permissions.cs" />
     <Compile Include="Services\PolicyServices.cs" />
     <Compile Include="Settings\PolicyPartSettingsHooks.cs" />
     <Compile Include="ViewModels\PolicyEventViewModel.cs" />
@@ -214,6 +216,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
