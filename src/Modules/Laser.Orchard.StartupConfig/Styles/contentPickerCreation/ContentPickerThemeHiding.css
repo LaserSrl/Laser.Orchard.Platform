@@ -1,0 +1,30 @@
+﻿/* Non è stato possibile eliminare le zone del tema di admin tramite filter.
+*  L'istruzione ThemeFilter.Disable cancellava completamente l'head e _resourceManager.Include() non riusciva a iniettare nuovamente gli stili necessari.
+*  Come soluzione di ripiego è stato deciso di disabilitare il tutto tramite css. Da eliminare una volta trovata una soluzione migliore.
+*  E' stato usato un css invece di jQuery perché altrimenti i contenuti da nascondere risultavano visibili per un istante prima di sparire.
+*/
+
+body, html, #layout-content {
+    background: none !important;
+}
+
+#menubar, #footer, #header, .zone-navigation {
+    display: none !important;
+}
+
+#base, #page-title {
+    padding-left: 30px !important;
+}
+
+#layout-main {
+    padding-bottom: 0px !important;
+}
+
+.zone-messages {
+    padding-top: 0px !important;
+}
+
+#main {
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}

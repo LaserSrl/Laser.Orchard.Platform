@@ -21,6 +21,14 @@ namespace Laser.Orchard.StartupConfig {
             manifest.DefineStyle("tabulatorBootstrap")
                 .SetUrl("tabulator\\bootstrap\\tabulator_bootstrap.min.css", "tabulator\\bootstrap\\tabulator_bootstrap.css")
                 .SetDependencies("Bootstrap");
+
+            manifest.DefineScript("ContentPickerCreation")
+                .SetUrl("contentPickerCreation\\ContentPickerCreation.js", "contentPickerCreation\\ContentPickerCreation.js")
+                .SetDependencies("jQueryUI");
+            manifest.DefineStyle("ContentPickerCreation")
+                .SetUrl("contentPickerCreation\\ContentPickerCreation.css", "contentPickerCreation\\ContentPickerCreation.css");
+            manifest.DefineStyle("ContentPickerThemeHiding")
+                .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.css", "contentPickerCreation\\ContentPickerThemeHiding.css");
         }
     }
 }

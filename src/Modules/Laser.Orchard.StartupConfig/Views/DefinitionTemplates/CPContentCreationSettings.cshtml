@@ -1,0 +1,6 @@
+﻿@model Laser.Orchard.StartupConfig.ContentPickerContentCreation.Settings.CPContentCreationSettings
+    <fieldset>
+        @Html.CheckBoxFor(m => m.EnableContentCreation)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EnableContentCreation)">@T("Enable Content Creation")</label>
+        <span class="hint">@T("Enable Content Creation")</span>
+    </fieldset>
