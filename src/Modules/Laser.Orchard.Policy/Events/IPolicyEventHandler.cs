@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.Policy.ViewModels;
+﻿using Laser.Orchard.Policy.Models;
+using Laser.Orchard.Policy.ViewModels;
 using Orchard.Events;
 
 namespace Laser.Orchard.Policy.Events {

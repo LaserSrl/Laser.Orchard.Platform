@@ -10,6 +10,7 @@ using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Localization;
@@ -24,14 +25,16 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
         private readonly IUsersExtensionsServices _usersExtensionsServices;
         private readonly IPolicyServices _policyServices;
         private readonly IControllerContextAccessor _controllerAccessor;
+        private readonly IOrchardServices _orchardServices;
 
-        public UserRegistrationPolicyPartDriver(IUtilsServices utilsServices, IUsersExtensionsServices usersExtensionsServices, IPolicyServices policyServices, IControllerContextAccessor controllerAccessor) {
+        public UserRegistrationPolicyPartDriver(IUtilsServices utilsServices, IUsersExtensionsServices usersExtensionsServices, IPolicyServices policyServices, IControllerContextAccessor controllerAccessor, IOrchardServices orchardServices) {
             T = NullLocalizer.Instance;
             Log = NullLogger.Instance;
             _utilsServices = utilsServices;
             _usersExtensionsServices = usersExtensionsServices;
             _policyServices = policyServices;
             _controllerAccessor = controllerAccessor;
+            _orchardServices = orchardServices;
         }
         public Localizer T { get; set; }
 
@@ -46,7 +49,8 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
         //GET
         protected override DriverResult Editor(UserRegistrationPolicyPart part, dynamic shapeHelper) {
             if (currentControllerAction != CONTROLLER_ACTION) return null;
-            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy")) {
+            var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
+            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && settings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
                 var shapeName = "Parts_UserRegistrationPolicy_Edit";
                 var templateName = "Parts/UserRegistrationPolicy_Edit";
                 var policies = _usersExtensionsServices.BuildEditorForRegistrationPolicies();
@@ -63,7 +67,8 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
         //POST
         protected override DriverResult Editor(UserRegistrationPolicyPart part, IUpdateModel updater, dynamic shapeHelper) {
             if (currentControllerAction != CONTROLLER_ACTION) return null;
-            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy")) {
+            var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
+            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && settings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
                 var policies = _usersExtensionsServices.BuildEditorForRegistrationPolicies();
                 if (updater.TryUpdateModel(policies, Prefix, null, null)) {
                     if (policies.Count(x => (
