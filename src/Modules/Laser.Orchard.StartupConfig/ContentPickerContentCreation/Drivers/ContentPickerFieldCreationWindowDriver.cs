@@ -27,57 +27,29 @@ namespace Laser.Orchard.StartupConfig.ContentPickerContentCreation.Drivers {
         }
 
         protected override DriverResult Editor(CommonPart part, dynamic shapeHelper) {
+            var model = new ContentPickerCreationWindowVM {
+                IdContent = part.ContentItem.Id,
+                Published = part.ContentItem.IsPublished(),
+                TypeContent = part.ContentItem.ContentType
+            };
 
-            var request = _orchardServices.WorkContext.HttpContext.Request;
-
-            var routeData = request.RequestContext.RouteData;
-            var model = new SelectButton();
-
-            var callbackUrl = (string)_controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] ?? "";
-            if (callbackUrl == "") {
-                callbackUrl = request.QueryString.ToString();
-                model.NameCPField = request.QueryString["namecpfield"];
-            }
-            else if(_controllerContextAccessor.Context.Controller.TempData["namecpfield"] != null) {
-                model.NameCPField = _controllerContextAccessor.Context.Controller.TempData["namecpfield"].ToString();
-            }
-
-            model.Callback = callbackUrl;
-            model.IdContent = part.ContentItem.Id;
             TitlePart titlePart = part.ContentItem.As<TitlePart>();
             if (titlePart != null && !string.IsNullOrWhiteSpace(titlePart.Title)) {
                 model.TitleContent = titlePart.Title;
             }
 
-            model.Published = part.ContentItem.IsPublished();
-
-            var isContentPickerCreation = callbackUrl.Contains("_contentpickercreate_");
-            if (isContentPickerCreation) {
-                return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
+            return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
                                                                                                        Model: model,
                                                                                                        Prefix: Prefix));
-            }
-
-            return null;
         }
 
         protected override DriverResult Editor(CommonPart part, IUpdateModel updater, dynamic shapeHelper) {
-            var model = new SelectButton();
-            var updateSuccess = updater.TryUpdateModel(model, Prefix, null, null);
+            var model = new ContentPickerCreationWindowVM();
+            updater.TryUpdateModel(model, Prefix, null, null);
 
-            if (!string.IsNullOrWhiteSpace(model.Callback)) {
-                _controllerContextAccessor.Context.Controller.TempData["CallbackUrl"] = model.Callback;
-                _controllerContextAccessor.Context.Controller.TempData["namecpfield"] = model.NameCPField;
-
-                if (updateSuccess)
-                    return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
-                                                                                                       Model: model,
-                                                                                                       Prefix: Prefix));
-                else
-                    return Editor(part, shapeHelper);
-            }
-
-            return null;
+            return ContentShape("Parts_ContentPickerCreateItem_EditExtension", () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContentPickerCreateItem.EditExtension",
+                                                                                                   Model: model,
+                                                                                                   Prefix: Prefix));
         }
     }
 }
