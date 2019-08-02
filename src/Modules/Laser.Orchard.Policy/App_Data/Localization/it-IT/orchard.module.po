@@ -69,6 +69,10 @@ msgid "Policy part behaviour"
 msgstr "Comportamento part informativa"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Add this policy to the policies a user have to accept or decline during his registration."
+msgstr "Aggiunge questa informativa alle informative che l'utente deve accettare o rifiutare esplicitamente in fase di registrazione."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "For the \"Policy\", \"CommercialUse\" and \"ThirdParty\" options an Accept/Don't Accept choice will be proposed to the end user."
 msgstr "Per le opzioni \"Policy\", \"CommercialUse\" e \"ThirdParty\" verrà proposta all'utente la scelta Accetto/Non accetto."
 
@@ -91,6 +95,10 @@ msgstr "Impostare una priorità. Questa informazione viene utilizzata per ordina
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "Set a priority. This information is used to order policy texts in a descending priority order."
 msgstr "Impostare una priorità. Questa informazione viene utilizzata per ordinare i testi dell'informativa in ordine di priorità decrescente."
+
+msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
+msgid "Show this policy during user registration"
+msgstr "Visualizza questa informativa durante la registrazione dell'utente"
 
 msgctxt "~/Modules/Laser.Orchard.Policy/Views/EditorTemplates/Parts/PolicyTextInfo_Edit.cshtml"
 msgid "User have to accept this policy"
