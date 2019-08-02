@@ -2,18 +2,14 @@
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
-using Orchard.Events;
 using Orchard.Localization;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
-namespace Laser.Orchard.Events.Tokens
-{
+namespace Laser.Orchard.Events.Tokens {
     public class ActivityPartTokens : ITokenProvider
     {
         private readonly ICurrentContentAccessor _currentContentAccessor;
@@ -40,16 +36,14 @@ namespace Laser.Orchard.Events.Tokens
         public void Describe(DescribeContext context)
         {
             context.For("Content")
-                   .Token("StartDate", T("List Start Date"), T("Start date of Activity"))
-                   .Token("EndDate", T("List End Date"), T("End date of Activity"));
+                   .Token("ActivityStartDate", T("Activity Start Date"), T("Start date of Activity"))
+                   .Token("ActivityEndDate", T("Activity End Date"), T("End date of Activity"))
+                   .Token("ActivityStartDateString", T("Activity Start Date (as String)"), T("String representing the start date of Activity"))
+                   .Token("ActivityEndDateString", T("Activity End Date (as String)"), T("String representing the end date of Activity"));
         }
 
         public void Evaluate(EvaluateContext context)
         {
-            //if (_currentContentAccessor.CurrentContentItem == null)
-            //    return;
-            //else if (_currentContentAccessor.CurrentContentItem.As<ActivityPart>() == null)
-            //    return;
             context.For<IContent>("Content")
                 .Token(token =>
                     token.Equals("ActivityStartDateString", StringComparison.InvariantCultureIgnoreCase) ? String.Empty : null,
@@ -73,7 +67,7 @@ namespace Laser.Orchard.Events.Tokens
                     StartDateStringChainParam,
                     "Text",
                     (token, content) => {
-                        return GetEndDateString(content, token);
+                        return GetStartDateString(content, token);
                     }
                 )
                 .Token(token =>
@@ -162,6 +156,7 @@ namespace Laser.Orchard.Events.Tokens
                 return ParseDate(activity, activity.DateTimeStart.Value, dateFormat);
             }
         }
+
         private object GetEndDateString(IContent content, string dateFormat) {
             ActivityPart activity = content == null ? null : content.As<ActivityPart>();
             if (activity == null)
@@ -249,73 +244,25 @@ namespace Laser.Orchard.Events.Tokens
         }
 
         private static Tuple<string, string> StartDateChainParam(string token) {
-            string tokenPrefix;
-            int chainIndex, tokenLength, tokenLimit;
-        
-            if (!token.StartsWith(("ActivityStartDate)"), StringComparison.OrdinalIgnoreCase)) {
+            if (!token.StartsWith("ActivityStartDate)", StringComparison.OrdinalIgnoreCase)) {
                 if (!token.Equals("ActivityStartDate", StringComparison.InvariantCultureIgnoreCase)) {
                     return null;
                 }
             }
 
-            tokenLimit = token.IndexOf(")");
-            // use ")." as chars combination to discover the end of the parameter
-            chainIndex = token.IndexOf(").") + 1;
-            if (chainIndex == 0) { // ")." has not be found
-                tokenLength = tokenLimit == 0 ? token.Length : tokenLimit;
-
-                return new Tuple<string, string>(token.Substring(tokenLength).Trim(new char[] { '(', ')' }), "");
-            }
-
-            tokenPrefix = token.Substring(0, tokenLimit);
-            tokenLength = tokenPrefix.Length;
-
-            if (chainIndex <= tokenLength) {
-                return null;
-            }
-            //ActivityStartDate).Format:yyyy-MM-dd
-            return new Tuple<string, string>(
-                // ActivityStartDate
-                String.Empty,
-                // Format:yyyy-MM-dd
-                token.Substring(chainIndex + 1));
+            return EvaluateChainDateFormat(token);
         }
         private static Tuple<string, string> EndDateChainParam(string token) {
-            string tokenPrefix;
-            int chainIndex, tokenLength, tokenLimit;
-
-            if (!token.StartsWith(("ActivityEndDate)"), StringComparison.OrdinalIgnoreCase)) {
+            if (!token.StartsWith("ActivityEndDate)", StringComparison.OrdinalIgnoreCase)) {
                 if (!token.Equals("ActivityEndDate", StringComparison.InvariantCultureIgnoreCase)) {
                     return null;
                 }
             }
 
-            tokenLimit = token.IndexOf(")");
-            // use ")." as chars combination to discover the end of the parameter
-            chainIndex = token.IndexOf(").") + 1;
-            if (chainIndex == 0) { // ")." has not be found
-                tokenLength = tokenLimit == 0 ? token.Length : tokenLimit;
-                return new Tuple<string, string>(token.Substring(tokenLength).Trim(new char[] { '(', ')' }), "");
-            }
-
-            tokenPrefix = token.Substring(0, tokenLimit);
-            tokenLength = tokenPrefix.Length;
-
-            if (chainIndex <= tokenLength) {
-                return null;
-            }
-            //ActivityStartDate).Format:yyyy-MM-dd
-            return new Tuple<string, string>(
-                // ActivityStartDate
-                String.Empty,
-                // Format:yyyy-MM-dd
-                token.Substring(chainIndex + 1));
+            return EvaluateChainDateFormat(token);
         }
 
         private static Tuple<string, string> StartDateStringChainParam(string token) {
-            string tokenPrefix, format;
-            int chainIndex, tokenLength;
-
             if (token.StartsWith("ActivityStartDateString", StringComparison.InvariantCultureIgnoreCase)) {
                 if (token.IndexOf("ActivityStartDateString:") != -1) {
                     //check if format is written after ':' char
@@ -326,36 +273,13 @@ namespace Laser.Orchard.Events.Tokens
                     }
                 }
 
-                chainIndex = token.IndexOf(").") + 1;
-                if (chainIndex == 0) { // ")." has not be found
-                    return new Tuple<string, string>(token.Substring(token.Length).Trim(new char[] { '(', ')' }), "");
-                }
-
-                tokenPrefix = token.Substring(0, token.IndexOf(")"));
-                tokenLength = tokenPrefix.Length;
-
-                if (chainIndex <= tokenLength) {
-                    return null;
-                }
-
-                if (tokenPrefix.IndexOf(":") == -1) {
-                    return new Tuple<string, string>(
-                        "",
-                        token.Substring(chainIndex + 1));
-
-                } else {
-                    format = token.Split(':', ')')[1];
-                    return new Tuple<string, string>(
-                        format.Trim(new char[] { '(', ')' }),
-                        token.Substring(chainIndex + 1));
-                }
+                return EvaluateChainStringFormat(token);
             }
 
             return null;
         }
         private static Tuple<string, string> EndDateStringChainParam(string token) {
-            string tokenPrefix, format;
-            int chainIndex, tokenLength;
+            string format;
 
             if (token.StartsWith("ActivityEndDateString", StringComparison.InvariantCultureIgnoreCase)) {
                 if (token.IndexOf("ActivityEndDateString:") != -1) {
@@ -365,32 +289,66 @@ namespace Laser.Orchard.Events.Tokens
                         return null;
                 }
 
-                chainIndex = token.IndexOf(").") + 1;
-                if (chainIndex == 0) { // ")." has not be found
-                    return new Tuple<string, string>(token.Substring(token.Length).Trim(new char[] { '(', ')' }), "");
-                }
-
-                tokenPrefix = token.Substring(0, token.IndexOf(")"));
-                tokenLength = tokenPrefix.Length;
-
-                if (chainIndex <= tokenLength) {
-                    return null;
-                }
-
-                if (tokenPrefix.IndexOf(":") == -1) {
-                    return new Tuple<string, string>(
-                        "",
-                        token.Substring(chainIndex + 1));
-                    
-                } else {
-                    format = token.Split(':', ')')[1];
-                    return new Tuple<string, string>(
-                        format.Trim(new char[] { '(', ')' }),
-                        token.Substring(chainIndex + 1));
-                }
+                return EvaluateChainStringFormat(token);
             }
 
             return null;
+        }
+
+        private static Tuple<string, string> EvaluateChainDateFormat(string token) {
+            string tokenPrefix;
+            int chainIndex, tokenLength, tokenLimit;
+
+            tokenLimit = token.IndexOf(")");
+            // use ")." as chars combination to discover the end of the parameter
+            chainIndex = token.IndexOf(").") + 1;
+            if (chainIndex == 0) { // ")." has not be found
+                tokenLength = tokenLimit == 0 ? token.Length : tokenLimit;
+
+                return new Tuple<string, string>(token.Substring(tokenLength).Trim(new char[] { '(', ')' }), "");
+            }
+
+            tokenPrefix = token.Substring(0, tokenLimit);
+            tokenLength = tokenPrefix.Length;
+
+            if (chainIndex <= tokenLength) {
+                return null;
+            }
+
+            //ActivityStartDate).Format:yyyy-MM-dd
+            return new Tuple<string, string>(
+                // ActivityStartDate
+                String.Empty,
+                // Format:yyyy-MM-dd
+                token.Substring(chainIndex + 1));
+        }
+
+        private static Tuple<string, string> EvaluateChainStringFormat(string token) {
+            string tokenPrefix, format;
+            int chainIndex, tokenLength;
+
+            chainIndex = token.IndexOf(").") + 1;
+            if (chainIndex == 0) { // ")." has not be found
+                return new Tuple<string, string>(token.Substring(token.Length).Trim(new char[] { '(', ')' }), "");
+            }
+
+            tokenPrefix = token.Substring(0, token.IndexOf(")"));
+            tokenLength = tokenPrefix.Length;
+
+            if (chainIndex <= tokenLength) {
+                return null;
+            }
+
+            if (tokenPrefix.IndexOf(":") == -1) {
+                return new Tuple<string, string>(
+                    "",
+                    token.Substring(chainIndex + 1));
+            } else {
+                format = token.Split(':', ')')[1];
+                return new Tuple<string, string>(
+                    format.Trim(new char[] { '(', ')' }),
+                    token.Substring(chainIndex + 1));
+            }
         }
     }
 }
