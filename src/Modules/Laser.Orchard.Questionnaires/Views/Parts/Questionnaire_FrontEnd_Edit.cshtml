@@ -175,13 +175,16 @@ else {
 <ul>
                             <li>
                                 @for (int i = 0; i < numeroRisposte; i++) {
-<label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                    // Genero l'id in questo modo perché usare Html.FieldIdFor() causa un'alterazione del name che lo rende irriconoscibile dal TryUpdateModel
+                                    var answerId = Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer) + "-" + i + "-" + j;
+                                <label for="@answerId">
                                         <input class="j_answer" type="radio" 
                                             @(Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer == Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
                                             name="@Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer)"
-                                            id="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)"
+                                            id="@answerId"
                                             value="@(Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
-                                        @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer</label>
+                                        @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                </label>
                                     
                                     if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
                                         foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
