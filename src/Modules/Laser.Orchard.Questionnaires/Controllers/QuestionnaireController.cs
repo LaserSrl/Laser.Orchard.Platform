@@ -75,7 +75,16 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                         }
                     }
                     if (canBeFilled) {
-                        canBeFilled = _questionnairesServices.Save(editModel, currentUser, ControllerContext.HttpContext.Session.SessionID);
+                        string uniqueId;
+                        var request = ControllerContext.HttpContext.Request;
+
+                        if (request != null && request.Headers["x-uuid"] != null) {
+                             uniqueId = request.Headers["x-uuid"];
+                        } else {
+                            uniqueId = ControllerContext.HttpContext.Session.SessionID;
+                        }
+
+                        canBeFilled = _questionnairesServices.Save(editModel, currentUser, uniqueId);
                     }
                     //if (editModel.UseRecaptcha && !_captchaServices.IsCaptchaValid(_orchardServices.WorkContext.HttpContext.Request.Form, _orchardServices.WorkContext.HttpContext.Request.UserHostAddress)) {
                     //    throw new Exception("Invalid captcha!");
