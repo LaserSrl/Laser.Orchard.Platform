@@ -7,6 +7,7 @@ using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.Localization;
 using Orchard.Logging;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
         private readonly IRepository<AnswerRecord> _repositoryAnswer;
         private readonly IUtilsServices _utilsServices;
 
+        public Localizer T { get; set; }
         public ILogger Logger { get; set; }
 
         public QuestionnaireResponseController(
@@ -43,6 +45,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
             _csrfTokenHelper = csrfTokenHelper;
             _repositoryQuestions = repositoryQuestions;
             _repositoryAnswer = repositoryAnswer;
+            T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
             _utilsServices = utilsServices;
         }
@@ -59,7 +62,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
             if (Risps != null) {
                 return ExecPost(Risps);
             } else {
-                return (_utilsServices.GetResponse(ResponseType.Validation, "Validation: invalid input data structure."));
+                return (_utilsServices.GetResponse(ResponseType.Validation, T("Validation: invalid input data structure.").ToString()));
             }
         }
         /// <summary>
@@ -77,7 +80,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                 return ExecPost(Risps, qContext);
             }
             else {
-                return (_utilsServices.GetResponse(ResponseType.Validation, "Validation: invalid input data structure."));
+                return (_utilsServices.GetResponse(ResponseType.Validation, T("Validation: invalid input data structure.").ToString()));
             }
         }
         private Response ExecPost(List<AnswerWithResultViewModel> Risps, string QuestionnaireContext = "") {
@@ -129,7 +132,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                         foreach (var validationResult in results) {
                             messaggio += validationResult.ErrorMessage + " ";
                         }
-                        return (_utilsServices.GetResponse(ResponseType.Validation, "Validation:" + messaggio));
+                        return (_utilsServices.GetResponse(ResponseType.Validation, T("Validation:").ToString() + messaggio));
                     } else {
                         qVM.Context = QuestionnaireContext;
 
@@ -145,12 +148,12 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                         if (_questionnairesServices.Save(qVM, currentUser, uniqueId)) {
                             return (_utilsServices.GetResponse(ResponseType.Success));
                         } else {
-                            return (_utilsServices.GetResponse(ResponseType.Validation, "Questionnaire already submitted."));
+                            return (_utilsServices.GetResponse(ResponseType.Validation, T("Questionnaire already submitted.").ToString()));
                         }
                     }
                 }
                 else 
-                    return (_utilsServices.GetResponse(ResponseType.Validation, "Validation: data list is empty."));
+                    return (_utilsServices.GetResponse(ResponseType.Validation, T("Validation: data list is empty.").ToString()));
             }
             else
                 return (_utilsServices.GetResponse(ResponseType.UnAuthorized));
