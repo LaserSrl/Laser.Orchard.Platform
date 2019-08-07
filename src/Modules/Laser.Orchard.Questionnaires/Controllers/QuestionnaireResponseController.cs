@@ -132,7 +132,17 @@ namespace Laser.Orchard.Questionnaires.Controllers {
                         return (_utilsServices.GetResponse(ResponseType.Validation, "Validation:" + messaggio));
                     } else {
                         qVM.Context = QuestionnaireContext;
-                        if (_questionnairesServices.Save(qVM, currentUser, HttpContext.Current.Session.SessionID)) {
+
+                        string uniqueId;
+                        var request = HttpContext.Current.Request;
+
+                        if (request != null && request.Headers["x-uuid"] != null) {
+                            uniqueId = request.Headers["x-uuid"];
+                        } else {
+                            uniqueId = HttpContext.Current.Session.SessionID;
+                        }
+
+                        if (_questionnairesServices.Save(qVM, currentUser, uniqueId)) {
                             return (_utilsServices.GetResponse(ResponseType.Success));
                         } else {
                             return (_utilsServices.GetResponse(ResponseType.Validation, "Questionnaire already submitted."));
