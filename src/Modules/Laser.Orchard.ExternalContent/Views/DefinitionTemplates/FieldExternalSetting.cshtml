@@ -49,72 +49,78 @@
     </div>
 </fieldset>
 <fieldset>
-    <label for="@Html.FieldIdFor(m => m.DataType)">@T("Data Type")</label>
-    @Html.DropDownListFor(m => m.DataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.OriginData)), Model.DataType), new { @class = "text" })
-    <span class="hint">@T("Default is RestWebService")</span>
+    <legend>@T("HTTP Request")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DataType)">@T("Data Type")</label>
+        @Html.DropDownListFor(m => m.DataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.OriginData)), Model.DataType), new { @class = "text" })
+        <span class="hint">@T("Default is RestWebService")</span>
+    </div><div>
+        <label for="@Html.FieldIdFor(m => m.ExternalURL)">@T("External URL / executable string")</label>
+        @Html.TextBoxFor(m => m.ExternalURL, new { @class = "text large tokenized" })
+        <span class="hint">@T("Insert url and token or executable (see Data type)")</span>
+        @Html.ValidationMessageFor(m => m.ExternalURL)
+    </div><div>
+        <label for="@Html.FieldIdFor(m => m.HttpVerb)">@T("Use this HttpVerb")</label>
+        @Html.DropDownListFor(m => m.HttpVerb, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.HttpVerbOptions)), Model.HttpVerb), new { @class = "text", onclick = "verbChanged(this)" })
+        <span class="hint">@T("Default is GET")</span>
+    </div>
+    <div @if (Model.HttpVerb.ToString() != "POST") { <text> style="display:none" </text> }>
+        <fieldset>
+            <label for="@Html.FieldIdFor(m => m.HttpDataType)">@T("Use this content type")</label>
+            @Html.DropDownListFor(m => m.HttpDataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.HttpDataTypeOptions)), Model.HttpDataType), new { @class = "text" })
+            <span class="hint">@T("Default is JSON")</span>
+        </fieldset>
+        <fieldset>
+            <label for="@Html.FieldIdFor(m => m.BodyRequest)">@T("Body Request")</label>
+            @Html.TextAreaFor(m => m.BodyRequest, new { @class = "text large tokenized" })
+            <span class="hint">@T("Insert request body")</span>
+        </fieldset>
+        <script type="text/javascript">
+            function verbChanged(e) {
+                var aux = $("#" + e.id);
+                if (aux.val() == "POST") {
+                    aux.parent().next("div").show();
+                }
+                else {
+                    aux.parent().next("div").hide();
+                }
+            }
+        </script>
+    </div><div>
+        <label for="@Html.FieldIdFor(m => m.AdditionalHeadersText)">@T("Additional headers for web request")</label>
+        @Html.TextAreaFor(m => m.AdditionalHeadersText, new { @class = "text large tokenized" })
+        <span class="hint">@T("One header per line. Each header must have the form 'header_name: header_value'.")</span>
+    </div>
 </fieldset>
 <fieldset>
-    <label for="@Html.FieldIdFor(m => m.ExternalURL)">@T("External URL / executable string")</label>
-    @Html.TextBoxFor(m => m.ExternalURL, new { @class = "text large tokenized" })
-    <span class="hint">@T("Insert url and token or executable (see Data type)")</span>
-    @Html.ValidationMessageFor(m => m.ExternalURL)
+    <legend>@T("Cache")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.CacheMinute)">@T("Cache duration")</label>
+        @Html.TextBoxFor(m => m.CacheMinute)
+        <span class="hint">@T("Cache duration time in minutes")</span>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.CacheToFileSystem)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.CacheToFileSystem)">@T("Cache To FileSystem")</label>
+        <span class="hint">@T("If checked cache will be stored also in filesystem (in folder/App_Data/cache).")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.CacheInput)">@T("Input Cache Key")</label>
+        @Html.TextBoxFor(m => m.CacheInput, new { @class = "text large tokenized" })
+        <span class="hint">@T("The cache key used in input.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.ScheduledMinute)">@T("Scheduled Minute")</label>
+        @Html.TextBoxFor(m => m.ScheduledMinute)
+        <span class="hint">@T("Scheduled request Minute")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.InternalHostNameForScheduledTask)">@T("Server hostname (internally resolved by the server)")</label>
+        @Html.TextBoxFor(m => m.InternalHostNameForScheduledTask, new { @class="text large"})
+        <span class="hint">@T("The hostname (internally resolved by the server) that the WebClient have to call to generate the cache (e.g. http://localhost or http://local.laser-group.com). If empty, the request will be addressed to the tenant base url.")</span>
+    </div>
 </fieldset>
 @Display.TokenHint()
-<fieldset>
-    <label for="@Html.FieldIdFor(m => m.AdditionalHeadersText)">@T("Additional headers for web request")</label>
-    @Html.TextAreaFor(m => m.AdditionalHeadersText, new { @class = "text large tokenized" })
-    <span class="hint">@T("One header per line. Each header must have the form 'header_name: header_value'.")</span>
-</fieldset>
-<fieldset>
-    <label for="@Html.FieldIdFor(m => m.CacheMinute)">@T("Cache duration")</label>
-    @Html.TextBoxFor(m => m.CacheMinute)
-    <span class="hint">@T("Cache duration time in minutes")</span>
-</fieldset>
-<fieldset>
-    @Html.CheckBoxFor(m => m.CacheToFileSystem)
-    <label class="forcheckbox" for="@Html.FieldIdFor(m => m.CacheToFileSystem)">@T("Cache To FileSystem")</label>
-    <span class="hint">@T("If checked cache will be stored also in filesystem (in folder/App_Data/cache).")</span>
-</fieldset>
-
-<fieldset>
-    <label for="@Html.FieldIdFor(m => m.CacheInput)">@T("Input Cache Key")</label>
-    @Html.TextBoxFor(m => m.CacheInput, new { @class = "text large tokenized" })
-    <span class="hint">@T("The cache key used in input.")</span>
-</fieldset>
-<fieldset>
-    <label for="@Html.FieldIdFor(m => m.ScheduledMinute)">@T("Scheduled Minute")</label>
-    @Html.TextBoxFor(m => m.ScheduledMinute)
-    <span class="hint">@T("Scheduled request Minute")</span>
-</fieldset>
 
 
 
-<fieldset>
-    <label for="@Html.FieldIdFor(m => m.HttpVerb)">@T("Use this HttpVerb")</label>
-    @Html.DropDownListFor(m => m.HttpVerb, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.HttpVerbOptions)), Model.HttpVerb), new { @class = "text", onclick = "verbChanged(this)" })
-    <span class="hint">@T("Default is GET")</span>
-</fieldset>
-<div @if (Model.HttpVerb.ToString() != "POST") { <text> style="display:none" </text> }>
-    <fieldset>
-        <label for="@Html.FieldIdFor(m => m.HttpDataType)">@T("Use this content type")</label>
-        @Html.DropDownListFor(m => m.HttpDataType, new SelectList(Enum.GetValues(typeof(Laser.Orchard.ExternalContent.HttpDataTypeOptions)), Model.HttpDataType), new { @class = "text" })
-        <span class="hint">@T("Default is JSON")</span>
-    </fieldset>
-    <fieldset>
-        <label for="@Html.FieldIdFor(m => m.BodyRequest)">@T("Body Request")</label>
-        @Html.TextAreaFor(m => m.BodyRequest, new { @class = "text large tokenized" })
-        <span class="hint">@T("Insert request body")</span>
-    </fieldset>
-    @Display.TokenHint()
-    <script type="text/javascript">
-        function verbChanged(e) {
-            var aux = $("#" + e.id);
-            if (aux.val() == "POST") {
-                aux.parent().next("div").show();
-            }
-            else {
-                aux.parent().next("div").hide();
-            }
-        }
-    </script>
-</div>
