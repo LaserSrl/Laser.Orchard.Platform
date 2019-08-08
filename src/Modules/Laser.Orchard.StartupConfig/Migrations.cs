@@ -105,6 +105,18 @@ namespace Laser.Orchard.StartupConfig {
             );
             return 9;
         }
+        public int UpdateFrom9() {
+            SchemaBuilder.CreateTable("PerItemCachePartRecord",
+             table => table
+                .ContentPartVersionRecord()
+                .Column<string>("PerItemKeyParam", column => column.WithLength(1024))
+            );
+
+            ContentDefinitionManager.AlterPartDefinition("PerItemCachePart", p => p.Attachable(true));
+            return 10;
+        }
+
+
     }
 
     [OrchardFeature("Laser.Orchard.StartupConfig.PermissionExtension")]
