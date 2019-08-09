@@ -67,3 +67,8 @@ Features:
 		Description: Enable feature to create contents when using a Content Picker Field
 		Category: Content
 		Dependencies: Orchard.ContentPicker, Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.PerItemCache
+		Name: Per Item Cache Key
+		Description: Enable feature to add a cache key in a item
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig

@@ -11,8 +11,10 @@ using System.Text;
 using System.Web;
 using Orchard.Tokens;
 using Orchard.Data;
+using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.StartupConfig.Handlers {
+    [OrchardFeature("Laser.Orchard.StartupConfig.PerItemCache")]
     public class PerItemCachePartHandler : ContentHandler,  ICachingEventHandler {
 
         private readonly ICurrentContentAccessor _currentContentAccessor;
@@ -44,7 +46,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             if (String.IsNullOrEmpty(settingKey))
                 return;
     
-            var _additionalCacheKey = _tokenizer.Replace(settingKey, null);
+            var _additionalCacheKey = _tokenizer.Replace(settingKey, new Dictionary<string, object> { { "Content", content } });
             key.Append(_additionalCacheKey);
         }
     }

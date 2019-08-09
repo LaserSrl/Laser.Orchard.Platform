@@ -4,10 +4,12 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.ViewModels;
+using Orchard.Environment.Extensions;
 using System.Collections.Generic;
 
 
 namespace Laser.Orchard.StartupConfig.Settings {
+    [OrchardFeature("Laser.Orchard.StartupConfig.PerItemCache")]
     public class PerItemCachePartSettingsEvents : ContentDefinitionEditorEventsBase {
         public override IEnumerable<TemplateViewModel> TypePartEditor(ContentTypePartDefinition definition) {
             if (definition.PartDefinition.Name != "PerItemCachePart") yield break;

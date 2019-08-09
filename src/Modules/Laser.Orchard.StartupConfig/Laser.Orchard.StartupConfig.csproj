@@ -374,6 +374,7 @@
     <Compile Include="Handlers\PerItemCachePartHandler.cs" />
     <Compile Include="Models\PerItemCachePart.cs" />
     <Compile Include="Models\PerItemCachePartSettings.cs" />
+    <Compile Include="Permission\PerItemCachePermission.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
