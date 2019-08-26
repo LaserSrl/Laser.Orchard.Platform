@@ -1,9 +1,14 @@
 ﻿@using Contrib.Widgets.Models;
+@using Orchard;
+@using Orchard.ContentManagement;
 @using Orchard.Core.Contents;
 @using Orchard.Environment.Extensions.Models;
 @using Orchard.Localization.Models;
 @using Orchard.Security;
 @using Orchard.Utility.Extensions;
+@using Orchard.Core.Common.Models;
+@using System.Web.Mvc;
+@using System.Web.Routing;
 
 @{
     Style.Require("TheAdminWidgetContainerStyle");
@@ -12,6 +17,9 @@
 
     Script.Include("~/Themes/TheAdmin/scripts/admin.js");
 
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+
     var zones = Model.Zones;
     var theme = (ExtensionDescriptor)Model.CurrentTheme;
     var zonePreviewImage = (string)Model.ZonePreviewImage;
@@ -19,11 +27,17 @@
     var contentItem = Model.ContentItem;
     var localizedContent = Model.ContentLocalizations != null ? (IEnumerable<LocalizationPart>)Model.ContentLocalizations : new List<LocalizationPart>();
     var selectListForLocalizedContent = new SelectList(localizedContent, "Id", "Culture.Culture", 0);
+
+    ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(Model.ContentItem);
+    RouteValueDictionary createRouteValues = metadata.CreateRouteValues;
+
+    var inCreateRoute = Url.RouteUrl(ViewContext.RouteData.Values) == Url.RouteUrl(createRouteValues);
+
 }
 
 <fieldset id="widgetsPlacement">
     <input type="hidden" name="returnUrl" />
-    <input type="hidden" name="submit.Save" />
+    <input type="hidden" id="hiddenSubmitSave" />
     <input type="hidden" name="widgetPlacement" />
     <input type="hidden" name="removedWidgets" />
     @if (contentItem.Id != 0 && localizedContent.Count() > 0) {
@@ -45,40 +59,76 @@
                         <ol>
                             @foreach (var zone in zones) {
                                 var widgets = allWidgets.Where(x => x.Zone == zone).OrderBy(w => w.Position, new Orchard.UI.FlatPositionComparer());
-                                var addWidgetUrl = contentItem.Id != 0
+                                var contentCreated = (contentItem.Id != 0 && !inCreateRoute);
+                                var addWidgetUrl = contentCreated
                                                        ? Url.Action("ListWidgets", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, zone })
                                                        : Url.Action("CreateContent", "Admin", new { area = "Contrib.Widgets", id = contentItem.ContentType, zone });
-    
+                                var contentId = contentCreated ? contentItem.Id : 0;
+
                                 <li>
                                     <h2>@zone</h2>
                                     <div class="zone-actions">
-                                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentItem.Id">@T("Add")</a>
+                                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId">@T("Add")</a>
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
                                             <li data-widget-id="@widget.Id">
-                                                <h3><a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget)</a></h3><div class="contentType"> - @widget.TypeDefinition.DisplayName</div>
-                                                <div class="widget-actions">
-                                                    @if (widget.IsPublished) {
-                                                        if (widget.HasDraft) {
+                                                @{
+                                                    int numberPLPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "PublishLaterPart").Count();
+                                                    bool scheduledTime = false;
+                                                    String scheduledTitle = "";
+                                                    if (numberPLPart > 0) {
+                                                        dynamic publishLaterPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "PublishLaterPart").First();
+
+                                                        if (publishLaterPart.ScheduledPublishUtc.Value != null && publishLaterPart.ScheduledPublishUtc.Value > DateTime.UtcNow) {
+                                                            scheduledTime = true;
+                                                            scheduledTitle += " " + @T("Scheduled Publish") + ": " + @Display.DateTime(DateTimeUtc: publishLaterPart.ScheduledPublishUtc.Value, CustomFormat: null).ToString();
+                                                        }
+                                                    }
+
+                                                    int numberALPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "ArchiveLaterPart").Count();
+                                                    if (numberALPart > 0) {
+                                                        dynamic archiveLaterPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "ArchiveLaterPart").First();
+
+                                                        if (archiveLaterPart.ScheduledArchiveUtc.Value != null && archiveLaterPart.ScheduledArchiveUtc.Value > DateTime.UtcNow) {
+                                                            if (scheduledTime) {
+                                                                scheduledTitle += "; ";
+                                                            }
+                                                            scheduledTime = true;
+                                                            scheduledTitle += " " + @T("Scheduled Archive") + ": " + @Display.DateTime(DateTimeUtc: archiveLaterPart.ScheduledArchiveUtc.Value, CustomFormat: null).ToString();
+                                                        }
+                                                    }
+                                                }
+                                                <h3>
+                                                    <a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget)</a>
+                                                </h3><span>
+                                                    <div class="contentType">
+                                                        - @widget.TypeDefinition.DisplayName
+                                                        @if (scheduledTime) {
+                                                            <img class="icon scheduledDates" src="@Href("~/Modules/Orchard.PublishLater/Content/Admin/images/scheduled.gif")" data-html="true" rel="tooltip" alt="@T("Scheduled")" title="@scheduledTitle" style="white-space: pre-wrap;" />
+                                                        }
+                                                    </div>
+                                                    <div class="widget-actions">
+                                                        @if (widget.IsPublished) {
+                                                            if (widget.HasDraft) {
+                                                                if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                    @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
+                                                                    @T(" | ")
+                                                                }
+                                                            }
+
                                                             if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
+                                                                @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
+                                                                @T(" | ")
+                                                            }
+                                                        } else {
+                                                            if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
                                                                 @T(" | ")
                                                             }
                                                         }
-
-                                                        if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                            @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
-                                                            @T(" | ")
-                                                        }
-                                                    } else {
-                                                        if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                            @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
-                                                            @T(" | ")
-                                                        }
-                                                    }
-                                                    <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
-                                                </div>
+                                                        <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
+                                                    </div>
                                             </li>
                                         }
                                     </ul>

@@ -13,7 +13,7 @@ msgid "You do not have permission to access this content."
 msgstr "Mancano i permessi per accedere a questo contenuto."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
-msgid "Command Line"
+msgid "Command line"
 msgstr "Linea di comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
@@ -51,6 +51,10 @@ msgstr "Se selezionato, quando il ContentItem viene salvato tutti i ContentItem 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "Translate Items"
 msgstr "Traduci Oggetti"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CPContentCreationSettings.cshtml"
+msgid "Enable Content Creation"
+msgstr "Abilita creazione contenuti"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text"
@@ -132,6 +136,10 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApp
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
+msgid "You are not authorized to create the content types associated to this field."
+msgstr "Non sei autorizzato a creare contenuti del tipo associato a questo campo."
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Add"
 msgstr "Aggiungi"
@@ -151,6 +159,26 @@ msgstr "Inserire una riga in cima alla lista"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Max number of rows reached."
 msgstr "Numero massimo di righe raggiunto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Cannot perform requested operation"
+msgstr "Impossibile eseguire l'operazione richiesta"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Select"
+msgstr "Seleziona"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "To select a content you need to save it first."
+msgstr "Per selezionare il contenuto devi prima effettuare il salvataggio."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/EnvironmentVariablesSettings.cshtml"
 msgid "Fallback tenants"

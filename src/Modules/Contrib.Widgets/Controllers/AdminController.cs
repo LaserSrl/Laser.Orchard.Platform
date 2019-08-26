@@ -3,6 +3,8 @@ using Contrib.Widgets.Services;
 using Contrib.Widgets.Settings;
 using Orchard;
 using Orchard.ContentManagement;
+using Orchard.ContentManagement.Aspects;
+using Orchard.Core.Contents.Settings;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
@@ -112,7 +114,7 @@ namespace Contrib.Widgets.Controllers {
             var widgetPart = _widgetsService.CreateWidget(layer.Id, widgetType, "", "", "");
             if (widgetPart == null)
                 return HttpNotFound();
-            else
+            else if(!widgetPart.ContentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable &&  !widgetPart.ContentItem.Has<IPublishingControlAspect>())
                 _contentManager.Publish(widgetPart.ContentItem);
 
             var contentItem = _services.ContentManager.Get(hostId, VersionOptions.Latest);
