@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 
@@ -12,7 +8,7 @@ namespace Laser.Orchard.Policy.Models {
         public virtual bool UserHaveToAccept { get; set; }
         public virtual int Priority { get; set; }
         public virtual PolicyTypeOptions PolicyType { get; set; }
-
+        public virtual bool AddPolicyToRegistration { get; set; }
     }
     public class PolicyTextInfoPart : ContentPart<PolicyTextInfoPartRecord> {
 
@@ -33,5 +29,9 @@ namespace Laser.Orchard.Policy.Models {
             set { this.Store(x => x.PolicyType, value); }
         }
 
+        public bool AddPolicyToRegistration {
+            get { return this.Retrieve(x => x.AddPolicyToRegistration); }
+            set { this.Store(x => x.AddPolicyToRegistration, value); }
+        }
     }
 }

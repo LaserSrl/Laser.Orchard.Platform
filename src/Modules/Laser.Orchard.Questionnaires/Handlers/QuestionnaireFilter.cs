@@ -56,7 +56,8 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                     uniqueId = _orchardServices.WorkContext.HttpContext.Session.SessionID;
                 }
 
-                elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.SessionID == uniqueId).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
+                if (!string.IsNullOrWhiteSpace(uniqueId))
+                    elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.SessionID == uniqueId).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
             }
 
             IHqlQuery query = context.Query;

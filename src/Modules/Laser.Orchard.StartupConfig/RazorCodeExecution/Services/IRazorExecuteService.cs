@@ -31,6 +31,12 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
         string ExecuteString(string code, IContent contentItem, IDictionary<string, object> tokens = null);
     }
+    public class RazorEngineTemplate<T> : TemplateBase<T> {
+        public new T Model {
+            get { return base.Model; }
+            set { base.Model = value; }
+        }
+    }
 
     public class RazorExecuteService : IRazorExecuteService {
         private readonly ShellSettings _shellSettings;
