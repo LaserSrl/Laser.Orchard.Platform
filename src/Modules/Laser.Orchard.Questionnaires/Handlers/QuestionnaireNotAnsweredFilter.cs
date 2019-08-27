@@ -39,12 +39,12 @@ namespace Laser.Orchard.Questionnaires.Handlers {
             // recupera il questionnaire context
             var questionnaireContext = (string)(context.State.Context);
 
+            string uniqueId = "";
             var currentUser = _orchardServices.WorkContext.CurrentUser;
+
             if (currentUser != null) {
                 elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.User_Id == currentUser.Id && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
-            }
-            else {
-                string uniqueId;
+            } else {
                 var request = _orchardServices.WorkContext.HttpContext.Request;
 
                 if (request != null && request.Headers["x-uuid"] != null) {
@@ -53,17 +53,20 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                     uniqueId = _orchardServices.WorkContext.HttpContext.Session.SessionID;
                 }
 
-                elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.SessionID == uniqueId && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
+                if (!string.IsNullOrWhiteSpace(uniqueId))
+                    elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.SessionID == uniqueId && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
             }
 
+            if (currentUser != null || !string.IsNullOrWhiteSpace(uniqueId)) {
                 Action<IAliasFactory> selector =
-                    alias => alias.ContentPartRecord<QuestionnairePartRecord>();
+                alias => alias.ContentPartRecord<QuestionnairePartRecord>();
                 Action<IHqlExpressionFactory> filter1 = x => x.Eq("Id", questionnaireId);
                 context.Query.Where(selector, filter1);
                 foreach (var id in elencoIdQuestionnaires) {
                     Action<IHqlExpressionFactory> filter2 = x => x.NotEqProperty("Id", id.ToString());
                     context.Query.Where(selector, filter2);
                 }
+            }
         }
     }
 }

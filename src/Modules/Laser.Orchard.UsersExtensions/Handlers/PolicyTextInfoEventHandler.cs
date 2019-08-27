@@ -15,11 +15,11 @@ namespace Laser.Orchard.UsersExtensions.Handlers {
         private void PolicyTextInfoPublished(PolicyTextInfoPart policyTextInfo, IOrchardServices orchardServices) {
             var settings = orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
             var list = new List<string>(settings.PolicyTextReferences);
-            var currenPolicyId = string.Format("{{{0}}}", policyTextInfo.Id);
+            var currentPolicyId = string.Format("{{{0}}}", policyTextInfo.Id);
             var all = "{All}";
             if (policyTextInfo.AddPolicyToRegistration) {
-                if(list.Contains(all) == false && list.Contains(currenPolicyId) == false) {
-                    list.Add(currenPolicyId);
+                if(list.Contains(all) == false && list.Contains(currentPolicyId) == false) {
+                    list.Add(currentPolicyId);
                 }
             }
             else { // remove current policy from registration
@@ -33,8 +33,8 @@ namespace Laser.Orchard.UsersExtensions.Handlers {
                         }
                     }
                 }
-                if (list.Contains(currenPolicyId)) {
-                    list.Remove(currenPolicyId);
+                if (list.Contains(currentPolicyId)) {
+                    list.Remove(currentPolicyId);
                 }
             }
             settings.IncludePendingPolicy = (list.Count == 0) ? Policy.IncludePendingPolicyOptions.No : Policy.IncludePendingPolicyOptions.Yes;
