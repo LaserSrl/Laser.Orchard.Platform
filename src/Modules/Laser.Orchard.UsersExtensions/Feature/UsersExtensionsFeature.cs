@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace Laser.Orchard.UsersExtensions.Feature {
     public class UsersExtensionsFeature : IFeatureEventHandler {
         private readonly IOrchardServices _orchardServices;
-        private readonly IPolicyServices _policySerivces;
-        public UsersExtensionsFeature(IOrchardServices orchardServices, IPolicyServices policySerivces) {
+        private readonly IPolicyServices _policyServices;
+        public UsersExtensionsFeature(IOrchardServices orchardServices, IPolicyServices policyServices) {
             _orchardServices = orchardServices;
-            _policySerivces = policySerivces;
+            _policyServices = policyServices;
         }
         public void Disabled(global::Orchard.Environment.Extensions.Models.Feature feature) {
         }
@@ -22,7 +22,7 @@ namespace Laser.Orchard.UsersExtensions.Feature {
         public void Enabled(global::Orchard.Environment.Extensions.Models.Feature feature) {
             var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
             var list = new List<string>();
-            var policies = _policySerivces.GetAllActivePolicies();
+            var policies = _policyServices.GetAllPublishedPolicyTexts();
             foreach(var p in policies) {
                 var currentPolicyId = string.Format("{{{0}}}", p.Id);
                 if (p.AddPolicyToRegistration) {

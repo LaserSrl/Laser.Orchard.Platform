@@ -45,18 +45,25 @@ namespace Laser.Orchard.UsersExtensions.Handlers {
                     context.ContentItem.As<UserRegistrationSettingsPart>().PolicyTextReferences = model.PolicyTextReferences;
 
                     // get all published policies
-                    var policies = _policyServices.GetAllActivePolicies();
+                    var policies = _policyServices.GetAllPublishedPolicyTexts();
                     // update policies settings
-                    if (model.PolicyTextReferences.Contains("{All}")) {
-                        // get all policies and set them all to AddPolicyToRegistration = true
-                        foreach(var p in policies) {
-                            p.AddPolicyToRegistration = true;
-                        }
-                    }
-                    else if (model.PolicyTextReferences.Length > 0) {
-                        // get all policies and update them
+                    if(model.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No) {
+                        // set all policies to AddPolicyToRegistration = false
                         foreach (var p in policies) {
-                            p.AddPolicyToRegistration = model.PolicyTextReferences.Contains(string.Format("{{{0}}}", p.Id));
+                            p.AddPolicyToRegistration = false;
+                        }
+                    } else { // IncludePendingPolicy = Yes
+                        if (model.PolicyTextReferences.Contains("{All}")) {
+                            // set all policies to AddPolicyToRegistration = true
+                            foreach (var p in policies) {
+                                p.AddPolicyToRegistration = true;
+                            }
+                        }
+                        else if (model.PolicyTextReferences.Length > 0) {
+                            // update all policies
+                            foreach (var p in policies) {
+                                p.AddPolicyToRegistration = model.PolicyTextReferences.Contains(string.Format("{{{0}}}", p.Id));
+                            }
                         }
                     }
                 }
