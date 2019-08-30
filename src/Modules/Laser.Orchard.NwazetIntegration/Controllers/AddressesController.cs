@@ -84,7 +84,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             Attributes = prod.AttributeIdsToValues,
                             LinePriceAdjustment = prod.LinePriceAdjustment,
                             OriginalPrice = prod.OriginalPrice,
-                            Price = _productPriceService.GetPrice(prod.Product),
+                            Price = prod.Product.DiscountPrice >= 0 && prod.Product.DiscountPrice < prod.Product.Price
+                                ? _productPriceService.GetDiscountPrice(prod.Product)
+                                : _productPriceService.GetPrice(prod.Product),
                             ProductId = prod.Product.Id,
                             PromotionId = prod.Promotion == null ? null : (int?)(prod.Promotion.Id),
                             Quantity = prod.Quantity,
