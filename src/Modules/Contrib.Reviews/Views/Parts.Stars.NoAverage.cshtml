@@ -37,7 +37,7 @@
                 @Html.SelectOption(userRating, -1, T("clear your opinion").ToString())
             </select>
             @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
-            @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+            @Html.Hidden("ReturnUrl", Context.Request.RawUrl)
             <button type="submit" name="submit.BulkEdit" value="yes">@T("Save")</button>
         }
     }
