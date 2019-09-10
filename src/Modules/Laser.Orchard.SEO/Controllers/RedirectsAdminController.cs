@@ -43,7 +43,15 @@ namespace Laser.Orchard.SEO.Controllers {
         [HttpGet]
         public ActionResult Index(PagerParameters pagerParameters) {
             var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
-            var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(_redirectService.GetRedirectsTotalCount());
+            var tot = _redirectService.GetRedirectsTotalCount();
+            var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(tot);
+            // adjust page value (in case of a previous deletion)
+            var firstItemInPage = pager.PageSize * (pager.Page - 1) + 1;
+            if(firstItemInPage > tot) {
+                pager.Page = decimal.ToInt32(decimal.Ceiling(new decimal(tot) / pager.PageSize));
+                pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(tot);
+            }
+
             var items = _redirectService.GetRedirects(pager.GetStartIndex(), pager.PageSize);
 
             dynamic viewModel = Shape.ViewModel()
@@ -107,7 +115,7 @@ namespace Laser.Orchard.SEO.Controllers {
             }
             
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { page = Request["page"] });
         }
 
         [HttpPost]
@@ -120,7 +128,7 @@ namespace Laser.Orchard.SEO.Controllers {
 
             _orchardServices.Notifier.Information(T("Redirect record was deleted"));
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { page = Request["page"] });
         }
     }
 }
