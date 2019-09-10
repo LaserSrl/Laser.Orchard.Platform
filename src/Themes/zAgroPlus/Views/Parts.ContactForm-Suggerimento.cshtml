@@ -53,7 +53,7 @@
             <label id="AttachmentNameLabel-@uniqueId" class="mrg-top-tiny"></label>
             <br />
         </div>
-        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
         <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
         <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
         @Html.AntiForgeryTokenOrchard()
