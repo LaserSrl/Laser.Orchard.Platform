@@ -1,13 +1,9 @@
 ﻿using Laser.Orchard.SEO.Models;
 using Orchard;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Laser.Orchard.SEO.Services {
-    public interface IRedirectService : IDependency {
+    public interface IRedirectService : ISingletonDependency {
         /// <summary>
         /// Gets the RedirectRule objects based on the pagination
         /// </summary>
@@ -72,5 +68,14 @@ namespace Laser.Orchard.SEO.Services {
         /// </summary>
         /// <param name="redirectRule">The RedirectRule object to be deleted.</param>
         void Delete(RedirectRule redirectRule);
+        /// <summary>
+        /// Clear redirects cache.
+        /// </summary>
+        void ClearCache();
+        /// <summary>
+        /// Number of elements in the redirects cache.
+        /// </summary>
+        /// <returns></returns>
+        int CountCached();
     }
 }
