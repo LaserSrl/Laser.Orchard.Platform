@@ -25,8 +25,8 @@
                     <td>@redirectRule.DestinationUrl</td>
                     <td>@redirectRule.IsPermanent</td>
                     <td>
-                        @Html.ActionLink(T("Edit").Text, "Edit", "RedirectsAdmin", new { id = redirectRule.Id }, null) |
-                        @Html.ActionLink(T("Delete").Text, "Delete", "RedirectsAdmin", new { id = redirectRule.Id }, new { itemprop = "RemoveUrl UnsafeUrl" })
+                        @Html.ActionLink(T("Edit").Text, "Edit", "RedirectsAdmin", new { id = redirectRule.Id, page = Model.Pager.Page }, null) |
+                        @Html.ActionLink(T("Delete").Text, "Delete", "RedirectsAdmin", new { id = redirectRule.Id, page = Model.Pager.Page }, new { itemprop = "RemoveUrl UnsafeUrl" })
                     </td>
                 </tr>
             }
@@ -34,6 +34,6 @@
     </fieldset>
 }
 
-@Display(Model.PagerShape)
+@Display(Model.Pager)
 
 @Html.AntiForgeryTokenOrchard()
