@@ -56,7 +56,7 @@ namespace Laser.Orchard.SEO.Filters {
                         .FirstOrDefault(s => s.Equals(urlPrefix.Trim('/'), StringComparison.InvariantCultureIgnoreCase)));
             }
             strippedSegments.RemoveAll(s => string.IsNullOrEmpty(s));
-
+            
             //if querystring is in redirects table, use it
             var pathQs = string.Join("/", strippedSegments) + url.Query;
             var redirect = _redirectService.GetRedirect(pathQs);
@@ -65,14 +65,14 @@ namespace Laser.Orchard.SEO.Filters {
                 var path = string.Join("/", strippedSegments);
                 redirect = _redirectService.GetRedirect(path);
                 if (redirect != null) {
-                    var destination = applicationPath +
+                    var destination = _wca.GetContext().CurrentSite.BaseUrl + //not a fan of this, since BaseUrl can be edited by admin
                         (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                         "/" + redirect.DestinationUrl.TrimStart('/');
                     filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
                 }
             }
             else {
-                var destination = applicationPath +
+                var destination = _wca.GetContext().CurrentSite.BaseUrl + //not a fan of this, since BaseUrl can be edited by admin
                     (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                     "/" + redirect.DestinationUrl.TrimStart('/');
                 filterContext.Result = new RedirectResult(destination, redirect.IsPermanent);
