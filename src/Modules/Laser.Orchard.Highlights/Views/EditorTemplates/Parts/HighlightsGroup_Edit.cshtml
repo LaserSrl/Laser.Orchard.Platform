@@ -151,11 +151,11 @@
 
                                     @if (contentItem.HasPublished()) {
                                         if (Authorizer.Authorize(Permissions.PublishContent, contentItem)) {
-                                        @Html.Link(T("Published").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" });
+                                        @Html.Link(T("Published").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" });
                                         } else {@T("Published")}
                                     } else {
                                         if (Authorizer.Authorize(Permissions.PublishContent, contentItem)) {
-                                        @Html.Link(T("Not published").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.ToUrlString() }), new { itemprop = "UnsafeUrl" })
+                                        @Html.Link(T("Not published").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = contentItem.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                         } else {@T("Not published");
                                         }
                                     }

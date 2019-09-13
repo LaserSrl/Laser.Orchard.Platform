@@ -4,21 +4,21 @@
 @using Laser.Orchard.NewsLetters.Models;
 
 @{ Layout.Title = T("Newsletter Subscribers List").ToString();
-   int newsletterId = Model.NewsletterId;
+    int newsletterId = Model.NewsletterId;
 }
 <p class="breadcrumb"><a href="@Url.NewsLettersForAdmin()">@T("Newsletter List")</a>@T(" &#62; ")@T("Newsletter Edition List")</p>
 
 @using (Html.BeginFormAntiForgeryPost(Url.Action("List", "Admin", new { area = "Contents", id = "" }))) {
-@*
-    <fieldset class="bulk-actions">
-        <label for="publishActions">@T("Actions:")</label>
-        <select id="publishActions" name="Options.BulkAction">
-            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.None, T("Choose action...").ToString())
-            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.Remove, T("Delete").ToString())
-        </select>
-        @Html.Hidden("returnUrl", ViewContext.RequestContext.HttpContext.Request.ToUrlString())
-        <button type="submit" name="submit.BulkEdit" value="yes">@T("Apply")</button>
-    </fieldset>
+    @*
+        <fieldset class="bulk-actions">
+            <label for="publishActions">@T("Actions:")</label>
+            <select id="publishActions" name="Options.BulkAction">
+                @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.None, T("Choose action...").ToString())
+                @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.Remove, T("Delete").ToString())
+            </select>
+            @Html.Hidden("returnUrl", ViewContext.RequestContext.HttpContext.Request.RawUrl)
+            <button type="submit" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+        </fieldset>
     *@
     <fieldset class="contentItems bulk-items">
         <ul>
@@ -47,9 +47,9 @@
                                 </ul>
                             </div>
                         </div>
-@*                        <div class="related">
-                            <a href="@Url.SubscriberRemove(item)" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
-                        </div>*@
+                        @*                        <div class="related">
+                                <a href="@Url.SubscriberRemove(item)" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a>
+                            </div>*@
                     </div>
                 </li>
             }

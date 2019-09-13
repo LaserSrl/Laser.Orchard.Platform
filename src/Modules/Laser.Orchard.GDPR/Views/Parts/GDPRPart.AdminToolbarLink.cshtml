@@ -8,7 +8,7 @@
 @if (string.IsNullOrWhiteSpace(vm.LinkAction)) {
     <text>@vm.LinkText</text>
 } else {
-    @Html.ActionLink(vm.LinkText, vm.LinkAction, vm.LinkController, new { area = vm.LinkArea, id = vm.ItemId, returnUrl = Request.ToUrlString() }, new { itemprop = "UnsafeUrl" })
+    @Html.ActionLink(vm.LinkText, vm.LinkAction, vm.LinkController, new { area = vm.LinkArea, id = vm.ItemId, returnUrl = Request.RawUrl }, new { itemprop = "UnsafeUrl" })
 
 }
 @T(" | ")
