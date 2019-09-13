@@ -5,9 +5,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Mvc.Filters;
 using Orchard.UI.Admin;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -27,7 +25,7 @@ namespace Laser.Orchard.SEO.Filters {
             _shellSettings = shellSettings;
             _wca = wca;
         }
-        
+
         public void OnActionExecuting(ActionExecutingContext filterContext) {
             var url = filterContext.RequestContext.HttpContext.Request.Url;
             if (url == null)
@@ -57,20 +55,30 @@ namespace Laser.Orchard.SEO.Filters {
                     .Remove(strippedSegments
                         .FirstOrDefault(s => s.Equals(urlPrefix.Trim('/'), StringComparison.InvariantCultureIgnoreCase)));
             }
+            strippedSegments.RemoveAll(s => string.IsNullOrEmpty(s));
 
-            var path = string.Join("/", strippedSegments);
-            var redirect = _redirectService.GetRedirect(path);
-
-            if (redirect == null)
-                return;
-
-            
-            var destination = _wca.GetContext().CurrentSite.BaseUrl + //not a fan of this, since BaseUrl can be edited by admin
-                (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
-                "/" + redirect.DestinationUrl.TrimStart('/');
-            filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
+            //if querystring is in redirects table, use it
+            var pathQs = string.Join("/", strippedSegments) + url.Query;
+            var redirect = _redirectService.GetRedirect(pathQs);
+            if (redirect == null) {
+                // else strip querystring to search a match
+                var path = string.Join("/", strippedSegments);
+                redirect = _redirectService.GetRedirect(path);
+                if (redirect != null) {
+                    var destination = applicationPath +
+                        (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
+                        "/" + redirect.DestinationUrl.TrimStart('/');
+                    filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
+                }
+            }
+            else {
+                var destination = applicationPath +
+                    (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
+                    "/" + redirect.DestinationUrl.TrimStart('/');
+                filterContext.Result = new RedirectResult(destination, redirect.IsPermanent);
+            }
         }
-        
+
         public void OnActionExecuted(ActionExecutedContext filterContext) { }
     }
 }

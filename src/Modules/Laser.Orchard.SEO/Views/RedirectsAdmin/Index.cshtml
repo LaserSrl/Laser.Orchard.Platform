@@ -1,9 +1,13 @@
-﻿
+﻿@{ 
+    string counter = string.Format(T("Number of cached elements: {0}").Text, Model.CachedCounter);
+}
 
 <h1>@T("Redirects")</h1>
 
 <div class="manage">
+    <span>@counter</span>
     @Html.ActionLink(T("Add").Text, "Add", "RedirectsAdmin", new { page = Request.QueryString["page"] }, new { @class = "button primaryAction" })
+    @Html.ActionLink(T("Clean Redirects Cache").Text, "ClearCache", "RedirectsAdmin", new { page = Request.QueryString["page"] }, new { @class = "button primaryAction" })
 </div>
 
 @Html.Partial("ListPartial")

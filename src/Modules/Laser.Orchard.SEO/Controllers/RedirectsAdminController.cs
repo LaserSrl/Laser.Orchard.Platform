@@ -47,16 +47,17 @@ namespace Laser.Orchard.SEO.Controllers {
             var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(tot);
             // adjust page value (in case of a previous deletion)
             var firstItemInPage = pager.PageSize * (pager.Page - 1) + 1;
-            if(firstItemInPage > tot) {
+            if (firstItemInPage > tot) {
                 pager.Page = decimal.ToInt32(decimal.Ceiling(new decimal(tot) / pager.PageSize));
                 pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(tot);
             }
 
             var items = _redirectService.GetRedirects(pager.GetStartIndex(), pager.PageSize);
-
+            int numCached = _redirectService.CountCached();
             dynamic viewModel = Shape.ViewModel()
                 .Redirects(items)
-                .Pager(pagerShape);
+                .Pager(pagerShape)
+                .CachedCounter(numCached);
             return View((object)viewModel);
         }
 
@@ -74,8 +75,7 @@ namespace Laser.Orchard.SEO.Controllers {
                 _orchardServices.TransactionManager.Cancel();
                 return View(redirect);
             }
-
-            return RedirectIfUrlsAreSame(redirect, (red) => _redirectService.Add(red));
+            return Validate(redirect, (red) => _redirectService.Add(red));
         }
 
         [HttpGet]
@@ -97,11 +97,19 @@ namespace Laser.Orchard.SEO.Controllers {
                 _orchardServices.TransactionManager.Cancel();
                 return View(redirect);
             }
-
-            return RedirectIfUrlsAreSame(redirect, (red) => _redirectService.Update(red));
+            return Validate(redirect, (red) => _redirectService.Update(red));
         }
-        
-        private ActionResult RedirectIfUrlsAreSame(RedirectRule redirect, Func<RedirectRule, RedirectRule> doOnSuccess) {
+
+        [HttpGet]
+        public ActionResult ClearCache(PagerParameters pagerParameters) {
+            _redirectService.ClearCache();
+            _orchardServices.Notifier.Information(T("Redirect cache successfully reloaded"));
+            return RedirectToAction("Index", pagerParameters);
+        }
+
+        private ActionResult Validate(RedirectRule redirect, Func<RedirectRule, RedirectRule> doOnSuccess) {
+            redirect.SourceUrl = redirect.SourceUrl.TrimEnd('/');
+            redirect.DestinationUrl = redirect.DestinationUrl.TrimEnd('/');
             if (redirect.SourceUrl == redirect.DestinationUrl) {
                 ModelState.AddModelError("SourceUrl", T("Source url is equal to Destination url").Text);
                 _orchardServices.TransactionManager.Cancel();
@@ -110,11 +118,10 @@ namespace Laser.Orchard.SEO.Controllers {
 
             try {
                 var resultRule = doOnSuccess(redirect);
-            } catch (RedirectRuleDuplicateException) {
+            }
+            catch (RedirectRuleDuplicateException) {
                 _orchardServices.Notifier.Error(T("A rule for this Source URL already exists."));
             }
-            
-
             return RedirectToAction("Index", new { page = Request["page"] });
         }
 
@@ -125,9 +132,7 @@ namespace Laser.Orchard.SEO.Controllers {
                 return HttpNotFound();
 
             _redirectService.Delete(redirect);
-
             _orchardServices.Notifier.Information(T("Redirect record was deleted"));
-
             return RedirectToAction("Index", new { page = Request["page"] });
         }
     }
