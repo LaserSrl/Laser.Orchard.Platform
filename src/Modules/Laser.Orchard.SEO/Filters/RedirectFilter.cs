@@ -2,10 +2,12 @@
 using Orchard;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
+using Orchard.Logging;
 using Orchard.Mvc.Filters;
 using Orchard.UI.Admin;
 using System;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -16,6 +18,8 @@ namespace Laser.Orchard.SEO.Filters {
         private readonly ShellSettings _shellSettings;
         private readonly IWorkContextAccessor _wca;
 
+        public ILogger Log { get; set; }
+
         public RedirectFilter(
             IRedirectService redirectService,
             ShellSettings shellSettings,
@@ -24,6 +28,7 @@ namespace Laser.Orchard.SEO.Filters {
             _redirectService = redirectService;
             _shellSettings = shellSettings;
             _wca = wca;
+            Log = NullLogger.Instance;
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {
@@ -56,23 +61,25 @@ namespace Laser.Orchard.SEO.Filters {
                         .FirstOrDefault(s => s.Equals(urlPrefix.Trim('/'), StringComparison.InvariantCultureIgnoreCase)));
             }
             strippedSegments.RemoveAll(s => string.IsNullOrEmpty(s));
-
+            var normalizedApplicationPath = applicationPath.TrimEnd('/');
+            var serverUrl = GetServerUrl(url);
+            
             //if querystring is in redirects table, use it
             var pathQs = string.Join("/", strippedSegments) + url.Query;
             var redirect = _redirectService.GetRedirect(pathQs);
             if (redirect == null) {
-                // else strip querystring to search a match
+                // else strip querystring to look for a match
                 var path = string.Join("/", strippedSegments);
                 redirect = _redirectService.GetRedirect(path);
                 if (redirect != null) {
-                    var destination = applicationPath +
+                    var destination = serverUrl + normalizedApplicationPath + 
                         (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                         "/" + redirect.DestinationUrl.TrimStart('/');
                     filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
                 }
             }
             else {
-                var destination = applicationPath +
+                var destination = serverUrl + normalizedApplicationPath +
                     (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                     "/" + redirect.DestinationUrl.TrimStart('/');
                 filterContext.Result = new RedirectResult(destination, redirect.IsPermanent);
@@ -80,5 +87,22 @@ namespace Laser.Orchard.SEO.Filters {
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) { }
+
+        private string GetServerUrl(Uri url) {
+            StringBuilder sb = new StringBuilder();
+            int slashCounter = 0;
+            foreach(var c in url.AbsoluteUri.ToCharArray()) {
+                if(c == '/') {
+                    slashCounter++;
+                }
+                if(slashCounter > 2) {
+                    break;
+                }
+                else {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
     }
 }
