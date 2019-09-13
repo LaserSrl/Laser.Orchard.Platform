@@ -56,7 +56,7 @@ namespace Laser.Orchard.SEO.Filters {
                         .FirstOrDefault(s => s.Equals(urlPrefix.Trim('/'), StringComparison.InvariantCultureIgnoreCase)));
             }
             strippedSegments.RemoveAll(s => string.IsNullOrEmpty(s));
-
+            var basePath = url.AbsoluteUri.Substring(0, url.AbsoluteUri.IndexOf(applicationPath));
             //if querystring is in redirects table, use it
             var pathQs = string.Join("/", strippedSegments) + url.Query;
             var redirect = _redirectService.GetRedirect(pathQs);
@@ -65,14 +65,14 @@ namespace Laser.Orchard.SEO.Filters {
                 var path = string.Join("/", strippedSegments);
                 redirect = _redirectService.GetRedirect(path);
                 if (redirect != null) {
-                    var destination = applicationPath +
+                    var destination = basePath + applicationPath +
                         (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                         "/" + redirect.DestinationUrl.TrimStart('/');
                     filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
                 }
             }
             else {
-                var destination = applicationPath +
+                var destination = basePath + applicationPath +
                     (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                     "/" + redirect.DestinationUrl.TrimStart('/');
                 filterContext.Result = new RedirectResult(destination, redirect.IsPermanent);
