@@ -7,6 +7,8 @@ namespace Laser.Orchard.Mobile.ViewModels {
         public IList<dynamic> PushRecords { get; set; }
         public dynamic Pager { get; set; }
         public PushSearch Search { get; set; }
+        public List<string> MachineNames { get; set; }
+        public string SelectedMachineName { get; set; }
 
         public PushIndex() {
             //Search = new OrderSearchVM();

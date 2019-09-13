@@ -14,6 +14,9 @@
             @Html.CheckBoxFor(m => m.Search.ShowAll)*@
             <button type="submit">@T("Search")</button>
             <a href="@Url.Action("Index")">@T("Clear")</a>
+            <label>@T("Machine Name:")</label>
+            @Html.DropDownListFor(m => m.SelectedMachineName, new SelectList(Model.MachineNames))
+            <button type="submit" name="Rename">@T("Assign to current Machine")</button>
         </fieldset>
 }
 <br />

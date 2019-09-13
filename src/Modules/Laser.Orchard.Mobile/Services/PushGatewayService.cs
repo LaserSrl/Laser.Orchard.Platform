@@ -131,8 +131,8 @@ namespace Laser.Orchard.Mobile.Services {
             IList<IDictionary> lista;
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
             if (nameFilter.StartsWith("token:")) {
+                string[] machineNameCheck = GetMachineNames();
                 var session = _transactionManager.GetSession();
                 ICriteria criteria = session.CreateCriteria<Laser.Orchard.Mobile.Models.PushNotificationRecord>();
                 criteria.SetMaxResults(10);
@@ -152,7 +152,7 @@ namespace Laser.Orchard.Mobile.Services {
                 conjunction.Add(Restrictions.Eq("Token", nameFilter.Replace("token:", "").Trim()));
                 conjunction.Add(Restrictions.Eq("RegistrationUrlHost", hostCheck));
                 conjunction.Add(Restrictions.Eq("RegistrationUrlPrefix", prefixCheck));
-                conjunction.Add(Restrictions.Eq("RegistrationMachineName", machineNameCheck));
+                conjunction.Add(Restrictions.In("RegistrationMachineName", machineNameCheck));
                 criteria.Add(conjunction);
                 //criteria
                 //lista = criteria.List<PushNotificationRecord>().Select(x => new {
@@ -165,6 +165,7 @@ namespace Laser.Orchard.Mobile.Services {
 
 
             } else {
+                string machineNameCheck = GetMachineNamesForSql();
                 query = "SELECT tp.Title as Title, count(MobileRecord.Id) as NumDevice" +
                     " FROM Orchard.ContentManagement.Records.ContentItemVersionRecord as civr " +
                     " join civr.ContentItemRecord as cir " +
@@ -234,8 +235,9 @@ namespace Laser.Orchard.Mobile.Services {
                 "WHERE civr.Published=1 AND MobileRecord.Validated";
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
-            queryForPush += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName='{2}'", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck.Replace("'", "''"));
+            string machineNameCheck = GetMachineNamesForSql();
+
+            queryForPush += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             if (tipodisp.HasValue) {
                 queryForPush += " AND MobileRecord.Device='" + tipodisp.Value + "'";
             }
@@ -283,8 +285,8 @@ namespace Laser.Orchard.Mobile.Services {
             " AND (upr.UserName IN (" + userNamesCSV + ") OR upr.Email IN (" + userNamesCSV + ") )";
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
-            query += string.Format(" AND pnr.RegistrationUrlHost='{0}' AND pnr.RegistrationUrlPrefix='{1}' AND pnr.RegistrationMachineName='{2}'", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck.Replace("'", "''"));
+            string machineNameCheck = GetMachineNamesForSql();
+            query += string.Format(" AND pnr.RegistrationUrlHost='{0}' AND pnr.RegistrationUrlPrefix='{1}' AND pnr.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             if (tipodisp.HasValue) {
                 query += " AND pnr.Device='" + tipodisp.Value + "'";
             }
@@ -315,8 +317,8 @@ namespace Laser.Orchard.Mobile.Services {
                 " AND tp.Title='" + contactTitle.Replace("'", "''") + "'";
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
-            query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName='{2}'", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck.Replace("'", "''"));
+            string machineNameCheck = GetMachineNamesForSql();
+            query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             var fullStatement = _transactionManager.GetSession()
                 .CreateQuery(query)
                 .SetCacheable(false);
@@ -368,8 +370,8 @@ namespace Laser.Orchard.Mobile.Services {
                 " AND MobileRecord.Token='" + token.Replace("'", "''").Replace("token:", "").Trim() + "'";
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
-            query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName='{2}'", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck.Replace("'", "''"));
+            string machineNameCheck = GetMachineNamesForSql();
+            query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName in ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
             var fullStatement = _transactionManager.GetSession()
                 .CreateQuery(query)
                 .SetCacheable(false);
@@ -867,9 +869,9 @@ namespace Laser.Orchard.Mobile.Services {
             // elimina i dispositivi non registrati sulla macchina corrente
             string hostCheck = _shellSetting.RequestUrlHost ?? "";
             string prefixCheck = _shellSetting.RequestUrlPrefix ?? "";
-            string machineNameCheck = System.Environment.MachineName ?? "";
+            string[] machineNameCheck = GetMachineNames();
             return listdispositivo.Where(x => x.RegistrationUrlHost == hostCheck
-                && x.RegistrationUrlPrefix == prefixCheck && x.RegistrationMachineName == machineNameCheck).ToList();
+                && x.RegistrationUrlPrefix == prefixCheck && machineNameCheck.Contains(x.RegistrationMachineName)).ToList();
         }
 
         private void InitializeRecipients(List<PushNotificationVM> listdispositivo, int offset, int size, int idContent, bool repeatable, PushMobileSettingsPart pushSettings) {
@@ -1469,6 +1471,27 @@ namespace Laser.Orchard.Mobile.Services {
 
         private void LogInfo(string message) {
             Logger.Log(OrchardLogging.LogLevel.Information, null, message, null);
+        }
+
+        private string[] GetMachineNames() {
+            var list = _shellSetting["PushRegistrationAllowedMachineNames"] ?? System.Environment.MachineName;
+            var result = list.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if(result.Contains(System.Environment.MachineName)) {
+                return result;
+            }
+            else {
+                LogError(string.Format("Current machine name \"{0}\" not correctly set in Settings.txt", System.Environment.MachineName));
+                return new string[0];
+            }
+        }
+
+        private string GetMachineNamesForSql() {
+            var list = GetMachineNames();
+            var result = new List<string>();
+            foreach(var name in list) {
+                result.Add(name.Replace("'", "''"));
+            }
+            return "'" + string.Join("','", result) + "'";
         }
 
         /// <summary>
