@@ -50,7 +50,7 @@ namespace Laser.Orchard.CulturePicker.Services {
             }
             else {
                 // Root web relative path is empty
-                return logicalPath.Substring(1);
+                return logicalPath.StartsWith("/") ? logicalPath.Substring(1) : logicalPath;
             }
 
             return logicalPath.Replace(appPath, "");
