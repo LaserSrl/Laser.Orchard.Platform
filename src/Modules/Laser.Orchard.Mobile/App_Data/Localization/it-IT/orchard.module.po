@@ -421,6 +421,11 @@ msgid "Suggested value: 2. Set to 0 for no retries in case of errors on first se
 msgstr "Valore suggerito: 2. Impostare a 0 per inibire nuovi tentativi di invio in caso di errore al primo tentativo."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):
+<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "Will able back office to send push to development device"
 msgstr "Abilita il back office a inviare notifiche push al dispositivo di sviluppo"
 
@@ -749,6 +754,11 @@ msgid "Show All"
 msgstr "Visualizza Tutto"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):
+<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Token"
 msgstr "Token"
 
@@ -809,7 +819,7 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User Device"
+msgid "User device"
 msgstr "Dispositivo Utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeFilter"
