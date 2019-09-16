@@ -92,6 +92,9 @@ namespace Laser.Orchard.OpenAuthentication.Events {
             MergeUserToClosestMergeable(user);
         }
 
+        public void Moderate(IUser user) {
+        }
+
         public void LoggingIn(string userNameOrEmail, string password) {
         }
 

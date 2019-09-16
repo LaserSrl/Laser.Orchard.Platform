@@ -28,6 +28,12 @@ namespace Laser.Orchard.StartupConfig.Handlers {
          
         }
 
+        public void Moderate(global::Orchard.Security.IUser user){
+            var content = user.ContentItem;
+            _workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Action", "Disabled" } });
+
+        }
+
         public void ChangedPassword(global::Orchard.Security.IUser user) {
             var content = user.ContentItem;
             _workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Action", "ChangedPassword" } });

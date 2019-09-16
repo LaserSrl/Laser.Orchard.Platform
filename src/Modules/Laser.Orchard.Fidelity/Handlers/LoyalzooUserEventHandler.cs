@@ -55,6 +55,10 @@ namespace Laser.Orchard.Fidelity.Handlers
         {
         }
 
+        public void Moderate(IUser user)
+        {
+        }
+
         public void Created(UserContext context)
         {
         }
