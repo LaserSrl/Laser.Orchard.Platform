@@ -42,6 +42,12 @@ namespace Laser.Orchard.Mobile.Controllers {
         [HttpPost]
         [Admin]
         public ActionResult Index(PagerParameters pagerParameters, PushSearch search) {
+            if(search.Operation == "Rename") {
+                _pushNotificationService.ReassignDevices(search.SelectedMachineName);
+            }
+            else if(search.Operation == "Clear") {
+                search.Expression = "";
+            }
             Pager pager = new Pager(_orchardServices.WorkContext.CurrentSite, pagerParameters);
             var tuple = _pushNotificationService.SearchPushNotification(search.Expression, pager.GetStartIndex(), pager.PageSize);
             var AllRecord = tuple.Item1;

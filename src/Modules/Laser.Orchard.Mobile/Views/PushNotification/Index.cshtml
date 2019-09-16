@@ -5,19 +5,17 @@
     Layout.Title = T("Devices");
 }
 
-@using (Html.BeginForm("Index", "PushNotification", FormMethod.Get)) {
+@using (Html.BeginForm("Index", "PushNotification", FormMethod.Post)) {
     @Html.AntiForgeryToken()  
-      <fieldset class="bulk-actions">
-            <label for="search">@T("Search:")</label>
-            @Html.TextBoxFor(m => m.Search.Expression)
-            @*@T("Show All")
-            @Html.CheckBoxFor(m => m.Search.ShowAll)*@
-            <button type="submit">@T("Search")</button>
-            <a href="@Url.Action("Index")">@T("Clear")</a>
-            <label>@T("Machine Name:")</label>
-            @Html.DropDownListFor(m => m.SelectedMachineName, new SelectList(Model.MachineNames))
-            <button type="submit" name="Rename">@T("Assign to current Machine")</button>
-        </fieldset>
+<fieldset class="bulk-actions">
+    <label for="@Html.IdFor(m => m.Search.Expression)">@T("Search:")</label>
+    <input type="text" id="@Html.IdFor(m => m.Search.Expression)" name="@Html.NameFor(m => m.Search.Expression)" value="@Model.Search.Expression" />
+    <button type="submit">@T("Search")</button>
+    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Clear">@T("Clear Search")</button>
+    <label>@T("Machine Name to reassign:")</label>
+    @Html.DropDownListFor(m => m.Search.SelectedMachineName, new SelectList(Model.MachineNames))
+    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Rename" onclick="return confirm('@T("Are you sure you want to reassign ALL devices from the selected Machine Name to the actual Machine Name?").Text.Replace("'", "\\'")');">@T("Assign to Current Machine")</button>
+</fieldset>
 }
 <br />
 <div class="table-responsive">
