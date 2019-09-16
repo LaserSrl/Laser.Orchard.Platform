@@ -43,7 +43,7 @@ namespace Laser.Orchard.Mobile.Controllers {
         [Admin]
         public ActionResult Index(PagerParameters pagerParameters, PushSearch search) {
             if(search.Operation == "Rename") {
-                _pushNotificationService.ReassignDevices(search.SelectedMachineName);
+                _pushNotificationService.ReassignDevices(search.SelectedMachineName, search.ActualMachineName);
             }
             else if(search.Operation == "Clear") {
                 search.Expression = "";

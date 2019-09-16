@@ -13,8 +13,14 @@
     <button type="submit">@T("Search")</button>
     <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Clear">@T("Clear Search")</button>
     <label>@T("Machine Name to reassign:")</label>
-    @Html.DropDownListFor(m => m.Search.SelectedMachineName, new SelectList(Model.MachineNames))
-    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Rename" onclick="return confirm('@T("Are you sure you want to reassign ALL devices from the selected Machine Name to the actual Machine Name?").Text.Replace("'", "\\'")');">@T("Assign to Current Machine")</button>
+    <select name="@Html.NameFor(m => m.Search.SelectedMachineName)">
+        @foreach(var machine in Model.MachineNames) {
+            <option value="@machine">@machine &rarr; @Model.Search.ActualMachineName</option>
+        }
+    </select>
+    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Rename" onclick="return confirm('@T("Are you sure you want to reassign ALL devices from the selected Machine Name to {0}?", Model.Search.ActualMachineName).Text.Replace("'", "\\'")');">@T("Assign to Current Machine")</button>
+    <label>@T("Actual Machine Name: {0}", Model.Search.ActualMachineName)</label>
+    @Html.HiddenFor(m => m.Search.ActualMachineName)
 </fieldset>
 }
 <br />

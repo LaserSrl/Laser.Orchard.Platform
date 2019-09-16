@@ -13,7 +13,6 @@ namespace Laser.Orchard.Mobile.ViewModels {
                 return (from d in PushRecords select d.RegistrationMachineName).Distinct().ToList();
             }
         }
-
         public PushIndex() {
             //Search = new OrderSearchVM();
             //Search.ShowAll = false;

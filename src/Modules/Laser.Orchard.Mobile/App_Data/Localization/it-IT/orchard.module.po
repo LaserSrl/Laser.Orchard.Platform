@@ -669,8 +669,12 @@ msgid "Actions"
 msgstr "Azioni"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
-msgid "Are you sure you want to reassign ALL devices from the selected Machine Name to the actual Machine Name?"
-msgstr "Sei sicuro di voler riassegnare al Nome Macchina corrente TUTTI i dispositivi a cui è associato il Nome Macchina selezionato?"
+msgid "Actual Machine Name: {0}"
+msgstr "Nome Macchina corrente: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Are you sure you want to reassign ALL devices from the selected Machine Name to {0}?"
+msgstr "Sei sicuro di voler riassegnare alla Macchina {0} TUTTI i dispositivi a cui è associato il Nome Macchina selezionato?"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Assign to Current Machine"
@@ -805,7 +809,7 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User device"
+msgid "User Device"
 msgstr "Dispositivo Utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeFilter"
