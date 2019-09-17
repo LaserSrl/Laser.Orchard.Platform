@@ -257,6 +257,7 @@
     <Compile Include="Models\LastDeviceUserDataProviderSettingsPart.cs" />
     <Compile Include="Models\LatestUUIDForUserRecord.cs" />
     <Compile Include="Models\MobileContactPart.cs" />
+    <Compile Include="Models\NotificationsCounters.cs" />
     <Compile Include="Models\PushState.cs" />
     <Compile Include="Models\SentRecord.cs" />
     <Compile Include="Models\SmsGatewayPart.cs" />
