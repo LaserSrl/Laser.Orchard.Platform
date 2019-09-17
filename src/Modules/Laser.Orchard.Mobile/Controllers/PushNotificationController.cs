@@ -1,15 +1,16 @@
-﻿using Laser.Orchard.Mobile.Models;
+﻿using Laser.Orchard.Commons.Attributes;
+using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Mobile.ViewModels;
 using Orchard;
-using Orchard.Environment.Extensions;
+using Orchard.Core.Contents;
+using Orchard.Security;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Web.Mvc;
-
 
 namespace Laser.Orchard.Mobile.Controllers {
     public class PushNotificationController : Controller {
@@ -17,15 +18,18 @@ namespace Laser.Orchard.Mobile.Controllers {
         private readonly IPushNotificationService _pushNotificationService;
         private readonly INotifier _notifier;
         private readonly IOrchardServices _orchardServices;
+        private readonly IPushGatewayService _pushGatewayService;
 
         public PushNotificationController(
             IOrchardServices orchardServices
             , IPushNotificationService pushNotificationService
             , INotifier notifier
+            , IPushGatewayService pushGatewayService
             ) {
             _orchardServices = orchardServices;
             _pushNotificationService = pushNotificationService;
             _notifier = notifier;
+            _pushGatewayService = pushGatewayService;
         }
 
        
@@ -57,6 +61,22 @@ namespace Laser.Orchard.Mobile.Controllers {
             return View(model);
         }
 
+        [HttpPost]
+        [AdminService]
+        public ActionResult SendNotificationAgain(int id) {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            var ci = _orchardServices.ContentManager.Get(id);
+            if(_orchardServices.Authorizer.Authorize(Permissions.PublishContent, ci)) {
+                _pushGatewayService.ResetNotificationFailures(ci);
+                _pushGatewayService.PublishedPushEvent(ci);
+                result.Add("result", "ok");
+            }
+            else {
+                result.Add("result", "ko");
+                result.Add("error", "Authorization failure");
+            }
+            return Json(result);
+        }
         public void Crea() {
             PushNotificationRecord test = new PushNotificationRecord();
             test.DataInserimento = DateTime.Today;

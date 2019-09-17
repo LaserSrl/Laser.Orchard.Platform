@@ -53,6 +53,9 @@ namespace Laser.Orchard.Mobile.Services {
         IList<IDictionary> GetContactsWithDevice(string nameFilter);
 
         void SendPushToContact(ContentItem ci, string contactTitle);
+
+        NotificationsCounters GetNotificationsCounters(ContentItem ci);
+        void ResetNotificationFailures(ContentItem ci);
     }
 
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -69,6 +72,7 @@ namespace Laser.Orchard.Mobile.Services {
         private readonly ShellSettings _shellSetting;
         private readonly IShortLinksService _shortLinksService;
         public Localizer T { get; set; }
+        private const string outcomeToTryAgain = "ko";
 
         public OrchardLogging.ILogger Logger { get; set; }
 
@@ -98,6 +102,14 @@ namespace Laser.Orchard.Mobile.Services {
             _pushNumber = 0;
 
             Logger = OrchardLogging.NullLogger.Instance;
+        }
+        public NotificationsCounters GetNotificationsCounters(ContentItem ci) {
+            var result = new NotificationsCounters();
+            result.TotSent = _sentRepository.Count(x => x.PushedItem == ci.Id && x.Repeatable == false); // esclude gli invii ripetuti dal conteggio
+            result.TotOk = _sentRepository.Count(x => x.PushedItem == ci.Id && x.Outcome == "ok");
+            result.TotToTryAgain = _sentRepository.Count(x => x.PushedItem == ci.Id && x.Outcome == outcomeToTryAgain);
+            result.TotPending = _sentRepository.Count(x => x.PushedItem == ci.Id && x.Outcome == "");
+            return result;
         }
         private void NotifySentNumber(int sentNumber) {
             // notifica solo se la richiesta arriva direttamente da web, non se si tratta di un task
@@ -1492,6 +1504,14 @@ namespace Laser.Orchard.Mobile.Services {
                 result.Add(name.Replace("'", "''"));
             }
             return "'" + string.Join("','", result) + "'";
+        }
+
+        public void ResetNotificationFailures(ContentItem ci) {
+            var list = _sentRepository.Fetch(x => x.PushedItem == ci.Id && x.Outcome == outcomeToTryAgain);
+            foreach(var item in list) {
+                item.Repeatable = true;
+                item.Outcome = "rp";
+            }
         }
 
         /// <summary>
