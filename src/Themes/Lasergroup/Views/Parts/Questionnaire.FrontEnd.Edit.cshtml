@@ -82,7 +82,7 @@ else {
     <div class="quest-message quest-error">@Html.Raw(T(TempData["QuestError"].ToString()).Text.Replace("\r\n", "<br/>"))</div>
     }
     if (Questionnaire.MustAcceptTerms && !Questionnaire.HasAcceptedTerms) {
-        using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.ToUrlString() }), FormMethod.Post)) {
+        using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post)) {
     @Html.HiddenFor(m => Questionnaire.Id)
     @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
     <div class="questionnaire-container">
@@ -99,7 +99,7 @@ else {
     } else {
 
         <div class="questionnaire-container">
-            @using (Html.BeginFormAntiForgeryPost(Url.Action("Save", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.ToUrlString() }), FormMethod.Post, new { @class = "quest-form" })) {
+            @using (Html.BeginFormAntiForgeryPost(Url.Action("Save", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post, new { @class = "quest-form" })) {
                 @Html.HiddenFor(m => Questionnaire.Id)
                 @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
                 @Html.HiddenFor(m => Questionnaire.HasAcceptedTerms)

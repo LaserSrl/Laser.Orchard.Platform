@@ -421,6 +421,10 @@ msgid "Suggested value: 2. Set to 0 for no retries in case of errors on first se
 msgstr "Valore suggerito: 2. Impostare a 0 per inibire nuovi tentativi di invio in caso di errore al primo tentativo."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "Will able back office to send push to development device"
 msgstr "Abilita il back office a inviare notifiche push al dispositivo di sviluppo"
 
@@ -669,8 +673,24 @@ msgid "Actions"
 msgstr "Azioni"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Actual Machine Name: {0}"
+msgstr "Nome Macchina corrente: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Are you sure you want to reassign ALL devices from the selected Machine Name to {0}?"
+msgstr "Sei sicuro di voler riassegnare alla Macchina {0} TUTTI i dispositivi a cui è associato il Nome Macchina selezionato?"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Assign to Current Machine"
+msgstr "Assegna alla Macchina Corrente"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Clear"
 msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Clear Search"
+msgstr "Cancella Ricerca"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "DataInserimento"
@@ -701,6 +721,10 @@ msgid "List of devices."
 msgstr "Elenco dei dispositivi."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Machine Name to reassign:"
+msgstr "Nome Macchina da riassegnare:"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Produzione"
 msgstr "Production"
 
@@ -727,6 +751,10 @@ msgstr "Cerca:"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Show All"
 msgstr "Visualizza Tutto"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Token"
@@ -789,7 +817,7 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User Device"
+msgid "User device"
 msgstr "Dispositivo Utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeFilter"

@@ -5,16 +5,25 @@
     Layout.Title = T("Devices");
 }
 
-@using (Html.BeginForm("Index", "PushNotification", FormMethod.Get)) {
+@using (Html.BeginForm("Index", "PushNotification", FormMethod.Post)) {
     @Html.AntiForgeryToken()  
-      <fieldset class="bulk-actions">
-            <label for="search">@T("Search:")</label>
-            @Html.TextBoxFor(m => m.Search.Expression)
-            @*@T("Show All")
-            @Html.CheckBoxFor(m => m.Search.ShowAll)*@
-            <button type="submit">@T("Search")</button>
-            <a href="@Url.Action("Index")">@T("Clear")</a>
-        </fieldset>
+<fieldset class="bulk-actions">
+    <label for="@Html.IdFor(m => m.Search.Expression)">@T("Search:")</label>
+    <input type="text" id="@Html.IdFor(m => m.Search.Expression)" name="@Html.NameFor(m => m.Search.Expression)" value="@Model.Search.Expression" />
+    <button type="submit">@T("Search")</button>
+    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Clear">@T("Clear Search")</button>
+    <label>@T("Machine Name to reassign:")</label>
+    <select name="@Html.NameFor(m => m.Search.SelectedMachineName)">
+        @foreach (var machine in Model.MachineNames) {
+            <option value="@machine">@machine &rarr; @Model.Search.ActualMachineName</option>
+        }
+    </select>
+    <button type="submit" name="@Html.NameFor(m => m.Search.Operation)" value="Rename" onclick="return confirm('@T("Are you sure you want to reassign ALL devices from the selected Machine Name to {0}?", Model.Search.ActualMachineName).Text.Replace("'", "\\'")');">@T("Assign to Current Machine")</button>
+    <label>@T("Actual Machine Name: {0}", Model.Search.ActualMachineName)</label>
+    @Html.HiddenFor(m => m.Search.ActualMachineName)
+    <br />
+    <span class="hint">@T("To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3")</span>
+</fieldset>
 }
 <br />
 <div class="table-responsive">
