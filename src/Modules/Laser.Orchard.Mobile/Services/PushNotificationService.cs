@@ -24,6 +24,11 @@ namespace Laser.Orchard.Mobile.Services {
         void RebindDevicesToMasterContact(int contactId);
         void Synchronize();
         Tuple<IEnumerable<PushNotificationRecord>, int> SearchPushNotification(string texttosearch, int startIndex, int length);
+        /// <summary>
+        /// Get a distinct list of all machine names devices are associated to.
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetMachineNames();
         void ReassignDevices(string oldMachineName, string newMachineName);
     }
 
@@ -309,6 +314,12 @@ namespace Laser.Orchard.Mobile.Services {
                 partialList = _pushNotificationRepository.Fetch(x => x.UUIdentifier.Contains(texttosearch)).Skip(startIndex).Take(length);
             }
             return new Tuple<IEnumerable<PushNotificationRecord>, int>(partialList, count);
+        }
+
+        public List<string> GetMachineNames() {
+            var list = _pushNotificationRepository.Table.Select(x => x.RegistrationMachineName).Distinct().ToList();
+            list.Sort();
+            return list;
         }
 
         public void ReassignDevices(string oldMachineName, string newMachineName) {

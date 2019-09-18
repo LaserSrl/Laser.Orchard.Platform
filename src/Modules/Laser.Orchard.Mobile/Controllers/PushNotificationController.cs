@@ -58,6 +58,7 @@ namespace Laser.Orchard.Mobile.Controllers {
             var totRecord = tuple.Item2;
             dynamic pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(totRecord);
             var model = new PushIndex(AllRecord, search, pagerShape);
+            model.MachineNames = _pushNotificationService.GetMachineNames();
             return View(model);
         }
 

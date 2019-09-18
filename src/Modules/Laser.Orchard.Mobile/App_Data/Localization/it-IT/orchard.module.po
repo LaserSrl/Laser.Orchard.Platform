@@ -422,8 +422,7 @@ msgstr "Valore suggerito: 2. Impostare a 0 per inibire nuovi tentativi di invio 
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
-msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):
-<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "Will able back office to send push to development device"
@@ -755,8 +754,7 @@ msgstr "Visualizza Tutto"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
-msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):
-<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Token"
