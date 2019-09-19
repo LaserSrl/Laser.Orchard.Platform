@@ -48,7 +48,7 @@ namespace Laser.Orchard.Mobile.Services {
 
         void PublishedPushEventTest(ContentItem ci);
 
-        PushState PublishedPushEvent(ContentItem ci);
+        PushState PublishedPushEvent(ContentItem ci, bool retry = false);
 
         IList<IDictionary> GetContactsWithDevice(string nameFilter);
 
@@ -353,7 +353,45 @@ namespace Laser.Orchard.Mobile.Services {
             }
             return lista;
         }
+        private IList<PushNotificationRecord> GetDevicesForRetry(int partId) {
+            var query = @"select d
+                            from Laser.Orchard.Mobile.Models.SentRecord r
+                            , Laser.Orchard.Mobile.Models.PushNotificationRecord d
+                            where r.PushNotificationRecord_Id = d.Id
+                                and r.PushedItem = partId
+                                and r.Outcome = ''";
+            var fullStatement = _transactionManager.GetSession()
+                .CreateQuery(query)
+                .SetCacheable(false);
+            var elenco = fullStatement.List<PushNotificationRecord>();
+            return elenco;
 
+        }
+        private List<PushNotificationVM> GetListMobileDeviceForRetry(int partId) {
+            var lista = new List<PushNotificationVM>();
+            //var elenco = (from r in _sentRepository.Table
+            //              join d in _pushNotificationRepository.Table
+            //                 on r.PushNotificationRecord_Id equals d.Id
+            //              where r.PushedItem == partId
+            //                 && r.Outcome == ""
+            //              select d).ToList();
+            var elenco = GetDevicesForRetry(partId);
+            foreach (var d in elenco) {
+                lista.Add(new PushNotificationVM {
+                    Id = d.Id,
+                    Device = d.Device,
+                    Produzione = d.Produzione,
+                    Validated = d.Validated,
+                    Language = d.Language,
+                    UUIdentifier = d.UUIdentifier,
+                    Token = d.Token,
+                    RegistrationUrlHost = d.RegistrationUrlHost,
+                    RegistrationUrlPrefix = d.RegistrationUrlPrefix,
+                    RegistrationMachineName = d.RegistrationMachineName
+                });
+            }
+            return lista;
+        }
         private List<PushNotificationVM> GetListMobileDeviceByUserNames(string[] userNames, bool countOnly = false) {
             var lista = new List<PushNotificationVM>();
             var elenco = GetPushQueryResultByUserNames(userNames, null, true, "All", countOnly);
@@ -534,7 +572,7 @@ namespace Laser.Orchard.Mobile.Services {
         /// </summary>
         /// <param name="ci"></param>
         /// <returns>An error list, if any.</returns>
-        public PushState PublishedPushEvent(ContentItem ci) {
+        public PushState PublishedPushEvent(ContentItem ci, bool retry = false) {
             _result = new PushState();
             _result.CompletedIteration = true;
             senderContentItemContainer = ci;
@@ -616,7 +654,20 @@ namespace Laser.Orchard.Mobile.Services {
 
                         var Myobject = new Dictionary<string, object> { { "Content", ci } };
                         string queryDevice = GetQueryDevice(Myobject, ci.As<MobilePushPart>());
-                        if (!SendPushToSpecificDevices) {
+                        if (retry) {
+                            var listDevices = GetListMobileDeviceForRetry(ci.Id);
+                            var pushMessage = GeneratePushMessage(mpp, idContent, idContentRelated);
+                            PushAndroid(listDevices.Where(x => x.Device == TipoDispositivo.Android).ToList(),
+                                produzione,
+                                pushMessage);
+                            PushApple(listDevices.Where(x => x.Device == TipoDispositivo.Apple).ToList(),
+                                produzione,
+                                pushMessage);
+                            PushWindows(listDevices.Where(x => x.Device == TipoDispositivo.WindowsMobile).ToList(),
+                                produzione,
+                                pushMessage);
+                        }
+                        else if (!SendPushToSpecificDevices) {
                             if (locTipoDispositivo.HasValue == false) {// tutti
                                 SendAllAndroidPart(mpp, idContent, idContentRelated, language, produzione, queryDevice, ids);
                                 SendAllApplePart(mpp, idContent, idContentRelated, language, produzione, queryDevice, ids);
