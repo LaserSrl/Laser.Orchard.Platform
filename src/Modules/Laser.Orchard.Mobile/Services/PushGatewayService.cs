@@ -48,14 +48,14 @@ namespace Laser.Orchard.Mobile.Services {
 
         void PublishedPushEventTest(ContentItem ci);
 
-        PushState PublishedPushEvent(ContentItem ci, bool retry = false);
+        PushState PublishedPushEvent(ContentItem ci, List<PushNotificationVM> failures = null);
 
         IList<IDictionary> GetContactsWithDevice(string nameFilter);
 
         void SendPushToContact(ContentItem ci, string contactTitle);
 
         NotificationsCounters GetNotificationsCounters(ContentItem ci);
-        void ResetNotificationFailures(ContentItem ci);
+        List<PushNotificationVM> ResetNotificationFailures(ContentItem ci);
     }
 
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -353,45 +353,48 @@ namespace Laser.Orchard.Mobile.Services {
             }
             return lista;
         }
-        private IList<PushNotificationRecord> GetDevicesForRetry(int partId) {
-            var query = @"select d
-                            from Laser.Orchard.Mobile.Models.SentRecord r
-                            , Laser.Orchard.Mobile.Models.PushNotificationRecord d
-                            where r.PushNotificationRecord_Id = d.Id
-                                and r.PushedItem = partId
-                                and r.Outcome = ''";
-            var fullStatement = _transactionManager.GetSession()
-                .CreateQuery(query)
-                .SetCacheable(false);
-            var elenco = fullStatement.List<PushNotificationRecord>();
-            return elenco;
+        //private List<PushNotificationVM> GetListMobileDeviceForRetry(List<int> deviceIdList) {
+        //    var lista = new List<PushNotificationVM>();
+        //    //var elenco = (from r in _sentRepository.Table
+        //    //              join d in _pushNotificationRepository.Table
+        //    //                 on r.PushNotificationRecord_Id equals d.Id
+        //    //              where r.PushedItem == partId
+        //    //                 && r.Outcome == ""
+        //    //              select d).ToList();
 
-        }
-        private List<PushNotificationVM> GetListMobileDeviceForRetry(int partId) {
-            var lista = new List<PushNotificationVM>();
-            //var elenco = (from r in _sentRepository.Table
-            //              join d in _pushNotificationRepository.Table
-            //                 on r.PushNotificationRecord_Id equals d.Id
-            //              where r.PushedItem == partId
-            //                 && r.Outcome == ""
-            //              select d).ToList();
-            var elenco = GetDevicesForRetry(partId);
-            foreach (var d in elenco) {
-                lista.Add(new PushNotificationVM {
-                    Id = d.Id,
-                    Device = d.Device,
-                    Produzione = d.Produzione,
-                    Validated = d.Validated,
-                    Language = d.Language,
-                    UUIdentifier = d.UUIdentifier,
-                    Token = d.Token,
-                    RegistrationUrlHost = d.RegistrationUrlHost,
-                    RegistrationUrlPrefix = d.RegistrationUrlPrefix,
-                    RegistrationMachineName = d.RegistrationMachineName
-                });
-            }
-            return lista;
-        }
+        //    var query = @"select distinct d
+        //                    from Laser.Orchard.Mobile.Models.SentRecord r
+        //                    , Laser.Orchard.Mobile.Models.PushNotificationRecord d
+        //                    , Laser.Orchard.Mobile.Models.SentRecord re
+        //                    where r.PushNotificationRecord_Id = d.Id
+        //                        and re.PushNotificationRecord_Id = r.PushNotificationRecord_Id
+        //                        and re.Outcome != 'rp'
+        //                        and r.PushedItem = :partId
+        //                        and r.Outcome = 'rp'
+        //                        and r.Repeatable = true
+        //                        ";
+        //    var fullStatement = _transactionManager.GetSession()
+        //        .CreateQuery(query)
+        //        .SetCacheable(false);
+        //    fullStatement.SetParameter("partId", partId);
+        //    var elenco = fullStatement.List<PushNotificationRecord>();
+        //    foreach (var id in deviceIdList) {
+        //        var d = _pushNotificationRepository.Get(id);
+        //        lista.Add(new PushNotificationVM {
+        //            Id = d.Id,
+        //            Device = d.Device,
+        //            Produzione = d.Produzione,
+        //            Validated = d.Validated,
+        //            Language = d.Language,
+        //            UUIdentifier = d.UUIdentifier,
+        //            Token = d.Token,
+        //            RegistrationUrlHost = d.RegistrationUrlHost,
+        //            RegistrationUrlPrefix = d.RegistrationUrlPrefix,
+        //            RegistrationMachineName = d.RegistrationMachineName
+        //        });
+        //    }
+        //    return lista;
+        //}
         private List<PushNotificationVM> GetListMobileDeviceByUserNames(string[] userNames, bool countOnly = false) {
             var lista = new List<PushNotificationVM>();
             var elenco = GetPushQueryResultByUserNames(userNames, null, true, "All", countOnly);
@@ -572,7 +575,7 @@ namespace Laser.Orchard.Mobile.Services {
         /// </summary>
         /// <param name="ci"></param>
         /// <returns>An error list, if any.</returns>
-        public PushState PublishedPushEvent(ContentItem ci, bool retry = false) {
+        public PushState PublishedPushEvent(ContentItem ci, List<PushNotificationVM> failures = null) {
             _result = new PushState();
             _result.CompletedIteration = true;
             senderContentItemContainer = ci;
@@ -654,16 +657,15 @@ namespace Laser.Orchard.Mobile.Services {
 
                         var Myobject = new Dictionary<string, object> { { "Content", ci } };
                         string queryDevice = GetQueryDevice(Myobject, ci.As<MobilePushPart>());
-                        if (retry) {
-                            var listDevices = GetListMobileDeviceForRetry(ci.Id);
+                        if (failures != null) {
                             var pushMessage = GeneratePushMessage(mpp, idContent, idContentRelated);
-                            PushAndroid(listDevices.Where(x => x.Device == TipoDispositivo.Android).ToList(),
+                            PushAndroid(failures.Where(x => x.Device == TipoDispositivo.Android).ToList(),
                                 produzione,
                                 pushMessage);
-                            PushApple(listDevices.Where(x => x.Device == TipoDispositivo.Apple).ToList(),
+                            PushApple(failures.Where(x => x.Device == TipoDispositivo.Apple).ToList(),
                                 produzione,
                                 pushMessage);
-                            PushWindows(listDevices.Where(x => x.Device == TipoDispositivo.WindowsMobile).ToList(),
+                            PushWindows(failures.Where(x => x.Device == TipoDispositivo.WindowsMobile).ToList(),
                                 produzione,
                                 pushMessage);
                         }
@@ -1557,12 +1559,45 @@ namespace Laser.Orchard.Mobile.Services {
             return "'" + string.Join("','", result) + "'";
         }
 
-        public void ResetNotificationFailures(ContentItem ci) {
-            var list = _sentRepository.Fetch(x => x.PushedItem == ci.Id && x.Outcome == outcomeToTryAgain);
-            foreach(var item in list) {
+        public List<PushNotificationVM> ResetNotificationFailures(ContentItem ci) {
+            // get devices corresponding to SentRecords failed (filtered on PushedItem, Outcome and Repeatable)
+            var hql = @"select d
+                            from Laser.Orchard.Mobile.Models.SentRecord r
+                            , Laser.Orchard.Mobile.Models.PushNotificationRecord d
+                            where r.PushNotificationRecord_Id = d.Id
+                                and r.PushedItem = :partId
+                                and r.Outcome = :outcomeToTryAgain
+                                and r.Repeatable = false";
+            var qry = _transactionManager.GetSession()
+                .CreateQuery(hql)
+                .SetCacheable(false);
+            qry.SetParameter("partId", ci.Id);
+            qry.SetParameter("outcomeToTryAgain", outcomeToTryAgain);
+            var failures = new List<PushNotificationVM>();
+            foreach(var d in qry.List<PushNotificationRecord>()) {
+                failures.Add(new PushNotificationVM {
+                    DataInserimento = d.DataInserimento,
+                    DataModifica = d.DataModifica,
+                    Device = d.Device,
+                    Id = d.Id,
+                    Language = d.Language,
+                    MobileContactPartRecord_Id = d.MobileContactPartRecord_Id,
+                    Produzione = d.Produzione,
+                    RegistrationMachineName = d.RegistrationMachineName,
+                    RegistrationUrlHost = d.RegistrationUrlHost,
+                    RegistrationUrlPrefix = d.RegistrationUrlPrefix,
+                    Token = d.Token,
+                    UUIdentifier = d.UUIdentifier,
+                    Validated = d.Validated
+                });
+            }
+            // update corresponding SentRecords according to PushedItem, Outcome and Repeatable
+            var list = _sentRepository.Fetch(x => x.PushedItem == ci.Id && x.Outcome == outcomeToTryAgain && x.Repeatable == false);
+            foreach (var item in list) {
                 item.Repeatable = true;
                 item.Outcome = "rp";
             }
+            return failures;
         }
 
         /// <summary>

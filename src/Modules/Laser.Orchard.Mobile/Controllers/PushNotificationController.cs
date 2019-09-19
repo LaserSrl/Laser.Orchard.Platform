@@ -68,8 +68,8 @@ namespace Laser.Orchard.Mobile.Controllers {
             Dictionary<string, object> result = new Dictionary<string, object>();
             var ci = _orchardServices.ContentManager.Get(id);
             if(_orchardServices.Authorizer.Authorize(Permissions.PublishContent, ci)) {
-                _pushGatewayService.ResetNotificationFailures(ci);
-                _pushGatewayService.PublishedPushEvent(ci, true);
+                var failures = _pushGatewayService.ResetNotificationFailures(ci);
+                _pushGatewayService.PublishedPushEvent(ci, failures);
                 result.Add("result", "ok");
             }
             else {
