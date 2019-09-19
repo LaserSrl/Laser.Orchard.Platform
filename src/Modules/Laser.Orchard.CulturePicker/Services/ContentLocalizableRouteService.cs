@@ -36,7 +36,10 @@ namespace Laser.Orchard.CulturePicker.Services {
             }
             var urlPrefix = Services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
 
-            string returnUrl = Utils.GetReturnUrl(Services.WorkContext.HttpContext.Request, urlPrefix);
+            string returnUrl = Utils.GetCleanUrl(
+                Services.WorkContext.HttpContext.Request, 
+                localizableRouteContext.UrlToLocalize,
+                urlPrefix);
 
             AutoroutePart currentRoutePart;
             //returnUrl may not correspond to any content and we use "Try" approach
