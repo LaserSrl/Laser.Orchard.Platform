@@ -290,7 +290,6 @@
     <Compile Include="ViewModels\DeliveryReportVM.cs" />
     <Compile Include="ViewModels\PhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\PushMessage.cs" />
-    <Compile Include="ViewModels\PushNotificationVM.cs" />
     <Compile Include="ViewModels\SmsDeliveryReportResultVM.cs" />
     <Compile Include="ViewModels\SmsGatewayVM.cs" />
     <Compile Include="WorkFlows\PushEditForm.cs" />

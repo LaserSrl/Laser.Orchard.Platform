@@ -46,7 +46,7 @@ namespace Laser.Orchard.Mobile.Services {
         public ICommunicationService _communicationService;
         private readonly ITokenizer _tokenizer;
         private readonly ITransactionManager _transactionManager;
-        private const int MAX_PUSH_TEXT_LENGTH = 160;
+        private const int maxPushTextLength = 160;
 
         public PushNotificationService(
             IOrchardServices orchardServices,
