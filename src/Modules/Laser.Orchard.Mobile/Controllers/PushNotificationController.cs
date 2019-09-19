@@ -69,7 +69,7 @@ namespace Laser.Orchard.Mobile.Controllers {
             var ci = _orchardServices.ContentManager.Get(id);
             if(_orchardServices.Authorizer.Authorize(Permissions.PublishContent, ci)) {
                 _pushGatewayService.ResetNotificationFailures(ci);
-                _pushGatewayService.PublishedPushEvent(ci);
+                _pushGatewayService.PublishedPushEvent(ci, true);
                 result.Add("result", "ok");
             }
             else {
