@@ -50,14 +50,14 @@ namespace Laser.Orchard.Mobile.Services {
 
         void PublishedPushEventTest(ContentItem ci);
 
-        PushState PublishedPushEvent(ContentItem ci, List<PushNotificationRecord> failures = null);
+        PushState PublishedPushEvent(ContentItem ci);
 
         IList<IDictionary> GetContactsWithDevice(string nameFilter);
 
         void SendPushToContact(ContentItem ci, string contactTitle);
 
         NotificationsCounters GetNotificationsCounters(ContentItem ci);
-        List<PushNotificationRecord> ResetNotificationFailures(ContentItem ci);
+        void ResetNotificationFailures(ContentItem ci);
     }
 
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -485,7 +485,7 @@ namespace Laser.Orchard.Mobile.Services {
         /// </summary>
         /// <param name="ci"></param>
         /// <returns>An error list, if any.</returns>
-        public PushState PublishedPushEvent(ContentItem ci, List<PushNotificationRecord> failures = null) {
+        public PushState PublishedPushEvent(ContentItem ci) {
             _result = new PushState();
             _result.CompletedIteration = true;
             senderContentItemContainer = ci;
@@ -567,19 +567,7 @@ namespace Laser.Orchard.Mobile.Services {
 
                         var Myobject = new Dictionary<string, object> { { "Content", ci } };
                         string queryDevice = GetQueryDevice(Myobject, ci.As<MobilePushPart>());
-                        if (failures != null) {
-                            var pushMessage = GeneratePushMessage(mpp, idContent, idContentRelated);
-                            PushAndroid(failures.Where(x => x.Device == TipoDispositivo.Android).ToList(),
-                                produzione,
-                                pushMessage);
-                            PushApple(failures.Where(x => x.Device == TipoDispositivo.Apple).ToList(),
-                                produzione,
-                                pushMessage);
-                            PushWindows(failures.Where(x => x.Device == TipoDispositivo.WindowsMobile).ToList(),
-                                produzione,
-                                pushMessage);
-                        }
-                        else if (!SendPushToSpecificDevices) {
+                        if (!SendPushToSpecificDevices) {
                             if (locTipoDispositivo.HasValue == false) {// tutti
                                 SendAllAndroidPart(mpp, idContent, idContentRelated, language, produzione, queryDevice, ids);
                                 SendAllApplePart(mpp, idContent, idContentRelated, language, produzione, queryDevice, ids);
@@ -1087,7 +1075,6 @@ namespace Laser.Orchard.Mobile.Services {
             }
             // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
         }
-
         private void PushApple(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
             listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
 
@@ -1180,13 +1167,23 @@ namespace Laser.Orchard.Mobile.Services {
                     push.Start();
                     foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
                         try {
-                            push.QueueNotification(new ApnsNotification {
+                            var notification = new ApnsNotification {
                                 DeviceToken = device.Key,
                                 Payload = sbParsed,
                                 LowPriority = false
-                            });
+                            };
+                            if(notification.IsDeviceRegistrationIdValid() && notification.DeviceToken.Length >= ApnsNotification.DEVICE_TOKEN_STRING_MIN_SIZE) {
+                                push.QueueNotification(notification);
+                            }
+                            else {
+                                _sentRecords.AddOrUpdate(device.Key, new SentRecord(), (key, record) => {
+                                    record.Outcome = "wr"; // lexical contraction for 'wrong'
+                                    return record;
+                                });
+                                LogError(string.Format("PushApple error: token '{0}' is invalid and was discarded.", device.Key));
+                            }
                         } catch (Exception ex) {
-                            LogError("PushApple retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
+                            LogError("PushApple error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
                         }
                     }
                     push.Stop();
@@ -1455,28 +1452,13 @@ namespace Laser.Orchard.Mobile.Services {
             return "'" + string.Join("','", result) + "'";
         }
 
-        public List<PushNotificationRecord> ResetNotificationFailures(ContentItem ci) {
-            // get devices corresponding to SentRecords failed (filtered on PushedItem, Outcome and Repeatable)
-            var hql = @"select d
-                            from Laser.Orchard.Mobile.Models.SentRecord r
-                            , Laser.Orchard.Mobile.Models.PushNotificationRecord d
-                            where r.PushNotificationRecord_Id = d.Id
-                                and r.PushedItem = :partId
-                                and r.Outcome = :outcomeToTryAgain
-                                and r.Repeatable = false";
-            var qry = _transactionManager.GetSession()
-                .CreateQuery(hql)
-                .SetCacheable(false);
-            qry.SetParameter("partId", ci.Id);
-            qry.SetParameter("outcomeToTryAgain", outcomeToTryAgain);
-            var failures = qry.List<PushNotificationRecord>().ToList();
-            // update corresponding SentRecords according to PushedItem, Outcome and Repeatable
+        public void ResetNotificationFailures(ContentItem ci) {
+            // update failed SentRecords according to PushedItem, Outcome and Repeatable
             var list = _sentRepository.Fetch(x => x.PushedItem == ci.Id && x.Outcome == outcomeToTryAgain && x.Repeatable == false);
             foreach (var item in list) {
                 item.Repeatable = true;
                 item.Outcome = "rp";
             }
-            return failures;
         }
 
         /// <summary>
