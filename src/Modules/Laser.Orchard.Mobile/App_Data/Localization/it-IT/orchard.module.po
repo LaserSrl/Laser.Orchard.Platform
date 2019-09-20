@@ -141,8 +141,20 @@ msgid "Approved"
 msgstr "Approvato"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Communication errors"
+msgstr "Errori di comunicazione"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Contact"
 msgstr "Contatto"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Delivery Informations"
+msgstr "Informazioni sulla consegna delle notifiche"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Do you want to retry sending this notification to devices that encountered communication errors and to newly registered devices?"
+msgstr "Si vuole provare a inviare nuovamente questa notifica push ai dispositivi che hanno riscontrato errori di comunicazione e ai nuovi dispositivi registrati?"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Enter recipients manually"
@@ -213,6 +225,14 @@ msgid "result(s)"
 msgstr "risultato/i"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry"
+msgstr "Riprova"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry is running. Please wait for its completion and reload this page."
+msgstr "È in corso il tentativo di reinvio. Attendere il suo completamento e ricaricare la pagina."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Select Devices"
 msgstr "Seleziona Dispositivi"
 
@@ -223,6 +243,10 @@ msgstr "Invio di test"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Send push to selected contact"
 msgstr "Invia la push al contatto selezionato"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Summary (ok/tot)"
+msgstr "Riepilogo (ok/tot)"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Test over developer devices"
@@ -259,6 +283,10 @@ msgstr "Titolo"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "To Device"
 msgstr "Dispositivi"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Try to send again this notification to devices that encountered communication errors and to newly registered devices"
+msgstr "Prova a inviare nuovamente questa notifica push ai dispositivi che hanno riscontrato errori di comunicazione e ai nuovi dispositivi registrati"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Type user's first 3 chars..."
@@ -817,7 +845,7 @@ msgid "Filter for device associated to User"
 msgstr "Filtro per il device associato all'utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
-msgid "User device"
+msgid "User Device"
 msgstr "Dispositivo Utente"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeviceTypeFilter"
