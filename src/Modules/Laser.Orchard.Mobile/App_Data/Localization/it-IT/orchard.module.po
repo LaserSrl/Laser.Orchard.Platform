@@ -233,6 +233,10 @@ msgid "Retry is running. Please wait for its completion and reload this page."
 msgstr "È in corso il tentativo di reinvio. Attendere il suo completamento e ricaricare la pagina."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry successfully planned."
+msgstr "Reinvio pianificato correttamente."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Select Devices"
 msgstr "Seleziona Dispositivi"
 
