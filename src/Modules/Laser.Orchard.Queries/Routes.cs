@@ -19,7 +19,6 @@ namespace Laser.Orchard.Queries {
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
                 AddRenamedRoute( "MyQueryAdmin","Index"),
-                AddRenamedRoute( "MyQueryAdmin","Index"),
                 AddRenamedRoute( "MyQueryAdmin","Edit", "/Edit/{id}"),
                 AddRenamedRoute( "UserQueryAdmin","Create", "/Create"),
                 AddRenamedRoute( "UserQueryAdmin","CreateOneShot", "/CreateOneShot"),
