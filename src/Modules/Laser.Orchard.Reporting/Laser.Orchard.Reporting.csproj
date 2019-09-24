@@ -193,6 +193,7 @@
     <Compile Include="Models\GenericItem.cs" />
     <Compile Include="Models\ReportRecord.cs" />
     <Compile Include="Models\DataReportViewerPartRecord.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Providers\AggregationResult.cs" />
     <Compile Include="Providers\DescribeGroupByContext.cs" />

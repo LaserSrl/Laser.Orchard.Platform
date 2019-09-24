@@ -370,6 +370,8 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Routes\MaintenanceRoutes.cs" />
+    <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
@@ -435,7 +437,7 @@
     <Compile Include="Localization\DateLocalization.cs" />
     <Compile Include="Localization\IDateLocalization.cs" />
     <Compile Include="Localization\UriCultureSelector.cs" />
-    <Compile Include="MediaExtensionsRoutes.cs" />
+    <Compile Include="Routes\MediaExtensionsRoutes.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migrations\RelationshipsEnhancerMigrations.cs" />
     <Compile Include="Models\ContentPickerConnector.cs" />

@@ -9,7 +9,7 @@ using Orchard.Mvc.Routes;
 
 namespace Laser.Orchard.StartupConfig {
     [OrchardFeature("Laser.Orchard.StartupConfig.MediaExtensions")]
-    public class Routes : IRouteProvider {
+    public class MediExtesionRoutes : IRouteProvider {
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (var routeDescriptor in GetRoutes()) {
                 routes.Add(routeDescriptor);
