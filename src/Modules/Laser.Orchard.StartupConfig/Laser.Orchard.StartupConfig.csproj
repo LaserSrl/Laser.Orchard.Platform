@@ -371,6 +371,8 @@
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Drivers\PerItemCachePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Routes\MaintenanceRoutes.cs" />
+    <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Handlers\PerItemCachePartHandler.cs" />
     <Compile Include="Models\PerItemCachePart.cs" />
     <Compile Include="Models\PerItemCachePartSettings.cs" />
@@ -441,7 +443,7 @@
     <Compile Include="Localization\DateLocalization.cs" />
     <Compile Include="Localization\IDateLocalization.cs" />
     <Compile Include="Localization\UriCultureSelector.cs" />
-    <Compile Include="MediaExtensionsRoutes.cs" />
+    <Compile Include="Routes\MediaExtensionsRoutes.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migrations\RelationshipsEnhancerMigrations.cs" />
     <Compile Include="Models\ContentPickerConnector.cs" />

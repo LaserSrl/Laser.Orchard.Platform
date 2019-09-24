@@ -26,6 +26,20 @@ namespace Laser.Orchard.SEO {
                                                             },
                                                             new MvcRouteHandler())
                                 },
+                                new RouteDescriptor {
+                                    Route = new Route(
+                                        "Admin/SEO/RobotsAdmin",
+                                        new RouteValueDictionary {
+                                            {"area", "Laser.Orchard.SEO"},
+                                            {"controller", "RobotsAdmin"},
+                                            {"action", "Index"}
+                                        },
+                                        new RouteValueDictionary(),
+                                        new RouteValueDictionary {
+                                            {"area", "Laser.Orchard.SEO"}
+                                        },
+                                        new MvcRouteHandler())
+                                }
                             };
         }
     }

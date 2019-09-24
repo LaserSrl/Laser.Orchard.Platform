@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Routing;
 using Orchard.Mvc.Routes;
+using Orchard.WebApi.Routes;
+using System.Web.Routing;
+using System.Web.Mvc;
 
-namespace Laser.Orchard.CulturePicker {
-    public class Routes : IRouteProvider {
-        #region IRouteProvider Members
+namespace Laser.Orchard.ContentExtension {
+    public class Routes : IHttpRouteProvider {
+
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (RouteDescriptor routeDescriptor in GetRoutes()) {
@@ -15,38 +16,36 @@ namespace Laser.Orchard.CulturePicker {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-                //TODO (ermakovich): still not sure why we need it, but without this route Orchard can`t find controller action properly
                 new RouteDescriptor {
                     Route = new Route(
-                        "ChangeCulture",
+                        "Admin/ContentExtension/Settings",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"},
-                            {"controller", "UserCulture"},
-                            {"action", "ChangeCulture"}
-                        },
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"}
-                        },
-                        new MvcRouteHandler())
-                },
-                new RouteDescriptor {
-                    Route = new Route(
-                        "Admin/CulturePicker/Settings",
-                        new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"},
+                            {"area", "Laser.Orchard.ContentExtension"},
                             {"controller", "Admin"},
                             {"action", "Settings"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"}
+                            {"area", "Laser.Orchard.ContentExtension"}
+                        },
+                        new MvcRouteHandler())
+                },
+            new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/ContentExtension/DynamicProjectionDisplay/List/{contentid}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.ContentExtension"},
+                            {"controller", "DynamicProjectionDisplay"},
+                            {"action", "List"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.ContentExtension"}
                         },
                         new MvcRouteHandler())
                 }
             };
-        }
 
-        #endregion
+        }
     }
 }
