@@ -21,13 +21,13 @@ namespace Laser.Orchard.Twitter {
                     Route = new Route(
                         "Admin/Twitter",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.TwitterAccount"},
-                            {"controller", "Admin"},
+                            {"area", "Laser.Orchard.Twitter"},
+                            {"controller", "TwitterAccount"},
                             {"action", "Index"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.TwitterAccount"}
+                            {"area", "Laser.Orchard.Twitter"}
                         },
                         new MvcRouteHandler())
                 }
