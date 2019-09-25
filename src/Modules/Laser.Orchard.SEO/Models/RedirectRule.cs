@@ -8,7 +8,7 @@ using System.Linq;
 namespace Laser.Orchard.SEO.Models {
     [OrchardFeature("Laser.Orchard.Redirects")]
     public class RedirectRule {
-
+        private string _destinationUrl;
         public RedirectRule() {
             CreatedDateTime = DateTime.Now;
         }
@@ -23,11 +23,17 @@ namespace Laser.Orchard.SEO.Models {
         [StringLengthMax]
         public virtual string SourceUrl { get; set; }
 
-        [Required]
         [RegularExpression(ValidRelativeUrlPattern, ErrorMessage = "Do not start with '~/'")]
         [Display(Name = "Destination URL")]
         [StringLengthMax]
-        public virtual string DestinationUrl { get; set; }
+        public virtual string DestinationUrl {
+            get {
+                return _destinationUrl == null ? "" : _destinationUrl;
+            }
+            set {
+                _destinationUrl = value;
+            }
+        }
 
         public virtual bool IsPermanent { get; set; }
 

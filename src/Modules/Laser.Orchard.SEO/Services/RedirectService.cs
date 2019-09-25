@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Laser.Orchard.SEO.Models;
 using Orchard.Data;
 using Laser.Orchard.SEO.Exceptions;
@@ -10,11 +9,13 @@ using Orchard.Localization;
 namespace Laser.Orchard.SEO.Services {
     public class RedirectService : IRedirectService {
         private readonly IRepository<RedirectRule> _repository;
+        private Dictionary<string, RedirectRule> _redirectCache;
         public RedirectService(
             IRepository<RedirectRule> repository) {
 
             _repository = repository;
-
+            _redirectCache = new Dictionary<string, RedirectRule>();
+            ReloadRedirectsCache();
             T = NullLocalizer.Instance;
         }
 
@@ -37,17 +38,25 @@ namespace Laser.Orchard.SEO.Services {
             return _repository.Table.Count();
         }
 
+        private void ReloadRedirectsCache() {
+            _redirectCache.Clear();
+            foreach (var rule in _repository.Table) {
+                _redirectCache.Add(rule.SourceUrl, rule);
+            }
+        }
+
         private IEnumerable<int> GetSameSourceUrlIds(RedirectRule redirectRule) {
             try {
                 return _repository.Table
                     .Where(rr => rr.SourceUrl == redirectRule.SourceUrl)
                     .ToList() //need to force execution of the query, so that it can fail in sqlCE
                     .Select(rr => rr.Id);
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 //sqlCE doe not support using strings properly when their length is such that the column
                 //in the record is of type ntext.
                 var rules = _repository.Fetch(rr =>
-                    rr.SourceUrl.StartsWith(redirectRule.SourceUrl) && 
+                    rr.SourceUrl.StartsWith(redirectRule.SourceUrl) &&
                     rr.SourceUrl.EndsWith(redirectRule.SourceUrl));
                 return rules.ToList()
                     .Where(rr => rr.SourceUrl == redirectRule.SourceUrl)
@@ -61,6 +70,7 @@ namespace Laser.Orchard.SEO.Services {
                 throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
             }
             _repository.Update(redirectRule);
+            ReloadRedirectsCache();
             return redirectRule;
         }
 
@@ -70,6 +80,7 @@ namespace Laser.Orchard.SEO.Services {
                 throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
             }
             _repository.Create(redirectRule);
+            ReloadRedirectsCache();
             return redirectRule;
         }
 
@@ -79,24 +90,16 @@ namespace Laser.Orchard.SEO.Services {
 
         public void Delete(int id) {
             var redirect = _repository.Get(id);
-
             _repository.Delete(redirect);
+            ReloadRedirectsCache();
         }
 
         public RedirectRule GetRedirect(string path) {
-            //path = path.TrimStart('/');
-            try {
-                var rule = _repository.Get(x => x.SourceUrl == path);
-                return rule == null ? null :
-                    RedirectRule.Copy(rule);
-            } catch (Exception) {
-                //sqlCE doe not support using strings properly when their length is such that the column
-                //in the record is of type ntext.
-                var rules = _repository.Fetch(rr => 
-                    rr.SourceUrl.StartsWith(path) && rr.SourceUrl.EndsWith(path));
-                var rule = rules.ToList().Where(rr => rr.SourceUrl == path).FirstOrDefault();
-                return rule == null ? null :
-                    RedirectRule.Copy(rule);
+            if (_redirectCache.ContainsKey(path)) {
+                return _redirectCache[path];
+            }
+            else {
+                return null;
             }
         }
 
@@ -105,7 +108,15 @@ namespace Laser.Orchard.SEO.Services {
             return rule == null ? null :
                 RedirectRule.Copy(rule);
         }
-        
+
+        public void ClearCache() {
+            ReloadRedirectsCache();
+        }
+
+        public int CountCached() {
+            return _redirectCache.Count;
+        }
+
         private static void FixRedirect(RedirectRule redirectRule) {
             redirectRule.SourceUrl = redirectRule.SourceUrl.TrimStart('/');
             redirectRule.DestinationUrl = redirectRule.DestinationUrl.TrimStart('/');

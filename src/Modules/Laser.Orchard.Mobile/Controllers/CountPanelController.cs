@@ -34,7 +34,7 @@ namespace Laser.Orchard.Mobile.Controllers {
                 if (manualRecipients == null || manualRecipients.Length == 0) {
                     elenco = _pushGatewayService.GetPushQueryResult(ids, true, contentId.HasValue ? contentId.Value : 0);
                 } else {
-                    elenco = _pushGatewayService.GetPushQueryResultByUserNames(manualRecipients, null, true, "All", true);
+                    elenco = _pushGatewayService.CountPushQueryResultByUserNames(manualRecipients, null, true, "All");
                 }
                 var android = Convert.ToInt64((((Hashtable)(elenco[0]))["Android"]) ?? 0); //elenco.Where(x => x.Device == TipoDispositivo.Android).Count();
                 var apple = Convert.ToInt64((((Hashtable)(elenco[0]))["Apple"]) ?? 0);  //elenco.Where(x => x.Device == TipoDispositivo.Apple).Count();
