@@ -257,6 +257,7 @@
     <Compile Include="Models\LastDeviceUserDataProviderSettingsPart.cs" />
     <Compile Include="Models\LatestUUIDForUserRecord.cs" />
     <Compile Include="Models\MobileContactPart.cs" />
+    <Compile Include="Models\NotificationsCounters.cs" />
     <Compile Include="Models\PushState.cs" />
     <Compile Include="Models\SentRecord.cs" />
     <Compile Include="Models\SmsGatewayPart.cs" />
@@ -279,7 +280,7 @@
     <Compile Include="Services\UserPwdRecoveryDefaultFrontEndSettingsProvider.cs" />
     <Compile Include="SMSGatewayMigration.cs" />
     <Compile Include="SmsMigrations.cs" />
-    <Compile Include="Projections\DeviceFilter.cs" />
+    <Compile Include="Projections\DeveiceFilter.cs" />
     <Compile Include="Handlers\SmsSettingsPartHandler.cs" />
     <Compile Include="Handlers\UserDeviceHandler.cs" />
     <Compile Include="Models\UserDeviceRecord.cs" />
@@ -289,7 +290,6 @@
     <Compile Include="ViewModels\DeliveryReportVM.cs" />
     <Compile Include="ViewModels\PhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\PushMessage.cs" />
-    <Compile Include="ViewModels\PushNotificationVM.cs" />
     <Compile Include="ViewModels\SmsDeliveryReportResultVM.cs" />
     <Compile Include="ViewModels\SmsGatewayVM.cs" />
     <Compile Include="WorkFlows\PushEditForm.cs" />

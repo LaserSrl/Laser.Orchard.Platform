@@ -1,6 +1,7 @@
 ﻿@model Laser.Orchard.Mobile.ViewModels.PushMobileSettingsVM
 <fieldset>
     <legend>@T("Push Mobile Settings")</legend>
+    <span class="hint">@T("To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3")</span>
     <div class="editor-field">
         <fieldset>
             <h2>Android</h2>
@@ -87,14 +88,14 @@
                 @Html.TextBoxFor(m => m.MaxPushPerIteration)
                 <span class="hint">@T("0 means default value (1000).")</span>
             </div>
-</fieldset>
+        </fieldset>
         <fieldset>
             <h2>@T("Setting Taxonomy")</h2>
             @Html.LabelFor(m => m.TaxonomyName, T("Enter Taxonomy Name used"))
-      @*    //  @Html.TextBoxFor(m => m.TaxonomyName)*@
-                    @Html.DropDownListFor(m => m.TaxonomyName, Model.ListOfTaxonomies, "")
+            @*    //  @Html.TextBoxFor(m => m.TaxonomyName)*@
+            @Html.DropDownListFor(m => m.TaxonomyName, Model.ListOfTaxonomies, "")
 
 
         </fieldset>
-</div>
+    </div>
 </fieldset>

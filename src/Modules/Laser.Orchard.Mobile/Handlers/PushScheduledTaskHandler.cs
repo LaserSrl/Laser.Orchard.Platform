@@ -18,7 +18,7 @@ namespace Laser.Orchard.Mobile.Handlers {
         private readonly ICommunicationService _communicationService;
         private readonly IScheduledTaskManager _taskManager;
         private readonly IOrchardServices _orchardServices;
-        private const string TaskType = "Laser.Orchard.PushNotification.Task";
+        private const string taskType = "Laser.Orchard.PushNotification.Task";
 
         public ILogger Logger { get; set; }
 
@@ -32,7 +32,7 @@ namespace Laser.Orchard.Mobile.Handlers {
 
         public void Process(ScheduledTaskContext context) {
             try {
-                if (context.Task.TaskType != TaskType) {
+                if (context.Task.TaskType != taskType) {
                     return;
                 }
                 // esegue l'invio delle push
@@ -44,7 +44,7 @@ namespace Laser.Orchard.Mobile.Handlers {
                     // rischedula il task
                     // applica il valore di default (5) nel caso di setting non valorizzato
                     var delay = pushSettings.DelayMinutesBeforeRetry == 0 ? 5 : pushSettings.DelayMinutesBeforeRetry;
-                    _taskManager.CreateTask("Laser.Orchard.PushNotification.Task", DateTime.UtcNow.AddMinutes(delay), context.Task.ContentItem);
+                    _taskManager.CreateTask(taskType, DateTime.UtcNow.AddMinutes(delay), context.Task.ContentItem);
                 }
             }
             catch (Exception ex) {
