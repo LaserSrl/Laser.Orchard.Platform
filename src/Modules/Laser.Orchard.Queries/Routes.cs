@@ -23,7 +23,9 @@ namespace Laser.Orchard.Queries {
                 AddRenamedRoute( "UserQueryAdmin","Create", "/Create"),
                 AddRenamedRoute( "UserQueryAdmin","CreateOneShot", "/CreateOneShot"),
                 AddRenamedRoute( "UserQueryAdmin","Edit","/Edit/{id}"),
-                AddRenamedRoute( "UserQueryAdmin","Preview","/Preview/{id}")
+                AddRenamedRoute( "UserQueryAdmin","Preview","/Preview/{id}"),
+                AddRenamedRoute( "Filter","Edit","/Edit/{id}/{category}/{type}"),
+                AddRenamedRoute( "Filter","Add","/Add/{id}")
             };
         }
 

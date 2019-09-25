@@ -31,7 +31,8 @@ namespace Laser.Orchard.Questionnaires {
                 AddRenamedRoute("QuestionnaireStats","Detail", "/{idQuestionario}"),
                 AddRenamedRoute("QuestionnaireStats","QuestionDetail", "/{idQuestionario}/{idDomanda}"),
                 AddRenamedRoute("AdminRanking","Index"),
-                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}/{deviceType}")
+                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}/{deviceType}"),
+                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}")
             };
         }
 
