@@ -34,6 +34,21 @@ namespace Laser.Orchard.PaymentGateway {
                         },
                         new MvcRouteHandler())
                 }
+                    ,
+                    new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/PaymentGateway/PaymentInfo/ListAll",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.PaymentGateway"},
+                            {"controller", "PaymentInfo"},
+                            {"action", "ListAll"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.PaymentGateway"}
+                        },
+                        new MvcRouteHandler())
+                }
 
 
             };
