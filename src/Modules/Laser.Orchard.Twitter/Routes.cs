@@ -19,15 +19,29 @@ namespace Laser.Orchard.Twitter {
             return new[] {
                 new RouteDescriptor {
                     Route = new Route(
-                        "Admin/Twitter",
+                        "Admin/TwitterAccount",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.TwitterAccount"},
-                            {"controller", "Admin"},
+                            {"area", "Laser.Orchard.Twitter"},
+                            {"controller", "TwitterAccount"},
                             {"action", "Index"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.TwitterAccount"}
+                            {"area", "Laser.Orchard.Twitter"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/TwitterAccount/Edit/{id}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Twitter"},
+                            {"controller", "TwitterAccount"},
+                            {"action", "Edit"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Twitter"}
                         },
                         new MvcRouteHandler())
                 }

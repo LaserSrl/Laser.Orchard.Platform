@@ -1,37 +1,34 @@
-﻿using System.Collections.Generic;
-using Orchard.Mvc.Routes;
+﻿using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
-using System.Web.Routing;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Routing;
 
-namespace Laser.Orchard.Mobile.Routes {
+namespace Laser.Orchard.PaymentGestPay {
     public class Routes : IHttpRouteProvider {
-
-
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
-            foreach (RouteDescriptor routeDescriptor in GetRoutes()) {
+            foreach (var routeDescriptor in GetRoutes()) {
                 routes.Add(routeDescriptor);
             }
         }
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
-            return new[] {
-                new RouteDescriptor {
+            return new[] {            
+                 new RouteDescriptor {
                     Route = new Route(
-                        "Admin/DevTools/PushNotification",
+                        "Admin/PaymentGateway/PaymentGestPay/",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.Mobile"},
-                            {"controller", "PushNotification"},
+                            {"area", "Laser.Orchard.PaymentGestPay"},
+                            {"controller", "Admin"},
                             {"action", "Index"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.Mobile"}
+                            {"area", "Laser.Orchard.PaymentGestPay"}
                         },
                         new MvcRouteHandler())
                 }
-        };
-
+            };
         }
     }
 }

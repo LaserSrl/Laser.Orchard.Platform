@@ -18,11 +18,25 @@ namespace Laser.Orchard.Facebook {
             return new[] {
                 new RouteDescriptor {
                     Route = new Route(
-                        "Admin/Facebook",
+                        "Admin/FacebookAccount",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.Facebook"},
                             {"controller", "FacebookAccount"},
                             {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Facebook"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/FacebookAccount/Edit/{id}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Facebook"},
+                            {"controller", "FacebookAccount"},
+                            {"action", "Edit"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
