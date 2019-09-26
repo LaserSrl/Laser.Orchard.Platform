@@ -6,9 +6,9 @@
   Place  aaFields_Numeric__CommonPart-LastModifier="-"/>
   -->
   <Place Parts_JsonDataTable_Edit="Content:2" Fields_JsonDataTable_Edit="Content:3"/>
-  
+
   <Place Parts_FavoriteCulturePart_Edit="Content:2" />
-  
+
   <Place Fields_Numeric__CommonPart-Creator="-"/>
   <Place Fields_Numeric__CommonPart-LastModifier="-"/>
 
@@ -59,11 +59,14 @@
 
   <Place Fields_Custom_ColorPicker_Edit="Content:2.5"/>
   <Place Fields_Custom_ColorPicker="Content:2.5"/>
-  
+
   <!-- Settings -->
   <Place Parts_EnvironmentVariablesSettings_Edit="Content:1" />
 
   <!-- Content Picker Creation-->
   <Place Fields_ContentPickerCreateItem_Edit="Content:2.3.1" />
   <Place Parts_ContentPickerCreateItem_EditExtension="Sidebar:25.1" />
+
+  <!-- User OwnedFolder-->
+  <Place Parts_OwnedFolder_Edit="Content:9"/>
 </Placement>
