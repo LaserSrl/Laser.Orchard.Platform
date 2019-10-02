@@ -106,3 +106,15 @@
     height:1px;
     border-bottom:1px solid #D3D3D3;
 }
+
+.st-btn-fieldset {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#st-export-fieldset {
+    float: right;
+    padding-right: 10px;
+    padding-left: 30px;
+}

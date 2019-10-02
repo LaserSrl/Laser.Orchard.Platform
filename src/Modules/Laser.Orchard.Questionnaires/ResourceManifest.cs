@@ -8,8 +8,8 @@ namespace Laser.Orchard.Questionnaires {
             var manifest = builder.Add();
             //Scripts
             //Styles
-            manifest.DefineStyle("Questionnaire").SetUrl("orchard.questionnaire.css");
-            manifest.DefineStyle("QuestionnaireAdmin").SetUrl("questionnaire-admin.css");
+            manifest.DefineStyle("Questionnaire").SetUrl("orchard.questionnaire.css?v=1.0");
+            manifest.DefineStyle("QuestionnaireAdmin").SetUrl("questionnaire-admin.css?v=1.0");
 
         }
     }

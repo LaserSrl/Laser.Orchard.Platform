@@ -12,7 +12,6 @@
     Script.Require("jQueryCalendars_Picker").AtFoot();
     //Script.Require("jQueryTimeEntry").AtFoot();
 
-
     const int answersToShow = 3;
     Layout.Title = T("Questionnaire Answers");
 
@@ -56,11 +55,14 @@
             @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
         </span>
         @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
+    </fieldset>
+    <fieldset class="bulk-items st-btn-fieldset">
         <button type="submit">@T("Filter")</button>
+        <a href="@Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] })" class="button">@T("Clear")</a>
+    </fieldset>
+    <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
         <button type="submit" name="export" value="true">@T("Export")</button>
-        <a href="@Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] })">@T("Clear")</a>
-        <span style="width:50px">&nbsp;</span>
-        <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics">@T("Show Exported Files")</a>
+        <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
     </fieldset>
 }
 
@@ -96,9 +98,9 @@
                     }
                 </div>
 
-                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
-                                <div style="margin-top: 5px; margin-left: 9px;">
-                                    <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
+                if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                    <div style="margin-top: 5px; margin-left: 9px;">
+                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
                            new {
                                area = "Laser.Orchard.Questionnaires",
                                idQuestionario = Model.First().QuestionnairePart_Id,
@@ -106,16 +108,16 @@
                                from = Request.QueryString["from"],
                                to = Request.QueryString["to"]
                            })">
-                                        @T("Show all answers")
-                                    </a>
-                                </div>
-                            }
-                            <div class="line-separator"></div>
-                            <br />
-                            }
+                            @T("Show all answers")
+                        </a>
+                    </div>
+                }
+                <div class="line-separator"></div>
+                <br />
+            }
         }
     </div>
-                            }
+}
 
 @{
     using (Script.Foot()) {
