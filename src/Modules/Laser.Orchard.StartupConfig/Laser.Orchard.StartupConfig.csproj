@@ -467,6 +467,7 @@
     <Compile Include="TaxonomiesExtensions\Projections\SelectTermsForm.cs" />
     <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceShapeDisplayEvent.cs" />
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
     <Compile Include="Tokens\ColorPickerTokens.cs" />
