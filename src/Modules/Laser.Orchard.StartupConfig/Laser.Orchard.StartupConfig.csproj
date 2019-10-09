@@ -137,6 +137,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\laser-tinymce.js" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -468,6 +469,9 @@
     <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
     <Compile Include="TinyMceEnhancement\TinyMceShapeDisplayEvent.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsDriver.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsHandler.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsPart.cs" />
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
     <Compile Include="Tokens\ColorPickerTokens.cs" />
@@ -618,6 +622,7 @@
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

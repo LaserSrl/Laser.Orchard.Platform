@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.StartupConfig.TinyMceEnhancement.TinyMceSiteSettingsPart
+
+<fieldset>
+    <legend>@T("TinyMce Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.InitScript)">@T("Init Script")</label>
+        @Html.TextAreaFor(m => m.InitScript, new { @class = "text large" })
+        <span class="hint">@T("Content of the init method for TinyMce.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.AdditionalPlugins)">@T("Additional Plugins")</label>
+        @Html.TextAreaFor(m => m.InitScript, new { @class = "text large" })
+        <span class="hint">@T("A list of additional plugins. Use space as separator (eg. plugin1 plugin2 pligin3).")</span>
+    </div>
+</fieldset>

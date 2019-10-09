@@ -1,7 +1,13 @@
-﻿using Orchard.UI.Resources;
+﻿using Orchard;
+using Orchard.Environment.Features;
+using Orchard.UI.Resources;
+using System.Linq;
 namespace Laser.Orchard.StartupConfig {
     public class ResourceManifest : IResourceManifestProvider {
-
+        private readonly IFeatureManager _featureManager;
+        public ResourceManifest(IFeatureManager featureManager) {
+            _featureManager = featureManager;
+        }
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
             //manifest.DefineStyle("FontAwesome").SetUrl("font-awesome/css/font-awesome.min.css");
@@ -34,6 +40,12 @@ namespace Laser.Orchard.StartupConfig {
                 .SetDependencies("jQueryUI");
             manifest.DefineStyle("ContentPickerThemeHiding")
                 .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.css", "contentPickerCreation\\ContentPickerThemeHiding.css");
+
+            // tinymce enhancement
+            if(_featureManager.GetEnabledFeatures().Any(x => x.Id == "Laser.Orchard.StartupConfig.TinyMceEnhancement")) {
+                // replace standard orchard init with custom init
+                manifest.DefineScript("OrchardTinyMce").SetUrl("laser-tinymce.js").SetDependencies("TinyMce");
+            }
         }
     }
 }
