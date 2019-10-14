@@ -62,13 +62,9 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 // }
                 var namesList = settings.AdditionalPlugins.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 var pluginList = new List<string>();
-                var shellSettings = new ShellSettings();
-                var urlBase = _shellSettings.RequestUrlPrefix;
-                if(string.IsNullOrWhiteSpace(urlBase) == false) {
-                    urlBase = "/" + urlBase;
-                }
+                var serverRelativeUrlBase = string.IsNullOrWhiteSpace(HttpContext.Current.Request.ApplicationPath) ? "" : "/" + HttpContext.Current.Request.ApplicationPath.TrimStart('/');
                 foreach (var item in namesList) {
-                    pluginList.Add($"'{item}': '{urlBase}/{item}/plugin.min.js'");
+                    pluginList.Add($"'{item}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}/plugin.min.js'");
                 }
                 externalPlugins = @",
                     external_plugins: {

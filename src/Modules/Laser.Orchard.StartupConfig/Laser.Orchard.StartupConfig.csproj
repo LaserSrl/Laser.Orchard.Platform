@@ -138,10 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\laser-tinymce.js" />
-    <Content Include="TinyMceEnhancement\plugins\prova\plugin.min.js" />
-    <Content Include="TinyMceEnhancement\plugins\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
