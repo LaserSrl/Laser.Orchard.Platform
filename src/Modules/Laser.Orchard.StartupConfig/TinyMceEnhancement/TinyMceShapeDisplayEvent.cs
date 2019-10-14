@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement.Implementation;
+using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor.Models;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.VirtualPath;
@@ -14,8 +16,10 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
     [OrchardFeature("Laser.Orchard.StartupConfig.TinyMceEnhancement")]
     public class TinyMceShapeDisplayEvent : ShapeDisplayEvents {
         private readonly IOrchardServices _orchardServices;
-        public TinyMceShapeDisplayEvent(IOrchardServices orchardServices) {
+        private readonly ShellSettings _shellSettings;
+        public TinyMceShapeDisplayEvent(IOrchardServices orchardServices, ShellSettings shellSettings) {
             _orchardServices = orchardServices;
+            _shellSettings = shellSettings;
         }
         public override void Displayed(ShapeDisplayedContext context) {
             // TODO aggiungere anche i field che usano TinyMce (verificare se serve)
@@ -46,102 +50,46 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 mediaPlugins += ", medialibrary";
                 mediaToolbar += " medialibrary";
             }
-            var defaultInit = @"selector: ""textarea.tinymce"",
-                        theme: ""modern"",
-                        schema: ""html5"",
-                        plugins: [""advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount" + mediaPlugins + @"""],
-                        toolbar: ""undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify ltr rtl | " + mediaToolbar + @" link unlink charmap | code fullscreen"",
-                        convert_urls: false,
-                        valid_elements: ""*[*]"",
-                        // Shouldn't be needed due to the valid_elements setting, but TinyMCE would strip script.src without it.
-                        extended_valid_elements: ""script[type|defer|src|language]"",
-                        //menubar: false,
-                        //statusbar: false,
-                        skin: ""orchardlightgray"",
-                        language: language,
-                        auto_focus: autofocus,
-                        directionality: directionality";
-            var defaultSetup = @"setup: function (editor) {
-                $(document).bind(""localization.ui.directionalitychanged"", function (event, directionality) {
-                    editor.getBody().dir = directionality;
-                });
-
-                // If the focused editable area is taller than the window, make the menu and the toolbox sticky-positioned within the editor
-                // to help the user avoid excessive vertical scrolling.
-                // There is a built-in fixed_toolbar_container option in the TinyMCE, but we can't use it, because it is only
-                // available if the selector is a DIV with inline mode.
-
-                editor.on(""focus"", function () {
-                    var $contentArea = $(this.contentAreaContainer.parentElement);
-                    stickyToolbar($contentArea);
-                });
-
-                editor.on(""blur"", function () {
-                    var $contentArea = $(this.contentAreaContainer.parentElement);
-                    $contentArea.prepend($contentArea.find(""div.mce-toolbar-grp""));
-                    $contentArea.prepend($contentArea.find(""div.mce-menubar""));
-                    $(""#stickyContainer"").remove();
-                    $(""#stickyPlaceholder"").remove();
-                });
-
-                function stickyToolbar($contentArea) {
-                    var $container = $(""<div/>"", { id: ""stickyContainer"", class: ""container-layout"" });
-
-                    $contentArea.prepend($container);
-                    $container.append($contentArea.find(""div.mce-menubar""));
-                    $container.append($contentArea.find(""div.mce-toolbar-grp""));
-
-                    var $containerPosition = $container.offset();
-                    var $placeholder = $(""<div/>"", { id: ""stickyPlaceholder"" });
-                    var isAdded = false;
-
-                    if ($(window).scrollTop() >= $containerPosition.top && !isAdded) {
-                        $container.addClass(""sticky-top"");
-                        $placeholder.insertBefore($container);
-                        $container.width($placeholder.width());
-                        $placeholder.height($container.height());
-                    }
-
-                    $(window).scroll(function (event) {
-                        var $statusbarPosition = $contentArea.find(""div.mce-statusbar"").offset();
-                        if ($(window).scrollTop() >= $containerPosition.top && !isAdded) {
-                            $container.addClass(""sticky-top"");
-                            $placeholder.insertBefore($container);
-                            $container.width($placeholder.width());
-                            $placeholder.height($container.height());
-                            $(window).on(""resize"", function () {
-                                $container.width($placeholder.width());
-                                $placeholder.height($container.height());
-                            });
-                            isAdded = true;
-                        } else if ($(window).scrollTop() < $containerPosition.top && isAdded) {
-                            $container.removeClass(""sticky-top"");
-                            $placeholder.remove();
-                            $(window).on(""resize"", function () {
-                                $container.width(""100%"");
-                            });
-                            isAdded = false;
-                        }
-                        if ($(window).scrollTop() >= ($statusbarPosition.top - $container.height())) {
-                            $container.hide();
-                        } else if ($(window).scrollTop() < ($statusbarPosition.top - $container.height()) && isAdded) {
-                            $container.show();
-                        }
-                    });
+            var plugins = Constants.BasePlugins + mediaPlugins;
+            var externalPlugins = "";
+            if (string.IsNullOrWhiteSpace(settings.AdditionalPlugins) == false) {
+                // TODO: creare oggetto json con nome e url di ogni plugin aggiuntivo
+                // predisporre cartella con web.config per mettere i plugin aggiuntivi e ricavare l'url
+                // external plugins example:
+                // external_plugins: {
+                //   'testing': 'http://www.testing.com/plugin.min.js',
+                //   'maths': 'http://www.maths.com/plugin.min.js'
+                // }
+                var namesList = settings.AdditionalPlugins.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                var pluginList = new List<string>();
+                var shellSettings = new ShellSettings();
+                var urlBase = _shellSettings.RequestUrlPrefix;
+                if(string.IsNullOrWhiteSpace(urlBase) == false) {
+                    urlBase = "/" + urlBase;
                 }
-            }";
+                foreach (var item in namesList) {
+                    pluginList.Add($"'{item}': '{urlBase}/{item}/plugin.min.js'");
+                }
+                externalPlugins = @",
+                    external_plugins: {
+                        " + string.Join(",\r\n", pluginList) + @"
+                    }"; 
+            }
             var init = "";
             if(string.IsNullOrWhiteSpace(settings.InitScript)) {
-                init = defaultInit;
+                init = Constants.BasePartialInit + @",
+                    toolbar: """ + Constants.BaseLeftToolbar + mediaToolbar + Constants.BaseRightToolbar + @""",
+                    plugins: [""" + plugins + @"""]";
             }
             else {
-                init = settings.InitScript;
+                init = settings.InitScript + @",
+                    plugins: [""" + plugins + @"""]";
             }
             var html = @"<script type=""text/javascript"">
                 $(function() {
                     tinyMCE.init({
-                        " + init + @",
-                        " + defaultSetup + @"
+                        " + init + externalPlugins + @",
+                        " + Constants.DefaultSetup + @"
                     });
                 });
                 </script>" + htmlOrig;
@@ -149,3 +97,4 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
         }
     }
 }
+ 

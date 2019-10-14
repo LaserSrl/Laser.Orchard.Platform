@@ -9,7 +9,7 @@
     </div>
     <div>
         <label for="@Html.FieldIdFor(m => m.AdditionalPlugins)">@T("Additional Plugins")</label>
-        @Html.TextAreaFor(m => m.InitScript, new { @class = "text large" })
+        @Html.TextAreaFor(m => m.AdditionalPlugins, new { @class = "text large" })
         <span class="hint">@T("A list of additional plugins. Use space as separator (eg. plugin1 plugin2 pligin3).")</span>
     </div>
 </fieldset>
