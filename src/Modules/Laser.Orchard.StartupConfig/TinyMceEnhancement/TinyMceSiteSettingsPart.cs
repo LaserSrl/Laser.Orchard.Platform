@@ -12,5 +12,7 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             get { return this.Retrieve(x => x.AdditionalPlugins); }
             set { this.Store(x => x.AdditionalPlugins, value); }
         }
+        // property not to be saved on repository
+        public string DefaultInitScript { get; set; }
     }
 }

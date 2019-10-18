@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Orchard.Environment.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
+    [OrchardFeature("Laser.Orchard.StartupConfig.TinyMceEnhancement")]
     public static class Constants {
         public const string BasePlugins = @"advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount";
         public const string BaseLeftToolbar = @"undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify ltr rtl | ";

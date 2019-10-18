@@ -470,7 +470,7 @@
     <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
     <Compile Include="TinyMceEnhancement\Constants.cs" />
-    <Compile Include="TinyMceEnhancement\TinyMcePluginsRoutes.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceEnhancementService.cs" />
     <Compile Include="TinyMceEnhancement\TinyMceShapeDisplayEvent.cs" />
     <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsDriver.cs" />
     <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsHandler.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 using Orchard;
 using Orchard.Caching;
@@ -17,9 +18,11 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
     public class TinyMceShapeDisplayEvent : ShapeDisplayEvents {
         private readonly IOrchardServices _orchardServices;
         private readonly ShellSettings _shellSettings;
-        public TinyMceShapeDisplayEvent(IOrchardServices orchardServices, ShellSettings shellSettings) {
+        private readonly ITinyMceEnhancementService _tinyMceEnhancementService;
+        public TinyMceShapeDisplayEvent(IOrchardServices orchardServices, ShellSettings shellSettings, ITinyMceEnhancementService tinyMceEnhancementService) {
             _orchardServices = orchardServices;
             _shellSettings = shellSettings;
+            _tinyMceEnhancementService = tinyMceEnhancementService;
         }
         public override void Displayed(ShapeDisplayedContext context) {
             // TODO aggiungere anche i field che usano TinyMce (verificare se serve)
@@ -34,27 +37,10 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             var settings = _orchardServices.WorkContext.CurrentSite.As<TinyMceSiteSettingsPart>();
 
             var htmlOrig = context.ChildContent.ToHtmlString();
-            //html = @"<script>
-            //        var lasertoolbar = 'undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify ltr rtl | ' + mediaPlugins + ' link unlink charmap | code fullscreen';
-            //    </script>" + html;
-            var shellDescriptor = _orchardServices.WorkContext.Resolve<ShellDescriptor>();
-            var mediaPickerEnabled = shellDescriptor.Features.Any(x => x.Name == "Orchard.MediaPicker") ? true : false;
-            var mediaLibraryEnabled = shellDescriptor.Features.Any(x => x.Name == "Orchard.MediaLibrary") ? true : false;
-            var mediaPlugins = "";
-            var mediaToolbar = "";
-            if (mediaPickerEnabled) {
-                mediaPlugins += ", mediapicker";
-                mediaToolbar += " mediapicker";
-            }
-            if (mediaLibraryEnabled) {
-                mediaPlugins += ", medialibrary";
-                mediaToolbar += " medialibrary";
-            }
-            var plugins = Constants.BasePlugins + mediaPlugins;
+            var plugins = _tinyMceEnhancementService.GetCorePluginsList();
             var externalPlugins = "";
+            var scriptList = new List<string>();
             if (string.IsNullOrWhiteSpace(settings.AdditionalPlugins) == false) {
-                // TODO: creare oggetto json con nome e url di ogni plugin aggiuntivo
-                // predisporre cartella con web.config per mettere i plugin aggiuntivi e ricavare l'url
                 // external plugins example:
                 // external_plugins: {
                 //   'testing': 'http://www.testing.com/plugin.min.js',
@@ -64,7 +50,14 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 var pluginList = new List<string>();
                 var serverRelativeUrlBase = string.IsNullOrWhiteSpace(HttpContext.Current.Request.ApplicationPath) ? "" : "/" + HttpContext.Current.Request.ApplicationPath.TrimStart('/');
                 foreach (var item in namesList) {
-                    pluginList.Add($"'{item}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}/plugin.min.js'");
+                    if (item.Contains('/')) {
+                        //scriptList.Add($"<script src=\"{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}\" type=\"text/javascript\"></script>");
+                        var pluginName = item.Split('/')[0];
+                        pluginList.Add($"'{pluginName}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}'");
+                    }
+                    else {
+                        pluginList.Add($"'{item}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}/plugin.min.js'");
+                    }
                 }
                 externalPlugins = @",
                     external_plugins: {
@@ -73,13 +66,15 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             }
             var init = "";
             if(string.IsNullOrWhiteSpace(settings.InitScript)) {
-                init = Constants.BasePartialInit + @",
-                    toolbar: """ + Constants.BaseLeftToolbar + mediaToolbar + Constants.BaseRightToolbar + @""",
-                    plugins: [""" + plugins + @"""]";
+                init = _tinyMceEnhancementService.GetDefaultInitScript();
             }
             else {
                 init = settings.InitScript + @",
                     plugins: [""" + plugins + @"""]";
+            }
+            var additionalScripts = new StringBuilder();
+            foreach(var script in scriptList) {
+                additionalScripts.AppendLine(script);
             }
             var html = @"<script type=""text/javascript"">
                 $(function() {
@@ -88,7 +83,8 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                         " + Constants.DefaultSetup + @"
                     });
                 });
-                </script>" + htmlOrig;
+                </script>
+                " + additionalScripts.ToString() + htmlOrig;
             context.ChildContent = new HtmlString(html);
         }
     }
