@@ -38,5 +38,15 @@ namespace Laser.Orchard.UsersExtensions {
 
             return 2;
         }
+
+        public int UpdateFrom2() {
+            SchemaBuilder.CreateTable("ManifestAppFileRecord",
+                table => table
+                    .Column<int>("Id", col => col.PrimaryKey().Identity())
+                    .Column<string>("FileContent", col => col.Nullable().Unlimited())
+                );
+            return 3;
+        }
+
     }
 }

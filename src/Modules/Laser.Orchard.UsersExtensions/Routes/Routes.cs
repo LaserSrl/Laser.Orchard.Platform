@@ -44,6 +44,20 @@ namespace Laser.Orchard.UsersExtensions.Routes {
                             {"area", "Laser.Orchard.UsersExtensions"}
                         },
                         new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "UserExtension/ManifestAppFile",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.UsersExtensions"},
+                            {"controller", "ManifestAppFileAdmin"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.UsersExtensions"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }

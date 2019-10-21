@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.UsersExtensions.ViewModels.ManifestAppFileViewModel
+
+<h1>@Html.TitleForPage(T("Manage Manifest File").ToString())</h1>
+@Html.ValidationSummary()
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Text)">@T("File Content")</label>
+            @Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
+            @Html.ValidationMessage("Text", "*")
+            <span class="hint">@T("apple app site association")</span>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save File apple-app-site-association")</button>
+}

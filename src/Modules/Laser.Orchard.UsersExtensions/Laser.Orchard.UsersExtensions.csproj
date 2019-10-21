@@ -169,6 +169,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AKUserActionsController.cs" />
     <Compile Include="Controllers\BaseUserActionsController.cs" />
+    <Compile Include="Controllers\ManifestAppFileAdminController.cs" />
     <Compile Include="Controllers\ManifestAppFileController.cs" />
     <Compile Include="Controllers\PoliciesController.cs" />
     <Compile Include="Controllers\UserActionsAPIController.cs" />
@@ -188,12 +189,14 @@
     <Compile Include="Models\UserRegistrationLogin.cs" />
     <Compile Include="Models\UserRegistrationPolicyPart.cs" />
     <Compile Include="Models\UserRegistrationSettingsPart.cs" />
+    <Compile Include="Navigation\ManifestAppFileNavigation.cs" />
     <Compile Include="RoutesApi.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\DefaultFrontEndSettingsProvider.cs" />
     <Compile Include="Services\IUserActionMethods.cs" />
     <Compile Include="Services\IUsersExtensionsServices.cs" />
     <Compile Include="Services\ManifestAppFileServices.cs" />
+    <Compile Include="ViewModels\ManifestAppFileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\UserRegistrationPolicy_Edit.cshtml" />
@@ -211,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\ManifestAppFileAdmin\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
