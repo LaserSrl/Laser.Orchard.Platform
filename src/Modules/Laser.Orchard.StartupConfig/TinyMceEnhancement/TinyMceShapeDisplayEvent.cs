@@ -46,7 +46,7 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 //   'testing': 'http://www.testing.com/plugin.min.js',
                 //   'maths': 'http://www.maths.com/plugin.min.js'
                 // }
-                var namesList = settings.AdditionalPlugins.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                var namesList = settings.AdditionalPlugins.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 var pluginList = new List<string>();
                 var serverRelativeUrlBase = string.IsNullOrWhiteSpace(HttpContext.Current.Request.ApplicationPath) ? "" : "/" + HttpContext.Current.Request.ApplicationPath.TrimStart('/');
                 foreach (var item in namesList) {
