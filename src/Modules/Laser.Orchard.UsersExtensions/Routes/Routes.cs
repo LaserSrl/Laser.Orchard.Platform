@@ -16,6 +16,21 @@ namespace Laser.Orchard.UsersExtensions.Routes {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
+                new RouteDescriptor {   Priority = 5,
+                    Route = new Route(
+                        "apple-app-site-association",
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.UsersExtensions"},
+                                                    {"controller", "ManifestAppFile"},
+                                                    {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.UsersExtensions"}
+                        },
+                        new MvcRouteHandler())
+                },
+
                 new RouteDescriptor {
                     Route = new Route(
                         "Policies/List",

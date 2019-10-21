@@ -169,6 +169,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AKUserActionsController.cs" />
     <Compile Include="Controllers\BaseUserActionsController.cs" />
+    <Compile Include="Controllers\ManifestAppFileController.cs" />
     <Compile Include="Controllers\PoliciesController.cs" />
     <Compile Include="Controllers\UserActionsAPIController.cs" />
     <Compile Include="Controllers\UserActionsController.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Handlers\UserRegistrationPolicyPartHandler.cs" />
     <Compile Include="Handlers\UserRegistrationSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ManifestAppFileRecord.cs" />
     <Compile Include="Models\UserRegistrationLogin.cs" />
     <Compile Include="Models\UserRegistrationPolicyPart.cs" />
     <Compile Include="Models\UserRegistrationSettingsPart.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Services\DefaultFrontEndSettingsProvider.cs" />
     <Compile Include="Services\IUserActionMethods.cs" />
     <Compile Include="Services\IUsersExtensionsServices.cs" />
+    <Compile Include="Services\ManifestAppFileServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\UserRegistrationPolicy_Edit.cshtml" />
