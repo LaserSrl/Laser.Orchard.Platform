@@ -20,9 +20,9 @@ Features:
 		Dependencies: 
 	Laser.Orchard.StartupConfig.MediaExtensions:
 		Name: Laser Media Extension
-		Description: Expose a route to transform images
+		Description: Expose a route to transform images and enable the ability to manage the owned default folder for a user
 		Category: Media
-		Dependencies: Orchard.MediaProcessing
+		Dependencies: Orchard.MediaLibrary,Orchard.MediaProcessing
 	Laser.Orchard.StartupConfig.WorkflowExtensions:
 		Name: Laser Workflow Extension
 		Description: Expose useful functions for workflows
