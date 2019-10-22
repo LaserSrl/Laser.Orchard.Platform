@@ -1,0 +1,10 @@
+﻿@model Laser.Orchard.StartupConfig.MediaExtensions.UserFolder.Models.OwnedFolderPart
+
+<fieldset>
+    <legend>@T("User default owned folder")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.FolderName)">@T("Folder Name")</label>
+        @Html.TextBoxFor(m => m.FolderName, new { @class = "text large" })
+        <span class="hint">@T("Insert folder's name (optional). If empty, an unique folder name (Identity or Username) will be created.")</span>
+    </div>
+</fieldset>

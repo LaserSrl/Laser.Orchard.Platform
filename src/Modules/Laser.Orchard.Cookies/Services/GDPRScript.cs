@@ -157,11 +157,11 @@ namespace Laser.Orchard.Cookies.Services {
         /// <returns></returns>
         public IList<CookieType> GetAcceptedCookieTypes() {
             var result = new List<CookieType>();
+            // accepted by default
+            result.Add(CookieType.Technical);
 
             var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
             if (cookie != null) {
-                // accepted by default
-                result.Add(CookieType.Technical);
                 var arrVal = cookie.Value.Split('.');
                 if (arrVal != null && arrVal.Length > 1) {
                     var arrCheck = arrVal[1];
