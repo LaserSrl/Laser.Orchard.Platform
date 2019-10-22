@@ -89,7 +89,7 @@ button, .button, a.button {
     border-radius: 3px;
     box-shadow: none;
     height: 30px;
-    line-height: 18px;
+    line-height: 20px;
     min-width: 110px;
     font-size: 14px;
 }
@@ -1635,4 +1635,9 @@ div#appliedFilters {
 .is-calendarsPicker, .is-timeEntry {
     min-width: 85px;
     width: 85px;
+}
+
+/*questionnaires*/
+.st-btn-fieldset {
+    vertical-align: initial;
 }
