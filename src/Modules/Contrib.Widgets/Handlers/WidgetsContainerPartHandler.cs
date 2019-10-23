@@ -6,6 +6,7 @@ using Contrib.Widgets.Models;
 using Contrib.Widgets.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Localization.Models;
 
 namespace Contrib.Widgets.Handlers {
     public class WidgetsContainerPartHandler : ContentHandler {
@@ -18,6 +19,16 @@ namespace Contrib.Widgets.Handlers {
 
             OnRemoved<WidgetsContainerPart>((context, part) => {
                 DeleteWidgets(part);
+            });
+
+            OnUpdated<WidgetsContainerPart>((context, part) => {
+                var culture = part.ContentItem.As<LocalizationPart>().Culture;
+                // recupero i WidgetExPart del Content
+                var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished());
+                foreach (var widget in widgets) {
+                    var localization = widget.ContentItem.As<LocalizationPart>();
+                    localization.Culture = culture;
+                }
             });
         }
 
