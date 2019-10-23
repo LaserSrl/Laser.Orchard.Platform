@@ -71,4 +71,7 @@
   <Place Parts_PerItemCachePart="Content:11" />
   <Place Parts_PerItemCachePart_Edit="Content:11" />
 
+
+  <!-- User OwnedFolder-->
+  <Place Parts_OwnedFolder_Edit="Content:9"/>
 </Placement>
