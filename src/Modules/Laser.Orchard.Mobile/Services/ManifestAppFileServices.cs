@@ -40,7 +40,8 @@ namespace Laser.Orchard.Mobile.Services {
         }
 
         public Tuple<bool, IEnumerable<string>> Save(string text, bool enable) {
-         
+
+
             var validationResult = Validate(text);
             if (validationResult.Item1) {
                 var manifestAppFileRecord = Get();
@@ -66,6 +67,10 @@ namespace Laser.Orchard.Mobile.Services {
             //            }
             //        }
             //    }";
+
+            if (String.IsNullOrEmpty(text)) {
+                return new Tuple<bool, IEnumerable<string>>(true, new List<string>() {});
+            }
 
             string schemaJson = @"{ }";
 
