@@ -7,7 +7,6 @@ using System.Web.Mvc;
 namespace Laser.Orchard.Mobile.Routes {
     public class Routes : IHttpRouteProvider {
 
-
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (RouteDescriptor routeDescriptor in GetRoutes()) {
                 routes.Add(routeDescriptor);
@@ -16,7 +15,35 @@ namespace Laser.Orchard.Mobile.Routes {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-                new RouteDescriptor {
+                    new RouteDescriptor {   Priority = 5,
+                    Route = new Route(
+                        "apple-app-site-association",
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"},
+                                                    {"controller", "ManifestAppFile"},
+                                                    {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
+                },
+                                new RouteDescriptor {
+                    Route = new Route(
+                        "Mobile/ManifestAppFile",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Mobile"},
+                            {"controller", "ManifestAppFileAdmin"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
+                },
+new RouteDescriptor {
                     Route = new Route(
                         "Admin/DevTools/PushNotification",
                         new RouteValueDictionary {
@@ -30,8 +57,8 @@ namespace Laser.Orchard.Mobile.Routes {
                         },
                         new MvcRouteHandler())
                 }
-        };
-
+            };
         }
+
     }
 }
