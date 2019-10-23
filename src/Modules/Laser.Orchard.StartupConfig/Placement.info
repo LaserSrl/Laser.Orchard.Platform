@@ -74,4 +74,7 @@
 
   <!-- User OwnedFolder-->
   <Place Parts_OwnedFolder_Edit="Content:9"/>
+
+  <!-- TinyMce Enhancement -->
+  <Place Parts_TinyMceSiteSettings_Edit="Content:1" />
 </Placement>
