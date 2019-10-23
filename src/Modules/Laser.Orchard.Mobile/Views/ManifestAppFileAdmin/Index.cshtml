@@ -1,4 +1,4 @@
-﻿@model Laser.Orchard.UsersExtensions.ViewModels.ManifestAppFileViewModel
+﻿@model Laser.Orchard.Mobile.ViewModels.ManifestAppFileViewModel
 
 <h1>@Html.TitleForPage(T("Manage Manifest File").ToString())</h1>
 @Html.ValidationSummary()
@@ -9,6 +9,11 @@
             @Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
             @Html.ValidationMessage("Text", "*")
             <span class="hint">@T("apple app site association")</span>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.Enable)
+                <label for="@Html.FieldIdFor(m => m.Enable)" class="forcheckbox">@T("Enable the Manifest File") </label>
+                <span class="hint">@T("Enable return file from the route: /apple-app-site-association")</span>
+            </div>
         </div>
     </fieldset>
     <button class="primaryAction" type="submit">@T("Save File apple-app-site-association")</button>
