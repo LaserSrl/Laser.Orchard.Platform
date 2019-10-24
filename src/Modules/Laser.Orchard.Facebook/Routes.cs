@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using System.Web.Routing;
 using Orchard.Mvc.Routes;
+using Orchard.WebApi.Routes;
+using System.Web.Routing;
+using System.Web.Mvc;
 
-namespace Laser.Orchard.CulturePicker {
-    public class Routes : IRouteProvider {
-        #region IRouteProvider Members
+namespace Laser.Orchard.Facebook {
+    public class Routes : IHttpRouteProvider {
+
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (RouteDescriptor routeDescriptor in GetRoutes()) {
@@ -15,38 +16,36 @@ namespace Laser.Orchard.CulturePicker {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-                //TODO (ermakovich): still not sure why we need it, but without this route Orchard can`t find controller action properly
                 new RouteDescriptor {
                     Route = new Route(
-                        "ChangeCulture",
+                        "Admin/FacebookAccount",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"},
-                            {"controller", "UserCulture"},
-                            {"action", "ChangeCulture"}
+                            {"area", "Laser.Orchard.Facebook"},
+                            {"controller", "FacebookAccount"},
+                            {"action", "Index"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"}
+                            {"area", "Laser.Orchard.Facebook"}
                         },
                         new MvcRouteHandler())
                 },
                 new RouteDescriptor {
                     Route = new Route(
-                        "Admin/CulturePicker/Settings",
+                        "Admin/FacebookAccount/Edit/{id}",
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"},
-                            {"controller", "Admin"},
-                            {"action", "Settings"}
+                            {"area", "Laser.Orchard.Facebook"},
+                            {"controller", "FacebookAccount"},
+                            {"action", "Edit"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.CulturePicker"}
+                            {"area", "Laser.Orchard.Facebook"}
                         },
                         new MvcRouteHandler())
                 }
-            };
-        }
+        };
 
-        #endregion
+        }
     }
 }

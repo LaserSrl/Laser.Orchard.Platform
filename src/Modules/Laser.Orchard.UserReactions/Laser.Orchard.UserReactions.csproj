@@ -202,6 +202,7 @@
     <Compile Include="Projections\UserReactionsQueryFilterFormValidation.cs" />
     <Compile Include="Projections\UserReactionsQuerySortForm.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Security\UserReactionsPermission.cs" />
     <Compile Include="Services\UserReactionsService.cs" />
     <Compile Include="Enums.cs" />
