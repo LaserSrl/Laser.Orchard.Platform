@@ -5,6 +5,7 @@ using Laser.Orchard.Mobile.ViewModels;
 using Orchard;
 using Orchard.Core.Contents;
 using Orchard.Security;
+using Orchard.Tasks.Scheduling;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
@@ -19,17 +20,20 @@ namespace Laser.Orchard.Mobile.Controllers {
         private readonly INotifier _notifier;
         private readonly IOrchardServices _orchardServices;
         private readonly IPushGatewayService _pushGatewayService;
+        private readonly IScheduledTaskManager _taskManager;
 
         public PushNotificationController(
             IOrchardServices orchardServices
             , IPushNotificationService pushNotificationService
             , INotifier notifier
             , IPushGatewayService pushGatewayService
+            , IScheduledTaskManager taskManager
             ) {
             _orchardServices = orchardServices;
             _pushNotificationService = pushNotificationService;
             _notifier = notifier;
             _pushGatewayService = pushGatewayService;
+            _taskManager = taskManager;
         }
 
        
@@ -69,7 +73,7 @@ namespace Laser.Orchard.Mobile.Controllers {
             var ci = _orchardServices.ContentManager.Get(id);
             if(_orchardServices.Authorizer.Authorize(Permissions.PublishContent, ci)) {
                 _pushGatewayService.ResetNotificationFailures(ci);
-                _pushGatewayService.PublishedPushEvent(ci);
+                _taskManager.CreateTask("Laser.Orchard.PushNotification.Task", DateTime.UtcNow.AddMinutes(-1), ci);
                 result.Add("result", "ok");
             }
             else {
