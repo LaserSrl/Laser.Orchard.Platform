@@ -8,7 +8,7 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             var manifest = builder.Add();
 
             // tinymce enhancement: replace standard orchard init with custom init
-            manifest.DefineScript("OrchardTinyMce").SetUrl("laser-tinymce.js").SetDependencies("TinyMce");
+            manifest.DefineScript("OrchardTinyMce").SetUrl("laser-tinymce.js").SetDependencies("TinyMce").SetVersion("1.1");
         }
     }
 }
