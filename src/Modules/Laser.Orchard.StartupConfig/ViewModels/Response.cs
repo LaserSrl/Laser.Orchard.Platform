@@ -8,7 +8,7 @@ namespace Laser.Orchard.StartupConfig.ViewModels {
     /// <summary>
     /// per user enum range 1000
     /// </summary>
-    public enum ErrorCode { NoError = 0, GenericError = 1, InvalidUser = 1000, InvalidXSRF = 1001, UnAuthorized = 1002, Validation = 2000, MissingPolicies = 3000, MissingParameters = 4000 }
+    public enum ErrorCode { NoError = 0, GenericError = 1, ToConfirmEmail = 2, InvalidUser = 1000, InvalidXSRF = 1001, UnAuthorized = 1002, Validation = 2000, MissingPolicies = 3000, MissingParameters = 4000 }
 
     /// <summary>
     /// per user enum range 1000
