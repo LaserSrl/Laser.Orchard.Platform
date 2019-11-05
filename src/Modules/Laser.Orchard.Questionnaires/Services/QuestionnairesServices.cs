@@ -809,7 +809,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             return (text ?? "").Replace('\"', '\'').Replace('\n', ' ').Replace('\r', ' ');
         }
         public List<QuestionnaireStatsViewModel> GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null) {
-            var questionnaireData = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Published)
+            var questionnaireData = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Latest)
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
 
@@ -863,7 +863,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public List<QuestStatViewModel> GetStats(QuestionType type) {
-            var listaQuest = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Published)
+            var listaQuest = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Latest)
                 .List();
             var fullStat = new List<QuestStatViewModel>();
             foreach (var quest in listaQuest) {

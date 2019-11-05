@@ -1,6 +1,8 @@
 ﻿@using Laser.Orchard.Policy;
 @model Laser.Orchard.Policy.Models.PolicyTextInfoPart
-
+@{ 
+    var hasPermission = Authorizer.Authorize(Laser.Orchard.Policy.Security.Permissions.AddPolicyToRegistration);
+}
 <fieldset>
     <div>
         @Html.LabelFor(x => x.PolicyType, T("Policy type").Text, new { })
@@ -16,4 +18,10 @@
         @Html.LabelFor(x => x.UserHaveToAccept, @T("User have to accept this policy").Text, new { @class = "forcheckbox" })
         <span class="hint">@T("Without acceptation on this policy, contents under policies will not be displayed.")</span>
     </div>
+    @if (hasPermission) {
+    <div>@Html.EditorFor(m => m.AddPolicyToRegistration)
+        @Html.LabelFor(x => x.AddPolicyToRegistration, @T("Show this policy during user registration").Text, new { @class = "forcheckbox" })
+        <span class="hint">@T("Add this policy to the policies a user have to accept or decline during his registration.")</span>
+    </div>
+    }
 </fieldset>

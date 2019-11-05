@@ -50,7 +50,7 @@
                 {
                     @Html.TextArea("comment", (TempData["Comment"] ?? "").ToString(), new { maxLength = 1200, rows = 4 })
                     @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
-                    @Html.Hidden("ReturnUrl", Context.Request.ToUrlString())
+                    @Html.Hidden("ReturnUrl", Context.Request.RawUrl)
                     <p class="review-character-limit"><span id="commentCharactersLeft"></span> @T("character(s) remaining")</p>
                     <input id="createReviewButton" type="submit" value="Submit Review" />
                     <a id="cancelCreateReviewLink" href="#">Cancel</a>
@@ -95,7 +95,7 @@
     @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post, new { id = "deleteReviewForm" }))
     {
         <input type="hidden" id="reviewId" name="reviewId" />
-        <input type="hidden" id="returnUrl" name="returnUrl" value="@Context.Request.ToUrlString()" />
+        <input type="hidden" id="returnUrl" name="returnUrl" value="@Context.Request.RawUrl" />
         <input type="submit" value="Yes" />
         <input type="button" value="No" id="cancelDeleteReviewButton" />
     }

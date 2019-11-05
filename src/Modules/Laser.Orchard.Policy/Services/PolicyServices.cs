@@ -45,6 +45,7 @@ namespace Laser.Orchard.Policy.Services {
         /// <param name="ids">optional: content ids of the policies to get. </param>
         /// <returns>A list of PolicyTextInfoPart</returns>
         IEnumerable<PolicyTextInfoPart> GetPolicies(string culture = null, int[] ids = null);
+        IEnumerable<PolicyTextInfoPart> GetAllPublishedPolicyTexts();
         List<PolicyHistoryViewModel> GetPolicyHistoryForUser(int userId);
         string PoliciesLMNVSerialization(IEnumerable<PolicyTextInfoPart> policies);
         string PoliciesPureJsonSerialization(IEnumerable<PolicyTextInfoPart> policies);
@@ -357,7 +358,10 @@ namespace Laser.Orchard.Policy.Services {
 
             return query.List<PolicyTextInfoPart>();
         }
-
+        public IEnumerable<PolicyTextInfoPart> GetAllPublishedPolicyTexts() {
+            var qry = _contentManager.Query<PolicyTextInfoPart>(new string[] { "PolicyText" });
+            return qry.List();
+        }
         public List<PolicyHistoryViewModel> GetPolicyHistoryForUser(int userId) {
             List<PolicyHistoryViewModel> policyHistory = new List<PolicyHistoryViewModel>();
             var currentAnswers = _userPolicyAnswersRepository.Table.Where(w => w.UserPolicyPartRecord.Id == userId);

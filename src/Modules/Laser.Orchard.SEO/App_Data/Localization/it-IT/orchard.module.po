@@ -341,6 +341,14 @@ msgid "Add"
 msgstr "Aggiungi"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Clean Redirects Cache"
+msgstr "Pulisci la Cache dei Redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Number of cached elements: {0}"
+msgstr "Numero di elementi in cache: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
 msgid "Redirects"
 msgstr "Redirezionamenti"
 
@@ -395,6 +403,10 @@ msgstr "La configurazione di default è impostata per non indicizzare alcun cont
 msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
 msgid "A rule for this Source URL already exists."
 msgstr "Regola per l'URL di origine già presente."
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "Redirect cache successfully reloaded"
+msgstr "Cache dei redirect ricaricata con successo"
 
 msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
 msgid "Redirect record was deleted"

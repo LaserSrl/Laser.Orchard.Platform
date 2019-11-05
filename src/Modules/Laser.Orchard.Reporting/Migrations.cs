@@ -92,5 +92,21 @@ namespace Laser.Orchard.Reporting {
             );
             return 4;
         }
+        public int UpdateFrom4() {
+            ContentDefinitionManager.AlterPartDefinition("DataReportDashboardPart", p => p
+                .Attachable(false)
+                .WithField("ReportIds", f => f
+                    .OfType("ContentPickerField")
+                    .WithSetting("ContentPickerFieldSettings.Hint", "Select one or more Reports.")
+                    .WithSetting("ContentPickerFieldSettings.Required", "True")
+                    .WithSetting("ContentPickerFieldSettings.Multiple", "True")
+                    .WithSetting("ContentPickerFieldSettings.ShowContentTab", "True")
+                    .WithSetting("ContentPickerFieldSettings.ShowSearchTab", "True")
+                    .WithSetting("ContentPickerFieldSettings.DisplayedContentTypes", "DataReportViewerPart")
+                    .WithDisplayName("Reports included")
+                )
+            );
+            return 5;
+        }
     }
 }

@@ -94,7 +94,7 @@ else {
     <div class="quest-message quest-error">@Html.Raw(T(TempData["QuestError"].ToString()).Text.Replace("\r\n", "<br/>"))</div>
     }
     if (Questionnaire.MustAcceptTerms && !Questionnaire.HasAcceptedTerms) {
-        using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.ToUrlString() }), FormMethod.Post)) {
+        using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post)) {
     @Html.HiddenFor(m => Questionnaire.Id)
     @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
     <div class="questionnaire-container">
@@ -112,7 +112,7 @@ else {
     else {
 
     <div class="questionnaire-container">
-        @using (Html.BeginFormAntiForgeryPost(Url.Action("Save", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.ToUrlString() }), FormMethod.Post, new { @class = "quest-form" })) {
+        @using (Html.BeginFormAntiForgeryPost(Url.Action("Save", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post, new { @class = "quest-form" })) {
             @Html.HiddenFor(m => Questionnaire.Id)
             @Html.HiddenFor(m => Questionnaire.MustAcceptTerms)
             @Html.HiddenFor(m => Questionnaire.HasAcceptedTerms)
@@ -175,13 +175,16 @@ else {
 <ul>
                             <li>
                                 @for (int i = 0; i < numeroRisposte; i++) {
-<label for="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                    // Genero l'id in questo modo perché usare Html.FieldIdFor() causa un'alterazione del name che lo rende irriconoscibile dal TryUpdateModel
+                                    var answerId = Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer) + "-" + i + "-" + j;
+                                <label for="@answerId">
                                         <input class="j_answer" type="radio" 
                                             @(Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer == Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
                                             name="@Html.FieldNameFor(m => Questionnaire.QuestionsWithResults[j].SingleChoiceAnswer)"
-                                            id="@Html.FieldIdFor(m => Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answered)"
+                                            id="@answerId"
                                             value="@(Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
-                                        @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer</label>
+                                        @Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                </label>
                                     
                                     if (Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
                                         foreach (int ciId in Questionnaire.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {

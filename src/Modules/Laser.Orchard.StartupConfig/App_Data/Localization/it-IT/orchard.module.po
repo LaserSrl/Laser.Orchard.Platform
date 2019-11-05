@@ -13,7 +13,7 @@ msgid "You do not have permission to access this content."
 msgstr "Mancano i permessi per accedere a questo contenuto."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
-msgid "Command Line"
+msgid "Command line"
 msgstr "Linea di comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
@@ -51,6 +51,10 @@ msgstr "Se selezionato, quando il ContentItem viene salvato tutti i ContentItem 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "Translate Items"
 msgstr "Traduci Oggetti"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CPContentCreationSettings.cshtml"
+msgid "Enable Content Creation"
+msgstr "Abilita creazione contenuti"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text"
@@ -132,6 +136,10 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApp
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
+msgid "You are not authorized to create the content types associated to this field."
+msgstr "Non sei autorizzato a creare contenuti del tipo associato a questo campo."
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Add"
 msgstr "Aggiungi"
@@ -151,6 +159,26 @@ msgstr "Inserire una riga in cima alla lista"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Max number of rows reached."
 msgstr "Numero massimo di righe raggiunto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Cannot perform requested operation"
+msgstr "Impossibile eseguire l'operazione richiesta"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Select"
+msgstr "Seleziona"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "To select a content you need to save it first."
+msgstr "Per selezionare il contenuto devi prima effettuare il salvataggio."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/EnvironmentVariablesSettings.cshtml"
 msgid "Fallback tenants"
@@ -204,6 +232,18 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/Maint
 msgid "Select Tenant"
 msgstr "Seleziona Istanza"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "Folder Name"
+msgstr "Nome Cartella"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "Insert folder's name (optional). If empty, an unique folder name (Identity or Username) will be created."
+msgstr "Inserire il nome della cartella (opzionale). Se vuoto, sarà creato in automatico un nome univoco per la cartella (Identity o Username)."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "User default owned folder"
+msgstr "Cartella di default di proprietà dell'utente"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ProtectionSettingsPart.Edit.cshtml"
 msgid "A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls."
 msgstr "Una lista di elementi MVC Area.Controller.Action. Quando compilato, separando gli elementi da virgola, protegge le chiamate alle WebApi da chiamate non autorizzate."
@@ -235,6 +275,30 @@ msgstr "Se questa opzione viene selezionata, verrà automaticamente aggiunta una
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TaxonomyExtensionsSiteSettings.cshtml"
 msgid "Taxonomy Settings"
 msgstr "Impostazioni della Tassonomia"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista di plugin addizionali. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Additional Plugins"
+msgstr "Plugin Addizionali"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Content of the init method for TinyMce."
+msgstr "Contenuto del metodo init per TinyMce."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Init Script"
+msgstr "Script di Init"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Show/Hide default value"
+msgstr "Mostra/Nascondi il valore di default"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "TinyMce Settings"
+msgstr "Impostazioni TinyMce"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/UsersGroups.cshtml"
 msgid "Select User Group"
@@ -439,6 +503,10 @@ msgstr "EmailConfermata"
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "Created"
 msgstr "Creato"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "Disabled"
+msgstr "Disabilitato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "LoggedIn"
@@ -1155,6 +1223,10 @@ msgstr "Sorgente del Token"
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "The token used as a source for term identifiers"
 msgstr "Il token usato come sorgente degli ID dei termini"
+
+msgctxt "Laser.Orchard.StartupConfig.TinyMceEnhancement.TinyMceSiteSettingsHandler"
+msgid "TinyMce Enhancement"
+msgstr "Potenziamento TinyMce"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.AdditionalDateTokens"
 msgid "Add Days|Months|Years to a date"

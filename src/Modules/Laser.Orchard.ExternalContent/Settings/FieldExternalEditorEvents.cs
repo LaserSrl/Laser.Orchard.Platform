@@ -43,6 +43,7 @@ namespace Laser.Orchard.ExternalContent.Settings {
                 builder.WithSetting("FieldExternalSetting.ScheduledMinute", model.ScheduledMinute.ToString());
                 builder.WithSetting("FieldExternalSetting.DataType", model.DataType.ToString());
                 builder.WithSetting("FieldExternalSetting.AdditionalHeadersText", model.AdditionalHeadersText);
+                builder.WithSetting("FieldExternalSetting.InternalHostNameForScheduledTask", model.InternalHostNameForScheduledTask);
 
                 if (model.CertificatePrivateKey == "(none)") { // empty private key
                     builder.WithSetting("FieldExternalSetting.CertificatePrivateKey", "");

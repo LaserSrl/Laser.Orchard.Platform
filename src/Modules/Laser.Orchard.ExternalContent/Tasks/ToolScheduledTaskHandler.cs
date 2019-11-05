@@ -47,30 +47,31 @@ namespace Laser.Orchard.ExternalContent.Tasks {
 
         public void Process(ScheduledTaskContext context) {
             if (context.Task.TaskType == TaskType) {
+                string CallUrl = "";
                 try {
                     Logger.Information("ExternalContent task item #{0} version {1} scheduled at {2} utc",
                          context.Task.ContentItem.Id,
                          context.Task.ContentItem.Version,
                          context.Task.ScheduledUtc);
                     var displayalias = context.Task.ContentItem.As<AutoroutePart>().DisplayAlias;
-                    //    //   using (var wc = _  using (var wc = shellContext.LifetimeScope.Resolve<IWorkContextAccessor>().CreateWorkContextScope()) {
-                    ////     var tenantSiteName = wc.Resolve<ISiteService>().GetSiteSettings().SiteName;
-                    //     var wc = _workContextAccessor.CreateWorkContextScope();
-                    //     var workcontext = WorkContextExtensions.GetWorkContext(wc);
-                    ////     var tenantSiteName = wc.Resolve<ISiteService>().GetSiteSettings().SiteName;
-                    //     var settings = workContext.Resolve<ShellSettings>();
-                    //     _shellSettings.
 
-                    //var httpContextAccessor = GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IHttpContextAccessor)) as IHttpContextAccessor;
-                    //var workContext = WorkContextExtensions.GetWorkContext(httpContextAccessor.Current().Request.RequestContext);
-                    //return workContext.CurrentSite.BaseUrl;
-                  
-                    string CallUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl;
+                    // Calculate the hostname to call based on settings of fields (if defined an InternalHostNameForScheduledTask) or the base url of the tenant
+                    var baseUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl;
+                    var baseUrlFromSettings = context.Task.ContentItem.Parts.SelectMany(x => x.Fields.Where(f =>
+                        f.FieldDefinition.Name == typeof(FieldExternal).Name &&
+                        f.PartFieldDefinition.Settings.GetModel<FieldExternalSetting>() != null &&
+                        !string.IsNullOrWhiteSpace(f.PartFieldDefinition.Settings.GetModel<FieldExternalSetting>().InternalHostNameForScheduledTask)))
+                        .Select(p => p.PartFieldDefinition.Settings.GetModel<FieldExternalSetting>().InternalHostNameForScheduledTask)
+                        .FirstOrDefault();
+                    CallUrl = baseUrl;
+                    if (baseUrlFromSettings != null) {
+                        CallUrl = baseUrlFromSettings;
+                    }
                     //var host = _shellSettings.RequestUrlHost;
                     var prefix = _shellSettings.RequestUrlPrefix;
                     //if (!string.IsNullOrEmpty(host))
                     //    CallUrl += host;
-                    if (!string.IsNullOrEmpty(prefix) && prefix.ToLower()!="default")
+                    if (!string.IsNullOrEmpty(prefix) && prefix.ToLower() != "default")
                         CallUrl += "/" + prefix;
                     CallUrl += @"/Webservices/Alias?displayalias=" + displayalias;
 
@@ -79,20 +80,20 @@ namespace Laser.Orchard.ExternalContent.Tasks {
                     //      var CallUrl = urlHelper.ItemDisplayUrl(context.Task.ContentItem);
                     // HostingEnvironment.MapPath("~/") + _shellSettings.Name + "\\Webservices\\Alias?displayalias=" + displayalias;
                     WebClient myClient = new WebClient();
-             
+
                     IApiKeyService apiKeyService = null;
                     if (_orchardServices.WorkContext.TryResolve<IApiKeyService>(out apiKeyService)) {
                         var iv = GetRandomIV();
-                        var key = apiKeyService.GetValidApiKey(iv);
+                        var key = apiKeyService.GetValidApiKey(iv, true);
                         // protezione attiva inserisco header
                         myClient.Headers.Set("ApiKey", key);
                         myClient.Headers.Set("AKIV", iv);
-                    }               
+                    }
                     Stream response = myClient.OpenRead(CallUrl);
                     response.Close();
                 }
                 catch (Exception e) {
-                    Logger.Error(e, e.Message);
+                    Logger.Error(e, "Error during webclient call to this URL: "+ CallUrl+ "\r\nMessage: " + e.Message);
                 }
                 finally {
                     try {

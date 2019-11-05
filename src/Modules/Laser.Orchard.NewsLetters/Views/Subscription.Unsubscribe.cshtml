@@ -17,7 +17,7 @@
         </li>
         @Html.Hidden("Subscription_Newsletters_Ids", (object)Model.ContentItem.Id.ToString())
     </ul>
-    <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+    <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
     <input id="Id" name="Id" type="hidden" value="@Model.ContentItem.Id" />
     @Html.AntiForgeryTokenOrchard()
     <input type="submit" name="Newsletter_Subscriber_Unsubscribe" value="@T("Unsubscribe")" />

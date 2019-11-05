@@ -1,19 +1,20 @@
 ﻿
 using Orchard.ContentManagement;
-using Orchard.Data;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using Laser.Orchard.UsersExtensions.Models;
 using System.Linq;
-using System;
 using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.Policy.Services;
 
 namespace Laser.Orchard.UsersExtensions.Handlers {
-    
+
     public class UserRegistrationSettingsPartHandler : ContentHandler {
         private readonly IUtilsServices _utilsServices;
-        public UserRegistrationSettingsPartHandler(IUtilsServices utilsServices) {
+        private readonly IPolicyServices _policyServices;
+        public UserRegistrationSettingsPartHandler(IUtilsServices utilsServices, IPolicyServices policyServices) {
             _utilsServices = utilsServices;
+            _policyServices = policyServices;
             T = NullLocalizer.Instance;
             Filters.Add(new ActivatingFilter<UserRegistrationSettingsPart>("Site"));
             Filters.Add(new TemplateFilterForPart<UserRegistrationSettingsPart>("UserRegistrationSettings", "Parts/UsersRegistrationSettings", "UserExtras"));
@@ -30,16 +31,6 @@ namespace Laser.Orchard.UsersExtensions.Handlers {
             }
         }
 
-        //protected override void BuildEditorShape(BuildEditorContext context) {
-        //    if (context.ContentItem.ContentType == "Site") {
-        //        var model = context.ContentItem.As<UserRegistrationSettingsPart>();
-        //        if (model.PolicyTextReferences != null && model.PolicyTextReferences.Length > 0) {
-        //            context.ContentItem.As<UserRegistrationSettingsPart>().PolicyTextReferences = model.PolicyTextReferences[0].Split(',');
-        //        }
-        //        base.BuildEditorShape(context);
-        //    }
-        //}
-
         protected override void Updated(UpdateContentContext context) {
             if (context.ContentItem.ContentType == "Site") {
                 var model = context.ContentItem.As<UserRegistrationSettingsPart>();
@@ -52,9 +43,32 @@ namespace Laser.Orchard.UsersExtensions.Handlers {
                         model.PolicyTextReferences = new string[] { "{DependsOnContent}" };
                     }
                     context.ContentItem.As<UserRegistrationSettingsPart>().PolicyTextReferences = model.PolicyTextReferences;
+
+                    // get all published policies
+                    var policies = _policyServices.GetAllPublishedPolicyTexts();
+                    // update policies settings
+                    if(model.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No) {
+                        // set all policies to AddPolicyToRegistration = false
+                        foreach (var p in policies) {
+                            p.AddPolicyToRegistration = false;
+                        }
+                    } else { // IncludePendingPolicy = Yes
+                        if (model.PolicyTextReferences.Contains("{All}")) {
+                            // set all policies to AddPolicyToRegistration = true
+                            foreach (var p in policies) {
+                                p.AddPolicyToRegistration = true;
+                            }
+                        }
+                        else if (model.PolicyTextReferences.Length > 0) {
+                            // update all policies
+                            foreach (var p in policies) {
+                                p.AddPolicyToRegistration = model.PolicyTextReferences.Contains(string.Format("{{{0}}}", p.Id));
+                            }
+                        }
+                    }
                 }
+                base.Updated(context);
             }
-            base.Updated(context);
         }
     }
 }

@@ -6,16 +6,16 @@
 @{ Layout.Title = T("Manage Newsletter editions").ToString(); }
 <div class="actions"><a class="add button primaryAction" href="@Url.NewsLetterCreate()">@T("Create Newsletter")</a></div>
 @using (Html.BeginFormAntiForgeryPost(Url.Action("List", "Admin", new { area = "Contents", id = "" }))) {
-@*
-    <fieldset class="bulk-actions">
-        <label for="publishActions">@T("Actions:")</label>
-        <select id="publishActions" name="Options.BulkAction">
-            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.None, T("Choose action...").ToString())
-            @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.Remove, T("Delete").ToString())
-        </select>
-        @Html.Hidden("returnUrl", ViewContext.RequestContext.HttpContext.Request.ToUrlString())
-        <button type="submit" name="submit.BulkEdit" value="yes">@T("Apply")</button>
-    </fieldset>
+    @*
+        <fieldset class="bulk-actions">
+            <label for="publishActions">@T("Actions:")</label>
+            <select id="publishActions" name="Options.BulkAction">
+                @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.None, T("Choose action...").ToString())
+                @Html.SelectOption(ContentsBulkAction.None, ContentsBulkAction.Remove, T("Delete").ToString())
+            </select>
+            @Html.Hidden("returnUrl", ViewContext.RequestContext.HttpContext.Request.RawUrl)
+            <button type="submit" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+        </fieldset>
     *@
     <fieldset class="contentItems bulk-items">
         <ul>
@@ -29,10 +29,10 @@
                             <div class="contentType">@item.ContentItem.BodyPart.Text</div>
                         </div>
                         <div class="related">
-                            <a href="@Url.NewsLetterEdit(part)">@T("Properties")</a> |         
-                            <a href="@Url.NewsLetterRemove(part)" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a> |       
-                            <a href="@Url.NewsLetterSubscribers(part)">@T("Subscribers")</a> |       
-                            <a href="@Url.NewsLetterEditionCreate(part.Id)">@T("New Edition")</a> |       
+                            <a href="@Url.NewsLetterEdit(part)">@T("Properties")</a> |
+                            <a href="@Url.NewsLetterRemove(part)" itemprop="RemoveUrl UnsafeUrl">@T("Delete")</a> |
+                            <a href="@Url.NewsLetterSubscribers(part)">@T("Subscribers")</a> |
+                            <a href="@Url.NewsLetterEditionCreate(part.Id)">@T("New Edition")</a> |
                             <a href="@Url.NewsLetterEditionsForAdmin(part.Id)">@T("Editions Archive")</a>
 
                         </div>

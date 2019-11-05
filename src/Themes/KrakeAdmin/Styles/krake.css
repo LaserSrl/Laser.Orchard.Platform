@@ -89,7 +89,7 @@ button, .button, a.button {
     border-radius: 3px;
     box-shadow: none;
     height: 30px;
-    line-height: 18px;
+    line-height: 20px;
     min-width: 110px;
     font-size: 14px;
 }
@@ -137,6 +137,10 @@ button:active, .button:active, a.button:active {
 button:hover, .button:hover, a.button:hover {
     background: #ee726f;
     color: #fff !important;
+}
+
+.button.disabled, .button.disabled:visited, .button.disabled:hover, .button.disabled:active, .button.disabled:focus {
+    color: #ababab !important;
 }
 
 select, textarea, input.text, input.textMedium, input.text-medium, input.text-small, input.text-box, .ui-autocomplete-input {
@@ -1222,7 +1226,8 @@ fieldset {
 .button.grey,
 #btn-CalendarEvent_Gallery_Field_Ids.button,
 .ui-datepicker-current,
-.ui-datepicker-close {
+.ui-datepicker-close,
+.selectContentTypeBtn {
     background: #00a65a !important;
     border-radius: 3px;
 }
@@ -1630,4 +1635,9 @@ div#appliedFilters {
 .is-calendarsPicker, .is-timeEntry {
     min-width: 85px;
     width: 85px;
+}
+
+/*questionnaires*/
+.st-btn-fieldset {
+    vertical-align: initial;
 }

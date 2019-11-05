@@ -1,0 +1,41 @@
+﻿.divCreateNewButton {
+    display: inline-block;
+    padding-left: 12px;
+}
+
+    .divCreateNewButton .ContentTypeOptions {
+        display: none;
+        list-style-type: none;
+        padding: 5px;
+        margin: 0;
+        border: 1px solid #DCDCDC;
+        background-color: #fff;
+        z-index: 999;
+        position: absolute;
+    }
+
+        .divCreateNewButton .ContentTypeOptions li {
+            padding: 5px 3px 5px 3px;
+            margin: 0;
+            width: 150px;
+            border: 1px solid #fff;
+        }
+
+            .divCreateNewButton .ContentTypeOptions li:hover {
+                cursor: pointer;
+                background-color: #DCDCDC;
+            }
+
+            .divCreateNewButton .ContentTypeOptions li a {
+                text-transform: none;
+            }
+
+#ulNewCT {
+    max-width: 50%;
+}
+
+#cp-creation {
+    float: right;
+    clear: none;
+    display: none;
+}
