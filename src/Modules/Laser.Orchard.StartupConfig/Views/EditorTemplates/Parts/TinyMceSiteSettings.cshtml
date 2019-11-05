@@ -1,0 +1,27 @@
+﻿@model Laser.Orchard.StartupConfig.TinyMceEnhancement.TinyMceSiteSettingsPart
+@{
+    Script.Require("jQuery");
+}
+
+<fieldset>
+    <legend>@T("TinyMce Settings")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.InitScript)">@T("Init Script")</label>
+        @Html.TextAreaFor(m => m.InitScript, new { @class = "text large" })
+        <span class="hint">@T("Content of the init method for TinyMce.")</span>
+        <button type="button" id="btnDefaultInitValue" style="background-color:lightgray;color:white">@T("Show/Hide default value")</button>
+        <span id="lblDefaultInitValue" class="hint" style="display:none">@Html.Raw(Model.DefaultInitScript.Replace("\n", "<br/>"))</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.AdditionalPlugins)">@T("Additional Plugins")</label>
+        @Html.TextAreaFor(m => m.AdditionalPlugins, new { @class = "text large" })
+        <span class="hint">@T("A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js")</span>
+    </div>
+</fieldset>
+<script type="text/javascript">
+    $(function () {
+        $("#btnDefaultInitValue").click(function (e) {
+            $("#lblDefaultInitValue").toggle();
+        });
+    });
+</script>

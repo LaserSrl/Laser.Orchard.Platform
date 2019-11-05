@@ -15,7 +15,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             if(part != null) {
                 var settings = part.Settings.GetModel<DisplayTextPartSettings>();
                 var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
-                context.Metadata.DisplayText = _tokenizer.Replace(settings.DisplayText, tokens);
+                context.Metadata.DisplayText = _tokenizer.Replace(settings.DisplayText, tokens, new ReplaceOptions { Encoding = ReplaceOptions.NoEncode });
             }
         }
     }
