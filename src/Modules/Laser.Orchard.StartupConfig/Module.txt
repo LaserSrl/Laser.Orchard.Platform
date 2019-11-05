@@ -72,3 +72,8 @@ Features:
 		Description: Enable feature to add a cache key in a item
 		Category: Content
 		Dependencies: Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.TinyMceEnhancement
+		Name: TinyMce Enhancement
+		Description: Enable feature to customize TinyMce
+		Category: Content
+		Dependencies: TinyMce, Laser.Orchard.StartupConfig

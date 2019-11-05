@@ -201,10 +201,11 @@ namespace Laser.Orchard.ExternalContent.Services {
                             if (!File.Exists(filename)) {
                                 throw new Exception(String.Format("File \"{0}\" not found!", filename));
                             }
+                            var tmptokenizedzedUrl = _tokenizer.Replace(externalUrl, contesto);
 
                             var StartInfo = new ProcessStartInfo {
                                 FileName = filename,
-                                Arguments = externalUrl.Substring(externalUrl.IndexOf(".exe") + 5),
+                                Arguments = tmptokenizedzedUrl.Substring(tmptokenizedzedUrl.IndexOf(".exe") + 5),
                                 UseShellExecute = false,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
