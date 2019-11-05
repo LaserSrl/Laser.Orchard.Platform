@@ -54,23 +54,27 @@ namespace Contrib.Widgets.Handlers {
                 DeleteWidgets(part);
             });
             OnUpdateEditorShape<WidgetsContainerPart>((context, part) => {
-                var settings = part.Settings.GetModel<WidgetsContainerSettings>();
-                if(settings.TryToLocalizeItems) {
-                    var culture = part.ContentItem.As<LocalizationPart>().Culture;
-                    var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished());
-                    foreach (var widget in widgets) {
-                        // trigger this handler to manage taxonomy fileds
-                        var ctx1 = new BuildEditorContext(context.Layout, widget.ContentItem, "", _shapeFactory);
-                        _handlers.Value.Invoke(handler => handler.BuildEditor(ctx1), Logger);
+                var lPart = part.ContentItem.As<LocalizationPart>();
+                if(lPart != null) {
+                    var settings = part.Settings.GetModel<WidgetsContainerSettings>();
+                    if (settings.TryToLocalizeItems) {
+                        var culture = lPart.Culture;
+                        var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished());
+                        foreach (var widget in widgets) {
+                            // trigger this handler to manage taxonomy fileds
+                            var ctx1 = new BuildEditorContext(context.Shape, widget.ContentItem, "", _shapeFactory);
+                            _handlers.Value.Invoke(handler => handler.BuildEditor(ctx1), Logger);
 
-                        _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
+                            // set localization of current content item AFTER invoking BuildEditor on it otherwise BuildEditor does not translate taxonomy fileds
+                            _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
 
-                        // trigger this handler to manage content picker fields and media library picker fields
-                        var ctx2 = new UpdateEditorContext(context.Layout, widget.ContentItem, context.Updater, "", _shapeFactory, context.ShapeTable, GetPath());
-                        _handlers.Value.Invoke(handler => handler.UpdateEditor(ctx2), Logger);
+                            // trigger this handler to manage content picker fields and media library picker fields
+                            var ctx2 = new UpdateEditorContext(context.Shape, widget.ContentItem, context.Updater, "", _shapeFactory, context.ShapeTable, GetPath());
+                            _handlers.Value.Invoke(handler => handler.UpdateEditor(ctx2), Logger);
 
-                        widget.ContentItem.VersionRecord.Published = false;
-                        _contentManager.Publish(widget.ContentItem);
+                            widget.ContentItem.VersionRecord.Published = false;
+                            _contentManager.Publish(widget.ContentItem);
+                        }
                     }
                 }
             });
