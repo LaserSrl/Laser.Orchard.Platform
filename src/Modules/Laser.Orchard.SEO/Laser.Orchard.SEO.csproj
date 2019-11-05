@@ -118,6 +118,7 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\RedirectRuleCommands.cs" />
     <Compile Include="Controllers\RedirectsAdminController.cs" />
     <Compile Include="Controllers\RobotsAdminController.cs" />
     <Compile Include="Controllers\KeywordHelperController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Navigation\RedirectsMenu.cs" />
     <Compile Include="Permissions\Permissions.cs" />
     <Compile Include="Permissions\RedirectPermissions.cs" />
+    <Compile Include="Recipes\Providers\Builders\RedirectRuleStep.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Migrations\SeoMigrations.cs" />
     <Compile Include="Models\FaviconSettingsPart.cs" />

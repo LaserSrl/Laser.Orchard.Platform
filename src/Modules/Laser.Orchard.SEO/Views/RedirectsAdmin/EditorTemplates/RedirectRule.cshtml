@@ -18,7 +18,7 @@
 
     <span class="permalink-definition" dir="ltr">
         <span>@Url.MakeAbsolute("/")@urlPrefix</span>
-        <span>@Html.TextBoxFor(x => x.SourceUrl, new { @class = "text is-url" }))</span>
+        <span>@Html.TextBoxFor(x => x.SourceUrl, new { @class = "text is-url" })</span>
     </span>
     
     @Html.ValidationMessageFor(x => x.SourceUrl)
@@ -28,7 +28,7 @@
     @Html.LabelFor(x => x.DestinationUrl)
     <span class="permalink-definition" dir="ltr">
         <span>@Url.MakeAbsolute("/")@urlPrefix</span>
-        <span>@Html.TextBoxFor(x => x.DestinationUrl, new { @class = "text is-url" }))</span>
+        <span>@Html.TextBoxFor(x => x.DestinationUrl, new { @class = "text is-url" })</span>
     </span>
     @Html.ValidationMessageFor(x => x.DestinationUrl)
     <span class="hint">@T("Relative Url to which redirect. Do not start with '~/'")</span>
