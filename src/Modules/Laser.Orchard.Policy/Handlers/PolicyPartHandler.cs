@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Laser.Orchard.Policy.Models;
+﻿using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
-using Laser.Orchard.Policy.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Laser.Orchard.Policy.Handlers {
 
@@ -27,12 +26,15 @@ namespace Laser.Orchard.Policy.Handlers {
                 part._hasPendingPolicies.Loader(() => {
                     RealPolicyInclusionSetter(part);
                     if (!IsPolicyIncluded(part)) return null;
-                    return GetPendingPolicies(context, part).List<IContent>().Count() > 0;
+                    return GetPendingPolicies(context, part)
+                        .Any();
                 });
                 part._pendingPolicies.Loader(() => {
                     RealPolicyInclusionSetter(part);
                     if (!IsPolicyIncluded(part)) return null;
-                    return GetPendingPolicies(context, part).List<IContent>().Select(s => (IContent)s.ContentItem).ToList();
+                    return GetPendingPolicies(context, part)
+                        .Select(s => (IContent)s.ContentItem)
+                        .ToList();
                 });
             });
         }
@@ -53,62 +55,49 @@ namespace Laser.Orchard.Policy.Handlers {
                 part.IncludePendingPolicy = settings.IncludePendingPolicy;
             }
         }
-        /// <summary>
-        /// Get pending policies: policies for which the user has not yet expressed his opinion
-        /// </summary>
-        /// <param name="context">Context of the showing content</param>
-        /// <param name="part">the PolicyPart that describe which policies should be checked</param>
-        /// <returns>The IContentQuery that returns the list of the pending policies</returns>
-        private IContentQuery GetPendingPolicies(LoadContentContext context, PolicyPart part) {
+        
+        private IEnumerable<IContent> GetPendingPolicies(LoadContentContext context, PolicyPart part) {
             var loggedUser = _workContext.GetContext().CurrentUser;
-            int currentLanguageId;
-            IContentQuery<PolicyTextInfoPart> query;
 
-            if (context.ContentItem.As<LocalizationPart>() != null && context.ContentItem.As<LocalizationPart>().Culture != null && context.ContentItem.As<LocalizationPart>().Culture.Id > 0) {
-                currentLanguageId = context.ContentItem.As<LocalizationPart>().Culture.Id;
+            // get the name of a culture to pass to find policies
+            string cultureName = null;
+            if (context.ContentItem.As<LocalizationPart>() != null
+                && context.ContentItem.As<LocalizationPart>().Culture != null
+                && context.ContentItem.As<LocalizationPart>().Culture.Id > 0) {
+
+                cultureName = context.ContentItem.As<LocalizationPart>().Culture.Culture;
             } else {
                 //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
-                currentLanguageId = _cultureManager.GetCultureByName(_workContext.GetContext().CurrentCulture).Id;
+                cultureName = _workContext.GetContext().CurrentCulture;
             }
-
-            query = _contentManager.Query<PolicyTextInfoPart>().Join<LocalizationPartRecord>().Where(w => w.CultureId == currentLanguageId || w.CultureId == 0);
-
-            //recupero solo le Policy Pendenti, alle quali l'utente non ha risposto ancora
-
-            IContentQuery<PolicyTextInfoPart, PolicyTextInfoPartRecord> items;
-            if (loggedUser != null) {
-                var answeredIds = loggedUser.As<UserPolicyPart>().UserPolicyAnswers.Select(s => s.PolicyTextInfoPartRecord.Id).ToArray();
-                items = query.Where<PolicyTextInfoPartRecord>(w => !answeredIds.Contains(w.Id));
-            } else {
-                IList<PolicyForUserViewModel> answers = _policyServices.GetCookieOrVolatileAnswers();
-                var answeredIds = answers.Select(s => s.PolicyTextId).ToArray();
-                items = query.Where<PolicyTextInfoPartRecord>(w => !answeredIds.Contains(w.Id));
-            }
+            var policies = _policyServices.GetPolicies(cultureName);
+            // figure out which policies the user has not answered
+            var answeredIds = loggedUser != null
+                ? loggedUser
+                    .As<UserPolicyPart>().UserPolicyAnswers.Select(s => s.PolicyTextInfoPartRecord.Id)
+                : _policyServices.GetCookieOrVolatileAnswers()
+                    .Select(s => s.PolicyTextId);
+            var items = policies.Where(p => !answeredIds.Contains(p.Id));
 
             var settings = part.Settings.GetModel<PolicyPartSettings>();
-
             if (!settings.PolicyTextReferences.Contains("{All}")) {
-
-                int[] filterIds;
-
                 string[] filterComplexIds = _policyServices.GetPoliciesForContent(part);
-
                 if (filterComplexIds != null) {
                     if (filterComplexIds.Length == 1) {
-                        filterComplexIds = filterComplexIds[0].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        filterComplexIds = filterComplexIds[0]
+                            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                     }
-                    filterIds = filterComplexIds.Select(s => {
+                    var filterIds = filterComplexIds.Select(s => {
                         int id = 0;
                         int.TryParse(s.Replace("{", "").Replace("}", ""), out id);
                         return id;
                     }).ToArray();
 
-                    items = items.Where<PolicyTextInfoPartRecord>(w => filterIds.Contains(w.Id));
+                    items = items.Where(p => filterIds.Contains(p.Id));
                 }
             }
 
-            return items.OrderByDescending(x=>x.Priority);
+            return items;
         }
-
     }
 }

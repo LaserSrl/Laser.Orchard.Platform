@@ -1,10 +1,6 @@
 ﻿using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Handlers {
     public class CurrentContentCacheEvictionHandler : ContentHandler {

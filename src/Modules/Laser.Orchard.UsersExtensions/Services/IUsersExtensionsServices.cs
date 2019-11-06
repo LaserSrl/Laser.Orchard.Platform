@@ -1,5 +1,4 @@
-﻿using Laser.Orchard.Mobile.Handlers;
-using Laser.Orchard.Mobile.Models;
+﻿using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
@@ -15,18 +14,17 @@ using Orchard.Localization;
 using Orchard.Localization.Records;
 using Orchard.Localization.Services;
 using Orchard.Logging;
+using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
 using Orchard.Utility.Extensions;
-using Orchard.Mvc.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,7 +43,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
     public class UsersExtensionsServices : IUsersExtensionsServices {
         private readonly IOrchardServices _orchardServices;
-        private readonly IPolicyServices _policySerivces;
+        private readonly IPolicyServices _policyServices;
         private readonly IMembershipService _membershipService;
         private readonly IUtilsServices _utilsServices;
         private readonly IAuthenticationService _authenticationService;
@@ -75,7 +73,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
             T = NullLocalizer.Instance;
             Log = NullLogger.Instance;
-            _policySerivces = policySerivces;
+            _policyServices = policySerivces;
             _orchardServices = orchardServices;
             _membershipService = membershipService;
             _authenticationService = authenticationService;
@@ -169,7 +167,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
                     
                     // [HS] BEGIN: Whe have to save the PoliciesAnswers cookie and persist answers on the DB after Login/SignIn events because during Login/Signin events database is not updated yet and those events override cookie in an unconsistent way.
                     if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
-                        _policySerivces.PolicyForUserMassiveUpdate(policyAnswers, createdUser);
+                        _policyServices.PolicyForUserMassiveUpdate(policyAnswers, createdUser);
                     }
                     // [HS] END
 
@@ -255,12 +253,15 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
         public IEnumerable<PolicyTextInfoPart> GetUserLinkedPolicies(string culture = null) {
             IEnumerable<PolicyTextInfoPart> policies;
-            if (UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No) return new List<PolicyTextInfoPart>(); // se selezionato No allora nessuna policy è obbligatoria e ritorno una collection vuota
-            if (UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == null || UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == "{All}") {
-                policies = _policySerivces.GetPolicies(culture);
+            if (UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No)
+                return new List<PolicyTextInfoPart>(); // se selezionato No allora nessuna policy è obbligatoria e ritorno una collection vuota
+            if (UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == null 
+                || UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == "{All}") {
+                policies = _policyServices.GetPolicies(culture);
             } else {
-                var ids = UserRegistrationExtensionsSettings.PolicyTextReferences.Select(x => Convert.ToInt32(x.Replace("{", "").Replace("}", ""))).ToArray();
-                policies = _policySerivces.GetPolicies(culture, ids);
+                var ids = UserRegistrationExtensionsSettings
+                    .PolicyTextReferences.Select(x => Convert.ToInt32(x.Replace("{", "").Replace("}", ""))).ToArray();
+                policies = _policyServices.GetPolicies(culture, ids);
             }
             return policies;
         }
