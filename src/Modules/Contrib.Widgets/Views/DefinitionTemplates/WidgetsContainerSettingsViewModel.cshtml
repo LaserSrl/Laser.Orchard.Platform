@@ -3,7 +3,7 @@
 <fieldset>
     <div>
         @Html.CheckBoxFor(m => m.UseHierarchicalAssociation)
-        @Html.LabelFor(m => m.UseHierarchicalAssociation, T("Use hierarchical association").Text, new { @class="forcheckbox"})
+        @Html.LabelFor(m => m.UseHierarchicalAssociation, T("Use hierarchical association").Text, new { @class = "forcheckbox" })
     </div>
     <div data-controllerid="@Html.FieldIdFor(m => m.UseHierarchicalAssociation)">
         @Html.LabelFor(m => m.HierarchicalAssociationJson, T("Hierarchical association:"))
@@ -19,5 +19,10 @@
         @Html.LabelFor(m => m.SelectedWidgets, T("Allowed widget types:"))
         @Html.ListBoxFor(m => m.SelectedWidgets, new MultiSelectList(Model.Widgets), new { style = "display:block;" })
         <span class="hint">@T("Select which types of widgets can be added to the content. If no widget type is selected all of them will be available.")</span>
+    </div>
+    <div>
+        @Html.CheckBoxFor(m => m.TryToLocalizeItems)
+        <label for="@Html.FieldIdFor(m => m.TryToLocalizeItems)" class="forcheckbox">@T("Try to replace selected items with their correct localization.")</label>
+        <span class="hint">@T("Check to attempt to replace items selected in this part with their translation in the main ContentItem's culture. This only applies if the main ContentItem has a LocalizationPart.")</span>
     </div>
 </fieldset>
