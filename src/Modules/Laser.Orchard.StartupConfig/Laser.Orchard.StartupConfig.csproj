@@ -375,6 +375,7 @@
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
+    <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
     <Compile Include="MediaExtensions\UserFolder\Drivers\OwnedFolderPartDriver.cs" />
     <Compile Include="MediaExtensions\UserFolder\Migrations.cs" />
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
