@@ -1,5 +1,6 @@
 ﻿using System.Web.Routing;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Utilities;
 
@@ -8,11 +9,20 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly LazyField<ContentItem> _currentContentItemField = new LazyField<ContentItem>();
         private readonly IContentManager _contentManager;
         private readonly RequestContext _requestContext;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
 
-        public CurrentContentAccessor(IContentManager contentManager, RequestContext requestContext) {
+        public CurrentContentAccessor(
+            IContentManager contentManager, 
+            RequestContext requestContext,
+            ICacheManager cacheManager,
+            ISignals signals) {
+
             _contentManager = contentManager;
             _requestContext = requestContext;
             _currentContentItemField.Loader(GetCurrentContentItem);
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
 
         public ContentItem CurrentContentItem {
@@ -24,7 +34,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
         private ContentItem GetCurrentContentItem() {
             var contentId = GetCurrentContentItemId();
-            return contentId == null ? null : _contentManager.Get(contentId.Value);
+            if (contentId == null) {
+                return null;
+            } else {
+                var key = $"CurrentContentAccessor_{contentId.Value}";
+                return _cacheManager.Get(key, true, ctx => {
+                    ctx.Monitor(_signals.When(key));
+                    return _contentManager.Get(contentId.Value);
+                });
+            }
         }
 
         private int? GetCurrentContentItemId() {
