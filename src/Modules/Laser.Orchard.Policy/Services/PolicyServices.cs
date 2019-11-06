@@ -309,9 +309,9 @@ namespace Laser.Orchard.Policy.Services {
         public string[] GetPoliciesForContent(PolicyPart part) {
             var settings = part.Settings.GetModel<PolicyPartSettings>();
 
-            if (!settings.PolicyTextReferences.Contains("{DependsOnContent}"))
+            if (settings.PolicyTextReferences != null && !settings.PolicyTextReferences.Contains("{DependsOnContent}"))
                 return settings.PolicyTextReferences;
-            else if (!part.PolicyTextReferences.Contains("{All}"))
+            else if (part.PolicyTextReferences != null && !part.PolicyTextReferences.Contains("{All}"))
                 return part.PolicyTextReferences;
             else
                 return null;

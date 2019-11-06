@@ -22,7 +22,11 @@ namespace Laser.Orchard.Policy.Models {
         }
 
         public string[] PolicyTextReferences {
-            get { return this.PolicyTextReferencesCsv != null ? this.PolicyTextReferencesCsv.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries) : null; }
+            get {
+                return this.PolicyTextReferencesCsv != null 
+                    ? this.PolicyTextReferencesCsv.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries) 
+                    : null;
+            }
             set {
                 if (value.Contains("{All}")) {
                     this.PolicyTextReferencesCsv = "{All}";
