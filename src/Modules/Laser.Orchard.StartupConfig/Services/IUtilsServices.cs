@@ -205,7 +205,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                         rsp.Message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
                     rsp.ErrorCode = ErrorCode.ToConfirmEmail;
                     rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.NoAction;
+                    rsp.ResolutionAction = ResolutionAction.ToConfirmEmail;
                     break;
             }
             return rsp;
