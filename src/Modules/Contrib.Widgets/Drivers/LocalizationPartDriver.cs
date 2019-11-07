@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Contrib.Widgets.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.ContentManagement.Handlers;
 using Orchard.Localization.Models;
-using Orchard.Localization.Services;
-using Orchard.Localization.ViewModels;
+using Orchard.Logging;
 
-namespace Contrib.Widgets.Drivers {
+namespace Contrib.Widgets.Drivers
+{
     public class LocalizationPartDriver : ContentPartDriver<LocalizationPart> {
         private const string TemplatePrefix = "Contrib.Widget";
         private readonly IContentManager _contentManager;
         private readonly IWorkContextAccessor _workContext;
-
+        public ILogger Logger { get; set; }
         public LocalizationPartDriver(IContentManager contentManager, IWorkContextAccessor workContext) {
             _contentManager = contentManager;
             _workContext = workContext;
+            Logger = NullLogger.Instance;
         }
 
 
@@ -41,12 +39,14 @@ namespace Contrib.Widgets.Drivers {
                     }
                 }
             }
-
+            Logger.Error($"Debug - ctype: {part.ContentItem.ContentType}, hostId.HasValue: {hostId.HasValue}");
             LocalizationPart hostLocPart = null;
-            if (hostId.HasValue)
+            if (hostId.HasValue) {
                 hostLocPart = _contentManager.Get<LocalizationPart>(hostId.Value, VersionOptions.Latest);
+                Logger.Error($"Debug - hostId: {hostId.Value}");
+            }
             var hostCulture = (hostLocPart != null) ? ((hostLocPart.Culture != null) ? hostLocPart.Culture.Culture : "") : "";
-
+            Logger.Error($"Debug - hostCulture: {hostCulture}");
             return ContentShape("Parts_ContribWidget_Localization_Edit",
                 () => shapeHelper.EditorTemplate(TemplateName: "Parts/ContribWidget.Localization.Edit", Model: hostCulture, Prefix: TemplatePrefix));
         }
