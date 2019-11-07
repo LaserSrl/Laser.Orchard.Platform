@@ -117,8 +117,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return GetUserRegistrationModelLogic();
         }
 
-        [HttpGet]
-        [AlwaysAccessible]
+        [HttpPost, AlwaysAccessible]
         public JsonResult ChallengeEmailApiSsl(string nonce) {
             return ChallengeEmailApiLogic(nonce);
         }
