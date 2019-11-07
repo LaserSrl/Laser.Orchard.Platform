@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Script.Serialization;
-using System.Xml.Linq;
-using Laser.Orchard.Commons.Services;
+﻿using Laser.Orchard.Commons.Services;
 using Laser.Orchard.Policy.Events;
 using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
 using Newtonsoft.Json.Linq;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
 using Orchard.Data;
@@ -19,8 +13,15 @@ using Orchard.Localization.Models;
 using Orchard.Localization.Records;
 using Orchard.Localization.Services;
 using Orchard.Security;
-using OrchardNS = Orchard;
 using Orchard.Users.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Xml.Linq;
+using OrchardNS = Orchard;
 
 namespace Laser.Orchard.Policy.Services {
     public interface IPolicyServices : IDependency {
@@ -61,15 +62,21 @@ namespace Laser.Orchard.Policy.Services {
         private readonly IRepository<UserPolicyAnswersHistoryRecord> _userPolicyAnswersHistoryRepository;
         private readonly IControllerContextAccessor _controllerContextAccessor;
         private readonly IPolicyEventHandler _policyEventHandler;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
 
-        public PolicyServices(IContentManager contentManager,
-                              IContentSerializationServices contentSerializationServices,
-                              OrchardNS.IWorkContextAccessor workContext,
-                              ICultureManager cultureManager,
-                              IRepository<UserPolicyAnswersRecord> userPolicyAnswersRepository,
-                              IRepository<UserPolicyAnswersHistoryRecord> userPolicyAnswersHistoryRepository,
-                              IControllerContextAccessor controllerContextAccessor,
-                              IPolicyEventHandler policyEventHandler) {
+        public PolicyServices(
+            IContentManager contentManager,
+            IContentSerializationServices contentSerializationServices,
+            OrchardNS.IWorkContextAccessor workContext,
+            ICultureManager cultureManager,
+            IRepository<UserPolicyAnswersRecord> userPolicyAnswersRepository,
+            IRepository<UserPolicyAnswersHistoryRecord> userPolicyAnswersHistoryRepository,
+            IControllerContextAccessor controllerContextAccessor,
+            IPolicyEventHandler policyEventHandler,
+            ICacheManager cacheManager,
+            ISignals signals) {
+
             _contentManager = contentManager;
             _contentSerializationServices = contentSerializationServices;
             _workContext = workContext;
@@ -78,39 +85,24 @@ namespace Laser.Orchard.Policy.Services {
             _userPolicyAnswersHistoryRepository = userPolicyAnswersHistoryRepository;
             _controllerContextAccessor = controllerContextAccessor;
             _policyEventHandler = policyEventHandler;
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
 
         public PoliciesForUserViewModel GetPoliciesForUserOrSession(bool writeMode, string language = null) {
             var loggedUser = _workContext.GetContext().CurrentUser;
-            var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
 
-            int currentLanguageId;
             IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
-            IContentQuery<PolicyTextInfoPart> query;
-
-            // language may be a string that does not represent any language. We should handle that case.
-            CultureRecord currentLanguageRecord = null;
-            if (!string.IsNullOrWhiteSpace(language)) {
-                currentLanguageRecord = _cultureManager.GetCultureByName(language);
-            }
-            // if the language string is not a valid language (or it's empty):
-            if (currentLanguageRecord == null) {
-                currentLanguageRecord = _cultureManager.GetCultureByName(_workContext.GetContext().CurrentCulture);
-            }
-            if (currentLanguageRecord == null) {
-                currentLanguageRecord = _cultureManager.GetCultureByName(_cultureManager.GetSiteCulture());
-            }
-            currentLanguageId = currentLanguageRecord.Id;
-
-            query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
-                                   .OrderByDescending(o => o.Priority)
-                                   .Join<LocalizationPartRecord>()
-                                   .Where(w => w.CultureId == currentLanguageId || (w.CultureId == 0 && (siteLanguage.Equals(language) || language == null)))
-                                   .ForVersion(VersionOptions.Published);
+            // get all the policy texts for the language given (handling defaults)
+            var policies = GetPolicies(language);
 
             if (loggedUser != null) { // loggato
-                model = query.List().Select(s => {
-                    var answer = loggedUser.As<UserPolicyPart>().UserPolicyAnswers.Where(w => w.PolicyTextInfoPartRecord.Id.Equals(s.Id)).SingleOrDefault();
+                model = policies.Select(s => {
+                    var answer = loggedUser
+                        .As<UserPolicyPart>()
+                        .UserPolicyAnswers
+                        .Where(w => w.PolicyTextInfoPartRecord.Id.Equals(s.Id))
+                        .SingleOrDefault();
                     return new PolicyForUserViewModel {
                         PolicyText = s,
                         PolicyTextId = s.Id,
@@ -123,9 +115,13 @@ namespace Laser.Orchard.Policy.Services {
                 }).ToList();
             }
             else { // non loggato
+                // since we are getting the possible answers from the call's context, we
+                // cannot be storing the results of this next step in a cache.
                 IList<PolicyForUserViewModel> answers = GetCookieOrVolatileAnswers();
-                model = query.List().Select(s => {
-                    var answer = answers.Where(w => w.PolicyTextId.Equals(s.Id)).SingleOrDefault();
+                model = policies.Select(s => {
+                    var answer = answers
+                        .Where(w => w.PolicyTextId.Equals(s.Id))
+                        .SingleOrDefault();
                     return new PolicyForUserViewModel {
                         PolicyText = s,
                         PolicyTextId = s.Id,
@@ -321,11 +317,25 @@ namespace Laser.Orchard.Policy.Services {
                 return null;
         }
 
+        private string _keyBase = "";
+        private string KeyBase {
+            get {
+                if (string.IsNullOrWhiteSpace(_keyBase)) {
+                    var site = _workContext.GetContext()?.CurrentSite;
+                    _keyBase = string.Join("_",
+                        site?.BaseUrl ?? "",
+                        site?.SiteName ?? "",
+                        "Laser.Orchard.Policy.Services.PolicyServices");
+                }
+
+                return _keyBase;
+            }
+        }
         public IEnumerable<PolicyTextInfoPart> GetPolicies(string culture = null, int[] ids = null) {
             var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
 
+            // figure out the culture Id we should use in the query
             int currentLanguageId;
-            IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
             IContentQuery<PolicyTextInfoPart> query;
             CultureRecord cultureRecord = null;
             if (!String.IsNullOrWhiteSpace(culture)) {
@@ -340,23 +350,38 @@ namespace Laser.Orchard.Policy.Services {
             }
             currentLanguageId = cultureRecord.Id;
 
-            if (ids != null) {
-                query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
-                           .Where(x => ids.Contains(x.Id))
-                           .OrderByDescending(o => o.Priority)
-                           .Join<LocalizationPartRecord>()
-                           .Where(w => w.CultureId == currentLanguageId || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
-                           .ForVersion(VersionOptions.Published);
-            }
-            else {
-                query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
-                           .OrderByDescending(o => o.Priority)
-                           .Join<LocalizationPartRecord>()
-                           .Where(w => w.CultureId == currentLanguageId || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
-                           .ForVersion(VersionOptions.Published);
-            }
+            // cacheKey = KeyBase_List_of_Ids
+            var cacheKey = string.Join("_", 
+                KeyBase,
+                currentLanguageId.ToString(),
+                ids == null
+                    ? "NoID"
+                    : string.Join("_", ids.Select(i => i.ToString())));
+            // cache the query results
+            return _cacheManager.Get(cacheKey, true, ctx => {
+                ctx.Monitor(_signals.When("PolicyTextInfoPart_EvictAll"));
+                if (ids != null) {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .Where(x => ids.Contains(x.Id))
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                } else {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                }
 
-            return query.List<PolicyTextInfoPart>();
+                return query.List<PolicyTextInfoPart>();
+            });
+
         }
         public IEnumerable<PolicyTextInfoPart> GetAllPublishedPolicyTexts() {
             var qry = _contentManager.Query<PolicyTextInfoPart>(new string[] { "PolicyText" });

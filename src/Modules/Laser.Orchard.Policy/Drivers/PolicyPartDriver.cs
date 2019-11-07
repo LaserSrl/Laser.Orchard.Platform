@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Laser.Orchard.Policy.Models;
+﻿using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
@@ -13,6 +8,11 @@ using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using Orchard.Mvc;
 using Orchard.OutputCache;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Policy.Drivers {
     public class PolicyPartDriver : ContentPartCloningDriver<PolicyPart>, ICachingEventHandler {

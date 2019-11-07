@@ -305,7 +305,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 return Json(result);
             }
             result = _utilsServices.GetResponse(ResponseType.None, T("Email not confirmed").Text);
-            return Json(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

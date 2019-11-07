@@ -380,6 +380,7 @@
     <Compile Include="Models\PerItemCachePart.cs" />
     <Compile Include="Models\PerItemCachePartSettings.cs" />
     <Compile Include="Permission\PerItemCachePermission.cs" />
+    <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
     <Compile Include="MediaExtensions\UserFolder\Drivers\OwnedFolderPartDriver.cs" />
     <Compile Include="MediaExtensions\UserFolder\Migrations.cs" />
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
