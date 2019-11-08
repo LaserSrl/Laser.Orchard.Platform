@@ -280,34 +280,34 @@ namespace Laser.Orchard.Policy.Services {
             }
 
             if (writeMode) {
+                // When in write mode it stores values into a cookie
                 newCollection.AddRange(viewModelCollection.Select(x => {
                     x.AnswerDate = DateTime.UtcNow;
                     //x.PolicyText = null; // annullo la parte per evitare circolarità nella serializzazione
                     return x;
                 }));
-            }
 
-            string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
-                var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
-                if (policyText == null) return false;
-                else {
-                    var policyTextRecord = policyText.Record;
-                    return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
+                    var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
+                    if (policyText == null) return false;
+                    else {
+                        var policyTextRecord = policyText.Record;
+                        return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                    }
+                }));
+
+                var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
+                    Expires = DateTime.Now.AddMonths(6)
+                };
+                if (_controllerContextAccessor.Context != null)
+                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
+                if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
+                    _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
                 }
-            }));
-
-            var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
-                Expires = DateTime.Now.AddMonths(6)
-            };
-            if (_controllerContextAccessor.Context != null)
-                _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
-            if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
-                _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
+                else {
+                    _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
+                }
             }
-            else {
-                _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
-            }
-
         }
 
         public string[] GetPoliciesForContent(PolicyPart part) {

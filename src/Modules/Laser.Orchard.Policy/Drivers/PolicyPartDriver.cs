@@ -7,6 +7,8 @@ using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
+using Orchard.Autoroute.Models;
+using Orchard.Autoroute.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
@@ -57,15 +59,21 @@ namespace Laser.Orchard.Policy.Drivers {
                     else
                         encodedAssociatedPolicies = Convert.ToBase64String(Encoding.UTF8.GetBytes(""));
 
-                    var fullUrl = url.Action("Index", "Policies", new { area = "Laser.Orchard.Policy", lang = language, policies = encodedAssociatedPolicies, returnUrl = _httpContextAccessor.Current().Request.RawUrl });
+                    var fullUrl = url.Action("Index", "Policies", new { area = "Laser.Orchard.Policy",
+                                                                        lang = language,
+                                                                        policies = encodedAssociatedPolicies,
+                                                                        returnUrl = _httpContextAccessor.Current().Request.RawUrl,
+                                                                        alias = part.As<AutoroutePart>()!=null? part.As<AutoroutePart>().DisplayAlias:""});
                     var cookie = _httpContextAccessor.Current().Request.Cookies["PoliciesAnswers"];
                     if (cookie != null && cookie.Value != null) {
                         _httpContextAccessor.Current().Response.Cookies.Add(_httpContextAccessor.Current().Request.Cookies["PoliciesAnswers"]);
                     }
                     _httpContextAccessor.Current().Response.Redirect(fullUrl, true);
-                } else {
                 }
-            } else if (displayType == "SummaryAdmin") {
+                else {
+                }
+            }
+            else if (displayType == "SummaryAdmin") {
                 return ContentShape("Parts_Policy_SummaryAdmin",
                      () => shapeHelper.Parts_Policy_SummaryAdmin(IncludePendingPolicy: part.IncludePendingPolicy));
 
@@ -127,10 +135,10 @@ namespace Laser.Orchard.Policy.Drivers {
         /// <param name="part"></param>
         /// <param name="context"></param>
         protected override void Importing(PolicyPart part, ImportContentContext context) {
-            
+
             var root = context.Data.Element(part.PartDefinition.Name);
             var includePendingPolicy = IncludePendingPolicyOptions.Yes;
-           
+
             List<string> policyTextReferencesList = new List<string>();
             var policyTextReferencesIdentities = root.Attribute("PolicyTextReferencesCsv").Value;
 
@@ -162,7 +170,9 @@ namespace Laser.Orchard.Policy.Drivers {
 
             if (part.HasPendingPolicies ?? false) {
                 _additionalCacheKey = "policy-not-accepted;";
-            } else {
+                _additionalCacheKey += "pendingitempolicies=" + String.Join("_", part.PendingPolicies.Select(s => s.Id)) + ";";
+            }
+            else {
                 _additionalCacheKey = "policy-accepted;";
             }
 
