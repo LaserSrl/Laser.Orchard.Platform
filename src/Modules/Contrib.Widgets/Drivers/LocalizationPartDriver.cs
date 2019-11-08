@@ -35,10 +35,8 @@ namespace Contrib.Widgets.Drivers {
             }
 
             if (!hostId.HasValue) {
-                if (_workContext.GetContext().HttpContext.Items["CurrentController"] is Contrib.Widgets.Controllers.AdminController) {
-                    if (!String.IsNullOrEmpty(_workContext.GetContext().HttpContext.Request.QueryString["hostId"])) {
-                        hostId = Convert.ToInt32(_workContext.GetContext().HttpContext.Request.QueryString["hostId"]);
-                    }
+                if (!String.IsNullOrEmpty(_workContext.GetContext().HttpContext.Request.QueryString["hostId"])) {
+                    hostId = Convert.ToInt32(_workContext.GetContext().HttpContext.Request.QueryString["hostId"]);
                 }
             }
 
