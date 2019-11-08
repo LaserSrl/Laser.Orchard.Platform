@@ -21,7 +21,6 @@ namespace Contrib.Widgets.Drivers {
             _workContext = workContext;
         }
 
-
         protected override DriverResult Editor(LocalizationPart part, dynamic shapeHelper) {
             var widgetExPart = part.As<WidgetExPart>() == null ? null : part.As<WidgetExPart>();
             var hostId = (int?)null;
@@ -41,8 +40,9 @@ namespace Contrib.Widgets.Drivers {
             }
 
             LocalizationPart hostLocPart = null;
-            if (hostId.HasValue)
+            if (hostId.HasValue) {
                 hostLocPart = _contentManager.Get<LocalizationPart>(hostId.Value, VersionOptions.Latest);
+            }
             var hostCulture = (hostLocPart != null) ? ((hostLocPart.Culture != null) ? hostLocPart.Culture.Culture : "") : "";
 
             return ContentShape("Parts_ContribWidget_Localization_Edit",
