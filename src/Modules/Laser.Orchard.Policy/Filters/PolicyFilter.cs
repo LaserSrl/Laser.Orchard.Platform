@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
@@ -17,14 +18,17 @@ namespace Laser.Orchard.Policy.Filters {
         private readonly ICommonsServices _commonServices;
         private readonly IContentSerializationServices _contentSerializationServices;
         private readonly ICurrentContentAccessor _currenContent;
+        private readonly IPolicyServices _policyServices;
         private IList<IContent> pendingPolicies;
 
         public PolicyFilter(ICommonsServices commonServices,
             IContentSerializationServices contentSerializationServices,
-            ICurrentContentAccessor currenContent) {
+            ICurrentContentAccessor currenContent,
+            IPolicyServices policyServices) {
             _commonServices = commonServices;
             _contentSerializationServices = contentSerializationServices;
             _currenContent = currenContent;
+            _policyServices = policyServices;
         }
 
         public ILogger Logger;
@@ -100,8 +104,8 @@ namespace Laser.Orchard.Policy.Filters {
             //_maxLevel = maxLevel;
             if (content != null) {
                 var policy = content.As<Models.PolicyPart>();
-                if (policy != null && (policy.HasPendingPolicies ?? false)) { // Se l'oggetto ha delle pending policies allora devo scrivere la lista delle pending policies
-                    pendingPolicies = policy.PendingPolicies;
+                if (policy != null && (_policyServices.HasPendingPolicies(content.ContentItem) ?? false)) { // Se l'oggetto ha delle pending policies allora devo scrivere la lista delle pending policies
+                    pendingPolicies = _policyServices.PendingPolicies(content.ContentItem);
                 }
                 else {
                     pendingPolicies = new List<IContent>();

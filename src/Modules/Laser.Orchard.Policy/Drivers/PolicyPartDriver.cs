@@ -3,7 +3,6 @@ using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.Autoroute.Models;
-using Orchard.Autoroute.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
@@ -16,7 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.Policy.Drivers {
+namespace Laser.Orchard.Policy.Drivers
+{
     public class PolicyPartDriver : ContentPartCloningDriver<PolicyPart>, ICachingEventHandler {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkContextAccessor _workContextAccessor;
@@ -48,7 +48,7 @@ namespace Laser.Orchard.Policy.Drivers {
         }
         protected override DriverResult Display(PolicyPart part, string displayType, dynamic shapeHelper) {
             if (displayType == "Detail") {
-                if (part.HasPendingPolicies ?? false) {
+                if (_policyServices.HasPendingPolicies(part.ContentItem) ?? false) {
                     var language = _workContextAccessor.GetContext().CurrentCulture;
                     UrlHelper url = new UrlHelper(_httpContextAccessor.Current().Request.RequestContext);
 
@@ -168,9 +168,9 @@ namespace Laser.Orchard.Policy.Drivers {
             var part = _currentContentAccessor.CurrentContentItem.As<PolicyPart>();
             if (part == null) return;
 
-            if (part.HasPendingPolicies ?? false) {
+            if (_policyServices.HasPendingPolicies(part.ContentItem) ?? false) {
                 _additionalCacheKey = "policy-not-accepted;";
-                _additionalCacheKey += "pendingitempolicies=" + String.Join("_", part.PendingPolicies.Select(s => s.Id)) + ";";
+                _additionalCacheKey += "pendingitempolicies=" + String.Join("_", _policyServices.PendingPolicies(part.ContentItem).Select(s => s.Id)) + ";";
             }
             else {
                 _additionalCacheKey = "policy-accepted;";
