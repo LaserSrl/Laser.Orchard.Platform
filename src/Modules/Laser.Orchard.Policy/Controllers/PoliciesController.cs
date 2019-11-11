@@ -15,7 +15,7 @@ using Laser.Orchard.Policy.Services;
 using System.Text;
 
 namespace Laser.Orchard.Policy.Controllers {
-    [Themed, OutputCache(NoStore = true, Duration = 0)]
+    [Themed]
     [RoutePrefix("UserPolicies")]
     public class PoliciesController : Controller {
         private readonly IPolicyServices _policyServices;
