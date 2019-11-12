@@ -103,11 +103,13 @@
                                                     String culture = "";
                                                     if (numberLocPart > 0) {
                                                         dynamic localizationPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "LocalizationPart").First();
-                                                        culture = localizationPart.Culture.Culture;
+                                                        if(localizationPart.Culture != null) {
+                                                            culture = "(" + localizationPart.Culture.Culture + ")";
+                                                        }
                                                     }
                                                 }
                                                 <h3>
-                                                    <a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget) (@culture)</a>
+                                                    <a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget) @culture</a>
                                                 </h3><span>
                                                     <div class="contentType">
                                                         - @widget.TypeDefinition.DisplayName
