@@ -63,7 +63,7 @@ namespace Laser.Orchard.UsersExtensions.Filters {
                 IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices.GetUserLinkedPolicies(language);
 
                 if (neededPolicies.Count() > 0) {
-                    var missingPolicies = MissingPolices();
+                    var missingPolicies = MissingRegistrationPolices();
                     if (missingPolicies.Count() > 0) {
 
                         if (filterContext.Controller.GetType().FullName == "Laser.Orchard.WebServices.Controllers.JsonController") {
@@ -120,12 +120,12 @@ namespace Laser.Orchard.UsersExtensions.Filters {
         public void OnActionExecuted(ActionExecutedContext filterContext) { }
 
         public void KeyGenerated(StringBuilder key) {
-            var missingPolicies = MissingPolices();
+            var missingPolicies = MissingRegistrationPolices();
             if (missingPolicies != null && missingPolicies.Count() > 0)
                 key.Append("pendingpolicies=" + String.Join("_", missingPolicies.Select(s => s)) + ";");
         }
 
-        private IEnumerable<int> MissingPolices() {
+        private IEnumerable<int> MissingRegistrationPolices() {
             if (_missingPolicies != null)
                 return _missingPolicies;
             var language = _workContext.GetContext().CurrentCulture;

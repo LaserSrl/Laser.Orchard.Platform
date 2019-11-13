@@ -25,12 +25,13 @@ using System.Web.Mvc;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using Orchard.OutputCache.Filters;
 using Laser.Orchard.StartupConfig.Exceptions;
 using Orchard.OutputCache;
 using Laser.Orchard.Commons.Enums;
+using Laser.Orchard.Policy.Services;
 
-namespace Laser.Orchard.WebServices.Controllers {
+namespace Laser.Orchard.WebServices.Controllers
+{
 
     public class JsonController : Controller, ICachingEventHandler {
         private readonly IOrchardServices _orchardServices;
@@ -45,6 +46,7 @@ namespace Laser.Orchard.WebServices.Controllers {
         private IEventsService _eventsService;
         private readonly ICsrfTokenHelper _csrfTokenHelper;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IPolicyServices _policyServices;
 
         private readonly HttpRequest _request;
 
@@ -56,7 +58,8 @@ namespace Laser.Orchard.WebServices.Controllers {
             ShellSettings shellSetting,
             IUtilsServices utilsServices,
             ICsrfTokenHelper csrfTokenHelper,
-            IAuthenticationService authenticationService) {
+            IAuthenticationService authenticationService,
+            IPolicyServices policyServices) {
             _request = System.Web.HttpContext.Current.Request;
 
             _orchardServices = orchardServices;
@@ -67,6 +70,7 @@ namespace Laser.Orchard.WebServices.Controllers {
             _utilsServices = utilsServices;
             _csrfTokenHelper = csrfTokenHelper;
             _authenticationService = authenticationService;
+            _policyServices = policyServices;
         }
 
         public ILogger Logger { get; set; }
@@ -380,7 +384,7 @@ namespace Laser.Orchard.WebServices.Controllers {
             //        return null; // in entrambi i casi ritorno null come risultato della current request
             //    }
             //}
-            if (policy != null && (policy.HasPendingPolicies ?? false)) { // Se l'oggetto ha delle pending policies allora devo serivre la lista delle pending policies
+            if (policy != null && (_policyServices.HasPendingPolicies(content.ContentItem) ?? false)) { // Se l'oggetto ha delle pending policies allora devo serivre la lista delle pending policies
                 //policy.PendingPolicies
                 sb.Insert(0, "{");
                 sb.AppendFormat("\"n\": \"{0}\"", "Model");
@@ -398,7 +402,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                 sb.AppendFormat(", \"v\": \"{0}\"", "ContentItem[]");
                 sb.Append(", \"m\": [");
 
-                foreach (var item in policy.PendingPolicies) {
+                foreach (var item in _policyServices.PendingPolicies(content.ContentItem)) {
                     if (i > 0) {
                         sb.Append(",");
                     }
@@ -687,9 +691,9 @@ namespace Laser.Orchard.WebServices.Controllers {
                     IContent item = GetContentByAlias(_request.QueryString["displayalias"]);
                     if (item != null) {
                         var policy = item.As<Policy.Models.PolicyPart>();
-                        if (policy != null && (policy.HasPendingPolicies ?? false)) {
+                        if (policy != null && (_policyServices.HasPendingPolicies(item.ContentItem) ?? false)) {
                             key.Append("policy-not-accepted;");
-                        } else if (policy != null && !(policy.HasPendingPolicies ?? false)) {
+                        } else if (policy != null && !(_policyServices.HasPendingPolicies(item.ContentItem) ?? false)) {
                             key.Append("policy-accepted;");
                         }
                     }
