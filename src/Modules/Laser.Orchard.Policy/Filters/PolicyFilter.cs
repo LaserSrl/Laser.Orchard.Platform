@@ -89,20 +89,29 @@ namespace Laser.Orchard.Policy.Filters {
             if (areaName.Equals("Laser.Orchard.WebServices", StringComparison.InvariantCultureIgnoreCase) &&
                 controllerName.Equals("WebApi", StringComparison.InvariantCultureIgnoreCase) &&
                 actionName.Equals("display", StringComparison.InvariantCultureIgnoreCase)) {
+                // For our webapi, we determine the content through its alias
                 alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
                 content = _commonServices.GetContentByAlias(alias);
             }
             else if (areaName.Equals("Laser.Orchard.Policy", StringComparison.InvariantCultureIgnoreCase) &&
                       controllerName.Equals("Policies", StringComparison.InvariantCultureIgnoreCase) &&
                       actionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
+                // since we also cache the page where we ask to accept the policies,
+                // and that's on a specific controller, we do need to figure out the content item
+                // we are preventing the used to see
                 alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
                 content = _commonServices.GetContentByAlias(alias);
             }
             else {
+                // this is the "normal" case, in which we are accessing a contentitem
+                // directly on its display view
                 content = _currenContent.CurrentContentItem;
             }
             //_maxLevel = maxLevel;
             if (content != null) {
+                // content would be null if rather than on a content item we are trying
+                // to go to a controller aciton. Those should manage their own permissions
+                // and caching so they would not have to be handled here
                 var policy = content.As<Models.PolicyPart>();
                 if (policy != null && (_policyServices.HasPendingPolicies(content.ContentItem) ?? false)) { // Se l'oggetto ha delle pending policies allora devo scrivere la lista delle pending policies
                     pendingPolicies = _policyServices.PendingPolicies(content.ContentItem);
