@@ -9,5 +9,5 @@ Features:
     Laser.Orchard.Generator:
 		Name: Laser Generator
         Description: It should be enabled ONLY in development environment
-		Dependencies: Laser.Orchard.WebServices, Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies
+		Dependencies: Laser.Orchard.WebServices, Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies,Laser.Orchard.Policy
 		Category: Services
