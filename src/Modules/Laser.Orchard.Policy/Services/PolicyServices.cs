@@ -51,6 +51,8 @@ namespace Laser.Orchard.Policy.Services {
         string PoliciesLMNVSerialization(IEnumerable<PolicyTextInfoPart> policies);
         string PoliciesPureJsonSerialization(IEnumerable<PolicyTextInfoPart> policies);
         IEnumerable<UserPolicyAnswersRecord> GetPolicyAnswersForContent(int contentId);
+        bool? HasPendingPolicies(ContentItem contentItem);
+        IList<IContent> PendingPolicies(ContentItem contentItem);
     }
 
     public class PolicyServices : IPolicyServices {
@@ -276,42 +278,42 @@ namespace Laser.Orchard.Policy.Services {
             }
 
             if (writeMode) {
+                // When in write mode it stores values into a cookie
                 newCollection.AddRange(viewModelCollection.Select(x => {
                     x.AnswerDate = DateTime.UtcNow;
                     //x.PolicyText = null; // annullo la parte per evitare circolarità nella serializzazione
                     return x;
                 }));
-            }
 
-            string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
-                var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
-                if (policyText == null) return false;
-                else {
-                    var policyTextRecord = policyText.Record;
-                    return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
+                    var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
+                    if (policyText == null) return false;
+                    else {
+                        var policyTextRecord = policyText.Record;
+                        return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                    }
+                }));
+
+                var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
+                    Expires = DateTime.Now.AddMonths(6)
+                };
+                if (_controllerContextAccessor.Context != null)
+                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
+                if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
+                    _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
                 }
-            }));
-
-            var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
-                Expires = DateTime.Now.AddMonths(6)
-            };
-            if (_controllerContextAccessor.Context != null)
-                _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
-            if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
-                _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
+                else {
+                    _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
+                }
             }
-            else {
-                _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
-            }
-
         }
 
         public string[] GetPoliciesForContent(PolicyPart part) {
             var settings = part.Settings.GetModel<PolicyPartSettings>();
 
-            if (!settings.PolicyTextReferences.Contains("{DependsOnContent}"))
+            if (settings.PolicyTextReferences != null && !settings.PolicyTextReferences.Contains("{DependsOnContent}"))
                 return settings.PolicyTextReferences;
-            else if (!part.PolicyTextReferences.Contains("{All}"))
+            else if (part.PolicyTextReferences != null && !part.PolicyTextReferences.Contains("{All}"))
                 return part.PolicyTextReferences;
             else
                 return null;
@@ -331,6 +333,25 @@ namespace Laser.Orchard.Policy.Services {
                 return _keyBase;
             }
         }
+
+        /// <summary>
+        /// This method is to wrap a level of cache around fetching cultures
+        /// from the repository, because otherwise it keeps requiring a connection
+        /// to the database.
+        /// </summary>
+        /// <param name="cultureName"></param>
+        /// <returns>The CultureRecord with the given name.</returns>
+        /// <remarks>TODO: this should probably be the default behaviour of
+        /// DefaultCultureManager.GetCultureByName()</remarks>
+        private CultureRecord GetCultureByName(string cultureName) {
+            var cacheKey = $"{KeyBase}_GetCultureByName_{cultureName}";
+            return _cacheManager.Get(cacheKey, true, ctx => {
+                // this is the same signal used in Orchard.Framework.DefaultCultureManager
+                ctx.Monitor(_signals.When("culturesChanged"));
+                // invoke the method from the ICultureManager
+                return _cultureManager.GetCultureByName(cultureName);
+            });
+        }
         public IEnumerable<PolicyTextInfoPart> GetPolicies(string culture = null, int[] ids = null) {
             var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
 
@@ -338,15 +359,15 @@ namespace Laser.Orchard.Policy.Services {
             int currentLanguageId;
             IContentQuery<PolicyTextInfoPart> query;
             CultureRecord cultureRecord = null;
-            if (!String.IsNullOrWhiteSpace(culture)) {
-                cultureRecord = _cultureManager.GetCultureByName(culture);
+            if (!string.IsNullOrWhiteSpace(culture)) {
+                cultureRecord = GetCultureByName(culture);
             }
             if (cultureRecord == null) {
                 //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
-                cultureRecord = _cultureManager.GetCultureByName(_workContext.GetContext().CurrentCulture);
+                cultureRecord = GetCultureByName(_workContext.GetContext().CurrentCulture);
             }
             if (cultureRecord == null) {
-                cultureRecord = _cultureManager.GetCultureByName(_cultureManager.GetSiteCulture());
+                cultureRecord = GetCultureByName(_cultureManager.GetSiteCulture());
             }
             currentLanguageId = cultureRecord.Id;
 
@@ -523,6 +544,88 @@ namespace Laser.Orchard.Policy.Services {
         public IEnumerable<UserPolicyAnswersRecord> GetPolicyAnswersForContent(int contentId) {
             var answers = _userPolicyAnswersRepository.Fetch(x => x.UserPolicyPartRecord.Id == contentId);
             return answers.ToList();
+        }
+
+        private bool IsPolicyIncluded(PolicyPart part)
+        {
+            var settings = part.Settings.GetModel<PolicyPartSettings>();
+            if (settings.IncludePendingPolicy == IncludePendingPolicyOptions.Yes) {
+                return true;
+            }
+            else if (settings.IncludePendingPolicy == IncludePendingPolicyOptions.DependsOnContent && part.IncludePendingPolicy == IncludePendingPolicyOptions.Yes) {
+                return true;
+            }
+            return false;
+        }
+        private void RealPolicyInclusionSetter(PolicyPart part)
+        {
+            var settings = part.Settings.GetModel<PolicyPartSettings>();
+            if (settings.IncludePendingPolicy != IncludePendingPolicyOptions.DependsOnContent) {
+                part.IncludePendingPolicy = settings.IncludePendingPolicy;
+            }
+        }
+        private IEnumerable<IContent> GetPendingPolicies(ContentItem contentItem)
+        {
+            var loggedUser = _workContext.GetContext().CurrentUser;
+
+            // get the name of a culture to pass to find policies
+            string cultureName = null;
+            if (contentItem.As<LocalizationPart>() != null
+                && contentItem.As<LocalizationPart>().Culture != null
+                && contentItem.As<LocalizationPart>().Culture.Id > 0) {
+
+                cultureName = contentItem.As<LocalizationPart>().Culture.Culture;
+            }
+            else {
+                //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
+                cultureName = _workContext.GetContext().CurrentCulture;
+            }
+            var policies = GetPolicies(cultureName);
+            // figure out which policies the user has not answered
+            var answeredIds = loggedUser != null
+                ? loggedUser
+                    .As<UserPolicyPart>().UserPolicyAnswers.Select(s => s.PolicyTextInfoPartRecord.Id)
+                : GetCookieOrVolatileAnswers()
+                    .Select(s => s.PolicyTextId);
+            var items = policies.Where(p => !answeredIds.Contains(p.Id));
+
+            var part = contentItem.As<PolicyPart>();
+            var settings = part.Settings.GetModel<PolicyPartSettings>();
+            if (!settings.PolicyTextReferences.Contains("{All}")) {
+                string[] filterComplexIds = GetPoliciesForContent(part);
+                if (filterComplexIds != null) {
+                    if (filterComplexIds.Length == 1) {
+                        filterComplexIds = filterComplexIds[0]
+                            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    var filterIds = filterComplexIds.Select(s => {
+                        int id = 0;
+                        int.TryParse(s.Replace("{", "").Replace("}", ""), out id);
+                        return id;
+                    }).ToArray();
+
+                    items = items.Where(p => filterIds.Contains(p.Id));
+                }
+            }
+
+            return items;
+        }
+        public bool? HasPendingPolicies(ContentItem contentItem)
+        {
+            var part = contentItem.As<PolicyPart>();
+            RealPolicyInclusionSetter(part);
+            if (!IsPolicyIncluded(part)) return null;
+            return GetPendingPolicies(contentItem)
+                .Any();
+        }
+        public IList<IContent> PendingPolicies(ContentItem contentItem)
+        {
+            var part = contentItem.As<PolicyPart>();
+            RealPolicyInclusionSetter(part);
+            if (!IsPolicyIncluded(part)) return null;
+            return GetPendingPolicies(contentItem)
+                .Select(s => (IContent)s.ContentItem)
+                .ToList();
         }
     }
 }

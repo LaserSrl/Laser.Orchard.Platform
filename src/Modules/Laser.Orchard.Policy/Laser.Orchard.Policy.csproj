@@ -136,7 +136,6 @@
     <Compile Include="Events\IPolicyEventHandler.cs" />
     <Compile Include="Filters\PolicyFilter.cs" />
     <Compile Include="Handlers\PolicyUserEventHandler.cs" />
-    <Compile Include="Handlers\PolicyPartHandler.cs" />
     <Compile Include="Handlers\PolicyTextInfoPartHandler.cs" />
     <Compile Include="Handlers\UserPolicyDumperHandler.cs" />
     <Compile Include="Handlers\UserPolicyPartHandler.cs" />

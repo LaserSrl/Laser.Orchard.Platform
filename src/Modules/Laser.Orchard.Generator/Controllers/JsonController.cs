@@ -1,50 +1,25 @@
-﻿using Contrib.Widgets.Services;
-using Laser.Orchard.Commons.Enums;
+﻿using Laser.Orchard.Commons.Enums;
 using Laser.Orchard.Commons.Services;
-using Laser.Orchard.Events.Services;
-
-//using Laser.Orchard.Commons.Services;
-//using Laser.Orchard.Events.Services;
-//using Laser.Orchard.Policy.Services;
+using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
-using Laser.Orchard.StartupConfig.ViewModels;
-using Laser.Orchard.WebServices;
 using Laser.Orchard.WebServices.Models;
 using Orchard;
 using Orchard.Autoroute.Models;
 using Orchard.ContentManagement;
-
-//using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
-
-//using Orchard.Localization.Models;
 using Orchard.Logging;
 using Orchard.Projections.Services;
 using Orchard.Security;
-using Orchard.Taxonomies.Services;
 using System;
 using System.Collections.Generic;
-
-//using System;
-//using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-
-//using System.Linq;
 using System.Text;
 using System.Web;
-
-//using System.Web;
-using System.Web.Hosting;
 using System.Web.Mvc;
-
-//using System.Web.Mvc;
-//using Newtonsoft.Json;
-using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
-namespace Laser.Orchard.Generator.Controllers {
+namespace Laser.Orchard.Generator.Controllers
+{
 
     public class JsonController : Controller {
         private readonly IOrchardServices _orchardServices;
@@ -54,6 +29,7 @@ namespace Laser.Orchard.Generator.Controllers {
         private readonly ICsrfTokenHelper _csrfTokenHelper;
         private readonly IAuthenticationService _authenticationService;
         private readonly IEnumerable<IDumperService> _dumperServices;
+        private readonly IPolicyServices _policyServices;
 
         public ILogger Logger { get; set; }
 
@@ -63,7 +39,8 @@ namespace Laser.Orchard.Generator.Controllers {
             IUtilsServices utilsServices,
             ICsrfTokenHelper csrfTokenHelper,
             IAuthenticationService authenticationService,
-            IEnumerable<IDumperService> dumperServices) {
+            IEnumerable<IDumperService> dumperServices,
+            IPolicyServices policyServices) {
 
             _orchardServices = orchardServices;
             _projectionManager = projectionManager;
@@ -72,6 +49,7 @@ namespace Laser.Orchard.Generator.Controllers {
             _csrfTokenHelper = csrfTokenHelper;
             _authenticationService = authenticationService;
             _dumperServices = dumperServices;
+            _policyServices = policyServices;
 
             Logger = NullLogger.Instance;
         }
@@ -150,7 +128,7 @@ namespace Laser.Orchard.Generator.Controllers {
             var policy = content.As<Policy.Models.PolicyPart>();
             if (policy != null) {
                 if ((String.IsNullOrWhiteSpace(_orchardServices.WorkContext.HttpContext.Request.QueryString["v"]))) {// E' soggetto a privacy, quindi faccio sempre il redirect se manca il parametro in querystring v=
-                    if (policy.HasPendingPolicies ?? false) { // se ha delle pending policies deve restituire le policy text, legate al contenuto, quindi non deve mai servire cache
+                    if (_policyServices.HasPendingPolicies(content.ContentItem) ?? false) { // se ha delle pending policies deve restituire le policy text, legate al contenuto, quindi non deve mai servire cache
                         var redirectUrl = String.Format("{0}{1}v={2}", _orchardServices.WorkContext.HttpContext.Request.RawUrl, (_orchardServices.WorkContext.HttpContext.Request.RawUrl.Contains("?") ? "&" : "?"), Guid.NewGuid());
                         _orchardServices.WorkContext.HttpContext.Response.Redirect(redirectUrl, true);
                     } else {// se NON ha delle pending policies deve restituire un url non cacheato (quindi aggiungo v=),
@@ -161,7 +139,7 @@ namespace Laser.Orchard.Generator.Controllers {
                     return null; // in entrambi i casi ritorno null come risultato della current request
                 }
             }
-            if (policy != null && (policy.HasPendingPolicies ?? false)) { // Se l'oggetto ha delle pending policies allora devo serivre la lista delle pending policies
+            if (policy != null && (_policyServices.HasPendingPolicies(content.ContentItem) ?? false)) { // Se l'oggetto ha delle pending policies allora devo serivre la lista delle pending policies
                 //policy.PendingPolicies
                 sb.Insert(0, "{");
                 sb.AppendFormat("\"n\": \"{0}\"", "Model");
@@ -179,7 +157,7 @@ namespace Laser.Orchard.Generator.Controllers {
                 sb.AppendFormat(", \"v\": \"{0}\"", "ContentItem[]");
                 sb.Append(", \"m\": [");
 
-                foreach (var item in policy.PendingPolicies) {
+                foreach (var item in _policyServices.PendingPolicies(content.ContentItem)) {
                     if (i > 0) {
                         sb.Append(",");
                     }
