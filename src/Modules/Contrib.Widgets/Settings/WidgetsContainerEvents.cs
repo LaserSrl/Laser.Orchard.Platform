@@ -34,6 +34,7 @@ namespace Contrib.Widgets.Settings {
                 allowedViewModel.Widgets = _widgetsService.GetWidgetTypeNames().OrderBy(o => o).ToList();
                 allowedViewModel.UseHierarchicalAssociation = model.UseHierarchicalAssociation;
                 allowedViewModel.HierarchicalAssociationJson = model.HierarchicalAssociationJson;
+                allowedViewModel.TryToLocalizeItems = model.TryToLocalizeItems;
 
                 yield return DefinitionTemplate(allowedViewModel);
             }
@@ -48,7 +49,7 @@ namespace Contrib.Widgets.Settings {
                 builder.WithSetting("WidgetsContainerSettings.AllowedWidgets", allowedViewModel.SelectedWidgets != null ? string.Join(",", allowedViewModel.SelectedWidgets) : "");
                 builder.WithSetting("WidgetsContainerSettings.UseHierarchicalAssociation", allowedViewModel.UseHierarchicalAssociation.ToString());
                 builder.WithSetting("WidgetsContainerSettings.HierarchicalAssociationJson", allowedViewModel.HierarchicalAssociationJson);
-
+                builder.WithSetting("WidgetsContainerSettings.TryToLocalizeItems", allowedViewModel.TryToLocalizeItems.ToString());
             }
 
             yield return DefinitionTemplate(allowedViewModel);
