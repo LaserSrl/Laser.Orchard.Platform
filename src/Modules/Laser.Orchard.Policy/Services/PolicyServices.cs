@@ -331,6 +331,25 @@ namespace Laser.Orchard.Policy.Services {
                 return _keyBase;
             }
         }
+
+        /// <summary>
+        /// This method is to wrap a level of cache around fetching cultures
+        /// from the repository, because otherwise it keeps requiring a connection
+        /// to the database.
+        /// </summary>
+        /// <param name="cultureName"></param>
+        /// <returns>The CultureRecord with the given name.</returns>
+        /// <remarks>TODO: this should probably be the default behaviour of
+        /// DefaultCultureManager.GetCultureByName()</remarks>
+        private CultureRecord GetCultureByName(string cultureName) {
+            var cacheKey = $"{KeyBase}_GetCultureByName_{cultureName}";
+            return _cacheManager.Get(cacheKey, true, ctx => {
+                // this is the same signal used in Orchard.Framework.DefaultCultureManager
+                ctx.Monitor(_signals.When("culturesChanged"));
+                // invoke the method from the ICultureManager
+                return _cultureManager.GetCultureByName(cultureName);
+            });
+        }
         public IEnumerable<PolicyTextInfoPart> GetPolicies(string culture = null, int[] ids = null) {
             var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
 
@@ -338,15 +357,15 @@ namespace Laser.Orchard.Policy.Services {
             int currentLanguageId;
             IContentQuery<PolicyTextInfoPart> query;
             CultureRecord cultureRecord = null;
-            if (!String.IsNullOrWhiteSpace(culture)) {
-                cultureRecord = _cultureManager.GetCultureByName(culture);
+            if (!string.IsNullOrWhiteSpace(culture)) {
+                cultureRecord = GetCultureByName(culture);
             }
             if (cultureRecord == null) {
                 //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
-                cultureRecord = _cultureManager.GetCultureByName(_workContext.GetContext().CurrentCulture);
+                cultureRecord = GetCultureByName(_workContext.GetContext().CurrentCulture);
             }
             if (cultureRecord == null) {
-                cultureRecord = _cultureManager.GetCultureByName(_cultureManager.GetSiteCulture());
+                cultureRecord = GetCultureByName(_cultureManager.GetSiteCulture());
             }
             currentLanguageId = cultureRecord.Id;
 
