@@ -49,10 +49,18 @@ namespace Laser.Orchard.Translator.Controllers
                                                                                               && r.Message == record.Message
                                                                                               && r.Language == record.Language);
                     var tryAddOrUpdateTranslation = true;
-                    if (alreadyExistingRecords.Any()) {
+                    if (alreadyExistingRecords.Any())
+                    {
                         // verifica maiuscole/minuscole del message
-                        if(record.Message.Equals(alreadyExistingRecords.First().Message, StringComparison.InvariantCulture)) {
-                            tryAddOrUpdateTranslation = false;
+                        // aggiunto il for perchè nel caso in cui ci fosse più di una traduzione uguale 
+                        // con differenza di maiuscolo o minuscole deve  effettuare il controllo su tutte
+                        foreach (var item in alreadyExistingRecords)
+                        {
+                            if (record.Message.Equals(item.Message, StringComparison.InvariantCulture))
+                            {
+                                tryAddOrUpdateTranslation = false;
+                                break;
+                            }
                         }
                     }
                     if (tryAddOrUpdateTranslation)

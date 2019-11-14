@@ -93,7 +93,23 @@ namespace Laser.Orchard.Translator.Services {
                                                                     && t.Message == translation.Message).ToList();
             }
 
-            if (existingTranslations.Any()) {
+            var updateRecord = false;
+            if (existingTranslations.Any())
+            {
+                // nel caso in cui dall'api controller viene richiesto l'inserimento o l'aggiornamento
+                // faccio un ulteriore verifica maiuscole/minuscole del message
+                foreach (var item in existingTranslations)
+                {
+                    if (translation.Message.Equals(item.Message, StringComparison.InvariantCulture))
+                    {
+                        updateRecord = true;
+                        break;
+                    }
+                }
+            }
+
+            if (updateRecord)
+            {
                 TranslationRecord existingTranslation = existingTranslations.FirstOrDefault();
 
                 existingTranslation.Context = translation.Context;
