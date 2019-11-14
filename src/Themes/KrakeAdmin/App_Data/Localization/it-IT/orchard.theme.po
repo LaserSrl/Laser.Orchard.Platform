@@ -157,8 +157,8 @@ msgid "KRAKE&#8482;"
 msgstr "KRAKE&#8482;"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
-msgid "MAIL"
-msgstr "MAIL"
+msgid "Mail"
+msgstr "Mail"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
 msgid "manage through its back office aimed marketing campaigns, newsletter and much more"

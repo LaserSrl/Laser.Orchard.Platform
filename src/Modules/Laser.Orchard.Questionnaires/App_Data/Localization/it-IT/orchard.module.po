@@ -124,6 +124,10 @@ msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
 msgid "Send top10s by email"
 msgstr "Invia le top10 via email"
 
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
+msgid "unknown"
+msgstr "Sconosciuto"
+
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/GamePartSettingVM.cshtml"
 msgid "Default is false. If selected emails will be sended at end game"
 msgstr "Il valore predefinito è falso. Se selezionato, alla fine del gioco verranno inviate le email"
@@ -209,7 +213,7 @@ msgid "Default 0 (no limit)"
 msgstr "Valore predefinito 0 (nessun limite)"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
-msgid "Default is false. "
+msgid "Default is false."
 msgstr "Il valore predefinito è falso."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
@@ -550,7 +554,7 @@ msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Annulla"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Date From"
@@ -598,7 +602,7 @@ msgstr "Di {0}"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Annulla"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "Language: {0}"
@@ -619,6 +623,10 @@ msgstr "Cerca"
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "Search:"
 msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
+msgid "unknown"
+msgstr "Sconosciuto"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/QuestionDetail.cshtml"
 msgid "Answers Detail"

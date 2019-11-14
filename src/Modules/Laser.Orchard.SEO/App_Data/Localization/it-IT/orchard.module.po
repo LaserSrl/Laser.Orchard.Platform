@@ -93,6 +93,10 @@ msgid "Hide charts"
 msgstr "Nascondi grafici"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Keyword"
+msgstr "Parola Chiave"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
 msgid "Language"
 msgstr "Lingua"
 
@@ -447,6 +451,14 @@ msgstr "Redirezionamenti"
 msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
 msgid "SEO"
 msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Exports Redirects. If there are 2 redirects in the exported file with the same SourceUrl, only one will be inserted during the import"
+msgstr "Esporta le redirect. Se ci sono 2 redirect nel file esportato con lo stesso SourceUrl, durante l'importazione ne verrà inserita solo una"
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Redirects Rule"
+msgstr "Regole di Redirect"
 
 msgctxt "Laser.Orchard.SEO.Services.RedirectService"
 msgid "Rules with same SourceURL are not valid."
