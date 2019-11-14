@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using Laser.Orchard.Mobile.Services;
 using Orchard.Caching;
-
+using Orchard.Security;
 
 namespace Laser.Orchard.Mobile.Controllers {
     public class ManifestAppFileController : Controller {
@@ -19,6 +19,7 @@ namespace Laser.Orchard.Mobile.Controllers {
             _signals = signals;
         }
 
+        [AlwaysAccessible]
         public ActionResult Index() {       
             var content = _cacheManager.Get("ManifestAppFile.Settings",
                               ctx => {
