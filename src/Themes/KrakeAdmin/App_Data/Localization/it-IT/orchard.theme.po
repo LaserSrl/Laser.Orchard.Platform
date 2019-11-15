@@ -161,6 +161,10 @@ msgid "Mail"
 msgstr "Mail"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "MAIL"
+msgstr "MAIL"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
 msgid "manage through its back office aimed marketing campaigns, newsletter and much more"
 msgstr "potrà gestire, attraverso un ambiente di back office, campagne di marketing mirato, newsletter, ecc."
 

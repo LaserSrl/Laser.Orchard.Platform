@@ -53,6 +53,10 @@ msgid "Newsletter edition"
 msgstr "Edizione"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
+msgid "Newsletter Edition"
+msgstr "Edizione"
+
+msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/EditorTemplates/Parts/NewsletterEdition_Edit.cshtml"
 msgid "Newsletter Edition Infos"
 msgstr "Inforrmazioni sull'Edizione della Newsletter"
 

@@ -217,6 +217,10 @@ msgid "Default is false."
 msgstr "Il valore predefinito è falso."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Default is false. "
+msgstr "Il valore predefinito è falso."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
 msgid "Default is false. If selected a Correct Response Option will be visible in back office"
 msgstr "Il valore predefinito è falso. Se selezionato, nel back office sarà visibile l'Opzione Risposta Corretta"
 

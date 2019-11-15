@@ -16,6 +16,10 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
 msgid "Command Line"
 msgstr "Linea di Comando"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
+msgid "Command line"
+msgstr "Linea di Comando"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
 msgstr "Per aiuto consultare {0}"
