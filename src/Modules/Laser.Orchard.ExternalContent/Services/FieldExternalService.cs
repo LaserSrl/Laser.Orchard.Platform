@@ -400,11 +400,14 @@ namespace Laser.Orchard.ExternalContent.Services {
                 JsonData = JsonData.Replace(",\"\"]}", "]}"); // aggiunto perchè nella nuova versione di newtonjson i nodi xml vuoti non vengono piu tradotti in null ma in ""
                 JsonData = JsonData.Replace(",{}]}", "]}");
 
+                JsonData = JsonData.Replace("\":lasernumericlasernumeric:\"", "null");
                 JsonData = JsonData.Replace("\":lasernumeric", "");
                 JsonData = JsonData.Replace("lasernumeric:\"", "");
+                JsonData = JsonData.Replace("\":laserbooleanlaserboolean:\"", "null");
                 JsonData = JsonData.Replace("\":laserboolean", "");
                 JsonData = JsonData.Replace("laserboolean:\"", "");
                 JsonData = JsonData.Replace(@"\r\n", "");
+                JsonData = JsonData.Replace("\":laserDatelaserDate:\"", "null");
                 JsonData = JsonData.Replace("\":laserDate", "\"\\/Date(");
                 JsonData = JsonData.Replace("laserDate:\"", ")\\/\"");
 
