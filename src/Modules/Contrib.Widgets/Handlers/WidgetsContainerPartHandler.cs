@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Web;
 using System.Web.Routing;
 using Contrib.Widgets.Models;
@@ -15,6 +16,7 @@ using Orchard.Localization;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Mvc.Routes;
+using Orchard.UI.Admin.Notification;
 
 namespace Contrib.Widgets.Handlers {
     public class WidgetsContainerPartHandler : ContentHandler {
@@ -69,7 +71,8 @@ namespace Contrib.Widgets.Handlers {
                             _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
 
                             // trigger this handler to manage content picker fields and media library picker fields
-                            var ctx2 = new UpdateEditorContext(context.Shape, widget.ContentItem, context.Updater, "", _shapeFactory, context.ShapeTable, GetPath());
+                            // parameter updater is set to null to avoid unwanted changes and validations on fields
+                            var ctx2 = new UpdateEditorContext(ctx1.Shape, widget.ContentItem, null, "", _shapeFactory, context.ShapeTable, GetPath());
                             _handlers.Value.Invoke(handler => handler.UpdateEditor(ctx2), Logger);
 
                             widget.ContentItem.VersionRecord.Published = false;
