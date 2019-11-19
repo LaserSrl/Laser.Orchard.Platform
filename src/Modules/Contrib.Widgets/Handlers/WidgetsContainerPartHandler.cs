@@ -17,6 +17,7 @@ using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Mvc.Routes;
 using Orchard.UI.Admin.Notification;
+using Orchard.UI.Zones;
 
 namespace Contrib.Widgets.Handlers {
     public class WidgetsContainerPartHandler : ContentHandler {
@@ -63,8 +64,11 @@ namespace Contrib.Widgets.Handlers {
                         var culture = lPart.Culture;
                         var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished());
                         foreach (var widget in widgets) {
+                            // create build context shape for the widget
+                            dynamic itemShape = CreateItemShape("Content_Edit");
+                            itemShape.ContentItem = widget.ContentItem;
                             // trigger this handler to manage taxonomy fileds
-                            var ctx1 = new BuildEditorContext(context.Shape, widget.ContentItem, "", _shapeFactory);
+                            var ctx1 = new BuildEditorContext(itemShape, widget.ContentItem, "", _shapeFactory);
                             _handlers.Value.Invoke(handler => handler.BuildEditor(ctx1), Logger);
 
                             // set localization of current content item AFTER invoking BuildEditor on it otherwise BuildEditor does not translate taxonomy fileds
@@ -72,7 +76,14 @@ namespace Contrib.Widgets.Handlers {
 
                             // trigger this handler to manage content picker fields and media library picker fields
                             // parameter updater is set to null to avoid unwanted changes and validations on fields
-                            var ctx2 = new UpdateEditorContext(ctx1.Shape, widget.ContentItem, null, "", _shapeFactory, context.ShapeTable, GetPath());
+                            var ctx2 = new UpdateEditorContext(
+                                ctx1.Shape, 
+                                widget.ContentItem, 
+                                null, 
+                                "", 
+                                _shapeFactory, 
+                                context.ShapeTable, 
+                                GetPath());
                             _handlers.Value.Invoke(handler => handler.UpdateEditor(ctx2), Logger);
 
                             widget.ContentItem.VersionRecord.Published = false;
@@ -81,6 +92,12 @@ namespace Contrib.Widgets.Handlers {
                     }
                 }
             });
+        }
+
+        private dynamic CreateItemShape(string actualShapeType) {
+            var zoneHolding = new ZoneHolding(() => _shapeFactory.Create("ContentZone", Arguments.Empty()));
+            zoneHolding.Metadata.Type = actualShapeType;
+            return zoneHolding;
         }
 
         /// <summary>
