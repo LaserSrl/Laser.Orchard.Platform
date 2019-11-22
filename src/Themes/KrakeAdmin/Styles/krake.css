@@ -1456,6 +1456,13 @@ div#widgets-layer-visibility {
     position: absolute;
 }
 
+#main li.widgets-this-layer h3 {
+    display: inline-block;
+    max-block-size: fit-content;
+    max-width: 40%;
+    vertical-align: middle;
+}
+
 #main li.widgets-other-layer h3 {
     display: inline-block;
     max-block-size: fit-content;
@@ -1464,10 +1471,45 @@ div#widgets-layer-visibility {
 }
 
 @media screen and (max-width: 1400px) {
+    #main li.widgets-this-layer h3 {
+        /*display: block;*/
+        max-width: 30%;
+    }
+
     #main li.widgets-other-layer h3 {
         /*display: block;*/
         max-width:30%;
     }
+}
+
+.widgets-listed .widgets-zone-widgets .widgets-move-somewhere {
+    padding-top: 5px;
+}
+
+li .widgets-this-layer form {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+li .widgets-other-layer form {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.widgets-listed .widgets-zone-widgets .widgets-this-layer div.contentType {
+    max-block-size: fit-content;
+    max-width: 30%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.widgets-this-layer .widgets-actions {
+    right: unset;
+    top: unset;
+    float: right;
+    right: 5px;
+    max-width: 35%;
+    top: 0px;
 }
 
 .widgets-listed .widgets-zone-widgets .widgets-other-layer div.contentType {
@@ -1485,6 +1527,7 @@ div#widgets-layer-visibility {
     max-width:35%;
     top:0px;
 }
+/*--------------------------*/
 
 .answer {
     width: 100%;
