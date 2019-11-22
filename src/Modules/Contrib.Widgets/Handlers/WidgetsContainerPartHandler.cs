@@ -75,11 +75,11 @@ namespace Contrib.Widgets.Handlers {
                             _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
 
                             // trigger this handler to manage content picker fields and media library picker fields
-                            // parameter updater is set to null to avoid unwanted changes and validations on fields
+                            // parameter updater is empty to avoid unwanted changes and validations on fields
                             var ctx2 = new UpdateEditorContext(
                                 ctx1.Shape, 
                                 widget.ContentItem, 
-                                null, 
+                                new EmptyUpdater(), 
                                 "", 
                                 _shapeFactory, 
                                 context.ShapeTable, 
@@ -118,6 +118,14 @@ namespace Contrib.Widgets.Handlers {
             var widgets = _widgetManager.GetWidgets(contentItem.Id, false);
             foreach (var w in widgets) {
                 _contentManager.Remove(w.ContentItem);
+            }
+        }
+        private class EmptyUpdater : IUpdateModel {
+            public void AddModelError(string key, LocalizedString errorMessage) {
+            }
+
+            public bool TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) where TModel : class {
+                return true;
             }
         }
     }
