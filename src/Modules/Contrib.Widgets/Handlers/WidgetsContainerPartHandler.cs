@@ -63,7 +63,9 @@ namespace Contrib.Widgets.Handlers {
                     var settings = part.Settings.GetModel<WidgetsContainerSettings>();
                     if (settings.TryToLocalizeItems) {
                         var culture = lPart.Culture;
-                        var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished());
+                        var widgets = _widgetManager.GetWidgets(part.ContentItem.Id, part.ContentItem.IsPublished())
+                            .Where(p => p.ContentItem.Has<LocalizationPart>() 
+                            && p.ContentItem.Get<LocalizationPart>().Culture == null);
                         foreach (var widget in widgets) {
                             // create build context shape for the widget
                             dynamic itemShape = CreateItemShape("Content_Edit");
@@ -75,13 +77,12 @@ namespace Contrib.Widgets.Handlers {
                             // set localization of current content item AFTER invoking BuildEditor on it otherwise BuildEditor does not translate taxonomy fileds
                             _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
 
-                            //var clone = _contentManager.Clone(widget.ContentItem);
                             // trigger this handler to manage content picker fields and media library picker fields
                             // parameter updater is empty to avoid unwanted changes and validations on fields
                             var ctx2 = new UpdateEditorContext(
                                 ctx1.Shape, 
                                 widget.ContentItem, 
-                                new EmptyUpdater(widget.ContentItem), 
+                                new EmptyUpdater(), 
                                 "", 
                                 _shapeFactory, 
                                 context.ShapeTable, 
@@ -123,10 +124,6 @@ namespace Contrib.Widgets.Handlers {
             }
         }
         private class EmptyUpdater : IUpdateModel {
-            private readonly ContentItem _ci;
-            public EmptyUpdater(ContentItem ci) {
-                _ci = ci;
-            }
             public void AddModelError(string key, LocalizedString errorMessage) {
             }
 
