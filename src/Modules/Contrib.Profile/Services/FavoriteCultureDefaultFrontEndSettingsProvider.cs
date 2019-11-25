@@ -1,7 +1,6 @@
-﻿using Contrib.Profile.Services;
-using Orchard.ContentManagement.MetaData;
+﻿using Orchard.ContentManagement.MetaData;
 
-namespace Laser.Orchard.StartupConfig.Services {
+namespace Contrib.Profile.Services {
     public class FavoriteCultureDefaultFrontEndSettingsProvider : DefaultFrontEndSettingsProviderBase {
         public FavoriteCultureDefaultFrontEndSettingsProvider(
             IContentDefinitionManager contentDefinitionManager)

@@ -1,6 +1,6 @@
-﻿using Contrib.Profile.Services;
-using Laser.Orchard.ContactForm.Models;
+﻿using Laser.Orchard.ContactForm.Models;
 using Laser.Orchard.ContactForm.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData.Models;
@@ -16,18 +16,18 @@ namespace Laser.Orchard.ContactForm.Controllers {
     public class ContactFormController : Controller, IUpdateModel {
         private readonly IContactFormService _contactFormService;
         private readonly IOrchardServices _orchardServices;
-        private readonly IFrontEndProfileService _frontEndProfileService;
+        private readonly IFrontEndEditService _frontEndEditeService;
         private readonly IContentManager _contentManager;
 
         public ContactFormController(
             IContactFormService contactFormService,
             IOrchardServices orchardServices,
-            IFrontEndProfileService frontEndProfileService,
+            IFrontEndEditService frontEndEditService,
             IContentManager contentManager) {
 
             _contactFormService = contactFormService;
             _orchardServices = orchardServices;
-            _frontEndProfileService = frontEndProfileService;
+            _frontEndEditeService = frontEndEditService;
             _contentManager = contentManager;
         }
 
@@ -57,7 +57,7 @@ namespace Laser.Orchard.ContactForm.Controllers {
                 var stubItem = _contentManager.Get<ContactFormPart>(id);
                 // then we will try to launch UPdateEditor to test recaptcha.
                 if (stubItem != null) {
-                    _frontEndProfileService.BuildFrontEndShape(
+                    _frontEndEditeService.BuildFrontEndShape(
                         _contentManager.UpdateEditor(stubItem, this),
                         OnlyShowReCaptcha,
                         NoFields);
@@ -65,6 +65,7 @@ namespace Laser.Orchard.ContactForm.Controllers {
                         // consider logging
                         // update of recaptcha failed
                         _orchardServices.TransactionManager.Cancel();
+                        TempData["form"] = Request.Form;
                         return this.RedirectLocal(redirectionUrl, "~/");
                     }
                 }

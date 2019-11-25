@@ -11,7 +11,6 @@ using Orchard.ContentManagement.Handlers;
 using System.Xml.Linq;
 using Orchard.Data;
 using Laser.Orchard.TemplateManagement.Models;
-using Contrib.Profile.Services;
 using Orchard.ContentManagement.MetaData.Models;
 using System;
 
@@ -23,7 +22,7 @@ namespace Laser.Orchard.ContactForm.Drivers {
         private readonly INotifier _notifier;
         private readonly IRepository<TemplatePartRecord> _repositoryTemplatePartRecord;
         private readonly IContentManager _contentManager;
-        private readonly IFrontEndProfileService _frontEndProfileService;
+        private readonly IFrontEndEditService _frontEndEditService;
 
         public Localizer T { get; set; }
 
@@ -33,14 +32,14 @@ namespace Laser.Orchard.ContactForm.Drivers {
             IStorageProvider storageProvider, 
             IRepository<TemplatePartRecord> repositoryTemplatePartRecord, 
             IContentManager contentManager,
-            IFrontEndProfileService frontEndProfileService) {
+            IFrontEndEditService frontEndProfileService) {
 
             _contentManager = contentManager;
             _storageProvider = storageProvider;
             _utilsServices = utilsServices;
             _notifier = notifier;
             _repositoryTemplatePartRecord = repositoryTemplatePartRecord;
-            _frontEndProfileService = frontEndProfileService;
+            _frontEndEditService = frontEndProfileService;
         }
 
         Func<ContentTypePartDefinition, string, bool> OnlyShowReCaptcha = 
@@ -72,7 +71,7 @@ namespace Laser.Orchard.ContactForm.Drivers {
                 return ContentShape("Parts_ContactForm",
                     () => shapeHelper.Parts_ContactForm(
                         ContactForm: viewModel,
-                        AdditionalShape: _frontEndProfileService.BuildFrontEndShape(
+                        AdditionalShape: _frontEndEditService.BuildFrontEndShape(
                             _contentManager.BuildEditor(part),
                             OnlyShowReCaptcha,
                             NoFields)
