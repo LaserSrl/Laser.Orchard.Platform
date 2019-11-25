@@ -337,10 +337,6 @@
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
       <Name>Laser.Orchard.Commons</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
-      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
-      <Name>Contrib.Profile</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessManagement\BadgeInfo.cs" />
@@ -381,6 +377,8 @@
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
     <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
@@ -413,7 +411,6 @@
     <Compile Include="Projections\OwnerStringForm.cs" />
     <Compile Include="RazorBase\Services\IRazorBaseService.cs" />
     <Compile Include="Services\IApiKeySettingService.cs" />
-    <Compile Include="Services\FavoriteCultureDefaultFrontEndSettingsProvider.cs" />
     <Compile Include="Services\TagForCache.cs" />
     <Compile Include="Settings\DisplayTextPartSettingsHooks.cs" />
     <Compile Include="Settings\JsonDataTablePartSettingsHooks.cs" />
