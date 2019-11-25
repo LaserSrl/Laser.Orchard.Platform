@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 using System.Web;
 using System.Web.Routing;
 using Contrib.Widgets.Models;
@@ -74,12 +75,13 @@ namespace Contrib.Widgets.Handlers {
                             // set localization of current content item AFTER invoking BuildEditor on it otherwise BuildEditor does not translate taxonomy fileds
                             _localizationService.SetContentCulture(widget.ContentItem, culture.Culture);
 
+                            //var clone = _contentManager.Clone(widget.ContentItem);
                             // trigger this handler to manage content picker fields and media library picker fields
                             // parameter updater is empty to avoid unwanted changes and validations on fields
                             var ctx2 = new UpdateEditorContext(
                                 ctx1.Shape, 
                                 widget.ContentItem, 
-                                new EmptyUpdater(), 
+                                new EmptyUpdater(widget.ContentItem), 
                                 "", 
                                 _shapeFactory, 
                                 context.ShapeTable, 
@@ -121,11 +123,15 @@ namespace Contrib.Widgets.Handlers {
             }
         }
         private class EmptyUpdater : IUpdateModel {
+            private readonly ContentItem _ci;
+            public EmptyUpdater(ContentItem ci) {
+                _ci = ci;
+            }
             public void AddModelError(string key, LocalizedString errorMessage) {
             }
 
             public bool TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) where TModel : class {
-                return true;
+                return false;
             }
         }
     }
