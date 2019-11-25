@@ -154,7 +154,7 @@
     <None Include="bundleconfig.json" />
     <Content Include="packages.config" />
     <Content Include="Contents\Web.config" />
-    <Content Include="Views\EditorTemplates\Parts.HubSpot.Settings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\HubSpotSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">

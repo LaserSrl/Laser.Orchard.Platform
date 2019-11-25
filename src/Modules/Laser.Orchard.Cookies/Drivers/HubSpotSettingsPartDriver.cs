@@ -9,7 +9,7 @@ namespace Laser.Orchard.Cookies.Drivers {
 
         private const string templateName = "Parts/HubSpotSettings";
         public Localizer T { get; set; }
-        protected override string Prefix { get { return "HubSpotSettings"; } }
+        protected override string Prefix { get { return "HubSpotSettingsPartDriver"; } }
 
         public HubSpotSettingsPartDriver()
         {
@@ -28,8 +28,7 @@ namespace Laser.Orchard.Cookies.Drivers {
                     updater.TryUpdateModel(part, Prefix, null, null);
                 }
                 return shapeHelper.EditorTemplate(TemplateName: templateName, Model: part, Prefix: Prefix);
-            })
-              .OnGroup("HubSpot");
+            });
         }
     }
 }
