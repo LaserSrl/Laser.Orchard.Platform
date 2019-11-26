@@ -11,6 +11,8 @@ using Orchard.ContentManagement.Handlers;
 using System.Xml.Linq;
 using Orchard.Data;
 using Laser.Orchard.TemplateManagement.Models;
+using Orchard.ContentManagement.MetaData.Models;
+using System;
 
 namespace Laser.Orchard.ContactForm.Drivers {
     public class ContactFormDriver : ContentPartCloningDriver<ContactFormPart> {
@@ -20,17 +22,32 @@ namespace Laser.Orchard.ContactForm.Drivers {
         private readonly INotifier _notifier;
         private readonly IRepository<TemplatePartRecord> _repositoryTemplatePartRecord;
         private readonly IContentManager _contentManager;
+        private readonly IFrontEndEditService _frontEndEditService;
 
         public Localizer T { get; set; }
 
-        public ContactFormDriver(IUtilsServices utilsServices, INotifier notifier, IStorageProvider storageProvider, 
-            IRepository<TemplatePartRecord> repositoryTemplatePartRecord, IContentManager contentManager) {
+        public ContactFormDriver(
+            IUtilsServices utilsServices, 
+            INotifier notifier, 
+            IStorageProvider storageProvider, 
+            IRepository<TemplatePartRecord> repositoryTemplatePartRecord, 
+            IContentManager contentManager,
+            IFrontEndEditService frontEndProfileService) {
+
             _contentManager = contentManager;
             _storageProvider = storageProvider;
             _utilsServices = utilsServices;
             _notifier = notifier;
             _repositoryTemplatePartRecord = repositoryTemplatePartRecord;
+            _frontEndEditService = frontEndProfileService;
         }
+
+        Func<ContentTypePartDefinition, string, bool> OnlyShowReCaptcha = 
+            (ctpd, typeName) => 
+                ctpd.PartDefinition.Name == "ReCaptchaPart";
+        Func<ContentPartFieldDefinition, bool> NoFields =
+            (ctpd) =>
+                false;
 
         /// <summary>
         /// Defines the shapes required for the part's main view.
@@ -53,7 +70,11 @@ namespace Laser.Orchard.ContactForm.Drivers {
                 viewModel.AcceptPolicyUrlText = part.AcceptPolicyUrlText;
                 return ContentShape("Parts_ContactForm",
                     () => shapeHelper.Parts_ContactForm(
-                        ContactForm: viewModel
+                        ContactForm: viewModel,
+                        AdditionalShape: _frontEndEditService.BuildFrontEndShape(
+                            _contentManager.BuildEditor(part),
+                            OnlyShowReCaptcha,
+                            NoFields)
                         ));
 
             }

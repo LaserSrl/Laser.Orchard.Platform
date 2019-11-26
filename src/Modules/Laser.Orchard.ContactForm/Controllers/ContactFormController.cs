@@ -1,25 +1,42 @@
 ﻿using Laser.Orchard.ContactForm.Models;
 using Laser.Orchard.ContactForm.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
+using Orchard.ContentManagement;
+using Orchard.ContentManagement.MetaData.Models;
+using Orchard.Localization;
 using Orchard.Mvc.Extensions;
 using System;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.ContactForm.Controllers
-{
+namespace Laser.Orchard.ContactForm.Controllers {
     /// <summary>
     /// The controller that handles all contact form requests.
     /// </summary>
-    public class ContactFormController : Controller
-    {
+    public class ContactFormController : Controller, IUpdateModel {
         private readonly IContactFormService _contactFormService;
         private readonly IOrchardServices _orchardServices;
+        private readonly IFrontEndEditService _frontEndEditeService;
+        private readonly IContentManager _contentManager;
 
-        public ContactFormController(IContactFormService contactFormService, IOrchardServices orchardServices)
-        {
+        public ContactFormController(
+            IContactFormService contactFormService,
+            IOrchardServices orchardServices,
+            IFrontEndEditService frontEndEditService,
+            IContentManager contentManager) {
+
             _contactFormService = contactFormService;
             _orchardServices = orchardServices;
+            _frontEndEditeService = frontEndEditService;
+            _contentManager = contentManager;
         }
+
+        Func<ContentTypePartDefinition, string, bool> OnlyShowReCaptcha =
+            (ctpd, typeName) =>
+                ctpd.PartDefinition.Name == "ReCaptchaPart";
+        Func<ContentPartFieldDefinition, bool> NoFields =
+            (ctpd) =>
+                false;
 
         /// <summary>
         /// Sends the contact email.
@@ -31,11 +48,27 @@ namespace Laser.Orchard.ContactForm.Controllers
         /// <param name="confirmEmail">The actual email string</param>
         /// <param name="subject">The subject.</param>
         /// <param name="message">The message.</param>
-        
-        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1, int Accept = 0)
-        {
+
+        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1, int Accept = 0) {
             var redirectionUrl = returnUrl;
             try {
+
+                // we want to create a new contentItem of the same type as the form we are posting
+                var stubItem = _contentManager.Get<ContactFormPart>(id);
+                // then we will try to launch UPdateEditor to test recaptcha.
+                if (stubItem != null) {
+                    _frontEndEditeService.BuildFrontEndShape(
+                        _contentManager.UpdateEditor(stubItem, this),
+                        OnlyShowReCaptcha,
+                        NoFields);
+                    if (!ModelState.IsValid) {
+                        // consider logging
+                        // update of recaptcha failed
+                        _orchardServices.TransactionManager.Cancel();
+                        TempData["form"] = Request.Form;
+                        return this.RedirectLocal(redirectionUrl, "~/");
+                    }
+                }
                 ContactFormRecord contactForm = _contactFormService.GetContactForm(id);
                 if (contactForm.AcceptPolicy && Accept != 1) {
                     TempData["form"] = Request.Form;
@@ -55,14 +88,21 @@ namespace Laser.Orchard.ContactForm.Controllers
                         redirectionUrl = contactForm.ThankyouPage;
                     }
                 }
-            } catch 
-            {
+            } catch {
                 // L'eccezione serve solo per la chiamata via APIController, mentre per la chiamata via form è già stata loggata e salvata nel Notifier
                 TempData["form"] = Request.Form;
                 redirectionUrl = returnUrl;
             }
 
             return this.RedirectLocal(redirectionUrl, "~/");
+        }
+
+        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) {
+            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
+        }
+
+        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage) {
+            ModelState.AddModelError(key, errorMessage.ToString());
         }
     }
 }
