@@ -181,17 +181,17 @@ namespace Contrib.Widgets.Drivers {
 
 
 
-        protected override void Imported(WidgetsContainerPart part, ImportContentContext context) {
-            var hostId = context.Attribute(part.PartDefinition.Name, "HostId");
-            if (hostId != null) {
-                CloneWidgets(Convert.ToInt32(hostId), part.ContentItem);
-            }
-        }
+        //protected override void Imported(WidgetsContainerPart part, ImportContentContext context) {
+        //    var hostId = context.Attribute(part.PartDefinition.Name, "HostId");
+        //    if (hostId != null) {
+        //        CloneWidgets(Convert.ToInt32(hostId), part.ContentItem);
+        //    }
+        //}
 
-        protected override void Exporting(WidgetsContainerPart part, ExportContentContext context) {
-            // memorizzo l'id della pagina sorgente
-            context.Element(part.PartDefinition.Name).SetAttributeValue("HostId", part.Id.ToString());
-        }
+        //protected override void Exporting(WidgetsContainerPart part, ExportContentContext context) {
+        //    // memorizzo l'id della pagina sorgente
+        //    context.Element(part.PartDefinition.Name).SetAttributeValue("HostId", part.Id.ToString());
+        //}
 
         #region [ Clone Functionality ]
 
