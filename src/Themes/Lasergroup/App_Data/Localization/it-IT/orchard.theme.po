@@ -329,6 +329,10 @@ msgid "Comments have been disabled for this content."
 msgstr "I commenti sono stati disabilitati per questo contenuto."
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "log on"
+msgstr "accedere"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
 msgid "Submit Comment"
 msgstr "Invia commento"
 

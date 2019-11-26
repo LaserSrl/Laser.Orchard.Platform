@@ -20,26 +20,37 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
     public class ProviderConfigurationService : IProviderConfigurationService {
         private readonly IRepository<ProviderConfigurationRecord> _repository;
-
         private IEnumerable<ProviderConfigurationRecord> _repositorystatic;
+
+        private IEnumerable<ProviderConfigurationRecord> RepositoryStatic {
+            get {
+                if(_repositorystatic == null) {
+                    syncRepositoryStatic();
+                }
+                return _repositorystatic;
+            }
+            set {
+                _repositorystatic = value;
+            }
+        }
 
         public ProviderConfigurationService(IRepository<ProviderConfigurationRecord> repository) {
             _repository = repository;
-            syncRepositoryStatic();
+            RepositoryStatic = null;
         }
 
         private void syncRepositoryStatic() {
-            _repositorystatic = _repository.Table.ToList();
+            RepositoryStatic = _repository.Table.ToList();
         }
 
         public IEnumerable<ProviderConfigurationRecord> GetAll() {
-            return _repositorystatic;
+            return RepositoryStatic;
         }
 
         public ProviderConfigurationRecord Get(string providerName) {
             if (providerName == null)
                 return null;
-            return _repositorystatic.FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
+            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
         }
 
         public void Delete(int id) {
@@ -48,10 +59,10 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         public bool VerifyUnicity(string providerName) {
-            return _repositorystatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
+            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
         }
         public bool VerifyUnicity(string providerName, int id) {
-            return _repositorystatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
+            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
         }
 
         public void Create(ProviderConfigurationCreateParams parameters) {
@@ -68,7 +79,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         public void Edit(CreateProviderViewModel parameters) {
-            var rec = _repositorystatic.FirstOrDefault(o => o.Id == parameters.Id);
+            var rec = RepositoryStatic.FirstOrDefault(o => o.Id == parameters.Id);
             rec.DisplayName = parameters.DisplayName;
             rec.IsEnabled = parameters.IsEnabled ? 1 : 0;
             rec.ProviderIdentifier = parameters.ProviderIdentifier;
@@ -83,7 +94,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
         public CreateProviderViewModel Get(Int32 id) {
             var cpvm = new CreateProviderViewModel();
-            var prec = _repositorystatic.FirstOrDefault(o => o.Id == id);
+            var prec = RepositoryStatic.FirstOrDefault(o => o.Id == id);
             cpvm.Id = prec.Id;
             cpvm.DisplayName = prec.DisplayName;
             cpvm.IsEnabled = prec.IsEnabled == 1;

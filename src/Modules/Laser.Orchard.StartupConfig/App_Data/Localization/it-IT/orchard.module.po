@@ -13,8 +13,12 @@ msgid "You do not have permission to access this content."
 msgstr "Mancano i permessi per accedere a questo contenuto."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
+msgid "Command Line"
+msgstr "Linea di Comando"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
 msgid "Command line"
-msgstr "Linea di comando"
+msgstr "Linea di Comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
@@ -39,6 +43,10 @@ msgstr "Pubblica a Cascata"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "Custom View to use on Preview of selected content pickerfield items"
 msgstr "Vista (cshtml) personalizzata da utilizzare nella preview degli elementi selezionati dal Content Picker Field"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "Custom View to use on Summary"
+msgstr "Vista personalizzata da utilizzare nel Riepilogo"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "If checked, when the ContentItem is published also other ContentItems connected to it through the Content Picker Field will be published."

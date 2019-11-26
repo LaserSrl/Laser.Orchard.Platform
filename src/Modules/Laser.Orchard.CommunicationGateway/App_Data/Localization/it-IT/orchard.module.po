@@ -561,6 +561,10 @@ msgid "Couldn't create content"
 msgstr "Non è stato possibile creare il contenuto"
 
 msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
+msgid "Create Advertising Id: {0} - Title: {1}"
+msgstr "Creare Comunicato Id: {0} - Titolo: {1}"
+
+msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
 msgid "Creating CommunicationAdvertising failed: {0}"
 msgstr "Creazione del Comunicato non riuscita: {0}"
 
