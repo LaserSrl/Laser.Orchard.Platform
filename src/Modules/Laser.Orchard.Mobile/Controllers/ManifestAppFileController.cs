@@ -36,11 +36,7 @@ namespace Laser.Orchard.Mobile.Controllers {
                 return new HttpNotFoundResult();
             }
 
-            return new ContentResult() {
-                ContentType = ContentType,
-                ContentEncoding = Encoding.UTF8,
-                Content = content.FileContent
-            };
+            return File(Encoding.UTF8.GetBytes(content.FileContent), ContentType, "apple-app-site-association");
         }
     }
 }
