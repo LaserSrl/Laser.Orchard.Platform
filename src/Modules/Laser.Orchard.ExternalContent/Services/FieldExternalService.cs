@@ -133,6 +133,9 @@ namespace Laser.Orchard.ExternalContent.Services {
                 }
             }
 
+            if (finalUrl.Count(f => f == '?') == 1 && finalUrl[finalUrl.Length - 1] == '?')
+                finalUrl = finalUrl.TrimEnd('?'); //delete the last ? if there aren t parameter in query string
+
             return finalUrl;
         }
         private string GetHeadersText(Dictionary<string, object> contesto, string additionalHeadersText) {
@@ -506,7 +509,6 @@ namespace Laser.Orchard.ExternalContent.Services {
             }
             else {
                 output = xmlpage;
-                Logger.Error("file not exist ->" + myXmlFile);
             }
             string xml = RemoveAllNamespaces(output);
             XmlDocument doc = new XmlDocument();
