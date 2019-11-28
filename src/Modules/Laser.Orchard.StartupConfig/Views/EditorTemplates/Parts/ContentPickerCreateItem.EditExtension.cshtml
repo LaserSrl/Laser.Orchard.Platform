@@ -2,13 +2,16 @@
 
 @using Orchard;
 @using Orchard.ContentManagement;
+@using Orchard.Environment.Configuration;
 
 @{
     Style.Require("ContentPickerCreation").AtHead();
     Script.Require("ContentPickerThemeHiding").AtHead();
 
     IOrchardServices _orchardServices;
+    ShellSettings _shellSettings;
     WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+    WorkContext.TryResolve<ShellSettings>(out _shellSettings);
 }
 
 <fieldset id="cp-creation">
@@ -22,8 +25,25 @@
     <script type="text/javascript">
         //<![CDATA[
         $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const callback = urlParams.get('callback');
+            var basePath = "@Url.Content("~/")";
+            var contentType = "@Model.TypeContent";
+            if (callback != null && callback.startsWith("_contentpickercreate_")) {
+                injectThemeHidingCss(basePath);
+
+                const cpfName = urlParams.get('namecpfield');
+                const ctName = urlParams.get('selectedct');
+
+                window.sessionStorage.setItem("cpfCreationSession", "true");
+                window.sessionStorage.setItem("cpfName", cpfName);
+                window.sessionStorage.setItem("ctName", ctName);
+            } else if (window.sessionStorage.getItem("cpfCreationSession") != null) {
+                injectThemeHidingCss(basePath);
+            }
+
             if (window.sessionStorage.getItem("cpfCreationSession") != null) {
-                enableSelectButton();
+                enableSelectButton(contentType);
             }
 
             // Disabilito il tasto di selezione se il contenuto non è stato ancora salvato
@@ -63,18 +83,6 @@
                 window.close();
             });
         });
-
-        function injectThemeHidingCss() {
-            $('head').append('<link href="/Orchard/Modules/Laser.Orchard.StartupConfig/styles/contentPickerCreation/ContentPickerThemeHiding.css" rel="stylesheet" type="text/css" />');
-        }
-
-        function enableSelectButton() {
-            if (window.sessionStorage.getItem("ctName") == '@Model.TypeContent') {
-                $('#cp-creation').show();
-            } else {
-                $('#cp-creation').hide();
-            }
-        }
     //]]>
     </script>
 }

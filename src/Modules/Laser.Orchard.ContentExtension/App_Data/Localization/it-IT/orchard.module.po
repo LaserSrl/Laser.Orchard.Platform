@@ -177,6 +177,10 @@ msgid "The text that should appear in the menu."
 msgstr "Il testo che dovrebbe apparire nel menu."
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "check your input!"
+msgstr "verificare i valori inseriti!"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "ContentType Permission settings updated."
 msgstr "Impostazione dei permessi per il tipo di contenuto aggiornate."
 

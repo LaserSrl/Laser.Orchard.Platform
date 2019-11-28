@@ -137,6 +137,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\laser-tinymce.js" />
+    <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -335,10 +337,6 @@
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
       <Name>Laser.Orchard.Commons</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
-      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
-      <Name>Contrib.Profile</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessManagement\BadgeInfo.cs" />
@@ -371,11 +369,14 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
     <Compile Include="MediaExtensions\UserFolder\Drivers\OwnedFolderPartDriver.cs" />
     <Compile Include="MediaExtensions\UserFolder\Migrations.cs" />
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
     <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
@@ -408,7 +409,6 @@
     <Compile Include="Projections\OwnerStringForm.cs" />
     <Compile Include="RazorBase\Services\IRazorBaseService.cs" />
     <Compile Include="Services\IApiKeySettingService.cs" />
-    <Compile Include="Services\FavoriteCultureDefaultFrontEndSettingsProvider.cs" />
     <Compile Include="Services\TagForCache.cs" />
     <Compile Include="Settings\DisplayTextPartSettingsHooks.cs" />
     <Compile Include="Settings\JsonDataTablePartSettingsHooks.cs" />
@@ -467,6 +467,13 @@
     <Compile Include="TaxonomiesExtensions\Projections\SelectTermsForm.cs" />
     <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
+    <Compile Include="TinyMceEnhancement\Constants.cs" />
+    <Compile Include="TinyMceEnhancement\ResourceManifest.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceEnhancementService.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceShapeDisplayEvent.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsDriver.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsHandler.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsPart.cs" />
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
     <Compile Include="Tokens\ColorPickerTokens.cs" />
@@ -617,6 +624,7 @@
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
