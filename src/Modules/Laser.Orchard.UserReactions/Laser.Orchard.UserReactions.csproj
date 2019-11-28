@@ -79,6 +79,7 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web" />
@@ -201,6 +202,7 @@
     <Compile Include="Projections\UserReactionsQueryFilterFormValidation.cs" />
     <Compile Include="Projections\UserReactionsQuerySortForm.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Security\UserReactionsPermission.cs" />
     <Compile Include="Services\UserReactionsService.cs" />
     <Compile Include="Enums.cs" />

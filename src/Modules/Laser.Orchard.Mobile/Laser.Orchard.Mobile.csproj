@@ -67,7 +67,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Schema, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.Schema.1.0.11\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
@@ -217,6 +219,7 @@
     <Content Include="Views\EditorTemplates\Parts\Users.LastDeviceUserDataProviderSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\BannerAgent_Edit.cshtml" />
     <Content Include="Views\Parts\BannerAgent.cshtml" />
+    <Content Include="Views\ManifestAppFileAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BannerAgentManifest.cs" />
@@ -224,6 +227,8 @@
     <Compile Include="Controllers\ContactListController.cs" />
     <Compile Include="Controllers\CountPanelController.cs" />
     <Compile Include="Controllers\ExternalPushController.cs" />
+    <Compile Include="Controllers\ManifestAppFileAdminController.cs" />
+    <Compile Include="Controllers\ManifestAppFileController.cs" />
     <Compile Include="Controllers\SmsDeliveryReportController.cs" />
     <Compile Include="Controllers\TaxonomiePushController.cs" />
     <Compile Include="Controllers\TransferDeliveryReportController.cs" />
@@ -251,17 +256,22 @@
     <Compile Include="Handlers\SmsScheduledTaskHandler.cs" />
     <Compile Include="Handlers\UserPwdRecoveryPartGDPRHandler.cs" />
     <Compile Include="Handlers\UserPwdRecoveryPartHandler.cs" />
+    <Compile Include="ManifestAppFileMigration.cs" />
     <Compile Include="MigrationBannerAgent.cs" />
     <Compile Include="Models\BannerAgentPart.cs" />
     <Compile Include="Handlers\UUIDGDPRHandler.cs" />
     <Compile Include="Models\LastDeviceUserDataProviderSettingsPart.cs" />
     <Compile Include="Models\LatestUUIDForUserRecord.cs" />
+    <Compile Include="Models\ManifestAppFileRecord.cs" />
     <Compile Include="Models\MobileContactPart.cs" />
+    <Compile Include="Models\NotificationsCounters.cs" />
     <Compile Include="Models\PushState.cs" />
     <Compile Include="Models\SentRecord.cs" />
     <Compile Include="Models\SmsGatewayPart.cs" />
     <Compile Include="Models\SmsPlaceholdersSettingsPart.cs" />
     <Compile Include="Models\UserPwdRecoveryPart.cs" />
+    <Compile Include="Navigation\ManifestAppFileNavigation.cs" />
+    <Compile Include="PermissionsManifestAppFile\ManifestAppFilePermissions.cs" />
     <Compile Include="Projections\DeviceTypeFilter.cs" />
     <Compile Include="Projections\DeviceTypeForm.cs" />
     <Compile Include="RedirectResourceManifest.cs" />
@@ -272,6 +282,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\LastDeviceUserDataProvider.cs" />
+    <Compile Include="Services\ManifestAppFileServices.cs" />
     <Compile Include="Services\MissingSmsSettingsBanner.cs" />
     <Compile Include="Services\PushGatewayService.cs" />
     <Compile Include="Services\SmsCommunicationService.cs" />
@@ -279,7 +290,7 @@
     <Compile Include="Services\UserPwdRecoveryDefaultFrontEndSettingsProvider.cs" />
     <Compile Include="SMSGatewayMigration.cs" />
     <Compile Include="SmsMigrations.cs" />
-    <Compile Include="Projections\DeviceFilter.cs" />
+    <Compile Include="Projections\DeveiceFilter.cs" />
     <Compile Include="Handlers\SmsSettingsPartHandler.cs" />
     <Compile Include="Handlers\UserDeviceHandler.cs" />
     <Compile Include="Models\UserDeviceRecord.cs" />
@@ -287,9 +298,9 @@
     <Compile Include="Models\SmsSettingsPart.cs" />
     <Compile Include="Settings\SmsSettingsPartHooks.cs" />
     <Compile Include="ViewModels\DeliveryReportVM.cs" />
+    <Compile Include="ViewModels\ManifestAppFileViewModel.cs" />
     <Compile Include="ViewModels\PhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\PushMessage.cs" />
-    <Compile Include="ViewModels\PushNotificationVM.cs" />
     <Compile Include="ViewModels\SmsDeliveryReportResultVM.cs" />
     <Compile Include="ViewModels\SmsGatewayVM.cs" />
     <Compile Include="WorkFlows\PushEditForm.cs" />

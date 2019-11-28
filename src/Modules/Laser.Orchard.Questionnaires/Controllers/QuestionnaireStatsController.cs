@@ -99,6 +99,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
             IContentQuery<ContentItem> contentQuery = _orchardServices.ContentManager.Query()
                                                                                      .ForType("Questionnaire")
+                                                                                     .ForVersion(VersionOptions.Latest)
                                                                                      .OrderByDescending<CommonPartRecord>(cpr => cpr.ModifiedUtc);
             if (!string.IsNullOrEmpty(searchExpression))
                 contentQuery = contentQuery.Where<TitlePartRecord>(w => w.Title.Contains(searchExpression));

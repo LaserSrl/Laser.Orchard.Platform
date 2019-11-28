@@ -12,5 +12,9 @@ namespace Laser.Orchard.Reporting.ViewModels {
         public string ColorsArray { get; set; }
         public List<AggregationResult> Data { get; set; }
         public int HtmlId { get; set; }
+        /// <summary>
+        /// Additional width for chart expressed in em units to compensate legend width.
+        /// </summary>
+        public int AdditionalChartWidth { get; set; }
     }
 }

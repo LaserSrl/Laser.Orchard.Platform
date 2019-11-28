@@ -4,12 +4,13 @@
     Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord> _cultureRepository;
     if (WorkContext.TryResolve<Orchard.Data.IRepository<Orchard.Localization.Records.CultureRecord>>(out _cultureRepository)) {
         var siteAvailableCultures = _cultureRepository.Table.ToList();
-    <fieldset>
-        <legend>@Html.LabelFor(m => m.Culture, T("Favorite Culture"))</legend>
-        @if (siteAvailableCultures.Count() > 1) {
-            @Html.DropDownListFor(m => m.Culture, new SelectList(siteAvailableCultures, "Culture", "Culture", siteAvailableCultures.SingleOrDefault(w => w.Id.Equals(Model.Culture_Id))))
+        if (siteAvailableCultures.Count() > 1) {
+            <fieldset>
+                <legend>@Html.LabelFor(m => m.Culture, T("Favorite Culture"))</legend>
+
+                @Html.DropDownListFor(m => m.Culture, new SelectList(siteAvailableCultures, "Culture", "Culture", siteAvailableCultures.SingleOrDefault(w => w.Id.Equals(Model.Culture_Id))))
+                @Html.ValidationMessageFor(m => m.Culture)
+            </fieldset>
         }
-        @Html.ValidationMessageFor(m => m.Culture)
-    </fieldset>
     }
 }

@@ -89,7 +89,7 @@ button, .button, a.button {
     border-radius: 3px;
     box-shadow: none;
     height: 30px;
-    line-height: 18px;
+    line-height: 20px;
     min-width: 110px;
     font-size: 14px;
 }
@@ -137,6 +137,10 @@ button:active, .button:active, a.button:active {
 button:hover, .button:hover, a.button:hover {
     background: #ee726f;
     color: #fff !important;
+}
+
+.button.disabled, .button.disabled:visited, .button.disabled:hover, .button.disabled:active, .button.disabled:focus {
+    color: #ababab !important;
 }
 
 select, textarea, input.text, input.textMedium, input.text-medium, input.text-small, input.text-box, .ui-autocomplete-input {
@@ -1222,7 +1226,8 @@ fieldset {
 .button.grey,
 #btn-CalendarEvent_Gallery_Field_Ids.button,
 .ui-datepicker-current,
-.ui-datepicker-close {
+.ui-datepicker-close,
+.selectContentTypeBtn {
     background: #00a65a !important;
     border-radius: 3px;
 }
@@ -1357,25 +1362,25 @@ fieldset {
     font-size: 1.0em;
 }
 
-    .widgets-listed .widgets-zone-widgets h3 a,
-    .widgets-listed h2,
-    .properties h3 a {
-        color: #1c2a37;
-        font-weight: bolder;
-    }
+.widgets-listed .widgets-zone-widgets h3 a,
+.widgets-listed h2,
+.properties h3 a {
+    color: #1c2a37;
+    font-weight: bolder;
+}
 
-    .widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a {
-        color: #888;
-    }
+.widgets-listed .widgets-zone-widgets .widgets-other-layer h3 a {
+    color: #888;
+}
 
-    .widgets-listed .widgets-none h2 {
-        font-weight: normal;
-    }
+.widgets-listed .widgets-none h2 {
+    font-weight: normal;
+}
 
-    .widgets-listed .widgets-zone-widgets h3 a:hover,
-    .properties h3 a:hover {
-        color: #253849;
-    }
+.widgets-listed .widgets-zone-widgets h3 a:hover,
+.properties h3 a:hover {
+    color: #253849;
+}
 
 #widgets-available li a {
     border: 1px solid #eaeaea;
@@ -1401,6 +1406,7 @@ fieldset {
 .layout-widgets-placement ul.widgets li h3 {
     float: left;
 }
+
 .zone-local-navigation a {
     color: #1c2a37 !important;
 }
@@ -1435,6 +1441,93 @@ fieldset {
 .switch-for-switchable.detail-switched .summary-view {
     background: rgba(0, 0, 0, 0) url("Images/summary-view-on.png") no-repeat scroll left top;
 }
+
+/* Add padding to button because if not comment in widget layer the buttons overwrite other objects */
+.switch-for-switchable .switch-button-group {
+    padding: 34px 0px 4px 0px;
+}
+
+div#widgets-layer-visibility {
+    padding: 24px 0px 4px 0px;
+}
+
+/* fix display of widgets to prevent text overwriting in case of small screen */
+.widgets-listed .widgets-actions {
+    position: absolute;
+}
+
+#main li.widgets-this-layer h3 {
+    display: inline-block;
+    max-block-size: fit-content;
+    max-width: 40%;
+    vertical-align: middle;
+}
+
+#main li.widgets-other-layer h3 {
+    display: inline-block;
+    max-block-size: fit-content;
+    max-width: 40%;
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 1400px) {
+    #main li.widgets-this-layer h3 {
+        /*display: block;*/
+        max-width: 30%;
+    }
+
+    #main li.widgets-other-layer h3 {
+        /*display: block;*/
+        max-width:30%;
+    }
+}
+
+.widgets-listed .widgets-zone-widgets .widgets-move-somewhere {
+    padding-top: 5px;
+}
+
+li .widgets-this-layer form {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+li .widgets-other-layer form {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.widgets-listed .widgets-zone-widgets .widgets-this-layer div.contentType {
+    max-block-size: fit-content;
+    max-width: 30%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.widgets-this-layer .widgets-actions {
+    right: unset;
+    top: unset;
+    float: right;
+    right: 5px;
+    max-width: 35%;
+    top: 0px;
+}
+
+.widgets-listed .widgets-zone-widgets .widgets-other-layer div.contentType {
+    max-block-size: fit-content;
+    max-width: 30%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.widgets-other-layer .widgets-actions {
+    right: unset;
+    top: unset;
+    float: right;
+    right: 5px;
+    max-width:35%;
+    top:0px;
+}
+/*--------------------------*/
 
 .answer {
     width: 100%;
@@ -1630,4 +1723,9 @@ div#appliedFilters {
 .is-calendarsPicker, .is-timeEntry {
     min-width: 85px;
     width: 85px;
+}
+
+/*questionnaires*/
+.st-btn-fieldset {
+    vertical-align: initial;
 }

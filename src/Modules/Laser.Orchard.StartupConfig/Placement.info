@@ -62,5 +62,19 @@
   
   <!-- Settings -->
   <Place Parts_EnvironmentVariablesSettings_Edit="Content:1" />
-  
+
+  <!-- Content Picker Creation-->
+  <Place Fields_ContentPickerCreateItem_Edit="Content:2.3.1" />
+  <Place Parts_ContentPickerCreateItem_EditExtension="Sidebar:25.1" />
+
+  <!-- Per Item Cache -->
+  <Place Parts_PerItemCachePart="Content:11" />
+  <Place Parts_PerItemCachePart_Edit="Content:11" />
+
+
+  <!-- User OwnedFolder-->
+  <Place Parts_OwnedFolder_Edit="Content:9"/>
+
+  <!-- TinyMce Enhancement -->
+  <Place Parts_TinyMceSiteSettings_Edit="Content:1" />
 </Placement>

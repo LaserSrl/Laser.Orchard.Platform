@@ -1,4 +1,4 @@
-# Orchard resource strings - it-IT
+﻿# Orchard resource strings - it-IT
 # Copyright (c) 2019 Laser s.r.l.
 
 
@@ -329,6 +329,10 @@ msgid "Comments have been disabled for this content."
 msgstr "I commenti sono stati disabilitati per questo contenuto."
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
+msgid "log on"
+msgstr "accedere"
+
+msgctxt "~/Themes/Lasergroup/Views/Parts/CommentForm-BlogPost.cshtml"
 msgid "Submit Comment"
 msgstr "Invia commento"
 
@@ -346,7 +350,7 @@ msgstr "Aggiungi allegato"
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
 msgid "By clicking \"SEND\" I declare that I have read and understood "
-msgstr "Cliccando su "Invia" dichiaro di avere letto e compreso"
+msgstr "Cliccando su \"Invia\" dichiaro di avere letto e compreso"
 
 msgctxt "~/Themes/Lasergroup/Views/Parts/ContactForm-AfterContentContattiPage.cshtml"
 msgid "Comments or Inquiry"

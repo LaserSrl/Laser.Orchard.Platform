@@ -67,9 +67,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.IO.Compression">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -196,6 +193,7 @@
     <Compile Include="Models\GenericItem.cs" />
     <Compile Include="Models\ReportRecord.cs" />
     <Compile Include="Models\DataReportViewerPartRecord.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Providers\AggregationResult.cs" />
     <Compile Include="Providers\DescribeGroupByContext.cs" />

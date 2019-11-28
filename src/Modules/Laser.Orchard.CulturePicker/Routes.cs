@@ -29,6 +29,20 @@ namespace Laser.Orchard.CulturePicker {
                             {"area", "Laser.Orchard.CulturePicker"}
                         },
                         new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/CulturePicker/Settings",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.CulturePicker"},
+                            {"controller", "Admin"},
+                            {"action", "Settings"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.CulturePicker"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }

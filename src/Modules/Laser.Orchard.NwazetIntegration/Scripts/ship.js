@@ -5,6 +5,11 @@
     toggleCheckbox
         .change(function () {
             $(".billing-address").toggle($(this).val());
+            $('input[name^="shippingAddress."]').each(function(){
+                var input = $(this),
+                name = input.attr("name").substr(16);
+                $('input[name="billingAddress.' + name + '"]').val(input.val());
+            });
         });
     $('input[name^="shippingAddress."]')
         .change(function () {

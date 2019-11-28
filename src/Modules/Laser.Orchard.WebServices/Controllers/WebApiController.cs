@@ -113,7 +113,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                 }
 
                 if (!_orchardServices.Authorizer.Authorize(Permissions.ViewContent, content))
-                    return Json(_utilsServices.GetResponse(ResponseType.UnAuthorized), JsonRequestBehavior.AllowGet);
+                    return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
 
                 //_maxLevel = maxLevel;
                 json = _contentSerializationServices.GetJson(content, page, pageSize);
@@ -125,6 +125,14 @@ namespace Laser.Orchard.WebServices.Controllers {
                 return Json(_utilsServices.GetResponse(ResponseType.InvalidUser), JsonRequestBehavior.AllowGet);
             }
         }
+        private Response UnauthorizedResponse() {
+            var response = _utilsServices.GetResponse(ResponseType.UnAuthorized);
+            response.ResolutionAction = _authenticationService.GetAuthenticatedUser() == null ?
+                ResolutionAction.Login :
+                ResolutionAction.NoAction;
+            return response;
+        }
+
     }
 
     public class EnumStringConverter : Newtonsoft.Json.Converters.StringEnumConverter {

@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -157,6 +157,10 @@ msgid "CC"
 msgstr "CC"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Check send it as a queued job."
+msgstr "Selezionare per inviare tramite una coda."
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Custom template ID"
 msgstr "ID del modello personalizzato"
 
@@ -173,6 +177,18 @@ msgid "From"
 msgstr "Da"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "High"
+msgstr "Alta"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Low"
+msgstr "Bassa"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Normal"
+msgstr "Normale"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Notify at Read Email"
 msgstr "Notifica per l'avvenuta lettura."
 
@@ -187,6 +203,14 @@ msgstr "Altro:"
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Owner"
 msgstr "Proprietario"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Priority"
+msgstr "Priorità"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
+msgid "Queued"
+msgstr "In coda"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "ReplyTo"
@@ -226,7 +250,7 @@ msgstr "Inserire il mittente della mail."
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Specify reply to."
-msgstr "Specificare "Rispondi a"."
+msgstr "Specificare a chi inviare la risposta"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Template"

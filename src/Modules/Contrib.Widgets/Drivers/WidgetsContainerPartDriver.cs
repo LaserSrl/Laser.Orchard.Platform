@@ -181,17 +181,17 @@ namespace Contrib.Widgets.Drivers {
 
 
 
-        protected override void Imported(WidgetsContainerPart part, ImportContentContext context) {
-            var hostId = context.Attribute(part.PartDefinition.Name, "HostId");
-            if (hostId != null) {
-                CloneWidgets(Convert.ToInt32(hostId), part.ContentItem);
-            }
-        }
+        //protected override void Imported(WidgetsContainerPart part, ImportContentContext context) {
+        //    var hostId = context.Attribute(part.PartDefinition.Name, "HostId");
+        //    if (hostId != null) {
+        //        CloneWidgets(Convert.ToInt32(hostId), part.ContentItem);
+        //    }
+        //}
 
-        protected override void Exporting(WidgetsContainerPart part, ExportContentContext context) {
-            // memorizzo l'id della pagina sorgente
-            context.Element(part.PartDefinition.Name).SetAttributeValue("HostId", part.Id.ToString());
-        }
+        //protected override void Exporting(WidgetsContainerPart part, ExportContentContext context) {
+        //    // memorizzo l'id della pagina sorgente
+        //    context.Element(part.PartDefinition.Name).SetAttributeValue("HostId", part.Id.ToString());
+        //}
 
         #region [ Clone Functionality ]
 
@@ -241,6 +241,18 @@ namespace Contrib.Widgets.Drivers {
                     _services.ContentManager.Publish(widgetExPart.ContentItem);
                 }
 
+                // se il widget ha una LocalizationPart, la gestisco
+                var clonedLocalization = clonedContentitem.As<LocalizationPart>();
+                if (clonedLocalization != null) {
+                    clonedLocalization.Culture = destination.As<LocalizationPart>().Culture;
+                    var originalLocalization = widget.ContentItem.As<LocalizationPart>();
+                    if(originalLocalization.MasterContentItem == null) {
+                        clonedLocalization.MasterContentItem = widget.ContentItem;
+                    }
+                    else {
+                        clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
+                    }
+                }
             }
         }
         #endregion

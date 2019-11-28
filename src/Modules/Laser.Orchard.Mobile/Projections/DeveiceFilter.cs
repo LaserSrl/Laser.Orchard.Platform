@@ -31,7 +31,7 @@ namespace Laser.Orchard.Mobile.Projections {
         public void Describe(DescribeFilterContext describe) {
             describe
                     .For("User", T("User Device"), T("User Device"))
-                    .Element("UserDEvice", T("User device"), T("Filter for device associated to User"),
+                    .Element("UserDEvice", T("User Device"), T("Filter for device associated to User"),
                              ApplyFilter,
                              DisplayFilter
                              );

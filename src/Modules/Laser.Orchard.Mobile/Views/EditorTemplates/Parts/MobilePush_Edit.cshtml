@@ -7,6 +7,8 @@
     Script.Require("rcswitcher").AtHead();
     Style.Require("rcswitcher").AtHead();
     bool disabledElements = Model.PushSent;
+    var retryHelpText = T("Try to send again this notification to devices that encountered communication errors and to newly registered devices");
+    var retryHelpDisabled = T("Retry is running. Please wait for its completion and reload this page.");
 }
 @using (Script.Foot()) {
     <script type="text/javascript">
@@ -46,6 +48,29 @@
 
             $('#@Html.FieldIdFor(m => m.RecipientList)').focusout(function () {
                 updateSummary();
+            });
+
+            $('#retry-button').click(function () {
+                if (confirm("@T("Do you want to retry sending this notification to devices that encountered communication errors and to newly registered devices?").Text.Replace("\"", "\\\"")")) {
+                    $('#retry-button').attr("disabled", "disabled");
+                    $('#retry-button').attr("title", "@retryHelpDisabled.Text.Replace("\"", "\\\"")");
+                    $('#retry-button').css("opacity", "0.3");
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("SendNotificationAgain", "PushNotification", new { area = "Laser.Orchard.Mobile" })",
+                        data: { id: @Model.PartId, __RequestVerificationToken: aft },
+                        success: function (result) {
+                            if (result.result == "ko") {
+                                alert(result.error);
+                                $('#retry-button').removeAttr("disabled");
+                                $('#retry-button').attr("title", "@retryHelpText.Text.Replace("\"", "\\\"")");
+                                $('#retry-button').css("opacity", "1");
+                            } else if (result.result == "ok") {
+                                alert("@T("Retry successfully planned.")");
+                            }
+                        }
+                    });
+                }
             });
         });
 
@@ -187,22 +212,49 @@
         <div class="editor-label">@Html.LabelFor(m => m.DevicePush, T("To Device"))</div>
         <div class="editor-field">
             @Html.DropDownListFor(m => m.DevicePush, Model.ListOfDevice)
-        <span class="hint">@T("Select Devices")</span>
-    </div>
-</fieldset>
-@if (Model.PushAdvertising) {
-    <fieldset>
-        @Html.LabelFor(m => m.ToPush, T("Approved").Text, new { @class = "forcheckbox" })
-        @if (disabledElements == false) {
-            @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push" })
-            <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet sent.")
-        } else {
-            @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push", @disabled = "disabled" })
-            <i class="fa fa-check-circle" style="color: green"></i> @T("Message already sent.")
-            <div class="message message-Error">@T("This Push message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
-        }
+            <span class="hint">@T("Select Devices")</span>
+        </div>
     </fieldset>
-}
+    @if (Model.PushAdvertising) {
+        <fieldset>
+            @Html.LabelFor(m => m.ToPush, T("Approved").Text, new { @class = "forcheckbox" })
+            @if (disabledElements == false) {
+                @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push" })
+                <i class="fa fa-times-circle" style="color: red"></i> @T("Message not yet sent.")
+            }
+            else {
+                @Html.CheckBoxFor(model => model.ToPush, new { @class = "rcswitcher-checkbox-push", @disabled = "disabled" })
+                <i class="fa fa-check-circle" style="color: green"></i> @T("Message already sent.")
+                <div class="message message-Error">@T("This Push message has been already sent. You will be able to edit and save it, but it will not be sent anymore on next publish.")</div>
+            }
+        </fieldset>
+    }
+    @if (Model.SentCounters.TotSent > 0) {
+        <fieldset>
+            <legend>@T("Delivery Informations")</legend>
+            <label>@T("Summary (ok/tot)"): @Model.SentCounters.TotOk/@Model.SentCounters.TotSent</label>
+            <table>
+                <tr>
+                    <td>
+                        <label>
+                            @T("Communication errors"): @Model.SentCounters.TotToTryAgain
+                            <span style="width:3em">&nbsp;</span>
+                        </label>
+                    </td>
+                    @if (Model.SentCounters.TotToTryAgain > 0) {
+                        <td>
+                            @if (Model.SentCounters.TotPending == 0) {
+                                <button type="button" id="retry-button" title="@retryHelpText">@T("Retry")</button>
+                            }
+                            else {
+                                <button type="button" id="retry-button" disabled="disabled" style="opacity:0.3" title="@retryHelpDisabled">@T("Retry")</button>
+                            }
+                        </td>
+                    }
+                </tr>
+            </table>
+        </fieldset>
+    }
 
 </div>
 @if (Model.PushAdvertising) {
@@ -212,6 +264,7 @@
 }
 @if (Model.PushSent) {
     <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalPush", "CountPanel", new { area = "Laser.Orchard.Mobile", tot = Model.TargetDeviceNumber })|@Html.FieldIdFor(m => m.UseRecipientList)|@Html.FieldIdFor(m => m.RecipientList)" />
-} else {
+}
+else {
     <input type="text" style="display:none" name="CountUrl" value="@Url.Action("GetTotalPush", "CountPanel", new { area = "Laser.Orchard.Mobile" })|@Html.FieldIdFor(m => m.UseRecipientList)|@Html.FieldIdFor(m => m.RecipientList)" />
 }

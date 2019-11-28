@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -29,12 +29,32 @@ msgid "Allowed zones:"
 msgstr "Zone permesse:"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Check to attempt to replace items selected in this part with their translation in the main ContentItem's culture. This only applies if the main ContentItem has a LocalizationPart."
+msgstr "Selezionare per tentare di sostituire gli elementi selezionati in questa parte con la loro traduzione nella lingua del contenuto principale. Il tentativo di traduzione verrà effettuato solamente se il contenuto principale ha una LocalizationPart."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Hierarchical association:"
+msgstr "Associazione gerarchica"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Insert the JSON object defining Zones and Widgets. JSON example: [{ \"ZoneName\":\"AsideFirst\",\"Widgets\":[{\"WidgetType\":\"ContentWidget\"}]},{ \"ZoneName\":\"AfterContent\",\"Widgets\":[{\"WidgetType\":\"HtmlWidget\"},{\"WidgetType\":\"TextWidget\"}]}]"
+msgstr "Inserire un oggetto JSON che definisca Zone e Widget. Esempio: [{ \"ZoneName\":\"AsideFirst\",\"Widgets\":[{\"WidgetType\":\"ContentWidget\"}]},{ \"ZoneName\":\"AfterContent\",\"Widgets\":[{\"WidgetType\":\"HtmlWidget\"},{\"WidgetType\":\"TextWidget\"}]}]"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Select the zones where the widgets can be placed. If no zone is selected all of them will be available."
 msgstr "Selezionare le zone dove si potranno aggiungere dei widgets. Se nessuna zona è selezionata, saranno tutte disponibili."
 
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Select which types of widgets can be added to the content. If no widget type is selected all of them will be available."
 msgstr "Selezionare i tipi di widget che si potrà aggiungere al contenuto. Se nessun tipo è selezionato, saranno tutti disponibili."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Try to replace selected items with their correct localization."
+msgstr "Provare a sostituire gli elementi selezionati con la loro versione in lingua corretta."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Use hierarchical association"
+msgstr "Utilizzare l'associazione gerarchica"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "-- Choose a culture to copy widgets from its version --"
@@ -69,6 +89,18 @@ msgid "Remove"
 msgstr "Rimuovi"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled"
+msgstr "Pianificato"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled Archive"
+msgstr "Archiviazione Pianificata"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled Publish"
+msgstr "Pubblicazione Pianificata"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Unpublish"
 msgstr "Annulla Pubblicazione"
 
@@ -87,6 +119,10 @@ msgstr "Creazione del widget fallita: {0}"
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Editing widget failed: {0}"
 msgstr "Modifica del widget fallita: {0}"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Not authorized to manage container widgets"
+msgstr "Non autorizzato a gestire i widget di pagina"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Not authorized to manage widgets"

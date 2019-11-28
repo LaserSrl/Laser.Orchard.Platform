@@ -10,4 +10,4 @@ Features:
 		Name: Profile
         Description: Adds a set of functionalities to display and edit users' profile.
         Category: Social
-        Dependencies: Orchard.Users, Orchard.ContentTypes
+        Dependencies: Orchard.Users, Orchard.ContentTypes, Laser.Orchard.StartupConfig

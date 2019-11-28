@@ -20,9 +20,9 @@ Features:
 		Dependencies: 
 	Laser.Orchard.StartupConfig.MediaExtensions:
 		Name: Laser Media Extension
-		Description: Expose a route to transform images
+		Description: Expose a route to transform images and enable the ability to manage the owned default folder for a user
 		Category: Media
-		Dependencies: Orchard.MediaProcessing
+		Dependencies: Orchard.MediaLibrary,Orchard.MediaProcessing
 	Laser.Orchard.StartupConfig.WorkflowExtensions:
 		Name: Laser Workflow Extension
 		Description: Expose useful functions for workflows
@@ -58,3 +58,22 @@ Features:
 		Description: Part to show and edit a data table in json format
 		Category: Content
 		Dependencies: Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.ExtendAdminControllerToFrontend
+		Name: Laser Extend Admin Controller To Frontend
+		Description: Replicate some admin controller to Frontend
+		Category: Frontend
+	Laser.Orchard.StartupConfig.ContentPickerContentCreation
+		Name: Content Picker Field Content Creation
+		Description: Enable feature to create contents when using a Content Picker Field
+		Category: Content
+		Dependencies: Orchard.ContentPicker, Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.PerItemCache
+		Name: Per Item Cache Key
+		Description: Enable feature to add a cache key in a item
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.TinyMceEnhancement
+		Name: TinyMce Enhancement
+		Description: Enable feature to customize TinyMce
+		Category: Content
+		Dependencies: TinyMce, Laser.Orchard.StartupConfig

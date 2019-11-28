@@ -1,0 +1,42 @@
+﻿@using Orchard;
+@using Orchard.ContentManagement;
+
+@{
+    Style.Require("ContentPickerCreation").AtHead();
+    Script.Require("ContentPickerCreation").AtHead();
+
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+}
+
+
+<div id="divCreateNewButton_@Model.nameCPField" class="divCreateNewButton">
+    <div id="divCTNewButton_@Model.nameCPField" class="divCTNewButton">
+        <input type="button" value="Create New Item" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" class="selectContentTypeBtn button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+               onclick="divCreateNewButton.onSelectCTClick.apply(this)" data-multiple="@Model.multiple" />
+
+    </div>
+    <ul id="ulNewCT_@Model.nameCPField" class="ContentTypeOptions ui-corner-bottom contentItems">
+        @foreach (var ctName in Model.contentTypeList) {
+            var content = _orchardServices.ContentManager.New(ctName);
+            ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(content);
+            var url = Url.RouteUrl(metadata.CreateRouteValues);
+
+            <li id="li_SelectCTOptions_@String.Concat(Model.nameCPField, "_", ctName)" data-createurl="@url" data-namecpfield="@Model.nameCPField" data-ctname="@ctName"
+                onclick="$('#ulNewCT_@Model.nameCPField').toggle(); divCreateNewButton.CTOptionChoice.apply(this)">@ctName</li>
+            }
+
+    </ul>
+</div>
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            if ($('#ulNewCT_@Model.nameCPField li').length == 0) {
+                $('#selectContentTypeBtn_@Model.nameCPField').addClass('disabled');
+                $('#selectContentTypeBtn_@Model.nameCPField').attr('title', '@T("You are not authorized to create the content types associated to this field.")');
+            }
+        });
+    //]]>
+    </script>
+}

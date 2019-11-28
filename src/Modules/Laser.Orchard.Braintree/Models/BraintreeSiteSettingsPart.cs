@@ -32,5 +32,10 @@ namespace Laser.Orchard.Braintree.Models
             get { return this.Retrieve(x => x.PrivateKey); }
             set { this.Store(x => x.PrivateKey, value); }
         }
+
+        public string MerchantAccountId {
+            get { return this.Retrieve(x => x.MerchantAccountId); }
+            set { this.Store(x => x.MerchantAccountId, value); }
+        }
     }
 }

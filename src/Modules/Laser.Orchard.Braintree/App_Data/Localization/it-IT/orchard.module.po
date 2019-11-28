@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -25,6 +25,10 @@ msgid "If checked, it means this is a production environment."
 msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Merchant Account"
+msgstr "Account Negoziante"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Merchant ID"
 msgstr "ID del negoziante (Merchant ID)"
 
@@ -43,6 +47,10 @@ msgstr "Chiave pubblica"
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The Merchant Account ID identifying the specific merchant. Leave empty to use the default Merchant for the account."
+msgstr "L'ID dello specifico Account Negoziante. Lasciare questo campo vuoto per usare il Negoziante di default per l'account."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "The Merchant ID assigned by Braintree during merchant registration."
@@ -118,5 +126,5 @@ msgstr "Braintree ha una sua SDK."
 
 msgctxt "Laser.Orchard.Braintree.Services.MissingSettingsBanner"
 msgid "The <a href=\"{0}\">Braintree PayPal</a> settings need to be configured."
-msgstr "Le impostazioni del modulo <a href=\"{0}\">Braintree PayPal</a> devono ancora essere configurate."
+msgstr "Le impostazioni di <a href=\"{0}\">Braintree PayPal</a> devono essere configurate."
 

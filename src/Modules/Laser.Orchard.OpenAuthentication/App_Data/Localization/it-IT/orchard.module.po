@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -154,7 +154,7 @@ msgstr "Identificativo"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "In order to enable \"Auto merge\", Users registration settings have to be in one of these status:"
-msgstr "Per potere abilitare la funzionalità di merge automatico degli utenti, le impostazioni per la registrazione utenti devono essere in uno di questi stati:"
+msgstr "Per poter abilitare il \"merge automatico\", l'impostazione di registrazione degli utenti deve essere in uno dei seguenti stati:"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Key"
@@ -190,7 +190,7 @@ msgstr "Secret"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "There are no providers registered. Why not <a href=\"{0}\">register one</a>?"
-msgstr "Non sono presenti provider registrati. Perché non <a href=\"{0}\">registrarne uno</a>?"
+msgstr "Nessun servizio registrato. Vuoi <a href=\"{0}\">registrarne uno</a>?"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "User"

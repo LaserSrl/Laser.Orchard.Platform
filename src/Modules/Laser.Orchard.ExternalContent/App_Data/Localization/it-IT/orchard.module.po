@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -9,12 +9,20 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Additional headers for web request"
+msgstr "Ulteriori header per la richiesta web"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Attach certificate to request"
 msgstr "Usa un certificato per la richiesta HTTP"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Body Request"
 msgstr "Corpo della richiesta"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Cache"
+msgstr "Cache"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Cache duration"
@@ -50,7 +58,7 @@ msgstr "Il valore di default è JSON"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Default is RestWebService"
-msgstr "Il default è "Rest Web Service""
+msgstr "Il default è RestWebService"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "External URL"
@@ -63,6 +71,10 @@ msgstr "URL esterno / eseguibile"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Generate on L For Mobile"
 msgstr "Genera su L For Mobile"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "HTTP Request"
+msgstr "Richiesta HTTP (HTTP Request)"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "If checked cache will be stored also in filesystem (in folder/App_Data/cache)."
@@ -101,6 +113,10 @@ msgid "No Follow"
 msgstr "Non Seguire"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "One header per line. Each header must have the form 'header_name: header_value'."
+msgstr "Inserire un header per riga. Ogni header deve avere la forma 'nome_header: valore_header'."
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Private key."
 msgstr "Chiave privata."
 
@@ -115,6 +131,10 @@ msgstr "Minuti di attesa"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Scheduled request Minute"
 msgstr "Minuti di attesa tra una schedulazione e l'altra"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Server hostname (internally resolved by the server)"
+msgstr "Il nome host (hostname) del server (risolto internamente dal server)"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "The cache key used in input."
@@ -133,6 +153,10 @@ msgid "The certificate private key. The key is empty."
 msgstr "La chiave privata del certificato. La chiave al momento non è impostata."
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "The hostname (internally resolved by the server) that the WebClient have to call to generate the cache (e.g. http://localhost or http://local.laser-group.com). If empty, the request will be addressed to the tenant base url."
+msgstr "Il nome host (l'hostname risolto internamente dal server) che il comando WebClient deve richiamare per generare la cache (es: http://localhost o http://local.laser-group.com). Se lasciato vuoto, la richiesta sarà indirizzata all'url di base del tenant."
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Use this content type"
 msgstr "Usare questo tipo di contenuto"
 
@@ -143,6 +167,10 @@ msgstr "Usare questo Verbo Http"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Used only on mobile communication. If checked, the linked content will be put in l field"
 msgstr "Usato solo per la comunicazione mobile. Se selezionato, il contenuto collegato sarà messo nel campo"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
+msgid "Additional headers for web request"
+msgstr "Ulteriori header per la richiesta web"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Body Request"
@@ -163,6 +191,10 @@ msgstr "Inserire il corpo della richiesta"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Insert url and token"
 msgstr "Inserire URL e token"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
+msgid "One header per line. Each header must have the form 'header_name: header_value'."
+msgstr "Inserire un header per riga. Ogni header deve avere la forma 'nome_header: valore_header'."
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/EditorTemplates/Fields/FieldExternal.cshtml"
 msgid "Start Schedule"

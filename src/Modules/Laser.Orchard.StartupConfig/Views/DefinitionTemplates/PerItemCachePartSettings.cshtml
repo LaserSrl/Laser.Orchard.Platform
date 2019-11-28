@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.StartupConfig.Models.PerItemCachePartSettings
+@{
+    Script.Require("jQuery");
+}
+@Display.TokenHint()
+<fieldset>
+    <legend></legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.PerItemKeyParam)">@T("New Cache Key")</label>
+        @Html.TextBoxFor(m => m.PerItemKeyParam, new { @class = "text large tokenized" })
+        <span class="hint">@T("hint")</span>
+    </div>
+</fieldset>

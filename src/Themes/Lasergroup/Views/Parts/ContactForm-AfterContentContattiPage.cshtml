@@ -77,6 +77,8 @@
                     </span>
                 </div>
 
+                @Display(Model.AdditionalShape.Content)
+
                 <div id="AttachmentSection-@uniqueId" type="hidden">
                     <img id="AttachmentPreview-@uniqueId"></img>
                     <label id="AttachmentNameLabel-@uniqueId"></label>
@@ -88,7 +90,7 @@
                         @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
                     </span>
                 </div>
-                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
                 <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
                 <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
                 @Html.AntiForgeryTokenOrchard()

@@ -1,0 +1,88 @@
+﻿@model Laser.Orchard.StartupConfig.ContentPickerContentCreation.ViewModels.ContentPickerCreationWindowVM
+
+@using Orchard;
+@using Orchard.ContentManagement;
+@using Orchard.Environment.Configuration;
+
+@{
+    Style.Require("ContentPickerCreation").AtHead();
+    Script.Require("ContentPickerThemeHiding").AtHead();
+
+    IOrchardServices _orchardServices;
+    ShellSettings _shellSettings;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+    WorkContext.TryResolve<ShellSettings>(out _shellSettings);
+}
+
+<fieldset id="cp-creation">
+    <input type="button" id="btn-cp-creation" value="@T("Select")" class="button ">
+</fieldset>
+@Html.HiddenFor(m => m.IdContent)
+@Html.HiddenFor(m => m.TitleContent, new { id = "Laser_Orchard_ContentPickerContentCreation_TitleContent" })
+@Html.HiddenFor(m => m.TypeContent)
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const callback = urlParams.get('callback');
+            var basePath = "@Url.Content("~/")";
+            var contentType = "@Model.TypeContent";
+            if (callback != null && callback.startsWith("_contentpickercreate_")) {
+                injectThemeHidingCss(basePath);
+
+                const cpfName = urlParams.get('namecpfield');
+                const ctName = urlParams.get('selectedct');
+
+                window.sessionStorage.setItem("cpfCreationSession", "true");
+                window.sessionStorage.setItem("cpfName", cpfName);
+                window.sessionStorage.setItem("ctName", ctName);
+            } else if (window.sessionStorage.getItem("cpfCreationSession") != null) {
+                injectThemeHidingCss(basePath);
+            }
+
+            if (window.sessionStorage.getItem("cpfCreationSession") != null) {
+                enableSelectButton(contentType);
+            }
+
+            // Disabilito il tasto di selezione se il contenuto non è stato ancora salvato
+            if (@Model.IdContent == 0) {
+                $('#btn-cp-creation').addClass('disabled');
+                $('#btn-cp-creation').attr('title', '@T("To select a content you need to save it first.")');
+            }
+
+            // Preparo oggetto per callback
+            $("#btn-cp-creation:not(.disabled)").on("click", function () {
+                @{
+                    var editUrl = "";
+                    if (Model.IdContent != 0) {
+                        var content = _orchardServices.ContentManager.Get(Model.IdContent, VersionOptions.Latest);
+                        if (content != null) {
+                            ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(content);
+                            editUrl = Url.RouteUrl(metadata.EditorRouteValues);
+                        }
+                    }
+                }
+                try {
+                    var result = {
+                        idcontent: '@Model.IdContent',
+                        namecpfield: window.sessionStorage.getItem("cpfName"),
+                        edit_link: '@editUrl',
+                        title_content: $('#Laser_Orchard_ContentPickerContentCreation_TitleContent').val(),
+                        published: '@Model.Published'.toLowerCase(),
+                        remove_text: '@T("Remove")',
+                        not_published: '@T("Not Published")',
+
+                    };
+
+                    window.opener.CallParent(result);
+                } catch (ex) {
+                    alert("@T("Cannot perform requested operation")");
+                }
+                window.close();
+            });
+        });
+    //]]>
+    </script>
+}

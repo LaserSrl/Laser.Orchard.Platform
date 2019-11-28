@@ -154,9 +154,9 @@
                     </span>
                 </div>
 
+                @Display(Model.AdditionalShape.Content)
 
-
-                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
                 <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
                 <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
                 if (!string.IsNullOrEmpty(noteInterne)) {
@@ -165,14 +165,14 @@
                 @Html.AntiForgeryTokenOrchard()
                 <div class="row">
                     @if (!string.IsNullOrWhiteSpace(privacyUrl)) {
-                    <div class="col-md-10">
-                        <div class="form-group">
-                            <span class="wpcf7-form-control-wrap">
-                                <input id="Accept-@uniqueId" name="Accept" type="checkbox" required aria-invalid="false" value="1" /><span class="required">*</span>
-                                @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
-                            </span>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <span class="wpcf7-form-control-wrap">
+                                    <input id="Accept-@uniqueId" name="Accept" type="checkbox" required aria-invalid="false" value="1" /><span class="required">*</span>
+                                    @prePrivacyText <a href="@privacyUrl" target="@privacyTarget">@privacyLinkText</a>
+                                </span>
+                            </div>
                         </div>
-                    </div>
                     }
                     <div class="col-md-2">
                         <p>
@@ -180,7 +180,7 @@
                         </p>
                     </div>
                 </div>
-                
+
 
             }
         }

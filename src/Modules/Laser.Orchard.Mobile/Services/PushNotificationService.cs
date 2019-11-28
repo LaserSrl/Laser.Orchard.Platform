@@ -24,6 +24,12 @@ namespace Laser.Orchard.Mobile.Services {
         void RebindDevicesToMasterContact(int contactId);
         void Synchronize();
         Tuple<IEnumerable<PushNotificationRecord>, int> SearchPushNotification(string texttosearch, int startIndex, int length);
+        /// <summary>
+        /// Get a distinct list of all machine names devices are associated to.
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetMachineNames();
+        void ReassignDevices(string oldMachineName, string newMachineName);
     }
 
     public class PushNotificationService : IPushNotificationService {
@@ -40,7 +46,7 @@ namespace Laser.Orchard.Mobile.Services {
         public ICommunicationService _communicationService;
         private readonly ITokenizer _tokenizer;
         private readonly ITransactionManager _transactionManager;
-        private const int MAX_PUSH_TEXT_LENGTH = 160;
+        private const int maxPushTextLength = 160;
 
         public PushNotificationService(
             IOrchardServices orchardServices,
@@ -310,6 +316,18 @@ namespace Laser.Orchard.Mobile.Services {
             return new Tuple<IEnumerable<PushNotificationRecord>, int>(partialList, count);
         }
 
+        public List<string> GetMachineNames() {
+            var list = _pushNotificationRepository.Table.Select(x => x.RegistrationMachineName).Distinct().ToList();
+            list.Sort();
+            return list;
+        }
+
+        public void ReassignDevices(string oldMachineName, string newMachineName) {
+            var devicesToReassign = _pushNotificationRepository.Fetch(x => x.RegistrationMachineName == oldMachineName);
+            foreach(var device in devicesToReassign) {
+                device.RegistrationMachineName = newMachineName;
+            }
+        }
         #endregion [CRUD PushNotification]
     }
 }

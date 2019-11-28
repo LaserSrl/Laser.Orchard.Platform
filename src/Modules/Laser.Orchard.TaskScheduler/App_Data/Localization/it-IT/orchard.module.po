@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2019 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -33,8 +33,16 @@ msgid "Amount of time that should pass between repetitions of the task (integer)
 msgstr "Tempo che passerà tra ripetizioni del task (intero)"
 
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Autodestroy"
+msgstr "Elimina automaticamente al termine"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "Content Item Id"
 msgstr "Id del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "Execution type."
+msgstr "Tipo di esecuzione."
 
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "Fewer details"
@@ -47,6 +55,10 @@ msgstr "Id del contenuto che sarà passato al task. Inserire 0 per non passare a
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "Invalid dates will be ignored"
 msgstr "Date non valide verranno ignorate"
+
+msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
+msgid "LongTask"
+msgstr "Task di lunga durata"
 
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "More details"

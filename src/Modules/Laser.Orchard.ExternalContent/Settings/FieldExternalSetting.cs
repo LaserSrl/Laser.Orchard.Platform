@@ -24,5 +24,6 @@ namespace Laser.Orchard.ExternalContent.Settings {
         public Int32 ScheduledMinute { get; set; } 
         public OriginData DataType { get; set; }
         public string AdditionalHeadersText { get; set; }
+        public string InternalHostNameForScheduledTask { get; set; }
     }
 }

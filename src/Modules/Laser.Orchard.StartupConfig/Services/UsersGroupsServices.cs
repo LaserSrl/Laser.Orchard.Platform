@@ -27,7 +27,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                      .Where(x => x.Id == ownerId).List().FirstOrDefault().ContentItem.As<UsersGroupsPart>().UserGroup;
             string currentUserGroups = _contentManager.Query<UserPart, UserPartRecord>()
                 .Where(x => x.Id == currentUserId).List().FirstOrDefault().ContentItem.As<UsersGroupsPart>().UserGroup;
-            if (!String.IsNullOrWhiteSpace(ownerGroups)) {
+            if (!String.IsNullOrWhiteSpace(ownerGroups) && !String.IsNullOrWhiteSpace(currentUserGroups)) {
                 List<int> primo = ownerGroups.Split(',').Select(int.Parse).ToList();
                 List<int> secondo = currentUserGroups.Split(',').Select(int.Parse).ToList();
                 var intersezione = primo.Intersect(secondo);

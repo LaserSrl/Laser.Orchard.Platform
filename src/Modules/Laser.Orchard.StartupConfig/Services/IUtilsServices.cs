@@ -25,6 +25,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using System.Collections;
+using Orchard.Localization.Services;
 
 namespace Laser.Orchard.StartupConfig.Services {
 
@@ -95,12 +96,14 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IRoleService _roleService;
         private readonly ITaxonomyService _taxonomyService;
         private readonly IOrchardServices _orchardServices;
+        private readonly ILocalizationService _localizationServices;
 
-        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices) {
+        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices) {
             _moduleService = moduleService;
             _roleService = roleService;
             _taxonomyService = taxonomyService;
             _orchardServices = orchardServices;
+            _localizationServices = localizationServices;
             var mediaPath = HostingEnvironment.IsHosted
                                 ? HostingEnvironment.MapPath("~/Media/") ?? ""
                                 : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
@@ -194,15 +197,15 @@ namespace Laser.Orchard.StartupConfig.Services {
                     rsp.ResolutionAction = ResolutionAction.AcceptPolicies;
                     break;
 
-                case ResponseType.MissingParameters:
+                case ResponseType.ToConfirmEmail:
                     rsp.Success = false;
                     if (message != "")
                         rsp.Message = message;
                     else
-                        rsp.Message = T("One or more parameters are null").ToString();
-                    rsp.ErrorCode = ErrorCode.MissingParameters;
+                        rsp.Message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
+                    rsp.ErrorCode = ErrorCode.ToConfirmEmail;
                     rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.AddParameter;
+                    rsp.ResolutionAction = ResolutionAction.ToConfirmEmail;
                     break;
             }
             return rsp;
@@ -352,25 +355,15 @@ namespace Laser.Orchard.StartupConfig.Services {
                         else {
                             #region [ Tassonomia in Lingua ]
                             foreach (Int32 idtermine in ElencoCategorie) {
-                                if (_taxonomyService.GetTerm(idtermine) != null) {
+                                var term = _taxonomyService.GetTerm(idtermine);
+                                if (term != null) {
                                     var taxo_sended_user = _taxonomyService.GetTaxonomy(_taxonomyService.GetTerm(idtermine).TaxonomyId);
                                     TermPart termine_selezionato = taxo_sended_user.Terms.Where(x => x.Id == idtermine).FirstOrDefault();
 
                                     if (theContentItem.As<LocalizationPart>() == null || theContentItem.ContentType == "User") { // se il contenuto non ha localization oppure è user salvo il mastercontent del termine
-                                        Int32 idmaster = 0;
-                                        if (termine_selezionato.ContentItem.As<LocalizationPart>() == null) {
-                                            idmaster = termine_selezionato.ContentItem.Id;
-                                        } else if (termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem == null)
-                                            idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().Id;
-                                        else
-                                            idmaster = termine_selezionato.ContentItem.As<LocalizationPart>().MasterContentItem.Id;
-                                        TermPart toAdd = taxobase.Terms.Where(x => x.Id == idmaster).FirstOrDefault();
-                                        if (toAdd == null) {
-                                            toAdd = taxobase.Terms.Where(x => x.ContentItem.As<LocalizationPart>().MasterContentItem.Id == idmaster).FirstOrDefault();
-                                        }
-                                        if (ListTermPartToAdd.Contains(toAdd) == false) {
-                                            ListTermPartToAdd.Add(toAdd);
-                                        }
+                                        var termTranslations = _localizationServices.GetLocalizations(term).Select(x=>x.As<TermPart>()); //get all translations for the term
+                                        ListTermPartToAdd.Add(term); //adds the original term
+                                        ListTermPartToAdd.AddRange(termTranslations); // adds the translations of term
                                     } else { // se il contenuto ha localization e non è user salvo il termine come mi viene passato
                                             // TODO: testare pertinenza della lingua Contenuto in italianao=>termine in italiano
                                         TermPart toAdd = termine_selezionato;
@@ -380,6 +373,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                                     }
                                 }
                             }
+                            ListTermPartToAdd = ListTermPartToAdd.Distinct().ToList(); //removes duplicated
                             #endregion [ Tassonomia in Lingua ]
                         }
                         _taxonomyService.UpdateTerms(theContentItem, ListTermPartToAdd, fieldObj.Name);

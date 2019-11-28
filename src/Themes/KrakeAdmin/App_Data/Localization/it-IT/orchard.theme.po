@@ -1,4 +1,4 @@
-# Orchard resource strings - it-IT
+﻿# Orchard resource strings - it-IT
 # Copyright (c) 2019 Laser s.r.l.
 
 
@@ -161,6 +161,10 @@ msgid "Mail"
 msgstr "Mail"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
+msgid "MAIL"
+msgstr "MAIL"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Dashboard/Admin/Index.cshtml"
 msgid "manage through its back office aimed marketing campaigns, newsletter and much more"
 msgstr "potrà gestire, attraverso un ambiente di back office, campagne di marketing mirato, newsletter, ecc."
 
@@ -286,7 +290,7 @@ msgstr "Selezionare questa checkbox per usare un campo di ricerca nella barra di
 
 msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
 msgid "Select this checkbox to use a sticky footer"
-msgstr "Selezionare questa checkbox per usare un footer "adesivo"."
+msgstr "Selezionare questa checkbox per usare un footer"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
 msgid "Select this checkbox to use the inverse navigation color. *REQUIRES FIXED NAVIGATION BAR"
@@ -338,7 +342,7 @@ msgstr "Usare il campo di ricerca nella barra di navigazione"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
 msgid "Use Sticky Footer"
-msgstr "Usare un footer "adesivo""
+msgstr "Usare un footer"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Layout.cshtml"
 msgid "Are you sure you want to remove this element ?"

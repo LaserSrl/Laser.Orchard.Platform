@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -125,6 +126,7 @@
     <Compile Include="Models\PaymentCartaSiSettingsPart.cs" />
     <Compile Include="Models\PaymentCartaSiSettingsPartRecord.cs" />
     <Compile Include="Models\CartaSiMessages.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Services\CartaSiPosService.cs" />
     <Compile Include="Services\ICartaSiTransactionService.cs" />
   </ItemGroup>
