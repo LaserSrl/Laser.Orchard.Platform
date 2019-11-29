@@ -1,4 +1,5 @@
 ﻿using Contrib.Profile.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Localization;
@@ -40,7 +41,7 @@ namespace Contrib.Profile.Controllers {
                 return HttpNotFound();
             }
             
-            dynamic shape = _frontEndProfileService.BuildFrontEndShape(
+            dynamic shape = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                 _contentManager.BuildDisplay(user, "", ""), //since the result of BuildDisplay is dynamic I have to do the ugly thing below
                 _frontEndProfileService.MayAllowPartDisplay,
                 _frontEndProfileService.MayAllowFieldDisplay);
@@ -57,7 +58,7 @@ namespace Contrib.Profile.Controllers {
                 return HttpNotFound();
             }
             
-            dynamic shape = _frontEndProfileService.BuildFrontEndShape(
+            dynamic shape = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                 _contentManager.BuildEditor(user),
                 _frontEndProfileService.MayAllowPartEdit,
                 _frontEndProfileService.MayAllowFieldEdit);
@@ -74,7 +75,7 @@ namespace Contrib.Profile.Controllers {
                 return HttpNotFound();
             }
 
-            dynamic shape = _frontEndProfileService.BuildFrontEndShape(
+            dynamic shape = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                 _contentManager.UpdateEditor(user, this),
                 _frontEndProfileService.MayAllowPartEdit,
                 _frontEndProfileService.MayAllowFieldEdit);
