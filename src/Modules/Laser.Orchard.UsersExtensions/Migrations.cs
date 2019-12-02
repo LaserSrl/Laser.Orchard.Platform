@@ -38,5 +38,6 @@ namespace Laser.Orchard.UsersExtensions {
 
             return 2;
         }
+
     }
 }

@@ -1,0 +1,11 @@
+﻿@model Laser.Orchard.Cookies.Models.HubSpotSettingsPart
+
+<fieldset>
+    <legend>@T("Hub Spot")</legend>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.HubSpotKey)">@T("HubSpot App ID")</label>
+        @Html.EditorFor(m => m.HubSpotKey)
+        <span class="hint">@T("Add HubSpot App ID")</span>
+        @Html.ValidationMessage("HubSpotKey", "*")
+</div>
+</fieldset>

@@ -6,7 +6,7 @@ using Orchard.Environment.Extensions;
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
     public class WidgetExPartDriver : ContentPartCloningDriver<WidgetExPart> {
-        protected override void Importing(WidgetExPart part, ImportContentContext context) {
+        protected override void Imported(WidgetExPart part, ImportContentContext context) {
             context.ImportAttribute(part.PartDefinition.Name, "HostId", s => part.Host = context.GetItemFromSession(s));
         }
 
