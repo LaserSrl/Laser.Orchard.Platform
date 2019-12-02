@@ -84,10 +84,19 @@ namespace Contrib.Widgets.Handlers {
             foreach(var field in taxoFields) {
                 var settings = field.PartFieldDefinition.Settings.GetModel<TaxonomyFieldLocalizationSettings>();
                 if(settings != null && settings.TryToLocalize) {
+                    // translate terms
                     var newTerms = new List<TermPart>();
                     foreach (var term in field.Terms) {
                         var translatedTerm = _localizationService.GetLocalizedContentItem(term, culture.Culture);
                         newTerms.Add(translatedTerm.ContentItem.As<TermPart>());
+                    }
+                    translations.Add(field.PartFieldDefinition.Name, newTerms);
+                }
+                else {
+                    // copy terms
+                    var newTerms = new List<TermPart>();
+                    foreach (var term in field.Terms) {
+                        newTerms.Add(term.ContentItem.As<TermPart>());
                     }
                     translations.Add(field.PartFieldDefinition.Name, newTerms);
                 }
@@ -97,11 +106,8 @@ namespace Contrib.Widgets.Handlers {
         private void ApplyTranslatedTaxonomies(ContentItem ci, Dictionary<string, List<TermPart>> translations) {
             var taxoFields = ci.Parts.SelectMany(p => p.Fields.Where(f => f is TaxonomyField).Select(f => f as TaxonomyField));
             foreach (var field in taxoFields) {
-                var settings = field.PartFieldDefinition.Settings.GetModel<TaxonomyFieldLocalizationSettings>();
-                if (settings != null && settings.TryToLocalize) {
-                    if (translations.ContainsKey(field.PartFieldDefinition.Name)) {
-                        _taxonomyService.UpdateTerms(ci, translations[field.PartFieldDefinition.Name], field.PartFieldDefinition.Name);
-                    }
+                if (translations.ContainsKey(field.PartFieldDefinition.Name)) {
+                    _taxonomyService.UpdateTerms(ci, translations[field.PartFieldDefinition.Name], field.PartFieldDefinition.Name);
                 }
             }
         }
