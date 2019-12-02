@@ -58,13 +58,15 @@ namespace Contrib.Widgets.Handlers {
                             && p.ContentItem.Get<LocalizationPart>().Culture == null);
                         foreach (var widget in widgets) {
                             var ci = widget.ContentItem;
+                            _localizationService.SetContentCulture(ci, culture.Culture);
                             // manage taxonomy field out of the normal flow:
                             // gets translations of selected terms in taxonomy fields before BuildEditor()
                             var translatedTaxo = TranslateTaxonomies(ci, culture);
 
+                            // simulates a user that opens in edit model the widget and saves it 
+                            // to trigger all handlers and drivers
                             var shapeWidget = _contentManager.BuildEditor(ci);
-                            _localizationService.SetContentCulture(ci, culture.Culture);
-                            var shapeUpdate = _contentManager.UpdateEditor(ci, new EmptyUpdater(shapeWidget, culture.Culture, Logger));
+                            var shapeUpdate = _contentManager.UpdateEditor(ci, new CustomUpdater(shapeWidget, culture.Culture, Logger));
 
                             // sets translated terms in taxonomy fields after UpdateEditor()
                             ApplyTranslatedTaxonomies(ci, translatedTaxo);
@@ -111,11 +113,11 @@ namespace Contrib.Widgets.Handlers {
                 _contentManager.Remove(w.ContentItem);
             }
         }
-        private class EmptyUpdater : IUpdateModel {
+        private class CustomUpdater : IUpdateModel {
             private readonly Dictionary<string, dynamic> _shapes;
             private readonly string _culture;
             private readonly ILogger _logger;
-            public EmptyUpdater(dynamic shape, string culture, ILogger loggger) {
+            public CustomUpdater(dynamic shape, string culture, ILogger loggger) {
                 _shapes = new Dictionary<string, dynamic>();
                 _culture = culture;
                 _logger = loggger;
