@@ -61,7 +61,7 @@ namespace Contrib.Widgets.Handlers {
                             _localizationService.SetContentCulture(ci, culture.Culture);
                             // manage taxonomy field out of the normal flow:
                             // gets translations of selected terms in taxonomy fields before BuildEditor()
-                            var translatedTaxo = TranslateTaxonomies(ci, culture);
+                            var translatedTaxo = TranslateTaxonomies(ci, culture, _localizationService);
 
                             // simulates a user that opens in edit model the widget and saves it 
                             // to trigger all handlers and drivers
@@ -69,7 +69,7 @@ namespace Contrib.Widgets.Handlers {
                             var shapeUpdate = _contentManager.UpdateEditor(ci, new CustomUpdater(shapeWidget, culture.Culture, Logger));
 
                             // sets translated terms in taxonomy fields after UpdateEditor()
-                            ApplyTranslatedTaxonomies(ci, translatedTaxo);
+                            ApplyTranslatedTaxonomies(ci, translatedTaxo, _taxonomyService);
 
                             ci.VersionRecord.Published = false;
                             _contentManager.Publish(ci);
@@ -78,7 +78,8 @@ namespace Contrib.Widgets.Handlers {
                 }
             });
         }
-        private Dictionary<string, List<TermPart>> TranslateTaxonomies(ContentItem ci, CultureRecord culture) {
+        // static method because it is called in the contructor
+        private static Dictionary<string, List<TermPart>> TranslateTaxonomies(ContentItem ci, CultureRecord culture, ILocalizationService localizationService) {
             var translations = new Dictionary<string, List<TermPart>>();
             var taxoFields = ci.Parts.SelectMany(p => p.Fields.Where(f => f is TaxonomyField).Select(f => f as TaxonomyField));
             foreach(var field in taxoFields) {
@@ -87,7 +88,7 @@ namespace Contrib.Widgets.Handlers {
                     // translate terms
                     var newTerms = new List<TermPart>();
                     foreach (var term in field.Terms) {
-                        var translatedTerm = _localizationService.GetLocalizedContentItem(term, culture.Culture);
+                        var translatedTerm = localizationService.GetLocalizedContentItem(term, culture.Culture);
                         newTerms.Add(translatedTerm.ContentItem.As<TermPart>());
                     }
                     translations.Add(field.PartFieldDefinition.Name, newTerms);
@@ -103,11 +104,12 @@ namespace Contrib.Widgets.Handlers {
             }
             return translations;
         }
-        private void ApplyTranslatedTaxonomies(ContentItem ci, Dictionary<string, List<TermPart>> translations) {
+        // static method because it is called in the contructor
+        private static void ApplyTranslatedTaxonomies(ContentItem ci, Dictionary<string, List<TermPart>> translations, ITaxonomyService taxonomyService) {
             var taxoFields = ci.Parts.SelectMany(p => p.Fields.Where(f => f is TaxonomyField).Select(f => f as TaxonomyField));
             foreach (var field in taxoFields) {
                 if (translations.ContainsKey(field.PartFieldDefinition.Name)) {
-                    _taxonomyService.UpdateTerms(ci, translations[field.PartFieldDefinition.Name], field.PartFieldDefinition.Name);
+                    taxonomyService.UpdateTerms(ci, translations[field.PartFieldDefinition.Name], field.PartFieldDefinition.Name);
                 }
             }
         }
