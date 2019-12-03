@@ -4,6 +4,7 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.DisplayManagement;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IPosServiceIntegration : ICheckoutService {
@@ -44,9 +45,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public dynamic BuildCheckoutButtonShape(IEnumerable<dynamic> productShapes, IEnumerable<ShoppingCartQuantityProduct> productQuantities, IEnumerable<ShippingOption> shippingOptions, TaxAmount taxes, string country, string zipCode, IEnumerable<string> custom) {
             bool insertOrder = false;
             foreach(var opt in shippingOptions) {
+                // check whether any shipping option is selected
                 if(opt != null) {
                     insertOrder = true;
                 }
+            }
+            if (!insertOrder) {
+                // perhaps we need no shipping option
+                // for example, if all products are digital
+                insertOrder = !productQuantities.Any(pq => !pq.Product.IsDigital);
             }
             if (insertOrder) {
                 return _shapeFactory.Pos();
