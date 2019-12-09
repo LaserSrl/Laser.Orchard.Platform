@@ -15,7 +15,8 @@ namespace Laser.Orchard.Mobile.Routes {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-                    new RouteDescriptor {   Priority = 5,
+                new RouteDescriptor {
+                    Priority = 5,
                     Route = new Route(
                         "apple-app-site-association",
                         new RouteValueDictionary {
@@ -29,7 +30,37 @@ namespace Laser.Orchard.Mobile.Routes {
                         },
                         new MvcRouteHandler())
                 },
-                                new RouteDescriptor {
+                new RouteDescriptor {
+                    Priority = 5,
+                    Route = new Route(
+                        ".well-known/apple-app-site-association",
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"},
+                                                    {"controller", "ManifestAppFile"},
+                                                    {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Priority = 5,
+                    Route = new Route(
+                        ".well-known/apple-developer-domain-association.txt",
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"},
+                                                    {"controller", "ManifestAppFile"},
+                                                    {"action", "DeveloperDomain"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
                     Route = new Route(
                         "Mobile/ManifestAppFile",
                         new RouteValueDictionary {
@@ -45,6 +76,5 @@ namespace Laser.Orchard.Mobile.Routes {
                 }
             };
         }
-
     }
 }
