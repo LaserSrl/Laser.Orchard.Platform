@@ -26,21 +26,23 @@
     <fieldset>
         @Html.LabelFor(m => m.ProviderIdentifier, T("Identifier"))
         @Html.TextBoxFor(m => m.ProviderIdentifier)
-        <span class="hint">@T("This is the url to the end point.")</span>
+        <span class="hint">@T("This is the url to the end point. This is the Key ID for Apple Authentication Provider.")</span>
     </fieldset>
-            <fieldset>
+    <fieldset>
         @Html.LabelFor(m => m.UserIdentifier, T("User Name (used for twitter post)"))
         @Html.TextBoxFor(m => m.UserIdentifier)
-        <span class="hint">@T("This is the User Name.")</span>
+        <span class="hint">@T("This is the User Name. This is the Team ID for Apple Authentication Provider.")</span>
     </fieldset>
     
     <fieldset>
         @Html.LabelFor(m => m.ProviderIdKey, T("Key"))
         @Html.TextBoxFor(m => m.ProviderIdKey)
+        <span class="hint">@T("This is the Services ID for Apple Authentication Provider.")</span>
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderSecret, T("Secret"))
         @Html.TextBoxFor(m => m.ProviderSecret)
+        <span class="hint">@T("This is the name of Private Key file (.p8) for Apple Authentication Provider.")</span>
     </fieldset>
 
 @Html.HiddenFor(m=>m.Id)
