@@ -48,7 +48,7 @@ namespace Laser.Orchard.Mobile.Controllers {
                 return new HttpNotFoundResult();
             }
 
-            return File(Encoding.UTF8.GetBytes(content.DeveloperDomainText ?? ""), contentType, "apple-developer-domain-association");
+            return File(Encoding.UTF8.GetBytes(content.DeveloperDomainText ?? ""), contentType, "apple-developer-domain-association.txt");
         }
     }
 }
