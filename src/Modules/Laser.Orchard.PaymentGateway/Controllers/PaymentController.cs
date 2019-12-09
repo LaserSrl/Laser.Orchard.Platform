@@ -75,6 +75,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         /// <param name="newPaymentGuid">Guid to be associated with this payment. No previous payment should have this value.</param>
         /// <returns>A page proposing the paymet options</returns>
         [Themed]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Pay(string nonce, string newPaymentGuid = null) {
             var record = _paymentService.DecryptPaymentNonce(nonce);
             if(record == null) {
@@ -106,6 +107,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         /// <param name="guid">The Guid corresponding to the payment. The check on this value is performed only for anonymous users.</param>
         /// <returns>A page reporting the information for the payment</returns>
         [Themed]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Info(int paymentId, string guid = "") {
             int currentUserId = -1; // utente inesistente
             var user = _orchardServices.WorkContext.CurrentUser;

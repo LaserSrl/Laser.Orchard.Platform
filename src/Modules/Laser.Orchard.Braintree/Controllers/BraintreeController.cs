@@ -65,6 +65,7 @@ namespace Laser.Orchard.Braintree.Controllers {
         /// <param name="itemId"></param>
         /// <returns></returns>
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult GetTokenAndPid(string reason, decimal amount, string currency, int itemId = 0) {
             var clientToken = _braintreeService.GetClientToken();
             var payment = new PaymentRecord {
@@ -102,6 +103,7 @@ namespace Laser.Orchard.Braintree.Controllers {
             return Json(outcome);
         }
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult GetToken() {
             var clientToken = _braintreeService.GetClientToken();
             return Content(clientToken, "text/plain", Encoding.UTF8);
