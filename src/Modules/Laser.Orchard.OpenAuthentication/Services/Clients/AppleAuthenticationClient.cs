@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IdentityModel.Tokens;
 using DotNetOpenAuth.AspNet;
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
@@ -10,9 +9,7 @@ using Orchard.Environment.Configuration;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Crypto.Parameters;
-using Org.BouncyCastle.OpenSsl;
-using Security.Cryptography;
+using System.Linq;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class AppleAuthenticationClient : IExternalAuthenticationClient {
@@ -31,10 +28,11 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         private string GetClientSecret(ProviderConfigurationRecord providerConfigurationRecord) {
+            var epoch = new DateTime(1970, 1, 1);
             var payload = new Dictionary<string, object>() {
                 { "iss", providerConfigurationRecord.UserIdentifier }, // team_id
-                { "iat", EpochTime.GetIntDate(DateTime.UtcNow.AddMinutes(-1)) },
-                { "exp", EpochTime.GetIntDate(DateTime.UtcNow.AddMonths(5)) },
+                { "iat", (DateTime.UtcNow.AddMinutes(-1) - epoch).TotalSeconds },
+                { "exp", (DateTime.UtcNow.AddMonths(5) - epoch).TotalSeconds },
                 { "aud", "https://appleid.apple.com" },
                 { "sub", providerConfigurationRecord.ProviderIdKey }, // client_id
             };
@@ -44,43 +42,34 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                 { "kid", providerConfigurationRecord.ProviderIdentifier } // key_id
             };
             var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\" + providerConfigurationRecord.ProviderSecret;
-            //var keyString = File.ReadAllText(p8File, Encoding.UTF8); //the content of my .p8 downloaded private key, when I created the key in https://developer.apple.com/account/ios/authkey/create";
-            //CspParameters cspParam = new CspParameters();
-            //cspParam.Flags = CspProviderFlags.UseMachineKeyStore;
-            //var rsa = new CngProvider(""); // RSACryptoServiceProvider(cspParam);
-            // TODO: cambiare gestione leggendo direttamente la chiave già estratta dal p8
-            //CngKey privateKey = CngKey.Import(Convert.FromBase64String(keyString), CngKeyBlobFormat.Pkcs8PrivateBlob);
-
-            CngKey privateKey = GetPrivateKey(p8File);
-
-            // version 1
-            //string token = JWT.Encode(payload, privateKey, JwsAlgorithm.ES256, extraHeader);
-            //return token;
-
-            // version 2
-            var headerString = JsonConvert.SerializeObject(extraHeader);
-            var payloadString = JsonConvert.SerializeObject(payload);
-            using (ECDsaCng dsa = new ECDsaCng(privateKey)) {
-                dsa.HashAlgorithm = CngAlgorithm.Sha256;
-                var unsignedJwtData = Base64UrlEncoder.Encode(Encoding.UTF8.GetBytes(headerString)) + "." + Base64UrlEncoder.Encode(Encoding.UTF8.GetBytes(payloadString));
-                var signature = dsa.SignData(Encoding.UTF8.GetBytes(unsignedJwtData));
-                return unsignedJwtData + "." + Base64UrlEncoder.Encode(signature);
+            string content = File.ReadAllText(p8File);
+            string[] keyLines = content.Split('\n');
+            content = string.Join(string.Empty, keyLines.Skip(1).Take(keyLines.Length - 2));
+            byte[] keyBlob = Convert.FromBase64String(content);
+            using (var privateKey = CngKey.Import(keyBlob, CngKeyBlobFormat.Pkcs8PrivateBlob)) {
+                var headerString = JsonConvert.SerializeObject(extraHeader);
+                var payloadString = JsonConvert.SerializeObject(payload);
+                using (ECDsaCng dsa = new ECDsaCng(privateKey)) {
+                    dsa.HashAlgorithm = CngAlgorithm.Sha256;
+                    var unsignedJwtData = Base64UrlEncode(headerString) + "." + Base64UrlEncode(payloadString);
+                    var signature = dsa.SignData(Encoding.UTF8.GetBytes(unsignedJwtData));
+                    return unsignedJwtData + "." + Base64UrlEncode(signature);
+                }
             }
         }
-        /// <summary>
-        /// Extracts private key from p8 file.
-        /// </summary>
-        /// <param name="p8File">Full path of the p8 file.</param>
-        /// <returns></returns>
-        private static CngKey GetPrivateKey(string p8File) {
-            using (var reader = File.OpenText(p8File)) {
-                var ecPrivateKeyParameters = (ECPrivateKeyParameters)new PemReader(reader).ReadObject();
-                var x = ecPrivateKeyParameters.Parameters.G.AffineXCoord.GetEncoded();
-                var y = ecPrivateKeyParameters.Parameters.G.AffineYCoord.GetEncoded();
-                var d = ecPrivateKeyParameters.D.ToByteArrayUnsigned();
-                return  EccKey.New(x, y, d);
-            }
+
+        private static string Base64UrlEncode(string input) {
+            var inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
+            return Base64UrlEncode(inputBytes);
         }
+        private static string Base64UrlEncode(byte[] inputBytes) {
+            // Special "url-safe" base64 encode.
+            return Convert.ToBase64String(inputBytes)
+              .Replace('+', '-')
+              .Replace('/', '_')
+              .Replace("=", "");
+        }
+
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
             var userData = (Build(clientConfiguration) as AppleOAuth2Client).GetUserDataDictionary(userAccessToken);
             userData["accesstoken"] = userAccessToken;
