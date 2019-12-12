@@ -106,7 +106,22 @@ namespace Contrib.Widgets.Controllers {
 
         [HttpPost, ActionName("AddWidget")]
         [Orchard.Mvc.FormValueRequired("submit.Save")]
-        public ActionResult AddWidgetPost(string widgetType, int hostId) {
+        public ActionResult AddWidgetSavePOST(string widgetType, int hostId) {
+            return AddWidgetPost(widgetType, hostId, contentItem => {
+                if (!contentItem.Has<IPublishingControlAspect>() && !contentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable)
+                    _services.ContentManager.Publish(contentItem);
+            });
+        }
+
+        [HttpPost, ActionName("AddWidget")]
+        [Orchard.Mvc.FormValueRequired("submit.Publish")]
+        public ActionResult AddWidgetPublishPOST(string widgetType, int hostId) {
+            return AddWidgetPost(widgetType, hostId, contentItem => _services.ContentManager.Publish(contentItem));
+        }
+
+        //[HttpPost, ActionName("AddWidget")]
+        //[Orchard.Mvc.FormValueRequired("submit.Save")]
+        public ActionResult AddWidgetPost(string widgetType, int hostId, Action<ContentItem> conditionallyPublish) {
             if (!IsAuthorizedToManageWidgets())
                 return new HttpUnauthorizedResult();
 
@@ -137,7 +152,7 @@ namespace Contrib.Widgets.Controllers {
                 _services.TransactionManager.Cancel();
                 return View((object)model);
             }
-
+            conditionallyPublish(widgetPart.ContentItem);
             _services.Notifier.Information(T("Your {0} has been added.", widgetPart.TypeDefinition.DisplayName));
             return Redirect(returnUrl);
         }
@@ -165,10 +180,26 @@ namespace Contrib.Widgets.Controllers {
                 return Redirect(returnUrl);
             }
         }
+        [HttpPost, ActionName("EditWidget")]
+        [Orchard.Mvc.FormValueRequired("submit.Publish")]
+        public ActionResult EditWidgetPublishPOST( int hostId, int id) {
+            return EditWidgetPost(hostId, id, contentItem => {
+                _services.ContentManager.Publish(contentItem);
+            });
+        }
 
         [HttpPost, ActionName("EditWidget")]
         [Orchard.Mvc.FormValueRequired("submit.Save")]
-        public ActionResult EditWidgetSavePost(int hostId, int id) {
+        public ActionResult EditWidgetSavePOST( int hostId, int id) {
+            return EditWidgetPost(hostId, id, contentItem => {
+                if (!contentItem.Has<IPublishingControlAspect>() && !contentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable)
+                    _services.ContentManager.Publish(contentItem);
+            });
+        }
+
+        //[HttpPost, ActionName("EditWidget")]
+        //[Orchard.Mvc.FormValueRequired("submit.Save")]
+        public ActionResult EditWidgetPost(int hostId, int id, Action<ContentItem> conditionallyPublish) {
             if (!IsAuthorizedToManageWidgets())
                 return new HttpUnauthorizedResult();
 
@@ -191,7 +222,7 @@ namespace Contrib.Widgets.Controllers {
                     _services.TransactionManager.Cancel();
                     return View(model);
                 }
-
+                conditionallyPublish(widgetPart.ContentItem);
                 _services.Notifier.Information(T("Your {0} has been saved.", widgetPart.TypeDefinition.DisplayName));
             } catch (Exception exception) {
                 Logger.Error(T("Editing widget failed: {0}", exception.Message).Text);
