@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
+using Orchard.Logging;
 
 namespace Laser.Orchard.OpenAuthentication.Controllers {
     /// <summary>
@@ -56,14 +57,27 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             _notifier = notifier;
 
             T = NullLocalizer.Instance;
+            Logger = NullLogger.Instance;
         }
 
         public Localizer T { get; set; }
-
+        public ILogger Logger { get; set; }
 
         [HttpPost]
         [AlwaysAccessible]
         public ActionResult ExternalLogOn(string providerName, string returnUrl) {
+            // check if this post request has to be processed by ExternalLogOn httpget action
+            var ctx = System.Web.HttpContext.Current;
+            if ( ! ctx.Request.QueryString.ToString().Contains("__provider__")) {
+                var stateString = HttpUtility.HtmlDecode(ctx.Request.Form["state"]);
+                if (!string.IsNullOrWhiteSpace(stateString)) {
+                    var q = HttpUtility.ParseQueryString(stateString);
+                    if (string.IsNullOrWhiteSpace(returnUrl) && Array.IndexOf(q.AllKeys, "ReturnUrl") >= 0) {
+                        returnUrl = q["ReturnUrl"];
+                        return ExternalLogOn(returnUrl);
+                    }
+                }
+            }
             return new OpenAuthLoginResult(providerName, Url.OpenAuthLogOn(returnUrl));
         }
 
@@ -73,7 +87,6 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
 
             if (!result.IsSuccessful) {
                 _notifier.Error(T("Your authentication request failed."));
-
                 return new RedirectResult(Url.LogOn(returnUrl));
             }
 
@@ -97,7 +110,6 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             if (result == null) {
                 // handle this condition and exit the method
                 _notifier.Error(T("Your authentication request failed."));
-
                 return new RedirectResult(Url.LogOn(returnUrl));
             }
 
