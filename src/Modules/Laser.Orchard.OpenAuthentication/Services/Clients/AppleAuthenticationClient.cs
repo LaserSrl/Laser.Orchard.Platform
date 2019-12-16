@@ -10,20 +10,23 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
+using Orchard.Logging;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class AppleAuthenticationClient : IExternalAuthenticationClient {
         private readonly ShellSettings _shellSetting;
+        public ILogger Logger { get; set; }
         public string ProviderName => "Apple";
 
         public AppleAuthenticationClient(ShellSettings shellSetting) {
             _shellSetting = shellSetting;
+            Logger = NullLogger.Instance;
         }
 
         public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
             string clientId = providerConfigurationRecord.ProviderIdKey;
             string clientSecret = GetClientSecret(providerConfigurationRecord);
-            var client = new AppleOAuth2Client(clientId, clientSecret);
+            var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
             return client;
         }
 
@@ -71,17 +74,27 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            var userData = (Build(clientConfiguration) as AppleOAuth2Client).GetUserDataDictionary(userAccessToken);
-            userData["accesstoken"] = userAccessToken;
-            var id = userData["sub"];
-            var email = userData["email"];
-            return new AuthenticationResult(true, this.ProviderName, id, email, userData);
+            if(previousAuthResult != null && previousAuthResult.IsSuccessful) {
+                return previousAuthResult;
+            }
+            else {
+                var userData = (Build(clientConfiguration) as AppleOAuth2Client).GetUserDataDictionary(userAccessToken);
+                userData["accesstoken"] = userAccessToken;
+                var id = userData["sub"];
+                var email = userData["email"];
+                return new AuthenticationResult(true, this.ProviderName, id, email, userData);
+            }
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl) {
-            var client = Build(clientConfiguration) as AppleOAuth2Client;
-            string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
-            return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
+            if (previousAuthResult != null && previousAuthResult.IsSuccessful) {
+                return previousAuthResult;
+            }
+            else {
+                var client = Build(clientConfiguration) as AppleOAuth2Client;
+                string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
+                return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
+            }
         }
 
         public OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams clientData) {
@@ -89,7 +102,26 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public bool RewriteRequest() {
-            return new ServiceUtility().RewriteRequestByState();
+            return RewriteRequestByPostState();
+        }
+        private bool RewriteRequestByPostState() {
+            bool result = false;
+            var ctx = System.Web.HttpContext.Current;
+            var stateString = System.Web.HttpUtility.HtmlDecode(ctx.Request.Form["state"]);
+            if (stateString != null && stateString.Contains("__provider__=Apple")) {
+                // this provider requires that all return data be packed into a "state" parameter
+                var q = System.Web.HttpUtility.ParseQueryString(stateString);
+                var codeString = System.Web.HttpUtility.HtmlDecode(ctx.Request.Form["code"]);
+                if( ! string.IsNullOrWhiteSpace(codeString)) {
+                    var q2 = System.Web.HttpUtility.ParseQueryString(codeString);
+                    q.Add("code", codeString);
+                }
+                q.Add(ctx.Request.QueryString);
+                Logger.Error("Apple - RewriteRequestByPostState: rewritten path = >{0}<", ctx.Request.Path + "?" + q.ToString());
+                ctx.RewritePath(ctx.Request.Path + "?" + q.ToString());
+                result = true;
+            }
+            return result;
         }
     }
 }

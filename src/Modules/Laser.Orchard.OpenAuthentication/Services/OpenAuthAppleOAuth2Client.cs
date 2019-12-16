@@ -3,28 +3,33 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.IdentityModel.Tokens;
+using Orchard.Logging;
+using System.Text;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using DotNetOpenAuth.AspNet;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
     public class AppleOAuth2Client : OAuth2Client {
         /// <summary>
         /// The keys endpoint.
         /// </summary>
-        private const string AuthorizationEndpoint = "https://appleid.apple.com/auth/authorize";
+        private const string _authorizationEndpoint = "https://appleid.apple.com/auth/authorize";
 
         /// <summary>
         /// The token endpoint.
         /// </summary>
-        private const string TokenEndpoint = "https://appleid.apple.com/auth/token";
+        private const string _tokenEndpoint = "https://appleid.apple.com/auth/token";
 
         /// <summary>
         /// The base uri for scopes.
         /// </summary>
-        private const string ScopeBaseUri = "https://appleid.apple.com";
+        private const string _scopeBaseUri = "https://appleid.apple.com";
 
         /// <summary>
         /// The _app id.
@@ -40,14 +45,19 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         /// The requested scopes.
         /// </summary>
         private readonly string _requestedScopes = "name email";
-
-        public AppleOAuth2Client(string clientId, string clientSecret)
+        private readonly ILogger _logger;
+        private static readonly HttpClient _httpClient;
+        static AppleOAuth2Client() {
+            _httpClient = new HttpClient();
+        }
+        public AppleOAuth2Client(string clientId, string clientSecret, ILogger logger)
             : base("Apple") {
             _clientId = clientId;
             _clientSecret = clientSecret;
+            _logger = logger;
         }
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
-            return BuildUri(AuthorizationEndpoint, new NameValueCollection
+            return BuildUri(_authorizationEndpoint, new NameValueCollection
                 {
                     { "response_type", "code" },
                     { "response_mode", "form_post" },
@@ -83,38 +93,60 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode) {
             var postData = HttpUtility.ParseQueryString(string.Empty);
-            postData.Add(new NameValueCollection
-                {
-                    { "grant_type", "authorization_code" },
-                    { "code", authorizationCode },
-                    { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
-                    { "client_id", _clientId },
-                    { "client_secret", _clientSecret },
-                });
+            postData.Add(new NameValueCollection {
+                { "grant_type", "authorization_code" },
+                { "code", authorizationCode },
+                { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
+                { "client_id", _clientId },
+                { "client_secret", _clientSecret },
+            });
 
-            var webRequest = (HttpWebRequest)WebRequest.Create(TokenEndpoint);
+            var response = MakePostRequest(_tokenEndpoint, postData.ToString());
 
-            webRequest.Method = "POST";
-            webRequest.ContentType = "application/x-www-form-urlencoded";
-            webRequest.Accept = "application/json";
-            webRequest.UserAgent = "krake"; // Apple requires a user agent header at the token endpoint
-
-            using (var s = webRequest.GetRequestStream())
-            using (var sw = new StreamWriter(s))
-                sw.Write(postData.ToString());
-
-            using (var webResponse = webRequest.GetResponse()) {
-                var responseStream = webResponse.GetResponseStream();
-                if (responseStream == null)
-                    return null;
-
-                using (var reader = new StreamReader(responseStream)) {
-                    var response = reader.ReadToEnd();
-                    var json = JObject.Parse(response);
-                    var accessToken = json.Value<string>("id_token"); // json.Value<string>("access_token");
-                    return accessToken;
-                }
+            if ( ! string.IsNullOrWhiteSpace(response)) {
+                var json = JObject.Parse(response);
+                var accessToken = json.Value<string>("id_token");
+                return accessToken;
             }
+            return null; // fallback
+        }
+        private string MakePostRequest(string url, string content) {
+            var result = "";
+            lock (_httpClient) {
+                _httpClient.DefaultRequestHeaders.Clear();
+                // specify to use TLS 1.2 as default connection if needed
+                if (url.ToLowerInvariant().StartsWith("https:")) {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                }
+                // call web api
+                Task<HttpResponseMessage> t = null;
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", "krake");
+                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                t = _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/x-www-form-urlencoded"));
+                if (t != null) {
+                    t.Wait(3000); // timeout: 3 seconds
+                    if (t.Status == TaskStatus.RanToCompletion) {
+                        var aux = t.Result.Content.ReadAsStringAsync();
+                        aux.Wait();
+                        if (t.Result.IsSuccessStatusCode) {
+                            result = aux.Result;
+                        }
+                        else {
+                            throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Http Error {0} - {1} on request {2}.", (int)(t.Result.StatusCode), t.Result.ReasonPhrase, url));
+                        }
+                    }
+                    else {
+                        throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Timeout on request {0}.", url));
+                    }
+                }
+                return result;
+            }
+        }
+        public override AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl) {
+            var code = context.Request.Form["code"];
+            var accessToken = QueryAccessToken(returnPageUrl, code);
+            var userData = GetUserData(accessToken);
+            return new AuthenticationResult(true, ProviderName, userData["sub"], userData["email"], userData);
         }
     }
 }
