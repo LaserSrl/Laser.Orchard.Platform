@@ -9700,3 +9700,7 @@ ul.widgets h3 {
     margin: 0;
     padding: 0;
 }
+/* fix an issue with the style from TheAdmin theme*/
+.error {
+    padding: 4px 4px 4px 26px;
+}
