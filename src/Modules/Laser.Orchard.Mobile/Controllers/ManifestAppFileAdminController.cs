@@ -27,14 +27,19 @@ namespace Laser.Orchard.Mobile.Controllers {
             if (!Authorized())
                 return new HttpUnauthorizedResult();
             var manifest = _manifestAppService.Get();
-            return View(new ManifestAppFileViewModel() { Text = manifest.FileContent, Enable = manifest.Enable });
+            return View(new ManifestAppFileViewModel() {
+                Text = manifest.FileContent,
+                Enable = manifest.Enable,
+                DeveloperDomainText = manifest.DeveloperDomainText,
+                EnableDeveloperDomain = manifest.EnableDeveloperDomain
+            });
         }
 
         [HttpPost]
         public ActionResult Index(ManifestAppFileViewModel viewModel) {
             if (!Authorized())
                 return new HttpUnauthorizedResult(); 
-            var saveResult = _manifestAppService.Save(viewModel.Text, viewModel.Enable);
+            var saveResult = _manifestAppService.Save(viewModel);
             if (saveResult.Item1)
                 Services.Notifier.Information(T("File settings successfully saved."));
             else {

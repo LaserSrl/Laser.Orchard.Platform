@@ -5,9 +5,10 @@ using Orchard;
 using Orchard.Data;
 using System;
 using Laser.Orchard.OpenAuthentication.ViewModels;
+using Orchard.Caching;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
-    public interface IProviderConfigurationService : ISingletonDependency {
+    public interface IProviderConfigurationService : IDependency {
         IEnumerable<ProviderConfigurationRecord> GetAll();
         ProviderConfigurationRecord Get(string providerName);
         void Delete(int id);
@@ -20,37 +21,40 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
     public class ProviderConfigurationService : IProviderConfigurationService {
         private readonly IRepository<ProviderConfigurationRecord> _repository;
-        private IEnumerable<ProviderConfigurationRecord> _repositorystatic;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
 
-        private IEnumerable<ProviderConfigurationRecord> RepositoryStatic {
-            get {
-                if(_repositorystatic == null) {
-                    syncRepositoryStatic();
-                }
-                return _repositorystatic;
-            }
-            set {
-                _repositorystatic = value;
-            }
-        }
-
-        public ProviderConfigurationService(IRepository<ProviderConfigurationRecord> repository) {
+        public ProviderConfigurationService(IRepository<ProviderConfigurationRecord> repository, ICacheManager cacheManager, ISignals signals) {
             _repository = repository;
-            RepositoryStatic = null;
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
 
+        public IEnumerable<ProviderConfigurationRecord> GetProviders() {
+            try {
+                return _cacheManager.Get(
+                    "Laser.Orchard.OpenAuthentication.Providers",
+                    ctx => {
+                        ctx.Monitor(_signals.When("Laser.Orchard.OpenAuthentication.Providers.Changed"));
+                        return _repository.Table.ToList();
+                    });
+            }
+            catch {
+                return null;
+            }
+        }
         private void syncRepositoryStatic() {
-            RepositoryStatic = _repository.Table.ToList();
+            _signals.Trigger("Laser.Orchard.OpenAuthentication.Providers.Changed");
         }
 
         public IEnumerable<ProviderConfigurationRecord> GetAll() {
-            return RepositoryStatic;
+            return GetProviders();
         }
 
         public ProviderConfigurationRecord Get(string providerName) {
             if (providerName == null)
                 return null;
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
         }
 
         public void Delete(int id) {
@@ -59,10 +63,10 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         public bool VerifyUnicity(string providerName) {
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
         }
         public bool VerifyUnicity(string providerName, int id) {
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
         }
 
         public void Create(ProviderConfigurationCreateParams parameters) {
@@ -79,7 +83,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         public void Edit(CreateProviderViewModel parameters) {
-            var rec = RepositoryStatic.FirstOrDefault(o => o.Id == parameters.Id);
+            var rec = GetProviders().FirstOrDefault(o => o.Id == parameters.Id);
             rec.DisplayName = parameters.DisplayName;
             rec.IsEnabled = parameters.IsEnabled ? 1 : 0;
             rec.ProviderIdentifier = parameters.ProviderIdentifier;
@@ -94,7 +98,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
         public CreateProviderViewModel Get(Int32 id) {
             var cpvm = new CreateProviderViewModel();
-            var prec = RepositoryStatic.FirstOrDefault(o => o.Id == id);
+            var prec = GetProviders().FirstOrDefault(o => o.Id == id);
             cpvm.Id = prec.Id;
             cpvm.DisplayName = prec.DisplayName;
             cpvm.IsEnabled = prec.IsEnabled == 1;

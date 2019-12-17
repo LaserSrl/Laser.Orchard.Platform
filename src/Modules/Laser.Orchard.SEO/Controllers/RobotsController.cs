@@ -24,9 +24,6 @@ namespace Laser.Orchard.SEO.Controllers {
 								  var robotsFile = _robotsService.Get();
 								  return robotsFile.FileContent;
 							  });
-			if (string.IsNullOrWhiteSpace(content)) {
-				content = _robotsService.Get().FileContent;
-			}
 			return new ContentResult() {
 				ContentType = ContentType,
 				ContentEncoding = Encoding.UTF8,

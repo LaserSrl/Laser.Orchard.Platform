@@ -49,6 +49,14 @@ msgid "Users registration - policies acceptation"
 msgstr "Registrazione utenti - accettazione informative"
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Email confirmed"
+msgstr "Email confermata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Email not confirmed"
+msgstr "Email non confermata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Generic error"
 msgstr "Errore generico"
 

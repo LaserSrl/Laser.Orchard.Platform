@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Orchard.Caching;
 using Orchard.Data;
-using Orchard.Localization;
 using Orchard;
-using System.Web.Mvc;
 using Laser.Orchard.Mobile.Models;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Laser.Orchard.Mobile.ViewModels;
 
 namespace Laser.Orchard.Mobile.Services {
 
     public interface IManifestAppFileServices : IDependency {
         ManifestAppFileRecord Get();
 
-        Tuple<bool, IEnumerable<string>> Save(string text, bool enable);
+        Tuple<bool, IEnumerable<string>> Save(ManifestAppFileViewModel vieModel);
     }
 
     public class ManifestAppFileServices : IManifestAppFileServices {
@@ -32,27 +31,30 @@ namespace Laser.Orchard.Mobile.Services {
             var manifestAppFileRecord = _repository.Table.FirstOrDefault();
             if (manifestAppFileRecord == null) {
                 manifestAppFileRecord = new ManifestAppFileRecord() {
-                    FileContent = ""
+                    FileContent = "",
+                    Enable = false,
+                    DeveloperDomainText = "",
+                    EnableDeveloperDomain = false
                 };
                 _repository.Create(manifestAppFileRecord);
             }
             return manifestAppFileRecord;
         }
 
-        public Tuple<bool, IEnumerable<string>> Save(string text, bool enable) {
-
-
-            var validationResult = Validate(text);
+        public Tuple<bool, IEnumerable<string>> Save(ManifestAppFileViewModel vieModel) {
+            var validationResult = Validate(vieModel);
             if (validationResult.Item1) {
                 var manifestAppFileRecord = Get();
-                manifestAppFileRecord.FileContent = text;
-                manifestAppFileRecord.Enable = enable;
+                manifestAppFileRecord.FileContent = vieModel.Text;
+                manifestAppFileRecord.Enable = vieModel.Enable;
+                manifestAppFileRecord.DeveloperDomainText = vieModel.DeveloperDomainText;
+                manifestAppFileRecord.EnableDeveloperDomain = vieModel.EnableDeveloperDomain;
                 _signals.Trigger("ManifestAppFile.SettingsChanged");
             }
             return validationResult;
         }
 
-        private Tuple<bool, IEnumerable<string>> Validate(string text) {
+        private Tuple<bool, IEnumerable<string>> Validate(ManifestAppFileViewModel vieModel) {
 
             //string schemaJson = @"{
             //        'definition': {
@@ -68,7 +70,7 @@ namespace Laser.Orchard.Mobile.Services {
             //        }
             //    }";
 
-            if (String.IsNullOrEmpty(text)) {
+            if (String.IsNullOrEmpty(vieModel.Text)) {
                 return new Tuple<bool, IEnumerable<string>>(true, new List<string>() {});
             }
 
@@ -76,7 +78,7 @@ namespace Laser.Orchard.Mobile.Services {
 
             JSchema schema = JSchema.Parse(schemaJson);
             try {
-                JObject jText = JObject.Parse(text);
+                JObject jText = JObject.Parse(vieModel.Text);
                 IList<string> message;
                 bool valid = jText.IsValid(schema, out message);
                 return new Tuple<bool, IEnumerable<string>>(valid, message);
