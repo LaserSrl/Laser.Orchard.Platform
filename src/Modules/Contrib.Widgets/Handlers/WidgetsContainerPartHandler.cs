@@ -88,8 +88,11 @@ namespace Contrib.Widgets.Handlers {
                     // translate terms
                     var newTerms = new List<TermPart>();
                     foreach (var term in field.Terms) {
+                        // adds translated term if it exists (same ogic of LocalizedTaxonomyFieldHandler.BuildEditorShape)
                         var translatedTerm = localizationService.GetLocalizedContentItem(term, culture.Culture);
-                        newTerms.Add(translatedTerm.ContentItem.As<TermPart>());
+                        if(translatedTerm != null) {
+                            newTerms.Add(translatedTerm.ContentItem.As<TermPart>());
+                        }
                     }
                     translations.Add(field.PartFieldDefinition.Name, newTerms);
                 }
