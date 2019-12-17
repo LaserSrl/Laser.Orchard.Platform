@@ -117,7 +117,6 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                     q.Add("code", codeString);
                 }
                 q.Add(ctx.Request.QueryString);
-                Logger.Error("Apple - RewriteRequestByPostState: rewritten path = >{0}<", ctx.Request.Path + "?" + q.ToString());
                 ctx.RewritePath(ctx.Request.Path + "?" + q.ToString());
                 result = true;
             }
