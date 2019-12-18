@@ -25,26 +25,26 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
             string clientId = providerConfigurationRecord.ProviderIdKey;
-            string clientSecret = GetClientSecret(providerConfigurationRecord);
+            string clientSecret = GetClientSecret(providerConfigurationRecord, false);
             var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
             return client;
         }
 
         public IAuthenticationClient BuildMobile(ProviderConfigurationRecord providerConfigurationRecord) {
             string clientId = providerConfigurationRecord.ProviderSecret;
-            string clientSecret = GetClientSecret(providerConfigurationRecord);
+            string clientSecret = GetClientSecret(providerConfigurationRecord, true);
             var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
             return client;
         }
 
-        private string GetClientSecret(ProviderConfigurationRecord providerConfigurationRecord) {
+        private string GetClientSecret(ProviderConfigurationRecord providerConfigurationRecord, bool forMobile) {
             var epoch = new DateTime(1970, 1, 1);
             var payload = new Dictionary<string, object>() {
                 { "iss", providerConfigurationRecord.UserIdentifier }, // team_id
                 { "iat", (DateTime.UtcNow.AddMinutes(-1) - epoch).TotalSeconds },
                 { "exp", (DateTime.UtcNow.AddMonths(5) - epoch).TotalSeconds },
                 { "aud", "https://appleid.apple.com" },
-                { "sub", providerConfigurationRecord.ProviderIdKey }, // services_id
+                { "sub", forMobile? providerConfigurationRecord.ProviderSecret : providerConfigurationRecord.ProviderIdKey }, // services_id
             };
             var extraHeader = new Dictionary<string, object>() {
                 { "alg", "ES256" },
@@ -81,7 +81,7 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            if(previousAuthResult != null && previousAuthResult.IsSuccessful && !string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
+            if (previousAuthResult != null && previousAuthResult.IsSuccessful && !string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
                 return previousAuthResult;
             }
             else {
