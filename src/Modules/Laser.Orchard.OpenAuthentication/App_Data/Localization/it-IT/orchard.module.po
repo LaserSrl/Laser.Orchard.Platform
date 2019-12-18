@@ -49,12 +49,20 @@ msgid "This is the key. If Apple Authentication Provider is selected, this is th
 msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "This is the secret. If Apple Authentication Provider is selected, this is the Bundle ID (the Services ID of the app)."
+msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il Bundle ID (il Services ID dell'app)."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
 msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
+msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID and the certificate file has to be name as AuthKey_<Key ID>.p8 and placed in App_Data/Sites/tenant folder."
+msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID e il file del certificato deve chiamarsi AuthKey_<Key ID>.p8 e deve essere posizionato nella cartella App_Data/Sites/tenant."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
@@ -117,12 +125,20 @@ msgid "This is the key. If Apple Authentication Provider is selected, this is th
 msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "This is the secret. If Apple Authentication Provider is selected, this is the Bundle ID (the Services ID of the app)."
+msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il Bundle ID (il Services ID dell'app)."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
 msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
+msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID and the certificate file has to be name as AuthKey_<Key ID>.p8 and placed in App_Data/Sites/tenant folder."
+msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID e il file del certificato deve chiamarsi AuthKey_<Key ID>.p8 e deve essere posizionato nella cartella App_Data/Sites/tenant."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
@@ -303,6 +319,10 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Username"
 msgstr "Nome utente"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."

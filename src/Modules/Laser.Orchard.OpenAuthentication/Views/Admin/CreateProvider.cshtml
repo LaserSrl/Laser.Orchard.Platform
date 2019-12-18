@@ -23,11 +23,11 @@
         @Html.DropDownListFor(m => m.ProviderName,Model.ProviderNameList)
         <span class="hint">@T("The name that will be used internally.")</span>
     </fieldset>
-    <fieldset>
+        <fieldset>
         @Html.LabelFor(m => m.ProviderIdentifier, T("Identifier"))
         @Html.TextBoxFor(m => m.ProviderIdentifier)
-        <span class="hint">@T("This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID.")</span>
-    </fieldset>
+        <span class="hint">@T("This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID and the certificate file has to be name as AuthKey_<Key ID>.p8 and placed in App_Data/Sites/tenant folder.")</span>
+        </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.UserIdentifier, T("User Name (used for twitter post)"))
         @Html.TextBoxFor(m => m.UserIdentifier)
