@@ -132,10 +132,12 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                             result = aux.Result;
                         }
                         else {
+                            _logger.Error("AppleOAuth2Client - MakePostRequest - Http Error {0} - {1} on request {2}.", (int)(t.Result.StatusCode), t.Result.ReasonPhrase, url);
                             throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Http Error {0} - {1} on request {2}.", (int)(t.Result.StatusCode), t.Result.ReasonPhrase, url));
                         }
                     }
                     else {
+                        _logger.Error("AppleOAuth2Client - MakePostRequest timeout on {0}", url);
                         throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Timeout on request {0}.", url));
                     }
                 }
