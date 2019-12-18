@@ -173,8 +173,8 @@ msgid "This user account will be linked to <b>{0}</b> when you login."
 msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
@@ -253,8 +253,8 @@ msgid "Username"
 msgstr "Nome utente"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Change Password"
@@ -357,8 +357,8 @@ msgid "View Content"
 msgstr "Visualizza contenuto"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
