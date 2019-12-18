@@ -42,7 +42,7 @@
     <fieldset>
         @Html.LabelFor(m => m.ProviderSecret, T("Secret"))
         @Html.TextBoxFor(m => m.ProviderSecret)
-        <span class="hint">@T("This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder.")</span>
+        <span class="hint">@T("This is the secret. If Apple Authentication Provider is selected, this is the Bundle ID (the Services ID of the app).")</span>
     </fieldset>
 
 @Html.HiddenFor(m=>m.Id)

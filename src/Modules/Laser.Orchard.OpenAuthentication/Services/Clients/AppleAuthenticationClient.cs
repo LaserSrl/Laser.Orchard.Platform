@@ -30,6 +30,13 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             return client;
         }
 
+        public IAuthenticationClient BuildMobile(ProviderConfigurationRecord providerConfigurationRecord) {
+            string clientId = providerConfigurationRecord.ProviderSecret;
+            string clientSecret = GetClientSecret(providerConfigurationRecord);
+            var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
+            return client;
+        }
+
         private string GetClientSecret(ProviderConfigurationRecord providerConfigurationRecord) {
             var epoch = new DateTime(1970, 1, 1);
             var payload = new Dictionary<string, object>() {
@@ -37,14 +44,14 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                 { "iat", (DateTime.UtcNow.AddMinutes(-1) - epoch).TotalSeconds },
                 { "exp", (DateTime.UtcNow.AddMonths(5) - epoch).TotalSeconds },
                 { "aud", "https://appleid.apple.com" },
-                { "sub", providerConfigurationRecord.ProviderIdKey }, // client_id
+                { "sub", providerConfigurationRecord.ProviderIdKey }, // services_id
             };
             var extraHeader = new Dictionary<string, object>() {
                 { "alg", "ES256" },
                 { "typ", "JWT" },
                 { "kid", providerConfigurationRecord.ProviderIdentifier } // key_id
             };
-            var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\" + providerConfigurationRecord.ProviderSecret;
+            var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\AuthKey_" + providerConfigurationRecord.ProviderIdentifier + ".p8";
             string content = File.ReadAllText(p8File);
             string[] keyLines = content.Split('\n');
             content = string.Join(string.Empty, keyLines.Skip(1).Take(keyLines.Length - 2));
@@ -74,7 +81,7 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            if(previousAuthResult != null && previousAuthResult.IsSuccessful) {
+            if(previousAuthResult != null && previousAuthResult.IsSuccessful && !string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
                 return previousAuthResult;
             }
             else {
@@ -87,11 +94,11 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl) {
-            if (previousAuthResult != null && previousAuthResult.IsSuccessful) {
+            if (previousAuthResult != null && previousAuthResult.IsSuccessful && ! string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
                 return previousAuthResult;
             }
             else {
-                var client = Build(clientConfiguration) as AppleOAuth2Client;
+                var client = BuildMobile(clientConfiguration) as AppleOAuth2Client;
                 string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
                 return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
             }
