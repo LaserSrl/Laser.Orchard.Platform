@@ -9,6 +9,10 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid " and must contain at least "
+msgstr "e deve contenere almeno"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
 msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
 
@@ -29,8 +33,28 @@ msgid "Email:"
 msgstr "Email:"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Password:"
 msgstr "Password:"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Passwords are required to be a minimum of {0} characters in length."
@@ -39,6 +63,10 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Register"
 msgstr "Registra"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Use the form below to create a new account."

@@ -61,6 +61,10 @@ msgid "Transaction canceled."
 msgstr "Transazione annullata."
 
 msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Transaction information not valid for transaction {0}: {1}"
+msgstr "Informazioni non valide per la transazione {0}: {1}"
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
 msgid "Transaction information not valid: {0}"
 msgstr "Informazioni sulla transazione non valide: {0}"
 
