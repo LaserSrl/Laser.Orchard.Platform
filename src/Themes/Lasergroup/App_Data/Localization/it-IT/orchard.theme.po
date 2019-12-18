@@ -129,8 +129,8 @@ msgid "Your email address has been validated."
 msgstr "Il tuo indirizzo email è stato confermato."
 
 msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Change Password"
@@ -189,8 +189,8 @@ msgid "Your password has been changed successfully."
 msgstr "Password cambiata con successo."
 
 msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/Lasergroup/Views/Orchard.Users/Account/LostPassword.cshtml"
 msgid "Account Information"
@@ -629,8 +629,8 @@ msgid "WORK WITH US"
 msgstr "LAVORA CON NOI"
 
 msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/Lasergroup/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."

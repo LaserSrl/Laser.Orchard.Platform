@@ -305,8 +305,8 @@ msgid "Username"
 msgstr "Nome utente"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
-msgid " and must contain at least "
-msgstr "e deve contenere almeno"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
