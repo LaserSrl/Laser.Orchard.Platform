@@ -45,28 +45,12 @@ msgid "The name that will be used internally."
 msgstr "Nome che verrà usato internamente."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the key. If Apple Authentication Provider is selected, this is the Services ID."
-msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
-msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
-msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the User Name."
 msgstr "Questo è il Nome Utente."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the User Name. If Apple Authentication Provider is selected, this is the Team ID."
-msgstr "Questo è il nome utente. Se è selezionato il provider di autenticazione Apple, questo è il Team ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the value that is shown to the User."
@@ -113,28 +97,12 @@ msgid "The name that will be used internally."
 msgstr "Nome che verrà usato internamente."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the key. If Apple Authentication Provider is selected, this is the Services ID."
-msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
-msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
-msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the User Name."
 msgstr "Questo è il Nome Utente."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the User Name. If Apple Authentication Provider is selected, this is the Team ID."
-msgstr "Questo è il nome utente. Se è selezionato il provider di autenticazione Apple, questo è il Team ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the value that is shown to the User."
