@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -15,9 +16,10 @@ namespace Laser.Orchard.OpenAuthentication.ViewModels {
         public bool IsEnabled { get; set; }
         public Int32 Id {get;set;}
         public SelectList ProviderNameList { get; set; }
+        public List<ProviderAttributeViewModel> Attributes { get; set; }
         public CreateProviderViewModel() {
             IsEnabled = true;
+            Attributes = new List<ProviderAttributeViewModel>();
         }
-
    }
 }
