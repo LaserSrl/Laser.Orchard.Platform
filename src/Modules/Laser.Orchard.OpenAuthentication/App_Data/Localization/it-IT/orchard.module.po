@@ -49,20 +49,12 @@ msgid "This is the key. If Apple Authentication Provider is selected, this is th
 msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the secret. If Apple Authentication Provider is selected, this is the Bundle ID (the Services ID of the app)."
-msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il Bundle ID (il Services ID dell'app)."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
 msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
-msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID and the certificate file has to be name as AuthKey_<Key ID>.p8 and placed in App_Data/Sites/tenant folder."
-msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID e il file del certificato deve chiamarsi AuthKey_<Key ID>.p8 e deve essere posizionato nella cartella App_Data/Sites/tenant."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
@@ -125,20 +117,12 @@ msgid "This is the key. If Apple Authentication Provider is selected, this is th
 msgstr "Questa è la chiave.  Se è selezionato il provider di autenticazione Apple, questo è il Services ID."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the secret. If Apple Authentication Provider is selected, this is the Bundle ID (the Services ID of the app)."
-msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il Bundle ID (il Services ID dell'app)."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the secret. If Apple Authentication Provider is selected, this is the name of Private Key file (.p8) in App_Data/Sites/tenant folder."
 msgstr "Questo è il secret.  Se è selezionato il provider di autenticazione Apple, questo è il nome del file Private Key (.p8) nella cartella App_Data/Sites/tenant.."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the url to the end point."
 msgstr "Questo è l'URL dell'end point."
-
-msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
-msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID and the certificate file has to be name as AuthKey_<Key ID>.p8 and placed in App_Data/Sites/tenant folder."
-msgstr "Questo è l'URL dell'end point. Se è selezionato il provider di autenticazione Apple, questo è il Key ID e il file del certificato deve chiamarsi AuthKey_<Key ID>.p8 e deve essere posizionato nella cartella App_Data/Sites/tenant."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "This is the url to the end point. If Apple Authentication Provider is selected, this is the Key ID."
@@ -465,6 +449,10 @@ msgid "Not allowed to manage open authentication settings"
 msgstr "Non è permesso modificare le impostazioni di open authentication"
 
 msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
+msgid "Please set attributes of this provider."
+msgstr "Impostare gli attributi per questo provider."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
 msgid "Provider name already exists"
 msgstr "Il nome del provider esiste già"
 
@@ -507,6 +495,26 @@ msgstr "La tua richiesta di autenticazione non è andata a buon fine."
 msgctxt "Laser.Orchard.OpenAuthentication.Events.OpenAuthUserEventHandler"
 msgid "Your account has been merged with your previous account."
 msgstr "Il tuo account è stato unito al tuo account precedente."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Bundle ID"
+msgstr "Bundle ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Certificate file name (for instance: AuthKey_XXXXXXXXXX.p8) to be placed in App_Data/Sites/tenant folder"
+msgstr "Nome del file del certificato (per esempio: AuthKey_XXXXXXXXXX.p8) che deve trovarsi nella cartella App_Data/Sites/tenant"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Key ID"
+msgstr "Key ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Services ID"
+msgstr "Services ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Team ID"
+msgstr "Team ID"
 
 msgctxt "Laser.Orchard.OpenAuthentication.Services.OpenAuthMembershipServices"
 msgid "Auto Registered User"

@@ -78,6 +78,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken) {
+            // the input parameter is id_token because it contains user data and there is no need to make another call to Apple server
             var userData = new Dictionary<string, string>();
             var jwtHandler = new JwtSecurityTokenHandler();
             var securityToken = (JwtSecurityToken)jwtHandler.ReadToken(accessToken);
@@ -106,6 +107,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             if ( ! string.IsNullOrWhiteSpace(response)) {
                 var json = JObject.Parse(response);
                 var accessToken = json.Value<string>("id_token");
+                // returns id_token because it contains user data and GetUserData() extracts these informations from it
                 return accessToken;
             }
             return null; // fallback

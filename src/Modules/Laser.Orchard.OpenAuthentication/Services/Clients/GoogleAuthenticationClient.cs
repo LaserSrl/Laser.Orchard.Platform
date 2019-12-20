@@ -14,7 +14,7 @@ using Laser.Orchard.OpenAuthentication.Extensions;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
 using System.Web;
-
+using Orchard.Localization;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class GoogleAuthenticationClient : IExternalAuthenticationClient {
@@ -66,6 +66,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         
         public bool RewriteRequest() {
             return new ServiceUtility().RewriteRequestByState();
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }
