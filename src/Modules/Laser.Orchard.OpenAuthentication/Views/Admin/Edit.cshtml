@@ -14,7 +14,8 @@
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderName, T("Technical Name"))
-        @Html.DropDownListFor(m => m.ProviderName, Model.ProviderNameList, new { @readonly = "true" })
+        @Html.DropDownListFor(m => m.ProviderName, Model.ProviderNameList, new { @disabled = "true" })
+        @Html.HiddenFor(m => m.ProviderName)
         <span class="hint">@T("The name that will be used internally.")</span>
     </fieldset>
     <fieldset>
