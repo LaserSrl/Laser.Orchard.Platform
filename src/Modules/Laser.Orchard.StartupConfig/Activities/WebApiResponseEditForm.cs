@@ -40,7 +40,7 @@ namespace Laser.Orchard.StartupConfig.Activities {
                             _Data: Shape.Textbox(
                                 Id: "data", Name: "Data",
                                 Title: T("Data"),
-                                Description: T("The data object of the response."),
+                                Description: T("The data object of the response, the data must be in Json format es: {{\"ErrorType\":\"TicketError\"}}. "),
                                 Classes: new[] { "large", "text", "tokenized" }),
                             _ErrorCode: Shape.SelectList(
                                 Id: "error-code",
