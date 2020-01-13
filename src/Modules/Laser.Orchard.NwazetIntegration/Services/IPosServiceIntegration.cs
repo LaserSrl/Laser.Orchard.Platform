@@ -5,6 +5,8 @@ using Orchard;
 using Orchard.DisplayManagement;
 using System.Web.Mvc;
 using System.Linq;
+using Orchard.Localization;
+using Laser.Orchard.PaymentGateway.Models;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IPosServiceIntegration : ICheckoutService {
@@ -32,7 +34,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _orderService = orderService;
             _currencyProvider = currencyProvider;
             _paymentService = paymentService;
+
+            T = NullLocalizer.Instance;
+
+            _paymentByTransactionId = new Dictionary<string, PaymentRecord>();
         }
+
+        public Localizer T { get; set; }
 
         public string Name
         {
@@ -62,9 +70,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 return null;
             }
         }
+
+        private Dictionary<string, PaymentRecord> _paymentByTransactionId;
+        private PaymentRecord PaymentByTransactionId(string transactionId) {
+            if (!_paymentByTransactionId.ContainsKey(transactionId)) {
+                _paymentByTransactionId
+                    .Add(transactionId, _paymentService.GetPaymentByGuid(transactionId));
+            }
+            return _paymentByTransactionId[transactionId];
+        }
         public string GetChargeAdminUrl(string transactionId) {
-            string result = "";
-            var payment = _paymentService.GetPaymentByGuid(transactionId);
+            string result = null;
+            var payment = PaymentByTransactionId(transactionId);
             if(payment != null) {
                 var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
                 var url = urlHelper.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway" });
@@ -74,6 +91,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
         public string GetOrderNumber(int orderId) {
             return string.Format("KPO-{0}", orderId);
+        }
+
+        public string GetChargeInfo(string transactionId) {
+            string result = null;
+            var payment = PaymentByTransactionId(transactionId);
+            if (payment != null) {
+                result = T("Payment made with {0}", payment.PosName).Text;
+            }
+            return result;
         }
     }
 }
