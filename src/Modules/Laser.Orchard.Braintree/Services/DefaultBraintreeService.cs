@@ -34,7 +34,8 @@ namespace Laser.Orchard.Braintree.Services {
             var request = new Bt.TransactionRequest {
                 Amount = amount,
                 PaymentMethodNonce = paymentMethodNonce,
-                MerchantAccountId = merchant
+                MerchantAccountId = merchant,
+                PurchaseOrderNumber = "TODO"
             };
             if (customFields != null) {
                 request.CustomFields = customFields;
