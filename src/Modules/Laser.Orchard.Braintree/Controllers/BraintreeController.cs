@@ -86,8 +86,7 @@ namespace Laser.Orchard.Braintree.Controllers {
         private PaymentResult FinalizePayment(string nonce, string sPid) {
             int pid = int.Parse(sPid);
             var paymentInfo = _posService.GetPaymentInfo(pid);
-            decimal amount = paymentInfo.Amount;
-            var payResult = _braintreeService.Pay(nonce, amount, null);
+            var payResult = _braintreeService.Pay(new PaymentContext(nonce, paymentInfo));
             string error = "";
             string transactionId = "";
             string info = JsonConvert.SerializeObject(payResult);

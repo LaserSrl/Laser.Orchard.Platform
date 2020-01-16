@@ -9,11 +9,8 @@ using Orchard.Localization;
 using Laser.Orchard.PaymentGateway.Models;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
-    public interface IPosServiceIntegration : ICheckoutService {
-        string GetOrderNumber(int orderId);
-    }
 
-    public class PosServiceIntegration : IPosServiceIntegration {
+    public class PosServiceIntegration : ICheckoutService {
         private readonly IOrchardServices _orchardServices; 
         private readonly IEnumerable<IPosService> _posServices;
         private readonly dynamic _shapeFactory;
@@ -88,9 +85,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 result = string.Format("{0}?paymentId={1}", url, payment.Id);
             }
             return result;
-        }
-        public string GetOrderNumber(int orderId) {
-            return string.Format("KPO-{0}", orderId);
         }
 
         public string GetChargeInfo(string transactionId) {
