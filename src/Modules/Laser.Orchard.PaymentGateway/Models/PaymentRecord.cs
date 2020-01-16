@@ -57,14 +57,5 @@ namespace Laser.Orchard.PaymentGateway.Models {
             }
         }
 
-        public static Dictionary<string, string> CustomPaymentDetails(PaymentRecord pr) {
-            return new Dictionary<string, string>() {
-                { "Reason", pr.Reason },
-                { "CreationDate", pr.CreationDate.ToString(CultureInfo.InvariantCulture) },
-                //{ "Currency", pr.Currency },
-                { "ContentItemId", pr.ContentItemId.ToString(CultureInfo.InvariantCulture) },
-                { "UserId", pr.UserId.ToString(CultureInfo.InvariantCulture) },
-            };
-        }
     }
 }
