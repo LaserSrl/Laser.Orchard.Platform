@@ -97,10 +97,8 @@ namespace Laser.Orchard.Braintree.Controllers {
                     error,
                     info));
             }
-            else {
-                // pagamento ok
-                transactionId = payResult.TransactionId;
-            }
+            // even failed transactions may be recorded
+            transactionId = payResult?.TransactionId ?? "";
             _posService.EndPayment(pid, payResult.Success, error, info, transactionId);
             return new PaymentResult { Pid = pid, Success = payResult.Success, Error = error, TransactionId = transactionId};
         }

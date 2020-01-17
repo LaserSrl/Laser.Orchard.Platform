@@ -5,6 +5,7 @@ using Laser.Orchard.NwazetIntegration.Services;
 using System.Collections.Generic;
 using Orchard.ContentManagement;
 using Orchard.Workflows.Services;
+using Laser.Orchard.NwazetIntegration.Models;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class PaymentEventHandler : IPaymentEventHandler {
@@ -59,6 +60,9 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 order.Status = OrderPart.Pending;
                 order.AmountPaid = payment.Amount;
                 order.CurrencyCode = payment.Currency;
+                // update charge
+                order.UpdateCharge(
+                    new PaymentGatewayCharge("Payment Gateway", payment.Guid));
                 order.LogActivity(OrderPart.Event, string.Format("Payed on POS {0}.", payment.PosName));
                 // svuota il carrello
                 foreach (var handler in _cartLifeCycleEventHandlers) {
