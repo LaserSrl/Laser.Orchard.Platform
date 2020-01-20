@@ -5,13 +5,13 @@ using Laser.Orchard.NwazetIntegration.Services;
 using System.Collections.Generic;
 using Orchard.ContentManagement;
 using Orchard.Workflows.Services;
+using Laser.Orchard.NwazetIntegration.Models;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class PaymentEventHandler : IPaymentEventHandler {
         private readonly IOrderService _orderService;
         private readonly IPaymentService _paymentService;
         private readonly IShoppingCart _shoppingCart;
-        private readonly IPosServiceIntegration _posServiceIntegration;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IEnumerable<ICartLifeCycleEventHandler> _cartLifeCycleEventHandlers;
         private readonly IContentManager _contentManager;
@@ -21,7 +21,6 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             IOrderService orderService, 
             IPaymentService paymentService, 
             IShoppingCart shoppingCart, 
-            IPosServiceIntegration posServiceIntegration, 
             INwazetCommunicationService nwazetCommunicationService, 
             IEnumerable<ICartLifeCycleEventHandler> cartLifeCycleEventHandlers,
             IContentManager contentManager,
@@ -30,7 +29,6 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             _orderService = orderService;
             _paymentService = paymentService;
             _shoppingCart = shoppingCart;
-            _posServiceIntegration = posServiceIntegration;
             _nwazetCommunicationService = nwazetCommunicationService;
             _cartLifeCycleEventHandlers = cartLifeCycleEventHandlers;
             _contentManager = contentManager;
@@ -61,8 +59,10 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 // aggiorna l'odine in base al pagamento effettuato
                 order.Status = OrderPart.Pending;
                 order.AmountPaid = payment.Amount;
-                order.PurchaseOrder = _posServiceIntegration.GetOrderNumber(order.Id);
                 order.CurrencyCode = payment.Currency;
+                // update charge
+                order.UpdateCharge(
+                    new PaymentGatewayCharge("Payment Gateway", payment.Guid));
                 order.LogActivity(OrderPart.Event, string.Format("Payed on POS {0}.", payment.PosName));
                 // svuota il carrello
                 foreach (var handler in _cartLifeCycleEventHandlers) {
