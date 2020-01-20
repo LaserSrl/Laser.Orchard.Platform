@@ -1,11 +1,5 @@
 [
   {
-    "outputFileName": "Styles/Site.min.css",
-    "inputFiles": [
-      "Styles/Site.css"
-    ]
-  },
-  {
     "outputFileName": "Styles/Style.min.css",
     "inputFiles": [
       "Styles/Style.css"
@@ -102,15 +96,15 @@
     ]
   },
   {
-    "outputFileName": "Styles/popup-box.min.css",
-    "inputFiles": [
-      "Styles/popup-box.css"
-    ]
-  },
-  {
     "outputFileName": "Scripts/jquery.magnific-popup.min.js",
     "inputFiles": [
       "Scripts/jquery.magnific-popup.js"
+    ]
+  },
+  {
+    "outputFileName": "Styles/popup-box.min.css",
+    "inputFiles": [
+      "Styles/popup-box.css"
     ]
   }
 ]
