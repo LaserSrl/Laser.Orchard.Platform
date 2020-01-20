@@ -27,6 +27,7 @@ using Orchard.Tasks.Scheduling;
 using Laser.Orchard.StartupConfig.Exceptions;
 using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
 using System.Diagnostics;
+using System.Text;
 
 namespace Laser.Orchard.ExternalContent.Services {
 
@@ -212,7 +213,8 @@ namespace Laser.Orchard.ExternalContent.Services {
                                 UseShellExecute = false,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
-                                CreateNoWindow = true
+                                CreateNoWindow = true,
+                                StandardOutputEncoding = Encoding.UTF8
                             };
                             var versionInfo = FileVersionInfo.GetVersionInfo(filename);
                             if (versionInfo.CompanyName != "Laser Group") {
