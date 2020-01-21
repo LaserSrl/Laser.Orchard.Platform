@@ -1,0 +1,49 @@
+﻿@using System.Globalization
+
+@model Laser.Orchard.NwazetIntegration.ViewModels.PaymentInfoViewModel
+
+<div class="order-editor">
+    <fieldset class="payment-info">
+        <legend>@T("Payment Info"):</legend>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td>@T("POS")</td>
+                    <td><span>@Model.PosName</span></td>
+                </tr>
+                <tr>
+                    <td>@T("Reason")</td>
+                    <td><span>@Model.Reason</span></td>
+                </tr>
+                <tr>
+                    <td>@T("Amount")</td>
+                    <td><span>@string.Format("{0} {1}", Model.Amount.ToString("0.00", CultureInfo.InvariantCulture), Model.Currency)</span></td>
+                </tr>
+                <tr>
+                    <td>@T("Date")</td>
+                    <td><span>@Model.UpdateDate.ToString("yyyy-MM-dd HH:mm")</span></td>
+                </tr>
+                @if (Model.Success) {
+                    <tr>
+                        <td>@T("Outcome")</td>
+                        <td><span>@T("Succeeded")</span></td>
+                    </tr>
+                    <tr>
+                        <td>@T("Transacion ID")</td>
+                        <td><span>@Model.TransationId</span></td>
+                    </tr>
+                }
+                else {
+                    <tr>
+                        <td>@T("Outcome")</td>
+                        <td><span>@T("Failed")</span></td>
+                    </tr>
+                    <tr>
+                        <td>@T("Error")</td>
+                        <td><span>@Model.Error</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+</div>
