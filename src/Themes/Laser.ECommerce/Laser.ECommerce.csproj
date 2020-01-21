@@ -179,6 +179,9 @@
       <DependentUpon>jquery.countdown.css</DependentUpon>
     </Content>
     <Content Include="Styles\popup-box.css" />
+    <Content Include="Styles\popup-box.min.css">
+      <DependentUpon>popup-box.css</DependentUpon>
+    </Content>
     <Content Include="Styles\Style.css" />
     <Content Include="Styles\Style.min.css">
       <DependentUpon>Style.css</DependentUpon>
