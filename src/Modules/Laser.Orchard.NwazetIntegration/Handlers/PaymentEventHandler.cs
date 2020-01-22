@@ -43,8 +43,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest);
                 //order.Status = OrderPart.Cancelled;
                 //_contentManager.Publish(order.ContentItem);
-                _updateStatusService.UpdateOrderStatusChanged(order, OrderPart.Cancelled);
-
+                _updateStatusService.UpdateOrderStatusChanged(order, Constants.PaymentFailed);
+                
                 _workflowManager.TriggerEvent(
                     "OrderError", 
                     order,

@@ -6,14 +6,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
     public class PaymentStatusProvider : BaseOrderStatusProvider {
 
         public static readonly string[] states = {
-           Constants.PaymentSucceeded
+           Constants.PaymentSucceeded, Constants.PaymentFailed
         };
 
         public override IEnumerable<string> States => states;
 
         public override Dictionary<string, LocalizedString> StatusLabels => 
             new Dictionary<string, LocalizedString> {
-                { Constants.PaymentSucceeded, T("Payment Succeeded") }
+                { Constants.PaymentSucceeded, T("Payment Succeeded") },
+                { Constants.PaymentFailed, T("Payment Failed") }
             };
     }
 }
