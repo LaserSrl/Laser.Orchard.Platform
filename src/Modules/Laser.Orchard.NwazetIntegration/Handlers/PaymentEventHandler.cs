@@ -63,6 +63,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest); // _orderService.Get(payment.ContentItemId);
                 // aggiorna l'odine in base al pagamento effettuato
                 //order.Status = OrderPart.Pending;
+                order.Status = Constants.PaymentSucceeded;
                 order.AmountPaid = payment.Amount;
                 order.CurrencyCode = payment.Currency;
                 // update charge
@@ -76,9 +77,6 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 _shoppingCart.Clear();
                 // raise order and payment events
                 _contentManager.Publish(order.ContentItem);
-
-                // update status order
-                _updateStatusService.UpdateOrderStatusChanged(order, Constants.PaymentSucceeded);
                 TriggerEvents(order);
             }
         }
