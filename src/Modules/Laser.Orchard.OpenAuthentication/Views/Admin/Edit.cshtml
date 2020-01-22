@@ -1,52 +1,54 @@
 ﻿@model Laser.Orchard.OpenAuthentication.ViewModels.CreateProviderViewModel
-           
+
 @{
     Layout.Title = T("Edit External Provider");
 }
 
-@using (Html.BeginFormAntiForgeryPost())
-{
+@using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
-    
+
     <fieldset>
         @Html.LabelFor(m => m.DisplayName, T("Display Name"))
         @Html.TextBoxFor(m => m.DisplayName)
         <span class="hint">@T("This is the value that is shown to the User.")</span>
-    </fieldset>@*
+    </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderName, T("Technical Name"))
-        @Html.TextBoxFor(m => m.ProviderName)
-        <span class="hint">@T("The name that will be used internally.")</span>
-    </fieldset>*@
-       <fieldset>
-        @Html.LabelFor(m => m.ProviderName, T("Technical Name"))
-        @Html.DropDownListFor(m => m.ProviderName,Model.ProviderNameList)
+        @Html.DropDownListFor(m => m.ProviderName, Model.ProviderNameList, new { @disabled = "true" })
+        @Html.HiddenFor(m => m.ProviderName)
         <span class="hint">@T("The name that will be used internally.")</span>
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderIdentifier, T("Identifier"))
         @Html.TextBoxFor(m => m.ProviderIdentifier)
-        <span class="hint">@T("This is the url to the end point. This is the Key ID for Apple Authentication Provider.")</span>
+        <span class="hint">@T("This is the url to the end point.")</span>
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.UserIdentifier, T("User Name (used for twitter post)"))
         @Html.TextBoxFor(m => m.UserIdentifier)
-        <span class="hint">@T("This is the User Name. This is the Team ID for Apple Authentication Provider.")</span>
+        <span class="hint">@T("This is the User Name.")</span>
     </fieldset>
-    
+
     <fieldset>
         @Html.LabelFor(m => m.ProviderIdKey, T("Key"))
         @Html.TextBoxFor(m => m.ProviderIdKey)
-        <span class="hint">@T("This is the Services ID for Apple Authentication Provider.")</span>
     </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderSecret, T("Secret"))
         @Html.TextBoxFor(m => m.ProviderSecret)
-        <span class="hint">@T("This is the name of Private Key file (.p8) for Apple Authentication Provider.")</span>
     </fieldset>
 
-@Html.HiddenFor(m=>m.Id)
-        <fieldset>
+    for (var idx = 0; idx < Model.Attributes.Count; idx++) {
+    <fieldset>
+        @Html.LabelFor(m => m.Attributes[idx].AttributeValue, Model.Attributes[idx].AttributeDescription)
+        @Html.TextBoxFor(m => m.Attributes[idx].AttributeValue)
+        @Html.HiddenFor(m => m.Attributes[idx].AttributeKey)
+    </fieldset>
+    }
+
+
+    @Html.HiddenFor(m => m.Id)
+    <fieldset>
         @Html.LabelFor(m => m.IsEnabled, T("Is Login enabled"))
         @Html.CheckBoxFor(m => m.IsEnabled)
     </fieldset>

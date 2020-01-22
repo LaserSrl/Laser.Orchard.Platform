@@ -287,6 +287,7 @@
     <Compile Include="Handlers\OpenAuthUserEventHandler.cs" />
     <Compile Include="Handlers\OpenAuthUserEventWorkflowTriggersHandler.cs" />
     <Compile Include="Handlers\UserProviderGDPRHandler.cs" />
+    <Compile Include="Models\ProviderAttributeRecord.cs" />
     <Compile Include="Models\UserAccountLogin.cs" />
     <Compile Include="Models\UserProviderDisplayPart.cs" />
     <Compile Include="Services\Clients\AppleAuthenticationClient.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="ViewModels\CreateProviderViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\OpenAuthTemporaryUser.cs" />
+    <Compile Include="ViewModels\ProviderAttributeViewModel.cs" />
     <Compile Include="ViewModels\UserProviderDisplayViewModel.cs" />
     <Compile Include="ViewModels\UserProvidersViewModel.cs" />
   </ItemGroup>

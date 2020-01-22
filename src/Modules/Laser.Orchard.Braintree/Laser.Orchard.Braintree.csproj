@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -133,6 +134,7 @@
     <Compile Include="Services\DefaultBraintreeService.cs" />
     <Compile Include="Services\IBraintreeService.cs" />
     <Compile Include="Services\MissingSettingsBanner.cs" />
+    <Compile Include="Services\PaymentContext.cs" />
     <Compile Include="ViewModels\PaymentVM.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,6 @@ using System.Web.Mvc;
 namespace Laser.Orchard.NwazetIntegration.Controllers {
     public class AddressesController : Controller {
         private readonly IOrderService _orderService;
-        private readonly IPosServiceIntegration _posServiceIntegration;
         private readonly IShoppingCart _shoppingCart;
         private readonly IOrchardServices _orchardServices;
         private readonly ICurrencyProvider _currencyProvider;
@@ -36,7 +35,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
         public AddressesController(
             IOrderService orderService,
-            IPosServiceIntegration posServiceIntegration,
             IPaymentService paymentService,
             IShoppingCart shoppingCart,
             IOrchardServices orchardServices,
@@ -50,7 +48,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IProductPriceService productPriceService) {
 
             _orderService = orderService;
-            _posServiceIntegration = posServiceIntegration;
             _paymentService = paymentService;
             _shoppingCart = shoppingCart;
             _orchardServices = orchardServices;
@@ -137,7 +134,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     _contentManager.Unpublish(order.ContentItem);
                     // save the addresses for the contact doing the order.
                     _nwazetCommunicationService.OrderToContact(order);
-                    var reason = string.Format("Purchase Order {0}", _posServiceIntegration.GetOrderNumber(order.Id));
+                    var reason = string.Format("Purchase Order {0}", order.OrderKey);
                     var payment = new PaymentRecord {
                         Reason = reason,
                         Amount = order.Total,

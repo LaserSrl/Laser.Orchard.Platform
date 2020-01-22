@@ -12,6 +12,7 @@ using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
 using Orchard.Logging;
 using System.Linq;
+using Orchard.Localization;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class TwitterAuthenticationClient : IExternalAuthenticationClient {
@@ -175,6 +176,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public bool RewriteRequest() {
             return false;
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }

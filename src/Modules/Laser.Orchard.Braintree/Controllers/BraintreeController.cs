@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.Logging;
 using Orchard.Themes;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,11 @@ namespace Laser.Orchard.Braintree.Controllers {
             _orchardServices = orchardServices;
             _posService = new BraintreePosService(orchardServices, repository, paymentEventHandler);
             _braintreeService = braintreeService;
+
+            Logger = NullLogger.Instance;
         }
+
+        public ILogger Logger { get; set; }
 
         /// <summary>
         /// 
@@ -80,18 +85,20 @@ namespace Laser.Orchard.Braintree.Controllers {
         }
         private PaymentResult FinalizePayment(string nonce, string sPid) {
             int pid = int.Parse(sPid);
-            decimal amount = _posService.GetPaymentInfo(pid).Amount;
-            var payResult = _braintreeService.Pay(nonce, amount, null);
+            var paymentInfo = _posService.GetPaymentInfo(pid);
+            var payResult = _braintreeService.Pay(new PaymentContext(nonce, paymentInfo));
             string error = "";
             string transactionId = "";
+            string info = JsonConvert.SerializeObject(payResult);
             if (payResult.Success == false) {
                 error = payResult.ResponseText;
+                Logger.Error(string.Format(@"Error on payment for order {0}: Error {1}. Details: {2}",
+                    paymentInfo.ContentItemId,
+                    error,
+                    info));
             }
-            else {
-                // pagamento ok
-                transactionId = payResult.TransactionId;
-            }
-            string info = JsonConvert.SerializeObject(payResult);
+            // even failed transactions may be recorded
+            transactionId = payResult?.TransactionId ?? "";
             _posService.EndPayment(pid, payResult.Success, error, info, transactionId);
             return new PaymentResult { Pid = pid, Success = payResult.Success, Error = error, TransactionId = transactionId};
         }

@@ -11,40 +11,60 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Linq;
 using Orchard.Logging;
+using Orchard.Localization;
+using Orchard.Data;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class AppleAuthenticationClient : IExternalAuthenticationClient {
         private readonly ShellSettings _shellSetting;
+        private readonly IRepository<ProviderConfigurationRecord> _repository;
+        private readonly IRepository<ProviderAttributeRecord> _repositoryAttributes;
         public ILogger Logger { get; set; }
+        public Localizer T { get; set; }
         public string ProviderName => "Apple";
 
-        public AppleAuthenticationClient(ShellSettings shellSetting) {
+        public AppleAuthenticationClient(
+            ShellSettings shellSetting, 
+            IRepository<ProviderConfigurationRecord> repository,
+            IRepository<ProviderAttributeRecord> repositoryAttributes) {
             _shellSetting = shellSetting;
+            _repository = repository;
+            _repositoryAttributes = repositoryAttributes;
             Logger = NullLogger.Instance;
+            T = NullLocalizer.Instance;
         }
 
         public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            string clientId = providerConfigurationRecord.ProviderIdKey;
-            string clientSecret = GetClientSecret(providerConfigurationRecord);
+            var providerAttributes = GetAttributes(providerConfigurationRecord.Id);
+            string clientId = providerAttributes["ServicesID"];
+            string clientSecret = GetClientSecret(providerAttributes, false);
             var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
             return client;
         }
 
-        private string GetClientSecret(ProviderConfigurationRecord providerConfigurationRecord) {
+        public IAuthenticationClient BuildMobile(ProviderConfigurationRecord providerConfigurationRecord) {
+            var providerAttributes = GetAttributes(providerConfigurationRecord.Id);
+            string clientId = providerAttributes["BundleID"];
+            string clientSecret = GetClientSecret(providerAttributes, true);
+            var client = new AppleOAuth2Client(clientId, clientSecret, Logger);
+            return client;
+        }
+
+        private string GetClientSecret(Dictionary<string, string> providerAttributes, bool forMobile) {
             var epoch = new DateTime(1970, 1, 1);
             var payload = new Dictionary<string, object>() {
-                { "iss", providerConfigurationRecord.UserIdentifier }, // team_id
+                { "iss", providerAttributes["TeamID"] },
                 { "iat", (DateTime.UtcNow.AddMinutes(-1) - epoch).TotalSeconds },
                 { "exp", (DateTime.UtcNow.AddMonths(5) - epoch).TotalSeconds },
                 { "aud", "https://appleid.apple.com" },
-                { "sub", providerConfigurationRecord.ProviderIdKey }, // client_id
+                { "sub", forMobile? providerAttributes["BundleID"] : providerAttributes["ServicesID"] },
             };
             var extraHeader = new Dictionary<string, object>() {
                 { "alg", "ES256" },
                 { "typ", "JWT" },
-                { "kid", providerConfigurationRecord.ProviderIdentifier } // key_id
+                { "kid", providerAttributes["KeyID"] }
             };
-            var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\" + providerConfigurationRecord.ProviderSecret;
+            var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\" + providerAttributes["p8File"];
             string content = File.ReadAllText(p8File);
             string[] keyLines = content.Split('\n');
             content = string.Join(string.Empty, keyLines.Skip(1).Take(keyLines.Length - 2));
@@ -74,7 +94,7 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            if(previousAuthResult != null && previousAuthResult.IsSuccessful) {
+            if (previousAuthResult != null && previousAuthResult.IsSuccessful && !string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
                 return previousAuthResult;
             }
             else {
@@ -87,11 +107,11 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl) {
-            if (previousAuthResult != null && previousAuthResult.IsSuccessful) {
+            if (previousAuthResult != null && previousAuthResult.IsSuccessful && ! string.IsNullOrWhiteSpace(previousAuthResult.Provider)) {
                 return previousAuthResult;
             }
             else {
-                var client = Build(clientConfiguration) as AppleOAuth2Client;
+                var client = BuildMobile(clientConfiguration) as AppleOAuth2Client;
                 string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
                 return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
             }
@@ -117,9 +137,29 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                     q.Add("code", codeString);
                 }
                 q.Add(ctx.Request.QueryString);
-                Logger.Error("Apple - RewriteRequestByPostState: rewritten path = >{0}<", ctx.Request.Path + "?" + q.ToString());
                 ctx.RewritePath(ctx.Request.Path + "?" + q.ToString());
                 result = true;
+            }
+            return result;
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>() {
+                { "KeyID", T("Key ID") },
+                { "TeamID", T("Team ID") },
+                { "ServicesID", T("Services ID") },
+                { "BundleID", T("Bundle ID") },
+                { "p8File", T("Certificate file name (for instance: AuthKey_XXXXXXXXXX.p8) to be placed in App_Data/Sites/tenant folder") }
+            };
+        }
+        private Dictionary<string, string> GetAttributes(int providerId) {
+            var result = new Dictionary<string, string>();
+            var provider = _repository.Get(providerId);
+            if (provider != null) {
+                var original = _repositoryAttributes.Fetch(x => x.ProviderId == providerId).ToList();
+                foreach (var item in GetAttributeKeys()) {
+                    var origValue = original.FirstOrDefault(x => x.AttributeKey == item.Key);
+                    result.Add(item.Key, origValue != null ? origValue.AttributeValue : "");
+                }
             }
             return result;
         }

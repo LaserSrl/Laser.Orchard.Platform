@@ -78,6 +78,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken) {
+            // the input parameter is id_token because it contains user data and there is no need to make another call to Apple server
             var userData = new Dictionary<string, string>();
             var jwtHandler = new JwtSecurityTokenHandler();
             var securityToken = (JwtSecurityToken)jwtHandler.ReadToken(accessToken);
@@ -106,6 +107,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             if ( ! string.IsNullOrWhiteSpace(response)) {
                 var json = JObject.Parse(response);
                 var accessToken = json.Value<string>("id_token");
+                // returns id_token because it contains user data and GetUserData() extracts these informations from it
                 return accessToken;
             }
             return null; // fallback
@@ -132,10 +134,12 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                             result = aux.Result;
                         }
                         else {
+                            _logger.Error("AppleOAuth2Client - MakePostRequest - Http Error {0} - {1} on request {2}.", (int)(t.Result.StatusCode), t.Result.ReasonPhrase, url);
                             throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Http Error {0} - {1} on request {2}.", (int)(t.Result.StatusCode), t.Result.ReasonPhrase, url));
                         }
                     }
                     else {
+                        _logger.Error("AppleOAuth2Client - MakePostRequest timeout on {0}", url);
                         throw new Exception(string.Format("AppleOAuth2Client - MakePostRequest: Timeout on request {0}.", url));
                     }
                 }

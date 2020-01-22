@@ -12,5 +12,6 @@ namespace Laser.Orchard.Braintree.Services
     {
         string GetClientToken();
         TransactionResult Pay(string paymentMethodNonce, decimal amount, Dictionary<string, string> customFields);
+        TransactionResult Pay(PaymentContext context);
     }
 }
