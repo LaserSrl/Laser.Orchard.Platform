@@ -16,6 +16,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         private readonly IEnumerable<ICartLifeCycleEventHandler> _cartLifeCycleEventHandlers;
         private readonly IContentManager _contentManager;
         private readonly IWorkflowManager _workflowManager;
+        private readonly IUpdateStatusService _updateStatusService;
 
         public PaymentEventHandler(
             IOrderService orderService, 
@@ -24,7 +25,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             INwazetCommunicationService nwazetCommunicationService, 
             IEnumerable<ICartLifeCycleEventHandler> cartLifeCycleEventHandlers,
             IContentManager contentManager,
-            IWorkflowManager workflowManager) {
+            IWorkflowManager workflowManager,
+            IUpdateStatusService updateStatusService) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -33,13 +35,16 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             _cartLifeCycleEventHandlers = cartLifeCycleEventHandlers;
             _contentManager = contentManager;
             _workflowManager = workflowManager;
+            _updateStatusService = updateStatusService;
         }
         public void OnError(int paymentId, int contentItemId) {
             var payment = _paymentService.GetPayment(paymentId);
             if (payment != null) {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest);
-                order.Status = OrderPart.Cancelled;
-                _contentManager.Publish(order.ContentItem);
+                //order.Status = OrderPart.Cancelled;
+                //_contentManager.Publish(order.ContentItem);
+                _updateStatusService.UpdateOrderStatusChanged(order, OrderPart.Cancelled);
+
                 _workflowManager.TriggerEvent(
                     "OrderError", 
                     order,
@@ -57,7 +62,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             if (payment != null) {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest); // _orderService.Get(payment.ContentItemId);
                 // aggiorna l'odine in base al pagamento effettuato
-                order.Status = OrderPart.Pending;
+                //order.Status = OrderPart.Pending;
                 order.AmountPaid = payment.Amount;
                 order.CurrencyCode = payment.Currency;
                 // update charge
@@ -71,6 +76,9 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 _shoppingCart.Clear();
                 // raise order and payment events
                 _contentManager.Publish(order.ContentItem);
+
+                // update status order
+                _updateStatusService.UpdateOrderStatusChanged(order, Constants.PaymentSucceeded);
                 TriggerEvents(order);
             }
         }
