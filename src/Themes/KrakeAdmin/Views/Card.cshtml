@@ -1,0 +1,25 @@
+﻿@using Orchard.Utility.Extensions;
+@{
+    IGrouping<string, dynamic> card = Model.Card;
+    string containerName = Model.ContainerName;
+
+    if (String.IsNullOrWhiteSpace(card.Key)) {
+        foreach (var item in card) {
+            @Display(item);
+        }
+    }
+    else {
+        var cardName = String.IsNullOrWhiteSpace(card.Key) ? "" : card.Key;
+        <div class="box box-card group-@containerName.HtmlClassify()-@cardName.HtmlClassify()">
+            <div class="box-header with-border">
+                <h3 class="box-title">@card.Key</h3>
+            </div>
+            <div class="box-body">
+                @foreach (var item in card) {
+                    @Display(item);
+                }
+            </div>
+        </div>
+    }
+}
+

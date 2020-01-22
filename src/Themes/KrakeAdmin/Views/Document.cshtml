@@ -1,63 +1,65 @@
-﻿@using Orchard.Mvc.Html;
+﻿@*Based on AdminLTE template https://adminlte.io/themes/AdminLTE/*@
+
+@using Orchard.Mvc.Html;
 @using Orchard.UI.Resources;
 @using Orchard.Environment.Configuration
 @{
     var settings = WorkContext.Resolve<ShellSettings>();
-    var tenantName = settings.Name;   
+    var tenantName = settings.Name;
     var css_TenantPath = "~/App_Data/Sites/" + tenantName + "/Styles/";
-    if (File.Exists(Server.MapPath(css_TenantPath + "Tenant.css")))  {
+    if (File.Exists(Server.MapPath(css_TenantPath + "Tenant.css"))) {
         Style.Include(css_TenantPath + "Tenant.css").AtHead();
     }
     @*Change favicon*@
     @*RegisterLink(new LinkEntry {Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content("~/modules/orchard.themes/Content/orchard.ico")});*@
-var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
-RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(folderStylePath + "/Images/logo_krake.ico") });
-Script.Include("html5.js").UseCondition("lt IE 9").AtHead();
+    var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
+    RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(folderStylePath + "/Images/logo_krake.ico") });
+    Script.Include("html5.js").UseCondition("lt IE 9").AtHead();
 
-string title = Convert.ToString(Model.Title);
-string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
+    string title = Convert.ToString(Model.Title);
+    string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
 
-//---- include js libraries ----//
-//generic & tools
-Script.Require("Bootstrap").AtHead();
-Script.Include("jquery.autosize.min.js").AtHead();
-// specific for krake theme
-Script.Require("jQuery").AtHead();
-Script.Include("App.js").AtHead();
-Script.Include("AppCard.js").AtHead();
-Script.Include("AppForm.js").AtHead();
-Script.Include("AppNavigation.js").AtHead();
-Script.Include("AppNavSearch.js").AtHead();
-Script.Include("AppOffcanvas.js").AtHead();
-Script.Include("AppVendor.js").AtHead();
-Script.Include("jquery.nanoscroller.min.js").AtHead();
-//custom
-Script.Include("krake.js").AtHead(); //dsweb custom library
-Script.Include("main.js").AtHead(); //laser-orchard custom library
+    //---- include js libraries ----//
+    //generic & tools
+    Script.Require("Bootstrap").AtHead();
+    Script.Include("jquery.autosize.min.js").AtHead();
+    // specific for krake theme
+    Script.Require("jQuery").AtHead();
+    Script.Include("App.js").AtHead();
+    Script.Include("AppCard.js").AtHead();
+    Script.Include("AppForm.js").AtHead();
+    Script.Include("AppNavigation.js").AtHead();
+    Script.Include("AppNavSearch.js").AtHead();
+    Script.Include("AppOffcanvas.js").AtHead();
+    Script.Include("AppVendor.js").AtHead();
+    Script.Include("jquery.nanoscroller.min.js").AtHead();
+    //custom
+    Script.Include("krake.js").AtHead(); //dsweb custom library
+    Script.Include("main.js").AtHead(); //laser-orchard custom library
 
-//---- include css files ----//
-// generic & utilities
-Style.Require("Bootstrap").AtHead();
-Style.Require("FontAwesome").AtHead();
-Style.Include("iconic-font.min.css").AtHead();
-Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,100,900").AtHead();
-//custom
-Style.Include("krake.css?v1.3").AtHead(); //dsweb custom styles TO DO JOIN with krakeadmin.css!!
-Style.Include("krakeadmin.css?date=29112016").AtHead(); //dsweb custom styles
-Style.Include("krake-navicon.css").AtHead();
+    //---- include css files ----//
+    // generic & utilities
+    Style.Require("Bootstrap").AtHead();
+    Style.Require("FontAwesome").AtHead();
+    Style.Include("iconic-font.min.css").AtHead();
+    Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,100,900").AtHead();
+    //custom
+    Style.Require("Krake").AtHead(); //dsweb custom styles TO DO JOIN with krakeadmin.css!!
+    Style.Require("KrakeAdmin").AtHead(); //dsweb custom styles
+    Style.Require("KrakeNavigation").AtHead();
 
 
 
 
 }
-<!DOCTYPE html> 
-<html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()"> 
-<head> 
+<!DOCTYPE html>
+<html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()">
+<head>
     <meta charset="utf-8" />
-    <title>@Html.Title(title, siteName)</title> 
+    <title>@Html.Title(title, siteName)</title>
     @Display(Model.Head)
-    <script>        (function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script> 
-</head> 
+    <script>(function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script>
+</head>
 <body class="menubar-hoverable header-fixed menubar-pin">
     @* Layout (template) is in the Body zone @ the default position (nothing, zero, zilch) *@
     @Display(Model.Body)
