@@ -44,5 +44,22 @@ namespace Laser.Orchard.Braintree.Services {
             return new string[] { _orchardServices.WorkContext
                 .CurrentSite.As<BraintreeSiteSettingsPart>().CurrencyCode}.ToList();
         }
+
+        protected override string InnerChargeAdminUrl(PaymentRecord payment)
+        {
+            var config = _orchardServices.WorkContext
+             .CurrentSite.As<BraintreeSiteSettingsPart>();
+            string merchant = config?.MerchantId;
+            if (!config.ProductionEnvironment){
+                return string.Format("https://sandbox.braintreegateway.com/merchants/{0}/transactions/{1}",
+                                     merchant,
+                                     payment.TransactionId);
+            }
+            else {
+                return string.Format("https://www.braintreegateway.com/merchants/{0}/transactions/{1}",
+                                     merchant,
+                                     payment.TransactionId);
+            }
+        }
     }
 }
