@@ -53,7 +53,7 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("jqPlotEnhancedPieLegendRenderer").SetUrl("jqPlot/plugins/jqplot.enhancedPieLegendRenderer.js").SetDependencies("jqPlot");
 
             manifest.DefineScript("jsonViewer").SetUrl("json-browse/jquery.json-browse.js").SetDependencies("jQuery");
-            manifest.DefineScript("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js","https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js", true).SetDependencies("jQuery");
+            manifest.DefineScript("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js","https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js").SetDependencies("jQuery");
 
             //Styles
 
@@ -81,7 +81,7 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("jqPlot").SetUrl("jqPlot/jquery.jqplot.css");
             manifest.DefineStyle("jqPlot_Mini").SetUrl("jqPlot/jquery.jqplot.min.css");
             manifest.DefineStyle("jsonViewer").SetUrl("json-browse/jquery.json-browse.css");
-            manifest.DefineStyle("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.css", "https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css", true);
+            manifest.DefineStyle("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.css", "https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css");
 
         }
     }
