@@ -22,6 +22,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         private IContentManager _contentManager;
 
+        #region base configuration
         public int ShippingCountriesHierarchyId { get; set; }
         public TerritoryHierarchyPart CountriesHierarchy { get; set; }
         public IEnumerable<TerritoryHierarchyPart> AllHierarchies { get; set; }
@@ -36,7 +37,15 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
             return result;
         }
+        #endregion
 
-        public string[] SelectedTerritories { get; set; }
+        #region details configuration
+
+        public void ResetDetails() {
+            // TODO: clear all detail configuration
+        }
+        #endregion
+
+        public int[] SelectedTerritories { get; set; }
     }
 }

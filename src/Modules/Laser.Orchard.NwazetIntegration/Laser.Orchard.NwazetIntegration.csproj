@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
@@ -214,6 +216,15 @@
     <Content Include="Views\EditorTemplates\Parts\TerritoryHierarchyIsCountriesHierarchy.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TerritoryHierarchyIsCountriesHierarchyLocalization.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TerritoryPartIsSelectedCountry.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AddressConfigurationAdmin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\SiteSettings\AddressConfigurationDetails.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\SiteSettings\AddressConfigurationDetailsMissing.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

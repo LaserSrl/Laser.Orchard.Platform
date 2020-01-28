@@ -6,7 +6,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IAddressConfigurationSettingsService : IDependency {
         TerritoryHierarchyPart ShippingCountriesHierarchy { get; }
         IEnumerable<TerritoryHierarchyPart> ShippingCountriesHierarchies { get; }
-        string[] SelectedTerritoryNames { get; }
+        int[] SelectedTerritoryIds { get; }
         IEnumerable<TerritoryInternalRecord> SelectedTerritoryRecords { get; }
     }
 }

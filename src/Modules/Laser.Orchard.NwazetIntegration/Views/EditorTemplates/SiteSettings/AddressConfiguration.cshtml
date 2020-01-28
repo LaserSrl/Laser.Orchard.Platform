@@ -4,7 +4,7 @@
 
 @functions{
     IContentManager ContentManager;
-    string[] SelectedTerritories;
+    int[] SelectedTerritories;
 }
 @{ 
     var hcStyle = "display: none;";
@@ -15,15 +15,15 @@
     }
 
     ContentManager = WorkContext.Resolve<IContentManager>();
-    SelectedTerritories = Model.SelectedTerritories ?? new string[] { };
+    SelectedTerritories = Model.SelectedTerritories ?? new int[] { };
 }
 @helper DrawTerritoryOption(ContentItem tci, int level = 0) { 
 var margin = (level * 10).ToString() + "px;";
 var text = ContentManager.GetItemMetadata(tci).DisplayText;
 var tp = tci.As<TerritoryPart>();
-var value = tp.Record.TerritoryInternalRecord.Name;
+var value = tp.Record.TerritoryInternalRecord.Id;
 var selected = SelectedTerritories.Contains(value)
-? "selected=\"selected\"" : "";
+    ? "selected=\"selected\"" : "";
 
     <option value="@value" style="margin-left:@margin" @selected>@text</option>
 

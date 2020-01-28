@@ -43,8 +43,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.ShippingCountriesHierarchy";
         private const string _hierarchiesCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.ShippingCountriesHierarchies";
-        private const string _territoryNamesCacheKey =
-            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedTerritoryNames";
+        private const string _territoryIdsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedTerritoryIds";
         private const string _territoryRecordsCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedTerritoryRecords";
         
@@ -95,13 +95,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 });
             }
         }
-
-        public string[] SelectedTerritoryNames {
+        
+        public int[] SelectedTerritoryIds {
             get {
-                return GetFromCache(_territoryNamesCacheKey, () => {
-                    return Settings != null 
+                return GetFromCache(_territoryIdsCacheKey, () => {
+                    return Settings != null
                         ? Settings.SelectedTerritories
-                        : new string[] { };
+                        : new int[] { };
                 });
             }
         }
@@ -110,7 +110,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_territoryRecordsCacheKey,() => {
                     return _territoriesRepositoryService
-                        .GetTerritories(SelectedTerritoryNames);
+                        .GetTerritories(SelectedTerritoryIds);
                 });
             }
         }
