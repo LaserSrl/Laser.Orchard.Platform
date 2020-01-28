@@ -1,0 +1,82 @@
+﻿@using Nwazet.Commerce.Models;
+@using Orchard.ContentManagement;
+@model Laser.Orchard.NwazetIntegration.ViewModels.AddressConfigurationSiteSettingsPartViewModel
+
+@functions{
+    IContentManager ContentManager;
+    string[] SelectedTerritories;
+}
+@{ 
+    var hcStyle = "display: none;";
+    var hoStyle = "";
+    if (Model.CountriesHierarchy == null) {
+        hcStyle = "";
+        hoStyle = "display: none;";
+    }
+
+    ContentManager = WorkContext.Resolve<IContentManager>();
+    SelectedTerritories = Model.SelectedTerritories ?? new string[] { };
+}
+@helper DrawTerritoryOption(ContentItem tci, int level = 0) { 
+var margin = (level * 10).ToString() + "px;";
+var text = ContentManager.GetItemMetadata(tci).DisplayText;
+var tp = tci.As<TerritoryPart>();
+var value = tp.Record.TerritoryInternalRecord.Name;
+var selected = SelectedTerritories.Contains(value)
+? "selected=\"selected\"" : "";
+
+    <option value="@value" style="margin-left:@margin" @selected>@text</option>
+
+    foreach (var child in tp.Children) {
+        @DrawTerritoryOption(child, level+1)
+    }
+    }
+<fieldset>
+    <legend>@T("Valid countries")</legend>
+    <div>
+        @if (Model.CountriesHierarchy == null) {
+            <p>@T("You need to select a hierarchy to pick the countries to allow in the system.")</p>
+        } else {
+
+        }
+    </div>
+    <div class="select-countries-hierarchy">
+        @Html.DropDownListFor(m => m.ShippingCountriesHierarchyId, Model.ListHierarchies())
+        <span for="@Html.FieldIdFor(m => m.ShippingCountriesHierarchyId)" class="hint forcheckbox">
+            @T("Select the hierarchy that contains the territories to be used as countries for the purposes of shipping. Later you will be able to select specific territories.")
+        </span>
+    </div>
+    <div class="select-countries">
+        <div class="hierarchy-changed" style="@hcStyle">
+            <p>@T("Save your settings to update the list of possible territories.")</p>
+        </div>
+        <div class="hierarchy-ok" style="@hoStyle">
+            @if (Model.CountriesHierarchy != null) {
+                <select id="@Html.IdFor(m => m.SelectedTerritories)"
+                        name="@Html.NameFor(m => m.SelectedTerritories)"
+                        multiple="multiple">
+                    @foreach (var tci in Model.CountriesHierarchy.TopLevel) {
+                        @DrawTerritoryOption(tci)
+                    }
+                </select>
+                <span for="@Html.FieldIdFor(m => m.SelectedTerritories)" class="hint">
+                    @T("The selected territories here will appear wherever the frontend user will be given the chance to select a country. Make sure to select only the ones you actually want to appear: for example, if you want to see all EU countries, you should select those rather than the EU.")
+                </span>
+            }
+        </div>
+    </div>
+</fieldset>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var hierarchySelect = $('#@Html.IdFor(m => m.ShippingCountriesHierarchyId)');
+            var hc = $('.hierarchy-changed');
+            var ho = $('.hierarchy-ok');
+            hierarchySelect.change(function (e) {
+                hc.show();
+                ho.hide();
+            })
+        });
+    </script>
+}

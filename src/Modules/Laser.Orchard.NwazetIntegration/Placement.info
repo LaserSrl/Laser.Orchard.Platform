@@ -5,4 +5,8 @@
     </Match>
   </Match>
   <Place Parts_NwazetContact="Content:5" />
+  <Place SiteSettings_AddressConfiguration="Content:4.5" />
+  <Place Parts_TerritoryHierarchy_IsCountriesHierarchy="Content:2.3"/>
+  <Place Parts_TerritoryHierarchy_IsCountriesHierarchyLocalization="Content:2.3"/>
+  <Place Parts_TerritoryPart_IsSelectedCountry="Content:2.1"/>
 </Placement>
