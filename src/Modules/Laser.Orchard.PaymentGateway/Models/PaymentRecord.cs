@@ -56,5 +56,9 @@ namespace Laser.Orchard.PaymentGateway.Models {
                     return null;
             }
         }
+
+        // Property added to store unique payent key While not creating a dependency
+        // on OrderPart from Nwazet.Commerce
+        public string PaymentUniqueKey { get; set; }
     }
 }
