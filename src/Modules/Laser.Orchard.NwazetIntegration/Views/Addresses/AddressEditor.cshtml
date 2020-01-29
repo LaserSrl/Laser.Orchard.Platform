@@ -1,7 +1,16 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.Localization;
 @using System.Linq.Expressions;
+@using Laser.Orchard.NwazetIntegration.Models;
+
 @model AddressEditViewModel
+
+@{
+    List<SelectListItem> AddressTypeLocalize = new List<SelectListItem>();
+    AddressTypeLocalize.Add(new SelectListItem() { Text = T("Billing Address").Text, Value = AddressRecordType.BillingAddress.ToString() });
+    AddressTypeLocalize.Add(new SelectListItem() { Text = T("Shipping Address").Text, Value = AddressRecordType.ShippingAddress.ToString() });
+}
+
 @helper EditorForString(
     Expression<Func<AddressEditViewModel, string>> property,
     LocalizedString label,
@@ -18,7 +27,7 @@
 @*This should generally be put in a form*@
 <div class="address-input">
     @Html.LabelFor(m => m.AddressType, T("Address Type").Text, new { })
-    @Html.EnumDropDownListFor(m => m.AddressType)
+    @Html.DropDownListFor(m => m.AddressType, AddressTypeLocalize)
 </div>
 @EditorForString(m => m.Honorific,
     T("Title"),
