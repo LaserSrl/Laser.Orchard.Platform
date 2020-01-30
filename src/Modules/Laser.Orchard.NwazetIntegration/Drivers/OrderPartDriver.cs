@@ -31,28 +31,28 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (!_orchardServices.Authorizer.Authorize(OrderPermissions.ManageOrders, null, T("Cannot manage orders")))
                 return null;
 
-            PaymentRecord payment = _paymentService.GetPaymentByGuid(order.Charge.TransactionId);
+            PaymentRecord payment = _paymentService.GetPaymentByGuid(order.Charge?.TransactionId);
 
-            if(payment != null) {
-                return ContentShape("Parts_Order_PaymentInfo",
-                    () => {
-                        var model = new PaymentInfoViewModel
-                        {
-                            PosName = payment.PosName,
-                            Reason = payment.Reason,
-                            Amount = payment.Amount,
-                            Currency = payment.Currency,
-                            UpdateDate= payment.UpdateDate,
-                            Success = payment.Success,
-                            Error = payment.Error,
-                            TransationId = payment.TransactionId,
-                        };
-                        return shapeHelper.EditorTemplate(
-                            TemplateName: "Parts/Order.PaymentInfo",
-                            Model: model);
-                    });
-            }
-            return null;
+            return ContentShape("Parts_Order_PaymentInfo",
+                () => {
+                    if (payment == null) {
+                        return null;
+                    }
+
+                    var model = new PaymentInfoViewModel {
+                        PosName = payment.PosName,
+                        Reason = payment.Reason,
+                        Amount = payment.Amount,
+                        Currency = payment.Currency,
+                        UpdateDate = payment.UpdateDate,
+                        Success = payment.Success,
+                        Error = payment.Error,
+                        TransationId = payment.TransactionId,
+                    };
+                    return shapeHelper.EditorTemplate(
+                        TemplateName: "Parts/Order.PaymentInfo",
+                        Model: model);
+                });
         }
     }
 }
