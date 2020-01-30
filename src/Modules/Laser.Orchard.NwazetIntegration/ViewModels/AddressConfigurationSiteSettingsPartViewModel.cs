@@ -15,9 +15,22 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             AllHierarchies = new List<TerritoryHierarchyPart>();
         }
         public AddressConfigurationSiteSettingsPartViewModel(
-            AddressConfigurationSiteSettingsPart part) : this(){
+            AddressConfigurationSiteSettingsPart part, bool detail = false) : this(){
 
             _contentManager = part.ContentItem.ContentManager;
+
+            ShippingCountriesHierarchyId = part.ShippingCountriesHierarchyId;
+            CountriesHierarchy = part.ShippingCountriesHierarchyId == 0
+                    ? null
+                    : _contentManager
+                        .Get<TerritoryHierarchyPart>(part.ShippingCountriesHierarchyId);
+
+            if (detail && CountriesHierarchy != null) {
+                SelectedCountries = part.SelectedCountries;
+                SelectedProvinces = part.SelectedProvinces;
+                SelectedCities = part.SelectedCities;
+                InitializeTerritories();
+            }
         }
 
         private IContentManager _contentManager;
@@ -40,6 +53,23 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         #endregion
 
         #region details configuration
+
+        public int[] SelectedCountries { get; set; }
+        public int[] SelectedProvinces { get; set; }
+        public int[] SelectedCities { get; set; }
+
+        public IEnumerable<AddressConfigurationTerritoryViewModel> TopLevel { get; set; }
+
+        public void InitializeTerritories() {
+            TopLevel = CountriesHierarchy.TopLevel
+                .Select(ci => {
+                    var tp = ci.As<TerritoryPart>();
+                    return tp != null
+                        ? new AddressConfigurationTerritoryViewModel(tp)
+                        : null;
+                })
+                .Where(tvm => tvm != null);
+        }
 
         public void ResetDetails() {
             // TODO: clear all detail configuration

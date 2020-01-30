@@ -1,1 +1,11 @@
-﻿
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model AddressConfigurationSiteSettingsPartViewModel
+
+@{
+    var hierarchy = Model.CountriesHierarchy;
+}
+@if (hierarchy != null && hierarchy.Territories.Any()) {
+    // Initially only show the top level
+    // Each territory may be marked as Country, Province or City 
+    // 
+}

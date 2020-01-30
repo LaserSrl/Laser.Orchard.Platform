@@ -3,12 +3,14 @@
     Layout.Title = T("Address Configuration Settings").ToString();
 }
 
-<h1>@T("Address Configuration Settings")</h1>
+<fieldset>
+    <legend>@T("Address Configuration Settings")</legend>
 
-@using (Html.BeginFormAntiForgeryPost()) {
-    @Html.ValidationSummary()
-    @Display(Model.Content)
-    <fieldset>
-        <button class="primaryAction" type="submit">@T("Save")</button>
-    </fieldset>
-}
+    @using (Html.BeginFormAntiForgeryPost()) {
+        @Html.ValidationSummary()
+        @Display(Model.Content)
+        <fieldset>
+            <button class="primaryAction" type="submit">@T("Save")</button>
+        </fieldset>
+    }
+</fieldset>

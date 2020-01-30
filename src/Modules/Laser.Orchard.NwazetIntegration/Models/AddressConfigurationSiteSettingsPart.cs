@@ -27,6 +27,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         /// </summary>
         public void ResetDetails() {
             // TODO: clear all detail configuration
+            SerializedSelectedTerritories = "[]";
+            SerializedSelectedCountries = "[]";
+            SerializedSelectedProvinces = "[]";
+            SerializedSelectedCities = "[]";
         }
         public string SerializedSelectedTerritories {
             get { return this.Retrieve(p => p.SerializedSelectedTerritories); }
@@ -41,15 +45,40 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             }
         }
 
-        //public int[] SelectedCountries {
+        public string SerializedSelectedCountries {
+            get { return this.Retrieve(p => p.SerializedSelectedCountries); }
+            set { this.Store(p => p.SerializedSelectedCountries, value); }
+        }
+        public int[] SelectedCountries {
+            get {
+                return string.IsNullOrWhiteSpace(SerializedSelectedCountries)
+                    ? new int[] { }
+                    : JsonConvert.DeserializeObject<int[]>(SerializedSelectedCountries);
+            }
+        }
+        public string SerializedSelectedProvinces {
+            get { return this.Retrieve(p => p.SerializedSelectedProvinces); }
+            set { this.Store(p => p.SerializedSelectedProvinces, value); }
+        }
+        public int[] SelectedProvinces {
+            get {
+                return string.IsNullOrWhiteSpace(SerializedSelectedProvinces)
+                    ? new int[] { }
+                    : JsonConvert.DeserializeObject<int[]>(SerializedSelectedProvinces);
+            }
+        }
+        public string SerializedSelectedCities {
+            get { return this.Retrieve(p => p.SerializedSelectedCities); }
+            set { this.Store(p => p.SerializedSelectedCities, value); }
+        }
+        public int[] SelectedCities {
+            get {
+                return string.IsNullOrWhiteSpace(SerializedSelectedCities)
+                    ? new int[] { }
+                    : JsonConvert.DeserializeObject<int[]>(SerializedSelectedCities);
+            }
+        }
 
-        //}
-        //public int[] SelectedProvinces {
-
-        //}
-        //public int[] SelectedCities {
-
-        //}
         #endregion
     }
 }

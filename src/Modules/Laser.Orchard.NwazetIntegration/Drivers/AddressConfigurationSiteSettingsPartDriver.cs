@@ -88,10 +88,6 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private AddressConfigurationSiteSettingsPartViewModel CreateBaseVM(
             AddressConfigurationSiteSettingsPart part) {
             return new AddressConfigurationSiteSettingsPartViewModel(part) {
-                ShippingCountriesHierarchyId = part.ShippingCountriesHierarchyId,
-                CountriesHierarchy = part.ShippingCountriesHierarchyId == 0
-                    ? null
-                    : _contentManager.Get<TerritoryHierarchyPart>(part.ShippingCountriesHierarchyId),
                 AllHierarchies = _contentManager
                     .Query<TerritoryHierarchyPart>(VersionOptions.Published)
                     .List(),
@@ -102,7 +98,10 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private AddressConfigurationSiteSettingsPartViewModel CreateDetailVM(
             AddressConfigurationSiteSettingsPart part) {
 
-            return new AddressConfigurationSiteSettingsPartViewModel(part);
+            var vm = new AddressConfigurationSiteSettingsPartViewModel(part, true) {
+            };
+
+            return vm;
         }
     }
 }

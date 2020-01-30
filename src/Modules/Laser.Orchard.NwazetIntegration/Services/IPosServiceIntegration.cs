@@ -77,6 +77,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return _paymentByTransactionId[transactionId];
         }
         public string GetChargeAdminUrl(string transactionId) {
+            if (string.IsNullOrWhiteSpace(transactionId)) {
+                return null;
+            }
             string result = null;
             var payment = PaymentByTransactionId(transactionId);
             if(payment != null) {
