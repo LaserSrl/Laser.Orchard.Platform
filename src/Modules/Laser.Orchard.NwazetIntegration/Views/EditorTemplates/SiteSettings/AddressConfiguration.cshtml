@@ -7,17 +7,17 @@
     int[] SelectedTerritories;
 }
 @{ 
-    var hcStyle = "display: none;";
-    var hoStyle = "";
-    if (Model.CountriesHierarchy == null) {
-        hcStyle = "";
-        hoStyle = "display: none;";
-    }
+    //var hcStyle = "display: none;";
+    //var hoStyle = "";
+    //if (Model.CountriesHierarchy == null) {
+    //    hcStyle = "";
+    //    hoStyle = "display: none;";
+    //}
 
     ContentManager = WorkContext.Resolve<IContentManager>();
-    SelectedTerritories = Model.SelectedTerritories ?? new int[] { };
+    //SelectedTerritories = Model.SelectedTerritories ?? new int[] { };
 }
-@helper DrawTerritoryOption(ContentItem tci, int level = 0) { 
+@*@helper DrawTerritoryOption(ContentItem tci, int level = 0) { 
 var margin = (level * 10).ToString() + "px;";
 var text = ContentManager.GetItemMetadata(tci).DisplayText;
 var tp = tci.As<TerritoryPart>();
@@ -30,12 +30,12 @@ var selected = SelectedTerritories.Contains(value)
     foreach (var child in tp.Children) {
         @DrawTerritoryOption(child, level+1)
     }
-    }
+    }*@
 <fieldset>
-    <legend>@T("Valid countries")</legend>
+    <legend>@T("Territories for address configuration")</legend>
     <div>
         @if (Model.CountriesHierarchy == null) {
-            <p>@T("You need to select a hierarchy to pick the countries to allow in the system.")</p>
+            <p>@T("You need to select a hierarchy to pick the territories to allow in the system.")</p>
         } else {
 
         }
@@ -43,10 +43,10 @@ var selected = SelectedTerritories.Contains(value)
     <div class="select-countries-hierarchy">
         @Html.DropDownListFor(m => m.ShippingCountriesHierarchyId, Model.ListHierarchies())
         <span for="@Html.FieldIdFor(m => m.ShippingCountriesHierarchyId)" class="hint forcheckbox">
-            @T("Select the hierarchy that contains the territories to be used as countries for the purposes of shipping. Later you will be able to select specific territories.")
+            @T("Select the hierarchy that contains the territories to be used to validate addresses. Later you will be able to select specific territories.")
         </span>
     </div>
-    <div class="select-countries">
+    @*<div class="select-countries">
         <div class="hierarchy-changed" style="@hcStyle">
             <p>@T("Save your settings to update the list of possible territories.")</p>
         </div>
@@ -64,10 +64,10 @@ var selected = SelectedTerritories.Contains(value)
                 </span>
             }
         </div>
-    </div>
+    </div>*@
 </fieldset>
 
-@using (Script.Foot()) {
+@*@using (Script.Foot()) {
     <script type="text/javascript">
         $(document).ready(function () {
             var hierarchySelect = $('#@Html.IdFor(m => m.ShippingCountriesHierarchyId)');
@@ -79,4 +79,4 @@ var selected = SelectedTerritories.Contains(value)
             })
         });
     </script>
-}
+}*@

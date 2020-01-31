@@ -1,0 +1,23 @@
+﻿.territories-list .single-territory {
+  padding-left: 30px; }
+  .territories-list .single-territory .territory-info .territory-text {
+    display: inline-block;
+    font-weight: bold; }
+  .territories-list .single-territory .territory-info .radio-buttons {
+    display: inline-block;
+    font-size: smaller;
+    text-transform: uppercase; }
+    .territories-list .single-territory .territory-info .radio-buttons:before {
+      content: '('; }
+    .territories-list .single-territory .territory-info .radio-buttons:after {
+      content: ')'; }
+  .territories-list .single-territory .territory-info .territory-children-counts {
+    display: block;
+    font-size: smaller;
+    text-transform: uppercase; }
+    .territories-list .single-territory .territory-info .territory-children-counts:before {
+      content: '('; }
+    .territories-list .single-territory .territory-info .territory-children-counts:after {
+      content: ')'; }
+    .territories-list .single-territory .territory-info .territory-children-counts .single-count {
+      display: inline-block; }

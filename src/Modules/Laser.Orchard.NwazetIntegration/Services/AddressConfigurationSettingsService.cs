@@ -100,7 +100,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_territoryIdsCacheKey, () => {
                     return Settings != null
-                        ? Settings.SelectedTerritories
+                        ? Settings.SelectedCities
+                            .Union(Settings.SelectedProvinces)
+                            .Union(Settings.SelectedCountries)
+                            .ToArray()
                         : new int[] { };
                 });
             }

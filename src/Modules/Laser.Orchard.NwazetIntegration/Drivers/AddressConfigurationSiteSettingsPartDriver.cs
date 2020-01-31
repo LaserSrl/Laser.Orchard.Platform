@@ -64,25 +64,50 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         protected override DriverResult Editor(
             AddressConfigurationSiteSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
-            var model = new AddressConfigurationSiteSettingsPartViewModel();
-            if (updater is ECommerceSettingsAdminController
-                && updater.TryUpdateModel(model, Prefix, null, null)) {
-                if (part.ShippingCountriesHierarchyId != model.ShippingCountriesHierarchyId) {
-                    // selected hierarchy changed, so we need to reset
-                    // the selected territories
-                    part.ResetDetails();
-                    part.SerializedSelectedTerritories = "[]";
-                } else {
-                    // update selected territories
-                    part.SerializedSelectedTerritories = JsonConvert.SerializeObject(model.SelectedTerritories);
-                }
-                // selected hierarchy
-                part.ShippingCountriesHierarchyId = model.ShippingCountriesHierarchyId;
-            } else if (updater is AddressConfigurationAdminController
-                && updater.TryUpdateModel(model, Prefix, null, null)) {
 
+            if (updater is ECommerceSettingsAdminController) {
+                // base settings
+                var model = new AddressConfigurationSiteSettingsPartViewModel();
+                if (updater.TryUpdateModel(model, Prefix, null, null)) {
+                    if (part.ShippingCountriesHierarchyId != model.ShippingCountriesHierarchyId) {
+                        // selected hierarchy changed, so we need to reset
+                        // the selected territories
+                        part.ResetDetails();
+                    }
+                    // selected hierarchy
+                    part.ShippingCountriesHierarchyId = model.ShippingCountriesHierarchyId;
+                }
+            } else if (updater is AddressConfigurationAdminController) {
+                // detailed settings
+                var model = new AddressConfigurationSiteSettingsPartViewModel();
+                if (updater.TryUpdateModel(model, Prefix, null, null)) {
+                    // TODO
+                    // model.TerritoryTypeMap will contain the desired configuration
+                    part.SerializedSelectedCountries = 
+                        JsonConvert.SerializeObject(GetCountries(model));
+                    part.SerializedSelectedProvinces =
+                        JsonConvert.SerializeObject(GetProvinces(model));
+                    part.SerializedSelectedCities =
+                        JsonConvert.SerializeObject(GetCities(model));
+                }
             }
             return Editor(part, shapeHelper);
+        }
+
+        private IEnumerable<int> GetCountries(AddressConfigurationSiteSettingsPartViewModel vm) {
+            return GetTerritoryIdsByType(vm, TerritoryTypeForAddress.Country);
+        }
+        private IEnumerable<int> GetProvinces(AddressConfigurationSiteSettingsPartViewModel vm) {
+            return GetTerritoryIdsByType(vm, TerritoryTypeForAddress.Province);
+        }
+        private IEnumerable<int> GetCities(AddressConfigurationSiteSettingsPartViewModel vm) {
+            return GetTerritoryIdsByType(vm, TerritoryTypeForAddress.City);
+        }
+        private IEnumerable<int> GetTerritoryIdsByType(
+            AddressConfigurationSiteSettingsPartViewModel vm, TerritoryTypeForAddress type) {
+            return vm.TerritoryTypeMap
+                .Where(kvp => kvp.Value == type)
+                .Select(kvp => kvp.Key);
         }
 
         private AddressConfigurationSiteSettingsPartViewModel CreateBaseVM(
@@ -90,8 +115,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             return new AddressConfigurationSiteSettingsPartViewModel(part) {
                 AllHierarchies = _contentManager
                     .Query<TerritoryHierarchyPart>(VersionOptions.Published)
-                    .List(),
-                SelectedTerritories = part.SelectedTerritories
+                    .List()
             };
         }
 

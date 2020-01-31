@@ -1,11 +1,103 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration;
 @model AddressConfigurationSiteSettingsPartViewModel
-
-@{
-    var hierarchy = Model.CountriesHierarchy;
+@functions{
+    int index = -1;
+    string baseFieldName;
 }
+@{
+    Style.Include("admin-style.css", "admin-style.min.css").AtHead();
+
+    var hierarchy = Model.CountriesHierarchy;
+
+    baseFieldName = Html.FieldNameFor(m => m.TerritoryTypeMap);
+}
+@helper DisplayTerritory(AddressConfigurationTerritoryViewModel vm) { 
+var radioChecks = new bool[4];
+radioChecks[0] = vm.IsCountry;
+radioChecks[1] = vm.IsProvince;
+radioChecks[2] = vm.IsCity;
+radioChecks[3] = !(vm.IsCountry || vm.IsProvince || vm.IsCity);
+index++;
+
+<div class="single-territory">
+    <input type="hidden" 
+        name="@(baseFieldName + "["+index+"]" + ".Key")" 
+        value="@vm.TerritoryId" />
+    @* UI for a single teritory here:
+          Its name/displaytext
+          The count of children "values" for country/province/city
+          Radio buttons to select whether it is a city/province/country/nothing*@
+    <div class="territory-info">
+        <div class="territory-text">
+            @vm.DisplayText
+        </div>
+        <div class="radio-buttons">
+            <input type="radio"
+                   id="[@vm.TerritoryId].IsCountry"
+                   name="@(baseFieldName + "["+index+"]" + ".Value")"
+                   value="@TerritoryTypeForAddress.Country"
+                   @if (radioChecks[0]) { <text> checked="checked" </text> } />
+            <label for="[@vm.TerritoryId].IsCountry" class="radio-label">
+                @T("Country")
+            </label>
+            <input type="radio"
+                   id="[@vm.TerritoryId].IsProvince"
+                   name="@(baseFieldName + "["+index+"]" + ".Value")"
+                   value="@TerritoryTypeForAddress.Province"
+                   @if (radioChecks[1]) { <text> checked="checked" </text> } />
+            <label for="[@vm.TerritoryId].IsProvince" class="radio-label">
+                @T("Province")
+            </label>
+            <input type="radio"
+                   id="[@vm.TerritoryId].IsCity"
+                   name="@(baseFieldName + "["+index+"]" + ".Value")"
+                   value="@TerritoryTypeForAddress.City"
+                   @if (radioChecks[2]) { <text> checked="checked" </text> } />
+            <label for="[@vm.TerritoryId].IsCity" class="radio-label">
+                @T("City")
+            </label>
+            <input type="radio"
+                   id="[@vm.TerritoryId].IsNone"
+                   name="@(baseFieldName + "["+index+"]" + ".Value")"
+                   value="@TerritoryTypeForAddress.None"
+                   @if (radioChecks[3]) { <text> checked="checked" </text> } />
+            <label for="[@vm.TerritoryId].IsNone" class="radio-label">
+                @T("None")
+            </label>
+        </div>
+        @if (0 < vm.ChildCountries + vm.ChildProvinces + vm.ChildCities) {
+        <div class="territory-children-counts">
+            @if (0 < vm.ChildCountries) {
+                <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
+            }
+            @if (0 < vm.ChildProvinces) {
+                <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
+            }
+            @if (0 < vm.ChildCities) {
+                <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
+            }
+        </div>
+        }
+    </div>
+    @*If the territory has children, we should display them too*@
+    @if(vm.Children.Any()) {
+        <div class="children-list">
+            @foreach (var territory in vm.Children) {
+                @DisplayTerritory(territory)
+            }
+        </div>
+    }
+</div>
+    
+    }
 @if (hierarchy != null && hierarchy.Territories.Any()) {
     // Initially only show the top level
     // Each territory may be marked as Country, Province or City 
-    // 
+    <div class="territories-list">
+        @foreach(var territory in Model.TopLevel) {
+            @DisplayTerritory(territory)
+        }
+    </div>
+    
 }

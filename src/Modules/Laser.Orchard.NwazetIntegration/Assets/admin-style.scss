@@ -1,0 +1,62 @@
+﻿.territories-list {
+    .single-territory {
+        padding-left: 30px;
+
+        .territory-info {
+            .territory-text {
+                display: inline-block;
+                font-weight: bold;
+            }
+
+            .radio-buttons {
+                display: inline-block;
+                font-size: smaller;
+                text-transform: uppercase;
+
+                &:before {
+                    content: '(';
+                }
+
+                &:after {
+                    content: ')';
+                }
+
+                input[type=radio] {
+                }
+
+                .radio-label {
+                }
+            }
+
+            .territory-children-counts {
+                display: block;
+                font-size: smaller;
+                text-transform: uppercase;
+
+                &:before {
+                    content: '(';
+                }
+
+                &:after {
+                    content: ')';
+                }
+
+                .single-count {
+                    display: inline-block;
+                }
+
+                .countries-count {
+                }
+
+                .provinces-count {
+                }
+
+                .cities-count {
+                }
+            }
+        }
+
+        .children-list {
+        }
+    }
+}

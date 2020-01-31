@@ -13,6 +13,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
     public class AddressConfigurationSiteSettingsPartViewModel {
         public AddressConfigurationSiteSettingsPartViewModel() {
             AllHierarchies = new List<TerritoryHierarchyPart>();
+            TerritoryTypeMap = new Dictionary<int, TerritoryTypeForAddress>();
         }
         public AddressConfigurationSiteSettingsPartViewModel(
             AddressConfigurationSiteSettingsPart part, bool detail = false) : this(){
@@ -60,15 +61,40 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public IEnumerable<AddressConfigurationTerritoryViewModel> TopLevel { get; set; }
 
+        /// <summary>
+        /// Dictionary to figure out what territories are countries/provinces/cities
+        /// Key: Id of TerritoryInternalRecord
+        /// Value: territory type (None/Country/Province/City)
+        /// </summary>
+        public IDictionary<int, TerritoryTypeForAddress> TerritoryTypeMap { get; set; }
+
         public void InitializeTerritories() {
             TopLevel = CountriesHierarchy.TopLevel
                 .Select(ci => {
                     var tp = ci.As<TerritoryPart>();
                     return tp != null
-                        ? new AddressConfigurationTerritoryViewModel(tp)
+                        ? new AddressConfigurationTerritoryViewModel(
+                            tp, SelectedCountries, SelectedProvinces, SelectedCities)
                         : null;
                 })
                 .Where(tvm => tvm != null);
+
+            TerritoryTypeMap = new Dictionary<int, TerritoryTypeForAddress>();
+            foreach (var territory in CountriesHierarchy.Territories) {
+                var part = territory.As<TerritoryPart>();
+                if (part != null) {
+                    var tType = TerritoryTypeForAddress.None;
+                    var internalId = part.Record.TerritoryInternalRecord.Id;
+                    if (SelectedCountries.Contains(internalId)) {
+                        tType = TerritoryTypeForAddress.Country;
+                    } else if(SelectedProvinces.Contains(internalId)) {
+                        tType = TerritoryTypeForAddress.Province;
+                    } else if(SelectedCities.Contains(internalId)) {
+                        tType = TerritoryTypeForAddress.City;
+                    }
+                    TerritoryTypeMap.Add(internalId, tType);
+                }
+            }
         }
 
         public void ResetDetails() {
@@ -76,6 +102,5 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
         #endregion
 
-        public int[] SelectedTerritories { get; set; }
     }
 }

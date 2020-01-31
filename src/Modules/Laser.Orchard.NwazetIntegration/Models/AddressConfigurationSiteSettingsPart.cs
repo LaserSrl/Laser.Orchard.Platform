@@ -27,22 +27,9 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         /// </summary>
         public void ResetDetails() {
             // TODO: clear all detail configuration
-            SerializedSelectedTerritories = "[]";
             SerializedSelectedCountries = "[]";
             SerializedSelectedProvinces = "[]";
             SerializedSelectedCities = "[]";
-        }
-        public string SerializedSelectedTerritories {
-            get { return this.Retrieve(p => p.SerializedSelectedTerritories); }
-            set { this.Store(p => p.SerializedSelectedTerritories, value); }
-        }
-
-        public int[] SelectedTerritories {
-            get {
-                return string.IsNullOrWhiteSpace(SerializedSelectedTerritories)
-                    ? new int[] { }
-                    : JsonConvert.DeserializeObject<int[]>(SerializedSelectedTerritories);
-            }
         }
 
         public string SerializedSelectedCountries {

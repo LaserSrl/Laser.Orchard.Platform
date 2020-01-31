@@ -13,25 +13,45 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
 
         public AddressConfigurationTerritoryViewModel(
-            TerritoryPart part) : this() {
-
-            Territory = part;
+            TerritoryPart part, 
+            IEnumerable<int> countries,
+            IEnumerable<int> provinces,
+            IEnumerable<int> cities) : this() {
 
             _contentManager = part.ContentItem.ContentManager;
+
+            Territory = part;
+            TerritoryId = part.Record.TerritoryInternalRecord.Id;
+
+            IsCountry = countries.Contains(TerritoryId);
+            IsProvince = provinces.Contains(TerritoryId);
+            IsCity = cities.Contains(TerritoryId);
+
+            DisplayText = _contentManager
+                .GetItemMetadata(part)
+                .DisplayText;
+            if (string.IsNullOrWhiteSpace(DisplayText)) {
+                DisplayText = part.Record.TerritoryInternalRecord.Name;
+            }
 
             foreach (var ci in part.Children) {
                 var tp = ci.As<TerritoryPart>();
                 if (tp != null) {
                     // constructing this here means we are going depth first
-                    var child = new AddressConfigurationTerritoryViewModel(tp, this);
+                    var child = new AddressConfigurationTerritoryViewModel(
+                        tp, countries, provinces, cities, this);
                     Children.Add(child);
                 }
             }
         }
 
         public AddressConfigurationTerritoryViewModel(
-            TerritoryPart part, 
-            AddressConfigurationTerritoryViewModel parent) : this(part) {
+            TerritoryPart part,
+            IEnumerable<int> countries,
+            IEnumerable<int> provinces,
+            IEnumerable<int> cities,
+            AddressConfigurationTerritoryViewModel parent) 
+            : this(part, countries, provinces, cities) {
             Parent = parent;
         }
 
@@ -39,6 +59,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         private IContentManager _contentManager;
 
         public TerritoryPart Territory { get; set; }
+        /// <summary>
+        /// Id of the TerritoryInternalRecord
+        /// </summary>
+        public int TerritoryId { get; set; }
+        public string DisplayText { get; set; }
 
         public AddressConfigurationTerritoryViewModel Parent { get; set; }
         // This will be the first level children

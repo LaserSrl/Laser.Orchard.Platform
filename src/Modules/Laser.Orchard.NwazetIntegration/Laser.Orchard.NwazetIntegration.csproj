@@ -111,6 +111,7 @@
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
@@ -140,6 +141,10 @@
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
     <Content Include="Scripts\ship.js" />
+    <Content Include="Styles\admin-style.css" />
+    <Content Include="Styles\admin-style.min.css">
+      <DependentUpon>admin-style.css</DependentUpon>
+    </Content>
     <Content Include="Styles\Styles.css" />
     <Content Include="Styles\Styles.min.css" />
     <Content Include="Web.config" />
@@ -232,6 +237,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\SiteSettings\AddressConfigurationDetailsMissing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\admin-style.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
