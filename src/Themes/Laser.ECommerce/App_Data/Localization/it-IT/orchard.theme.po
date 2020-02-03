@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -363,6 +363,10 @@ msgstr "E-mail:"
 msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
 msgid "Order #{0}"
 msgstr "Ordine #{0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Order reference: {0}"
+msgstr "Riferimento dell'ordine: {0}"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
 msgid "Phone:"
