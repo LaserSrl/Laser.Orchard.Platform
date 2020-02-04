@@ -1,0 +1,24 @@
+﻿@using Orchard.Users.Models;
+
+@model  Orchard.Users.ViewModels.UserEditViewModel
+
+@using Orchard.ContentManagement;
+@using Orchard.Core.Contents;
+@using Orchard.Utility.Extensions;
+
+@if (Authorizer.Authorize(Permissions.PublishContent, Model.User)) {
+
+<fieldset class="approve-user">
+    @if (Model.User != null) {
+        var user = Model.User.As<UserPart>();
+        if (user.RegistrationStatus == UserStatus.Pending) {
+            @*@Html.ActionLink(T("Approve").ToString(), "Approve", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })*@
+            <button type="submit" name="submit.Save" value="submit.PublishLater">@T("Approve")</button>
+        }
+        else {
+            @*@Html.ActionLink(T("Disable").ToString(), "Moderate", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })*@
+            <button type="submit" name="submit.Save" value="submit.PublishLater">@T("Disable")</button>
+        }
+    }
+</fieldset>
+}

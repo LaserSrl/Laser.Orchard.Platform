@@ -347,6 +347,7 @@
     <Compile Include="Activities\TaxonomySetValuesActivity.cs" />
     <Compile Include="Activities\TaxonomySetValuesForm.cs" />
     <Compile Include="Activities\UserEventActivity.cs" />
+    <Compile Include="ApproveUserExtension\Drivers\ApprovePartDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerField.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
@@ -625,6 +626,7 @@
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\UserApprove.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -634,6 +636,7 @@
     <None Include="Views\EditorTemplates\Parts\ProtectionSettingsPart.Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApproveUserExtension\Handler\" />
     <Folder Include="ContentPickerContentCreation\Models\" />
     <Folder Include="ContentPickerContentCreation\Style\" />
   </ItemGroup>
