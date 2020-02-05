@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
     public class AddressEditViewModel {
@@ -74,5 +75,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             get { return AddressRecord.Country; }
             set { AddressRecord.Country = value; }
         }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
     }
 }

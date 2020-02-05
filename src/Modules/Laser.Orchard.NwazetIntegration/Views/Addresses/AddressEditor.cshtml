@@ -29,6 +29,7 @@
     @Html.LabelFor(m => m.AddressType, T("Address Type").Text, new { })
     @Html.DropDownListFor(m => m.AddressType, AddressTypeLocalize)
 </div>
+@* Personal information *@
 @EditorForString(m => m.Honorific,
     T("Title"),
     T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc."))
@@ -42,17 +43,26 @@
     true)
 @EditorForString(m => m.Company,
     T("Company"))
-<div class="address-input address-text-input">
-    @Html.LabelFor(m => m.Address1, T("Address").Text, new { @class = "required" })
-    @Html.EditorFor(m => m.Address1)
-    @Html.EditorFor(m => m.Address2)
+@* 1. Country *@
+@*    This must be selected among the countries configured *@
+<div class="address-input address-text-input adrress-country">
+    @Html.LabelFor(m => m.Country, T("Country").Text, new { @class = "required" })
+    @Html.DropDownListFor(m => m.Country,
+        Model.Countries)
+    <div class="hint">@T("Select a valid country from the list.")</div>
 </div>
+@* 2. City *@
 @EditorForString(m => m.City,
     T("City"))
+@* 3. Province and ZIP code *@
 @EditorForString(m => m.Province,
     T("State, province, prefecture, republic or region"),
     T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."))
 @EditorForString(m => m.PostalCode,
     T("Postal or ZIP code"))
-@EditorForString(m => m.Country,
-    T("Country"))
+@* 4. Street *@
+<div class="address-input address-text-input">
+    @Html.LabelFor(m => m.Address1, T("Address").Text, new { @class = "required" })
+    @Html.EditorFor(m => m.Address1)
+    @Html.EditorFor(m => m.Address2)
+</div>

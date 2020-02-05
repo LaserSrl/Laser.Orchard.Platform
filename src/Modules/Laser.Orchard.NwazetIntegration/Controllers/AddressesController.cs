@@ -15,6 +15,7 @@ using Orchard.Themes;
 using Orchard.UI.Notify;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
@@ -30,6 +31,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IContentManager _contentManager;
         private readonly INotifier _notifier;
         private readonly IProductPriceService _productPriceService;
+        private readonly IAddressConfigurationService _addressConfigurationService;
 
         private readonly dynamic _shapeFactory;
 
@@ -45,7 +47,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ITransactionManager transactionManager,
             IContentManager contentManager,
             INotifier notifier,
-            IProductPriceService productPriceService) {
+            IProductPriceService productPriceService,
+            IAddressConfigurationService addressConfigurationService) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -59,6 +62,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _contentManager = contentManager;
             _notifier = notifier;
             _productPriceService = productPriceService;
+            _addressConfigurationService = addressConfigurationService;
 
             T = NullLocalizer.Instance;
         }
@@ -204,7 +208,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
         public ActionResult Create() {
-            return View(new AddressEditViewModel());
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user == null) {
+                // we should never be here, because the AuthorizeAttribute should
+                // take care of anonymous users.
+                return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
+            }
+            return View(CreateVM());
         }
         [HttpPost, Themed, 
             OutputCache(NoStore = true, Duration = 0), Authorize,
@@ -267,6 +277,17 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             _notifier.Information(T("Address updated successfully."));
             return View(newAddress);
+        }
+
+        private AddressEditViewModel CreateVM() {
+            return new AddressEditViewModel() {
+                Countries = _addressConfigurationService
+                    .GetAllCountries()
+                    .Select(tp => new SelectListItem() {
+                        Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
+                        Text = _contentManager.GetItemMetadata(tp).DisplayText
+                    })
+            };
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
+using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
@@ -9,6 +10,7 @@ using Orchard.Localization.Services;
 using Orchard.Settings;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
@@ -20,6 +22,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IContentManager _contentManager;
         private readonly ILocalizationService _localizationService;
         private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public AddressConfigurationSettingsService(
             ISiteService siteService,
@@ -27,7 +30,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             ISignals signals,
             IContentManager contentManager,
             ILocalizationService localizationService,
-            ITerritoriesRepositoryService territoriesRepositoryService) {
+            ITerritoriesRepositoryService territoriesRepositoryService,
+            IWorkContextAccessor workContextAccessor) {
 
             _siteService = siteService;
             _cacheManager = cacheManager;
@@ -35,8 +39,32 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _contentManager = contentManager;
             _localizationService = localizationService;
             _territoriesRepositoryService = territoriesRepositoryService;
+            _workContextAccessor = workContextAccessor;
         }
 
+        public TerritoryHierarchyPart GetConfiguredHierarchy(CultureInfo culture) {
+            return GetConfiguredHierarchy(culture.Name);
+        }
+        public TerritoryHierarchyPart GetConfiguredHierarchy(string culture = "") {
+            if (string.IsNullOrWhiteSpace(culture)) {
+                culture = _workContextAccessor.GetContext().CurrentCulture;
+            }
+            return GetFromCache(_hierarchyForCultureBaseCacheKey + culture, () => {
+                var localizedHierarchy = ShippingCountriesHierarchies
+                    .FirstOrDefault(thp =>
+                        // localizable
+                        thp.Is<LocalizationPart>()
+                        // desired culture
+                        && thp.As<LocalizationPart>()
+                            .Culture.Culture
+                            .Equals(culture, StringComparison.InvariantCultureIgnoreCase));
+
+                return localizedHierarchy ?? ShippingCountriesHierarchy;
+            });
+
+        }
+
+        #region cache keys
         private const string _settingsCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.Settings";
         private const string _hierarchyCacheKey =
@@ -47,7 +75,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedTerritoryIds";
         private const string _territoryRecordsCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedTerritoryRecords";
-        
+        private const string _countryIdsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedCountryIds";
+        private const string _countryTerritoryRecordsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedCountryTerritoryRecords";
+        private const string _provinceIdsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedProvinceIds";
+        private const string _provinceTerritoryRecordsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedProvinceTerritoryRecords";
+        private const string _cityIdsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedCityIds";
+        private const string _cityTerritoryRecordsCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedCityTerritoryRecords";
+        private const string _hierarchyForCultureBaseCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.GetConfiguredHierarchy.";
+        #endregion
+
         private T GetFromCache<T>(string cacheKey, Func<T> method) {
             return _cacheManager.Get(cacheKey, true, ctx => {
                 // invalidation signal 
@@ -95,7 +138,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 });
             }
         }
-        
+
         public int[] SelectedTerritoryIds {
             get {
                 return GetFromCache(_territoryIdsCacheKey, () => {
@@ -111,9 +154,69 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public IEnumerable<TerritoryInternalRecord> SelectedTerritoryRecords {
             get {
-                return GetFromCache(_territoryRecordsCacheKey,() => {
+                return GetFromCache(_territoryRecordsCacheKey, () => {
                     return _territoriesRepositoryService
                         .GetTerritories(SelectedTerritoryIds);
+                });
+            }
+        }
+
+        public int[] SelectedCountryIds {
+            get {
+                return GetFromCache(_countryIdsCacheKey, () => {
+                    return Settings != null
+                        ? Settings.SelectedCountries
+                            .ToArray()
+                        : new int[] { };
+                });
+            }
+        }
+
+        public IEnumerable<TerritoryInternalRecord> SelectedCountryTerritoryRecords {
+            get {
+                return GetFromCache(_countryTerritoryRecordsCacheKey, () => {
+                    return _territoriesRepositoryService
+                        .GetTerritories(SelectedCountryIds);
+                });
+            }
+        }
+
+        public int[] SelectedProvinceIds {
+            get {
+                return GetFromCache(_provinceIdsCacheKey, () => {
+                    return Settings != null
+                        ? Settings.SelectedProvinces
+                            .ToArray()
+                        : new int[] { };
+                });
+            }
+        }
+
+        public IEnumerable<TerritoryInternalRecord> SelectedProvinceTerritoryRecords {
+            get {
+                return GetFromCache(_provinceTerritoryRecordsCacheKey, () => {
+                    return _territoriesRepositoryService
+                        .GetTerritories(SelectedProvinceIds);
+                });
+            }
+        }
+
+        public int[] SelectedCityIds {
+            get {
+                return GetFromCache(_cityIdsCacheKey, () => {
+                    return Settings != null
+                        ? Settings.SelectedCities
+                            .ToArray()
+                        : new int[] { };
+                });
+            }
+        }
+
+        public IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords {
+            get {
+                return GetFromCache(_cityTerritoryRecordsCacheKey, () => {
+                    return _territoriesRepositoryService
+                        .GetTerritories(SelectedCityIds);
                 });
             }
         }
