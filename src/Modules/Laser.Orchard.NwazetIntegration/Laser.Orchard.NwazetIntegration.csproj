@@ -142,6 +142,7 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
+    <Content Include="Scripts\address-configuration.js" />
     <Content Include="Scripts\ship.js" />
     <Content Include="Styles\admin-style.css" />
     <Content Include="Styles\admin-style.min.css">
@@ -244,6 +245,7 @@
     <Content Include="Assets\admin-style.scss" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
