@@ -5,10 +5,12 @@ using System.Web;
 using Laser.Orchard.Maps.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
 
 namespace Laser.Orchard.Maps.Handlers {
+    [OrchardFeature("Laser.Orchard.Maps.OpenRoute")]
     public class OpenRouteSiteSettingsHandler : ContentHandler {
 
         public OpenRouteSiteSettingsHandler() {

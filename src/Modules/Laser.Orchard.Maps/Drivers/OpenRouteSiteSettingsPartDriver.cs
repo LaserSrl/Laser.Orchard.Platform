@@ -5,9 +5,11 @@ using System.Web;
 using Laser.Orchard.Maps.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 
 namespace Laser.Orchard.Maps.Drivers {
+    [OrchardFeature("Laser.Orchard.Maps.OpenRoute")]
     public class OpenRouteSiteSettingsPartDriver : ContentPartDriver<OpenRouteSiteSettingsPart> {
         private const string TemplateName = "Parts/OpenRouteSiteSettings";
 
