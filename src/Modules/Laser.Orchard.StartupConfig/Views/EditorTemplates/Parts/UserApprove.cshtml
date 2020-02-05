@@ -1,24 +1,38 @@
-﻿@using Orchard.Users.Models;
+﻿@model  Orchard.Users.ViewModels.UserEditViewModel
 
-@model  Orchard.Users.ViewModels.UserEditViewModel
 
+@using Orchard.Users.Models;
 @using Orchard.ContentManagement;
 @using Orchard.Core.Contents;
 @using Orchard.Utility.Extensions;
 
 @if (Authorizer.Authorize(Permissions.PublishContent, Model.User)) {
+    <style type="text/css">
+        .approve-user {
+            float: left;
+            clear: none;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
 
-<fieldset class="approve-user">
-    @if (Model.User != null) {
-        var user = Model.User.As<UserPart>();
-        if (user.RegistrationStatus == UserStatus.Pending) {
-            @*@Html.ActionLink(T("Approve").ToString(), "Approve", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })*@
-            <button type="submit" name="submit.Save" value="submit.PublishLater">@T("Approve")</button>
+        .approve-user legend {
+            display: none;
         }
-        else {
-            @*@Html.ActionLink(T("Disable").ToString(), "Moderate", new { entry.User.Id }, new { itemprop = "UnsafeUrl" })*@
-            <button type="submit" name="submit.Save" value="submit.PublishLater">@T("Disable")</button>
+
+        .approve-user button {
+            margin-left: 4px;
         }
-    }
-</fieldset>
+    </style>
+    <fieldset class="approve-user">
+        <legend>@T("Approve User")</legend>
+        @if (Model.User != null) {
+            var user = Model.User.As<UserPart>();
+            if (user.RegistrationStatus == UserStatus.Pending) {
+                <button type="submit" name="submit.Save" value="submit.ApproveUser">@T("Approve")</button>
+            }
+            else {
+                <button type="submit" name="submit.Save" value="submit.DisableUser">@T("Disable")</button>
+            }
+        }
+    </fieldset>
 }
