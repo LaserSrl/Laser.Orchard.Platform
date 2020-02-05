@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -19,6 +19,10 @@ msgstr "Usa un certificato per la richiesta HTTP"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Body Request"
 msgstr "Corpo della richiesta"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Cache"
+msgstr "Cache"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Cache duration"
@@ -67,6 +71,10 @@ msgstr "URL esterno / eseguibile"
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Generate on L For Mobile"
 msgstr "Genera su L For Mobile"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "HTTP Request"
+msgstr "Richiesta HTTP (HTTP Request)"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "If checked cache will be stored also in filesystem (in folder/App_Data/cache)."
@@ -125,6 +133,10 @@ msgid "Scheduled request Minute"
 msgstr "Minuti di attesa tra una schedulazione e l'altra"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "Server hostname (internally resolved by the server)"
+msgstr "Il nome host (hostname) del server (risolto internamente dal server)"
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "The cache key used in input."
 msgstr "La chiave di cache utilizzata come input."
 
@@ -139,6 +151,10 @@ msgstr "La chiave privata del certificato. Inserire (none) se non è richiesta n
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "The certificate private key. The key is empty."
 msgstr "La chiave privata del certificato. La chiave al momento non è impostata."
+
+msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
+msgid "The hostname (internally resolved by the server) that the WebClient have to call to generate the cache (e.g. http://localhost or http://local.laser-group.com). If empty, the request will be addressed to the tenant base url."
+msgstr "Il nome host (l'hostname risolto internamente dal server) che il comando WebClient deve richiamare per generare la cache (es: http://localhost o http://local.laser-group.com). Se lasciato vuoto, la richiesta sarà indirizzata all'url di base del tenant."
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Use this content type"

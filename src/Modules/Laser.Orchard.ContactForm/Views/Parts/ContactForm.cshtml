@@ -69,11 +69,14 @@
                 }
             }
         </div>
-        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+        <input id="ReturnUrl-@uniqueId" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
         <input id="Id-@uniqueId" name="Id" type="hidden" value="@uniqueId" />
         <input id="MediaId-@uniqueId" name="MediaId" type="hidden" value="" />
         @Html.AntiForgeryTokenOrchard()
         <input id="attachment_button-@uniqueId" type="button" @Html.Raw(displayAttachmentButton) value="@T("Add attachment")" />
+        
+        @Display(Model.AdditionalShape.Content)
+
         <input type="submit" value="@T("Send")" />
     }
 }

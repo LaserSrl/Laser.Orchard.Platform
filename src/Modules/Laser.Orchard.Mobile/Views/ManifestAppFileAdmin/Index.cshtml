@@ -1,0 +1,33 @@
+﻿@model Laser.Orchard.Mobile.ViewModels.ManifestAppFileViewModel
+
+<h1>@Html.TitleForPage(T("Manage Manifest Files").ToString())</h1>
+@Html.ValidationSummary()
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Text)">@T("File Content for apple-app-site-association")</label>
+            @Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
+            @Html.ValidationMessageFor(m => m.Text, "*")
+            <span class="hint">@T("apple app site association")</span>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.Enable)
+                <label for="@Html.FieldIdFor(m => m.Enable)" class="forcheckbox">@T("Enable the App Site File") </label>
+                <span class="hint">@T("Enable return file from the route: /apple-app-site-association")</span>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.DeveloperDomainText)">@T("File Content for apple-developer-domain-association")</label>
+            @Html.TextAreaFor(m => m.DeveloperDomainText, new { @class = "textMedium", rows = "16" })
+            @Html.ValidationMessageFor(m => m.DeveloperDomainText, "*")
+            <span class="hint">@T("apple developer domain association")</span>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.EnableDeveloperDomain)
+                <label for="@Html.FieldIdFor(m => m.EnableDeveloperDomain)" class="forcheckbox">@T("Enable the Developer Domain File") </label>
+                <span class="hint">@T("Enable return file from the route: /apple-developer-domain-association")</span>
+            </div>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save")</button>
+}

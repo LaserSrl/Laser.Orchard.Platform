@@ -175,9 +175,11 @@
     <Compile Include="Drivers\UserRegistrationPolicyPartDriver.cs" />
     <Compile Include="Drivers\UserRegistrationSettingsPartDriver.cs" />
     <Compile Include="Enumerators.cs" />
+    <Compile Include="Feature\UsersExtensionsFeature.cs" />
     <Compile Include="Filters\PolicyApiFilterAttribute.cs" />
     <Compile Include="Filters\PolicyFilter.cs" />
     <Compile Include="Handlers\FavoriteCulturePartHandler.cs" />
+    <Compile Include="Handlers\PolicyTextInfoEventHandler.cs" />
     <Compile Include="Handlers\UserRegistrationPolicyPartHandler.cs" />
     <Compile Include="Handlers\UserRegistrationSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -206,6 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

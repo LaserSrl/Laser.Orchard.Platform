@@ -9,5 +9,6 @@ namespace Contrib.Widgets.ViewModels {
         public List<string> Widgets { get; set; }
         public bool UseHierarchicalAssociation { get; set; }
         public string HierarchicalAssociationJson { get; set; }
+        public bool TryToLocalizeItems { get; set; }
     }
 }

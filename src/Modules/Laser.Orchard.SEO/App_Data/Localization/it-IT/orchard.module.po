@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -11,6 +11,18 @@
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "Add microdata for nested content"
 msgstr "Aggiungi microdata per i contenuti annidati"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical Url"
+msgstr "Url Canonico"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}"
+msgstr "Url Canonico es: {Site.BaseUrl}{Content.DisplayUrl}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Canonical Url."
+msgstr "Url Canonico."
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "If this content type contains an aggregator (i.e. projection, taxonomy, content picker), microdata for a carousel showing its linked items will be generated."
@@ -79,6 +91,10 @@ msgstr "Clicca per ricaricare i grafici"
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
 msgid "Hide charts"
 msgstr "Nascondi grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Keyword"
+msgstr "Parola Chiave"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
 msgid "Language"
@@ -201,6 +217,18 @@ msgid "You can add keywords and obtain the most relevant related ones on search 
 msgstr "Qui si possono aggiungere parole chiave, ed ottenere quelle correlate più importanti nei motori di ricerca."
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical Url"
+msgstr "Url Canonico"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}"
+msgstr "Url Canonico es: {Site.BaseUrl}{Content.DisplayUrl}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
+msgid "Canonical Url."
+msgstr "Url Canonico."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
 msgid "Description"
 msgstr "META Description"
 
@@ -317,6 +345,14 @@ msgid "Add"
 msgstr "Aggiungi"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Clean Redirects Cache"
+msgstr "Pulisci la Cache dei Redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Number of cached elements: {0}"
+msgstr "Numero di elementi in cache: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
 msgid "Redirects"
 msgstr "Redirezionamenti"
 
@@ -373,6 +409,10 @@ msgid "A rule for this Source URL already exists."
 msgstr "Regola per l'URL di origine già presente."
 
 msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "Redirect cache successfully reloaded"
+msgstr "Cache dei redirect ricaricata con successo"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
 msgid "Redirect record was deleted"
 msgstr "L'elemento di redirect è stato eliminato"
 
@@ -411,6 +451,14 @@ msgstr "Redirezionamenti"
 msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
 msgid "SEO"
 msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Exports Redirects. If there are 2 redirects in the exported file with the same SourceUrl, only one will be inserted during the import"
+msgstr "Esporta le redirect. Se ci sono 2 redirect nel file esportato con lo stesso SourceUrl, durante l'importazione ne verrà inserita solo una"
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Redirects Rule"
+msgstr "Regole di Redirect"
 
 msgctxt "Laser.Orchard.SEO.Services.RedirectService"
 msgid "Rules with same SourceURL are not valid."

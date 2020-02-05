@@ -1,4 +1,5 @@
 ﻿using Contrib.Profile.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -14,7 +15,6 @@ using Orchard.Users.Models;
 using Orchard.Users.Services;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -25,7 +25,6 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         private readonly IMembershipService _membershipService;
         private readonly IUserService _userService;
         private readonly IOrchardServices _orchardServices;
-        //private readonly IShapeFactory shapeFactory;
         private readonly IContentManager _contentManager;
         private readonly IFrontEndProfileService _frontEndProfileService;
         private readonly ShellSettings _shellSettings;
@@ -35,12 +34,6 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         public ILogger Logger { get; set; }
         public Localizer T { get; set; }
         dynamic Shape { get; set; }
-
-        int MinPasswordLength {
-            get {
-                return _membershipService.GetSettings().GetMinimumPasswordLength();
-            }
-        }
 
         public AccountController(
           IAuthenticationService authenticationService,
@@ -68,20 +61,25 @@ namespace itWORKS.ExtendedRegistration.Controllers {
             _accountValidationService = accountValidationService;
         }
 
+        [AlwaysAccessible]
         public ActionResult Register() {
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
 
-            ViewData["PasswordLength"] = MinPasswordLength;
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 
             var user = _orchardServices.ContentManager.New("User");
             if (user != null && !_frontEndProfileService.UserHasNoProfilePart(user.As<IUser>())) {
-                shape.UserProfile = _frontEndProfileService.BuildFrontEndShape(
+                shape.UserProfile = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                     _contentManager.BuildEditor(user),
                     _frontEndProfileService.MayAllowPartEdit,
                     _frontEndProfileService.MayAllowFieldEdit);
@@ -91,23 +89,29 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Register(string userName, string email, string password, string confirmPassword, string returnUrl = null,bool createPersistentCookie=false) {
+        [AlwaysAccessible]
+        public ActionResult Register(string userName, string email, string password, string confirmPassword, string returnUrl = null, bool createPersistentCookie = false) {
             if (string.IsNullOrEmpty(returnUrl)) {
                 returnUrl = Request.QueryString["ReturnUrl"];
             }
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
-            ViewData["PasswordLength"] = MinPasswordLength;
+
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 
             // validate user part, create a temp user part to validate input
             var userPart = _contentManager.New("User");
             if (userPart != null && !_frontEndProfileService.UserHasNoProfilePart(userPart.As<IUser>())) {
-                shape.UserProfile = _frontEndProfileService.BuildFrontEndShape(
+                shape.UserProfile = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                     _contentManager.UpdateEditor(userPart, this),
                     _frontEndProfileService.MayAllowPartEdit,
                     _frontEndProfileService.MayAllowFieldEdit);
@@ -125,7 +129,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                 if (user != null) {
                     if (!_frontEndProfileService.UserHasNoProfilePart(user)) {
                         // we know userpart data is ok, now we update the 'real' recently published userpart
-                        _frontEndProfileService.BuildFrontEndShape(
+                        ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                             _contentManager.UpdateEditor(user, this),
                             _frontEndProfileService.MayAllowPartEdit,
                             _frontEndProfileService.MayAllowFieldEdit);
@@ -134,7 +138,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                     var userPart2 = user.As<UserPart>();
                     if (user.As<UserPart>().EmailStatus == UserStatus.Pending) {
                         _userService.SendChallengeEmail(user.As<UserPart>(), nonce => Url.AbsoluteAction(() => Url.Action("ChallengeEmail", "Account", new { Area = "Orchard.Users", nonce = nonce })));
-                        
+
                         _userEventHandler.SentChallengeEmail(user);
                         return RedirectToAction("ChallengeEmailSent", "Account", new { area = "Orchard.Users" });
                     }
@@ -144,7 +148,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                     }
 
                     _userEventHandler.LoggingIn(userName, password);
-                    _authenticationService.SignIn(user, createPersistentCookie );
+                    _authenticationService.SignIn(user, createPersistentCookie);
                     _userEventHandler.LoggedIn(user);
 
                     if (!string.IsNullOrEmpty(returnUrl)) {

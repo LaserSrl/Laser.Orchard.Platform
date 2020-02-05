@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -177,6 +177,10 @@ msgid "The text that should appear in the menu."
 msgstr "Il testo che dovrebbe apparire nel menu."
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "check your input!"
+msgstr "verificare i valori inseriti!"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "ContentType Permission settings updated."
 msgstr "Impostazione dei permessi per il tipo di contenuto aggiornate."
 
@@ -188,10 +192,6 @@ msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "Yout have to be an Administrator to edit ContentTypePermission settings!"
 msgstr "Devi essere un Amministratore per poter modificare le impostazioni dei Permessi"
 
-msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentController"
-msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
-
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
 msgid "ContentType not exist"
 msgstr "Il tipo di contenuto non esiste"
@@ -202,11 +202,11 @@ msgstr "Contenuto inesistente"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
 msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
+msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.testpostController"
 msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
-msgstr "Non si dispone dell'autorizzazione \"Gestione Impostazioni\" per definire e gestire i gruppi di utenti!"
+msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.UploadFileController"
 msgid "The file extension in the filename is not allowed or has not been provided."

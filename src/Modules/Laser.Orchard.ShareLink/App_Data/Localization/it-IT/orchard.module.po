@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -27,6 +27,10 @@ msgstr "Consenti all'utente la selezione di un'immagine"
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "Enable user to select a Text"
 msgstr "Consenti all'utente la selezione di un testo"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Enable user to select a Text to share"
+msgstr "Consenti all'utente la selezione di un testo da condividere"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "Link"
@@ -67,6 +71,10 @@ msgstr "Testo"
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "Text to Share"
 msgstr "Testo da Condividere"
+
+msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
+msgid "Used only for Open Graph - Text to Share"
+msgstr "Usato solo per Open Graph - Testo da condividere"
 
 msgctxt "~/Modules/Laser.Orchard.ShareLink/Views/DefinitionTemplates/ShareLinkPartSettingVM.cshtml"
 msgid "User only for Open Graph - Text to Share"

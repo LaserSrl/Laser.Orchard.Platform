@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -125,6 +125,10 @@ msgid "Name"
 msgstr "Nome"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "New HQL Query"
+msgstr "Nuova Query HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
 msgid "Query"
 msgstr "Ricerca"
 
@@ -149,8 +153,16 @@ msgid "Dashboards"
 msgstr "Dashboard"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
 msgid "Name"
 msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "New Dashboard"
+msgstr "Nuova Dashboard"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
 msgid "Download"
@@ -225,6 +237,10 @@ msgid "Name"
 msgstr "Nome"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "New HQL Query"
+msgstr "Nuova Query HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
 msgid "Query"
 msgstr "Ricerca"
 
@@ -287,6 +303,14 @@ msgstr "Aggiorna"
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
 msgid "Apply Filter"
 msgstr "Applica Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Edit"
+msgstr "Modifica"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
 msgid "Execute Data Reports"

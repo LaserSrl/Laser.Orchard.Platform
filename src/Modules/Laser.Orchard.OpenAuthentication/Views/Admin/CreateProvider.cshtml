@@ -1,26 +1,20 @@
 ﻿@model Laser.Orchard.OpenAuthentication.ViewModels.CreateProviderViewModel
-           
+
 @{
     Layout.Title = T("Create External Provider");
 }
 
-@using (Html.BeginFormAntiForgeryPost())
-{
+@using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
-    
+
     <fieldset>
         @Html.LabelFor(m => m.DisplayName, T("Display Name"))
         @Html.TextBoxFor(m => m.DisplayName)
         <span class="hint">@T("This is the value that is shown to the User.")</span>
-    </fieldset>@*
+    </fieldset>
     <fieldset>
         @Html.LabelFor(m => m.ProviderName, T("Technical Name"))
-        @Html.TextBoxFor(m => m.ProviderName)
-        <span class="hint">@T("The name that will be used internally.")</span>
-    </fieldset>*@
-        <fieldset>
-        @Html.LabelFor(m => m.ProviderName, T("Technical Name"))
-        @Html.DropDownListFor(m => m.ProviderName,Model.ProviderNameList)
+        @Html.DropDownListFor(m => m.ProviderName, Model.ProviderNameList)
         <span class="hint">@T("The name that will be used internally.")</span>
     </fieldset>
     <fieldset>
@@ -28,12 +22,12 @@
         @Html.TextBoxFor(m => m.ProviderIdentifier)
         <span class="hint">@T("This is the url to the end point.")</span>
     </fieldset>
-        <fieldset>
+    <fieldset>
         @Html.LabelFor(m => m.UserIdentifier, T("User Name (used for twitter post)"))
         @Html.TextBoxFor(m => m.UserIdentifier)
         <span class="hint">@T("This is the User Name.")</span>
     </fieldset>
-    
+
     <fieldset>
         @Html.LabelFor(m => m.ProviderIdKey, T("Key"))
         @Html.TextBoxFor(m => m.ProviderIdKey)
@@ -43,8 +37,8 @@
         @Html.TextBoxFor(m => m.ProviderSecret)
     </fieldset>
 
-@Html.HiddenFor(m=>m.Id)
-        <fieldset>
+    @Html.HiddenFor(m => m.Id)
+    <fieldset>
         @Html.LabelFor(m => m.IsEnabled, T("Is Login enabled"))
         @Html.CheckBoxFor(m => m.IsEnabled)
     </fieldset>

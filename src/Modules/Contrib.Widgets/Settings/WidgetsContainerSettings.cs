@@ -6,6 +6,7 @@ namespace Contrib.Widgets.Settings {
         public WidgetsContainerSettings() {
             UseHierarchicalAssociation = false;
             HierarchicalAssociationJson = "";
+            TryToLocalizeItems = true;
         }
         public string AllowedZones { get; set; }
         public string AllowedWidgets { get; set; }
@@ -16,5 +17,6 @@ namespace Contrib.Widgets.Settings {
                 return new JavaScriptSerializer().Deserialize<List<Zone>>(HierarchicalAssociationJson);
             }
         }
+        public bool TryToLocalizeItems { get; set; }
     }
 }

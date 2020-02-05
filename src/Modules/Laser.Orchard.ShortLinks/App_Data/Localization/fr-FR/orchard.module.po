@@ -1,32 +1,30 @@
 ﻿# Orchard resource strings - fr-FR
-# Copyright (c) 2015 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
-# > #: msgctxt  { contesto del messaggio - Originale ITA }
-# > #| msgid  	{ identificativo del messaggio - Originale ITA }
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
-
-msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
-msgid "Short Link Settings"
-msgstr "Impostations Short Link"
-
-msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
-msgid "Short Link"
-msgstr "Short Link"
 
 msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
 msgid "Ask New Short Link"
 msgstr "Demander nouveau short link"
 
 msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
-msgid "You must save content before be able to create short link."
-msgstr "Vous devez enregistrer le contenu avant de pouvoir créer un short link."
+msgid "Short Link"
+msgstr "Short Link"
 
 msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
 msgid "You must save a valid Google API KEY on settings before be able to create short link."
 msgstr "Vous devez enregistrer un Google API KEY sup les impostations avant de pouvoir créer un short link."
 
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinks.cshtml"
+msgid "You must save content before be able to create short link."
+msgstr "Vous devez enregistrer le contenu avant de pouvoir créer un short link."
 
+msgctxt "~/Modules/Laser.Orchard.ShortLinks/Views/EditorTemplates/Parts/ShortLinksSettings.cshtml"
+msgid "Short Link Settings"
+msgstr "Impostations Short Link"
 

@@ -27,6 +27,7 @@ using Orchard.Tasks.Scheduling;
 using Laser.Orchard.StartupConfig.Exceptions;
 using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
 using System.Diagnostics;
+using System.Text;
 
 namespace Laser.Orchard.ExternalContent.Services {
 
@@ -133,6 +134,9 @@ namespace Laser.Orchard.ExternalContent.Services {
                 }
             }
 
+            if (finalUrl.Count(f => f == '?') == 1 && finalUrl[finalUrl.Length - 1] == '?')
+                finalUrl = finalUrl.TrimEnd('?'); //delete the last ? if there aren t parameter in query string
+
             return finalUrl;
         }
         private string GetHeadersText(Dictionary<string, object> contesto, string additionalHeadersText) {
@@ -201,14 +205,16 @@ namespace Laser.Orchard.ExternalContent.Services {
                             if (!File.Exists(filename)) {
                                 throw new Exception(String.Format("File \"{0}\" not found!", filename));
                             }
+                            var tmptokenizedzedUrl = _tokenizer.Replace(externalUrl, contesto);
 
                             var StartInfo = new ProcessStartInfo {
                                 FileName = filename,
-                                Arguments = externalUrl.Substring(externalUrl.IndexOf(".exe") + 5),
+                                Arguments = tmptokenizedzedUrl.Substring(tmptokenizedzedUrl.IndexOf(".exe") + 5),
                                 UseShellExecute = false,
                                 RedirectStandardOutput = true,
                                 RedirectStandardError = true,
-                                CreateNoWindow = true
+                                CreateNoWindow = true,
+                                StandardOutputEncoding = Encoding.UTF8
                             };
                             var versionInfo = FileVersionInfo.GetVersionInfo(filename);
                             if (versionInfo.CompanyName != "Laser Group") {
@@ -286,7 +292,8 @@ namespace Laser.Orchard.ExternalContent.Services {
                         else {
                             dvb.Add("CachedData", new XmlDocument());
                         }
-
+                        dvb.Add("externalUrl", UrlToGet);
+                        dvb.Add("OrchardServices", _orchardServices);
                         ci = RazorTransform(webpagecontent.Replace(" xmlns=\"\"", ""), nomexlst, contentType, dvb);
 
                         _cacheStorageProvider.Remove(chiavecache);
@@ -399,11 +406,14 @@ namespace Laser.Orchard.ExternalContent.Services {
                 JsonData = JsonData.Replace(",\"\"]}", "]}"); // aggiunto perchè nella nuova versione di newtonjson i nodi xml vuoti non vengono piu tradotti in null ma in ""
                 JsonData = JsonData.Replace(",{}]}", "]}");
 
+                JsonData = JsonData.Replace("\":lasernumericlasernumeric:\"", "null");
                 JsonData = JsonData.Replace("\":lasernumeric", "");
                 JsonData = JsonData.Replace("lasernumeric:\"", "");
+                JsonData = JsonData.Replace("\":laserbooleanlaserboolean:\"", "null");
                 JsonData = JsonData.Replace("\":laserboolean", "");
                 JsonData = JsonData.Replace("laserboolean:\"", "");
                 JsonData = JsonData.Replace(@"\r\n", "");
+                JsonData = JsonData.Replace("\":laserDatelaserDate:\"", "null");
                 JsonData = JsonData.Replace("\":laserDate", "\"\\/Date(");
                 JsonData = JsonData.Replace("laserDate:\"", ")\\/\"");
 
@@ -501,7 +511,6 @@ namespace Laser.Orchard.ExternalContent.Services {
             }
             else {
                 output = xmlpage;
-                Logger.Error("file not exist ->" + myXmlFile);
             }
             string xml = RemoveAllNamespaces(output);
             XmlDocument doc = new XmlDocument();

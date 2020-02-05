@@ -25,7 +25,7 @@
                         <input id="Email" type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
 
                         @Html.Hidden("Subscription_Newsletters_Ids", (object)newsList[0].Id.ToString())
-                        <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.ToUrlString()" />
+                        <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="@Context.Request.RawUrl" />
                         <input id="Id" name="Id" type="hidden" value="@Model.ContentPart.Id" />
                         <input type="submit" name="Newsletter_Subscriber_Subscribe" onclick="newsletterFieldFiller(this);" value=" " />
                     }

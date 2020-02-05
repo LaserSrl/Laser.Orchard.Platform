@@ -9,6 +9,7 @@ using DotNetOpenAuth.Messaging;
 using Laser.Orchard.OpenAuthentication.Models;
 using Orchard.Logging;
 using Laser.Orchard.OpenAuthentication.Security;
+using Orchard.Localization;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class FacebookAuthenticationClient : IExternalAuthenticationClient {
@@ -82,6 +83,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public bool RewriteRequest() {
             return false;
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }

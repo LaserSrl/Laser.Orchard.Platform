@@ -1,0 +1,35 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Orchard.Localization;
+@using System.Linq.Expressions;
+@model AddressEditViewModel
+
+@using (Html.BeginFormAntiForgeryPost()) {
+<div class="edit-address">
+    @if (Model.Errors.Any()) {
+        <div class="errors">
+            @foreach (var err in Model.Errors) {
+                <p>@err</p>
+            }
+        </div>
+    }
+    @if (Model.Information.Any()) {
+        <div class="information">
+            @foreach (var info in Model.Information) {
+                <p>@info</p>
+            }
+        </div>
+    }
+    @Html.ValidationSummary()
+    <div class="edit-address edit-address">
+        @Html.Partial("AddressEditor")
+    </div>
+    <div class="action save-button">
+        <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
+        @{
+            var returnUrl = Url.Action("MyAddresses", "Addresses");
+        }
+
+        <a id="button-cancel" href="@returnUrl" class="button">@T("Back to List")</a>
+    </div>
+</div>
+}

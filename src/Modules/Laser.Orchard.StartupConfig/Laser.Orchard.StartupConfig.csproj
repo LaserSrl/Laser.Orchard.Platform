@@ -137,6 +137,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\laser-tinymce.js" />
+    <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
+    <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
+    <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
+    <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
     <Content Include="Scripts\spectrum.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.js" />
     <Content Include="Scripts\tabulator\jquery_wrapper.min.js" />
@@ -198,6 +203,8 @@
     <Content Include="Scripts\tabulator\tabulator.min.js" />
     <Content Include="Scripts\tabulator\tabulator_core.js" />
     <Content Include="Scripts\tabulator\tabulator_core.min.js" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerThemeHiding.css" />
+    <Content Include="Styles\contentPickerCreation\ContentPickerCreation.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.css" />
     <Content Include="Styles\font-awesome\css\font-awesome.min.css" />
     <Content Include="Styles\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -330,10 +337,6 @@
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
       <Name>Laser.Orchard.Commons</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
-      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
-      <Name>Contrib.Profile</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessManagement\BadgeInfo.cs" />
@@ -348,8 +351,17 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreationWindowDriver.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />
+    <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
+    <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
+    <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
+    <Compile Include="Controllers\FrontEndContentController.cs" />
     <Compile Include="Controllers\MaintenanceAdminController.cs" />
+    <Compile Include="Controllers\FrontEndTagsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
@@ -357,6 +369,14 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
+    <Compile Include="MediaExtensions\UserFolder\Drivers\OwnedFolderPartDriver.cs" />
+    <Compile Include="MediaExtensions\UserFolder\Migrations.cs" />
+    <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
+    <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
+    <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
@@ -389,7 +409,6 @@
     <Compile Include="Projections\OwnerStringForm.cs" />
     <Compile Include="RazorBase\Services\IRazorBaseService.cs" />
     <Compile Include="Services\IApiKeySettingService.cs" />
-    <Compile Include="Services\FavoriteCultureDefaultFrontEndSettingsProvider.cs" />
     <Compile Include="Services\TagForCache.cs" />
     <Compile Include="Settings\DisplayTextPartSettingsHooks.cs" />
     <Compile Include="Settings\JsonDataTablePartSettingsHooks.cs" />
@@ -404,7 +423,7 @@
     <Compile Include="FileDownloader\ViewModels\FilesListVM.cs" />
     <Compile Include="Handlers\ContentEventHandler.cs" />
     <Compile Include="Handlers\ContentPickerConnectorHandler.cs" />
-    <Compile Include="Controllers\MediaTransformController.cs" />
+    <Compile Include="MediaExtensions\Transform\Controllers\MediaTransformController.cs" />
     <Compile Include="Drivers\ContentPickerConnectorDriver.cs" />
     <Compile Include="Enumerators.cs" />
     <Compile Include="Extensions\MediaHelperExtensions.cs" />
@@ -421,7 +440,7 @@
     <Compile Include="Localization\DateLocalization.cs" />
     <Compile Include="Localization\IDateLocalization.cs" />
     <Compile Include="Localization\UriCultureSelector.cs" />
-    <Compile Include="MediaExtensionsRoutes.cs" />
+    <Compile Include="MediaExtensions\Transform\MediaExtensionsRoutes.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migrations\RelationshipsEnhancerMigrations.cs" />
     <Compile Include="Models\ContentPickerConnector.cs" />
@@ -448,6 +467,13 @@
     <Compile Include="TaxonomiesExtensions\Projections\SelectTermsForm.cs" />
     <Compile Include="TaxonomiesExtensions\Security\AuthorizationEventHandler.cs" />
     <Compile Include="TaxonomiesExtensions\Services\TaxonomyServiceExtension.cs" />
+    <Compile Include="TinyMceEnhancement\Constants.cs" />
+    <Compile Include="TinyMceEnhancement\ResourceManifest.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceEnhancementService.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceShapeDisplayEvent.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsDriver.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsHandler.cs" />
+    <Compile Include="TinyMceEnhancement\TinyMceSiteSettingsPart.cs" />
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
     <Compile Include="Tokens\ColorPickerTokens.cs" />
@@ -524,6 +550,7 @@
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="App_Data\Localization\fr-FR\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="Views\DefinitionTemplates\CPContentCreationSettings.cshtml" />
     <None Include="Properties\PublishProfiles\OrchardModuleRelease.pubxml" />
     <Content Include="Views\Parts\ContentPickerConnector.cshtml" />
     <Content Include="Views\DefinitionTemplates\Parts\ContentPickerConnector.Settings.cshtml" />
@@ -594,6 +621,10 @@
     <Content Include="Views\DefinitionTemplates\JsonDataTableFieldSettings.cshtml" />
     <Content Include="Views\Fields\JsonDataTable.cshtml" />
     <Content Include="Views\Widget-HeaderFooterWidget.cshtml" />
+    <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
+    <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -602,7 +633,10 @@
     </None>
     <None Include="Views\EditorTemplates\Parts\ProtectionSettingsPart.Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ContentPickerContentCreation\Models\" />
+    <Folder Include="ContentPickerContentCreation\Style\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

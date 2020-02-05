@@ -50,6 +50,9 @@ namespace Laser.Orchard.Mobile.Handlers {
         public void Approved(IUser user) {
             //  throw new NotImplementedException();
         }
+        public void Moderate(IUser user) {
+            //  throw new NotImplementedException();
+        }
 
         public void ChangedPassword(IUser user) {
             //   throw new NotImplementedException();

@@ -49,10 +49,16 @@ public interface IPosService : IDependency {
     /// <param name="paymentGuid">The guid of the record that contains the information about the payment.</param>
     /// <returns>The url of the virtual POS where the payment should happen.</returns>
     string GetPosUrl(string paymentGuid);
+    /// <summary>
+    /// Get Correct Url
+    /// </summary>
+    /// <param name="payment"></param>
+    /// <returns></returns>
+    string GetChargeAdminUrl(PaymentRecord payment);
     #endregion
 
     #region Methods implemented in the abstract service base
-    string GetPaymentInfoUrl(int paymentId);
+        string GetPaymentInfoUrl(int paymentId);
     PaymentRecord StartPayment(PaymentRecord values, string newPaymentGuid = null);
     PaymentRecord GetPaymentInfo(int paymentId);
     void EndPayment(int paymentId, bool success, string error, string info, string transactionId = "");

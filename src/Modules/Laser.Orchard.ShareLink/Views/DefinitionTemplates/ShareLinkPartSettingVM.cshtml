@@ -13,7 +13,7 @@
     <div>
         <label for="@Html.FieldIdFor(m => m.SharedBody)">@T("Description") </label>
         @Html.TextAreaFor(m => m.SharedBody, new { @class = "text medium tokenized", rows = "5" })
-        <span class="hint">@T("User only for Open Graph - Text to Share")</span>
+        <span class="hint">@T("Used only for Open Graph - Text to Share")</span>
     </div>
     <div>
         <label for="@Html.FieldIdFor(m => m.ShowBodyChoise)">@T("Show Description Choise") </label>
@@ -28,7 +28,7 @@
     <div>
         <label for="@Html.FieldIdFor(m => m.ShowTextChoise)" >@T("Show Text Choise") </label>
         @Html.EditorFor(m => m.ShowTextChoise)
-        <span class="hint">@T("Enable user to select a Text")</span>
+        <span class="hint">@T("Enable user to select a Text to share")</span>
     </div>
     <div>
         <label for="@Html.FieldIdFor(m => m.SharedImage)" >@T("Picture") </label>

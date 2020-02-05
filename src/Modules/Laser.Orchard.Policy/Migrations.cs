@@ -85,5 +85,10 @@ namespace Laser.Orchard.Policy {
             );
             return 5;
         }
+        public int UpdateFrom5() {
+            SchemaBuilder.AlterTable("PolicyTextInfoPartRecord", table => table
+                .AddColumn<bool>("AddPolicyToRegistration"));
+            return 6;
+        }
     }
 }

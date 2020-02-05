@@ -501,29 +501,55 @@ namespace Contrib.Profile.Settings {
             SetCurrentPlacement(contentTypeDefinition, newPlacements);
         }
 
-        private Dictionary<string, PlacementSettings[]> _currentPlacement;
-        private PlacementSettings[] GetCurrentPlacement(ContentTypeDefinition contentTypeDefinition) {
-            if (_currentPlacement == null) {
-                _currentPlacement = new Dictionary<string, PlacementSettings[]>();
-            }
-            if (!_currentPlacement.ContainsKey(contentTypeDefinition.Name)) {
-                _currentPlacement.Add(contentTypeDefinition.Name, _frontEndProfileService.GetFrontEndPlacement(contentTypeDefinition));
-            }
-
-            return _currentPlacement[contentTypeDefinition.Name];
-        }
+        // We use this dictionary to store, for each ContentType, all the settings.
+        // this dictionary, when a type is being updated, will itself be updated
+        // several times, as each part and field may update its own information.
+        private Dictionary<string, // ContentType Name
+            Dictionary<string, // ShapeType
+                Dictionary<string, // Differentiator (important for ContentFields)
+                    PlacementSettings>>> _currentPlacement;
         private PlacementSettings[] SetCurrentPlacement(
             ContentTypeDefinition contentTypeDefinition, IEnumerable<PlacementSettings> newPlacements) {
-
-            var placementsArray = newPlacements.ToArray();
-
+            // create the dictioanry if it does not exist (i.e. the first time this method
+            // is ever called in a request)
             if (_currentPlacement == null) {
-                _currentPlacement = new Dictionary<string, PlacementSettings[]>();
+                _currentPlacement = new Dictionary<string, Dictionary<string, Dictionary<string, PlacementSettings>>>();
             }
-            if (_currentPlacement.ContainsKey(contentTypeDefinition.Name)) {
-                _currentPlacement.Remove(contentTypeDefinition.Name);
+            // add a Dictionary for the ContentType we are processing
+            if (!_currentPlacement.ContainsKey(contentTypeDefinition.Name)) {
+                _currentPlacement.Add(contentTypeDefinition.Name,
+                    new Dictionary<string, Dictionary<string, PlacementSettings>>());
             }
-            _currentPlacement.Add(contentTypeDefinition.Name, placementsArray);
+            // dictionary of placements for this type
+            var placementsForType = _currentPlacement[contentTypeDefinition.Name];
+            // update placements for this type
+            foreach (var placement in newPlacements) {
+                // If we already had some information for this ShapeType
+                if (placementsForType.ContainsKey(placement.ShapeType)) {
+                    // update setting: we need to further drill things down on the differentiation
+                    // this will generally not matter for parts, but it is required to correctly
+                    // manage ContentFields, that generally share a single ShapeType.
+                    var differentPlacements = placementsForType[placement.ShapeType];
+                    if (differentPlacements.ContainsKey(placement.Differentiator)) {
+                        // update
+                        differentPlacements[placement.Differentiator] = placement;
+                    } else {
+                        // add
+                        differentPlacements.Add(placement.Differentiator, placement);
+                    }
+                } else {
+                    // add settings for this ShapeType
+                    placementsForType.Add(placement.ShapeType,
+                        new Dictionary<string, PlacementSettings>());
+                    placementsForType[placement.ShapeType].Add(placement.Differentiator, placement);
+                }
+            }
+
+            // pull the settings from the dictionary: for each shapeType we have a dictionary
+            // of settings
+            var placementsArray = placementsForType // Dictionary<string, Dictionary<string, PlacementSettings>>
+                .SelectMany(kvp => kvp.Value.Values)
+                .ToArray();
 
             // write the placement settings as a setting for the type, by serializing them all
             var serializer = new JavaScriptSerializer();

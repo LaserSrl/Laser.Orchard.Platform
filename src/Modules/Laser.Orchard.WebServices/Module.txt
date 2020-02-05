@@ -7,5 +7,5 @@ Features:
     Laser.Orchard.WebServices:
 		Name: Laser WebServices
 		Description: Expose your contents in Json format
-		Dependencies:  Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies
+		Dependencies:  Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies,Laser.Orchard.Policy
 		Category: Services

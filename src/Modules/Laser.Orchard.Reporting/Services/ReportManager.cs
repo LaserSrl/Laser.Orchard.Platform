@@ -22,6 +22,8 @@ using Orchard.Security.Permissions;
 using Orchard.Logging;
 using System.Text;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using Orchard.Core.Contents;
 
 namespace Laser.Orchard.Reporting.Services {
     public class ReportManager : IReportManager
@@ -153,8 +155,9 @@ namespace Laser.Orchard.Reporting.Services {
             IQuery hql = null;
             Dictionary<string, AggregationResult> returnValue = new Dictionary<string, AggregationResult>();
             IEnumerable result = null;
-            // check on hql query
-            if (query.StartsWith("select ", StringComparison.InvariantCultureIgnoreCase) == false) {
+            // check on hql query: must start with the word "select"
+            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            if (startsWithSelect.IsMatch(query) == false) {
                 throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
             } 
             try {
@@ -271,11 +274,15 @@ namespace Laser.Orchard.Reporting.Services {
             var reportLst = new List<GenericItem>();
             var unfilteredList = GetReports().Select(x => new GenericItem {
                 Id = x.Id,
-                Title =  (x.Has<TitlePart>() ? x.As<TitlePart>().Title : T("[No Title]").ToString())
+                Title =  (x.Has<TitlePart>() ? x.As<TitlePart>().Title : T("[No Title]").ToString()),
+                ContentItem = x.ContentItem
             });
             foreach(var report in unfilteredList) {
                 if (report.Title.ToLowerInvariant().Contains(filter)) {
                     if (_authorizer.Authorize(GetReportPermissions()[report.Id])) {
+                        if (_authorizer.Authorize(Permissions.EditOwnContent, report.ContentItem) == false) {
+                            report.ContentItem = null;
+                        }
                         reportLst.Add(report);
                     }
                 }
@@ -287,11 +294,15 @@ namespace Laser.Orchard.Reporting.Services {
             var dashboardLst = new List<GenericItem>();
             var unfilteredList = contentManager.Query("DataReportDashboard").List().Select(x => new GenericItem {
                 Id = x.Id,
-                Title = (x.Has<TitlePart>() ? x.As<TitlePart>().Title : T("[No Title]").ToString())
+                Title = (x.Has<TitlePart>() ? x.As<TitlePart>().Title : T("[No Title]").ToString()),
+                ContentItem = x
             });
             foreach (var dashboard in unfilteredList) {
                 if (dashboard.Title.ToLowerInvariant().Contains(filter)) {
                     if (_authorizer.Authorize(GetDashboardPermissions()[dashboard.Id])) {
+                        if(_authorizer.Authorize(Permissions.EditOwnContent, dashboard.ContentItem) == false) {
+                            dashboard.ContentItem = null;
+                        }
                         dashboardLst.Add(dashboard);
                     }
                 }

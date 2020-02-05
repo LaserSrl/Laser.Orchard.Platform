@@ -1,5 +1,5 @@
-# Orchard resource strings - it-IT
-# Copyright (c) 2018 Laser s.r.l.
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -559,6 +559,10 @@ msgstr "La validità della campagna è terminata. Nessuna modifica possibile."
 msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
 msgid "Couldn't create content"
 msgstr "Non è stato possibile creare il contenuto"
+
+msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
+msgid "Create Advertising Id: {0} - Title: {1}"
+msgstr "Creare Comunicato Id: {0} - Titolo: {1}"
 
 msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
 msgid "Creating CommunicationAdvertising failed: {0}"

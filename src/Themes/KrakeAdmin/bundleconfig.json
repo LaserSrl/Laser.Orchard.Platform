@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Styles/krake.min.css",
+    "inputFiles": [
+      "Styles/krake.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/krakeadmin.min.css",
+    "inputFiles": [
+      "Styles/krakeadmin.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/krake-navicon.min.css",
+    "inputFiles": [
+      "Styles/krake-navicon.css"
+    ]
+  }
+]

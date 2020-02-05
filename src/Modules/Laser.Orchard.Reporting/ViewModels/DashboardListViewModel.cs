@@ -9,6 +9,8 @@ namespace Laser.Orchard.Reporting.ViewModels {
         public dynamic Pager { get; set; }
         public PagerParameters PagerParameters { get; set; }
         public int? page { get; set; }
+        public int? pageSize { get; set; }
+        public string UrlForCreateDashboard { get; set; }
         public DashboardListViewModel() {
             PagerParameters = new PagerParameters();
         }

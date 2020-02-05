@@ -24,7 +24,7 @@
  */
 (function ($) {
     function load() {
-        $.cookieCuttr = function (options) {
+        $.cookieCuttr = function (pOptions) {
 			var defaults = {
 				cookieBannerPosition: "top",
                 cookieCutter: false, // you'd like to enable the div/section/span etc. hide feature? change this to true
@@ -43,11 +43,12 @@
                 cookiePolicyPageMessage: 'Please read the information below and then choose from the following options',
                 cookieDiscreetReset: false,
                 cookieNoMessage: false, // change to true hide message from all pages apart from your policy page
-				cookieDomain: "",
+                cookieDomain: "",
+                cookieExpandMessage: "Change your choice",
 				cookiePoweredBy: "",
 				cookiePoweredByIcon: ""
             };
-            var options = $.extend(defaults, options);
+            var options = $.extend(defaults, pOptions);
             //convert options
 			var cookieBannerPosition = options.cookieBannerPosition;
 			var cookieTitle = options.cookieTitle;
@@ -56,7 +57,8 @@
             var cookieAcceptButtonText = options.cookieAcceptButtonText;
             var cookiePolicyPage = options.cookiePolicyPage;
             var cookieExpectedValue = options.cookieExpectedValue;
-			var cookieAccepted = options.cookieAccepted;
+            var cookieAccepted = options.cookieAccepted;
+            var cookieExpandMessage = options.cookieExpandMessage;
 			var cookiePoweredBy = options.cookiePoweredBy;
 			var cookiePoweredByIcon = options.cookiePoweredByIcon;
             // cookie identifier
@@ -110,8 +112,13 @@
                 manageCookieResetButton(options);
             } else {
                 // add message to just after opening body tag
-				var htmlBanner = '<div class="cc-cookies" style="background-color:black;box-shadow:#121212 2px 2px 14px 2px"><div class="cc-cookie-box" style="width:90%;max-width:670px;margin:0px auto;width:auto;padding:0px;"><h3>' + cookieTitle + "</h3>" + cookieMessage + '<div style="position:relative"><div id="ccPoweredBy" style="height:34px"><div style="position:absolute;bottom:0px;margin-bottom:6px">GDPR Cookies <img src="' + cookiePoweredByIcon + '" style="width:20px"> ' + cookiePoweredBy + '</div></div><div style="position:absolute;right:0;bottom:0">' + cookieAccept + '</div></div></div></div></div>';
-				var htmlOverlay = '<div class="cc-cookies cc-overlay"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy">GDPR Cookies <img src="' + cookiePoweredByIcon + '" style="width:20px"> ' + cookiePoweredBy + '</p></div></div></div>';
+                var htmlFooterText = 'GDPR Cookies';
+                if (cookieExpandMessage != "") {
+                    htmlFooterText = '<a class="cc-expand">' + cookieExpandMessage + '</a> | ' + htmlFooterText;
+                }
+                var iconPoweredBy = '|';
+                var htmlBanner = '<div class="cc-cookies" style="background-color:black;box-shadow:#121212 2px 2px 14px 2px"><div class="cc-cookie-box" style="width:90%;max-width:670px;margin:0px auto;width:auto;padding:0px;"><h3>' + cookieTitle + "</h3>" + cookieMessage + '<div style="position:relative"><div id="ccPoweredBy" style="height:34px"><div style="position:absolute;bottom:0px;margin-bottom:6px"><p id="ccPoweredBy">' + htmlFooterText + ' ' + iconPoweredBy + ' ' + cookiePoweredBy + '</p></div></div><div style="position:absolute;right:0;bottom:0">' + cookieAccept + '</div></div></div></div>';
+                var htmlOverlay = '<div class="cc-cookies cc-overlay"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy">' + htmlFooterText + ' ' + iconPoweredBy + ' ' + cookiePoweredBy + '</p></div></div></div>';
 				if (cookiePolicyPage) {
 					if (cookieBannerPosition == "top") {
 						$('body').prepend(htmlBanner);
@@ -165,6 +172,9 @@
                     //location.reload();
                     manageCookieResetButton(options);
                 });
+            });
+            $('.cc-expand').click(function () {
+                $('.cc-cookie-box form').slideToggle('slow');
             });
         };
     }

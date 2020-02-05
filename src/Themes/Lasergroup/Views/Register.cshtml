@@ -1,5 +1,25 @@
 ﻿@using Orchard.ContentManagement
 @{
+    var requirementsMessage = T.Plural("The password can't be empty", "Passwords are required to be a minimum of {0} characters in length", (int)ViewData["PasswordLength"]).Text;
+    var additionalRequirementsMessage = new List<string>();
+    if ((bool)ViewData["LowercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one lowercase letter").Text);
+    }
+    if ((bool)ViewData["UppercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one uppercase letter").Text);
+    }
+    if ((bool)ViewData["NumberRequirement"]) {
+        additionalRequirementsMessage.Add(T("one number").Text);
+    }
+    if ((bool)ViewData["SpecialCharacterRequirement"]) {
+        additionalRequirementsMessage.Add(T("one special character").Text);
+    }
+    if (additionalRequirementsMessage.Count() > 0) {
+        requirementsMessage = T("{0} and must contain at least {1}", requirementsMessage, string.Join(", ", additionalRequirementsMessage)).Text;
+    }
+    requirementsMessage += ".";
+}
+@{
     Script.Require("jQuery");
     Script.Include("~/modules/itWORKS.ExtendedRegistration/Scripts/remove_publish_btn.js");
 
@@ -14,12 +34,12 @@
     var imageTitle = "";
     Layout.BaseClass = "page page-template navbar-fixed";
 }
-@Display(New.Parts_Title_Default(Title: T("Create a New Account").ToString(), 
-    Subtitle: "", 
-    ImageUrl: imageSrc, 
-    ImageTitle: imageTitle, 
+@Display(New.Parts_Title_Default(Title: T("Create a New Account").ToString(),
+    Subtitle: "",
+    ImageUrl: imageSrc,
+    ImageTitle: imageTitle,
     ImageAlternateText: imageAlt))
-@Display(New.Parts_Body_Default(Html: T("Use the form below to create a new account.").ToString() + "<br />" + T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"]).ToString()))
+@Display(New.Parts_Body_Default(Html: T("Use the form below to create a new account.").ToString() + "<br />" + requirementsMessage))
 <div class="container">
     @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
     @using (Html.BeginFormAntiForgeryPost(Url.Action("Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) {
@@ -27,31 +47,31 @@
         <b>@T("Account Information")</b>
         <div class="space-20"></div>
 
-            @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control" })
-            @Html.ValidationMessage("username")
+        @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control" })
+        @Html.ValidationMessage("username")
 
-            <div class="space-20"></div>
+        <div class="space-20"></div>
 
-            @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control" })
-            @Html.ValidationMessage("email")
+        @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control" })
+        @Html.ValidationMessage("email")
 
-            <div class="space-20"></div>
+        <div class="space-20"></div>
 
-            @Html.Password("password", "", new { placeholder = "Password...", @class = "input-text form-control" })
-            @Html.ValidationMessage("password")
+        @Html.Password("password", "", new { placeholder = "Password...", @class = "input-text form-control" })
+        @Html.ValidationMessage("password")
 
-            <div class="space-20"></div>
-            @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" })
-            @Html.ValidationMessage("confirmPassword")
+        <div class="space-20"></div>
+        @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" })
+        @Html.ValidationMessage("confirmPassword")
 
-            <div class="space-20"></div>
-            if (Model.UserProfile != null) {
-                <fieldset>
-                    @Display(Model.UserProfile)
-                </fieldset>
-            }
-            <div class="space-20"></div>
-            <button class="btn btn-invia primaryAction" type="submit">@T("Register")</button>
+        <div class="space-20"></div>
+        if (Model.UserProfile != null) {
+            <fieldset>
+                @Display(Model.UserProfile)
+            </fieldset>
+        }
+        <div class="space-20"></div>
+        <button class="btn btn-invia primaryAction" type="submit">@T("Register")</button>
 
 
     }

@@ -28,7 +28,7 @@
     @Html.ValidationSummary()
     <div class="container">
         <div class="well">
-            @using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Comment", new { Area = "Orchard.Comments", ReturnUrl = Context.Request.ToUrlString() }), FormMethod.Post, new { Class = "comment-form" })) {
+            @using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Comment", new { Area = "Orchard.Comments", ReturnUrl = Context.Request.RawUrl }), FormMethod.Post, new { Class = "comment-form" })) {
                 if (TempData.ContainsKey("Comments.InvalidCommentEditorShape")) {
                     @Display(TempData["Comments.InvalidCommentEditorShape"]);
                 } else {

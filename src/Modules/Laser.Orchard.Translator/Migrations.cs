@@ -12,8 +12,16 @@ namespace Laser.Orchard.Translator {
                 .Column<string>("TranslatedMessage", column => column.WithLength(4000))
                 .Column<string>("Language")
                 );
+            SchemaBuilder.CreateTable("TranslationFolderSettingsRecord", table => table
+                .Column<int>("Id", column => column.PrimaryKey().Identity())
+                .Column<string>("ContainerName")
+                .Column<string>("ContainerType", column => column.WithLength(1))
+                //.Column<string>("Language")
+                .Column<bool>("Deprecated")
+                .Column<string>("OutputPath")
+                );
 
-            return 1;
+            return 3;
         }
 
         public int UpdateFrom1() {
@@ -26,6 +34,14 @@ namespace Laser.Orchard.Translator {
                 );
 
             return 2;
+        }
+
+        public int UpdateFrom2() {
+            SchemaBuilder.AlterTable("TranslationFolderSettingsRecord", table => table
+                .AddColumn<string>("OutputPath")
+                );
+
+            return 3;
         }
     }
 }
