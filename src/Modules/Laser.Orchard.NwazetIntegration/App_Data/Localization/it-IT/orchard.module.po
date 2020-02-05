@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -15,6 +15,10 @@ msgstr "Indirizzo"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Address Type"
 msgstr "Tipo di Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "City"
@@ -47,6 +51,10 @@ msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codic
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Postal or ZIP code"
 msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "State, province, prefecture, republic or region"
@@ -228,6 +236,46 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "You may leave this blank for the United States."
 msgstr "Lasciare vuoto per gli Stati Uniti d'America."
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Payment Info"
+msgstr "Informazioni Pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Transacion ID"
+msgstr "ID Transazione"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
 msgid "{0} &times; {1}"
 msgstr "{0} &times; {1}"
@@ -267,4 +315,20 @@ msgstr "Eseguire l'accesso per visualizzare i propri indirizzi salvati."
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
 msgid "That address has been removed."
 msgstr "L'indirizzo è stato rimosso."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
+msgid "Cannot manage orders"
+msgstr "Impossibile gestire gli ordini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Failed"
+msgstr "Pagamento Fallito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Succeeded"
+msgstr "Pagamento Riuscito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PosServiceIntegration"
+msgid "Payment made with {0}"
+msgstr "Pagamento fatto tramite {0}"
 

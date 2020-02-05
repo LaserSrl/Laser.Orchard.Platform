@@ -9704,3 +9704,13 @@ ul.widgets h3 {
 .error {
     padding: 4px 4px 4px 26px;
 }
+
+/* Placement Admin*/
+#placement .zone-container h2 {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#placement .zone-container h3 {
+    font-size: 15px;
+}
