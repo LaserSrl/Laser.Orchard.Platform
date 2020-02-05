@@ -9,54 +9,49 @@ using Orchard.Users.Events;
 
 namespace Laser.Orchard.StartupConfig.ApproveUserExtension.Services {
     public interface IApproveUserService : IDependency {
-        void Approve(ContentItem contentItem);
-        void Disable(ContentItem contentItem);
+        void Approve(UserPart contentItem);
+        void Disable(UserPart contentItem);
     }
 
     public class ApproveUserService : IApproveUserService {
 
         private readonly IUserEventHandler _userEventHandlers;
-        public IOrchardServices Services { get; set; }
-
-
+        private readonly IOrchardServices _orchardServices;
+        
         public ApproveUserService(
            IUserEventHandler userEventHandlers,
-           IOrchardServices services) {
+           IOrchardServices orchardServices) {
 
             _userEventHandlers = userEventHandlers;
-            Services = services;
+            _orchardServices = orchardServices;
 
             T = NullLocalizer.Instance;
         }
         public Localizer T { get; set; }
 
 
-        public void Approve(ContentItem contentItem) {
-            if (!Services.Authorizer.Authorize(Permissions.ManageUsers, T("Not authorized to manage users")))
+        public void Approve(UserPart part) {
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageUsers, T("Not authorized to manage users")))
                 return;
 
-            var user = Services.ContentManager.Get<IUser>(contentItem.Id);
-
-            if (user == null)
+            if (part == null)
                 return;
 
-            user.As<UserPart>().RegistrationStatus = UserStatus.Approved;
-            Services.Notifier.Information(T("User {0} approved", user.UserName));
-            _userEventHandlers.Approved(user);
+            part.RegistrationStatus = UserStatus.Approved;
+            _orchardServices.Notifier.Information(T("User {0} approved", part.UserName));
+            _userEventHandlers.Approved(part);
         }
 
-        public void Disable(ContentItem contentItem) {
-            if (!Services.Authorizer.Authorize(Permissions.ManageUsers, T("Not authorized to manage users")))
+        public void Disable(UserPart part) {
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageUsers, T("Not authorized to manage users")))
                 return;
 
-            var user = Services.ContentManager.Get<IUser>(contentItem.Id);
-
-            if (user == null)
+            if (part == null)
                 return;
 
-            user.As<UserPart>().RegistrationStatus = UserStatus.Pending;
-            Services.Notifier.Information(T("User {0} disabled", user.UserName));
-            _userEventHandlers.Moderate(user);
+            part.RegistrationStatus = UserStatus.Pending;
+            _orchardServices.Notifier.Information(T("User {0} disabled", part.UserName));
+            _userEventHandlers.Moderate(part);
         }
     }
 }

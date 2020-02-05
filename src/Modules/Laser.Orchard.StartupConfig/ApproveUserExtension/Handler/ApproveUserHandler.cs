@@ -21,12 +21,12 @@ namespace Laser.Orchard.StartupConfig.ApproveUserExtension.Handler {
                 // registration status is correct to approve/disable
                 if (httpContext.Request.Form["submit.Save"] == "submit.ApproveUser" &&
                     part.RegistrationStatus == UserStatus.Pending) {
-                    _approveUserService.Approve(part.ContentItem);
+                    _approveUserService.Approve(part);
                 }
 
                 if (httpContext.Request.Form["submit.Save"] == "submit.DisableUser" &&
                     part.RegistrationStatus == UserStatus.Approved) {
-                    _approveUserService.Disable(part.ContentItem);
+                    _approveUserService.Disable(part);
                 }
             });
         }
