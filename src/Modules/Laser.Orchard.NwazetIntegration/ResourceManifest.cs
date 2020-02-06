@@ -10,6 +10,11 @@ namespace Laser.Orchard.NwazetIntegration {
             var manifest = builder.Add();
 
             manifest.DefineScript("NwazetIntegration.Addresses").SetUrl("ship.js").SetDependencies("jQuery");
+
+            manifest
+                .DefineScript("NwazetIntegration.AddressConfiguration")
+                .SetUrl("address-configuration.min.js", "address-configuration.js")
+                .SetDependencies("jQuery");
         }
     }
 }

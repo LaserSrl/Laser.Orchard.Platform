@@ -146,10 +146,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         ContentItemId = order.Id
                     };
                     var nonce = _paymentService.CreatePaymentNonce(payment);
-                    result = RedirectToAction("Pay", "Payment", 
-                        new { area = "Laser.Orchard.PaymentGateway",
+                    result = RedirectToAction("Pay", "Payment",
+                        new {
+                            area = "Laser.Orchard.PaymentGateway",
                             nonce = nonce,
-                            newPaymentGuid = paymentGuid });
+                            newPaymentGuid = paymentGuid
+                        });
                     break;
                 default:
                     model.ShippingAddress = new Address();
@@ -216,7 +218,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             return View(CreateVM());
         }
-        [HttpPost, Themed, 
+        [HttpPost, Themed,
             OutputCache(NoStore = true, Duration = 0), Authorize,
             ActionName("Create")]
         public ActionResult CreatePost() {
@@ -279,14 +281,48 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return View(newAddress);
         }
 
+        #region Actions for advanced address configuration
+
+        [HttpPost]
+        public JsonResult GetCities(ConfigurationRequestViewModel viewModel) {
+            var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
+            if (country == null) {
+                // this is an error
+            } else {
+                var cities = _addressConfigurationService.GetAllCities(country);
+                return Json(new {
+                    Success = true,
+                    Cities = cities
+                        .Select(tp =>
+                            new {
+                                Value = tp.Record.TerritoryInternalRecord.Id,
+                                Text = _contentManager.GetItemMetadata(tp).DisplayText
+                            })
+                });
+            }
+            // TODO
+            return Json(new List<string>());
+        }
+
+        #endregion
+
         private AddressEditViewModel CreateVM() {
+            var countries = _addressConfigurationService
+                .GetAllCountries();
+            var options = new List<SelectListItem>();
+            options.Add(new SelectListItem() {
+                Value = "-1",
+                Text = T("Select a country").Text,
+                Selected = true
+            });
+            options.AddRange(countries
+                .Select(tp => new SelectListItem() {
+                    Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
+                    Text = _contentManager.GetItemMetadata(tp).DisplayText
+                }));
             return new AddressEditViewModel() {
-                Countries = _addressConfigurationService
-                    .GetAllCountries()
-                    .Select(tp => new SelectListItem() {
-                        Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
-                        Text = _contentManager.GetItemMetadata(tp).DisplayText
-                    })
+                Countries = options
+
             };
         }
     }

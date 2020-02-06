@@ -6,7 +6,7 @@
 @model AddressEditViewModel
 
 @{
-    Script.Include("address-configuration.js", "address-configuration.min.js").AtFoot();
+    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
 
     List<SelectListItem> AddressTypeLocalize = new List<SelectListItem>();
     AddressTypeLocalize.Add(new SelectListItem() { Text = T("Billing Address").Text, Value = AddressRecordType.BillingAddress.ToString() });
@@ -80,6 +80,10 @@
                 // set all instance specific information here
                 // e.g. urls for ajax calls and the jquery selectors
                 // for the different elements of the address
+                countriesInput: '#@Html.FieldIdFor(m => m.Country)',
+                citiesInput: '#@Html.FieldIdFor(m => m.City)',
+                provincesInput: '#@Html.FieldIdFor(m => m.Province)',
+                getCitiesUrl: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
             });
         });
     </script>

@@ -23,6 +23,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _contentManager = contentManager;
         }
 
+        public TerritoryPart GetCountry(int internalId) {
+            var hierarchy = _settingsService.GetConfiguredHierarchy();
+            if (_settingsService.SelectedCountryIds.Contains(internalId)) {
+                return _territoriesService.GetTerritoriesQuery(hierarchy)
+                    .Where(tpr => tpr.TerritoryInternalRecord.Id == internalId)
+                    .Slice(0, 1)
+                    .FirstOrDefault();
+            }
+            return null;
+        }
+
         public IEnumerable<TerritoryPart> GetAllCountries() {
             var hierarchy = _settingsService.GetConfiguredHierarchy();
 
@@ -84,7 +95,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .Where(tpr => _settingsService.SelectedCityIds.Contains(tpr.TerritoryInternalRecord.Id))
                 .List();
         }
-
+        
         public IEnumerable<TerritoryPart> GetAllCities(TerritoryPart parent) {
             // usualy parent will be either a country or a province
             var hierarchy = _settingsService.GetConfiguredHierarchy();
