@@ -58,7 +58,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                     });
             }
             catch(Exception ex) {
-                Logger.Error(ex, "An unexpected error occurred while terminating the GetProviders");
+                Logger.Error(ex, "An unexpected error occurred in GetProviders methode");
                 return new List<ProviderConfigurationRecord>();
             }
         }
