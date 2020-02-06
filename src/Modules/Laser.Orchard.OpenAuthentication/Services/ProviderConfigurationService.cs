@@ -7,6 +7,7 @@ using System;
 using Laser.Orchard.OpenAuthentication.ViewModels;
 using Orchard.Caching;
 using Laser.Orchard.OpenAuthentication.Services.Clients;
+using Orchard.Logging;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
     public interface IProviderConfigurationService : IDependency {
@@ -41,7 +42,11 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             _signals = signals;
             _repositoryAttributes = repositoryAttributes;
             _authenticationClients = authenticationClients;
+
+            Logger = NullLogger.Instance;
         }
+
+        public ILogger Logger { get; set; }
 
         public IEnumerable<ProviderConfigurationRecord> GetProviders() {
             try {
@@ -52,8 +57,9 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                         return _repository.Table.ToList();
                     });
             }
-            catch {
-                return null;
+            catch(Exception ex) {
+                Logger.Error(ex, "An unexpected error occurred while terminating the GetProviders");
+                return new List<ProviderConfigurationRecord>();
             }
         }
         private void syncRepositoryStatic() {
