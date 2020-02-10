@@ -298,6 +298,31 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                                 Value = tp.Record.TerritoryInternalRecord.Id,
                                 Text = _contentManager.GetItemMetadata(tp).DisplayText
                             })
+                        .OrderBy(obj => obj.Text)
+                });
+            }
+            // TODO
+            return Json(new List<string>());
+        }
+
+        [HttpPost]
+        public JsonResult GetProvinces(ConfigurationRequestViewModel viewModel) {
+            var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
+            var city = _addressConfigurationService.GetCity(viewModel.CityId);
+            if (country == null) {
+                // this is an error
+            } else {
+                // city may be null: that is handled in the service
+                var provinces = _addressConfigurationService.GetAllProvinces(country, city);
+                return Json(new {
+                    Success = true,
+                    Provinces = provinces
+                        .Select(tp =>
+                            new {
+                                Value = tp.Record.TerritoryInternalRecord.Id,
+                                Text = _contentManager.GetItemMetadata(tp).DisplayText
+                            })
+                        .OrderBy(obj => obj.Text)
                 });
             }
             // TODO

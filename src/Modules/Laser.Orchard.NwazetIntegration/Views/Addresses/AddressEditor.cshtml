@@ -57,12 +57,21 @@
             <div class="hint">@T("Select a valid country from the list.")</div>
         </div>
         @* 2. City *@
-        @EditorForString(m => m.City,
-            T("City"))
+        <div class="address-input address-text-input address-city">
+            @Html.LabelFor(m => m.City, T("City").Text, new { @class = "required" })
+            <select id="@Html.FieldIdFor(m => m.City)"
+                    class="required"
+                    name="@Html.NameFor(m => m.City)"></select>
+            <div class="hint">@T("Select a city from the list.")</div>
+        </div>
         @* 3. Province and ZIP code *@
-        @EditorForString(m => m.Province,
-            T("State, province, prefecture, republic or region"),
-            T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."))
+        <div class="address-input address-text-input address-province">
+            @Html.LabelFor(m => m.Province, T("Province").Text, new { @class = "required" })
+            <select id="@Html.FieldIdFor(m => m.Province)"
+                    class="required"
+                    name="@Html.NameFor(m => m.Province)"></select>
+            <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
+        </div>
         @EditorForString(m => m.PostalCode,
             T("Postal or ZIP code"))
         @* 4. Street *@
@@ -83,7 +92,12 @@
                 countriesInput: '#@Html.FieldIdFor(m => m.Country)',
                 citiesInput: '#@Html.FieldIdFor(m => m.City)',
                 provincesInput: '#@Html.FieldIdFor(m => m.Province)',
-                getCitiesUrl: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                getCities: {
+                    url: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                getProvinces: {
+                    url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                }
             });
         });
     </script>
