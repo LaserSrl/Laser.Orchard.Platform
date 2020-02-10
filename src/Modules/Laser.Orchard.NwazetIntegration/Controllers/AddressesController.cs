@@ -350,5 +350,27 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             };
         }
+
+        private AddressEditViewModel CreateVM(AddressRecord address) {
+            var countries = _addressConfigurationService
+                .GetAllCountries();
+            var options = new List<SelectListItem>();
+            options.Add(new SelectListItem() {
+                Value = "-1",
+                Text = T("Select a country").Text,
+                Selected = string.IsNullOrWhiteSpace(address.Country)
+            });
+            // from address.Country 
+            options.AddRange(countries
+                .Select(tp => new SelectListItem() {
+                    Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
+                    Text = _contentManager.GetItemMetadata(tp).DisplayText,
+
+                }));
+            return new AddressEditViewModel(address) {
+                Countries = options
+
+            };
+        }
     }
 }
