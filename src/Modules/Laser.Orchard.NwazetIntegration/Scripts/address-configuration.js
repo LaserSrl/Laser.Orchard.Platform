@@ -411,6 +411,10 @@ $.fn.addressConfiguration = function (options) {
         console.error('Url to get cities is required.');
         return;
     }
+    if (!options.getProvinces.url) {
+        console.error('Url to get provinces is required.');
+        return;
+    }
 
     niAC.addAddress(containerDiv, options);
 
