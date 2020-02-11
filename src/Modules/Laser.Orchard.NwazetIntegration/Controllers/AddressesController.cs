@@ -235,6 +235,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
+            // Convert the values of Country, City, and Province to strings and ids for
+            // the AddressRecord.
+            FixUpdate(newAddress);
+            // save record
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
             _notifier.Information(T("Address created successfully."));
             return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
@@ -252,7 +256,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (address == null) {
                 return HttpNotFound();
             }
-            return View(new AddressEditViewModel(address));
+            return View(CreateVM(address));
         }
         [HttpPost, Themed,
             OutputCache(NoStore = true, Duration = 0), Authorize,
@@ -275,10 +279,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
+            // Convert the values of Country, City, and Province to strings and ids for
+            // the AddressRecord.
+            FixUpdate(newAddress);
+            // save record
             _nwazetCommunicationService.AddAddress(newAddress.AddressRecord, user);
 
             _notifier.Information(T("Address updated successfully."));
-            return View(newAddress);
+            return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
         }
 
         #region Actions for advanced address configuration
@@ -308,7 +316,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         [HttpPost]
         public JsonResult GetProvinces(ConfigurationRequestViewModel viewModel) {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
-            var city = _addressConfigurationService.GetCity(viewModel.CityId);
+            var city = string.IsNullOrWhiteSpace(viewModel.CityName)
+                ? _addressConfigurationService.GetCity(viewModel.CityId)
+                : _addressConfigurationService.GetCity(viewModel.CityName);
             if (country == null) {
                 // this is an error
             } else {
@@ -332,45 +342,93 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         private AddressEditViewModel CreateVM() {
-            var countries = _addressConfigurationService
-                .GetAllCountries();
-            var options = new List<SelectListItem>();
-            options.Add(new SelectListItem() {
-                Value = "-1",
-                Text = T("Select a country").Text,
-                Selected = true
-            });
-            options.AddRange(countries
-                .Select(tp => new SelectListItem() {
-                    Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
-                    Text = _contentManager.GetItemMetadata(tp).DisplayText
-                }));
             return new AddressEditViewModel() {
-                Countries = options
-
+                Countries = CountryOptions()
             };
         }
 
         private AddressEditViewModel CreateVM(AddressRecord address) {
+            
+            // defaults to "no country selected" for a new or "legacy" AddressRecord
+            var countryId = address.CountryId;
+            if (countryId == 0 && !string.IsNullOrWhiteSpace(address.Country)) {
+                // from address.Country, find the value that should be used 
+                // address.Country is of type string. It could represent the
+                // name of the country (legacy) or the Id of the country territory.
+                // Try to parse it.
+                if (!int.TryParse(address.Country, out countryId)) {
+                    // parsing failed, so the string may be a territory's name
+                    var tp = _addressConfigurationService.GetCountry(address.Country);
+                    if (tp != null) {
+                        countryId = tp.Record.TerritoryInternalRecord.Id;
+                    }
+                }
+            }
+
+            return new AddressEditViewModel(address) {
+                Countries = CountryOptions(countryId),
+                CountryId = countryId
+            };
+        }
+
+        private List<SelectListItem> CountryOptions(int id = -1) {
             var countries = _addressConfigurationService
                 .GetAllCountries();
             var options = new List<SelectListItem>();
             options.Add(new SelectListItem() {
                 Value = "-1",
                 Text = T("Select a country").Text,
-                Selected = string.IsNullOrWhiteSpace(address.Country)
+                Disabled = true,
+                Selected = id <= 0
             });
-            // from address.Country 
             options.AddRange(countries
                 .Select(tp => new SelectListItem() {
                     Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
                     Text = _contentManager.GetItemMetadata(tp).DisplayText,
-
+                    Selected = id == tp.Record.TerritoryInternalRecord.Id
                 }));
-            return new AddressEditViewModel(address) {
-                Countries = options
+            return options;
+        }
 
-            };
+        /// <summary>
+        /// Extract a specific territory from the configured hierarchy
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private TerritoryPart GetTerritory(string value) {
+            if (string.IsNullOrWhiteSpace(value)) {
+                return null;
+            }
+            var id = 0;
+            if (int.TryParse(value, out id)) {
+                return _addressConfigurationService.SingleTerritory(id);
+            }
+            return _addressConfigurationService.SingleTerritory(value);
+        }
+
+        private void FixUpdate(AddressEditViewModel vm) {
+            // Country: front end sets the Id => we need to set the string
+            var countryTP = _addressConfigurationService
+                .GetCountry(vm.CountryId);
+            vm.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
+            // City: we may be settings either the Id or the string, but either way the
+            //   property we are setting is vm.City. We get the territory and set the Id
+            var cityTP = GetTerritory(vm.City);
+            if (cityTP != null) {
+                vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
+                vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
+            } else {
+                vm.CityId = -1;
+            }
+            // Province: we may be settings either the Id or the string, but either way the
+            //   property we are setting is vm.Province. We get the territory and set the Id
+            var provinceTP = GetTerritory(vm.Province);
+            if (provinceTP != null) {
+                vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
+                vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
+            } else {
+                vm.ProvinceId = -1;
+            }
         }
     }
 }

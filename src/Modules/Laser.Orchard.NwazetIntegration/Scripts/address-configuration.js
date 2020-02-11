@@ -33,8 +33,6 @@ AddressConfiguration.prototype = {
         el.find(options.freeInputSelector).prop("disabled", false);
         // set some variables as shorthands for the various inputs
         var countryInput = el.find(options.countriesInput);
-        var cityInput = el.find(options.citiesInput);
-        var provinceInput = el.find(options.provincesInput);
         // attach handlers
         // When selected country changes...
         niAC._attachCountryHandlers(el, options);
@@ -50,13 +48,22 @@ AddressConfiguration.prototype = {
         // If input for Country already has a valid (> 0) value, enable
         // input for City (really, fire handlers)
         if (niAC._checkCountryOption(el, options)) {
-            options.countriesInput.trigger("change");
+            countryInput.trigger("change");
         }
     },
     /* *
      * Helpers/Handlers
      * */
     _baseCountryChangeHandler: function (e) {
+        // countries with value < 0 are just placeholders
+        // $('#CountryId').find('option').filter(function() {return $(this).attr('value') <= 0})
+        e.data.el
+            .find(e.data.options.countriesInput)
+            .find('option')
+            .filter(function () {
+                return $(this).attr('value') <= 0;
+            })
+            .prop("disabled", true);
         niAC._enableCityInput(e.data.el, e.data.options);
     },
     _baseCityChangeHandler: function (e) {
@@ -78,6 +85,11 @@ AddressConfiguration.prototype = {
     // attach city handlers
     _attachCityHandlers: function (el, options) {
         var cityInput = el.find(options.citiesInput);
+        if (cityInput.is('select')) {
+            cityInput.on('change', function (e) {
+                el.find(options.cityId).val(cityInput.val());
+            });
+        }
         if (options.useDefaultCityChangeHandler) {
             cityInput.on('change', { el: el, options: options }, niAC._baseCityChangeHandler);
         }
@@ -88,6 +100,11 @@ AddressConfiguration.prototype = {
     // attach province handlers
     _attachProvinceHandlers: function (el, options) {
         var provinceInput = el.find(options.provincesInput);
+        if (provinceInput.is('select')) {
+            provinceInput.on('change', function (e) {
+                el.find(options.provinceId).val(provinceInput.val());
+            });
+        }
         if (options.useDefaultProvinceChangeHandler) {
             provinceInput.on('change', {el:el, options:options}, niAC._baseProvinceChangeHandler);
         }
@@ -169,6 +186,7 @@ AddressConfiguration.prototype = {
                                 newInput += '></select>';
                                 city.replaceWith(newInput);
                                 city = el.find(options.citiesInput);
+                                var cityId = el.find(options.cityId).val();
                                 // remove old values
                                 //city.empty();
                                 for (var i = 0; i < data.Cities.length; i++) {
@@ -178,7 +196,8 @@ AddressConfiguration.prototype = {
                                             data.Cities[i].Text, //text
                                             data.Cities[i].Value, //value
                                             !!data.Cities[i].DefaultSelected, //defaultSelected
-                                            !!data.Cities[i].Selected); //selected
+                                            !!data.Cities[i].Selected
+                                                || data.Cities[i].Value == cityId); //selected
                                     city.append(newOption);
                                 }
                             } else {
@@ -226,15 +245,24 @@ AddressConfiguration.prototype = {
             this._enableAllProvince(el, options, true)
         } else {
             var cityId = 0;
-            if (options.cityCommandsProvince) {
-                cityId = el.find(options.citiesInput).val();
+            var cityName = "";
+            var city = el.find(options.citiesInput);
+            if (city.is('select')) {
+                cityId = city.val();
+            } else {
+                cityName = city.val();
             }
+            if (!cityId) {
+                cityId = el.find(options.cityId).val();
+            }
+
             if (!cityId) {
                 cityId = 0; // handle case where the select is unset
             }
             var viewModel = {
                 CountryId: el.find(options.countriesInput).val(),
-                CityId: cityId
+                CityId: cityId,
+                CityName: cityName //in case city is input rather than select
             };
             $.post(options.getProvinces.url, {
                 viewmodel: viewModel,
@@ -262,6 +290,7 @@ AddressConfiguration.prototype = {
                             newInput += '></select>';
                             province.replaceWith(newInput);
                             province = el.find(options.provincesInput);
+                            var provinceId = el.find(options.provinceId);
                             // remove old values
                             //province.empty();
                             for (var i = 0; i < data.Provinces.length; i++) {
@@ -271,7 +300,8 @@ AddressConfiguration.prototype = {
                                         data.Provinces[i].Text, //text
                                         data.Provinces[i].Value, //value
                                         !!data.Provinces[i].DefaultSelected, //defaultSelected
-                                        !!data.Provinces[i].Selected); //selected
+                                        !!data.Provinces[i].Selected
+                                            || data.Provinces[i].Value == provinceId); //selected
                                 province.append(newOption);
                             }
                         } else {
@@ -325,7 +355,9 @@ $.addressConfiguration = {
         // default option values
         countriesInput: '', // CSS/jQuery selector of input for the country
         citiesInput: '', // CSS/jQuery selector of input for the city
+        cityId: '', // CSS/jQuery selector of input for the city id
         provincesInput: '', // CSS/jQuery selector of input for the province
+        provinceId: '', // CSS/jQuery selector of input for the province id
         inputSelector: '.address-input', //CSS/jQuery selector of all address input
         /* *
          * Flags for special behaviours

@@ -51,8 +51,8 @@
         @* 1. Country *@
         @*    This must be selected among the countries configured *@
         <div class="address-input address-text-input address-country">
-            @Html.LabelFor(m => m.Country, T("Country").Text, new { @class = "required" })
-            @Html.DropDownListFor(m => m.Country,
+            @Html.LabelFor(m => m.CountryId, T("Country").Text, new { @class = "required" })
+            @Html.DropDownListFor(m => m.CountryId,
                 Model.Countries)
             <div class="hint">@T("Select a valid country from the list.")</div>
         </div>
@@ -89,7 +89,7 @@
                 // set all instance specific information here
                 // e.g. urls for ajax calls and the jquery selectors
                 // for the different elements of the address
-                countriesInput: '#@Html.FieldIdFor(m => m.Country)',
+                countriesInput: '#@Html.FieldIdFor(m => m.CountryId)',
                 citiesInput: '#@Html.FieldIdFor(m => m.City)',
                 provincesInput: '#@Html.FieldIdFor(m => m.Province)',
                 getCities: {

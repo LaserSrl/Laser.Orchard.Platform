@@ -29,5 +29,19 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 1;
         }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("CountryId")
+            );
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("CityId")
+            );
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("ProvinceId")
+            );
+
+            return 2;
+        }
     }
 }

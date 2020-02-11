@@ -12,15 +12,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IAddressConfigurationSettingsService _settingsService;
         private readonly ITerritoriesService _territoriesService;
         private readonly IContentManager _contentManager;
+        private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
 
         public AddressConfigurationService(
             IAddressConfigurationSettingsService settingsService,
             ITerritoriesService territoriesService,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            ITerritoriesRepositoryService territoriesRepositoryService) {
 
             _settingsService = settingsService;
             _territoriesService = territoriesService;
             _contentManager = contentManager;
+            _territoriesRepositoryService = territoriesRepositoryService;
         }
 
         TerritoryHierarchyPart ConfiguredHierarchy =>
@@ -28,23 +31,51 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public TerritoryPart GetCountry(int internalId) {
             if (_settingsService.SelectedCountryIds.Contains(internalId)) {
-                return SingleTeritory(internalId);
+                return SingleTerritory(internalId);
+            }
+            return null;
+        }
+
+        public TerritoryPart GetCountry(string name) {
+            var tp = SingleTerritory(name);
+            if (tp != null) {
+                return _settingsService.SelectedCountryIds.Contains(tp.Record.TerritoryInternalRecord.Id)
+                    ? tp // return it if it is a country
+                    : null;
             }
             return null;
         }
 
         public TerritoryPart GetCity(int internalId) {
             if (_settingsService.SelectedCityIds.Contains(internalId)) {
-                return SingleTeritory(internalId);
+                return SingleTerritory(internalId);
             }
             return null;
         }
 
-        private TerritoryPart SingleTeritory(int internalId) {
+        public TerritoryPart GetCity(string name) {
+            var tp = SingleTerritory(name);
+            if (tp != null) {
+                return _settingsService.SelectedCityIds.Contains(tp.Record.TerritoryInternalRecord.Id)
+                    ? tp // return it if it is a city
+                    : null;
+            }
+            return null;
+        }
+
+        public TerritoryPart SingleTerritory(int internalId) {
             return _territoriesService.GetTerritoriesQuery(ConfiguredHierarchy)
                 .Where(tpr => tpr.TerritoryInternalRecord.Id == internalId)
                 .Slice(0, 1)
                 .FirstOrDefault();
+        }
+
+        public TerritoryPart SingleTerritory(string name) {
+            var internalRecord = _territoriesRepositoryService.GetTerritoryInternal(name);
+            if (internalRecord != null) {
+                return SingleTerritory(internalRecord.Id);
+            }
+            return null;
         }
 
         public IEnumerable<TerritoryPart> GetAllCountries() {
@@ -77,7 +108,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var root = country;
             // make sure root we'll use belongs to hierarchy
             if (country.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTeritory(country.Record.TerritoryInternalRecord.Id);
+                root = SingleTerritory(country.Record.TerritoryInternalRecord.Id);
             }
             if (root == null) {
                 // if the root is not valid for the hierarchy, we cannot return 
@@ -94,12 +125,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .Where(tpr => _settingsService.SelectedCityIds.Contains(tpr.TerritoryInternalRecord.Id))
                 .List();
         }
-        
+
         public IEnumerable<TerritoryPart> GetAllCities(TerritoryPart parent) {
             var root = parent;
             // make sure root we'll use belongs to hierarchy
             if (parent.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTeritory(parent.Record.TerritoryInternalRecord.Id);
+                root = SingleTerritory(parent.Record.TerritoryInternalRecord.Id);
             }
             if (root == null) {
                 // if the root is not valid for the hierarchy, we cannot return 

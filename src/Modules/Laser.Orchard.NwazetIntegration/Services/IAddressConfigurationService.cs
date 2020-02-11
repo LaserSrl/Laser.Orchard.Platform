@@ -26,6 +26,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// given and it is a country.</remarks>
         TerritoryPart GetCountry(int internalId);
         /// <summary>
+        /// Given the Name of a TerritoryInternalRecord (i.e. the territories' truth)
+        /// find the corresponding configured country if it exists.
+        /// </summary>
+        /// <param name="name">The Name of a TerritoryInternalRecord for the country 
+        /// we are looking for</param>
+        /// <returns>The TerritoryPart for the desired country if found, null otherwise.</returns>
+        /// <remarks>This method will not return the country the territory with the 
+        /// given Name belongs to. It only returns a TerritoryPart if if matches the Name
+        /// given and it is a country.</remarks>
+        TerritoryPart GetCountry(string name);
+        /// <summary>
         /// Get the list of all TerritoryParts that exist in the hierarchy underneath
         /// the given territory and that are also configured as cities.
         /// </summary>
@@ -43,6 +54,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// given ID belongs to. It only returns a TerritoryPart if if matches the Id
         /// given and it is a city.</remarks>
         TerritoryPart GetCity(int internalId);
+        /// <summary>
+        /// Given the Name of a TerritoryInternalRecord (i.e. the territories' truth)
+        /// find the corresponding configured city if it exists.
+        /// </summary>
+        /// <param name="internalId">The Name of a TerritoryInternalRecord for the city 
+        /// we are looking for</param>
+        /// <returns>The TerritoryPart for the desired city if found, null otherwise.</returns>
+        /// <remarks>This method will not return the city the territory with the 
+        /// given Name belongs to. It only returns a TerritoryPart if if matches the Name
+        /// given and it is a city.</remarks>
+        TerritoryPart GetCity(string name);
         /// <summary>
         /// Get the list of all TerritoryParts that exist in the hierarchy underneath
         /// the given territory and that are also configured as provinces.
@@ -64,5 +86,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// We are open to returning more results in some special cases, but the main reason
         /// why we are returning an IEnumerable is to simplify code using this API.</remarks>
         IEnumerable<TerritoryPart> GetAllProvinces(TerritoryPart country, TerritoryPart city);
+        /// <summary>
+        /// Get a single Territory from the configured Hierarchy
+        /// </summary>
+        /// <param name="internalId">The Id of the internal record for the territory</param>
+        /// <returns>The TerritoryPart, or null if it is not found.</returns>
+        TerritoryPart SingleTerritory(int internalId);
+        /// <summary>
+        /// Get a single Territory from the configured Hierarchy
+        /// </summary>
+        /// <param name="name">The Name of the internal record for the territory</param>
+        /// <returns>The TerritoryPart, or null if it is not found.</returns>
+        TerritoryPart SingleTerritory(string name);
     }
 }
