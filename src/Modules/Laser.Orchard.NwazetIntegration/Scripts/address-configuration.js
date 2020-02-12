@@ -57,11 +57,17 @@ AddressConfiguration.prototype = {
     reset: function (el, options, values) {
         el.find('input').val('');
         // reinit
-        niAC.addAddress(el, options);
+        var countryInput = el.find(options.countriesInput);
+        var nullOption = countryInput
+            .find('option')
+            .filter(function () {
+                return $(this).attr('value') <= 0;
+            });
+        nullOption.prop("disabled", false);
+        countryInput.val(nullOption.attr('value'));
         // set values
         if (values) {
             // set some variables as shorthands for the various inputs
-            var countryInput = el.find(options.countriesInput);
             var citiesInput = el.find(options.citiesInput);
             var cityIdInput = el.find(options.cityId);
             var provincesInput = el.find(options.provincesInput);
@@ -83,9 +89,16 @@ AddressConfiguration.prototype = {
             // country
             countryInput.val(values.countryId);
 
-            niAC._enableCityInput(el, options);
-            niAC._enableProvinceInput(el, options);
+            //niAC._enableCityInput(el, options);
+            //niAC._enableProvinceInput(el, options);
         }
+        niAC._detachCountryHandlers(el, options);
+        niAC._detachCityHandlers(el, options);
+        niAC._detachProvinceHandlers(el, options);
+        niAC.addAddress(el, options);
+        //if (niAC._checkCountryOption(el, options)) {
+        //    countryInput.trigger("change");
+        //}
     },
     /* *
      * Helpers/Handlers
@@ -459,15 +472,37 @@ $.fn.addressConfiguration = function (options) {
 
     return containerDiv;
 };
-$.fn.resetAddress = function (values) {
+$.fn.resetAddress = function (values, options) {
     _checkInstance();
     var containerDiv = $(this);
 
-    if (containerDiv.attr("niac-options")) {
-        var options = JSON.parse(containerDiv.attr("niac-options"));
-
-        niAC.reset(containerDiv, options, values);
+    if (!options) {
+        if (containerDiv.attr("niac-options")) {
+            options = JSON.parse(containerDiv.attr("niac-options"));
+        }
     }
+    options = $.extend(true, {}, $.addressConfiguration.defaults, options);
+    options.token = containerDiv
+        .closest("form")
+        .find("input[name='__RequestVerificationToken']")
+        .val();
+    /* *
+     * VALIDATION
+     * */
+    if (!options.token) {
+        console.error('RequestVerificationToken is required.');
+        return;
+    }
+    if (!options.getCities.url) {
+        console.error('Url to get cities is required.');
+        return;
+    }
+    if (!options.getProvinces.url) {
+        console.error('Url to get provinces is required.');
+        return;
+    }
+
+    niAC.reset(containerDiv, options, values);
 
     return containerDiv;
 };

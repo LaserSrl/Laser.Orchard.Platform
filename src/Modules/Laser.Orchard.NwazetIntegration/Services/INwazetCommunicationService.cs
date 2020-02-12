@@ -128,15 +128,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                         ContactList.Add(newcontact);
                     }
                 }
+                var addressPart = order.As<AddressOrderPart>();
+                Action<ContentItem> storeBilling = (ci) => 
+                    StoreAddress(order.BillingAddress, addressPart, AddressRecordType.BillingAddress, ci);
+                Action<ContentItem> storeShipping = (ci) => 
+                    StoreAddress(order.ShippingAddress, addressPart, AddressRecordType.ShippingAddress, ci);
+                
                 foreach (var contactItem in ContactList) {
                     // nel caso in cui una sincro fallisce continua con 
                     try {
-                        StoreAddress(order.BillingAddress, "BillingAddress", contactItem);
+                        storeBilling(contactItem);
                     } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> BillingAddress -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
                     try {
-                        StoreAddress(order.ShippingAddress, "ShippingAddress", contactItem);
+                        storeShipping(contactItem);
                     } catch (Exception ex) {
                         _Logger.Error("OrderToContact -> ShippingAddress -> order id= " + order.Id.ToString() + " Error: " + ex.Message);
                     }
@@ -156,16 +162,39 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
-        private void StoreAddress(Address address, string typeAddress, ContentItem contact) {
-            var typeAddressValue = (AddressRecordType)Enum.Parse(typeof(AddressRecordType), typeAddress);
+        private void StoreAddress(Address address, AddressOrderPart addressPart, AddressRecordType addressType, ContentItem contact) {
+
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<Address, AddressRecord>();
             });
             var addressToStore = new AddressRecord();
             Mapper.Map<Address, AddressRecord>(address, addressToStore);
-            addressToStore.AddressType = typeAddressValue;
+            if (addressPart != null) {
+                switch (addressType) {
+                    case AddressRecordType.ShippingAddress:
+                        addressToStore.CountryId = addressPart.ShippingCountryId;
+                        addressToStore.CityId = addressPart.ShippingCityId;
+                        addressToStore.ProvinceId = addressPart.ShippingProvinceId;
+                        addressToStore.Country = addressPart.ShippingCountryName;
+                        addressToStore.City = addressPart.ShippingCityName;
+                        addressToStore.Province = addressPart.ShippingProvinceName;
+                        break;
+                    case AddressRecordType.BillingAddress:
+                        addressToStore.CountryId = addressPart.BillingCountryId;
+                        addressToStore.CityId = addressPart.BillingCityId;
+                        addressToStore.ProvinceId = addressPart.BillingProvinceId;
+                        addressToStore.Country = addressPart.BillingCountryName;
+                        addressToStore.City = addressPart.BillingCityName;
+                        addressToStore.Province = addressPart.BillingProvinceName;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            addressToStore.AddressType = addressType;
             StoreAddress(addressToStore, contact);
         }
+
         private void StoreAddress(AddressRecord addressToStore, ContentItem contact) {
             addressToStore.NwazetContactPartRecord_Id = contact.Id;
             bool AddNewAddress = true;
