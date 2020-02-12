@@ -5,11 +5,22 @@
     toggleCheckbox
         .change(function () {
             $(".billing-address").toggle($(this).val());
-            $('input[name^="shippingAddress."]').each(function(){
-                var input = $(this),
-                name = input.attr("name").substr(16);
-                $('input[name="billingAddress.' + name + '"]').val(input.val());
-            });
+            if ($(this).val() == "on") {
+                $('input[name^="shippingAddress."]').each(function () {
+                    var input = $(this),
+                        name = input.attr("name").substr(16);
+                    $('input[name="billingAddress.' + name + '"]')
+                        .val(input.val())
+                        .trigger('change');
+                });
+                $('select[name^="shippingAddress."]').each(function () {
+                    var input = $(this),
+                        name = input.attr("name").substr(16);
+                    $('select[name="billingAddress.' + name + '"]')
+                        .val(input.val())
+                        .trigger('change');
+                });
+            }
         });
     $('input[name^="shippingAddress."]')
         .change(function () {

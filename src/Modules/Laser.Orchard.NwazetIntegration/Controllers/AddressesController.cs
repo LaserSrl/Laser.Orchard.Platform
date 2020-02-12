@@ -154,8 +154,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         });
                     break;
                 default:
-                    model.ShippingAddress = new Address();
-                    model.BillingAddress = new Address();
+                    model.ShippingAddressVM = CreateVM();
+                    model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
+                    model.BillingAddressVM = CreateVM();
+                    model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
                     var thecurrentUser = _orchardServices.WorkContext.CurrentUser;
                     if (thecurrentUser != null) {
                         model.ListAvailableBillingAddress = _nwazetCommunicationService.GetBillingByUser(thecurrentUser);

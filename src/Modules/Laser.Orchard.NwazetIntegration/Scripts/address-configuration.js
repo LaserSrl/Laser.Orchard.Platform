@@ -52,6 +52,42 @@ AddressConfiguration.prototype = {
         }
     },
     /* *
+     * Reset the address form 
+     * */
+    reset: function (el, options, values) {
+        el.find('input').val('');
+        // reinit
+        niAC.addAddress(el, options);
+        // set values
+        if (values) {
+            // set some variables as shorthands for the various inputs
+            var countryInput = el.find(options.countriesInput);
+            var citiesInput = el.find(options.citiesInput);
+            var cityIdInput = el.find(options.cityId);
+            var provincesInput = el.find(options.provincesInput);
+            var provinceIdInput = el.find(options.provinceId);
+            // province
+            provinceIdInput.val(values.provinceId);
+            if (provincesInput.is('select')) {
+                provincesInput.val(values.provinceId);
+            } else {
+                provincesInput.val(values.province);
+            }
+            // city
+            cityIdInput.val(values.cityId);
+            if (citiesInput.is('select')) {
+                citiesInput.val(values.cityId);
+            } else {
+                citiesInput.val(values.city);
+            }
+            // country
+            countryInput.val(values.countryId);
+
+            niAC._enableCityInput(el, options);
+            niAC._enableProvinceInput(el, options);
+        }
+    },
+    /* *
      * Helpers/Handlers
      * */
     _baseCountryChangeHandler: function (e) {
@@ -416,7 +452,22 @@ $.fn.addressConfiguration = function (options) {
         return;
     }
 
+    // set options as attributes for the html element
+    containerDiv.attr("niac-options", JSON.stringify(options));
+
     niAC.addAddress(containerDiv, options);
+
+    return containerDiv;
+};
+$.fn.resetAddress = function (values) {
+    _checkInstance();
+    var containerDiv = $(this);
+
+    if (containerDiv.attr("niac-options")) {
+        var options = JSON.parse(containerDiv.attr("niac-options"));
+
+        niAC.reset(containerDiv, options, values);
+    }
 
     return containerDiv;
 };

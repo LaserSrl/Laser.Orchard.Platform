@@ -148,6 +148,9 @@
       <DependentUpon>address-configuration.js</DependentUpon>
     </Content>
     <Content Include="Scripts\ship.js" />
+    <Content Include="Scripts\ship.min.js">
+      <DependentUpon>ship.js</DependentUpon>
+    </Content>
     <Content Include="Styles\admin-style.css" />
     <Content Include="Styles\admin-style.min.css">
       <DependentUpon>admin-style.css</DependentUpon>
