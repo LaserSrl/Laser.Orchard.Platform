@@ -17,7 +17,7 @@
      <fieldset>
         <legend>@T("Shipping Address")</legend>
         @Display.AddressForm(
-            Prefix: "shippingAddress", 
+            Prefix: "shippingAddressVM", 
             Address: Model.ShippingAddressVM, 
             IncludeCountry: true, 
             ListAddress:Model.ListAvailableShippingAddress)
@@ -30,7 +30,7 @@
     <fieldset class="billing-address">
         <legend>@T("Billing Address")</legend>
         @Display.AddressForm(
-            Prefix: "billingAddress", 
+            Prefix: "billingAddressVM", 
             Address: Model.BillingAddressVM, 
             IncludeCountry: true, 
             ListAddress: Model.ListAvailableBillingAddress)

@@ -43,5 +43,24 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 2;
         }
+
+        public int UpdateFrom2() {
+            SchemaBuilder.CreateTable("AddressOrderPartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("ShippingCountryName")
+                .Column<int>("ShippingCountryId")
+                .Column<string>("ShippingCityName")
+                .Column<int>("ShippingCityId")
+                .Column<string>("ShippingProvinceName")
+                .Column<int>("ShippingProvinceId")
+                .Column<string>("BillingCountryName")
+                .Column<int>("BillingCountryId")
+                .Column<string>("BillingCityName")
+                .Column<int>("BillingCityId")
+                .Column<string>("BillingProvinceName")
+                .Column<int>("BillingProvinceId"));
+
+            return 3;
+        }
     }
 }

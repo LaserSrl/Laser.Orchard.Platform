@@ -103,6 +103,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         userId = currentUser.Id;
                     }
 
+                    // update addresses based on those populated in the form
+                    model.ShippingAddress = AddressFromVM(model.ShippingAddressVM);
+                    model.BillingAddress = AddressFromVM(model.BillingAddressVM);
+
                     var currency = _currencyProvider.CurrencyCode;
                     var order = _orderService.CreateOrder(
                         charge,
@@ -123,6 +127,24 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         0,
                         "",
                         currency);
+                    // update advanced address information
+                    var addressPart = order.As<AddressOrderPart>();
+                    if (addressPart != null) {
+                        // shipping info
+                        addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
+                        addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
+                        addressPart.ShippingCityName = model.ShippingAddressVM.City;
+                        addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
+                        addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
+                        addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                        // billing
+                        addressPart.BillingCountryName = model.BillingAddressVM.Country;
+                        addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
+                        addressPart.BillingCityName = model.BillingAddressVM.City;
+                        addressPart.BillingCityId = model.BillingAddressVM.CityId;
+                        addressPart.BillingProvinceName = model.BillingAddressVM.Province;
+                        addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                    }
                     order.LogActivity(OrderPart.Event, "Order created");
                     // we unpublish the order here. The service from Nwazet create it
                     // and publish it it. This would cause issues whenever a user leaves
@@ -177,6 +199,26 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return result;
         }
 
+        private Address AddressFromVM(AddressEditViewModel vm) {
+            FixUpdate(vm);
+            return new Address {
+                Honorific = vm.Honorific,
+                FirstName = vm.FirstName,
+                LastName = vm.LastName,
+                Company = vm.Company,
+                Address1 = vm.Address1,
+                Address2 = vm.Address2,
+                PostalCode = vm.PostalCode,
+                // advanced address stuff
+                // The string values here are the DisplayText properties of
+                // configured territories, or "custom" text entered by the user.
+                Country = vm.Country, 
+                City = vm.City,
+                Province = vm.Province
+            };
+        }
+
+        #region Address CRUD
         [Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
         public ActionResult MyAddresses() {
             var user = _workContextAccessor.GetContext().CurrentUser;
@@ -290,6 +332,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _notifier.Information(T("Address updated successfully."));
             return RedirectToAction("Edit", new { id = newAddress.AddressRecord.Id });
         }
+        #endregion
 
         #region Actions for advanced address configuration
 
@@ -350,7 +393,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         private AddressEditViewModel CreateVM(AddressRecord address) {
-            
+
             // defaults to "no country selected" for a new or "legacy" AddressRecord
             var countryId = address.CountryId;
             if (countryId == 0 && !string.IsNullOrWhiteSpace(address.Country)) {

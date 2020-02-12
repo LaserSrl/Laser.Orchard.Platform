@@ -118,6 +118,8 @@
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\AddressOrderPart.cs" />
+    <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
