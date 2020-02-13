@@ -55,7 +55,6 @@ AddressConfiguration.prototype = {
      * Reset the address form 
      * */
     reset: function (el, options, values) {
-        el.find('input').val('');
         // reinit
         var countryInput = el.find(options.countriesInput);
         var nullOption = countryInput
@@ -472,16 +471,19 @@ $.fn.addressConfiguration = function (options) {
 
     return containerDiv;
 };
-$.fn.resetAddress = function (values, options) {
+$.fn.resetAddress = function (options, values) {
     _checkInstance();
     var containerDiv = $(this);
 
-    if (!options) {
-        if (containerDiv.attr("niac-options")) {
-            options = JSON.parse(containerDiv.attr("niac-options"));
-        }
+    // In case the initialization options are easy to serialize, we don't need
+    // to send them back when we are resetting. However, delegates are hard to 
+    // properly serialize, so if those are being used it's best to send the options
+    // object over.
+    var storedOptions = {};
+    if (containerDiv.attr("niac-options")) {
+        storedOptions = JSON.parse(containerDiv.attr("niac-options"));
     }
-    options = $.extend(true, {}, $.addressConfiguration.defaults, options);
+    options = $.extend(true, {}, $.addressConfiguration.defaults, storedOptions, options);
     options.token = containerDiv
         .closest("form")
         .find("input[name='__RequestVerificationToken']")

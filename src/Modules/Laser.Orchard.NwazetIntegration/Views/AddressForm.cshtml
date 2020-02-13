@@ -105,11 +105,13 @@
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
                 }
             });
-
+            
+            // saved addresses for the user
+            var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
+            // when a different address is selected:
             $('#@idlistaddress').on('change', function () {
-                // saved addresses for the user
-                var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
                 if ($(this).val() == -1) {
+                    $('#@guid').find('input').val('');
                     // clear what's currently populated for the address
                     myaddress.resetAddress();
                 } else {
@@ -117,7 +119,7 @@
                     for (i = 0; i < arrayOfArrays.length; i++) {
                         if (arrayOfArrays[i].Id == $(this).val()) {
                             // country, province, city are managed by the js library
-                            myaddress.resetAddress({
+                            myaddress.resetAddress({ }, {
                                 countryId: arrayOfArrays[i].CountryId,
                                 cityId: arrayOfArrays[i].CityId,
                                 provinceId: arrayOfArrays[i].ProvinceId,
@@ -136,42 +138,19 @@
                     }
                 }
             });
+            // use a custom event to handle hiding/showing the form
+            $('#@guid').parent().on('visibilityChanged', function () {
+                // country, province, city are managed by the js library
+                myaddress.resetAddress({}, {
+                    countryId: $('#@Html.Id(prefix + ".CountryId")').val(),
+                    cityId: $('#@Html.Id(prefix + ".CityId")').val(),
+                    provinceId: $('#@Html.Id(prefix + ".ProvinceId")').val(),
+                    city: $('#@Html.Id(prefix + ".City")').val(),
+                    province: $('#@Html.Id(prefix + ".Province")').val(),
+                });
+            });
             // on page load, set the first saved address
             $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
         });
-        @*
-        $(document).ready(function () {
-            $('#@idlistaddress').on('change',function(){
-                var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
-                if ($(this).val() == -1) {
-                    $('#@(prefix + "_Honorific")').val('');
-                    $('#@(prefix + "_FirstName")').val('');
-                    $('#@(prefix + "_LastName")').val('');
-                    $('#@(prefix + "_Company")').val('');
-                    $('#@(prefix + "_Address1")').val('');
-                    $('#@(prefix + "_Address2")').val('');
-                    $('#@(prefix + "_City")').val('');
-                    $('#@(prefix + "_Province")').val('');
-                    $('#@(prefix + "_PostalCode")').val('');
-                }else{
-                    for (i = 0; i < arrayOfArrays.length; i++) {
-                        if (arrayOfArrays[i].Id == $(this).val()) {
-                            $('#@(prefix + "_Honorific")').val(arrayOfArrays[i].Honorific);
-                            $('#@(prefix + "_FirstName")').val(arrayOfArrays[i].FirstName);
-                            $('#@(prefix + "_LastName")').val(arrayOfArrays[i].LastName);
-                            $('#@(prefix + "_Company")').val(arrayOfArrays[i].Company);
-                            $('#@(prefix + "_Address1")').val(arrayOfArrays[i].Address1);
-                            $('#@(prefix + "_Address2")').val(arrayOfArrays[i].Address2);
-                            $('#@(prefix + "_City")').val(arrayOfArrays[i].City);
-                            $('#@(prefix + "_Province")').val(arrayOfArrays[i].Province);
-                            $('#@(prefix + "_PostalCode")').val(arrayOfArrays[i].PostalCode);
-                            $('#@(prefix + "_Country")').val(arrayOfArrays[i].Country);
-                        }
-                    }
-                }
-            });
-            $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
-        });
-        *@
     </script>
 }

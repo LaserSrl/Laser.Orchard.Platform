@@ -5,6 +5,7 @@
     toggleCheckbox
         .change(function () {
             $(".billing-address").toggle($(this).val());
+            
             if ($(this).val() == "on") {
                 $('input[name^="shippingAddressVM."]').each(function () {
                     var input = $(this),
@@ -21,13 +22,27 @@
                         .trigger('change');
                 });
             }
+
+            // trigger a custom visibility event
+            $(".billing-address").trigger('visibilityChanged');
         });
     $('input[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
             var input = $(this),
                 name = input.attr("name").substr(18);
-            $('input[name="billingAddressVM.' + name + '"]').val(input.val());
+            $('input[name="billingAddressVM.' + name + '"]')
+                .val(input.val())
+                .trigger('change');
+        });
+    $('select[name^="shippingAddressVM."]')
+        .change(function () {
+            if (!toggleCheckbox.prop("checked")) return;
+            var input = $(this),
+                name = input.attr("name").substr(18);
+            $('select[name="billingAddressVM.' + name + '"]')
+                .val(input.val())
+                .trigger('change');
         });
     addressForm.find(".required").after(
         $("<span class='error-indicator' title='" + required + "'>*</span>"));
