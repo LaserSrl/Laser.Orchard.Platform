@@ -1,11 +1,13 @@
 ﻿using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
+using Orchard.Localization;
 using Orchard.Localization.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public class AddressConfigurationService : IAddressConfigurationService {
@@ -24,7 +26,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _territoriesService = territoriesService;
             _contentManager = contentManager;
             _territoriesRepositoryService = territoriesRepositoryService;
+
+            T = NullLocalizer.Instance;
         }
+        public Localizer T { get; set; }
 
         TerritoryHierarchyPart ConfiguredHierarchy =>
             _settingsService.GetConfiguredHierarchy();
@@ -83,6 +88,24 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return _territoriesService.GetTerritoriesQuery(ConfiguredHierarchy)
                 .Where(tpr => _settingsService.SelectedCountryIds.Contains(tpr.TerritoryInternalRecord.Id))
                 .List();
+        }
+
+        public List<SelectListItem> CountryOptions(int id = -1) {
+            var countries = GetAllCountries();
+            var options = new List<SelectListItem>();
+            options.Add(new SelectListItem() {
+                Value = "-1",
+                Text = T("Select a country").Text,
+                Disabled = true,
+                Selected = id <= 0
+            });
+            options.AddRange(countries
+                .Select(tp => new SelectListItem() {
+                    Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
+                    Text = _contentManager.GetItemMetadata(tp).DisplayText,
+                    Selected = id == tp.Record.TerritoryInternalRecord.Id
+                }));
+            return options;
         }
 
         public IEnumerable<TerritoryPart> GetAllProvinces() {

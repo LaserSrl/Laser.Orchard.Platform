@@ -106,6 +106,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
+    <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
+    <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
   </ItemGroup>
@@ -259,6 +261,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Views\EditorTemplates\Parts\Order.AdvancedAddress.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

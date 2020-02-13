@@ -388,7 +388,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
         private AddressEditViewModel CreateVM() {
             return new AddressEditViewModel() {
-                Countries = CountryOptions()
+                Countries = _addressConfigurationService.CountryOptions()
             };
         }
 
@@ -411,28 +411,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             return new AddressEditViewModel(address) {
-                Countries = CountryOptions(countryId),
+                Countries = _addressConfigurationService.CountryOptions(countryId),
                 CountryId = countryId
             };
-        }
-
-        private List<SelectListItem> CountryOptions(int id = -1) {
-            var countries = _addressConfigurationService
-                .GetAllCountries();
-            var options = new List<SelectListItem>();
-            options.Add(new SelectListItem() {
-                Value = "-1",
-                Text = T("Select a country").Text,
-                Disabled = true,
-                Selected = id <= 0
-            });
-            options.AddRange(countries
-                .Select(tp => new SelectListItem() {
-                    Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
-                    Text = _contentManager.GetItemMetadata(tp).DisplayText,
-                    Selected = id == tp.Record.TerritoryInternalRecord.Id
-                }));
-            return options;
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IAddressConfigurationService : IDependency {
@@ -14,6 +15,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         /// <returns></returns>
         IEnumerable<TerritoryPart> GetAllCountries();
+        /// <summary>
+        /// Gets a list of options configured to be used in UI when selecting
+        /// a country.
+        /// </summary>
+        /// <param name="id">Id of a country to preselect.</param>
+        /// <returns></returns>
+        List<SelectListItem> CountryOptions(int id = -1);
         /// <summary>
         /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured country if it exists.
