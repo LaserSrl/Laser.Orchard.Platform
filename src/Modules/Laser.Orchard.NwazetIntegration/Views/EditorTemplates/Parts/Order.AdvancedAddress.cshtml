@@ -7,10 +7,18 @@
 
 <div class="order-editor advanced-addresses col-md-12">
     <div class="order-address-editor shipping-address col-md-6">
-        @Html.EditorFor(m => m.ShippingAddressVM)
+        @Html.EditorFor(m => m.ShippingAddressVM,
+            new {
+                OtherElementSelector = ".order-editor .addresses fieldset.shipping-address",
+                OtherPrefix = "NwazetCommerceOrder"
+            })
     </div>
 
     <div class="order-address-editor billing-address col-md-6">
-        @Html.EditorFor(m => m.BillingAddressVM)
+        @Html.EditorFor(m => m.BillingAddressVM,
+            new {
+                OtherElementSelector = ".order-editor .addresses fieldset.billing-address",
+                OtherPrefix = "NwazetCommerceOrder"
+            })
     </div>
 </div>

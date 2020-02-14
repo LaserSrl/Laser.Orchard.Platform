@@ -71,6 +71,9 @@
         .address-editor{
             .address-input{
                 display: inline-block;
+                .hint{
+                    display: inline-block;
+                }
             }
         }
     }

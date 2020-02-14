@@ -24,3 +24,5 @@
 
 .advanced-addresses .order-address-editor .address-editor .address-input {
   display: inline-block; }
+  .advanced-addresses .order-address-editor .address-editor .address-input .hint {
+    display: inline-block; }

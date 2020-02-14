@@ -16,12 +16,15 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
     public class AddressOrderPartDriver : ContentPartDriver<AddressOrderPart> {
         private readonly IAuthorizer _authorizer;
         private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly IContentManager _contentManager;
         public AddressOrderPartDriver(
             IAuthorizer authorizer,
-            IAddressConfigurationService addressConfigurationService) {
+            IAddressConfigurationService addressConfigurationService,
+            IContentManager contentManager) {
 
             _authorizer = authorizer;
             _addressConfigurationService = addressConfigurationService;
+            _contentManager = contentManager;
 
             T = NullLocalizer.Instance;
         }
@@ -39,16 +42,36 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
                 return shapeHelper.EditorTemplate(
                     TemplateName: "Parts/Order.AdvancedAddress",
-                    Model: CreateVM(part), //TODO
+                    Model: CreateVM(part),
                     Prefix: Prefix);
 
             });
         }
 
-        protected override DriverResult Editor(AddressOrderPart part, IUpdateModel updater, dynamic shapeHelper) {
+        protected override DriverResult Editor(
+            AddressOrderPart part, IUpdateModel updater, dynamic shapeHelper) {
             if (!Authorized(part)) {
                 return null;
             }
+
+            var updatedModel = new OrderAddressEditorViewModel();
+            if (updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
+                // shipping
+                part.ShippingCountryId = updatedModel.ShippingAddressVM.CountryId;
+                part.ShippingCountryName = updatedModel.ShippingAddressVM.Country;
+                part.ShippingCityId = updatedModel.ShippingAddressVM.CityId;
+                part.ShippingCityName = updatedModel.ShippingAddressVM.City;
+                part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
+                part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
+                // billing
+                part.BillingCountryId = updatedModel.BillingAddressVM.CountryId;
+                part.BillingCountryName = updatedModel.BillingAddressVM.Country;
+                part.BillingCityId = updatedModel.BillingAddressVM.CityId;
+                part.BillingCityName = updatedModel.BillingAddressVM.City;
+                part.BillingProvinceId = updatedModel.BillingAddressVM.ProvinceId;
+                part.BillingProvinceName = updatedModel.BillingAddressVM.Province;
+            }
+
             return Editor(part, shapeHelper);
         }
 
@@ -129,5 +152,6 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 CountryId = countryId
             };
         }
+
     }
 }
