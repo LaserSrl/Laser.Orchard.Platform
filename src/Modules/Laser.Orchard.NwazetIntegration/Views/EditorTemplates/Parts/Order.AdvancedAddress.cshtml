@@ -1,6 +1,10 @@
 ﻿
 @model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
-@* This will display the advanced address and hide the "standard" one *@
+@* This will display the advanced address and hide the "standard" one.
+    To avoid changing the OrderPart, this view, its partials and the 
+    underlying driver are somewhat depndent on it. In particular, changes
+    in the view for OrderPart addresses will reflect on this view and
+    on the partials used for each address here. *@
 @{ 
     Style.Require("NwazetIntegration.Admin");
 }
