@@ -17,9 +17,11 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IAuthorizer _authorizer;
         private readonly IAddressConfigurationService _addressConfigurationService;
         public AddressOrderPartDriver(
-            IAuthorizer authorizer) {
+            IAuthorizer authorizer,
+            IAddressConfigurationService addressConfigurationService) {
 
             _authorizer = authorizer;
+            _addressConfigurationService = addressConfigurationService;
 
             T = NullLocalizer.Instance;
         }
@@ -47,7 +49,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (!Authorized(part)) {
                 return null;
             }
-            return null;//base.Editor(part, updater, shapeHelper);
+            return Editor(part, shapeHelper);
         }
 
         private bool Authorized(AddressOrderPart part) {

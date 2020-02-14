@@ -2,6 +2,15 @@
 @model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
 @* This will display the advanced address and hide the "standard" one *@
 @{ 
-
-    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
+    Style.Require("NwazetIntegration.Admin");
 }
+
+<div class="order-editor advanced-addresses col-md-12">
+    <div class="order-address-editor shipping-address col-md-6">
+        @Html.EditorFor(m => m.ShippingAddressVM)
+    </div>
+
+    <div class="order-address-editor billing-address col-md-6">
+        @Html.EditorFor(m => m.BillingAddressVM)
+    </div>
+</div>

@@ -262,6 +262,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Views\EditorTemplates\Parts\Order.AdvancedAddress.cshtml" />
+    <Content Include="Views\EditorTemplates\AddressEditViewModel.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,7 +9,8 @@ namespace Laser.Orchard.NwazetIntegration {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
 
-            manifest.DefineScript("NwazetIntegration.Addresses")
+            manifest
+                .DefineScript("NwazetIntegration.Addresses")
                 .SetUrl("ship.min.js", "ship.js")
                 .SetDependencies("jQuery");
 
@@ -17,6 +18,10 @@ namespace Laser.Orchard.NwazetIntegration {
                 .DefineScript("NwazetIntegration.AddressConfiguration")
                 .SetUrl("address-configuration.min.js", "address-configuration.js")
                 .SetDependencies("jQuery");
+
+            manifest
+                .DefineStyle("NwazetIntegration.Admin")
+                .SetUrl("admin-style.min.css", "admin-style.css");
         }
     }
 }
