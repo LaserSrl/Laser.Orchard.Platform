@@ -1,11 +1,13 @@
-﻿using Orchard.ContentManagement;
+﻿using Nwazet.Commerce.Aspects;
+using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
-    public class AddressOrderPart : ContentPart<AddressOrderPartRecord> {
+    public class AddressOrderPart 
+        : ContentPart<AddressOrderPartRecord>, ITerritoryAddressAspect {
 
         public string ShippingCountryName {
             get { return Retrieve(r => r.ShippingCountryName); }
@@ -56,5 +58,15 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return Retrieve(r => r.BillingProvinceId); }
             set { Store(r => r.BillingProvinceId, value); }
         }
+
+        public IEnumerable<int> TerritoriesIds => 
+            new int[] { ShippingCityId, ShippingProvinceId, ShippingCountryId,
+                BillingCityId, BillingProvinceId, BillingCountryId };
+
+        public int CountryId => ShippingCountryId;
+
+        public int ProvinceId => ShippingProvinceId;
+
+        public int CityId => ShippingCityId;
     }
 }

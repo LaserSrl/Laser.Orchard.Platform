@@ -32,6 +32,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly INotifier _notifier;
         private readonly IProductPriceService _productPriceService;
         private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly IEnumerable<IOrderAdditionalInformationProvider> _orderAdditionalInformationProviders;
 
         private readonly dynamic _shapeFactory;
 
@@ -48,7 +49,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IContentManager contentManager,
             INotifier notifier,
             IProductPriceService productPriceService,
-            IAddressConfigurationService addressConfigurationService) {
+            IAddressConfigurationService addressConfigurationService,
+            IEnumerable<IOrderAdditionalInformationProvider> orderAdditionalInformationProviders) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -63,6 +65,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _notifier = notifier;
             _productPriceService = productPriceService;
             _addressConfigurationService = addressConfigurationService;
+            _orderAdditionalInformationProviders = orderAdditionalInformationProviders;
 
             T = NullLocalizer.Instance;
         }
@@ -144,6 +147,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         addressPart.BillingCityId = model.BillingAddressVM.CityId;
                         addressPart.BillingProvinceName = model.BillingAddressVM.Province;
                         addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                    }
+                    // To properly handle the order's advanced address configuration we need
+                    // to call again the providers to store the additional data, because when they 
+                    // are invoked in Nwazet's IOrderService implementation we can't have access
+                    // to the new information yet. If we ever overhaul that module, we should 
+                    // account for this extensibility requirement.
+                    foreach (var oaip in _orderAdditionalInformationProviders) {
+                        oaip.StoreAdditionalInformation(order);
                     }
                     order.LogActivity(OrderPart.Event, "Order created");
                     // we unpublish the order here. The service from Nwazet create it
