@@ -41,6 +41,12 @@ index++;
             <label for="[@vm.TerritoryId].IsCountry" class="radio-label">
                 @T("Country")
             </label>
+            <input type="text" class="iso-alpha-2"
+                   id="[@vm.TerritoryId].CountryISO"
+                   name="pippo"
+                   value="@vm.CountryISO"
+                   placeholder="ISO-2"
+                   title="@T("Alpha-2 ISO3166-1 Code.")"/>
             <input type="radio"
                    id="[@vm.TerritoryId].IsProvince"
                    name="@(baseFieldName + "["+index+"]" + ".Value")"

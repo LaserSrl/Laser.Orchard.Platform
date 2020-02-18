@@ -26,6 +26,12 @@
 
                 .radio-label {
                 }
+
+                input[type=text] {
+                    &.iso-alpha-2 {
+                        width: 4em;
+                    }
+                }
             }
 
             .territory-children-counts {

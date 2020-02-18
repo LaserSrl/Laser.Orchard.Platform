@@ -11,6 +11,8 @@
       content: '('; }
     .territories-list .single-territory .territory-info .radio-buttons:after {
       content: ')'; }
+    .territories-list .single-territory .territory-info .radio-buttons input[type=text].iso-alpha-2 {
+      width: 4em; }
   .territories-list .single-territory .territory-info .territory-children-counts {
     display: block;
     font-size: smaller;
