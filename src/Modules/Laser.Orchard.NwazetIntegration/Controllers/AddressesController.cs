@@ -81,6 +81,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     result = RedirectToAction("Index", "ShoppingCart", new { area = "Nwazet.Commerce" });
                     break;
                 case "save":
+                    // Hack: based on the address coming in model.ShippingAddressVM, we can compute the actual
+                    // destinations to be used for tax computations at this stage
+                    var countryName = _addressConfigurationService
+                        .GetCountry(model.ShippingAddressVM.CountryId)
+                        .Record.TerritoryInternalRecord.Name;
                     // costruisce la lista di CheckoutItems in base al contenuto del carrello
                     List<CheckoutItem> items = new List<CheckoutItem>();
                     foreach (var prod in _shoppingCart.GetProducts()) {
@@ -89,8 +94,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             LinePriceAdjustment = prod.LinePriceAdjustment,
                             OriginalPrice = prod.OriginalPrice,
                             Price = prod.Product.DiscountPrice >= 0 && prod.Product.DiscountPrice < prod.Product.Price
-                                ? _productPriceService.GetDiscountPrice(prod.Product)
-                                : _productPriceService.GetPrice(prod.Product),
+                                ? _productPriceService.GetDiscountPrice(prod.Product, countryName, null)
+                                : _productPriceService.GetPrice(prod.Product, countryName, null),
                             ProductId = prod.Product.Id,
                             PromotionId = prod.Promotion == null ? null : (int?)(prod.Promotion.Id),
                             Quantity = prod.Quantity,
