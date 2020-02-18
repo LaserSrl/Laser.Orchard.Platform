@@ -184,7 +184,7 @@ namespace Laser.Orchard.Mobile.Services {
                     " WHERE civr.Published=1 AND MobileRecord.Validated" +
                     " AND tp.Title like '%" + nameFilter.Replace("'", "''") + "%'";
                 groupby = " GROUP BY tp.Title";
-                query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName='{2}'", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck.Replace("'", "''"));
+                query += string.Format(" AND MobileRecord.RegistrationUrlHost='{0}' AND MobileRecord.RegistrationUrlPrefix='{1}' AND MobileRecord.RegistrationMachineName IN ({2})", hostCheck.Replace("'", "''"), prefixCheck.Replace("'", "''"), machineNameCheck);
                 query += groupby;
                 var fullStatement = _transactionManager.GetSession()
                     .CreateQuery(query)
