@@ -84,8 +84,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // Hack: based on the address coming in model.ShippingAddressVM, we can compute the actual
                     // destinations to be used for tax computations at this stage
                     var countryName = _addressConfigurationService
-                        .GetCountry(model.ShippingAddressVM.CountryId)
-                        .Record.TerritoryInternalRecord.Name;
+                        ?.GetCountry(model.ShippingAddressVM.CountryId)
+                        ?.Record?.TerritoryInternalRecord.Name;
                     // costruisce la lista di CheckoutItems in base al contenuto del carrello
                     List<CheckoutItem> items = new List<CheckoutItem>();
                     foreach (var prod in _shoppingCart.GetProducts()) {

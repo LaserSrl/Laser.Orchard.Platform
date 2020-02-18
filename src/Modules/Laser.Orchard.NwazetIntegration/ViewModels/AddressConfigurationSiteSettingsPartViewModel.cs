@@ -30,6 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 SelectedCountries = part.SelectedCountries;
                 SelectedProvinces = part.SelectedProvinces;
                 SelectedCities = part.SelectedCities;
+                CountryCodes = part.CountryCodes;
                 InitializeTerritories();
             }
         }
@@ -58,6 +59,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public int[] SelectedCountries { get; set; }
         public int[] SelectedProvinces { get; set; }
         public int[] SelectedCities { get; set; }
+        public CountryAlpha2[] CountryCodes { get; set; }
 
         public IEnumerable<AddressConfigurationTerritoryViewModel> TopLevel { get; set; }
 
@@ -74,7 +76,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     var tp = ci.As<TerritoryPart>();
                     return tp != null
                         ? new AddressConfigurationTerritoryViewModel(
-                            tp, SelectedCountries, SelectedProvinces, SelectedCities)
+                            tp, SelectedCountries, SelectedProvinces, SelectedCities, CountryCodes)
                         : null;
                 })
                 .Where(tvm => tvm != null);

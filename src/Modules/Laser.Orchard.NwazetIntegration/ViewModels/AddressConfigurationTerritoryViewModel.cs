@@ -16,7 +16,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             TerritoryPart part, 
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
-            IEnumerable<int> cities) : this() {
+            IEnumerable<int> cities,
+            IEnumerable<CountryAlpha2> countryCodes) : this() {
 
             _contentManager = part.ContentItem.ContentManager;
 
@@ -26,6 +27,13 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             IsCountry = countries.Contains(TerritoryId);
             IsProvince = provinces.Contains(TerritoryId);
             IsCity = cities.Contains(TerritoryId);
+
+            CountryISO = countryCodes
+                // if there is no value for the given ID, FirstOrDefault
+                // returns a CountryAlpha2 struct with ISOCode = null. THis
+                // happens because CountryAlpha2 is a struct rather than a class
+                .FirstOrDefault(cc => cc.TerritoryId == TerritoryId)
+                .ISOCode ?? string.Empty;
 
             DisplayText = _contentManager
                 .GetItemMetadata(part)
@@ -39,7 +47,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 if (tp != null) {
                     // constructing this here means we are going depth first
                     var child = new AddressConfigurationTerritoryViewModel(
-                        tp, countries, provinces, cities, this);
+                        tp, countries, provinces, cities, countryCodes, this);
                     Children.Add(child);
                 }
             }
@@ -50,8 +58,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
             IEnumerable<int> cities,
+            IEnumerable<CountryAlpha2> countryCodes,
             AddressConfigurationTerritoryViewModel parent) 
-            : this(part, countries, provinces, cities) {
+            : this(part, countries, provinces, cities, countryCodes) {
             Parent = parent;
         }
 
@@ -72,6 +81,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public bool IsCountry { get; set; }
         public bool IsProvince { get; set; }
         public bool IsCity { get; set; }
+
+        /// <summary>
+        /// ISO 3166-1 Alpha-2 code for a country.
+        /// </summary>
+        public string CountryISO { get; set; }
 
         public int ChildCountries =>
             // how many of this object's children are Countries?

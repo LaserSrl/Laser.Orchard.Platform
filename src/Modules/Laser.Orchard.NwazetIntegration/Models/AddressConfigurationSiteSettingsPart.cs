@@ -66,6 +66,18 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             }
         }
 
+        public string SerializedCountryCodes {
+            get { return this.Retrieve(p => p.SerializedCountryCodes); }
+            set { this.Store(p => p.SerializedCountryCodes, value); }
+        }
+        public CountryAlpha2[] CountryCodes {
+            get {
+                return string.IsNullOrWhiteSpace(SerializedCountryCodes)
+                    ? new CountryAlpha2[] { }
+                    : JsonConvert.DeserializeObject<CountryAlpha2[]>(SerializedCountryCodes);
+            }
+        }
+
         #endregion
     }
 }
