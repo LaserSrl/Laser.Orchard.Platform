@@ -162,8 +162,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         oaip.StoreAdditionalInformation(order);
                     }
                     order.LogActivity(OrderPart.Event, "Order created");
-                    // we unpublish the order here. The service from Nwazet create it
-                    // and publish it it. This would cause issues whenever a user leaves
+                    // we unpublish the order here. The service from Nwazet creates it
+                    // and publishes it. This would cause issues whenever a user leaves
                     // mid checkout rather than completing the entire process, because we
                     // would end up having unprocessed orders that are created and published.
                     // By unpublishing, we practically turn the order in a draft. Later,

@@ -64,44 +64,72 @@ AddressConfiguration.prototype = {
             });
         nullOption.prop("disabled", false);
         countryInput.val(nullOption.attr('value'));
+
+        niAC._detachCountryHandlers(el, options);
+        niAC._detachCityHandlers(el, options);
+        niAC._detachProvinceHandlers(el, options);
+
         // set values
         if (values) {
             // set some variables as shorthands for the various inputs
             var citiesInput = el.find(options.citiesInput);
-            var cityIdInput = el.find(options.cityId);
             var provincesInput = el.find(options.provincesInput);
-            var provinceIdInput = el.find(options.provinceId);
             // province
-            provinceIdInput.val(values.provinceId);
-            if (provincesInput.is('select')) {
-                provincesInput.val(values.provinceId);
-            } else {
-                provincesInput.val(values.province);
+            if (options.getProvinces.before) {
+                options.getProvinces.before(provincesInput);
+            }
+            provincesInput = niAC._updateInput(el, options.provinceId, options.provincesInput, values.provinceId, values.province);
+            if (options.getProvinces.after) {
+                options.getProvinces.after(provincesInput);
             }
             // city
-            cityIdInput.val(values.cityId);
-            if (citiesInput.is('select')) {
-                citiesInput.val(values.cityId);
-            } else {
-                citiesInput.val(values.city);
+            if (options.getCities.before) {
+                options.getCities.before(citiesInput);
+            }
+            citiesInput = niAC._updateInput(el, options.cityId, options.citiesInput, values.cityId, values.city);
+            if (options.getCities.after) {
+                options.getCities.after(citiesInput);
             }
             // country
             countryInput.val(values.countryId);
-
-            //niAC._enableCityInput(el, options);
-            //niAC._enableProvinceInput(el, options);
         }
-        niAC._detachCountryHandlers(el, options);
-        niAC._detachCityHandlers(el, options);
-        niAC._detachProvinceHandlers(el, options);
         niAC.addAddress(el, options);
-        //if (niAC._checkCountryOption(el, options)) {
-        //    countryInput.trigger("change");
-        //}
     },
     /* *
      * Helpers/Handlers
      * */
+    _updateInput: function (el, idInputSelector, textInputSelector, idValue, textValue) {
+        // this function will change the "shape" and value of a single
+        // input (used when resetting city and province)
+        var textInput = el.find(textInputSelector);
+        var idInput = el.find(idInputSelector);
+        idInput.val(idValue);
+        if (idValue > 0) {
+            // a selection was made
+            if (textInput.is('select')) {
+            } else {
+                // build it as a select with the option already selected?
+            }
+            // set the value
+            textInput.val(idValue);
+        } else {
+            // negative id => freetext
+            // build the input as freetext
+            var newInput = '<input type="text" ';
+            for (var a = 0; a < textInput[0].attributes.length; a++) {
+                newInput += textInput[0].attributes[a].name + '="'
+                    + textInput[0].attributes[a].value + '" ';
+            }
+            newInput += '/>';
+            // place the input in the page
+            textInput.replaceWith(newInput);
+            // reference to the new input
+            textInput = el.find(textInputSelector);
+            // set the value
+            textInput.val(textValue);
+        }
+        return textInput;
+    },
     _baseCountryChangeHandler: function (e) {
         // countries with value < 0 are just placeholders
         // $('#CountryId').find('option').filter(function() {return $(this).attr('value') <= 0})
@@ -218,6 +246,14 @@ AddressConfiguration.prototype = {
                         if (data.Success) {
                             // city's input
                             var city = el.find(options.citiesInput);
+                            // get the text for the currently selected city
+                            var cityName = city.val();
+                            if (city.is('select')) {
+                                // in case the input for the city is currently a select, we don't want
+                                // to necessarily carry that name to the text box we may create later
+                                // get the text for the selected option
+                                cityName = ""; //city.find('option:selected').text();
+                            }
                             // detach handlers
                             niAC._detachCityHandlers(el, options);
                             // call delegates?
@@ -257,6 +293,8 @@ AddressConfiguration.prototype = {
                                 newInput += '/>';
                                 city.replaceWith(newInput);
                                 city = el.find(options.citiesInput);
+                                // set the text to the previous text
+                                city.val(cityName);
                             }
                             // call delegates?
                             if (options.getCities.after) {
@@ -323,6 +361,14 @@ AddressConfiguration.prototype = {
                     if (data.Success) {
                         // province input
                         var province = el.find(options.provincesInput);
+                        // get the text for the currently configured province
+                        var provinceName = province.val();
+                        if (province.is('select')) {
+                            // in case the input for the province is currently a select, we don't want
+                            // to necessarily carry that name to the text box we may create later
+                            // get the text for the selected option
+                            provinceName = ""; //province.find('option:selected').text();
+                        }
                         // detach handlers
                         niAC._detachProvinceHandlers(el, options);
                         // call delegates?
@@ -361,6 +407,8 @@ AddressConfiguration.prototype = {
                             newInput += '/>';
                             province.replaceWith(newInput);
                             province = el.find(options.provincesInput);
+                            // set the text to the previous text
+                            province.val(provinceName);
                         }
                         // call delegates?
                         if (options.getProvinces.after) {
