@@ -4,6 +4,7 @@
 @functions{
     int index = -1;
     string baseFieldName;
+    string codeFieldName;
 }
 @{
     Style.Include("admin-style.css", "admin-style.min.css").AtHead();
@@ -11,6 +12,7 @@
     var hierarchy = Model.CountriesHierarchy;
 
     baseFieldName = Html.FieldNameFor(m => m.TerritoryTypeMap);
+    codeFieldName = Html.FieldNameFor(m => m.TerritoryISOCode);
 }
 @helper DisplayTerritory(AddressConfigurationTerritoryViewModel vm) { 
 var radioChecks = new bool[4];
@@ -21,19 +23,23 @@ radioChecks[3] = !(vm.IsCountry || vm.IsProvince || vm.IsCity);
 index++;
 
 <div class="single-territory">
-    <input type="hidden" 
-        name="@(baseFieldName + "["+index+"]" + ".Key")" 
-        value="@vm.TerritoryId" />
+    <input type="hidden"
+           name="@(baseFieldName + "["+index+"]" + ".Key")"
+           value="@vm.TerritoryId" />
+    <input type="hidden"
+           name="@(codeFieldName + "["+index+"]" + ".Key")"
+           value="@vm.TerritoryId" />
     @* UI for a single teritory here:
-          Its name/displaytext
-          The count of children "values" for country/province/city
-          Radio buttons to select whether it is a city/province/country/nothing*@
+        Its name/displaytext
+        The count of children "values" for country/province/city
+        Radio buttons to select whether it is a city/province/country/nothing
+        A textbox to insert the alpha-2 ISO 3166-1 code for countries *@
     <div class="territory-info">
         <div class="territory-text">
             @vm.DisplayText
         </div>
         <div class="radio-buttons">
-            <input type="radio"
+            <input type="radio" class="country-radio"
                    id="[@vm.TerritoryId].IsCountry"
                    name="@(baseFieldName + "["+index+"]" + ".Value")"
                    value="@TerritoryTypeForAddress.Country"
@@ -43,10 +49,10 @@ index++;
             </label>
             <input type="text" class="iso-alpha-2"
                    id="[@vm.TerritoryId].CountryISO"
-                   name="pippo"
+                   name="@(codeFieldName + "["+index+"]" + ".Value")"
                    value="@vm.CountryISO"
                    placeholder="ISO-2"
-                   title="@T("Alpha-2 ISO3166-1 Code.")"/>
+                   title="@T("Alpha-2 ISO3166-1 Code.")" />
             <input type="radio"
                    id="[@vm.TerritoryId].IsProvince"
                    name="@(baseFieldName + "["+index+"]" + ".Value")"
@@ -73,21 +79,21 @@ index++;
             </label>
         </div>
         @if (0 < vm.ChildCountries + vm.ChildProvinces + vm.ChildCities) {
-        <div class="territory-children-counts">
-            @if (0 < vm.ChildCountries) {
-                <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
-            }
-            @if (0 < vm.ChildProvinces) {
-                <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
-            }
-            @if (0 < vm.ChildCities) {
-                <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
-            }
-        </div>
+            <div class="territory-children-counts">
+                @if (0 < vm.ChildCountries) {
+                    <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
+                }
+                @if (0 < vm.ChildProvinces) {
+                    <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
+                }
+                @if (0 < vm.ChildCities) {
+                    <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
+                }
+            </div>
         }
     </div>
     @*If the territory has children, we should display them too*@
-    @if(vm.Children.Any()) {
+    @if (vm.Children.Any()) {
         <div class="children-list">
             @foreach (var territory in vm.Children) {
                 @DisplayTerritory(territory)
@@ -98,7 +104,7 @@ index++;
     
     }
 @if (hierarchy != null && hierarchy.Territories.Any()) {
-    // Initially only show the top level
+    // Initially only show the top level?
     // Each territory may be marked as Country, Province or City 
     <div class="territories-list">
         @foreach(var territory in Model.TopLevel) {

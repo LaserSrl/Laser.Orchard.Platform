@@ -30,7 +30,12 @@
                 input[type=text] {
                     &.iso-alpha-2 {
                         width: 4em;
+                        display: none;
                     }
+                }
+                
+                .country-radio:checked ~ input[type=text].iso-alpha-2 {
+                    display: inline-block;
                 }
             }
 

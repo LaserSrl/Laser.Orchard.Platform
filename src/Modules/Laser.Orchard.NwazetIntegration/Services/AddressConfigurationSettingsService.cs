@@ -89,6 +89,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.SelectedCityTerritoryRecords";
         private const string _hierarchyForCultureBaseCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.GetConfiguredHierarchy.";
+        private const string _countryCodesCacheKey =
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.GetCountryISOCode";
         #endregion
 
         private T GetFromCache<T>(string cacheKey, Func<T> method) {
@@ -219,6 +221,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                         .GetTerritories(SelectedCityIds);
                 });
             }
+        }
+
+        public string GetCountryISOCode(int id) {
+            var allCodes = GetFromCache(_countryCodesCacheKey, () => {
+                return Settings != null
+                    ? Settings.CountryCodes
+                    : new CountryAlpha2[] { };
+            });
+            return allCodes
+                .FirstOrDefault(cc => cc.TerritoryId == id)
+                .ISOCode ?? string.Empty;
         }
     }
 }

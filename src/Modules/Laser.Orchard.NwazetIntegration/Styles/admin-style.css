@@ -12,7 +12,10 @@
     .territories-list .single-territory .territory-info .radio-buttons:after {
       content: ')'; }
     .territories-list .single-territory .territory-info .radio-buttons input[type=text].iso-alpha-2 {
-      width: 4em; }
+      width: 4em;
+      display: none; }
+    .territories-list .single-territory .territory-info .radio-buttons .country-radio:checked ~ input[type=text].iso-alpha-2 {
+      display: inline-block; }
   .territories-list .single-territory .territory-info .territory-children-counts {
     display: block;
     font-size: smaller;

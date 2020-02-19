@@ -83,12 +83,15 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 if (updater.TryUpdateModel(model, Prefix, null, null)) {
                     // TODO
                     // model.TerritoryTypeMap will contain the desired configuration
-                    part.SerializedSelectedCountries = 
+                    part.SerializedSelectedCountries =
                         JsonConvert.SerializeObject(GetCountries(model));
                     part.SerializedSelectedProvinces =
                         JsonConvert.SerializeObject(GetProvinces(model));
                     part.SerializedSelectedCities =
                         JsonConvert.SerializeObject(GetCities(model));
+                    // model.TerritoryISOCode contains the iso codes
+                    part.SerializedCountryCodes =
+                        JsonConvert.SerializeObject(GetISOCodes(model));
                 }
             }
             return Editor(part, shapeHelper);
@@ -108,6 +111,18 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             return vm.TerritoryTypeMap
                 .Where(kvp => kvp.Value == type)
                 .Select(kvp => kvp.Key);
+        }
+
+        private IEnumerable<CountryAlpha2> GetISOCodes(AddressConfigurationSiteSettingsPartViewModel vm) {
+            return vm.TerritoryISOCode
+                .Where(kvp => !string.IsNullOrWhiteSpace(kvp.Value)
+                    && kvp.Value.Length >= 2) // alpha-2 is 2 characters
+                .Select(kvp => new CountryAlpha2 {
+                    TerritoryId = kvp.Key,
+                    ISOCode = kvp.Value
+                    .Substring(0, 2) // alpha-2 is 2 characters
+                    .ToUpperInvariant() // Capitalize for clarity
+                });
         }
 
         private AddressConfigurationSiteSettingsPartViewModel CreateBaseVM(

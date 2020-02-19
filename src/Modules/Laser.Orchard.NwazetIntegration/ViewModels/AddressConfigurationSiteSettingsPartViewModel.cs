@@ -14,6 +14,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public AddressConfigurationSiteSettingsPartViewModel() {
             AllHierarchies = new List<TerritoryHierarchyPart>();
             TerritoryTypeMap = new Dictionary<int, TerritoryTypeForAddress>();
+            TerritoryISOCode = new Dictionary<int, string>();
         }
         public AddressConfigurationSiteSettingsPartViewModel(
             AddressConfigurationSiteSettingsPart part, bool detail = false) : this(){
@@ -69,9 +70,17 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// Value: territory type (None/Country/Province/City)
         /// </summary>
         public IDictionary<int, TerritoryTypeForAddress> TerritoryTypeMap { get; set; }
+        /// <summary>
+        /// Dictionary for ISO codes for territories. We may be able to set codes for all
+        /// territories, but the intent for now is to have it for countries only.
+        /// Key: Id of TerritoryInternalRecord
+        /// Value: Alpha-2 ISO 3166-1 code
+        /// </summary>
+        public IDictionary<int, string> TerritoryISOCode { get; set; }
 
         public void InitializeTerritories() {
             TopLevel = CountriesHierarchy.TopLevel
+                // Create the top level and recursively create the whole hierarchy
                 .Select(ci => {
                     var tp = ci.As<TerritoryPart>();
                     return tp != null
@@ -79,12 +88,13 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                             tp, SelectedCountries, SelectedProvinces, SelectedCities, CountryCodes)
                         : null;
                 })
+                // remove nulls (sanity check)
                 .Where(tvm => tvm != null);
-
+            // Initialize the dictionaries we'll use to edit the configuration
             TerritoryTypeMap = new Dictionary<int, TerritoryTypeForAddress>();
             foreach (var territory in CountriesHierarchy.Territories) {
                 var part = territory.As<TerritoryPart>();
-                if (part != null) {
+                if (part != null) { // sanity check
                     var tType = TerritoryTypeForAddress.None;
                     var internalId = part.Record.TerritoryInternalRecord.Id;
                     if (SelectedCountries.Contains(internalId)) {
@@ -95,6 +105,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                         tType = TerritoryTypeForAddress.City;
                     }
                     TerritoryTypeMap.Add(internalId, tType);
+                    var iso = CountryCodes
+                        // default is a struct with ISOCode = null
+                        .FirstOrDefault(cc => cc.TerritoryId == internalId)
+                        .ISOCode ?? string.Empty;
+                    TerritoryISOCode.Add(internalId, iso);
                 }
             }
         }
