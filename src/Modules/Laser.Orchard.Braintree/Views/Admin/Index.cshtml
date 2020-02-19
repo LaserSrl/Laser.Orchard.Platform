@@ -33,6 +33,11 @@
         @Html.TextBoxFor(m => m.PrivateKey, new { @class = "text large" })
         <span class="hint">@T("The Private Key assigned by Braintree during merchant registration.")</span>
     </div>
+     <div>
+        @Html.CheckBoxFor(m => m.AutomaticPayment, new { @class = "check-box" })
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.AutomaticPayment)">@T("Automatic Payment") </label>
+        <span class="hint">@T("If checked, the payment starts automatically.")</span>
+    </div>
 </fieldset>
 
     <button class="primaryAction" type="submit">@T("Save")</button>
