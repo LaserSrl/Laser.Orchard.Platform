@@ -37,5 +37,10 @@ namespace Laser.Orchard.Braintree.Models
             get { return this.Retrieve(x => x.MerchantAccountId); }
             set { this.Store(x => x.MerchantAccountId, value); }
         }
+
+        public bool AutomaticPayment {
+            get { return this.Retrieve(x => x.AutomaticPayment); }
+            set { this.Store(x => x.AutomaticPayment, value); }
+        }
     }
 }
