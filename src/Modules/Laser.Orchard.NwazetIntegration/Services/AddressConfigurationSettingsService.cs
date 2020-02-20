@@ -90,7 +90,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private const string _hierarchyForCultureBaseCacheKey =
             "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.GetConfiguredHierarchy.";
         private const string _countryCodesCacheKey =
-            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.GetCountryISOCode";
+            "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationSettingsService.CountryISOCodes";
         #endregion
 
         private T GetFromCache<T>(string cacheKey, Func<T> method) {
@@ -223,13 +223,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
+        public IEnumerable<CountryAlpha2> CountryISOCodes {
+            get {
+                return GetFromCache(_countryCodesCacheKey, () => {
+                    return Settings != null
+                        ? Settings.CountryCodes
+                        : new CountryAlpha2[] { };
+                });
+            }
+        }
+
         public string GetCountryISOCode(int id) {
-            var allCodes = GetFromCache(_countryCodesCacheKey, () => {
-                return Settings != null
-                    ? Settings.CountryCodes
-                    : new CountryAlpha2[] { };
-            });
-            return allCodes
+            return CountryISOCodes
                 .FirstOrDefault(cc => cc.TerritoryId == id)
                 .ISOCode ?? string.Empty;
         }

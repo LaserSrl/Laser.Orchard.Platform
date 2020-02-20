@@ -295,6 +295,8 @@ AddressConfiguration.prototype = {
                                 city = el.find(options.citiesInput);
                                 // set the text to the previous text
                                 city.val(cityName);
+                                // unset the cityId field
+                                el.find(options.cityId).val('0');
                             }
                             // call delegates?
                             if (options.getCities.after) {
@@ -409,6 +411,8 @@ AddressConfiguration.prototype = {
                             province = el.find(options.provincesInput);
                             // set the text to the previous text
                             province.val(provinceName);
+                            // unset the provinceId field
+                            el.find(options.provinceId).val('0');
                         }
                         // call delegates?
                         if (options.getProvinces.after) {
@@ -484,6 +488,10 @@ $.addressConfiguration = {
          * Use selected city to limit choice of province
          * */
         cityCommandsProvince: true,
+        /* *
+         * Plug in handlers
+         * */
+
     }
 };
 $.fn.addressConfiguration = function (options) {
@@ -551,6 +559,9 @@ $.fn.resetAddress = function (options, values) {
         console.error('Url to get provinces is required.');
         return;
     }
+
+    // set options as attributes for the html element
+    containerDiv.attr("niac-options", JSON.stringify(options));
 
     niAC.reset(containerDiv, options, values);
 
