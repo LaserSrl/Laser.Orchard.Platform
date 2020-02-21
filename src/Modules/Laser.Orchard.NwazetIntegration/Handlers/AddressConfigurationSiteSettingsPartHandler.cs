@@ -23,6 +23,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             // Evict cached content when updated, removed or destroyed.
             OnUpdated<AddressConfigurationSiteSettingsPart>(
                 (context, part) => Invalidate());
+            OnImported<AddressConfigurationSiteSettingsPart>(
+                (context, part) => Invalidate());
             OnPublished<AddressConfigurationSiteSettingsPart>(
                 (context, part) => Invalidate());
             OnRemoved<AddressConfigurationSiteSettingsPart>(

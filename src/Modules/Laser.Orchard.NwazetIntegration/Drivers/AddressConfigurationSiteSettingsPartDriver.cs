@@ -5,6 +5,7 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Controllers;
 using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Services;
 using Nwazet.Commerce.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -23,13 +24,16 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         private readonly IContentManager _contentManager;
         private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
 
         public AddressConfigurationSiteSettingsPartDriver(
             IContentManager contentManager,
-            IAddressConfigurationService addressConfigurationService) {
+            IAddressConfigurationService addressConfigurationService,
+            ITerritoriesRepositoryService territoriesRepositoryService) {
 
             _contentManager = contentManager;
             _addressConfigurationService = addressConfigurationService;
+            _territoriesRepositoryService = territoriesRepositoryService;
         }
 
         protected override string Prefix {
@@ -151,25 +155,34 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         protected override void Exporting(
             AddressConfigurationSiteSettingsPart part, ExportContentContext context) {
+            // "normal" export for settings would export all the part's properties
+            // (that are base types) in attributes of the XElement. Then it would just
+            // parse them on import. However, for this instance that would break things
+            // because:
+            // - The ShippingCountriesHierarchyId should be handled through the corresponding
+            //   ContentItem's Identity.
+            // - The arrays for the territories and the ISO codes use, within the application
+            //   the Id of the record, but to "map" to different tenants they should use
+            //   its name.
             var root = context.Element(part.PartDefinition.Name);
             // base configuration
             var hierarchy = _contentManager
                 .Get<TerritoryHierarchyPart>(part.ShippingCountriesHierarchyId);
             var hierarchyIdentity = _contentManager
                 .GetItemMetadata(hierarchy).Identity;
-            root.SetAttributeValue("ShippingCountriesHierarchyId", hierarchyIdentity);
+            root.SetAttributeValue("ShippingCountriesHierarchyIdentity", hierarchyIdentity);
             // details configuration
-            AddTerritoryElements(root, new TerritoryExportContext {
+            ExportTerritoryElements(root, new TerritoryExportContext {
                 Ids = part.SelectedCountries,
                 ArrayName = "SelectedCountries",
                 ElementName = "SelectedCountry"
             });
-            AddTerritoryElements(root, new TerritoryExportContext {
+            ExportTerritoryElements(root, new TerritoryExportContext {
                 Ids = part.SelectedProvinces,
                 ArrayName = "SelectedProvinces",
                 ElementName = "SelectedProvince"
             });
-            AddTerritoryElements(root, new TerritoryExportContext {
+            ExportTerritoryElements(root, new TerritoryExportContext {
                 Ids = part.SelectedCities,
                 ArrayName = "SelectedCities",
                 ElementName = "SelectedCity"
@@ -189,8 +202,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                     })
                     .ToArray()));
         }
-
-        private void AddTerritoryElements(XElement root, TerritoryExportContext context) {
+        private void ExportTerritoryElements(XElement root, TerritoryExportContext context) {
             // our int[] should be exported as strings for the names of the
             // TerritoryInternalRecords
             var tNames = context.Ids
@@ -219,8 +231,12 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             public string ArrayName { get; set; }
             public string ElementName { get; set; }
         }
-        protected override void Importing(
+        protected override void Imported(
             AddressConfigurationSiteSettingsPart part, ImportContentContext context) {
+            // We need to do this in the Imported method, rather than the usual Importing
+            // because for settings, the default executor would try to parse automatic
+            // attributes after Importing and before Imported. Here we need to override
+            // the results of that based on the actual information we want to be copying.
             var root = context.Data.Element(part.PartDefinition.Name);
             // Don't do anything if the tag is not specified.
             if (root == null) {
@@ -230,11 +246,59 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             // base configuration
             context.ImportAttribute(
                 part.PartDefinition.Name,
-                "ShippingCountriesHierarchyId",
+                "ShippingCountriesHierarchyIdentity",
                 identity =>
                     part.ShippingCountriesHierarchyId = context.GetItemFromSession(identity).Id);
             // details configuration
-            
+            part.SerializedSelectedCountries =
+                JsonConvert.SerializeObject(ImportTerritoryElements(root, new TerritoryExportContext {
+                    ArrayName = "SelectedCountries",
+                    ElementName = "SelectedCountry"
+                }));
+            part.SerializedSelectedProvinces =
+                JsonConvert.SerializeObject(ImportTerritoryElements(root, new TerritoryExportContext {
+                    ArrayName = "SelectedProvinces",
+                    ElementName = "SelectedProvince"
+                }));
+            part.SerializedSelectedCities =
+                JsonConvert.SerializeObject(ImportTerritoryElements(root, new TerritoryExportContext {
+                    ArrayName = "SelectedCities",
+                    ElementName = "SelectedCity"
+                }));
+            // country Codes
+            part.SerializedCountryCodes =
+                JsonConvert.SerializeObject(root
+                    .Element("CountryCodes")
+                    .Elements("CountryCode")
+                    .Select(xel => {
+                        // read territory name and iso code
+                        var name = xel.Attr("TerritoryName");
+                        var code = xel.Attr("ISOCode");
+                        // configured hierarchy may not be set yet, so we should
+                        // just get the TerritoryInternalRecord itself
+                        var tir = _territoriesRepositoryService.GetTerritoryInternal(name);
+                        return new CountryAlpha2 {
+                            TerritoryId = tir != null ? tir.Id : 0,
+                            ISOCode = code
+                        };
+                    })
+                    .Where(cc => cc.TerritoryId > 0)
+                    .ToArray());
+        }
+        private int[] ImportTerritoryElements(XElement root, TerritoryExportContext context) {
+            var arrayElement = root.Element(context.ArrayName);
+            return arrayElement
+                .Elements(context.ElementName)
+                .Select(xel => {
+                    // read territory name
+                    var name = xel.Attr("Name");
+                    // configured hierarchy may not be set yet, so we should
+                    // just get the TerritoryInternalRecord itself
+                    var tir = _territoriesRepositoryService.GetTerritoryInternal(name);
+                    return tir != null ? tir.Id : 0;
+                })
+                .Where(i => i > 0)
+                .ToArray();
         }
     }
 }
