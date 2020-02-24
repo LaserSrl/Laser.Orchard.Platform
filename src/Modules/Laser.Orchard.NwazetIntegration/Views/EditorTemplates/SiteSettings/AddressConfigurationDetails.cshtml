@@ -14,7 +14,7 @@
     baseFieldName = Html.FieldNameFor(m => m.TerritoryTypeMap);
     codeFieldName = Html.FieldNameFor(m => m.TerritoryISOCode);
 }
-@helper DisplayTerritory(AddressConfigurationTerritoryViewModel vm) { 
+@helper DisplayTerritory(AddressConfigurationTerritoryViewModel vm, bool isChild = false) { 
 var radioChecks = new bool[4];
 radioChecks[0] = vm.IsCountry;
 radioChecks[1] = vm.IsProvince;
@@ -78,25 +78,26 @@ index++;
                 @T("None")
             </label>
         </div>
-        @if (0 < vm.ChildCountries + vm.ChildProvinces + vm.ChildCities) {
-            <div class="territory-children-counts">
-                @if (0 < vm.ChildCountries) {
-                    <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
-                }
-                @if (0 < vm.ChildProvinces) {
-                    <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
-                }
-                @if (0 < vm.ChildCities) {
-                    <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
-                }
-            </div>
+        @if (vm.Children.Any()) {
+        <div class="territory-children-counts">
+            <div class="single-count">@T("Children: {0}", vm.AllChildrenCount)</div>
+            @if (0 < vm.ChildCountries) {
+                <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
+            }
+            @if (0 < vm.ChildProvinces) {
+                <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
+            }
+            @if (0 < vm.ChildCities) {
+                <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
+            }
+        </div>
         }
     </div>
     @*If the territory has children, we should display them too*@
     @if (vm.Children.Any()) {
-        <div class="children-list">
+        <div class="children-list" style="display:none;">
             @foreach (var territory in vm.Children) {
-                @DisplayTerritory(territory)
+                @DisplayTerritory(territory, true)
             }
         </div>
     }
@@ -112,4 +113,14 @@ index++;
         }
     </div>
     
+}
+
+@using(Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.territory-children-counts').on('click', function() {
+                $(this).parent().parent().find('>.children-list').toggle();
+            });
+        });
+    </script>
 }

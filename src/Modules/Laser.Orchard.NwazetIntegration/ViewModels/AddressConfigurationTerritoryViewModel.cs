@@ -87,6 +87,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public string CountryISO { get; set; }
 
+        public int AllChildrenCount =>
+            // count of this object's direct children
+            Children.Count()
+            // and all their children
+            + Children.Sum(vm => vm.AllChildrenCount);
         public int ChildCountries =>
             // how many of this object's children are Countries?
             Children.Count(vm => vm.IsCountry)
