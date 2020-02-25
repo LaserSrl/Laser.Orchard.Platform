@@ -78,9 +78,9 @@ index++;
                 @T("None")
             </label>
         </div>
-        @if (vm.Children.Any()) {
-        <div class="territory-children-counts">
-            <div class="single-count">@T("Children: {0}", vm.AllChildrenCount)</div>
+        @if (vm.ChildrenCount > 0) {
+        <div class="territory-children-counts" territory-id="@vm.TerritoryId">
+            <div class="single-count">@T("Children: {0}", vm.ChildrenCount)</div>
             @if (0 < vm.ChildCountries) {
                 <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
             }
@@ -94,13 +94,13 @@ index++;
         }
     </div>
     @*If the territory has children, we should display them too*@
-    @if (vm.Children.Any()) {
+    @*@if (vm.Children.Any()) {
         <div class="children-list" style="display:none;">
             @foreach (var territory in vm.Children) {
                 @DisplayTerritory(territory, true)
             }
         </div>
-    }
+    }*@
 </div>
     
     }
@@ -117,9 +117,162 @@ index++;
 
 @using(Script.Foot()) {
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('.territory-children-counts').on('click', function() {
-                $(this).parent().parent().find('>.children-list').toggle();
+        $(document).ready(function () {
+            var territoryIndex = @index  ;
+            var _handleClick = function (el) {
+                $('.territory-children-counts').off('click');
+                // el is the clicked element
+                $.post('@Url.Action("GetChildren", "AddressConfigurationAdmin", new { area = "Laser.Orchard.NwazetIntegration" })',
+                    {
+                    territoryId: $(el).attr('territory-id'),
+                    __RequestVerificationToken: $(el)
+                        .closest("form")
+                        .find("input[name='__RequestVerificationToken']")
+                        .val()
+                })
+                    .done(function (data) {
+                        if (data.Success) {
+                            // we need to draw the next hierarchy level inside
+                            // $(el).parent().parent().find('>.children-list')
+                            if (data.Territories && data.Territories.length && data.Territories.length > 0) {
+                                var territoriesDiv = document.createElement('div');
+                                territoriesDiv.setAttribute("class", "children-list");
+                                for (i = 0; i < data.Territories.length; i++) {
+                                    var thisIndex = ++territoryIndex;
+                                    // 1. main div for the territory
+                                    var territoryDiv = document.createElement('div');
+                                    territoryDiv.setAttribute("class", "single-territory");
+                                    // hidden inputs for properties that we are editing
+                                    // 1.1 Model.TerritoryTypeMap
+                                    var typeMapHidden = document.createElement('input');
+                                    typeMapHidden.setAttribute("type", "hidden");
+                                    typeMapHidden.setAttribute("name", "@(baseFieldName)[" + thisIndex+"].Key");
+                                    typeMapHidden.setAttribute("value", data.Territories[i].Id);
+                                    territoryDiv.appendChild(typeMapHidden);
+                                    // 1.2 Model.TerritoryISOCode
+                                    var isoCodeHidden = document.createElement('input');
+                                    isoCodeHidden.setAttribute("type", "hidden");
+                                    isoCodeHidden.setAttribute("name", "@(codeFieldName)[" + thisIndex+"].Key");
+                                    isoCodeHidden.setAttribute("value", data.Territories[i].Id);
+                                    territoryDiv.appendChild(isoCodeHidden);
+                                    // 1.3 div for this territory's information
+                                    var tInfoDiv = document.createElement('div');
+                                    tInfoDiv.setAttribute("class", "territory-info");
+                                    // 1.3.1 title
+                                    var tTitleDiv = document.createElement('div');
+                                    tTitleDiv.setAttribute("class", "territory-text");
+                                    tTitleDiv.appendChild(document.createTextNode(data.Territories[i].DisplayText));
+                                    tInfoDiv.appendChild(tTitleDiv);
+                                    // 1.3.2 buttons to configure territory type
+                                    var radioDiv = document.createElement('div');
+                                    radioDiv.setAttribute("class", "radio-buttons");
+                                    // 1.3.2.1 IsCountry
+                                    var countryRadio = document.createElement('input');
+                                    countryRadio.setAttribute("type", "radio");
+                                    countryRadio.setAttribute("class", "country-radio");
+                                    countryRadio.setAttribute("id", "[" + data.Territories[i].Id + "].IsCountry");
+                                    countryRadio.setAttribute("name", "@(baseFieldName)[" + thisIndex+"].Value");
+                                    countryRadio.setAttribute("value", "@TerritoryTypeForAddress.Country");
+                                    if (data.Territories[i].IsCountry) {
+                                        countryRadio.setAttribute("checked", "checked");
+                                    }
+                                    radioDiv.appendChild(countryRadio);
+                                    // 1.3.2.2 Label for IsCountry
+                                    var countryLabel = document.createElement('label');
+                                    countryLabel.setAttribute("for", "[" + data.Territories[i].Id + "].IsCountry");
+                                    countryLabel.setAttribute("class", "radio-label");
+                                    countryLabel.appendChild(document.createTextNode("@T("Country")"));
+                                    radioDiv.appendChild(countryLabel);
+                                    // 1.3.2.3 Input for ISO 3166 alpha-2 code
+                                    var isoCodeInput = document.createElement('input');
+                                    isoCodeInput.setAttribute("type", "text");
+                                    isoCodeInput.setAttribute("class", "iso-alpha-2");
+                                    isoCodeInput.setAttribute("id", "[" + data.Territories[i].Id + "].CountryISO");
+                                    isoCodeInput.setAttribute("name", "@(codeFieldName)[" + thisIndex+"].Value");
+                                    isoCodeInput.setAttribute("value", data.Territories[i].CountryISO);
+                                    isoCodeInput.setAttribute("placeholder", "ISO-2");
+                                    isoCodeInput.setAttribute("title", "@T("Alpha-2 ISO3166-1 Code.")");
+                                    radioDiv.appendChild(isoCodeInput);
+                                    // 1.3.2.4 IsProvince
+                                    var provinceRadio = document.createElement('input');
+                                    provinceRadio.setAttribute("type", "radio");
+                                    provinceRadio.setAttribute("id", "[" + data.Territories[i].Id + "].IsProvince");
+                                    provinceRadio.setAttribute("name", "@(baseFieldName)[" + thisIndex+"].Value");
+                                    provinceRadio.setAttribute("value", "@TerritoryTypeForAddress.Province");
+                                    if (data.Territories[i].IsProvince) {
+                                        provinceRadio.setAttribute("checked", "checked");
+                                    }
+                                    radioDiv.appendChild(provinceRadio);
+                                    // 1.3.2.5 Label for IsProvince
+                                    var provinceLabel = document.createElement('label');
+                                    provinceLabel.setAttribute("for", "[" + data.Territories[i].Id + "].IsProvince");
+                                    provinceLabel.setAttribute("class", "radio-label");
+                                    provinceLabel.appendChild(document.createTextNode("@T("Province")"));
+                                    radioDiv.appendChild(provinceLabel);
+                                    // 1.3.2.6 IsCity
+                                    var cityRadio = document.createElement('input');
+                                    cityRadio.setAttribute("type", "radio");
+                                    cityRadio.setAttribute("id", "[" + data.Territories[i].Id + "].IsCity");
+                                    cityRadio.setAttribute("name", "@(baseFieldName)[" + thisIndex+"].Value");
+                                    cityRadio.setAttribute("value", "@TerritoryTypeForAddress.City");
+                                    if (data.Territories[i].IsCity) {
+                                        cityRadio.setAttribute("checked", "checked");
+                                    }
+                                    radioDiv.appendChild(cityRadio);
+                                    // 1.3.2.7 Label for IsCity
+                                    var cityLabel = document.createElement('label');
+                                    cityLabel.setAttribute("for", "[" + data.Territories[i].Id + "].IsCity");
+                                    cityLabel.setAttribute("class", "radio-label");
+                                    cityLabel.appendChild(document.createTextNode("@T("City")"));
+                                    radioDiv.appendChild(cityLabel);
+                                    // 1.3.2.8 IsNone
+                                    var noneRadio = document.createElement('input');
+                                    noneRadio.setAttribute("type", "radio");
+                                    noneRadio.setAttribute("id", "[" + data.Territories[i].Id + "].IsNone");
+                                    noneRadio.setAttribute("name", "@(baseFieldName)[" + thisIndex+"].Value");
+                                    noneRadio.setAttribute("value", "@TerritoryTypeForAddress.None");
+                                    if (data.Territories[i].IsNone) {
+                                        noneRadio.setAttribute("checked", "checked");
+                                    }
+                                    radioDiv.appendChild(noneRadio);
+                                    // 1.3.2.9 Label for IsNone
+                                    var noneLabel = document.createElement('label');
+                                    noneLabel.setAttribute("for", "[" + data.Territories[i].Id + "].IsNone");
+                                    noneLabel.setAttribute("class", "radio-label");
+                                    noneLabel.appendChild(document.createTextNode("@T("None")"));
+                                    radioDiv.appendChild(noneLabel);
+                                    tInfoDiv.appendChild(radioDiv);
+                                    // 1.3.3 Children
+                                    if (data.Territories[i].HasChildren) {
+                                        var childrenDiv = document.createElement('div');
+                                        childrenDiv.setAttribute("class", "territory-children-counts");
+                                        childrenDiv.setAttribute("territory-id", data.Territories[i].Id);
+                                        // 1.3.3.1 children count
+                                        var countDiv = document.createElement('div');
+                                        countDiv.setAttribute("class", "single-count");
+                                        countDiv.appendChild(document.createTextNode("@T("Children: ") " + data.Territories[i].ChildrenCount));
+                                        childrenDiv.appendChild(countDiv);
+                                        tInfoDiv.appendChild(childrenDiv);
+                                    }
+                                    territoryDiv.appendChild(tInfoDiv);
+
+                                    territoriesDiv.appendChild(territoryDiv);
+                                }
+                                $(el).parent().parent()[0].appendChild(territoriesDiv);
+                            }
+                        }
+                    })
+                    .fail(function () { })
+                    .always(function () {
+                        $('.territory-children-counts').on('click', function () {
+                            _handleClick(this);
+                            //$(this).parent().parent().find('>.children-list').toggle();
+                        });
+                    });
+            };
+            $('.territory-children-counts').on('click', function () {
+                _handleClick(this);
+                //$(this).parent().parent().find('>.children-list').toggle();
             });
         });
     </script>
