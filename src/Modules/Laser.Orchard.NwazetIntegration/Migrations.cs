@@ -29,5 +29,38 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 1;
         }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("CountryId")
+            );
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("CityId")
+            );
+            SchemaBuilder.AlterTable("AddressRecord", table => table
+                .AddColumn<int>("ProvinceId")
+            );
+
+            return 2;
+        }
+
+        public int UpdateFrom2() {
+            SchemaBuilder.CreateTable("AddressOrderPartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("ShippingCountryName")
+                .Column<int>("ShippingCountryId")
+                .Column<string>("ShippingCityName")
+                .Column<int>("ShippingCityId")
+                .Column<string>("ShippingProvinceName")
+                .Column<int>("ShippingProvinceId")
+                .Column<string>("BillingCountryName")
+                .Column<int>("BillingCountryId")
+                .Column<string>("BillingCityName")
+                .Column<int>("BillingCityId")
+                .Column<string>("BillingProvinceName")
+                .Column<int>("BillingProvinceId"));
+
+            return 3;
+        }
     }
 }

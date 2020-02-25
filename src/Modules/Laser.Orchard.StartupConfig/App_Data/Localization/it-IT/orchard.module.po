@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -591,6 +591,10 @@ msgstr "Risposta"
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Success"
 msgstr "Successo"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
+msgid "The data object of the response, the data must be in Json format es: {{\"ErrorType\":\"TicketError\"}}. "
+msgstr "L'oggetto di dati della risposta. I dati devono essere in formato Json. E.g.: {{\"ErrorType\":\"TicketError\"}}."
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "The data object of the response."

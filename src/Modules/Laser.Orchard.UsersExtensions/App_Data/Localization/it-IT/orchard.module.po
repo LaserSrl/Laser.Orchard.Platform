@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -47,6 +47,10 @@ msgstr "Registrazione utente - Accettazione delle informative"
 msgctxt "~/Modules/Laser.Orchard.UsersExtensions/Views/EditorTemplates/Parts/UsersRegistrationSettings.cshtml"
 msgid "Users registration - policies acceptation"
 msgstr "Registrazione utenti - accettazione informative"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.AKUserActionsController"
+msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
+msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Email confirmed"

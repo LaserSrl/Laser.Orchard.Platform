@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -703,6 +703,14 @@ msgstr "Contenuto del file"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Manage Manifest File"
 msgstr "Gestisci il file manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Manage Manifest Files"
+msgstr "Gestisci Files Manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Save File apple-app-site-association"
