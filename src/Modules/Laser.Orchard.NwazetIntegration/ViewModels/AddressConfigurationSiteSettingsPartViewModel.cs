@@ -92,25 +92,23 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 .Where(tvm => tvm != null);
             // Initialize the dictionaries we'll use to edit the configuration
             TerritoryTypeMap = new Dictionary<int, TerritoryTypeForAddress>();
-            foreach (var territory in CountriesHierarchy.Territories) {
-                var part = territory.As<TerritoryPart>();
-                if (part != null) { // sanity check
-                    var tType = TerritoryTypeForAddress.None;
-                    var internalId = part.Record.TerritoryInternalRecord.Id;
-                    if (SelectedCountries.Contains(internalId)) {
-                        tType = TerritoryTypeForAddress.Country;
-                    } else if(SelectedProvinces.Contains(internalId)) {
-                        tType = TerritoryTypeForAddress.Province;
-                    } else if(SelectedCities.Contains(internalId)) {
-                        tType = TerritoryTypeForAddress.City;
-                    }
-                    TerritoryTypeMap.Add(internalId, tType);
-                    var iso = CountryCodes
-                        // default is a struct with ISOCode = null
-                        .FirstOrDefault(cc => cc.TerritoryId == internalId)
-                        .ISOCode ?? string.Empty;
-                    TerritoryISOCode.Add(internalId, iso);
+
+            foreach (var territory in CountriesHierarchy.Record.Territories) {
+                var tType = TerritoryTypeForAddress.None;
+                var internalId = territory.TerritoryInternalRecord.Id;
+                if (SelectedCountries.Contains(internalId)) {
+                    tType = TerritoryTypeForAddress.Country;
+                } else if (SelectedProvinces.Contains(internalId)) {
+                    tType = TerritoryTypeForAddress.Province;
+                } else if (SelectedCities.Contains(internalId)) {
+                    tType = TerritoryTypeForAddress.City;
                 }
+                TerritoryTypeMap.Add(internalId, tType);
+                var iso = CountryCodes
+                    // default is a struct with ISOCode = null
+                    .FirstOrDefault(cc => cc.TerritoryId == internalId)
+                    .ISOCode ?? string.Empty;
+                TerritoryISOCode.Add(internalId, iso);
             }
         }
 
