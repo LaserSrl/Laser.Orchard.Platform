@@ -1,0 +1,91 @@
+﻿.territories-list {
+    .single-territory {
+        padding-left: 30px;
+
+        .territory-info {
+            .territory-text {
+                display: inline-block;
+                font-weight: bold;
+            }
+
+            .radio-buttons {
+                display: inline-block;
+                font-size: smaller;
+                text-transform: uppercase;
+
+                &:before {
+                    content: '(';
+                }
+
+                &:after {
+                    content: ')';
+                }
+
+                input[type=radio] {
+                }
+
+                .radio-label {
+                }
+
+                input[type=text] {
+                    &.iso-alpha-2 {
+                        width: 4em;
+                        display: none;
+                    }
+                }
+                
+                .country-radio:checked ~ input[type=text].iso-alpha-2 {
+                    display: inline-block;
+                }
+            }
+
+            .territory-children-counts {
+                display: block;
+                font-size: smaller;
+                text-transform: uppercase;
+
+                &:before {
+                    content: '(';
+                }
+
+                &:after {
+                    content: ')';
+                }
+
+                .single-count {
+                    display: inline-block;
+                }
+
+                .countries-count {
+                }
+
+                .provinces-count {
+                }
+
+                .cities-count {
+                }
+            }
+        }
+
+        .children-list {
+        }
+    }
+}
+.advanced-addresses {
+    .order-address-editor {
+        .shipping-address {
+        }
+
+        .billing-address {
+        }
+
+        .address-editor{
+            .address-input{
+                display: inline-block;
+                .hint{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
