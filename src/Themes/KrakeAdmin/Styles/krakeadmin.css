@@ -9700,3 +9700,17 @@ ul.widgets h3 {
     margin: 0;
     padding: 0;
 }
+/* fix an issue with the style from TheAdmin theme*/
+.error {
+    padding: 4px 4px 4px 26px;
+}
+
+/* Placement Admin*/
+#placement .zone-container h2 {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#placement .zone-container h3 {
+    font-size: 15px;
+}

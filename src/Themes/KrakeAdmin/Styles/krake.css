@@ -891,7 +891,7 @@ input[type="number"]:focus {
     }
 
 @media(max-width:767px) {
-    .box-social-icone .link-social; {
+    .box-social-icone .link-social {
         height: 27px;
         width: 27px;
     }
@@ -956,7 +956,7 @@ input[type="number"]:focus {
 }
 
 @media(max-width:600px) {
-    .nav-tabs > li > a; {
+    .nav-tabs > li > a {
         padding: 0 5px;
     }
 
@@ -966,7 +966,7 @@ input[type="number"]:focus {
 }
 
 @media(max-width:500px) {
-    .nav-tabs > li; {
+    .nav-tabs > li {
         min-height: 65px;
     }
 
@@ -1042,19 +1042,19 @@ input[type="number"]:focus {
 }
 
 @media(max-width:1199px) {
-    .dashboard-box; {
+    .dashboard-box {
         height: 408px;
     }
 }
 
 @media(max-width:991px) {
-    .dashboard-box; {
+    .dashboard-box {
         height: 468px;
     }
 }
 
 @media(max-width:767px) {
-    .dashboard-box; {
+    .dashboard-box {
         height: 368px;
     }
 }
@@ -1317,6 +1317,20 @@ fieldset {
     position: relative;
 }
 
+.box.box-card {
+    border: 1px solid #d2d6de;
+    border-top: 3px solid #8eaebe;
+}
+
+    .box.box-card .box-header {
+        background-color: #f4f4f4;
+    }
+
+        .box.box-card .box-header h3 {
+            font-weight: bold;
+            color: #313534;
+        }
+
 .form-control {
     border-color: #d2d6de;
     border-radius: 0;
@@ -1478,7 +1492,7 @@ div#widgets-layer-visibility {
 
     #main li.widgets-other-layer h3 {
         /*display: block;*/
-        max-width:30%;
+        max-width: 30%;
     }
 }
 
@@ -1524,8 +1538,8 @@ li .widgets-other-layer form {
     top: unset;
     float: right;
     right: 5px;
-    max-width:35%;
-    top:0px;
+    max-width: 35%;
+    top: 0px;
 }
 /*--------------------------*/
 

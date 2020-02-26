@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +179,9 @@
       <DependentUpon>jquery.countdown.css</DependentUpon>
     </Content>
     <Content Include="Styles\popup-box.css" />
+    <Content Include="Styles\popup-box.min.css">
+      <DependentUpon>popup-box.css</DependentUpon>
+    </Content>
     <Content Include="Styles\Style.css" />
     <Content Include="Styles\Style.min.css">
       <DependentUpon>Style.css</DependentUpon>
@@ -345,6 +349,9 @@
     <Content Include="Views\Payment\Info.cshtml" />
     <Content Include="Views\Braintree\Index.cshtml" />
     <Content Include="packages.config" />
+    <Content Include="bundleconfig.json.bindings">
+      <DependentUpon>bundleconfig.json</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

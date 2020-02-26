@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -149,9 +150,20 @@
     <Content Include="Styles\Images\sfondo-krake.png" />
     <Content Include="Styles\Images\sfondo.png" />
     <Content Include="Styles\krake-navicon.css" />
+    <Content Include="Styles\krake-navicon.min.css">
+      <DependentUpon>krake-navicon.css</DependentUpon>
+    </Content>
     <Content Include="Styles\krake.css" />
     <Content Include="Styles\iconic-font.min.css" />
+    <Content Include="Styles\krake.min.css">
+      <DependentUpon>krake.css</DependentUpon>
+    </Content>
     <Content Include="Styles\krakeadmin.css" />
+    <None Include="bundleconfig.json" />
+    <None Include="Views\Card.cshtml" />
+    <Content Include="Styles\krakeadmin.min.css">
+      <DependentUpon>krakeadmin.css</DependentUpon>
+    </Content>
     <Content Include="Views\Dashboard\Admin\Index.cshtml" />
     <Content Include="Views\Document.cshtml" />
     <Content Include="Views\Layout.cshtml" />

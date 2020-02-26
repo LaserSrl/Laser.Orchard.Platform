@@ -2,6 +2,8 @@
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
 using Orchard;
+using Orchard.Localization;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public interface IExternalAuthenticationClient : IDependency {
@@ -19,5 +21,10 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         /// </summary>
         /// <returns></returns>
         bool RewriteRequest();
+        /// <summary>
+        /// Returns keys and labels of the additional attributes for this provider.
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<string, LocalizedString> GetAttributeKeys();
     }
 }

@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -273,6 +273,10 @@ msgid "Username"
 msgstr "Nome utente"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
 msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
 
@@ -297,8 +301,28 @@ msgid "External Service Association"
 msgstr "Associazione Servizi Esterni"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Password:"
 msgstr "Password"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Passwords are required to be a minimum of {0} characters in length."
@@ -307,6 +331,10 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Register"
 msgstr "Registra"
+
+msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "This user account will be linked to <b>{0}</b> when you login."
@@ -389,6 +417,10 @@ msgid "Not allowed to manage open authentication settings"
 msgstr "Non è permesso modificare le impostazioni di open authentication"
 
 msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
+msgid "Please set attributes of this provider."
+msgstr "Impostare gli attributi per questo provider."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Controllers.AdminController"
 msgid "Provider name already exists"
 msgstr "Il nome del provider esiste già"
 
@@ -431,6 +463,26 @@ msgstr "La tua richiesta di autenticazione non è andata a buon fine."
 msgctxt "Laser.Orchard.OpenAuthentication.Events.OpenAuthUserEventHandler"
 msgid "Your account has been merged with your previous account."
 msgstr "Il tuo account è stato unito al tuo account precedente."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Bundle ID"
+msgstr "Bundle ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Certificate file name (for instance: AuthKey_XXXXXXXXXX.p8) to be placed in App_Data/Sites/tenant folder"
+msgstr "Nome del file del certificato (per esempio: AuthKey_XXXXXXXXXX.p8) che deve trovarsi nella cartella App_Data/Sites/tenant"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Key ID"
+msgstr "Key ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Services ID"
+msgstr "Services ID"
+
+msgctxt "Laser.Orchard.OpenAuthentication.Services.Clients.AppleAuthenticationClient"
+msgid "Team ID"
+msgstr "Team ID"
 
 msgctxt "Laser.Orchard.OpenAuthentication.Services.OpenAuthMembershipServices"
 msgid "Auto Registered User"

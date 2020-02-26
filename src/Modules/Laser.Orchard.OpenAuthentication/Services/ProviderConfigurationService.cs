@@ -5,68 +5,94 @@ using Orchard;
 using Orchard.Data;
 using System;
 using Laser.Orchard.OpenAuthentication.ViewModels;
+using Orchard.Caching;
+using Laser.Orchard.OpenAuthentication.Services.Clients;
+using Orchard.Logging;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
-    public interface IProviderConfigurationService : ISingletonDependency {
+    public interface IProviderConfigurationService : IDependency {
         IEnumerable<ProviderConfigurationRecord> GetAll();
         ProviderConfigurationRecord Get(string providerName);
         void Delete(int id);
-        void Create(ProviderConfigurationCreateParams parameters);
+        int Create(ProviderConfigurationCreateParams parameters);
         bool VerifyUnicity(string providerName);
         bool VerifyUnicity(string providerName, int id);
         CreateProviderViewModel Get(Int32 id);
         void Edit(CreateProviderViewModel parameters);
+        List<ProviderAttributeViewModel> GetAttributes(int providerId);
+        void SaveAttributes(int providerId, List<ProviderAttributeViewModel> viewModel);
+        bool HasAttributes(string providerName);
     }
 
     public class ProviderConfigurationService : IProviderConfigurationService {
         private readonly IRepository<ProviderConfigurationRecord> _repository;
-        private IEnumerable<ProviderConfigurationRecord> _repositorystatic;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
+        private readonly IRepository<ProviderAttributeRecord> _repositoryAttributes;
+        private readonly IEnumerable<IExternalAuthenticationClient> _authenticationClients;
 
-        private IEnumerable<ProviderConfigurationRecord> RepositoryStatic {
-            get {
-                if(_repositorystatic == null) {
-                    syncRepositoryStatic();
-                }
-                return _repositorystatic;
-            }
-            set {
-                _repositorystatic = value;
-            }
-        }
-
-        public ProviderConfigurationService(IRepository<ProviderConfigurationRecord> repository) {
+        public ProviderConfigurationService(
+            IRepository<ProviderConfigurationRecord> repository, 
+            ICacheManager cacheManager, 
+            ISignals signals,
+            IRepository<ProviderAttributeRecord> repositoryAttributes,
+            IEnumerable<IExternalAuthenticationClient> authenticationClients) {
             _repository = repository;
-            RepositoryStatic = null;
+            _cacheManager = cacheManager;
+            _signals = signals;
+            _repositoryAttributes = repositoryAttributes;
+            _authenticationClients = authenticationClients;
+
+            Logger = NullLogger.Instance;
         }
 
+        public ILogger Logger { get; set; }
+
+        public IEnumerable<ProviderConfigurationRecord> GetProviders() {
+            try {
+                return _cacheManager.Get(
+                    "Laser.Orchard.OpenAuthentication.Providers",
+                    ctx => {
+                        ctx.Monitor(_signals.When("Laser.Orchard.OpenAuthentication.Providers.Changed"));
+                        return _repository.Table.ToList();
+                    });
+            }
+            catch(Exception ex) {
+                Logger.Error(ex, "An unexpected error occurred in GetProviders methode");
+                return new List<ProviderConfigurationRecord>();
+            }
+        }
         private void syncRepositoryStatic() {
-            RepositoryStatic = _repository.Table.ToList();
+            _signals.Trigger("Laser.Orchard.OpenAuthentication.Providers.Changed");
         }
 
         public IEnumerable<ProviderConfigurationRecord> GetAll() {
-            return RepositoryStatic;
+            return GetProviders();
         }
 
         public ProviderConfigurationRecord Get(string providerName) {
             if (providerName == null)
                 return null;
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName,StringComparison.OrdinalIgnoreCase));
         }
 
         public void Delete(int id) {
+            foreach(var dbAttr in _repositoryAttributes.Fetch(x => x.ProviderId == id)) {
+                _repositoryAttributes.Delete(dbAttr);
+            }
             _repository.Delete(_repository.Get(o => o.Id == id));
             syncRepositoryStatic();
         }
 
         public bool VerifyUnicity(string providerName) {
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase)) == null;
         }
         public bool VerifyUnicity(string providerName, int id) {
-            return RepositoryStatic.FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
+            return GetProviders().FirstOrDefault(o => o.ProviderName.Equals(providerName, StringComparison.OrdinalIgnoreCase) && o.Id != id) == null;
         }
 
-        public void Create(ProviderConfigurationCreateParams parameters) {
-            _repository.Create(new ProviderConfigurationRecord {
+        public int Create(ProviderConfigurationCreateParams parameters) {
+            var provider = new ProviderConfigurationRecord {
                 DisplayName = parameters.DisplayName,
                 ProviderName = parameters.ProviderName,
                 ProviderIdentifier = parameters.ProviderIdentifier,
@@ -74,12 +100,14 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                 ProviderIdKey = parameters.ProviderIdKey,
                 ProviderSecret = parameters.ProviderSecret,
                 IsEnabled = 1
-            });
+            };
+            _repository.Create(provider);
             syncRepositoryStatic();
+            return provider.Id;
         }
 
         public void Edit(CreateProviderViewModel parameters) {
-            var rec = RepositoryStatic.FirstOrDefault(o => o.Id == parameters.Id);
+            var rec = GetProviders().FirstOrDefault(o => o.Id == parameters.Id);
             rec.DisplayName = parameters.DisplayName;
             rec.IsEnabled = parameters.IsEnabled ? 1 : 0;
             rec.ProviderIdentifier = parameters.ProviderIdentifier;
@@ -94,7 +122,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
         public CreateProviderViewModel Get(Int32 id) {
             var cpvm = new CreateProviderViewModel();
-            var prec = RepositoryStatic.FirstOrDefault(o => o.Id == id);
+            var prec = GetProviders().FirstOrDefault(o => o.Id == id);
             cpvm.Id = prec.Id;
             cpvm.DisplayName = prec.DisplayName;
             cpvm.IsEnabled = prec.IsEnabled == 1;
@@ -104,6 +132,60 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             cpvm.ProviderName = prec.ProviderName;
             cpvm.ProviderSecret = prec.ProviderSecret;
             return cpvm;
+        }
+        public List<ProviderAttributeViewModel> GetAttributes(int providerId) {
+            var result = new List<ProviderAttributeViewModel>();
+            var provider = _repository.Get(providerId);
+            if(provider != null) {
+                var client = _authenticationClients.FirstOrDefault(x => x.ProviderName == provider.ProviderName);
+                if(client != null) {
+                    var original = _repositoryAttributes.Fetch(x => x.ProviderId == providerId).ToList();
+                    foreach(var item in client.GetAttributeKeys()) {
+                        var origValue = original.FirstOrDefault(x => x.AttributeKey == item.Key);
+                        result.Add(new ProviderAttributeViewModel() {
+                            AttributeKey = item.Key,
+                            AttributeValue = origValue != null ? origValue.AttributeValue : "",
+                            AttributeDescription = item.Value
+                        });
+                    }
+                }
+            }
+            return result;
+        }
+        public void SaveAttributes(int providerId, List<ProviderAttributeViewModel> attributes) {
+            var dbValues = _repositoryAttributes.Fetch(x => x.ProviderId == providerId);
+            //update or delete attributes that are already on db 
+            foreach (var dbAttr in dbValues) {
+                var viewAttr = attributes.FirstOrDefault(x => x.AttributeKey == dbAttr.AttributeKey);
+                if (viewAttr != null) {
+                    dbAttr.AttributeValue = viewAttr.AttributeValue;
+                    _repositoryAttributes.Update(dbAttr);
+                }
+                else {
+                    _repositoryAttributes.Delete(dbAttr);
+                }
+            }
+            //insert new attributes
+            foreach(var viewAttr in attributes) {
+                var dbAttr = dbValues.FirstOrDefault(x => x.AttributeKey == viewAttr.AttributeKey);
+                // no record on db => create one
+                if(dbAttr == null) {
+                    _repositoryAttributes.Create(new ProviderAttributeRecord() {
+                        ProviderId = providerId,
+                        AttributeKey = viewAttr.AttributeKey,
+                        AttributeValue = viewAttr.AttributeValue
+                    });
+                }
+            }
+        }
+        public bool HasAttributes(string providerName) {
+            var client = _authenticationClients.FirstOrDefault(x => x.ProviderName == providerName);
+            if(client != null) {
+                return client.GetAttributeKeys().Count > 0;
+            }
+            else {
+                return false;
+            }
         }
     }
 

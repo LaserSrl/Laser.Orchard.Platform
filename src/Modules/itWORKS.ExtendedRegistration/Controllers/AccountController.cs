@@ -35,12 +35,6 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         public Localizer T { get; set; }
         dynamic Shape { get; set; }
 
-        int MinPasswordLength {
-            get {
-                return _membershipService.GetSettings().GetMinimumPasswordLength();
-            }
-        }
-
         public AccountController(
           IAuthenticationService authenticationService,
           IMembershipService membershipService,
@@ -70,12 +64,16 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         [AlwaysAccessible]
         public ActionResult Register() {
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
 
-            ViewData["PasswordLength"] = MinPasswordLength;
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 
@@ -97,11 +95,16 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                 returnUrl = Request.QueryString["ReturnUrl"];
             }
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
-            ViewData["PasswordLength"] = MinPasswordLength;
+
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 

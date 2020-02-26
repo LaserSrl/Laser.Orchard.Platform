@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - fr-FR
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }

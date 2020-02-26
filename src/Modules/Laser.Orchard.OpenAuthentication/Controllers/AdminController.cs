@@ -81,22 +81,20 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
         public ActionResult Edit(int id) {
             if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage open authentication settings")))
                 return new HttpUnauthorizedResult();
-            CreateProviderViewModel pv = _providerConfigurationService.Get(id);
+            var pv = _providerConfigurationService.Get(id);
             pv.ProviderNameList = getAllProviderName(pv.ProviderName);
-            return View((Object)pv);
+            pv.Attributes = _providerConfigurationService.GetAttributes(id);
+            return View(pv);
         }
 
 
         private SelectList getAllProviderName(string selectedvalue="") {
             var instances = _externalAuthenticationClients;
-
-
             List<SelectListItem> lSelectList = new List<SelectListItem>();
             foreach (var instance in instances.OrderByDescending(p=>p.ProviderName)) {
                 lSelectList.Insert(0, new SelectListItem() { Value = instance.ProviderName, Text = instance.ProviderName });
             }
             return new SelectList((IEnumerable<SelectListItem>)lSelectList, "Value", "Text", selectedvalue);
-
         }
 
         [HttpPost, ActionName("Edit")]
@@ -109,12 +107,11 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
                 ModelState.AddModelError("ProviderName", T("Provider name already exists").ToString());
 
                 viewModel.ProviderNameList = getAllProviderName(viewModel.ProviderName);
-                return View((Object)viewModel);
+                return View(viewModel);
             }
             else {
                 _providerConfigurationService.Edit(viewModel);
-
-
+                _providerConfigurationService.SaveAttributes(viewModel.Id, viewModel.Attributes);
                 return RedirectToAction("Index");
             }
         }
@@ -122,8 +119,9 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
         public ActionResult CreateProvider() {
             if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage open authentication settings")))
                 return new HttpUnauthorizedResult();
-            CreateProviderViewModel pv = new CreateProviderViewModel();
-            pv.ProviderNameList = getAllProviderName();
+            CreateProviderViewModel pv = new CreateProviderViewModel() {
+                ProviderNameList = getAllProviderName()
+            };
             return View(pv);
         }
 
@@ -142,7 +140,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
                 return View(viewModel);
             }
 
-            _providerConfigurationService.Create(new ProviderConfigurationCreateParams {
+            var id = _providerConfigurationService.Create(new ProviderConfigurationCreateParams {
                 DisplayName = viewModel.DisplayName,
                 ProviderName = viewModel.ProviderName,
                 ProviderIdentifier = viewModel.ProviderIdentifier,
@@ -152,7 +150,13 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             });
             _orchardServices.Notifier.Information(T("Your configuration has been saved."));
 
-            return RedirectToAction("Index");
+            if (_providerConfigurationService.HasAttributes(viewModel.ProviderName)) {
+                _orchardServices.Notifier.Warning(T("Please set attributes of this provider."));
+                return RedirectToAction("Edit", new { id = id });
+            }
+            else {
+                return RedirectToAction("Index");
+            }
         }
     }
 }

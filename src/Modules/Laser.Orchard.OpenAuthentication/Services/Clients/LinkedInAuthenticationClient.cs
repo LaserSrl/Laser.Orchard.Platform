@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Web;
 using System;
+using Orchard.Localization;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class LinkedInAuthenticationClient : IExternalAuthenticationClient {
@@ -54,6 +55,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public bool RewriteRequest() {
             return new ServiceUtility().RewriteRequestByState();
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }

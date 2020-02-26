@@ -2,6 +2,7 @@
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
 using Newtonsoft.Json;
+using Orchard.Localization;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -41,6 +42,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public bool RewriteRequest() {
             return new ServiceUtility().RewriteRequestByState();
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }

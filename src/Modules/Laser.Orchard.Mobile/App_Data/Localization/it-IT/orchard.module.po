@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -684,6 +684,38 @@ msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/SmsPlaceholder.csh
 msgid "Value"
 msgstr "Valore"
 
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "apple app site association"
+msgstr "Associazione sito/app di Apple"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable return file from the route: /apple-app-site-association"
+msgstr "Abilita l'esposizione del file tramite url: /apple-app-site-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the Manifest File"
+msgstr "Abilita il file di manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content"
+msgstr "Contenuto del file"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Manage Manifest File"
+msgstr "Gestisci il file manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Manage Manifest Files"
+msgstr "Gestisci Files Manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Save File apple-app-site-association"
+msgstr "Salva il file apple-app-site-association"
+
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/Parts/MobileContact.cshtml"
 msgid "Mobile"
 msgstr "Mobile"
@@ -800,6 +832,18 @@ msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Validated"
 msgstr "Convalidato"
 
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "Cannot manage apple manifest file"
+msgstr "Impossibile gestire il file di manifest Apple"
+
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "File not saved."
+msgstr "File non salvato."
+
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "File settings successfully saved."
+msgstr "Impostazioni del file salvate correttamente."
+
 msgctxt "Laser.Orchard.Mobile.Controllers.TaxonomiePushController"
 msgid "Can't retrieve user category, user not logged in"
 msgstr "Impossibile recuperare la categoria dell'utente, utente non loggato"
@@ -839,6 +883,14 @@ msgstr "Contenuto Correlato"
 msgctxt "Laser.Orchard.Mobile.Migrations"
 msgid "Related Content"
 msgstr "Contenuto Correlato"
+
+msgctxt "Laser.Orchard.Mobile.Navigation.ManifestAppFileNavigation"
+msgid "Manifest App File"
+msgstr "File Manifest dell'App"
+
+msgctxt "Laser.Orchard.Mobile.Navigation.ManifestAppFileNavigation"
+msgid "Settings"
+msgstr "Impostazioni"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
 msgid "Content with userpart"

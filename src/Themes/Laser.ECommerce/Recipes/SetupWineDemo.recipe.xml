@@ -845,8 +845,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/bubbles" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:22.4773399Z" PublishedUtc="2017-07-14T12:24:31.9493062Z" ModifiedUtc="2017-07-14T12:24:31.9142165Z" />
-      <TermPart Count="9" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:22.4773399Z" PublishedUtc="2020-01-15T13:40:59.91318Z" ModifiedUtc="2017-07-14T12:24:31.9142165Z" />
+      <TermPart Count="9" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00000.130/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
       <TitlePart Title="Bubbles" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/bubbles\/champagne" Status="Published">
@@ -854,8 +854,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/bubbles/champagne" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:54.2321677Z" PublishedUtc="2017-07-14T12:26:14.0880025Z" ModifiedUtc="2017-07-14T12:26:14.0549437Z" />
-      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:54.2321677Z" PublishedUtc="2020-01-15T13:41:00.1583408Z" ModifiedUtc="2017-07-14T12:26:14.0549437Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00000.130/80000.00000.131/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
       <TitlePart Title="Champagne" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/bubbles\/italian-spumante" Status="Published">
@@ -863,8 +863,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/bubbles/italian-spumante" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:44:18.7081926Z" PublishedUtc="2017-07-14T12:36:26.1039199Z" ModifiedUtc="2017-07-14T12:36:26.0818383Z" />
-      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:44:18.7081926Z" PublishedUtc="2020-01-15T13:41:00.4552223Z" ModifiedUtc="2017-07-14T12:36:26.0818383Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00000.130/80000.00001.132/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
       <TitlePart Title="Italian Spumante" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/bubbles\/spumante" Status="Published">
@@ -872,16 +872,16 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/bubbles/spumante" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:38.1128581Z" PublishedUtc="2017-07-14T12:37:25.7793756Z" ModifiedUtc="2017-07-14T12:37:25.761584Z" />
-      <TermPart Count="2" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/bubbles" CreatedUtc="2017-07-14T08:43:38.1128581Z" PublishedUtc="2020-01-15T13:41:00.8207569Z" ModifiedUtc="2017-07-14T12:37:25.761584Z" />
+      <TermPart Count="2" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00000.130/80000.00002.133/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/bubbles" />
       <TitlePart Title="Spumante" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits" Status="Published">
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:47.9582234Z" PublishedUtc="2017-07-14T12:24:57.5598336Z" ModifiedUtc="2017-07-14T12:24:57.5317408Z" />
-      <TermPart Count="15" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:47.9582234Z" PublishedUtc="2020-01-15T13:41:01.2042672Z" ModifiedUtc="2017-07-14T12:24:57.5317408Z" />
+      <TermPart Count="15" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
       <TitlePart Title="Spirits" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits\/armagnac" Status="Published">
@@ -889,8 +889,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits/armagnac" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:48.8871686Z" PublishedUtc="2017-07-14T12:41:45.49609Z" ModifiedUtc="2017-07-14T12:41:45.4795271Z" />
-      <TermPart Count="2" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:48.8871686Z" PublishedUtc="2020-01-15T13:41:01.6115206Z" ModifiedUtc="2017-07-14T12:41:45.4795271Z" />
+      <TermPart Count="2" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/80000.00000.135/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
       <TitlePart Title="Armagnac" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits\/cognac" Status="Published">
@@ -898,8 +898,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits/cognac" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:27.6536166Z" PublishedUtc="2017-07-14T12:47:18.6818847Z" ModifiedUtc="2017-07-14T12:47:18.6172068Z" />
-      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:46:27.6536166Z" PublishedUtc="2020-01-15T13:41:02.0148669Z" ModifiedUtc="2017-07-14T12:47:18.6172068Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/80000.00001.136/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
       <TitlePart Title="Cognac" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits\/other-spirits" Status="Published">
@@ -907,8 +907,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits/other-spirits" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:46.8155159Z" PublishedUtc="2017-07-14T12:48:40.574149Z" ModifiedUtc="2017-07-14T12:48:40.5556278Z" />
-      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:46.8155159Z" PublishedUtc="2020-01-15T13:41:02.3312684Z" ModifiedUtc="2017-07-14T12:48:40.5556278Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/80000.00002.137/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
       <TitlePart Title="Other Spirits" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits\/rum" Status="Published">
@@ -916,8 +916,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits/rum" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:05.8511319Z" PublishedUtc="2017-07-14T12:52:57.1340822Z" ModifiedUtc="2017-07-14T12:52:57.1175448Z" />
-      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:05.8511319Z" PublishedUtc="2020-01-15T13:41:02.6682539Z" ModifiedUtc="2017-07-14T12:52:57.1175448Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/80000.00003.138/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
       <TitlePart Title="Rum" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/spirits\/whisky" Status="Published">
@@ -925,16 +925,16 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/spirits/whisky" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:23.3069434Z" PublishedUtc="2017-07-14T12:40:19.1438065Z" ModifiedUtc="2017-07-14T12:40:19.1207594Z" />
-      <TermPart Count="3" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/spirits" CreatedUtc="2017-07-14T08:47:23.3069434Z" PublishedUtc="2020-01-15T13:41:03.0627693Z" ModifiedUtc="2017-07-14T12:40:19.1207594Z" />
+      <TermPart Count="3" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00001.134/80000.00004.139/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/spirits" />
       <TitlePart Title="Whisky" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/wine" Status="Published">
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/wine" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:06.0200154Z" PublishedUtc="2017-07-14T12:25:13.8116202Z" ModifiedUtc="2017-07-14T12:25:13.6546053Z" />
-      <TermPart Count="21" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products" CreatedUtc="2017-07-14T08:42:06.0200154Z" PublishedUtc="2020-01-15T13:41:03.3655391Z" ModifiedUtc="2017-07-14T12:25:13.6546053Z" />
+      <TermPart Count="21" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00002.140/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products" />
       <TitlePart Title="Wine" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/wine\/reds" Status="Published">
@@ -942,8 +942,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/wine/reds" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:31.4376777Z" PublishedUtc="2017-07-14T12:26:33.8945108Z" ModifiedUtc="2017-07-14T12:26:33.877985Z" />
-      <TermPart Count="9" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:31.4376777Z" PublishedUtc="2020-01-15T13:41:03.6438996Z" ModifiedUtc="2017-07-14T12:26:33.877985Z" />
+      <TermPart Count="9" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00002.140/80000.00000.141/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
       <TitlePart Title="Reds" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/wine\/rosee" Status="Published">
@@ -951,8 +951,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/wine/rosee" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:49:08.2216403Z" PublishedUtc="2017-07-14T12:56:51.645569Z" ModifiedUtc="2017-07-14T12:56:51.6266578Z" />
-      <TermPart Count="4" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:49:08.2216403Z" PublishedUtc="2020-01-15T13:41:03.8880739Z" ModifiedUtc="2017-07-14T12:56:51.6266578Z" />
+      <TermPart Count="4" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00002.140/80000.00001.142/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
       <TitlePart Title="Rosèe" />
     </ProductsTerm>
     <ProductsTerm Id="/alias=products\/products\/wine\/whites" Status="Published">
@@ -960,8 +960,8 @@
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
       <AutoroutePart Alias="products/products/wine/whites" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:47.3989861Z" PublishedUtc="2017-07-14T12:54:20.3826061Z" ModifiedUtc="2017-07-14T12:54:20.3588329Z" />
-      <TermPart Count="8" Selectable="true" Weight="0" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
+      <CommonPart Owner="/User.UserName=admin" Container="/alias=products\/products\/wine" CreatedUtc="2017-07-14T08:48:47.3989861Z" PublishedUtc="2020-01-15T13:41:04.1331722Z" ModifiedUtc="2017-07-14T12:54:20.3588329Z" />
+      <TermPart Count="8" Selectable="true" Weight="0" FullWeight="80000.00000.17/80000.00002.140/80000.00002.143/" TaxonomyId="/alias=products" Path="/alias=products\/products,/alias=products\/products,/alias=products\/products\/wine" />
       <TitlePart Title="Whites" />
     </ProductsTerm>
     <Product Id="/alias=adelphi-s-liddesdale18/Sku=SKU-adelphi-s-liddesdale18" Status="Published">

@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -59,6 +59,10 @@ msgstr "Sono state ricevute delle informazioni sbagliate in chiusura del pagamen
 msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
 msgid "Transaction canceled."
 msgstr "Transazione annullata."
+
+msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
+msgid "Transaction information not valid for transaction {0}: {1}"
+msgstr "Informazioni non valide per la transazione {0}: {1}"
 
 msgctxt "Laser.Orchard.PaymentCartaSi.Services.CartaSiPosService"
 msgid "Transaction information not valid: {0}"

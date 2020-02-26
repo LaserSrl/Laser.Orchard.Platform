@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -173,6 +173,10 @@ msgid "This user account will be linked to <b>{0}</b> when you login."
 msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'accesso."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
 msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
 
@@ -201,8 +205,28 @@ msgid "I Disagree"
 msgstr "Non sono d'accordo"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Password"
 msgstr "Password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Passwords are required to be a minimum of {0} characters in length."
@@ -211,6 +235,10 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Register"
 msgstr "Registra"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "This user account will be linked to <b>{0}</b> when you login."
@@ -223,6 +251,10 @@ msgstr "Usare il modulo sottostante per creare un nuovo account."
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Username"
 msgstr "Nome utente"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Change Password"
@@ -245,8 +277,32 @@ msgid "New passwords are required to be a minimum of {0} characters in length."
 msgstr "La password deve essere almeno di {0} caratteri."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Password change was unsuccessful. Please correct the errors and try again."
 msgstr "La modifica della password è fallita. Correggere gli errori e provare di nuovo."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Use the form below to change your password."
@@ -301,6 +357,10 @@ msgid "View Content"
 msgstr "Visualizza contenuto"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
 msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
 
@@ -313,12 +373,36 @@ msgid "Create a New Account"
 msgstr "Creare un nuovo Account"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Passwords are required to be a minimum of {0} characters in length."
 msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Register"
 msgstr "Registra"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Use the form below to create a new account."

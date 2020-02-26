@@ -2,7 +2,26 @@
     var userName = Request.QueryString["UserName"];
     var externalLoginData = Request.QueryString["ExternalLoginData"];
 }
-
+@{
+    var requirementsMessage = T.Plural("The password can't be empty", "Passwords are required to be a minimum of {0} characters in length", (int)ViewData["PasswordLength"]).Text;
+    var additionalRequirementsMessage = new List<string>();
+    if ((bool)ViewData["LowercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one lowercase letter").Text);
+    }
+    if ((bool)ViewData["UppercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one uppercase letter").Text);
+    }
+    if ((bool)ViewData["NumberRequirement"]) {
+        additionalRequirementsMessage.Add(T("one number").Text);
+    }
+    if ((bool)ViewData["SpecialCharacterRequirement"]) {
+        additionalRequirementsMessage.Add(T("one special character").Text);
+    }
+    if (additionalRequirementsMessage.Count() > 0) {
+        requirementsMessage = T("{0} and must contain at least {1}", requirementsMessage, string.Join(", ", additionalRequirementsMessage)).Text;
+    }
+    requirementsMessage += ".";
+}
 <div class="row">
     @using (Html.BeginFormAntiForgeryPost()) {
         <div class="col-xs-12 col-sm-12 col-padding-low">
@@ -13,7 +32,7 @@
                     <p>@T("This user account will be linked to <b>{0}</b> when you login.", userName)</p>
                 }
                 <p>@T("Use the form below to create a new account.")</p>
-                <p>@T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"])</p>
+                <p>@requirementsMessage</p>
                 @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
             </div>
 
@@ -42,16 +61,16 @@
     }
 </div>
 @*<script>
-    function colorCheckbox() {
-        if (jQuery('label span').hasClass('accepted')) {
-            jQuery('label span').removeClass('accepted');
-            jQuery('label span').text('@T("I Disagree").Text.Replace("'", "\\'")');
-        } else {
-            jQuery('label span').addClass('accepted');
-            jQuery('label span').text('@T("I Agree").Text.Replace("'", "\\'")');
+        function colorCheckbox() {
+            if (jQuery('label span').hasClass('accepted')) {
+                jQuery('label span').removeClass('accepted');
+                jQuery('label span').text('@T("I Disagree").Text.Replace("'", "\\'")');
+            } else {
+                jQuery('label span').addClass('accepted');
+                jQuery('label span').text('@T("I Agree").Text.Replace("'", "\\'")');
+            }
         }
-    }
-</script>*@
+    </script>*@
 
 
 @if (Model.UserProfile != null) {
@@ -59,11 +78,11 @@
     using (Script.Foot()) {
         // calling EditorFor(Part) -> will render a Publish button
         // in this case we don't have a publish button, so we just hide it!
-    <script type="text/javascript">
+        <script type="text/javascript">
         jQuery(function ($) {
             $('.save-button').hide();
         });
-    </script>
+        </script>
     }
 }
 

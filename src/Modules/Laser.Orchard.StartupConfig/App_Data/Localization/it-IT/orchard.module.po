@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -111,6 +111,14 @@ msgstr "Valori separati da virgola come ad esempio: ContentType.ContentFieldName
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/Parts/ContentPickerConnector.Settings.cshtml"
 msgid "Fields Filter"
 msgstr "Filtro Campi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/UserGroupSettings.cshtml"
 msgid "If checked, the part will be mandatory."
@@ -251,6 +259,14 @@ msgstr "Inserire il nome della cartella (opzionale). Se vuoto, sarà creato in a
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
 msgid "User default owned folder"
 msgstr "Cartella di default di proprietà dell'utente"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ProtectionSettingsPart.Edit.cshtml"
 msgid "A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls."
@@ -575,6 +591,10 @@ msgstr "Risposta"
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Success"
 msgstr "Successo"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
+msgid "The data object of the response, the data must be in Json format es: {{\"ErrorType\":\"TicketError\"}}. "
+msgstr "L'oggetto di dati della risposta. I dati devono essere in formato Json. E.g.: {{\"ErrorType\":\"TicketError\"}}."
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "The data object of the response."
@@ -1143,6 +1163,10 @@ msgstr "Uno o più parametri sono nulli"
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "Successfully Executed"
 msgstr "Eseguito con successo"
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
+msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "UnAuthorized Action"
