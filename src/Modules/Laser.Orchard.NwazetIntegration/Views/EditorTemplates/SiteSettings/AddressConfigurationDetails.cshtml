@@ -79,8 +79,8 @@ index++;
             </label>
         </div>
         @if (vm.ChildrenCount > 0) {
-        <div class="territory-children-counts" territory-id="@vm.TerritoryId">
-            <div class="single-count">@T("Children: {0}", vm.ChildrenCount)</div>
+        <div class="territory-children-counts" territory-id="@vm.TerritoryId" title="@T("Click to expand.")">
+            (<div class="single-count">@T("Children: {0}", vm.ChildrenCount)</div>
             @if (0 < vm.ChildCountries) {
                 <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
             }
@@ -89,7 +89,7 @@ index++;
             }
             @if (0 < vm.ChildCities) {
                 <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
-            }
+            })
         </div>
         }
     </div>
@@ -247,11 +247,14 @@ index++;
                                         var childrenDiv = document.createElement('div');
                                         childrenDiv.setAttribute("class", "territory-children-counts");
                                         childrenDiv.setAttribute("territory-id", data.Territories[i].Id);
+                                        childrenDiv.setAttribute("title", "@T("Click to expand.")");
                                         // 1.3.3.1 children count
                                         var countDiv = document.createElement('div');
                                         countDiv.setAttribute("class", "single-count");
                                         countDiv.appendChild(document.createTextNode("@T("Children: ") " + data.Territories[i].ChildrenCount));
+                                        childrenDiv.appendChild(document.createTextNode(" ("));
                                         childrenDiv.appendChild(countDiv);
+                                        childrenDiv.appendChild(document.createTextNode(" ) "));
                                         tInfoDiv.appendChild(childrenDiv);
                                     }
                                     territoryDiv.appendChild(tInfoDiv);
