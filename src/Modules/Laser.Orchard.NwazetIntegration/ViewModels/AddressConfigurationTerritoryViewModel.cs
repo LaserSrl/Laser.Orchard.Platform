@@ -42,15 +42,17 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 DisplayText = part.Record.TerritoryInternalRecord.Name;
             }
 
-            foreach (var ci in part.Children) {
-                var tp = ci.As<TerritoryPart>();
-                if (tp != null) {
-                    // constructing this here means we are going depth first
-                    var child = new AddressConfigurationTerritoryViewModel(
-                        tp, countries, provinces, cities, countryCodes, this);
-                    Children.Add(child);
-                }
-            }
+            ChildrenCount = part.Record.Children.Count();
+
+            //foreach (var ci in part.Children) {
+            //    var tp = ci.As<TerritoryPart>();
+            //    if (tp != null) {
+            //        // constructing this here means we are going depth first
+            //        var child = new AddressConfigurationTerritoryViewModel(
+            //            tp, countries, provinces, cities, countryCodes, this);
+            //        Children.Add(child);
+            //    }
+            //}
         }
 
         public AddressConfigurationTerritoryViewModel(
@@ -86,6 +88,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// ISO 3166-1 Alpha-2 code for a country.
         /// </summary>
         public string CountryISO { get; set; }
+
+        public int ChildrenCount { get; set; }
 
         public int AllChildrenCount =>
             // count of this object's direct children
