@@ -87,6 +87,7 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\overthrow.min.js" />
     <Content Include="Scripts\TooltipsZoomimage.js" />
+    <Content Include="Styles\baseadmin.css" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Styles\fonts\HANDGOTB.svg" />

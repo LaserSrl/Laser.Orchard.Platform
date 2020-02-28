@@ -169,10 +169,10 @@ namespace Laser.Orchard.Questionnaires.Services {
             ////.Future();
             //.Future<RankingTemplateVM>();
             var windowsRankQuery = QueryForRanking(gameId: gameID, device: TipoDispositivo.WindowsMobile.ToString(), page: 1, pageSize: 10);
-                //.GetExecutableQueryOver(session)
-                //.TransformUsing(new AliasToBeanVMFromRecord(ConvertFromDBData))
-                ////.Future();
-                //.Future<RankingTemplateVM>();
+            //.GetExecutableQueryOver(session)
+            //.TransformUsing(new AliasToBeanVMFromRecord(ConvertFromDBData))
+            ////.Future();
+            //.Future<RankingTemplateVM>();
 
             //List<RankingTemplateVM> generalRank = new List<RankingTemplateVM>();
             //foreach (RankingPartRecord obj in generalRankQuery) { //Trasformers would allow getting rid of these iterations
@@ -348,11 +348,11 @@ namespace Laser.Orchard.Questionnaires.Services {
 
             qoRpr = CheckSortDirection(qoRpr, Ascending);
 
-           var rank =  (qoRpr.Skip(pageSize * (page - 1)).Take(pageSize));
+            var rank = (qoRpr.Skip(pageSize * (page - 1)).Take(pageSize));
 
 
             return rank.GetExecutableQueryOver(session).List().Select(x => ConvertFromDBData(x)).ToList();
-           
+
 
         }
 
@@ -456,10 +456,10 @@ namespace Laser.Orchard.Questionnaires.Services {
             var questionnairePartSettings = _orchardServices.ContentManager.Get<QuestionnairePart>(editModel.Id).Settings.GetModel<QuestionnairesPartSettingVM>();
             var content = _orchardServices.ContentManager.Get(editModel.Id);
             bool exit = false;
-            
+
             if (String.IsNullOrWhiteSpace(editModel.Context)) { //fallback into questionnaire part settings context if context is null
                 // Tokenize Settings Context
-                editModel.Context = _tokenizer.Replace(questionnairePartSettings.QuestionnaireContext, new Dictionary<string, object> { { "Content", content } }); 
+                editModel.Context = _tokenizer.Replace(questionnairePartSettings.QuestionnaireContext, new Dictionary<string, object> { { "Content", content } });
             }
             if (editModel.Context.Length > 255) {// limits context to 255 chars
                 editModel.Context = editModel.Context.Substring(0, 255);
@@ -688,7 +688,7 @@ namespace Laser.Orchard.Questionnaires.Services {
 
         public QuestionnaireWithResultsViewModel BuildViewModelWithResultsForQuestionnairePart(QuestionnairePart part) {
             // Mapper.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
-           
+
             if (part.Settings.GetModel<QuestionnairesPartSettingVM>().QuestionsSortedRandomlyNumber > 0) {
                 if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse)
                     Mapper.Initialize(cfg => {
@@ -739,10 +739,10 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (to.HasValue && to.Value > DateTime.MinValue) {
                 answersQuery = answersQuery.Where(w => w.AnswerDate <= to);
             }
-            var result = answersQuery.Select(x => new ExportUserAnswersVM { 
-                Answer = x.AnswerText, 
-                Question = x.QuestionText, 
-                AnswerDate = x.AnswerDate, 
+            var result = answersQuery.Select(x => new ExportUserAnswersVM {
+                Answer = x.AnswerText,
+                Question = x.QuestionText,
+                AnswerDate = x.AnswerDate,
                 UserName = x.SessionID,
                 UserId = x.User_Id,
                 Contesto = x.Context
@@ -808,11 +808,11 @@ namespace Laser.Orchard.Questionnaires.Services {
         private string EscapeString(string text) {
             return (text ?? "").Replace('\"', '\'').Replace('\n', ' ').Replace('\r', ' ');
         }
-        public List<QuestionnaireStatsViewModel> GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        public QuestionnaireStatsViewModel GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null) {
             var questionnaireData = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Latest)
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
-
+            var questionsCount = questionnaireData.Questions.Count();
             var questionnaireStatsQuery = _repositoryUserAnswer.Table.Join(_repositoryQuestions.Table,
                         l => l.QuestionRecord_Id, r => r.Id, (l, r) => new { UserAnswers = l, Questions = r })
                         .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
@@ -827,13 +827,15 @@ namespace Laser.Orchard.Questionnaires.Services {
             var questionnaireStats = questionnaireStatsQuery.ToList();
 
             if (questionnaireStats.Count == 0) {
-                QuestionnaireStatsViewModel empty = new QuestionnaireStatsViewModel();
-                empty.QuestionnairePart_Id = questionnaireData.Id;
-                empty.QuestionnaireTitle = questionnaireData.As<TitlePart>().Title;
-                return new List<QuestionnaireStatsViewModel>() { empty };
+                QuestionnaireStatsViewModel empty = new QuestionnaireStatsViewModel {
+                    Id = questionnaireData.Id,
+                    Title = questionnaireData.As<TitlePart>().Title,
+                    QuestionsStatsList = new List<QuestionStatsViewModel>()
+                };
+                return empty;
             }
             else {
-                var aggregatedStats = questionnaireStats.Select(s => new QuestionnaireStatsViewModel {
+                var aggregatedStats = questionnaireStats.Select(s => new QuestionStatsViewModel {
                     QuestionnairePart_Id = s.Questions.QuestionnairePartRecord_Id,
                     QuestionnaireTitle = questionnaireData.As<TitlePart>().Title,
                     QuestionId = s.Questions.Id,
@@ -857,8 +859,20 @@ namespace Laser.Orchard.Questionnaires.Services {
 
                     question.Answers.AddRange(answers.OrderBy(o => o.Answer));
                 }
-
-                return aggregatedStats.OrderBy(o => o.Position).ToList();
+                var FullyAnsweringPeople = questionnaireStats.Select(x => new { x.UserAnswers.SessionID, x.UserAnswers.QuestionRecord_Id })
+                    .Distinct()
+                    .GroupBy(info => info.SessionID)
+                    .Select(group => new { group.Key, Count = group.Count() })
+                    .Where(w => w.Count >= questionsCount)
+                    .Count();
+                return new QuestionnaireStatsViewModel {
+                    Title = aggregatedStats[0].QuestionnaireTitle,
+                    Id = questionnaireId,
+                    NumberOfQuestions = questionsCount,
+                    ReplyingPeopleCount = questionnaireStats.Select(x => x.UserAnswers.SessionID).Distinct().Count(),
+                    FullyAnsweringPeople = FullyAnsweringPeople,
+                    QuestionsStatsList = aggregatedStats.OrderBy(o => o.Position).ToList()
+                };
             }
         }
 
