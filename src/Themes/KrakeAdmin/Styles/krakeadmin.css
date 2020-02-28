@@ -4725,9 +4725,9 @@ section.section-account .img-circle {
     opacity: 0.75;
 }
 
-    .table thead > tr > th {
+    .table thead > tr > th, table tr > th {
         color: inherit;
-        font-weight: 500;
+        font-weight: 600;
     }
 
 .table-bordered {
