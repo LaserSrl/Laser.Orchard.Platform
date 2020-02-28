@@ -154,11 +154,7 @@
     <Content Include="Styles\krake-navicon.min.css">
       <DependentUpon>krake-navicon.css</DependentUpon>
     </Content>
-    <Content Include="Styles\krake.css" />
     <Content Include="Styles\iconic-font.min.css" />
-    <Content Include="Styles\krake.min.css">
-      <DependentUpon>krake.css</DependentUpon>
-    </Content>
     <Content Include="Styles\krakeadmin.css" />
     <None Include="bundleconfig.json" />
     <None Include="Views\Card.cshtml" />
