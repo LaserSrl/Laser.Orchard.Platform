@@ -691,7 +691,7 @@ a {
 }
 
 @media (min-width:768px) {
-    .sidebar-mini: not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right), .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
+    .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right), .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > .treeview-menu {
         display: block !important;
         position: absolute;
         width: 180px;
@@ -1251,7 +1251,7 @@ a {
     }
 
 @media (max-width:991px) {
-    .navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default: hover {
+    .navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default:hover {
         background-color: #f9f9f9;
     }
 }
