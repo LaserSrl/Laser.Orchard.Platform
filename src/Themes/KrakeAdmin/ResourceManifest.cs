@@ -3,8 +3,8 @@
 namespace KrakeAdmin {
     public class ResourceManifest : IResourceManifestProvider {
 
+        public const string BaseAdmin = "BaseAdmin";
         public const string KrakeAdmin = "KrakeAdmin";
-        public const string Krake = "Krake";
         public const string KrakeNavigation = "KrakeNavigation";
         public const string Bootstrap = "Bootstrap";
         public const string Site = "Site";
@@ -13,8 +13,8 @@ namespace KrakeAdmin {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
 
-            manifest.DefineStyle(KrakeAdmin).SetUrl("krakeadmin.min.css?v1.4", "krakeadmin.css?v1.4");
-            manifest.DefineStyle(Krake).SetUrl("krake.min.css?v1.4", "krake.css?v1.4");
+            manifest.DefineStyle(BaseAdmin).SetUrl("baseadmin.min.css?v1.0", "baseadmin.css?v1.0");
+            manifest.DefineStyle(KrakeAdmin).SetUrl("krakeadmin.min.css?v2.0", "krakeadmin.css?v2.0");
             manifest.DefineStyle(KrakeNavigation).SetUrl("krake-navicon.min.css?v1.4", "krake-navicon.css?v1.4");
             //manifest.DefineStyle(Bootstrap).SetUrl("bootstrap.css", "bootstrap.css");
             manifest.DefineStyle(Site).SetUrl("site.css", "site.css");

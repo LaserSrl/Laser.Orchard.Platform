@@ -16,5 +16,11 @@
     "inputFiles": [
       "Styles/krake-navicon.css"
     ]
+  },
+  {
+    "outputFileName": "Styles/baseadmin.min.css",
+    "inputFiles": [
+      "Styles/baseadmin.css"
+    ]
   }
 ]

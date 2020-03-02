@@ -45,7 +45,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
             DateTime.TryParse(from, provider, DateTimeStyles.None, out fromDate);
             DateTime.TryParse(to, provider, DateTimeStyles.None, out toDate);
 
-            var stats = _questionnairesServices.GetStats(idQuestionario, (DateTime?)fromDate, (DateTime?)toDate).Where(x => x.QuestionId == idDomanda).FirstOrDefault();
+            var stats = _questionnairesServices.GetStats(idQuestionario, (DateTime?)fromDate, (DateTime?)toDate).QuestionsStatsList.Where(x => x.QuestionId == idDomanda).FirstOrDefault();
 
             var orderedAnswers = stats.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(o => o.Count).ThenBy(o => o.Answer).ToList();
 
