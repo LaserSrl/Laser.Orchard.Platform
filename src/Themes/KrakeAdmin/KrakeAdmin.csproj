@@ -203,6 +203,7 @@
     <Content Include="Views\Media-OEmbed.Thumbnail.cshtml" />
     <Content Include="Views\Parts\Common.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts\PublishLater.Metadata.SummaryAdmin.cshtml" />
+    <Content Include="Views\CommonMetadataLastModified.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
