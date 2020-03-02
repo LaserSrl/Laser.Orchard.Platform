@@ -84,39 +84,10 @@
     }
 }
 .advanced-addresses {
-
-    input[type=radio].for-tabulation {
-        display: none;
+    >ul>li{
+        min-height:unset;
     }
-
-    #tabshipping:checked ~ div.shipping-address,
-    #tabbilling:checked ~ div.billing-address {
-        display: block;
-    }
-
-    label.for-tabulation {
-        background-color: #f4f4f4;
-        padding: 5px 10px;
-        display: inline-block;
-        cursor: pointer;
-        border-color: #8eaebe;
-        border-image: none;
-        border-style: solid solid solid;
-        border-width: 1px 1px medium;
-        border-radius: 5px 5px 0px 0px;
-    }
-
-    input.for-tabulation:checked + label.for-tabulation {
-        border-top: 3px solid #8eaebe;
-    }
-
     .order-address-editor {
-        border: 1px solid #d2d6de;
-
-        &.shipping-address, &.billing-address {
-            display: none;
-        }
-
 
         .address-editor {
             .address-input {
@@ -129,6 +100,7 @@
                     label {
                         font-size: smaller;
                         display: inline-block;
+                        color: black;
                     }
                 }
 
