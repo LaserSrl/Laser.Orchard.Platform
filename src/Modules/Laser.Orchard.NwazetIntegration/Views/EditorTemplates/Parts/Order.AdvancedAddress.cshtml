@@ -2,7 +2,7 @@
 @model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
 @* This will display the advanced address and hide the "standard" one.
     To avoid changing the OrderPart, this view, its partials and the 
-    underlying driver are somewhat depndent on it. In particular, changes
+    underlying driver are somewhat dependent on it. In particular, changes
     in the view for OrderPart addresses will reflect on this view and
     on the partials used for each address here. *@
 @{ 
@@ -10,7 +10,11 @@
 }
 
 <div class="order-editor advanced-addresses col-md-12">
-    <div class="order-address-editor shipping-address col-md-6">
+    <input id="tabshipping" type="radio" name="address-tabs" class="for-tabulation" checked />
+    <label for="tabshipping" class="for-tabulation">@T("Shipping Address")</label>
+    <input id="tabbilling" type="radio" name="address-tabs" class="for-tabulation" />
+    <label for="tabbilling" class="for-tabulation">@T("Billing Address")</label>
+    <div class="order-address-editor shipping-address col-md-12">
         @Html.EditorFor(m => m.ShippingAddressVM,
             new {
                 OtherElementSelector = ".order-editor .addresses fieldset.shipping-address",
@@ -18,7 +22,7 @@
             })
     </div>
 
-    <div class="order-address-editor billing-address col-md-6">
+    <div class="order-address-editor billing-address col-md-12">
         @Html.EditorFor(m => m.BillingAddressVM,
             new {
                 OtherElementSelector = ".order-editor .addresses fieldset.billing-address",
@@ -26,3 +30,4 @@
             })
     </div>
 </div>
+

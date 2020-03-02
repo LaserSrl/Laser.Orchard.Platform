@@ -9,6 +9,10 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Automatic Payment"
+msgstr "Pagamento Automatico"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Braintree PayPal Settings"
 msgstr "Impostazioni Braintree PayPal"
 
@@ -23,6 +27,10 @@ msgstr "Codice valuta associato all'ID del negoziante nella configurazione di Br
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "If checked, it means this is a production environment."
 msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "If checked, the payment starts automatically."
+msgstr "Se selezionato, il pagamento inizia automaticamente."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Merchant Account"

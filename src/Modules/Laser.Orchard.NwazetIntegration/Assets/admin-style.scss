@@ -33,7 +33,7 @@
                         display: none;
                     }
                 }
-                
+
                 .country-radio:checked ~ input[type=text].iso-alpha-2 {
                     display: inline-block;
                 }
@@ -43,13 +43,25 @@
                 display: block;
                 font-size: smaller;
                 text-transform: uppercase;
+                cursor: pointer;
 
                 &:before {
-                    content: '(';
+                    //content: '(';
                 }
 
                 &:after {
-                    content: ')';
+                    //content: ')';
+                    border-style: solid;
+                    border-width: 0.25em 0.25em 0 0;
+                    content: '';
+                    display: inline-block;
+                    height: 0.75em;
+                    left: 0.15em;
+                    position: relative;
+                    top: -0.15em;
+                    transform: rotate(135deg);
+                    vertical-align: middle;
+                    width: 0.75em;
                 }
 
                 .single-count {
@@ -72,17 +84,62 @@
     }
 }
 .advanced-addresses {
+
+    input[type=radio].for-tabulation {
+        display: none;
+    }
+
+    #tabshipping:checked ~ div.shipping-address,
+    #tabbilling:checked ~ div.billing-address {
+        display: block;
+    }
+
+    label.for-tabulation {
+        background-color: #f4f4f4;
+        padding: 5px 10px;
+        display: inline-block;
+        cursor: pointer;
+        border-color: #8eaebe;
+        border-image: none;
+        border-style: solid solid solid;
+        border-width: 1px 1px medium;
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    input.for-tabulation:checked + label.for-tabulation {
+        border-top: 3px solid #8eaebe;
+    }
+
     .order-address-editor {
-        .shipping-address {
+        border: 1px solid #d2d6de;
+
+        &.shipping-address, &.billing-address {
+            display: none;
         }
 
-        .billing-address {
-        }
 
-        .address-editor{
-            .address-input{
+        .address-editor {
+            .address-input {
                 display: inline-block;
-                .hint{
+
+                .row {
+                    margin-left: 0px;
+                    margin-right: 0px;
+
+                    label {
+                        font-size: smaller;
+                        display: inline-block;
+                    }
+                }
+
+                &.address-text-input {
+                    input, select {
+                        width: 100%;
+                        min-width: unset;
+                    }
+                }
+
+                .hint {
                     display: inline-block;
                 }
             }

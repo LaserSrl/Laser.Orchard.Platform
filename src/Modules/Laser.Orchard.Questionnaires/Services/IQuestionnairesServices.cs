@@ -14,7 +14,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         QuestionnaireWithResultsViewModel BuildViewModelWithResultsForQuestionnairePart(QuestionnairePart part);
         void CreateUserAnswers(UserAnswersRecord answerRecord);
         AnswerRecord GetAnswer(int id);
-        List<QuestionnaireStatsViewModel> GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null);
+        QuestionnaireStatsViewModel GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null);
         List<QuestStatViewModel> GetStats(QuestionType type);
         bool Save(QuestionnaireWithResultsViewModel editModel, IUser currentUser, string SessionID);
         bool SendTemplatedEmailRanking();
