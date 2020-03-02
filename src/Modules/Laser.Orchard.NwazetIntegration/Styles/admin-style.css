@@ -36,9 +36,6 @@
     .territories-list .single-territory .territory-info .territory-children-counts .single-count {
       display: inline-block; }
 
-.advanced-addresses > ul > li {
-  min-height: unset; }
-
 .advanced-addresses .order-address-editor .address-editor .address-input {
   display: inline-block; }
   .advanced-addresses .order-address-editor .address-editor .address-input .row {

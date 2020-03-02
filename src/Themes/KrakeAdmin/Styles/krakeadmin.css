@@ -798,8 +798,8 @@ input[type="number"]:focus {
 }
 
 .tab-pane {
-    margin-top: 15px;
-    background: #EEE;
+    /*margin-top: 15px;
+    background: #EEE;*/
 }
 
 .tab-content > .active {
@@ -834,11 +834,14 @@ input[type="number"]:focus {
 }
 
 .nav-tabs > li > a {
-    padding: 0 8px;
+    /*padding: 0 8px;*/
+    position: relative;
+    display: block;
+    padding: 10px 15px;
 }
 
 .nav-tabs > li {
-    min-height: 80px;
+    /*min-height: 80px;*/
 }
 
     .nav-tabs > li > a {
@@ -7405,7 +7408,7 @@ li.dropdown-progress {
 .nav-tabs > li.active > a:focus {
     border: none;
     border-bottom: 2px solid #00ccff;
-    color: #00ccff;
+    /*color: #00ccff;*/
     background-color: transparent;
     cursor: default;
     opacity: 1;
