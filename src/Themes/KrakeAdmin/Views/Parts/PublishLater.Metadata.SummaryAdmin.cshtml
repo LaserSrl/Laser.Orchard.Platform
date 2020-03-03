@@ -1,0 +1,24 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models;
+@{
+    var publishLaterPart = Model.ContentPart;
+    DateTime? versionPublishedUtc = publishLaterPart.VersionPublishedUtc == null ? null : publishLaterPart.VersionPublishedUtc;
+
+    var contentItem = Model.ContentItem == null ? null : (ContentItem)Model.ContentItem;
+
+    if (publishLaterPart != null && contentItem!=null) {
+        <ul class="pageStatus">
+            @if ((((DateTime?)publishLaterPart.ScheduledPublishUtc.Value).HasValue &&
+                ((DateTime?)publishLaterPart.ScheduledPublishUtc.Value) > DateTime.UtcNow) || (contentItem.HasPublished() && versionPublishedUtc.HasValue)) {
+                if (!contentItem.HasPublished() && !versionPublishedUtc.HasValue) {
+                    <li><img class="icon" src="@Href("~/Modules/Orchard.PublishLater/Content/Admin/images/scheduled.gif")" alt="@T("Scheduled")" title="@T("The page is scheduled for publishing")" /></li>
+                    <li>@T("Scheduled")&#58;&nbsp;</li>
+                    <li>
+                        @Display.DateTime(DateTimeUtc: ((DateTime?)Model.ScheduledPublishUtc).Value, CustomFormat: null)
+                        &nbsp;&#124;&nbsp;
+                    </li>
+                }
+            }
+        </ul>
+    }
+}
