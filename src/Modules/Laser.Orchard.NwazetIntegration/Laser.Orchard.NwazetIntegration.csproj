@@ -112,12 +112,14 @@
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
+    <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
+    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
@@ -125,6 +127,8 @@
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets.json" />
@@ -263,6 +268,7 @@
     </None>
     <Content Include="Views\EditorTemplates\Parts\Order.AdvancedAddress.cshtml" />
     <Content Include="Views\EditorTemplates\AddressEditViewModel.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.AdministrativeType.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

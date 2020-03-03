@@ -3,6 +3,7 @@ using Laser.Orchard.NwazetIntegration.Services;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard.Caching;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using System.Linq;
@@ -41,13 +42,13 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             OnDestroyed<TerritoryHierarchyPart>(
                 (context, part) => Invalidate(part));
             // Also invalidate when one of the selected territories has been updated
-            OnUpdated<TerritoryPart>(
+            OnUpdated<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
-            OnPublished<TerritoryPart>(
+            OnPublished<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
-            OnRemoved<TerritoryPart>(
+            OnRemoved<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
-            OnDestroyed<TerritoryPart>(
+            OnDestroyed<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
         }
 
@@ -61,19 +62,20 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             }
         }
 
-        private void Invalidate(TerritoryPart part) {
-            // if the territory belongs the selected hierarchy or one
-            // of its localizations
-            var hId = part.Hierarchy?.Id;
-            var localizations = _addressConfigurationSettingsService.ShippingCountriesHierarchies;
-            var hierarchyOk = hId.HasValue && localizations.Any()
-                && localizations.Select(thp => thp.Id).Contains(hId.Value);
-            // if the territory was actually selected
-            if (hierarchyOk
-                && _addressConfigurationSettingsService.SelectedTerritoryRecords
-                .Any(tir => part.IsSameAs(tir))) {
-                Invalidate();
+        private void Invalidate(TerritoryAdministrativeTypePart part) {
+            var territory = part.As<TerritoryPart>();
+            if (territory != null) {
+                var hId = territory.Hierarchy?.Id;
+                // if the territory belongs the selected hierarchy or one
+                // of its localizations
+                var localizations = _addressConfigurationSettingsService.ShippingCountriesHierarchies;
+                var hierarchyOk = hId.HasValue && localizations.Any()
+                    && localizations.Select(thp => thp.Id).Contains(hId.Value);
+                if (hierarchyOk) {
+                    Invalidate();
+                }
             }
+            
         }
 
         private void Invalidate() {

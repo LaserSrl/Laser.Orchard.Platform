@@ -62,5 +62,22 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 3;
         }
+
+        public int UpdateFrom3() {
+
+            SchemaBuilder.CreateTable("TerritoryAdministrativeTypePartRecord", table => table
+                .ContentPartRecord()
+                // TerritoryAdministrativeType enum stored as string
+                .Column<string>("AdministrativeType"));
+            return 4;
+        }
+        public int UpdateFrom4() {
+            SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
+                table => table.AddColumn<int>("TerritoryInternalRecord_Id"));
+            SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
+                table => table.CreateIndex("IDX_AdministrativeType", "AdministrativeType"));
+
+            return 5;
+        }
     }
 }
