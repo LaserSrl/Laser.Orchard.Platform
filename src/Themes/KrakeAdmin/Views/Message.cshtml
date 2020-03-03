@@ -1,0 +1,20 @@
+﻿@using Orchard.UI.Notify;
+
+@{
+    @*
+        Model.Message can either be:
+        - an IHtmlString and won't be re-encoded
+        - a string and will be encoded
+    *@
+    //<div class="message message-@Model.Type">@Html.Raw(Html.Encode(Model.Message).Replace("\n", "<br />"))</div>
+}
+@{
+    var cssClass = Model.Type.ToString().ToLower();
+    if (Model.Type == NotifyType.Information) {
+        cssClass = "success";
+    }
+}
+
+<div class="callout callout-@cssClass">
+    <p>@Model.Message</p>
+</div>

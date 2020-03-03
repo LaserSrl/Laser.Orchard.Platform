@@ -179,6 +179,8 @@
     <Content Include="Views\Media-Audio.Thumbnail.cshtml" />
     <Content Include="Views\Media-Document.Thumbnail.cshtml" />
     <Content Include="Views\Media-OEmbed.Thumbnail.cshtml" />
+    <Content Include="Views\Message.cshtml" />
+    <None Include="Views\_Zone-Messages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
@@ -286,9 +288,7 @@
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Fields\ContentPicker.Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
