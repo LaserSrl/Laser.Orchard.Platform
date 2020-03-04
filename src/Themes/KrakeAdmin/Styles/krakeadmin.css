@@ -1309,6 +1309,10 @@ fieldset {
     border-bottom: 1px solid #f4f4f4;
 }
 
+.with-border-top {
+    border-top: 1px solid #f4f4f4;
+}
+
 .box-header {
     color: #444;
     display: block;
