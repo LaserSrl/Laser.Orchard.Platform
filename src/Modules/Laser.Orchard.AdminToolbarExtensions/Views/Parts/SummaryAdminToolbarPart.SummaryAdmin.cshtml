@@ -4,13 +4,10 @@
     foreach (var lblObj in Model.Toolbar.Labels) {
         //if there is a Custom URL, link to that
         if (!String.IsNullOrWhiteSpace((string)(lblObj.CustomUrl))) {
-            <a href="@Href(lblObj.CustomUrl)" target ="@lblObj.Target.ToString()" name="submit.Filter">@(lblObj.Label.ToString())</a>
-        } else {
-            @Html.ActionLink((string)(lblObj.Label), (string)(lblObj.Action), (string)(lblObj.Controller))
+            <a href="@Href(lblObj.CustomUrl)" target="@lblObj.Target.ToString()" class="btn btn-primary btn-xs" name="submit.Filter">@(lblObj.Label.ToString())</a>
         }
-        
-        <text>&nbsp;|&nbsp;</text>
+        else {
+            @Html.ActionLink((string)(lblObj.Label), (string)(lblObj.Action), (string)(lblObj.Controller), new { @class = "btn btn-primary btn-xs" })
+        }
     }
-    
 }
-
