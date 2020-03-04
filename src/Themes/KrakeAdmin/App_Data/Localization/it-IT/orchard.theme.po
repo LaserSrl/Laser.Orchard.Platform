@@ -386,7 +386,7 @@ msgstr "Elementi {0} - {1} di {2}"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Clone.SummaryAdmin.cshtml"
 msgid "Clone"
-msgstr "Clona"
+msgstr "Duplica"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
 msgid "Preview"
