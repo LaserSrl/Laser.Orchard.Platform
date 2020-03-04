@@ -6413,7 +6413,6 @@ span.help-block {
 
 .btn {
     font-size: 14px;
-    text-transform: uppercase;
 }
 
     .btn:active,
@@ -11540,7 +11539,6 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     color: #fff;
     /*btn-xs*/
     font-size: 12px;
-    text-transform: uppercase;
     line-height: 1.5;
     padding: 1px 5px;
 }
