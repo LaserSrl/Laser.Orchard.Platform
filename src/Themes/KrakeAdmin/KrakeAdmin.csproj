@@ -202,6 +202,9 @@
     <Content Include="Views\Parts\Common.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts\PublishLater.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\CommonMetadataLastModified.cshtml" />
+    <Content Include="Views\Contents\admin\ivreaterritorio_cpf_manifestazione_ruolo.cshtml" />
+    <Content Include="Views\Parts.Contents.Clone.SummaryAdmin.cshtml" />
+    <Content Include="Views\Parts.Contents.Publish.SummaryAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
