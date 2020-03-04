@@ -557,8 +557,16 @@ msgid "You have to be logged in, before answering a questionnaire!"
 msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Answers"
+msgstr "Risposte"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Clear"
 msgstr "Annulla"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Completeness"
+msgstr "Completezza"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Date From"
@@ -575,6 +583,22 @@ msgstr "Esporta"
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Filter"
 msgstr "Filtra"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Filter options"
+msgstr "Opzioni di filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Number of people replying to questionnaire"
+msgstr "Numero di persone che hanno risposto al questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "People"
+msgstr "Persone"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Percentage of reply to all questions"
+msgstr "Percentuale di risposte all'intero questionario"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Questionnaire Answers"
@@ -597,8 +621,16 @@ msgid "Show Exported Files"
 msgstr "Mostra file esportati"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Statistics for {0}"
+msgstr "Statistiche per {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "This questionnaire contains no answers."
 msgstr "Questo questionario non ha ricevuto nessuna risposta."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Total number of given answers"
+msgstr "Numero totale di risposte"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "By {0}"
