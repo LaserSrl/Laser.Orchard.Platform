@@ -384,6 +384,30 @@ msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
 msgid "Showing items {0} - {1} of {2}"
 msgstr "Elementi {0} - {1} di {2}"
 
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Clone.SummaryAdmin.cshtml"
+msgid "Clone"
+msgstr "Clona"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Preview"
+msgstr "Anteprima"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Publish"
+msgstr "Pubblica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Publish Draft"
+msgstr "Pubblica Bozza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Unpublish"
+msgstr "Annulla Pubblicazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "View"
+msgstr "Visualizza"
+
 msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
 msgid "Created: {0}"
 msgstr "Creato: {0}"
