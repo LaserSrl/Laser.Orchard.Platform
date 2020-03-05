@@ -5699,7 +5699,10 @@ span.help-block {
 .form-horizontal .form-inverse .has-success .form-control-feedback {
     opacity: 1;
 }
-
+.btn-danger {
+    background-color: #ef2108;
+    border-color: #cc240f;
+}
 .btn-default-bright {
     color: #e5e6e6;
     color: #313534;
