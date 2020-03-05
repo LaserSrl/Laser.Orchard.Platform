@@ -50,16 +50,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// The records corresponding to all selected Cities.
         /// </summary>
         IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords { get; }
-        /// <summary>
-        /// All the configured Country ISO codes, with the Id corresponding to the
-        /// TerritoryInternalRecord for that country.
-        /// </summary>
-        IEnumerable<CountryAlpha2> CountryISOCodes { get; }
-        /// <summary>
-        /// Get the configured ISO Code for the territory with the given ID
-        /// </summary>
-        /// <param name="id">The Id of the territory for which we want the ISO code</param>
-        /// <returns></returns>
-        string GetCountryISOCode(int id);
+        ///// <summary>
+        ///// All the configured Country ISO codes, with the Id corresponding to the
+        ///// TerritoryInternalRecord for that country.
+        ///// </summary>
+        //IEnumerable<CountryAlpha2> CountryISOCodes { get; }
+        ///// <summary>
+        ///// Get the configured ISO Code for the territory with the given ID
+        ///// </summary>
+        ///// <param name="id">The Id of the territory for which we want the ISO code</param>
+        ///// <returns></returns>
+        //string GetCountryISOCode(int id);
     }
 }

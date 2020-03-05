@@ -81,6 +81,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     result = RedirectToAction("Index", "ShoppingCart", new { area = "Nwazet.Commerce" });
                     break;
                 case "save":
+                    // validate addresses
+                    if (!ValidateVM(model.ShippingAddressVM) || !ValidateVM(model.BillingAddressVM)) {
+                        result = View("Index", model);
+                        break;
+                    }
                     // Hack: based on the address coming in model.ShippingAddressVM, we can compute the actual
                     // destinations to be used for tax computations at this stage
                     var countryName = _addressConfigurationService
@@ -192,10 +197,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         });
                     break;
                 default:
-                    model.ShippingAddressVM = CreateVM();
-                    model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
-                    model.BillingAddressVM = CreateVM();
-                    model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
+                    model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
+                    model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
                     var thecurrentUser = _orchardServices.WorkContext.CurrentUser;
                     if (thecurrentUser != null) {
                         model.ListAvailableBillingAddress = _nwazetCommunicationService.GetBillingByUser(thecurrentUser);
@@ -228,7 +231,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // advanced address stuff
                 // The string values here are the DisplayText properties of
                 // configured territories, or "custom" text entered by the user.
-                Country = vm.Country, 
+                Country = vm.Country,
                 City = vm.City,
                 Province = vm.Province
             };
@@ -295,6 +298,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
+            if (!ValidateVM(newAddress)) {
+                _transactionManager.Cancel();
+                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
+                return View(newAddress);
+            }
             // Convert the values of Country, City, and Province to strings and ids for
             // the AddressRecord.
             FixUpdate(newAddress);
@@ -339,6 +347,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
+
+            if (!ValidateVM(newAddress)) {
+                _transactionManager.Cancel();
+                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
+                return View(newAddress);
+            }
             // Convert the values of Country, City, and Province to strings and ids for
             // the AddressRecord.
             FixUpdate(newAddress);
@@ -358,7 +372,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (country == null) {
                 // this is an error
             } else {
-                var cities = _addressConfigurationService.GetAllCities(country);
+                var cities = _addressConfigurationService.GetAllCities(
+                    viewModel.IsBillingAddress
+                        ? AddressRecordType.BillingAddress
+                        : AddressRecordType.ShippingAddress,
+                    country);
                 return Json(new {
                     Success = true,
                     Cities = cities
@@ -384,7 +402,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // this is an error
             } else {
                 // city may be null: that is handled in the service
-                var provinces = _addressConfigurationService.GetAllProvinces(country, city);
+                var provinces = _addressConfigurationService.GetAllProvinces(
+                    viewModel.IsBillingAddress
+                        ? AddressRecordType.BillingAddress
+                        : AddressRecordType.ShippingAddress,
+                    country, city);
                 return Json(new {
                     Success = true,
                     Provinces = provinces
@@ -403,8 +425,22 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         private AddressEditViewModel CreateVM() {
+            //TODO: Handle address type correctly
             return new AddressEditViewModel() {
-                Countries = _addressConfigurationService.CountryOptions()
+                Countries = _addressConfigurationService
+                    .CountryOptions(),
+                ShippingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.BillingAddress)
+            };
+        }
+        private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
+            return new AddressEditViewModel() {
+                Countries = _addressConfigurationService.CountryOptions(addressRecordType),
+                ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
+                AddressType = addressRecordType
             };
         }
 
@@ -427,9 +463,57 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             return new AddressEditViewModel(address) {
-                Countries = _addressConfigurationService.CountryOptions(countryId),
+                Countries = _addressConfigurationService
+                    .CountryOptions(address.AddressType, countryId),
+                ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
                 CountryId = countryId
             };
+        }
+
+        /// <summary>
+        /// validation of the vm coming from a create/edit action
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// It would be cleaner to do this in its own validation classes,
+        /// but we need a bunch of IDependencies, so putting this code
+        /// here is less of an hassle.
+        /// </remarks>
+        private bool ValidateVM(AddressEditViewModel vm) {
+            var validCountries = _addressConfigurationService
+                .GetAllCountries(vm.AddressType);
+            var countryTP = _addressConfigurationService
+                .GetCountry(vm.CountryId);
+            if (!SubValidation(validCountries, countryTP)) {
+                return false;
+            }
+            var validProvinces = _addressConfigurationService
+                .GetAllProvinces(vm.AddressType, countryTP);
+            var provinceTP = GetTerritory(vm.Province);
+            if (!SubValidation(validProvinces, provinceTP)) {
+                return false;
+            }
+            var validCities = _addressConfigurationService
+                .GetAllCities(vm.AddressType, provinceTP);
+            var cityTP = GetTerritory(vm.City);
+            if (!SubValidation(validCities, cityTP)) {
+                return false;
+            }
+            return true;
+        }
+        private bool SubValidation(IEnumerable<TerritoryPart> list, TerritoryPart item) {
+            if (list == null || !list.Any()) {
+                return false;
+            }
+            if (item == null) {
+                return false;
+            }
+            if (!list.Any(c => c.Id == item.Id)) {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

@@ -92,7 +92,7 @@
                 .replace('__geo__', geo)
                 .replace('__date__', date);
             ua = ua.replace(/amp;/g, ''); //Url.Action() puts &amp; instead of just &
-            document.getElementById("iframe_SummaryChart").height = "360px";
+            document.getElementById("iframe_SummaryChart").height = "450px";//"360px";
             document.getElementById("iframe_SummaryChart").src = ua;
 
             var pathStr = window

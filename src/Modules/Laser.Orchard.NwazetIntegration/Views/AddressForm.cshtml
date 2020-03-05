@@ -11,6 +11,10 @@
     List<AddressRecord> addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
+    string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
     var guid = Guid.NewGuid().ToString();
 }
 <div style="float:right">
@@ -86,7 +90,7 @@
     <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
 </div>
 @using (Script.Foot()) {
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function () {
             // configure the script that will dynamically load configured address settings
             var myaddress = $('#@guid').addressConfiguration({
@@ -103,9 +107,10 @@
                 },
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
-                }
+                },
+                isBilling: function () { return @isBillingAddress; }
             });
-            
+
             // saved addresses for the user
             var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
             // when a different address is selected:
@@ -152,5 +157,5 @@
             // on page load, set the first saved address
             $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
         });
-    </script>
+</script>
 }
