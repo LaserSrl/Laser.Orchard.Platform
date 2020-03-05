@@ -79,5 +79,20 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 5;
         }
+
+        public int UpdateFrom5() {
+            SchemaBuilder.CreateTable("TerritoryAddressTypePartRecord", table => table
+                .ContentPartRecord()
+                .Column<bool>("Shipping")
+                .Column<bool>("Billing")
+                .Column<int>("TerritoryInternalRecord_Id"));
+            // indexes because we will search over those booleans
+            SchemaBuilder.AlterTable("TerritoryAddressTypePartRecord",
+                table => table.CreateIndex("IDX_Shipping", "Shipping"));
+            SchemaBuilder.AlterTable("TerritoryAddressTypePartRecord",
+                table => table.CreateIndex("IDX_Billing", "Billing"));
+
+            return 6;
+        }
     }
 }

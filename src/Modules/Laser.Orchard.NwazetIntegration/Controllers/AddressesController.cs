@@ -192,10 +192,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         });
                     break;
                 default:
-                    model.ShippingAddressVM = CreateVM();
-                    model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
-                    model.BillingAddressVM = CreateVM();
-                    model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
+                    model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
+                    model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
                     var thecurrentUser = _orchardServices.WorkContext.CurrentUser;
                     if (thecurrentUser != null) {
                         model.ListAvailableBillingAddress = _nwazetCommunicationService.GetBillingByUser(thecurrentUser);
@@ -358,7 +356,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (country == null) {
                 // this is an error
             } else {
-                var cities = _addressConfigurationService.GetAllCities(country);
+                var cities = _addressConfigurationService.GetAllCities(
+                    viewModel.IsBillingAddress 
+                        ? AddressRecordType.BillingAddress
+                        : AddressRecordType.ShippingAddress,
+                    country);
                 return Json(new {
                     Success = true,
                     Cities = cities
@@ -384,7 +386,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // this is an error
             } else {
                 // city may be null: that is handled in the service
-                var provinces = _addressConfigurationService.GetAllProvinces(country, city);
+                var provinces = _addressConfigurationService.GetAllProvinces(
+                    viewModel.IsBillingAddress
+                        ? AddressRecordType.BillingAddress
+                        : AddressRecordType.ShippingAddress, 
+                    country, city);
                 return Json(new {
                     Success = true,
                     Provinces = provinces
@@ -403,8 +409,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         private AddressEditViewModel CreateVM() {
+            //TODO: Handle address type correctly
             return new AddressEditViewModel() {
                 Countries = _addressConfigurationService.CountryOptions()
+            };
+        }
+        private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
+            return new AddressEditViewModel() {
+                Countries = _addressConfigurationService.CountryOptions(addressRecordType),
+                AddressType = addressRecordType
             };
         }
 
@@ -427,7 +440,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             return new AddressEditViewModel(address) {
-                Countries = _addressConfigurationService.CountryOptions(countryId),
+                Countries = _addressConfigurationService
+                    .CountryOptions(address.AddressType, countryId),
                 CountryId = countryId
             };
         }

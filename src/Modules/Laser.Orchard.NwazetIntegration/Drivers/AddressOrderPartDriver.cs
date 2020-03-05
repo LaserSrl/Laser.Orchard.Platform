@@ -148,7 +148,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             return new AddressEditViewModel(address) {
-                Countries = _addressConfigurationService.CountryOptions(countryId),
+                Countries = _addressConfigurationService
+                    .CountryOptions(address.AddressType, countryId),
                 CountryId = countryId
             };
         }

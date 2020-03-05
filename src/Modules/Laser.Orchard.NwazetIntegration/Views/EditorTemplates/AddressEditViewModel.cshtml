@@ -23,6 +23,10 @@
             ? "ShippingAddress_" // map to the correctobject within OrderPart
             : "BillingAddress_");
 
+    string isBillingAddress = (Model.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
     var guid = Guid.NewGuid().ToString();
 }
 @helper EditorForString(
@@ -187,6 +191,7 @@
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
                 },
+                isBilling: @isBillingAddress,
                 @if (!string.IsNullOrWhiteSpace(otherPrefix)) {
                     <text>
                     onChangeCity: function () {

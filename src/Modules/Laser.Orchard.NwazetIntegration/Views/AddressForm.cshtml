@@ -11,6 +11,10 @@
     List<AddressRecord> addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
+    string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
     var guid = Guid.NewGuid().ToString();
 }
 <div style="float:right">
@@ -103,7 +107,8 @@
                 },
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
-                }
+                },
+                isBilling: @isBillingAddress
             });
             
             // saved addresses for the user

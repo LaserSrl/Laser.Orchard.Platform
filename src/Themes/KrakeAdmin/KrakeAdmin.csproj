@@ -198,6 +198,7 @@
     <Content Include="Views\Media-Audio.Thumbnail.cshtml" />
     <Content Include="Views\Media-Document.Thumbnail.cshtml" />
     <Content Include="Views\Media-OEmbed.Thumbnail.cshtml" />
+    <Content Include="Views\Message.cshtml" />
     <Content Include="Views\Parts\Common.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts\PublishLater.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\CommonMetadataLastModified.cshtml" />
@@ -308,9 +309,7 @@
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Fields\ContentPicker.Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

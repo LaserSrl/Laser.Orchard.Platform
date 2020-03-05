@@ -1,4 +1,5 @@
-﻿using Nwazet.Commerce.Models;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Nwazet.Commerce.Models;
 using Orchard;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,28 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <returns></returns>
         IEnumerable<TerritoryPart> GetAllCountries();
         /// <summary>
+        /// Get the list of all the countries configured for the system for a 
+        /// given type of address.
+        /// Implementations should be aware of proper content localization.
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <returns></returns>
+        IEnumerable<TerritoryPart> GetAllCountries(AddressRecordType addressRecordType);
+        /// <summary>
         /// Gets a list of options configured to be used in UI when selecting
         /// a country.
         /// </summary>
         /// <param name="id">Id of a country to preselect.</param>
         /// <returns></returns>
         List<SelectListItem> CountryOptions(int id = -1);
+        /// <summary>
+        /// Gets a list of options configured to be used in UI when selecting
+        /// a country for a given typ fo address.
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <param name="id">Id of a country to preselect.</param>
+        /// <returns></returns>
+        List<SelectListItem> CountryOptions(AddressRecordType addressRecordType, int id = -1);
         /// <summary>
         /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured country if it exists.
@@ -51,6 +68,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="parent"></param>
         /// <returns></returns>
         IEnumerable<TerritoryPart> GetAllCities(TerritoryPart parent);
+        /// <summary>
+        /// Get the list of all TerritoryParts that exist in the hierarchy underneath
+        /// the given territory and that are also configured as cities and that are
+        /// marked for the given address type (shipping/billing).
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        IEnumerable<TerritoryPart> GetAllCities(AddressRecordType addressRecordType, TerritoryPart parent);
         /// <summary>
         /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured city if it exists.
@@ -82,6 +108,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         IEnumerable<TerritoryPart> GetAllProvinces(TerritoryPart country);
         /// <summary>
         /// Get the list of all TerritoryParts that exist in the hierarchy underneath
+        /// the given territory and that are also configured as provinces and that are
+        /// marked for the given address type (shipping/billing).
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        IEnumerable<TerritoryPart> GetAllProvinces(AddressRecordType addressRecordType, TerritoryPart country);
+        /// <summary>
+        /// Get the list of all TerritoryParts that exist in the hierarchy underneath
         /// the given territory, that are also configured as provinces, and that contain
         /// within the sub-hierarchy of their children the territory passed as city.
         /// </summary>
@@ -94,6 +129,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// We are open to returning more results in some special cases, but the main reason
         /// why we are returning an IEnumerable is to simplify code using this API.</remarks>
         IEnumerable<TerritoryPart> GetAllProvinces(TerritoryPart country, TerritoryPart city);
+        /// <summary>
+        /// Get the list of all TerritoryParts that exist in the hierarchy underneath
+        /// the given territory, that are also configured as provinces, and that contain
+        /// within the sub-hierarchy of their children the territory passed as city and that are
+        /// marked for the given address type (shipping/billing).
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <param name="country"></param>
+        /// <param name="city">The territory that we must have within the sub-hierarchy
+        /// of the province territory.</param>
+        /// <returns></returns>
+        /// <remarks>We should expect this method to always return 0 results (no province found
+        /// that matches the criteria) or 1 result (we found The province that matches the criteria).
+        /// We are open to returning more results in some special cases, but the main reason
+        /// why we are returning an IEnumerable is to simplify code using this API.</remarks>
+        IEnumerable<TerritoryPart> GetAllProvinces(AddressRecordType addressRecordType, TerritoryPart country, TerritoryPart city);
         /// <summary>
         /// Get a single Territory from the configured Hierarchy
         /// </summary>
