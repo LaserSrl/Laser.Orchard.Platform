@@ -173,7 +173,7 @@
     </fieldset>
 
 @using (Script.Foot()) {
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             // configure the script that will dynamically load configured address settings
             $('#@guid').addressConfiguration({
@@ -191,7 +191,7 @@
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
                 },
-                isBilling: @isBillingAddress,
+                isBilling: function () { return @isBillingAddress; },
                 @if (!string.IsNullOrWhiteSpace(otherPrefix)) {
                     <text>
                     onChangeCity: function () {
@@ -221,7 +221,7 @@
 
             });
         });
-</script>
+    </script>
 }
 @* Use this for the properties that don't have advanced handling *@
 @helper BasicChangeHandler(

@@ -234,7 +234,7 @@ AddressConfiguration.prototype = {
             if (this._checkCountryOption(el, options)) {
                 var viewModel = {
                     CountryId: el.find(options.countriesInput).val(),
-                    IsBillingAddress: options.isBilling
+                    IsBillingAddress: options.isBilling()
                 };
                 $.post(options.getCities.url, {
                     viewmodel: viewModel,
@@ -352,7 +352,7 @@ AddressConfiguration.prototype = {
                 CountryId: el.find(options.countriesInput).val(),
                 CityId: cityId,
                 CityName: cityName, //in case city is input rather than select
-                IsBillingAddress: options.isBilling
+                IsBillingAddress: options.isBilling()
             };
             $.post(options.getProvinces.url, {
                 viewmodel: viewModel,
@@ -493,7 +493,7 @@ $.addressConfiguration = {
         /* *
          * Shipping/Billing address
          * */
-        isBilling: false,
+        isBilling: function () { return false; },
     }
 };
 $.fn.addressConfiguration = function (options) {

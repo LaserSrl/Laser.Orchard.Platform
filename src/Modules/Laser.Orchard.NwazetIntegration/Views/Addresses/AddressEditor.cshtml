@@ -9,8 +9,19 @@
     Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
 
     List<SelectListItem> AddressTypeLocalize = new List<SelectListItem>();
-    AddressTypeLocalize.Add(new SelectListItem() { Text = T("Billing Address").Text, Value = AddressRecordType.BillingAddress.ToString() });
-    AddressTypeLocalize.Add(new SelectListItem() { Text = T("Shipping Address").Text, Value = AddressRecordType.ShippingAddress.ToString() });
+    AddressTypeLocalize.Add(new SelectListItem() {
+        Text = T("Billing Address").Text,
+        Value = AddressRecordType.BillingAddress.ToString()
+    });
+    AddressTypeLocalize.Add(new SelectListItem() {
+        Text = T("Shipping Address").Text,
+        Value = AddressRecordType.ShippingAddress.ToString()
+    });
+
+    var shippingCountries = Model.ShippingCountries
+        .Select(sli => new { val = sli.Value, text = sli.Text });
+    var billingCountries = Model.BillingCountries
+        .Select(sli => new { val = sli.Value, text = sli.Text });
 
     var guid = Guid.NewGuid().ToString();
 }
@@ -53,7 +64,9 @@
         <div class="address-input address-text-input address-country">
             @Html.LabelFor(m => m.CountryId, T("Country").Text, new { @class = "required" })
             @Html.DropDownListFor(m => m.CountryId,
-                Model.Countries)
+                Model.AddressType == AddressRecordType.ShippingAddress
+                    ? Model.ShippingCountries
+                    : Model.BillingCountries)
             <div class="hint">@T("Select a valid country from the list.")</div>
         </div>
         @* 2. City *@
@@ -100,8 +113,9 @@
 @using(Script.Foot()) {
     <script type="text/javascript">
         $(document).ready(function () {
+            var addressTypeElement = $('#@Html.FieldIdFor(m => m.AddressType)');
             // configure the script that will dynamically load configured address settings
-            $('#@guid').addressConfiguration({
+            var addressOptions = {
                 // set all instance specific information here
                 // e.g. urls for ajax calls and the jquery selectors
                 // for the different elements of the address
@@ -115,7 +129,48 @@
                 },
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                isBilling: function () {
+                    var addressType = addressTypeElement.val();
+                    return addressType == '@AddressRecordType.BillingAddress.ToString()';
                 }
+            };
+            var myAddress = $('#@guid').addressConfiguration(addressOptions);
+
+            var shippingCountryOptions = JSON.parse('@Html.Raw(Json.Encode(shippingCountries))');
+            var billingCountryOptions = JSON.parse('@Html.Raw(Json.Encode(billingCountries))');
+            //  when we change the type of address
+            addressTypeElement.on('change', function () {
+                // we will have to update the country dropdown
+                var newAddressType = addressTypeElement.val();
+                var countrySelect = $('#@Html.FieldIdFor(m => m.CountryId)');
+                // if the formerly selected country is still valid for the other
+                // address type, we will preselect it
+                var oldCountry = countrySelect.val();
+                countrySelect.empty();
+                var listToUse = shippingCountryOptions;
+                if (newAddressType == '@AddressRecordType.BillingAddress.ToString()') {
+                    listToUse = billingCountryOptions;
+                }
+                var countryIsBoth = false;
+                for (i = 0; i < listToUse.length; i++) {
+                    countrySelect.append(new Option(
+                        listToUse[i].text,
+                        listToUse[i].val
+                    ));
+                    countryIsBoth |= oldCountry == listToUse[i].val;
+                }
+                if (countryIsBoth) {
+                    countrySelect.val(oldCountry);
+                }
+                // we will have to reset the address form
+                myAddress.resetAddress(addressOptions, {
+                    countryId: $('#@Html.FieldIdFor(m => m.CountryId)').val(),
+                    cityId: $('#@Html.FieldIdFor(m => m.CityId)').val(),
+                    provinceId: $('#@Html.FieldIdFor(m => m.ProvinceId)').val(),
+                    city: $('#@Html.FieldIdFor(m => m.City)').val(),
+                    province: $('#@Html.FieldIdFor(m => m.Province)').val(),
+                });
             });
         });
     </script>

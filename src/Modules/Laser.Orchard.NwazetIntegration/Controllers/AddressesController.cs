@@ -411,12 +411,19 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private AddressEditViewModel CreateVM() {
             //TODO: Handle address type correctly
             return new AddressEditViewModel() {
-                Countries = _addressConfigurationService.CountryOptions()
+                Countries = _addressConfigurationService
+                    .CountryOptions(),
+                ShippingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.BillingAddress)
             };
         }
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
             return new AddressEditViewModel() {
                 Countries = _addressConfigurationService.CountryOptions(addressRecordType),
+                ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
                 AddressType = addressRecordType
             };
         }
@@ -442,6 +449,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return new AddressEditViewModel(address) {
                 Countries = _addressConfigurationService
                     .CountryOptions(address.AddressType, countryId),
+                ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
                 CountryId = countryId
             };
         }
