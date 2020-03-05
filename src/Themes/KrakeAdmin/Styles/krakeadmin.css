@@ -1245,6 +1245,7 @@ fieldset {
 
 .pager-footer {
     text-align: right !important;
+    font-size: 13px;
 }
 
 .pager {
@@ -1265,16 +1266,66 @@ fieldset {
         text-shadow: none;
     }
 
-    .pagination > li > a, .pagination > li > span, .pager > li > a, .pager > li > span {
-        color: #1c2a37;
-        font-size: 12pt;
-        border-radius: 1px;
+.pager {
+    margin: 0;
+    display: inline-block;
+    padding-left: 0;
+    border-radius: 0;
+}
+
+    .pager > li {
+        display: inline;
     }
+
+        .pager > li > span.current-page {
+            z-index: 3;
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+        .pager > li > span {
+            border-radius: 0;
+        }
+
+        .pager > li > a {
+            background: #fafafa;
+            color: #666;
+            border-radius: 0;
+        }
+
+        .pager > li.first > a, .pager > li.first > span {
+            margin-left: 0;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .pager > li.last > a, .pager > li.last > span {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .pager > li > a, .pager > li > span {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
 
 .page-size-options {
     display: inline-block;
     white-space: nowrap;
+    text-align: left;
 }
+
+    .page-size-options select {
+        float: left;
+    }
 
 .page-results {
     display: block;
@@ -1618,10 +1669,7 @@ html.media-library-modal-window .button-cancel {
     padding: 5px;
 }
 
-.pager span.current-page {
-    border-radius: 1px;
-    background-color: #337AB7;
-}
+
 
 html {
     padding: 10px 0 0;
