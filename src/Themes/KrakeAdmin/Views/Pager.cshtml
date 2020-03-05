@@ -52,7 +52,7 @@
 
 @if (Model.TotalItemCount > 1) {
     <div class="row pager-footer">
-        <div class="col-sm-5 page-size-options group">
+        <div class="col-sm-2 page-size-options group">
             @if (totalPageCount > 1 || Model.PageSize == 0 || Model.PageSize > pageSizes.First()) {
                 <div>@T("Show:")</div>
 
@@ -81,7 +81,7 @@
                 @pageSizeTag.EndElement
             }
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-10">
             <span class="page-results">@T("Showing items {0} - {1} of {2}", (Model.Page - 1) * (int)Model.PageSize + 1, Model.PageSize == 0 ? Model.TotalItemCount : Math.Min(Model.TotalItemCount, (Model.Page) * (int)Model.PageSize), Model.TotalItemCount)</span>
             @pagerLinks
         </div>
