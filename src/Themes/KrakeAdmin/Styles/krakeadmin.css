@@ -84,6 +84,7 @@ button, .button, a.button {
     line-height: 20px;
     min-width: 110px;
     font-size: 13.4px;
+    padding: 6px 12px !important;
 }
     /* style buttons for google maps*/
     button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
