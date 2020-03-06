@@ -32,7 +32,10 @@
 
 
     Model.Classes.Add("selector");
+    Model.Classes.Remove("pager");
+
     var pageSizeTag = Tag(Model, "ul");
+
 
     if (Model.RouteData != null) {
         foreach (var rd in Model.RouteData.Values) {
@@ -48,76 +51,78 @@
 }
 
 @if (Model.TotalItemCount > 1) {
-    <div class="pager-footer">
-        @if (totalPageCount > 1 || Model.PageSize == 0 || Model.PageSize > pageSizes.First()) {
-            <div class="page-size-options group">
+    <div class="row pager-footer">
+        <div class="col-sm-2 page-size-options group">
+            @if (totalPageCount > 1 || Model.PageSize == 0 || Model.PageSize > pageSizes.First()) {
                 <div>@T("Show:")</div>
 
                 @pageSizeTag.StartElement
 
-                    @{ routeData["pageSize"] = 0; }
+                routeData["pageSize"] = 0;
 
-                    @if ((int)Model.PageSize == 0) {
-                        <li class="selected"><span>@T("All").ToString()</span></li>
-                    } else {
-                        <li>@Display.ActionLink(Value: T("All"), Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+                if ((int)Model.PageSize == 0) {
+                    <li class="selected"><span>@T("All").ToString()</span></li>
+                }
+                else {
+                    <li>@Display.ActionLink(Value: T("All"), Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
+                }
+
+                foreach (int size in pageSizes.OrderBy(p => p)) {
+                    routeData["pageSize"] = size;
+
+                    if ((int)Model.PageSize == size) {
+                        <li class="selected"><span>@size.ToString()</span></li>
                     }
-
-                    @foreach (int size in pageSizes.OrderBy(p => p)) {
-                        routeData["pageSize"] = size;
-
-                        if ((int)Model.PageSize == size) {
-                            <li class="selected"><span>@size.ToString()</span></li>
-                        } else {
-                            <li>@Display.ActionLink(Value: size, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
-                        }
+                    else {
+                        <li>@Display.ActionLink(Value: size, Action: (string)routeData["action"], Controller: (string)routeData["controller"], RouteValues: routeData)</li>
                     }
+                }
 
                 @pageSizeTag.EndElement
-            </div>
-        }
-
-        <span class="page-results">@T("Showing items {0} - {1} of {2}", (Model.Page - 1) * (int)Model.PageSize + 1, Model.PageSize == 0 ? Model.TotalItemCount : Math.Min(Model.TotalItemCount, (Model.Page) * (int)Model.PageSize), Model.TotalItemCount)</span>
-
-        @pagerLinks
+            }
+        </div>
+        <div class="col-sm-10">
+            <span class="page-results">@T("Showing items {0} - {1} of {2}", (Model.Page - 1) * (int)Model.PageSize + 1, Model.PageSize == 0 ? Model.TotalItemCount : Math.Min(Model.TotalItemCount, (Model.Page) * (int)Model.PageSize), Model.TotalItemCount)</span>
+            @pagerLinks
+        </div>
     </div>
 }
 @using (Script.Foot()) {
-<script type="text/javascript">
-    //<![CDATA[
-    $(function () {
-        var onSelectChange = function() {
-            // Rredirect to page with new page size.
-            // Disable button so that no other value can be chosen while the form is submitted.
-            window.location = $(this).attr("disabled", true).val();
-        };
+    <script type="text/javascript">
+        //<![CDATA[
+        $(function () {
+            var onSelectChange = function () {
+                // Rredirect to page with new page size.
+                // Disable button so that no other value can be chosen while the form is submitted.
+                window.location = $(this).attr("disabled", true).val();
+            };
 
-        var transformPager = function () {
-            $('ul.selector').each(function () {
-                var self = $(this),
-                    options = $.map(self.find("li"), function (li) {
-                        var self = $(li);
-                        return $("<option/>", {
-                            value: self.children("a").attr("href"),
-                            text: self.text(),
-                            selected: self.hasClass("selected")
-                        })[0];
-                    }),
-                    select = $("<select/>", {
-                        id: self.attr("id") + "Selector",
-                        "class": self.attr("class"),
-                        name: self.attr("name") + "Selector"
-                    }).change(onSelectChange).append(options);
-                self.replaceWith(select);
-            });
-        };
+            var transformPager = function () {
+                $('ul.selector').each(function () {
+                    var self = $(this),
+                        options = $.map(self.find("li"), function (li) {
+                            var self = $(li);
+                            return $("<option/>", {
+                                value: self.children("a").attr("href"),
+                                text: self.text(),
+                                selected: self.hasClass("selected")
+                            })[0];
+                        }),
+                        select = $("<select/>", {
+                            id: self.attr("id") + "Selector",
+                            "class": self.attr("class"),
+                            name: self.attr("name") + "Selector"
+                        }).change(onSelectChange).append(options);
+                    self.replaceWith(select);
+                });
+            };
 
-        transformPager();
-
-        $(window).on("reinitialize", function() {
             transformPager();
-        });
-    })
+
+            $(window).on("reinitialize", function () {
+                transformPager();
+            });
+        })
 //]]>
-</script>
+    </script>
 }

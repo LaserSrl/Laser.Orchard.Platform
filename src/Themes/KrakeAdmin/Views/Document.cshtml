@@ -43,9 +43,12 @@ Script.Include("jquery.nanoscroller.min.js").AtHead();
 //custom
 Script.Include("krake.js").AtHead(); //dsweb custom library
 Script.Include("main.js").AtHead(); //laser-orchard custom library
+Script.Require("jQuery_DataTables").AtHead();
 
 //---- include css files ----//
 Style.Require("Bootstrap").AtHead();
+Style.Require("jQuery_DataTables").AtHead();
+
 // Base theme
 Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
 Style.Include("ie.css").UseCondition("gte IE 9").SetAttribute("media", "screen, projection");

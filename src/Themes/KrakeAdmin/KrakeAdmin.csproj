@@ -106,6 +106,7 @@
     <Content Include="Scripts\overthrow.min.js" />
     <Content Include="Scripts\TooltipsZoomimage.js" />
     <Content Include="Styles\baseadmin.css" />
+    <Content Include="Styles\baseadmin.min.css" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Styles\fonts\HANDGOTB.svg" />
@@ -202,6 +203,10 @@
     <Content Include="Views\Parts\Common.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts\PublishLater.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\CommonMetadataLastModified.cshtml" />
+    <Content Include="Views\Contents\admin\ivreaterritorio_cpf_manifestazione_ruolo.cshtml" />
+    <Content Include="Views\Parts.Contents.Clone.SummaryAdmin.cshtml" />
+    <Content Include="Views\Parts.Contents.Publish.SummaryAdmin.cshtml" />
+    <Content Include="Views\Pager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
@@ -228,7 +233,6 @@
     <Content Include="Views\LocalMenu.cshtml" />
     <Content Include="Views\Menu.cshtml" />
     <Content Include="Views\MenuORI.cshtml" />
-    <Content Include="Views\Pager.cshtml" />
     <Content Include="Views\Title.cshtml" />
     <Content Include="Views\User.cshtml" />
   </ItemGroup>
