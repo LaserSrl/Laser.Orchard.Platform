@@ -5700,10 +5700,12 @@ span.help-block {
 .form-horizontal .form-inverse .has-success .form-control-feedback {
     opacity: 1;
 }
+
 .btn-danger {
     background-color: #ef2108;
     border-color: #cc240f;
 }
+
 .btn-default-bright {
     color: #e5e6e6;
     color: #313534;
@@ -7465,17 +7467,41 @@ li.dropdown-progress {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
     border: none;
-    border-bottom: 2px solid #00ccff;
+    border-bottom: 2px solid #fff;
     color: #00ccff;
     background-color: transparent;
     cursor: default;
     opacity: 1;
 }
 
-.card-head.nav-tabs,
-.card-head > .nav-tabs {
-    padding: 0 24px;
+.nav-tabs-custom {
+    padding: 10px;
+    background-color: #f4f4f4;
 }
+
+    .nav-tabs-custom .tab-content {
+        margin-top: 0;
+        padding: 0;
+    }
+
+        .nav-tabs-custom .tab-content > .tab-pane {
+            background-color: white;
+            padding: 0 10px;
+            margin: 0;
+        }
+    .nav-tabs-custom .nav-tabs {
+        background-color: white;
+    }
+        .nav-tabs-custom .nav-tabs > li {
+            min-height: 40px;
+        }
+        .nav-tabs-custom .nav-tabs > li > a {
+            padding: 5px;
+            text-transform: none;
+        }
+    .card-head.nav-tabs, .card-head > .nav-tabs {
+        padding: 0 24px;
+    }
 
     .card-head.nav-tabs > li > a,
     .card-head > .nav-tabs > li > a {
