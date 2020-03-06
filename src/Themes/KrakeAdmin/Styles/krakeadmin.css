@@ -7454,7 +7454,7 @@ li.dropdown-progress {
     border: none;
     border-bottom: 2px solid transparent;
     border-radius: none;
-    opacity: 0.55;
+    opacity: 0.85;
     font-weight: 500;
     text-transform: uppercase;
 }
@@ -7489,19 +7489,33 @@ li.dropdown-progress {
             padding: 0 10px;
             margin: 0;
         }
+
     .nav-tabs-custom .nav-tabs {
         background-color: white;
     }
+
         .nav-tabs-custom .nav-tabs > li {
             min-height: 40px;
+            font-size: 0.9em;
         }
-        .nav-tabs-custom .nav-tabs > li > a {
-            padding: 5px;
-            text-transform: none;
-        }
-    .card-head.nav-tabs, .card-head > .nav-tabs {
-        padding: 0 24px;
+
+            .nav-tabs-custom .nav-tabs > li.active {
+                border-left: 1px solid #f4f4f4;
+                border-right: 1px solid #f4f4f4;
+            }
+
+    .nav-tabs-custom .nav-tabs > li > a {
+        padding: 5px 10px;
+        text-transform: none;
     }
+
+    .nav-tabs-custom .nav-tabs > li.active > a, .nav-tabs-custom .nav-tabs > li.active > a:hover, .nav-tabs-custom .nav-tabs > li.active > a:focus {
+        color: #444;
+    }
+
+.card-head.nav-tabs, .card-head > .nav-tabs {
+    padding: 0 24px;
+}
 
     .card-head.nav-tabs > li > a,
     .card-head > .nav-tabs > li > a {
