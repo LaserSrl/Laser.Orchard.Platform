@@ -23,7 +23,7 @@
             }
 
             <select id="@idlistaddress" name="@idlistaddress">
-                <option value=-1 selected title="@T(" Remove inserted data")">@T("none")</option>
+                <option value=-1 selected title="@T("New address")">@T("New address")</option>
                 @foreach (var ad in addressList) {
                 <option value=@ad.Id title="@ad.Honorific @ad.FirstName @ad.LastName @ad.Company">@ad.Address1 @ad.Address2 @ad.City</option>
                 }
