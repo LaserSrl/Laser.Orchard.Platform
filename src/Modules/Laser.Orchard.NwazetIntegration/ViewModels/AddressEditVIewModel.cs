@@ -63,10 +63,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             get { return AddressRecord.City; }
             set { AddressRecord.City = value; }
         }
+        [Required]
         public string Province {
             get { return AddressRecord.Province; }
             set { AddressRecord.Province = value; }
         }
+        [Required]
         public string PostalCode {
             get { return AddressRecord.PostalCode; }
             set { AddressRecord.PostalCode = value; }

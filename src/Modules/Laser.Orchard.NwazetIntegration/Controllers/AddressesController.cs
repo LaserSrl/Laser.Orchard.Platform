@@ -342,6 +342,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             var newAddress = new AddressEditViewModel(id);
+            newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
+            newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
             if (!TryUpdateModel(newAddress)) {
                 _transactionManager.Cancel();
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
