@@ -193,8 +193,12 @@ msgid "Last Name"
 msgstr "Cognome"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "New address"
+msgstr "Nuovo indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "none"
-msgstr "Nessuno"
+msgstr "Nuovo indirizzo"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Please include middle name or initial as appropriate."
