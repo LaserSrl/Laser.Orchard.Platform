@@ -293,13 +293,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             var newAddress = new AddressEditViewModel();
-            if (!TryUpdateModel(newAddress)) {
+            if (!TryUpdateModel(newAddress) || !ValidateVM(newAddress)) {
                 _transactionManager.Cancel();
-                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
-                return View(newAddress);
-            }
-            if (!ValidateVM(newAddress)) {
-                _transactionManager.Cancel();
+                // added the assignment of the lists because in case of error in the validation the properties are not populated
+                newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
+                newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
+
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -342,16 +341,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
 
             var newAddress = new AddressEditViewModel(id);
-            newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
-            newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
-            if (!TryUpdateModel(newAddress)) {
+          
+            if (!TryUpdateModel(newAddress) || !ValidateVM(newAddress)) {
                 _transactionManager.Cancel();
-                newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
-                return View(newAddress);
-            }
+                // added the assignment of the lists because in case of error in the validation the properties are not populated
+                newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
+                newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
-            if (!ValidateVM(newAddress)) {
-                _transactionManager.Cancel();
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
