@@ -11667,3 +11667,7 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     color: #fff;
     margin-left: 5px;
 }
+
+.manage-type .content {
+    min-height: unset;
+}
