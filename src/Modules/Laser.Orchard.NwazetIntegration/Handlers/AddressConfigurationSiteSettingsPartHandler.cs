@@ -35,6 +35,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             // Also invalidate when the Hierarchy part has been updated
             OnUpdated<TerritoryHierarchyPart>(
                 (context, part) => Invalidate(part));
+            OnImported<TerritoryHierarchyPart>(
+                (context, part) => Invalidate(part));
             OnPublished<TerritoryHierarchyPart>(
                 (context, part) => Invalidate(part));
             OnRemoved<TerritoryHierarchyPart>(
@@ -44,26 +46,49 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             // Also invalidate when one of the selected territories has been updated
             OnUpdated<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
+            OnImported<TerritoryAdministrativeTypePart>(
+                (context, part) => Invalidate(part));
             OnPublished<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
             OnRemoved<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
             OnDestroyed<TerritoryAdministrativeTypePart>(
                 (context, part) => Invalidate(part));
+            // Also invalidate when we update whether the territory is for shipping or billing
+            OnUpdated<TerritoryAddressTypePart>(
+                (context, part) => Invalidate(part));
+            OnImported<TerritoryAddressTypePart>(
+                (context, part) => Invalidate(part));
+            OnPublished<TerritoryAddressTypePart>(
+                (context, part) => Invalidate(part));
+            OnRemoved<TerritoryAddressTypePart>(
+                (context, part) => Invalidate(part));
+            OnDestroyed<TerritoryAddressTypePart>(
+                (context, part) => Invalidate(part));
         }
 
         private void Invalidate(TerritoryHierarchyPart part) {
             // if the hierarchy is the one selected or one of its localizations
             // we invalidate the cache
-            if (_addressConfigurationSettingsService.ShippingCountriesHierarchies
+            if (!_addressConfigurationSettingsService.ShippingCountriesHierarchies.Any()
+                || _addressConfigurationSettingsService.ShippingCountriesHierarchies
                 .Select(thp => thp.Id)
                 .Contains(part.Id)) {
                 Invalidate();
             }
         }
 
+        private void Invalidate(TerritoryAddressTypePart part) {
+            var territory = part.As<TerritoryPart>();
+            Invalidate(territory);
+        }
+
         private void Invalidate(TerritoryAdministrativeTypePart part) {
             var territory = part.As<TerritoryPart>();
+            Invalidate(territory);
+        }
+
+        private void Invalidate(TerritoryPart territory) {
             if (territory != null) {
                 var hId = territory.Hierarchy?.Id;
                 // if the territory belongs the selected hierarchy or one
@@ -75,7 +100,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                     Invalidate();
                 }
             }
-            
+
         }
 
         private void Invalidate() {
