@@ -12,14 +12,15 @@
 }
 <h1>@title</h1>
 <div class="ship-errors"></div>
+@Html.ValidationSummary()
 
 @using (Html.BeginFormAntiForgeryPost(Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
-     <fieldset>
+    <fieldset>
         <legend>@T("Shipping Address")</legend>
         @Display.AddressForm(
-            Prefix: "shippingAddressVM", 
-            Address: Model.ShippingAddressVM, 
-            IncludeCountry: true, 
+            Prefix: "shippingAddressVM",
+            Address: Model.ShippingAddressVM,
+            IncludeCountry: true,
             ListAddress:Model.ListAvailableShippingAddress)
     </fieldset>
 
@@ -30,9 +31,9 @@
     <fieldset class="billing-address">
         <legend>@T("Billing Address")</legend>
         @Display.AddressForm(
-            Prefix: "billingAddressVM", 
-            Address: Model.BillingAddressVM, 
-            IncludeCountry: true, 
+            Prefix: "billingAddressVM",
+            Address: Model.BillingAddressVM,
+            IncludeCountry: true,
             ListAddress: Model.ListAvailableBillingAddress)
     </fieldset>
 
@@ -54,4 +55,4 @@
         <button type="submit" id="payButton" name="Submit" value="save" style="padding: 10px 10px">@T("Next")</button>
         <button type="submit" id="cartButton" name="Submit" value="cart" style="padding: 10px 10px">@T("Back to cart")</button>
     </div>
-    }
+}

@@ -10,63 +10,62 @@
     addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
-    }
-
-    <div style="float:right">
-        <fieldset>
-            @if (prefix == "shippingAddress") {
+}
+<div style="float:right">
+    <fieldset>
+        @if (prefix == "shippingAddress") {
 
             <legend>@T("Stored Shipping Address")</legend>
-            }
-            else {
+        }
+        else {
             <legend>@T("Stored Billing Address")</legend>
-            }
+        }
 
-            <select id="@idlistaddress" name="@idlistaddress">
-                <option value=-1 selected title="@T("New address")">@T("New address")</option>
-                @foreach (var ad in addressList) {
+        <select id="@idlistaddress" name="@idlistaddress">
+            <option value=-1 selected title="@T("New address")">@T("New address")</option>
+            @foreach (var ad in addressList) {
                 <option value=@ad.Id title="@ad.Honorific @ad.FirstName @ad.LastName @ad.Company">@ad.Address1 @ad.Address2 @ad.City</option>
-                }
-            </select>
-        </fieldset>
-    </div>
+            }
+        </select>
+    </fieldset>
+</div>
 
 
-        <input id="@Html.Id(prefix + ".Honorific")" type="text" name="@Html.Name(prefix + ".Honorific")" value="@address.Honorific" class="honorific input-mini" />
-        <label for="@Html.Id(prefix + ".Honorific")">@T("Title")</label>
-        <div class="hint">@T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc.")</div>
-        <input id="@Html.Id(prefix + ".FirstName")" type="text" name="@Html.Name(prefix + ".FirstName")" value="@address.FirstName" class="input-large required" />
-        <label for="@Html.Id(prefix + ".FirstName")">@T("First Name")</label>
-        <div class="hint">@T("Please include middle name or initial as appropriate.")</div>
-        <input id="@Html.Id(prefix + ".LastName")" type="text" name="@Html.Name(prefix + ".LastName")" value="@address.LastName" class="input-large required" />
-        <label for="@Html.Id(prefix + ".LastName")">@T("Last Name")</label>
-        <div class="hint">@T("Please include middle name or initial as appropriate.")</div>
-        <input id="@Html.Id(prefix + ".Company")" type="text" name="@Html.Name(prefix + ".Company")" value="@address.Company" class="input-large" />
-        <label for="@Html.Id(prefix + ".Company")">@T("Company")</label>
-        <div class="hint">&nbsp;</div>
-        <input id="@Html.Id(prefix + ".Address1")" type="text" name="@Html.Name(prefix + ".Address1")" value="@address.Address1" class="input-xxlarge required" />
-        <label for="@Html.Id(prefix + ".Address1")">@T("Address")</label>
-        <div class="hint">&nbsp;</div>
-        <input id="@Html.Id(prefix + ".Address2")" type="text" name="@Html.Name(prefix + ".Address2")" value="@address.Address2" class="input-xxlarge" />
-        <label for="@Html.Id(prefix + ".Address2")">@T("Address2")</label>
-        <div class="hint">&nbsp;</div>
-        <input id="@Html.Id(prefix + ".City")" type="text" name="@Html.Name(prefix + ".City")" value="@address.City" class="input-large required" />
-        <label for="@Html.Id(prefix + ".City")">@T("City")</label>
-        <div class="hint">&nbsp;</div>
-        <input id="@Html.Id(prefix + ".Province")" type="text" name="@Html.Name(prefix + ".Province")" value="@address.Province" class="input-mini" />
-        <label for="@Html.Id(prefix + ".Province")">@T("State, province, prefecture, republic or region")</label>
-        <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
+<input id="@Html.Id(prefix + ".Honorific")" type="text" name="@Html.Name(prefix + ".Honorific")" value="@address.Honorific" class="honorific input-mini" />
+<label for="@Html.Id(prefix + ".Honorific")">@T("Title")</label>
+<div class="hint">@T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc.")</div>
+<input id="@Html.Id(prefix + ".FirstName")" type="text" name="@Html.Name(prefix + ".FirstName")" value="@address.FirstName" class="input-large required" />
+<label for="@Html.Id(prefix + ".FirstName")">@T("First Name")</label>
+<div class="hint">@T("Please include middle name or initial as appropriate.")</div>
+<input id="@Html.Id(prefix + ".LastName")" type="text" name="@Html.Name(prefix + ".LastName")" value="@address.LastName" class="input-large required" />
+<label for="@Html.Id(prefix + ".LastName")">@T("Last Name")</label>
+<div class="hint">@T("Please include middle name or initial as appropriate.")</div>
+<input id="@Html.Id(prefix + ".Company")" type="text" name="@Html.Name(prefix + ".Company")" value="@address.Company" class="input-large" />
+<label for="@Html.Id(prefix + ".Company")">@T("Company")</label>
+<div class="hint">&nbsp;</div>
+<input id="@Html.Id(prefix + ".Address1")" type="text" name="@Html.Name(prefix + ".Address1")" value="@address.Address1" class="input-xxlarge required" />
+<label for="@Html.Id(prefix + ".Address1")">@T("Address")</label>
+<div class="hint">&nbsp;</div>
+<input id="@Html.Id(prefix + ".Address2")" type="text" name="@Html.Name(prefix + ".Address2")" value="@address.Address2" class="input-xxlarge" />
+<label for="@Html.Id(prefix + ".Address2")">@T("Address2")</label>
+<div class="hint">&nbsp;</div>
+<input id="@Html.Id(prefix + ".City")" type="text" name="@Html.Name(prefix + ".City")" value="@address.City" class="input-large required" />
+<label for="@Html.Id(prefix + ".City")">@T("City")</label>
+<div class="hint">&nbsp;</div>
+<input id="@Html.Id(prefix + ".Province")" type="text" name="@Html.Name(prefix + ".Province")" value="@address.Province" class="input-mini" />
+<label for="@Html.Id(prefix + ".Province")">@T("State, province, prefecture, republic or region")</label>
+<div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
 
-        <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
-        <label for="@Html.Id(prefix + ".PostalCode")">@T("Postal or ZIP code")</label>
-        <div class="hint">&nbsp;</div>
-        <input id="@Html.Id(prefix + ".Country")" type="text" name="@Html.Name(prefix + ".Country")" value="@address.Country" class="input-medium" />
-        <label for="@Html.Id(prefix + ".Country")">@T("Country")</label>
+<input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
+<label for="@Html.Id(prefix + ".PostalCode")">@T("Postal or ZIP code")</label>
+<div class="hint">&nbsp;</div>
+<input id="@Html.Id(prefix + ".Country")" type="text" name="@Html.Name(prefix + ".Country")" value="@address.Country" class="input-medium" />
+<label for="@Html.Id(prefix + ".Country")">@T("Country")</label>
 
-        <div class="hint">@T("You may leave this blank for the United States.")</div>
-   
+<div class="hint">@T("You may leave this blank for the United States.")</div>
 
-    @using (Script.Foot()){
+
+@using (Script.Foot()) {
     <script type="text/javascript">
         $(document).ready(function () {
             $('#@idlistaddress').on('change', function () {
@@ -101,4 +100,4 @@
             $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
         });
     </script>
-    }
+}
