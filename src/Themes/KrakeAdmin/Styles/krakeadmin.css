@@ -5703,10 +5703,12 @@ span.help-block {
 .form-horizontal .form-inverse .has-success .form-control-feedback {
     opacity: 1;
 }
+
 .btn-danger {
     background-color: #ef2108;
     border-color: #cc240f;
 }
+
 .btn-default-bright {
     color: #e5e6e6;
     color: #313534;
@@ -7455,7 +7457,7 @@ li.dropdown-progress {
     border: none;
     border-bottom: 2px solid transparent;
     border-radius: none;
-    opacity: 0.55;
+    opacity: 0.85;
     font-weight: 500;
     text-transform: uppercase;
 }
@@ -7468,15 +7470,53 @@ li.dropdown-progress {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
     border: none;
-    border-bottom: 2px solid #00ccff;
+    border-bottom: 2px solid #fff;
     /*color: #00ccff;*/
     background-color: transparent;
     cursor: default;
     opacity: 1;
 }
 
-.card-head.nav-tabs,
-.card-head > .nav-tabs {
+.nav-tabs-custom {
+    padding: 10px;
+    background-color: #f4f4f4;
+}
+
+    .nav-tabs-custom .tab-content {
+        margin-top: 0;
+        padding: 0;
+    }
+
+        .nav-tabs-custom .tab-content > .tab-pane {
+            background-color: white;
+            padding: 0 10px;
+            margin: 0;
+        }
+
+    .nav-tabs-custom .nav-tabs {
+        background-color: white;
+    }
+
+        .nav-tabs-custom .nav-tabs > li {
+            min-height: 40px;
+            font-size: 0.9em;
+        }
+
+            .nav-tabs-custom .nav-tabs > li.active {
+                border-left: 1px solid #f4f4f4;
+                border-right: 1px solid #f4f4f4;
+            }
+
+    .nav-tabs-custom .nav-tabs > li > a {
+        padding: 5px 10px;
+        text-transform: none;
+    }
+
+    .nav-tabs-custom .nav-tabs > li.active > a, .nav-tabs-custom .nav-tabs > li.active > a:hover, .nav-tabs-custom .nav-tabs > li.active > a:focus {
+        color: #444;
+    }
+
+.card-head.nav-tabs, .card-head > .nav-tabs {
     padding: 0 24px;
 }
 
@@ -11626,4 +11666,8 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 .contentItems.bulk-items .summary .related a.btn {
     color: #fff;
     margin-left: 5px;
+}
+
+.manage-type .content {
+    min-height: unset;
 }

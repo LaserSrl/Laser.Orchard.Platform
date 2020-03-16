@@ -7,17 +7,23 @@
     var settings = WorkContext.Resolve<ShellSettings>();
     var prefix = settings.RequestUrlPrefix;
     var url = (string)(item.ElementoFasciaKrake.Link.Value);
-    url = (url.StartsWith("~/") && !string.IsNullOrWhiteSpace(prefix)) ?
-        ("~/" + prefix + "/" + url.Substring(2)) :
-        url;
-    url = Url.Content(url);
+	if (url!=null) {
+		url = (url.StartsWith("~/") && !string.IsNullOrWhiteSpace(prefix)) ?
+			("~/" + prefix + "/" + url.Substring(2)) :
+			url;
+		url = Url.Content(url);
+	}
 }
 <div id="krake" class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-sm-6 text-center-xs">
+		@if (url!=null) {
             <a href="@url">
                 <img src="@item.ElementoFasciaKrake.Image.FirstMediaUrl"  title="@item.ElementoFasciaKrake.Image.MediaParts[0].Title" alt="@item.ElementoFasciaKrake.Image.MediaParts[0].AlternateText"  class="img-responsive pull-right-sm pull-right-md pull-right-lg">
             </a>
+		} else {
+			<img src="@item.ElementoFasciaKrake.Image.FirstMediaUrl"  title="@item.ElementoFasciaKrake.Image.MediaParts[0].Title" alt="@item.ElementoFasciaKrake.Image.MediaParts[0].AlternateText"  class="img-responsive pull-right-sm pull-right-md pull-right-lg">
+		}
         </div>
         <div class="col-xs-12 col-sm-6 hidden-xs">
             <div class="space-20 visible-xs"></div>
