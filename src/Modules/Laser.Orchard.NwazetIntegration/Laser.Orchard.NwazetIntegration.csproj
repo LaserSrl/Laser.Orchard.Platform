@@ -109,16 +109,21 @@
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Migration\MigrationsGTM.cs" />
+    <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
+    <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\IPosServiceIntegration.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +202,10 @@
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\Order.PaymentInfo.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
