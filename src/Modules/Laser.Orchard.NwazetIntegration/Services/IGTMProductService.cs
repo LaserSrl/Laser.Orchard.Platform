@@ -29,17 +29,14 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
             if (string.IsNullOrEmpty(part.ProductId)) {
-                var s = FillString(partSetting.Id, moduleSetting.ProductId, tokens);
+                var s = FillString(partSetting.Id, tokens);
                 part.ProductId = ProcessString(s, true);
             }
         }
 
-        private string FillString(string first, string second, Dictionary<string, object> tokens) {
-            if (!string.IsNullOrEmpty(first)) {
-                return _tokenizer.Replace(first, tokens);
-            }
-            if (!string.IsNullOrEmpty(second)) {
-                return _tokenizer.Replace(second, tokens);
+        private string FillString(string value, Dictionary<string, object> tokens) {
+            if (!string.IsNullOrEmpty(value)) {
+                return _tokenizer.Replace(value, tokens);
             }
             return string.Empty;
         }

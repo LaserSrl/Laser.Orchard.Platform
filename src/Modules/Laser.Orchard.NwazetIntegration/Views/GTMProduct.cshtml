@@ -3,13 +3,11 @@
 @{
     var gtmProductVM = Model.GTMProductVM;
     using (Script.Head()) {
-        @Html.Raw("dataLayer = [{");
-        @Html.Raw("'Id': '" + @gtmProductVM.Id + "'");
-        @Html.Raw("}];");
-
-        if (!string.IsNullOrEmpty(gtmProductVM.Id)) {
-            @Html.Raw("<meta property=\"og:Id\" content=\"" + gtmProductVM.Id + "\" />");
-        }
+        <script type="text/javascript">
+            var dataLayer = [{
+                    'Id': '@(gtmProductVM.Id)'
+                }];
+        </script>
     }
 
 }
