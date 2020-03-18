@@ -18,4 +18,16 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string Coupon { get; set; }
         public string Position { get; set; }
     }
+
+    public class GTMProductVM {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Brand { get; set; }
+        public string Category { get; set; }
+        public string Variant { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public string Coupon { get; set; }
+        public int Position { get; set; }
+    }
 }

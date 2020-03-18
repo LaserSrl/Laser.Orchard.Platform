@@ -26,17 +26,18 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                     _GTMProductService.FillPart(part);
 
                     var gtmProductVM = new GTMProductVM {
-                        Id = part.ProductId
+                        Id = part.ProductId,
+                        Name = part.Name,
+                        Brand = part.Brand,
+                        Category = part.Category,
+                        Variant = part.Variant,
+                        Price = part.Price,
+                        Quantity = part.Quantity,
+                        Coupon = part.Coupon,
+                        Position = part.Position
                     };
-
-                    //remove previous sharelink metas
+                    
                     var layout = (dynamic)context.Layout;
-                    if (layout.Head?.Items != null) {
-                        var headShapes = (List<object>)layout.Head.Items;
-                        headShapes.RemoveAll(sha => ((Shape)sha)
-                          .Metadata
-                          .Type == "GTMProduct");
-                    }
                     layout.Head.Add(context.New.GTMProduct(GTMProductVM: gtmProductVM));
                 }
             });

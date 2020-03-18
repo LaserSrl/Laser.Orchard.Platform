@@ -1,13 +1,32 @@
-﻿@using Orchard.ContentManagement
-@using Orchard.Mvc.Extensions
-@{
+﻿@{
     var gtmProductVM = Model.GTMProductVM;
     using (Script.Head()) {
         <script type="text/javascript">
             var dataLayer = [{
-                    'Id': '@(gtmProductVM.Id)'
-                }];
+                'name': '@(gtmProductVM.Name)',
+                'id': '@(gtmProductVM.Id)',
+                @if (gtmProductVM.Price != 0) {
+                    <text>'price': '@(gtmProductVM.Price)',</text>
+                 }
+                @if (!string.IsNullOrEmpty(gtmProductVM.Brand)) {
+                    <text>'brand': '@(gtmProductVM.Brand)',</text>
+                }
+                @if (!string.IsNullOrEmpty(gtmProductVM.Category)) {
+                    <text>'category': '@(gtmProductVM.Category)',</text>
+                }
+                @if (!string.IsNullOrEmpty(gtmProductVM.Variant)) {
+                    <text>'variant': '@(gtmProductVM.Variant)',</text>
+                }
+                @if (gtmProductVM.Quantity!=0) {
+                    <text>'quantity': @(gtmProductVM.Quantity),</text>
+                }
+                @if (!string.IsNullOrEmpty(gtmProductVM.Coupon)) {
+                    <text> 'coupon': '@(gtmProductVM.Coupon)',</text>
+                }
+                @if (gtmProductVM.Position != 0) {
+                    <text> 'position':'@(gtmProductVM.Position)' </text>
+                }
+            }];
         </script>
     }
-
 }

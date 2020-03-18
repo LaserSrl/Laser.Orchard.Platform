@@ -33,6 +33,18 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return this.Retrieve(r => r.Price); }
             set { this.Store(r => r.Price, value); }
         }
+        public int Quantity {
+            get { return this.Retrieve(r => r.Quantity); }
+            set { this.Store(r => r.Quantity, value); }
+        }
+        public string Coupon {
+            get { return this.Retrieve(r => r.Coupon); }
+            set { this.Store(r => r.Coupon, value); }
+        }
+        public int Position {
+            get { return this.Retrieve(r => r.Position); }
+            set { this.Store(r => r.Position, value); }
+        }
     }
 
     public class GTMProductPartRecord : ContentPartRecord {

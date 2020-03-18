@@ -129,7 +129,6 @@
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
-    <Compile Include="ViewModels\GTMProductVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

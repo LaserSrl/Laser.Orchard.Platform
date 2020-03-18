@@ -5,6 +5,7 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Tokens;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
@@ -24,14 +25,28 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public void FillPart(GTMProductPart part) {
-            var moduleSetting = _orchardServices.WorkContext.CurrentSite.As<GTMProductPart>();
             var partSetting = part.Settings.GetModel<GTMProductSettingVM>();
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
-            if (string.IsNullOrEmpty(part.ProductId)) {
-                var s = FillString(partSetting.Id, tokens);
-                part.ProductId = ProcessString(s, true);
-            }
+            part.ProductId = ProcessString(FillString(partSetting.Id, tokens), true);
+            part.Name = ProcessString(FillString(partSetting.Name, tokens), true);
+            part.Brand = ProcessString(FillString(partSetting.Brand, tokens), true);
+            part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
+            part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
+            
+            decimal price;
+            part.Price = decimal.TryParse(ProcessString(FillString(partSetting.Price, tokens), true), out price)
+                ? price : 0;
+            
+            int quantity;
+            part.Quantity = int.TryParse(ProcessString(FillString(partSetting.Quantity, tokens), true), out quantity)
+                ? quantity : 0;
+            
+            part.Coupon = ProcessString(FillString(partSetting.Coupon, tokens), true);
+
+            int position;
+            part.Position = int.TryParse(ProcessString(FillString(partSetting.Position, tokens), true), out position)
+                ? position : 0;
         }
 
         private string FillString(string value, Dictionary<string, object> tokens) {
