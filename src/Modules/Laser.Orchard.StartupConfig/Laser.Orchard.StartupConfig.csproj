@@ -137,8 +137,19 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\laser-base.scss" />
     <Content Include="Scripts\laser-tinymce.js" />
     <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
+    <Content Include="Styles\laser-base.css" />
+    <Content Include="Styles\laser-base.min.css">
+      <DependentUpon>laser-base.css</DependentUpon>
+    </Content>
+    <Content Include="Views\EditorTemplates\Parts.Common.SummaryInfoFor_Edit.cshtml" />
+    <Content Include="Assets\_colors.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -366,6 +377,7 @@
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
+    <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
