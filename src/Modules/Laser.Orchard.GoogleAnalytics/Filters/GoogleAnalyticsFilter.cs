@@ -7,6 +7,7 @@ using Orchard.UI.Resources;
 using Laser.Orchard.GoogleAnalytics.Models;
 using OUI = Orchard.UI;
 using Laser.Orchard.GoogleAnalytics.Services;
+using Orchard.Caching;
 
 namespace Laser.Orchard.GoogleAnalytics.Filters {
     [OrchardFeature("Laser.Orchard.GoogleAnalytics")]
@@ -14,11 +15,24 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
         private readonly IResourceManager _resourceManager;
         private readonly IOrchardServices _orchardServices;
         private readonly IGoogleAnalyticsCookie _googleAnalyticsCookie;
+        private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
 
-        public GoogleAnalyticsFilter(IResourceManager resourceManager, IOrchardServices orchardServices, IGoogleAnalyticsCookie googleAnalyticsCookie) {
+        public GoogleAnalyticsFilter(
+            IResourceManager resourceManager, 
+            IOrchardServices orchardServices, 
+            IGoogleAnalyticsCookie googleAnalyticsCookie,
+            IWorkContextAccessor workContextAccessor,
+            ICacheManager cacheManager,
+            ISignals signals) {
+
             _resourceManager = resourceManager;
             _orchardServices = orchardServices;
             _googleAnalyticsCookie = googleAnalyticsCookie;
+            _workContextAccessor = workContextAccessor;
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
 
         #region IResultFilter Members
@@ -30,10 +44,16 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
 
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(filterContext.RequestContext);
-            var part = _orchardServices.WorkContext.CurrentSite.As<GoogleAnalyticsSettingsPart>();
-            if (part != null && part.TrackOnAdmin && isAdmin && string.IsNullOrWhiteSpace(part.GoogleAnalyticsKey) == false) {
+            // This is designed to only run in the admin, because frontend scripts are
+            // handled by the module for GDPR cookies
+            if (SettingsPart != null 
+                && SettingsPart.TrackOnAdmin 
+                && isAdmin 
+                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)) {
                 // Register Google's new, recommended asynchronous universal analytics script to the header
-                _resourceManager.RegisterHeadScript(_googleAnalyticsCookie.GetScript(_googleAnalyticsCookie.GetCookieTypes()));
+                // (or the tag manager script if we have that configuration)
+                _resourceManager.RegisterHeadScript(
+                    _googleAnalyticsCookie.GetHeadScript(_googleAnalyticsCookie.GetCookieTypes()));
             }
         }
 
@@ -41,5 +61,18 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
         }
 
         #endregion
+
+        private GoogleAnalyticsSettingsPart SettingsPart {
+            get {
+                return _cacheManager.Get(Constants.SiteSettingsCacheKey, true, ctx => {
+                    // check whether we should invalidate the cache
+                    ctx.Monitor(_signals.When(Constants.SiteSettingsEvictSignal));
+                    return _workContextAccessor
+                        .GetContext()
+                        .CurrentSite
+                        .As<GoogleAnalyticsSettingsPart>();
+                });
+            }
+        }
     }
 }
