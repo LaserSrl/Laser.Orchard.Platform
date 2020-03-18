@@ -53,6 +53,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\..\..\Orchard\src\Orchard.Web\Modules\Laser.Orchard.ShareLink\Bin\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -106,6 +109,7 @@
     <Compile Include="Drivers\OrderPartDriver.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -124,6 +128,7 @@
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
+    <Compile Include="ViewModels\GTMProductVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +153,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
+      <Name>Orchard.Tokens</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
@@ -205,7 +214,9 @@
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\GTMProduct.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

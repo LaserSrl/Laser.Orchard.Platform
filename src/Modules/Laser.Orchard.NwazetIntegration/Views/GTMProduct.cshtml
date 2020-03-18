@@ -1,0 +1,15 @@
+﻿@using Orchard.ContentManagement
+@using Orchard.Mvc.Extensions
+@{
+    var gtmProductVM = Model.GTMProductVM;
+    using (Script.Head()) {
+        @Html.Raw("dataLayer = [{");
+        @Html.Raw("'Id': '" + @gtmProductVM.Id + "'");
+        @Html.Raw("}];");
+
+        if (!string.IsNullOrEmpty(gtmProductVM.Id)) {
+            @Html.Raw("<meta property=\"og:Id\" content=\"" + gtmProductVM.Id + "\" />");
+        }
+    }
+
+}
