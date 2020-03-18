@@ -11,7 +11,7 @@ using Orchard.Caching;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
     public interface IGoogleAnalyticsCookie : ICookieGDPR {
-
+        string GetNoScript();
     }
     public class CookieGDPR : IGoogleAnalyticsCookie {
         private readonly IOrchardServices _orchardServices;
@@ -43,9 +43,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
             //Get our part data/record if available for rendering scripts
-            if (SettingsPart == null 
-                || string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey) 
-                || (!SettingsPart.TrackOnAdmin && isAdmin) 
+            if (SettingsPart == null
+                || string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
+                || (!SettingsPart.TrackOnAdmin && isAdmin)
                 || (!SettingsPart.TrackOnFrontEnd && !isAdmin)) {
                 return ""; // Not a valid configuration, ignore
             }
@@ -96,6 +96,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             var script = new StringBuilder();
 
             script.AppendLine("<!-- Google Tag Manager -->");
+            script.AppendLine("<script type='text/javascript'>");
+            script.AppendLine("window.dataLayer = window.dataLayer || [];");
+            script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
             script.AppendLine("new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],");
             script.AppendLine("j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=");
@@ -108,6 +111,17 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
         public string GetFootScript(IList<CookieType> allowedTypes) {
             return string.Empty;
+        }
+
+        public string GetNoScript() {
+            var snippet = new StringBuilder();
+
+            snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
+            snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
+            snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
+            snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
+
+            return snippet.ToString();
         }
     }
 }
