@@ -34,15 +34,33 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             var validProvinces = _addressConfigurationService
                 .GetAllProvinces(vm.AddressType, countryTP);
-            var provinceTP = GetTerritory(vm.Province);
-            if (!SubValidation(validProvinces, provinceTP)) {
+            if (validProvinces == null) {
+                // error condition
                 return false;
             }
+            var provinceTP = GetTerritory(vm.Province);
+            if (validProvinces.Any()) {
+                // there may not be any configured province, and that is ok,
+                // but if any is configured, we check that the one selected is valid
+                if (!SubValidation(validProvinces, provinceTP)) {
+                    return false;
+                }
+            }
             var validCities = _addressConfigurationService
-                .GetAllCities(vm.AddressType, provinceTP);
-            var cityTP = GetTerritory(vm.City);
-            if (!SubValidation(validCities, cityTP)) {
+                .GetAllCities(vm.AddressType, 
+                    // use province if it exists, otherwise country
+                    provinceTP == null ? countryTP : provinceTP);
+            if (validCities == null) {
+                // error condition
                 return false;
+            }
+            if (validCities.Any()) {
+                // there may not be any configured city, and that is ok,
+                // but if any is configured, we check that the one selected is valid
+                var cityTP = GetTerritory(vm.City);
+                if (!SubValidation(validCities, cityTP)) {
+                    return false;
+                }
             }
             return true;
         }
