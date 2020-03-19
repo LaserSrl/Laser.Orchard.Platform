@@ -1,0 +1,12 @@
+﻿[
+  {
+    "outputFile": "Styles/laser-base.css",
+    "inputFile": "Assets/laser-base.scss",
+    "minify": {
+      "enabled": true
+    },
+    "options": {
+      "sourceMap": true
+    }
+  }
+]
