@@ -108,6 +108,7 @@
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />

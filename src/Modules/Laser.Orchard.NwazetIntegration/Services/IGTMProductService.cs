@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Tokens;
@@ -10,7 +11,7 @@ using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IGTMProductService : IDependency {
-        void FillPart(GTMProductPart part);
+        void FillPart(ProductPart product, GTMProductPart part);
     }
 
     public class GTMProductService : IGTMProductService {
@@ -24,29 +25,28 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _tokenizer = tokenizer;
         }
 
-        public void FillPart(GTMProductPart part) {
+        public void FillPart(ProductPart product, GTMProductPart part) {
             var partSetting = part.Settings.GetModel<GTMProductSettingVM>();
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
+           
+            if(partSetting.Id== Enums.TypeId.Id) {
+                part.ProductId = product.Id.ToString();
+            }
+            else {
+                part.ProductId = product.Sku;
+            }
 
-            part.ProductId = ProcessString(FillString(partSetting.Id, tokens), true);
             part.Name = ProcessString(FillString(partSetting.Name, tokens), true);
             part.Brand = ProcessString(FillString(partSetting.Brand, tokens), true);
             part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
             part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
-            
-            decimal price;
-            part.Price = decimal.TryParse(ProcessString(FillString(partSetting.Price, tokens), true), out price)
-                ? price : 0;
-            
-            int quantity;
-            part.Quantity = int.TryParse(ProcessString(FillString(partSetting.Quantity, tokens), true), out quantity)
-                ? quantity : 0;
-            
-            part.Coupon = ProcessString(FillString(partSetting.Coupon, tokens), true);
 
-            int position;
-            part.Position = int.TryParse(ProcessString(FillString(partSetting.Position, tokens), true), out position)
-                ? position : 0;
+            part.Price = product.ProductPriceService.GetPrice();
+            //in questa parte del dettaglio non va popolata
+            part.Quantity = 0;
+            //per il momento non sono trattati
+            part.Coupon = string.Empty;
+            part.Position = 0;
         }
 
         private string FillString(string value, Dictionary<string, object> tokens) {
