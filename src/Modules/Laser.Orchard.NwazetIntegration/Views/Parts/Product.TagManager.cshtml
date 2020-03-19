@@ -1,32 +1,38 @@
 ﻿@{
     var gtmProductVM = Model.GTMProductVM;
+    var arrayName =
+        string.IsNullOrWhiteSpace(Model.DisplayType)
+        || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
+        ? "products" : "impressions";
     using (Script.Head()) {
         <script type="text/javascript">
-            var dataLayer = [{
-                'name': '@(gtmProductVM.Name)',
+            options = $.extend(true, {}, $.addressConfiguration.defaults, options);
+        window.ecommerceData = $.extend(true, {}, window.ecommerceData);
+        window.ecommerceData.@(arrayName).push({
+            'name': '@(gtmProductVM.Name)',
                 'id': '@(gtmProductVM.Id)'
                 @if (gtmProductVM.Price != 0) {
                     <text>,'price': '@(gtmProductVM.Price)'</text>
                  }
-                @if (!string.IsNullOrEmpty(gtmProductVM.Brand)) {
+            @if (!string.IsNullOrEmpty(gtmProductVM.Brand)) {
                     <text>,'brand': '@(gtmProductVM.Brand)'</text>
                 }
-                @if (!string.IsNullOrEmpty(gtmProductVM.Category)) {
+            @if (!string.IsNullOrEmpty(gtmProductVM.Category)) {
                     <text>,'category': '@(gtmProductVM.Category)'</text>
                 }
-                @if (!string.IsNullOrEmpty(gtmProductVM.Variant)) {
+            @if (!string.IsNullOrEmpty(gtmProductVM.Variant)) {
                     <text>,'variant': '@(gtmProductVM.Variant)'</text>
                 }
-                @if (gtmProductVM.Quantity!=0) {
+            @if (gtmProductVM.Quantity!=0) {
                     <text>,'quantity': @(gtmProductVM.Quantity)</text>
                 }
-                @if (!string.IsNullOrEmpty(gtmProductVM.Coupon)) {
+            @if (!string.IsNullOrEmpty(gtmProductVM.Coupon)) {
                     <text>,'coupon': '@(gtmProductVM.Coupon)'</text>
                 }
-                @if (gtmProductVM.Position != 0) {
+            @if (gtmProductVM.Position != 0) {
                     <text>,'position':'@(gtmProductVM.Position)'</text>
                 }
-            }];
+        });
         </script>
     }
 }

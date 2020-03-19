@@ -217,6 +217,9 @@
   <ItemGroup>
     <Content Include="Views\GTMProduct.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Product.TagManager.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

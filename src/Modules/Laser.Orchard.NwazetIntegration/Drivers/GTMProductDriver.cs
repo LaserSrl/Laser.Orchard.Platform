@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -34,6 +35,26 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             _tokenizer = tokenizer;
             _contentManager = contentManager;
             _GTMProductService = GTMProductService;
+        }
+
+        protected override DriverResult Display(GTMProductPart part, string displayType, dynamic shapeHelper) {
+            return ContentShape("Parts_Product_TagManager", shape => {
+                _GTMProductService.FillPart(part);
+                var gtmProductVM = new GTMProductVM {
+                    Id = part.ProductId,
+                    Name = part.Name,
+                    Brand = part.Brand,
+                    Category = part.Category,
+                    Variant = part.Variant,
+                    Price = part.Price,
+                    Quantity = part.Quantity,
+                    Coupon = part.Coupon,
+                    Position = part.Position
+                };
+                return shapeHelper.Parts_Product_TagManager(
+                    GTMProductVM: gtmProductVM,
+                    DisplayType: displayType);
+            });
         }
     }
 }
