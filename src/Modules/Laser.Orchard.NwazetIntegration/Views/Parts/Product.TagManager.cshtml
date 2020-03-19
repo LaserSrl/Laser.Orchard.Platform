@@ -3,11 +3,15 @@
     var arrayName =
         string.IsNullOrWhiteSpace(Model.DisplayType)
         || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
-        ? "products" : "impressions";
+        ? "detail.products" : "impressions";
+
+    Script.Require("NwazetIntegration.TagManager").AtHead();
+
     using (Script.Head()) {
         <script type="text/javascript">
-            options = $.extend(true, {}, $.addressConfiguration.defaults, options);
-        window.ecommerceData = $.extend(true, {}, window.ecommerceData);
+            window.ecommerceData = $.extend(true, {}, window.ecommerceData);
+            window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
+            window.ecommerceData.@(arrayName) = window.ecommerceData.@(arrayName) || [];
         window.ecommerceData.@(arrayName).push({
             'name': '@(gtmProductVM.Name)',
                 'id': '@(gtmProductVM.Id)'

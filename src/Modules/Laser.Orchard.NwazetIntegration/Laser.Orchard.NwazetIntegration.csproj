@@ -134,6 +134,10 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
+    <Content Include="Scripts\ecommerce-tag-manager.js" />
+    <Content Include="Scripts\ecommerce-tag-manager.min.js">
+      <DependentUpon>ecommerce-tag-manager.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\ship.js" />
     <Content Include="Styles\Styles.css" />
     <Content Include="Styles\Styles.min.css" />
@@ -215,10 +219,10 @@
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\GTMProduct.cshtml" />
+    <Content Include="Views\Parts\Product.TagManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts\Product.TagManager.cshtml" />
+    <None Include="bundleconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

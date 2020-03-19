@@ -41,6 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             return ContentShape("Parts_Product_TagManager", shape => {
                 _GTMProductService.FillPart(part);
                 var gtmProductVM = new GTMProductVM {
+                    PartId = part.Id,
                     Id = part.ProductId,
                     Name = part.Name,
                     Brand = part.Brand,
