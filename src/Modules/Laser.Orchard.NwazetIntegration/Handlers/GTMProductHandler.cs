@@ -36,6 +36,24 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                         Coupon = part.Coupon,
                         Position = part.Position
                     };
+
+                    var layout = (dynamic)context.Layout;
+                    layout.Head.Add(context.New.GTMProduct(GTMProductVM: gtmProductVM));
+                }
+                else if (context.DisplayType == "Summary") {
+                    _GTMProductService.FillPart(part);
+
+                    var gtmProductVM = new GTMProductVM {
+                        Id = part.ProductId,
+                        Name = part.Name,
+                        Brand = part.Brand,
+                        Category = part.Category,
+                        Variant = part.Variant,
+                        Price = part.Price,
+                        Quantity = part.Quantity,
+                        Coupon = part.Coupon,
+                        Position = part.Position
+                    };
                     
                     var layout = (dynamic)context.Layout;
                     layout.Head.Add(context.New.GTMProduct(GTMProductVM: gtmProductVM));
