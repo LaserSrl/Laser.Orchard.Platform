@@ -15,9 +15,13 @@ namespace Laser.Orchard.Sharing.Services {
             return new List<CookieType>() { CookieType.Marketing };
         }
 
-        public string GetScript(IList<CookieType> allowedTypes) {
+        public string GetFootScript(IList<CookieType> allowedTypes) {
             // html, js e css sono nelle partial view, il check per capire se aggiungerle o no è nel driver
             return "";
+        }
+
+        public string GetHeadScript(IList<CookieType> allowedTypes) {
+            return string.Empty;
         }
     }
 }
