@@ -42,11 +42,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
 
             part.Price = product.ProductPriceService.GetPrice(product);
-            //in questa parte del dettaglio non va popolata
-            part.Quantity = 0;
-            //per il momento non sono trattati
-            part.Coupon = string.Empty;
-            part.Position = 0;
         }
 
         private string FillString(string value, Dictionary<string, object> tokens) {
