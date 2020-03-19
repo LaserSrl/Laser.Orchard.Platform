@@ -1,5 +1,6 @@
-﻿@{
-    var gtmProductVM = Model.GTMProductVM;
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@{
+    var gtmProductVM = (GTMProductVM)Model.GTMProductVM;
     var arrayName =
         string.IsNullOrWhiteSpace(Model.DisplayType)
         || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
@@ -12,7 +13,8 @@
             window.ecommerceData = $.extend(true, {}, window.ecommerceData);
             window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
             window.ecommerceData.@(arrayName) = window.ecommerceData.@(arrayName) || [];
-        window.ecommerceData.@(arrayName).push({
+            window.ecommerceData.@(arrayName).push({
+            'partId': '@(gtmProductVM.PartId)',
             'name': '@(gtmProductVM.Name)',
                 'id': '@(gtmProductVM.Id)'
                 @if (gtmProductVM.Price != 0) {

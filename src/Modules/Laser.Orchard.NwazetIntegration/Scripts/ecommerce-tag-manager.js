@@ -19,11 +19,68 @@ $(function () {
     // "used" on DOM ready events.
     var ecommerceObject = {};
     ecommerceObject.impressions = window.ecommerceData.impressions;
+    // if there is any product being displayed in a "detail" view:
     if (window.ecommerceData.detail.products.length) {
         ecommerceObject.detail = window.ecommerceData.detail;
     }
+    // make sure dataLayer has been initialized
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
         'ecommerce': ecommerceObject
     });
+
+    //register handlers
+
+    // Add to cart:
+    // This uses the event launched by the shoppingcart.js script
+    $(document).on("nwazet.addedtocart", "form.addtocart", function (e) {
+        // in $(this) we have the form
+        var formData = $(this)
+            // serialize to an array of oblects like {name: '', value:''}
+            .serializeArray()
+            // reduce the array to an object with the named properties
+            .reduce(function (o, v) {
+                o[v.name] = v.value;
+                return o;}, {});
+        // given the stuff in the form, get the information to send 
+        // to the tag manager: the product and the quantity added.
+        var partId = formData.id;
+        // get the product with that id from any of our lists
+        var productAdded = {};
+        for (i = 0; i < window.ecommerceData.detail.products.length; i++) {
+            var currentProduct = window.ecommerceData.detail.products[i];
+            if (currentProduct.partId == partId) {
+                // found it
+                productAdded = currentProduct;
+                break;
+            }
+        }
+        if ($.isEmptyObject(productAdded)) {
+            //not found among detail view. Search in summary views
+            for (i = 0; i < window.ecommerceData.impressions.length; i++) {
+                var currentProduct = window.ecommerceData.impressions[i];
+                if (currentProduct.partId == partId) {
+                    // found it
+                    productAdded = currentProduct;
+                    break;
+                }
+            }
+        }
+        if ($.isEmptyObject(productAdded)) {
+            // not even found there:
+            // this is a strange error condition that should not happen naturally
+            return;
+        }
+        var quantity = formData.quantity;
+        productAdded.quantity = quantity;
+        window.dataLayer.push({
+            'event': 'addToCart',
+            'ecommerce': {
+                'add': {
+                    'products': [productAdded]
+                }
+            }
+        });
+    })
 });
+

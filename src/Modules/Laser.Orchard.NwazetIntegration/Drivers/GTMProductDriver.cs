@@ -19,7 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IContentManager _contentManager;
 
         protected override string Prefix {
-            get { return "Laser.Orchard.NwazetIntegration"; }
+            get { return "GTMProductPart"; }
         }
 
 
@@ -40,18 +40,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         protected override DriverResult Display(GTMProductPart part, string displayType, dynamic shapeHelper) {
             return ContentShape("Parts_Product_TagManager", shape => {
                 _GTMProductService.FillPart(part);
-                var gtmProductVM = new GTMProductVM {
-                    PartId = part.Id,
-                    Id = part.ProductId,
-                    Name = part.Name,
-                    Brand = part.Brand,
-                    Category = part.Category,
-                    Variant = part.Variant,
-                    Price = part.Price,
-                    Quantity = part.Quantity,
-                    Coupon = part.Coupon,
-                    Position = part.Position
-                };
+                var gtmProductVM = new GTMProductVM(part);
                 return shapeHelper.Parts_Product_TagManager(
                     GTMProductVM: gtmProductVM,
                     DisplayType: displayType);
