@@ -29,7 +29,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var partSetting = part.Settings.GetModel<GTMProductSettingVM>();
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
            
-            if(partSetting.Id== Enums.TypeId.Id) {
+            if(partSetting.Id== TypeId.Id) {
                 part.ProductId = product.Id.ToString();
             }
             else {
@@ -41,7 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
             part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
 
-            part.Price = product.ProductPriceService.GetPrice();
+            part.Price = product.ProductPriceService.GetPrice(product);
             //in questa parte del dettaglio non va popolata
             part.Quantity = 0;
             //per il momento non sono trattati

@@ -8,7 +8,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// <summary>
         /// In GTM product part is identifier with ProductId
         /// </summary>
-        public Enums.TypeId Id { get; set; }
+        public TypeId Id { get; set; }
         public string Name { get; set; }
         public string Brand { get; set; }
         public string Category { get; set; }

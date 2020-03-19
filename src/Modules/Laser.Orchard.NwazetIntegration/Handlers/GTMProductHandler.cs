@@ -22,7 +22,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             OnGetDisplayShape<GTMProductPart>((context, part) => {
                 if (context.DisplayType == "Detail") {
                     if(context.ContentPart != null && context.ContentPart.GetType().Name=="ProductPart") {
-                        _GTMProductService.FillPart(((ProductPart)context.ContentPart), part);
+                        _GTMProductService.FillPart((ProductPart)context.ContentPart, part);
 
                         var gtmProductVM = new GTMProductVM {
                             Id = part.ProductId,

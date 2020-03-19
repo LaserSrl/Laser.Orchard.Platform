@@ -4,10 +4,8 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration {
-    public class Enums {
-        public enum TypeId {
+     public enum TypeId {
             Id,
             Sku
         }
-    }
 }
