@@ -1,9 +1,11 @@
 ﻿// create the scaffold for the object we will manage
 window.ecommerceData = $.extend(true, {}, window.ecommerceData);
 window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
-window.ecommerceData.products = window.ecommerceData.products || [];
+window.ecommerceData.detail.products = window.ecommerceData.detail.products || [];
 window.ecommerceData.impressions = window.ecommerceData.impressions || [];
-//
+// array of objects used to track/manage changes to the shopping cart
+window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
+window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -14,6 +16,8 @@ $(function () {
     window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
     window.ecommerceData.detail.products = window.ecommerceData.detail.products || [];
     window.ecommerceData.impressions = window.ecommerceData.impressions || [];
+    window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
+    window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be

@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
@@ -31,6 +32,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         [JsonProperty("variant", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Variant { get; set; }
         [JsonProperty("price")]
+        [JsonConverter(typeof(PriceFormatConverter))]
         public decimal Price { get; set; }
         [JsonProperty("quantity", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Quantity { get; set; }
@@ -42,5 +44,22 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         [DefaultValue("")]
         [JsonProperty("list", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ListName { get; set; }
+
+        class PriceFormatConverter : JsonConverter {
+            public override bool CanConvert(Type objectType) {
+                return objectType == typeof(decimal);
+            }
+
+            public override bool CanRead => false;
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+                // won't be called because can read is false
+                throw new NotImplementedException();
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
+                writer.WriteRawValue($"{value:0.00}");
+            }
+        }
     }
 }
