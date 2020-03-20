@@ -10,5 +10,11 @@
     "inputFiles": [
       "Scripts/ship.js"
     ]
+  },
+  {
+    "outputFileName": "Scripts/ecommerce-tag-manager.min.js",
+    "inputFiles": [
+      "Scripts/ecommerce-tag-manager.js"
+    ]
   }
 ]
