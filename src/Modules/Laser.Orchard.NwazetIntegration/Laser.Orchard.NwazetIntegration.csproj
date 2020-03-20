@@ -127,9 +127,11 @@
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
-    <Compile Include="Services\IPosServiceIntegration.cs" />
+    <Compile Include="Services\NwazetCommunicationService.cs" />
+    <Compile Include="Services\PosServiceIntegration.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />

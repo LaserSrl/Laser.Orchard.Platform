@@ -1,4 +1,5 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration.Services;
 @{
     var gtmProductVM = (GTMProductVM)Model.GTMProductVM;
     var arrayName =
@@ -6,6 +7,7 @@
         || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)
         ? "detail.products" : "impressions";
 
+    var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
     Script.Require("NwazetIntegration.TagManager").AtHead();
 
     using (Script.Head()) {
@@ -13,32 +15,9 @@
             window.ecommerceData = $.extend(true, {}, window.ecommerceData);
             window.ecommerceData.detail = $.extend(true, {}, window.ecommerceData.detail);
             window.ecommerceData.@(arrayName) = window.ecommerceData.@(arrayName) || [];
-            window.ecommerceData.@(arrayName).push({
-            'partId': '@(gtmProductVM.PartId)',
-            'name': '@(gtmProductVM.Name)',
-                'id': '@(gtmProductVM.Id)'
-                @if (gtmProductVM.Price != 0) {
-                    <text>,'price': '@(gtmProductVM.Price)'</text>
-                 }
-            @if (!string.IsNullOrEmpty(gtmProductVM.Brand)) {
-                    <text>,'brand': '@(gtmProductVM.Brand)'</text>
-                }
-            @if (!string.IsNullOrEmpty(gtmProductVM.Category)) {
-                    <text>,'category': '@(gtmProductVM.Category)'</text>
-                }
-            @if (!string.IsNullOrEmpty(gtmProductVM.Variant)) {
-                    <text>,'variant': '@(gtmProductVM.Variant)'</text>
-                }
-            @if (gtmProductVM.Quantity!=0) {
-                    <text>,'quantity': @(gtmProductVM.Quantity)</text>
-                }
-            @if (!string.IsNullOrEmpty(gtmProductVM.Coupon)) {
-                    <text>,'coupon': '@(gtmProductVM.Coupon)'</text>
-                }
-            @if (gtmProductVM.Position != 0) {
-                    <text>,'position':'@(gtmProductVM.Position)'</text>
-                }
-        });
+            window.ecommerceData.@(arrayName).push(
+                @Html.Raw(_GTMProductService.GetJsonString(gtmProductVM))
+            );
         </script>
     }
 }

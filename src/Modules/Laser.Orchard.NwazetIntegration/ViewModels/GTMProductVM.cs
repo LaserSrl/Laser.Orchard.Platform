@@ -39,5 +39,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string Coupon { get; set; }
         [JsonProperty("position", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Position { get; set; }
+        [DefaultValue("")]
+        [JsonProperty("list", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string ListName { get; set; }
     }
 }
