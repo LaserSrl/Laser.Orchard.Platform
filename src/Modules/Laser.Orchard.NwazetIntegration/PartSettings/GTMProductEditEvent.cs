@@ -24,15 +24,11 @@ namespace Laser.Orchard.NwazetIntegration.PartSettings {
             if (builder.Name != "GTMProductPart") yield break;
             var model = new GTMProductSettingVM();
             updateModel.TryUpdateModel(model, "GTMProductSettingVM", null, null);
-            builder.WithSetting("GTMProductSettingVM.Id", ((string)model.Id) ?? "");
+            builder.WithSetting("GTMProductSettingVM.Id", model.Id.ToString());
             builder.WithSetting("GTMProductSettingVM.Name", ((string)model.Name) ?? "");
             builder.WithSetting("GTMProductSettingVM.Brand", ((string)model.Brand) ?? "");
             builder.WithSetting("GTMProductSettingVM.Category", ((string)model.Category) ?? "");
             builder.WithSetting("GTMProductSettingVM.Variant", ((string)model.Variant) ?? "");
-            builder.WithSetting("GTMProductSettingVM.Price", ((string)model.Price) ?? "");
-            builder.WithSetting("GTMProductSettingVM.Quantity", ((string)model.Quantity) ?? "");
-            builder.WithSetting("GTMProductSettingVM.Coupon", ((string)model.Coupon) ?? "");
-            builder.WithSetting("GTMProductSettingVM.Position", ((string)model.Position) ?? "");
             yield return DefinitionTemplate(model);
         }
     }

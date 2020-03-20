@@ -111,6 +111,7 @@
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
+    <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
+    <Compile Include="ViewModels\GTMProductVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

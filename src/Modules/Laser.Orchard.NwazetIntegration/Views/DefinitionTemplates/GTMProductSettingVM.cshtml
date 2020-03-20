@@ -1,10 +1,9 @@
 ﻿@model Laser.Orchard.NwazetIntegration.ViewModels.GTMProductSettingVM
 
-
 <fieldset>
     <div class="settings">
         <label for="@Html.FieldIdFor(m => m.Id)">@T("Id") </label>
-        @Html.TextBoxFor(m => m.Id, new { @class = "text medium tokenized", rows = "5" })
+        @Html.EnumDropDownListFor(m => m.Id)
         <span class="hint">@T("The product ID or SKU")</span>
     </div>
     <div class="settings">
@@ -26,26 +25,6 @@
         <label for="@Html.FieldIdFor(m => m.Variant)">@T("Variant") </label>
         @Html.TextBoxFor(m => m.Variant, new { @class = "text medium tokenized", rows = "5" })
         <span class="hint">@T("The variant of the product")</span>
-    </div>
-    <div class="settings">
-        <label for="@Html.FieldIdFor(m => m.Price)">@T("Price") </label>
-        @Html.TextBoxFor(m => m.Price, new { @class = "text medium tokenized", rows = "5" })
-        <span class="hint">@T("The price of a product")</span>
-    </div>
-    <div class="settings">
-        <label for="@Html.FieldIdFor(m => m.Quantity)">@T("Quantity") </label>
-        @Html.TextBoxFor(m => m.Quantity, new { @class = "text medium tokenized", rows = "5" })
-        <span class="hint">@T("The quantity of a product")</span>
-    </div>
-    <div class="settings">
-        <label for="@Html.FieldIdFor(m => m.Coupon)">@T("Coupon") </label>
-        @Html.TextBoxFor(m => m.Coupon, new { @class = "text medium tokenized", rows = "5" })
-        <span class="hint">@T("The coupon code associated with a product")</span>
-    </div>
-    <div class="settings">
-        <label for="@Html.FieldIdFor(m => m.Position)">@T("Position") </label>
-        @Html.TextBoxFor(m => m.Position, new { @class = "text medium tokenized", rows = "5" })
-        <span class="hint">@T("The product's position in a list or collection")</span>
     </div>
     @Display.TokenHint()
 </fieldset>

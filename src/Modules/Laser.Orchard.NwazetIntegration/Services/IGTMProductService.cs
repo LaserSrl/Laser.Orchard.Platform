@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
 using Newtonsoft.Json;
 using Orchard;
 using Orchard.ContentManagement;
@@ -8,6 +9,8 @@ using Orchard.Tokens;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
+using Nwazet.Commerce.Services;
+using System;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface IGTMProductService : IDependency {
@@ -27,37 +30,45 @@ namespace Laser.Orchard.NwazetIntegration.Services {
     public class GTMProductService : IGTMProductService {
         private readonly IOrchardServices _orchardServices;
         private readonly ITokenizer _tokenizer;
+        private readonly IProductPriceService _productPriceService;
 
         public GTMProductService(
             IOrchardServices orchardServicies,
-            ITokenizer tokenizer) {
+            ITokenizer tokenizer,
+            IProductPriceService productPriceService) {
+
             _orchardServices = orchardServicies;
             _tokenizer = tokenizer;
+            _productPriceService = productPriceService;
         }
 
         public void FillPart(GTMProductPart part) {
+            if (part == null) {
+                throw new ArgumentNullException("part");
+            }
+            if (part.ContentItem == null) {
+                throw new ArgumentNullException("part.ContentItem");
+            }
+            var product = part.As<ProductPart>();
+            if (product == null) {
+                throw new ArgumentNullException("part.A<ProductPart>()");
+            }
             var partSetting = part.Settings.GetModel<GTMProductSettingVM>();
+            
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
-            part.ProductId = ProcessString(FillString(partSetting.Id, tokens), true);
+            if (partSetting.Id == TypeId.Id) {
+                part.ProductId = product.Id.ToString();
+            } else {
+                part.ProductId = product.Sku;
+            }
+
             part.Name = ProcessString(FillString(partSetting.Name, tokens), true);
             part.Brand = ProcessString(FillString(partSetting.Brand, tokens), true);
             part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
             part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
-            
-            decimal price;
-            part.Price = decimal.TryParse(ProcessString(FillString(partSetting.Price, tokens), true), out price)
-                ? price : 0;
-            
-            int quantity;
-            part.Quantity = int.TryParse(ProcessString(FillString(partSetting.Quantity, tokens), true), out quantity)
-                ? quantity : 0;
-            
-            part.Coupon = ProcessString(FillString(partSetting.Coupon, tokens), true);
 
-            int position;
-            part.Position = int.TryParse(ProcessString(FillString(partSetting.Position, tokens), true), out position)
-                ? position : 0;
+            part.Price = _productPriceService.GetPrice(product);
         }
 
         public string GetJsonString(GTMProductPart part) {
@@ -73,6 +84,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return output;
         }
 
+        #region private methods to handle tokenized fields
         private string FillString(string value, Dictionary<string, object> tokens) {
             if (!string.IsNullOrEmpty(value)) {
                 return _tokenizer.Replace(value, tokens);
@@ -113,5 +125,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             return value;
         }
+        #endregion
     }
 }

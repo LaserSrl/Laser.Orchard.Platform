@@ -13,9 +13,6 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
                 .Column<string>("Category")
                 .Column<string>("Variant")
                 .Column<decimal>("Price")
-                .Column<int>("Quantity")
-                .Column<string>("Coupon")
-                .Column<int>("Position")
                 );
             return 1;
         }

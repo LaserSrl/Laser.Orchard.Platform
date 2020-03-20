@@ -1,5 +1,4 @@
 ﻿using Orchard.ContentManagement;
-using Orchard.ContentManagement.Records;
 using System.ComponentModel.DataAnnotations;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
@@ -33,29 +32,6 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return this.Retrieve(r => r.Price); }
             set { this.Store(r => r.Price, value); }
         }
-        public int Quantity {
-            get { return this.Retrieve(r => r.Quantity); }
-            set { this.Store(r => r.Quantity, value); }
-        }
-        public string Coupon {
-            get { return this.Retrieve(r => r.Coupon); }
-            set { this.Store(r => r.Coupon, value); }
-        }
-        public int Position {
-            get { return this.Retrieve(r => r.Position); }
-            set { this.Store(r => r.Position, value); }
-        }
     }
 
-    public class GTMProductPartRecord : ContentPartRecord {
-        public virtual string ProductId { get; set; }
-        public virtual string Name { get; set; }
-        public virtual string Brand { get; set; }
-        public virtual string Category { get; set; }
-        public virtual string Variant { get; set; }
-        public virtual decimal Price { get; set; }
-        public virtual int Quantity { get; set; }
-        public virtual string Coupon { get; set; }
-        public virtual int Position { get; set; }
-    }
 }
