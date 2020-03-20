@@ -26,6 +26,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -137,8 +139,19 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\laser-base.scss" />
     <Content Include="Scripts\laser-tinymce.js" />
     <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
+    <Content Include="Styles\laser-base.css" />
+    <Content Include="Styles\laser-base.min.css">
+      <DependentUpon>laser-base.css</DependentUpon>
+    </Content>
+    <Content Include="Views\EditorTemplates\Parts.Common.SummaryInfoFor_Edit.cshtml" />
+    <Content Include="Assets\_colors.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -366,6 +379,7 @@
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
+    <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Drivers\PerItemCachePartDriver.cs" />
@@ -691,4 +705,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
+  </Target>
 </Project>

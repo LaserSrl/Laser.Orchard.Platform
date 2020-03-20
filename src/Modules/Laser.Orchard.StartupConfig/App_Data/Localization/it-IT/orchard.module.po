@@ -176,6 +176,54 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/Json
 msgid "Max number of rows reached."
 msgstr "Numero massimo di righe raggiunto"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Created on"
+msgstr "Creato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Draft"
+msgstr "Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Has Draft"
+msgstr "In bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Last Modified"
+msgstr "Ultima modifica"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Modified on"
+msgstr "Modificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "No Draft"
+msgstr "Nessuna Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Publish on"
+msgstr "Pianificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published on"
+msgstr "Pubblicato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Status"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Unpublish on"
+msgstr "Spubblica il"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Cannot perform requested operation"
 msgstr "Impossibile eseguire l'operazione richiesta"

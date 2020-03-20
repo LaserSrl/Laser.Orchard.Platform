@@ -8,6 +8,9 @@ using Laser.Orchard.GoogleAnalytics.Models;
 using OUI = Orchard.UI;
 using Laser.Orchard.GoogleAnalytics.Services;
 using Orchard.Caching;
+using System.Web;
+using Orchard.DisplayManagement;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.GoogleAnalytics.Filters {
     [OrchardFeature("Laser.Orchard.GoogleAnalytics")]
@@ -18,6 +21,7 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
+        private readonly dynamic _shapeFactory;
 
         public GoogleAnalyticsFilter(
             IResourceManager resourceManager, 
@@ -25,7 +29,8 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
             IGoogleAnalyticsCookie googleAnalyticsCookie,
             IWorkContextAccessor workContextAccessor,
             ICacheManager cacheManager,
-            ISignals signals) {
+            ISignals signals,
+            IShapeFactory shapeFactory) {
 
             _resourceManager = resourceManager;
             _orchardServices = orchardServices;
@@ -33,6 +38,7 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
             _workContextAccessor = workContextAccessor;
             _cacheManager = cacheManager;
             _signals = signals;
+            _shapeFactory = shapeFactory;
         }
 
         #region IResultFilter Members
@@ -54,6 +60,26 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
                 // (or the tag manager script if we have that configuration)
                 _resourceManager.RegisterHeadScript(
                     _googleAnalyticsCookie.GetHeadScript(_googleAnalyticsCookie.GetCookieTypes()));
+            }
+
+            // add the <noscript> element for tagmanager
+            if (SettingsPart != null
+                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
+                && ((isAdmin && SettingsPart.TrackOnAdmin) || (!isAdmin && SettingsPart.TrackOnFrontEnd))) {
+                var noscript = new HtmlString(_googleAnalyticsCookie.GetNoScript());
+                // write that to the top of the page, immediately after the opening <body> tag
+                var body = _workContextAccessor.GetContext()
+                    .Layout.Body;
+                if (body.Items is IList<object>) {
+                    body.Items.Insert(0, noscript);
+                } else {
+                    // this probably won't let us place the snippet in the correct
+                    // position. On the other hand, with the existing implementations body.Items 
+                    // is always a List. This branch is here for safety, so that if ever we have
+                    // a different implementation of body.Items this will not crash.
+                    body.Add(noscript, "1");
+                }
+                
             }
         }
 
