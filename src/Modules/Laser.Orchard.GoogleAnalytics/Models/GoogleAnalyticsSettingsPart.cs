@@ -7,7 +7,7 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         /// <summary>
         /// Gets or sets the Google Analytics tracking key used to perform analytics tracking.
         /// </summary>
-        [RegularExpression(@"^UA\-\d{1,}\-\d{1,}$")]
+        [RegularExpression(@"(^UA\-\d{1,}\-\d{1,}$)|(^GTM\-\w+$)")]
         public string GoogleAnalyticsKey {
             get { return this.Retrieve(r => r.GoogleAnalyticsKey); }
             set { this.Store(r => r.GoogleAnalyticsKey, value); }
@@ -51,6 +51,11 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         public bool TrackOnFrontEnd {
             get { return this.Retrieve(r => r.TrackOnFrontEnd); }
             set { this.Store(r => r.TrackOnFrontEnd, value); }
+        }
+
+        public bool UseTagManager {
+            get { return this.Retrieve(r => r.UseTagManager); }
+            set { this.Store(r => r.UseTagManager, value); }
         }
     }
 }

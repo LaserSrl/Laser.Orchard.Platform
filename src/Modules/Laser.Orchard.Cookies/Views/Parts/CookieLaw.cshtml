@@ -15,8 +15,7 @@
 
     // banner position
     var cookieBannerPosition = "overlay";
-    switch ((CookieBannerPosition)settings.cookiePosition)
-    {
+    switch ((CookieBannerPosition)settings.cookiePosition) {
         case CookieBannerPosition.Top:
             cookieBannerPosition = "top";
             break;
@@ -31,11 +30,15 @@
     var gdprScriptService = Model.GDPRScriptservice;
     var isPolicyPage = Model.isPolicyPage;
 
-    using (Script.Foot())
-    {
-        if (settings.DisableCookieGDPRManagement == false)
-        {
-<script type="text/javascript">
+    using (Script.Head()) {
+        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetHeadScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
+        }
+    }
+
+    using (Script.Foot()) {
+        if (settings.DisableCookieGDPRManagement == false) {
+            <script type="text/javascript">
 $(document).ready(function() {
     var cookiesettings = { };
     cookiesettings.cookieTitle = '@part.cookieTitle';
@@ -82,12 +85,11 @@ $(document).ready(function() {
 
     $.cookieCuttr(cookiesettings);
 });
-</script>
+            </script>
         }
 
-        foreach (var cookie in gdprScriptService.GetAllowedCookies())
-        {
-            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
+        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetFootScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
         }
     }
 }

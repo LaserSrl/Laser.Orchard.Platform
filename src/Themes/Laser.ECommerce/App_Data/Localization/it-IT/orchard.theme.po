@@ -101,8 +101,12 @@ msgid "Last Name"
 msgstr "Cognome"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "New address"
+msgstr "Nuovo indirizzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "none"
-msgstr "Nessuno"
+msgstr "Nuovo indirizzo"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "Please include middle name or initial as appropriate."

@@ -11,6 +11,10 @@
     List<AddressRecord> addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
+    string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
     var guid = Guid.NewGuid().ToString();
 }
 <div style="float:right">
@@ -23,7 +27,7 @@
         }
 
         <select id="@idlistaddress" name="@idlistaddress">
-            <option value=-1 selected title="@T("Remove inserted data")">@T("none")</option>
+            <option value=-1 selected title="@T("New address")">@T("New address")</option>
             @foreach (var ad in addressList) {
                 <option value=@ad.Id title="@ad.Honorific @ad.FirstName @ad.LastName @ad.Company">@ad.Address1 @ad.Address2 @ad.City</option>
             }
@@ -82,11 +86,11 @@
                value="@Model.Province" />
     }
     <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
-    <label for="@Html.Id(prefix + ".PostalCode")">@T("Postal or ZIP code")</label>
-    <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
+    <label for="@Html.Id(prefix + ".PostalCode")" class="required">@T("Postal or ZIP code")</label>
+    <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small required" />
 </div>
 @using (Script.Foot()) {
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function () {
             // configure the script that will dynamically load configured address settings
             var myaddress = $('#@guid').addressConfiguration({
@@ -103,9 +107,10 @@
                 },
                 getProvinces: {
                     url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
-                }
+                },
+                isBilling: function () { return @isBillingAddress; }
             });
-            
+
             // saved addresses for the user
             var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
             // when a different address is selected:
@@ -152,5 +157,5 @@
             // on page load, set the first saved address
             $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
         });
-    </script>
+</script>
 }

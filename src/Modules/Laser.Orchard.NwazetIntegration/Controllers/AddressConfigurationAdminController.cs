@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.NwazetIntegration.Services;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Permissions;
 using Orchard.ContentManagement;
@@ -45,6 +46,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _addressSettingsService = addressSettingsService;
 
             T = NullLocalizer.Instance;
+
+            administrativeTypeNames = new Dictionary<TerritoryAdministrativeType, string>();
+            administrativeTypeNames.Add(TerritoryAdministrativeType.None, T("Undefined").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.Country, T("Country").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.Province, T("Province").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.City, T("City").Text);
         }
 
         public Localizer T { get; set; }
@@ -95,6 +102,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ModelState.AddModelError(key, errorMessage.ToString());
         }
 
+        private Dictionary<TerritoryAdministrativeType, string> administrativeTypeNames;
+
         [HttpPost]
         public JsonResult GetChildren(int territoryId = 0) {
             var parent = _addressConfigurationService
@@ -109,36 +118,30 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         .Select(ci => {
                             var tp = ci.As<TerritoryPart>();
                             var id = tp.Record.TerritoryInternalRecord.Id;
-                            bool isCountry = false, isProvince = false, isCity = false, isNone = false;
-                            if (_addressSettingsService.SelectedCountryIds
-                                    .Contains(id)) {
-                                isCountry = true;
-                            } else if (_addressSettingsService.SelectedProvinceIds
-                                    .Contains(id)) {
-                                isProvince = true;
-                            } else if (_addressSettingsService.SelectedCityIds
-                                    .Contains(id)) {
-                                isCity = true;
-                            }else {
-                                isNone = true;
+                            var adminTypePart = tp.As<TerritoryAdministrativeTypePart>();
+                            var adminType = TerritoryAdministrativeType.None;
+                            if (adminTypePart != null) {
+                                adminType = adminTypePart.AdministrativeType;
                             }
+                            var isCountry = adminType == TerritoryAdministrativeType.Country;
+                            var isProvince = adminType == TerritoryAdministrativeType.Province;
+                            var isCity = adminType == TerritoryAdministrativeType.City;
+                            var isNone = adminType == TerritoryAdministrativeType.None;
                             return new {
                                 Id = id,
                                 DisplayText = _contentManager
-                                    .GetItemMetadata(ci).DisplayText,
+                                    .GetItemMetadata(ci).DisplayText
+                                    + " " + T("(Administrative type: {0})", administrativeTypeNames[adminType]),
                                 IsCountry = isCountry,
                                 IsProvince = isProvince,
                                 IsCity = isCity,
                                 IsNone = isNone,
-                                CountryISO = _addressSettingsService.GetCountryISOCode(id),
                                 HasChildren = tp.Record.Children.Any(),
                                 ChildrenCount = tp.Record.Children.Count()
                             };
                         })
                 });
             }
-            // TODO
-            return Json(new List<string>());
         }
     }
 }
