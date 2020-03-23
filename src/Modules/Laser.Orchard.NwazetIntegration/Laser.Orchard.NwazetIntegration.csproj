@@ -235,6 +235,7 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <Content Include="Views\GTMShoppingCart.cshtml" />
+    <Content Include="Views\GTMPurchase.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

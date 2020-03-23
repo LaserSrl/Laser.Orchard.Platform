@@ -16,6 +16,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// to get the shapes in place.</remarks>
         string GetJsonString(GTMProductPart part);
         string GetJsonString(GTMProductVM vm);
+        string GetJsonString(GTMActionField af);
     }
 
 }

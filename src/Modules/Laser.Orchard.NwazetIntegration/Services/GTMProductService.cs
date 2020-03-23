@@ -79,6 +79,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
             return output;
         }
+        public string GetJsonString(GTMActionField af) {
+            if (af == null) {
+                return string.Empty;
+            }
+            string output = JsonConvert
+                .SerializeObject(af);
+
+            return output;
+        }
 
         #region private methods to handle tokenized fields
         private string FillString(string value, Dictionary<string, object> tokens) {

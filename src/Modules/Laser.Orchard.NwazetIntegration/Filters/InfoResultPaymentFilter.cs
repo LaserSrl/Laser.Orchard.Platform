@@ -4,7 +4,9 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Controllers;
 using Laser.Orchard.PaymentGateway.ViewModels;
 using Nwazet.Commerce.Models;
+using Orchard;
 using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.Mvc;
 using Orchard.Mvc.Filters;
 using System.Collections.Generic;
@@ -15,12 +17,18 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
     public class InfoResultPaymentFilter : FilterProvider, IActionFilter {
         private readonly IContentManager _contentManager;
         private readonly IGTMProductService _GTMProductService;
+        private readonly dynamic _shapeFactory;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public InfoResultPaymentFilter(
             IContentManager contentManager,
-            IGTMProductService GTMProductService) {
+            IGTMProductService GTMProductService,
+            IShapeFactory shapeFactory,
+            IWorkContextAccessor workContextAccessor) {
             _contentManager = contentManager;
             _GTMProductService = GTMProductService;
+            _shapeFactory = shapeFactory;
+            _workContextAccessor = workContextAccessor;
         }
 
 
@@ -34,9 +42,12 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         // populate ViewModel to send at shape
                         var purchaseVM = new GTMPurchaseVM();
                         purchaseVM.ActionField = new GTMActionField {
-                            Id = model.Record.TransactionId
+                            Id = model.Record.TransactionId,
+                            Revenue = model.Record.Amount
                         };
 
+                        var productList = new List<GTMProductVM>();
+                        #region add item to productList
                         // select the contentitemid which is the id of the order
                         var orderId = model.Record.ContentItemId;
                         // select order
@@ -48,8 +59,6 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                VersionOptions.Latest,
                                QueryHints.Empty)
                             .ToList();
-
-                        var productList = new List<GTMProductVM>();
                         foreach (var p in products) {
                             // populate list of GTMProductVM 
                             var part = p.As<GTMProductPart>();
@@ -62,8 +71,12 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             vm.Quantity = checkoutItem == null ? 0 : checkoutItem.Quantity;
                             productList.Add(vm);
                         }
+                        #endregion 
                         purchaseVM.ProductList = productList;
 
+                        _workContextAccessor.GetContext(filterContext)
+                            .Layout.Zones.Head
+                            .Add(_shapeFactory.GTMPurchase(GTMPurchaseVM: purchaseVM));
                     }
                 }
 
