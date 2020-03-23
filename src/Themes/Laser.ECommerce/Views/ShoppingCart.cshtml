@@ -137,7 +137,7 @@
                                             <td class="invert">@Model.CurrencyProvider.GetPriceString(totalPrice)</td>
                                             @if (!readOnly) {
                                                 <td class="invert">
-                                                    <a class="delete" href="#">
+                                                    <a class="delete" href="#" data-product-id="@product.Id">
                                                         <div class="rem">
                                                             <div class="closeX @closeClass"> </div>
                                                         </div>
@@ -204,6 +204,9 @@
                         </div>
                         <div class="clearfix"> </div>
                     </div>
+                }
+                foreach (var additionalShape in Model.CartExtensionShapes) {
+                    @Display(additionalShape)
                 }
             }
             <div class="checkout-right-basket">

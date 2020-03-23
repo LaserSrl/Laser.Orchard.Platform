@@ -101,7 +101,36 @@ $(function () {
         .on("nwazet.removefromcart", ".shoppingcart .delete", function (e) {
             // $(this) is the element that was clicked to trigger the event
             // (generally an anchor tag)
-
+            // id of the product we are trying to delete
+            var prodId = $(this).attr('data-product-id');
+            // take it from the array of products in the cart
+            var productRemoved = {};
+            for (i = 0; i < window.ecommerceData.cart.products.length; i++) {
+                var current = window.ecommerceData.cart.products[i];
+                if (current.partId == prodId) {
+                    // found it
+                    productRemoved = current;
+                    break;
+                }
+            }
+            if ($.isEmptyObject(productRemoved)) {
+                // not found in the cart:
+                // this is a strange error condition that should not happen naturally
+                return;
+            }
+            // send a removed from cart event to tag manager
+            if (productRemoved.quantity > 0) {
+                // this check will allow us to avoid sending duplicate events
+                window.dataLayer.push({
+                    'event': 'removeFromCart',
+                    'ecommerce': {
+                        'remove': {
+                            'products': [productRemoved]
+                        }
+                    }
+                });
+                productRemoved.quantity = 0;
+            }
             console.log('removefromcart');
         })
     // CartUpdated
