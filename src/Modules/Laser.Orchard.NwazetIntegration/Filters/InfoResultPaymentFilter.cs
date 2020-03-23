@@ -38,7 +38,9 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                 var viewResult = filterContext.Result as ViewResult;
                 if (viewResult != null) {
                     var model = viewResult.Model as PaymentVM;
-                    if (model != null) {
+                    if (model != null 
+                        && model.Record != null 
+                        && model.Record.Success) {
                         // populate ViewModel to send at shape
                         var purchaseVM = new GTMPurchaseVM();
                         purchaseVM.ActionField = new GTMActionField {

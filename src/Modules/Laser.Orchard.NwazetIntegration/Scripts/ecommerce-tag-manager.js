@@ -6,6 +6,10 @@ window.ecommerceData.impressions = window.ecommerceData.impressions || [];
 // array of objects used to track/manage changes to the shopping cart
 window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
 window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
+// object used to track transactions/purchases
+window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
+window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -18,21 +22,36 @@ $(function () {
     window.ecommerceData.impressions = window.ecommerceData.impressions || [];
     window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
     window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
+    window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
+    window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+    window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be
     // "used" on DOM ready events.
     var ecommerceObject = {};
-    ecommerceObject.impressions = window.ecommerceData.impressions;
+    if (window.ecommerceData.impressions.length) {
+        ecommerceObject.impressions = window.ecommerceData.impressions;
+    }
     // if there is any product being displayed in a "detail" view:
     if (window.ecommerceData.detail.products.length) {
         ecommerceObject.detail = window.ecommerceData.detail;
     }
+    // If we are displaying the results from a succesfull purchase
+    if (!$.isEmptyObject(window.ecommerceData.purchase)
+        && !$.isEmptyObject(window.ecommerceData.purchase.actionfield)) {
+        // we do not test the contents of purchase.products because in some special
+        // cases it may be allowed to be empty
+        ecommerceObject.purchase = window.ecommerceData.purchase;
+    }
     // make sure dataLayer has been initialized
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-        'ecommerce': ecommerceObject
-    });
+    // if there is anything to be sent immediately, push it
+    if (!$.isEmptyObject(ecommerceObject)) {
+        window.dataLayer.push({
+            'ecommerce': ecommerceObject
+        });
+    }
 
     var productInArray = function (array, partId) {
         var product = {};
