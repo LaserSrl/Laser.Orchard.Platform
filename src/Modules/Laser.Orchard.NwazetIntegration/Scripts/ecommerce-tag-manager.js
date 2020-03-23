@@ -34,6 +34,79 @@ $(function () {
         'ecommerce': ecommerceObject
     });
 
+    var productInArray = function (array, partId) {
+        var product = {};
+        for (i = 0; i < array.length; i++) {
+            var currentProduct = array[i];
+            if (currentProduct.partId == partId) {
+                // found it
+                product = currentProduct;
+                break;
+            }
+        }
+        return product;
+    }
+
+    var addRemoveAllCartChanges = function (el) {
+        // get all set quantity elements
+        var quantityElements = $(el).find(".quantity");
+        if (quantityElements && quantityElements.length) {
+            // found some
+            // we will add to these arrays the products whose quantities changed
+            var addedToCart = [];
+            var removedFromCart = [];
+            // go through all products in the cart
+            for (i = 0; i < quantityElements.length; i++) {
+                var prodId = $(quantityElements[i]).attr('data-cart-product-id');
+                var currentQuantity = $(quantityElements[i]).val();
+                if (prodId && currentQuantity) { // sanity check
+                    var productChanged = productInArray(window.ecommerceData.cart.products, prodId);
+                    if ($.isEmptyObject(productChanged)) {
+                        // not found in the cart:
+                        // this is a strange error condition that should not happen naturally
+                        break;
+                    }
+                    // we have the product for this quantity
+                    if (currentQuantity != productChanged.quantity) {
+                        // quantity is different
+                        var difference = currentQuantity - productChanged.quantity;
+                        var prodCopy = {};
+                        prodCopy = Object.assign(prodCopy, productChanged);
+                        if (difference > 0) {
+                            // added to cart
+                            prodCopy.quantity = difference;
+                            addedToCart.push(prodCopy);
+                        } else {
+                            // removed from cart
+                            prodCopy.quantity = -difference;
+                            removedFromCart.push(prodCopy);
+                        }
+                    }
+                }
+            }
+            // raise the events for addition/removal from cart
+            if (addedToCart.length) {
+                window.dataLayer.push({
+                    'event': 'addToCart',
+                    'ecommerce': {
+                        'add': {
+                            'products': addedToCart
+                        }
+                    }
+                });
+            }
+            if (removedFromCart.length) {
+                window.dataLayer.push({
+                    'event': 'removeFromCart',
+                    'ecommerce': {
+                        'remove': {
+                            'products': removedFromCart
+                        }
+                    }
+                });
+            }
+        }
+    }
     //register handlers
 
     // Add to cart:
@@ -61,25 +134,10 @@ $(function () {
             // to the tag manager: the product and the quantity added.
             var partId = formData.id;
             // get the product with that id from any of our lists
-            var productAdded = {};
-            for (i = 0; i < window.ecommerceData.detail.products.length; i++) {
-                var currentProduct = window.ecommerceData.detail.products[i];
-                if (currentProduct.partId == partId) {
-                    // found it
-                    productAdded = currentProduct;
-                    break;
-                }
-            }
+            var productAdded = productInArray(window.ecommerceData.detail.products, partId);
             if ($.isEmptyObject(productAdded)) {
                 //not found among detail view. Search in summary views
-                for (i = 0; i < window.ecommerceData.impressions.length; i++) {
-                    var currentProduct = window.ecommerceData.impressions[i];
-                    if (currentProduct.partId == partId) {
-                        // found it
-                        productAdded = currentProduct;
-                        break;
-                    }
-                }
+                productAdded = productInArray(window.ecommerceData.impressions, partId);
             }
             if ($.isEmptyObject(productAdded)) {
                 // not even found there:
@@ -102,17 +160,9 @@ $(function () {
             // $(this) is the element that was clicked to trigger the event
             // (generally an anchor tag)
             // id of the product we are trying to delete
-            var prodId = $(this).attr('data-product-id');
+            var prodId = $(this).attr('data-cart-product-id');
             // take it from the array of products in the cart
-            var productRemoved = {};
-            for (i = 0; i < window.ecommerceData.cart.products.length; i++) {
-                var current = window.ecommerceData.cart.products[i];
-                if (current.partId == prodId) {
-                    // found it
-                    productRemoved = current;
-                    break;
-                }
-            }
+            var productRemoved = productInArray(window.ecommerceData.cart.products, prodId);
             if ($.isEmptyObject(productRemoved)) {
                 // not found in the cart:
                 // this is a strange error condition that should not happen naturally
@@ -137,6 +187,58 @@ $(function () {
         .on("nwazet.cartupdated", function (e) {
 
             console.log('cartupdated');
+        })
+        .on("change", ".shoppingcart .quantity", function (e) {
+            // $(this) is the input whose value for quantity changed
+            // id of the product whose quantity changed
+            var prodId = $(this).attr('data-cart-product-id');
+            // take it from the array of products in the cart
+            var productChanged = productInArray(window.ecommerceData.cart.products, prodId);
+            if ($.isEmptyObject(productChanged)) {
+                // not found in the cart:
+                // this is a strange error condition that should not happen naturally
+                return;
+            }
+            // when we will send the event corresponding to the quantity change
+            // (either an add or remove) we will have to send the amount by which
+            // the quantity changed, so we should not overwrite the "original" value
+            // but rather save the "current" one, and make a difference when the "final"
+            // update is called.
+            var currentQuantity = $(this).val();
+            productChanged.currentQuantity = currentQuantity;
+            console.log('quantity changed to ' + currentQuantity);
+        })
+        // we cannot e.preventDefault in handling these events, because that would
+        // break dynamic cart loading
+        .on("submit", ".shopping-cart-container form", function (e) {
+            // in $(this) we have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated inside');
+        })
+        .on("submit", ".shoppingcart form", function (e) {
+            // in $(this) we have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated outside');
+        })
+        .on("submit", "form .shopping-cart-container", function (e) {
+            // in $(this) we may not have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated inside');
+        })
+        .on("submit", "form .shoppingcart", function (e) {
+            // in $(this) we may not have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated outside');
+        })
+        .on("submit", function (e) {
+            // in $(this) we may not have the form
+            //addRemoveAllCartChanges(this);
+            // post on a form 
+            //console.log('cartupdated outside');
         })
 });
 
