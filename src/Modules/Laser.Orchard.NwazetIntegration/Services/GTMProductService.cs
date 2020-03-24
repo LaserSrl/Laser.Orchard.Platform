@@ -53,7 +53,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
             part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
 
-            part.Price = _productPriceService.GetPrice(product);
+            // consider discounts
+            if (product.DiscountPrice >= 0 && product.DiscountPrice < product.Price) {
+                part.Price = _productPriceService.GetDiscountPrice(product);
+            } else {
+                part.Price = _productPriceService.GetPrice(product);
+            }
         }
 
         public string GetJsonString(GTMProductPart part) {
@@ -71,6 +76,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             string output = JsonConvert
                 .SerializeObject(vm);
+
+            return output;
+        }
+        public string GetJsonString(GTMActionField af) {
+            if (af == null) {
+                return string.Empty;
+            }
+            string output = JsonConvert
+                .SerializeObject(af);
 
             return output;
         }

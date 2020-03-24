@@ -120,6 +120,7 @@
     <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
+    <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
+    <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
+    <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
@@ -308,6 +311,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <Content Include="Views\GTMShoppingCart.cshtml" />
+    <Content Include="Views\GTMPurchase.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
