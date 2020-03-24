@@ -18,8 +18,8 @@
     using (Script.Head()) {
         <script type="text/javascript">
             window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
-            window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
-            window.ecommerceData.purchase.actionfield = $.extend(true, @Html.Raw(gtmActionField), window.ecommerceData.purchase.actionfield);
+            window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
+            window.ecommerceData.purchase.actionField = $.extend(true, @Html.Raw(gtmActionField), window.ecommerceData.purchase.actionField);
             @if (gtmProductsStrings.Any()) {
                 var productString = string.Join(",", gtmProductsStrings);
                 <text>

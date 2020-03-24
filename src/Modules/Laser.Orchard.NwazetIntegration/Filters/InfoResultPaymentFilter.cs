@@ -41,13 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                     if (model != null 
                         && model.Record != null 
                         && model.Record.Success) {
-                        // populate ViewModel to send at shape
-                        var purchaseVM = new GTMPurchaseVM();
-                        purchaseVM.ActionField = new GTMActionField {
-                            Id = model.Record.TransactionId,
-                            Revenue = model.Record.Amount
-                        };
-
+                        
                         var productList = new List<GTMProductVM>();
                         #region add item to productList
                         // select the contentitemid which is the id of the order
@@ -74,6 +68,12 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             productList.Add(vm);
                         }
                         #endregion 
+                        // populate ViewModel to send at shape
+                        var purchaseVM = new GTMPurchaseVM();
+                        purchaseVM.ActionField = new GTMActionField {
+                            Id = order.OrderKey,
+                            Revenue = model.Record.Amount
+                        };
                         purchaseVM.ProductList = productList;
 
                         _workContextAccessor.GetContext(filterContext)

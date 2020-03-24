@@ -8,7 +8,7 @@ window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
 window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
 // object used to track transactions/purchases
 window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
-window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
 window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
 $(function () {
@@ -23,7 +23,7 @@ $(function () {
     window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
     window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
     window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
-    window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+    window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
     window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
     // put it all together and push it into the dataLayer
@@ -39,7 +39,7 @@ $(function () {
     }
     // If we are displaying the results from a succesfull purchase
     if (!$.isEmptyObject(window.ecommerceData.purchase)
-        && !$.isEmptyObject(window.ecommerceData.purchase.actionfield)) {
+        && !$.isEmptyObject(window.ecommerceData.purchase.actionField)) {
         // we do not test the contents of purchase.products because in some special
         // cases it may be allowed to be empty
         ecommerceObject.purchase = window.ecommerceData.purchase;
