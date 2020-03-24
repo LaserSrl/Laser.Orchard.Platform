@@ -63,16 +63,16 @@ namespace Laser.Orchard.SEO.Filters {
             strippedSegments.RemoveAll(s => string.IsNullOrEmpty(s));
             var normalizedApplicationPath = applicationPath.TrimEnd('/');
             var serverUrl = GetServerUrl(url);
-            
+
             //if querystring is in redirects table, use it
             var pathQs = string.Join("/", strippedSegments) + url.Query;
-            var redirect = _redirectService.GetRedirect(pathQs);
+            var redirect = _redirectService.GetCachedRedirects().FirstOrDefault(x => x.SourceUrl == pathQs);
             if (redirect == null) {
                 // else strip querystring to look for a match
                 var path = string.Join("/", strippedSegments);
-                redirect = _redirectService.GetRedirect(path);
+                redirect = _redirectService.GetCachedRedirects().FirstOrDefault(x => x.SourceUrl == path);
                 if (redirect != null) {
-                    var destination = serverUrl + normalizedApplicationPath + 
+                    var destination = serverUrl + normalizedApplicationPath +
                         (string.IsNullOrWhiteSpace(urlPrefix) ? "" : "/" + urlPrefix) +
                         "/" + redirect.DestinationUrl.TrimStart('/');
                     filterContext.Result = new RedirectResult(destination + url.Query, redirect.IsPermanent);
@@ -91,11 +91,11 @@ namespace Laser.Orchard.SEO.Filters {
         private string GetServerUrl(Uri url) {
             StringBuilder sb = new StringBuilder();
             int slashCounter = 0;
-            foreach(var c in url.AbsoluteUri.ToCharArray()) {
-                if(c == '/') {
+            foreach (var c in url.AbsoluteUri.ToCharArray()) {
+                if (c == '/') {
                     slashCounter++;
                 }
-                if(slashCounter > 2) {
+                if (slashCounter > 2) {
                     break;
                 }
                 else {
