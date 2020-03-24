@@ -25,5 +25,14 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
             );
             return 2;
         }
+        public int UpdateFrom2() {
+            SchemaBuilder.CreateTable("AddedMeasuringPurchase",
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<int>("OrderPartRecord_Id")
+                    .Column<bool>("AddedScript")
+                );
+            return 3;
+        }
     }
 }

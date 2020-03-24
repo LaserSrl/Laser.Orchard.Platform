@@ -120,6 +120,7 @@
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
+    <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />

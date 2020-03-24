@@ -6,6 +6,7 @@ using Laser.Orchard.PaymentGateway.ViewModels;
 using Nwazet.Commerce.Models;
 using Orchard;
 using Orchard.ContentManagement;
+using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Mvc;
 using Orchard.Mvc.Filters;
@@ -19,16 +20,19 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         private readonly IGTMProductService _GTMProductService;
         private readonly dynamic _shapeFactory;
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IRepository<AddedMeasuringPurchase> _addedMeauringPurchaseRepository;
 
         public InfoResultPaymentFilter(
             IContentManager contentManager,
             IGTMProductService GTMProductService,
             IShapeFactory shapeFactory,
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor,
+            IRepository<AddedMeasuringPurchase> addedMeauringPurchaseRepository) {
             _contentManager = contentManager;
             _GTMProductService = GTMProductService;
             _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
+            _addedMeauringPurchaseRepository = addedMeauringPurchaseRepository;
         }
 
 
@@ -38,47 +42,60 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                 var viewResult = filterContext.Result as ViewResult;
                 if (viewResult != null) {
                     var model = viewResult.Model as PaymentVM;
-                    if (model != null 
-                        && model.Record != null 
+                    if (model != null
+                        && model.Record != null
                         && model.Record.Success) {
-                        // populate ViewModel to send at shape
-                        var purchaseVM = new GTMPurchaseVM();
-                        purchaseVM.ActionField = new GTMActionField {
-                            Id = model.Record.TransactionId,
-                            Revenue = model.Record.Amount
-                        };
-
-                        var productList = new List<GTMProductVM>();
-                        #region add item to productList
                         // select the contentitemid which is the id of the order
                         var orderId = model.Record.ContentItemId;
                         // select order
                         var order = _contentManager.Get<OrderPart>(orderId);
-                        var checkoutItems = order.Items.ToList();
-                        var products = _contentManager
-                           .GetMany<IContent>(
-                               checkoutItems.Select(p => p.ProductId).Distinct(),
-                               VersionOptions.Latest,
-                               QueryHints.Empty)
-                            .ToList();
-                        foreach (var p in products) {
-                            // populate list of GTMProductVM 
-                            var part = p.As<GTMProductPart>();
-                            _GTMProductService.FillPart(part);
-                            var vm = new GTMProductVM(part);
-                            var checkoutItem = checkoutItems
-                                .Where(c => c.ProductId == p.Id)
-                                .FirstOrDefault();
-                            // add quantity
-                            vm.Quantity = checkoutItem == null ? 0 : checkoutItem.Quantity;
-                            productList.Add(vm);
-                        }
-                        #endregion 
-                        purchaseVM.ProductList = productList;
 
-                        _workContextAccessor.GetContext(filterContext)
-                            .Layout.Zones.Head
-                            .Add(_shapeFactory.GTMPurchase(GTMPurchaseVM: purchaseVM));
+                        // verify if existing record
+                        var existing = _addedMeauringPurchaseRepository
+                            .Fetch(mp => mp.OrderPartRecord == order.Record
+                                && mp.AddedScript==true);
+
+                        if (!existing.Any()) {
+                            var checkoutItems = order.Items.ToList();
+                            var products = _contentManager
+                               .GetMany<IContent>(
+                                   checkoutItems.Select(p => p.ProductId).Distinct(),
+                                   VersionOptions.Latest,
+                                   QueryHints.Empty)
+                                .ToList();
+                            // initialize list of GTMProductVM
+                            var productList = new List<GTMProductVM>();
+                            foreach (var p in products) {
+                                // populate list of GTMProductVM 
+                                var part = p.As<GTMProductPart>();
+                                _GTMProductService.FillPart(part);
+                                var vm = new GTMProductVM(part);
+                                var checkoutItem = checkoutItems
+                                    .Where(c => c.ProductId == p.Id)
+                                    .FirstOrDefault();
+                                // add quantity
+                                vm.Quantity = checkoutItem == null ? 0 : checkoutItem.Quantity;
+                                productList.Add(vm);
+                            }
+
+                            // populate ViewModel to send at shape
+                            var purchaseVM = new GTMPurchaseVM();
+                            purchaseVM.ActionField = new GTMActionField {
+                                Id = model.Record.TransactionId,
+                                Revenue = model.Record.Amount
+                            };
+                            purchaseVM.ProductList = productList;
+
+                            // add the record to store the operation
+                            _addedMeauringPurchaseRepository.Create(new AddedMeasuringPurchase {
+                                OrderPartRecord = order.Record,
+                                AddedScript = true
+                            });
+
+                            _workContextAccessor.GetContext(filterContext)
+                                .Layout.Zones.Head
+                                .Add(_shapeFactory.GTMPurchase(GTMPurchaseVM: purchaseVM));                           
+                        }
                     }
                 }
 
