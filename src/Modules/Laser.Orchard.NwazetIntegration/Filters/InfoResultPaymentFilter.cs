@@ -21,18 +21,21 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         private readonly dynamic _shapeFactory;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IRepository<AddedMeasuringPurchase> _addedMeauringPurchaseRepository;
+        private readonly IGTMMeasuringPurchaseService _GTMMeasuringPurchaseService;
 
         public InfoResultPaymentFilter(
             IContentManager contentManager,
             IGTMProductService GTMProductService,
             IShapeFactory shapeFactory,
             IWorkContextAccessor workContextAccessor,
-            IRepository<AddedMeasuringPurchase> addedMeauringPurchaseRepository) {
+            IRepository<AddedMeasuringPurchase> addedMeauringPurchaseRepository,
+            IGTMMeasuringPurchaseService GTMMeasuringPurchaseService) {
             _contentManager = contentManager;
             _GTMProductService = GTMProductService;
             _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
             _addedMeauringPurchaseRepository = addedMeauringPurchaseRepository;
+            _GTMMeasuringPurchaseService = GTMMeasuringPurchaseService;
         }
 
 
@@ -82,7 +85,10 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             var purchaseVM = new GTMPurchaseVM();
                             purchaseVM.ActionField = new GTMActionField {
                                 Id = model.Record.TransactionId,
-                                Revenue = model.Record.Amount
+                                Revenue = model.Record.Amount,
+                                Tax = _GTMMeasuringPurchaseService.GetVatDue(order),
+                                // shipping with VAT
+                                Shipping = order.ShippingOption.DefaultPrice
                             };
                             purchaseVM.ProductList = productList;
 
