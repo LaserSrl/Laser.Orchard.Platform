@@ -19,7 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.JsonConverters {
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
-            writer.WriteRawValue(((decimal)value).ToString("0.00", CultureInfo.InvariantCulture));
+            writer.WriteRawValue($"\"{((decimal)value).ToString("0.00", CultureInfo.InvariantCulture)}\"");
         }
     }
 }
