@@ -8,7 +8,7 @@ window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
 window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
 // object used to track transactions/purchases
 window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
-window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
 window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
 $(function () {
@@ -23,7 +23,7 @@ $(function () {
     window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
     window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
     window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
-    window.ecommerceData.purchase.actionfield = $.extend(true, {}, window.ecommerceData.purchase.actionfield);
+    window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
     window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
 
     // put it all together and push it into the dataLayer
@@ -39,7 +39,7 @@ $(function () {
     }
     // If we are displaying the results from a succesfull purchase
     if (!$.isEmptyObject(window.ecommerceData.purchase)
-        && !$.isEmptyObject(window.ecommerceData.purchase.actionfield)) {
+        && !$.isEmptyObject(window.ecommerceData.purchase.actionField)) {
         // we do not test the contents of purchase.products because in some special
         // cases it may be allowed to be empty
         ecommerceObject.purchase = window.ecommerceData.purchase;
@@ -203,10 +203,6 @@ $(function () {
             console.log('removefromcart');
         })
     // CartUpdated
-        .on("nwazet.cartupdated", function (e) {
-
-            console.log('cartupdated');
-        })
         .on("change", ".shoppingcart .quantity", function (e) {
             // $(this) is the input whose value for quantity changed
             // id of the product whose quantity changed
@@ -253,11 +249,25 @@ $(function () {
             // post on a form 
             //console.log('cartupdated outside');
         })
-        .on("submit", function (e) {
-            // in $(this) we may not have the form
-            //addRemoveAllCartChanges(this);
-            // post on a form 
-            //console.log('cartupdated outside');
+        .on("click", "[data-product-id]", function (e) {
+            // use this to track product clicks
+            var prodId = $(this).attr('data-product-id');
+            // if we did the page right, this product is among the impressions
+            var productClicked = productInArray(window.ecommerceData.impressions, prodId);
+            if ($.isEmptyObject(productClicked)) {
+                // not found:
+                // this is a strange error condition that should not happen naturally
+                return;
+            }
+            // generate a product click event
+            window.dataLayer.push({
+                'event': 'productClick',
+                'ecommerce': {
+                    'click': {
+                        'products': [productClicked]
+                    }
+                }
+            });
         })
 });
 
