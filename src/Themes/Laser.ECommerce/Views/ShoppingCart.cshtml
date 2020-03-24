@@ -99,13 +99,13 @@
                                             <td class="invert">@T("{0}", i + 1)</td>
                                             @if (imageUrl != null) {
                                                 <td class="invert-image">
-                                                    <a href="@Url.ItemDisplayUrl(contentItem)"><img src="@Href(imageUrl)" alt="@title" class="img-responsive" /></a>
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id"><img src="@Href(imageUrl)" alt="@title" class="img-responsive" /></a>
                                                 </td>
                                                 <td class="invert">
-                                                    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-name">@title</a>
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-name" data-product-id="@contentItem.Id">@title</a>
                                                 </td>
                                             } else {
-                                                <td colspan="2" class="invert"><a href="@Url.ItemDisplayUrl(contentItem)">@title</a></td>
+                                                <td colspan="2" class="invert"><a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id">@title</a></td>
                                             }
                                             <td class="invert">
                                                 <div class="quantity">

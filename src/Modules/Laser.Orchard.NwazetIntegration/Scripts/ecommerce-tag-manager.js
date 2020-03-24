@@ -249,11 +249,25 @@ $(function () {
             // post on a form 
             //console.log('cartupdated outside');
         })
-        .on("submit", function (e) {
-            // in $(this) we may not have the form
-            //addRemoveAllCartChanges(this);
-            // post on a form 
-            //console.log('cartupdated outside');
+        .on("click", "[data-product-id]", function (e) {
+            // use this to track product clicks
+            var prodId = $(this).attr('data-product-id');
+            // if we did the page right, this product is among the impressions
+            var productClicked = productInArray(window.ecommerceData.impressions, prodId);
+            if ($.isEmptyObject(productClicked)) {
+                // not found:
+                // this is a strange error condition that should not happen naturally
+                return;
+            }
+            // generate a product click event
+            window.dataLayer.push({
+                'event': 'productClick',
+                'ecommerce': {
+                    'click': {
+                        'products': [productClicked]
+                    }
+                }
+            });
         })
 });
 
