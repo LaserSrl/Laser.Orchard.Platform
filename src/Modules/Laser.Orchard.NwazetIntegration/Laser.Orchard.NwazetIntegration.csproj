@@ -153,6 +153,7 @@
     <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
+    <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />
     <Compile Include="Services\PosServiceIntegration.cs" />
     <Compile Include="Services\IValidationProvider.cs" />

@@ -203,10 +203,6 @@ $(function () {
             console.log('removefromcart');
         })
     // CartUpdated
-        .on("nwazet.cartupdated", function (e) {
-
-            console.log('cartupdated');
-        })
         .on("change", ".shoppingcart .quantity", function (e) {
             // $(this) is the input whose value for quantity changed
             // id of the product whose quantity changed
