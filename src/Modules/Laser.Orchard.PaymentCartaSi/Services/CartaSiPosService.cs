@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.PaymentCartaSi.Extensions;
+﻿using Laser.Orchard.PaymentCartaSi.Controllers;
+using Laser.Orchard.PaymentCartaSi.Extensions;
 using Laser.Orchard.PaymentCartaSi.Models;
 using Laser.Orchard.PaymentGateway;
 using Laser.Orchard.PaymentGateway.Models;
@@ -74,6 +75,14 @@ namespace Laser.Orchard.PaymentCartaSi.Services {
             };
             return ub.Uri.ToString();
         }
+
+        public override Type GetPosActionControllerType() {
+            return typeof(TransactionsController);
+        }
+        public override string GetPosActionName() {
+            return "RedirectToCartaSìPage";
+        }
+
         /// <summary>
         /// This gets the url of the virtual pos.
         /// </summary>

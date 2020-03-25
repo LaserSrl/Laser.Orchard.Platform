@@ -113,6 +113,7 @@
     <Compile Include="Drivers\OrderPartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
+    <Compile Include="Filters\CheckoutStepsFilter.cs" />
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
@@ -240,6 +241,7 @@
     <None Include="bundleconfig.json" />
     <Content Include="Views\GTMShoppingCart.cshtml" />
     <Content Include="Views\GTMPurchase.cshtml" />
+    <Content Include="Views\GTMCheckoutStep.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

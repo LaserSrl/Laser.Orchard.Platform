@@ -10,6 +10,11 @@ window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
 window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
 window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
 window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
+// object used to track checkout steps
+window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout);
+window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
+window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
+
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -25,6 +30,9 @@ $(function () {
     window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
     window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
     window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
+    window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout);
+    window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
+    window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be
@@ -43,6 +51,13 @@ $(function () {
         // we do not test the contents of purchase.products because in some special
         // cases it may be allowed to be empty
         ecommerceObject.purchase = window.ecommerceData.purchase;
+    }
+    // if we are displaying a checkout step
+    if (!$.isEmptyObject(window.ecommerceData.checkout)
+        && !$.isEmptyObject(window.ecommerceData.checkout.actionField)) {
+        // we do not test the contents of purchase.products because in some special
+        // cases it may be allowed to be empty
+        ecommerceObject.checkout = window.ecommerceData.checkout;
     }
     // make sure dataLayer has been initialized
     window.dataLayer = window.dataLayer || [];
