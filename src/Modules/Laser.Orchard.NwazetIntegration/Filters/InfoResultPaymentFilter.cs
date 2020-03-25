@@ -88,7 +88,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                 Revenue = model.Record.Amount,
                                 Tax = _GTMMeasuringPurchaseService.GetVatDue(order),
                                 // shipping with VAT
-                                Shipping = order.ShippingOption.DefaultPrice
+                                Shipping = order.ShippingOption.Price
                             };
                             purchaseVM.ProductList = productList;
 
