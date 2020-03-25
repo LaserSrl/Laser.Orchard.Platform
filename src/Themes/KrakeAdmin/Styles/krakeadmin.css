@@ -11671,3 +11671,9 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 .manage-type .content {
     min-height: unset;
 }
+
+.info-box-text, .info-box-number {
+    text-transform: none;
+    font-size: 0.9em;
+    line-height: 1.6em;
+}

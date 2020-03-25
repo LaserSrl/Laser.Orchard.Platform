@@ -1,0 +1,113 @@
+﻿@model Orchard.Core.Common.Models.CommonPart
+@using System.Globalization;
+@using Orchard.ContentManagement;
+@using Orchard.Core.Common.Models;
+
+@{
+    Script.Require("Bootstrap").AtHead();
+    Style.Require("Bootstrap").AtHead();
+    Style.Require("FontAwesome").AtHead();
+    Style.Require("LaserBase").AtHead();
+
+
+    var cultureInfo = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    DateTime? createdUtc = Model == null ? null : Model.CreatedUtc;
+    DateTime? publishedUtc = Model == null ? null : Model.PublishedUtc;
+    DateTime? modifiedUtc = Model == null ? null : Model.ModifiedUtc;
+
+    var contentItem = Model.ContentItem == null ? null : (ContentItem)Model.ContentItem;
+
+}
+@{
+    // Defaults
+    var statusBackgroundColor = "green";
+    var statusIconClass = "fa fa-check";
+    var statusText = T("Published");
+    var statusDraftText = T("No Draft");
+    var statusDraftBackgrundColor = "green";
+
+    //Not Published
+    if (!contentItem.HasPublished()) {
+        statusBackgroundColor = "red";
+        statusIconClass = "fa fa-arrow-down";
+        statusText = T("not Published");
+    }
+    // Does the page have a draft
+    if (contentItem.HasDraft()) {
+        statusDraftText = T("Has Draft");
+        statusDraftBackgrundColor = "yellow";
+    }
+}
+<div class="edit-item-info-box-container">
+    <div class="row">
+        <!-- /.col -->
+        <div class="col-md-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-cog"></i></span>
+
+                <div class="info-box-content">
+                    @if (createdUtc.HasValue) {
+                        <span class="info-box-text col-sm-4">@T("Created on")</span>
+                        <span class="info-box-number col-sm-8">@createdUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                    }
+                    @if (publishedUtc.HasValue) {
+                        <span class="info-box-text col-sm-4">@T("Published on")</span>
+                        <span class="info-box-number col-sm-8">@publishedUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                    }
+                    @if (modifiedUtc.HasValue) {
+                        <span class="info-box-text col-sm-4">@T("Modified on")</span>
+                        <span class="info-box-number col-sm-8">@modifiedUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                    }
+                    <span class="info-box-text col-sm-4">@T("Last Modified")</span>
+                    <span class="info-box-number col-sm-8">@Display.CommonMetadataLastModified(ContentPart: Model)</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <!-- .col -->
+        <div class="col-md-6 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-@statusBackgroundColor"><i class="@statusIconClass"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text col-sm-4">@T("Status")</span>
+                    <span class="info-box-number col-sm-8"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
+                    <span class="info-box-text col-sm-4">@T("Draft")</span>
+                    <span class="info-box-number col-sm-8"><i class="fa fa-circle fa-lg text-@statusDraftBackgrundColor"></i> @statusDraftText</span>
+                    @{
+                        var publishLaterPart = ((dynamic)Model.ContentItem).PublishLaterPart;
+                        if (publishLaterPart != null) {
+                            DateTime? versionPublishedUtc = publishLaterPart.VersionPublishedUtc == null ? null : publishLaterPart.VersionPublishedUtc;
+                            if (publishLaterPart != null && contentItem != null) {
+                                if ((((DateTime?)publishLaterPart.ScheduledPublishUtc.Value).HasValue &&
+                                        ((DateTime?)publishLaterPart.ScheduledPublishUtc.Value) > DateTime.UtcNow) || (contentItem.HasPublished() && versionPublishedUtc.HasValue)) {
+                                    if (!contentItem.HasPublished() && !versionPublishedUtc.HasValue) {
+                                        <span class="info-box-text col-sm-4">@T("Publish on")</span>
+                                        <span class="info-box-number col-sm-8"><i class="fa fa-calendar-check-o fa-lg text-green"></i> @Display.DateTime(DateTimeUtc: ((Orchard.ContentManagement.Utilities.LazyField<System.DateTime?>)publishLaterPart.ScheduledPublishUtc).Value, CustomFormat: null)</span>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    @{
+                        var archiveLaterPart = ((dynamic)Model.ContentItem).ArchiveLaterPart;
+                        if (archiveLaterPart != null) {
+                            var scheduledArchiveUtc = archiveLaterPart.ScheduledArchiveUtc.Value;
+                            var isPublished = (archiveLaterPart.ContentItem.VersionRecord != null && archiveLaterPart.ContentItem.VersionRecord.Published);
+                            if ((isPublished && scheduledArchiveUtc != null && scheduledArchiveUtc > DateTime.UtcNow)) {
+                                <span class="info-box-text col-sm-4">@T("Unpublish on")</span>
+                                <span class="info-box-number col-sm-8">
+                                    <i class="fa fa-calendar-times-o fa-lg text-red" aria-hidden="true"></i> @Display.DateTime(DateTimeUtc: (DateTime)scheduledArchiveUtc, CustomFormat: null)
+                                </span>
+                            }
+                        }
+                    }
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
