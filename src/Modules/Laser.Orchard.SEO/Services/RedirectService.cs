@@ -5,22 +5,33 @@ using Laser.Orchard.SEO.Models;
 using Orchard.Data;
 using Laser.Orchard.SEO.Exceptions;
 using Orchard.Localization;
+using Orchard.Caching;
+using Orchard.Logging;
 
 namespace Laser.Orchard.SEO.Services {
     public class RedirectService : IRedirectService {
         private readonly IRepository<RedirectRule> _repository;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
         private Dictionary<string, RedirectRule> _redirectCache;
         public RedirectService(
-            IRepository<RedirectRule> repository) {
+            IRepository<RedirectRule> repository,
+            ICacheManager cacheManager,
+            ISignals signals) {
 
             _repository = repository;
+            _cacheManager = cacheManager;
+            _signals = signals;
             _redirectCache = new Dictionary<string, RedirectRule>();
-            ReloadRedirectsCache();
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
+        public ILogger Logger { get; set; }
 
+        public IQueryable<RedirectRule> GetTable() {
+            return _repository.Table;
+        }
         public IEnumerable<RedirectRule> GetRedirects(int startIndex = 0, int pageSize = 0) {
             var result = _repository.Table.Skip(startIndex >= 0 ? startIndex : 0);
 
@@ -34,15 +45,55 @@ namespace Laser.Orchard.SEO.Services {
             return RedirectRule.Copy(_repository.Fetch(x => itemIds.Contains(x.Id)));
         }
 
-        public int GetRedirectsTotalCount() {
-            return _repository.Table.Count();
+        public RedirectRule Update(RedirectRule redirectRule) {
+            //FixRedirect(redirectRule);
+            if (GetSameSourceUrlIds(redirectRule).Any(id => id != redirectRule.Id)) {
+                throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
+            }
+            _repository.Update(redirectRule);
+            _signals.Trigger("Laser.Orchard.Redirects.Changed");
+            return redirectRule;
         }
 
-        private void ReloadRedirectsCache() {
-            _redirectCache.Clear();
-            foreach (var rule in _repository.Table) {
-                _redirectCache.Add(rule.SourceUrl, rule);
+        public RedirectRule Add(RedirectRule redirectRule) {
+            //FixRedirect(redirectRule);
+            if (GetSameSourceUrlIds(redirectRule).Any()) {
+                throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
             }
+            _repository.Create(redirectRule);
+            ClearCache();
+            return redirectRule;
+        }
+
+        public void Delete(RedirectRule redirectRule) {
+            Delete(redirectRule.Id);
+            ClearCache();
+        }
+
+        public void Delete(int id) {
+            var redirect = _repository.Get(id);
+            _repository.Delete(redirect);
+            ClearCache();
+        }
+
+
+        public IEnumerable<RedirectRule> GetCachedRedirects() {
+            try {
+                return _cacheManager.Get(
+                    "Laser.Orchard.Redirects",
+                    ctx => {
+                        ctx.Monitor(_signals.When("Laser.Orchard.Redirects.Changed"));
+                        return _repository.Table.ToList();
+                    });
+            }
+            catch (Exception ex) {
+                Logger.Error(ex, "An unexpected error occurred in GetRedirects method");
+                return new List<RedirectRule>();
+            }
+        }
+
+        public void ClearCache() {
+            _signals.Trigger("Laser.Orchard.Redirects.Changed");
         }
 
         private IEnumerable<int> GetSameSourceUrlIds(RedirectRule redirectRule) {
@@ -64,63 +115,11 @@ namespace Laser.Orchard.SEO.Services {
             }
         }
 
-        public RedirectRule Update(RedirectRule redirectRule) {
-            //FixRedirect(redirectRule);
-            if (GetSameSourceUrlIds(redirectRule).Any(id => id != redirectRule.Id)) {
-                throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
-            }
-            _repository.Update(redirectRule);
-            ReloadRedirectsCache();
-            return redirectRule;
-        }
-
-        public RedirectRule Add(RedirectRule redirectRule) {
-            //FixRedirect(redirectRule);
-            if (GetSameSourceUrlIds(redirectRule).Any()) {
-                throw new RedirectRuleDuplicateException(T("Rules with same SourceURL are not valid."));
-            }
-            _repository.Create(redirectRule);
-            ReloadRedirectsCache();
-            return redirectRule;
-        }
-
-        public void Delete(RedirectRule redirectRule) {
-            Delete(redirectRule.Id);
-        }
-
-        public void Delete(int id) {
-            var redirect = _repository.Get(id);
-            _repository.Delete(redirect);
-            ReloadRedirectsCache();
-        }
-
-        public RedirectRule GetRedirect(string path) {
-            if (_redirectCache.ContainsKey(path)) {
-                return _redirectCache[path];
-            }
-            else {
-                return null;
-            }
-        }
-
-        public RedirectRule GetRedirect(int id) {
-            var rule = _repository.Get(id);
-            return rule == null ? null :
-                RedirectRule.Copy(rule);
-        }
-
-        public void ClearCache() {
-            ReloadRedirectsCache();
-        }
-
-        public int CountCached() {
-            return _redirectCache.Count;
-        }
-
         private static void FixRedirect(RedirectRule redirectRule) {
             redirectRule.SourceUrl = redirectRule.SourceUrl.TrimStart('/');
             redirectRule.DestinationUrl = redirectRule.DestinationUrl.TrimStart('/');
         }
+
 
     }
 }
