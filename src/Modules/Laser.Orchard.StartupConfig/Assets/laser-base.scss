@@ -1,0 +1,28 @@
+﻿@import "colors";
+
+.edit-item-info-box-container {
+    padding: 10px;
+    background-color: $bg-lightgray;
+    margin-bottom: 20px;
+    border: 1px solid $lightgray;
+
+    .row {
+        margin-bottom: 0px;
+
+        .info-box {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.text-green {
+    color: $green;
+}
+
+.text-yellow {
+    color: $yellow;
+}
+
+.text-red {
+    color: $red;
+}
