@@ -13,4 +13,5 @@
   <Place Parts_Territory_AdministrativeType_Edit="Content:2.1" />
   <Place Parts_Territory_AddressType_Edit="Content:2.1" />
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
+  <Place Parts_Product_TagManager="Content:1"/>
 </Placement>

@@ -14,8 +14,11 @@
             <div class="total">
                 <span class="simpleCart_total">@Model.CurrencyProvider.GetPriceString((decimal)Model.Total)</span>
                 &nbsp;(<span class="simpleCart_quantity">@items.Sum(it => it.Quantity) @T("items")</span>)
-                <img src="@(themeBasePath + "/Styles/Images/bag.png")"/>
+                <img src="@(themeBasePath + "/Styles/Images/bag.png")" />
             </div>
         </a>
     </div>
+    foreach (var additionalShape in Model.CartExtensionShapes) {
+        @Display(additionalShape)
+    }
 }
