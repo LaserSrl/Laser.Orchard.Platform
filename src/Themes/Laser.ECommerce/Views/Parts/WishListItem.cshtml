@@ -22,12 +22,12 @@
 }
 
 @if (!string.IsNullOrWhiteSpace(imageUrl)) {
-    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-image-link">
+    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-image-link" data-product-id="@contentItem.Id">
         <img src="@Display.ResizeMediaUrl(Width: 140, Height: 120, Mode: "pad", Alignment: "middlecenter", Path: imageUrl)" alt="@title" class="product-image" />
     </a>
 }
 <div>
-    <h5><a href="@Url.ItemDisplayUrl(contentItem)">@title</a></h5>
+    <h5><a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id">@title</a></h5>
     <div class="price">
         @Display.Price(Price: unitPriceOriginal, DiscountedPrice: unitPrice, CurrencyProvider: Model.CurrencyProvider)
     </div>

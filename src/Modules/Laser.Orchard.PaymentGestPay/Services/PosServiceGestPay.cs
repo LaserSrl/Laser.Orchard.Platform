@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.PaymentGateway;
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
+using Laser.Orchard.PaymentGestPay.Controllers;
 using Laser.Orchard.PaymentGestPay.CryptDecryptProd;
 using Laser.Orchard.PaymentGestPay.CryptDecryptTest;
 using Laser.Orchard.PaymentGestPay.Extensions;
@@ -85,6 +86,14 @@ namespace Laser.Orchard.PaymentGestPay.Services {
             //var ub = new UrlHelper().Action("RedirectToGestPayPage", "Transactions", new { Id = paymentId });
             return ub.Uri.ToString();
         }
+
+        public override Type GetPosActionControllerType() {
+            return typeof(TransactionsController);
+        }
+        public override string GetPosActionName() {
+            return "RedirectToGestPayPage";
+        }
+
         /// <summary>
         /// Gets the name of the controller where the Action for the editor of the POS settings is.
         /// </summary>

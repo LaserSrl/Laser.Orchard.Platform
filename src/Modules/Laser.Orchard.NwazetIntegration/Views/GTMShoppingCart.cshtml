@@ -1,0 +1,26 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration.Services;
+@{
+    var gtmProducts = (IEnumerable<GTMProductVM>)Model.GTMProducts;
+
+    var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
+    Script.Require("NwazetIntegration.TagManager").AtHead();
+
+    var gtmObjectStrings = gtmProducts
+        .Select(p => _GTMProductService.GetJsonString(p))
+        .Where(s => !string.IsNullOrWhiteSpace(s));
+
+    if (gtmObjectStrings.Any()) {
+        var jsonString = string.Join(",", gtmObjectStrings);
+        using (Script.Head()) {
+            <script type="text/javascript">
+                window.ecommerceData.cart = $.extend(true, {}, window.ecommerceData.cart);
+                window.ecommerceData.cart.products = window.ecommerceData.cart.products || [];
+                window.ecommerceData.cart.products.push(
+                    @Html.Raw(jsonString)
+                );
+            </script>
+        }
+    }
+
+}
