@@ -48,38 +48,40 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
 
         //GET
         protected override DriverResult Editor(UserRegistrationPolicyPart part, dynamic shapeHelper) {
-            if (currentControllerAction != CONTROLLER_ACTION) return null;
-            var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
-            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && settings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
-                var shapeName = "Parts_UserRegistrationPolicy_Edit";
-                var templateName = "Parts/UserRegistrationPolicy_Edit";
-                var policies = _usersExtensionsServices.BuildEditorForRegistrationPolicies();
-
-                return ContentShape(shapeName,
-                                    () => shapeHelper.EditorTemplate(TemplateName: templateName,
-                                        Model: policies,
-                                        Prefix: Prefix));
-            } else {
-                return null;
-            }
+            return Editor(part, null, shapeHelper);
         }
 
         //POST
         protected override DriverResult Editor(UserRegistrationPolicyPart part, IUpdateModel updater, dynamic shapeHelper) {
-            if (currentControllerAction != CONTROLLER_ACTION) return null;
+            var policyPart = part.As<PolicyPart>();
             var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
-            if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && settings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
-                var policies = _usersExtensionsServices.BuildEditorForRegistrationPolicies();
-                if (updater.TryUpdateModel(policies, Prefix, null, null)) {
-                    if (policies.Count(x => (
-                            (x.PolicyAnswer == false) && x.UserHaveToAccept)) > 0) {
-                        updater.AddModelError("NotAcceptedPolicies", T("User has to accept policies!"));
-                    }
-                    _controllerAccessor.Context.Controller.TempData["VolatileAnswers"] = String.Join(",", policies.Where(x => x.PolicyAnswer).Select(x => x.PolicyId.ToString()));
-                }
-            }
-            return Editor(part, shapeHelper);
-        }
+            var shapeName = "Parts_UserRegistrationPolicy_Edit";
+            var templateName = "Parts/UserRegistrationPolicy_Edit";
+            IList<UserPolicyAnswerWithContent> policies;
+            if (part.As<PolicyPart>() != null && part.As<UserPart>() == null) {
+                //The content is not a User and has the PolicyPart. 
+                //Having UserRegistrationPolicyPart means that we want to force policy accaptance before Saving/Publishing the content.
+                policies = _usersExtensionsServices.BuildEditorForPolicies(policyPart);
 
+            }
+            else if (currentControllerAction != CONTROLLER_ACTION) return null;
+            else if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && settings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
+                policies = _usersExtensionsServices.BuildEditorForRegistrationPolicies();
+            }
+            else {
+                return null;
+            }
+            if (updater != null && updater.TryUpdateModel(policies, Prefix, null, null)) {
+                if (policies.Count(x => (
+                        (x.PolicyAnswer == false) && x.UserHaveToAccept)) > 0) {
+                    updater.AddModelError("NotAcceptedPolicies", T("User has to accept policies!"));
+                }
+                _controllerAccessor.Context.Controller.TempData["VolatileAnswers"] = String.Join(",", policies.Where(x => x.PolicyAnswer).Select(x => x.PolicyId.ToString()));
+            }
+            return ContentShape(shapeName,
+                                () => shapeHelper.EditorTemplate(TemplateName: templateName,
+                                    Model: policies,
+                                    Prefix: Prefix));
+        }
     }
 }

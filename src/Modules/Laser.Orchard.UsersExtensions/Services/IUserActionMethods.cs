@@ -77,7 +77,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                 var registeredServicesData = _utilsServices.GetUserIdentityProviders(_identityProviders);
                 var json = registeredServicesData.ToString();
                 result = _utilsServices.GetResponse(ResponseType.Success, data: json);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 result = _utilsServices.GetResponse(ResponseType.None, ex.Message);
             }
             return result;
@@ -90,7 +91,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                 var registeredServicesData = _utilsServices.GetUserIdentityProviders(_identityProviders);
                 var json = registeredServicesData.ToString();
                 result = _utilsServices.GetResponse(ResponseType.Success, "", json);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 result = _utilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
             }
             return result;
@@ -101,7 +103,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
             try {
                 _usersExtensionsServices.SignOut();
                 result = _utilsServices.GetResponse(ResponseType.Success);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 result = _utilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
             }
             return (result);
@@ -191,7 +194,12 @@ namespace Laser.Orchard.UsersExtensions.Services {
                 PolicyAnswers = _usersExtensionsServices.GetUserLinkedPolicies("it-IT").Select(x => new UserPolicyAnswer {
                     PolicyId = x.Id,
                     UserHaveToAccept = x.UserHaveToAccept,
-                    PolicyAnswer = false
+                    PolicyAnswer = false,
+                    Policy = new PolicyTextViewModel {
+                        Type = x.PolicyType,
+                        Title = x.As<TitlePart>()?.Title,
+                        Body = x.As<BodyPart>()?.Text
+                    }
                 }).ToList()
             };
             return userRegistration;
@@ -223,15 +231,18 @@ namespace Laser.Orchard.UsersExtensions.Services {
             if (userOptions == LostPasswordUserOptions.Account) {
                 if (_userService.SendLostPasswordEmail(username, nonce => urlHelper.MakeAbsolute(urlHelper.Action("LostPassword", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl))) {
                     result = _utilsServices.GetResponse(ResponseType.Success);
-                } else {
+                }
+                else {
                     result = _utilsServices.GetResponse(ResponseType.None, T("Send email failed.").Text);
                 }
-            } else {
+            }
+            else {
                 var sendSmsResult = _usersExtensionsServices.SendLostPasswordSms(internationalPrefix, username, nonce => urlHelper.MakeAbsolute(urlHelper.Action("LostPassword", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl));
 
                 if (sendSmsResult == "TRUE") {
                     result = _utilsServices.GetResponse(ResponseType.Success);
-                } else {
+                }
+                else {
                     Dictionary<string, string> errors = new Dictionary<string, string>();
                     errors.Add("BODYEXCEEDED", T("Message rejected: too many characters. (160 max)").ToString()); //"messaggio rigettato per superamento lunghezza max di testo (160 caratteri)");
                     errors.Add("MISSINGPARAMETER_1", T("Missing recipient").ToString()); //"Destinatario mancante");

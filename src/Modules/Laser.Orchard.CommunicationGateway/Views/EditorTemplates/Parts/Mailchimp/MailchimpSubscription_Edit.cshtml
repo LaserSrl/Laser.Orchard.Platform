@@ -1,0 +1,13 @@
+﻿@model Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels.SelectableAudience
+<fieldset>
+    <legend>@T("Mailchimp subscription")</legend>
+    @if (Model.Audience == null) {
+        <div>@T("An audience need to be set.")</div>
+    }
+    else {
+    @Html.HiddenFor(m => m.Audience.Identifier)
+    @Html.HiddenFor(m => m.Audience.Name)
+    @Html.CheckBoxFor(m => m.Selected)
+    @Html.LabelFor(m => m.Selected, @T("Subscribed to {0}", Model.Audience.Name).Text, new { @class = "forcheckbox" })
+    }
+</fieldset>
