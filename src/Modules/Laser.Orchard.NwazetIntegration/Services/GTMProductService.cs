@@ -48,10 +48,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 part.ProductId = product.Sku;
             }
 
-            part.Name = ProcessString(FillString(partSetting.Name, tokens), true);
-            part.Brand = ProcessString(FillString(partSetting.Brand, tokens), true);
-            part.Category = ProcessString(FillString(partSetting.Category, tokens), true);
-            part.Variant = ProcessString(FillString(partSetting.Variant, tokens), true);
+            part.Name = FillString(partSetting.Name, tokens);
+            part.Brand = FillString(partSetting.Brand, tokens);
+            part.Category = FillString(partSetting.Category, tokens);
+            part.Variant = FillString(partSetting.Variant, tokens);
 
             // consider discounts
             if (product.DiscountPrice >= 0 && product.DiscountPrice < product.Price) {
@@ -92,42 +92,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         #region private methods to handle tokenized fields
         private string FillString(string value, Dictionary<string, object> tokens) {
             if (!string.IsNullOrEmpty(value)) {
-                return _tokenizer.Replace(value, tokens);
+                return HttpUtility.HtmlDecode(_tokenizer.Replace(value, tokens));
             }
             return string.Empty;
-        }
-        private string ProcessString(string value, bool removeHtml) {
-            return ProcessString(value, 0, removeHtml);
-        }
-        private string ProcessString(string value, int length = 0, bool removeHtml = false) {
-            if (removeHtml) {
-                value = HttpUtility.HtmlDecode(value);
-                value = RemoveHtmlTag(value);
-            }
-            return TruncateText(value, length);
-        }
-
-        private string RemoveHtmlTag(string text) {
-            if (string.IsNullOrEmpty(text))
-                return "";
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(text);
-            return (htmlDoc.DocumentNode.InnerText);
-        }
-        private string TruncateText(string value, int length = 0) {
-            if (string.IsNullOrWhiteSpace(value) || value.Length < length || length <= 0) {
-                return value;
-            }
-
-            value = value.Substring(0, value.IndexOf(" ", length));
-            if (value.Length > length) {
-                if (value.LastIndexOf(" ") != -1) { //try to be nice and truncate aftrer a word
-                    value = value.Substring(0, value.LastIndexOf(" "));
-                } else { //just shear it off to avoid breaking stuff db-side
-                    value = value.Substring(0, length);
-                }
-            }
-            return value;
         }
         #endregion
     }
