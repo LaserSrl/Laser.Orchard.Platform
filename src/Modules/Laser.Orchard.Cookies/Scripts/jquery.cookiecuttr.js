@@ -91,6 +91,8 @@
                 //reset cookies
                 $('a.cc-cookie-reset').click(function (f) {
                     f.preventDefault();
+                    // fire an event to notify we are resetting cookie consent
+                    $(document).trigger("cookieConsent.reset");
                     $.cookie("cc_cookie_accept", null, {
                         path: '/'
                     });
@@ -147,19 +149,27 @@
             $('.cc-cookie-accept').click(function (e) {
                 e.preventDefault();
 
+                var acceptedOptions = {
+                    preferences: false,
+                    statistical: false,
+                    marketing: false
+                };
                 var aux1 = "";
                 if ($("#chkPreferences").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.preferences = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkStatistical").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.statistical = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkMarketing").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.marketing = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
@@ -170,6 +180,8 @@
                 $(".cc-cookies").fadeOut(function () {
                     // reload page to activate cookies
                     //location.reload();
+                    // fire an event to notify of the accepted options
+                    $(document).trigger("cookieConsent.accept", acceptedOptions);
                     manageCookieResetButton(options);
                 });
             });
