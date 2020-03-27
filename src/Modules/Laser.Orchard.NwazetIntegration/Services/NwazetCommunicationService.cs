@@ -108,11 +108,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     }
                 }
                 var addressPart = order.As<AddressOrderPart>();
-                Action<ContentItem> storeBilling = (ci) => 
+                Action<ContentItem> storeBilling = (ci) =>
                     StoreAddress(order.BillingAddress, addressPart, AddressRecordType.BillingAddress, ci);
-                Action<ContentItem> storeShipping = (ci) => 
+                Action<ContentItem> storeShipping = (ci) =>
                     StoreAddress(order.ShippingAddress, addressPart, AddressRecordType.ShippingAddress, ci);
-                
+
                 foreach (var contactItem in ContactList) {
                     // nel caso in cui una sincro fallisce continua con 
                     try {

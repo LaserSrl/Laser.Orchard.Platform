@@ -10,8 +10,9 @@ namespace Laser.Orchard.NwazetIntegration {
         Province = 2,
         City = 3
     }
-    public enum TypeId {
-            Id,
-            Sku
-        }
+
+	public enum TypeId {
+    	Id,
+    	Sku
+    }
 }
