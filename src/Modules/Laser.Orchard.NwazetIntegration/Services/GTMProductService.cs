@@ -90,6 +90,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         #region private methods to handle tokenized fields
+        // anything inserted into these tokens is thrown on the screen
+        // even if there is html code
         private string FillString(string value, Dictionary<string, object> tokens) {
             if (!string.IsNullOrEmpty(value)) {
                 return HttpUtility.HtmlDecode(_tokenizer.Replace(value, tokens));

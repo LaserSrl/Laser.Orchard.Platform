@@ -26,5 +26,7 @@
         @Html.TextBoxFor(m => m.Variant, new { @class = "text medium tokenized", rows = "5" })
         <span class="hint">@T("The variant of the product")</span>
     </div>
+    <br />
+    <span class="hint">@T("Any content will be inserted into the fields, both as text and as a token will be sent as is to Google Tag Manager (also with html tags or special characters)")</span>
     @Display.TokenHint()
 </fieldset>
