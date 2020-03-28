@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Orchard.Security;
 using Laser.Orchard.Policy.Models;
-using Laser.Orchard.UsersExtensions.Models;
+using Laser.Orchard.Policy.ViewModels;
 
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
     public interface IMailchimpService : IDependency {
         string DecryptApiKey();
         string CryptApiKey(string apikey);
-        void CheckAcceptedPolicy(MailchimpSubscriptionPart part, UserRegistrationPolicyPart userRegistrationPolicyPart);
+        void CheckAcceptedPolicy(MailchimpSubscriptionPart part);
+
     }
 }

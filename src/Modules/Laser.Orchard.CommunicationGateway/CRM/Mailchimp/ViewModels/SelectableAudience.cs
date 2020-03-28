@@ -9,5 +9,6 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels {
     public class SelectableAudience {
         public Audience Audience { get; set; }
         public bool Selected { get; set; }
+        public string[] RequiredPolicies { get; set; }
     }
 }

@@ -1,13 +1,34 @@
 ﻿@model Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels.SelectableAudience
+@{
+    Script.Require("JQuery").AtHead();
+}
 <fieldset>
     <legend>@T("Mailchimp subscription")</legend>
     @if (Model.Audience == null) {
         <div>@T("An audience need to be set.")</div>
     }
     else {
-    @Html.HiddenFor(m => m.Audience.Identifier)
-    @Html.HiddenFor(m => m.Audience.Name)
-    @Html.CheckBoxFor(m => m.Selected)
-    @Html.LabelFor(m => m.Selected, @T("Subscribed to {0}", Model.Audience.Name).Text, new { @class = "forcheckbox" })
+        @Html.HiddenFor(m => m.Audience.Identifier)
+        @Html.HiddenFor(m => m.Audience.Name)
+        @Html.CheckBoxFor(m => m.Selected, new { id=Html.FieldIdFor(m=>m.Selected)})
+        @Html.LabelFor(m => m.Selected, @T("Subscribed to {0}", Model.Audience.Name).Text, new { @class = "forcheckbox" })
     }
 </fieldset>
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.FieldIdFor(m=>m.Selected)").change(AutoSelectRequiredPolicies);
+            $("#@Html.FieldIdFor(m=>m.Selected)").click(AutoSelectRequiredPolicies);
+
+            function AutoSelectRequiredPolicies() {
+                var policyIds = [@String.Join(",",Model.RequiredPolicies.Select(x=>x.Substring(1,x.Length-2)))]; //array of policy ids required
+                policyIds.forEach((id, index) => {
+                    var policyRadioId = $("#user-registration-policy-" + id).data("answer-field");
+                    if (policyRadioId != "") {
+                        $("#" + policyRadioId + "_Accept").attr('checked', true);
+                    }
+                });
+            }
+        });
+    </script>
+}

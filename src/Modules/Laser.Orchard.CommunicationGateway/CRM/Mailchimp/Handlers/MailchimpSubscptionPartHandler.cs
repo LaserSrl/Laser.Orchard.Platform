@@ -3,7 +3,7 @@ using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
 using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
 using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
-using Laser.Orchard.UsersExtensions.Models;
+
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
@@ -71,7 +71,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
             base.UpdateEditorShape(context);
             if (context.ContentItem.As<MailchimpSubscriptionPart>() != null) {
                 try {
-                    _service.CheckAcceptedPolicy(context.ContentItem.As<MailchimpSubscriptionPart>(), context.ContentItem.As<UserRegistrationPolicyPart>());
+                    _service.CheckAcceptedPolicy(context.ContentItem.As<MailchimpSubscriptionPart>());
                 }
                 catch (MissingPoliciesException ex) {
                     context.Updater.AddModelError("MissingPolicies", T("You have to accepted all required policies in order to subscribe to the newsletter."));

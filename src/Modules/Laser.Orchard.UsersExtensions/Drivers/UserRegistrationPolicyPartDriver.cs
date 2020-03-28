@@ -77,10 +77,13 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
                         (x.PolicyAnswer == false) && x.UserHaveToAccept)) > 0) {
                     updater.AddModelError("NotAcceptedPolicies", T("User has to accept policies!"));
                 }
-                part.PolicyAnswers = policies.Select(x => new PolicyAnswer {
+
+                //Insert answers in a ViewBag so they can be used from other modules
+                var answers = policies.Select(x => new PolicyAnswer {
                     PolicyTextId = x.PolicyId,
-                    Accepted =x.PolicyAnswer
-                });
+                    Accepted = x.PolicyAnswer
+                }).ToList();
+                _controllerAccessor.Context.Controller.ViewBag.PolicyAnswers = answers;  
                 _controllerAccessor.Context.Controller.TempData["VolatileAnswers"] = String.Join(",", policies.Where(x => x.PolicyAnswer).Select(x => x.PolicyId.ToString()));
             }
             return ContentShape(shapeName,

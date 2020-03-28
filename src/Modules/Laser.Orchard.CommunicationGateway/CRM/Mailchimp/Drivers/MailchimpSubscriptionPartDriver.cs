@@ -36,14 +36,16 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
                 if (subscription.Audience == null || settings.AudienceId != subscription.Audience.Identifier) {
                     _service.Audience(settings.AudienceId);
                     selectableAudience = new SelectableAudience {
-                        Audience = new Audience { Identifier = settings.AudienceId, Name = "TODO: complete with audience call" },
-                        Selected = false
+                        Audience = new Audience { Identifier = settings.AudienceId, Name = _service.Audience(settings.AudienceId).Name },
+                        Selected = false,
+                        RequiredPolicies = settings.PolicyTextReferences
                     };
                 }
                 else {
                     selectableAudience = new SelectableAudience {
                         Audience = subscription.Audience,
-                        Selected = subscription.Subscribed
+                        Selected = subscription.Subscribed,
+                        RequiredPolicies = settings.PolicyTextReferences
                     };
                 }
                 if (updater != null) {

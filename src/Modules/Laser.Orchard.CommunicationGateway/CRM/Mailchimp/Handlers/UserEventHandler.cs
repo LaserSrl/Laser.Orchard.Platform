@@ -1,7 +1,7 @@
 ﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
 using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
 using Laser.Orchard.Policy.Models;
-using Laser.Orchard.UsersExtensions.Models;
+
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
@@ -91,7 +91,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                 // So I skip this step
                 if (part.Subscription.Audience == null || user.As<UserPart>().EmailStatus != UserStatus.Approved) return;
                 try {
-                    _service.CheckAcceptedPolicy(part, part.As<UserRegistrationPolicyPart>());
+                    _service.CheckAcceptedPolicy(part);
                 }
                 catch (MissingPoliciesException ex) {
                     _notifier.Add(NotifyType.Warning, T("User have not accepted all required policies. Subscription failed."));

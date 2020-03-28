@@ -7,7 +7,7 @@
                           || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
                           || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
 
-    <div>
+    <div id="user-registration-policy-@Model[i].PolicyId" data-answer-field="@Html.FieldIdFor(model => model[i].PolicyAnswer)">
         @Html.HiddenFor(m => m[i].PolicyId)
         @Html.HiddenFor(m => m[i].UserHaveToAccept)
         @Html.HiddenFor(m => m[i].Policy.Type)
