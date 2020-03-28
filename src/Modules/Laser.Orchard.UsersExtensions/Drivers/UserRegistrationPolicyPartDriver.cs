@@ -16,6 +16,7 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Security;
+using Orchard.UI.Admin;
 using Orchard.Users.Models;
 
 namespace Laser.Orchard.UsersExtensions.Drivers {
@@ -59,8 +60,8 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
             var templateName = "Parts/UserRegistrationPolicy_Edit";
             IList<UserPolicyAnswerWithContent> policies;
             if (part.As<PolicyPart>() != null && part.As<UserPart>() == null) {
-                //The content is not a User and has the PolicyPart. 
-                //Having UserRegistrationPolicyPart means that we want to force policy accaptance before Saving/Publishing the content.
+                // The content has the PolicyPart and is not a User. 
+                // Having UserRegistrationPolicyPart means that we want to display policy accaptance before Saving/Publishing the content.
                 policies = _usersExtensionsServices.BuildEditorForPolicies(policyPart);
 
             }
