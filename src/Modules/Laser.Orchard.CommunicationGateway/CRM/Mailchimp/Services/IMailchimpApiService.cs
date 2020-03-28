@@ -8,13 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Orchard.Security;
-using Laser.Orchard.Policy.Models;
-using Laser.Orchard.UsersExtensions.Models;
 
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
-    public interface IMailchimpService : IDependency {
-        string DecryptApiKey();
-        string CryptApiKey(string apikey);
-        void CheckAcceptedPolicy(MailchimpSubscriptionPart part, UserRegistrationPolicyPart userRegistrationPolicyPart);
+    public interface IMailchimpApiService : IDependency {
+        List<Audience> Audiences();
+        Audience Audience(string id);
+        bool TryUpdateSubscription(MailchimpSubscriptionPart part);
     }
 }

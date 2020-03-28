@@ -12,9 +12,9 @@ using Orchard.Environment.Extensions;
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartDriver : ContentPartDriver<MailchimpSubscriptionPart> {
-        private readonly IMailchimpService _service;
+        private readonly IMailchimpApiService _service;
 
-        public MailchimpSubscriptionPartDriver(IMailchimpService service) {
+        public MailchimpSubscriptionPartDriver(IMailchimpApiService service) {
             _service = service;
         }
         protected override string Prefix => "MailchimpSubscription";

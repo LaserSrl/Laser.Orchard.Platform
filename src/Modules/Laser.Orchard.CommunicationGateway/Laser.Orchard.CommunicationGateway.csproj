@@ -56,6 +56,9 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Laser.Orchard.UsersExtensions">
+      <HintPath>..\..\..\..\Orchard\src\Orchard.Web\Modules\Laser.Orchard.UsersExtensions\Bin\Laser.Orchard.UsersExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -137,11 +140,14 @@
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSiteSettingsHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscptionPartHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\UserEventHandler.cs" />
+    <Compile Include="CRM\Mailchimp\MissingPoliciesException.cs" />
     <Compile Include="CRM\Mailchimp\Migrations.cs" />
     <Compile Include="CRM\Mailchimp\Models\MailchimpSiteSettings.cs" />
     <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPartSettings.cs" />
     <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPart.cs" />
+    <Compile Include="CRM\Mailchimp\Services\IMailchimpApiService.cs" />
     <Compile Include="CRM\Mailchimp\Services\IMailchimpService.cs" />
+    <Compile Include="CRM\Mailchimp\Services\MailchimpApiService.cs" />
     <Compile Include="CRM\Mailchimp\SettingsHooks\MailchimpSubscriptionPartSettingsHooks.cs" />
     <Compile Include="CRM\Mailchimp\ViewModels\MailchimpSiteSettingsEdit.cs" />
     <Compile Include="CRM\Mailchimp\ViewModels\Subscription.cs" />
