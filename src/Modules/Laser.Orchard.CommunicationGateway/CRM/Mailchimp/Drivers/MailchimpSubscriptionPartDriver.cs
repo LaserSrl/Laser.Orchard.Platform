@@ -37,7 +37,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
                     _service.Audience(settings.AudienceId);
                     selectableAudience = new SelectableAudience {
                         Audience = new Audience { Identifier = settings.AudienceId, Name = _service.Audience(settings.AudienceId).Name },
-                        Selected = false,
+                        Selected = true, /* Subscription are marketing goals, so selected is true by default :) */
                         RequiredPolicies = settings.PolicyTextReferences
                     };
                 }

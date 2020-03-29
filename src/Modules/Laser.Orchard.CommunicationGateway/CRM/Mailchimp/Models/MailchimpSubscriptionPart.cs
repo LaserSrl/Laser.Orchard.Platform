@@ -23,7 +23,13 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Models {
 
         private Subscription DeserializeSubscription(string Subscription) {
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-            return serializer.Deserialize<Subscription>(Subscription ?? "{}");
+            if (Subscription != null) {
+                return serializer.Deserialize<Subscription>(Subscription);
+            }
+            else {
+                return new Subscription();
+            } 
+                
         }
 
         private string SerializeSubscription(Subscription Subscription) {
