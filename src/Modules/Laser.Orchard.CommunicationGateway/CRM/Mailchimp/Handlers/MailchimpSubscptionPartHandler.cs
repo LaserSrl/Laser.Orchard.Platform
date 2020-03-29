@@ -13,6 +13,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Security;
+using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
@@ -52,6 +53,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
 
 
             OnUpdating<MailchimpSubscriptionPart>((context, part) => {
+                if (part.Subscription == null) _subscrptionId = "(undefined)";
                 _subscrptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
             });
 
@@ -100,7 +102,19 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
             // check if subscriptions have changed during the publish process:
             // if changed it fires an update over Mailchimp servers
             if (_subscrptionId != (part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)")) {
-                return _apiService.TryUpdateSubscription(part);
+                var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
+                if (!_apiService.TryUpdateSubscription(part)) {
+                    if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
+                        _notifier.Error(T("Oops! We are currently experienced a problem during your email subscription. Please, retry later."));
+                    }
+                    return false;
+                }
+                else {
+                    if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
+                        _notifier.Information(T("Nice to meet you! Your subscription has been accepted."));
+                    }
+                    return true;
+                }
             }
             else {
                 return false;

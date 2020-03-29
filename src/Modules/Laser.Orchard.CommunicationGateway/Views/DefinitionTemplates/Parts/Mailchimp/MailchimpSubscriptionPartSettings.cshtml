@@ -10,6 +10,11 @@
 }
 <fieldset>
     <div>
+        <h4>@T("Notifier front-end verbosity")</h4>
+        @Html.CheckBoxFor(m => m.NotifySubscriptionResult)
+        @Html.LabelFor(m => m.NotifySubscriptionResult, T("Notify subscription result").Text, new { @class = "forcheckbox" })
+    </div>
+    <div>
         @Html.LabelFor(m => m.AudienceId, T("Audiences ids"))
         @Html.TextBoxFor(m => m.AudienceId, new { @class = "text large" })
     </div>

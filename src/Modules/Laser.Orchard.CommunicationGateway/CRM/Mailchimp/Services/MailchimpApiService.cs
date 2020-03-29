@@ -15,6 +15,7 @@ using Orchard.Tokens;
 using System.Web.Script.Serialization;
 using System.Linq;
 using Laser.Orchard.Policy.Services;
+using Orchard.Logging;
 
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
@@ -34,7 +35,10 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
             _encryptionService = encryptionService;
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
+            Logger = NullLogger.Instance;
         }
+
+        public ILogger Logger { get; set; }
 
         public Audience Audience(string id) {
             Audience audience = new Audience();
@@ -84,6 +88,15 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
                 }
                 if (!response.IsSuccessStatusCode) {
                     syncronized = false;
+                    string errorMessage = "Mailchimp: Error while syncronyzing member.\r\n" +
+                                            "Error while {0} {1} to Mailchimp.\r\n" +
+                                            "Payload:\r\n{2}\r\n\r\n" +
+                                            "Mailchimp Response:\r\n{3}\r\n";
+                    
+                    Logger.Error(errorMessage, sub.Subscribed ? "Subscribing" : "Unsubscribing",
+                                                memberEmail,
+                                                putPayload,
+                                                response.ReasonPhrase + "\r\n" + response.Content.ReadAsStringAsync().Result);
                 }
                 else {
                     syncronized = true;

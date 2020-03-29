@@ -14,5 +14,6 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Models {
         public string MemberEmail { get; set; }
         public string AudienceId { get; set; }
         public string[] PolicyTextReferences { get; set; }
+        public bool NotifySubscriptionResult { get; set; }
     }
 }

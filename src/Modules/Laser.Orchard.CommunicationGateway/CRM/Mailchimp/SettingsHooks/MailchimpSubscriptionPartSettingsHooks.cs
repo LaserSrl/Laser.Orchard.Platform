@@ -44,6 +44,9 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.SettingsHooks {
             model.MemberEmail);
             builder.WithSetting("MailchimpSubscriptionPartSettings.PolicyTextReferences",
             string.Join(",",model.PolicyTextReferences));
+            builder.WithSetting("MailchimpSubscriptionPartSettings.NotifySubscriptionResult",
+            model.NotifySubscriptionResult.ToString());
+
 
             yield return DefinitionTemplate(model, TEMPLATE_NAME, PREFIX);
         }
