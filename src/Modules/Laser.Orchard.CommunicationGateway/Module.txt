@@ -14,4 +14,4 @@ Features:
 		Name: Mailchimp
 		Description: Integrates Mailchimp
 		Category: Marketing
-		Dependencies: Orchard.Resources, Orchard.Tokens, Orchard.Users, Laser.Orchard.Policy
+		Dependencies: Orchard.Resources, Orchard.Tokens, Orchard.Users, Laser.Orchard.Policy, Laser.Orchard.UsersExtensions
