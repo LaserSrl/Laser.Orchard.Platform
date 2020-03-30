@@ -94,7 +94,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         // even if there is html code
         private string FillString(string value, Dictionary<string, object> tokens) {
             if (!string.IsNullOrEmpty(value)) {
-                return HttpUtility.HtmlDecode(_tokenizer.Replace(value, tokens));
+                // if a field like the bodypart with a lot of text is added, 
+                // it is better to cut the string in order not to give problems to the page
+                // the maximum length of the field is 255 characters, for the moment it's okay
+                var maxLenght = 255;
+                var str = HttpUtility.HtmlDecode(_tokenizer.Replace(value, tokens));
+                if (str.Length <= maxLenght) {
+                    return str;
+                }
+                else {
+                    return str.Substring(0, maxLenght);
+                }
             }
             return string.Empty;
         }
