@@ -135,7 +135,7 @@
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSiteSettingsDriver.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSubscriptionPartDriver.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSiteSettingsHandler.cs" />
-    <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscptionPartHandler.cs" />
+    <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscriptionPartHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\UserEventHandler.cs" />
     <Compile Include="CRM\Mailchimp\MissingPoliciesException.cs" />
     <Compile Include="CRM\Mailchimp\Migrations.cs" />

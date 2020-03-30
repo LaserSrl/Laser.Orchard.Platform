@@ -1,43 +1,35 @@
 ﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp;
 using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
 using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
-using Laser.Orchard.Policy.Models;
-using Laser.Orchard.Policy.Services;
 
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.Core.Settings.Metadata;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
-using Orchard.Security;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
-using Orchard.Users.Events;
 using Orchard.Users.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
-    public class MailchimpSubscptionPartHandler : ContentHandler {
+    public class MailchimpSubscriptionPartHandler : ContentHandler {
         private IMailchimpApiService _apiService;
         private readonly IMailchimpService _service;
         private readonly IWorkContextAccessor _workContext;
         private readonly ITransactionManager _transaction;
         private readonly INotifier _notifier;
-        private string _subscrptionId;
+        private string _subscriptionId;
         private bool _serverUpdated = false;
         private bool _modelIsValid = true;
 
         public Localizer T { get; set; }
 
 
-        public MailchimpSubscptionPartHandler(
+        public MailchimpSubscriptionPartHandler(
             IMailchimpApiService apiService,
             IMailchimpService service,
             IContentManager contentManager,
@@ -50,14 +42,14 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
             _transaction = transaction;
             _notifier = notifier;
             T = NullLocalizer.Instance;
-            _subscrptionId = "(undefined)";
+            _subscriptionId = "(undefined)";
 
             OnUpdating<MailchimpSubscriptionPart>((context, part) => {
                 if (part.Subscription == null || part.Subscription.Audience == null) {
-                    _subscrptionId = "(undefined)";
+                    _subscriptionId = "(undefined)";
                 }
                 else {
-                    _subscrptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
+                    _subscriptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
                 }
             });
 
@@ -80,11 +72,11 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
                     _service.CheckAcceptedPolicy(context.ContentItem.As<MailchimpSubscriptionPart>());
                 }
                 catch (MissingPoliciesException ex) {
-                    context.Updater.AddModelError("MissingPolicies", T("You have to accepted all required policies in order to subscribe to the newsletter."));
+                    context.Updater.AddModelError("MissingPolicies", T("You have to accept all required policies in order to subscribe to the newsletter."));
                     _modelIsValid = false;
                 }
                 catch (Exception ex) {
-                    context.Updater.AddModelError("GenericPolicies", T("You have to accepted all required policies in order to subscribe to the newsletter."));
+                    context.Updater.AddModelError("GenericPolicies", T("You have to accept all required policies in order to subscribe to the newsletter."));
                     context.Logger.Log(LogLevel.Error, ex, "CheckAcceptedPolicy throws an error.", null);
                     _modelIsValid = false;
                 }
@@ -105,11 +97,11 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
             }
             // check if subscriptions have changed during the publish process:
             // if changed it fires an update over Mailchimp servers
-            if (_subscrptionId != (part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)")) {
+            if (_subscriptionId != (part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)")) {
                 var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
                 if (!_apiService.TryUpdateSubscription(part)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
-                        _notifier.Error(T("Oops! We are currently experienced a problem during your email subscription. Please, retry later."));
+                        _notifier.Error(T("Oops! We have experienced a problem during your email subscription. Please, retry later."));
                     }
                     return false;
                 }

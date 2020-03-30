@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Orchard.Environment.Extensions;
+using Orchard.Users.Models;
 
 namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
@@ -37,7 +38,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
                     var audience = _service.Audience(settings.AudienceId);
                     selectableAudience = new SelectableAudience {
                         Audience = new Audience { Identifier = settings.AudienceId, Name = audience.Name },
-                        Selected = true, /* Subscription are marketing goals, so selected is true by default :) */
+                        Selected = !part.Is<UserPart>(),
                         RequiredPolicies = settings.PolicyTextReferences
                     };
                 }

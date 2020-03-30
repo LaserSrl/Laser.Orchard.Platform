@@ -13,9 +13,9 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp {
         public int Create() {
             ContentDefinitionManager
                 .AlterPartDefinition("MailchimpSubscriptionPart", part => 
-                part.Attachable(true)
+                    part.Attachable(true)
                 .WithDescription("Adds the ability to subscribe to one Mailchimp audience."));
-                return 1;
+            return 1;
         }
     }
 }

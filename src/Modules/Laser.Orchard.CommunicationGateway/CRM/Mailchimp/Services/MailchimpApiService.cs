@@ -27,14 +27,21 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
         private readonly IPolicyServices _policyServices;
         private readonly IMailchimpService _mailchimpService;
 
-        public MailchimpApiService(ShellSettings shellSettings, IOrchardServices orchardServices, IEncryptionService encryptionService, ITokenizer tokenizer,
-        IPolicyServices policyServices, IMailchimpService mailchimpService) {
+        public MailchimpApiService(
+            ShellSettings shellSettings, 
+            IOrchardServices orchardServices, 
+            IEncryptionService encryptionService, 
+            ITokenizer tokenizer,
+            IPolicyServices policyServices, 
+            IMailchimpService mailchimpService) {
+
             _tokenizer = tokenizer;
             _shellSettings = shellSettings;
             _orchardServices = orchardServices;
             _encryptionService = encryptionService;
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
+
             Logger = NullLogger.Instance;
         }
 

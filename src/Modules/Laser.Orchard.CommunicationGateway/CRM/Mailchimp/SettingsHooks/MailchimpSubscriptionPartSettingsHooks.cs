@@ -37,15 +37,15 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.SettingsHooks {
             var model = new MailchimpSubscriptionPartSettings();
             updateModel.TryUpdateModel(model, PREFIX, null, null);
             builder.WithSetting("MailchimpSubscriptionPartSettings.AudienceId",
-            model.AudienceId);
+                model.AudienceId);
             builder.WithSetting("MailchimpSubscriptionPartSettings.PutPayload",
-            model.PutPayload);
+                model.PutPayload);
             builder.WithSetting("MailchimpSubscriptionPartSettings.MemberEmail",
-            model.MemberEmail);
+                model.MemberEmail);
             builder.WithSetting("MailchimpSubscriptionPartSettings.PolicyTextReferences",
-            string.Join(",",model.PolicyTextReferences));
+                string.Join(",", model.PolicyTextReferences ?? new string[] { }));
             builder.WithSetting("MailchimpSubscriptionPartSettings.NotifySubscriptionResult",
-            model.NotifySubscriptionResult.ToString());
+                model.NotifySubscriptionResult.ToString());
 
 
             yield return DefinitionTemplate(model, TEMPLATE_NAME, PREFIX);
