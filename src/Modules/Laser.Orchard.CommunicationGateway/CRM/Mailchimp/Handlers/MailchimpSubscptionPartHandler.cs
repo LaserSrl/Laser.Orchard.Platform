@@ -53,8 +53,12 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
             _subscrptionId = "(undefined)";
 
             OnUpdating<MailchimpSubscriptionPart>((context, part) => {
-                if (part.Subscription == null || part.Subscription.Audience == null) _subscrptionId = "(undefined)";
-                _subscrptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
+                if (part.Subscription == null || part.Subscription.Audience == null) {
+                    _subscrptionId = "(undefined)";
+                }
+                else {
+                    _subscrptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
+                }
             });
 
             OnUpdated<MailchimpSubscriptionPart>((context, part) => {
