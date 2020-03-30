@@ -76,7 +76,7 @@ namespace Laser.Orchard.StartupConfig {
                 .WithPart("WidgetPart")
                 .WithSetting("Stereotype", "Widget")
             );
-            ContentDefinitionManager.AlterPartDefinition("EnsureAsFontEndInvisiblePart",
+            ContentDefinitionManager.AlterPartDefinition("EnsureAsFrontEndInvisiblePart",
                 p => p.Attachable(true));
 
             return 10;
@@ -166,7 +166,7 @@ namespace Laser.Orchard.StartupConfig {
             return 9;
         }
         public int UpdateFrom9() {
-            ContentDefinitionManager.AlterPartDefinition("EnsureAsFontEndInvisiblePart",
+            ContentDefinitionManager.AlterPartDefinition("EnsureAsFrontEndInvisiblePart",
                                                     p => p.Attachable(true));
             return 10;
         }

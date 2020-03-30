@@ -7,8 +7,8 @@ using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Drivers {
     /// <summary>
-    /// Do not remove. if missing the EnsureAsFontEndInvisiblePart is threated as a ContentPart and it can't be used as a visibility discriminant
+    /// Do not remove. if missing the EnsureAsFrontEndInvisiblePart is threated as a ContentPart and it can't be used as a visibility discriminant
     /// </summary>
-    public class EnsureAsFontEndInvisiblePartDriver :ContentPartDriver<EnsureAsFontEndInvisiblePart>{
+    public class EnsureAsFrontEndInvisiblePartDriver :ContentPartDriver<EnsureAsFrontEndInvisiblePart>{
     }
 }

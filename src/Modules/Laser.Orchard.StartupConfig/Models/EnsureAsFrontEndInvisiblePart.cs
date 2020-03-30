@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Models {
-    public class EnsureAsFontEndInvisiblePart : ContentPart {
+    public class EnsureAsFrontEndInvisiblePart : ContentPart {
 
     }
 }
