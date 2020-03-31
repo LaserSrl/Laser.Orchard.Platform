@@ -234,7 +234,8 @@ namespace Laser.Orchard.Policy.Services {
                     PolicyForUserUpdate(item, loggedUser);
                 }
             }
-            //Dopo aver salvatao gli eventuali record, aggiorno anche il campo AnswerDate per il cookie. Devo farlo assolutamente dopo il salvataggio in quanto è l'unico modo per stabilire se si tratta di prima risposta o meno.
+            //Dopo aver salvatao gli eventuali record, aggiorno anche il campo AnswerDate per il cookie. 
+            //Devo farlo assolutamente dopo il salvataggio in quanto è l'unico modo per stabilire se si tratta di prima risposta o meno.
             CreateAndAttachPolicyCookie(viewModelCollection, true);
         }
 
