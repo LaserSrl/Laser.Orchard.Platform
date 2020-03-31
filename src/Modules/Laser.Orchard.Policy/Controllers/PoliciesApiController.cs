@@ -33,7 +33,7 @@ namespace Laser.Orchard.Policy.Controllers {
 
         // GET api/policiesapi
         public PoliciesApiModel Get(string lang) {
-            PoliciesForUserViewModel model = _policySerivces.GetPoliciesForUserOrSession(false, lang);
+            PoliciesForUserViewModel model = _policySerivces.GetPoliciesForCurrentUser(false, lang);
 
             return new PoliciesApiModel {
                 Language = lang,

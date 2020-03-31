@@ -9,7 +9,13 @@ namespace Laser.Orchard.Policy.ViewModels {
         public string Language { get; set; }
         public SimplePoliciesForUserViewModel PoliciesForUser { get; set; }
     }
-    
+
+    public class PolicyAnswer {
+        public int PolicyTextId { get; set; }
+        public bool Accepted { get; set; }
+    }
+
+
     public class PoliciesForUserViewModel {
         public PoliciesForUserViewModel() {
             Policies = new List<PolicyForUserViewModel>();
