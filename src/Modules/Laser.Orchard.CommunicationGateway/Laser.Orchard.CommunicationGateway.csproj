@@ -132,8 +132,10 @@
     <Compile Include="Controllers\AdvertisingExternalController.cs" />
     <Compile Include="Controllers\ContactsAdminController.cs" />
     <Compile Include="Controllers\DeliveryReportController.cs" />
+    <Compile Include="CRM\Mailchimp\Activities\PushDataActivity.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSiteSettingsDriver.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSubscriptionPartDriver.cs" />
+    <Compile Include="CRM\Mailchimp\Forms\PushDataForm.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSiteSettingsHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscptionPartHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\UserEventHandler.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="CRM\Mailchimp\Models\MailchimpSiteSettings.cs" />
     <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPartSettings.cs" />
     <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPart.cs" />
+    <Compile Include="CRM\Mailchimp\Services\ApiEnums.cs" />
     <Compile Include="CRM\Mailchimp\Services\IMailchimpApiService.cs" />
     <Compile Include="CRM\Mailchimp\Services\IMailchimpService.cs" />
     <Compile Include="CRM\Mailchimp\Services\MailchimpApiService.cs" />
@@ -261,6 +264,7 @@
     <Content Include="Views\EditorTemplates\Parts\Mailchimp\MailchimpSiteSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Mailchimp\MailchimpSubscription_Edit.cshtml" />
     <Content Include="Views\DefinitionTemplates\Parts\Mailchimp\MailchimpSubscriptionPartSettings.cshtml" />
+    <Content Include="Views\PushDataEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
@@ -282,6 +286,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Fields\Orchard.Fields.csproj">
       <Project>{3787dde5-e5c8-4841-bda7-dcb325388064}</Project>
       <Name>Orchard.Fields</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
+      <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
+      <Name>Orchard.Forms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Layouts\Orchard.Layouts.csproj">
       <Project>{6bd8b2fa-f2e3-4ac8-a4c3-2925a653889a}</Project>
@@ -326,6 +334,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
+      <Project>{7059493C-8251-4764-9C1E-2368B8B485BC}</Project>
+      <Name>Orchard.Workflows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
