@@ -52,12 +52,13 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
             return Editor(part, null, shapeHelper);
         }
 
+        private const string _shapeName = "Parts_UserRegistrationPolicy_Edit";
+        private const string _templateName = "Parts/UserRegistrationPolicy_Edit";
         //POST
         protected override DriverResult Editor(UserRegistrationPolicyPart part, IUpdateModel updater, dynamic shapeHelper) {
             var policyPart = part.As<PolicyPart>();
             var settings = _orchardServices.WorkContext.CurrentSite.As<UserRegistrationSettingsPart>();
-            var shapeName = "Parts_UserRegistrationPolicy_Edit";
-            var templateName = "Parts/UserRegistrationPolicy_Edit";
+
             IList<UserPolicyAnswerWithContent> policies;
             if (part.As<PolicyPart>() != null && part.As<UserPart>() == null) {
                 // The content has the PolicyPart and is not a User. 
@@ -86,8 +87,8 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
                 _controllerAccessor.Context.Controller.ViewBag.PolicyAnswers = answers;  
                 _controllerAccessor.Context.Controller.TempData["VolatileAnswers"] = String.Join(",", policies.Where(x => x.PolicyAnswer).Select(x => x.PolicyId.ToString()));
             }
-            return ContentShape(shapeName,
-                                () => shapeHelper.EditorTemplate(TemplateName: templateName,
+            return ContentShape(_shapeName,
+                                () => shapeHelper.EditorTemplate(TemplateName: _templateName,
                                     Model: policies,
                                     Prefix: Prefix));
         }

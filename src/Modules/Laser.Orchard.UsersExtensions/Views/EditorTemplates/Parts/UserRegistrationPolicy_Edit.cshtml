@@ -15,9 +15,21 @@
         @Html.HiddenFor(m => m[i].Policy.Body)
         <h3>@Model[i].Policy.Title</h3>
         <div>@Html.Raw(Model[i].Policy.Body)</div>
-        @if (Model[i].Policy.Type == null || acceptTypePolicy) {// Privacy
-            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { @class = "select-"+ Model[i].PolicyId + "-Accept" }) @T("Accept")</label>
-            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { @class = "select-" + Model[i].PolicyId + "_NoAccept" }) @T("Don't Accept")</label>
+        @if (acceptTypePolicy) {// Privacy
+            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">
+                @Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new {
+                   @class = "select-"+ Model[i].PolicyId + "-Accept",
+                   @id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"
+               }) 
+                @T("Accept")
+            </label>
+            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">
+                @Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new {
+                   @class = "select-" + Model[i].PolicyId + "_NoAccept",
+                   @id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"
+               }) 
+                @T("Don't Accept")
+            </label>
         }
         else { // Regolamento
             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.CheckBoxFor(model => model[i].PolicyAnswer, new { @class = "select-" + Model[i].PolicyId + "-Accept" }) @T("I have read the regulation.")</label>

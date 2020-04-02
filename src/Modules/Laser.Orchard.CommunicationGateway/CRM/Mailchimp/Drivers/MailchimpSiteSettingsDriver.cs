@@ -1,16 +1,12 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSiteSettingsDriver : ContentPartDriver<MailchimpSiteSettings> {
         private const string TemplateName = "Parts/Mailchimp/MailchimpSiteSettings";

@@ -1,25 +1,23 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
+using Laser.Orchard.Policy.Services;
 using Newtonsoft.Json.Linq;
 using Orchard;
-using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
+using Orchard.Logging;
 using Orchard.Security;
+using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using Orchard.Environment.Extensions;
-using Orchard.Tokens;
-using System.Web.Script.Serialization;
-using System.Linq;
-using Laser.Orchard.Policy.Services;
-using Orchard.Logging;
 using System.Web.Mvc;
-using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+using System.Web.Script.Serialization;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpApiService : IMailchimpApiService {
         private readonly ITokenizer _tokenizer;
@@ -29,14 +27,21 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
         private readonly IPolicyServices _policyServices;
         private readonly IMailchimpService _mailchimpService;
 
-        public MailchimpApiService(ShellSettings shellSettings, IOrchardServices orchardServices, IEncryptionService encryptionService, ITokenizer tokenizer,
-        IPolicyServices policyServices, IMailchimpService mailchimpService) {
+        public MailchimpApiService(
+            ShellSettings shellSettings,
+            IOrchardServices orchardServices,
+            IEncryptionService encryptionService,
+            ITokenizer tokenizer,
+            IPolicyServices policyServices,
+            IMailchimpService mailchimpService) {
+
             _tokenizer = tokenizer;
             _shellSettings = shellSettings;
             _orchardServices = orchardServices;
             _encryptionService = encryptionService;
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
+
             Logger = NullLogger.Instance;
         }
 
@@ -46,20 +51,20 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
             Audience audience = new Audience();
             HttpResponseMessage response = new HttpResponseMessage();
             var urlTokens = new Dictionary<string, string> {
-                { "list-id", id}
+                { "{list-id}", id}
             };
-
-            if (TryApiCall(HttpVerbs.Get, RequestTypes.List, urlTokens, null, response)) {
-                audience = ToAudience(response.Content.ReadAsAsync<dynamic>().Result);
+            string result = "";
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.List, urlTokens), null, ref result)) {
+                audience = ToAudience(JObject.Parse(result));
             }
             return audience;
         }
 
         public List<Audience> Audiences() {
             List<Audience> audiences = new List<Audience>();
-            HttpResponseMessage response = new HttpResponseMessage();
-            if (TryApiCall(HttpVerbs.Get, RequestTypes.Lists, null, null, response)) {
-                audiences = ToAudiences(response.Content.ReadAsAsync<dynamic>().Result);
+            string result = "";
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Lists, null), null, ref result)) {
+                audiences = ToAudiences(JObject.Parse(result));
             }
             return audiences;
         }
@@ -74,32 +79,29 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
 
             var syncronized = false;
             var urlTokens = new Dictionary<string, string> {
-                { "list-id",sub.Audience.Identifier},
-                { "member-id",CalculateMD5Hash(memberEmail) }
+                { "{list-id}",sub.Audience.Identifier},
+                { "{member-id}",CalculateMD5Hash(memberEmail) }
             };
-            HttpResponseMessage response = new HttpResponseMessage();
+            string  result = "";
             if (sub.Subscribed) {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                object body = serializer.Deserialize<dynamic>(putPayload ?? "{}");
-                syncronized = TryApiCall(HttpVerbs.Put, RequestTypes.Member, urlTokens, body, response);
+                JObject body = JObject.Parse(putPayload ?? "{}");
+                syncronized = TryApiCall(HttpVerbs.Put, CalculateUrlByType(RequestTypes.Member, urlTokens), body, ref result);
             }
             else {
-                syncronized = TryApiCall(HttpVerbs.Delete, RequestTypes.Member, urlTokens, null, response);
+                syncronized = TryApiCall(HttpVerbs.Delete, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ref result);
             }
 
             return syncronized;
         }
 
 
-        public bool TryApiCall(HttpVerbs httpVerb, RequestTypes urlType, IDictionary<string, string> urlTokens, object bodyRequest, HttpResponseMessage response) {
-            var requestUrl = GetBaseUrl() + RequestTypeUrls().Where(x => x.Key == urlType);
-            foreach (var token in urlTokens) {
-                requestUrl = requestUrl.Replace(token.Key, token.Value);
-            }
-
+        public bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, ref string result) {
+            var requestUrl = GetBaseUrl() + url;
             var syncronized = false;
             using (var httpClient = new HttpClient()) {
                 SetHeader(httpClient);
+                HttpResponseMessage response;
                 if (httpVerb == HttpVerbs.Put) {
                     response = httpClient.PutAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
                 }
@@ -115,6 +117,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
                 else {
                     throw new Exception("Http verb not supported.");
                 }
+                result = response.Content.ReadAsStringAsync().Result;
                 if (!response.IsSuccessStatusCode) {
                     syncronized = false;
                     string errorMessage = "Mailchimp: Error while pushing data to mailchimp.\r\n" +
@@ -126,7 +129,7 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
                     Logger.Error(errorMessage, httpVerb,
                                                 requestUrl,
                                                 bodyRequest,
-                                                response.ReasonPhrase + "\r\n" + response.Content.ReadAsStringAsync().Result);
+                                                response.ReasonPhrase + "\r\n" + result);
                 }
                 else {
                     syncronized = true;
@@ -137,15 +140,32 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
 
         }
 
-        public Dictionary<RequestTypes, string> RequestTypeUrls() {
-            return new Dictionary<RequestTypes, string> {
-                { RequestTypes.Member,"lists/{list-id}/members/{memerber-id}"},
-                { RequestTypes.Lists, "lists/" },
-                { RequestTypes.List, "lists/{list-id}" }
+        public List<RequestTypeInfo> GetRequestTypes() {
+            return new List<RequestTypeInfo> {
+                new RequestTypeInfo {
+                    Type = RequestTypes.Member,
+                    UrlTemplate = "lists/{list-id}/members/{member-id}",
+                    PayloadTemplate = "\"email_address\": \"hermes.sbicego@laser1.com\", "+
+                                        "\"status\": \"subscribed\","+
+                                        "\"merge_fields\": {\"FNAME\": \"Hermes\","+
+                                        "\"LNAME\": \"Sbicego2\"," +
+                                        "\"ADDRESS\": \"Via Roma, 12\"," +
+                                        "\"PHONE\": \"2222\"," +
+                                        "\"BIRTHDAY\": \"03/22\"" +
+                                    "}," +
+                                    "\"language\":\"it\"," +
+                                    "\"vip\": true"
+                },
+                new RequestTypeInfo {
+                    Type = RequestTypes.Lists,
+                    UrlTemplate ="lists/" },
+                new RequestTypeInfo {
+                    Type = RequestTypes.List,
+                    UrlTemplate = "lists/{list-id}" }
                 };
         }
 
-        private string GetBaseUrl() {
+        public string GetBaseUrl() {
             var apiKey = _mailchimpService.DecryptApiKey();
             return string.Format("https://{0}.api.mailchimp.com/3.0/", apiKey.Substring(apiKey.LastIndexOf("-") + 1));
         }
@@ -156,28 +176,17 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
             return Convert.ToBase64String(textBytes);
         }
 
-        //private string GetMemberUrl(string listId, string memberEmail) {
-        //    return GetListsUrl() + listId + "/members/" + CalculateMD5Hash(memberEmail) + "/";
-        //}
-
-        //private string GetListUrl(string listId) {
-        //    return GetBaseUrl() + "lists/" + listId + "/";
-        //}
-        //private string GetListsUrl() {
-        //    return GetBaseUrl() + "lists/";
-        //}
-
-        private List<Audience> ToAudiences(object response) {
-            var json = (JObject)response;
+        private List<Audience> ToAudiences(JObject response) {
+            var json = response;
             var audiences = new List<Audience>();
             var list = json["lists"];
-            foreach (var item in list) {
+            foreach (JObject item in list) {
                 audiences.Add(ToAudience(item));
             }
             return audiences;
         }
-        private Audience ToAudience(object jobject) {
-            var json = (JObject)jobject;
+        private Audience ToAudience(JObject jobject) {
+            var json = jobject;
             return new Audience {
                 Identifier = json["id"].Value<string>(),
                 Name = json["name"].Value<string>()
@@ -201,5 +210,18 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
             client.DefaultRequestHeaders.Add("Authorization", "Basic " + GetBase64AuthenticationToken());
         }
 
+        private string CalculateUrlByType(RequestTypes urlType, Dictionary<string, string> urlTokens) {
+            var requestUrl = "";
+            try {
+                requestUrl += GetRequestTypes().First(x => x.Type == urlType).UrlTemplate;
+            }
+            catch {
+                throw new Exception("Request Type missing.");
+            }
+            foreach (var token in urlTokens) {
+                requestUrl = requestUrl.Replace(token.Key, token.Value);
+            }
+            return requestUrl;
+        }
     }
 }

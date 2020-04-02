@@ -64,12 +64,12 @@ namespace Laser.Orchard.Policy {
 
             ContentDefinitionManager.AlterPartDefinition("UserPolicyPart", part => part
             .Attachable(true)
-            .WithDescription("Resume the choices of the policies for the content."));
+            .WithDescription("Summarizes the choices of the policies for a content and ties policy functionalities around a user."));
 
             ContentDefinitionManager.AlterTypeDefinition("User", content => content
                 .WithPart("UserPolicyPart"));
 
-            return 7;
+            return 8;
         }
 
         public int UpdateFrom1() {
@@ -127,6 +127,14 @@ namespace Laser.Orchard.Policy {
 
 
             return 7;
+        }
+
+        public int UpdateFrom7() {
+
+            ContentDefinitionManager.AlterPartDefinition("UserPolicyPart", part => part
+                .WithDescription("Summarizes the choices of the policies for a content and ties policy functionalities around a user."));
+
+            return 8;
         }
     }
 }

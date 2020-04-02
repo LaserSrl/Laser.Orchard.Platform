@@ -1,22 +1,23 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
+using Newtonsoft.Json.Linq;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Activities {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
-    public class PushDataActivity : Event {
+    public class APICallActivity : Task {
         private readonly IMailchimpService _service;
         private readonly IMailchimpApiService _apiservice;
 
         public Localizer T { get; set; }
 
-        public PushDataActivity(IMailchimpService service, IMailchimpApiService apiService) {
+        public APICallActivity(IMailchimpService service, IMailchimpApiService apiService) {
             _service = service;
             _apiservice = apiService;
             T = NullLocalizer.Instance;
@@ -25,12 +26,22 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Activities {
             get { return T("Mailchimp"); }
         }
         public override LocalizedString Description {
-            get { return T("Push Data to Mailchimp CRM"); }
+            get { return T("Calls Mailchimp API"); }
         }
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
             LocalizedString messageout = null;
-            //_apiservice.TryApiCall();
-            var done = true;
+            string result = "";
+            HttpVerbs verb = HttpVerbs.Get;
+            var model = new APICallEdit {
+                Url = activityContext.GetState<string>("Url"),
+                RequestType = activityContext.GetState<string>("RequestType"),
+                HttpVerb = activityContext.GetState<string>("HttpVerb"),
+                Payload = activityContext.GetState<string>("Payload").ToString(),
+                RequiredPolicies = activityContext.GetState<string>("RequiredPolicies")
+            };
+            Enum.TryParse<HttpVerbs>(model.HttpVerb.ToString(), true, out verb);
+            JObject payload = JObject.Parse("{" + model.Payload + "}");
+            var done = _apiservice.TryApiCall(verb, model.Url, payload, ref result);
             if (done) {
                 messageout = T("Succeeded");
             }
@@ -43,14 +54,10 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Activities {
             return new[] { T("Succeeded"), T("Failed") };
         }
         public override string Name {
-            get { return "PushData"; }
+            get { return "MailchimpApiCall"; }
         }
 
-        public override bool CanStartWorkflow {
-            get { return false; }
-        }
-
-        public override string Form => "PushDataForm";
+        public override string Form => "MailchimpAPICallForm";
 
     }
 }
