@@ -155,14 +155,31 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         public string GetNoScript() {
-            var snippet = new StringBuilder();
+            //Determine if we're on an admin page
+            bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
-            snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
-            snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
-            snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
-            snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
+            //Get our part data/record if available for rendering scripts
+            if (SettingsPart == null
+                || string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
+                || (!SettingsPart.TrackOnAdmin && isAdmin)
+                || (!SettingsPart.TrackOnFrontEnd && !isAdmin)) {
+                return string.Empty; // Not a valid configuration, ignore
+            }
 
-            return snippet.ToString();
+            // Tag manager deployment
+            if (SettingsPart.UseTagManager) {
+
+                var snippet = new StringBuilder();
+
+                snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
+                snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
+                snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
+                snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
+
+                return snippet.ToString();
+            }
+
+            return string.Empty;
         }
     }
 }
