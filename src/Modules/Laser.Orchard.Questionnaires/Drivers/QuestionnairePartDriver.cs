@@ -117,11 +117,10 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                 if (viewModel.UseRecaptcha) { // se è previsto un recaptcha creo l'html e il js del recaptcha
                     viewModel.CaptchaHtmlWidget = _capthcaServices.GenerateCaptcha();
                 }
-                
                 return ContentShape("Parts_Questionnaire_FrontEnd_Edit",
-                                 () => shapeHelper.Parts_Questionnaire_FrontEnd_Edit(
-                                     Questionnaire: viewModel,
-                                     Prefix: Prefix));
+                 () => shapeHelper.EditorTemplate(TemplateName: "Parts/Questionnaire_FrontEnd_Edit",
+                     Model: viewModel,
+                     Prefix: Prefix));
             } else {
                 throw new OrchardSecurityException(T("You have to be logged in, before answering a questionnaire!"));
             }
