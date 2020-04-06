@@ -28,5 +28,9 @@ namespace Laser.Orchard.ContentExtension.ViewModels {
         public string AdminMenuPosition { get; set; }
         public string Icon { get; set; }
         public string Shape { get; set; }
+        public bool ReturnsHqlResults { get; set; }
+        public string TypeForFilterForm { get; set; }
+        public string ShapeForResults { get; set; }
+
     }
 }

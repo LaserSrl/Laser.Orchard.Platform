@@ -54,6 +54,7 @@ namespace Laser.Orchard.ContentExtension {
                    .Column<bool>("OnAdminMenu", col => col.WithDefault(true))
                    .Column<string>("Icon")
                    .Column<string>("Shape")
+                   .Column<string>("ShapeForResults")
                    .Column<int>("Items")
                    .Column<int>("ItemsPerPage")
                    .Column<int>("Skip")
@@ -62,6 +63,8 @@ namespace Laser.Orchard.ContentExtension {
                    .Column<int>("MaxItems")
                    .Column<int>("QueryPartRecord_id")
                    .Column<int>("LayoutRecord_Id")
+                   .Column<bool>("ReturnsHqlResults")
+                   .Column<string>("TypeForFilterForm")
                 );
             ContentDefinitionManager.AlterPartDefinition("DynamicProjectionPart", builder => builder
                   .Attachable()
@@ -75,7 +78,20 @@ namespace Laser.Orchard.ContentExtension {
                     .Creatable()
                     .Listable()
                 );
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("DynamicProjectionPartRecord", table => table
+            .AddColumn<bool>("ReturnsHqlResults")
+            );
+            SchemaBuilder.AlterTable("DynamicProjectionPartRecord", table => table
+            .AddColumn<string>("TypeForFilterForm")
+            );
+            SchemaBuilder.AlterTable("DynamicProjectionPartRecord", table => table
+            .AddColumn<string>("ShapeForResults")
+            );
+            return 2;
         }
     }
 

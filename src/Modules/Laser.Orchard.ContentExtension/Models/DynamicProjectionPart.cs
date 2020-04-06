@@ -17,24 +17,39 @@ namespace Laser.Orchard.ContentExtension.Models {
             set { this.Store(x => x.Icon, value); }
         }
         public bool OnAdminMenu {
-            get { return Record.OnAdminMenu; }
-            set { Record.OnAdminMenu = value; }
+            get { return this.Retrieve<bool>("OnAdminMenu"); }
+            set { this.Store("OnAdminMenu", value); }
         }
 
         [StringLength(DynamicProjectionPartRecord.DefaultMenuTextLength)]
         public string AdminMenuText {
-            get { return Record.AdminMenuText; }
-            set { Record.AdminMenuText = value; }
+            get { return this.Retrieve<string>("AdminMenuText"); }
+            set { this.Store("AdminMenuText", value); }
         }
 
         public string AdminMenuPosition {
-            get { return Record.AdminMenuPosition; }
-            set { Record.AdminMenuPosition = value; }
+            get { return this.Retrieve<string>("AdminMenuPosition"); }
+            set { this.Store("AdminMenuPosition", value); }
         }
 
-         public string Shape {
-            get { return Record.Shape; }
-            set { Record.Shape = value; }
+        public string Shape {
+            get { return this.Retrieve<string>("Shape"); }
+            set { this.Store("Shape", value); }
+        }
+
+        public bool ReturnsHqlResults {
+            get { return this.Retrieve<bool>("ReturnsHqlResults"); }
+            set { this.Store("ReturnsHqlResults", value); }
+        }
+
+        public string TypeForFilterForm {
+            get { return this.Retrieve<string>("TypeForFilterForm"); }
+            set { this.Store("TypeForFilterForm", value); }
+        }
+
+        public bool ShapeForResults {
+            get { return this.Retrieve<bool>("ShapeForResults"); }
+            set { this.Store("ShapeForResults", value); }
         }
 
     }
@@ -51,8 +66,13 @@ namespace Laser.Orchard.ContentExtension.Models {
         public virtual string AdminMenuPosition { get; set; }
         public virtual bool OnAdminMenu { get; set; }
         public virtual string Icon { get; set; }
-        public virtual string Shape { get; set; }
-        
+        public virtual string Shape { get; set; } /*Shape for custom filter forms */
+        public virtual string TypeForFilterForm { get; set; }
+        public virtual bool ReturnsHqlResults { get; set; }
+        public virtual string ShapeForResults { get; set; }
+
+
+
         public virtual int Items { get; set; }
 
         /// <summary>

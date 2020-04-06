@@ -22,7 +22,12 @@
                     });
                     $("#AjaxList").html(result);
                  }
-            });
+            }).done(function () {
+                transformPager();
+                setTimeout(function () {
+                    $("#overlay").fadeOut(300);
+                }, 500);
+            });;
             e.preventDefault();
         });
     });
