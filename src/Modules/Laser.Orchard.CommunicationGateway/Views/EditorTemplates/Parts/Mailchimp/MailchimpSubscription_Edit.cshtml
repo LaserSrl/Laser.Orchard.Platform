@@ -1,0 +1,47 @@
+﻿@model Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels.SelectableAudience
+@{
+    // Attention! Does not work if rendered twice in the page
+    Script.Require("JQuery").AtHead();
+}
+<fieldset>
+    <legend>@T("Mailchimp subscription")</legend>
+    @if (Model.Audience == null) {
+        <div>@T("An audience need to be set.")</div>
+    }
+    else {
+        @Html.HiddenFor(m => m.Audience.Identifier)
+        @Html.HiddenFor(m => m.Audience.Name)
+        @Html.CheckBoxFor(m => m.Selected, new { @class="mailchimp-select-audience"})
+        @Html.LabelFor(m => m.Selected, @T("I want to subscribe to {0}", Model.Audience.Name).Text, new { @class = "forcheckbox" })
+    }
+</fieldset>
+@using (Script.Foot()) {
+<script type="text/javascript">
+        $(document).ready(function () {
+            var policyIds = [@String.Join(",",Model.RequiredPolicies.Select(x=>x.Substring(1,x.Length-2)))]; //array of policy ids required
+            var mailchimpoCheckboxes = $(".mailchimp-select-audience");
+            mailchimpoCheckboxes.each(function(index) {
+                if ($(this).prop('checked') == true) {
+                    AutoSelectRequiredPolicies($(this).closest("form"));
+                }
+                $(this).change(function () {
+                    AutoSelectRequiredPolicies($(this).closest("form"));
+                });
+                $(this).click(function () {
+                    AutoSelectRequiredPolicies($(this).closest("form"));
+                });
+            });
+            function AutoSelectRequiredPolicies(form) {
+                policyIds.forEach((id, index) => {
+                    var policyAcceptRadio = form.find(".select-" + id + "-Accept");
+                    var policyNoAcceptRadio = form.find(".select-" + id + "-NoAccept");
+
+                    if (policyAcceptRadio != null) {
+                        policyAcceptRadio.prop('checked', true);
+                        policyNoAcceptRadio.prop('checked', false);
+                    }
+                });
+            }
+        });
+</script>
+}

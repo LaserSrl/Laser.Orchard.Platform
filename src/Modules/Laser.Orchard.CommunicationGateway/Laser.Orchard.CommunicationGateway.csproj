@@ -132,6 +132,24 @@
     <Compile Include="Controllers\AdvertisingExternalController.cs" />
     <Compile Include="Controllers\ContactsAdminController.cs" />
     <Compile Include="Controllers\DeliveryReportController.cs" />
+    <Compile Include="CRM\Mailchimp\Drivers\MailchimpSiteSettingsDriver.cs" />
+    <Compile Include="CRM\Mailchimp\Drivers\MailchimpSubscriptionPartDriver.cs" />
+    <Compile Include="CRM\Mailchimp\Handlers\MailchimpSiteSettingsHandler.cs" />
+    <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscriptionPartHandler.cs" />
+    <Compile Include="CRM\Mailchimp\Handlers\UserEventHandler.cs" />
+    <Compile Include="CRM\Mailchimp\MissingPoliciesException.cs" />
+    <Compile Include="CRM\Mailchimp\Migrations.cs" />
+    <Compile Include="CRM\Mailchimp\Models\MailchimpSiteSettings.cs" />
+    <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPartSettings.cs" />
+    <Compile Include="CRM\Mailchimp\Models\MailchimpSubscriptionPart.cs" />
+    <Compile Include="CRM\Mailchimp\Services\IMailchimpApiService.cs" />
+    <Compile Include="CRM\Mailchimp\Services\IMailchimpService.cs" />
+    <Compile Include="CRM\Mailchimp\Services\MailchimpApiService.cs" />
+    <Compile Include="CRM\Mailchimp\SettingsHooks\MailchimpSubscriptionPartSettingsHooks.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\MailchimpSiteSettingsEdit.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\Subscription.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\SelectableAudience.cs" />
+    <Compile Include="CRM\Mailchimp\Services\MailchimpService.cs" />
     <Compile Include="Drivers\CommunicationAdvertisingPartDriver.cs" />
     <Compile Include="Drivers\CommunicationCampaignPartDriver.cs" />
     <Compile Include="Drivers\CommunicationContactDriver.cs" />
@@ -155,6 +173,9 @@
     <Compile Include="Handlers\SmsContactPartHandler.cs" />
     <Compile Include="Handlers\SynchronizeContactTaskHandler.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\Audience.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\Subscriber.cs" />
+    <Compile Include="CRM\Mailchimp\ViewModels\Tag.cs" />
     <Compile Include="Models\CommunicationAdvertisingPart.cs" />
     <Compile Include="Models\CommunicationCampaignPart.cs" />
     <Compile Include="Models\CommunicationContactPart.cs" />
@@ -237,6 +258,9 @@
     <Content Include="Views\Fields\ContentPicker-CommunicationAdvertising-CommunicationAdvertisingPart-ContentLinked.cshtml" />
     <Content Include="Views\Fields\Link-CommunicationAdvertising-CommunicationAdvertisingPart-UrlLinked.cshtml" />
     <Content Include="Views\Parts\ContactInfo.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Mailchimp\MailchimpSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Mailchimp\MailchimpSubscription_Edit.cshtml" />
+    <Content Include="Views\DefinitionTemplates\Parts\Mailchimp\MailchimpSubscriptionPartSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
@@ -340,6 +364,7 @@
       <Name>Laser.Orchard.UserProfiler</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
