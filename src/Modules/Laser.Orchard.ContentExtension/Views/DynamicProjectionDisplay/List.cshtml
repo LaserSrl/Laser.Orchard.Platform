@@ -11,7 +11,8 @@
 }
 @using (Script.Foot()) {
     <script type="text/javascript">
-        var transformPager = function () {
+        @*public functions always accessible beacuase they need to be call by List.cshtml (this one) and AjaxList.cstml*@
+        var transformPager = function () { @*Change pageSizes from ul li to select*@
             $('ul.selector').each(function () {
                 var self = $(this),
                     options = $.map(self.find("li"), function (li) {
@@ -30,13 +31,13 @@
                 self.replaceWith(select);
             });
         };
-        var onSelectChange = function () {
+        var onSelectChange = function () { @*When the select of pageSizes changes its value, if calls AjaxList in order to refresh the list*@ 
             var url = $(this).val();
             $.ajax({
                 type: "GET",
                 url: url,
                 success: function (data) {
-                    // Handle the fact that returnUrls have likely been generated using the 
+                    // Handle the fact that returnUrls have likely been generated using the
                     // ajax request, hence following them is wrong.
                     var retUrlRegex = /returnUrl=\S*AjaxList/g;
                     var result = data.replace(retUrlRegex, function (x) {
@@ -128,7 +129,6 @@
 </div>
 
 @using (Html.BeginFormAntiForgeryPost()) {
-
     <div id="AjaxList">
     </div>
 }
