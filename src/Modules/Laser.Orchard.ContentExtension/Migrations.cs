@@ -2,9 +2,11 @@
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
+using Orchard.Environment.Features;
 
 namespace Laser.Orchard.ContentExtension {
     public class Migrations : DataMigrationImpl {
+
         public int Create() {
             SchemaBuilder.CreateTable("ContentTypePermissionRecord", table => table
                      .Column<int>("Id", column => column.PrimaryKey().Identity())
@@ -17,25 +19,6 @@ namespace Laser.Orchard.ContentExtension {
             return 1;
         }
         public int UpdateFrom1() {
-            //SchemaBuilder.CreateTable("DynamicProjectionPartRecord", table => table
-            //         .ContentPartRecord()
-            //         .Column<string>("AdminMenuText")
-            //         .Column<string>("AdminMenuPosition")
-            //         .Column<bool>("OnAdminMenu", col => col.WithDefault(true))
-            //         .Column<string>("Icon")
-            //         .Column<string>("Shape")
-            //         .Column<int>("Items")
-            //         .Column<int>("ItemsPerPage")
-            //         .Column<int>("Skip")
-            //         .Column<string>("PagerSuffix", col => col.WithLength(255))
-            //         .Column<bool>("DisplayPager", col => col.WithDefault(true))
-            //         .Column<int>("MaxItems")
-            //         .Column<int>("QueryPartRecord_id")
-            //         .Column<int>("LayoutRecord_Id")
-            //      );
-            //ContentDefinitionManager.AlterPartDefinition("DynamicProjectionPart", builder => builder
-            //        .Attachable()
-            //        .WithDescription("Adds a menu item to the Admin menu that links to this content item."));
             return 3;
         }
         public int UpdateFrom2() {
@@ -46,6 +29,11 @@ namespace Laser.Orchard.ContentExtension {
 
     [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
     public class DynamicProjectionMigration : DataMigrationImpl {
+        private readonly IFeatureManager _featureManager;
+
+        public DynamicProjectionMigration(IFeatureManager featureManager) {
+            _featureManager = featureManager;
+        }
         public int Create() {
             SchemaBuilder.CreateTable("DynamicProjectionPartRecord", table => table
                    .ContentPartRecord()
@@ -84,6 +72,8 @@ namespace Laser.Orchard.ContentExtension {
         }
 
         public int UpdateFrom1() {
+
+            _featureManager.EnableFeatures(new string[] { "Laser.Orchard.Queries" }, true);
             SchemaBuilder.AlterTable("DynamicProjectionPartRecord", table => table
             .AddColumn<bool>("ReturnsHqlResults")
             );

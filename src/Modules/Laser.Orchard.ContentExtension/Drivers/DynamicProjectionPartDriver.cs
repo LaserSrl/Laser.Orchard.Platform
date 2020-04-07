@@ -20,7 +20,6 @@ using Orchard.Projections.Descriptors.Layout;
 using Orchard.Projections.Descriptors.Property;
 using Orchard.Projections.Models;
 using Orchard.Projections.Services;
-using Orchard.Projections.ViewModels;
 using Orchard.Security;
 using Orchard.Tokens;
 using Orchard.UI.Navigation;
@@ -45,10 +44,10 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             get { return "Laser.DynamicProjectionPart"; }
         }
         public DynamicProjectionPartDriver(
-            IAuthorizationService authorizationService, 
-            INavigationManager navigationManager, 
+            IAuthorizationService authorizationService,
+            INavigationManager navigationManager,
             IOrchardServices orchardServices,
-            IProjectionManagerExtension projectionManager, 
+            IProjectionManagerExtension projectionManager,
             IRepository<QueryPartRecord> queryRepository,
             ITokenizer tokenizer,
             IDisplayHelperFactory displayHelperFactory,
@@ -58,7 +57,7 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             _navigationManager = navigationManager;
             _orchardServices = orchardServices;
             _projectionManager = projectionManager;
-            _queryRepository=queryRepository;
+            _queryRepository = queryRepository;
             T = NullLocalizer.Instance;
             _tokenizer = tokenizer;
             _displayHelperFactory = displayHelperFactory;
@@ -132,30 +131,30 @@ namespace Laser.Orchard.ContentExtension.Drivers {
                 }),
                 ContentShape("Parts_ProjectionPart_List", shape => {
 
-                        // generates a link to the RSS feed for this term
-                        var metaData = _orchardServices.ContentManager.GetItemMetadata(part.ContentItem);
-                        //      _feedManager.Register(metaData.DisplayText, "rss", new RouteValueDictionary { { "projection", part.Id } });
+                    // generates a link to the RSS feed for this term
+                    var metaData = _orchardServices.ContentManager.GetItemMetadata(part.ContentItem);
+                    //      _feedManager.Register(metaData.DisplayText, "rss", new RouteValueDictionary { { "projection", part.Id } });
 
-                        // execute the query
-                        var contentItems = _projectionManager.GetContentItems(query.Id, part, pager.GetStartIndex() + part.Record.Skip, pager.PageSize).ToList();
+                    // execute the query
+                    var contentItems = _projectionManager.GetContentItems(query.Id, part, pager.GetStartIndex() + part.Record.Skip, pager.PageSize).ToList();
 
-                        // sanity check so that content items with ProjectionPart can't be added here, or it will result in an infinite loop
-                        contentItems = contentItems.Where(x => !x.Has<ProjectionPart>()).ToList();
+                    // sanity check so that content items with ProjectionPart can't be added here, or it will result in an infinite loop
+                    contentItems = contentItems.Where(x => !x.Has<ProjectionPart>()).ToList();
 
-                        // applying layout
-                        var layout = part.Record.LayoutRecord;
+                    // applying layout
+                    var layout = part.Record.LayoutRecord;
 
                     LayoutDescriptor layoutDescriptor = layout == null ? null : _projectionManager.DescribeLayouts().SelectMany(x => x.Descriptors).FirstOrDefault(x => x.Category == layout.Category && x.Type == layout.Type);
 
-                        // create pager shape
-                        if (part.Record.DisplayPager) {
+                    // create pager shape
+                    if (part.Record.DisplayPager) {
                         var contentItemsCount = _projectionManager.GetCount(query.Id, part) - part.Record.Skip;
                         contentItemsCount = Math.Max(0, contentItemsCount);
                         pagerShape.TotalItemCount(contentItemsCount);
                     }
 
-                        // renders in a standard List shape if no specific layout could be found
-                        if (layoutDescriptor == null) {
+                    // renders in a standard List shape if no specific layout could be found
+                    if (layoutDescriptor == null) {
                         var list = _orchardServices.New.List();
                         var contentShapes = contentItems.Select(item => _orchardServices.ContentManager.BuildDisplay(item, "Summary"));
                         list.AddRange(contentShapes);
@@ -181,17 +180,17 @@ namespace Laser.Orchard.ContentExtension.Drivers {
                                     return new { d.Property, Shape = d.Descriptor.Property(fieldContext, contentItem) };
                                 });
 
-                                // apply all settings to the field content, wrapping it in a FieldWrapper shape
-                                var properties = _orchardServices.New.Properties(
-                                Items: propertyDescriptors.Select(
-                                    pd => _orchardServices.New.PropertyWrapper(
-                                        Item: pd.Shape,
-                                        Property: pd.Property,
-                                        ContentItem: contentItem,
-                                        ContentItemMetadata: contentItemMetadata
-                                    )
+                            // apply all settings to the field content, wrapping it in a FieldWrapper shape
+                            var properties = _orchardServices.New.Properties(
+                            Items: propertyDescriptors.Select(
+                                pd => _orchardServices.New.PropertyWrapper(
+                                    Item: pd.Shape,
+                                    Property: pd.Property,
+                                    ContentItem: contentItem,
+                                    ContentItemMetadata: contentItemMetadata
                                 )
-                            );
+                            )
+                        );
 
                             return new LayoutComponentResult {
                                 ContentItem = contentItem,
@@ -212,25 +211,25 @@ namespace Laser.Orchard.ContentExtension.Drivers {
                         var groupPropertyId = layout.GroupProperty.Id;
                         var display = _displayHelperFactory.CreateHelper(new ViewContext { HttpContext = _workContextAccessor.GetContext().HttpContext }, new ViewDataContainer());
 
-                            // index by PropertyWrapper shape
-                            var groups = layoutComponents.GroupBy(
-                            x => {
-                                var propertyShape = ((IEnumerable<dynamic>)x.Properties.Items).First(p => ((PropertyRecord)p.Property).Id == groupPropertyId);
+                        // index by PropertyWrapper shape
+                        var groups = layoutComponents.GroupBy(
+                        x => {
+                            var propertyShape = ((IEnumerable<dynamic>)x.Properties.Items).First(p => ((PropertyRecord)p.Property).Id == groupPropertyId);
 
-                                    // clear the wrappers, as they shouldn't be needed to generate the grouping key itself
-                                    // otherwise the DisplayContext.View is null, and throws an exception if a wrapper is rendered (#18558)
-                                    ((IShape)propertyShape).Metadata.Wrappers.Clear();
+                            // clear the wrappers, as they shouldn't be needed to generate the grouping key itself
+                            // otherwise the DisplayContext.View is null, and throws an exception if a wrapper is rendered (#18558)
+                            ((IShape)propertyShape).Metadata.Wrappers.Clear();
 
-                                string key = Convert.ToString(display(propertyShape));
-                                return key;
-                            }).Select(x => new { Key = x.Key, Components = x });
+                            string key = Convert.ToString(display(propertyShape));
+                            return key;
+                        }).Select(x => new { Key = x.Key, Components = x });
 
                         var list = _orchardServices.New.List();
                         foreach (var group in groups) {
 
                             var localResult = layoutDescriptor.Render(renderLayoutContext, group.Components);
-                                // add the Context to the shape
-                                localResult.Context(renderLayoutContext);
+                            // add the Context to the shape
+                            localResult.Context(renderLayoutContext);
 
                             list.Add(_orchardServices.New.LayoutGroup(Key: new MvcHtmlString(group.Key), List: localResult));
                         }
@@ -241,8 +240,8 @@ namespace Laser.Orchard.ContentExtension.Drivers {
 
                     var layoutResult = layoutDescriptor.Render(renderLayoutContext, layoutComponents);
 
-                        // add the Context to the shape
-                        layoutResult.Context(renderLayoutContext);
+                    // add the Context to the shape
+                    layoutResult.Context(renderLayoutContext);
 
                     return layoutResult;
                 }));
@@ -262,7 +261,7 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             if (string.IsNullOrEmpty(part.AdminMenuPosition)) {
                 part.AdminMenuPosition = "2"; // GetDefaultPosition(part);
             }
-            var model = new ProjectionPartEditViewModel {
+            var model = new ViewModels.DynamicProjectionPartEditViewModel {
                 DisplayPager = part.Record.DisplayPager,
                 Items = part.Record.Items,
                 ItemsPerPage = part.Record.ItemsPerPage,
@@ -299,11 +298,11 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<DynamicProjectionPart, DynamicProjectionPartVM>();
             });
-            Mapper.Map<DynamicProjectionPart, DynamicProjectionPartVM>(part,partvm);
+            Mapper.Map<DynamicProjectionPart, DynamicProjectionPartVM>(part, partvm);
             var newmodel = new DynamicProjectionVM {
                 Projection = model,
                 Part = partvm,
-              //  FormFile =part.FormFile,
+                //  FormFile =part.FormFile,
                 Tenant = _shellSettings.Name
             };
             return ContentShape("Parts_Navigation_DynamicProjection_Edit",
@@ -331,29 +330,31 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<DynamicProjectionPartVM, DynamicProjectionPart>();
             });
-            Mapper.Map<DynamicProjectionPartVM, DynamicProjectionPart>(newmodel.Part,part);
-//           part.FormFile = newmodel.FormFile;
+            Mapper.Map<DynamicProjectionPartVM, DynamicProjectionPart>(newmodel.Part, part);
+            //           part.FormFile = newmodel.FormFile;
             // projection
             var model = newmodel.Projection;
 
-    
 
+
+
+            part.Record.DisplayPager = model.DisplayPager;
+            part.Record.Items = model.Items;
+            part.Record.ItemsPerPage = model.ItemsPerPage;
+            part.Record.Skip = model.Skip;
+            part.Record.MaxItems = model.MaxItems;
+            part.Record.PagerSuffix = (model.PagerSuffix ?? String.Empty).Trim();
+
+            if (model.QueryLayoutRecordId != null) {
                 var queryLayoutIds = model.QueryLayoutRecordId.Split(new[] { ';' });
-
-                part.Record.DisplayPager = model.DisplayPager;
-                part.Record.Items = model.Items;
-                part.Record.ItemsPerPage = model.ItemsPerPage;
-                part.Record.Skip = model.Skip;
-                part.Record.MaxItems = model.MaxItems;
-                part.Record.PagerSuffix = (model.PagerSuffix ?? String.Empty).Trim();
                 part.Record.QueryPartRecord = _queryRepository.Get(Int32.Parse(queryLayoutIds[0]));
                 part.Record.LayoutRecord = part.Record.QueryPartRecord.Layouts.FirstOrDefault(x => x.Id == Int32.Parse(queryLayoutIds[1]));
+            }
+            if (!String.IsNullOrWhiteSpace(part.Record.PagerSuffix) && !String.Equals(part.Record.PagerSuffix.ToSafeName(), part.Record.PagerSuffix, StringComparison.OrdinalIgnoreCase)) {
+                updater.AddModelError("PagerSuffix", T("Suffix should not contain special characters."));
+            }
 
-                if (!String.IsNullOrWhiteSpace(part.Record.PagerSuffix) && !String.Equals(part.Record.PagerSuffix.ToSafeName(), part.Record.PagerSuffix, StringComparison.OrdinalIgnoreCase)) {
-                    updater.AddModelError("PagerSuffix", T("Suffix should not contain special characters."));
-                }
-        
-//
+            //
 
 
             return Editor(part, shapeHelper);

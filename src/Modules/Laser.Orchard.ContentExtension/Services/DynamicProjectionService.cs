@@ -1,6 +1,7 @@
 ﻿using NHibernate;
 using NHibernate.Transform;
 using Orchard;
+using Orchard.Environment.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Laser.Orchard.ContentExtension.Services {
+    [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
     public class DynamicProjectionService : IDynamicProjectionService {
         private readonly IOrchardServices _orchardServices;
 

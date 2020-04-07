@@ -1,13 +1,24 @@
-﻿<fieldset class="contentItems bulk-items">
-    @if (Model.ContentItems != null) {
-        @Display(Model.ContentItems)
+﻿@using System.Linq;
+@{
+    var itemsCount = 0;
+    if (Model.ContentItems != null) {
+        itemsCount = Model.ContentItems.Items.Count;
     }
-    else if (!string.IsNullOrEmpty(Model.ResultShape)) {
-        @Html.Partial((string)(Model.ResultShape), (object)Model.Items)
+    else if (Model.Items != null) {
+        itemsCount = Model.Items.Count;
+    }
+}
 
-    }
-    else {
-        @T("No content found. try again by changing the filters")
+<fieldset class="contentItems bulk-items">
+    @{ if (Model.ContentItems != null) {
+            @Display(Model.ContentItems)
+        }
+        else if (!string.IsNullOrEmpty(Model.ResultShape)) {
+            @Html.Partial((string)(Model.ResultShape), (object)Model.Items)
+        }
+        if (itemsCount == 0) {
+            @T("No content found. try again by changing the filters")
+        }
     }
 </fieldset>
 @if ((bool)Model.Part.Record.DisplayPager) {
@@ -33,6 +44,7 @@
                  }
             }).done(function () {
                 transformPager();@*this function is defined within the file List.cshtml*@
+                $("html, body").animate({ scrollTop: $('#FormAjaxList').offset().top }, 1000); // scroll to form
                 setTimeout(function () {
                     $("#overlay").fadeOut(300);
                 }, 500);

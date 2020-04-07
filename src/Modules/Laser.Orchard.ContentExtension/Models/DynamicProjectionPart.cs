@@ -17,39 +17,39 @@ namespace Laser.Orchard.ContentExtension.Models {
             set { this.Store(x => x.Icon, value); }
         }
         public bool OnAdminMenu {
-            get { return this.Retrieve<bool>("OnAdminMenu"); }
-            set { this.Store("OnAdminMenu", value); }
+            get { return this.Retrieve<bool>(x=>x.OnAdminMenu); }
+            set { this.Store(x => x.OnAdminMenu, value); }
         }
 
         [StringLength(DynamicProjectionPartRecord.DefaultMenuTextLength)]
         public string AdminMenuText {
-            get { return this.Retrieve<string>("AdminMenuText"); }
-            set { this.Store("AdminMenuText", value); }
+            get { return this.Retrieve<string>(x => x.AdminMenuText); }
+            set { this.Store(x => x.AdminMenuText, value); }
         }
 
         public string AdminMenuPosition {
-            get { return this.Retrieve<string>("AdminMenuPosition"); }
-            set { this.Store("AdminMenuPosition", value); }
+            get { return this.Retrieve<string>(x => x.AdminMenuPosition); }
+            set { this.Store(x => x.AdminMenuPosition, value); }
         }
 
         public string Shape {
-            get { return this.Retrieve<string>("Shape"); }
-            set { this.Store("Shape", value); }
+            get { return this.Retrieve<string>(x => x.Shape); }
+            set { this.Store(x => x.Shape, value); }
         }
 
         public bool ReturnsHqlResults {
-            get { return this.Retrieve<bool>("ReturnsHqlResults"); }
-            set { this.Store("ReturnsHqlResults", value); }
+            get { return this.Retrieve<bool>(x => x.ReturnsHqlResults); }
+            set { this.Store(x => x.ReturnsHqlResults, value); }
         }
 
         public string TypeForFilterForm {
-            get { return this.Retrieve<string>("TypeForFilterForm"); }
-            set { this.Store("TypeForFilterForm", value); }
+            get { return this.Retrieve<string>(x => x.TypeForFilterForm); }
+            set { this.Store(x => x.TypeForFilterForm, value); }
         }
 
         public string ShapeForResults {
-            get { return this.Retrieve<string>("ShapeForResults"); }
-            set { this.Store("ShapeForResults", value); }
+            get { return this.Retrieve<string>(x => x.ShapeForResults); }
+            set { this.Store(x => x.ShapeForResults, value); }
         }
 
     }

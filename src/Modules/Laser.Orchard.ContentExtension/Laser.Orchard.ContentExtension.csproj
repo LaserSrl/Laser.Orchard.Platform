@@ -144,7 +144,7 @@
     <Compile Include="Navigation\DynamicProjectionProvider.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions\DynamicProjectionPermission.cs" />
-    <Compile Include="ResourceManifest.cs" />
+    <Compile Include="DynamicProjectionResourceManifest.cs" />
     <Compile Include="Services\DynamicProjectionService.cs" />
     <Compile Include="Services\IContentTypePermissionSettingsService.cs" />
     <Compile Include="Services\IContentExtensionService.cs" />

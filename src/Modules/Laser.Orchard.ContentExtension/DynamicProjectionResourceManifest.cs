@@ -1,11 +1,13 @@
-﻿using Orchard.UI.Resources;
+﻿using Orchard.Environment.Extensions;
+using Orchard.UI.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.ContentExtension {
-    public class ResourceManifest : IResourceManifestProvider {
+    [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
+    public class DynamicProjectionResourceManifest : IResourceManifestProvider {
 
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
