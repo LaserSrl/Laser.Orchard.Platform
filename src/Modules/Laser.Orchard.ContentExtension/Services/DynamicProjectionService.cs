@@ -16,24 +16,22 @@ namespace Laser.Orchard.ContentExtension.Services {
             _orchardServices = orchardServices;
         }
 
-        public IEnumerable GetResults(string query, int skip = 0, int count = 0) {
+        public int GetCount(IQuery query) {
+            var count = 0;
+            int.TryParse(query.UniqueResult().ToString(), out count);
+            return count;
+        }
+
+        public IEnumerable GetResults(IQuery query, int skip = 0, int count = 0) {
             IQuery hqlQuery;
-            string[] aliases;
-            bool cacheable = true;
-            var hql = _orchardServices.TransactionManager.GetSession().CreateQuery(query).SetCacheable(cacheable);
+
             if (skip != 0) {
-                hql.SetFirstResult(skip);
+                query.SetFirstResult(skip);
             }
             if (count != 0 && count != Int32.MaxValue) {
-                hql.SetMaxResults(count);
+                query.SetMaxResults(count);
             }
-            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-            if (startsWithSelect.IsMatch(query)) {
-                hqlQuery = hql.SetResultTransformer(Transformers.AliasToEntityMap);
-            }
-            else {
-                throw new Exception("Query should starts with \"select\" keyword.\r\nQuery is:\r\n" + query);
-            }
+            hqlQuery = query.SetResultTransformer(Transformers.AliasToEntityMap);
             return hqlQuery.Enumerable();
         }
     }

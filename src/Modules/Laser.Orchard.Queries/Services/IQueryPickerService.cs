@@ -12,12 +12,18 @@ using Orchard.Projections.Descriptors;
 using Orchard.Projections.Descriptors.Filter;
 using Orchard.Forms.Services;
 using Orchard.Data;
+using Laser.Orchard.Queries.Models;
+using NHibernate;
+using System.Text.RegularExpressions;
+using NHibernate.Transform;
 
 namespace Laser.Orchard.Queries.Services {
     public interface IQueryPickerService : IDependency {
         List<QueryPart> GetUserDefinedQueries();
         List<QueryPart> GetOneShotQueries();
+        List<TitlePart> GetHqlQueries();
         IHqlQuery GetCombinedContentQuery(int[] queryIds, Dictionary<string, object> tokens = null, string[] contentTypesToFilter = null);
+        IQuery GetCustomQuery(int queryId, Dictionary<string, object> tokens, bool count = false);
     }
 
 
@@ -56,6 +62,12 @@ namespace Laser.Orchard.Queries.Services {
                 .Select(x => x.As<QueryPart>());
             return availableQueries.ToList();
         }
+
+        public List<TitlePart> GetHqlQueries() {
+            var availableQueries = _services.ContentManager.Query<TitlePart>().ForType("MyCustomQuery").List();
+            return availableQueries.ToList();
+        }
+
         public IHqlQuery GetCombinedContentQuery(int[] queryIds, Dictionary<string, object> tokens = null, string[] contentTypesToFilter = null) {
             var availableFilters = DescribeFilters().ToList();
 
@@ -106,6 +118,52 @@ namespace Laser.Orchard.Queries.Services {
             contentQuery = contentQuery.ForVersion(VersionOptions.Published);
             return contentQuery;
         }
+
+        public IQuery GetCustomQuery(int queryId, Dictionary<string, object> tokens, bool count = false) {
+            var customQueryContent = _services.ContentManager.Get(queryId);
+            string parameters = ((dynamic)customQueryContent).MyCustomQueryPart.QueryParameterValues.Value;
+            bool hasParameters = !string.IsNullOrWhiteSpace(parameters); // before tokens substitution because tokens can result in an empty value
+            string query = ((dynamic)customQueryContent).MyCustomQueryPart.QueryString.Value;
+            //Apply tokenization for parameters and query
+            parameters = _tokenizer.Replace(parameters, tokens);
+            query = _tokenizer.Replace(query, tokens);
+            if (string.IsNullOrWhiteSpace(query)) {
+                return null;
+            }
+            Dictionary<string, object> queryParams = new Dictionary<string, object>();
+            bool cacheable = true;
+            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+            if (startsWithSelect.IsMatch(query)) {
+                if (count) { // 
+                    var splittedQuery = query.Split(new string[] { "\n", " ", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    var indexOfFromWord = Array.FindIndex(splittedQuery, x => x.ToLower() == "from");
+                    query = "select count(*) " + string.Join(" ", splittedQuery, indexOfFromWord, splittedQuery.Length - indexOfFromWord);
+                }
+                var hql = _services.TransactionManager.GetSession()
+                    .CreateQuery(query)
+                    .SetCacheable(cacheable);
+
+                if (hasParameters) {
+                    // Parse parameters:
+                    // The correct way to input parameters in the text area is to have one parameter
+                    // per line and end each line with a comma.
+                    var splitParameters = parameters.Split(
+                        new string[] { ",\n", "," + Environment.NewLine },
+                        StringSplitOptions.None); // keep empty entries
+                                                  // we don't trim values in case whitespace is desired.
+                                                  // Parameters are always assumed to be strings.
+
+                    foreach (var kvp in splitParameters.Select((val, i) => new { i, val })) {
+                        hql.SetParameter("param" + kvp.i, kvp.val);
+                    }
+                }
+                return hql;
+            }
+            else {
+                throw new Exception("Query should starts with \"select\" keyword.\r\nQuery is:\r\n" + query);
+            }
+        }
+
         private IEnumerable<TypeDescriptor<FilterDescriptor>> DescribeFilters() {
             var context = new DescribeFilterContext();
 

@@ -47,8 +47,8 @@ namespace Laser.Orchard.ContentExtension.Models {
             set { this.Store("TypeForFilterForm", value); }
         }
 
-        public bool ShapeForResults {
-            get { return this.Retrieve<bool>("ShapeForResults"); }
+        public string ShapeForResults {
+            get { return this.Retrieve<string>("ShapeForResults"); }
             set { this.Store("ShapeForResults", value); }
         }
 

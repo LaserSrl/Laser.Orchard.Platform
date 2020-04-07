@@ -17,6 +17,8 @@ using Orchard.Themes;
 using Laser.Orchard.ContentExtension.Services;
 using Orchard.Data;
 using Orchard.Projections.Models;
+using Laser.Orchard.Queries.Services;
+using Laser.Orchard.Queries.Models;
 
 [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
 public class DynamicProjectionDisplayController : Controller {
@@ -24,7 +26,7 @@ public class DynamicProjectionDisplayController : Controller {
     private readonly IProjectionManagerExtension _projectionManager;
     private readonly IContentManager _contentManager;
     private readonly IDynamicProjectionService _dynamicProjectoinService;
-    private readonly IRepository<QueryPartRecord> _queryRepository;
+    private readonly IQueryPickerService _queryPickerService;
 
     private readonly ShellSettings _shellSettings;
     public Localizer T { get; set; }
@@ -37,7 +39,7 @@ public class DynamicProjectionDisplayController : Controller {
         IContentManager contentManager,
         IShapeFactory shapeFactory,
         IDynamicProjectionService dynamicProjectoinService,
-        IRepository<QueryPartRecord> queryRepository,
+        IQueryPickerService queryPickerService,
         ShellSettings shellSettings
         ) {
         _orchardServices = orchardServices;
@@ -47,7 +49,7 @@ public class DynamicProjectionDisplayController : Controller {
         Logger = NullLogger.Instance;
         _shapeFactory = shapeFactory;
         _dynamicProjectoinService = dynamicProjectoinService;
-        _queryRepository = queryRepository;
+        _queryPickerService = queryPickerService;
         _shellSettings = shellSettings;
     }
 
@@ -60,7 +62,8 @@ public class DynamicProjectionDisplayController : Controller {
         DynamicProjectionPart part = ci.As<DynamicProjectionPart>();
         if (ci == null || part == null) {
             return null;
-        } else {
+        }
+        else {
             var record = part.Record;
             var queryString = _orchardServices.WorkContext.HttpContext.Request.QueryString;
             pager.PageSize = part.Record.Items;
@@ -92,8 +95,40 @@ public class DynamicProjectionDisplayController : Controller {
             //          b. We should have a way to call a razor view in order to show results of the query
 
             if (part.ReturnsHqlResults) {
-                var queryRecord = _queryRepository.Get(record.QueryPartRecord.Id);
-                return null;
+                var queryPicker = ci.As<QueryPickerPart>();
+                if (queryPicker == null || !queryPicker.Ids.Any()) {
+                    return null;
+                }
+
+                //Results and Count
+                var countQuery = _queryPickerService.GetCustomQuery(queryPicker.Ids.First(), new Dictionary<string, object> { { "Content", ci } }, true);
+                var query = _queryPickerService.GetCustomQuery(queryPicker.Ids.First(), new Dictionary<string, object> { { "Content", ci } });
+                var queryresults = _dynamicProjectoinService.GetResults(query,
+                                                                       pager.GetStartIndex() + record.Skip,
+                                                                       pager.PageSize);
+                var counttot = _dynamicProjectoinService.GetCount(countQuery);
+
+                //Pager
+                var pagerShape = _shapeFactory
+                    .Pager(pager).TotalItemCount(counttot);
+
+                //Shape for results
+                var resultsfile = string.Empty;
+                if (!string.IsNullOrEmpty(part.ShapeForResults)) {
+                    resultsfile = string.Format(
+                        "~/App_Data/Sites/{0}/Code/{1}",
+                        _shellSettings.Name,
+                        ci.As<DynamicProjectionPart>().ShapeForResults);
+                }
+
+
+                var viewModel = _shapeFactory.ViewModel()
+                    .ResultShape(resultsfile)
+                    .Items(queryresults)
+                    .Pager(pagerShape)
+                    .Part(ci.As<DynamicProjectionPart>());
+                return View(viewModel);
+
             }
             else {
                 var contentItems = _projectionManager
@@ -129,7 +164,8 @@ public class DynamicProjectionDisplayController : Controller {
         var part = ci.As<DynamicProjectionPart>();
         if (ci == null || part == null) {
             return null;
-        } else {
+        }
+        else {
             ContentItem contentForm;
             contentForm = _contentManager.New("FakeContentForDynamicProjection");
             if (string.IsNullOrWhiteSpace(part.TypeForFilterForm)) {
@@ -156,7 +192,7 @@ public class DynamicProjectionDisplayController : Controller {
                 }
             }
             var formfile = string.Empty;
-            if (!string.IsNullOrEmpty(ci.As<DynamicProjectionPart>().Shape)) {
+            if (!string.IsNullOrEmpty(part.Shape)) {
                 formfile = string.Format(
                     "~/App_Data/Sites/{0}/Code/{1}",
                     _shellSettings.Name,

@@ -75,6 +75,8 @@ namespace Laser.Orchard.ContentExtension {
                 type => type
                     .WithPart("DynamicProjectionPart")
                     .WithPart("CommonPart")
+                    .WithPart("QueryPickerPart", p => p
+                        .WithSetting("QueryPickerPartSettings.IsForHqlQueries", bool.TrueString))
                     .Creatable()
                     .Listable()
                 );
@@ -91,6 +93,12 @@ namespace Laser.Orchard.ContentExtension {
             SchemaBuilder.AlterTable("DynamicProjectionPartRecord", table => table
             .AddColumn<string>("ShapeForResults")
             );
+            ContentDefinitionManager.AlterTypeDefinition(
+                "DynamicProjection",
+                type => type
+                    .WithPart("QueryPickerPart", p => p
+                        .WithSetting("QueryPickerPartSettings.IsForHqlQueries", bool.TrueString))
+                );
             return 2;
         }
     }

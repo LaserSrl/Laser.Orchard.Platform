@@ -7,6 +7,7 @@
 @{
     Script.Require("ShapesBase");
 }
+@*ADMINMENU START*@
 <fieldset>
     @Html.EditorFor(m => m.Part.OnAdminMenu)
     <label for="@Html.FieldIdFor(m => m.Part.OnAdminMenu)" class="forcheckbox">@T("Show on admin menu")</label>
@@ -23,6 +24,9 @@
         <span class="hint">@T("The css class used as icon for the admin menu item.")</span>
     </div>
 </fieldset>
+@*ADMINMENU END*@
+
+@*FILTERS FORM START*@
 <fieldset>
     <h2>@T("Custom razor for filtering")</h2>
     @if (Model.ListFormFile != null && Model.ListFormFile.Any()) {
@@ -36,16 +40,26 @@
 </fieldset>
 <fieldset>
     <h2>@T("ContentType for filtering")</h2>
-        @Html.LabelFor(m => m.Part.Shape, T("Content type"))
-        @Html.TextBoxFor(m => m.Part.TypeForFilterForm, new { @class="text medium"} )
-        <span class="hint">@T("Type a ContentType name. Leave empty to not use a ContenType as form for filtering.")</span>
+    @Html.LabelFor(m => m.Part.TypeForFilterForm, T("Content type"))
+    @Html.TextBoxFor(m => m.Part.TypeForFilterForm, new { @class = "text medium" })
+    <span class="hint">@T("Type a ContentType name. Leave empty to not use a ContenType as form for filtering.")</span>
 </fieldset>
+@*FILTERS FORM END*@
+
+@*QUERY START*@
 <fieldset>
+    <h2>@T("Query")</h2>
+    <div>
+        @Html.CheckBoxFor(m => m.Part.ReturnsHqlResults, T("Returns an Hql result"))
+        @Html.LabelFor(m => m.Part.ReturnsHqlResults, new { @class = "forcheckbox" })
+        @Html.Hint(T("Check if the query returns an HqlResult and NOT a list of content items.")) @*TODO: jquery to hide/show #content-query-group and #querypicker*@
+    </div>
+
     @{
         var selectedQueryRecordId = -1;
     }
 
-    <fieldset>
+    <fieldset id="content-query-group">
         <div>
 
             @Html.LabelFor(m => m.Projection.QueryLayoutRecordId, T("For Query"))
@@ -58,7 +72,6 @@
                         }
 
                         @foreach (LayoutRecordEntry layoutRecord in queryRecord.LayoutRecordEntries.OrderBy(x => x.Description)) {
-                            @Html.SelectOption(Model.Projection.QueryLayoutRecordId, queryRecord.Id + ";" + layoutRecord.Id, queryRecord.Name + " " + T("({0})", layoutRecord.Description).Text)
                             if (Model.Projection.QueryLayoutRecordId == queryRecord.Id + ";" + layoutRecord.Id) {
                                 selectedQueryRecordId = queryRecord.Id;
                             }
@@ -70,11 +83,6 @@
                 @Html.ActionLink(T("Edit Query").Text, "Edit", new { area = "Orchard.Projections", id = selectedQueryRecordId }, new { })
             }
             <span class="hint">@T("The query to display.")</span>
-        </div>
-        <div>
-            @Html.CheckBoxFor(m => m.Part.ReturnsHqlResults, T("Returns an Hql result"))
-            @Html.LabelFor(m => m.Part.ReturnsHqlResults, new { @class = "forcheckbox" })
-            @Html.Hint(T("Check if the query returns an HqlResult and NOT a list of content items."))
         </div>
     </fieldset>
 
@@ -122,3 +130,17 @@
 
 
 </fieldset>
+@*QUERY END*@
+@*RESULTS FORM START*@
+<fieldset>
+    <h2>@T("Custom razor for results")</h2>
+    @if (Model.ListFormFile != null && Model.ListFormFile.Any()) {
+        @Html.LabelFor(m => m.Part.ShapeForResults, T("Razor file"))
+        @Html.DropDownListFor(m => m.Part.ShapeForResults, Model.ListFormFile, "")
+        <span class="hint">@T("Choose a form to be used to render results.")</span>
+    }
+    else {
+        @T("There are not razors set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder")
+    }
+</fieldset>
+@*RESULTS FORM END*@
