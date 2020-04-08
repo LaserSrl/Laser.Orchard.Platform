@@ -9,6 +9,45 @@
     Style.Require("Bootstrap").AtHead();
     Style.Require("AdminDynamicProjections").AtHead();
 }
+<div class="row">
+    <div class="col-12">
+        <form id="FormAjaxList" method="get">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@T("Search filters")</h3>
+                </div>
+                <div class="box-body">
+                    <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
+                    <input type='hidden' name='page' value='1' />
+                    @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
+                        if (!string.IsNullOrEmpty(Model.Form)) {
+                            @Html.Partial((string)(Model.Form))
+                        }
+                        if (Model.FilterContent != null) {
+                            @Display(_contentManager.BuildEditor(Model.FilterContent));
+                        }
+                    }
+                </div>
+                <div class="box-footer align-right padding-right-35">
+                    <button type="submit" value="submit">@T("Apply")</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div id="AjaxList">
+    </div>
+}
+
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+
 @using (Script.Foot()) {
     <script type="text/javascript">
         @*public functions always accessible beacuase they need to be call by List.cshtml (this one) and AjaxList.cstml*@
@@ -31,7 +70,7 @@
                 self.replaceWith(select);
             });
         };
-        var onSelectChange = function () { @*When the select of pageSizes changes its value, if calls AjaxList in order to refresh the list*@ 
+        var onSelectChange = function () { @*When the select of pageSizes changes its value, if calls AjaxList in order to refresh the list*@
             var url = $(this).val();
             $.ajax({
                 type: "GET",
@@ -107,40 +146,3 @@
     });
     </script>
 }
-<div class="row">
-    <div class="col-12">
-        <form id="FormAjaxList" method="get">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">@T("Search filters")</h3>
-                </div>
-                <div class="box-body">
-                    <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
-                    <input type='hidden' name='page' value='1' />
-                    @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
-                        if (!string.IsNullOrEmpty(Model.Form)) {
-                            @Html.Partial((string)(Model.Form))
-                        }
-                        if (Model.FilterContent != null) {
-                            @Display(_contentManager.BuildEditor(Model.FilterContent));
-                        }
-                    }
-                </div>
-                <div class="box-footer align-right padding-right-35">
-                    <button type="submit" value="submit">@T("Apply")</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-@using (Html.BeginFormAntiForgeryPost()) {
-    <div id="AjaxList">
-    </div>
-}
-
-<div id="overlay">
-    <div class="cv-spinner">
-        <span class="spinner"></span>
-    </div>
-</div>

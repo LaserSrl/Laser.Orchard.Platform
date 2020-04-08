@@ -137,7 +137,8 @@ namespace Laser.Orchard.Queries.Services {
                 if (count) { // 
                     var splittedQuery = query.Split(new string[] { "\n", " ", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                     var indexOfFromWord = Array.FindIndex(splittedQuery, x => x.ToLower() == "from");
-                    query = "select count(*) " + string.Join(" ", splittedQuery, indexOfFromWord, splittedQuery.Length - indexOfFromWord);
+                    var indexOfOrderWord = Array.FindLastIndex(splittedQuery, x => x.ToLower() == "order");
+                    query = "select count(*) " + string.Join(" ", splittedQuery, indexOfFromWord, (indexOfOrderWord > 0 ? indexOfOrderWord : splittedQuery.Length) - indexOfFromWord);
                 }
                 var hql = _services.TransactionManager.GetSession()
                     .CreateQuery(query)
