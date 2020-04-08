@@ -19,6 +19,7 @@ using Orchard.Data;
 using Orchard.Projections.Models;
 using Laser.Orchard.Queries.Services;
 using Laser.Orchard.Queries.Models;
+using Laser.Orchard.StartupConfig.Services;
 
 [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
 public class DynamicProjectionDisplayController : Controller {
@@ -27,7 +28,7 @@ public class DynamicProjectionDisplayController : Controller {
     private readonly IContentManager _contentManager;
     private readonly IDynamicProjectionService _dynamicProjectoinService;
     private readonly IQueryPickerService _queryPickerService;
-
+    private readonly IFrontEndEditService _frontEndEditService;
     private readonly ShellSettings _shellSettings;
     public Localizer T { get; set; }
     public ILogger Logger { get; set; }
@@ -40,6 +41,7 @@ public class DynamicProjectionDisplayController : Controller {
         IShapeFactory shapeFactory,
         IDynamicProjectionService dynamicProjectoinService,
         IQueryPickerService queryPickerService,
+        IFrontEndEditService frontEndEditService,
         ShellSettings shellSettings
         ) {
         _orchardServices = orchardServices;
@@ -50,6 +52,7 @@ public class DynamicProjectionDisplayController : Controller {
         _shapeFactory = shapeFactory;
         _dynamicProjectoinService = dynamicProjectoinService;
         _queryPickerService = queryPickerService;
+        _frontEndEditService = frontEndEditService;
         _shellSettings = shellSettings;
     }
 
@@ -166,9 +169,10 @@ public class DynamicProjectionDisplayController : Controller {
             return null;
         }
         else {
-            ContentItem contentForm;
-            contentForm = _contentManager.New("FakeContentForDynamicProjection");
+            IShape contenFormEditShape;
             if (string.IsNullOrWhiteSpace(part.TypeForFilterForm)) {
+                ContentItem contentForm;
+                contentForm = _contentManager.New("FakeContentForDynamicProjection");
                 var contpart = ci.Parts
                     .Where(x => ((dynamic)x).PartDefinition.Name == ci.ContentType)
                     .FirstOrDefault();
@@ -181,15 +185,20 @@ public class DynamicProjectionDisplayController : Controller {
                 else {
                     contentForm = null;
                 }
+                contenFormEditShape = _contentManager.BuildEditor(contentForm);
             }
             else {
                 var contentFormTemplate = _contentManager.New(part.TypeForFilterForm);
+                contenFormEditShape = _contentManager.BuildEditor(contentFormTemplate);
+                _frontEndEditService.BuildFrontEndShape(contenFormEditShape,
+                    (ctpd, typeName) => {
+                        var uselessParts = new string[] { "CommonPart" };
+                        return !uselessParts.Contains(ctpd.PartDefinition.Name); //Excludes uselessParts
+                    },
+                    //All fields
+                    (ctpd) => true);
+
                 // removes useless parts
-                var uselessParts = new string[] { "CommonPart" };
-                var readyForFilterParts = contentFormTemplate.Parts.Where(x => !uselessParts.Contains(x.PartDefinition.Name));
-                foreach (var readyForFilterPart in readyForFilterParts) {
-                    contentForm.Weld(readyForFilterPart);
-                }
             }
             var formfile = string.Empty;
             if (!string.IsNullOrEmpty(part.Shape)) {
@@ -203,7 +212,7 @@ public class DynamicProjectionDisplayController : Controller {
             var viewModel = _shapeFactory.ViewModel()
                 .Part(ci.As<DynamicProjectionPart>())
                 .Form(formfile)
-                .FilterContent(contentForm);
+                .FilterContent(contenFormEditShape);
             return View(viewModel);
         }
     }

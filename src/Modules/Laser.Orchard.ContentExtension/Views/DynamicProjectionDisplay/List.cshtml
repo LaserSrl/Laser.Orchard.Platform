@@ -24,7 +24,7 @@
                             @Html.Partial((string)(Model.Form))
                         }
                         if (Model.FilterContent != null) {
-                            @Display(_contentManager.BuildEditor(Model.FilterContent));
+                            @Display(Model.FilterContent);
                         }
                     }
                 </div>
