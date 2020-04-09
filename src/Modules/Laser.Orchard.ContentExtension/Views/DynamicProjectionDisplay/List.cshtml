@@ -1,5 +1,6 @@
 ﻿@using Orchard.ContentManagement
 @using Orchard.Fields.Fields
+@using Orchard.DisplayManagement;
 @{
     IContentManager _contentManager;
     WorkContext.TryResolve<IContentManager>(out _contentManager);
@@ -8,6 +9,7 @@
     Script.Require("JQuery").AtHead();
     Style.Require("Bootstrap").AtHead();
     Style.Require("AdminDynamicProjections").AtHead();
+    Func<ContentItem, IShape> ToShape = Model.CalculateFilterContentShape;
 }
 <div class="row">
     <div class="col-12">
@@ -21,10 +23,10 @@
                     <input type='hidden' name='page' value='1' />
                     @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
                         if (!string.IsNullOrEmpty(Model.Form)) {
-                            @Html.Partial((string)(Model.Form))
+                            @Html.Partial((string)(Model.Form), (ContentItem)Model.FilterContent) // passing the shape in order to have a way to alterate it
                         }
                         if (Model.FilterContent != null) {
-                            @Display(Model.FilterContent);
+                            @Display(ToShape(Model.FilterContent)); //Model.CalculateFilterContentShape is a delegate calculating shape from content and defined
                         }
                     }
                 </div>

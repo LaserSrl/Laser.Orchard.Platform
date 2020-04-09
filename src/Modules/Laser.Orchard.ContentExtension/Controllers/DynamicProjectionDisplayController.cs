@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using Laser.Orchard.ContentExtension.Models;
+﻿using Laser.Orchard.ContentExtension.Models;
+using Laser.Orchard.ContentExtension.Services;
+using Laser.Orchard.Queries.Models;
+using Laser.Orchard.Queries.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -11,15 +11,13 @@ using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Projections.Services;
+using Orchard.Themes;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
-using Orchard.Themes;
-using Laser.Orchard.ContentExtension.Services;
-using Orchard.Data;
-using Orchard.Projections.Models;
-using Laser.Orchard.Queries.Services;
-using Laser.Orchard.Queries.Models;
-using Laser.Orchard.StartupConfig.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
 public class DynamicProjectionDisplayController : Controller {
@@ -169,36 +167,37 @@ public class DynamicProjectionDisplayController : Controller {
             return null;
         }
         else {
-            IShape contenFormEditShape;
+            Func<ContentItem, IShape> shape;
+            ContentItem contentFormTemplate;
             if (string.IsNullOrWhiteSpace(part.TypeForFilterForm)) {
-                ContentItem contentForm;
-                contentForm = _contentManager.New("FakeContentForDynamicProjection");
-                var contpart = ci.Parts
-                    .Where(x => ((dynamic)x).PartDefinition.Name == ci.ContentType)
-                    .FirstOrDefault();
-                IEnumerable<ContentField> lcf = null;
-                if (contpart != null) {
-                    lcf = contpart.Fields;
-                    foreach (var field in lcf)
-                        contentForm.Parts.FirstOrDefault().Weld(field);
-                }
-                else {
-                    contentForm = null;
-                }
-                contenFormEditShape = _contentManager.BuildEditor(contentForm);
+                contentFormTemplate= _contentManager.New("FakeContentForDynamicProjection");
+                shape = (content) => {
+                    var contpart = ci.Parts
+                        .Where(x => x.PartDefinition.Name == ci.ContentType)
+                        .FirstOrDefault();
+                    IEnumerable<ContentField> lcf = null;
+                    if (contpart != null) {
+                        lcf = contpart.Fields;
+                        foreach (var field in lcf)
+                            content.Parts.FirstOrDefault().Weld(field);
+                    }
+                    else {
+                        content = null;
+                    }
+                    return _contentManager.BuildEditor(content);
+                };
             }
             else {
-                var contentFormTemplate = _contentManager.New(part.TypeForFilterForm);
-                contenFormEditShape = _contentManager.BuildEditor(contentFormTemplate);
-                _frontEndEditService.BuildFrontEndShape(contenFormEditShape,
-                    (ctpd, typeName) => {
+                contentFormTemplate = _contentManager.New(part.TypeForFilterForm);
+                shape = (content) => {
+                    IShape contenFormEditShape = _contentManager.BuildEditor(content);
+                    return _frontEndEditService.BuildFrontEndShape(contenFormEditShape, (ctpd, typeName) => {
                         var uselessParts = new string[] { "CommonPart" };
                         return !uselessParts.Contains(ctpd.PartDefinition.Name); //Excludes uselessParts
                     },
-                    //All fields
-                    (ctpd) => true);
-
-                // removes useless parts
+                        //All fields
+                        (ctpd) => true);
+                };
             }
             var formfile = string.Empty;
             if (!string.IsNullOrEmpty(part.Shape)) {
@@ -212,8 +211,10 @@ public class DynamicProjectionDisplayController : Controller {
             var viewModel = _shapeFactory.ViewModel()
                 .Part(ci.As<DynamicProjectionPart>())
                 .Form(formfile)
-                .FilterContent(contenFormEditShape);
+                .FilterContent(contentFormTemplate)
+                .CalculateFilterContentShape(shape);
             return View(viewModel);
         }
+
     }
 }
