@@ -365,24 +365,66 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             if (context.Data.Element(part.PartDefinition.Name) == null) {
                 return;
             }
+            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuText", x =>part.AdminMenuText = x);
+            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuPosition", x =>part.AdminMenuPosition = x);
+            context.ImportAttribute(part.PartDefinition.Name, "OnAdminMenu", x =>part.OnAdminMenu = Boolean.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "Icon", x => part.Icon = x);
+            context.ImportAttribute(part.PartDefinition.Name, "Shape", x => part.Shape = x);
+            context.ImportAttribute(part.PartDefinition.Name, "TypeForFilterForm", x => part.TypeForFilterForm = x);
+            context.ImportAttribute(part.PartDefinition.Name, "ReturnsHqlResults", x => part.ReturnsHqlResults = Boolean.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "ShapeForResults", x => part.ShapeForResults = x);
 
-            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuText", adminMenuText =>
-                part.AdminMenuText = adminMenuText
-            );
 
-            context.ImportAttribute(part.PartDefinition.Name, "AdminMenuPosition", position =>
-                part.AdminMenuPosition = position
-            );
+            context.ImportAttribute(part.PartDefinition.Name, "Items", x => part.Record.Items = Int32.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "ItemsPerPage", x => part.Record.ItemsPerPage = Int32.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "Offset", x => part.Record.Skip = Int32.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "PagerSuffix", x => part.Record.PagerSuffix = x);
+            context.ImportAttribute(part.PartDefinition.Name, "MaxItems", x => part.Record.MaxItems = Int32.Parse(x));
+            context.ImportAttribute(part.PartDefinition.Name, "DisplayPager", x => part.Record.DisplayPager = Boolean.Parse(x));
+        }
 
-            context.ImportAttribute(part.PartDefinition.Name, "OnAdminMenu", onAdminMenu =>
-                part.OnAdminMenu = Convert.ToBoolean(onAdminMenu)
-            );
+        protected override void ImportCompleted(DynamicProjectionPart part, ImportContentContext context) {
+            // Assign the query only when everything is imported.
+            var query = context.Attribute(part.PartDefinition.Name, "Query");
+            if (query != null) {
+                part.Record.QueryPartRecord = context.GetItemFromSession(query).As<QueryPart>().Record;
+                var layoutIndex = context.Attribute(part.PartDefinition.Name, "LayoutIndex");
+                int layoutIndexValue;
+                if (layoutIndex != null
+                    && Int32.TryParse(layoutIndex, out layoutIndexValue)
+                    && layoutIndexValue >= 0
+                    && part.Record.QueryPartRecord.Layouts.Count > layoutIndexValue) {
+                    part.Record.LayoutRecord = part.Record.QueryPartRecord.Layouts[Int32.Parse(layoutIndex)];
+                }
+            }
         }
 
         protected override void Exporting(DynamicProjectionPart part, ExportContentContext context) {
             context.Element(part.PartDefinition.Name).SetAttributeValue("AdminMenuText", part.AdminMenuText);
             context.Element(part.PartDefinition.Name).SetAttributeValue("AdminMenuPosition", part.AdminMenuPosition);
             context.Element(part.PartDefinition.Name).SetAttributeValue("OnAdminMenu", part.OnAdminMenu);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Icon", part.Icon);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Shape", part.Shape);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("TypeForFilterForm", part.TypeForFilterForm);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ReturnsHqlResults", part.ReturnsHqlResults);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ShapeForResults", part.ShapeForResults);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Items", part.Record.Items);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ItemsPerPage", part.Record.ItemsPerPage);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Offset", part.Record.Skip);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("PagerSuffix", part.Record.PagerSuffix);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("MaxItems", part.Record.MaxItems);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("DisplayPager", part.Record.DisplayPager);
+
+            if (part.Record.QueryPartRecord != null) {
+                var queryPart = _orchardServices.ContentManager.Query<QueryPart, QueryPartRecord>("Query").Where(x => x.Id == part.Record.QueryPartRecord.Id).List().FirstOrDefault();
+                if (queryPart != null) {
+                    var queryIdentity = _orchardServices.ContentManager.GetItemMetadata(queryPart).Identity;
+                    context.Element(part.PartDefinition.Name).SetAttributeValue("Query", queryIdentity.ToString());
+                    context.Element(part.PartDefinition.Name).SetAttributeValue("LayoutIndex", part.Record.QueryPartRecord.Layouts.IndexOf(part.Record.LayoutRecord));
+                }
+            }
         }
+
+
     }
 }

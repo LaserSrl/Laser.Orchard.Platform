@@ -67,6 +67,7 @@ namespace Laser.Orchard.ContentExtension {
                         .WithSetting("QueryPickerPartSettings.IsForHqlQueries", bool.TrueString))
                     .Creatable()
                     .Listable()
+                    .WithIdentity()
                 );
             return 2;
         }
@@ -88,6 +89,7 @@ namespace Laser.Orchard.ContentExtension {
                 type => type
                     .WithPart("QueryPickerPart", p => p
                         .WithSetting("QueryPickerPartSettings.IsForHqlQueries", bool.TrueString))
+                    .WithIdentity()
                 );
             return 2;
         }
