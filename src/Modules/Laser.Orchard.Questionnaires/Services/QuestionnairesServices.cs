@@ -616,6 +616,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                         ConditionType = quest.ConditionType,
                         AllFiles = quest.AllFiles,
                         Condition = quest.Condition,
+                        IsRequired = quest.IsRequired,
                         QuestionnairePartRecord_Id = PartID,
                     };
                     try {
