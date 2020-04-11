@@ -33,8 +33,6 @@ using Laser.Orchard.Commons.Services;
 namespace Laser.Orchard.Questionnaires.Services {
 
     public class QuestionnairesServices : IQuestionnairesServices {
-        private readonly IRepository<QuestionRecord> _repositoryQuestions;
-        private readonly IRepository<AnswerRecord> _repositoryAnswer;
         private readonly IRepository<UserAnswersRecord> _repositoryUserAnswer;
         private readonly IRepository<TitlePartRecord> _repositoryTitle;
         private readonly IOrchardServices _orchardServices;
@@ -49,12 +47,11 @@ namespace Laser.Orchard.Questionnaires.Services {
         private readonly ShellSettings _shellSettings;
         private readonly Lazy<ISmtpChannel> _messageManager;
         private readonly ITokenizer _tokenizer;
+        private readonly IQuestionAnswerRepositoryService _questionAnswerRepositoryService;
 
         public Localizer T { get; set; }
 
         public QuestionnairesServices(IOrchardServices orchardServices,
-            IRepository<QuestionRecord> repositoryQuestions,
-            IRepository<AnswerRecord> repositoryAnswer,
             IRepository<TitlePartRecord> repositoryTitle,
             IRepository<UserAnswersRecord> repositoryUserAnswer,
             IWorkflowManager workflowManager,
@@ -67,10 +64,9 @@ namespace Laser.Orchard.Questionnaires.Services {
             IDateLocalization dateLocalization,
             IScheduledTaskManager taskManager,
             IDateLocalizationServices dateServices,
+            IQuestionAnswerRepositoryService questionAnswerRepositoryService,
             ShellSettings shellSettings) {
             _orchardServices = orchardServices;
-            _repositoryAnswer = repositoryAnswer;
-            _repositoryQuestions = repositoryQuestions;
             _repositoryTitle = repositoryTitle;
             _repositoryUserAnswer = repositoryUserAnswer;
             _workflowManager = workflowManager;
@@ -80,10 +76,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             _templateService = templateService;
             _messageManager = messageManager;
             _tokenizer = tokenizer;
-            // ISmtpChannel _messageManager = null;
-
-
-
+            _questionAnswerRepositoryService = questionAnswerRepositoryService;
             _transactionManager = transactionManager;
             _dateLocalization = dateLocalization;
             _taskManager = taskManager;
@@ -533,6 +526,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var partRecord = item.As<QuestionnairePart>().Record;
                 var part = item.As<QuestionnairePart>();
                 var PartID = partRecord.Id;
+                var storedQuestions = part.Questions.ToList(); // ensure list of questions is in memory
+                var storedAnswers = storedQuestions.SelectMany(x => x.Answers).ToList();// ensure list of answers is in memory
+
                 Mapper.Initialize(cfg => {
                     cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
                     cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
@@ -540,126 +536,97 @@ namespace Laser.Orchard.Questionnaires.Services {
                 Mapper.Map<QuestionnaireEditModel, QuestionnairePart>(partEditModel, part);
                 var mappingA = new Dictionary<string, string>();
 
-                // Update and Delete
-                foreach (var quest in partEditModel.Questions.Where(w => w.Id > 0)) {
-                    QuestionRecord questionRecord = _repositoryQuestions.Get(quest.Id);
-                    Mapper.Initialize(cfg => {
-                        cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                        cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                    });
-                    Mapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
-                    var recordQuestionID = questionRecord.Id;
-                    questionRecord.QuestionnairePartRecord_Id = PartID;
+                // Insert, Update and Delete questions
+                foreach (var quest in partEditModel.Questions) {
+                    QuestionRecord questionRecord;
+                    if (!string.IsNullOrWhiteSpace(quest.Identifier)) {
+                        questionRecord = storedQuestions.SingleOrDefault(x =>
+                        x.Identifier == quest.Identifier) ?? new QuestionRecord(); //Get data of question by Identifier or create a new question
+                    }
+                    else {
+                        questionRecord = storedQuestions.SingleOrDefault(x =>
+                        x.Id == quest.Id) ?? new QuestionRecord(); //Get data of question by Id or create a new question
+                    }
+                    var originalQuestionRecordId = questionRecord.Id; // 0 if new, a valid Id if get from DB
                     if (quest.Delete) {
                         try {
                             foreach (var answer in questionRecord.Answers) {
-                                _repositoryAnswer.Delete(_repositoryAnswer.Get(answer.Id));
+                                if (answer.Id > 0) {
+                                    _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                }
                             }
-                            _repositoryQuestions.Delete(_repositoryQuestions.Get(quest.Id));
+                            if (quest.Id > 0) {
+                                _questionAnswerRepositoryService.DeleteQuestion(quest.Id);
+                            }
                         }
-                        catch (Exception) {
-                            throw new Exception("quest.Delete");
+                        catch (Exception ex) {
+                            throw new Exception("quest.Delete\r\n" + ex.Message);
                         }
                     }
                     else {
+                        Mapper.Initialize(cfg => {
+                            cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
+                        });
+                        Mapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
+                        questionRecord.QuestionnairePartRecord_Id = PartID;
+                        if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
+                            questionRecord.Id = originalQuestionRecordId;
+                        }
+                        _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                        var recordQuestionID = questionRecord.Id;
                         try {
-                            foreach (var answer in quest.Answers.Where(w => w.Id != 0)) { ///Update and delete Answer
-                                AnswerRecord answerRecord = new AnswerRecord();
-                                Mapper.Initialize(cfg => {
-                                    //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                    //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                    cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                                });
-                                Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+                            foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
                                 if (answer.Delete) {
-                                    _repositoryAnswer.Delete(_repositoryAnswer.Get(answer.Id));
+                                    if (answer.Id > 0) {
+                                        _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                    }
                                 }
-                                else if (answer.Id > 0) {
-                                    _repositoryAnswer.Update(answerRecord);
+                                else {
+                                    AnswerRecord answerRecord;
+                                    if (!string.IsNullOrWhiteSpace(answer.Identifier)) {
+                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Identifier == answer.Identifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+                                    }
+                                    else {
+                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+                                    }
+                                    var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
+
+                                    Mapper.Initialize(cfg => {
+                                        cfg.CreateMap<AnswerEditModel, AnswerRecord>();
+                                    });
+                                    Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+                                    answerRecord.QuestionRecord_Id = recordQuestionID;
+                                    if (answerRecord.Id == 0 && originalAnswerRecordId > 0) {
+                                        answerRecord.Id = originalAnswerRecordId;
+                                    }
+                                    _questionAnswerRepositoryService.UpdateAnswer(answerRecord);
+                                    if (answer.OriginalId > 0) {
+                                        mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
+                                    }
                                 }
                             }
-                            _repositoryQuestions.Update(questionRecord);
                         }
-                        catch (Exception) {
-                            throw new Exception("quest.Update");
+                        catch (Exception ex) {
+                            throw new Exception("quest.Update\r\n" + ex.Message);
                         }
                         try {
-                            foreach (var answer in quest.Answers.Where(w => w.Id == 0)) { ///Insert Answer
-
-                                AnswerRecord answerRecord = new AnswerRecord();
-                                Mapper.Initialize(cfg => {
-                                    //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                    //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                    cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                                });
-                                Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
-                                if (answer.Id == 0 && !answer.Delete) {
-                                    answerRecord.QuestionRecord_Id = recordQuestionID;
-                                    _repositoryAnswer.Create(answerRecord);
-                                }
+                            // fix condtions if necessary
+                            if (mappingA.Count() > 0 && questionRecord.Condition != null) {
+                                Regex re = new Regex(@"[0-9]+", RegexOptions.Compiled);
+                                questionRecord.Condition = re.Replace(questionRecord.Condition, match => mappingA[match.Value] != null ? mappingA[match.Value].ToString() : match.Value);
+                                _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                                re = null;
                             }
                         }
-                        catch (Exception) {
-                            throw new Exception("answer.Insert");
+                        catch (Exception ex) {
+                            throw new Exception("quest.CorrezzioneCondizioni\r\n" + ex.Message);
                         }
-                    }
-                }
-                // Create
-                foreach (var quest in partEditModel.Questions.Where(w => w.Id == 0 && w.Delete == false)) {
-                    QuestionRecord questionRecord = new QuestionRecord {
-                        Position = quest.Position,
-                        Published = quest.Published,
-                        Question = quest.Question,
-                        QuestionType = quest.QuestionType,
-                        AnswerType = quest.AnswerType,
-                        Section = quest.Section,
-                        ConditionType = quest.ConditionType,
-                        AllFiles = quest.AllFiles,
-                        Condition = quest.Condition,
-                        QuestionnairePartRecord_Id = PartID,
-                    };
-                    try {
-                        _repositoryQuestions.Create(questionRecord);
-                        var createdQuestionId = questionRecord.Id;
-                        _repositoryQuestions.Flush();
-                        foreach (var answer in quest.Answers) {
-                            AnswerRecord answerRecord = new AnswerRecord();
-                            Mapper.Initialize(cfg => {
-                                //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                            });
-                            Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
-                            if (answer.Id == 0) {
-                                answerRecord.QuestionRecord_Id = createdQuestionId;
-                                _repositoryAnswer.Create(answerRecord);
-                                if (answer.OriginalId > 0) {
-                                    mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
-                                }
-                                _repositoryAnswer.Flush();
-                            }
-                        }
-                    }
-                    catch (Exception) {
-                        throw new Exception("quest.Create");
-                    }
 
-                    try {
-                        // correggo gli id delle condizioni se necessario
-                        if (mappingA.Count() > 0 && questionRecord.Condition != null) {
-                            Regex re = new Regex(@"[0-9]+", RegexOptions.Compiled);
-                            questionRecord.Condition = re.Replace(questionRecord.Condition, match => mappingA[match.Value] != null ? mappingA[match.Value].ToString() : match.Value);
-                            _repositoryQuestions.Update(questionRecord);
-                            re = null;
-                        }
-                    }
-                    catch (Exception) {
-                        throw new Exception("quest.CorrezzioneCondizioni");
                     }
                 }
             }
-            catch (Exception) {
-                throw new Exception("quest.UpdateTotale");
+            catch (Exception ex) {
+                throw new Exception("quest.UpdateTotale\r\n" + ex.Message);
             }
         }
 
@@ -728,7 +695,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public AnswerRecord GetAnswer(int id) {
-            return (_repositoryAnswer.Get(id));
+            return (_questionAnswerRepositoryService.AnswersRepository().Get(id));
         }
 
         private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
@@ -813,7 +780,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
             var questionsCount = questionnaireData.Questions.Count();
-            var questionnaireStatsQuery = _repositoryUserAnswer.Table.Join(_repositoryQuestions.Table,
+            var questionnaireStatsQuery = _repositoryUserAnswer.Table.Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
                         l => l.QuestionRecord_Id, r => r.Id, (l, r) => new { UserAnswers = l, Questions = r })
                         .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
 
@@ -882,7 +849,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             var fullStat = new List<QuestStatViewModel>();
             foreach (var quest in listaQuest) {
                 var title = quest.As<TitlePart>();
-                var stats = _repositoryUserAnswer.Table.Join(_repositoryQuestions.Table,
+                var stats = _repositoryUserAnswer.Table.Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
                         l => l.QuestionRecord_Id, r => r.Id, (l, r) => new { UserAnswers = l, Questions = r })
                         .Where(w => w.Questions.QuestionType == type && w.Questions.QuestionnairePartRecord_Id == quest.Id)
                         .GroupBy(g => new { g.Questions.QuestionnairePartRecord_Id, g.UserAnswers.QuestionText, g.UserAnswers.AnswerText })
@@ -897,5 +864,6 @@ namespace Laser.Orchard.Questionnaires.Services {
             }
             return fullStat.OrderBy(o => o.QuestionnaireTitle).ThenBy(o => o.Question).ThenBy(o => o.Answer).ToList();
         }
+
     }
 }
