@@ -237,5 +237,12 @@ namespace Laser.Orchard.Questionnaires {
             SchemaBuilder.AlterTable("UserAnswersRecord", t => t.AlterColumn("SessionID", col => col.WithType(System.Data.DbType.String).WithLength(400)));
             return 26;
         }
+        public int UpdateFrom26() {
+            SchemaBuilder.AlterTable("QuestionRecord", t => t.AddColumn<string>("Identifier",
+                      column => column.Unlimited()));
+            SchemaBuilder.AlterTable("AnswerRecord", t => t.AddColumn<string>("Identifier",
+                      column => column.Unlimited()));
+            return 27;
+        }
     }
 }

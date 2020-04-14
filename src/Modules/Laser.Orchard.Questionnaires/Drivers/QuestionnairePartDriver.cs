@@ -117,11 +117,10 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                 if (viewModel.UseRecaptcha) { // se è previsto un recaptcha creo l'html e il js del recaptcha
                     viewModel.CaptchaHtmlWidget = _capthcaServices.GenerateCaptcha();
                 }
-                
                 return ContentShape("Parts_Questionnaire_FrontEnd_Edit",
-                                 () => shapeHelper.Parts_Questionnaire_FrontEnd_Edit(
-                                     Questionnaire: viewModel,
-                                     Prefix: Prefix));
+                 () => shapeHelper.EditorTemplate(TemplateName: "Parts/Questionnaire_FrontEnd_Edit",
+                     Model: viewModel,
+                     Prefix: Prefix));
             } else {
                 throw new OrchardSecurityException(T("You have to be logged in, before answering a questionnaire!"));
             }
@@ -161,7 +160,6 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     if (part.ContentItem.Id != 0) {
                         // se per caso part.Id è diversa dall'Id registrato nei record relazionati, arrivo da una traduzione, quindi devo trattare tutto come se fosse questions e answers nuove
                         foreach (var q in editModel.Questions) {
-
                             if (part.Id != q.QuestionnairePartRecord_Id) {
                                 q.QuestionnairePartRecord_Id = part.Id;
                                 q.Id = 0;
@@ -214,6 +212,8 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                 question.SetAttributeValue("IsRequired", q.IsRequired);
                 question.SetAttributeValue("Condition", q.Condition);
                 question.SetAttributeValue("ConditionType", q.ConditionType);
+                question.SetAttributeValue("Identifier", q.Identifier);
+
                 ExportMedia(question, q.AllFiles, "AllFiles");
                 foreach (var a in q.Answers) {
                     XElement answer = new XElement("Answer");
@@ -221,6 +221,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     answer.SetAttributeValue("Position", a.Position);
                     answer.SetAttributeValue("Published", a.Published);
                     answer.SetAttributeValue("Answer", a.Answer);
+                    answer.SetAttributeValue("Identifier", a.Identifier);
                     answer.SetAttributeValue("CorrectResponse", a.CorrectResponse);
                     ExportMedia(answer, a.AllFiles, "AllFiles");
                     question.Add(answer);
@@ -256,7 +257,8 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                         Answer = a.Attribute("Answer") != null ? a.Attribute("Answer").Value : "",
                         OriginalId = a.Attribute("OriginalId") != null ? int.Parse(a.Attribute("OriginalId").Value) : 0,
                         CorrectResponse = a.Attribute("CorrectResponse") != null ? bool.Parse(a.Attribute("CorrectResponse").Value) : false,
-                        AllFiles = ImportMedia(a, "AllFiles")
+                        AllFiles = ImportMedia(a, "AllFiles"),
+                        Identifier = a.Attribute("Identifier") != null ? a.Attribute("Identifier").Value : "",
                     };
                     answerModelList.Add(answerEditModel);
                 }
@@ -273,7 +275,8 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     Condition = q.Attribute("Condition") == null ? null : q.Attribute("Condition").Value,
                     ConditionType = q.Attribute("ConditionType") != null ? (ConditionType)Enum.Parse(typeof(ConditionType), q.Attribute("ConditionType").Value) : ConditionType.Show,
                     OriginalId = q.Attribute("OriginalId") != null ? int.Parse(q.Attribute("OriginalId").Value) : 0,
-                    AllFiles = ImportMedia(q, "AllFiles")
+                    AllFiles = ImportMedia(q, "AllFiles"),
+                    Identifier = q.Attribute("Identifier") != null ? q.Attribute("Identifier").Value : ""
                 };
                 questionModelList.Add(questionEditModel);
             }

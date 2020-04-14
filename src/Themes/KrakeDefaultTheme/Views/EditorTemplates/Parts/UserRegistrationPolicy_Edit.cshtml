@@ -7,31 +7,34 @@
     <div class="space-20"></div>
 </div>
 <div class="panel-group" id="accordion">
-   @for (int i = 0; i < Model.Count; i++) {
-       var acceptTypePolicy = ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
-       
+    @for (int i = 0; i < Model.Count; i++) {
+        var acceptTypePolicy = Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.Policy
+                           || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
+                           || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
+
         @Html.HiddenFor(m => m[i].PolicyId)
         @Html.HiddenFor(m => m[i].UserHaveToAccept)
+        @Html.HiddenFor(m => m[i].Policy.Type)
+        @Html.HiddenFor(m => m[i].Policy.Title)
+        @Html.HiddenFor(m => m[i].Policy.Body)
         <div class="panel panel-default">
-          <div class="panel-heading">
-               <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-@Model[i].PolicyId">@(((dynamic)Model[i].PolicyText).TitlePart.Title)</a></h4>
-          </div>
-          <div id="collapse-@Model[i].PolicyId" class="panel-collapse collapse @((i==0)?"in":"")">
-            <div class="panel-body">
-                @Html.Raw(((dynamic)Model[i].PolicyText).BodyPart.Text)
-                <br>
-                <div class="text-right">
-                    @if (((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == null || acceptTypePolicy) {// Privacy
-                        <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"}) @T("Accept")</label>
-                        <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"}) @T("Don't Accept")</label>
-                    } else { // Regolamento
-                        <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
-                    }
+            <div class="panel-heading">
+                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-@Model[i].PolicyId">@(Model[i].Policy.Title) </a></h4>
+            </div>
+            <div id="collapse-@Model[i].PolicyId" class="panel-collapse collapse @((i==0)?"in":"")">
+                <div class="panel-body">
+                    @Html.Raw(Model[i].Policy.Body)
+                    <br>
+                    <div class="text-right">
+                        @if (Model[i].Policy.Type == null || acceptTypePolicy) {// Privacy
+                            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept" }) @T("Accept")</label>
+                            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept" }) @T("Don't Accept")</label>
+                        } else { // Regolamento
+                            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
+                        }
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
     }
 </div>
