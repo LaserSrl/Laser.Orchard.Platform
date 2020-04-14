@@ -37,7 +37,7 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-index">
         <h3>@Html.TitleForPage(T("Create a New Account").ToString())</h3>
-        <p>@T("Use the form below to create a new account.")</p>
+        <p>@T("Use the form below to create a new account.")</p>TOPOLINO
         <p>@requirementsMessage</p>
         @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
         @using (Html.BeginFormAntiForgeryPost(Url.Action("Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) {
@@ -61,6 +61,11 @@
             <div class="space-20"></div>
             @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" })
             @Html.ValidationMessage("confirmPassword")
+
+            if (Model.UserProfile != null) { // if UserProfile && ExtendedRegistration are enabled, it shows all user parts/fields
+            <div class="space-20"></div>
+                @Display(Model.UserProfile)
+            }
 
             <div class="space-20"></div>
             <button class="submit" type="submit">@T("Register")</button>
