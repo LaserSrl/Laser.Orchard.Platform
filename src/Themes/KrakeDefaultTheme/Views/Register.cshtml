@@ -37,7 +37,7 @@
     </div>
     <div class="col-xs-12 col-sm-8 col-index">
         <h3>@Html.TitleForPage(T("Create a New Account").ToString())</h3>
-        <p>@T("Use the form below to create a new account.")</p>TOPOLINO
+        <p>@T("Use the form below to create a new account.")</p>
         <p>@requirementsMessage</p>
         @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
         @using (Html.BeginFormAntiForgeryPost(Url.Action("Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) {
