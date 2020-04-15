@@ -41,6 +41,12 @@
             @T("Include on front end Pages")
         </label>
     </div>
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">
+            @Html.EditorFor(m => m.AnonymizeIp, new { title = @T("Track but anonymize IP").Text })
+            @T("Track but anonymize ip (optional)")
+        </label>
+    </div>
 
     <div class="box box-default">
         <div class="box-header with-border">
@@ -54,12 +60,6 @@
                          @class ="form-control",
                          placeholder = @T("Domain name...").Text,
                          title = @T("Domain name override").Text })
-            </div>
-            <div class="checkbox">
-                <label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">
-                    @Html.EditorFor(m => m.AnonymizeIp, new { title = @T("Track but anonymize IP").Text })
-                    @T("Track but anonymize ip (optional)")
-                </label>
             </div>
             <div>
                 @Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>

@@ -35,6 +35,16 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         public IList<CookieType> GetCookieTypes() {
+            if (SettingsPart != null
+                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
+                && SettingsPart.UseTagManager) {
+                // We need to return all cookie types for tag manager, because 
+                // addition of some cookies may be managed by tags, and they 
+                // will need to be told whether any type is refused.
+                return new List<CookieType>() {
+                    CookieType.Technical, CookieType.Statistical,
+                    CookieType.Preferences, CookieType.Marketing};
+            }
             return new List<CookieType>() { CookieType.Technical, CookieType.Statistical };
         }
 
@@ -98,6 +108,37 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("<!-- Google Tag Manager -->");
             script.AppendLine("<script type='text/javascript'>");
             script.AppendLine("window.dataLayer = window.dataLayer || [];");
+            if (SettingsPart.AnonymizeIp || !allowedTypes.Contains(CookieType.Statistical)) {
+                // insert into the datalayer a variable that tells to anonymize
+                // ips for gathered interactions (i.e. fired tags)
+                script.AppendLine("window.dataLayer.push({'anonymizeIp': 'true'});");
+            }
+            // set the initial (on page load) values of cookie consents
+            script.AppendLine("window.dataLayer.push({'preferencesCookiesAccepted': '" 
+                + allowedTypes.Contains(CookieType.Preferences).ToString().ToLowerInvariant() + "'});");
+            script.AppendLine("window.dataLayer.push({'statisticalCookiesAccepted': '"
+                + allowedTypes.Contains(CookieType.Statistical).ToString().ToLowerInvariant() + "'});");
+            script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
+                + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
+            // script that handles changes in the settings for cookie consent
+            script.AppendLine("$(document)");
+            script.AppendLine("	.on('cookieConsent.reset', function(e) {");
+            script.AppendLine("		window.dataLayer.push({");
+            script.AppendLine("			'event': 'cookieConsent',");
+            script.AppendLine("			'preferencesCookiesAccepted': false,");
+            script.AppendLine("			'statisticalCookiesAccepted': false,");
+            script.AppendLine("			'marketingCookiesAccepted': false");
+            script.AppendLine("		});");
+            script.AppendLine("	})");
+            script.AppendLine("	.on('cookieConsent.accept', function(e, options) {");
+            script.AppendLine("		window.dataLayer.push({");
+            script.AppendLine("			'event': 'cookieConsent',");
+            script.AppendLine("			'preferencesCookiesAccepted': options.preferences,");
+            script.AppendLine("			'statisticalCookiesAccepted': options.statistical,");
+            script.AppendLine("			'marketingCookiesAccepted': options.marketing");
+            script.AppendLine("		});");
+            script.AppendLine("	});");
+            // done handlers for changes in cookie consent
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
             script.AppendLine("new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],");
@@ -114,14 +155,31 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         public string GetNoScript() {
-            var snippet = new StringBuilder();
+            //Determine if we're on an admin page
+            bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
-            snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
-            snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
-            snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
-            snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
+            //Get our part data/record if available for rendering scripts
+            if (SettingsPart == null
+                || string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
+                || (!SettingsPart.TrackOnAdmin && isAdmin)
+                || (!SettingsPart.TrackOnFrontEnd && !isAdmin)) {
+                return string.Empty; // Not a valid configuration, ignore
+            }
 
-            return snippet.ToString();
+            // Tag manager deployment
+            if (SettingsPart.UseTagManager) {
+
+                var snippet = new StringBuilder();
+
+                snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
+                snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
+                snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
+                snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
+
+                return snippet.ToString();
+            }
+
+            return string.Empty;
         }
     }
 }
