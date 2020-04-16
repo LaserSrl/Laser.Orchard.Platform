@@ -1,0 +1,52 @@
+﻿.territories-list .single-territory {
+  padding-left: 30px; }
+  .territories-list .single-territory .territory-info .territory-text {
+    display: inline-block;
+    font-weight: bold; }
+  .territories-list .single-territory .territory-info .radio-buttons {
+    display: inline-block;
+    font-size: smaller;
+    text-transform: uppercase; }
+    .territories-list .single-territory .territory-info .radio-buttons:before {
+      content: '('; }
+    .territories-list .single-territory .territory-info .radio-buttons:after {
+      content: ')'; }
+    .territories-list .single-territory .territory-info .radio-buttons input[type=text].iso-alpha-2 {
+      width: 4em;
+      display: none; }
+    .territories-list .single-territory .territory-info .radio-buttons .country-radio:checked ~ input[type=text].iso-alpha-2 {
+      display: inline-block; }
+  .territories-list .single-territory .territory-info .territory-children-counts {
+    display: block;
+    font-size: smaller;
+    text-transform: uppercase;
+    cursor: pointer; }
+    .territories-list .single-territory .territory-info .territory-children-counts:after {
+      border-style: solid;
+      border-width: 0.25em 0.25em 0 0;
+      content: '';
+      display: inline-block;
+      height: 0.75em;
+      left: 0.15em;
+      position: relative;
+      top: -0.15em;
+      transform: rotate(135deg);
+      vertical-align: middle;
+      width: 0.75em; }
+    .territories-list .single-territory .territory-info .territory-children-counts .single-count {
+      display: inline-block; }
+
+.advanced-addresses .order-address-editor .address-editor .address-input {
+  display: inline-block; }
+  .advanced-addresses .order-address-editor .address-editor .address-input .row {
+    margin-left: 0px;
+    margin-right: 0px; }
+    .advanced-addresses .order-address-editor .address-editor .address-input .row label {
+      font-size: smaller;
+      display: inline-block;
+      color: black; }
+  .advanced-addresses .order-address-editor .address-editor .address-input.address-text-input input, .advanced-addresses .order-address-editor .address-editor .address-input.address-text-input select {
+    width: 100%;
+    min-width: unset; }
+  .advanced-addresses .order-address-editor .address-editor .address-input .hint {
+    display: inline-block; }

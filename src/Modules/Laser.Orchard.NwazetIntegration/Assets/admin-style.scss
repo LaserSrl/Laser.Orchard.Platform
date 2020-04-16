@@ -1,0 +1,118 @@
+﻿.territories-list {
+    .single-territory {
+        padding-left: 30px;
+
+        .territory-info {
+            .territory-text {
+                display: inline-block;
+                font-weight: bold;
+            }
+
+            .radio-buttons {
+                display: inline-block;
+                font-size: smaller;
+                text-transform: uppercase;
+
+                &:before {
+                    content: '(';
+                }
+
+                &:after {
+                    content: ')';
+                }
+
+                input[type=radio] {
+                }
+
+                .radio-label {
+                }
+
+                input[type=text] {
+                    &.iso-alpha-2 {
+                        width: 4em;
+                        display: none;
+                    }
+                }
+
+                .country-radio:checked ~ input[type=text].iso-alpha-2 {
+                    display: inline-block;
+                }
+            }
+
+            .territory-children-counts {
+                display: block;
+                font-size: smaller;
+                text-transform: uppercase;
+                cursor: pointer;
+
+                &:before {
+                    //content: '(';
+                }
+
+                &:after {
+                    //content: ')';
+                    border-style: solid;
+                    border-width: 0.25em 0.25em 0 0;
+                    content: '';
+                    display: inline-block;
+                    height: 0.75em;
+                    left: 0.15em;
+                    position: relative;
+                    top: -0.15em;
+                    transform: rotate(135deg);
+                    vertical-align: middle;
+                    width: 0.75em;
+                }
+
+                .single-count {
+                    display: inline-block;
+                }
+
+                .countries-count {
+                }
+
+                .provinces-count {
+                }
+
+                .cities-count {
+                }
+            }
+        }
+
+        .children-list {
+        }
+    }
+}
+.advanced-addresses {
+
+    .order-address-editor {
+
+        .address-editor {
+            .address-input {
+                display: inline-block;
+
+                .row {
+                    margin-left: 0px;
+                    margin-right: 0px;
+
+                    label {
+                        font-size: smaller;
+                        display: inline-block;
+                        color: black;
+                    }
+                }
+
+                &.address-text-input {
+                    input, select {
+                        width: 100%;
+                        min-width: unset;
+                    }
+                }
+
+                .hint {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

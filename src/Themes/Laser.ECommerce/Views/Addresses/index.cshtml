@@ -12,42 +12,44 @@
     }
 }
 <div class="ship">
-<h3>@title</h3>
-<div class="ship-errors"></div>
+    <h3>@title</h3>
+    <div class="ship-errors"></div>
+    @Html.ValidationSummary()
 
-@using (Html.BeginFormAntiForgeryPost(Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
-    <div class="contact-left">
-        <fieldset>
-            <h4>@T("Shipping Address")</h4>
-            @Display.AddressForm(Prefix: "shippingAddress", Address: Model.ShippingAddress, IncludeCountry: true, ListAddress: Model.ListAvailableShippingAddress)
-        </fieldset>
-        <fieldset class="toggle-billing">
-            <input id="toggle-billing-address" type="checkbox" checked="checked" />
-            <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
-        </fieldset>
-        <fieldset class="billing-address">
-            <h4>@T("Billing Address")</h4>
-            @Display.AddressForm(Prefix: "billingAddress", Address: Model.BillingAddress, IncludeCountry: true, ListAddress: Model.ListAvailableBillingAddress)
-        </fieldset>
-        <h4>Contacts</h4>
-       
-        <input id="@Html.Id("Email")" type="text" name="@Html.Name("Email")" value="@Model.Email" class="input-large required" placeholder="@T("Email")"/>
-       
-         <div class="hint">@T("Please provide an e-mail address for us to use in order to give you updates on your order.")</div>
 
-          <input id="@Html.Id("PhonePrefix")" type="text" name="@Html.Name("PhonePrefix")" value="@Model.PhonePrefix" class="input-large" placeholder="@T("International Phone Prefix")" />
-       
-          <div class="hint"> @T("Please provide an international phone prefix, For example 0039 for Italy")</div>
-        <input id="@Html.Id("Phone")" type="text" name="@Html.Name("Phone")" value="@Model.Phone" class="input-large" placeholder="@T("Phone")" />
-      
-   <div class="hint">@T("Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries.")</div>
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
+        <div class="contact-left">
+            <fieldset>
+                <h4>@T("Shipping Address")</h4>
+                @Display.AddressForm(Prefix: "shippingAddress", Address: Model.ShippingAddress, IncludeCountry: true, ListAddress: Model.ListAvailableShippingAddress)
+            </fieldset>
+            <fieldset class="toggle-billing">
+                <input id="toggle-billing-address" type="checkbox" checked="checked" />
+                <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
+            </fieldset>
+            <fieldset class="billing-address">
+                <h4>@T("Billing Address")</h4>
+                @Display.AddressForm(Prefix: "billingAddress", Address: Model.BillingAddress, IncludeCountry: true, ListAddress: Model.ListAvailableBillingAddress)
+            </fieldset>
+            <h4>Contacts</h4>
 
-          <textarea id="@Html.Id("specialInstructions")" name="@Html.Name("SpecialInstructions")" rows="6" cols="80" class="input-xxlarge"  placeholder="@T("Special Instructions")"></textarea>
-       
-        <div class="actions">
-            <button type="submit" class="back-button" id="cartButton" name="Submit" value="cart">@T("Back")</button>
-            <button type="submit" class="submit-button" id="payButton" name="Submit" value="save">@T("Next")</button>
+            <input id="@Html.Id("Email")" type="text" name="@Html.Name("Email")" value="@Model.Email" class="input-large required" placeholder="@T("Email")" />
+
+            <div class="hint">@T("Please provide an e-mail address for us to use in order to give you updates on your order.")</div>
+
+            <input id="@Html.Id("PhonePrefix")" type="text" name="@Html.Name("PhonePrefix")" value="@Model.PhonePrefix" class="input-large" placeholder="@T("International Phone Prefix")" />
+
+            <div class="hint"> @T("Please provide an international phone prefix, For example 0039 for Italy")</div>
+            <input id="@Html.Id("Phone")" type="text" name="@Html.Name("Phone")" value="@Model.Phone" class="input-large" placeholder="@T("Phone")" />
+
+            <div class="hint">@T("Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries.")</div>
+
+            <textarea id="@Html.Id("specialInstructions")" name="@Html.Name("SpecialInstructions")" rows="6" cols="80" class="input-xxlarge" placeholder="@T("Special Instructions")"></textarea>
+
+            <div class="actions">
+                <button type="submit" class="back-button" id="cartButton" name="Submit" value="cart">@T("Back")</button>
+                <button type="submit" class="submit-button" id="payButton" name="Submit" value="save">@T("Next")</button>
+            </div>
         </div>
-    </div>
-}
-    </div>
+    }
+</div>

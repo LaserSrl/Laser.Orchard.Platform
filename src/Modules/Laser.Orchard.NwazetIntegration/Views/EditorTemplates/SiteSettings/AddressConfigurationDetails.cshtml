@@ -1,0 +1,152 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration;
+@model AddressConfigurationSiteSettingsPartViewModel
+@functions{
+    int index = -1;
+    string baseFieldName;
+    string codeFieldName;
+    Dictionary<TerritoryAdministrativeType, string> administrativeTypeNames;
+}
+@{
+    Style.Include("admin-style.css", "admin-style.min.css").AtHead();
+
+    var hierarchy = Model.CountriesHierarchy;
+
+    baseFieldName = Html.FieldNameFor(m => m.TerritoryTypeMap);
+    //codeFieldName = Html.FieldNameFor(m => m.TerritoryISOCode);
+
+    administrativeTypeNames = new Dictionary<TerritoryAdministrativeType, string>();
+    administrativeTypeNames.Add(TerritoryAdministrativeType.None, T("Undefined").Text);
+    administrativeTypeNames.Add(TerritoryAdministrativeType.Country, T("Country").Text);
+    administrativeTypeNames.Add(TerritoryAdministrativeType.Province, T("Province").Text);
+    administrativeTypeNames.Add(TerritoryAdministrativeType.City, T("City").Text);
+}
+@helper DisplayTerritory(AddressConfigurationTerritoryViewModel vm, bool isChild = false) { 
+var radioChecks = new bool[4];
+radioChecks[0] = vm.IsCountry;
+radioChecks[1] = vm.IsProvince;
+radioChecks[2] = vm.IsCity;
+radioChecks[3] = !(vm.IsCountry || vm.IsProvince || vm.IsCity);
+index++;
+
+<div class="single-territory">
+    @* UI for a single teritory here:
+        {Its name/displaytext} ({administrative type})
+        (The count of children "values" for country/province/city)
+         *@
+    <div class="territory-info">
+        <div class="territory-text">
+            @vm.DisplayText @T("(Administrative type: {0})", administrativeTypeNames[vm.AdministrativeType])
+        </div>
+        @if (vm.ChildrenCount > 0) {
+        <div class="territory-children-counts" territory-id="@vm.TerritoryId" title="@T("Click to expand.")">
+            (<div class="single-count">@T("Children: {0}", vm.ChildrenCount)</div>
+            @if (0 < vm.ChildCountries) {
+                <div class="single-count countries-count">@T("Countries: {0}", vm.ChildCountries)</div>
+            }
+            @if (0 < vm.ChildProvinces) {
+                <div class="single-count provinces-count">@T("Provinces: {0}", vm.ChildProvinces)</div>
+            }
+            @if (0 < vm.ChildCities) {
+                <div class="single-count cities-count">@T("Cities: {0}", vm.ChildCities)</div>
+            })
+        </div>
+        }
+    </div>
+    @*If the territory has children, we should display them too*@
+    @*@if (vm.Children.Any()) {
+        <div class="children-list" style="display:none;">
+            @foreach (var territory in vm.Children) {
+                @DisplayTerritory(territory, true)
+            }
+        </div>
+    }*@
+</div>
+    
+    }
+@if (hierarchy != null && hierarchy.Record.Territories.Any()) {
+    // Initially only show the top level?
+    // Each territory may be marked as Country, Province or City 
+    <div class="territories-list">
+        @foreach(var territory in Model.TopLevel) {
+            @DisplayTerritory(territory)
+        }
+    </div>
+    
+}
+
+@using(Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var territoryIndex = @index  ;
+            var _handleClick = function (el) {
+                $('.territory-children-counts').off('click');
+                // el is the clicked element
+                $.post('@Url.Action("GetChildren", "AddressConfigurationAdmin", new { area = "Laser.Orchard.NwazetIntegration" })',
+                    {
+                    territoryId: $(el).attr('territory-id'),
+                    __RequestVerificationToken: $(el)
+                        .closest("form")
+                        .find("input[name='__RequestVerificationToken']")
+                        .val()
+                })
+                    .done(function (data) {
+                        if (data.Success) {
+                            // we need to draw the next hierarchy level inside
+                            // $(el).parent().parent().find('>.children-list')
+                            if (data.Territories && data.Territories.length && data.Territories.length > 0) {
+                                var territoriesDiv = document.createElement('div');
+                                territoriesDiv.setAttribute("class", "children-list");
+                                for (i = 0; i < data.Territories.length; i++) {
+                                    var thisIndex = ++territoryIndex;
+                                    // 1. main div for the territory
+                                    var territoryDiv = document.createElement('div');
+                                    territoryDiv.setAttribute("class", "single-territory");
+                                    // hidden inputs for properties that we are editing
+                                    // 1.3 div for this territory's information
+                                    var tInfoDiv = document.createElement('div');
+                                    tInfoDiv.setAttribute("class", "territory-info");
+                                    // 1.3.1 title
+                                    var tTitleDiv = document.createElement('div');
+                                    tTitleDiv.setAttribute("class", "territory-text");
+                                    tTitleDiv.appendChild(document.createTextNode(data.Territories[i].DisplayText));
+                                    tInfoDiv.appendChild(tTitleDiv);
+                                    
+                                    // 1.3.3 Children
+                                    if (data.Territories[i].HasChildren) {
+                                        var childrenDiv = document.createElement('div');
+                                        childrenDiv.setAttribute("class", "territory-children-counts");
+                                        childrenDiv.setAttribute("territory-id", data.Territories[i].Id);
+                                        childrenDiv.setAttribute("title", "@T("Click to expand.")");
+                                        // 1.3.3.1 children count
+                                        var countDiv = document.createElement('div');
+                                        countDiv.setAttribute("class", "single-count");
+                                        countDiv.appendChild(document.createTextNode("@T("Children: ") " + data.Territories[i].ChildrenCount));
+                                        childrenDiv.appendChild(document.createTextNode(" ("));
+                                        childrenDiv.appendChild(countDiv);
+                                        childrenDiv.appendChild(document.createTextNode(" ) "));
+                                        tInfoDiv.appendChild(childrenDiv);
+                                    }
+                                    territoryDiv.appendChild(tInfoDiv);
+
+                                    territoriesDiv.appendChild(territoryDiv);
+                                }
+                                $(el).parent().parent()[0].appendChild(territoriesDiv);
+                            }
+                        }
+                    })
+                    .fail(function () { })
+                    .always(function () {
+                        $('.territory-children-counts').on('click', function () {
+                            _handleClick(this);
+                            //$(this).parent().parent().find('>.children-list').toggle();
+                        });
+                    });
+            };
+            $('.territory-children-counts').on('click', function () {
+                _handleClick(this);
+                //$(this).parent().parent().find('>.children-list').toggle();
+            });
+        });
+    </script>
+}

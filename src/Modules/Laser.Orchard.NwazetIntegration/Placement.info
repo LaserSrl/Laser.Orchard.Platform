@@ -5,4 +5,13 @@
     </Match>
   </Match>
   <Place Parts_NwazetContact="Content:5" />
+  <Place SiteSettings_AddressConfiguration="Content:4.5" />
+  <Place SiteSettings_AddressConfiguration_Details="Content:1" />
+  <Place Parts_TerritoryHierarchy_IsCountriesHierarchy="Content:2.3"/>
+  <Place Parts_TerritoryHierarchy_IsCountriesHierarchyLocalization="Content:2.3"/>
+  <Place Parts_TerritoryPart_IsSelectedCountry="Content:2.1"/>
+  <Place Parts_Territory_AdministrativeType_Edit="Content:2.1" />
+  <Place Parts_Territory_AddressType_Edit="Content:2.1" />
+  <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
+  <Place Parts_Product_TagManager="Content:1"/>
 </Placement>

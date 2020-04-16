@@ -42,6 +42,13 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 return "";
             }
 
+            public override Type GetPosActionControllerType() {
+                return typeof(object);
+            }
+
+            public override string GetPosActionName() {
+                return "";
+            }
         }
         private readonly IRepository<PaymentRecord> _repository;
         private readonly IOrchardServices _orchardServices;

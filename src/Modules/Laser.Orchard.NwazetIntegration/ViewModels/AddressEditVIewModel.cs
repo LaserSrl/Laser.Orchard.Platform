@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
     public class AddressEditViewModel {
@@ -14,10 +15,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             Errors = new List<string>();
             Information = new List<string>();
         }
-        public AddressEditViewModel(AddressRecord address) : this(){
+        public AddressEditViewModel(AddressRecord address) : this() {
             AddressRecord = address;
         }
-        public AddressEditViewModel(int id) :this(){
+        public AddressEditViewModel(int id) : this() {
             AddressRecord = new AddressRecord() { Id = id };
         }
 
@@ -62,10 +63,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             get { return AddressRecord.City; }
             set { AddressRecord.City = value; }
         }
+        [Required]
         public string Province {
             get { return AddressRecord.Province; }
             set { AddressRecord.Province = value; }
         }
+        [Required]
         public string PostalCode {
             get { return AddressRecord.PostalCode; }
             set { AddressRecord.PostalCode = value; }
@@ -74,5 +77,33 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             get { return AddressRecord.Country; }
             set { AddressRecord.Country = value; }
         }
+
+        /// <summary>
+        /// Id of the TerritoryInternalRecord that matches the country
+        /// </summary>
+        public int CountryId {
+            get { return AddressRecord.CountryId; }
+            set { AddressRecord.CountryId = value; }
+        }
+        /// <summary>
+        /// Id of the TerritoryInternalRecord that matches the city
+        /// </summary>
+        public int CityId {
+            get { return AddressRecord.CityId; }
+            set { AddressRecord.CityId = value; }
+        }
+        /// <summary>
+        /// Id of the TerritoryInternalRecord that matches the province
+        /// </summary>
+        public int ProvinceId {
+            get { return AddressRecord.ProvinceId; }
+            set { AddressRecord.ProvinceId = value; }
+        }
+
+        public IEnumerable<SelectListItem> Countries { get; set; }
+        // These next two lists are used where in the frontend we allow the choice
+        // as to whether the address is shipping or billing.
+        public IEnumerable<SelectListItem> ShippingCountries { get; set; }
+        public IEnumerable<SelectListItem> BillingCountries { get; set; }
     }
 }
