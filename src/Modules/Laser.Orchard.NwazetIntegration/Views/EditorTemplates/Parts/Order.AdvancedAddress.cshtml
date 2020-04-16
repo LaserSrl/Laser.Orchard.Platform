@@ -1,0 +1,46 @@
+﻿
+@model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
+@* This will display the advanced address and hide the "standard" one.
+    To avoid changing the OrderPart, this view, its partials and the 
+    underlying driver are somewhat dependent on it. In particular, changes
+    in the view for OrderPart addresses will reflect on this view and
+    on the partials used for each address here. *@
+@{ 
+    Style.Require("Bootstrap");
+    Style.Require("FontAwesome");
+    Script.Require("Bootstrap");
+    Style.Require("NwazetIntegration.Admin");
+
+    var shippingId = Html.Id("shipping-tab");
+    var billingId = Html.Id("billing-tab");
+}
+
+<div class="order-editor advanced-addresses col-md-12 nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#@shippingId" data-toggle="tab" aria-expanded="true">@T("Shipping Address")</a>
+        </li>
+        <li class="">
+            <a href="#@billingId" data-toggle="tab" aria-expanded="false">@T("Billing Address")</a>
+        </li>
+    </ul>
+    
+    <div class="tab-content">
+        <div id="@shippingId" class="tab-pane active order-address-editor shipping-address col-md-12">
+            @Html.EditorFor(m => m.ShippingAddressVM,
+                new {
+                    OtherElementSelector = ".order-editor .addresses fieldset.shipping-address",
+                    OtherPrefix = "NwazetCommerceOrder"
+                })
+        </div>
+
+        <div id="@billingId" class="tab-pane order-address-editor billing-address col-md-12">
+            @Html.EditorFor(m => m.BillingAddressVM,
+                new {
+                    OtherElementSelector = ".order-editor .addresses fieldset.billing-address",
+                    OtherPrefix = "NwazetCommerceOrder"
+                })
+        </div>
+    </div>
+</div>
+

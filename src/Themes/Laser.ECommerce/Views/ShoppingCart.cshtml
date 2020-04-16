@@ -99,13 +99,13 @@
                                             <td class="invert">@T("{0}", i + 1)</td>
                                             @if (imageUrl != null) {
                                                 <td class="invert-image">
-                                                    <a href="@Url.ItemDisplayUrl(contentItem)"><img src="@Href(imageUrl)" alt="@title" class="img-responsive" /></a>
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id"><img src="@Href(imageUrl)" alt="@title" class="img-responsive" /></a>
                                                 </td>
                                                 <td class="invert">
-                                                    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-name">@title</a>
+                                                    <a href="@Url.ItemDisplayUrl(contentItem)" class="product-name" data-product-id="@contentItem.Id">@title</a>
                                                 </td>
                                             } else {
-                                                <td colspan="2" class="invert"><a href="@Url.ItemDisplayUrl(contentItem)">@title</a></td>
+                                                <td colspan="2" class="invert"><a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id">@title</a></td>
                                             }
                                             <td class="invert">
                                                 <div class="quantity">
@@ -127,7 +127,7 @@
                                                             }
                                                         }
                                                         <input name="@(propertyNamePrefix + ".ProductId")" type="hidden" value="@product.Id" />
-                                                        <input name="@(propertyNamePrefix + ".Quantity")" type="hidden" class="quantity addtocart-quantity" value="@quantity" min="0" />
+                                                        <input name="@(propertyNamePrefix + ".Quantity")" type="hidden" class="quantity addtocart-quantity" value="@quantity" min="0" data-cart-product-id="@product.Id"/>
                                                         <div class="entry value-minus">&nbsp;</div>
                                                         <div class="entry value"><span>@quantity</span></div>
                                                         <div class="entry value-plus active">&nbsp;</div>
@@ -137,7 +137,7 @@
                                             <td class="invert">@Model.CurrencyProvider.GetPriceString(totalPrice)</td>
                                             @if (!readOnly) {
                                                 <td class="invert">
-                                                    <a class="delete" href="#">
+                                                    <a class="delete" href="#" data-product-cart-id="@product.Id">
                                                         <div class="rem">
                                                             <div class="closeX @closeClass"> </div>
                                                         </div>
@@ -204,6 +204,9 @@
                         </div>
                         <div class="clearfix"> </div>
                     </div>
+                }
+                foreach (var additionalShape in Model.CartExtensionShapes) {
+                    @Display(additionalShape)
                 }
             }
             <div class="checkout-right-basket">

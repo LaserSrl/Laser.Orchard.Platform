@@ -55,6 +55,10 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("jsonViewer").SetUrl("json-browse/jquery.json-browse.js").SetDependencies("jQuery");
             manifest.DefineScript("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js","https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js").SetDependencies("jQuery");
 
+            manifest.DefineScript("Select2")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js")
+                .SetDependencies("jQuery");
+
             //Styles
 
             manifest.DefineStyle("jQuery_DataTables").SetUrl("jqDataTable/jquery.dataTables.min.css");
@@ -83,6 +87,8 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("jsonViewer").SetUrl("json-browse/jquery.json-browse.css");
             manifest.DefineStyle("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.css", "https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/css/animsition.min.css");
 
+            manifest.DefineStyle("Select2")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css");
         }
     }
 }
