@@ -66,20 +66,23 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
             if (SettingsPart != null
                 && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
                 && ((isAdmin && SettingsPart.TrackOnAdmin) || (!isAdmin && SettingsPart.TrackOnFrontEnd))) {
-                var noscript = new HtmlString(_googleAnalyticsCookie.GetNoScript());
-                // write that to the top of the page, immediately after the opening <body> tag
-                var body = _workContextAccessor.GetContext()
-                    .Layout.Body;
-                if (body.Items is IList<object>) {
-                    body.Items.Insert(0, noscript);
-                } else {
-                    // this probably won't let us place the snippet in the correct
-                    // position. On the other hand, with the existing implementations body.Items 
-                    // is always a List. This branch is here for safety, so that if ever we have
-                    // a different implementation of body.Items this will not crash.
-                    body.Add(noscript, "1");
+
+                var snippet = _googleAnalyticsCookie.GetNoScript();
+                if (!string.IsNullOrWhiteSpace(snippet)) {
+                    var noscript = new HtmlString(snippet);
+                    // write that to the top of the page, immediately after the opening <body> tag
+                    var body = _workContextAccessor.GetContext()
+                        .Layout.Body;
+                    if (body.Items is IList<object>) {
+                        body.Items.Insert(0, noscript);
+                    } else {
+                        // this probably won't let us place the snippet in the correct
+                        // position. On the other hand, with the existing implementations body.Items 
+                        // is always a List. This branch is here for safety, so that if ever we have
+                        // a different implementation of body.Items this will not crash.
+                        body.Add(noscript, "1");
+                    }
                 }
-                
             }
         }
 
