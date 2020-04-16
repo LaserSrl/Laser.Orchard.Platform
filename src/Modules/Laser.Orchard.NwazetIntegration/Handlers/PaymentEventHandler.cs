@@ -53,7 +53,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                         {"Order", order},
                         {"CheckoutError", payment.Error}
                     });
-                order.LogActivity(OrderPart.Error, string.Format("Transaction failed (payment id: {0}).", payment.Id));
+                order.LogActivity(Constants.PaymentFailed, payment.Error);
+                //order.LogActivity(OrderPart.Error, string.Format("Transaction failed (payment id: {0}).", payment.Id));
             }
         }
 
