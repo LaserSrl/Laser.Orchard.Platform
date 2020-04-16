@@ -255,6 +255,7 @@ AddressConfiguration.prototype = {
                                 // get the text for the selected option
                                 cityName = ""; //city.find('option:selected').text();
                             }
+                            cityName = cityName.toLowerCase();
                             // detach handlers
                             niAC._detachCityHandlers(el, options);
                             // call delegates?
@@ -282,6 +283,7 @@ AddressConfiguration.prototype = {
                                             data.Cities[i].Value, //value
                                             !!data.Cities[i].DefaultSelected, //defaultSelected
                                             !!data.Cities[i].Selected
+                                                || (cityId == 0 && cityName.length > 0 && cityName == data.Cities[i].Text.toLowerCase())
                                                 || data.Cities[i].Value == cityId); //selected
                                     city.append(newOption);
                                 }
@@ -373,6 +375,7 @@ AddressConfiguration.prototype = {
                             // get the text for the selected option
                             provinceName = ""; //province.find('option:selected').text();
                         }
+                        provinceName = provinceName.toLowerCase();
                         // detach handlers
                         niAC._detachProvinceHandlers(el, options);
                         // call delegates?
@@ -399,6 +402,7 @@ AddressConfiguration.prototype = {
                                         data.Provinces[i].Value, //value
                                         !!data.Provinces[i].DefaultSelected, //defaultSelected
                                         !!data.Provinces[i].Selected
+                                        || (provinceId == 0 && provinceName.length > 0 && provinceName == data.Provinces[i].Text.toLowerCase())
                                             || data.Provinces[i].Value == provinceId); //selected
                                 province.append(newOption);
                             }
