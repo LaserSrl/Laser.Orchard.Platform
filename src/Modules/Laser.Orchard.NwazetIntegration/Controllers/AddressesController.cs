@@ -121,94 +121,101 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         Title = prod.Product.ContentItem.As<TitlePart>().Title
                     });
                 }
-                var paymentGuid = Guid.NewGuid().ToString();
-                var charge = new PaymentGatewayCharge("Payment Gateway", paymentGuid);
-                // get Orchard user id
-                var userId = -1;
-                var currentUser = _orchardServices.WorkContext.CurrentUser;
-                if (currentUser != null) {
-                    userId = currentUser.Id;
-                }
+                // check if there are products in the cart
+                if (items.Count > 0) {
+                    var paymentGuid = Guid.NewGuid().ToString();
+                    var charge = new PaymentGatewayCharge("Payment Gateway", paymentGuid);
+                    // get Orchard user id
+                    var userId = -1;
+                    var currentUser = _orchardServices.WorkContext.CurrentUser;
+                    if (currentUser != null) {
+                        userId = currentUser.Id;
+                    }
 
-                // update addresses based on those populated in the form
-                model.ShippingAddress = AddressFromVM(model.ShippingAddressVM);
-                model.BillingAddress = AddressFromVM(model.BillingAddressVM);
+                    // update addresses based on those populated in the form
+                    model.ShippingAddress = AddressFromVM(model.ShippingAddressVM);
+                    model.BillingAddress = AddressFromVM(model.BillingAddressVM);
 
-                var currency = _currencyProvider.CurrencyCode;
-                var order = _orderService.CreateOrder(
-                    charge,
-                    items,
-                    _shoppingCart.Subtotal(),
-                    _shoppingCart.Total(),
-                    _shoppingCart.Taxes(),
-                    _shoppingCart.ShippingOption,
-                    model.ShippingAddress,
-                    model.BillingAddress,
-                    model.Email,
-                    model.PhonePrefix + " " + model.Phone,
-                    model.SpecialInstructions,
-                    OrderPart.Pending, //.Cancelled,
-                    null,
-                    false,
-                    userId,
-                    0,
-                    "",
-                    currency);
-                // update advanced address information
-                var addressPart = order.As<AddressOrderPart>();
-                if (addressPart != null) {
-                    // shipping info
-                    addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
-                    addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
-                    addressPart.ShippingCityName = model.ShippingAddressVM.City;
-                    addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
-                    addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
-                    addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
-                    // billing
-                    addressPart.BillingCountryName = model.BillingAddressVM.Country;
-                    addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
-                    addressPart.BillingCityName = model.BillingAddressVM.City;
-                    addressPart.BillingCityId = model.BillingAddressVM.CityId;
-                    addressPart.BillingProvinceName = model.BillingAddressVM.Province;
-                    addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                    var currency = _currencyProvider.CurrencyCode;
+                    var order = _orderService.CreateOrder(
+                        charge,
+                        items,
+                        _shoppingCart.Subtotal(),
+                        _shoppingCart.Total(),
+                        _shoppingCart.Taxes(),
+                        _shoppingCart.ShippingOption,
+                        model.ShippingAddress,
+                        model.BillingAddress,
+                        model.Email,
+                        model.PhonePrefix + " " + model.Phone,
+                        model.SpecialInstructions,
+                        OrderPart.Pending, //.Cancelled,
+                        null,
+                        false,
+                        userId,
+                        0,
+                        "",
+                        currency);
+                    // update advanced address information
+                    var addressPart = order.As<AddressOrderPart>();
+                    if (addressPart != null) {
+                        // shipping info
+                        addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
+                        addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
+                        addressPart.ShippingCityName = model.ShippingAddressVM.City;
+                        addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
+                        addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
+                        addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                        // billing
+                        addressPart.BillingCountryName = model.BillingAddressVM.Country;
+                        addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
+                        addressPart.BillingCityName = model.BillingAddressVM.City;
+                        addressPart.BillingCityId = model.BillingAddressVM.CityId;
+                        addressPart.BillingProvinceName = model.BillingAddressVM.Province;
+                        addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                    }
+                    // To properly handle the order's advanced address configuration we need
+                    // to call again the providers to store the additional data, because when they 
+                    // are invoked in Nwazet's IOrderService implementation we can't have access
+                    // to the new information yet. If we ever overhaul that module, we should 
+                    // account for this extensibility requirement.
+                    foreach (var oaip in _orderAdditionalInformationProviders) {
+                        oaip.StoreAdditionalInformation(order);
+                    }
+                    order.LogActivity(OrderPart.Event, "Order created");
+                    // we unpublish the order here. The service from Nwazet creates it
+                    // and publishes it. This would cause issues whenever a user leaves
+                    // mid checkout rather than completing the entire process, because we
+                    // would end up having unprocessed orders that are created and published.
+                    // By unpublishing, we practically turn the order in a draft. Later,
+                    // after processing payments, we publish the order again so it shows
+                    // in the "normal" queries and lists.
+                    // Note that this is a workaround for order management that only really
+                    // works as long as payments are processed and the order published there.
+                    // In cases where we may not wish to have payments happen when a new order
+                    // is created, this system should be reworked properly.
+                    _contentManager.Unpublish(order.ContentItem);
+                    // save the addresses for the contact doing the order.
+                    _nwazetCommunicationService.OrderToContact(order);
+                    var reason = string.Format("Purchase Order {0}", order.OrderKey);
+                    var payment = new PaymentRecord {
+                        Reason = reason,
+                        Amount = order.Total,
+                        Currency = order.CurrencyCode,
+                        ContentItemId = order.Id
+                    };
+                    var nonce = _paymentService.CreatePaymentNonce(payment);
+                        result = RedirectToAction("Pay", "Payment",
+                            new {
+                                area = "Laser.Orchard.PaymentGateway",
+                                nonce = nonce,
+                                newPaymentGuid = paymentGuid
+                            });
                 }
-                // To properly handle the order's advanced address configuration we need
-                // to call again the providers to store the additional data, because when they 
-                // are invoked in Nwazet's IOrderService implementation we can't have access
-                // to the new information yet. If we ever overhaul that module, we should 
-                // account for this extensibility requirement.
-                foreach (var oaip in _orderAdditionalInformationProviders) {
-                    oaip.StoreAdditionalInformation(order);
+                else {
+                    _notifier.Information(T("There are no products in the cart. Go back to the catalog and add products."));
+                    result = View("Index", model);
                 }
-                order.LogActivity(OrderPart.Event, "Order created");
-                // we unpublish the order here. The service from Nwazet creates it
-                // and publishes it. This would cause issues whenever a user leaves
-                // mid checkout rather than completing the entire process, because we
-                // would end up having unprocessed orders that are created and published.
-                // By unpublishing, we practically turn the order in a draft. Later,
-                // after processing payments, we publish the order again so it shows
-                // in the "normal" queries and lists.
-                // Note that this is a workaround for order management that only really
-                // works as long as payments are processed and the order published there.
-                // In cases where we may not wish to have payments happen when a new order
-                // is created, this system should be reworked properly.
-                _contentManager.Unpublish(order.ContentItem);
-                // save the addresses for the contact doing the order.
-                _nwazetCommunicationService.OrderToContact(order);
-                var reason = string.Format("Purchase Order {0}", order.OrderKey);
-                var payment = new PaymentRecord {
-                    Reason = reason,
-                    Amount = order.Total,
-                    Currency = order.CurrencyCode,
-                    ContentItemId = order.Id
-                };
-                var nonce = _paymentService.CreatePaymentNonce(payment);
-                result = RedirectToAction("Pay", "Payment",
-                    new {
-                        area = "Laser.Orchard.PaymentGateway",
-                        nonce = nonce,
-                        newPaymentGuid = paymentGuid
-                    });
                 break;
                 default:
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
