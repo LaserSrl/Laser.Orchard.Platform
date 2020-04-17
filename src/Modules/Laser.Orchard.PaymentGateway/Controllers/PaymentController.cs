@@ -102,7 +102,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 model.Record = _posServiceEmpty.StartPayment(model.Record, newPaymentGuid);
             }
             catch(Exception ex) {
-                Logger.Error(ex, "Error starting payment.");
+                Logger.Information(ex, "Error starting payment.");
                 return new HttpUnauthorizedResult();
             }
             return View("Pay", model);
