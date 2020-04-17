@@ -9,18 +9,20 @@ namespace KrakeAdmin.Settings.Services {
     }
     public class ThemeSettingsService : IThemeSettingsService {
         private readonly IRepository<ThemeSettingsRecord> _repository;
+        private ThemeSettingsRecord _setttingsRecord;
 
         public ThemeSettingsService(IRepository<ThemeSettingsRecord> repository) {
             _repository = repository;
         }
 
         public ThemeSettingsRecord GetSettings() {
-            var settings = _repository.Table.SingleOrDefault();
-            if (settings == null) {
-                _repository.Create(settings = new ThemeSettingsRecord());
+            if (_setttingsRecord == null) {
+                _setttingsRecord = _repository.Table.SingleOrDefault();
+                if (_setttingsRecord == null) {
+                    _repository.Create(_setttingsRecord = new ThemeSettingsRecord());
+                }
             }
-
-            return settings;
+            return _setttingsRecord;
         }
 
     }

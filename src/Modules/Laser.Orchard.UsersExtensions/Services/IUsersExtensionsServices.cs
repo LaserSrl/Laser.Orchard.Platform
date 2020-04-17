@@ -58,7 +58,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
         private readonly IAccountValidationService _accountValidationService;
 
         private static readonly TimeSpan DelayToResetPassword = new TimeSpan(1, 0, 0, 0); // 24 hours to reset password
-        private readonly IRepository<CultureRecord> _repositoryCultures;
+        private readonly ICommonsServices _commonsServices;
 
 
         public UsersExtensionsServices(
@@ -71,7 +71,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
             IUserEventHandler userEventHandler,
             IShapeFactory shapeFactory,
             ICultureManager cultureManager,
-            IRepository<CultureRecord> repositoryCultures,
+            ICommonsServices commonsServices,
             IAccountValidationService accountValidationService) {
 
             T = NullLocalizer.Instance;
@@ -85,7 +85,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
             _userEventHandler = userEventHandler;
             _shapeFactory = shapeFactory;
             _cultureManager = cultureManager;
-            _repositoryCultures = repositoryCultures;
+            _commonsServices = commonsServices;
             _accountValidationService = accountValidationService;
         }
 
@@ -152,7 +152,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
                     // here user was created
                     var favCulture = createdUser.As<FavoriteCulturePart>();
                     if (favCulture != null) {
-                        var culture = _repositoryCultures.Fetch(x => x.Culture.Equals(userRegistrationParams.Culture)).SingleOrDefault();
+                        var culture = _commonsServices.ListCultures().SingleOrDefault(x => x.Culture.Equals(userRegistrationParams.Culture));
                         if (culture != null) {
                             favCulture.Culture_Id = culture.Id;
                         }
