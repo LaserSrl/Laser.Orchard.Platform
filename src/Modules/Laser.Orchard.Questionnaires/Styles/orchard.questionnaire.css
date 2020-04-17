@@ -4,7 +4,7 @@
 
     /* Elenco risposte */
     .questionnaire-container ul li ul li {
-        display: inline;
+        display: inline-block;
     }
 
         .questionnaire-container ul li ul li label {
