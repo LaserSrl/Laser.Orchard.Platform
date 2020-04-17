@@ -1,0 +1,28 @@
+﻿@using Nwazet.Commerce.Models;
+@using Orchard.ContentManagement;
+@model Laser.Orchard.NwazetIntegration.ViewModels.AddressConfigurationSiteSettingsPartViewModel
+
+@functions{
+    IContentManager ContentManager;
+    int[] SelectedTerritories;
+}
+@{ 
+
+    ContentManager = WorkContext.Resolve<IContentManager>();
+}
+<fieldset>
+    <legend>@T("Territories for address configuration")</legend>
+    <div>
+        @if (Model.CountriesHierarchy == null) {
+            <p>@T("You need to select a hierarchy to pick the territories to allow in the system.")</p>
+        } else {
+
+        }
+    </div>
+    <div class="select-countries-hierarchy">
+        @Html.DropDownListFor(m => m.ShippingCountriesHierarchyId, Model.ListHierarchies())
+        <span for="@Html.FieldIdFor(m => m.ShippingCountriesHierarchyId)" class="hint forcheckbox">
+            @T("Select the hierarchy that contains the territories to be used to validate addresses. Later you will be able to select specific territories.")
+        </span>
+    </div>
+</fieldset>

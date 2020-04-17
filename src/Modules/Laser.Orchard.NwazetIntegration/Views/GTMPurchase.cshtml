@@ -1,0 +1,35 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration.Services;
+@{
+    var gtmPurchase = (GTMPurchaseVM)Model.GTMPurchaseVM;
+
+    var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
+    Script.Require("NwazetIntegration.TagManager").AtHead();
+
+    var gtmActionField = _GTMProductService.GetJsonString(
+        gtmPurchase.ActionField);
+
+    var gtmProductsStrings = gtmPurchase
+            .ProductList
+            .Select(p => _GTMProductService.GetJsonString(p))
+            .Where(s => !string.IsNullOrWhiteSpace(s));
+
+
+    using (Script.Head()) {
+        <script type="text/javascript">
+            window.ecommerceData.purchase = $.extend(true, {}, window.ecommerceData.purchase);
+            window.ecommerceData.purchase.actionField = $.extend(true, {}, window.ecommerceData.purchase.actionField);
+            window.ecommerceData.purchase.actionField = $.extend(true, @Html.Raw(gtmActionField), window.ecommerceData.purchase.actionField);
+            @if (gtmProductsStrings.Any()) {
+                var productString = string.Join(",", gtmProductsStrings);
+                <text>
+                    window.ecommerceData.purchase.products = window.ecommerceData.purchase.products || [];
+                    window.ecommerceData.purchase.products.push(
+                        @Html.Raw(productString)
+                );
+                </text>
+            }
+        </script>
+    }
+
+}

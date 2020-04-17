@@ -1,0 +1,15 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels
+@model TerritoryAddressTypeEditViewModel
+
+<div class="form-group">
+    <div class="checkbox-inline">
+        @Html.CheckBoxFor(m => m.Shipping)
+        @Html.LabelFor(m => m.Shipping, T("Enable this territory for shipping address configuration."))
+    </div>
+    <div class="checkbox-inline">
+        <label>
+            @Html.CheckBoxFor(m => m.Billing)
+            @T("Enable this territory for billing address configuration.")
+        </label>
+    </div>
+</div>

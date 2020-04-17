@@ -1,0 +1,9 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels
+@model TerritoryAdministrativeTypeEditViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.AdministrativeType, T("Administrative Type for this territory"))
+    @Html.DropDownListFor(m => m.AdministrativeType,
+        Model.AdministrativeTypes,
+        htmlAttributes: new { @class="form-control" })
+</div>

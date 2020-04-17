@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Scripts/address-configuration.min.js",
+    "inputFiles": [
+      "Scripts/address-configuration.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/ship.min.js",
+    "inputFiles": [
+      "Scripts/ship.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/ecommerce-tag-manager.min.js",
+    "inputFiles": [
+      "Scripts/ecommerce-tag-manager.js"
+    ]
+  }
+]
