@@ -46,16 +46,26 @@ namespace Laser.Orchard.StartupConfig.Handlers {
         }
 
         public void Created(UserContext context) {
-           // throw new NotImplementedException();
             var content = context.User.ContentItem;
-            _workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Action", "Created" } });
+            _workflowManager.TriggerEvent("OnUserEvent", 
+                content, 
+                () => new Dictionary<string, object> {
+                    { "Content", content },
+                    { "Action", "Created" },
+                    { "UserContext", context}
+                });
 
         }
 
         public void Creating(UserContext context) {
-           // throw new NotImplementedException();
-            //var content = user.ContentItem;
-            //_workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Action", System.Reflection.MethodBase.GetCurrentMethod().Name } });
+            var content = context.User.ContentItem;
+            _workflowManager.TriggerEvent("OnUserEvent", 
+                content, 
+                () => new Dictionary<string, object> {
+                    { "Content", content },
+                    { "Action", "Creating" },
+                    { "UserContext", context }
+                });
 
         }
 

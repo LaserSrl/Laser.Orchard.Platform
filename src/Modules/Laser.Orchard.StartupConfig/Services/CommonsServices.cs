@@ -13,17 +13,31 @@ using Orchard.Security;
 using System.Web.Mvc;
 using System.IO;
 using System.Web.Routing;
+using Orchard.Caching;
+using Orchard.Data;
+using Orchard.Localization.Records;
 
 namespace Laser.Orchard.StartupConfig.Services {
     public class CommonsServices : ICommonsServices {
         private readonly IOrchardServices _orchardServices;
         private readonly IClock _clock;
         private readonly IEncryptionService _encryptionService;
+        private readonly ICacheManager _cacheManager;
+        private readonly IRepository<CultureRecord> _cultureRecord;
+        private readonly ISignals _signals;
 
-        public CommonsServices(IOrchardServices orchardServices, IClock clock, IEncryptionService encryptionService) {
+        public CommonsServices(IOrchardServices orchardServices, 
+            IClock clock, 
+            IEncryptionService encryptionService,
+            ICacheManager cacheManager,
+            IRepository<CultureRecord> cultureRecord,
+            ISignals signals) {
             _orchardServices = orchardServices;
             _clock = clock;
             _encryptionService = encryptionService;
+            _cacheManager = cacheManager;
+            _cultureRecord = cultureRecord;
+            _signals = signals;
         }
 
         public DevicesBrands GetDeviceBrandByUserAgent() {
@@ -91,6 +105,21 @@ namespace Laser.Orchard.StartupConfig.Services {
             var urlHelper = new UrlHelper(virtualRequestContext);
             return urlHelper;
         }
+
+        public IList<CultureEntry> ListCultures() {
+            return _cacheManager.Get("ListCulturesWithId", true, context => {
+                context.Monitor(_signals.When("culturesChanged"));
+
+                return _cultureRecord.Table
+                .Select(x => new CultureEntry { Id = x.Id, Culture = x.Culture }).ToList();
+            });
+        }
+
+    }
+
+    public class CultureEntry {
+        public int Id { get; set; }
+        public string Culture { get; set; }
 
     }
 }
