@@ -19,7 +19,7 @@
                     <h3 class="box-title">@T("Search filters")</h3>
                 </div>
                 <div class="box-body">
-                    <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
+                    <input type='hidden' name='contentid' value='@Model.Part.Id' />
                     <input type='hidden' name='page' value='1' />
                     @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
                         if (!string.IsNullOrEmpty(Model.Form)) {
