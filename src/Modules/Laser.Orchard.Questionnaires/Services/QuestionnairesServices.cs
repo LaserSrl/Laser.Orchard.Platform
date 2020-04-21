@@ -445,14 +445,19 @@ namespace Laser.Orchard.Questionnaires.Services {
 
         public bool Save(QuestionnaireWithResultsViewModel editModel, IUser currentUser, string SessionID) {
             bool result = false;
-            var questionnaireModuleSettings = _orchardServices.WorkContext.CurrentSite.As<QuestionnaireModuleSettingsPart>();
-            var questionnairePartSettings = _orchardServices.ContentManager.Get<QuestionnairePart>(editModel.Id).Settings.GetModel<QuestionnairesPartSettingVM>();
+            var questionnaireModuleSettings = _orchardServices.WorkContext
+                .CurrentSite.As<QuestionnaireModuleSettingsPart>();
+            var questionnairePartSettings = _orchardServices.ContentManager
+                .Get<QuestionnairePart>(editModel.Id)
+                .Settings.GetModel<QuestionnairesPartSettingVM>();
             var content = _orchardServices.ContentManager.Get(editModel.Id);
             bool exit = false;
 
             if (String.IsNullOrWhiteSpace(editModel.Context)) { //fallback into questionnaire part settings context if context is null
                 // Tokenize Settings Context
-                editModel.Context = _tokenizer.Replace(questionnairePartSettings.QuestionnaireContext, new Dictionary<string, object> { { "Content", content } });
+                editModel.Context = _tokenizer
+                    .Replace(questionnairePartSettings.QuestionnaireContext, 
+                        new Dictionary<string, object> { { "Content", content } });
             }
             if (editModel.Context.Length > 255) {// limits context to 255 chars
                 editModel.Context = editModel.Context.Substring(0, 255);
@@ -471,51 +476,46 @@ namespace Laser.Orchard.Questionnaires.Services {
             }
             if (!exit) {
                 foreach (var q in editModel.QuestionsWithResults) {
+                    UserAnswersRecord userAnswer = null;
                     if (q.QuestionType == QuestionType.OpenAnswer) {
                         if (!String.IsNullOrWhiteSpace(q.OpenAnswerAnswerText)) {
-                            var userAnswer = new UserAnswersRecord();
+                            userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerText = q.OpenAnswerAnswerText;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
                         }
                     }
                     else if (q.QuestionType == QuestionType.SingleChoice) {
                         if (q.SingleChoiceAnswer > 0) {
-                            var userAnswer = new UserAnswersRecord();
+                            userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
                             userAnswer.AnswerText = GetAnswer(q.SingleChoiceAnswer).Answer;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
                         }
                     }
                     else if (q.QuestionType == QuestionType.MultiChoice) {
                         var answerList = q.AnswersWithResult.Where(w => w.Answered);
                         foreach (var a in answerList) {
-                            var userAnswer = new UserAnswersRecord();
+                            userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = a.Id;
                             userAnswer.AnswerText = GetAnswer(a.Id).Answer;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
                         }
+                    }
+                    if (userAnswer != null) {
+                        userAnswer.QuestionText = q.Question;
+                        userAnswer.QuestionRecord_Id = q.Id;
+                        userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
+                        userAnswer.QuestionnairePartRecord_Id = editModel.Id;
+                        userAnswer.SessionID = SessionID;
+                        userAnswer.Context = editModel.Context;
+                        CreateUserAnswers(userAnswer);
                     }
                 }
 
-                _workflowManager.TriggerEvent("QuestionnaireSubmitted", content, () => new Dictionary<string, object> { { "Content", content }, { "QuestionnaireContext", editModel.Context } });
+                _workflowManager.TriggerEvent(
+                    "QuestionnaireSubmitted", 
+                    content, () => new Dictionary<string, object> {
+                        { "Content", content },
+                        { "QuestionnaireContext", editModel.Context },
+                        { "QuestionnaireWithResults", editModel }
+                    });
                 result = true;
             }
             return result;
