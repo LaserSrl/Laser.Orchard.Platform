@@ -43,7 +43,12 @@ namespace Laser.Orchard.Questionnaires.Handlers {
             var currentUser = _orchardServices.WorkContext.CurrentUser;
 
             if (currentUser != null) {
-                elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.User_Id == currentUser.Id && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
+                elencoIdQuestionnaires = _userAnswersRecord
+                    .Fetch(x => x.User_Id == currentUser.Id 
+                        && x.QuestionnairePartRecord_Id == questionnaireId 
+                        && x.Context == questionnaireContext)
+                    .Select(y => y.QuestionnairePartRecord_Id)
+                    .Distinct().ToList();
             } else {
                 var request = _orchardServices.WorkContext.HttpContext.Request;
 
@@ -54,12 +59,17 @@ namespace Laser.Orchard.Questionnaires.Handlers {
                 }
 
                 if (!string.IsNullOrWhiteSpace(uniqueId))
-                    elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.SessionID == uniqueId && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
+                    elencoIdQuestionnaires = _userAnswersRecord
+                        .Fetch(x => x.SessionID == uniqueId 
+                            && x.QuestionnairePartRecord_Id == questionnaireId 
+                            && x.Context == questionnaireContext)
+                        .Select(y => y.QuestionnairePartRecord_Id)
+                        .Distinct().ToList();
             }
 
             if (currentUser != null || !string.IsNullOrWhiteSpace(uniqueId)) {
                 Action<IAliasFactory> selector =
-                alias => alias.ContentPartRecord<QuestionnairePartRecord>();
+                    alias => alias.ContentPartRecord<QuestionnairePartRecord>();
                 Action<IHqlExpressionFactory> filter1 = x => x.Eq("Id", questionnaireId);
                 context.Query.Where(selector, filter1);
                 foreach (var id in elencoIdQuestionnaires) {
