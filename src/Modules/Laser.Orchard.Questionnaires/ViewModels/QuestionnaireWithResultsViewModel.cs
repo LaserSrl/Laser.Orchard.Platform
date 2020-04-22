@@ -19,5 +19,7 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public string CaptchaHtmlWidget { get; set; }
         public IList<QuestionWithResultsViewModel> QuestionsWithResults { get; set; }
         public string Context { get; set; }
+
+        public string AnswersInstance { get; set; }
     }
 }

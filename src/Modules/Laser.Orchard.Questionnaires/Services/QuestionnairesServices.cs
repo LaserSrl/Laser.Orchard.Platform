@@ -490,6 +490,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var instanceId = GetHash(
                     (currentUser != null ? currentUser.Id.ToString() : SessionID)
                     + editModel.Id.ToString() + DateTime.UtcNow.ToString());
+                editModel.AnswersInstance = instanceId;
                 foreach (var q in editModel.QuestionsWithResults) {
                     Action<UserAnswersRecord> CreationAction = (uar) => {
                         uar.QuestionText = q.Question;
@@ -549,6 +550,13 @@ namespace Laser.Orchard.Questionnaires.Services {
                 throw new ArgumentNullException("user");
             }
             var instanceId = GetMostRecentInstanceId(part, user);
+            if (instanceId == null) {
+                // never answered
+                return null;
+            }
+            if (string.IsNullOrWhiteSpace(instanceId)) {
+                throw new InvalidOperationException("The latest answers to this question for the user were recorded before the introduction of answers' instances.");
+            }
             return AnswersInstance(instanceId, part, user);
         }
         public string GetMostRecentInstanceId(QuestionnairePart part, IUser user) {
@@ -567,7 +575,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                     0, //skip none
                     1) //take 1
                 .FirstOrDefault();
-            return mostRecentAnswer.AnswerInstance;
+            return mostRecentAnswer == null
+                ? null // never answered
+                : mostRecentAnswer.AnswerInstance ?? string.Empty;
         }
         public QuestionnaireWithResultsViewModel AnswersInstance(
             string instance, QuestionnairePart part, IUser user) {
@@ -580,22 +590,47 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (string.IsNullOrWhiteSpace(instance)) {
                 throw new ArgumentNullException("instance");
             }
+
             var viewModel = new QuestionnaireWithResultsViewModel() {
-                Id = part.Id
+                Id = part.Id,
+                AnswersInstance = instance
             };
             // get all answers belonging to this instance
             var userAnswers = _repositoryUserAnswer
                 .Fetch(uar => uar.User_Id == user.Id
                     && uar.QuestionnairePartRecord_Id == part.Id
                     && uar.AnswerInstance == instance);
+            if (!userAnswers.Any()) {
+                // never answered (or nothing found for that instance)
+                return null;
+            }
             // based on the answers we fetched, do the inverse of what is done when saving
             // them to build the view model.
-            foreach (var userAnswer in userAnswers) {
+            var answerGroups = userAnswers.GroupBy(uar => uar.QuestionRecord_Id);
+            var answerResults = new List<AnswerWithResultViewModel>();
+            foreach (var group in answerGroups) {
+                var answer = group.First();
+                if (answer.QuestionType == QuestionType.MultiChoice) {
+                    answerResults = group.Select(uar => new AnswerWithResultViewModel() {
+                        Id = uar.Id,
+                        AnswerText = uar.AnswerText,
+                        QuestionRecord_Id = uar.QuestionRecord_Id
+                    }).ToList();
+                }
                 viewModel.QuestionsWithResults
-                    .Add(new QuestionWithResultsViewModel)
+                    .Add(new QuestionWithResultsViewModel() {
+                        Id = answer.QuestionRecord_Id,
+                        Question = answer.QuestionText,
+                        QuestionType = answer.QuestionType,
+                        SingleChoiceAnswer = answer.QuestionType == QuestionType.SingleChoice
+                            ? answer.AnswerRecord_Id.Value : 0,
+                        OpenAnswerAnswerText = answer.QuestionType == QuestionType.OpenAnswer
+                            ? answer.AnswerText : string.Empty,
+                        QuestionnairePartRecord_Id = part.Id,
+                        AnswersWithResult = answerResults
+                    });
             }
-            //TODO
-            return null;
+            return viewModel;
         }
 
         public void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel) {
