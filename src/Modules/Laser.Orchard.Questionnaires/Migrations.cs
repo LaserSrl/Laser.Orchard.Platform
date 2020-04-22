@@ -244,5 +244,29 @@ namespace Laser.Orchard.Questionnaires {
                       column => column.Unlimited()));
             return 27;
         }
+
+        public int UpdateFrom27() {
+            SchemaBuilder.AlterTable("UserAnswersRecord", t => 
+                t.AddColumn<string>("AnswerInstance",
+                    //since these strings are generated programmatically, we know how long they will be
+                    column => column.WithLength(64)));
+            return 28;
+        }
+
+        public int UpdateFrom28() {
+            SchemaBuilder.AlterTable("UserAnswersRecord", t =>
+                t.AddColumn<string>("QuestionType",
+                    col => col.WithLength(20)));
+
+            // add indexes over the stuff we use to filter select queries
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_User_Id", "User_Id"));
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_QuestionnairePartRecord_Id", "QuestionnairePartRecord_Id"));
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_AnswerInstance", "AnswerInstance"));
+
+            return 29;
+        }
     }
 }
