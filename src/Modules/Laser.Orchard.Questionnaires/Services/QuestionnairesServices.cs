@@ -557,7 +557,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (string.IsNullOrWhiteSpace(instanceId)) {
                 throw new InvalidOperationException("The latest answers to this question for the user were recorded before the introduction of answers' instances.");
             }
-            return AnswersInstance(instanceId, part, user);
+            return GetAnswersInstance(instanceId, part, user);
         }
         public string GetMostRecentInstanceId(QuestionnairePart part, IUser user) {
             if (part == null) {
@@ -579,7 +579,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 ? null // never answered
                 : mostRecentAnswer.AnswerInstance ?? string.Empty;
         }
-        public QuestionnaireWithResultsViewModel AnswersInstance(
+        public QuestionnaireWithResultsViewModel GetAnswersInstance(
             string instance, QuestionnairePart part, IUser user) {
             if (part == null) {
                 throw new ArgumentNullException("part");

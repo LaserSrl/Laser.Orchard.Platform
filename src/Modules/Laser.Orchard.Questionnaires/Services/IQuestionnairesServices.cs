@@ -33,6 +33,25 @@ namespace Laser.Orchard.Questionnaires.Services {
         /// introduction of answers' instances.</exception>
         QuestionnaireWithResultsViewModel GetMostRecentAnswersInstance(
             QuestionnairePart part, IUser user);
+        /// <summary>
+        /// Extract a set of answers that a specific user has given
+        /// to a specific questionnaire. The set is identified by a string.
+        /// </summary>
+        /// <param name="instance">The identifier for the set of answers.</param>
+        /// <param name="part">The QuestionnairePart representing the Questionnaire whose
+        /// answers we want to extract.</param>
+        /// <param name="user">The IUser representing the user whose answers we want to
+        /// extract</param>
+        /// <returns>A view model containing the set of answers given. The method returns
+        /// null if no answer was found, meaning either the user never answered the
+        /// Questionnaire, or no answer was found for the give set.</returns>
+        /// <exception cref="ArgumentNullException">Throws ArgumentNullException if
+        /// any parameter is null.</exception>
+        /// <exception cref="InvalidOperationException">Throws InvalidOperationException if
+        /// the latest answers given by the user for the question are older than the
+        /// introduction of answers' instances.</exception>
+        QuestionnaireWithResultsViewModel GetAnswersInstance(
+            string instance, QuestionnairePart part, IUser user);
         bool SendTemplatedEmailRanking();
         bool SendTemplatedEmailRanking(Int32 gameID);
         void ScheduleEmailTask(Int32 gameID, DateTime timeGameEnd);
