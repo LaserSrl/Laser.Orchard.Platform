@@ -25,14 +25,15 @@ namespace Laser.Orchard.Questionnaires.Services {
         /// answers we want to extract.</param>
         /// <param name="user">The IUser representing the user whose answers we want to
         /// extract</param>
+        /// <param name="context">The optional string for the answers' context.</param>
         /// <returns>A view model containing the set of answers given.</returns>
         /// <exception cref="ArgumentNullException">Throws ArgumentNullException if
-        /// either parameter is null.</exception>
+        /// either required parameter is null.</exception>
         /// <exception cref="InvalidOperationException">Throws InvalidOperationException if
         /// the latest answers given by the user for the question are older than the
         /// introduction of answers' instances.</exception>
         QuestionnaireWithResultsViewModel GetMostRecentAnswersInstance(
-            QuestionnairePart part, IUser user);
+            QuestionnairePart part, IUser user, string context = null);
         /// <summary>
         /// Extract a set of answers that a specific user has given
         /// to a specific questionnaire. The set is identified by a string.
