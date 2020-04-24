@@ -30,6 +30,7 @@ using Orchard.Email.Services;
 using Orchard.Tokens;
 using Laser.Orchard.Commons.Services;
 using System.Security.Cryptography;
+using System.Linq.Expressions;
 
 namespace Laser.Orchard.Questionnaires.Services {
 
@@ -542,14 +543,14 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public QuestionnaireWithResultsViewModel GetMostRecentAnswersInstance(
-            QuestionnairePart part, IUser user) {
+            QuestionnairePart part, IUser user, string context = null) {
             if (part == null) {
                 throw new ArgumentNullException("part");
             }
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
-            var instanceId = GetMostRecentInstanceId(part, user);
+            var instanceId = GetMostRecentInstanceId(part, user, context);
             if (instanceId == null) {
                 // never answered
                 return null;
@@ -559,17 +560,27 @@ namespace Laser.Orchard.Questionnaires.Services {
             }
             return GetAnswersInstance(instanceId, part, user);
         }
-        public string GetMostRecentInstanceId(QuestionnairePart part, IUser user) {
+        public string GetMostRecentInstanceId(QuestionnairePart part, IUser user, string context = null) {
             if (part == null) {
                 throw new ArgumentNullException("part");
             }
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
+            Expression<Func<UserAnswersRecord, bool>> fetchPredicate;
+            if (context == null) {
+                fetchPredicate = // answers for this user to this questionnaire
+                    uar => uar.User_Id == user.Id 
+                        && uar.QuestionnairePartRecord_Id == part.Id;
+            } else {
+                fetchPredicate = // answers for this user to this questionnaire in this context
+                    uar => uar.User_Id == user.Id 
+                        && uar.QuestionnairePartRecord_Id == part.Id
+                        && uar.Context == context;
+            }
             var mostRecentAnswer = _repositoryUserAnswer
                 .Fetch(
-                    // answers for this user to this questionnaire
-                    uar => uar.User_Id == user.Id && uar.QuestionnairePartRecord_Id == part.Id,
+                    fetchPredicate,
                     // most recent first
                     o => o.Desc(uar => uar.AnswerDate),
                     0, //skip none
