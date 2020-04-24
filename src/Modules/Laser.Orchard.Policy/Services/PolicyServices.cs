@@ -152,6 +152,7 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public void PolicyForItemUpdate(PolicyForUserViewModel viewModel, ContentItem item) {
+            if (item.As<UserPolicyPart>() == null) return; // if the content item has not the UserPolicyPart, i cannot save the answers, so we skip the update.
             UserPolicyAnswersRecord record = null;
             var currentUser = _workContext.GetContext().CurrentUser;
             UserPartRecord currentUserPartRecord = null;
@@ -240,7 +241,7 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public void PolicyForItemMassiveUpdate(IList<PolicyForUserViewModel> viewModelCollection, ContentItem item) {
-            if (item != null) {
+            if (item != null && item.As<UserPolicyPart>() != null) {
                 foreach (var policy in viewModelCollection) {
                     PolicyForItemUpdate(policy, item);
                 }
