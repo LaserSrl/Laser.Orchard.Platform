@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.ContentExtension.Services;
+using Laser.Orchard.StartupConfig.RazorBase.Services;
 using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
@@ -24,15 +25,15 @@ using Orchard.Security;
 using Orchard.Taxonomies.Fields;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
+using Orchard.UI.Notify;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Web.Hosting;
 using System.Web.Http;
 using OrchardCore = Orchard.Core;
-using Orchard.UI.Notify;
-using Laser.Orchard.StartupConfig.RazorBase.Services;
+using CorePermissions = Orchard.Core.Contents.Permissions;
+using Orchard.ContentManagement.Aspects;
 
 namespace Laser.Orchard.ContentExtension.Controllers {
 
@@ -47,7 +48,6 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         private readonly ShellSettings _shellSettings;
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly ITaxonomyService _taxonomyService;
-        public ILogger Logger { get; set; }
         private readonly IContentExtensionService _contentExtensionService;
         private readonly ILocalizedStringManager _localizedStringManager;
         private readonly IUtilsServices _utilsServices;
@@ -56,29 +56,34 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         private readonly IRazorTemplateManager _razorTemplateManager;
         private readonly INotifier _notifier;
         private readonly IRazorBaseService _razorService;
+        private readonly IContentManager _contentManager;
+        private readonly IAuthorizer _authorizer;
 
         public Localizer T { get; set; }
+        public ILogger Logger { get; set; }
 
         public ContentItemController(
-           ShellSettings shellSettings,
+            ShellSettings shellSettings,
             INotifier notifier,
-           ICsrfTokenHelper csrfTokenHelper,
-           IOrchardServices orchardServices,
-           IAuthenticationService authenticationService,
-           IContentExtensionService contentExtensionService,
-           Lazy<IAutorouteService> autorouteService,
-           ILocalizationService localizationService,
-           ICultureManager cultureManager,
-           IUtilsServices utilsServices,
-           IContentDefinitionManager contentDefinitionManager,
-           ITaxonomyService taxonomyService,
-           ILocalizedStringManager localizedStringManager,
-
-           ITransactionManager transactionManager,
+            ICsrfTokenHelper csrfTokenHelper,
+            IOrchardServices orchardServices,
+            IAuthenticationService authenticationService,
+            IContentExtensionService contentExtensionService,
+            Lazy<IAutorouteService> autorouteService,
+            ILocalizationService localizationService,
+            ICultureManager cultureManager,
+            IUtilsServices utilsServices,
+            IContentDefinitionManager contentDefinitionManager,
+            ITaxonomyService taxonomyService,
+            ILocalizedStringManager localizedStringManager,
+            ITransactionManager transactionManager,
             Lazy<IEnumerable<IContentHandler>> handlers,
             IRazorTemplateManager razorTemplateManager,
-            IRazorBaseService razorService
-           ) {
+            IRazorBaseService razorService,
+            IContentManager contentManager,
+            IAuthorizer authorizer
+            ) {
+
             _razorTemplateManager = razorTemplateManager;
             _localizedStringManager = localizedStringManager;
             _taxonomyService = taxonomyService;
@@ -86,19 +91,21 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             _shellSettings = shellSettings;
             _csrfTokenHelper = csrfTokenHelper;
             _orchardServices = orchardServices;
-            T = NullLocalizer.Instance;
             _authenticationService = authenticationService;
             _contentExtensionService = contentExtensionService;
             _autorouteService = autorouteService;
             _localizationService = localizationService;
             _cultureManager = cultureManager;
             _utilsServices = utilsServices;
-            Logger = NullLogger.Instance;
             _transactionManager = transactionManager;
             _handlers = handlers;
             _notifier = notifier;
             _razorService = razorService;
+            _contentManager = contentManager;
+            _authorizer = authorizer;
 
+            T = NullLocalizer.Instance;
+            Logger = NullLogger.Instance;
         }
 
         public IEnumerable<IContentHandler> Handlers {
@@ -389,108 +396,141 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         /// <param name="TheContentItem"></param>
         /// <returns></returns>
         private Response StoreNewContentItem(ExpandoObject eObj) {
+            // Reasoning on permissions will require us to know the type
+            // of the content.
             string tipoContent = ((dynamic)eObj).ContentType;
+            // We will also need to know the content's Id in case we are
+            // trying to edit an existing ContentItem.
             Int32 IdContentToModify = 0; // new content
             try {
                 if ((Int32)(((dynamic)eObj).Id) > 0) {
                     IdContentToModify = (Int32)(((dynamic)eObj).Id);
                 }
-            }
-            catch {
+            } catch {
                 // Fix per Username nullo
-                if (tipoContent == "User")
+                if (tipoContent == "User") {
                     return _utilsServices.GetResponse(ResponseType.Validation, "Missing user Id");
+                }
             }
+            // We will be doing a first check on the ContentType, to validate what's coming
+            // to the API. The call to the GetTypeDefinition method will also do null checks
+            // on the type name for us.
+            var typeDefinition = _contentDefinitionManager.GetTypeDefinition(tipoContent);
+            if (typeDefinition == null) {
+                // return an error of some sort here
+                return _utilsServices.GetResponse(ResponseType.Validation, "Invalid ContentType");
+            }
+            // The ContentItem we will create/edit
             ContentItem NewOrModifiedContent;
+            if (IdContentToModify == 0) {
+                // We are going to be creating a new ContentItem
+                NewOrModifiedContent = _contentManager.New(tipoContent);
+                if (!_authorizer.Authorize(CorePermissions.CreateContent, NewOrModifiedContent)) {
+                    // the user cannot create content of the given type, so
+                    // return an error
+                    return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                }
+                // since we may create, create
+                _contentManager.Create(NewOrModifiedContent, VersionOptions.Draft);
+            } else {
+                // we are attempting to modify an existing items
+                NewOrModifiedContent = _contentManager.Get(IdContentToModify, VersionOptions.DraftRequired);
+            }
+            if (NewOrModifiedContent == null) {
+                // something went horribly wrong, so return an error
+                return _utilsServices.GetResponse(ResponseType.Validation, "No content with this Id");
+            }
+            // If either of these validations fail, return an error because we cannot
+            // edit the content
+            // Validation 1: item should be of the given type
+            if (NewOrModifiedContent.TypeDefinition.Name != tipoContent) {
+                // return an error
+                return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+            }
+            // Validation 2: check EditContent Permissions
+            if (!_authorizer.Authorize(CorePermissions.EditContent, NewOrModifiedContent)
+                // we also check permissions that may exist for this specific method
+                && !_contentExtensionService.HasPermission(tipoContent, Methods.Post)) {
+                // return an error
+                return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+            }
+            // Validation 3: if we are also trying to publish, check PublishContent Permissions
+            if (NewOrModifiedContent.Has<IPublishingControlAspect>()
+                || NewOrModifiedContent.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) {
+                // in this case, simply the EditContent permission is not enough because that
+                // would only allow the user to create a draftable
+                if (!_authorizer.Authorize(CorePermissions.PublishContent, NewOrModifiedContent)) {
+                    // return an error
+                    return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                }
+            }
+            // To summarize, here we have a valid ContentItem that we are authorized to edit
             Response rsp = new Response();
-            string validateMessage = "";
-            if (IdContentToModify > 0) {
-                var ctypeDefinition = _orchardServices.ContentManager.GetContentTypeDefinitions().Where(x => x.Name == tipoContent).FirstOrDefault();
-                if (ctypeDefinition != null) {
-                    var typeSettings = ctypeDefinition.Settings.TryGetModel<ContentTypeSettings>();
-                    if (typeSettings.Draftable) {
-                        NewOrModifiedContent = _orchardServices.ContentManager.Get(IdContentToModify, VersionOptions.DraftRequired); // quando edito estraggo sempre il draftrequired (come in Orchard.Core.Contents.Controllers)
-                    }
-                    else {
-                        NewOrModifiedContent = _orchardServices.ContentManager.Get(IdContentToModify, VersionOptions.Latest);
-                    }
-                    if (NewOrModifiedContent == null) {
-                        return _utilsServices.GetResponse(ResponseType.Validation, "No content with this Id");
-                    }
-
-                    if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.EditContent, NewOrModifiedContent))
-                        if (!_contentExtensionService.HasPermission(tipoContent, Methods.Post, NewOrModifiedContent))
-                            return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                    validateMessage = ValidateMessage(NewOrModifiedContent, "Modified");
-                }
-                else {
-                    return _utilsServices.GetResponse(ResponseType.Validation, "Invalid ContentType");
-                }
-            }
-            else {
-                NewOrModifiedContent = _orchardServices.ContentManager.New(tipoContent);
-                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.EditContent, NewOrModifiedContent)) {
-                    if (!_contentExtensionService.HasPermission(tipoContent, Methods.Post))
-                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                }
-                _orchardServices.ContentManager.Create(NewOrModifiedContent, VersionOptions.Draft); // quando creo creo sempre in draft (come in Orchard.Core.Contents.Controllers), se non faccio il create poi non vengono salvati i field
-                validateMessage = ValidateMessage(NewOrModifiedContent, "Created");
-            }
-            if (string.IsNullOrEmpty(validateMessage))
-                rsp = _contentExtensionService.StoreInspectExpando(eObj, NewOrModifiedContent);
-            else
-                rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
-            if (rsp.Success) {
-                try {
-                    string language = "";
-                    try {
-                        language = ((dynamic)eObj).Language;
-                    }
-                    catch { }
-                    if (NewOrModifiedContent.As<LocalizationPart>() != null) {
-                        if (!string.IsNullOrEmpty(language))
-                            NewOrModifiedContent.As<LocalizationPart>().Culture = _cultureManager.GetCultureByName(language);
-                        NewOrModifiedContent.As<LocalizationPart>().MasterContentItem = NewOrModifiedContent;
-                    }
-                    validateMessage = ValidateMessage(NewOrModifiedContent, "");
-                    if (string.IsNullOrEmpty(validateMessage) == false) {
-                        rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
-                    }
-                    if (NewOrModifiedContent.As<AutoroutePart>() != null) {
-                        dynamic data = new ExpandoObject();
-                        data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
-                        data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
-                        data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
-                        rsp.Data = data;
-                    }
-                }
-                catch (Exception ex) {
-                    rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
-                }
-            }
-            if (!rsp.Success)
-                _transactionManager.Cancel();
-            else {
-                // forza il publish solo per i contenuti non draftable
-                var typeSettings = NewOrModifiedContent.TypeDefinition.Settings.TryGetModel<ContentTypeSettings>();
-                if ((typeSettings == null) || (typeSettings.Draftable == false)) {
-                    NewOrModifiedContent.VersionRecord.Published = false; //not draftable items may have this flag set to published, and that would mean that the .Publish would not actually be executed.
-                    _orchardServices.ContentManager.Publish(NewOrModifiedContent);
-                }
-                // propaga l'evento Updated per il ContentItem
+            // do some further custom validation
+            string validateMessage = ValidateMessage(NewOrModifiedContent, IdContentToModify == 0 ? "Created" : "Modified");
+            if (string.IsNullOrEmpty(validateMessage)) {
+                // act like _contentManager.UpdateEditor
                 var context = new UpdateContentContext(NewOrModifiedContent);
+                // 1. invoke the Updating handlers
+                Handlers.Invoke(handler => handler.Updating(context), Logger);
+                // 2. do all the update operations
+                rsp = _contentExtensionService.StoreInspectExpando(eObj, NewOrModifiedContent);
+                if (rsp.Success) {
+                    try {
+                        string language = "";
+                        try {
+                            language = ((dynamic)eObj).Language;
+                        } catch { }
+                        if (NewOrModifiedContent.As<LocalizationPart>() != null) {
+                            if (!string.IsNullOrEmpty(language))
+                                NewOrModifiedContent.As<LocalizationPart>().Culture = _cultureManager.GetCultureByName(language);
+                            NewOrModifiedContent.As<LocalizationPart>().MasterContentItem = NewOrModifiedContent;
+                        }
+                        validateMessage = ValidateMessage(NewOrModifiedContent, "");
+                        if (string.IsNullOrEmpty(validateMessage) == false) {
+                            rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
+                        }
+                        if (NewOrModifiedContent.As<AutoroutePart>() != null) {
+                            dynamic data = new ExpandoObject();
+                            data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
+                            data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
+                            data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
+                            rsp.Data = data;
+                        }
+                    } catch (Exception ex) {
+                        rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
+                    }
+                }
+                // 3. invoke the Updated handlers
                 Handlers.Invoke(handler => handler.Updated(context), Logger);
-
+                // Check whether any handler set some Error notifications (???)
                 foreach (var notifi in _notifier.List()) {
                     if (notifi.Type == NotifyType.Error) {
-                        _transactionManager.Cancel();
+                        // we'll cancel the transaction later
+                        //_transactionManager.Cancel();
                         rsp.Success = false;
                         rsp.Message = "Error on update";
                         Logger.Error(notifi.Message.ToString());
                         break;
                     }
                 }
+            } else {
+                // Custom validation failed
+                // this one has by definition rsp.Success == false
+                rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
             }
+
+            if (!rsp.Success) {
+                // update failed
+                _transactionManager.Cancel();
+                // return an error
+                return rsp;
+            }
+
+
+            // we want the ContentItem to be published, so it can be "seen" by mobile
+            _contentManager.Publish(NewOrModifiedContent);
+
             return rsp;
         }
 
