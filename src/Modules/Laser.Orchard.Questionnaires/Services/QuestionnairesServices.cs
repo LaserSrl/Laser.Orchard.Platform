@@ -426,7 +426,7 @@ namespace Laser.Orchard.Questionnaires.Services {
 
         private HashAlgorithm _hashAlgorithm;
         private HashAlgorithm GetHashAlgorithm() {
-            if(_hashAlgorithm == null) {
+            if (_hashAlgorithm == null) {
                 _hashAlgorithm = SHA256.Create();
             }
             return _hashAlgorithm;
@@ -462,7 +462,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (String.IsNullOrWhiteSpace(editModel.Context)) { //fallback into questionnaire part settings context if context is null
                 // Tokenize Settings Context
                 editModel.Context = _tokenizer
-                    .Replace(questionnairePartSettings.QuestionnaireContext, 
+                    .Replace(questionnairePartSettings.QuestionnaireContext,
                         new Dictionary<string, object> { { "Content", content } });
             }
             if (editModel.Context.Length > 255) {// limits context to 255 chars
@@ -471,16 +471,16 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (questionnaireModuleSettings.Disposable) {
                 if (currentUser != null) {
                     if (_repositoryUserAnswer
-                            .Fetch(x => x.User_Id == currentUser.Id 
-                                && x.QuestionnairePartRecord_Id == editModel.Id 
+                            .Fetch(x => x.User_Id == currentUser.Id
+                                && x.QuestionnairePartRecord_Id == editModel.Id
                                 && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
                 }
                 else { // anonymous user => check SessionID
                     if (_repositoryUserAnswer
-                            .Fetch(x => x.SessionID == SessionID 
-                                && x.QuestionnairePartRecord_Id == editModel.Id 
+                            .Fetch(x => x.SessionID == SessionID
+                                && x.QuestionnairePartRecord_Id == editModel.Id
                                 && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
@@ -531,7 +531,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 }
 
                 _workflowManager.TriggerEvent(
-                    "QuestionnaireSubmitted", 
+                    "QuestionnaireSubmitted",
                     content, () => new Dictionary<string, object> {
                         { "Content", content },
                         { "QuestionnaireContext", editModel.Context },
@@ -570,11 +570,12 @@ namespace Laser.Orchard.Questionnaires.Services {
             Expression<Func<UserAnswersRecord, bool>> fetchPredicate;
             if (context == null) {
                 fetchPredicate = // answers for this user to this questionnaire
-                    uar => uar.User_Id == user.Id 
+                    uar => uar.User_Id == user.Id
                         && uar.QuestionnairePartRecord_Id == part.Id;
-            } else {
+            }
+            else {
                 fetchPredicate = // answers for this user to this questionnaire in this context
-                    uar => uar.User_Id == user.Id 
+                    uar => uar.User_Id == user.Id
                         && uar.QuestionnairePartRecord_Id == part.Id
                         && uar.Context == context;
             }
@@ -623,9 +624,10 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var answer = group.First();
                 if (answer.QuestionType == QuestionType.MultiChoice) {
                     answerResults = group.Select(uar => new AnswerWithResultViewModel() {
-                        Id = uar.Id,
+                        Id = uar.AnswerRecord_Id ?? 0,
                         AnswerText = uar.AnswerText,
-                        QuestionRecord_Id = uar.QuestionRecord_Id
+                        QuestionRecord_Id = uar.QuestionRecord_Id,
+                        Answered = true //if the the record is there means the user answered with that option
                     }).ToList();
                 }
                 viewModel.QuestionsWithResults
@@ -905,8 +907,8 @@ namespace Laser.Orchard.Questionnaires.Services {
             var questionsCount = questionnaireData.Questions.Count();
             var questionnaireStatsQuery = _repositoryUserAnswer.Table
                 .Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
-                    l => l.QuestionRecord_Id, 
-                    r => r.Id, 
+                    l => l.QuestionRecord_Id,
+                    r => r.Id,
                     (l, r) => new { UserAnswers = l, Questions = r })
                 .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
 
@@ -977,8 +979,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var title = quest.As<TitlePart>();
                 var stats = _repositoryUserAnswer.Table
                     .Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
-                        l => l.QuestionRecord_Id, 
-                        r => r.Id, 
+                        l => l.QuestionRecord_Id,
+                        r => r.Id,
                         (l, r) => new { UserAnswers = l, Questions = r })
                     .Where(w => w.Questions.QuestionType == type && w.Questions.QuestionnairePartRecord_Id == quest.Id)
                     .GroupBy(g => new { g.Questions.QuestionnairePartRecord_Id, g.UserAnswers.QuestionText, g.UserAnswers.AnswerText })
