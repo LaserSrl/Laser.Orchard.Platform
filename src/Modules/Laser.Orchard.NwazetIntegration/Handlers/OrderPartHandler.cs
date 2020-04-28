@@ -27,6 +27,9 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         private bool IsOrder(string contentType) {
             // return true if type has OrderPart
             var definition = _contentDefinitionManager.GetTypeDefinition(contentType);
+            if (definition == null) {
+                return false;
+            }
             return definition.Parts.Any(ctpd => ctpd.PartDefinition.Name.Equals("OrderPart"));
         }
 
