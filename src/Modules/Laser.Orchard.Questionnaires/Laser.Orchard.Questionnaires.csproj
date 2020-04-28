@@ -92,6 +92,7 @@
     <Compile Include="Models\QuestionnairePartRecord.cs" />
     <Compile Include="Models\QuestionRecord.cs" />
     <Compile Include="Models\RankingPart.cs" />
+    <Compile Include="Models\UserAnswerInstanceRecord.cs" />
     <Compile Include="Models\UserAnswersRecord.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions.cs" />
