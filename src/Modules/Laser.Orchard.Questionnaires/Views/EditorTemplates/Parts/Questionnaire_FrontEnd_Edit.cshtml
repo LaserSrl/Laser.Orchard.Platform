@@ -222,88 +222,92 @@ else {
                             @Html.HiddenFor(m => m.QuestionsWithResults[j].ConditionType)
                             @Html.HiddenFor(m => m.QuestionsWithResults[j].AllFiles)
                             @Html.HiddenFor(m => m.QuestionsWithResults[j].AnswerType)
-                            <li data-condition="@Model.QuestionsWithResults[j].Condition" data-conditiontype="@Model.QuestionsWithResults[j].ConditionType" data-required="@(Model.QuestionsWithResults[j].IsRequired ? "true" : "false")">
+                                  <li data-condition="@Model.QuestionsWithResults[j].Condition" data-conditiontype="@Model.QuestionsWithResults[j].ConditionType" data-required="@(Model.QuestionsWithResults[j].IsRequired ? "true" : "false")">
 
-                                <h3>@Model.QuestionsWithResults[j].Question</h3>
-                                @if (Model.QuestionsWithResults[j].AllFiles != null && Model.QuestionsWithResults[j].AllFiles.Split(',').Count() > 0) {
-                                    foreach (int ciId in Model.QuestionsWithResults[j].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
-                                    }
-                                }
-                                @if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                                    if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.None) {
-                                        @Html.TextAreaFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class= "form-control text large" })
-                                    }
-                                    else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Date) {
-                                        <label class="forpicker" for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)">@T("Date")</label>
-                                        <span class="date">@Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control date-textbox text" })</span>
-                                    }
-                                    else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Datetime) {
-                                        <div class="form-inline">
-                                            <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date">@T("Date")</label>
-                                            <span class="date"><input type="text" class="form-control date-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date" /></span>
-                                            <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time">@T("Time")</label>
-                                            <span class="time"><input type="text" class="form-control date-time-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time" /></span>
-                                            @Html.HiddenFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)
-                                        </div>
-                                    }
-                                    else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Email) {
-                                        @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control email-textbox text medium", data_type = "email" })
-                                    }
-                                    else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Url) {
-                                        @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control url-textbox text medium", data_type = "url" })
-                                    }
-                                }
-                                else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.SingleChoice) {
-                                    var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
-                                    <ul>
-                                        <li>
-                                            @for (int i = 0; i < numeroRisposte; i++) {
-                                                // Genero l'id in questo modo perché usare Html.FieldIdFor() causa un'alterazione del name che lo rende irriconoscibile dal TryUpdateModel
-                                                var answerId = Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer) + "-" + i + "-" + j;
-                                                <label for="@answerId">
-                                                    <input class="j_answer" type="radio"
-                                                           @(Model.QuestionsWithResults[j].SingleChoiceAnswer == Model.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
-                                                           name="@Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer)"
-                                                           id="@answerId"
-                                                           value="@(Model.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
-                                                    @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
-                                                </label>
+                                      <h3>@Model.QuestionsWithResults[j].Question</h3>
+                                      @if (Model.QuestionsWithResults[j].AllFiles != null && Model.QuestionsWithResults[j].AllFiles.Split(',').Count() > 0) {
+                                          foreach (int ciId in Model.QuestionsWithResults[j].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                          }
+                                      }
+                                      @if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                          if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.None) {
+                                              @Html.TextAreaFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control text large" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Date) {
+                                              <label class="forpicker" for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)">@T("Date")</label>
+                                              <span class="date">@Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control date-textbox text" })</span>
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Datetime) {
+                                              <div class="form-inline">
+                                                  <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date">@T("Date")</label>
+                                                  <span class="date"><input type="text" class="form-control date-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date" /></span>
+                                                  <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time">@T("Time")</label>
+                                                  <span class="time"><input type="text" class="form-control date-time-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time" /></span>
+                                                  @Html.HiddenFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)
+                                              </div>
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Email) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control email-textbox text medium", data_type = "email" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Url) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control url-textbox text medium", data_type = "url" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Number) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control number-textbox text medium", type="number", data_type = "number" })
+                                          }
 
-                                                if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
-                                                    foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
-                                                    }
-                                                }
+                                      }
+                                      else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.SingleChoice) {
+                                          var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
+                                          <ul>
+                                              <li>
+                                                  @for (int i = 0; i < numeroRisposte; i++) {
+                                                      // Genero l'id in questo modo perché usare Html.FieldIdFor() causa un'alterazione del name che lo rende irriconoscibile dal TryUpdateModel
+                                                      var answerId = Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer) + "-" + i + "-" + j;
+                                                      <label for="@answerId">
+                                                          <input class="j_answer" type="radio"
+                                                                 @(Model.QuestionsWithResults[j].SingleChoiceAnswer == Model.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
+                                                                 name="@Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer)"
+                                                                 id="@answerId"
+                                                                 value="@(Model.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
+                                                          @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                      </label>
 
-                                            }
-                                        </li>
-                                    </ul>
-                                }
-                                else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.MultiChoice) {
-                                    var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
+                                                      if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                          foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                          }
+                                                      }
 
-                                    <ul>
-                                        <li>
-                                            @for (int i = 0; i < numeroRisposte; i++) {
-                                                @Html.HiddenFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Id)
-                                                <label for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
-                                                    @Html.CheckBoxFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered, new { @class = "j_answer", data_value = @Model.QuestionsWithResults[j].AnswersWithResult[i].Id })
-                                                    @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
-                                                </label>
-                                                if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
-                                                    foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
-                                                        MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
-                                                        <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
-                                                    }
-                                                }
-                                            }
-                                        </li>
-                                    </ul>
-                                }
-                            </li>
+                                                  }
+                                              </li>
+                                          </ul>
+                                      }
+                                      else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.MultiChoice) {
+                                          var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
+
+                                          <ul>
+                                              <li>
+                                                  @for (int i = 0; i < numeroRisposte; i++) {
+                                                      @Html.HiddenFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Id)
+                                                      <label for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                                          @Html.CheckBoxFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered, new { @class = "j_answer", data_value = @Model.QuestionsWithResults[j].AnswersWithResult[i].Id })
+                                                          @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                      </label>
+                                                      if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                          foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                          }
+                                                      }
+                                                  }
+                                              </li>
+                                          </ul>
+                                      }
+                                  </li>
                             if (j == Model.QuestionsWithResults.Count() - 1) {
                             @:</ul>
                             @Html.HiddenFor(m => m.UseRecaptcha)
