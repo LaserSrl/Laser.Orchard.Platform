@@ -492,6 +492,26 @@ namespace Laser.Orchard.Questionnaires.Services {
                     (currentUser != null ? currentUser.Id.ToString() : SessionID)
                     + editModel.Id.ToString() + DateTime.UtcNow.ToString());
                 editModel.AnswersInstance = instanceId;
+                // get the answer text where it's not open
+                var answerIds = editModel.QuestionsWithResults
+                    // for all questions that don't have open Answer
+                    .Where(q => q.QuestionType == QuestionType.SingleChoice
+                        || q.QuestionType == QuestionType.MultiChoice)
+                    // select the answer ids
+                    .SelectMany(q => q.QuestionType == QuestionType.SingleChoice
+                        // we make a list of this to merge it with the others
+                        ? new List<int>() { q.SingleChoiceAnswer }
+                        // all selected answers
+                        : q.AnswersWithResult.Where(a => a.Answered).Select(a => a.Id))
+                    // Distinct is probably not neeeded
+                    .Distinct();
+                // get the text from db (candidate for caching)
+                var allSelectedAnswers = _questionAnswerRepositoryService
+                    .AnswersRepository()
+                    .Fetch(ar => answerIds.Contains(ar.Id));
+                // a dictionary is easy to get stuff out of
+                var answerTexts = allSelectedAnswers
+                    .ToDictionary(ar => ar.Id);
                 foreach (var q in editModel.QuestionsWithResults) {
                     Action<UserAnswersRecord> CreationAction = (uar) => {
                         uar.QuestionText = q.Question;
@@ -502,6 +522,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                         uar.Context = editModel.Context;
                         uar.AnswerInstance = instanceId;
                         uar.QuestionType = q.QuestionType;
+                        // I really wish I could create several records in a single call
                         CreateUserAnswers(uar);
                     };
                     if (q.QuestionType == QuestionType.OpenAnswer) {
@@ -515,7 +536,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                         if (q.SingleChoiceAnswer > 0) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
-                            userAnswer.AnswerText = GetAnswer(q.SingleChoiceAnswer).Answer;
+                            userAnswer.AnswerText = answerTexts[q.SingleChoiceAnswer].Answer;//GetAnswer(q.SingleChoiceAnswer).Answer;
                             CreationAction(userAnswer);
                         }
                     }
@@ -524,7 +545,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                         foreach (var a in answerList) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = a.Id;
-                            userAnswer.AnswerText = GetAnswer(a.Id).Answer;
+                            userAnswer.AnswerText = answerTexts[a.Id].Answer;// GetAnswer(a.Id).Answer;
                             CreationAction(userAnswer);
                         }
                     }
