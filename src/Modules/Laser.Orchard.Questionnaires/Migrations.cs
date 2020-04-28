@@ -268,5 +268,27 @@ namespace Laser.Orchard.Questionnaires {
 
             return 29;
         }
+
+        public int UpdateFrom29() {
+            SchemaBuilder
+                .CreateTable("UserAnswerInstanceRecord", table => table
+                    .Column<int>("Id", col => col.PrimaryKey().Identity())
+                    .Column<int>("QuestionnairePartRecord_Id")
+                    .Column<int>("User_Id")
+                    // string properties are the same length as those in UserAnswersRecord
+                    .Column<string>("SessionID", col => col.WithLength(24))
+                    .Column<string>("Context", col => col.WithLength(255))
+                    .Column<DateTime>("AnswerDate")
+                    .Column<string>("AnswerInstance", col => col.WithLength(64)))
+                // add indexes for the columns we'll most often query on
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_User_Id", "User_Id"))
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_QuestionnairePartRecord_Id", "QuestionnairePartRecord_Id"))
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_AnswerInstance", "AnswerInstance"));
+
+            return 30;
+        }
     }
 }

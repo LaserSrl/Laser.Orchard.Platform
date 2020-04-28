@@ -37,6 +37,7 @@ namespace Laser.Orchard.Questionnaires.Services {
     public class QuestionnairesServices : IQuestionnairesServices {
         private readonly IRepository<UserAnswersRecord> _repositoryUserAnswer;
         private readonly IRepository<TitlePartRecord> _repositoryTitle;
+        private readonly IRepository<UserAnswerInstanceRecord> _repositoryinstanceRecords;
         private readonly IOrchardServices _orchardServices;
         private readonly IWorkflowManager _workflowManager;
         private readonly INotifier _notifier;
@@ -67,7 +68,8 @@ namespace Laser.Orchard.Questionnaires.Services {
             IScheduledTaskManager taskManager,
             IDateLocalizationServices dateServices,
             IQuestionAnswerRepositoryService questionAnswerRepositoryService,
-            ShellSettings shellSettings) {
+            ShellSettings shellSettings,
+            IRepository<UserAnswerInstanceRecord> repositoryinstanceRecords) {
 
             _orchardServices = orchardServices;
             _repositoryTitle = repositoryTitle;
@@ -85,6 +87,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             _taskManager = taskManager;
             _dateServices = dateServices;
             _shellSettings = shellSettings;
+            _repositoryinstanceRecords = repositoryinstanceRecords;
         }
 
         private string getusername(int id) {
@@ -488,9 +491,19 @@ namespace Laser.Orchard.Questionnaires.Services {
             }
             if (!exit) {
                 // here we loop to actually generate the records for the answers given
+                var dateTimeNow = DateTime.UtcNow;
                 var instanceId = GetHash(
                     (currentUser != null ? currentUser.Id.ToString() : SessionID)
-                    + editModel.Id.ToString() + DateTime.UtcNow.ToString());
+                    + editModel.Id.ToString() + dateTimeNow.ToString());
+                var instanceRecord = new UserAnswerInstanceRecord() {
+                    QuestionnairePartRecord_Id = editModel.Id,
+                    User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) 
+                        ? 0 : currentUser.Id,
+                    SessionID = SessionID,
+                    Context = editModel.Context,
+                    AnswerDate = dateTimeNow,
+                    AnswerInstance = instanceId
+                };
                 editModel.AnswersInstance = instanceId;
                 // get the answer text where it's not open
                 var answerIds = editModel.QuestionsWithResults
@@ -550,7 +563,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                         }
                     }
                 }
-
+                // create the instance record
+                _repositoryinstanceRecords.Create(instanceRecord);
+                // fire events
                 _workflowManager.TriggerEvent(
                     "QuestionnaireSubmitted",
                     content, () => new Dictionary<string, object> {
@@ -588,19 +603,18 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
-            Expression<Func<UserAnswersRecord, bool>> fetchPredicate;
+            Expression<Func<UserAnswerInstanceRecord, bool>> fetchPredicate;
             if (context == null) {
                 fetchPredicate = // answers for this user to this questionnaire
                     uar => uar.User_Id == user.Id
                         && uar.QuestionnairePartRecord_Id == part.Id;
-            }
-            else {
+            } else {
                 fetchPredicate = // answers for this user to this questionnaire in this context
                     uar => uar.User_Id == user.Id
                         && uar.QuestionnairePartRecord_Id == part.Id
                         && uar.Context == context;
             }
-            var mostRecentAnswer = _repositoryUserAnswer
+            var mostRecentAnswer = _repositoryinstanceRecords
                 .Fetch(
                     fetchPredicate,
                     // most recent first
