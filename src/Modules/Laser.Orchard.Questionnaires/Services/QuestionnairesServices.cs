@@ -603,33 +603,27 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
-
-            UserAnswerInstanceRecord mostRecentAnswer;
+            
+            string instanceId = null;
             if (context == null) {
-                mostRecentAnswer = _repositoryinstanceRecords
-                    .Fetch(// answers for this user to this questionnaire
-                        uar => uar.User_Id == user.Id
-                            && uar.QuestionnairePartRecord_Id == part.Id,
-                        // most recent first
-                        o => o.Desc(uar => uar.AnswerDate),
-                        0, //skip none
-                        1) //take 1
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.User_Id == user.Id
+                        && uair.QuestionnairePartRecord_Id == part.Id)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
             } else {
-                mostRecentAnswer = _repositoryinstanceRecords
-                    .Fetch(// answers for this user to this questionnaire in this context
-                        uar => uar.User_Id == user.Id
-                            && uar.QuestionnairePartRecord_Id == part.Id
-                            && uar.Context == context,
-                        // most recent first
-                        o => o.Desc(uar => uar.AnswerDate),
-                        0, //skip none
-                        1) //take 1
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.User_Id == user.Id
+                        && uair.QuestionnairePartRecord_Id == part.Id
+                        && uair.Context == context)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
             }
-            return mostRecentAnswer == null
-                ? null // never answered
-                : mostRecentAnswer.AnswerInstance ?? string.Empty;
+            return instanceId;
         }
         public QuestionnaireWithResultsViewModel GetAnswersInstance(
             string instance, QuestionnairePart part, IUser user) {
