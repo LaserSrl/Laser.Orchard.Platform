@@ -290,5 +290,6 @@ namespace Laser.Orchard.Questionnaires {
 
             return 30;
         }
+        
     }
 }

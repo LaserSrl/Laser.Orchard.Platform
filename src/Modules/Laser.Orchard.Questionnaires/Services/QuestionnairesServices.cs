@@ -603,25 +603,30 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
-            Expression<Func<UserAnswerInstanceRecord, bool>> fetchPredicate;
+
+            UserAnswerInstanceRecord mostRecentAnswer;
             if (context == null) {
-                fetchPredicate = // answers for this user to this questionnaire
-                    uar => uar.User_Id == user.Id
-                        && uar.QuestionnairePartRecord_Id == part.Id;
+                mostRecentAnswer = _repositoryinstanceRecords
+                    .Fetch(// answers for this user to this questionnaire
+                        uar => uar.User_Id == user.Id
+                            && uar.QuestionnairePartRecord_Id == part.Id,
+                        // most recent first
+                        o => o.Desc(uar => uar.AnswerDate),
+                        0, //skip none
+                        1) //take 1
+                    .FirstOrDefault();
             } else {
-                fetchPredicate = // answers for this user to this questionnaire in this context
-                    uar => uar.User_Id == user.Id
-                        && uar.QuestionnairePartRecord_Id == part.Id
-                        && uar.Context == context;
+                mostRecentAnswer = _repositoryinstanceRecords
+                    .Fetch(// answers for this user to this questionnaire in this context
+                        uar => uar.User_Id == user.Id
+                            && uar.QuestionnairePartRecord_Id == part.Id
+                            && uar.Context == context,
+                        // most recent first
+                        o => o.Desc(uar => uar.AnswerDate),
+                        0, //skip none
+                        1) //take 1
+                    .FirstOrDefault();
             }
-            var mostRecentAnswer = _repositoryinstanceRecords
-                .Fetch(
-                    fetchPredicate,
-                    // most recent first
-                    o => o.Desc(uar => uar.AnswerDate),
-                    0, //skip none
-                    1) //take 1
-                .FirstOrDefault();
             return mostRecentAnswer == null
                 ? null // never answered
                 : mostRecentAnswer.AnswerInstance ?? string.Empty;
