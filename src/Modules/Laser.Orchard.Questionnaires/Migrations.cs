@@ -290,6 +290,17 @@ namespace Laser.Orchard.Questionnaires {
 
             return 30;
         }
+
+        public int UpdateFrom30() {
+            SchemaBuilder
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery", 
+                        "QuestionnairePartRecord_Id", "User_Id", "AnswerDate"))
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery_WithContext",
+                        "QuestionnairePartRecord_Id", "User_Id", "AnswerDate", "Context"));
+            return 31;
+        }
         
     }
 }
