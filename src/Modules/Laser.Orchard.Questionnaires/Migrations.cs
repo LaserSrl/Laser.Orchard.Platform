@@ -279,20 +279,14 @@ namespace Laser.Orchard.Questionnaires {
                     .Column<string>("SessionID", col => col.WithLength(24))
                     .Column<string>("Context", col => col.WithLength(255))
                     .Column<DateTime>("AnswerDate")
-                    .Column<string>("AnswerInstance", col => col.WithLength(64)))
-                // add indexes for the columns we'll most often query on
-                .AlterTable("UserAnswerInstanceRecord", table => table
-                    .CreateIndex("IX_User_Id", "User_Id"))
-                .AlterTable("UserAnswerInstanceRecord", table => table
-                    .CreateIndex("IX_QuestionnairePartRecord_Id", "QuestionnairePartRecord_Id"))
-                .AlterTable("UserAnswerInstanceRecord", table => table
-                    .CreateIndex("IX_AnswerInstance", "AnswerInstance"));
+                    .Column<string>("AnswerInstance", col => col.WithLength(64)));
 
             return 30;
         }
 
         public int UpdateFrom30() {
             SchemaBuilder
+                // add indexes for the columns we'll most often query on
                 .AlterTable("UserAnswerInstanceRecord", table => table
                     .CreateIndex("IX_LatestAnswersQuery", 
                         "QuestionnairePartRecord_Id", "User_Id", "AnswerDate"))
@@ -301,6 +295,5 @@ namespace Laser.Orchard.Questionnaires {
                         "QuestionnairePartRecord_Id", "User_Id", "AnswerDate", "Context"));
             return 31;
         }
-        
     }
 }
