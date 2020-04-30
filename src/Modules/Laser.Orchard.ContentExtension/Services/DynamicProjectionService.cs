@@ -1,21 +1,21 @@
-﻿using NHibernate;
+﻿using Laser.Orchard.ContentExtension.Models;
+using NHibernate;
 using NHibernate.Transform;
-using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 
 namespace Laser.Orchard.ContentExtension.Services {
     [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
     public class DynamicProjectionService : IDynamicProjectionService {
-        private readonly IOrchardServices _orchardServices;
+        private readonly IContentManager _contentManager;
 
-        public DynamicProjectionService(IOrchardServices orchardServices) {
-            _orchardServices = orchardServices;
+        public DynamicProjectionService(
+            IContentManager contentManager) {
+
+            _contentManager = contentManager;
         }
 
         public int GetCount(IQuery query) {
@@ -35,6 +35,17 @@ namespace Laser.Orchard.ContentExtension.Services {
             }
             hqlQuery = query.SetResultTransformer(Transformers.AliasToEntityMap);
             return hqlQuery.Enumerable();
+        }
+
+        private IEnumerable<DynamicProjectionPart> _partsForMenu;
+        public IEnumerable<DynamicProjectionPart> GetPartsForMenu() {
+            if (_partsForMenu == null) {
+                _partsForMenu = _contentManager
+                    .Query<DynamicProjectionPart, DynamicProjectionPartRecord>()
+                    .Where(x => x.OnAdminMenu).List();
+                
+            }
+            return _partsForMenu;
         }
     }
 }
