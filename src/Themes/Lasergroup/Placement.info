@@ -23,4 +23,9 @@
   <Match ContentType="GalleryWidget">
     <Place Fields_MediaLibraryPicker="Content:1;Alternate=ClientsGallery"/>
   </Match>
+  <Match ContentType ="Prodotto">
+    <Match DisplayType="Detail">
+      <Place Fields_Boolean__InEvidenza="-" />
+    </Match>
+  </Match>
 </Placement>
