@@ -640,3 +640,41 @@ body.verde .navbar-nav .dropdown-menu > li > a{ border-color:#A1D030 !important;
 
 body.home .navbar-lang.navbar-lang-home-intro{ right: 50%; bottom: 25px; top:auto; margin-right:-785px; }
 body.home.navbar-fixed .navbar-lang.navbar-lang-home-intro{ position:fixed; bottom:auto; top:35px; }
+
+/* Clienti/Partner/Loghi*/
+#loghi {
+    padding-top: 100px;
+    position: relative;
+}
+
+    #loghi .row {
+        font-size: 0;
+    }
+
+        #loghi .row .col-xs-12 {
+            display: inline-block;
+            float: none;
+        }
+
+            #loghi .row .col-xs-12 .img-responsive {
+                filter: grayscale(100%);
+            }
+
+    #loghi .slick-dots li button::before {
+        background: #000;
+        border-radius: 50%;
+        content: ' ';
+        height: 10px;
+        width: 10px;
+    }
+
+.loghi-bottom {
+    background: #fff;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    z-index: 5;
+    bottom: -50px;
+    height: 50px;
+    border-radius: 0 0 50% 50%;
+}
