@@ -73,6 +73,20 @@ namespace Laser.Orchard.Mobile.Routes {
                             {"area", "Laser.Orchard.Mobile"}
                         },
                         new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/DevTools/PushNotification",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Mobile"},
+                            {"controller", "PushNotification"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Mobile"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }

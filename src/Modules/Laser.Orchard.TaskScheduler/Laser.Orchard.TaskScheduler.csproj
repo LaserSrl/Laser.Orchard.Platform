@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -114,6 +115,7 @@
     <Compile Include="Models\ScheduledTaskPart.cs" />
     <Compile Include="Models\LaserTaskSchedulerRecord.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Services\IScheduledTaskServices.cs" />
     <Compile Include="Services\ScheduledTaskServices.cs" />
     <Compile Include="TaskSchedulerMigrations.cs" />
@@ -146,6 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

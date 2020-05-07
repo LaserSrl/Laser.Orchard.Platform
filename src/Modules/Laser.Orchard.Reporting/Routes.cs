@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Laser.Orchard.Questionnaires {
+namespace Laser.Orchard.Reporting {
     public class Routes : IHttpRouteProvider {
 
-        const string renamedRouteName = "Admin/Questionnaires/";
+        const string renamedRouteName = "Admin/Reporting/";
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (var routeDescriptor in GetRoutes()) {
@@ -18,27 +18,22 @@ namespace Laser.Orchard.Questionnaires {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-                new HttpRouteDescriptor {
-                    Priority = 5,
-                    RouteTemplate = "api/laser.questionnaireresponse/{qContext}",
-                    Defaults = new {
-                        area = "Laser.Orchard.Questionnaires",
-                        controller = "QuestionnaireResponse",
-                        action = "PostContext"
-                    }
-                },
-                AddRenamedRoute("QuestionnaireStats","Index"),
-                AddRenamedRoute("QuestionnaireStats","Detail", "/{idQuestionario}"),
-                AddRenamedRoute("QuestionnaireStats","QuestionDetail", "/{idQuestionario}/{idDomanda}"),
-                AddRenamedRoute("AdminRanking","Index"),
-                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}/{deviceType}"),
-                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}")
+                AddRenamedRoute("Report","Index"),
+                AddRenamedRoute("Report","ShowReports", "/ShowReports"),
+                AddRenamedRoute("Report","DashboardList", "/DashboardList"),
+                AddRenamedRoute("Report","Create", "/Create"),
+                AddRenamedRoute("Report","CreateHql", "/CreateHql"),
+                AddRenamedRoute("Report","EditHql", "/EditHql/{id}"),
+                AddRenamedRoute("Report","Edit", "/Edit/{id}"),
+                AddRenamedRoute("Report","ShowDashboard", "/ShowDashboard/{id}"),
+                AddRenamedRoute("Report","Display", "/Display/{id}")
+
             };
         }
 
         private RouteDescriptor AddRenamedRoute(string controllerName, string action, string routeQueue = "") {
             RouteValueDictionary routeDictionary = new RouteValueDictionary();
-            routeDictionary.Add("area", "Laser.Orchard.Questionnaires");
+            routeDictionary.Add("area", "Laser.Orchard.Reporting");
             routeDictionary.Add("controller", controllerName);
             routeDictionary.Add("action", action);
 
@@ -48,7 +43,7 @@ namespace Laser.Orchard.Questionnaires {
                         routeDictionary,
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "Laser.Orchard.Questionnaires"}
+                            {"area", "Laser.Orchard.Reporting"}
                         },
                         new MvcRouteHandler())
             };
