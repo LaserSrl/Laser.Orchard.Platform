@@ -43,7 +43,7 @@ namespace Laser.Orchard.StartupConfig.Settings {
         private void AddIdentityToType(string typeName) {
             _contentDefinitionManager
                 .AlterTypeDefinition(typeName, builder => {
-                    builder.WithPart("IdentityPart");
+                    builder.WithIdentity();
                 });
             _orchardServices.Notifier.Information(T("The content type must have a form of identity. IdentityPart was added."));
         }

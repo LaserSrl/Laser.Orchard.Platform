@@ -13,15 +13,15 @@ using System.Web.Http;
 namespace Laser.Orchard.Policy.Controllers {
     [WebApiKeyFilter(false)]
     public class PoliciesApiController : ApiController {
-        private readonly IPolicyServices _policySerivces;
+        private readonly IPolicyServices _policyServices;
         private readonly ICsrfTokenHelper _csrfTokenHelper;
         private readonly IOrchardServices _orchardServices;
         private readonly IUtilsServices _utilsServices;
 
         public ILogger Log { get; set; }
 
-        public PoliciesApiController(IOrchardServices orchardServices, IPolicyServices policySerivces, ICsrfTokenHelper csrfTokenHelper, IUtilsServices utilsServices) {
-            _policySerivces = policySerivces;
+        public PoliciesApiController(IOrchardServices orchardServices, IPolicyServices policyServices, ICsrfTokenHelper csrfTokenHelper, IUtilsServices utilsServices) {
+            _policyServices = policyServices;
             _csrfTokenHelper = csrfTokenHelper;
             _orchardServices = orchardServices;
             T = NullLocalizer.Instance;
@@ -33,7 +33,7 @@ namespace Laser.Orchard.Policy.Controllers {
 
         // GET api/policiesapi
         public PoliciesApiModel Get(string lang) {
-            PoliciesForUserViewModel model = _policySerivces.GetPoliciesForUserOrSession(false, lang);
+            PoliciesForUserViewModel model = _policyServices.GetPoliciesForCurrentUser(false, lang);
 
             return new PoliciesApiModel {
                 Language = lang,
@@ -64,7 +64,7 @@ namespace Laser.Orchard.Policy.Controllers {
                         PolicyText = null, // non serve per l'update è sufficinete l'ID
                         UserId = s.UserId
                     }).ToList();
-                    _policySerivces.PolicyForUserMassiveUpdate(fullModel);
+                    _policyServices.PolicyForUserMassiveUpdate(fullModel);
                     return (_utilsServices.GetResponse(ResponseType.Success));// { Message = "Ok", Success = true });
                 }
                 else {

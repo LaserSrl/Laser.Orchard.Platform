@@ -187,6 +187,13 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
                     return "Your answer to {0} must be a valid date and time";
                 }
             }
+            else if (answerType == AnswerType.Number) {
+                decimal number = new Decimal();
+                if (!decimal.TryParse(answerText, out number)) {
+                    return "Your answer to {0} must be a valid number";
+                }
+            }
+
             return "";
         }
 

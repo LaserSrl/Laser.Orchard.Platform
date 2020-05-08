@@ -1,5 +1,4 @@
-﻿using HtmlAgilityPack;
-using Laser.Orchard.NwazetIntegration.Models;
+﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Models;

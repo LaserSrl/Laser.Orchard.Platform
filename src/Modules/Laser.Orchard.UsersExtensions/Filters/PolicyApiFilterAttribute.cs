@@ -54,7 +54,7 @@ namespace Laser.Orchard.UsersExtensions.Filters {
 
                 if (neededPolicies.Any()) {
                     var userPolicyIds = _policyService
-                        .GetPoliciesForUserOrSession(false, language)
+                        .GetPoliciesForCurrentUser(false, language)
                         .Policies
                         .Where(po =>
                             po.Accepted ||

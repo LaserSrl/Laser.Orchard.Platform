@@ -13,5 +13,6 @@ namespace Laser.Orchard.StartupConfig.Services {
         string CreateNonce(string parametri, TimeSpan delay);
         bool DecryptNonce(string nonce, out string parametri);
         UrlHelper GetUrlHelper();
+        IList<CultureEntry> ListCultures();
     }
 }

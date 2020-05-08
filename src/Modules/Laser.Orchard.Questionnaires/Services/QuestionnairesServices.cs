@@ -29,14 +29,15 @@ using System.Web.Hosting;
 using Orchard.Email.Services;
 using Orchard.Tokens;
 using Laser.Orchard.Commons.Services;
+using System.Security.Cryptography;
+using System.Linq.Expressions;
 
 namespace Laser.Orchard.Questionnaires.Services {
 
     public class QuestionnairesServices : IQuestionnairesServices {
-        private readonly IRepository<QuestionRecord> _repositoryQuestions;
-        private readonly IRepository<AnswerRecord> _repositoryAnswer;
         private readonly IRepository<UserAnswersRecord> _repositoryUserAnswer;
         private readonly IRepository<TitlePartRecord> _repositoryTitle;
+        private readonly IRepository<UserAnswerInstanceRecord> _repositoryinstanceRecords;
         private readonly IOrchardServices _orchardServices;
         private readonly IWorkflowManager _workflowManager;
         private readonly INotifier _notifier;
@@ -49,12 +50,11 @@ namespace Laser.Orchard.Questionnaires.Services {
         private readonly ShellSettings _shellSettings;
         private readonly Lazy<ISmtpChannel> _messageManager;
         private readonly ITokenizer _tokenizer;
+        private readonly IQuestionAnswerRepositoryService _questionAnswerRepositoryService;
 
         public Localizer T { get; set; }
 
         public QuestionnairesServices(IOrchardServices orchardServices,
-            IRepository<QuestionRecord> repositoryQuestions,
-            IRepository<AnswerRecord> repositoryAnswer,
             IRepository<TitlePartRecord> repositoryTitle,
             IRepository<UserAnswersRecord> repositoryUserAnswer,
             IWorkflowManager workflowManager,
@@ -67,10 +67,11 @@ namespace Laser.Orchard.Questionnaires.Services {
             IDateLocalization dateLocalization,
             IScheduledTaskManager taskManager,
             IDateLocalizationServices dateServices,
-            ShellSettings shellSettings) {
+            IQuestionAnswerRepositoryService questionAnswerRepositoryService,
+            ShellSettings shellSettings,
+            IRepository<UserAnswerInstanceRecord> repositoryinstanceRecords) {
+
             _orchardServices = orchardServices;
-            _repositoryAnswer = repositoryAnswer;
-            _repositoryQuestions = repositoryQuestions;
             _repositoryTitle = repositoryTitle;
             _repositoryUserAnswer = repositoryUserAnswer;
             _workflowManager = workflowManager;
@@ -80,15 +81,13 @@ namespace Laser.Orchard.Questionnaires.Services {
             _templateService = templateService;
             _messageManager = messageManager;
             _tokenizer = tokenizer;
-            // ISmtpChannel _messageManager = null;
-
-
-
+            _questionAnswerRepositoryService = questionAnswerRepositoryService;
             _transactionManager = transactionManager;
             _dateLocalization = dateLocalization;
             _taskManager = taskManager;
             _dateServices = dateServices;
             _shellSettings = shellSettings;
+            _repositoryinstanceRecords = repositoryinstanceRecords;
         }
 
         private string getusername(int id) {
@@ -357,27 +356,6 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         /// <summary>
-        /// Method used to query the db for a specific ranking (by game, device) and a specific range of results (paging)
-        /// </summary>
-        /// <param name="gameId">The Id of the game for which we want the ranking table.</param>
-        /// <param name="device">A string representing the tipe of device for which we want the ranking. This is obtained as a 
-        /// TipoDispositivo.value.ToString(). Any other string causes this method to default to returning the general ranking.</param>
-        /// <param name="page">The page of the results in the ranking. This is 1-based (the top-most results are on page 1).</param>
-        /// <param name="pageSize">The size of a page of results, corresponding to the maximum number of socres to return.</param>
-        /// <param name="Ascending">A flag to determine the sorting order for the scores: <value>true</value> order by ascending score; 
-        /// <value>false</value> order by descending score.</param>
-        /// <returns>A <type>List &lt; RankingTemplateVM &gt;</type> containingn the objects representing the desired ranking.</returns>
-        /// <example> QueryForRanking (3, TipoDispositivo.Apple.ToString()) would return the top10 scores for game number 3
-        /// scored by iOs users, sorted from the highest score down.</example>
-        //public List<RankingTemplateVM> QueryForRanking(
-        //    Int32 gameId, string device = "General", int page = 1, int pageSize = 10, bool Ascending = false) {
-        //    var session = _transactionManager.GetSession();
-        //    var rank = GenerateRankingQuery(gameId: gameId, device: device, page: page, pageSize: pageSize)
-        //       .GetExecutableQueryOver(session).List();
-        //    return rank.Select(x => ConvertFromDBData(x)).ToList(); 
-        //}
-
-        /// <summary>
         /// Verifies what kind of device we want to query for, and eventually adds the corresponding query.
         /// </summary>
         /// <param name="qoRpr">The <type>QueryOver</type> object we are building the query on.</param>
@@ -449,60 +427,130 @@ namespace Laser.Orchard.Questionnaires.Services {
             return ret;
         }
 
+        private HashAlgorithm _hashAlgorithm;
+        private HashAlgorithm GetHashAlgorithm() {
+            if (_hashAlgorithm == null) {
+                _hashAlgorithm = SHA256.Create();
+            }
+            return _hashAlgorithm;
+        }
+        private string GetHash(string input) {
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = GetHashAlgorithm()
+                .ComputeHash(Encoding.UTF8.GetBytes(input));
 
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            var sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++) {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
         public bool Save(QuestionnaireWithResultsViewModel editModel, IUser currentUser, string SessionID) {
             bool result = false;
-            var questionnaireModuleSettings = _orchardServices.WorkContext.CurrentSite.As<QuestionnaireModuleSettingsPart>();
-            var questionnairePartSettings = _orchardServices.ContentManager.Get<QuestionnairePart>(editModel.Id).Settings.GetModel<QuestionnairesPartSettingVM>();
+            var questionnaireModuleSettings = _orchardServices.WorkContext
+                .CurrentSite.As<QuestionnaireModuleSettingsPart>();
+            var questionnairePartSettings = _orchardServices.ContentManager
+                .Get<QuestionnairePart>(editModel.Id)
+                .Settings.GetModel<QuestionnairesPartSettingVM>();
             var content = _orchardServices.ContentManager.Get(editModel.Id);
             bool exit = false;
 
             if (String.IsNullOrWhiteSpace(editModel.Context)) { //fallback into questionnaire part settings context if context is null
                 // Tokenize Settings Context
-                editModel.Context = _tokenizer.Replace(questionnairePartSettings.QuestionnaireContext, new Dictionary<string, object> { { "Content", content } });
+                editModel.Context = _tokenizer
+                    .Replace(questionnairePartSettings.QuestionnaireContext,
+                        new Dictionary<string, object> { { "Content", content } });
             }
             if (editModel.Context.Length > 255) {// limits context to 255 chars
                 editModel.Context = editModel.Context.Substring(0, 255);
             }
             if (questionnaireModuleSettings.Disposable) {
                 if (currentUser != null) {
-                    if (_repositoryUserAnswer.Fetch(x => x.User_Id == currentUser.Id && x.QuestionnairePartRecord_Id == editModel.Id && x.Context == editModel.Context).Count() > 0) {
+                    if (_repositoryUserAnswer
+                            .Fetch(x => x.User_Id == currentUser.Id
+                                && x.QuestionnairePartRecord_Id == editModel.Id
+                                && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
                 }
                 else { // anonymous user => check SessionID
-                    if (_repositoryUserAnswer.Fetch(x => x.SessionID == SessionID && x.QuestionnairePartRecord_Id == editModel.Id && x.Context == editModel.Context).Count() > 0) {
+                    if (_repositoryUserAnswer
+                            .Fetch(x => x.SessionID == SessionID
+                                && x.QuestionnairePartRecord_Id == editModel.Id
+                                && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
                 }
             }
             if (!exit) {
+                // here we loop to actually generate the records for the answers given
+                var dateTimeNow = DateTime.UtcNow;
+                var instanceId = GetHash(
+                    (currentUser != null ? currentUser.Id.ToString() : SessionID)
+                    + editModel.Id.ToString() + dateTimeNow.ToString());
+                var instanceRecord = new UserAnswerInstanceRecord() {
+                    QuestionnairePartRecord_Id = editModel.Id,
+                    User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) 
+                        ? 0 : currentUser.Id,
+                    SessionID = SessionID,
+                    Context = editModel.Context,
+                    AnswerDate = dateTimeNow,
+                    AnswerInstance = instanceId
+                };
+                editModel.AnswersInstance = instanceId;
+                // get the answer text where it's not open
+                var answerIds = editModel.QuestionsWithResults
+                    // for all questions that don't have open Answer
+                    .Where(q => q.QuestionType == QuestionType.SingleChoice
+                        || q.QuestionType == QuestionType.MultiChoice)
+                    // select the answer ids
+                    .SelectMany(q => q.QuestionType == QuestionType.SingleChoice
+                        // we make a list of this to merge it with the others
+                        ? new List<int>() { q.SingleChoiceAnswer }
+                        // all selected answers
+                        : q.AnswersWithResult.Where(a => a.Answered).Select(a => a.Id))
+                    // Distinct is probably not neeeded
+                    .Distinct();
+                // get the text from db (candidate for caching)
+                var allSelectedAnswers = _questionAnswerRepositoryService
+                    .AnswersRepository()
+                    .Fetch(ar => answerIds.Contains(ar.Id));
+                // a dictionary is easy to get stuff out of
+                var answerTexts = allSelectedAnswers
+                    .ToDictionary(ar => ar.Id);
                 foreach (var q in editModel.QuestionsWithResults) {
+                    Action<UserAnswersRecord> CreationAction = (uar) => {
+                        uar.QuestionText = q.Question;
+                        uar.QuestionRecord_Id = q.Id;
+                        uar.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
+                        uar.QuestionnairePartRecord_Id = editModel.Id;
+                        uar.SessionID = SessionID;
+                        uar.Context = editModel.Context;
+                        uar.AnswerInstance = instanceId;
+                        uar.QuestionType = q.QuestionType;
+                        // I really wish I could create several records in a single call
+                        CreateUserAnswers(uar);
+                    };
                     if (q.QuestionType == QuestionType.OpenAnswer) {
                         if (!String.IsNullOrWhiteSpace(q.OpenAnswerAnswerText)) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerText = q.OpenAnswerAnswerText;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
+                            CreationAction(userAnswer);
                         }
                     }
                     else if (q.QuestionType == QuestionType.SingleChoice) {
                         if (q.SingleChoiceAnswer > 0) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
-                            userAnswer.AnswerText = GetAnswer(q.SingleChoiceAnswer).Answer;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
+                            userAnswer.AnswerText = answerTexts[q.SingleChoiceAnswer].Answer;//GetAnswer(q.SingleChoiceAnswer).Answer;
+                            CreationAction(userAnswer);
                         }
                     }
                     else if (q.QuestionType == QuestionType.MultiChoice) {
@@ -510,22 +558,126 @@ namespace Laser.Orchard.Questionnaires.Services {
                         foreach (var a in answerList) {
                             var userAnswer = new UserAnswersRecord();
                             userAnswer.AnswerRecord_Id = a.Id;
-                            userAnswer.AnswerText = GetAnswer(a.Id).Answer;
-                            userAnswer.QuestionRecord_Id = q.Id;
-                            userAnswer.User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) ? 0 : currentUser.Id;
-                            userAnswer.QuestionText = q.Question;
-                            userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                            userAnswer.SessionID = SessionID;
-                            userAnswer.Context = editModel.Context;
-                            CreateUserAnswers(userAnswer);
+                            userAnswer.AnswerText = answerTexts[a.Id].Answer;// GetAnswer(a.Id).Answer;
+                            CreationAction(userAnswer);
                         }
                     }
                 }
-
-                _workflowManager.TriggerEvent("QuestionnaireSubmitted", content, () => new Dictionary<string, object> { { "Content", content }, { "QuestionnaireContext", editModel.Context } });
+                // create the instance record
+                _repositoryinstanceRecords.Create(instanceRecord);
+                // fire events
+                _workflowManager.TriggerEvent(
+                    "QuestionnaireSubmitted",
+                    content, () => new Dictionary<string, object> {
+                        { "Content", content },
+                        { "QuestionnaireContext", editModel.Context },
+                        { "QuestionnaireWithResults", editModel }
+                    });
                 result = true;
             }
             return result;
+        }
+
+        public QuestionnaireWithResultsViewModel GetMostRecentAnswersInstance(
+            QuestionnairePart part, IUser user, string context = null) {
+            if (part == null) {
+                throw new ArgumentNullException("part");
+            }
+            if (user == null) {
+                throw new ArgumentNullException("user");
+            }
+            var instanceId = GetMostRecentInstanceId(part, user, context);
+            if (instanceId == null) {
+                // never answered
+                return null;
+            }
+            if (string.IsNullOrWhiteSpace(instanceId)) {
+                throw new InvalidOperationException("The latest answers to this question for the user were recorded before the introduction of answers' instances.");
+            }
+            return GetAnswersInstance(instanceId, part, user);
+        }
+        public string GetMostRecentInstanceId(QuestionnairePart part, IUser user, string context = null) {
+            if (part == null) {
+                throw new ArgumentNullException("part");
+            }
+            if (user == null) {
+                throw new ArgumentNullException("user");
+            }
+            
+            string instanceId = null;
+            if (context == null) {
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.User_Id == user.Id
+                        && uair.QuestionnairePartRecord_Id == part.Id)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
+                    .FirstOrDefault();
+            } else {
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.User_Id == user.Id
+                        && uair.QuestionnairePartRecord_Id == part.Id
+                        && uair.Context == context)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
+                    .FirstOrDefault();
+            }
+            return instanceId;
+        }
+        public QuestionnaireWithResultsViewModel GetAnswersInstance(
+            string instance, QuestionnairePart part, IUser user) {
+            if (part == null) {
+                throw new ArgumentNullException("part");
+            }
+            if (user == null) {
+                throw new ArgumentNullException("user");
+            }
+            if (string.IsNullOrWhiteSpace(instance)) {
+                throw new ArgumentNullException("instance");
+            }
+
+            var viewModel = new QuestionnaireWithResultsViewModel() {
+                Id = part.Id,
+                AnswersInstance = instance
+            };
+            // get all answers belonging to this instance
+            var userAnswers = _repositoryUserAnswer
+                .Fetch(uar => uar.User_Id == user.Id
+                    && uar.QuestionnairePartRecord_Id == part.Id
+                    && uar.AnswerInstance == instance);
+            if (!userAnswers.Any()) {
+                // never answered (or nothing found for that instance)
+                return null;
+            }
+            // based on the answers we fetched, do the inverse of what is done when saving
+            // them to build the view model.
+            var answerGroups = userAnswers.GroupBy(uar => uar.QuestionRecord_Id);
+            var answerResults = new List<AnswerWithResultViewModel>();
+            foreach (var group in answerGroups) {
+                var answer = group.First();
+                if (answer.QuestionType == QuestionType.MultiChoice) {
+                    answerResults = group.Select(uar => new AnswerWithResultViewModel() {
+                        Id = uar.AnswerRecord_Id ?? 0,
+                        AnswerText = uar.AnswerText,
+                        QuestionRecord_Id = uar.QuestionRecord_Id,
+                        Answered = true //if the the record is there means the user answered with that option
+                    }).ToList();
+                }
+                viewModel.QuestionsWithResults
+                    .Add(new QuestionWithResultsViewModel() {
+                        Id = answer.QuestionRecord_Id,
+                        Question = answer.QuestionText,
+                        QuestionType = answer.QuestionType,
+                        SingleChoiceAnswer = answer.QuestionType == QuestionType.SingleChoice
+                            ? answer.AnswerRecord_Id.Value : 0,
+                        OpenAnswerAnswerText = answer.QuestionType == QuestionType.OpenAnswer
+                            ? answer.AnswerText : string.Empty,
+                        QuestionnairePartRecord_Id = part.Id,
+                        AnswersWithResult = answerResults
+                    });
+            }
+            return viewModel;
         }
 
         public void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel) {
@@ -533,6 +685,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var partRecord = item.As<QuestionnairePart>().Record;
                 var part = item.As<QuestionnairePart>();
                 var PartID = partRecord.Id;
+                var storedQuestions = part.Questions.ToList(); // ensure list of questions is in memory
+                var storedAnswers = storedQuestions.SelectMany(x => x.Answers).ToList();// ensure list of answers is in memory
+
                 Mapper.Initialize(cfg => {
                     cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
                     cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
@@ -540,126 +695,97 @@ namespace Laser.Orchard.Questionnaires.Services {
                 Mapper.Map<QuestionnaireEditModel, QuestionnairePart>(partEditModel, part);
                 var mappingA = new Dictionary<string, string>();
 
-                // Update and Delete
-                foreach (var quest in partEditModel.Questions.Where(w => w.Id > 0)) {
-                    QuestionRecord questionRecord = _repositoryQuestions.Get(quest.Id);
-                    Mapper.Initialize(cfg => {
-                        cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                        cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                    });
-                    Mapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
-                    var recordQuestionID = questionRecord.Id;
-                    questionRecord.QuestionnairePartRecord_Id = PartID;
+                // Insert, Update and Delete questions
+                foreach (var quest in partEditModel.Questions) {
+                    QuestionRecord questionRecord;
+                    if (!string.IsNullOrWhiteSpace(quest.Identifier)) {
+                        questionRecord = storedQuestions.SingleOrDefault(x =>
+                        x.Identifier == quest.Identifier) ?? new QuestionRecord(); //Get data of question by Identifier or create a new question
+                    }
+                    else {
+                        questionRecord = storedQuestions.SingleOrDefault(x =>
+                        x.Id == quest.Id) ?? new QuestionRecord(); //Get data of question by Id or create a new question
+                    }
+                    var originalQuestionRecordId = questionRecord.Id; // 0 if new, a valid Id if get from DB
                     if (quest.Delete) {
                         try {
                             foreach (var answer in questionRecord.Answers) {
-                                _repositoryAnswer.Delete(_repositoryAnswer.Get(answer.Id));
+                                if (answer.Id > 0) {
+                                    _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                }
                             }
-                            _repositoryQuestions.Delete(_repositoryQuestions.Get(quest.Id));
+                            if (quest.Id > 0) {
+                                _questionAnswerRepositoryService.DeleteQuestion(quest.Id);
+                            }
                         }
-                        catch (Exception) {
-                            throw new Exception("quest.Delete");
+                        catch (Exception ex) {
+                            throw new Exception("quest.Delete\r\n" + ex.Message);
                         }
                     }
                     else {
+                        Mapper.Initialize(cfg => {
+                            cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
+                        });
+                        Mapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
+                        questionRecord.QuestionnairePartRecord_Id = PartID;
+                        if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
+                            questionRecord.Id = originalQuestionRecordId;
+                        }
+                        _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                        var recordQuestionID = questionRecord.Id;
                         try {
-                            foreach (var answer in quest.Answers.Where(w => w.Id != 0)) { ///Update and delete Answer
-                                AnswerRecord answerRecord = new AnswerRecord();
-                                Mapper.Initialize(cfg => {
-                                    //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                    //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                    cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                                });
-                                Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+                            foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
                                 if (answer.Delete) {
-                                    _repositoryAnswer.Delete(_repositoryAnswer.Get(answer.Id));
+                                    if (answer.Id > 0) {
+                                        _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                    }
                                 }
-                                else if (answer.Id > 0) {
-                                    _repositoryAnswer.Update(answerRecord);
+                                else {
+                                    AnswerRecord answerRecord;
+                                    if (!string.IsNullOrWhiteSpace(answer.Identifier)) {
+                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Identifier == answer.Identifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+                                    }
+                                    else {
+                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+                                    }
+                                    var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
+
+                                    Mapper.Initialize(cfg => {
+                                        cfg.CreateMap<AnswerEditModel, AnswerRecord>();
+                                    });
+                                    Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+                                    answerRecord.QuestionRecord_Id = recordQuestionID;
+                                    if (answerRecord.Id == 0 && originalAnswerRecordId > 0) {
+                                        answerRecord.Id = originalAnswerRecordId;
+                                    }
+                                    _questionAnswerRepositoryService.UpdateAnswer(answerRecord);
+                                    if (answer.OriginalId > 0) {
+                                        mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
+                                    }
                                 }
                             }
-                            _repositoryQuestions.Update(questionRecord);
                         }
-                        catch (Exception) {
-                            throw new Exception("quest.Update");
+                        catch (Exception ex) {
+                            throw new Exception("quest.Update\r\n" + ex.Message);
                         }
                         try {
-                            foreach (var answer in quest.Answers.Where(w => w.Id == 0)) { ///Insert Answer
-
-                                AnswerRecord answerRecord = new AnswerRecord();
-                                Mapper.Initialize(cfg => {
-                                    //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                    //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                    cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                                });
-                                Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
-                                if (answer.Id == 0 && !answer.Delete) {
-                                    answerRecord.QuestionRecord_Id = recordQuestionID;
-                                    _repositoryAnswer.Create(answerRecord);
-                                }
+                            // fix condtions if necessary
+                            if (mappingA.Count() > 0 && questionRecord.Condition != null) {
+                                Regex re = new Regex(@"[0-9]+", RegexOptions.Compiled);
+                                questionRecord.Condition = re.Replace(questionRecord.Condition, match => mappingA[match.Value] != null ? mappingA[match.Value].ToString() : match.Value);
+                                _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                                re = null;
                             }
                         }
-                        catch (Exception) {
-                            throw new Exception("answer.Insert");
+                        catch (Exception ex) {
+                            throw new Exception("quest.CorrezzioneCondizioni\r\n" + ex.Message);
                         }
-                    }
-                }
-                // Create
-                foreach (var quest in partEditModel.Questions.Where(w => w.Id == 0 && w.Delete == false)) {
-                    QuestionRecord questionRecord = new QuestionRecord {
-                        Position = quest.Position,
-                        Published = quest.Published,
-                        Question = quest.Question,
-                        QuestionType = quest.QuestionType,
-                        AnswerType = quest.AnswerType,
-                        Section = quest.Section,
-                        ConditionType = quest.ConditionType,
-                        AllFiles = quest.AllFiles,
-                        Condition = quest.Condition,
-                        QuestionnairePartRecord_Id = PartID,
-                    };
-                    try {
-                        _repositoryQuestions.Create(questionRecord);
-                        var createdQuestionId = questionRecord.Id;
-                        _repositoryQuestions.Flush();
-                        foreach (var answer in quest.Answers) {
-                            AnswerRecord answerRecord = new AnswerRecord();
-                            Mapper.Initialize(cfg => {
-                                //    cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
-                                //    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                                cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                            });
-                            Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
-                            if (answer.Id == 0) {
-                                answerRecord.QuestionRecord_Id = createdQuestionId;
-                                _repositoryAnswer.Create(answerRecord);
-                                if (answer.OriginalId > 0) {
-                                    mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
-                                }
-                                _repositoryAnswer.Flush();
-                            }
-                        }
-                    }
-                    catch (Exception) {
-                        throw new Exception("quest.Create");
-                    }
 
-                    try {
-                        // correggo gli id delle condizioni se necessario
-                        if (mappingA.Count() > 0 && questionRecord.Condition != null) {
-                            Regex re = new Regex(@"[0-9]+", RegexOptions.Compiled);
-                            questionRecord.Condition = re.Replace(questionRecord.Condition, match => mappingA[match.Value] != null ? mappingA[match.Value].ToString() : match.Value);
-                            _repositoryQuestions.Update(questionRecord);
-                            re = null;
-                        }
-                    }
-                    catch (Exception) {
-                        throw new Exception("quest.CorrezzioneCondizioni");
                     }
                 }
             }
-            catch (Exception) {
-                throw new Exception("quest.UpdateTotale");
+            catch (Exception ex) {
+                throw new Exception("quest.UpdateTotale\r\n" + ex.Message);
             }
         }
 
@@ -728,7 +854,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public AnswerRecord GetAnswer(int id) {
-            return (_repositoryAnswer.Get(id));
+            return (_questionAnswerRepositoryService.AnswersRepository().Get(id));
         }
 
         private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
@@ -813,9 +939,12 @@ namespace Laser.Orchard.Questionnaires.Services {
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
             var questionsCount = questionnaireData.Questions.Count();
-            var questionnaireStatsQuery = _repositoryUserAnswer.Table.Join(_repositoryQuestions.Table,
-                        l => l.QuestionRecord_Id, r => r.Id, (l, r) => new { UserAnswers = l, Questions = r })
-                        .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
+            var questionnaireStatsQuery = _repositoryUserAnswer.Table
+                .Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
+                    l => l.QuestionRecord_Id,
+                    r => r.Id,
+                    (l, r) => new { UserAnswers = l, Questions = r })
+                .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
 
             if (from.HasValue && from.Value > DateTime.MinValue) {
                 questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.AnswerDate >= from);
@@ -882,20 +1011,24 @@ namespace Laser.Orchard.Questionnaires.Services {
             var fullStat = new List<QuestStatViewModel>();
             foreach (var quest in listaQuest) {
                 var title = quest.As<TitlePart>();
-                var stats = _repositoryUserAnswer.Table.Join(_repositoryQuestions.Table,
-                        l => l.QuestionRecord_Id, r => r.Id, (l, r) => new { UserAnswers = l, Questions = r })
-                        .Where(w => w.Questions.QuestionType == type && w.Questions.QuestionnairePartRecord_Id == quest.Id)
-                        .GroupBy(g => new { g.Questions.QuestionnairePartRecord_Id, g.UserAnswers.QuestionText, g.UserAnswers.AnswerText })
-                        .Select(s => new QuestStatViewModel {
-                            Question = s.Key.QuestionText,
-                            Answer = s.Key.AnswerText,
-                            QuestionnairePart_Id = s.Key.QuestionnairePartRecord_Id,
-                            QuestionnaireTitle = title.Title,
-                            Count = s.Count(),
-                        });
+                var stats = _repositoryUserAnswer.Table
+                    .Join(_questionAnswerRepositoryService.QuestionsRepository().Table,
+                        l => l.QuestionRecord_Id,
+                        r => r.Id,
+                        (l, r) => new { UserAnswers = l, Questions = r })
+                    .Where(w => w.Questions.QuestionType == type && w.Questions.QuestionnairePartRecord_Id == quest.Id)
+                    .GroupBy(g => new { g.Questions.QuestionnairePartRecord_Id, g.UserAnswers.QuestionText, g.UserAnswers.AnswerText })
+                    .Select(s => new QuestStatViewModel {
+                        Question = s.Key.QuestionText,
+                        Answer = s.Key.AnswerText,
+                        QuestionnairePart_Id = s.Key.QuestionnairePartRecord_Id,
+                        QuestionnaireTitle = title.Title,
+                        Count = s.Count(),
+                    });
                 fullStat.AddRange(stats);
             }
             return fullStat.OrderBy(o => o.QuestionnaireTitle).ThenBy(o => o.Question).ThenBy(o => o.Answer).ToList();
         }
+
     }
 }

@@ -1,0 +1,469 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels
+@using Orchard.Utility.Extensions;
+@using Orchard.MediaLibrary.Models;
+@using Orchard.ContentManagement;
+@model QuestionnaireWithResultsViewModel
+
+@Display.CalendarsPickerLocalization()
+@Display.TimeEntryLocalization()
+@{
+    Script.Require("JQuery").AtHead();
+    Style.Require("Questionnaire").AtHead();
+
+    Style.Require("jQueryCalendars_Picker");
+    Style.Require("jQueryTimeEntry");
+    Style.Require("jQueryDateTimeEditor");
+
+    Script.Require("jQueryCalendars_Picker").AtFoot();
+    Script.Require("jQueryTimeEntry").AtFoot();
+
+
+    var sections = Model.QuestionsWithResults.Select(s => s.Section).Distinct();
+    bool HasAcceptedTerms = Model.HasAcceptedTerms;
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    int j = 0;
+}
+@using (Script.Foot()) {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            AddClassConditionedAndOnclickToAnswer();
+            VerifyConditions();
+            AttachValidationsToTextBoxes();
+        });
+
+        function AttachValidationsToTextBoxes() {
+            $("input.email-textbox").blur(function () {
+                var regex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                var value = $(this).val();
+                if (value != "" && !regex.test(value)) {
+                    $(this).addClass("quest-error");
+                    $(this).focus();
+                } else {
+                    $(this).removeClass("quest-error");
+                }
+            });
+            $("input.url-textbox").blur(function () {
+                var regex = /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/;
+                var value = $(this).val();
+                if (value != "" && !regex.test(value)) {
+                    $(this).addClass("quest-error");
+                    $(this).focus();
+                } else {
+                    $(this).removeClass("quest-error");
+                }
+            });
+
+            $("input.date-textbox").calendarsPicker({
+                showAnim: "",
+                onSelect: function (selected) {
+                    var answerId = $(this).data("answerid");
+                    var answerField = $("#" + answerId);
+                    var date = $(this).val();
+                    var time = $("#" + answerId + "_time").val();
+                    answerField.val(date+" "+time);
+                },
+                renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
+                    picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
+                    month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
+                })
+            });
+
+            $("input.date-time-textbox").timeEntry();
+            $("input.date-time-textbox").change(function () {
+                var answerId = $(this).data("answerid");
+                var answerField = $("#" + answerId);
+                var date = $("#" + answerId + "_date").val();
+                var time = $(this).val();
+                answerField.val(date + " " + time);
+
+            });
+        }
+
+        function AddClassConditionedAndOnclickToAnswer() {
+            $(".j_answer").click(VerifyConditions);
+            $('ul.j_allquest > li').each(function () {
+                if ($(this).data("condition") != "") {
+                    $(this).addClass("conditioned");
+                }
+                else {
+                    $(this).removeClass("conditioned");
+                }
+            });
+        }
+
+        function VerifyConditions() {
+            $("ul.j_allquest > li").each(function () {
+                if ($(this).data("condition") != "") {
+                    bshow = true;
+                    if ($(this).data("conditiontype") == "Hide") {
+                        bshow = false;
+                    }
+                    var funzToExecute = ConvertConditionToJava($(this).data("condition"));
+                    var conditionbool = eval(funzToExecute);
+                    if (conditionbool && bshow) {
+                        $(this).show();
+                    }
+                    if (conditionbool && !bshow) {
+                        $(this).hide();
+                    }
+                    if (!conditionbool && bshow) {
+                        $(this).hide();
+                    }
+                    if (!conditionbool && !bshow) {
+                        $(this).show();
+                    }
+                }
+                else {
+                    $(this).show();
+                }
+            });
+        }
+
+        function VerifyAnswer(val_answer) {
+            var selezionato = false;
+            $(".j_answer:checked").each(function () {
+                if ($(this).closest("ul.j_allquest > li").data("conditiontype") != "Hide") {
+                    if (parseInt($(this).val()) == val_answer || parseInt($(this).data("value")) == val_answer)
+                        selezionato = true;
+                }
+            });
+            return selezionato;
+        }
+        function ConvertConditionToJava(textToConvert) {
+            var numberPattern = /(\d+)/g;
+            return textToConvert.toString().replace(numberPattern, "VerifyAnswer(" + '$1' + ")").replace(/and/ig, "&&").replace(/or/ig, "||");
+        }
+
+    </script>
+}
+@if (TempData["QuestSuccess"] != null) {
+    var cookie = HttpContext.Current.Request.Cookies.Get("Questionnaires");
+
+    if (cookie == null) {
+        cookie = new HttpCookie("Questionnaires", "");
+        HttpContext.Current.Response.AppendCookie(cookie);
+    }
+
+    if (!cookie.Value.Contains("," + Model.Id + ",")) {
+        cookie.Value += "," + Model.Id + ",";
+        HttpContext.Current.Response.SetCookie(cookie);
+    }
+
+    <div class="quest-message quest-success">@T(TempData["QuestSuccess"].ToString())</div>
+}
+else {
+    if (TempData["QuestError"] != null) {
+        <div class="quest-message quest-error">@Html.Raw(T(TempData["QuestError"].ToString()).Text.Replace("\r\n", "<br/>"))</div>
+    }
+    if (Model.MustAcceptTerms && !Model.HasAcceptedTerms) {
+        using (Html.BeginFormAntiForgeryPost(Url.Action("AcceptTerms", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post)) {
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.MustAcceptTerms)
+            <div class="questionnaire-container">
+                <div class="terms-and-conditions">
+                    @if (!String.IsNullOrWhiteSpace(Model.TermsText)) {
+                        @Html.Raw(Model.TermsText)
+                    }
+                </div>
+                @Html.CheckBoxFor(m => m.HasAcceptedTerms)
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.HasAcceptedTerms)">@T("I accept your terms and conditions. I want to answer to your survey.")</label>
+                <input type="submit" value="@T("Continue >")" name="Accept.Terms" />
+            </div>
+        }
+    }
+    else {
+
+        <div class="questionnaire-container">
+            @using (Html.BeginFormAntiForgeryPost(Url.Action("Save", "Questionnaire", new { area = "Laser.Orchard.Questionnaires", returnUrl = Context.Request.RawUrl }), FormMethod.Post, new { @class = "quest-form" })) {
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.MustAcceptTerms)
+                @Html.HiddenFor(m => m.HasAcceptedTerms)
+                @Html.HiddenFor(m => m.Context)
+                var progSection = 0;
+                if (sections.Count() > 1) {
+                    <ul id="progressbar">
+                        @foreach (var questsection in sections) {
+                            <li class="@(progSection == 0 ? "active" : "")">@questsection</li>
+                            progSection++;
+                        }
+                    </ul>
+                }
+                var ultimaSection = "no-section";
+                progSection = 0;
+                for (j = 0; j < Model.QuestionsWithResults.Count(); j++) {
+                    if (Model.QuestionsWithResults[j].Section != ultimaSection) {
+                        progSection++;
+                        if (ultimaSection != "no-section") {
+                            @:</ul>
+                            if (sections.Count() > 1) {
+                                if (progSection > 2) {
+                                    <input type="button" name="previous" class="previous action-button" value="@T("Previous")" />
+                                }
+                                <input type="button" name="next" class="next action-button" value="@T("Next")" />
+                            }
+                            @:</fieldset>
+                        }
+                        @:<fieldset class="@(progSection > 1 ? "quest-no-show" : "")">
+                            <h2 class="fs-title">
+                                @Model.QuestionsWithResults[j].Section
+                            </h2>
+                            @:<ul class="j_allquest">
+                                ultimaSection = Model.QuestionsWithResults[j].Section;
+                            }
+
+
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].Id, new { @class = "j_conditionid" })
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].QuestionType)
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].Question)
+
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].IsRequired)
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].Condition)
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].ConditionType)
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].AllFiles)
+                            @Html.HiddenFor(m => m.QuestionsWithResults[j].AnswerType)
+                                  <li data-condition="@Model.QuestionsWithResults[j].Condition" data-conditiontype="@Model.QuestionsWithResults[j].ConditionType" data-required="@(Model.QuestionsWithResults[j].IsRequired ? "true" : "false")">
+
+                                      <h3>@Model.QuestionsWithResults[j].Question</h3>
+                                      @if (Model.QuestionsWithResults[j].AllFiles != null && Model.QuestionsWithResults[j].AllFiles.Split(',').Count() > 0) {
+                                          foreach (int ciId in Model.QuestionsWithResults[j].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                          }
+                                      }
+                                      @if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                          if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.None) {
+                                              @Html.TextAreaFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control text large" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Date) {
+                                              <label class="forpicker" for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)">@T("Date")</label>
+                                              <span class="date">@Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control date-textbox text" })</span>
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Datetime) {
+                                              <div class="form-inline">
+                                                  <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date">@T("Date")</label>
+                                                  <span class="date"><input type="text" class="form-control date-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_date" /></span>
+                                                  <label class="forpicker" for="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time">@T("Time")</label>
+                                                  <span class="time"><input type="text" class="form-control date-time-textbox text" data-answerid="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))" id="@(Html.FieldIdFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText))_time" /></span>
+                                                  @Html.HiddenFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText)
+                                              </div>
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Email) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control email-textbox text medium", data_type = "email" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Url) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control url-textbox text medium", data_type = "url" })
+                                          }
+                                          else if (Model.QuestionsWithResults[j].AnswerType == Laser.Orchard.Questionnaires.AnswerType.Number) {
+                                              @Html.TextBoxFor(m => m.QuestionsWithResults[j].OpenAnswerAnswerText, new { @maxlength = "1200", @class = "form-control number-textbox text medium", type="number", data_type = "number" })
+                                          }
+
+                                      }
+                                      else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.SingleChoice) {
+                                          var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
+                                          <ul>
+                                              <li>
+                                                  @for (int i = 0; i < numeroRisposte; i++) {
+                                                      // Genero l'id in questo modo perché usare Html.FieldIdFor() causa un'alterazione del name che lo rende irriconoscibile dal TryUpdateModel
+                                                      var answerId = Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer) + "-" + i + "-" + j;
+                                                      <label for="@answerId">
+                                                          <input class="j_answer" type="radio"
+                                                                 @(Model.QuestionsWithResults[j].SingleChoiceAnswer == Model.QuestionsWithResults[j].AnswersWithResult[i].Id ? "checked=\"checked\"" : "")
+                                                                 name="@Html.FieldNameFor(m => m.QuestionsWithResults[j].SingleChoiceAnswer)"
+                                                                 id="@answerId"
+                                                                 value="@(Model.QuestionsWithResults[j].AnswersWithResult[i].Id)" />
+                                                          @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                      </label>
+
+                                                      if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                          foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                          }
+                                                      }
+
+                                                  }
+                                              </li>
+                                          </ul>
+                                      }
+                                      else if (Model.QuestionsWithResults[j].QuestionType == Laser.Orchard.Questionnaires.QuestionType.MultiChoice) {
+                                          var numeroRisposte = Model.QuestionsWithResults[j].AnswersWithResult.Count();
+
+                                          <ul>
+                                              <li>
+                                                  @for (int i = 0; i < numeroRisposte; i++) {
+                                                      @Html.HiddenFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Id)
+                                                      <label for="@Html.FieldIdFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered)">
+                                                          @Html.CheckBoxFor(m => m.QuestionsWithResults[j].AnswersWithResult[i].Answered, new { @class = "j_answer", data_value = @Model.QuestionsWithResults[j].AnswersWithResult[i].Id })
+                                                          @Model.QuestionsWithResults[j].AnswersWithResult[i].Answer
+                                                      </label>
+                                                      if (Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles != null && Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Count() > 0) {
+                                                          foreach (int ciId in Model.QuestionsWithResults[j].AnswersWithResult[i].AllFiles.Split(',').Select(int.Parse).ToList()) {
+                                                              MediaPart mediaPart = ((ContentItem)contentManager.Get(ciId)).As<MediaPart>();
+                                                              <img width="100" height="100" alt="@mediaPart.AlternateText" src="@Display.ResizeMediaUrl(Width: 200, Height: 200, Mode: "crop", Alignment: "middlecenter", Path: mediaPart.MediaUrl)" />
+                                                          }
+                                                      }
+                                                  }
+                                              </li>
+                                          </ul>
+                                      }
+                                  </li>
+                            if (j == Model.QuestionsWithResults.Count() - 1) {
+                            @:</ul>
+                            @Html.HiddenFor(m => m.UseRecaptcha)
+                            if (Model.UseRecaptcha) {
+                                @Html.Raw(Model.CaptchaHtmlWidget)
+                            }
+                            if (sections.Count() > 1) {
+                                <input type="button" name="previous" class="previous action-button" value="@T("Previous")" />
+                            }
+                            <input type="submit" value="@T("Send your questionnaire")" name="" class="action-button" />
+                        @:</fieldset>
+                    }
+                }
+
+            }
+        </div>
+    }
+
+    using (Script.Foot()) {
+        <script type="text/javascript">
+
+            //jQuery time
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var left, opacity, scale; //fieldset properties which we will animate
+            var animating; //flag to prevent quick multi-click glitches
+
+            function canGoToNextStep() {
+                var allRequiredAnswered = true;
+                $(".j_allquest > li").each(function () {
+                    var atLeastOneIsAnswered = false;;
+                    if ($(this).data("required") && $(this).is(":visible")) {
+                        $(this).find('input:checkbox').each(function () {
+                            if ($(this).is(':checked')) {
+                                atLeastOneIsAnswered = true;
+                                // Stop .each from processing any more items
+                                return false;
+                            }
+                        });
+                        if (!atLeastOneIsAnswered) {
+                            $(this).find('input:radio').each(function () {
+                                if ($(this).is(':checked')) {
+                                    atLeastOneIsAnswered = true;
+                                    // Stop .each from processing any more items
+                                    return false;
+                                }
+                            });
+                        }
+                        if (!atLeastOneIsAnswered) {
+                            $(this).find('input:text').each(function () {
+                                if ($(this).val() != "") {
+                                    atLeastOneIsAnswered = true;
+                                    // Stop .each from processing any more items
+                                    return false;
+                                }
+                            });
+                        }
+                        if (!atLeastOneIsAnswered) {
+                            $(this).find('textarea').each(function () {
+                                if ($(this).val() != "") {
+                                    atLeastOneIsAnswered = true;
+                                    // Stop .each from processing any more items
+                                    return false;
+                                }
+                            });
+                        }
+                        if (!atLeastOneIsAnswered) {
+                            allRequiredAnswered = false;
+                            $(this).addClass("quest-required");
+                        } else {
+                            $(this).removeClass("quest-required");
+                        }
+                    }
+                });
+                return allRequiredAnswered;
+            }
+
+            $(".quest-form").submit(function () {
+                return canGoToNextStep();
+            });
+
+            $(".next").click(function () {
+                if (!canGoToNextStep()) {
+                    return;
+                }
+                if (animating) return false;
+                animating = true;
+
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+
+                //activate next step on progressbar using the index of next_fs
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale current_fs down to 80%
+                        scale = 1 - (1 - now) * 0.2;
+                        //2. bring next_fs from the right(50%)
+                        left = (now * 50) + "%";
+                        //3. increase opacity of next_fs to 1 as it moves in
+                        opacity = 1 - now;
+                        current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                        next_fs.css({ 'left': left, 'opacity': opacity });
+                    },
+                    duration: 800,
+                    complete: function () {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            });
+
+            $(".previous").click(function () {
+                if (animating) return false;
+                animating = true;
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                //de-activate current step on progressbar
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                //show the previous fieldset
+                previous_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale previous_fs from 80% to 100%
+                        scale = 0.8 + (1 - now) * 0.2;
+                        //2. take current_fs to the right(50%) - from 0%
+                        left = ((1 - now) * 50) + "%";
+                        //3. increase opacity of previous_fs to 1 as it moves in
+                        opacity = 1 - now;
+                        current_fs.css({ 'left': left });
+                        previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                    },
+                    duration: 800,
+                    complete: function () {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            });
+
+            $(".submit").click(function () {
+                return false;
+            })
+        </script>
+    }
+}

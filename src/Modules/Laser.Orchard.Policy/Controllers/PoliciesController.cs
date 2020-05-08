@@ -28,7 +28,7 @@ namespace Laser.Orchard.Policy.Controllers {
         //
         // GET: /Policies/
         public ActionResult Index(string lang = null, string policies = null, bool editMode = false) {
-            PoliciesForUserViewModel model = _policyServices.GetPoliciesForUserOrSession(false, lang);
+            PoliciesForUserViewModel model = _policyServices.GetPoliciesForCurrentUser(false, lang);
 
             if (policies != null)
             {
@@ -48,7 +48,7 @@ namespace Laser.Orchard.Policy.Controllers {
         [HttpPost, ActionName("SavePolicies")]
         [OrchardNS.Mvc.FormValueRequired("submit.Save")]
         public ActionResult Index(string lang = null, string returnUrl = null, string policies = null, bool editMode = false) {
-            PoliciesForUserViewModel model = _policyServices.GetPoliciesForUserOrSession(true, lang);
+            PoliciesForUserViewModel model = _policyServices.GetPoliciesForCurrentUser(true, lang);
 
             if (TryUpdateModel(model, String.Empty)) {
                 _policyServices.PolicyForUserMassiveUpdate(model.Policies);

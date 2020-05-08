@@ -141,7 +141,7 @@ namespace Laser.Orchard.UsersExtensions.Filters {
             IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices
                 .GetUserLinkedPolicies(language);
             var userPolicies = _policyServices
-                .GetPoliciesForUserOrSession(false, language)
+                .GetPoliciesForCurrentUser(false, language)
                 .Policies
                 .Where(w => w.Accepted || (w.AnswerDate > DateTime.MinValue && !w.PolicyText.UserHaveToAccept))
                 .Select(s => s.PolicyTextId)

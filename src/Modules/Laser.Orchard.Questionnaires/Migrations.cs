@@ -237,5 +237,63 @@ namespace Laser.Orchard.Questionnaires {
             SchemaBuilder.AlterTable("UserAnswersRecord", t => t.AlterColumn("SessionID", col => col.WithType(System.Data.DbType.String).WithLength(400)));
             return 26;
         }
+        public int UpdateFrom26() {
+            SchemaBuilder.AlterTable("QuestionRecord", t => t.AddColumn<string>("Identifier",
+                      column => column.Unlimited()));
+            SchemaBuilder.AlterTable("AnswerRecord", t => t.AddColumn<string>("Identifier",
+                      column => column.Unlimited()));
+            return 27;
+        }
+
+        public int UpdateFrom27() {
+            SchemaBuilder.AlterTable("UserAnswersRecord", t => 
+                t.AddColumn<string>("AnswerInstance",
+                    //since these strings are generated programmatically, we know how long they will be
+                    column => column.WithLength(64)));
+            return 28;
+        }
+
+        public int UpdateFrom28() {
+            SchemaBuilder.AlterTable("UserAnswersRecord", t =>
+                t.AddColumn<string>("QuestionType",
+                    col => col.WithLength(20)));
+
+            // add indexes over the stuff we use to filter select queries
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_User_Id", "User_Id"));
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_QuestionnairePartRecord_Id", "QuestionnairePartRecord_Id"));
+            SchemaBuilder.AlterTable("UserAnswersRecord", table => table
+                .CreateIndex("IX_AnswerInstance", "AnswerInstance"));
+
+            return 29;
+        }
+
+        public int UpdateFrom29() {
+            SchemaBuilder
+                .CreateTable("UserAnswerInstanceRecord", table => table
+                    .Column<int>("Id", col => col.PrimaryKey().Identity())
+                    .Column<int>("QuestionnairePartRecord_Id")
+                    .Column<int>("User_Id")
+                    // string properties are the same length as those in UserAnswersRecord
+                    .Column<string>("SessionID", col => col.WithLength(24))
+                    .Column<string>("Context", col => col.WithLength(255))
+                    .Column<DateTime>("AnswerDate")
+                    .Column<string>("AnswerInstance", col => col.WithLength(64)));
+
+            return 30;
+        }
+
+        public int UpdateFrom30() {
+            SchemaBuilder
+                // add indexes for the columns we'll most often query on
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery", 
+                        "QuestionnairePartRecord_Id", "User_Id", "AnswerDate"))
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery_WithContext",
+                        "QuestionnairePartRecord_Id", "User_Id", "AnswerDate", "Context"));
+            return 31;
+        }
     }
 }

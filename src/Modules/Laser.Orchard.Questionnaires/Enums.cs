@@ -8,7 +8,7 @@ namespace Laser.Orchard.Questionnaires {
         SingleChoice, MultiChoice, OpenAnswer
     };
     public enum AnswerType {
-       None, Email, Url , Date , Datetime
+       None, Email, Url , Date , Datetime, Number
     };
     public enum ConditionType {
         Show,Hide

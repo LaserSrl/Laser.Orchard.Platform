@@ -41,14 +41,8 @@ namespace KrakeAdmin.Settings.Controllers {
             if (!Services.Authorizer.Authorize(Permissions.ApplyTheme, T("Couldn't update theme settings")))
                 return new HttpUnauthorizedResult();
 
-            var settings = _settingsService.GetSettings();
-            settings.BaseLineText = viewModel.BaseLineText;
-            settings.HeaderLogoUrl = viewModel.HeaderLogoUrl;
-            settings.PlaceholderLogoUrl = viewModel.PlaceholderLogoUrl;
-            settings.PlaceholderSmallLogoUrl = viewModel.PlaceholderSmallLogoUrl; 
-
+            _settingsService.UpdateSettingsRecord(viewModel);
             Services.Notifier.Information(T("Your settings have been saved."));
-
             return RedirectToAction("ThemeSettings");
         }
     }
