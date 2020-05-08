@@ -8,5 +8,5 @@ Features:
     Laser.Orchard.AdminToolbarExtensions:
 		Name: Laser SummaryAdmin Toolbar
         Description: Adds a part for interactive labels to the SummaryAdmin views of contents
-		Category: Administration
+		Category: Admin
 		Dependencies: Laser.Orchard.AdvancedSearch, Orchard.Tokens
