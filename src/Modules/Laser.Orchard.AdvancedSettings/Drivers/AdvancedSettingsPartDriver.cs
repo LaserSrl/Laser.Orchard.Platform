@@ -2,6 +2,7 @@
 using Laser.Orchard.AdvancedSettings.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,22 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
 
             return ContentShape("Parts_AdvancedSettings_Edit",
                     () => shapeHelper.EditorTemplate(TemplateName: "Parts/AdvancedSettings.Edit", Model: model, Prefix: Prefix));
+        }
+
+        protected override void Importing(AdvancedSettingsPart part, ImportContentContext context) {
+            // Don't do anything if the tag is not specified.
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
+            }
+            part.Name = context.Attribute(part.PartDefinition.Name, "Name");
+
+            // TODO: Manage multiple theme settings
+        }
+
+        protected override void Exporting(AdvancedSettingsPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Name", part.Name);
+
+            // TODO: Manage multiple theme settings
         }
     }
 }
