@@ -8,5 +8,5 @@ Features:
 	Laser.Orchard.GoogleAnalytics:
 		Name: Laser Google Analytics
 		Description: Includes the Google Analytics tracking code into the site
-		Category: Administration
+		Category: Admin
 		Dependencies: Settings, Laser.Orchard.Cookies
