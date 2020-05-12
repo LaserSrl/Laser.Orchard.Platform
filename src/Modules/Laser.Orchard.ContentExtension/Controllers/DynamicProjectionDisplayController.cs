@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 namespace Laser.Orchard.ContentExtension.Controllers {
-
     [OrchardFeature("Laser.Orchard.ContentExtension.DynamicProjection")]
     public class DynamicProjectionDisplayController : Controller {
         private readonly IOrchardServices _orchardServices;
