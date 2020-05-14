@@ -419,5 +419,3 @@ body.red .btn-invia {
     border-radius: 4px;
     font-size: 18px;
 }
-
-@media(max-width:767px){.form-contatto-vertical .col-sm-1{width: 8.33333333%; float: left;} .form-contatto-vertical .col-sm-10 {width: 83.33333333%;float: left;}}
