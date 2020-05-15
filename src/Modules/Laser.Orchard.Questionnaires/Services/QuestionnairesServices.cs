@@ -698,9 +698,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                 // Insert, Update and Delete questions
                 foreach (var quest in partEditModel.Questions) {
                     QuestionRecord questionRecord;
-                    if (!string.IsNullOrWhiteSpace(quest.Identifier)) {
+                    if (!string.IsNullOrWhiteSpace(quest.GUIdentifier)) {
                         questionRecord = storedQuestions.SingleOrDefault(x =>
-                        x.Identifier == quest.Identifier) ?? new QuestionRecord(); //Get data of question by Identifier or create a new question
+                        x.GUIdentifier == quest.GUIdentifier) ?? new QuestionRecord(); //Get data of question by Identifier or create a new question
                     }
                     else {
                         questionRecord = storedQuestions.SingleOrDefault(x =>
@@ -742,8 +742,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 }
                                 else {
                                     AnswerRecord answerRecord;
-                                    if (!string.IsNullOrWhiteSpace(answer.Identifier)) {
-                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Identifier == answer.Identifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+                                    if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
+                                        answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
                                     }
                                     else {
                                         answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
