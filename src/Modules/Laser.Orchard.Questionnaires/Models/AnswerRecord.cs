@@ -11,7 +11,7 @@ namespace Laser.Orchard.Questionnaires.Models {
             Published = true;
         }
         public virtual int Id { get; set; }
-        public virtual string Identifier { get; set; }
+        public virtual string GUIdentifier { get; set; }
         [MaxLength(1200)]
         public virtual string Answer { get; set; }
         public virtual bool Published { get; set; }

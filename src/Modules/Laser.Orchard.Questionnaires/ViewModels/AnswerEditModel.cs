@@ -18,6 +18,6 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public int OriginalId { get; set; } // For Cloning and Import/Export purpose only
         public  bool CorrectResponse { get; set; }
         public string AllFiles { get; set; }
-        public string Identifier { get; set; }
+        public string GUIdentifier { get; set; }
     }
 }
