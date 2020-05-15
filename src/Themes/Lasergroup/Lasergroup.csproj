@@ -142,7 +142,9 @@
     <Content Include="Styles\style.media.max1649.css" />
     <Content Include="Styles\style.media.max1649.min.css" />
     <Content Include="Styles\style.media.max767.css" />
-    <Content Include="Styles\style.media.max767.min.css" />
+    <Content Include="Styles\style.media.max767.min.css">
+      <DependentUpon>style.media.max767.css</DependentUpon>
+    </Content>
     <Content Include="Styles\style.media.min1200.css" />
     <Content Include="Styles\style.media.min1200.min.css" />
     <Content Include="Styles\style.media.min768.css" />
