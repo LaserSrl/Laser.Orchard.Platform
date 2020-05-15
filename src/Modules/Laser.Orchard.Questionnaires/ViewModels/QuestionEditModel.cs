@@ -25,6 +25,6 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public ConditionType ConditionType { get; set; }
         public int OriginalId { get; set; } // For Cloning and Import/Export purpose only
         public string AllFiles { get; set; }
-        public string Identifier { get; set; }
+        public string GUIdentifier { get; set; }
     }
 }

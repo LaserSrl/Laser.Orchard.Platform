@@ -244,7 +244,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                 question.SetAttributeValue("IsRequired", q.IsRequired);
                 question.SetAttributeValue("Condition", q.Condition);
                 question.SetAttributeValue("ConditionType", q.ConditionType);
-                question.SetAttributeValue("Identifier", q.Identifier);
+                question.SetAttributeValue("GUIdentifier", q.GUIdentifier);
 
                 ExportMedia(question, q.AllFiles, "AllFiles");
                 foreach (var a in q.Answers) {
@@ -253,7 +253,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     answer.SetAttributeValue("Position", a.Position);
                     answer.SetAttributeValue("Published", a.Published);
                     answer.SetAttributeValue("Answer", a.Answer);
-                    answer.SetAttributeValue("Identifier", a.Identifier);
+                    answer.SetAttributeValue("GUIdentifier", a.GUIdentifier);
                     answer.SetAttributeValue("CorrectResponse", a.CorrectResponse);
                     ExportMedia(answer, a.AllFiles, "AllFiles");
                     question.Add(answer);
@@ -290,7 +290,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                         OriginalId = a.Attribute("OriginalId") != null ? int.Parse(a.Attribute("OriginalId").Value) : 0,
                         CorrectResponse = a.Attribute("CorrectResponse") != null ? bool.Parse(a.Attribute("CorrectResponse").Value) : false,
                         AllFiles = ImportMedia(a, "AllFiles"),
-                        Identifier = a.Attribute("Identifier") != null ? a.Attribute("Identifier").Value : "",
+                        GUIdentifier = a.Attribute("GUIdentifier") != null ? a.Attribute("GUIdentifier").Value : "",
                     };
                     answerModelList.Add(answerEditModel);
                 }
@@ -308,7 +308,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     ConditionType = q.Attribute("ConditionType") != null ? (ConditionType)Enum.Parse(typeof(ConditionType), q.Attribute("ConditionType").Value) : ConditionType.Show,
                     OriginalId = q.Attribute("OriginalId") != null ? int.Parse(q.Attribute("OriginalId").Value) : 0,
                     AllFiles = ImportMedia(q, "AllFiles"),
-                    Identifier = q.Attribute("Identifier") != null ? q.Attribute("Identifier").Value : ""
+                    GUIdentifier = q.Attribute("GUIdentifier") != null ? q.Attribute("GUIdentifier").Value : ""
                 };
                 questionModelList.Add(questionEditModel);
             }

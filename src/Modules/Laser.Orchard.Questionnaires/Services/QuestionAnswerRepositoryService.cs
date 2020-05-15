@@ -39,8 +39,8 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public void UpdateAnswer(AnswerRecord record) {
-            if (string.IsNullOrWhiteSpace(record.Identifier)) {
-                record.Identifier = Guid.NewGuid().ToString("n");
+            if (string.IsNullOrWhiteSpace(record.GUIdentifier)) {
+                record.GUIdentifier = Guid.NewGuid().ToString("n");
             }
             if (record.Id == 0) {
                 _repositoryAnswer.Create(record);
@@ -51,8 +51,8 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public void UpdateQuestion(QuestionRecord record) {
-            if (string.IsNullOrWhiteSpace(record.Identifier)) {
-                record.Identifier = Guid.NewGuid().ToString("n");
+            if (string.IsNullOrWhiteSpace(record.GUIdentifier)) {
+                record.GUIdentifier = Guid.NewGuid().ToString("n");
             }
             if (record.Id == 0) {
                 _repositoryQuestions.Create(record);
