@@ -295,5 +295,29 @@ namespace Laser.Orchard.Questionnaires {
                         "QuestionnairePartRecord_Id", "User_Id", "AnswerDate", "Context"));
             return 31;
         }
+
+        // We must rename the Identifier property of QuestionRecord and AnswerRecord
+        // because some mobile libraries have issues mapping that.
+        public int UpdateFrom31() {
+            // 1. add a new column for the renamed property
+            SchemaBuilder.AlterTable("QuestionRecord", t => t.AddColumn<string>("GUIdentifier",
+                      column => column.Unlimited()));
+            SchemaBuilder.AlterTable("AnswerRecord", t => t.AddColumn<string>("GUIdentifier",
+                      column => column.Unlimited()));
+            // 2. Copy values from old column to new column
+            // This is done in sql because the class does not have the property anymore
+            // UPDATE table SET columnB = columnA
+            var baseTableName = SchemaBuilder.FormatPrefix(SchemaBuilder.FeaturePrefix);
+            var questionTableName = string.Concat(baseTableName, "QuestionRecord");
+            var answerTableName = string.Concat(baseTableName, "AnswerRecord");
+            SchemaBuilder.ExecuteSql(
+                $"UPDATE {questionTableName} SET GUIdentifier = Identifier WHERE Identifier IS NOT NULL");
+            SchemaBuilder.ExecuteSql(
+                $"UPDATE {answerTableName} SET GUIdentifier = Identifier WHERE Identifier IS NOT NULL");
+            // 3. Drop old column
+            SchemaBuilder.AlterTable("QuestionRecord", t => t.DropColumn("Identifier"));
+            SchemaBuilder.AlterTable("AnswerRecord", t => t.DropColumn("Identifier"));
+            return 32;
+        }
     }
 }

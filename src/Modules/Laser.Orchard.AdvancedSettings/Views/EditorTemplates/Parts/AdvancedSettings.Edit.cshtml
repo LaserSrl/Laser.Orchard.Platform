@@ -1,0 +1,12 @@
+﻿@model Laser.Orchard.AdvancedSettings.ViewModels.AdvancedSettingsEdit
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.Name)" class="required">@T("Name")</label>
+    @if (Model.EditableName) {
+        @Html.TextBoxFor(m => m.Name, new { @class = "text large", autofocus = "autofocus" })
+        <span class="hint">@T("You must provide a unique techincal name for the setting.")</span>
+    }
+    else {
+        @Html.TextBoxFor(m => m.Name, new { @class = "text large", autofocus = "autofocus", @readonly = "readonly" })
+        <span class="hint">@T("The technical name can't be modified.")</span>
+    }
+</fieldset>

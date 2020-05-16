@@ -36,7 +36,7 @@
                 <span class="quest_label">@T("Answer type")</span>
                 @Html.DropDownListFor(x => x.AnswerType, new SelectList(Enum.GetNames(typeof(AnswerType)), Model.AnswerType), new { @class = "leftside" })<br />
                 @Html.HiddenFor(x => x.Id)
-                @Html.HiddenFor(x => x.Identifier)
+                @Html.HiddenFor(x => x.GUIdentifier)
                 @Html.HiddenFor(x => x.QuestionnairePartRecord_Id)
                 <input type="hidden" class="j_iddomanda" value="@qid" />
                 @Html.HiddenFor(x => x.Position, new { @class = "position-field" })

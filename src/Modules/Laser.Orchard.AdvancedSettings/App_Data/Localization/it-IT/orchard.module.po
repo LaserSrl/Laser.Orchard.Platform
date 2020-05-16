@@ -1,0 +1,26 @@
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/AdvancedSettings.Edit.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/AdvancedSettings.Edit.cshtml"
+msgid "The technical name can't be modified."
+msgstr "Il nome tecnico una volta definito non può essere modificato."
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/AdvancedSettings.Edit.cshtml"
+msgid "You must provide a unique techincal name for the setting."
+msgstr "È necessario fornire un nome tecnico univoco per questa configurazione."
+
+msgctxt "Laser.Orchard.AdvancedSettings.Drivers.AdvancedSettingsPartDriver"
+msgid "A setting with the same Name already exists."
+msgstr "Esiste già una configurazione con lo stesso Nome."
+
