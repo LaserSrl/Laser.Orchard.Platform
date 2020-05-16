@@ -8,6 +8,10 @@
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
 
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryPickerPartSettings.cshtml"
+msgid "Picker is for hql queries"
+msgstr "Lista a discesa per le query hql"
+
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "Caption"
 msgstr "Etichetta"
@@ -19,6 +23,10 @@ msgstr "vuoto (default) = nessun filtro"
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "Settings - Query User Filter Extension"
 msgstr "Impostazioni - Estensione per Ricerche utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
+msgid "Custom queries picker"
+msgstr "Selezione di una query personalizzata"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
 msgid "found {0:N0} content items"

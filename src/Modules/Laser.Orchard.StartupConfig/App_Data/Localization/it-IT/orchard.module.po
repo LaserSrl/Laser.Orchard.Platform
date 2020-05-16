@@ -577,6 +577,10 @@ msgid "Created"
 msgstr "Creato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "Creating"
+msgstr "Creating"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "Disabled"
 msgstr "Disabilitato"
 
