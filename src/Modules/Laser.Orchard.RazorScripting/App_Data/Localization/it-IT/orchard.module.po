@@ -16,6 +16,10 @@ msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorV
 msgid "The script to run everytime the content item is edited. You can use ContentItem, Services, WorkContext, T() and AddModelError()."
 msgstr "Lo script che viene eseguito ogni volta che un contenuto è modificato. Si possono usare: ContentItem, Services, WorkContext, T() and AddModelError()."
 
+msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorValidationPartSettings.cshtml"
+msgid "The script to run everytime the content item is edited. You can use Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. If the script returns a NOT empty string, the part assumes that the content is in error."
+msgstr "Script da eseguire durante l'aggiornamento del contenuto. Si possono usare gli oggetti Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. Quando l'output dello script è una stringa NON vuota, la parte considera il contenuto in errore e non effettua l'aggiornamento."
+
 msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
 msgid "Evaluates an expression."
 msgstr "Valuta un'espressione"
