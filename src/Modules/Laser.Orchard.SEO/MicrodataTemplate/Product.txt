@@ -10,7 +10,8 @@
   "offers": {{
     "@type": "Offer",
     "priceCurrency": "EUR",
-    "price": "{Content.Parameter:(ProductPart-Price).Replace:(,|.)}"
+    "price": "{Content.Parameter:(ProductPart-Price).Replace:(,|.)}",
+    "url":"{Site.BaseUrl}{Content.DisplayUrl}"
   }}
 }}
 </script>
