@@ -77,12 +77,52 @@ msgid "Username:"
 msgstr "Nome Utente:"
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "A username for that e-mail address already exists. Please enter a different e-mail address."
+msgstr "Un nome utente per quell'indirizzo e-mail esiste già. Per favore inseirisci un indirizzo e-mail diverso."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator."
+msgstr "Si è verificato un errore sconosciuto. Per favore verifica i dati inseriti e riprova. Se il problema persiste, contatta un amministratore del sistema."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator."
+msgstr "Il sistema di autenticazione ha riscontrato un errore. Per favore verifica i dati inseriti e riprova. Se il problema persiste, contatta un amministratore del sistema."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The e-mail address provided is invalid. Please check the value and try again."
+msgstr "L'indirizzo e-mail inserito non è valdo. Per favore verifica il valore e riprova."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "The new password and confirmation password do not match."
 msgstr "La nuova password e la conferma password non sono uguali."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The password provided is invalid. Please enter a valid password value."
+msgstr "La password inserita non è valida. Per favore inserisci una password valida."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The password retrieval answer provided is invalid. Please check the value and try again."
+msgstr "La risposta data per il recupero della password non è valida. Per favore verifica il valore e riprova."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The password retrieval question provided is invalid. Please check the value and try again."
+msgstr "La domanda inserita per il recupero della password non è valida. Per favore verifica il valore e riprova."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator."
+msgstr "La richiesta di creazione utente è stata cancellata. Per favore verifica le informazioni inserite e riprova. Se il problema persiste, contatta un amministratore del sistema."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The user name provided is invalid. Please check the value and try again."
+msgstr "Il nome utente inserito non è valido. Per favore verifica il valore e riprova."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "User with that username and/or email already exists."
 msgstr "Esiste già un utente con il nome e/o l'email indicata."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "Username already exists. Please enter a different user name."
+msgstr "Il nome utente è già in uso. Per favore scegli un nome utente diverso."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "You must specify a password of {0} or more characters."

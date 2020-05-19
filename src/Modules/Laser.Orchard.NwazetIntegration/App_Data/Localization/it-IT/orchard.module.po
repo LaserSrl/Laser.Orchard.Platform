@@ -270,7 +270,7 @@ msgstr "Qualsiasi contenuto verrà inserito nei campi, sia come testo che come t
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Brand"
-msgstr "Logo"
+msgstr "Marchio"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Category"
