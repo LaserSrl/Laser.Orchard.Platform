@@ -456,8 +456,9 @@ namespace Laser.Orchard.Questionnaires.Services {
             bool result = false;
             var questionnaireModuleSettings = _orchardServices.WorkContext
                 .CurrentSite.As<QuestionnaireModuleSettingsPart>();
-            var questionnairePartSettings = _orchardServices.ContentManager
-                .Get<QuestionnairePart>(editModel.Id)
+            var part = _orchardServices.ContentManager
+                .Get<QuestionnairePart>(editModel.Id);
+            var questionnairePartSettings = part
                 .Settings.GetModel<QuestionnairesPartSettingVM>();
             var content = _orchardServices.ContentManager.Get(editModel.Id);
             bool exit = false;
@@ -471,17 +472,30 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (editModel.Context.Length > 255) {// limits context to 255 chars
                 editModel.Context = editModel.Context.Substring(0, 255);
             }
+            // The Disposable flag is used for scenarios where a user is not allowed to answer to
+            // a questionnaire more than once. Checking the UserAnswersRecord table is not enough
+            // to ensure that, because when none of the questions have mandatory answers (i.e the
+            // user may be submitting a valid form that has no answer to any question). However,
+            // UserAnswerInstanceRecord has a record for each single time a user submitted a form
+            // to answer a questionnaire, even when no answer was given. Issue with that is that
+            // for questionnaires older than its introduction, we should still try the original
+            // query, since there cannot be an UserAnswerInstanceRecord there.
             if (questionnaireModuleSettings.Disposable) {
                 if (currentUser != null) {
-                    if (_repositoryUserAnswer
+                    var answeredInstance = GetMostRecentInstanceId(part, currentUser, editModel.Context);
+                    if (!string.IsNullOrWhiteSpace(answeredInstance)
+                        || _repositoryUserAnswer
                             .Fetch(x => x.User_Id == currentUser.Id
                                 && x.QuestionnairePartRecord_Id == editModel.Id
                                 && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
-                }
-                else { // anonymous user => check SessionID
-                    if (_repositoryUserAnswer
+                } else { // anonymous user => check SessionID
+                    var answeredInstance = !string.IsNullOrWhiteSpace(SessionID)
+                        ? GetMostRecentInstanceId(part, SessionID, editModel.Context)
+                        : string.Empty;
+                    if (!string.IsNullOrWhiteSpace(answeredInstance)
+                        || _repositoryUserAnswer
                             .Fetch(x => x.SessionID == SessionID
                                 && x.QuestionnairePartRecord_Id == editModel.Id
                                 && x.Context == editModel.Context).Count() > 0) {
@@ -617,6 +631,34 @@ namespace Laser.Orchard.Questionnaires.Services {
                 instanceId = _repositoryinstanceRecords
                     .Table
                     .Where(uair => uair.User_Id == user.Id
+                        && uair.QuestionnairePartRecord_Id == part.Id
+                        && uair.Context == context)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
+                    .FirstOrDefault();
+            }
+            return instanceId;
+        }
+        public string GetMostRecentInstanceId(QuestionnairePart part, string sessionId, string context = null) {
+            if (part == null) {
+                throw new ArgumentNullException("part");
+            }
+            if (string.IsNullOrWhiteSpace(sessionId)) {
+                throw new ArgumentNullException("sessionId");
+            }
+            string instanceId = null;
+            if (context == null) {
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.SessionID == sessionId
+                        && uair.QuestionnairePartRecord_Id == part.Id)
+                    .OrderByDescending(uair => uair.AnswerDate)
+                    .Select(uair => uair.AnswerInstance)
+                    .FirstOrDefault();
+            } else {
+                instanceId = _repositoryinstanceRecords
+                    .Table
+                    .Where(uair => uair.SessionID == sessionId
                         && uair.QuestionnairePartRecord_Id == part.Id
                         && uair.Context == context)
                     .OrderByDescending(uair => uair.AnswerDate)
