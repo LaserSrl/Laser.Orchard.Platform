@@ -181,9 +181,6 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             foreach (var field in lcf)
                                 content.Parts.FirstOrDefault().Weld(field);
                         }
-                        else {
-                            content = null;
-                        }
                         return _contentManager.BuildEditor(content);
                     };
                 }

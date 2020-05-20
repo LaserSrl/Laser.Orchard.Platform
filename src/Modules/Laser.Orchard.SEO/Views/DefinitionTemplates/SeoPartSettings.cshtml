@@ -37,7 +37,7 @@
     <label for="@Html.FieldIdFor(m => m.JsonLd)">@T("Json ld text")</label>
     <div>
         @Html.TextAreaFor(m => m.JsonLd, new { @id = "templateArea", @class = "textMedium", rows = "20"})
-        <span class="hint">@T("Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized.")</span>
+        <span class="hint">@T("Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html and https://developers.google.com/search/reference/overview, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized.")</span>
     </div>
 
     <label for="@Html.FieldIdFor(m => m.Templates)">@T("Json ld Templates")</label>

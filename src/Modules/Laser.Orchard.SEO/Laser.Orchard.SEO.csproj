@@ -107,9 +107,11 @@
     <EmbeddedResource Include="CountryCodes.txt" />
     <EmbeddedResource Include="LanguageCodes.txt" />
     <Content Include="MicrodataTemplate\Article.txt" />
+    <Content Include="MicrodataTemplate\BlogPost.txt" />
     <Content Include="MicrodataTemplate\Contact.txt" />
     <Content Include="MicrodataTemplate\Event%28ActivityPart+MapPart%29.txt" />
-    <Content Include="MicrodataTemplate\Prodotto.txt" />
+    <Content Include="MicrodataTemplate\POI.txt" />
+    <Content Include="MicrodataTemplate\Product.txt" />
     <Content Include="Styles\KeywordHelper.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
@@ -143,6 +145,7 @@
     <Compile Include="Navigation\RedirectsMenu.cs" />
     <Compile Include="Permissions\Permissions.cs" />
     <Compile Include="Permissions\RedirectPermissions.cs" />
+    <Compile Include="Providers\SeoPartTokens.cs" />
     <Compile Include="Recipes\Providers\Builders\RedirectRuleStep.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Migrations\SeoMigrations.cs" />
@@ -232,6 +235,7 @@
   <ItemGroup>
     <Content Include="Views\SeoMicrodataScript.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
