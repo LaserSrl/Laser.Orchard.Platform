@@ -45,7 +45,8 @@
 
         }
     </div>
-    <script type="text/javascript">
+    using (Script.Foot()) {
+        <script type="text/javascript">
         $(function () {
             $("#reportFilters button[value='submit.Save']").hide();
             $("#btnPrint").click(function () { window.print(); });
@@ -60,7 +61,8 @@
                 });
             });
         });
-    </script>
+        </script>
+    }
 } else {
     <button class="primaryAction" type="button" value="Print" id="btnPrint">@T("Print")</button>
     if (AuthorizedFor(Laser.Orchard.Reporting.Security.Permissions.DownloadDashboardData)) {
