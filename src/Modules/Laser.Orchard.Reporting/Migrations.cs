@@ -108,5 +108,11 @@ namespace Laser.Orchard.Reporting {
             );
             return 5;
         }
+
+        public int UpdateFrom5() {
+            SchemaBuilder.AlterTable("ReportRecord", table => 
+                table.AddColumn<string>("ColumnAliases"));
+            return 6;
+        }
     }
 }
