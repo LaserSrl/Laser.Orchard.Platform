@@ -108,5 +108,19 @@ namespace Laser.Orchard.Queries {
            );
             return 5;
         }
+
+        public int UpdateFrom5() {
+            ContentDefinitionManager.AlterPartDefinition(
+               "MyCustomQueryPart",
+                part => part
+                   .WithField("IsSQL", cfg => cfg
+                        .OfType("BooleanField")
+                        .WithDisplayName("Is the Query language SQL?")
+                        .WithSetting("BooleanFieldSettings.Hint", "Select this if the language you are using is SQL rather than HQL. When using SQL, you must pay special care to table names, especially when you are importing a query from a different tenant."))
+
+            );
+
+            return 6;
+        }
     }
 }

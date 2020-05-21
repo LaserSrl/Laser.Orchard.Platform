@@ -16,6 +16,7 @@ using Laser.Orchard.Queries.Models;
 using NHibernate;
 using System.Text.RegularExpressions;
 using NHibernate.Transform;
+using Orchard.Fields.Fields;
 
 namespace Laser.Orchard.Queries.Services {
     public interface IQueryPickerService : IDependency {
@@ -121,10 +122,18 @@ namespace Laser.Orchard.Queries.Services {
 
         public IQuery GetCustomQuery(int queryId, Dictionary<string, object> tokens, bool count = false) {
             var customQueryContent = _services.ContentManager.Get(queryId);
-            string parameters = ((dynamic)customQueryContent).MyCustomQueryPart.QueryParameterValues.Value;
+            string parameters = ((dynamic)customQueryContent)
+                .MyCustomQueryPart.QueryParameterValues.Value;
             bool hasParameters = !string.IsNullOrWhiteSpace(parameters); // before tokens substitution because tokens can result in an empty value
-            string query = ((dynamic)customQueryContent).MyCustomQueryPart.QueryString.Value;
-            //Apply tokenization for parameters and query
+            string query = ((dynamic)customQueryContent)
+                .MyCustomQueryPart.QueryString.Value;
+            var sqlField = customQueryContent.Parts
+                .FirstOrDefault(x => x.PartDefinition.Name == "MyCustomQueryPart")
+                .Get(typeof(BooleanField), "IsSQL") as BooleanField;
+            var isSql = sqlField == null
+                ? false
+                : sqlField.Value.HasValue ? sqlField.Value.Value : false;
+            // Apply tokenization for parameters and query
             parameters = _tokenizer.Replace(parameters, tokens);
             query = _tokenizer.Replace(query, tokens);
             if (string.IsNullOrWhiteSpace(query)) {
@@ -132,17 +141,28 @@ namespace Laser.Orchard.Queries.Services {
             }
             Dictionary<string, object> queryParams = new Dictionary<string, object>();
             bool cacheable = true;
-            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-            if (startsWithSelect.IsMatch(query)) {
+            // check on query: must start with the word "select"
+            var startsWithSelect = query
+                // TrimStart() removes all whitespace from the beginning of the query,
+                // including newline characters
+                .TrimStart()
+                .StartsWith("select", StringComparison.InvariantCultureIgnoreCase)
+                // select is followed by whitespace
+                && char.IsWhiteSpace(query.TrimStart(), 6);
+            if (startsWithSelect) {
                 if (count) { // 
                     var splittedQuery = query.Split(new string[] { "\n", " ", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                     var indexOfFromWord = Array.FindIndex(splittedQuery, x => x.ToLower() == "from");
                     var indexOfOrderWord = Array.FindLastIndex(splittedQuery, x => x.ToLower() == "order");
                     query = "select count(*) " + string.Join(" ", splittedQuery, indexOfFromWord, (indexOfOrderWord > 0 ? indexOfOrderWord : splittedQuery.Length) - indexOfFromWord);
                 }
-                var hql = _services.TransactionManager.GetSession()
-                    .CreateQuery(query)
-                    .SetCacheable(cacheable);
+                var session = _services.TransactionManager.GetSession();
+                IQuery hql = isSql
+                    ? session // SQL
+                        .CreateSQLQuery(query)
+                    : session // HQL
+                        .CreateQuery(query);
+                hql.SetCacheable(cacheable);
 
                 if (hasParameters) {
                     // Parse parameters:
