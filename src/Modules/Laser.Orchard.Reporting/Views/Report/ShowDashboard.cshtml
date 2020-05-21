@@ -38,7 +38,7 @@
     <div>
         @foreach (var rep in Model.Reports.AsPart<DataReportViewerPart>()) {
             if (rep.Record.ChartType == 7) {
-                <div data-report-id="@rep.Record.Id"></div>
+                <div style="clear:both;" data-report-id="@rep.Record.Id"></div>
             } else {
                 <div style="float:left" data-report-id="@rep.Record.Id"></div>
             }
