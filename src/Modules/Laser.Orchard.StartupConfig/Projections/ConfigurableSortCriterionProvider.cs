@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.Projections.Descriptors.SortCriterion;
 using Orchard.Projections.Services;
@@ -41,6 +42,18 @@ namespace Laser.Orchard.StartupConfig.Projections {
                     }
                     // get the ith criterion
                     var criterionToUse = criteriaArray[criterionIndex];
+                    if (true) {
+                        // order based on a field
+                    } else if (true) {
+                        // order based on a part's property
+                        context.Query = criterionToUse.Ascending
+                            ? context.Query
+                                .OrderBy(alias => alias.ContentPartRecord(criterionToUse.PartName),
+                                    x => x.Asc(criterionToUse.PropertyName))
+                            : context.Query
+                                .OrderBy(alias => alias.ContentPartRecord(criterionToUse.PartName),
+                                    x => x.Desc(criterionToUse.PropertyName));
+                    }
                 }
             } catch (Exception) {
                 // impossible to parse the array
