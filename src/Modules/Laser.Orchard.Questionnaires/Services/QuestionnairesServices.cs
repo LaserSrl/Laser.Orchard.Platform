@@ -565,6 +565,17 @@ namespace Laser.Orchard.Questionnaires.Services {
                             userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
                             userAnswer.AnswerText = answerTexts[q.SingleChoiceAnswer].Answer;//GetAnswer(q.SingleChoiceAnswer).Answer;
                             CreationAction(userAnswer);
+                            // for a single choice answer we aren't carrying the answer's text
+                            // in the view model. This would prevent us from using it in workflows.
+                            // So we go ahead and add it to the list of answers for this question.
+                            if (q.AnswersWithResult == null) {
+                                q.AnswersWithResult = new List<AnswerWithResultViewModel>();
+                            }
+                            q.AnswersWithResult.Add(new AnswerWithResultViewModel() {
+                                Id = q.SingleChoiceAnswer,
+                                Answered = true,
+                                AnswerText = answerTexts[q.SingleChoiceAnswer].Answer
+                            });
                         }
                     }
                     else if (q.QuestionType == QuestionType.MultiChoice) {
