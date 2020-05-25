@@ -37,7 +37,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
                         Name: "CriteriaArray",
                         Title: T("Array of objects describing the sort criteria."),
                         Classes: new[] { "tokenized" },
-                        Description: T("TODO"))
+                        Description: T("Since this field may be tokenized, you should double braces delimiting JSON objects (i.e. use {{ and }} instead of { and })"))
                     );
 
                 return f;
@@ -70,6 +70,8 @@ namespace Laser.Orchard.StartupConfig.Projections {
             try {
                 var json = context
                     .ValueProvider.GetValue("CriteriaArray").AttemptedValue;
+                // remove double braces we are using because of tokens
+                json = json.Replace("{{", "{").Replace("}}", "}");
                 var criteria = JsonConvert
                     .DeserializeObject<SortCriterionConfiguration[]>(json);
                 if (criteria == null || !criteria.Any()) {
@@ -77,10 +79,21 @@ namespace Laser.Orchard.StartupConfig.Projections {
                         .AddModelError("CriteriaArray",
                             T("The array of Criteria may not be null").Text);
                 }
+                for (int i = 0; i < criteria.Length; i++) {
+                    if (!criteria[i].IsForPart() && !criteria[i].IsForField()) {
+                        context.ModelState
+                            .AddModelError("CriteriaArray",
+                                T("Criterion at index {0} is neither for a part or a field.", i.ToString()).Text);
+                    } else if (criteria[i].IsForPart() && criteria[i].IsForField()) {
+                        context.ModelState
+                            .AddModelError("CriteriaArray",
+                                T("Criterion at index {0} is configured for both a part and a field.", i.ToString()).Text);
+                    }
+                }
             } catch (Exception ex) {
                 context.ModelState
                     .AddModelError("CriteriaArray",
-                        T("Error while parsing the json array: " + ex.Message).Text);
+                        T("Error while parsing the json array: {0}", ex.Message).Text);
             }
         }
 
