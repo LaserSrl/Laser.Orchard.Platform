@@ -33,6 +33,10 @@ msgid "If this website has a search functionality powered by Google, this tag pr
 msgstr "Se il sito ha una funzionalità di ricerca abilitata da Google, questo tag impedisce a Google di mostrare una casella per la ricerca nel sito nei suoi risultati delle ricerche."
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html and https://developers.google.com/search/reference/overview, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized."
+msgstr "Inserire un json-ld che descriva il contenuto. Per la lista degli elementi consentiti consultare http://schema.org/docs/schemas.html e https://developers.google.com/search/reference/overview; per testare lo script utilizzare il tool all'indirizzo https://search.google.com/structured-data/testing-tool. Il testo è tokenizzabile."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized."
 msgstr "Inserire un json-ld che descriva il contenuto. Per la lista degli elementi consentiti consultare http://schema.org/docs/schemas.html; per testare lo script utilizzare il tool all'indirizzo https://search.google.com/structured-data/testing-tool. Il testo è tokenizzabile."
 
@@ -451,6 +455,14 @@ msgstr "Redirezionamenti"
 msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
 msgid "SEO"
 msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Providers.SeoPartTokens"
+msgid "SEOPart.Description"
+msgstr "SEOPart.Description"
+
+msgctxt "Laser.Orchard.SEO.Providers.SeoPartTokens"
+msgid "The description for the content that was input in its SEO Part."
+msgstr "La descrizion per il contenuto che è stata inseirta per il SEO."
 
 msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
 msgid "Exports Redirects. If there are 2 redirects in the exported file with the same SourceUrl, only one will be inserted during the import"

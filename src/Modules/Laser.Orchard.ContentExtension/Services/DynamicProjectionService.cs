@@ -34,7 +34,7 @@ namespace Laser.Orchard.ContentExtension.Services {
                 query.SetMaxResults(count);
             }
             hqlQuery = query.SetResultTransformer(Transformers.AliasToEntityMap);
-            return hqlQuery.Enumerable();
+            return hqlQuery.List();
         }
 
         private IEnumerable<DynamicProjectionPart> _partsForMenu;

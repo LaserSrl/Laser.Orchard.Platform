@@ -57,8 +57,11 @@ namespace Laser.Orchard.StartupConfig.Activities {
                 string message = activityContext.GetState<string>("Message");
                 var dataString = activityContext.GetState<string>("Data");
                 if (!string.IsNullOrWhiteSpace(dataString)) {
-                    ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Data = 
-                        JsonConvert.DeserializeObject(dataString);
+                    try {
+                        ((Response)workflowContext.Tokens[tokenWebApiResponseName]).Data =
+                            JsonConvert.DeserializeObject(dataString);
+                    }
+                    catch { }
                 }
                 ErrorCode errorCode = activityContext.GetState<ErrorCode>("ErrorCode");
                 ResolutionAction resolutionAction = activityContext.GetState<ResolutionAction>("ResolutionAction");
