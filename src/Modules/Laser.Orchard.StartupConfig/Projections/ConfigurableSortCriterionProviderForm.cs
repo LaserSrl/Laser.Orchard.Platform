@@ -37,7 +37,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
                         Name: "CriteriaArray",
                         Title: T("Array of objects describing the sort criteria."),
                         Classes: new[] { "tokenized" },
-                        Description: T("Since this field may be tokenized, you should double braces delimiting JSON objects (i.e. use {{ and }} instead of { and })"))
+                        Description: T("This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and })"))
                     );
 
                 return f;
