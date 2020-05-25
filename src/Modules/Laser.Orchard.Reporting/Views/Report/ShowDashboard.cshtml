@@ -38,14 +38,15 @@
     <div>
         @foreach (var rep in Model.Reports.AsPart<DataReportViewerPart>()) {
             if (rep.Record.ChartType == 7) {
-                <div data-report-id="@rep.Record.Id"></div>
+                <div style="clear:both;" data-report-id="@rep.Record.Id"></div>
             } else {
                 <div style="float:left" data-report-id="@rep.Record.Id"></div>
             }
 
         }
     </div>
-    <script type="text/javascript">
+    using (Script.Foot()) {
+        <script type="text/javascript">
         $(function () {
             $("#reportFilters button[value='submit.Save']").hide();
             $("#btnPrint").click(function () { window.print(); });
@@ -60,7 +61,8 @@
                 });
             });
         });
-    </script>
+        </script>
+    }
 } else {
     <button class="primaryAction" type="button" value="Print" id="btnPrint">@T("Print")</button>
     if (AuthorizedFor(Laser.Orchard.Reporting.Security.Permissions.DownloadDashboardData)) {

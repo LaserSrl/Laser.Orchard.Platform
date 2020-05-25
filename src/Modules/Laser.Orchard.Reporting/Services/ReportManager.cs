@@ -24,6 +24,7 @@ using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Orchard.Core.Contents;
+using Orchard.Fields.Fields;
 
 namespace Laser.Orchard.Reporting.Services {
     public class ReportManager : IReportManager
@@ -145,6 +146,12 @@ namespace Laser.Orchard.Reporting.Services {
                 throw new ArgumentOutOfRangeException("HQL query not valid.");
             }
             var queryField = contentQuery.Get(typeof(TextField), "QueryString") as TextField;
+            string parameters = (contentQuery.Get(typeof(TextField), "QueryParameterValues") as TextField).Value;
+            bool hasParameters = !string.IsNullOrWhiteSpace(parameters); // before tokens substitution because tokens can result in an empty value
+            var sqlField = contentQuery.Get(typeof(BooleanField), "IsSQL") as BooleanField;
+            var isSql = sqlField == null
+                ? false
+                : sqlField.Value.HasValue ? sqlField.Value.Value : false; 
             var query = queryField.Value.Trim();
             // tokens replacement
             Dictionary<string, object> contextDictionary = new Dictionary<string, object>();
@@ -152,23 +159,80 @@ namespace Laser.Orchard.Reporting.Services {
                 contextDictionary.Add("Content", container);
             }
             query = _tokenizer.Replace(query, contextDictionary);
+            parameters = _tokenizer.Replace(parameters, contextDictionary);
             IQuery hql = null;
             Dictionary<string, AggregationResult> returnValue = new Dictionary<string, AggregationResult>();
             IEnumerable result = null;
-            // check on hql query: must start with the word "select"
-            var startsWithSelect = new Regex(@"^select\s", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-            if (startsWithSelect.IsMatch(query) == false) {
+            // check on query: must start with the word "select"
+            var startsWithSelect = query
+                // TrimStart() removes all whitespace from the beginning of the query,
+                // including newline characters
+                .TrimStart()
+                .StartsWith("select", StringComparison.InvariantCultureIgnoreCase)
+                // select is followed by whitespace
+                && char.IsWhiteSpace(query.TrimStart(), 6);
+            if (!startsWithSelect) {
                 throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
             } 
             try {
-                hql = _transactionManager.GetSession().CreateQuery(query);
-                if (hql.ReturnAliases.Count() < 2) {
-                    throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
+                var session = _transactionManager.GetSession();
+                if (isSql) {
+                    // SQL Query
+                    hql = session.CreateSQLQuery(query);
+                } else {
+                    // HQL Query
+                    hql = session.CreateQuery(query);
+                    if (hql.ReturnAliases.Count() < 2) {
+                        throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
+                    }
                 }
-                result = hql.SetResultTransformer(Transformers.AliasToEntityMap).Enumerable();
+                hql.SetCacheable(true);
+                if (hasParameters) {
+                    // Parse parameters:
+                    // The correct way to input parameters in the text area is to have one parameter
+                    // per line and end each line with a comma.
+                    var splitParameters = parameters.Split(
+                        new string[] { ",\n", "," + Environment.NewLine },
+                        StringSplitOptions.None); // keep empty entries
+                                                  // we don't trim values in case whitespace is desired.
+                                                  // Parameters are always assumed to be strings.
+
+                    foreach (var kvp in splitParameters.Select((val, i) => new { i, val })) {
+                        hql.SetParameter("param" + kvp.i, kvp.val);
+                    }
+                }
+                result = hql.SetResultTransformer(Transformers.AliasToEntityMap).List();
             } catch (Exception ex) {
                 Log.Error(ex, "RunHqlReport error - query: " + query);
-                throw new ArgumentOutOfRangeException("HQL query not valid: please specify select clause with at least 2 columns (the first for labels, the second for values).");
+                throw new Exception("RunHqlReport error - query: " + query, ex);
+            }
+
+            string[] columnTitles = null;
+            if (!string.IsNullOrWhiteSpace(report.ColumnAliases)) {
+                // try to use the given aliases as column names
+                var aliases = report.ColumnAliases
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim()).ToArray();
+                if (aliases.Any()) {
+                    columnTitles = aliases;
+                }
+            }
+            if (columnTitles == null) {
+                if (isSql) {
+                    var list = (IEnumerable<object>)result;
+                    if (list.Any()) {
+                        var tmp = list.First() as Hashtable;
+                        columnTitles = new string[tmp.Keys.Count];
+                        int i = 0;
+                        foreach (var key in tmp.Keys) {
+                            columnTitles[i++] = key.ToString();
+                        }
+                    } else {
+                        columnTitles = new string[] { T("No results found for your search.").Text };
+                    }
+                } else {
+                    columnTitles = hql.ReturnAliases;
+                }
             }
 
             if (multiColumnTable) {
@@ -176,14 +240,18 @@ namespace Laser.Orchard.Reporting.Services {
                     AggregationValue = 0,
                     Label = "",
                     GroupingField = "",
-                    Other = hql.ReturnAliases
+                    Other = columnTitles
                 });
                 int rownum = 0;
                 foreach (var record in result) {
                     var row = new List<object>();
                     var ht = record as Hashtable;
-                    foreach(var alias in hql.ReturnAliases) {
-                        row.Add(ht[alias]);
+                    foreach(var alias in columnTitles) {
+                        if (ht.ContainsKey(alias)) {
+                            row.Add(ht[alias]);
+                        } else {
+                            row.Add(null);
+                        }
                     }
                     rownum++;
                     returnValue.Add(rownum.ToString(), new AggregationResult {
@@ -196,9 +264,9 @@ namespace Laser.Orchard.Reporting.Services {
             } else {
                 foreach (var record in result) {
                     var ht = record as Hashtable;
-                    string key = Convert.ToString(ht[hql.ReturnAliases[0]]);
+                    string key = Convert.ToString(ht[columnTitles[0]]);
                     double value = 0;
-                    double.TryParse(Convert.ToString(ht[hql.ReturnAliases[1]]), out value);
+                    double.TryParse(Convert.ToString(ht[columnTitles[1]]), out value);
                     if (returnValue.ContainsKey(key)) {
                         var previousItem = returnValue[key];
                         previousItem.AggregationValue += value;
@@ -207,7 +275,7 @@ namespace Laser.Orchard.Reporting.Services {
                         returnValue[key] = new AggregationResult {
                             AggregationValue = value,
                             Label = key,
-                            GroupingField = hql.ReturnAliases[0],
+                            GroupingField = columnTitles[0],
                             Other = null
                         };
                     }
