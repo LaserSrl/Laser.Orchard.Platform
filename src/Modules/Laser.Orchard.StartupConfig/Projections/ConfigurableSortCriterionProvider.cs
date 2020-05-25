@@ -85,6 +85,42 @@ namespace Laser.Orchard.StartupConfig.Projections {
             }
         }
 
+        #region Sorting on a ContentField or one of its properties
+        private Dictionary<string, IEnumerable<IContentFieldDriver>> _groupedDrivers;
+        private IEnumerable<IContentFieldDriver> DriversForField(string definitionName) {
+            if (_groupedDrivers == null) {
+                _groupedDrivers = new Dictionary<string, IEnumerable<IContentFieldDriver>>();
+            }
+            if(!_groupedDrivers.ContainsKey(definitionName)) {
+                _groupedDrivers.Add(definitionName, 
+                    _contentFieldDrivers
+                        .Where(x => x.GetFieldInfo()
+                            .Any(fi => fi.FieldTypeName == definitionName)));
+            }
+            return _groupedDrivers[definitionName];
+        }
+        private List<IFieldTypeEditor> GetFieldEditors(string definitionName, string propertyName) {
+            var fieldTypeEditors = new List<IFieldTypeEditor>();
+            // drivers for the ContentField
+            var drivers = DriversForField(definitionName);
+            // delegate that will help us figure out the tables
+            var membersContext = new DescribeMembersContext(
+                (storageName, storageType, displayName, description) => {
+                    // get the correct field type editor
+                    if ((storageName == null && propertyName == null)
+                        || (storageName ?? string.Empty).Equals(propertyName ?? string.Empty)) {
+                        IFieldTypeEditor fieldTypeEditor = _fieldTypeEditors
+                            .FirstOrDefault(x => x.CanHandle(storageType));
+                        if (fieldTypeEditor != null) {
+                            fieldTypeEditors.Add(fieldTypeEditor);
+                        }
+                    }
+                });
+            foreach (var driver in drivers) {
+                driver.Describe(membersContext);
+            }
+            return fieldTypeEditors;
+        }
         private void ApplyCriterionForField(
             SortCriterionContext context, SortCriterionConfiguration criterion) {
             // This uses the logic from ContentFieldsSortCriterion
@@ -107,25 +143,8 @@ namespace Laser.Orchard.StartupConfig.Projections {
                         criterion.FieldName,
                         // field's property (e.g. LinkField.Text)
                         criterion.PropertyName ?? "");
-                    // drivers for the ContentField
-                    var drivers = _contentFieldDrivers
-                        .Where(x => x.GetFieldInfo()
-                            .Any(fi => fi.FieldTypeName == fieldDefinition.FieldDefinition.Name)).ToList();
-                    var fieldTypeEditors = new List<IFieldTypeEditor>();
-                    var membersContext = new DescribeMembersContext(
-                        (storageName, storageType, displayName, description) => {
-                            // get the correct field type editor
-                            if ((storageName ?? string.Empty).Equals(criterion.PropertyName ?? string.Empty)) {
-                                IFieldTypeEditor fieldTypeEditor = _fieldTypeEditors
-                                    .FirstOrDefault(x => x.CanHandle(storageType));
-                                if (fieldTypeEditor != null) {
-                                    fieldTypeEditors.Add(fieldTypeEditor);
-                                }
-                            }
-                        });
-                    foreach (var driver in drivers) {
-                        driver.Describe(membersContext);
-                    }
+                    
+                    var fieldTypeEditors = GetFieldEditors(fieldDefinition.FieldDefinition.Name, criterion.PropertyName);
                     if (fieldTypeEditors.Any()) {
                         // I think there should be only one
                         foreach (var fieldTypeEditor in fieldTypeEditors) {
@@ -146,6 +165,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
                 }
             }
         }
+        #endregion
 
         #region Sorting on ContentPartRecord.Property based on MemberBinding
         private Dictionary<Type, IGrouping<Type, BindingItem>> _groupsDictionary;
