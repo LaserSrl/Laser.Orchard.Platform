@@ -141,7 +141,7 @@ msgid "Save"
 msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
-msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the comlumn aliases based on the query."
+msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query."
 msgstr "Specificare i nomi delle colonne da mostrare nel report, separati da virgola. Il report mostrerà, per ogni riga, solo i valori corrispondenti alle colonne specificate, nell'ordine in cui sono scritte. Se non viene specificato alcun nome di colonna, il report mostrerà le colonne così come definite dalla query."
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
@@ -261,7 +261,7 @@ msgid "Save"
 msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
-msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the comlumn aliases based on the query."
+msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query."
 msgstr "Specificare i nomi delle colonne da mostrare nel report, separati da virgola. Il report mostrerà, per ogni riga, solo i valori corrispondenti alle colonne specificate, nell'ordine in cui sono scritte. Se non viene specificato alcun nome di colonna, il report mostrerà le colonne così come definite dalla query."
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
