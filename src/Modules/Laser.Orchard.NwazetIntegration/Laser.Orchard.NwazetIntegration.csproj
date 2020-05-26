@@ -106,6 +106,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
