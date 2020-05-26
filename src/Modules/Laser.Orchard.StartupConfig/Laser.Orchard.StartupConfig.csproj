@@ -385,6 +385,9 @@
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Drivers\PerItemCachePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
+    <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
+    <Compile Include="Projections\SortCriterionConfiguration.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Handlers\PerItemCachePartHandler.cs" />
