@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -105,5 +106,26 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         // as to whether the address is shipping or billing.
         public IEnumerable<SelectListItem> ShippingCountries { get; set; }
         public IEnumerable<SelectListItem> BillingCountries { get; set; }
+
+        public static AddressEditViewModel CreateVM(
+            IAddressConfigurationService _addressConfigurationService) {
+            //TODO: Handle address type correctly
+            return new AddressEditViewModel() {
+                Countries = _addressConfigurationService
+                    .CountryOptions(),
+                ShippingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.ShippingAddress),
+                BillingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.BillingAddress)
+            };
+        }
+
+        public static AddressEditViewModel CreateVM(
+            IAddressConfigurationService _addressConfigurationService,
+            AddressRecordType addressRecordType) {
+            var vm = CreateVM(_addressConfigurationService);
+            vm.AddressType = addressRecordType;
+            return vm;
+        }
     }
 }

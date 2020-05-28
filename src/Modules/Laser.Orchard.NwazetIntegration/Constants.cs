@@ -7,6 +7,8 @@
     public class Constants {
         public const string PaymentSucceeded = "Payment Succeeded";
         public const string PaymentFailed = "Payment Failed";
-        public static string CacheEvictSignal = "AddressConfigurationSiteSettingsPart_Evict";
+
+        public static string AddressConfigurationCacheEvictSignal = "AddressConfigurationSiteSettingsPart_Evict";
+        public static string CheckoutSettingsCacheEvictSignal = "CheckoutSettingsPart_Evict";
     }
 }

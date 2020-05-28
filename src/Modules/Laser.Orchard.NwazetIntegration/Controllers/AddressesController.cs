@@ -445,23 +445,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         private AddressEditViewModel CreateVM() {
-            //TODO: Handle address type correctly
-            return new AddressEditViewModel() {
-                Countries = _addressConfigurationService
-                    .CountryOptions(),
-                ShippingCountries = _addressConfigurationService
-                    .CountryOptions(AddressRecordType.ShippingAddress),
-                BillingCountries = _addressConfigurationService
-                    .CountryOptions(AddressRecordType.BillingAddress)
-            };
+            return AddressEditViewModel.CreateVM(_addressConfigurationService);
         }
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
-            return new AddressEditViewModel() {
-                Countries = _addressConfigurationService.CountryOptions(addressRecordType),
-                ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
-                BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
-                AddressType = addressRecordType
-            };
+            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
         }
 
         private AddressEditViewModel CreateVM(AddressRecord address) {

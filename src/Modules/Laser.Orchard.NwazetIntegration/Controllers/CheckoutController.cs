@@ -1,4 +1,7 @@
-﻿using Orchard;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+using Orchard;
 using Orchard.Themes;
 using System;
 using System.Collections.Generic;
@@ -31,26 +34,56 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
           the checkout process, because it will affect the required steps.
          */
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly ICheckoutSettingsService _checkoutSettingsService;
+        private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly INwazetCommunicationService _nwazetCommunicationService;
         public CheckoutController(
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor,
+            ICheckoutSettingsService checkoutSettingsService,
+            IAddressConfigurationService addressConfigurationService,
+            INwazetCommunicationService nwazetCommunicationService) {
 
             _workContextAccessor = workContextAccessor;
+            _checkoutSettingsService = checkoutSettingsService;
+            _addressConfigurationService = addressConfigurationService;
+            _nwazetCommunicationService = nwazetCommunicationService;
         }
 
-        public ActionResult Index() {
+        public ActionResult Index(AddressesVM model) {
             // This will be the entry point for the checkout process.
             // This method should probably have parameters to handle displaying its form
             // with some information already in it in case of validation errors when posting
             // it.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (user == null /*TODO: && authentication is required*/) {
+            if (user == null && _checkoutSettingsService.AuthenticationRequired) {
                 // redirect to login, perhaps with a message
+            }
+            if (user != null) {
+                // If the user is authenticated, set the model's email and any other information
+                // we can get from the user's contact
+                model.Email = user.Email;
+                var cel = _nwazetCommunicationService.GetPhone(user);
+                if (cel.Length == 2) {
+                    model.PhonePrefix = cel[0];
+                    model.Phone = cel[1];
+                }
+                // also load the list of existing addresses for them
+                model.ListAvailableBillingAddress = 
+                    _nwazetCommunicationService.GetBillingByUser(user);
+                // we are only going to load the shipping addresses if shipping is required
+                if(IsShippingRequired()) {
+                    model.ListAvailableShippingAddress = 
+                        _nwazetCommunicationService.GetShippingByUser(user);
+                }
             }
             // test whether shipping will be required for the order, because that will change
             // what must be displayed for the addresses as well as what happens when we go ahead
             // with the checkout: if no shipping is required, we can go straight to order review
             // and then payment.
-            return null;
+            if (IsShippingRequired() && model.ShippingAddressVM == null) {
+                model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
+            }
+            return View(model);
         }
 
         [HttpPost, ActionName("Index")]
@@ -99,10 +132,17 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
 
         private bool IsShippingRequired() {
+            //TODO
             // This should get the current order under process, as well as any other relevant
             // setting, as well as the user object, to determine whether anything has to be 
             // shipped.
             return true;
+        }
+        private AddressEditViewModel CreateVM() {
+            return AddressEditViewModel.CreateVM(_addressConfigurationService);
+        }
+        private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
+            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
         }
     }
 }

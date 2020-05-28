@@ -108,6 +108,7 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
+    <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
+    <Compile Include="Models\CheckoutSettingsPart.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
@@ -147,11 +150,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\CheckoutSettingsService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
     <Compile Include="Services\GTMProductService.cs" />
+    <Compile Include="Services\ICheckoutSettingsService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
@@ -305,6 +311,8 @@
     <Content Include="Views\EditorTemplates\AddressEditViewModel.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Territory.AdministrativeType.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Territory.AddressType.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\CheckoutSettings.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
@@ -313,11 +321,11 @@
     <Content Include="Views\Parts\Product.TagManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bundleconfig.json" />
     <Content Include="Views\GTMShoppingCart.cshtml" />
     <Content Include="Views\GTMPurchase.cshtml" />
     <Content Include="Views\GTMCheckoutStep.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
