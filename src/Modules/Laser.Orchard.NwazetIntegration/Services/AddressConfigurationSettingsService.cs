@@ -239,21 +239,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 });
             }
         }
-
-        //public IEnumerable<CountryAlpha2> CountryISOCodes {
-        //    get {
-        //        return GetFromCache(_countryCodesCacheKey, () => {
-        //            return Settings != null
-        //                ? Settings.CountryCodes
-        //                : new CountryAlpha2[] { };
-        //        });
-        //    }
-        //}
-
-        //public string GetCountryISOCode(int id) {
-        //    return CountryISOCodes
-        //        .FirstOrDefault(cc => cc.TerritoryId == id)
-        //        .ISOCode ?? string.Empty;
-        //}
+        
     }
 }

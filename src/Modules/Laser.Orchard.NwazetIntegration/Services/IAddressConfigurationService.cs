@@ -30,7 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         /// <param name="id">Id of a country to preselect.</param>
         /// <returns></returns>
-        List<SelectListItem> CountryOptions(int id = -1);
+        IEnumerable<SelectListItem> CountryOptions(int id = -1);
         /// <summary>
         /// Gets a list of options configured to be used in UI when selecting
         /// a country for a given typ fo address.
@@ -38,7 +38,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="addressRecordType">The type of address</param>
         /// <param name="id">Id of a country to preselect.</param>
         /// <returns></returns>
-        List<SelectListItem> CountryOptions(AddressRecordType addressRecordType, int id = -1);
+        IEnumerable<SelectListItem> CountryOptions(AddressRecordType addressRecordType, int id = -1);
         /// <summary>
         /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured country if it exists.

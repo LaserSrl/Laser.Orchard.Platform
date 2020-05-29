@@ -38,7 +38,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
 
         private IContentManager _contentManager;
-        private IAddressConfigurationSettingsService _addressConfigurationSettingsService;
 
         #region base configuration
         public int ShippingCountriesHierarchyId { get; set; }

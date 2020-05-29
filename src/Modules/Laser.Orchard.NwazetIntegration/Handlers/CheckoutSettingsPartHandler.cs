@@ -9,6 +9,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         public CheckoutSettingsPartHandler(
             ISignals signals) {
 
+            _signals = signals;
+
             Filters.Add(new ActivatingFilter<CheckoutSettingsPart>("Site"));
 
             // Evict cached content when updated, removed or destroyed.

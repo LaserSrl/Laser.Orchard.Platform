@@ -1,4 +1,5 @@
 ﻿using Orchard;
+using Orchard.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
     /// </summary>
     public interface ICheckoutSettingsService : IDependency{
         bool AuthenticationRequired { get; }
+        bool UserMayCheckout(IUser user = null);
     }
 }

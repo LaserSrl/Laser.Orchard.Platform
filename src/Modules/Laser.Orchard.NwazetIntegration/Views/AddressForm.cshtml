@@ -54,7 +54,7 @@
     } else {
         <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
         @Html.DropDownList(prefix + ".CountryId", address.Countries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
-        <div class="hint">@T("You may leave this blank for the United States.")</div>
+        <div class="hint">@T("Select your Country from the list.")</div>
     }
 
     @Html.Hidden(prefix + ".CityId", address.CityId)

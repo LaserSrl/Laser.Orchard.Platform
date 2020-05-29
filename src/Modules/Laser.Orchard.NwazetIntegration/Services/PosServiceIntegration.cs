@@ -17,6 +17,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IOrderService _orderService;
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IPaymentService _paymentService;
+        private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly ICheckoutSettingsService _checkoutSettingsService;
 
         public PosServiceIntegration(
             IOrchardServices orchardServices, 
@@ -24,13 +26,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             IShapeFactory shapeFactory,
             IOrderService orderService,
             ICurrencyProvider currencyProvider,
-            IPaymentService paymentService) {
+            IPaymentService paymentService,
+            IWorkContextAccessor workContextAccessor,
+            ICheckoutSettingsService checkoutSettingsService) {
+
             _orchardServices = orchardServices;
             _posServices = posServices;
             _shapeFactory = shapeFactory;
             _orderService = orderService;
             _currencyProvider = currencyProvider;
             _paymentService = paymentService;
+            _workContextAccessor = workContextAccessor;
+            _checkoutSettingsService = checkoutSettingsService;
 
             T = NullLocalizer.Instance;
 
@@ -47,19 +54,19 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
-        public dynamic BuildCheckoutButtonShape(IEnumerable<dynamic> productShapes, IEnumerable<ShoppingCartQuantityProduct> productQuantities, IEnumerable<ShippingOption> shippingOptions, TaxAmount taxes, string country, string zipCode, IEnumerable<string> custom) {
-            bool insertOrder = false;
-            foreach(var opt in shippingOptions) {
-                // check whether any shipping option is selected
-                if(opt != null) {
-                    insertOrder = true;
-                }
-            }
-            if (!insertOrder) {
-                // perhaps we need no shipping option
-                // for example, if all products are digital
-                insertOrder = !productQuantities.Any(pq => !pq.Product.IsDigital);
-            }
+        public dynamic BuildCheckoutButtonShape(
+            IEnumerable<dynamic> productShapes, 
+            IEnumerable<ShoppingCartQuantityProduct> productQuantities, 
+            IEnumerable<ShippingOption> shippingOptions, 
+            TaxAmount taxes, string country, string zipCode, IEnumerable<string> custom) {
+            bool insertOrder = true;
+            // The button here will be to start the checkout, so there is no need to check 
+            // whether any shipping option has been selected yet like we used to do. It makes
+            // sense, however, to check whether the user is allowed to checkout.
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            insertOrder &= _checkoutSettingsService.UserMayCheckout(user);
+            // can't checkout with an empty cart
+            insertOrder &= productQuantities.Any();
             if (insertOrder) {
                 return _shapeFactory.Pos();
             }

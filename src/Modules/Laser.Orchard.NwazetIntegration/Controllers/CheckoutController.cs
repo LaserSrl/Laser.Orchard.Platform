@@ -37,16 +37,24 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ICheckoutSettingsService _checkoutSettingsService;
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
+        private readonly IEnumerable<IValidationProvider> _validationProviders;
+
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
             ICheckoutSettingsService checkoutSettingsService,
             IAddressConfigurationService addressConfigurationService,
-            INwazetCommunicationService nwazetCommunicationService) {
+            INwazetCommunicationService nwazetCommunicationService,
+            IEnumerable<IValidationProvider> validationProviders) {
 
             _workContextAccessor = workContextAccessor;
             _checkoutSettingsService = checkoutSettingsService;
             _addressConfigurationService = addressConfigurationService;
             _nwazetCommunicationService = nwazetCommunicationService;
+            _validationProviders = validationProviders;
+        }
+
+        public ActionResult CheckoutStart() {
+            return RedirectToAction("Index");
         }
 
         public ActionResult Index(AddressesVM model) {
@@ -55,7 +63,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // with some information already in it in case of validation errors when posting
             // it.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (user == null && _checkoutSettingsService.AuthenticationRequired) {
+            if (!_checkoutSettingsService.UserMayCheckout(user)) {
+                // TODO: change the UserMayCheckout
+                // Have a method that returns the action I should redirect the user to
+                // in case they can't checkout (e.g. LogOn or AccessDenied)
                 // redirect to login, perhaps with a message
             }
             if (user != null) {
@@ -76,6 +87,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         _nwazetCommunicationService.GetShippingByUser(user);
                 }
             }
+            model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
             // test whether shipping will be required for the order, because that will change
             // what must be displayed for the addresses as well as what happens when we go ahead
             // with the checkout: if no shipping is required, we can go straight to order review
@@ -87,12 +99,22 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpPost, ActionName("Index")]
-        public ActionResult IndexPOST() {
-            // this method should have parameters
+        public ActionResult IndexPOST(AddressesVM model) {
             // Depending on whether shipping is required or not, the validation of what has been
             // input changes, because if there is no shipping there's no need for the shipping
             // address.
-            // TODO: validate
+            var shippingRequired = IsShippingRequired(); //we'll reuse this
+            var validationSuccess = TryUpdateModel(model.BillingAddressVM)
+                && ValidateVM(model.BillingAddressVM);
+            if (shippingRequired) {
+                validationSuccess &= TryUpdateModel(model.ShippingAddressVM)
+                    && ValidateVM(model.ShippingAddressVM);
+            }
+            validationSuccess &= ValidateVM(model);
+            if (!validationSuccess) {
+                // don't move on, but rather leave the user on this form
+                return View(model);
+            }
             // In case validation is successful, depending on whether shipping is required, we
             // should redirect to a different action/step. 
             // If shipping is required, we should redirect to an action that lets the user select 
@@ -101,10 +123,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // can make use of the address the user has selected for shipping.
             // If no shipping is required we can move on to reviewing the order.
 
-            return null;
+            return RedirectToAction("Shipping", model);
         }
 
-        public ActionResult Shipping() {
+        public ActionResult Shipping(AddressesVM model) {
             // In this step the user will select the shipping method from a list
             return null;
         }
@@ -144,5 +166,29 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
         }
+
+        private bool ValidateVM(AddressEditViewModel vm) {
+            bool response = true;
+            foreach (var valP in _validationProviders) {
+                if (!valP.Validate(vm)) {
+                    response = false;
+                }
+            }
+            return response;
+        }
+        private bool ValidateVM(AddressesVM vm) {
+            bool response = true;
+            foreach (var valP in _validationProviders) {
+                var result = valP.Validate(vm);
+                if (result.Count() > 0) {
+                    response = false;
+                }
+                foreach (var error in valP.Validate(vm)) {
+                    ModelState.AddModelError("_FORM", error.Text);
+                }
+            }
+            return response;
+        }
+
     }
 }
