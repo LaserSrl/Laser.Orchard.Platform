@@ -168,7 +168,7 @@ namespace Laser.Orchard.Twitter.Controllers {
         #region twitterizer
 
         public ActionResult GetPostTokenTwitter() {
-            ProviderConfigurationRecord pcr = _providerConfigurationService.Get("Twitter");
+            var pcr = _providerConfigurationService.Get("Twitter");
             if (pcr == null) {
                 _notifier.Add(NotifyType.Error, T("No twitter account setting added, add one in Settings -> Open Authentication"));
                 return RedirectToAction("Index", "TwitterAccount", new { area = "Laser.Orchard.Twitter", id = -10 });

@@ -10,6 +10,7 @@ using Laser.Orchard.OpenAuthentication.Models;
 using Orchard.Logging;
 using Laser.Orchard.OpenAuthentication.Security;
 using Orchard.Localization;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class FacebookAuthenticationClient : IExternalAuthenticationClient {
@@ -22,11 +23,11 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             get { return "Facebook"; }
         }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            return new FacebookOAuth2Client(providerConfigurationRecord.ProviderIdKey, providerConfigurationRecord.ProviderSecret);
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            return new FacebookOAuth2Client(providerConfiguration.ProviderIdKey, providerConfiguration.ProviderSecret);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
             var serializer = new DataContractJsonSerializer(typeof(FacebookGraphData));
             FacebookGraphData graphData;
             var request =
@@ -73,7 +74,7 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                 isSuccessful: true, provider: this.ProviderName, providerUserId: id, userName: name, extraData: userData);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previosAuthResult, string token, string userAccessSecret, string returnUrl) {
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel clientConfiguration, AuthenticationResult previosAuthResult, string token, string userAccessSecret, string returnUrl) {
             return GetUserData(clientConfiguration, previosAuthResult, token);
         }
 
