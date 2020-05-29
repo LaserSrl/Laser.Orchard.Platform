@@ -13,6 +13,7 @@ using Laser.Orchard.OpenAuthentication.Security;
 using Orchard.Logging;
 using System.Linq;
 using Orchard.Localization;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class TwitterAuthenticationClient : IExternalAuthenticationClient {
@@ -22,19 +23,19 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public ILogger Logger { get; set; }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            return new TwitterCustomClient(providerConfigurationRecord.ProviderIdKey, providerConfigurationRecord.ProviderSecret);
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            return new TwitterCustomClient(providerConfiguration.ProviderIdKey, providerConfiguration.ProviderSecret);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
             string secret = "";
             if (previousAuthResult.ExtraData.ContainsKey("secret")) {
                 secret = previousAuthResult.ExtraData["secret"];
             }
-            return GetUserData(clientConfiguration, previousAuthResult, userAccessToken, secret, "");
+            return GetUserData(providerConfiguration, previousAuthResult, userAccessToken, secret, "");
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
             var userAccessToken = token;
             if (String.IsNullOrWhiteSpace(userAccessSecret)) {
                 if (previousAuthResult.ExtraData.ContainsKey("accesstoken") == false) {
@@ -48,8 +49,8 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             // recupero lo User_Name e la mail relativi al token
             var accountSettingsRequest = PrepareAuthorizedRequestGet(userAccessToken,
                 userAccessSecret,
-                clientConfiguration.ProviderIdKey,
-                clientConfiguration.ProviderSecret,
+                providerConfiguration.ProviderIdKey,
+                providerConfiguration.ProviderSecret,
                 "https://api.twitter.com/1.1/account/verify_credentials.json?skip_status=true&include_email=true");
             try {
                 using (var response = accountSettingsRequest.GetResponse()) {
