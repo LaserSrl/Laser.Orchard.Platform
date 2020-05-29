@@ -6,7 +6,7 @@ namespace Laser.Orchard.OpenAuthentication.ViewModels {
         public bool AutoRegistrationEnabled { get; set; }
         public bool AutoMergeNewUsersEnabled { get; set; }
 
-        public IEnumerable<ProviderConfigurationRecord> CurrentProviders { get; set; }
+        public IEnumerable<ProviderConfigurationViewModel> CurrentProviders { get; set; }
         public string AppDirectBaseUrl { get; set; }
         public bool ShowAppDirectSetting { get; set; }
     }
