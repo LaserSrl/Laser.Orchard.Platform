@@ -1,5 +1,5 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
-@model AddressesVM
+@model CheckoutViewModel
 @{
 
     var title = Layout.Title = Model.ShippingAddressVM != null
@@ -14,13 +14,13 @@
     }
 }
 <h1>@title</h1>
-<div class="ship-errors"></div>
+<div class="ship-errors checkout-errors"></div>
 @Html.ValidationSummary()
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
 
     if (Model.ShippingAddressVM != null) {
-        <fieldset>
+        <fieldset class="shipping-address">
             <legend>@T("Shipping Address")</legend>
             @Display.AddressForm(
                 Prefix: "shippingAddressVM",

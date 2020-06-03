@@ -149,6 +149,7 @@
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\CheckoutSettingsService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
     <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
@@ -313,6 +315,7 @@
     <Content Include="Views\EditorTemplates\Parts\Territory.AddressType.cshtml" />
     <Content Include="Views\EditorTemplates\SiteSettings\CheckoutSettings.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\Shipping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

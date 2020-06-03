@@ -1,6 +1,8 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.Themes;
 using System;
@@ -38,30 +40,44 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IEnumerable<IValidationProvider> _validationProviders;
+        private readonly IEnumerable<IShippingMethodProvider> _shippingMethodProviders;
+        private readonly IShoppingCart _shoppingCart;
+        private readonly ICurrencyProvider _currencyProvider;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
             ICheckoutSettingsService checkoutSettingsService,
             IAddressConfigurationService addressConfigurationService,
             INwazetCommunicationService nwazetCommunicationService,
-            IEnumerable<IValidationProvider> validationProviders) {
+            IEnumerable<IValidationProvider> validationProviders,
+            IEnumerable<IShippingMethodProvider> shippingMethodProviders,
+            IShoppingCart shoppingCart,
+            ICurrencyProvider currencyProvider) {
 
             _workContextAccessor = workContextAccessor;
             _checkoutSettingsService = checkoutSettingsService;
             _addressConfigurationService = addressConfigurationService;
             _nwazetCommunicationService = nwazetCommunicationService;
             _validationProviders = validationProviders;
+            _shippingMethodProviders = shippingMethodProviders;
+            _shoppingCart = shoppingCart;
+            _currencyProvider = currencyProvider;
         }
 
         public ActionResult CheckoutStart() {
             return RedirectToAction("Index");
         }
 
-        public ActionResult Index(AddressesVM model) {
+        public ActionResult Index(CheckoutViewModel model) {
             // This will be the entry point for the checkout process.
             // This method should probably have parameters to handle displaying its form
             // with some information already in it in case of validation errors when posting
             // it.
+            // Try to fetch the model from TempData to handle the case where we have been
+            // redirected here.
+            if (TempData.ContainsKey("CheckoutViewModel")) {
+                model = (CheckoutViewModel)TempData["CheckoutViewModel"];
+            }
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (!_checkoutSettingsService.UserMayCheckout(user)) {
                 // TODO: change the UserMayCheckout
@@ -99,7 +115,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpPost, ActionName("Index")]
-        public ActionResult IndexPOST(AddressesVM model) {
+        public ActionResult IndexPOST(CheckoutViewModel model) {
             // Depending on whether shipping is required or not, the validation of what has been
             // input changes, because if there is no shipping there's no need for the shipping
             // address.
@@ -110,10 +126,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 validationSuccess &= TryUpdateModel(model.ShippingAddressVM)
                     && ValidateVM(model.ShippingAddressVM);
             }
-            validationSuccess &= ValidateVM(model);
+            validationSuccess &= ValidateAddresses(model);
             if (!validationSuccess) {
                 // don't move on, but rather leave the user on this form
                 return View(model);
+            }
+            // in case validation is successful, if a user exists, try to store the 
+            // addresses they just configured.
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (user != null) {
+                // TODO: save addresses
             }
             // In case validation is successful, depending on whether shipping is required, we
             // should redirect to a different action/step. 
@@ -122,20 +144,80 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // still be made to go through that step. The selection of the list of available methods
             // can make use of the address the user has selected for shipping.
             // If no shipping is required we can move on to reviewing the order.
-
-            return RedirectToAction("Shipping", model);
+            // Put the model we validated in TempData so it can be reused in the next action.
+            TempData["CheckoutViewModel"] = model;
+            if (IsShippingRequired()) {
+                return RedirectToAction("Shipping");
+            }
+            return RedirectToAction("Review");
         }
 
-        public ActionResult Shipping(AddressesVM model) {
+        public ActionResult Shipping(CheckoutViewModel model) {
             // In this step the user will select the shipping method from a list
-            return null;
+            // Try to fetch the model from TempData to handle the case where we have been
+            // redirected here.
+            if (TempData.ContainsKey("CheckoutViewModel")) {
+                model = (CheckoutViewModel)TempData["CheckoutViewModel"];
+            }
+            if (model.ShippingAddressVM == null 
+                && !string.IsNullOrWhiteSpace(model.SerializedAddresses)) {
+                model.DecodeAddresses();
+            }
+            if (model.ShippingAddressVM != null) {
+                var productQuantities = _shoppingCart
+                    .GetProducts()
+                    .Where(p => p.Quantity > 0)
+                    .ToList();
+                // Hack: based on the address coming in model.ShippingAddressVM, we can 
+                // compute the actual destinations to be used at this stage
+                var countryName = _addressConfigurationService
+                    ?.GetCountry(model.ShippingAddressVM.CountryId)
+                    ?.Record?.TerritoryInternalRecord.Name;
+                // get all possible providers for shipping methods
+                var shippingMethods = _shippingMethodProviders
+                    .SelectMany(p => p.GetShippingMethods())
+                    .ToList();
+                // Test those providers with nwazet's default interface.
+                var allShippingOptions = ShippingService
+                    .GetShippingOptions(
+                        shippingMethods,
+                        productQuantities,
+                        countryName,
+                        model.ShippingAddressVM.PostalCode,
+                        _workContextAccessor).ToList();
+                // Those tests done like that cannot be very reliable with respect to
+                // territories' configuration, unless we configure a hierarchy of postal
+                // codes. Rather than do that, we are going to do an hack on the PostalCode
+                // that will let a shipping criterion parse out the territory Ids.
+                allShippingOptions
+                    .AddRange(ShippingService
+                        .GetShippingOptions(
+                            shippingMethods,
+                            productQuantities,
+                            countryName,
+                            $"{model.ShippingAddressVM.PostalCode};" +
+                                $"{model.ShippingAddressVM.CountryId};" +
+                                $"{model.ShippingAddressVM.ProvinceId};" +
+                                $"{model.ShippingAddressVM.CityId}",
+                            _workContextAccessor));
+                // remove duplicate shipping options
+                model.AvailableShippingOptions = allShippingOptions.Distinct().ToList();
+                // to correctly display prices, the view will need the currency provider
+                model.CurrencyProvider = _currencyProvider;
+                return View(model);
+            }
+            // to get here something must have gone very wrong. Perhaps the user
+            // is trying to select a shipping method where no shipping is required.
+            // Put the model we validated in TempData so it can be reused in the next action.
+            TempData["CheckoutViewModel"] = model;
+            return RedirectToAction("Index");
         }
 
         [HttpPost, ActionName("Shipping")]
-        public ActionResult ShippingPOST() {
+        public ActionResult ShippingPOST(CheckoutViewModel model) {
             // validate the choice of shipping method then redirect to the action that lets
             // the user review their order.
-            return null;
+            return View(model);
         }
 
         public ActionResult Review() {
@@ -175,6 +257,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 }
             }
             return response;
+        }
+        private bool ValidateAddresses(CheckoutViewModel vm) {
+            return ValidateVM(vm.AsAddressesVM());
         }
         private bool ValidateVM(AddressesVM vm) {
             bool response = true;
