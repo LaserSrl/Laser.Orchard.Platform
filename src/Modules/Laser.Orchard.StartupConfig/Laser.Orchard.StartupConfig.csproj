@@ -503,6 +503,7 @@
     <Compile Include="Tokens\ParameterToken.cs" />
     <Compile Include="Tokens\RazorCodeExecutionToken.cs" />
     <Compile Include="Tokens\ReplaceToken.cs" />
+    <Compile Include="Tokens\SiteTokens.cs" />
     <Compile Include="Tokens\StripHtmlToken.cs" />
     <Compile Include="ViewModels\CommandsExecuteViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceIndexVM.cs" />
