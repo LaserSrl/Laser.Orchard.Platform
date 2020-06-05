@@ -1,13 +1,24 @@
-﻿using Orchard.ContentManagement.MetaData;
+﻿using Orchard.ContentManagement;
+using Orchard.ContentManagement.MetaData;
+using Orchard.Core.Common.Models;
 using Orchard.Core.Contents.Extensions;
+using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Data.Migration.Schema;
+using Orchard.Roles.Models;
+using System.Linq;
 
 namespace Laser.Orchard.Reporting {
-    public class Migrations : DataMigrationImpl
-    {
-        public int Create()
-        {
+    public class Migrations : DataMigrationImpl {
+        private readonly IContentManager _contentManager;
+        private readonly IRepository<PermissionRecord> _permissionRepository;
+
+        public Migrations(IContentManager contentManager, IRepository<PermissionRecord> permissionRepository) {
+            _contentManager = contentManager;
+            _permissionRepository = permissionRepository;
+        }
+
+        public int Create() {
             // Create ReportRecord table
             SchemaBuilder.CreateTable("ReportRecord", table => table
                 .Column<int>("Id", c => c.Identity().PrimaryKey())
@@ -24,8 +35,8 @@ namespace Laser.Orchard.Reporting {
             SchemaBuilder.CreateTable("DataReportViewerPartRecord", table => table
                 .ContentPartRecord()
                 .Column<int>("Report_Id", c => c.Nullable())
-                .Column<string>("ContainerTagCssClass", c=>c.Nullable().WithLength(100))
-                .Column<string>("ChartTagCssClass", c=>c.Nullable().WithLength(100)));
+                .Column<string>("ContainerTagCssClass", c => c.Nullable().WithLength(100))
+                .Column<string>("ChartTagCssClass", c => c.Nullable().WithLength(100)));
 
             ContentDefinitionManager.AlterPartDefinition("DataReportViewerPart", builder => builder.Attachable());
 
@@ -110,9 +121,29 @@ namespace Laser.Orchard.Reporting {
         }
 
         public int UpdateFrom5() {
-            SchemaBuilder.AlterTable("ReportRecord", table => 
+            SchemaBuilder.AlterTable("ReportRecord", table =>
                 table.AddColumn<string>("ColumnAliases"));
             return 6;
+        }
+        public int UpdateFrom6() {
+            // Updating permission Names for Reports and Dashboards because they uses identity instead of id
+            var reports = _contentManager.Query().ForType("DataReportViewer").List();
+            var dashboards = _contentManager.Query().ForType("DataReportDashboard").List();
+            foreach (var report in reports) {
+                var permission = _permissionRepository.Table.SingleOrDefault(x => x.Name == string.Format("ShowDataReport{0}", report.Id) && x.FeatureName == "Laser.Orchard.Reporting");
+                if (permission != null) {
+                    permission.Name = string.Format("ShowDataReport{0}", report.As<IdentityPart>().Identifier);
+                    _permissionRepository.Update(permission);
+                }
+            }
+            foreach (var dashboard in dashboards) {
+                var permission = _permissionRepository.Table.SingleOrDefault(x => x.Name == string.Format("ShowDashboard{0}", dashboard.Id) && x.FeatureName == "Laser.Orchard.Reporting");
+                if (permission != null) {
+                    permission.Name = string.Format("ShowDashboard{0}", dashboard.As<IdentityPart>().Identifier);
+                    _permissionRepository.Update(permission);
+                }
+            }
+            return 7;
         }
     }
 }
