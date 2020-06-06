@@ -160,7 +160,7 @@ namespace Laser.Orchard.Reporting {
             return 8;
         }
         public int UpdateFrom8() {
-            foreach (var rr in _reportRepository.Table.Where(r => string.IsNullOrWhiteSpace(r.GUID))) {
+            foreach (var rr in _reportRepository.Table.Where(r => r.GUID == null || r.GUID == "")) {
                 rr.GUID = Guid.NewGuid().ToString();
             }
             return 9;
