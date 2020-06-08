@@ -46,6 +46,13 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual string Province { get; set; }
         public virtual string PostalCode { get; set; }
         public virtual string Country { get; set; }
+
+        // Properties added for the advanced address configuration that 
+        // uses territories
+        public virtual int CountryId { get; set; }
+        public virtual int CityId { get; set; }
+        public virtual int ProvinceId { get; set; }
+
         public override bool Equals(object objAddress) {
             if (!(objAddress is AddressRecord))
                 return false;

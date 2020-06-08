@@ -10,3 +10,8 @@ Features:
 		Name: GDPR Communication Contact Extensions
 		Description: Enables specialized handling of the information from our communication features. This feature is enabled automatically when its dependecies are, unless it's been disabled.
 		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.CommunicationGateway
+	Laser.Orchard.CommunicationGateway.Mailchimp:
+		Name: Mailchimp
+		Description: Integrates Mailchimp
+		Category: Marketing
+		Dependencies: Orchard.Resources, Orchard.Tokens, Orchard.Users, Laser.Orchard.Policy, Laser.Orchard.UsersExtensions

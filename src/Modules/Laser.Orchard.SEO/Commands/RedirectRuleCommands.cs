@@ -3,6 +3,7 @@ using Laser.Orchard.SEO.Services;
 using Orchard.Commands;
 using Orchard.Environment.Extensions;
 using System;
+using System.Linq;
 
 namespace Laser.Orchard.SEO.Commands {
     [OrchardFeature("Laser.Orchard.Redirects")]
@@ -24,7 +25,7 @@ namespace Laser.Orchard.SEO.Commands {
             string destinationUrl, 
             bool isPermanent) {
 
-            var result = _redirectService.GetRedirect(sourceUrl);
+            var result = _redirectService.GetTable().FirstOrDefault(x=>x.SourceUrl == sourceUrl);
 
             if (result == null) {
                 _redirectService.Add(new RedirectRule {

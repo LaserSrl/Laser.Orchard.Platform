@@ -44,16 +44,16 @@ namespace Laser.Orchard.SEO.Tests.Services {
 
         [Test]
         public void RedirectsAreCreatedCorrectly() {
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(0));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(0));
             var role = new RedirectRule {
                 SourceUrl = "sourceUrl",
                 DestinationUrl = "destinationUrl",
                 IsPermanent = false
             };
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(0));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(0));
 
             PopulateTable(6);
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(6));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(6));
 
             var created = _redirectService.GetRedirects().ToArray();
 
@@ -72,11 +72,11 @@ namespace Laser.Orchard.SEO.Tests.Services {
 
         [Test]
         public void GetRedirectsTotalCountReturnsCorrectNumber() {
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(0));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(0));
 
             PopulateTable(6);
 
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(6));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(6));
             Assert.That(_redirectService.GetRedirects().Count(), Is.EqualTo(6));
         }
 
@@ -131,15 +131,15 @@ namespace Laser.Orchard.SEO.Tests.Services {
             PopulateTable(10);
             var rules = _redirectService.GetRedirects();
 
-            _redirectService.Delete(rules.First());
+            _redirectService.Delete(rules.First().Id);
 
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(9));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(9));
             rules = _redirectService.GetRedirects();
             Assert.That(rules.First().SourceUrl, Is.EqualTo("sourceUrl1"));
 
             _redirectService.Delete(rules.First().Id);
 
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(8));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(8));
             rules = _redirectService.GetRedirects();
             Assert.That(rules.First().SourceUrl, Is.EqualTo("sourceUrl2"));
         }
@@ -148,7 +148,7 @@ namespace Laser.Orchard.SEO.Tests.Services {
         public void CannotCreateRedirectRulesWithSameSourceUrl() {
             PopulateTable(1);
             Assert.Throws<RedirectRuleDuplicateException>(() => PopulateTable(1));
-            Assert.That(_redirectService.GetRedirectsTotalCount(), Is.EqualTo(1));
+            Assert.That(_redirectService.GetTable().Count(), Is.EqualTo(1));
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace Laser.Orchard.SEO.Tests.Services {
             Assert.Throws<RedirectRuleDuplicateException>(() => _redirectService.Update(rule));
             Assert.That(_redirectService.GetRedirects().Count(rr => rr.SourceUrl == "sourceUrl1"), Is.EqualTo(1));
 
-            rule = _redirectService.GetRedirect(1);
+            rule = _redirectService.GetTable().FirstOrDefault(x=>x.Id == 1);
             rule.SourceUrl = "sourceUrl1";
 
             Assert.Throws<RedirectRuleDuplicateException>(() => _redirectService.Update(rule));
@@ -170,14 +170,14 @@ namespace Laser.Orchard.SEO.Tests.Services {
 
         [Test]
         public void CannotGetNonExistingRulById() {
-            Assert.That(_redirectService.GetRedirect(5), Is.EqualTo(null));
-            Assert.That(_redirectService.GetRedirect(-5), Is.EqualTo(null));
+            Assert.That(_redirectService.GetTable().FirstOrDefault(x => x.Id == 5), Is.EqualTo(null));
+            Assert.That(_redirectService.GetTable().FirstOrDefault(x => x.Id == -5), Is.EqualTo(null));
         }
 
         [Test]
         public void CannotGetNonExistingRuleByPath() {
-            Assert.That(_redirectService.GetRedirect("source"), Is.EqualTo(null));
-            Assert.That(_redirectService.GetRedirect(""), Is.EqualTo(null));
+            Assert.That(_redirectService.GetTable().FirstOrDefault(x => x.SourceUrl == "source"), Is.EqualTo(null));
+            Assert.That(_redirectService.GetTable().FirstOrDefault(x => x.SourceUrl == ""), Is.EqualTo(null));
         }
 
     }

@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,10 +57,16 @@
       <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine, Version=3.9.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\RazorEngine.3.9.0\lib\net45\RazorEngine.dll</HintPath>
@@ -110,6 +117,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Styles\admin-dynamic-projections.css" />
+    <Content Include="Styles\admin-dynamic-projections.min.css">
+      <DependentUpon>admin-dynamic-projections.css</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -133,12 +144,21 @@
     <Compile Include="Navigation\DynamicProjectionProvider.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions\DynamicProjectionPermission.cs" />
+    <Compile Include="Routes.cs" />
+    <Compile Include="DynamicProjectionResourceManifest.cs" />
+    <Compile Include="Services\DynamicProjectionService.cs" />
     <Compile Include="Services\IContentTypePermissionSettingsService.cs" />
     <Compile Include="Services\IContentExtensionService.cs" />
+    <Compile Include="Services\IDynamicProjectionService.cs" />
     <Compile Include="ViewModels\DynamicProjectionVM.cs" />
     <Compile Include="ViewModels\ContentTypePermissionVM.cs" />
     <Compile Include="ViewModels\UploadFileVM.cs" />
     <Content Include="packages.config" />
+    <Content Include="Assets\admin-dynamic-projections.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Views\DynamicProjectionDisplay\AjaxList.cshtml" />
     <Content Include="Placement.info">
       <SubType>Designer</SubType>
@@ -205,6 +225,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Queries\Laser.Orchard.Queries.csproj">
+      <Project>{d494b57f-2ae6-460f-9785-565376409afc}</Project>
+      <Name>Laser.Orchard.Queries</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>

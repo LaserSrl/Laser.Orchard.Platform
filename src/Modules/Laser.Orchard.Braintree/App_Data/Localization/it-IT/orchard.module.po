@@ -9,6 +9,10 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Automatic Payment"
+msgstr "Pagamento Automatico"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Braintree PayPal Settings"
 msgstr "Impostazioni Braintree PayPal"
 
@@ -23,6 +27,10 @@ msgstr "Codice valuta associato all'ID del negoziante nella configurazione di Br
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "If checked, it means this is a production environment."
 msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "If checked, the payment starts automatically."
+msgstr "Se selezionato, il pagamento inizia automaticamente."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Merchant Account"
@@ -115,6 +123,394 @@ msgstr "La chiave privata assegnata da Braintree durante la registrazione del ne
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
 msgid "The Public Key assigned by Braintree during merchant registration."
 msgstr "La chiave pubblica assegnata da Braintree durante la registrazione del negoziante"
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "A non-numeric value was sent with the attempted transaction. Fix errors and resubmit with the transaction with the proper SKU Number."
+msgstr "Un valore non numerico è stato inviato con la tentata transazione. Correggi gli errori e reinvia con la transazione con il numero SKU corretto."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "An error occurred and the intended transaction was not completed. Attempt the transaction again."
+msgstr "Si è verificato un errore e la transazione prevista non è stata completata. Tentare nuovamente la transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "An error occurred when communicating with the processor. The customer will need to contact their bank for more details."
+msgstr "Si è verificato un errore durante la comunicazione con il processore. Il cliente dovrà contattare la propria banca per maggiori dettagli."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "An error occurred when trying to process the authorization. This response could indicate an issue with the customer’s card or that the processor doesn't allow this action."
+msgstr "Si è verificato un errore durante il tentativo di elaborare l'autorizzazione. Questa risposta potrebbe indicare un problema con la carta del cliente o che il processore non consente questa azione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Both the AVS and CVV checks failed for this transaction. The customer should contact PayPal for more information or use a different payment method."
+msgstr "Entrambi i controlli AVS e CVV non sono riusciti per questa transazione. Il cliente deve contattare PayPal per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Braintree received an unsupported Pending Verification response from PayPal. Contact Braintree’s Support team to resolve a potential issue with your account settings. If there is no issue with your account, have the customer reach out to PayPal for more information."
+msgstr "Braintree ha ricevuto una risposta di verifica in sospeso non supportata da PayPal. Contatta il team di supporto di Braintree per risolvere un potenziale problema con le impostazioni del tuo account. Se non ci sono problemi con il tuo account, chiedi al cliente di contattare PayPal per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Card is expired. The customer will need to use a different payment method."
+msgstr "La carta è scaduta. Il cliente dovrà utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Contact PayPal’s Support team to resolve this issue with your account. Then, you can attempt the transaction again."
+msgstr "Contatta il team di supporto di PayPal per risolvere questo problema con il tuo account. Quindi, puoi tentare nuovamente la transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Customer has not finalized setup of their PayPal account. Reach out to the customer for more information or a different payment method."
+msgstr "Il cliente non ha finalizzato la configurazione del proprio conto PayPal. Contatta il cliente per ulteriori informazioni o per un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Customer made a typo or is attempting to use an invalid PayPal account."
+msgstr "Il cliente ha fatto un refuso o sta tentando di utilizzare un conto PayPal non valido."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Depending on your region, this response could indicate a connectivity or setup issue."
+msgstr "A seconda della regione, questa risposta potrebbe indicare un problema di connettività o installazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Either the refund amount is greater than the original transaction or the card-issuing bank does not allow partial refunds. The customer will need to contact their bank for more information or use a different payment method."
+msgstr "L'importo del rimborso è superiore alla transazione originale o la banca emittente della carta non consente rimborsi parziali. Il cliente dovrà contattare la propria banca per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Fraud settings on your PayPal business account are blocking payments from this customer. These can be adjusted in the Block Payments section of your PayPal business account."
+msgstr "Le impostazioni di frode sul tuo conto commerciale PayPal stanno bloccando i pagamenti da questo cliente. Questi possono essere modificati nella sezione Blocca pagamenti del tuo conto commerciale PayPal."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Invalid Transaction Division Number."
+msgstr "Numero Divisione Transazione non valido."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Once a PayPal transaction is partially refunded, all subsequent refunds must also be partial refunds for the remaining amount or less. Full refunds are not allowed after a PayPal transaction has been partially refunded."
+msgstr "Una volta che una transazione PayPal è parzialmente rimborsata, tutti i rimborsi successivi devono essere anche rimborsi parziali per l'importo residuo o inferiore. Non sono consentiti rimborsi completi dopo che una transazione PayPal è stata parzialmente rimborsata."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal API permissions are not set up between your PayPal business accounts."
+msgstr "Le autorizzazioni API PayPal non sono impostate tra i tuoi account aziendali PayPal."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal API permissions are not set up to allow reference transactions. You'll need to contact PayPal’s Support team to resolve an issue with your account. Once resolved, you can attempt to process the transaction again."
+msgstr "Le autorizzazioni API PayPal non sono impostate per consentire transazioni di riferimento. Devi contattare il team di supporto di PayPal per risolvere un problema con il tuo account. Una volta risolto, puoi tentare di elaborare nuovamente la transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal authorization amount is greater than the allowed limit on the order."
+msgstr "L'importo dell'autorizzazione PayPal è superiore al limite consentito sull'ordine."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal buyer account can't be the same as the seller account."
+msgstr "L'account acquirente PayPal non può essere uguale all'account venditore."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal can't validate this transaction."
+msgstr "PayPal non può convalidare questa transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal has declined this transaction due to risk limitations. You'll need to contact PayPal’s Support team to resolve this issue."
+msgstr "PayPal ha rifiutato questa transazione a causa di limiti di rischio. Dovrai contattare il team di supporto di PayPal per risolvere questo problema."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal requires that refunds are issued within 180 days of the sale. This refund can't be successfully processed."
+msgstr "PayPal richiede che i rimborsi vengano emessi entro 180 giorni dalla vendita. Questo rimborso non può essere elaborato correttamente."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "PayPal was unable to verify that the transaction qualifies for Seller Protection because the address was improperly formatted. The customer should contact PayPal for more information or use a different payment method."
+msgstr "PayPal non è stato in grado di verificare che la transazione sia idonea per la protezione del venditore perché l'indirizzo non è stato formattato correttamente. Il cliente deve contattare PayPal per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Processor Network Unavailable – Try Again"
+msgstr "Rete del processore non disponibile: Riprovare"
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Surcharge amount not permitted on this card. The customer will need to use a different payment method."
+msgstr "Importo del supplemento non consentito su questa carta. Il cliente dovrà utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The account did not have sufficient funds to cover the transaction amount at the time of the transaction"
+msgstr "Il conto non disponeva di fondi sufficienti per coprire l'importo della transazione al momento della transazione"
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The attempted card can't be processed without enabling 3D Secure for your account."
+msgstr "La carta tentata non può essere elaborata senza abilitare 3D Secure per il tuo account."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The attempted transaction exceeds the activity limit of the account. The customer will need to contact their bank to change the account limits or use a different payment method."
+msgstr "La transazione tentata supera il limite di attività dell'account. Il cliente dovrà contattare la propria banca per modificare i limiti del conto o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The attempted transaction exceeds the withdrawal limit of the account. The customer will need to contact their bank to change the account limits or use a different payment method."
+msgstr "La tentata transazione supera il limite di prelievo del conto. Il cliente dovrà contattare la propria banca per modificare i limiti del conto o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The authorization code was not found or not provided. Have the customer attempt the transaction again – if the decline persists, they will need to contact their bank."
+msgstr "Il codice di autorizzazione non è stato trovato o non fornito. Chiedi al cliente di tentare nuovamente la transazione: se il calo persiste, dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The authorized amount is set to zero, is unreadable, or exceeds the allowable amount. Make sure the amount is greater than zero and in a suitable format."
+msgstr "L'importo autorizzato è impostato su zero, è illeggibile o supera l'importo consentito. Assicurarsi che l'importo sia maggiore di zero e in un formato adatto."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card used for this transaction requires customer approval – they will need to contact their bank."
+msgstr "La carta utilizzata per questa transazione richiede l'approvazione del cliente, che dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card used has likely been reported as lost. The customer will need to contact their bank for more information."
+msgstr "È probabile che la carta utilizzata sia stata persa. Il cliente dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card used has likely been reported as stolen. The customer will need to contact their bank for more information."
+msgstr "È probabile che la carta utilizzata sia stata rubata. Il cliente dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card used was reported lost or stolen. The customer will need to contact their bank for more information or use a different payment method."
+msgstr "La carta utilizzata è stata segnalata persa o rubata. Il cliente dovrà contattare la propria banca per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The cardholder’s bank does not support $0.00 card verifications. Enable the Retry All Failed $0 option to resolve this error."
+msgstr "La banca del titolare della carta non supporta le verifiche della carta da $ 0,00. Abilita l'opzione Riprova tutto non riuscito $ 0 per risolvere questo errore."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card-issuing bank has declined this transaction. Have the customer attempt the transaction again – if the decline persists, they will need to contact their bank for more information."
+msgstr "La banca emittente della carta ha rifiutato questa transazione. Chiedi al cliente di tentare nuovamente la transazione: se il calo persiste, dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The card-issuing bank will not allow this transaction. The customer will need to contact their bank for more information."
+msgstr "La banca emittente della carta non consentirà questa transazione. Il cliente dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer entered an invalid payment method or made a typo in their card expiration date. Have the customer correct their payment information and attempt the transaction again – if the decline persists, they will need to contact their bank."
+msgstr "Il cliente ha inserito un metodo di pagamento non valido o ha effettuato un refuso nella data di scadenza della carta. Chiedi al cliente di correggere le informazioni di pagamento e ritentare la transazione: se il calo persiste, dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer entered an invalid payment method or made a typo in their credit card information. Have the customer correct their payment information and attempt the transaction again – if the decline persists, they will need to contact their bank."
+msgstr "Il cliente ha inserito un metodo di pagamento non valido o ha fatto un refuso nelle informazioni della sua carta di credito. Chiedi al cliente di correggere le informazioni di pagamento e ritentare la transazione: se il calo persiste, dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer entered in an invalid security code or made a typo in their card information. Have the customer attempt the transaction again – if the decline persists, the customer will need to contact their bank."
+msgstr "Il cliente ha inserito un codice di sicurezza non valido o ha fatto un refuso nelle informazioni della sua carta. Chiedi al cliente di tentare nuovamente la transazione: se il calo persiste, il cliente dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer must complete their PayPal account information, including submitting their phone number and all required tax information."
+msgstr "Il cliente deve completare i dati del proprio conto PayPal, incluso l'invio del proprio numero di telefono e di tutti i dati fiscali richiesti."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer requested a cancellation of a single transaction – reach out to them for more information."
+msgstr "Il cliente ha richiesto l'annullamento di una singola transazione - contattalo per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer requested the cancellation of a recurring transaction or subscription – reach out to them for more information."
+msgstr "Il cliente ha richiesto l'annullamento di una transazione ricorrente o di un abbonamento - contattalo per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer revoked authorization for this payment method. Reach out to the customer for more information or a different payment method."
+msgstr "Il cliente ha revocato l'autorizzazione per questo metodo di pagamento. Contatta il cliente per ulteriori informazioni o per un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer should contact PayPal for more information or use a different payment method. You may also receive this response if you create transactions using the email address registered with your PayPal Business Account."
+msgstr "Il cliente deve contattare PayPal per ulteriori informazioni o utilizzare un metodo di pagamento diverso. Puoi anche ricevere questa risposta se crei transazioni utilizzando l'indirizzo e-mail registrato con il tuo Conto commerciale PayPal."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer will need to contact their bank for more information."
+msgstr "Il cliente dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer will need to contact their issuing bank for more information."
+msgstr "Il cliente dovrà contattare la propria banca emittente per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s bank declined the transaction, typically because the card in question does not support this type of transaction – for example, the customer used an FSA debit card for a non-healthcare related purchase. They will need to contact their bank for more information."
+msgstr "La banca del cliente ha rifiutato la transazione, in genere perché la carta in questione non supporta questo tipo di transazione - ad esempio, il cliente ha utilizzato una carta di debito FSA per un acquisto non sanitario. Dovranno contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s bank declined the transaction, typically because the card in question does not support this type of transaction. If this response persists across transactions for multiple customers, it could indicate a connectivity or setup issue."
+msgstr "La banca del cliente ha rifiutato la transazione, in genere perché la carta in questione non supporta questo tipo di transazione. Se questa risposta persiste per più transazioni per più clienti, potrebbe indicare un problema di connettività o installazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s bank is requesting that the merchant (you) call to obtain a special authorization code in order to complete this transaction. This can result in a lengthy process – we recommend obtaining a new payment method instead."
+msgstr "La banca del cliente richiede che il commerciante (tu) chiami per ottenere un codice di autorizzazione speciale al fine di completare questa transazione. Ciò può comportare un lungo processo: consigliamo invece di ottenere un nuovo metodo di pagamento."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s bank suspects fraud – they will need to contact their bank for more information."
+msgstr "La banca del cliente sospetta una frode - dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s card has been reported as lost or stolen by the cardholder and the card-issuing bank has requested that merchants keep the card and call the number on the back to report it. As an online merchant, you don’t have the physical card and can't complete this request – obtain a different payment method from the customer."
+msgstr "La carta del cliente è stata segnalata come persa o rubata dal titolare della carta e la banca emittente della carta ha richiesto ai commercianti di conservare la carta e chiamare il numero sul retro per segnalarla. Come commerciante online, non hai la carta fisica e non puoi completare questa richiesta: ottieni un metodo di pagamento diverso dal cliente."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s payment method associated with their PayPal account was declined. Reach out to the customer for more information or a different payment method."
+msgstr "Il metodo di pagamento del cliente associato al proprio conto PayPal è stato rifiutato. Contatta il cliente per ulteriori informazioni o per un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer’s PayPal account can't be used for transactions at this time. The customer will need to contact PayPal for more information or use a different payment method."
+msgstr "Al momento il conto PayPal del cliente non può essere utilizzato per le transazioni. Il cliente dovrà contattare PayPal per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank approved the transaction for less than the requested amount. Have the customer attempt the transaction again – if the decline persists, the customer will need to use a different payment method."
+msgstr "La banca del cliente ha approvato la transazione per un importo inferiore all'importo richiesto. Chiedi al cliente di tentare nuovamente la transazione - se il calo persiste, il cliente dovrà utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank declined the transaction because a 3D Secure authentication was not performed during checkout. Have the customer authenticate using 3D Secure, then attempt the authorization again."
+msgstr "La banca del cliente ha rifiutato la transazione perché durante il checkout non è stata eseguita un'autenticazione 3D Secure. Chiedi al cliente di autenticarsi utilizzando 3D Secure, quindi riprova l'autorizzazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is declining the transaction for unspecified reasons, possibly due to an issue with the card itself. They will need to contact their bank or use a different payment method."
+msgstr "La banca del cliente sta rifiutando la transazione per motivi non specificati, probabilmente a causa di un problema con la carta stessa. Dovranno contattare la propria banca o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is declining the transaction, possibly due to a fraud concern. They will need to contact their bank or use a different payment method."
+msgstr "La banca del cliente sta rifiutando la transazione, probabilmente a causa di un problema di frode. Dovranno contattare la propria banca o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is unwilling to accept the transaction. For credit/debit card transactions, the customer will need to contact their bank for more details regarding this generic decline; if this is a PayPal transaction, the customer will need to contact PayPal."
+msgstr "La banca del cliente non è disposta ad accettare la transazione. Per le transazioni con carta di credito / debito, il cliente dovrà contattare la propria banca per maggiori dettagli su questo generico declino; se si tratta di una transazione PayPal, il cliente dovrà contattare PayPal."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is unwilling to accept the transaction. The customer will need to contact their bank for more details regarding this generic decline."
+msgstr "La banca del cliente non è disposta ad accettare la transazione. Il cliente dovrà contattare la propria banca per maggiori dettagli su questo generico declino."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is unwilling to accept the transaction. The customer will need to contact their bank for more details."
+msgstr "La banca del cliente non è disposta ad accettare la transazione. Il cliente dovrà contattare la propria banca per maggiori dettagli."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The customer's bank is unwilling to accept the transaction. The reasons for this response can vary – customer will need to contact their bank for more details."
+msgstr "La banca del cliente non è disposta ad accettare la transazione. Le ragioni di questa risposta possono variare: il cliente dovrà contattare la propria banca per maggiori dettagli."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The indicated authorization has already been reversed. If you believe this to be false."
+msgstr "L'autorizzazione indicata è già stata annullata. Se ritieni che ciò sia falso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The number of PayPal authorizations is greater than the allowed number on the order."
+msgstr "Il numero di autorizzazioni PayPal è maggiore del numero consentito sull'ordine."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The PayPal authorization is no longer valid."
+msgstr "L'autorizzazione PayPal non è più valida."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The PayPal payment method has either expired or been canceled."
+msgstr "Il metodo di pagamento PayPal è scaduto o è stato annullato."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The processor is unable to provide a definitive answer about the customer's bank account. Please try a different US bank account verification method."
+msgstr "Il processore non è in grado di fornire una risposta definitiva sul conto bancario del cliente. Prova un altro metodo di verifica del conto bancario negli Stati Uniti."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The settings on the customer's account do not allow a transaction amount this large. They will need to contact PayPal to resolve this issue."
+msgstr "Le impostazioni sul conto del cliente non consentono un importo di transazione così elevato. Dovranno contattare PayPal per risolvere questo problema."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The submitted card has expired or been reported lost and a new card has been issued. Reach out to your customer to obtain updated card information."
+msgstr "La carta inviata è scaduta o è stata segnalata persa ed è stata emessa una nuova carta. Contatta il tuo cliente per ottenere informazioni aggiornate sulla carta."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The submitted card number does not include the proper number of digits. Have the customer attempt the transaction again – if the decline persists, the customer will need to contact their bank."
+msgstr "Il numero di carta inviato non include il numero corretto di cifre. Chiedi al cliente di tentare nuovamente la transazione: se il calo persiste, il cliente dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The submitted card number is not on file with the card-issuing bank. The customer will need to contact their bank."
+msgstr "Il numero di carta inviato non è archiviato presso la banca emittente della carta. Il cliente dovrà contattare la propria banca."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The submitted PayPal transaction appears to be a duplicate of a previously submitted transaction. This decline code indicates an attempt to prevent charging the same PayPal account twice for the same service."
+msgstr "La transazione PayPal inviata sembra essere un duplicato di una transazione precedentemente inviata. Questo codice di rifiuto indica un tentativo di evitare di addebitare due volte lo stesso conto PayPal per lo stesso servizio."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "The submitted transaction appears to be a duplicate of a previously submitted transaction and was declined to prevent charging the same card twice for the same service."
+msgstr "La transazione inviata sembra essere un duplicato di una transazione precedentemente inviata ed è stata rifiutata per evitare di addebitare due volte la stessa carta per lo stesso servizio."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There is a setup issue with your account."
+msgstr "Si è verificato un problema di installazione con il tuo account."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There may be an issue with the configuration of your account for the currency specified."
+msgstr "Potrebbe essersi verificato un problema con la configurazione del tuo account per la valuta specificata."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There may be an issue with the configuration of your account. Have the customer attempt the transaction again – if the decline persists."
+msgstr "Potrebbe essersi verificato un problema con la configurazione del tuo account. Chiedi al cliente di tentare nuovamente la transazione, se il calo persiste."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There may be an issue with the customer’s card or a temporary issue at the card-issuing bank. Have the customer attempt the transaction again – if the decline persists, ask for a different card or payment method."
+msgstr "Potrebbe esserci un problema con la carta del cliente o un problema temporaneo presso la banca emittente della carta. Chiedi al cliente di tentare nuovamente la transazione: se il rifiuto persiste, chiedi una carta o un metodo di pagamento diversi."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There may be an issue with the customer’s card or a temporary issue at the card-issuing bank. The customer will need to contact their bank for more information or use a different payment method."
+msgstr "Potrebbe esserci un problema con la carta del cliente o un problema temporaneo presso la banca emittente della carta. Il cliente dovrà contattare la propria banca per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "There may be an issue with the customer’s credit card or a temporary issue at the card-issuing bank. Have the customer attempt the transaction again – if the decline persists, ask for a different card or payment method."
+msgstr "Potrebbe esserci un problema con la carta di credito del cliente o un problema temporaneo presso la banca emittente della carta. Chiedi al cliente di tentare nuovamente la transazione: se il rifiuto persiste, chiedi una carta o un metodo di pagamento diversi."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This currency is not currently supported by your PayPal account. You can accept additional currencies by updating your PayPal profile."
+msgstr "Questa valuta non è attualmente supportata dal tuo conto PayPal. Puoi accettare valute aggiuntive aggiornando il tuo profilo PayPal."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This decline code could indicate that the submitted card number does not correlate to an existing card-issuing bank or that there is a connectivity error with the issuer. The customer will need to contact their bank for more information."
+msgstr "Questo codice di rifiuto potrebbe indicare che il numero della carta inviata non è correlato a una banca emittente della carta esistente o che si è verificato un errore di connettività con l'emittente. Il cliente dovrà contattare la propria banca per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This rare decline code indicates an issue with processing the amount of the transaction. The customer will need to contact their bank for more details."
+msgstr "Questo raro codice di rifiuto indica un problema con l'elaborazione dell'importo della transazione. Il cliente dovrà contattare la propria banca per maggiori dettagli."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This response generally indicates that there is a problem with the submitted card. The customer will need to use a different payment method."
+msgstr "Questa risposta indica generalmente che c'è un problema con la carta inviata. Il cliente dovrà utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This transaction requires the customer to be a resident of the same country as the merchant. Reach out to the customer for a different payment method."
+msgstr "Questa transazione richiede che il cliente sia residente nello stesso Paese del commerciante. Contatta il cliente per un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "This transaction requires the payer to provide a valid phone number. The customer should contact PayPal for more information or use a different payment method."
+msgstr "Questa transazione richiede al pagatore di fornire un numero di telefono valido. Il cliente deve contattare PayPal per ulteriori informazioni o utilizzare un metodo di pagamento diverso."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Transaction amount exceeds the transaction division limit."
+msgstr "L'importo della transazione supera il limite di divisione della transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Transaction failed. The customer will have to try again to make the payment"
+msgstr "Transazione fallita. Il cliente dovrà riprovare a effettuare il pagamento"
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "You can't process this transaction because your account is set to block certain payment types, such as eChecks or foreign currencies. If you believe you have received this decline in error."
+msgstr "Non puoi elaborare questa transazione perché il tuo account è impostato per bloccare determinati tipi di pagamento, come eCheck o valute estere. Se ritieni di aver ricevuto questo calo per errore."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "You'll need to contact PayPal’s Support team to resolve an issue with your account. Once resolved, you can attempt to process the transaction again."
+msgstr "Devi contattare il team di supporto di PayPal per risolvere un problema con il tuo account. Una volta risolto, puoi tentare di elaborare nuovamente la transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "You'll need to contact us to resolve an issue with your account. Once resolved, you can attempt to process the transaction again."
+msgstr "Dovrai contattarci per risolvere un problema con il tuo account. Una volta risolto, puoi tentare di elaborare nuovamente la transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your account can't process the attempted card type. If you believe your merchant account should be set up to accept this type of card."
+msgstr "Il tuo account non può elaborare il tipo di carta tentato. Se ritieni che il tuo account commerciante debba essere impostato per accettare questo tipo di carta."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your account can't process transactions with the intended feature – for example, 3D Secure or Level 2/Level 3 data. If you believe your merchant account should be set up to accept this type of transaction."
+msgstr "Il tuo account non può elaborare le transazioni con la funzionalità prevista, ad esempio dati 3D Secure o Level 2 / Level 3. Se ritieni che il tuo account commerciante debba essere impostato per accettare questo tipo di transazione."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your integration is likely making PayPal calls out of sequence. Check the error response for more details."
+msgstr "È probabile che la tua integrazione stia effettuando chiamate PayPal fuori sequenza. Controlla la risposta dell'errore per maggiori dettagli."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your PayPal account can only process transactions in the currency of your home country. Contact PayPal's Support team for more information."
+msgstr "Il tuo conto PayPal può elaborare transazioni solo nella valuta del tuo paese di origine. Contatta il team di supporto di PayPal per ulteriori informazioni."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your PayPal account is not set up to refund amounts higher than the original transaction amount. Contact PayPal's Support team for information on how to enable this."
+msgstr "Il tuo conto PayPal non è impostato per rimborsare importi superiori all'importo della transazione originale. Contatta il team di supporto di PayPal per informazioni su come abilitarlo."
+
+msgctxt "Laser.Orchard.Braintree.Controllers.BraintreeController"
+msgid "Your PayPal permissions are not set up to allow channel initiated billing transactions. Contact PayPal's Support team for information on how to enable this. Once resolved, you can attempt to process the transaction again."
+msgstr "Le tue autorizzazioni PayPal non sono impostate per consentire transazioni di fatturazione avviate dal canale. Contatta il team di supporto di PayPal per informazioni su come abilitarlo. Una volta risolto, puoi tentare di elaborare nuovamente la transazione."
 
 msgctxt "Laser.Orchard.Braintree.Handlers.BraintreeSiteSettingsHandler"
 msgid "Braintree PayPal"

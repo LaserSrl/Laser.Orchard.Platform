@@ -2,8 +2,7 @@
 @using System.Web.Mvc;
 @{
     var title = Layout.Title = T("Checkout: Shipping & Billing Addresses");
-    Script.Require("jQuery");
-    Script.Include("ship.js");
+    Script.Require("NwazetIntegration.Addresses");
     using (Script.Foot()) {
         <script type="text/javascript">
             var requiredFormat = "@T("{0} is required.")",
@@ -13,20 +12,29 @@
 }
 <h1>@title</h1>
 <div class="ship-errors"></div>
+@Html.ValidationSummary()
 
 @using (Html.BeginFormAntiForgeryPost(Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
-     <fieldset>
+    <fieldset>
         <legend>@T("Shipping Address")</legend>
-        @Display.AddressForm(Prefix: "shippingAddress", Address: Model.ShippingAddress, IncludeCountry: true,ListAddress:Model.ListAvailableShippingAddress)
+        @Display.AddressForm(
+            Prefix: "shippingAddressVM",
+            Address: Model.ShippingAddressVM,
+            IncludeCountry: true,
+            ListAddress:Model.ListAvailableShippingAddress)
     </fieldset>
 
     <fieldset class="toggle-billing">
-        <input id="toggle-billing-address" type="checkbox" checked="checked" />
+        <input id="toggle-billing-address" type="checkbox" />
         <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
     </fieldset>
     <fieldset class="billing-address">
         <legend>@T("Billing Address")</legend>
-        @Display.AddressForm(Prefix: "billingAddress", Address: Model.BillingAddress, IncludeCountry: true, ListAddress: Model.ListAvailableBillingAddress)
+        @Display.AddressForm(
+            Prefix: "billingAddressVM",
+            Address: Model.BillingAddressVM,
+            IncludeCountry: true,
+            ListAddress: Model.ListAvailableBillingAddress)
     </fieldset>
 
     <label for="@Html.Id("Email")">@T("e-mail")</label>
@@ -47,4 +55,4 @@
         <button type="submit" id="payButton" name="Submit" value="save" style="padding: 10px 10px">@T("Next")</button>
         <button type="submit" id="cartButton" name="Submit" value="cart" style="padding: 10px 10px">@T("Back to cart")</button>
     </div>
-    }
+}

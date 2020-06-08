@@ -23,6 +23,12 @@
             <span class="hint">@T("You can specify filters in your HQL query using tokens like {Request.Form:*}. Then you have to add a field for each filter to your Data Report Viewer Content Type to enable users to set filters.")</span>
             @Html.ValidationMessageFor(c => c.QueryId)
         </fieldset>
+        <fieldset>
+            <label for="ColumnAliases">@T("Column Aliases")</label>
+            <input id="ColumnAliases" name="ColumnAliases" value="@Model.ColumnAliases" type="text"class="text large" />
+            <span class="hint">@T("Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query.")</span>
+            @Html.ValidationMessageFor(c => c.ColumnAliases)
+        </fieldset>
         <fieldset class="save-button">
             <input type="hidden" value="@Model.ReportId" name="ReportId" id="ReportId" />
             <button class="primaryAction" type="submit" value="@T("Save")">@T("Save")</button>

@@ -79,7 +79,7 @@ namespace Laser.Orchard.Twitter.Drivers {
             {
                 if ((displayType == "Detail") || (displayType == "Summary"))
                 {
-                    ProviderConfigurationRecord pcr = _providerConfigurationService.Get("Twitter");
+                    var pcr = _providerConfigurationService.Get("Twitter");
                     TwitterOgVM vm = new TwitterOgVM();
                     if (pcr != null)
                         vm.Site = pcr.UserIdentifier;

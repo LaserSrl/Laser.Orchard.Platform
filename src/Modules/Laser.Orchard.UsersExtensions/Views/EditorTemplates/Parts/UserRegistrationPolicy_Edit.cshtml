@@ -3,22 +3,38 @@
 <fieldset>
     <legend>@T("Policies")</legend>
     @for (int i = 0; i < Model.Count; i++) {
-        var acceptTypePolicy = ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
+        var acceptTypePolicy = Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.Policy
+                          || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
+                          || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
 
-        <div>
-            @Html.HiddenFor(m => m[i].PolicyId)
-            @Html.HiddenFor(m => m[i].UserHaveToAccept)
-            <h3>@(((dynamic)Model[i].PolicyText).TitlePart.Title)</h3>
-            <div>@Html.Raw(((dynamic)Model[i].PolicyText).BodyPart.Text)</div>
-            @if (((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == null || acceptTypePolicy) {// Privacy
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"}) @T("Accept")</label>
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"}) @T("Don't Accept")</label>
-            } else { // Regolamento
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
-            }
-        </div>
+    <div class="user-registration-policy" data-policy-id="@Model[i].PolicyId" data-answer-field="@Html.FieldIdFor(model => model[i].PolicyAnswer)">
+        @Html.HiddenFor(m => m[i].PolicyId)
+        @Html.HiddenFor(m => m[i].UserHaveToAccept)
+        @Html.HiddenFor(m => m[i].Policy.Type)
+        @Html.HiddenFor(m => m[i].Policy.Title)
+        @Html.HiddenFor(m => m[i].Policy.Body)
+        <h3>@Model[i].Policy.Title</h3>
+        <div>@Html.Raw(Model[i].Policy.Body)</div>
+        @if (acceptTypePolicy) {// Privacy
+            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">
+                @Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new {
+                   @class = "select-"+ Model[i].PolicyId + "-Accept",
+                   @id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"
+               }) 
+                @T("Accept")
+            </label>
+            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">
+                @Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new {
+                   @class = "select-" + Model[i].PolicyId + "_NoAccept",
+                   @id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"
+               }) 
+                @T("Don't Accept")
+            </label>
+        }
+        else { // Regolamento
+            <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.CheckBoxFor(model => model[i].PolicyAnswer, new { @class = "select-" + Model[i].PolicyId + "-Accept" }) @T("I have read the regulation.")</label>
+        }
+    </div>
     }
 </fieldset>
 

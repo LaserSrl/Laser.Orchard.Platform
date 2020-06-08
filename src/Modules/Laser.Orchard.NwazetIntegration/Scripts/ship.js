@@ -5,18 +5,44 @@
     toggleCheckbox
         .change(function () {
             $(".billing-address").toggle($(this).val());
-            $('input[name^="shippingAddress."]').each(function(){
-                var input = $(this),
-                name = input.attr("name").substr(16);
-                $('input[name="billingAddress.' + name + '"]').val(input.val());
-            });
+            
+            if ($(this).val() == "on") {
+                $('input[name^="shippingAddressVM."]').each(function () {
+                    var input = $(this),
+                        name = input.attr("name").substr(18);
+                    $('input[name="billingAddressVM.' + name + '"]')
+                        .val(input.val())
+                        .trigger('change');
+                });
+                $('select[name^="shippingAddressVM."]').each(function () {
+                    var input = $(this),
+                        name = input.attr("name").substr(18);
+                    $('select[name="billingAddressVM.' + name + '"]')
+                        .val(input.val())
+                        .trigger('change');
+                });
+            }
+
+            // trigger a custom visibility event
+            $(".billing-address").trigger('visibilityChanged');
         });
-    $('input[name^="shippingAddress."]')
+    $('input[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
             var input = $(this),
-                name = input.attr("name").substr(16);
-            $('input[name="billingAddress.' + name + '"]').val(input.val());
+                name = input.attr("name").substr(18);
+            $('input[name="billingAddressVM.' + name + '"]')
+                .val(input.val())
+                .trigger('change');
+        });
+    $('select[name^="shippingAddressVM."]')
+        .change(function () {
+            if (!toggleCheckbox.prop("checked")) return;
+            var input = $(this),
+                name = input.attr("name").substr(18);
+            $('select[name="billingAddressVM.' + name + '"]')
+                .val(input.val())
+                .trigger('change');
         });
     addressForm.find(".required").after(
         $("<span class='error-indicator' title='" + required + "'>*</span>"));
@@ -26,7 +52,8 @@
             alreadyRequired = [];
         addressForm.find(".required").each(function () {
             var requiredField = $(this);
-            if (!requiredField.val()) {
+            if ((requiredField.is('input') || requiredField.is('select'))
+                && !requiredField.val()) {
                 validated = false;
                 var id = requiredField.attr("id"),
                     label = addressForm.find("label[for='" + id + "']").html();

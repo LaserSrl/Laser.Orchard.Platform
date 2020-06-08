@@ -36,6 +36,8 @@ namespace Laser.Orchard.PaymentGateway.Services {
         /// <returns></returns>
         public abstract string GetPosActionUrl(int paymentId);
         public abstract string GetPosActionUrl(string paymentGuid);
+        public abstract Type GetPosActionControllerType();
+        public abstract string GetPosActionName();
 
         /// <summary>
         /// Get the url of the virtual pos

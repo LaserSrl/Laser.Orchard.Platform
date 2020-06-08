@@ -14,7 +14,7 @@
         @*Question zone*@
         <tr>
             <td class="leftside">
-             
+
                 @{
                     <span class="quest_label">@T("Question type")</span>
                     var qTypes = new List<string>();
@@ -36,8 +36,9 @@
                 <span class="quest_label">@T("Answer type")</span>
                 @Html.DropDownListFor(x => x.AnswerType, new SelectList(Enum.GetNames(typeof(AnswerType)), Model.AnswerType), new { @class = "leftside" })<br />
                 @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.GUIdentifier)
                 @Html.HiddenFor(x => x.QuestionnairePartRecord_Id)
-                <input type="hidden" class = "j_iddomanda" value="@qid"  />
+                <input type="hidden" class="j_iddomanda" value="@qid" />
                 @Html.HiddenFor(x => x.Position, new { @class = "position-field" })
                 @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete" })
 

@@ -38,8 +38,13 @@
 </fieldset>
 <div class="checkbox-and-label">
     @Html.EditorFor(m => m.ForceAnonymous)
-    <label for="@Html.FieldIdFor(m => m.ForceAnonymous)">@T("Force anonymous responses for authenticated users.") </label>
+    <label for="@Html.FieldIdFor(m => m.ForceAnonymous)" class="forcheckbox">@T("Force anonymous responses for authenticated users.") </label>
     <span class="hint">@T("Check if you don't want to save the username in the answers.")</span>
+</div>
+<div class="checkbox-and-label">
+    @Html.EditorFor(m => m.ShowLatestAnswers)
+    <label for="@Html.FieldIdFor(m => m.ShowLatestAnswers)" class="forcheckbox">@T("Show user's latest answers.") </label>
+    <span class="hint">@T("Check if you want to show to the current user its own latest answers.")</span>
 </div>
 <h2>@T("Settings - Questionnaire Part - Images")</h2>
 <fieldset>

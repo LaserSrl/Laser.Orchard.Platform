@@ -67,7 +67,7 @@ namespace Laser.Orchard.Twitter.Services {
             rsp.Success = true;
             bool trysended = false;
             List<TwitterAccountPart> TwitterAccountSettings = Twitter_GetAccessToken(message.AccountList);
-            ProviderConfigurationRecord pcr = _providerConfigurationService.Get("Twitter");
+            var pcr = _providerConfigurationService.Get("Twitter");
             foreach (TwitterAccountPart Faccount in TwitterAccountSettings) {
                 try {
                     trysended = true;

@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -155,6 +156,7 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Navigation\ContentAdminMenu.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="ViewModels\ListContentsViewModelExtension.cs" />
   </ItemGroup>
   <ItemGroup>

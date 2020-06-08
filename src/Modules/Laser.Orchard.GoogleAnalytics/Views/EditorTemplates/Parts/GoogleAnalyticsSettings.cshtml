@@ -1,33 +1,72 @@
 ﻿@model Laser.Orchard.GoogleAnalytics.Models.GoogleAnalyticsSettingsPart
 @using Laser.Orchard.GoogleAnalytics.Models;
 
-<fieldset><a name="googleanalitycssetting"></a>
-	<legend>@T("Google Analytics")</legend>
-	<div>
-		<label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Analytics Tracking Key (UA-XXXXXXX-X)")</label>
-		@Html.EditorFor(m => m.GoogleAnalyticsKey)
-		@Html.ValidationMessage("GoogleAnalyticsKey", "*")
-	</div>
-	<div>
-		<label for="@Html.FieldIdFor(m => m.DomainName)">@T("Override Domain Name (optional)")</label>
-		@Html.EditorFor(m => m.DomainName)
-	</div>
-    <br/>
-	<div>
-		@Html.EditorFor(m => m.AnonymizeIp)
-		<label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">@T("Track but anonymize ip (optional)")</label>
-	</div>
-	<div>
-		@Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>
-        @*<label for="@Html.FieldIdFor(m => m.UseAsyncTracking)" class="forcheckbox">@T("Use Async Tracking")</label>*@
-	</div>
-    <br/>
-    <div>
-        @Html.EditorFor(m => m.TrackOnAdmin)
-        <label for="@Html.FieldIdFor(m => m.TrackOnAdmin)" class="forcheckbox">@T("Include on /Admin Pages")</label>
+<fieldset>
+    <a name="googleanalitycssetting"></a>
+    <legend>@T("Google Analytics")</legend>
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.UseTagManager)" class="forcheckbox" title="@T("Use Google Tag Manager")">
+                @Html.EditorFor(m => m.UseTagManager)
+                @T("Use Google Tag Manager")
+            </label>
+        </div>
+        <span class="hint">
+            @T("Mark this to use Google Tag Manager rather than analytics.js.")
+        </span>
     </div>
-    <div>
-        @Html.EditorFor(m => m.TrackOnFrontEnd)
-        <label for="@Html.FieldIdFor(m => m.TrackOnFrontEnd)" class="forcheckbox">@T("Include on front end Pages")</label>
-	</div>
+
+    <div class="form-group">
+        <label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Analytics Tracking Key (UA-XXXXXXX-X) or Tag Manager Container ID (GTM-YYYYYYY)")</label>
+        @Html.TextBoxFor(m => m.GoogleAnalyticsKey,
+             htmlAttributes: new {
+                 @class = "form-control",
+                 placeholder = @T("Key or Id...").Text,
+                 title = @T("Analytics Key or Tag Container Id.").Text })
+        <span class="hint">
+            @T("The value here will be used as either the analytics key if Google analytics is being used, or as the Tag Manager Container Id if Tag Manager is active instead.")
+        </span>
+        @Html.ValidationMessage("GoogleAnalyticsKey", "*")
+    </div>
+
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.TrackOnAdmin)" class="forcheckbox" title="@T("Include on /Admin Pages")">
+            @Html.EditorFor(m => m.TrackOnAdmin)
+            @T("Include on /Admin Pages")
+        </label>
+    </div>
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.TrackOnFrontEnd)" class="forcheckbox" title="@T("Include on front end Pages")">
+            @Html.EditorFor(m => m.TrackOnFrontEnd)
+            @T("Include on front end Pages")
+        </label>
+    </div>
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">
+            @Html.EditorFor(m => m.AnonymizeIp, new { title = @T("Track but anonymize IP").Text })
+            @T("Track but anonymize ip (optional)")
+        </label>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">@T("The following settings only apply to analytics.js and are ignored by Google Tag Manager")</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <label for="@Html.FieldIdFor(m => m.DomainName)">@T("Override Domain Name (optional)")</label>
+                @Html.TextBoxFor(m => m.DomainName,
+                     htmlAttributes: new {
+                         @class ="form-control",
+                         placeholder = @T("Domain name...").Text,
+                         title = @T("Domain name override").Text })
+            </div>
+            <div>
+                @Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>
+                @*<label for="@Html.FieldIdFor(m => m.UseAsyncTracking)" class="forcheckbox">@T("Use Async Tracking")</label>*@
+            </div>
+        </div>
+    </div>
+
+
 </fieldset>

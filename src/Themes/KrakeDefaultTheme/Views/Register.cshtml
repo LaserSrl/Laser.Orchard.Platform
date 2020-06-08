@@ -62,6 +62,11 @@
             @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" })
             @Html.ValidationMessage("confirmPassword")
 
+            if (Model.UserProfile != null) { // if UserProfile && ExtendedRegistration are enabled, it shows all user parts/fields
+            <div class="space-20"></div>
+                @Display(Model.UserProfile)
+            }
+
             <div class="space-20"></div>
             <button class="submit" type="submit">@T("Register")</button>
 

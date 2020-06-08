@@ -29,7 +29,12 @@ namespace Laser.Orchard.Queries.Services {
 
         public Dictionary<String, Int32> Get(string option) {
             Dictionary<String, Int32> Listquery = new Dictionary<string, int>();
-            IEnumerable<ContentItem> enumCI = _orchardServices.ContentManager.Query().ForType("MyCustomQuery").List().Where(x => ((dynamic)x).MyCustomQueryPart.Options.Value.ToString().Contains(option));
+            IEnumerable<ContentItem> enumCI = _orchardServices
+                .ContentManager.Query()
+                .ForType("MyCustomQuery")
+                .List()
+                .Where(x => ((dynamic)x).MyCustomQueryPart
+                    .Options.Value.ToString().Contains(option));
             foreach (ContentItem ci in enumCI) {
                 Listquery.Add(ci.As<TitlePart>().Title, ci.Id);
             }

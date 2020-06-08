@@ -31,7 +31,8 @@ namespace Laser.Orchard.Policy.Services {
         /// <param name="writeMode">Tells if the policies should be stored into a cookie.</param>
         /// <param name="language">optional: the culture of the policies to get. if null the current culture is applied.</param>
         /// <returns>A PoliciesForUserViewModel object</returns>
-        PoliciesForUserViewModel GetPoliciesForUserOrSession(bool writeMode, string language = null);
+        PoliciesForUserViewModel GetPoliciesForCurrentUser(bool writeMode, string language = null);
+        PoliciesForUserViewModel GetPoliciesForUserOrSession(IUser user, bool writeMode, string language = null);
         void PolicyForItemUpdate(PolicyForUserViewModel viewModel, ContentItem item);
         void PolicyForUserUpdate(PolicyForUserViewModel viewModel, IUser user = null);
         void PolicyForItemMassiveUpdate(IList<PolicyForUserViewModel> viewModelCollection, ContentItem item);
@@ -91,8 +92,12 @@ namespace Laser.Orchard.Policy.Services {
             _signals = signals;
         }
 
-        public PoliciesForUserViewModel GetPoliciesForUserOrSession(bool writeMode, string language = null) {
-            var loggedUser = _workContext.GetContext().CurrentUser;
+        public PoliciesForUserViewModel GetPoliciesForCurrentUser(bool writeMode, string language = null) {
+            return GetPoliciesForUserOrSession(_workContext.GetContext().CurrentUser, writeMode, language);
+        }
+
+        public PoliciesForUserViewModel GetPoliciesForUserOrSession(IUser user, bool writeMode, string language = null) {
+            var loggedUser = user;
 
             IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
             // get all the policy texts for the language given (handling defaults)
@@ -147,6 +152,7 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public void PolicyForItemUpdate(PolicyForUserViewModel viewModel, ContentItem item) {
+            if (item.As<UserPolicyPart>() == null) return; // if the content item has not the UserPolicyPart, i cannot save the answers, so we skip the update.
             UserPolicyAnswersRecord record = null;
             var currentUser = _workContext.GetContext().CurrentUser;
             UserPartRecord currentUserPartRecord = null;
@@ -229,12 +235,13 @@ namespace Laser.Orchard.Policy.Services {
                     PolicyForUserUpdate(item, loggedUser);
                 }
             }
-            //Dopo aver salvatao gli eventuali record, aggiorno anche il campo AnswerDate per il cookie. Devo farlo assolutamente dopo il salvataggio in quanto è l'unico modo per stabilire se si tratta di prima risposta o meno.
+            //Dopo aver salvatao gli eventuali record, aggiorno anche il campo AnswerDate per il cookie. 
+            //Devo farlo assolutamente dopo il salvataggio in quanto è l'unico modo per stabilire se si tratta di prima risposta o meno.
             CreateAndAttachPolicyCookie(viewModelCollection, true);
         }
 
         public void PolicyForItemMassiveUpdate(IList<PolicyForUserViewModel> viewModelCollection, ContentItem item) {
-            if (item != null) {
+            if (item != null && item.As<UserPolicyPart>() != null) {
                 foreach (var policy in viewModelCollection) {
                     PolicyForItemUpdate(policy, item);
                 }
@@ -310,7 +317,6 @@ namespace Laser.Orchard.Policy.Services {
 
         public string[] GetPoliciesForContent(PolicyPart part) {
             var settings = part.Settings.GetModel<PolicyPartSettings>();
-
             if (settings.PolicyTextReferences != null && !settings.PolicyTextReferences.Contains("{DependsOnContent}"))
                 return settings.PolicyTextReferences;
             else if (part.PolicyTextReferences != null && !part.PolicyTextReferences.Contains("{All}"))

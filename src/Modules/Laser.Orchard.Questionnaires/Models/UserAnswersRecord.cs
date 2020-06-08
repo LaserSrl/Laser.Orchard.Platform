@@ -24,5 +24,18 @@ namespace Laser.Orchard.Questionnaires.Models {
         [Required]
         public virtual string SessionID { get; set; }
         public virtual string Context { get; set; }
+        /// <summary>
+        /// Answers to a specific Questionnaire given by a specific user at a given
+        /// time will share this value. The goal is to be able identify all the 
+        /// UserAnswerRecord that were created "together" when a user submitted their
+        /// answers to a questionnaire.
+        /// We will generate this string as 
+        /// SHA256({user.Id + QuestionnairePartRecord_Id + DateTime.UtcNow})
+        /// if a user exists, or
+        /// SHA256({sessionId + QuestionnairePartRecord_Id + DateTime.UtcNow})
+        /// otherwise
+        /// </summary>
+        public virtual string AnswerInstance { get; set; }
+        public virtual QuestionType QuestionType { get; set; }
     }
 }

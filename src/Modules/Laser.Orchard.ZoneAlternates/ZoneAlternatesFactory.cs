@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Orchard;
 using Orchard.ContentManagement;
@@ -17,18 +18,20 @@ namespace Laser.Orchard.ZoneAlternates {
 
             context.ShapeMetadata
             .OnDisplaying(displayedContext => {
+                if (displayedContext.ShapeMetadata.Type == "Zone") {
+                    lastZone = displayedContext.Shape.ZoneName;
+                }
 
                 // We don't want the widget itself, 
                 // but the content item that consists of the Widget part (e.g. Parts.Blogs.RecentBlogPosts)
                 if (displayedContext.ShapeMetadata.Type != "Widget") {
-                    if (displayedContext.ShapeMetadata.Type == "Zone") {
-                        lastZone = displayedContext.Shape.ZoneName;
-                    } else if (displayedContext.Shape.ContentItem is ContentItem) {
+                    if (displayedContext.Shape.ContentItem is ContentItem) {
 
                         ContentItem contentItem = displayedContext.Shape.ContentItem;
                         ContentPart contentPart = displayedContext.Shape.ContentPart is ContentPart ? displayedContext.Shape.ContentPart : null;
                         ContentField contentField = displayedContext.Shape.ContentField is ContentField ? displayedContext.Shape.ContentField : null;
                         var displayType = displayedContext.ShapeMetadata.DisplayType;
+                        var shapeName = displayedContext.ShapeMetadata.Type;
 
                         //var route = System.Web.HttpContext.Current.Request.RequestContext.RouteData.Values;
                         //var area = (route.ContainsKey("area")) ? route["area"] : null;
@@ -38,7 +41,6 @@ namespace Laser.Orchard.ZoneAlternates {
                         if (System.Web.HttpContext.Current != null) {
                             isAdmin = AdminFilter.IsApplied(System.Web.HttpContext.Current.Request.RequestContext);
                         }
-                        var shapeName = displayedContext.ShapeMetadata.Type;
 
                         if (contentItem != null && lastZone != "") {
 
@@ -85,6 +87,16 @@ namespace Laser.Orchard.ZoneAlternates {
                         }
                     }
 
+                }
+                else {
+                    //It's a widget
+                    var contentType = displayedContext.Shape.ContentItem.ContentType;
+                    var zoneName = displayedContext.Shape.ContentItem.WidgetPart.Zone;
+                    string shapeName = "Widget__" + contentType + "__" + zoneName;
+                    // Widget-[ContentTypeName]-[ZoneName].cshtml: "Widget-RecentBlogPosts-myZoneName.cshtml"
+                    if (!displayedContext.ShapeMetadata.Alternates.Contains(shapeName)) {
+                        displayedContext.ShapeMetadata.Alternates.Add(shapeName);
+                    }
                 }
             });
         }

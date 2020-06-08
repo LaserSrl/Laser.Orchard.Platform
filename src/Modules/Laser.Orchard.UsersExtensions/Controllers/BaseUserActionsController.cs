@@ -241,7 +241,12 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 PolicyAnswers = _usersExtensionsServices.GetUserLinkedPolicies("it-IT").Select(x => new UserPolicyAnswer {
                     PolicyId = x.Id,
                     UserHaveToAccept = x.UserHaveToAccept,
-                    PolicyAnswer = false
+                    PolicyAnswer = false,
+                    Policy = new PolicyTextViewModel {
+                        Type = x.PolicyType,
+                        Title = x.As<TitlePart>()?.Title,
+                        Body = x.As<BodyPart>()?.Text
+                    }
                 }).ToList()
             };
             return Json(userRegistration, JsonRequestBehavior.AllowGet);

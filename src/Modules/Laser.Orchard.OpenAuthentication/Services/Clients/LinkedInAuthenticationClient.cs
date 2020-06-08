@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web;
 using System;
 using Orchard.Localization;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class LinkedInAuthenticationClient : IExternalAuthenticationClient {
@@ -20,15 +21,15 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             get { return "LinkedIn"; }
         }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            string ClientId = providerConfigurationRecord.ProviderIdKey;
-            string ClientSecret = providerConfigurationRecord.ProviderSecret;
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            string ClientId = providerConfiguration.ProviderIdKey;
+            string ClientSecret = providerConfiguration.ProviderSecret;
             var client = new LinkedInOAuth2Client(ClientId, ClientSecret);
             return client;
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            var userData = (Build(clientConfiguration) as LinkedInOAuth2Client).GetUserDataDictionary(userAccessToken);
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
+            var userData = (Build(providerConfiguration) as LinkedInOAuth2Client).GetUserDataDictionary(userAccessToken);
             userData["accesstoken"] = userAccessToken;
             string id = userData["id"];
             string name = userData["email-address"];
@@ -36,10 +37,10 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             return new AuthenticationResult(true, this.ProviderName, id, name, userData);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
-            var client = Build(clientConfiguration) as LinkedInOAuth2Client;
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
+            var client = Build(providerConfiguration) as LinkedInOAuth2Client;
             string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
-            return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
+            return GetUserData(providerConfiguration, previousAuthResult, userAccessToken);
         }
 
         public OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams createUserParams) {

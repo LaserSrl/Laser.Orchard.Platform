@@ -42,6 +42,13 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 return "";
             }
 
+            public override Type GetPosActionControllerType() {
+                return typeof(object);
+            }
+
+            public override string GetPosActionName() {
+                return "";
+            }
         }
         private readonly IRepository<PaymentRecord> _repository;
         private readonly IOrchardServices _orchardServices;
@@ -95,7 +102,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 model.Record = _posServiceEmpty.StartPayment(model.Record, newPaymentGuid);
             }
             catch(Exception ex) {
-                Logger.Error(ex, "Error starting payment.");
+                Logger.Information(ex, "Error starting payment.");
                 return new HttpUnauthorizedResult();
             }
             return View("Pay", model);

@@ -1,6 +1,7 @@
 ﻿using DotNetOpenAuth.AspNet;
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 using Orchard;
 using Orchard.Localization;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public interface IExternalAuthenticationClient : IDependency {
         string ProviderName { get; }
         
-        IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord);
+        IAuthenticationClient Build(ProviderConfigurationViewModel providerConfigurationRecord);
 
-        AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken);
-        AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl);
+        AuthenticationResult GetUserData(ProviderConfigurationViewModel clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken);
+        AuthenticationResult GetUserData(ProviderConfigurationViewModel clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl);
         
         OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams clientData);
 

@@ -209,6 +209,10 @@ msgid "Check if you want the user to be able to manage questions with single cho
 msgstr "Selezionare per permettere all'utente di gestire domande con risposta a scelta mutuamente esclusiva."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Check if you want to show to the current user its own latest answers."
+msgstr "Selezionare nel caso in cui si desideri mostrare all'utente le sue ultime risposte."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
 msgid "Default 0 (no limit)"
 msgstr "Valore predefinito 0 (nessun limite)"
 
@@ -291,6 +295,10 @@ msgstr "Impostazioni - Parte Questionario - Immagini"
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
 msgid "Show Correct Response Option"
 msgstr "Visualizza Opzione Risposta Corretta"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
+msgid "Show user's latest answers."
+msgstr "Mostra le ultime risposte dell'utente."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/DefinitionTemplates/QuestionnairesPartSettingVM.cshtml"
 msgid "The Context this questionnaire refers to (eg. a commercial campaign name). It is usually usefull '{Content.DisplayText}'."
@@ -419,6 +427,34 @@ msgstr "Testo dei termini e delle condizioni"
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Use recaptcha"
 msgstr "Usa recaptcha"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Continue >"
+msgstr "Avanti >"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "I accept your terms and conditions. I want to answer to your survey."
+msgstr "Accetto i termini e lecondizioni del servizio. Desidero partecipare al vostro questionario."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Previous"
+msgstr "Precedente"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Send your questionnaire"
+msgstr "Inoltra questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_FrontEnd_Edit.cshtml"
+msgid "Time"
+msgstr "Orario"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/QuestionnaireModuleSettings.cshtml"
 msgid "Disposable Action"
@@ -557,8 +593,16 @@ msgid "You have to be logged in, before answering a questionnaire!"
 msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Answers"
+msgstr "Risposte"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Clear"
 msgstr "Annulla"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Completeness"
+msgstr "Completezza"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Date From"
@@ -575,6 +619,22 @@ msgstr "Esporta"
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Filter"
 msgstr "Filtra"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Filter options"
+msgstr "Opzioni di filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Number of people replying to questionnaire"
+msgstr "Numero di persone che hanno risposto al questionario"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "People"
+msgstr "Persone"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Percentage of reply to all questions"
+msgstr "Percentuale di risposte all'intero questionario"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Questionnaire Answers"
@@ -597,8 +657,16 @@ msgid "Show Exported Files"
 msgstr "Mostra file esportati"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Statistics for {0}"
+msgstr "Statistiche per {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "This questionnaire contains no answers."
 msgstr "Questo questionario non ha ricevuto nessuna risposta."
+
+msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
+msgid "Total number of given answers"
+msgstr "Numero totale di risposte"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "By {0}"

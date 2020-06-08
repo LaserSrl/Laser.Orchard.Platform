@@ -176,6 +176,54 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/Json
 msgid "Max number of rows reached."
 msgstr "Numero massimo di righe raggiunto"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Created on"
+msgstr "Creato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Draft"
+msgstr "Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Has Draft"
+msgstr "In bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Last Modified"
+msgstr "Ultima modifica"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Modified on"
+msgstr "Modificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "No Draft"
+msgstr "Nessuna Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Publish on"
+msgstr "Pianificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published on"
+msgstr "Pubblicato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Status"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Unpublish on"
+msgstr "Spubblica il"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Cannot perform requested operation"
 msgstr "Impossibile eseguire l'operazione richiesta"
@@ -529,6 +577,10 @@ msgid "Created"
 msgstr "Creato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "Creating"
+msgstr "Creating"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -879,6 +931,110 @@ msgstr "Impostazioni"
 msgctxt "Laser.Orchard.StartupConfig.Navigation.UsersGroupsSettingsProvider"
 msgid "Users Groups"
 msgstr "Gruppi di utenti"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid " Array: {0}"
+msgstr "Array: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Configurable Sort Criteria"
+msgstr "Criteri di ordinamento configurabili"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Error: {0}"
+msgstr "Errore: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "General"
+msgstr "Generali"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "General sort criteria"
+msgstr "Criteri di ordinamento generali"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to find a field definition with name {0} within the part {1}."
+msgstr "Impossibile trovare una definizione di campo con nome {0} nella parte {1}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to find a part definition with name {0}."
+msgstr "Impossibile trovare una definizione di parte con nome {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to identify the IFieldTypeEditor to sort by {0}."
+msgstr "Impossibile identificare l'IFieldTypeEditor per ordinare per {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Index: {0}"
+msgstr "Indice: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "It was impossible to uniquely identify a property named {0} for type {1}. Perhaps it lacks a MemberBinding configuration?"
+msgstr "Non è stato possibile identificare univocamente una proprietà chiamata {0} per il tipo {1}. Forse manca la sua configurazione per il MemberBinding?"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "It was impossible to uniquely identify a type for {0}. Perhaps it lacks a MemberBinding configuration?"
+msgstr "Non è stato possibile identificare un tipo univoco per {0}. Forse manca la sua configurazione per il MemberBinding?"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Order based off a variable configuration"
+msgstr "Ordina sulla base di una configurazione variabile."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Possible types found are: {0}"
+msgstr "Possibili tipi trovati: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Sorts the results by choosing the criterion from a list"
+msgstr "Ordina i risultati selezionando un criterio da una lista."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "The configuration is {0}."
+msgstr "La configurazione è {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "The type asked for in the sort criterion does not have a unique name. Use its FullName."
+msgstr "Il tipo richiesto nel criterio di ordinamento non ha un nome univoco. Usa il suo FullName."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "There was an error while attempting to process the Sorting configuration."
+msgstr "C'è stato un errore nel tentativo di valutare la configurazione di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Array of objects describing the sort criteria."
+msgstr "Array di oggetti che descrivono i criteri di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is configured for both a part and a field."
+msgstr "Il criterio in posizione {0} è configurato sia per una parte che per un campo."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is neither for a part or a field."
+msgstr "Il criterio in posizione {0} non è nè per una parte nè per un campo."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Enter the index of the criterion to be used. This will be interpreted as an integer index into the array given here in JSON. If this is not an integer, or if it's out of the bounds of the array, the first sort criterion will be used."
+msgstr "Inserire l'indice del criterio da usare. Questo sarà interpretato come un indice intero per l'array dato in JSON. Se non è un intero, o se è fuori dai limiti dell'array, verrà utilizzato il primo criterio di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Error while parsing the json array: {0}"
+msgstr "Errore nell'interpretare l'array json: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Index of the sort criterion."
+msgstr "Indice del criterio di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Insert a value for the Index (it is allowed to be a token)."
+msgstr "Inserisci un valore per l'indice (sono permessi i token)."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "The array of Criteria may not be null"
+msgstr "L'array dei criteri non può essere null."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and })"
+msgstr "Questo campo è usato per un array di oggetti che descriveranno la configurazione per ciascun criterio. Nel caso in cui si voglia ordinare sulla base di una proprietà di una ContentPart, bisogna valorizzare \"PartRecordTypeName\" e \"PropertyName\". Nel caso in cui si voglia ordinare sulla base di una proprietà di un ContentField, bisogna valorizzare \"PartName\" e \"FieldName\"; in questo caso \"PropertyName\" è opzionale. Si può anche valorizzare una proprietà booleana \"Ascending\" per modificare la direzione di ordinamento. Visto che questo campo può contenere dei tokens, bisogna usare le doppie graffe per delimitare gli oggetti JSON (i.e. usare {{ e }} invece di { e })."
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.FavoriteCultureFilter"
 msgid "Content Items associated with {0} as favorite culture."

@@ -11,6 +11,7 @@ using Orchard;
 using Orchard.Validation;
 using Laser.Orchard.OpenAuthentication.Security;
 using Orchard.Logging;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
     public interface IOrchardOpenAuthClientProvider : IDependency {
@@ -113,8 +114,8 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             return client.NormalizeData(userData);
         }
 
-        private static IAuthenticationClient CreateOpenIdClient(ProviderConfigurationRecord clientConfiguration) {
-            return new CustomOpenIdAuthenticationClient(clientConfiguration.ProviderName).Build(clientConfiguration);
+        private static IAuthenticationClient CreateOpenIdClient(ProviderConfigurationViewModel providerConfiguration) {
+            return new CustomOpenIdAuthenticationClient(providerConfiguration.ProviderName).Build(providerConfiguration);
         }
     }
 }

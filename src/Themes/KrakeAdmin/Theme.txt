@@ -6,3 +6,4 @@ Description: Krake Admin Theme
 Version: 2.0
 OrchardVersion: 1.10
 BaseTheme: TheAdmin
+Dependencies: Orchard.Resources, Laser.Orchard.jQueryPlugins

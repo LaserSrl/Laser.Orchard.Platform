@@ -58,6 +58,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -101,30 +104,96 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
+    <Compile Include="Drivers\AddressOrderPartDriver.cs" />
+    <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
+    <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
+    <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
+    <Compile Include="Drivers\TerritoryAddressTypePartDriver.cs" />
+    <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
+    <Compile Include="Filters\CheckoutStepsFilter.cs" />
+    <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
+    <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
+    <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
+    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\AddressOrderPart.cs" />
+    <Compile Include="Models\AddressOrderPartRecord.cs" />
+    <Compile Include="Migration\MigrationsGTM.cs" />
+    <Compile Include="Models\AddedMeasuringPurchase.cs" />
+    <Compile Include="Models\GTMProductPart.cs" />
+    <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
+    <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\TerritoryAddressTypePart.cs" />
+    <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
+    <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
+    <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\IAddressConfigurationService.cs" />
+    <Compile Include="Services\GTMCartExtensionProvider.cs" />
+    <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
+    <Compile Include="Services\GTMProductService.cs" />
+    <Compile Include="Services\IGTMMeasuringPurchase.cs" />
+    <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
-    <Compile Include="Services\IPosServiceIntegration.cs" />
+    <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
+    <Compile Include="Services\NwazetCommunicationService.cs" />
+    <Compile Include="Services\PosServiceIntegration.cs" />
+    <Compile Include="Services\IValidationProvider.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />
+    <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\ValidationAddressViewModelService.cs" />
+    <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
+    <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
+    <Compile Include="ViewModels\GTMProductSettingVM.cs" />
+    <Compile Include="ViewModels\GTMProductVM.cs" />
+    <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
+    <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
+    <Content Include="Scripts\address-configuration.js" />
+    <Content Include="Scripts\address-configuration.min.js">
+      <DependentUpon>address-configuration.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ecommerce-tag-manager.js" />
+    <Content Include="Scripts\ecommerce-tag-manager.min.js">
+      <DependentUpon>ecommerce-tag-manager.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\ship.js" />
+    <Content Include="Scripts\ship.min.js">
+      <DependentUpon>ship.js</DependentUpon>
+    </Content>
+    <Content Include="Styles\admin-style.css" />
+    <Content Include="Styles\admin-style.min.css">
+      <DependentUpon>admin-style.css</DependentUpon>
+    </Content>
     <Content Include="Styles\Styles.css" />
     <Content Include="Styles\Styles.min.css" />
     <Content Include="Web.config" />
@@ -143,6 +212,14 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
+      <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
+      <Name>Orchard.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
+      <Name>Orchard.Tokens</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
@@ -196,6 +273,49 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\Order.PaymentInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\SiteSettings\AddressConfiguration.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\TerritoryHierarchyIsCountriesHierarchy.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\TerritoryHierarchyIsCountriesHierarchyLocalization.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\TerritoryPartIsSelectedCountry.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AddressConfigurationAdmin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\SiteSettings\AddressConfigurationDetails.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\SiteSettings\AddressConfigurationDetailsMissing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\admin-style.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Views\EditorTemplates\Parts\Order.AdvancedAddress.cshtml" />
+    <Content Include="Views\EditorTemplates\AddressEditViewModel.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.AdministrativeType.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.AddressType.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Product.TagManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+    <Content Include="Views\GTMShoppingCart.cshtml" />
+    <Content Include="Views\GTMPurchase.cshtml" />
+    <Content Include="Views\GTMCheckoutStep.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

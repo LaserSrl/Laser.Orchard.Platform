@@ -8,4 +8,4 @@ Features:
     Laser.Orchard.jQueryPlugins:
         Description: Manifest definition for javascripts and stylesheets resources.
         Dependencies: Orchard.Resources
-        Category: Administration
+        Category: Admin

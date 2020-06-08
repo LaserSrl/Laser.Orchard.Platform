@@ -1,6 +1,6 @@
 ﻿@model Laser.Orchard.Reporting.ViewModels.ReportDisplayViewModel
 @using Orchard.ContentManagement
-@{ 
+@{
     Style.Include("jquery-ui.css");
     Style.Include("jquery.jqplot.css");
     Style.Include("reporting.css");
@@ -20,7 +20,7 @@
     WorkContext.TryResolve<IContentManager>(out contentManager);
 }
 <p class="breadcrumb"><a href="@Url.Action("ShowReports", "Report", new { area = "Laser.Orchard.Reporting" })">@T("Reports List")</a> &#62; @T("Execute report")</p>
-@if(Model.FilterContent != null) {
+@if (Model.FilterContent != null) {
     using (Html.BeginFormAntiForgeryPost(Url.Action("DisplayChart"))) {
         <div id="reportFilters">
             <input type="hidden" name="id" value="@Model.Id" />
@@ -33,7 +33,8 @@
         </div>
     }
     <div id="divReportViewer"></div>
-    <script type="text/javascript">
+    using (Script.Foot()) {
+        <script type="text/javascript">
         $(function () {
             $("#reportFilters button[value='submit.Save']").hide();
             $("#btnPrint").click(function () { window.print(); });
@@ -45,7 +46,8 @@
                 });
             });
         });
-    </script>
+        </script>
+    }
 } else {
     <button class="primaryAction" type="button" value="Print" id="btnPrint">@T("Print")</button>
     if (AuthorizedFor(Laser.Orchard.Reporting.Security.Permissions.DownloadReportData)) {

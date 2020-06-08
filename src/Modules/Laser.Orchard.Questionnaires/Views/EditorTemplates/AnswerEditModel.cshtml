@@ -10,13 +10,14 @@
     <td class="answer-text">
         <div>
             @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.GUIdentifier)
             @Html.HiddenFor(x => x.Position, new { @class = "answers-position-field" })
             @Html.HiddenFor(x => x.Delete, new { @class = "mark-for-delete" })
             @Html.HiddenFor(x => x.QuestionRecord_Id)
             @Html.TextBoxFor(x => x.Answer, new { @maxlength = "1200", @class = "j_risposta" })
             @{
                 if ((bool)TempData["ShowCorrectResponseFlag"]) {
-                @Html.CheckBoxFor(x => x.CorrectResponse) @Html.Raw("Right answer")
+                    @Html.CheckBoxFor(x => x.CorrectResponse) @Html.Raw("Right answer")
                 }
             }
         </div>

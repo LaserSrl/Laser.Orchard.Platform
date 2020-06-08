@@ -1,0 +1,10 @@
+﻿Name: Orchard Advanced Settings
+AntiForgery: enabled
+Author: Hermes Sbicego
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10.3
+Features:
+    Laser.Orchard.AdvancedSettings:
+		Category: Admin
+		Description: Extends settings adding the capability to create custom contents usable as settings.

@@ -2,6 +2,7 @@ using DotNetOpenAuth.AspNet;
 using DotNetOpenAuth.AspNet.Clients;
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard.Localization;
@@ -16,11 +17,11 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             get { return "Microsoft"; }
         }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            return new MicrosoftClient(providerConfigurationRecord.ProviderIdKey, providerConfigurationRecord.ProviderSecret, "wl.basic", "wl.emails");
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            return new MicrosoftClient(providerConfiguration.ProviderIdKey, providerConfiguration.ProviderSecret, "wl.basic", "wl.emails");
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
             Dictionary<string, string> userData = new Dictionary<string, string>();
             string uri = "https://apis.live.net/v5.0/me?access_token=" + userAccessToken;
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
@@ -55,8 +56,8 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             return new AuthenticationResult(true, ProviderName, id, name, userData);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previosAuthResult, string token, string userAccessSecret, string returnUrl) {
-            return GetUserData(clientConfiguration, previosAuthResult, token);
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previosAuthResult, string token, string userAccessSecret, string returnUrl) {
+            return GetUserData(providerConfiguration, previosAuthResult, token);
         }
 
         public OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams createUserParams) {

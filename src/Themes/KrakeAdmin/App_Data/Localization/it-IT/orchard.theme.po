@@ -48,6 +48,14 @@ msgctxt "~/Themes/KrakeAdmin/Views/Admin/ThemeSettings.cshtml"
 msgid "type an URL for the placeholder small logo. Recommended size is 70x70."
 msgstr "digitare un URL per il logo placeholder piccolo. Dimensione consigliata 70x70."
 
+msgctxt "~/Themes/KrakeAdmin/Views/CommonMetadataLastModified.cshtml"
+msgid "by {0}"
+msgstr "di {0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/CommonMetadataLastModified.cshtml"
+msgid "unknown"
+msgstr "sconosciuto"
+
 msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
 msgid "Delete"
 msgstr "Elimina"
@@ -375,6 +383,86 @@ msgstr "Mostra:"
 msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
 msgid "Showing items {0} - {1} of {2}"
 msgstr "Elementi {0} - {1} di {2}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Clone.SummaryAdmin.cshtml"
+msgid "Clone"
+msgstr "Duplica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Preview"
+msgstr "Anteprima"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Publish"
+msgstr "Pubblica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Publish Draft"
+msgstr "Pubblica Bozza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "Unpublish"
+msgstr "Annulla Pubblicazione"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Publish.SummaryAdmin.cshtml"
+msgid "View"
+msgstr "Visualizza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Created: {0}"
+msgstr "Creato: {0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Draft"
+msgstr "Bozza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Last modified: {0}"
+msgstr "Ultima modifica: {0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "No Draft"
+msgstr "Nessuna Bozza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Offline"
+msgstr "Offline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Online"
+msgstr "Online"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "Published: {0}"
+msgstr "Pubblicato: {0}"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "The page has a draft"
+msgstr "La pagina ha una bozza"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "The page is currently offline"
+msgstr "La pagina è attualmente offline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
+msgid "The page is currently online"
+msgstr "La pagina è attualmente online"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/PublishLater.Metadata.SummaryAdmin.cshtml"
+msgid "Scheduled"
+msgstr "Pianificato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Parts/PublishLater.Metadata.SummaryAdmin.cshtml"
+msgid "The page is scheduled for publishing"
+msgstr "La pagina è schedulata per la pubblicazione"
 
 msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
 msgid "Add Selected"

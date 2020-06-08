@@ -1,0 +1,35 @@
+﻿@model Laser.Orchard.NwazetIntegration.ViewModels.GTMProductSettingVM
+
+<fieldset>
+    <div class="settings">
+        <label for="@Html.FieldIdFor(m => m.Id)">@T("Id") </label>
+        @Html.EnumDropDownListFor(m => m.Id)
+        <span class="hint">@T("The product ID or SKU")</span>
+    </div>
+    <div class="settings">
+        <label for="@Html.FieldIdFor(m => m.Name)">@T("Name") </label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("The name of the product")</span>
+    </div>
+    <div class="settings">
+        <label for="@Html.FieldIdFor(m => m.Brand)">@T("Brand") </label>
+        @Html.TextBoxFor(m => m.Brand, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("The brand associated with the product")</span>
+    </div>
+    <div class="settings">
+        <label for="@Html.FieldIdFor(m => m.Category)">@T("Category") </label>
+        @Html.TextBoxFor(m => m.Category, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("The category to which the product belongs")</span>
+    </div>
+    <div class="settings">
+        <label for="@Html.FieldIdFor(m => m.Variant)">@T("Variant") </label>
+        @Html.TextBoxFor(m => m.Variant, new { @class = "text medium tokenized", rows = "5" })
+        <span class="hint">@T("The variant of the product")</span>
+    </div>
+    <br />
+    <span class="hint">
+        @T("Any content will be inserted into the fields, both as text and as a token will be sent as it is to Google Tag Manager (also with html tags or special characters)")
+        <p> @T("The maximum number of characters passed for each field to the GTM will be 255, at the end of the maximum length the string will be truncated")</p>
+    </span>
+    @Display.TokenHint()
+</fieldset>

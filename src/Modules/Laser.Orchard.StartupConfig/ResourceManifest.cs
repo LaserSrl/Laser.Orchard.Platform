@@ -4,6 +4,9 @@ namespace Laser.Orchard.StartupConfig {
     public class ResourceManifest : IResourceManifestProvider {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
+
+            manifest.DefineStyle("LaserBase").SetUrl("laser-base.min.css", "laser-base.css");
+
             //manifest.DefineStyle("FontAwesome").SetUrl("font-awesome/css/font-awesome.min.css");
             manifest.DefineStyle("FontAwesome430").SetUrl("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
             manifest.DefineStyle("FontAwesome430.ie7").SetUrl("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome-ie7.min.css");

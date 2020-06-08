@@ -193,6 +193,7 @@
     <Compile Include="Models\GenericItem.cs" />
     <Compile Include="Models\ReportRecord.cs" />
     <Compile Include="Models\DataReportViewerPartRecord.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Providers\AggregationResult.cs" />
     <Compile Include="Providers\DescribeGroupByContext.cs" />
@@ -228,6 +229,10 @@
       <Project>{f301ef7d-f19c-4d83-aa94-cb64f29c037d}</Project>
       <Name>Orchard.ContentPicker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Fields\Orchard.Fields.csproj">
+      <Project>{3787DDE5-E5C8-4841-BDA7-DCB325388064}</Project>
+      <Name>Orchard.Fields</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
       <Project>{642a49d7-8752-4177-80d6-bfbbcfad3de0}</Project>
       <Name>Orchard.Forms</Name>
@@ -235,6 +240,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Projections\Orchard.Projections.csproj">
       <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
       <Name>Orchard.Projections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Roles\Orchard.Roles.csproj">
+      <Project>{D10AD48F-407D-4DB5-A328-173EC7CB010F}</Project>
+      <Name>Orchard.Roles</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6f759635-13d7-4e94-bcc9-80445d63f117}</Project>

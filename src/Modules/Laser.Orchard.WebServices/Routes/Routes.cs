@@ -6,7 +6,7 @@ using System.Web.Routing;
 
 namespace Laser.Orchard.WebServices.Routes {
 
-    public class Routes : IHttpRouteProvider {
+    public class Routes : IRouteProvider {//, IHttpRouteProvider {
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (RouteDescriptor routeDescriptor in GetRoutes()) {
@@ -22,8 +22,21 @@ namespace Laser.Orchard.WebServices.Routes {
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "Json"},
-                            {"action", "GetByAlias"},
-                            {"id",  UrlParameter.Optional }
+                            {"action", "GetByAlias"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Laser.Orchard.WebServices/Json/GetByAlias",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "Json"},
+                            {"action", "GetByAlias"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
@@ -57,7 +70,7 @@ namespace Laser.Orchard.WebServices.Routes {
                             {"action", "GetObjectByAlias"},
                             {"id",  UrlParameter.Optional },
                             { "version",1},
-                            
+
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {

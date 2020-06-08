@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -173,6 +174,7 @@
     <Compile Include="Models\PaymentGestPaySettingsPart.cs" />
     <Compile Include="Models\PaymentGestPaySettingsPartRecord.cs" />
     <Compile Include="Models\TransactionOutcome.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Service References\CryptDecryptProd\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

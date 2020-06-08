@@ -27,9 +27,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
         public QuestionnaireController(IOrchardServices orchardServices,
             IQuestionnairesServices questionnairesServices,
-            IRepository<AnswerRecord> repositoryAnswer,
             ITransactionManager transactionManager,
-            IRepository<UserAnswersRecord> repositoryUserAnswers,
             IWorkflowManager workflowManager,
             ICaptchaService captchaServices,
             IShapeFactory shapeFactory) {
@@ -86,63 +84,12 @@ namespace Laser.Orchard.Questionnaires.Controllers {
 
                         canBeFilled = _questionnairesServices.Save(editModel, currentUser, uniqueId);
                     }
-                    //if (editModel.UseRecaptcha && !_captchaServices.IsCaptchaValid(_orchardServices.WorkContext.HttpContext.Request.Form, _orchardServices.WorkContext.HttpContext.Request.UserHostAddress)) {
-                    //    throw new Exception("Invalid captcha!");
-                    //}
-
-                    //if (editModel.MustAcceptTerms && !editModel.HasAcceptedTerms) {
-                    //    TempData["QuestError"] = T("Please, accept our terms and conditions!");
-                    //} else {
-                    //    foreach (var q in editModel.QuestionsWithResults) {
-                    //        if (q.QuestionType == QuestionType.OpenAnswer) {
-                    //            if (!String.IsNullOrWhiteSpace(q.OpenAnswerAnswerText)) {
-                    //                var userAnswer = new UserAnswersRecord();
-                    //                userAnswer.AnswerText = q.OpenAnswerAnswerText;
-                    //                userAnswer.QuestionText = q.Question;
-                    //                userAnswer.QuestionRecord_Id = q.Id;
-                    //                userAnswer.User_Id = currentUser.Id;
-                    //                userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                    //                userAnswer.SessionID = ControllerContext.HttpContext.Session.SessionID;
-                    //                _questionnairesServices.CreateUserAnswers(userAnswer);
-                    //            }
-                    //        } else if (q.QuestionType == QuestionType.SingleChoice) {
-                    //            if (q.SingleChoiceAnswer > 0) {
-                    //                var userAnswer = new UserAnswersRecord();
-                    //                userAnswer.AnswerRecord_Id = q.SingleChoiceAnswer;
-                    //                userAnswer.AnswerText = _questionnairesServices.GetAnswer(q.SingleChoiceAnswer).Answer;
-                    //                userAnswer.QuestionRecord_Id = q.Id;
-                    //                userAnswer.User_Id = currentUser.Id;
-                    //                userAnswer.QuestionText = q.Question;
-                    //                userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                    //                userAnswer.SessionID = ControllerContext.HttpContext.Session.SessionID;
-                    //                _questionnairesServices.CreateUserAnswers(userAnswer);
-                    //            }
-                    //        } else if (q.QuestionType == QuestionType.MultiChoice) {
-                    //            var answerList = q.AnswersWithResult.Where(w => w.Answered);
-                    //            foreach (var a in answerList) {
-                    //                var userAnswer = new UserAnswersRecord();
-                    //                userAnswer.AnswerRecord_Id = a.Id;
-                    //                userAnswer.AnswerText = _questionnairesServices.GetAnswer(a.Id).Answer;
-                    //                userAnswer.QuestionRecord_Id = q.Id;
-                    //                userAnswer.User_Id = currentUser.Id;
-                    //                userAnswer.QuestionText = q.Question;
-                    //                userAnswer.QuestionnairePartRecord_Id = editModel.Id;
-                    //                userAnswer.SessionID = ControllerContext.HttpContext.Session.SessionID;
-                    //                _questionnairesServices.CreateUserAnswers(userAnswer);
-                    //            }
-                    //        }
-                    //    }
                     if (canBeFilled == false) {
                         TempData["QuestError"] = T("Sorry, you already submitted this questionnaire.");
                         TempData["AlreadySubmitted"] = true;
                     } else {
                         TempData["QuestSuccess"] = T("Thank you for submitting your feedback.");
                     }
-                    //var content = _orchardServices.ContentManager.Get(editModel.Id);
-                    //_workflowManager.TriggerEvent("QuestionnaireSubmitted", content, () => new Dictionary<string, object> { { "Content", content } });
-
-
-                    //}
                 } else {
                     TempData["QuestUpdatedEditModel"] = editModel; // devo avere modo di fare non perdere le risposte date finora!!!
                     _transactionManager.Cancel();

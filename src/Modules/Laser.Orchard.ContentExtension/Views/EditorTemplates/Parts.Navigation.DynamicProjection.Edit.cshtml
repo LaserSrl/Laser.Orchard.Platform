@@ -1,75 +1,87 @@
-﻿@using Laser.Orchard.ContentExtension.ViewModels;
+﻿@using System.Linq;
+@using Laser.Orchard.ContentExtension.ViewModels;
+
 @model DynamicProjectionVM
-@using Orchard.Projections.Models;
-@using Orchard.Projections.ViewModels;
 @{
     Script.Require("ShapesBase");
 }
+@*ADMINMENU START*@
 <fieldset>
     @Html.EditorFor(m => m.Part.OnAdminMenu)
     <label for="@Html.FieldIdFor(m => m.Part.OnAdminMenu)" class="forcheckbox">@T("Show on admin menu")</label>
     <div data-controllerid="@Html.FieldIdFor(m => m.Part.OnAdminMenu)" class="">
         <label for="@Html.FieldIdFor(m => m.Part.AdminMenuText)">@T("Menu text")</label>
-        @Html.TextBoxFor(m => m.Part.AdminMenuText, new { @class = "text single-line" })
-        <span class="hint">@T("The text that should appear in the menu.")</span>
+        @Html.TextBoxFor(m => m.Part.AdminMenuText, new { @class = "text medium" })
+        <span class="hint">@T("The text of the admin menu item.")</span>
 
         <label for="@Html.FieldIdFor(m => m.Part.AdminMenuPosition)">@T("Position")</label>
         @Html.TextBoxFor(m => m.Part.AdminMenuPosition, new { @class = "text small" })
-        <span class="hint">@T("The position in the menu.")</span>
-        @*<label for="@Html.FieldIdFor(m => m.Part.Controller)">@T("Controller")</label>
-        @Html.TextBoxFor(m => m.Part.Controller, new { @class = "text small" })
-        <span class="hint">@T("The Controller used for generate menu link.")</span>
-        <label for="@Html.FieldIdFor(m => m.Part.Action)">@T("Action")</label>
-        @Html.TextBoxFor(m => m.Part.Action, new { @class = "text small" })
-        <span class="hint">@T("The Action used for generate menu link.")</span>
-        <label for="@Html.FieldIdFor(m => m.Part.Area)">@T("Area")</label>
-        @Html.TextBoxFor(m => m.Part.Area, new { @class = "text small" })
-        <span class="hint">@T("The Area used for generate menu link.")</span>*@
+        <span class="hint">@T("The position of item in the admin menu.")</span>
         <label for="@Html.FieldIdFor(m => m.Part.Icon)">@T("Icon")</label>
-        @Html.TextBoxFor(m => m.Part.Icon, new { @class = "text small" })
-        <span class="hint">@T("The Icon used for menu link.")</span>
-        @*<label for="@Html.FieldIdFor(m => m.Part.Shape)">@T("Shape")</label>
-        @Html.TextBoxFor(m => m.Part.Shape, new { @class = "text small" })
-        <span class="hint">@T("The Shape used for search form.")</span>*@
+        @Html.TextBoxFor(m => m.Part.Icon, new { @class = "text medium" })
+        <span class="hint">@T("The css class used as icon for the admin menu item.")</span>
     </div>
 </fieldset>
-@if (Model.ListFormFile != null){
+@*ADMINMENU END*@
+
+@*FILTERS FORM START*@
 <fieldset>
- 
-    <h2>@T("Form Files")</h2>
-    @Html.LabelFor(m => m.Part.Shape, T("Shape"))
-    @Html.DropDownListFor(m => m.Part.Shape, Model.ListFormFile, "")
-    <span class="hint">@T("The Shape used for search form.")</span>
+    <h2>@T("Custom razor for filtering")</h2>
+    @if (Model.ListFormFile != null && Model.ListFormFile.Any()) {
+        @Html.LabelFor(m => m.Part.Shape, T("Razor file"))
+        @Html.DropDownListFor(m => m.Part.Shape, Model.ListFormFile, "")
+        <span class="hint">@T("Choose a form to be used as filtering form.")</span>
+    }
+    else {
+        @T("There are not forms set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder")
+    }
 </fieldset>
-}
 <fieldset>
+    <h2>@T("ContentType for filtering")</h2>
+    @Html.LabelFor(m => m.Part.TypeForFilterForm, T("Content type"))
+    @Html.TextBoxFor(m => m.Part.TypeForFilterForm, new { @class = "text medium" })
+    <span class="hint">@T("Type a ContentType name. Leave empty to not use a ContenType as form for filtering.")</span>
+</fieldset>
+@*FILTERS FORM END*@
+
+@*QUERY START*@
+<fieldset>
+    <h2>@T("Query")</h2>
+    <div>
+        @Html.CheckBoxFor(m => m.Part.ReturnsHqlResults, T("Returns an Hql result"))
+        @Html.LabelFor(m => m.Part.ReturnsHqlResults, new { @class = "forcheckbox" })
+        @Html.Hint(T("Check if the query returns an HqlResult and NOT a list of content items.")) @*TODO: jquery to hide/show #content-query-group and #querypicker*@
+    </div>
+
     @{
         var selectedQueryRecordId = -1;
     }
 
-    <fieldset>
-        @Html.LabelFor(m => m.Projection.QueryLayoutRecordId, T("For Query"))
-        <select id="@Html.FieldIdFor(m => m.Projection.QueryLayoutRecordId)" name="@Html.FieldNameFor(m => m.Projection.QueryLayoutRecordId)">
-            @foreach (QueryRecordEntry queryRecord in Model.Projection.QueryRecordEntries.OrderBy(x => x.Name)) {
-                <optgroup label="@queryRecord.Name">
-                    @Html.SelectOption(Model.Projection.QueryLayoutRecordId, queryRecord.Id + ";-1", queryRecord.Name + " " + T("(Default Layout)").Text)
-                    @if (Model.Projection.QueryLayoutRecordId == queryRecord.Id + ";-1") {
-                    selectedQueryRecordId = queryRecord.Id;
-                }
+    <fieldset id="content-query-group">
+        <div>
 
-                    @foreach (LayoutRecordEntry layoutRecord in queryRecord.LayoutRecordEntries.OrderBy(x => x.Description)) {
-                        @Html.SelectOption(Model.Projection.QueryLayoutRecordId, queryRecord.Id + ";" + layoutRecord.Id, queryRecord.Name + " " + T("({0})", layoutRecord.Description).Text)
-                        if (Model.Projection.QueryLayoutRecordId == queryRecord.Id + ";" + layoutRecord.Id) {
+            @Html.LabelFor(m => m.Projection.QueryLayoutRecordId, T("For Query"))
+            <select id="@Html.FieldIdFor(m => m.Projection.QueryLayoutRecordId)" name="@Html.FieldNameFor(m => m.Projection.QueryLayoutRecordId)">
+                @foreach (QueryRecordEntry queryRecord in Model.Projection.QueryRecordEntries.OrderBy(x => x.Name)) {
+                    <optgroup label="@queryRecord.Name">
+                        @Html.SelectOption(Model.Projection.QueryLayoutRecordId, queryRecord.Id + ";-1", queryRecord.Name + " " + T("(Default Layout)").Text)
+                        @if (Model.Projection.QueryLayoutRecordId == queryRecord.Id + ";-1") {
                             selectedQueryRecordId = queryRecord.Id;
                         }
-                    }
-                </optgroup>
+
+                        @foreach (LayoutRecordEntry layoutRecord in queryRecord.LayoutRecordEntries.OrderBy(x => x.Description)) {
+                            if (Model.Projection.QueryLayoutRecordId == queryRecord.Id + ";" + layoutRecord.Id) {
+                                selectedQueryRecordId = queryRecord.Id;
+                            }
+                        }
+                    </optgroup>
+                }
+            </select>
+            @if (selectedQueryRecordId != -1) {
+                @Html.ActionLink(T("Edit Query").Text, "Edit", new { area = "Orchard.Projections", id = selectedQueryRecordId }, new { })
             }
-        </select>
-        @if (selectedQueryRecordId != -1) {
-            @Html.ActionLink(T("Edit Query").Text, "Edit", new { area = "Orchard.Projections", id = selectedQueryRecordId }, new { })
-        }
-        <span class="hint">@T("The query to display.")</span>
+            <span class="hint">@T("The query to display.")</span>
+        </div>
     </fieldset>
 
     <fieldset>
@@ -106,13 +118,27 @@
 
     @using (Script.Foot()) {
         <script type="text/javascript">
-//<![CDATA[
-    (function ($) {
-        $("fieldset legend").expandoControl(function (controller) { return controller.nextAll(".expando"); }, { collapse: true, remember: false });
-    })(jQuery);
+            //<![CDATA[
+            (function ($) {
+                $("fieldset legend").expandoControl(function (controller) { return controller.nextAll(".expando"); }, { collapse: true, remember: false });
+            })(jQuery);
 //]]>
         </script>
     }
 
 
 </fieldset>
+@*QUERY END*@
+@*RESULTS FORM START*@
+<fieldset>
+    <h2>@T("Custom razor for results")</h2>
+    @if (Model.ListFormFile != null && Model.ListFormFile.Any()) {
+        @Html.LabelFor(m => m.Part.ShapeForResults, T("Razor file"))
+        @Html.DropDownListFor(m => m.Part.ShapeForResults, Model.ListFormFile, "")
+        <span class="hint">@T("Choose a form to be used to render results.")</span>
+    }
+    else {
+        @T("There are not razors set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder")
+    }
+</fieldset>
+@*RESULTS FORM END*@

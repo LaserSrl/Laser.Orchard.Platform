@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.Braintree.Models;
+﻿using Laser.Orchard.Braintree.Controllers;
+using Laser.Orchard.Braintree.Models;
 using Laser.Orchard.PaymentGateway;
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
@@ -30,6 +31,12 @@ namespace Laser.Orchard.Braintree.Services {
             UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
             return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree" })
                 + "?pid=" + paymentId.ToString();
+        }
+        public override Type GetPosActionControllerType() {
+            return typeof(BraintreeController);
+        }
+        public override string GetPosActionName() {
+            return "Index";
         }
 
         public override string GetPosUrl(int paymentId) {

@@ -37,10 +37,21 @@ namespace Laser.Orchard.Queries.Drivers {
             return Editor(part, null, shapeHelper);
         }
         protected override DriverResult Editor(QueryPickerPart part, IUpdateModel updater, dynamic shapeHelper) {
-            var queryList = _queryPickerService.GetUserDefinedQueries().Select(x =>
-                    new KeyValuePair<int, string>(x.Id, ((dynamic)x).TitlePart.Title));
-            var oneShotList = _queryPickerService.GetOneShotQueries().Select(x =>
-                    new KeyValuePair<int, string>(x.Id, ((dynamic)x).TitlePart.Title));
+
+            var settings = part.Settings.GetModel<QueryPickerPartSettings>();
+            IEnumerable<KeyValuePair<int, string>> queryList;
+                IEnumerable<KeyValuePair<int, string>> oneShotList;
+            if (settings.IsForHqlQueries) {
+                queryList = _queryPickerService.GetHqlQueries().Select(x =>
+                        new KeyValuePair<int, string>(x.Id, ((dynamic)x).TitlePart.Title));
+                oneShotList = new List<KeyValuePair<int, string>>();
+            }
+            else {
+                queryList = _queryPickerService.GetUserDefinedQueries().Select(x =>
+                        new KeyValuePair<int, string>(x.Id, ((dynamic)x).TitlePart.Title));
+                oneShotList = _queryPickerService.GetOneShotQueries().Select(x =>
+                        new KeyValuePair<int, string>(x.Id, ((dynamic)x).TitlePart.Title));
+            }
 
             var model = new QueryPickerVM {
                 SelectedIds = part.Ids,
@@ -55,10 +66,12 @@ namespace Laser.Orchard.Queries.Drivers {
                 }
             }
             var resultRecordNumber = 0;
-            // TODO: rendere dinamico e injettabile l'array dei contenttypes
-            var combinedQueries = _queryPickerService.GetCombinedContentQuery(model.SelectedIds, null, null);
-            resultRecordNumber = combinedQueries.Count();
-            model.TotalItemsCount = resultRecordNumber;
+            if (!settings.IsForHqlQueries) {
+                // TODO: rendere dinamico e injettabile l'array dei contenttypes
+                var combinedQueries = _queryPickerService.GetCombinedContentQuery(model.SelectedIds, null, null);
+                resultRecordNumber = combinedQueries.Count();
+                model.TotalItemsCount = resultRecordNumber;
+            }
 
             return ContentShape("Parts_QueryPicker_Edit",
                     () => shapeHelper.EditorTemplate(TemplateName: "Parts/QueryPicker_Edit",
