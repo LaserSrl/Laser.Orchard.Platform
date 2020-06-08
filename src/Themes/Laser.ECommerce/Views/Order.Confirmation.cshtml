@@ -12,8 +12,10 @@
 <div class="order-confirmation">
     <h3><span>@title</span></h3>
     <p class="order-status">@T("Status: {0}", Model.Status)</p>
-    @if (!String.IsNullOrWhiteSpace(Model.PurchaseOrder)) {
-        <p class="order-purchase-order">@T("Purchase Order, Invoice, or Reference Order: {0}", Model.PurchaseOrder)</p>
+    @* Model.PurchaseOrder is for use by the merchant and their operators
+        FrontEnd customers need the order reference represented in Model.OrderKey*@
+    @if (!String.IsNullOrWhiteSpace(Model.OrderKey)) {
+        <p class="order-purchase-order">@T("Order reference: {0}", Model.OrderKey)</p>
     }
     <div class="checkout-right">
         @if (items.Any()) {
@@ -49,7 +51,7 @@
                     @foreach (var item in items) {
                         <tr class="remX">
                             <td class="quantity">@item.Quantity &times;</td>
-                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])">@item.Title</a></td>
+                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])" data-product-id="@item.ProductId">@item.Title</a></td>
                             <td class="price">@currencyInUse.PriceAsString(item.Price, cultureInUse)</td>
                             <td class="price">@currencyInUse.PriceAsString(item.LinePriceAdjustment, cultureInUse)</td>
                         </tr>

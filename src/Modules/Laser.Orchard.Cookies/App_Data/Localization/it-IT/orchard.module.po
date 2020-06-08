@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -111,6 +111,18 @@ msgstr "Titolo del banner dei cookie."
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "Your privacy policy / Cookie policy link"
 msgstr "Link Informativa sulla Privacy / Informativa sui Cookie"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/HubSpotSettings.cshtml"
+msgid "Add HubSpot App ID"
+msgstr "Aggiungi l'App ID di HubSpot"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/HubSpotSettings.cshtml"
+msgid "Hub Spot"
+msgstr "Hub Spot"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/HubSpotSettings.cshtml"
+msgid "HubSpot App ID"
+msgstr "App ID di HubSpot"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
 msgid "Change your choice"

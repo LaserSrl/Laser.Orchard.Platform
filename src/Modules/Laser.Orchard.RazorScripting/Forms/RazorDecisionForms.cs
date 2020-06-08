@@ -18,6 +18,11 @@ namespace Laser.Orchard.RazorScripting.Forms {
             Func<IShapeFactory, dynamic> form =
               shape => Shape.Form(
                 Id: "RazorActionDecision",
+                _RazorName: Shape.Textbox(
+                  Id: "razorname", Name: "RazorName",
+                  Title: T("Razor name."),
+                  Description: T("A name for the razor that explain what it does."),
+                  Classes: new[] { "text medium" }),
                 _Message: Shape.Textbox(
                   Id: "outcomes", Name: "Outcomes",
                   Title: T("Possible Outcomes."),
@@ -26,7 +31,7 @@ namespace Laser.Orchard.RazorScripting.Forms {
                 _RazorScript: Shape.TextArea(
                   Id: "RazorScript", Name: "RazorScript",
                   Title: T("RazorScript"),
-                  Description: T("The script to run every time the Razor Decision Activity is invoked. You can use ContentItem, Services, WorkContext, and T(). Call SetOutcome(string outcome) to define the outcome of the activity."),
+                  Description: T("The script to run every time the Razor Decision Activity is invoked. You can use Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. If the script renders a string, that string has threated as outcome."),
                   Classes: new[] { "tokenized" }
                   )
                 );
@@ -45,7 +50,7 @@ namespace Laser.Orchard.RazorScripting.Forms {
         }
 
         public void Validating(ValidatingContext context) {
-            if (context.FormName == "RazorActionDecision") {
+            if (context.FormName == "RazorActivityActionDecision") {
                 if (context.ValueProvider.GetValue("RazorScript").AttemptedValue == string.Empty) {
                     context.ModelState.AddModelError("RazorScript", T("You must provide a Script").Text);
                 }

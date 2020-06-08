@@ -18,6 +18,8 @@ using Orchard.UI.Notify;
 using Orchard.Environment.Configuration;
 using Laser.Orchard.TemplateManagement.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
+using Orchard.MediaLibrary.Services;
+using System.IO;
 
 namespace Laser.Orchard.TemplateManagement.Services {
 
@@ -54,8 +56,18 @@ namespace Laser.Orchard.TemplateManagement.Services {
         private readonly INotifier _notifier;
         private readonly ShellSettings _shellSettings;
         private readonly ITagForCache _tagForCache;
+        private readonly IMediaLibraryService _mediaLibraryService;
 
-        public TemplateService(ITagForCache tagForCache,Notifier notifier, IEnumerable<IParserEngine> parsers, IOrchardServices services, IMessageService messageService, IJobsQueueService jobsQueueService, ShellSettings shellSettings) {
+        public TemplateService(
+            ITagForCache tagForCache,
+            Notifier notifier,
+            IEnumerable<IParserEngine> parsers,
+            IOrchardServices services,
+            IMessageService messageService,
+            IJobsQueueService jobsQueueService,
+            ShellSettings shellSettings,
+            IMediaLibraryService mediaLibraryService) {
+
             _contentManager = services.ContentManager;
             _tagForCache = tagForCache;
             _parsers = parsers;
@@ -64,6 +76,7 @@ namespace Laser.Orchard.TemplateManagement.Services {
             _jobsQueueService = jobsQueueService;
             _notifier = notifier;
             _shellSettings = shellSettings;
+            _mediaLibraryService = mediaLibraryService;
         }
 
         public IEnumerable<TemplatePart> GetLayouts() {
@@ -203,6 +216,12 @@ namespace Laser.Orchard.TemplateManagement.Services {
                                      baseUri.Port == 80 ? string.Empty : ":" + baseUri.Port);
                 mediaUrl = string.Format("{0}{1}{2}", basePath, tenantPrefix, @"Laser.Orchard.StartupConfig/MediaTransform/Image");
             }
+            // compute base url for medias in the media folder:
+            var mockMediaPath = _mediaLibraryService
+                    .GetMediaPublicUrl("a", "a"); // path for mocked media
+            var baseMediaPath = Path.Combine(host,
+                mockMediaPath
+                    .Substring(0, mockMediaPath.Length - 3));
             string baseUrl = string.Format("{0}{1}{2}", host, basePath, tenantPrefix);
             var dynamicModel = new {
                 WorkContext = _services.WorkContext,
@@ -211,6 +230,7 @@ namespace Laser.Orchard.TemplateManagement.Services {
                     BaseUrl = baseUrl,
                     MediaUrl = mediaUrl,
                     Domain = host,
+                    PublicMediaPath = baseMediaPath,
                 }.ToExpando()
             };
             templatectx.Model = dynamicModel;

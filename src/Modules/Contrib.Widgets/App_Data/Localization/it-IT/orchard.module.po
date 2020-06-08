@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -29,6 +29,10 @@ msgid "Allowed zones:"
 msgstr "Zone permesse:"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Check to attempt to replace items selected in this part with their translation in the main ContentItem's culture. This only applies if the main ContentItem has a LocalizationPart."
+msgstr "Selezionare per tentare di sostituire gli elementi selezionati in questa parte con la loro traduzione nella lingua del contenuto principale. Il tentativo di traduzione verrà effettuato solamente se il contenuto principale ha una LocalizationPart."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Hierarchical association:"
 msgstr "Associazione gerarchica"
 
@@ -43,6 +47,10 @@ msgstr "Selezionare le zone dove si potranno aggiungere dei widgets. Se nessuna 
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Select which types of widgets can be added to the content. If no widget type is selected all of them will be available."
 msgstr "Selezionare i tipi di widget che si potrà aggiungere al contenuto. Se nessun tipo è selezionato, saranno tutti disponibili."
+
+msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
+msgid "Try to replace selected items with their correct localization."
+msgstr "Provare a sostituire gli elementi selezionati con la loro versione in lingua corretta."
 
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Use hierarchical association"
@@ -79,6 +87,18 @@ msgstr "Pubblica Bozza"
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Remove"
 msgstr "Rimuovi"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled"
+msgstr "Pianificato"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled Archive"
+msgstr "Archiviazione Pianificata"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid "Scheduled Publish"
+msgstr "Pubblicazione Pianificata"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Unpublish"

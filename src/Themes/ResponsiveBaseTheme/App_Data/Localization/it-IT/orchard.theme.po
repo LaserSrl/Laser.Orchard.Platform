@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -11,6 +11,10 @@
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/BadgeOfHonor.cshtml"
 msgid "&#169; The Theme Machine 2010."
 msgstr "&#169; Il Tema Macchina 2010."
+
+msgctxt "~/Themes/ResponsiveBaseTheme/Views/BadgeOfHonor.cshtml"
+msgid "Powered by <a href=\"{0}\" target=\"_blank\">Orchard</a>"
+msgstr "Offerto da <a href=\"{0}\" target=\"_blank\">Orchard</a>"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-ProdottiEccellenze.cshtml"
 msgid "more"

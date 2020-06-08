@@ -1,11 +1,15 @@
 ﻿using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace Laser.Orchard.Questionnaires {
     public class Routes : IHttpRouteProvider {
+
+        const string renamedRouteName = "Admin/Questionnaires/";
+
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
             foreach (var routeDescriptor in GetRoutes()) {
                 routes.Add(routeDescriptor);
@@ -23,20 +27,30 @@ namespace Laser.Orchard.Questionnaires {
                         action = "PostContext"
                     }
                 },
-                new RouteDescriptor {
-                    Route = new Route(
-                        "{area}/{controller}/{action}/{idQuestionario}/{idDomanda}",
-                        new RouteValueDictionary {
-                                                     {"area", "Laser.Orchard.Questionnaires"},
-                                                     {"controller", "QuestionnaireStats"},
-                                                     {"action", "QuestionDetail"}
-                                                 },
+                AddRenamedRoute("QuestionnaireStats","Index"),
+                AddRenamedRoute("QuestionnaireStats","Detail", "/{idQuestionario}"),
+                AddRenamedRoute("QuestionnaireStats","QuestionDetail", "/{idQuestionario}/{idDomanda}"),
+                AddRenamedRoute("AdminRanking","Index"),
+                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}/{deviceType}"),
+                AddRenamedRoute("AdminRanking","GetListSingleGame", "/{ID}")
+            };
+        }
+
+        private RouteDescriptor AddRenamedRoute(string controllerName, string action, string routeQueue = "") {
+            RouteValueDictionary routeDictionary = new RouteValueDictionary();
+            routeDictionary.Add("area", "Laser.Orchard.Questionnaires");
+            routeDictionary.Add("controller", controllerName);
+            routeDictionary.Add("action", action);
+
+            return new RouteDescriptor {
+                Route = new Route(
+                        renamedRouteName + controllerName + routeQueue,
+                        routeDictionary,
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                                                     {"area", "Laser.Orchard.Questionnaires"}
-                                                 },
+                            {"area", "Laser.Orchard.Questionnaires"}
+                        },
                         new MvcRouteHandler())
-                }
             };
         }
     }

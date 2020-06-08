@@ -29,7 +29,7 @@
         while (allUrls.Count() < 6) { //hack: the hover animation works best with at least 6 items
             allUrls.AddRange(productImages.Select(mp => mp.MediaUrl));
         }
-        <a href="@Url.ItemDisplayUrl(contentItem)">
+        <a href="@Url.ItemDisplayUrl(contentItem)" data-product-id="@contentItem.Id">
             <div class="hs-wrapper hs-wrapper3">
                 @foreach (var imageUrl in allUrls) {
                     <img src="@Display.ResizeMediaUrl(Width: 255, Height: 340, Mode: "pad", Alignment: "middlecenter", Path: imageUrl)" alt=" " class="img-responsive" />

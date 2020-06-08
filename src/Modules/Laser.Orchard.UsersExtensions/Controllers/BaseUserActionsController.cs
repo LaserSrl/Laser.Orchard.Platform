@@ -11,6 +11,7 @@ using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Localization;
 using Orchard.Mvc.Extensions;
+using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
 using Orchard.Utility.Extensions;
@@ -36,19 +37,22 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         private readonly IUsersExtensionsServices _usersExtensionsServices;
         private readonly IEnumerable<IIdentityProvider> _identityProviders;
         private readonly IUserService _userService;
+        private readonly IUserEventHandler _userEventHandler;
 
         public BaseUserActionsController(
             IOrchardServices orchardServices,
             IUtilsServices utilsServices,
             IUsersExtensionsServices usersExtensionsServices,
-            IEnumerable<IIdentityProvider> identityProviders,
-            IUserService userService) {
+            IEnumerable<IIdentityProvider> identityProviders,          
+            IUserService userService,
+            IUserEventHandler userEventHandler) {
 
             _orchardServices = orchardServices;
             _utilsServices = utilsServices;
             _usersExtensionsServices = usersExtensionsServices;
             _identityProviders = identityProviders;
             _userService = userService;
+            _userEventHandler = userEventHandler;
 
             T = NullLocalizer.Instance;
         }
@@ -101,6 +105,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         protected ContentResult RegisterLogic(UserRegistration userRegistrationParams) {
             Response result;
+            ResponseType responseType;
             // ensure users can request lost password
             var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
             if (!registrationSettings.UsersCanRegister) {
@@ -112,11 +117,14 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 List<string> roles = new List<string>();
                 var message = "";
                 var registeredServicesData = _utilsServices.GetUserIdentityProviders(_identityProviders);
+                var json = registeredServicesData.ToString();
+                responseType = ResponseType.Success;
                 if (_orchardServices.WorkContext.CurrentUser == null && registrationSettings.UsersMustValidateEmail) {
                     message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
+                    responseType = ResponseType.ToConfirmEmail;
                 }
-                var json = registeredServicesData.ToString();
-                result = _utilsServices.GetResponse(ResponseType.Success, message, json);
+                
+                result = _utilsServices.GetResponse(responseType, message, json);
             } catch (Exception ex) {
                 result = _utilsServices.GetResponse(ResponseType.None, ex.Message);
             }
@@ -233,7 +241,12 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 PolicyAnswers = _usersExtensionsServices.GetUserLinkedPolicies("it-IT").Select(x => new UserPolicyAnswer {
                     PolicyId = x.Id,
                     UserHaveToAccept = x.UserHaveToAccept,
-                    PolicyAnswer = false
+                    PolicyAnswer = false,
+                    Policy = new PolicyTextViewModel {
+                        Type = x.PolicyType,
+                        Title = x.As<TitlePart>()?.Title,
+                        Body = x.As<BodyPart>()?.Text
+                    }
                 }).ToList()
             };
             return Json(userRegistration, JsonRequestBehavior.AllowGet);
@@ -286,5 +299,18 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return Json(result);
         }
 
+        protected JsonResult ChallengeEmailApiLogic(string nonce) {
+            var user = _userService.ValidateChallenge(nonce);
+            Response result;
+            if (user != null) {
+                _userEventHandler.ConfirmedEmail(user);
+
+                result = _utilsServices.GetResponse(ResponseType.Success, T("Email confirmed").Text);
+
+                return Json(result);
+            }
+            result = _utilsServices.GetResponse(ResponseType.None, T("Email not confirmed").Text);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

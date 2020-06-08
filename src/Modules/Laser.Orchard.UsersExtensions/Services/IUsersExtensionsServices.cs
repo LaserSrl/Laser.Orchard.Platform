@@ -1,5 +1,4 @@
-﻿using Laser.Orchard.Mobile.Handlers;
-using Laser.Orchard.Mobile.Models;
+﻿using Laser.Orchard.Mobile.Models;
 using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
@@ -9,24 +8,25 @@ using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.UsersExtensions.Models;
 using Orchard;
 using Orchard.ContentManagement;
+using Orchard.Core.Common.Models;
+using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Localization.Records;
 using Orchard.Localization.Services;
 using Orchard.Logging;
+using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
 using Orchard.Utility.Extensions;
-using Orchard.Mvc.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -40,12 +40,13 @@ namespace Laser.Orchard.UsersExtensions.Services {
         IList<UserPolicyAnswerWithContent> BuildEditorForRegistrationPolicies();
         string SendLostPasswordSms(string internationalPrefix, string phoneNumber, Func<string, string> createUrl);
         UserPart GetUserByMail(string mail);
+        IList<UserPolicyAnswerWithContent> BuildEditorForPolicies(PolicyPart policyPart);
     }
 
 
     public class UsersExtensionsServices : IUsersExtensionsServices {
         private readonly IOrchardServices _orchardServices;
-        private readonly IPolicyServices _policySerivces;
+        private readonly IPolicyServices _policyServices;
         private readonly IMembershipService _membershipService;
         private readonly IUtilsServices _utilsServices;
         private readonly IAuthenticationService _authenticationService;
@@ -57,25 +58,25 @@ namespace Laser.Orchard.UsersExtensions.Services {
         private readonly IAccountValidationService _accountValidationService;
 
         private static readonly TimeSpan DelayToResetPassword = new TimeSpan(1, 0, 0, 0); // 24 hours to reset password
-        private readonly IRepository<CultureRecord> _repositoryCultures;
+        private readonly ICommonsServices _commonsServices;
 
 
         public UsersExtensionsServices(
-            IOrchardServices orchardServices, 
-            IPolicyServices policySerivces, 
-            IMembershipService membershipService, 
-            IUtilsServices utilsServices, 
-            IAuthenticationService authenticationService, 
-            IUserService userService, 
-            IUserEventHandler userEventHandler, 
-            IShapeFactory shapeFactory, 
-            ICultureManager cultureManager, 
-            IRepository<CultureRecord> repositoryCultures,
+            IOrchardServices orchardServices,
+            IPolicyServices policySerivces,
+            IMembershipService membershipService,
+            IUtilsServices utilsServices,
+            IAuthenticationService authenticationService,
+            IUserService userService,
+            IUserEventHandler userEventHandler,
+            IShapeFactory shapeFactory,
+            ICultureManager cultureManager,
+            ICommonsServices commonsServices,
             IAccountValidationService accountValidationService) {
 
             T = NullLocalizer.Instance;
             Log = NullLogger.Instance;
-            _policySerivces = policySerivces;
+            _policyServices = policySerivces;
             _orchardServices = orchardServices;
             _membershipService = membershipService;
             _authenticationService = authenticationService;
@@ -84,7 +85,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
             _userEventHandler = userEventHandler;
             _shapeFactory = shapeFactory;
             _cultureManager = cultureManager;
-            _repositoryCultures = repositoryCultures;
+            _commonsServices = commonsServices;
             _accountValidationService = accountValidationService;
         }
 
@@ -101,7 +102,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
         public void Register(UserRegistration userRegistrationParams) {
             if (RegistrationSettings.UsersCanRegister) {
                 var policyAnswers = new List<PolicyForUserViewModel>();
-                if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") 
+                if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy")
                     && UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
                     IEnumerable<PolicyTextInfoPart> policies = GetUserLinkedPolicies(userRegistrationParams.Culture);
                     // controllo che tutte le policy abbiano una risposta e che le policy obbligatorie siano accettate 
@@ -132,7 +133,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
                     }
                 }
                 var registrationErrors = new List<string>();
-                if (ValidateRegistration(userRegistrationParams.Username, userRegistrationParams.Email, 
+                if (ValidateRegistration(userRegistrationParams.Username, userRegistrationParams.Email,
                     userRegistrationParams.Password, userRegistrationParams.ConfirmPassword, out registrationErrors)) {
 
                     var createdUser = _membershipService.CreateUser(new CreateUserParams(
@@ -151,7 +152,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
                     // here user was created
                     var favCulture = createdUser.As<FavoriteCulturePart>();
                     if (favCulture != null) {
-                        var culture = _repositoryCultures.Fetch(x => x.Culture.Equals(userRegistrationParams.Culture)).SingleOrDefault();
+                        var culture = _commonsServices.ListCultures().SingleOrDefault(x => x.Culture.Equals(userRegistrationParams.Culture));
                         if (culture != null) {
                             favCulture.Culture_Id = culture.Id;
                         }
@@ -166,10 +167,10 @@ namespace Laser.Orchard.UsersExtensions.Services {
                         // solleva l'evento LoggedIn sull'utente
                         _userEventHandler.LoggedIn(createdUser);
                     }
-                    
+
                     // [HS] BEGIN: Whe have to save the PoliciesAnswers cookie and persist answers on the DB after Login/SignIn events because during Login/Signin events database is not updated yet and those events override cookie in an unconsistent way.
                     if (_utilsServices.FeatureIsEnabled("Laser.Orchard.Policy") && UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.Yes) {
-                        _policySerivces.PolicyForUserMassiveUpdate(policyAnswers, createdUser);
+                        _policyServices.PolicyForUserMassiveUpdate(policyAnswers, createdUser);
                     }
                     // [HS] END
 
@@ -182,10 +183,12 @@ namespace Laser.Orchard.UsersExtensions.Services {
                         UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
                         _userService.SendChallengeEmail(createdUser, nonce => urlHelper.MakeAbsolute(urlHelper.Action("ChallengeEmail", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl));
                     }
-                } else {
+                }
+                else {
                     throw new SecurityException(String.Join(", ", registrationErrors));
                 }
-            } else {
+            }
+            else {
                 throw new SecurityException(T("User cannot register due to Site settings").Text);
             }
         }
@@ -196,7 +199,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                 _userEventHandler.LoggingIn(userLoginParams.Username, userLoginParams.Password);
                 _authenticationService.SignIn(user, userLoginParams.CreatePersistentCookie);
                 _userEventHandler.LoggedIn(user);
-            } else {
+            }
+            else {
                 throw new SecurityException(T("The username or e-mail or password provided is incorrect.").Text);
             }
         }
@@ -255,18 +259,22 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
         public IEnumerable<PolicyTextInfoPart> GetUserLinkedPolicies(string culture = null) {
             IEnumerable<PolicyTextInfoPart> policies;
-            if (UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No) return new List<PolicyTextInfoPart>(); // se selezionato No allora nessuna policy è obbligatoria e ritorno una collection vuota
-            if (UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == null || UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == "{All}") {
-                policies = _policySerivces.GetPolicies(culture);
-            } else {
-                var ids = UserRegistrationExtensionsSettings.PolicyTextReferences.Select(x => Convert.ToInt32(x.Replace("{", "").Replace("}", ""))).ToArray();
-                policies = _policySerivces.GetPolicies(culture, ids);
+            if (UserRegistrationExtensionsSettings.IncludePendingPolicy == Policy.IncludePendingPolicyOptions.No)
+                return new List<PolicyTextInfoPart>(); // se selezionato No allora nessuna policy è obbligatoria e ritorno una collection vuota
+            if (UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == null
+                || UserRegistrationExtensionsSettings.PolicyTextReferences.FirstOrDefault() == "{All}") {
+                policies = _policyServices.GetPolicies(culture);
+            }
+            else {
+                var ids = UserRegistrationExtensionsSettings
+                    .PolicyTextReferences.Select(x => Convert.ToInt32(x.Replace("{", "").Replace("}", ""))).ToArray();
+                policies = _policyServices.GetPolicies(culture, ids);
             }
             return policies;
         }
 
         public bool ValidateRegistration(string userName, string email, string password, string confirmPassword, out List<string> errors) {
-            
+
             errors = new List<string>();
 
             IDictionary<string, LocalizedString> validationErrors;
@@ -297,7 +305,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
                     errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
                 }
             }
-            
+
             if (!String.Equals(password, confirmPassword, StringComparison.Ordinal)) {
                 errors.Add(T("The new password and confirmation password do not match.").Text);
             }
@@ -309,14 +317,37 @@ namespace Laser.Orchard.UsersExtensions.Services {
                 PolicyAnswer = false,
                 PolicyId = x.Id,
                 UserHaveToAccept = x.UserHaveToAccept,
-                PolicyText = x.ContentItem
+                PolicyText = x.ContentItem,
+                Policy = new PolicyTextViewModel {
+                    Type = x.PolicyType,
+                    Title = x.As<TitlePart>()?.Title,
+                    Body = x.As<BodyPart>()?.Text
+                }
             }).ToList();
             return policies;
+        }
+        public IList<UserPolicyAnswerWithContent> BuildEditorForPolicies(PolicyPart policyPart) {
+            var associatedPolicies = _policyServices.GetPoliciesForContent(policyPart); //Reading policies Ids for that content. Ids are in strings i.e. "{12}"
+            if (associatedPolicies.Count() == 0) return new List<UserPolicyAnswerWithContent>();
+
+            var contentPolicies = _policyServices.GetPolicies(null, associatedPolicies.Select(x => Convert.ToInt32(x.Substring(1,x.Length-2)/*Strips {} chars*/)).ToArray());
+            return contentPolicies.Select(x => new UserPolicyAnswerWithContent {
+                PolicyAnswer = false,
+                PolicyId = x.Id,
+                UserHaveToAccept = x.UserHaveToAccept,
+                PolicyText = x.ContentItem,
+                Policy = new PolicyTextViewModel {
+                    Type = x.PolicyType,
+                    Title = x.As<TitlePart>()?.Title,
+                    Body = x.As<BodyPart>()?.Text
+                }
+            }).ToList();
+
         }
         public UserPart GetUserByMail(string mail) {
             var qry = _orchardServices.ContentManager.Query("User").Where<UserPartRecord>(x => x.Email == mail);
             var usr = qry.Slice(0, 1).FirstOrDefault();
-            if(usr != null) {
+            if (usr != null) {
                 return usr.As<UserPart>();
             }
             return null;

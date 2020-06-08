@@ -1,4 +1,5 @@
 ﻿using Contrib.Profile.Services;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
@@ -34,12 +35,6 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         public Localizer T { get; set; }
         dynamic Shape { get; set; }
 
-        int MinPasswordLength {
-            get {
-                return _membershipService.GetSettings().GetMinimumPasswordLength();
-            }
-        }
-
         public AccountController(
           IAuthenticationService authenticationService,
           IMembershipService membershipService,
@@ -69,18 +64,22 @@ namespace itWORKS.ExtendedRegistration.Controllers {
         [AlwaysAccessible]
         public ActionResult Register() {
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
 
-            ViewData["PasswordLength"] = MinPasswordLength;
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 
             var user = _orchardServices.ContentManager.New("User");
             if (user != null && !_frontEndProfileService.UserHasNoProfilePart(user.As<IUser>())) {
-                shape.UserProfile = _frontEndProfileService.BuildFrontEndShape(
+                shape.UserProfile = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                     _contentManager.BuildEditor(user),
                     _frontEndProfileService.MayAllowPartEdit,
                     _frontEndProfileService.MayAllowFieldEdit);
@@ -91,23 +90,28 @@ namespace itWORKS.ExtendedRegistration.Controllers {
 
         [HttpPost]
         [AlwaysAccessible]
-        public ActionResult Register(string userName, string email, string password, string confirmPassword, string returnUrl = null,bool createPersistentCookie=false) {
+        public ActionResult Register(string userName, string email, string password, string confirmPassword, string returnUrl = null, bool createPersistentCookie = false) {
             if (string.IsNullOrEmpty(returnUrl)) {
                 returnUrl = Request.QueryString["ReturnUrl"];
             }
             // ensure users can register
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
-            if (!registrationSettings.UsersCanRegister) {
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersCanRegister) {
                 return HttpNotFound();
             }
-            ViewData["PasswordLength"] = MinPasswordLength;
+
+            ViewData["PasswordLength"] = membershipSettings.GetMinimumPasswordLength();
+            ViewData["LowercaseRequirement"] = membershipSettings.GetPasswordLowercaseRequirement();
+            ViewData["UppercaseRequirement"] = membershipSettings.GetPasswordUppercaseRequirement();
+            ViewData["SpecialCharacterRequirement"] = membershipSettings.GetPasswordSpecialRequirement();
+            ViewData["NumberRequirement"] = membershipSettings.GetPasswordNumberRequirement();
 
             var shape = _orchardServices.New.Register();
 
             // validate user part, create a temp user part to validate input
             var userPart = _contentManager.New("User");
             if (userPart != null && !_frontEndProfileService.UserHasNoProfilePart(userPart.As<IUser>())) {
-                shape.UserProfile = _frontEndProfileService.BuildFrontEndShape(
+                shape.UserProfile = ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                     _contentManager.UpdateEditor(userPart, this),
                     _frontEndProfileService.MayAllowPartEdit,
                     _frontEndProfileService.MayAllowFieldEdit);
@@ -125,7 +129,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                 if (user != null) {
                     if (!_frontEndProfileService.UserHasNoProfilePart(user)) {
                         // we know userpart data is ok, now we update the 'real' recently published userpart
-                        _frontEndProfileService.BuildFrontEndShape(
+                        ((IFrontEndEditService)_frontEndProfileService).BuildFrontEndShape(
                             _contentManager.UpdateEditor(user, this),
                             _frontEndProfileService.MayAllowPartEdit,
                             _frontEndProfileService.MayAllowFieldEdit);
@@ -134,7 +138,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                     var userPart2 = user.As<UserPart>();
                     if (user.As<UserPart>().EmailStatus == UserStatus.Pending) {
                         _userService.SendChallengeEmail(user.As<UserPart>(), nonce => Url.AbsoluteAction(() => Url.Action("ChallengeEmail", "Account", new { Area = "Orchard.Users", nonce = nonce })));
-                        
+
                         _userEventHandler.SentChallengeEmail(user);
                         return RedirectToAction("ChallengeEmailSent", "Account", new { area = "Orchard.Users" });
                     }
@@ -144,7 +148,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
                     }
 
                     _userEventHandler.LoggingIn(userName, password);
-                    _authenticationService.SignIn(user, createPersistentCookie );
+                    _authenticationService.SignIn(user, createPersistentCookie);
                     _userEventHandler.LoggedIn(user);
 
                     if (!string.IsNullOrEmpty(returnUrl)) {
@@ -208,42 +212,42 @@ namespace itWORKS.ExtendedRegistration.Controllers {
 
         }
 
-        private static string ErrorCodeToString(MembershipCreateStatus createStatus) {
+        private string ErrorCodeToString(MembershipCreateStatus createStatus) {
             // See http://msdn.microsoft.com/en-us/library/system.web.security.membershipcreatestatus.aspx for
             // a full list of status codes.
             switch (createStatus) {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "Username already exists. Please enter a different user name.";
+                    return T("Username already exists. Please enter a different user name.").Text;
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A username for that e-mail address already exists. Please enter a different e-mail address.";
+                    return T("A username for that e-mail address already exists. Please enter a different e-mail address.").Text;
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return T("The password provided is invalid. Please enter a valid password value.").Text;
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return T("The e-mail address provided is invalid. Please check the value and try again.").Text;
 
                 case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
+                    return T("The password retrieval answer provided is invalid. Please check the value and try again.").Text;
 
                 case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
+                    return T("The password retrieval question provided is invalid. Please check the value and try again.").Text;
 
                 case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
+                    return T("The user name provided is invalid. Please check the value and try again.").Text;
 
                 case MembershipCreateStatus.ProviderError:
                     return
-                        "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                        T("The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.").Text;
 
                 case MembershipCreateStatus.UserRejected:
                     return
-                        "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                        T("The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.").Text;
 
                 default:
                     return
-                        "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+                        T("An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.").Text;
             }
         }
 

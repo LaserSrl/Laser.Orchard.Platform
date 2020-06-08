@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -147,6 +147,10 @@ msgstr "Upload completato"
 msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/BackendUpload/Index.cshtml"
 msgid "Uploading: do not leave this page or close the browser."
 msgstr "Upload in corso: non lasciare la pagina o chiudere il browser."
+
+msgctxt "~/Modules/Laser.Orchard.Vimeo/Views/EditorTemplates/VimeoAccessTokenViewModel.cshtml"
+msgid "Authorized Access Token"
+msgstr "Token di accesso autorizzato"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Done"

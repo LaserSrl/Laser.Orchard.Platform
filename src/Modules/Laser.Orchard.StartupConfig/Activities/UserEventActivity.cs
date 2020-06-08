@@ -42,7 +42,17 @@ namespace Laser.Orchard.StartupConfig.Activities {
         }
 
         public override IEnumerable<LocalizedString> GetPossibleOutcomes(WorkflowContext workflowContext, ActivityContext activityContext) {
-            return new[] { T("Created"), T("AccessDenied"), T("Approved"), T("ChangedPassword"), T("ConfirmedEmail"), T("LoggedIn"), T("LoggedOut"), T("SentChallengeEmail") };
+            return new[] { T("Created"),
+                T("AccessDenied"),
+                T("Approved"),
+                T("Disabled"),
+                T("ChangedPassword"),
+                T("ConfirmedEmail"),
+                T("LoggedIn"),
+                T("LoggedOut"),
+                T("SentChallengeEmail"),
+                T("Creating")
+            };
         }
 
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {

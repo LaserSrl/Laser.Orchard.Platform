@@ -24,7 +24,7 @@
  */
 (function ($) {
     function load() {
-        $.cookieCuttr = function (options) {
+        $.cookieCuttr = function (pOptions) {
 			var defaults = {
 				cookieBannerPosition: "top",
                 cookieCutter: false, // you'd like to enable the div/section/span etc. hide feature? change this to true
@@ -48,7 +48,7 @@
 				cookiePoweredBy: "",
 				cookiePoweredByIcon: ""
             };
-            var options = $.extend(defaults, options);
+            var options = $.extend(defaults, pOptions);
             //convert options
 			var cookieBannerPosition = options.cookieBannerPosition;
 			var cookieTitle = options.cookieTitle;
@@ -91,6 +91,8 @@
                 //reset cookies
                 $('a.cc-cookie-reset').click(function (f) {
                     f.preventDefault();
+                    // fire an event to notify we are resetting cookie consent
+                    $(document).trigger("cookieConsent.reset");
                     $.cookie("cc_cookie_accept", null, {
                         path: '/'
                     });
@@ -116,9 +118,8 @@
                 if (cookieExpandMessage != "") {
                     htmlFooterText = '<a class="cc-expand">' + cookieExpandMessage + '</a> | ' + htmlFooterText;
                 }
-                //var iconPoweredBy = '<img src=' + cookiePoweredByIcon + ' style="width: 20px">';
                 var iconPoweredBy = '|';
-				var htmlBanner = '<div class="cc-cookies" style="background-color:black;box-shadow:#121212 2px 2px 14px 2px"><div class="cc-cookie-box" style="width:90%;max-width:670px;margin:0px auto;width:auto;padding:0px;"><h3>' + cookieTitle + "</h3>" + cookieMessage + '<div style="position:relative"><div id="ccPoweredBy" style="height:34px"><div style="position:absolute;bottom:0px;margin-bottom:6px">GDPR Cookies <img src="' + cookiePoweredByIcon + '" style="width:20px"> ' + cookiePoweredBy + '</div></div><div style="position:absolute;right:0;bottom:0">' + cookieAccept + '</div></div></div></div></div>';
+                var htmlBanner = '<div class="cc-cookies" style="background-color:black;box-shadow:#121212 2px 2px 14px 2px"><div class="cc-cookie-box" style="width:90%;max-width:670px;margin:0px auto;width:auto;padding:0px;"><h3>' + cookieTitle + "</h3>" + cookieMessage + '<div style="position:relative"><div id="ccPoweredBy" style="height:34px"><div style="position:absolute;bottom:0px;margin-bottom:6px"><p id="ccPoweredBy">' + htmlFooterText + ' ' + iconPoweredBy + ' ' + cookiePoweredBy + '</p></div></div><div style="position:absolute;right:0;bottom:0">' + cookieAccept + '</div></div></div></div>';
                 var htmlOverlay = '<div class="cc-cookies cc-overlay"><div class="cc-cookie-frame"><div class="cc-cookie-box"><h3>' + cookieTitle + "</h3><p>" + cookieMessage + "</p>" + cookieAccept + '<hr/><p id="ccPoweredBy">' + htmlFooterText + ' ' + iconPoweredBy + ' ' + cookiePoweredBy + '</p></div></div></div>';
 				if (cookiePolicyPage) {
 					if (cookieBannerPosition == "top") {
@@ -148,19 +149,27 @@
             $('.cc-cookie-accept').click(function (e) {
                 e.preventDefault();
 
+                var acceptedOptions = {
+                    preferences: false,
+                    statistical: false,
+                    marketing: false
+                };
                 var aux1 = "";
                 if ($("#chkPreferences").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.preferences = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkStatistical").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.statistical = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkMarketing").prop("checked")) {
                     aux1 = aux1 + "1";
+                    acceptedOptions.marketing = true;
                 } else {
                     aux1 = aux1 + "0";
                 }
@@ -171,6 +180,8 @@
                 $(".cc-cookies").fadeOut(function () {
                     // reload page to activate cookies
                     //location.reload();
+                    // fire an event to notify of the accepted options
+                    $(document).trigger("cookieConsent.accept", acceptedOptions);
                     manageCookieResetButton(options);
                 });
             });

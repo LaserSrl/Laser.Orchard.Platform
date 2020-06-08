@@ -1,6 +1,8 @@
 ﻿using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
 using System.Collections.Generic;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Laser.Orchard.Braintree
 {
@@ -35,6 +37,21 @@ namespace Laser.Orchard.Braintree
                         controller = "Paypal",
                         action = "Post"
                     }
+                }
+                ,
+                 new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/PaymentGateway/Braintree/",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Braintree"},
+                            {"controller", "Admin"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Braintree"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }

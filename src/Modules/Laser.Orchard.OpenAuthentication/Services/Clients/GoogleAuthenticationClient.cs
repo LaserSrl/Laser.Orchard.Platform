@@ -14,7 +14,8 @@ using Laser.Orchard.OpenAuthentication.Extensions;
 using System.Collections.Specialized;
 using Newtonsoft.Json;
 using System.Web;
-
+using Orchard.Localization;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 
 namespace Laser.Orchard.OpenAuthentication.Services.Clients {
     public class GoogleAuthenticationClient : IExternalAuthenticationClient {
@@ -28,9 +29,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
 
         public ILogger Logger { get; set; }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            string ClientId = providerConfigurationRecord.ProviderIdKey;
-            string ClientSecret = providerConfigurationRecord.ProviderSecret;
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            string ClientId = providerConfiguration.ProviderIdKey;
+            string ClientSecret = providerConfiguration.ProviderSecret;
             var client = new GoogleOAuth2Client(ClientId, ClientSecret);
             return client;
         }
@@ -46,8 +47,8 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             return retVal;
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previosAuthResult, string userAccessToken) {
-            var userData = (Build(clientConfiguration) as GoogleOAuth2Client).GetUserDataDictionary(userAccessToken);
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previosAuthResult, string userAccessToken) {
+            var userData = (Build(providerConfiguration) as GoogleOAuth2Client).GetUserDataDictionary(userAccessToken);
             //Logger.Error("user data count: {0}", userData.Count);
             userData["accesstoken"] = userAccessToken;
             string id = userData["id"];
@@ -56,16 +57,19 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             return new AuthenticationResult(true, this.ProviderName, id, name, userData);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
-            var client = Build(clientConfiguration) as GoogleOAuth2Client;
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecret, string returnUrl) {
+            var client = Build(providerConfiguration) as GoogleOAuth2Client;
             //Logger.Error("Inizio chiamata Google");
             string userAccessToken = client.GetAccessToken(new Uri(returnUrl), token);
             //Logger.Error("access token: {0}", userAccessToken);
-            return GetUserData(clientConfiguration, previousAuthResult, userAccessToken);
+            return GetUserData(providerConfiguration, previousAuthResult, userAccessToken);
         }
         
         public bool RewriteRequest() {
             return new ServiceUtility().RewriteRequestByState();
+        }
+        public Dictionary<string, LocalizedString> GetAttributeKeys() {
+            return new Dictionary<string, LocalizedString>();
         }
     }
 }

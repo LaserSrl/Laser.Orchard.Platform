@@ -1,7 +1,31 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.Localization;
 @using System.Linq.Expressions;
+@using Laser.Orchard.NwazetIntegration.Models;
+
 @model AddressEditViewModel
+
+@{
+    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
+
+    List<SelectListItem> AddressTypeLocalize = new List<SelectListItem>();
+    AddressTypeLocalize.Add(new SelectListItem() {
+        Text = T("Billing Address").Text,
+        Value = AddressRecordType.BillingAddress.ToString()
+    });
+    AddressTypeLocalize.Add(new SelectListItem() {
+        Text = T("Shipping Address").Text,
+        Value = AddressRecordType.ShippingAddress.ToString()
+    });
+
+    var shippingCountries = Model.ShippingCountries
+        .Select(sli => new { val = sli.Value, text = sli.Text });
+    var billingCountries = Model.BillingCountries
+        .Select(sli => new { val = sli.Value, text = sli.Text });
+
+    var guid = Guid.NewGuid().ToString();
+}
+
 @helper EditorForString(
     Expression<Func<AddressEditViewModel, string>> property,
     LocalizedString label,
@@ -16,34 +40,138 @@
     </div>
 }
 @*This should generally be put in a form*@
-<div class="address-input">
-    @Html.LabelFor(m => m.AddressType, T("Address Type").Text, new { })
-    @Html.EnumDropDownListFor(m => m.AddressType)
-</div>
-@EditorForString(m => m.Honorific,
-    T("Title"),
-    T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc."))
-@EditorForString(m => m.FirstName,
-    T("First Name"),
-    T("Please include middle name or initial as appropriate."),
-    true)
-@EditorForString(m => m.LastName,
-    T("Last Name"),
-    T("Please include middle name or initial as appropriate."),
-    true)
-@EditorForString(m => m.Company,
-    T("Company"))
-<div class="address-input address-text-input">
-    @Html.LabelFor(m => m.Address1, T("Address").Text, new { @class = "required" })
-    @Html.EditorFor(m => m.Address1)
-    @Html.EditorFor(m => m.Address2)
-</div>
-@EditorForString(m => m.City,
-    T("City"))
-@EditorForString(m => m.Province,
-    T("State, province, prefecture, republic or region"),
-    T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."))
-@EditorForString(m => m.PostalCode,
-    T("Postal or ZIP code"))
-@EditorForString(m => m.Country,
-    T("Country"))
+    <div class="address-editor" id="@guid">
+        <div class="address-input">
+            @Html.LabelFor(m => m.AddressType, T("Address Type").Text, new { })
+            @Html.DropDownListFor(m => m.AddressType, AddressTypeLocalize)
+        </div>
+        @* Personal information *@
+        @EditorForString(m => m.Honorific,
+            T("Title"),
+            T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc."))
+        @EditorForString(m => m.FirstName,
+            T("First Name"),
+            T("Please include middle name or initial as appropriate."),
+            true)
+        @EditorForString(m => m.LastName,
+            T("Last Name"),
+            T("Please include middle name or initial as appropriate."),
+            true)
+        @EditorForString(m => m.Company,
+            T("Company"))
+        @* 1. Country *@
+        @*    This must be selected among the countries configured *@
+        <div class="address-input address-text-input address-country">
+            @Html.LabelFor(m => m.CountryId, T("Country").Text, new { @class = "required" })
+            @Html.DropDownListFor(m => m.CountryId,
+                Model.AddressType == AddressRecordType.ShippingAddress
+                    ? Model.ShippingCountries
+                    : Model.BillingCountries)
+            <div class="hint">@T("Select a valid country from the list.")</div>
+        </div>
+        @* 2. City *@
+        <div class="address-input address-text-input address-city">
+            @Html.HiddenFor(m => m.CityId)
+            @Html.LabelFor(m => m.City, T("City").Text, new { @class = "required" })
+            @if (Model.CityId >= 0) {
+                <select id="@Html.FieldIdFor(m => m.City)"
+                        class="required address-input"
+                        name="@Html.NameFor(m => m.City)"></select>
+            } else {
+                <input id="@Html.FieldIdFor(m => m.City)"
+                       class="required address-input"
+                       name="@Html.NameFor(m => m.City)" type="text"
+                       value="@Model.City" />
+            }
+            <div class="hint">@T("Select a city from the list.")</div>
+        </div>
+        @* 3. Province and ZIP code *@
+        <div class="address-input address-text-input address-province">
+            @Html.HiddenFor(m => m.ProvinceId)
+            @Html.LabelFor(m => m.Province, T("Province").Text, new { @class = "required" })
+            @if (Model.ProvinceId >= 0) {
+                <select id="@Html.FieldIdFor(m => m.Province)"
+                        class="required address-input"
+                        name="@Html.NameFor(m => m.Province)"></select>
+            } else {
+                <input id="@Html.FieldIdFor(m => m.Province)"
+                       class="required address-input"
+                       name="@Html.NameFor(m => m.Province)" type="text"
+                       value="@Model.Province" />
+            }
+            <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
+        </div>
+        @EditorForString(m => m.PostalCode,
+            T("Postal or ZIP code"))
+        @* 4. Street *@
+        <div class="address-input address-text-input">
+            @Html.LabelFor(m => m.Address1, T("Address").Text, new { @class = "required" })
+            @Html.EditorFor(m => m.Address1)
+            @Html.EditorFor(m => m.Address2)
+        </div>
+    </div>
+@using(Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var addressTypeElement = $('#@Html.FieldIdFor(m => m.AddressType)');
+            // configure the script that will dynamically load configured address settings
+            var addressOptions = {
+                // set all instance specific information here
+                // e.g. urls for ajax calls and the jquery selectors
+                // for the different elements of the address
+                countriesInput: '#@Html.FieldIdFor(m => m.CountryId)',
+                citiesInput: '#@Html.FieldIdFor(m => m.City)',
+                cityId: '#@Html.FieldIdFor(m => m.CityId)',
+                provincesInput: '#@Html.FieldIdFor(m => m.Province)',
+                provinceId: '#@Html.FieldIdFor(m => m.ProvinceId)',
+                getCities: {
+                    url: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                getProvinces: {
+                    url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                isBilling: function () {
+                    var addressType = addressTypeElement.val();
+                    return addressType == '@AddressRecordType.BillingAddress.ToString()';
+                }
+            };
+            var myAddress = $('#@guid').addressConfiguration(addressOptions);
+
+            var shippingCountryOptions = JSON.parse('@Html.Raw(Json.Encode(shippingCountries))');
+            var billingCountryOptions = JSON.parse('@Html.Raw(Json.Encode(billingCountries))');
+            //  when we change the type of address
+            addressTypeElement.on('change', function () {
+                // we will have to update the country dropdown
+                var newAddressType = addressTypeElement.val();
+                var countrySelect = $('#@Html.FieldIdFor(m => m.CountryId)');
+                // if the formerly selected country is still valid for the other
+                // address type, we will preselect it
+                var oldCountry = countrySelect.val();
+                countrySelect.empty();
+                var listToUse = shippingCountryOptions;
+                if (newAddressType == '@AddressRecordType.BillingAddress.ToString()') {
+                    listToUse = billingCountryOptions;
+                }
+                var countryIsBoth = false;
+                for (i = 0; i < listToUse.length; i++) {
+                    countrySelect.append(new Option(
+                        listToUse[i].text,
+                        listToUse[i].val
+                    ));
+                    countryIsBoth |= oldCountry == listToUse[i].val;
+                }
+                if (countryIsBoth) {
+                    countrySelect.val(oldCountry);
+                }
+                // we will have to reset the address form
+                myAddress.resetAddress(addressOptions, {
+                    countryId: $('#@Html.FieldIdFor(m => m.CountryId)').val(),
+                    cityId: $('#@Html.FieldIdFor(m => m.CityId)').val(),
+                    provinceId: $('#@Html.FieldIdFor(m => m.ProvinceId)').val(),
+                    city: $('#@Html.FieldIdFor(m => m.City)').val(),
+                    province: $('#@Html.FieldIdFor(m => m.Province)').val(),
+                });
+            });
+        });
+    </script>
+}

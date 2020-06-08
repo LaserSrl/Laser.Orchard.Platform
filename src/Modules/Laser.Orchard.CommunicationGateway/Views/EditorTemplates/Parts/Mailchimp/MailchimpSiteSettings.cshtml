@@ -1,0 +1,12 @@
+﻿@model Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels.MailchimpSiteSettingsEdit
+
+<fieldset>
+    @if (!string.IsNullOrWhiteSpace(Model.ApiKey)) {
+        <div>@T("Current ApiKey (BASE64):") @Model.ApiKey</div>
+    }
+    else {
+        <div>@T("An ApiKey needs to be set!")</div>
+    }
+    @Html.LabelFor(m => m.NewApiKey)
+    @Html.TextBoxFor(m => m.NewApiKey, new { @class = "text large" })
+</fieldset>

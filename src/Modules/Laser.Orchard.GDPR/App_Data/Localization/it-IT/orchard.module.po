@@ -1,0 +1,374 @@
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2020 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach all items after anonymization."
+msgstr "Dopo l'anonimizzazione, rimuovi tutti i Contenuti."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach all items after erasure."
+msgstr "Dopo la cancellazione, rimuovi tutti i Contenuti."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach items with personal identifiable information after anonymization."
+msgstr "Dopo l'anonimizzazione, rimuovi i Contenuti che contengono informazioni personali."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach items with personal identifiable information after erasure."
+msgstr "Dopo la cancellazione, rimuovi i Contenuti che contengono informazioni personali."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after anonymizing the ContentItem for the ContentPickerField and eventually its selected items, we will unselect all items."
+msgstr "Se questo flag è selezionato, dopo avere anonimizzato il Contenuto del ContentPickerField ed eventualmente i contenuti selezionati, tutti i contenuti verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after anonymizing the ContentItem for the ContentPickerField and eventually its selected items, we will unselect those items that have a GDPRPart."
+msgstr "Se questo flag è selezionato, dopo avere anonimizzato il Contenuto del ContentPickerField ed eventualmente i contenuti selezionati, quei contenuti che a loro volta hanno una GDPRPart verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after erasing the ContentItem for the ContentPickerField and eventually its selected items, we will unselect all items."
+msgstr "Se questo flag è selezionato, dopo avere cancellato il Contenuto del ContentPickerField ed eventualmente i contenuti selezionati, tutti i contenuti verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after erasing the ContentItem for the ContentPickerField and eventually its selected items, we will unselect those items that have a GDPRPart."
+msgstr "Se questo flag è selezionato, dopo avere cancellato il Contenuto del ContentPickerField ed eventualmente i contenuti selezionati, quei contenuti che a loro volta hanno una GDPRPart verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues Anonymization to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions."
+msgstr "Impostando questo flag un tentativo di anonimizzazione verrà propagato a tutti i contenuti selezionati nel campo. ATTENZIONE: non c'è garanzia che il processo riesca a prevenire ricorsioni infinite."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues Erasure to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions."
+msgstr "Impostando questo flag un tentativo di cancellazione verrà propagato a tutti i contenuti selezionati nel campo. ATTENZIONE: non c'è garanzia che il processo riesca a prevenire ricorsioni infinite."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "We will attempt to anonymize items selected in the field."
+msgstr "Proveremo ad anonimizzare i contenuti selezionati nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/ContentPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "We will attempt to erase items selected in the field."
+msgstr "Proveremo a cancellare i contenuti selezionati nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "Default Anonymization"
+msgstr "Anonimizzazione predefinita"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "Default Erasure"
+msgstr "Cancellazione predefinita"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "Property value pairs for reflection. Write them as a json dictionary. E.g.: { \"key1\": \"value1\", \"key2\": \"value2\"}"
+msgstr "Coppie di valori per la reflection. Scriverli nella forma di un dizionario json. E.g.: { \"chiave1\": \"valore1\", \"chiave2\": \"valore2\"}"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues the field to be processed when a ContentItem of this type is being processed for anonymization."
+msgstr "Impostando questo flag il campo sarà processato quando un ContentItem di questo tipo starà venendo anonimizzato."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues the field to be processed when a ContentItem of this type is being processed for erasure."
+msgstr "Impostando questo flag il campo sarà processato quando un ContentItem di questo tipo starà venendo cancellato."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "This ContentField is subject to anonymization."
+msgstr "Questo ContentField è soggetto ad anonimizzazione"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartFieldSettingsViewModel.cshtml"
+msgid "This ContentField is subject to erasure."
+msgstr "Questo ContentField è soggetto a cancellazione."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "Default Anonymization"
+msgstr "Anonimizzazione predefinita"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "Default Erasure"
+msgstr "Cancellazione predefinita"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "Property value pairs for reflection. Write them as a json dictionary. E.g.: { \"key1\": \"value1\", \"key2\": \"value2\"}"
+msgstr "Coppie di valori per la reflection. Scriverli nella forma di un dizionario json. E.g.: { \"chiave1\": \"valore1\", \"chiave2\": \"valore2\"}"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "Setting this flag casues the part to be processed when a ContentItem of this type is being processed for anonymization."
+msgstr "Impostando questo flag la parte sarà processata quando un ContentItem di questo tipo starà venendo anonimizzato."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "Setting this flag casues the part to be processed when a ContentItem of this type is being processed for erasure."
+msgstr "Impostando questo flag la parte sarà processata quando un ContentItem di questo tipo starà venendo cancellato."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "This ContentPart is subject to anonymization."
+msgstr "Questa ContentPart è soggetta ad anonimizzazione."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartPartSettingsViewModel.cshtml"
+msgid "This ContentPart is subject to erasure."
+msgstr "Questa ContentPart è soggetta a cancellazione."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "ContentItems will be anonymized automatically after a time."
+msgstr "I Contenuti saranno anonimizzati automaticamente dopo un certo periodo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "ContentItems will be erased automatically after a time."
+msgstr "I Contenuti saranno cancellati automaticamente dopo un certo periodo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "Select whether the scheduled anonymization should check for the date of item creation or its latest update."
+msgstr "Scegli se per l'anonimizzazione schedulata si debba considerare la data di creazione del contenuto o quella dell'ultimo aggiornamento."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "Select whether the scheduled erasure should check for the date of item creation or its latest update."
+msgstr "Scegli se per la cancellazione schedulata si debba considerare la data di creazione del contenuto o quella dell'ultimo aggiornamento."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "Setting this flag causes ContentItems of this type to be analyzed periodically, and based on the setting here eventually anonymized if they are old enough."
+msgstr "Impostando questo flag ContentItems di questo tipo saranno analizzati periodicamente, e a seconda di altre impostazioni qui saranno eventualmente anonimizzati se ritenuti vecchi a sufficienza."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "Setting this flag causes ContentItems of this type to be analyzed periodically, and based on the setting here eventually erased if they are old enough."
+msgstr "Impostando questo flag ContentItems di questo tipo saranno analizzati periodicamente, e a seconda di altre impostazioni qui saranno eventualmente cancellati se ritenuti vecchi a sufficienza."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "The number of days waited before the automated anonymization."
+msgstr "Il numero di giorni da attendere prima dell'anonimizzazione automatica."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSchedulingSettingsViewModel.cshtml"
+msgid "The number of days waited before the automated erasure."
+msgstr "Il numero di giorni da attendere prima della cancellazione automatica."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSettingsViewModel.cshtml"
+msgid "Delete ContentItems after the information has been erased."
+msgstr "Elimina i Contenuti dopo che le informazioni personali sono state cancellate."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSettingsViewModel.cshtml"
+msgid "Profile Items are ContentItems that will act as a node of sorts for a user's personal identifiable information. They are the ones anonymization and erasure should start from, because they allow identifying all other items. Functionally, this means they are the ones for whom the PrivacyManagers will see the links to the actions to start the anonymization and erasure processes."
+msgstr "I Contenuti Profilo sono elementi di contenuto che fungono da centri nevralgici pe le informazioni personali di un utente. Sono i contenuti dai quali devono partire le procedure di anonimizzazione e cancellazione, perchè da essi è possibile risalire a tutti i contenuti rilevanti. Operativamente, questo significa che sono i Contenuti per cui i PrivacyManagers vedranno i collegamenti per avviare le procedure di anonimizzazione e cancellazione."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSettingsViewModel.cshtml"
+msgid "Set this type as a Profile Item type."
+msgstr "Considera contenuti di questo tipo come Contenuti Profilo"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/GDPRPartTypeSettingsViewModel.cshtml"
+msgid "Setting this flag causes ContentItems of this type to be deleted after erasure of personal identifiable information has been handled for them."
+msgstr "Impostando questo flag i ContentItems di questo tipo saranno cancelllati dopo l'eliminazione delle informazioni personali."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach all items after anonymization."
+msgstr "Dopo l'anonimizzazione, rimuovi tutti i Contenuti."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach all items after erasure."
+msgstr "Dopo la cancellazione, rimuovi tutti i Contenuti."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach items with personal identifiable information after anonymization."
+msgstr "Dopo l'anonimizzazione, rimuovi i Contenuti che contengono informazioni personali."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Detach items with personal identifiable information after erasure."
+msgstr "Dopo la cancellazione, rimuovi i Contenuti che contengono informazioni personali."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after anonymizing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect all items."
+msgstr "Se questo flag è selezionato, dopo avere anonimizzato il Contenuto del MediaLibraryPickerField ed eventualmente i contenuti selezionati, tutti i contenuti verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after anonymizing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect those items that have a GDPRPart."
+msgstr "Se questo flag è selezionato, dopo avere anonimizzato il Contenuto del MediaLibraryPickerField ed eventualmente i contenuti selezionati, quei contenuti che a loro volta hanno una GDPRPart verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after erasing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect all items."
+msgstr "Se questo flag è selezionato, dopo avere cancellato il Contenuto del MediaLibraryPickerField ed eventualmente i contenuti selezionati,tutti i contenuti verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "If this flag is set, after erasing the ContentItem for the MediaLibraryPickerField and eventually its selected items, we will unselect those items that have a GDPRPart."
+msgstr "Se questo flag è selezionato, dopo avere cancellato il Contenuto del MediaLibraryPickerField ed eventualmente i contenuti selezionati, quei contenuti che a loro volta hanno una GDPRPart verranno deselezionati."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues Anonymization to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions."
+msgstr "Impostando questo flag un tentativo di anonimizzazione verrà propagato a tutti i contenuti selezionati nel campo. ATTENZIONE: non c'è garanzia che il processo riesca a prevenire ricorsioni infinite."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "Setting this flag casues Erasure to propagate to all items selected in the field. CAREFUL: the process is not guaranteed to prevent recursions."
+msgstr "Impostando questo flag un tentativo di cancellazione verrà propagato a tutti i contenuti selezionati nel campo. ATTENZIONE: non c'è garanzia che il processo riesca a prevenire ricorsioni infinite."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "We will attempt to anonymize items selected in the field."
+msgstr "Proveremo ad anonimizzare i contenuti selezionati nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/DefinitionTemplates/MediaLibraryPickerFieldGDPRPartFieldSettingsViewModel.cshtml"
+msgid "We will attempt to erase items selected in the field."
+msgstr "Proveremo a cancellare i contenuti selezionati nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/EditorTemplates/Parts/GDPRPartProtectionFlag.cshtml"
+msgid "If this flag is set the information in this ContentItem will never be anonymized or erased."
+msgstr "Se questo flag è selezionato, l'informazione in questo Contenuto non sarà mai anonimizzata nè cancellata."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/EditorTemplates/Parts/GDPRPartProtectionFlag.cshtml"
+msgid "Protect this content from anonymization and erasure."
+msgstr "Proteggi questo contenuto da tentativi di anonimizzazione e cancellazione."
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/GDPRAdmin/Index.cshtml"
+msgid "Manage ProfileItems"
+msgstr "Gestisci i Contenuti Profilo"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/GDPRAdmin/Index.cshtml"
+msgid "Search"
+msgstr "Cerca"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/GDPRAdmin/Index.cshtml"
+msgid "Search:"
+msgstr "Cerca:"
+
+msgctxt "~/Modules/Laser.Orchard.GDPR/Views/Parts/GDPRPart.AdminToolbarLink.cshtml"
+msgid " | "
+msgstr "|"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
+msgid "Content is Anonymized. The GDPRContentContext token contains further information."
+msgstr "Contenuto anonimizzato. Il token GDPRContentContext contiene informazioni addizionali."
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
+msgid "Content is Erased. The GDPRContentContext token contains further information."
+msgstr "Contenuto cancellato. Il token GDPRContentContext contiene informazioni addizionali."
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
+msgid "Content Items"
+msgstr "Contenuti"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "Anonymize the selected ContentItems"
+msgstr "Anonimizza i Contenuti selezionati."
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "Content Items"
+msgstr "Contenuti"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "Erase the selected ContentItems"
+msgstr "Cancella i Contentuti selezionati"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "Error during the execution of {0} for ContentItem with Id {1}"
+msgstr "Errore durante l'esecuzione di {0} per il Contenuto con Id {1}"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "NoItem"
+msgstr "Nessun Contenuto"
+
+msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "Laser.Orchard.GDPR.Activities.SelectContentItemForm"
+msgid "ContentItem Id"
+msgstr "Id del Contenuto"
+
+msgctxt "Laser.Orchard.GDPR.Activities.SelectContentItemForm"
+msgid "Select the ContentItem"
+msgstr "Seleziona il Contenuto"
+
+msgctxt "Laser.Orchard.GDPR.Activities.SelectContentItemForm"
+msgid "Specify the Id of the ContentItem to be subjected to a process for GDPR compliance. You may specify multiple Ids by separating tem with a comma. Leave this empty to attempt to use the ContentItem from the WorkflowContext."
+msgstr "Specifica l'Id del Contenuto da essere processato per il rispetto del GDPR. Si possono specificare più IDs separandoli con una virgola. Lascia vuoto questo campo per provare ad usare il Contenuto che è parte del WorkflowContext."
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "anonymization"
+msgstr "Anonimizzazione"
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "anonymized"
+msgstr "anonimizzato"
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "erased"
+msgstr "cancellato"
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "erasure"
+msgstr "cancellazione"
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "protection status"
+msgstr "status di protezione"
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "The item has no configuration saved for {0}."
+msgstr "Il contenuto non ha una configurazione salvata per {0}."
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "The item is not a Profile."
+msgstr "Il contenuti non è un Profilo."
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "The item is protected and cannot be {0}."
+msgstr "Questo contenuto è protetto e non può essere {0}."
+
+msgctxt "Laser.Orchard.GDPR.Controllers.GDPRAdminController"
+msgid "Unauthorized to manage {0} of contents."
+msgstr "Non autorizzato a gestire {0} dei contenuti."
+
+msgctxt "Laser.Orchard.GDPR.Drivers.GDPRPartDriver"
+msgid "Anonymize"
+msgstr "Anonimizza"
+
+msgctxt "Laser.Orchard.GDPR.Drivers.GDPRPartDriver"
+msgid "Cannot perform GDPR Processes"
+msgstr "Impossibile eseguire i processi per il GDPR"
+
+msgctxt "Laser.Orchard.GDPR.Drivers.GDPRPartDriver"
+msgid "Erase"
+msgstr "Cancella"
+
+msgctxt "Laser.Orchard.GDPR.Drivers.GDPRPartDriver"
+msgid "Reset Protection"
+msgstr "Resetta la protezione"
+
+msgctxt "Laser.Orchard.GDPR.Drivers.GDPRPartDriver"
+msgid "Set protection"
+msgstr "Imposta la protezione"
+
+msgctxt "Laser.Orchard.GDPR.Navigation.GDPRAdminMenu"
+msgid "Profile items"
+msgstr "Contenuti Profilo"
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartFieldEditorEvents"
+msgid "There was an issue updating the GDPR configuration for {0}."
+msgstr "C'è stato un problema nell'aggiornamento della configurazione GDPR per {0}."
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartPartEditorEvents"
+msgid "There was an issue updating the GDPR configuration for {0}."
+msgstr "C'è stato un problema nell'aggiornamento della configurazione GDPR per {0}."
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartTypeSchedulingEditorEvents"
+msgid "Creation"
+msgstr "Creazione"
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartTypeSchedulingEditorEvents"
+msgid "Days to wait before anonymization must be greater than zero. Scheduler configuration failed."
+msgstr "I giorni da attendere prima dell'anonimizzazione devono essere più di zero. Configurazione della schedulazione fallita."
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartTypeSchedulingEditorEvents"
+msgid "Days to wait before erasure must be greater than zero. Scheduler configuration failed."
+msgstr "I giorni da attendere prima della cancellazione devono essere più di zero. Configurazione della schedulazione fallita."
+
+msgctxt "Laser.Orchard.GDPR.Settings.GDPRPartTypeSchedulingEditorEvents"
+msgid "Latest Update"
+msgstr "Ultimo Aggiornamento"
+

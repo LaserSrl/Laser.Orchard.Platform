@@ -26,6 +26,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,6 +106,9 @@
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.cookie.min.js" />
     <Content Include="Scripts\jquery.cookiecuttr.js" />
+    <Content Include="Scripts\jquery.cookiecuttr.min.js">
+      <DependentUpon>jquery.cookiecuttr.js</DependentUpon>
+    </Content>
     <Content Include="Styles\cookiecuttr.css" />
     <Content Include="Styles\cookiecuttr.min.css">
       <DependentUpon>cookiecuttr.css</DependentUpon>
@@ -123,7 +128,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drivers\HubSpotSettingsPartDriver.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Handlers\HubSpotSettingPartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Drivers\CookieLawPartDriver.cs" />
     <Compile Include="Drivers\CookieSettingsPartDriver.cs" />
@@ -131,6 +138,7 @@
     <Compile Include="Handlers\CookieSettingsPartHandler.cs" />
     <Compile Include="Models\CookieLawPart.cs" />
     <Compile Include="Models\CookieSettingsPart.cs" />
+    <Compile Include="Models\HubSpotSettingsPart.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\GDPRScript.cs" />
     <Compile Include="Services\HubSpotCookieGDPR.cs" />
@@ -151,6 +159,7 @@
     <None Include="bundleconfig.json" />
     <Content Include="packages.config" />
     <Content Include="Contents\Web.config" />
+    <Content Include="Views\EditorTemplates\Parts\HubSpotSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
@@ -211,4 +220,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.435\build\BuildBundlerMinifier.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.435\build\BuildBundlerMinifier.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.435\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.435\build\BuildBundlerMinifier.targets'))" />
+  </Target>
 </Project>

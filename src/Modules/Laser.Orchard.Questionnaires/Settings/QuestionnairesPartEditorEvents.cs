@@ -60,6 +60,7 @@ namespace Laser.Orchard.Questionnaires.Settings {
             builder.WithSetting("QuestionnairesPartSettingVM.AllowOpenAnswers", model.AllowOpenAnswers.ToString());
             builder.WithSetting("QuestionnairesPartSettingVM.QuestionnaireContext", model.QuestionnaireContext);
             builder.WithSetting("QuestionnairesPartSettingVM.ForceAnonymous", model.ForceAnonymous.ToString());
+            builder.WithSetting("QuestionnairesPartSettingVM.ShowLatestAnswers", model.ShowLatestAnswers.ToString());
 
             yield return DefinitionTemplate(model);
         }

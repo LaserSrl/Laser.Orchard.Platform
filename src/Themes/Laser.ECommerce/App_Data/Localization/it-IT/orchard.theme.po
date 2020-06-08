@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -101,8 +101,12 @@ msgid "Last Name"
 msgstr "Cognome"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "New address"
+msgstr "Nuovo indirizzo"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "none"
-msgstr "Nessuno"
+msgstr "Nuovo indirizzo"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "Please include middle name or initial as appropriate."
@@ -365,6 +369,10 @@ msgid "Order #{0}"
 msgstr "Ordine #{0}"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Order reference: {0}"
+msgstr "Riferimento dell'ordine: {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
 msgid "Phone:"
 msgstr "Telefono:"
 
@@ -419,6 +427,14 @@ msgstr "Totale"
 msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
 msgid "Total: {0}"
 msgstr "Totale: {0}"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "Tracking URL: <a href=\"{0}\">{0}</a>"
+msgstr "URL del tracciamento: <a href=\"{0}\">{0}</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Order.Confirmation.cshtml"
+msgid "You may view this order at a later time by going to this address: <a href=\"{0}\">{0}</a>, using this password: \"{1}\"."
+msgstr "Potrai visualizzare i dettagli del tuo ordine a questo indirizzo: <a href=\"{0}\">{0}</a>, usando questa password: \"{1}\"."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ListOfWishLists.cshtml"
 msgid "Your Wish Lists:"
@@ -689,6 +705,10 @@ msgid "{1} {0}"
 msgstr "{1} {0}"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Click <a href=\"{0}\">here</a> to choose a different shipping option."
+msgstr "Clicca <a href=\"{0}\">qui</a> per scegliere un'opzione di spedizione diversa."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Continue Shopping"
 msgstr "Continua con gli acquisti"
 
@@ -699,6 +719,10 @@ msgstr "Impossibile caricare il carrello"
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Minimum order of {0} required."
 msgstr "È richiesto un ordine di almeno {0}."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "No shipping options available for {0} {1}. Click <a href=\"{2}\">here</a> to change your shipping destination."
+msgstr "Non ci sono spedizioni valide per {0} {1}. Clicca <a href=\"{2}\">qui</a> per cambiare la destinazione della spedizione."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Please wait while we restore your shopping cart..."
@@ -727,6 +751,10 @@ msgstr "Rimuovi"
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "SL No."
 msgstr "Numero linea"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
+msgid "Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>"
+msgstr "Alcuni prodotti nel tuo carrello richiedono che tu sia autenticato. <a href=\"{0}\">Effettua login per completare l'ordine.</a>"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/ShoppingCart.cshtml"
 msgid "Subtotal:"
@@ -793,6 +821,10 @@ msgid "Card Number"
 msgstr "Numero della carta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
+msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
+msgstr "Acquista con <a href=\"https://stripe.com/\">Stripe</a>"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Pay.cshtml"
 msgid "Checkout with Stripe"
 msgstr "Checkout con Stripe"
 
@@ -839,6 +871,10 @@ msgstr "Fatturazione all'indirizzo di spedizione."
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
 msgid "Billing Address"
 msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
+msgid "Checkout with <a href=\"https://stripe.com/\">Stripe</a>"
+msgstr "Acquista con <a href=\"https://stripe.com/\">Stripe</a>"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Stripe/Ship.cshtml"
 msgid "Checkout with Stripe"

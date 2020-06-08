@@ -5,47 +5,72 @@
     string tenantname = _shellsettings.Name.ToLower();
     var whitelabelLogo = Url.Content(String.Format("~/media/AdminResources/Logo/{0}-logo-frontoffice.png", tenantname));
 }
+@{
+    var requirementsMessage = T.Plural("The password can't be empty", "Passwords are required to be a minimum of {0} characters in length", (int)ViewData["PasswordLength"]).Text;
+    var additionalRequirementsMessage = new List<string>();
+    if ((bool)ViewData["LowercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one lowercase letter").Text);
+    }
+    if ((bool)ViewData["UppercaseRequirement"]) {
+        additionalRequirementsMessage.Add(T("one uppercase letter").Text);
+    }
+    if ((bool)ViewData["NumberRequirement"]) {
+        additionalRequirementsMessage.Add(T("one number").Text);
+    }
+    if ((bool)ViewData["SpecialCharacterRequirement"]) {
+        additionalRequirementsMessage.Add(T("one special character").Text);
+    }
+    if (additionalRequirementsMessage.Count() > 0) {
+        requirementsMessage = T("{0} and must contain at least {1}", requirementsMessage, string.Join(", ", additionalRequirementsMessage)).Text;
+    }
+    requirementsMessage += ".";
+}
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-index">
         @if (File.Exists(Server.MapPath(whitelabelLogo))) {
-            <img src="@whitelabelLogo" alt="@tenantname" class="img-responsive"/>
+            <img src="@whitelabelLogo" alt="@tenantname" class="img-responsive" />
         }
         else {
-            <div class="placeholder-logo"></div>   
+            <div class="placeholder-logo"></div>
         }
 
     </div>
     <div class="col-xs-12 col-sm-8 col-index">
         <h3>@Html.TitleForPage(T("Create a New Account").ToString())</h3>
         <p>@T("Use the form below to create a new account.")</p>
-        <p>@T("Passwords are required to be a minimum of {0} characters in length.", ViewData["PasswordLength"])</p>
+        <p>@requirementsMessage</p>
         @Html.ValidationSummary(T("Account creation was unsuccessful. Please correct the errors and try again.").ToString())
-        @using (Html.BeginFormAntiForgeryPost(Url.Action("Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) { 
-   
+        @using (Html.BeginFormAntiForgeryPost(Url.Action("Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))) {
+
             <b>@T("Account Information")</b>
             <div class="space-20"></div>
-           
-            @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control" }) 
-            @Html.ValidationMessage("username") 
-        
+
+            @Html.TextBox("username", "", new { placeholder = "Username...", @class = "input-text form-control" })
+            @Html.ValidationMessage("username")
+
             <div class="space-20"></div>
-           
-            @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control" }) 
-            @Html.ValidationMessage("email") 
-        
+
+            @Html.TextBox("email", "", new { placeholder = "email...", @class = "input-text form-control" })
+            @Html.ValidationMessage("email")
+
             <div class="space-20"></div>
-           
-            @Html.Password("password", "", new { placeholder = "Password...", @class = "input-text form-control" }) 
-            @Html.ValidationMessage("password") 
-       
+
+            @Html.Password("password", "", new { placeholder = "Password...", @class = "input-text form-control" })
+            @Html.ValidationMessage("password")
+
             <div class="space-20"></div>
-            @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" }) 
-            @Html.ValidationMessage("confirmPassword") 
-       
+            @Html.Password("confirmPassword", "", new { placeholder = "Confirm password...", @class = "input-text form-control" })
+            @Html.ValidationMessage("confirmPassword")
+
+            if (Model.UserProfile != null) { // if UserProfile && ExtendedRegistration are enabled, it shows all user parts/fields
+            <div class="space-20"></div>
+                @Display(Model.UserProfile)
+            }
+
             <div class="space-20"></div>
             <button class="submit" type="submit">@T("Register")</button>
-       
-   
+
+
         }
     </div>
 </div>

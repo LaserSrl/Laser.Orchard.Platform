@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -31,6 +31,10 @@ msgstr "Se questo tipo di contenuto contiene un aggregatore (i.e. projection, ta
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "If this website has a search functionality powered by Google, this tag prevents a search box from being displayed in Google's search results."
 msgstr "Se il sito ha una funzionalità di ricerca abilitata da Google, questo tag impedisce a Google di mostrare una casella per la ricerca nel sito nei suoi risultati delle ricerche."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
+msgid "Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html and https://developers.google.com/search/reference/overview, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized."
+msgstr "Inserire un json-ld che descriva il contenuto. Per la lista degli elementi consentiti consultare http://schema.org/docs/schemas.html e https://developers.google.com/search/reference/overview; per testare lo script utilizzare il tool all'indirizzo https://search.google.com/structured-data/testing-tool. Il testo è tokenizzabile."
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/DefinitionTemplates/SeoPartSettings.cshtml"
 msgid "Insert a json-ld that describe the content. For the list of elements avaible in structured data see http://schema.org/docs/schemas.html, for testing the script use https://search.google.com/structured-data/testing-tool. The text is tokenized."
@@ -91,6 +95,10 @@ msgstr "Clicca per ricaricare i grafici"
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
 msgid "Hide charts"
 msgstr "Nascondi grafici"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
+msgid "Keyword"
+msgstr "Parola Chiave"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/KeywordHelperKeyword.cshtml"
 msgid "Language"
@@ -341,6 +349,14 @@ msgid "Add"
 msgstr "Aggiungi"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Clean Redirects Cache"
+msgstr "Pulisci la Cache dei Redirect"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
+msgid "Number of cached elements: {0}"
+msgstr "Numero di elementi in cache: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Index.cshtml"
 msgid "Redirects"
 msgstr "Redirezionamenti"
 
@@ -397,6 +413,10 @@ msgid "A rule for this Source URL already exists."
 msgstr "Regola per l'URL di origine già presente."
 
 msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
+msgid "Redirect cache successfully reloaded"
+msgstr "Cache dei redirect ricaricata con successo"
+
+msgctxt "Laser.Orchard.SEO.Controllers.RedirectsAdminController"
 msgid "Redirect record was deleted"
 msgstr "L'elemento di redirect è stato eliminato"
 
@@ -435,6 +455,22 @@ msgstr "Redirezionamenti"
 msgctxt "Laser.Orchard.SEO.Navigation.RedirectsMenu"
 msgid "SEO"
 msgstr "SEO"
+
+msgctxt "Laser.Orchard.SEO.Providers.SeoPartTokens"
+msgid "SEOPart.Description"
+msgstr "SEOPart.Description"
+
+msgctxt "Laser.Orchard.SEO.Providers.SeoPartTokens"
+msgid "The description for the content that was input in its SEO Part."
+msgstr "La descrizion per il contenuto che è stata inseirta per il SEO."
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Exports Redirects. If there are 2 redirects in the exported file with the same SourceUrl, only one will be inserted during the import"
+msgstr "Esporta le redirect. Se ci sono 2 redirect nel file esportato con lo stesso SourceUrl, durante l'importazione ne verrà inserita solo una"
+
+msgctxt "Laser.Orchard.SEO.Recipes.Providers.Builders.RedirectRuleStep"
+msgid "Redirects Rule"
+msgstr "Regole di Redirect"
 
 msgctxt "Laser.Orchard.SEO.Services.RedirectService"
 msgid "Rules with same SourceURL are not valid."

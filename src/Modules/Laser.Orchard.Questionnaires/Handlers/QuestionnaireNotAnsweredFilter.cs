@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Laser.Orchard.Questionnaires.Models;
+using Orchard;
+using Orchard.ContentManagement;
+using Orchard.Data;
+using Orchard.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Orchard.Localization;
 using OProjections = Orchard.Projections;
-using Orchard;
-using Orchard.Data;
-using Laser.Orchard.Questionnaires.Models;
-using Orchard.ContentManagement;
 
 namespace Laser.Orchard.Questionnaires.Handlers {
     public class QuestionnaireNotAnsweredFilter : OProjections.Services.IFilterProvider {
@@ -32,30 +31,51 @@ namespace Laser.Orchard.Questionnaires.Handlers {
             return T("Only unanswered Questionnaire for current user");
         }
         public void ApplyFilter(OProjections.Descriptors.Filter.FilterContext context) {
+            List<int> elencoIdQuestionnaires = new List<int>();
+
             // recupera il context da un campo tokenized
             var aux = (string)(context.State.QuestionnaireId);
             var questionnaireId = string.IsNullOrWhiteSpace(aux) ? 0 : Convert.ToInt32(aux);
             // recupera il questionnaire context
             var questionnaireContext = (string)(context.State.Context);
+
+            string uniqueId = "";
             var currentUser = _orchardServices.WorkContext.CurrentUser;
+
             if (currentUser != null) {
-                List<Int32> elencoIdQuestionnaires = _userAnswersRecord.Fetch(x => x.User_Id == currentUser.Id && x.QuestionnairePartRecord_Id == questionnaireId && x.Context == questionnaireContext).Select(y => y.QuestionnairePartRecord_Id).Distinct().ToList();
+                elencoIdQuestionnaires = _userAnswersRecord
+                    .Fetch(x => x.User_Id == currentUser.Id 
+                        && x.QuestionnairePartRecord_Id == questionnaireId 
+                        && x.Context == questionnaireContext)
+                    .Select(y => y.QuestionnairePartRecord_Id)
+                    .Distinct().ToList();
+            } else {
+                var request = _orchardServices.WorkContext.HttpContext.Request;
+
+                if (request != null && request.Headers["x-uuid"] != null) {
+                    uniqueId = request.Headers["x-uuid"];
+                } else {
+                    uniqueId = _orchardServices.WorkContext.HttpContext.Session.SessionID;
+                }
+
+                if (!string.IsNullOrWhiteSpace(uniqueId))
+                    elencoIdQuestionnaires = _userAnswersRecord
+                        .Fetch(x => x.SessionID == uniqueId 
+                            && x.QuestionnairePartRecord_Id == questionnaireId 
+                            && x.Context == questionnaireContext)
+                        .Select(y => y.QuestionnairePartRecord_Id)
+                        .Distinct().ToList();
+            }
+
+            if (currentUser != null || !string.IsNullOrWhiteSpace(uniqueId)) {
                 Action<IAliasFactory> selector =
                     alias => alias.ContentPartRecord<QuestionnairePartRecord>();
                 Action<IHqlExpressionFactory> filter1 = x => x.Eq("Id", questionnaireId);
                 context.Query.Where(selector, filter1);
                 foreach (var id in elencoIdQuestionnaires) {
-                    var termId = id;
                     Action<IHqlExpressionFactory> filter2 = x => x.NotEqProperty("Id", id.ToString());
                     context.Query.Where(selector, filter2);
                 }
-            }
-            else {
-                // non estrae nulla: la condizione seguente è sempre falsa
-                Action<IAliasFactory> selector =
-                       alias => alias.ContentPartRecord<QuestionnairePartRecord>();
-                Action<IHqlExpressionFactory> filter = x => x.Eq("Id", -100);
-                context.Query.Where(selector, filter);
             }
         }
     }

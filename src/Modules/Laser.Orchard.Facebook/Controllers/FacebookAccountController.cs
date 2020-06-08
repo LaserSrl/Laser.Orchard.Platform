@@ -166,7 +166,7 @@ namespace Laser.Orchard.Facebook.Controllers {
 
         [Admin]
         public ActionResult GetPostTokenFacebook() {
-            ProviderConfigurationRecord pcr = _providerConfigurationService.Get("Facebook");
+            var pcr = _providerConfigurationService.Get("Facebook");
             if (pcr == null) {
                 _notifier.Add(NotifyType.Error, T("No facebook account setting added, add one in Settings -> Open Authentication"));
                 return RedirectToAction("Index", "FacebookAccount", new { area = "Laser.Orchard.Facebook", id = -10 });

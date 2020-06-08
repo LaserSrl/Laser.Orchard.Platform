@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.Braintree.Models;
+﻿using Laser.Orchard.Braintree.Controllers;
+using Laser.Orchard.Braintree.Models;
 using Laser.Orchard.PaymentGateway;
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
@@ -31,6 +32,12 @@ namespace Laser.Orchard.Braintree.Services {
             return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree" })
                 + "?pid=" + paymentId.ToString();
         }
+        public override Type GetPosActionControllerType() {
+            return typeof(BraintreeController);
+        }
+        public override string GetPosActionName() {
+            return "Index";
+        }
 
         public override string GetPosUrl(int paymentId) {
             throw new NotImplementedException(T("An SDK is available for BrainTree.").Text);
@@ -43,6 +50,23 @@ namespace Laser.Orchard.Braintree.Services {
         public override List<string> GetAllValidCurrencies() {
             return new string[] { _orchardServices.WorkContext
                 .CurrentSite.As<BraintreeSiteSettingsPart>().CurrencyCode}.ToList();
+        }
+
+        protected override string InnerChargeAdminUrl(PaymentRecord payment)
+        {
+            var config = _orchardServices.WorkContext
+             .CurrentSite.As<BraintreeSiteSettingsPart>();
+            string merchant = config?.MerchantId;
+            if (!config.ProductionEnvironment){
+                return string.Format("https://sandbox.braintreegateway.com/merchants/{0}/transactions/{1}",
+                                     merchant,
+                                     payment.TransactionId);
+            }
+            else {
+                return string.Format("https://www.braintreegateway.com/merchants/{0}/transactions/{1}",
+                                     merchant,
+                                     payment.TransactionId);
+            }
         }
     }
 }

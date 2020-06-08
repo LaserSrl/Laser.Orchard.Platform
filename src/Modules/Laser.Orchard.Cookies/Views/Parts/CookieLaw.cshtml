@@ -15,8 +15,7 @@
 
     // banner position
     var cookieBannerPosition = "overlay";
-    switch ((CookieBannerPosition)settings.cookiePosition)
-    {
+    switch ((CookieBannerPosition)settings.cookiePosition) {
         case CookieBannerPosition.Top:
             cookieBannerPosition = "top";
             break;
@@ -31,19 +30,21 @@
     var gdprScriptService = Model.GDPRScriptservice;
     var isPolicyPage = Model.isPolicyPage;
 
-    using (Script.Foot())
-    {
-        if (settings.DisableCookieGDPRManagement == false)
-        {
-<script type="text/javascript">
+    using (Script.Head()) {
+        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetHeadScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
+        }
+    }
+
+    using (Script.Foot()) {
+        if (settings.DisableCookieGDPRManagement == false) {
+            <script type="text/javascript">
 $(document).ready(function() {
     var cookiesettings = { };
-    if (@(part.cookieTitle.Length) > 0)
-        cookiesettings.cookieTitle = '@part.cookieTitle';
+    cookiesettings.cookieTitle = '@part.cookieTitle';
     if (@(part.cookieMessage.Length) > 0)
-        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>"))';
-    if ('@part.cookiePolicyLink'.length > 0)
-        cookiesettings.cookiePolicyLink = '@part.cookiePolicyLink';
+        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>").Replace("'", "&apos;"))';
+    cookiesettings.cookiePolicyLink = '@Html.Raw(part.cookiePolicyLink.Replace("'", "\\'"))';
     cookiesettings.cookieMessage = cookiesettings.cookieMessage + "<p id=\"ccPolicyMsgLink\"><a href=\"" + cookiesettings.cookiePolicyLink + "\">@part.cookiePolicyPageMessage</a></p>";
     // user options
     cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;width:100%"><div class="cc-cookie-checks">';
@@ -54,13 +55,26 @@ $(document).ready(function() {
     cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
     // buttons
     cookiesettings.cookieAcceptButton = true;
-    if ('@part.cookieAcceptButtonText'.length > 0)
-        cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
+    cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
     cookiesettings.cookieResetButton = @cookieResetButton;
-    if ('@part.cookieResetButtonText'.length > 0)
-        cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+    cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
     cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
-    cookiesettings.cookieAccepted = (@gdprScriptService.IsCookieAccepted() == 1);
+    var getCookie = function (cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    };
+    cookiesettings.cookieAccepted = getCookie("cc_cookie_accept").startsWith(cookiesettings.cookieExpectedValue);
     if (@isPolicyPage) {
         cookiesettings.cookiePolicyPage = true;
     }
@@ -71,12 +85,11 @@ $(document).ready(function() {
 
     $.cookieCuttr(cookiesettings);
 });
-</script>
+            </script>
         }
 
-        foreach (var cookie in gdprScriptService.GetAllowedCookies())
-        {
-            <text>@Html.Raw(cookie.GetScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
+        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+            <text>@Html.Raw(cookie.GetFootScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
         }
     }
 }

@@ -26,6 +26,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,20 +51,28 @@
     <Content Include="Content\Web.config" />
     <Content Include="Placement.info" />
     <Content Include="Scripts\Web.config" />
+    <Content Include="Styles\css.css" />
+    <Content Include="Styles\css.min.css" />
+    <Content Include="Styles\Custom.css" />
+    <Content Include="Styles\Custom.min.css" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff2" />
     <Content Include="Styles\fonts\FontAwesome.otf" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Styles\fonts\HandelGotD-Bold.eot" />
     <Content Include="Styles\fonts\HandelGotD-Bold.otf" />
+    <Content Include="Styles\fonts\HandelGotD-Bold.svg" />
     <Content Include="Styles\fonts\HandelGotD-Bold.ttf" />
     <Content Include="Styles\fonts\HandelGotD-Bold.woff" />
     <Content Include="Styles\fonts\lg.eot" />
+    <Content Include="Styles\fonts\lg.svg" />
     <Content Include="Styles\fonts\lg.ttf" />
     <Content Include="Styles\fonts\lg.woff" />
     <Content Include="Styles\fonts\Roboto-Black.eot" />
@@ -103,9 +112,52 @@
     <Content Include="Styles\fonts\Roboto-ThinItalic.ttf" />
     <Content Include="Styles\fonts\Roboto-ThinItalic.woff" />
     <Content Include="Styles\fonts\slick.eot" />
+    <Content Include="Styles\fonts\slick.svg" />
     <Content Include="Styles\fonts\slick.ttf" />
     <Content Include="Styles\fonts\slick.woff" />
     <Content Include="Styles\images\1499974076_142-mini-country-flags-16x16px.zip" />
+    <Content Include="Styles\images\748024 - flag kingd.png" />
+    <Content Include="Styles\images\748049 - flag italy.png" />
+    <Content Include="Styles\images\ajax-loader.gif" />
+    <Content Include="Styles\images\favicon.ico" />
+    <Content Include="Styles\images\favicon_laser.gif" />
+    <Content Include="Styles\images\footer-shadow.png" />
+    <Content Include="Styles\images\icon-marker.png" />
+    <Content Include="Styles\images\krake\footer-shadow.png" />
+    <Content Include="Styles\images\krake\home_principale.jpg" />
+    <Content Include="Styles\images\krake\logo-blue.png" />
+    <Content Include="Styles\images\krake\logo-green.png" />
+    <Content Include="Styles\images\krake\logo-red.png" />
+    <Content Include="Styles\images\krake\logo-yellow.png" />
+    <Content Include="Styles\images\krake\logo.png" />
+    <Content Include="Styles\images\krake\logo_krake_blu.png" />
+    <Content Include="Styles\images\logo-footer.png" />
+    <Content Include="Styles\images\logo.png" />
+    <Content Include="Styles\images\retro.png" />
+    <Content Include="Styles\images\societa-bg-other-value.png" />
+    <Content Include="Styles\krake.css" />
+    <Content Include="Styles\slick.css" />
+    <Content Include="Styles\slick.min.css" />
+    <Content Include="Styles\style.css" />
+    <Content Include="Styles\style.media.max1649.css" />
+    <Content Include="Styles\style.media.max1649.min.css" />
+    <Content Include="Styles\style.media.max767.css" />
+    <Content Include="Styles\style.media.max767.min.css">
+      <DependentUpon>style.media.max767.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\style.media.min1200.css" />
+    <Content Include="Styles\style.media.min1200.min.css" />
+    <Content Include="Styles\style.media.min768.css" />
+    <Content Include="Styles\style.media.min768.min.css" />
+    <Content Include="Styles\style.media.min992.css" />
+    <Content Include="Styles\style.media.min992.min.css" />
+    <Content Include="Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\style.postmedia.min.css" />
+    <Content Include="Styles\style.premedia.min.css" />
+    <Content Include="Styles\styles.css" />
+    <Content Include="Styles\styles.min.css" />
     <Content Include="Styles\Web.config" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\ClientsGallery.cshtml" />
@@ -212,41 +264,6 @@
     <Content Include="Scripts\webfont.js" />
     <Content Include="Scripts\whoami.js" />
     <Content Include="Scripts\wp-embed.js" />
-    <Content Include="Styles\css.css" />
-    <Content Include="Styles\Custom.css" />
-    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
-    <Content Include="Styles\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Styles\fonts\HandelGotD-Bold.svg" />
-    <Content Include="Styles\fonts\lg.svg" />
-    <Content Include="Styles\fonts\slick.svg" />
-    <Content Include="Styles\images\748024 - flag kingd.png" />
-    <Content Include="Styles\images\748049 - flag italy.png" />
-    <Content Include="Styles\images\ajax-loader.gif" />
-    <Content Include="Styles\images\favicon.ico" />
-    <Content Include="Styles\images\favicon_laser.gif" />
-    <Content Include="Styles\images\footer-shadow.png" />
-    <Content Include="Styles\images\icon-marker.png" />
-    <Content Include="Styles\images\krake\footer-shadow.png" />
-    <Content Include="Styles\images\krake\home_principale.jpg" />
-    <Content Include="Styles\images\krake\logo-blue.png" />
-    <Content Include="Styles\images\krake\logo-green.png" />
-    <Content Include="Styles\images\krake\logo-red.png" />
-    <Content Include="Styles\images\krake\logo-yellow.png" />
-    <Content Include="Styles\images\krake\logo.png" />
-    <Content Include="Styles\images\krake\logo_krake_blu.png" />
-    <Content Include="Styles\images\logo-footer.png" />
-    <Content Include="Styles\images\logo.png" />
-    <Content Include="Styles\images\retro.png" />
-    <Content Include="Styles\images\societa-bg-other-value.png" />
-    <Content Include="Styles\krake.css" />
-    <Content Include="Styles\slick.css" />
-    <Content Include="Styles\style.css" />
-    <Content Include="Styles\style.media.max1649.css" />
-    <Content Include="Styles\style.media.max767.css" />
-    <Content Include="Styles\style.media.min1200.css" />
-    <Content Include="Styles\style.media.min768.css" />
-    <Content Include="Styles\style.media.min992.css" />
-    <Content Include="Styles\styles.css" />
     <Content Include="Theme.png" />
     <Content Include="Theme.txt" />
     <Content Include="Web.config" />

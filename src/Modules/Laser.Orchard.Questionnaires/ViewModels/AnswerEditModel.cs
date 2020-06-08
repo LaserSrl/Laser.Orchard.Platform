@@ -15,8 +15,9 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public int Position { get; set; }
         public int QuestionRecord_Id { get; set; }
         public bool Delete { get; set; }
-        public int OriginalId { get; set; } // For Import Export purpose only
+        public int OriginalId { get; set; } // For Cloning and Import/Export purpose only
         public  bool CorrectResponse { get; set; }
         public string AllFiles { get; set; }
+        public string GUIdentifier { get; set; }
     }
 }

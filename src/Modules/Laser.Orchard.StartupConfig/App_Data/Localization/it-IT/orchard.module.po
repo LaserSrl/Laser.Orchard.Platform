@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -14,7 +14,11 @@ msgstr "Mancano i permessi per accedere a questo contenuto."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
 msgid "Command Line"
-msgstr "Linea di comando"
+msgstr "Linea di Comando"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
+msgid "Command line"
+msgstr "Linea di Comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
@@ -41,6 +45,10 @@ msgid "Custom View to use on Preview of selected content pickerfield items"
 msgstr "Vista (cshtml) personalizzata da utilizzare nella preview degli elementi selezionati dal Content Picker Field"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
+msgid "Custom View to use on Summary"
+msgstr "Vista personalizzata da utilizzare nel Riepilogo"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "If checked, when the ContentItem is published also other ContentItems connected to it through the Content Picker Field will be published."
 msgstr "Se selezionato, quando il ContentItem verrà pubblicato anche gli altri ContentItem collegati ad esso tramite il Content Picker Field verranno pubblicati."
 
@@ -51,6 +59,10 @@ msgstr "Se selezionato, quando il ContentItem viene salvato tutti i ContentItem 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ContentPickerFieldExtensionSettings.cshtml"
 msgid "Translate Items"
 msgstr "Traduci Oggetti"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CPContentCreationSettings.cshtml"
+msgid "Enable Content Creation"
+msgstr "Abilita creazione contenuti"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text"
@@ -100,6 +112,14 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/Parts/C
 msgid "Fields Filter"
 msgstr "Filtro Campi"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItemCachePartSettings.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/UserGroupSettings.cshtml"
 msgid "If checked, the part will be mandatory."
 msgstr "Se selezionato, la parte sarà obbligatoria."
@@ -132,6 +152,10 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApp
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
+msgid "You are not authorized to create the content types associated to this field."
+msgstr "Non sei autorizzato a creare contenuti del tipo associato a questo campo."
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Add"
 msgstr "Aggiungi"
@@ -151,6 +175,74 @@ msgstr "Inserire una riga in cima alla lista"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/JsonDataTable.cshtml"
 msgid "Max number of rows reached."
 msgstr "Numero massimo di righe raggiunto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Created on"
+msgstr "Creato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Draft"
+msgstr "Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Has Draft"
+msgstr "In bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Last Modified"
+msgstr "Ultima modifica"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Modified on"
+msgstr "Modificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "No Draft"
+msgstr "Nessuna Bozza"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Publish on"
+msgstr "Pianificato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Published on"
+msgstr "Pubblicato il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Status"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Unpublish on"
+msgstr "Spubblica il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Cannot perform requested operation"
+msgstr "Impossibile eseguire l'operazione richiesta"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "Select"
+msgstr "Seleziona"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
+msgid "To select a content you need to save it first."
+msgstr "Per selezionare il contenuto devi prima effettuare il salvataggio."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/EnvironmentVariablesSettings.cshtml"
 msgid "Fallback tenants"
@@ -204,6 +296,26 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/Maint
 msgid "Select Tenant"
 msgstr "Seleziona Istanza"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "Folder Name"
+msgstr "Nome Cartella"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "Insert folder's name (optional). If empty, an unique folder name (Identity or Username) will be created."
+msgstr "Inserire il nome della cartella (opzionale). Se vuoto, sarà creato in automatico un nome univoco per la cartella (Identity o Username)."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/OwnedFolder_Edit.cshtml"
+msgid "User default owned folder"
+msgstr "Cartella di default di proprietà dell'utente"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "hint"
+msgstr "suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/PerItemCachePart_Edit.cshtml"
+msgid "New Cache Key"
+msgstr "Nuova chiave di cache"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ProtectionSettingsPart.Edit.cshtml"
 msgid "A list of MVC Area.Controller.Action entries. When defined, using comma separated values, protects entries from unauthorized calls."
 msgstr "Una lista di elementi MVC Area.Controller.Action. Quando compilato, separando gli elementi da virgola, protegge le chiamate alle WebApi da chiamate non autorizzate."
@@ -235,6 +347,30 @@ msgstr "Se questa opzione viene selezionata, verrà automaticamente aggiunta una
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TaxonomyExtensionsSiteSettings.cshtml"
 msgid "Taxonomy Settings"
 msgstr "Impostazioni della Tassonomia"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista di plugin addizionali. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Additional Plugins"
+msgstr "Plugin Addizionali"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Content of the init method for TinyMce."
+msgstr "Contenuto del metodo init per TinyMce."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Init Script"
+msgstr "Script di Init"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Show/Hide default value"
+msgstr "Mostra/Nascondi il valore di default"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "TinyMce Settings"
+msgstr "Impostazioni TinyMce"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/UsersGroups.cshtml"
 msgid "Select User Group"
@@ -441,6 +577,14 @@ msgid "Created"
 msgstr "Creato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "Creating"
+msgstr "Creating"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "Disabled"
+msgstr "Disabilitato"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "LoggedIn"
 msgstr "EseguitoLogin"
 
@@ -499,6 +643,10 @@ msgstr "Risposta"
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Success"
 msgstr "Successo"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
+msgid "The data object of the response, the data must be in Json format es: {{\"ErrorType\":\"TicketError\"}}. "
+msgstr "L'oggetto di dati della risposta. I dati devono essere in formato Json. E.g.: {{\"ErrorType\":\"TicketError\"}}."
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "The data object of the response."
@@ -783,6 +931,110 @@ msgstr "Impostazioni"
 msgctxt "Laser.Orchard.StartupConfig.Navigation.UsersGroupsSettingsProvider"
 msgid "Users Groups"
 msgstr "Gruppi di utenti"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid " Array: {0}"
+msgstr "Array: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Configurable Sort Criteria"
+msgstr "Criteri di ordinamento configurabili"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Error: {0}"
+msgstr "Errore: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "General"
+msgstr "Generali"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "General sort criteria"
+msgstr "Criteri di ordinamento generali"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to find a field definition with name {0} within the part {1}."
+msgstr "Impossibile trovare una definizione di campo con nome {0} nella parte {1}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to find a part definition with name {0}."
+msgstr "Impossibile trovare una definizione di parte con nome {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Impossible to identify the IFieldTypeEditor to sort by {0}."
+msgstr "Impossibile identificare l'IFieldTypeEditor per ordinare per {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Index: {0}"
+msgstr "Indice: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "It was impossible to uniquely identify a property named {0} for type {1}. Perhaps it lacks a MemberBinding configuration?"
+msgstr "Non è stato possibile identificare univocamente una proprietà chiamata {0} per il tipo {1}. Forse manca la sua configurazione per il MemberBinding?"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "It was impossible to uniquely identify a type for {0}. Perhaps it lacks a MemberBinding configuration?"
+msgstr "Non è stato possibile identificare un tipo univoco per {0}. Forse manca la sua configurazione per il MemberBinding?"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Order based off a variable configuration"
+msgstr "Ordina sulla base di una configurazione variabile."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Possible types found are: {0}"
+msgstr "Possibili tipi trovati: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "Sorts the results by choosing the criterion from a list"
+msgstr "Ordina i risultati selezionando un criterio da una lista."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "The configuration is {0}."
+msgstr "La configurazione è {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "The type asked for in the sort criterion does not have a unique name. Use its FullName."
+msgstr "Il tipo richiesto nel criterio di ordinamento non ha un nome univoco. Usa il suo FullName."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "There was an error while attempting to process the Sorting configuration."
+msgstr "C'è stato un errore nel tentativo di valutare la configurazione di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Array of objects describing the sort criteria."
+msgstr "Array di oggetti che descrivono i criteri di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is configured for both a part and a field."
+msgstr "Il criterio in posizione {0} è configurato sia per una parte che per un campo."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is neither for a part or a field."
+msgstr "Il criterio in posizione {0} non è nè per una parte nè per un campo."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Enter the index of the criterion to be used. This will be interpreted as an integer index into the array given here in JSON. If this is not an integer, or if it's out of the bounds of the array, the first sort criterion will be used."
+msgstr "Inserire l'indice del criterio da usare. Questo sarà interpretato come un indice intero per l'array dato in JSON. Se non è un intero, o se è fuori dai limiti dell'array, verrà utilizzato il primo criterio di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Error while parsing the json array: {0}"
+msgstr "Errore nell'interpretare l'array json: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Index of the sort criterion."
+msgstr "Indice del criterio di ordinamento."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Insert a value for the Index (it is allowed to be a token)."
+msgstr "Inserisci un valore per l'indice (sono permessi i token)."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "The array of Criteria may not be null"
+msgstr "L'array dei criteri non può essere null."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and })"
+msgstr "Questo campo è usato per un array di oggetti che descriveranno la configurazione per ciascun criterio. Nel caso in cui si voglia ordinare sulla base di una proprietà di una ContentPart, bisogna valorizzare \"PartRecordTypeName\" e \"PropertyName\". Nel caso in cui si voglia ordinare sulla base di una proprietà di un ContentField, bisogna valorizzare \"PartName\" e \"FieldName\"; in questo caso \"PropertyName\" è opzionale. Si può anche valorizzare una proprietà booleana \"Ascending\" per modificare la direzione di ordinamento. Visto che questo campo può contenere dei tokens, bisogna usare le doppie graffe per delimitare gli oggetti JSON (i.e. usare {{ e }} invece di { e })."
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.FavoriteCultureFilter"
 msgid "Content Items associated with {0} as favorite culture."
@@ -1069,6 +1321,10 @@ msgid "Successfully Executed"
 msgstr "Eseguito con successo"
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "Thank you for registering. We sent you an e-mail with instructions to enable your account."
+msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "UnAuthorized Action"
 msgstr "Azione non autorizzata"
 
@@ -1155,6 +1411,10 @@ msgstr "Sorgente del Token"
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "The token used as a source for term identifiers"
 msgstr "Il token usato come sorgente degli ID dei termini"
+
+msgctxt "Laser.Orchard.StartupConfig.TinyMceEnhancement.TinyMceSiteSettingsHandler"
+msgid "TinyMce Enhancement"
+msgstr "Potenziamento TinyMce"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.AdditionalDateTokens"
 msgid "Add Days|Months|Years to a date"

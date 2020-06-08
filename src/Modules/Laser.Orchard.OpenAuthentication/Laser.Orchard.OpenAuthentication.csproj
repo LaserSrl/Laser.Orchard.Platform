@@ -78,12 +78,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.IdentityModel.Logging.5.6.0\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Layouts\Orchard.Layouts.csproj">
@@ -94,12 +93,19 @@
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
       <Name>Orchard.Workflows</Name>
     </ProjectReference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
       <Private>True</Private>
@@ -281,13 +287,16 @@
     <Compile Include="Handlers\OpenAuthUserEventHandler.cs" />
     <Compile Include="Handlers\OpenAuthUserEventWorkflowTriggersHandler.cs" />
     <Compile Include="Handlers\UserProviderGDPRHandler.cs" />
+    <Compile Include="Models\ProviderAttributeRecord.cs" />
     <Compile Include="Models\UserAccountLogin.cs" />
     <Compile Include="Models\UserProviderDisplayPart.cs" />
+    <Compile Include="Services\Clients\AppleAuthenticationClient.cs" />
     <Compile Include="Services\Clients\GoogleAuthenticationClient.cs" />
     <Compile Include="Services\Clients\InstagramAuthenticationClient.cs" />
     <Compile Include="Services\Clients\PinterestAuthenticationClient.cs" />
     <Compile Include="Services\Clients\PinterestUserData.cs" />
     <Compile Include="Services\Clients\YahooAuthenticationClient.cs" />
+    <Compile Include="Services\OpenAuthAppleOAuth2Client.cs" />
     <Compile Include="Services\OpenAuthFacebookOAuth2.cs" />
     <Compile Include="Services\OpenAuthGoogleOAuth2.cs" />
     <Compile Include="Services\OpenAuthInstagramOAuth2Client.cs" />
@@ -328,6 +337,8 @@
     <Compile Include="ViewModels\CreateProviderViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\OpenAuthTemporaryUser.cs" />
+    <Compile Include="ViewModels\ProviderAttributeViewModel.cs" />
+    <Compile Include="ViewModels\ProviderConfigurationViewModel.cs" />
     <Compile Include="ViewModels\UserProviderDisplayViewModel.cs" />
     <Compile Include="ViewModels\UserProvidersViewModel.cs" />
   </ItemGroup>

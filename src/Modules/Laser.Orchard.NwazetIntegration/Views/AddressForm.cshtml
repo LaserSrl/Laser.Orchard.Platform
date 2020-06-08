@@ -2,33 +2,39 @@
 @using System.Web.Mvc
 @using Nwazet.Commerce.Models
 @using Laser.Orchard.NwazetIntegration.Models
+@using Laser.Orchard.NwazetIntegration.ViewModels
 @{
     Script.Require("jQuery").AtHead();
+    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
     string prefix = Model.Prefix;
-    Address address = Model.Address;
+    AddressEditViewModel address = Model.Address;
     List<AddressRecord> addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
+    string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
+    var guid = Guid.NewGuid().ToString();
 }
 <div style="float:right">
     <fieldset>
         @if (prefix == "shippingAddress") {
 
             <legend>@T("Stored Shipping Address")</legend>
-        }
-        else {
+        } else {
             <legend>@T("Stored Billing Address")</legend>
         }
 
         <select id="@idlistaddress" name="@idlistaddress">
-            <option value=-1 selected title="@T("Remove inserted data")">@T("none")</option>
+            <option value=-1 selected title="@T("New address")">@T("New address")</option>
             @foreach (var ad in addressList) {
                 <option value=@ad.Id title="@ad.Honorific @ad.FirstName @ad.LastName @ad.Company">@ad.Address1 @ad.Address2 @ad.City</option>
             }
         </select>
     </fieldset>
 </div>
-<div>
+<div id="@guid">
     <label for="@Html.Id(prefix + ".Honorific")">@T("Title")</label>
     <input id="@Html.Id(prefix + ".Honorific")" type="text" name="@Html.Name(prefix + ".Honorific")" value="@address.Honorific" class="honorific input-mini" />
     <div class="hint">@T("Title or honorific, e.g. Mr., Mrs., Dr., San, etc.")</div>
@@ -40,53 +46,116 @@
     <div class="hint">@T("Please include middle name or initial as appropriate.")</div>
     <label for="@Html.Id(prefix + ".Company")">@T("Company")</label>
     <input id="@Html.Id(prefix + ".Company")" type="text" name="@Html.Name(prefix + ".Company")" value="@address.Company" class="input-large" />
-    <label for="@Html.Id(prefix + ".Address1")">@T("Address")</label>
+
+    @*Manage case where only 1 country is possible*@
+    @if (address.Countries.Count() == 1) {
+        <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country: {0}", address.Country)</label>
+        @Html.Hidden(prefix + ".CountryId", address.CountryId)
+    } else {
+        <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
+        @Html.DropDownList(prefix + ".CountryId", address.Countries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
+        <div class="hint">@T("You may leave this blank for the United States.")</div>
+    }
+
+    @Html.Hidden(prefix + ".CityId", address.CityId)
+    <label for="@Html.Id(prefix + ".City")" class="required">@T("City")</label>
+    @if (address.CityId >= 0) {
+        <select id="@Html.Id(prefix + ".City")"
+                class="input-large required address-input"
+                name="@Html.Name(prefix + ".City")"></select>
+    } else {
+        <input id="@Html.Id(prefix + ".City")"
+               class="input-large required address-input"
+               name="@Html.Name(prefix + ".City")" type="text"
+               value="@Model.City" />
+    }
+    <label for="@Html.Id(prefix + ".Address1")" class="required">@T("Address")</label>
     <input id="@Html.Id(prefix + ".Address1")" type="text" name="@Html.Name(prefix + ".Address1")" value="@address.Address1" class="input-xxlarge required" />
     <input id="@Html.Id(prefix + ".Address2")" type="text" name="@Html.Name(prefix + ".Address2")" value="@address.Address2" class="input-xxlarge" />
-    <label for="@Html.Id(prefix + ".City")">@T("City")</label>
-    <input id="@Html.Id(prefix + ".City")" type="text" name="@Html.Name(prefix + ".City")" value="@address.City" class="input-large required" />
-    <label for="@Html.Id(prefix + ".Province")">@T("State, province, prefecture, republic or region")</label>
-    <input id="@Html.Id(prefix + ".Province")" type="text" name="@Html.Name(prefix + ".Province")" value="@address.Province" class="input-mini" />
+
+    @Html.Hidden(prefix + ".ProvinceId", address.ProvinceId)
+    <label for="@Html.Id(prefix + ".Province")" class="required">@T("State, province, prefecture, republic or region")</label>
+    @if (Model.ProvinceId >= 0) {
+        <select id="@Html.Id(prefix + ".Province")"
+                class="input-mini required address-input"
+                name="@Html.Name(prefix + ".Province")"></select>
+    } else {
+        <input id="@Html.Id(prefix + ".Province")"
+               class="input-mini required address-input"
+               name="@Html.Name(prefix + ".Province")" type="text"
+               value="@Model.Province" />
+    }
     <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
-    <label for="@Html.Id(prefix + ".PostalCode")">@T("Postal or ZIP code")</label>
-    <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
-    <label for="@Html.Id(prefix + ".Country")">@T("Country")</label>
-    <input id="@Html.Id(prefix + ".Country")" type="text" name="@Html.Name(prefix + ".Country")" value="@address.Country" class="input-medium" />
-    <div class="hint">@T("You may leave this blank for the United States.")</div>
+    <label for="@Html.Id(prefix + ".PostalCode")" class="required">@T("Postal or ZIP code")</label>
+    <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small required" />
 </div>
-@using (Script.Foot()){
-    <script type="text/javascript">
+@using (Script.Foot()) {
+<script type="text/javascript">
         $(document).ready(function () {
-            $('#@idlistaddress').on('change',function(){
-                var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
+            // configure the script that will dynamically load configured address settings
+            var myaddress = $('#@guid').addressConfiguration({
+                // set all instance specific information here
+                // e.g. urls for ajax calls and the jquery selectors
+                // for the different elements of the address
+                countriesInput: '#@Html.Id(prefix + ".CountryId")',
+                citiesInput: '#@Html.Id(prefix + ".City")',
+                cityId: '#@Html.Id(prefix + ".CityId")',
+                provincesInput: '#@Html.Id(prefix + ".Province")',
+                provinceId: '#@Html.Id(prefix + ".ProvinceId")',
+                getCities: {
+                    url: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                getProvinces: {
+                    url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                },
+                isBilling: function () { return @isBillingAddress; }
+            });
+
+            // saved addresses for the user
+            var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
+            // when a different address is selected:
+            $('#@idlistaddress').on('change', function () {
                 if ($(this).val() == -1) {
-                    $('#@(prefix + "_Honorific")').val('');
-                    $('#@(prefix + "_FirstName")').val('');
-                    $('#@(prefix + "_LastName")').val('');
-                    $('#@(prefix + "_Company")').val('');
-                    $('#@(prefix + "_Address1")').val('');
-                    $('#@(prefix + "_Address2")').val('');
-                    $('#@(prefix + "_City")').val('');
-                    $('#@(prefix + "_Province")').val('');
-                    $('#@(prefix + "_PostalCode")').val('');
-                }else{
+                    $('#@guid').find('input').val('');
+                    // clear what's currently populated for the address
+                    myaddress.resetAddress();
+                } else {
+                    // figure out what address is selected
                     for (i = 0; i < arrayOfArrays.length; i++) {
                         if (arrayOfArrays[i].Id == $(this).val()) {
+                            // country, province, city are managed by the js library
+                            myaddress.resetAddress({ }, {
+                                countryId: arrayOfArrays[i].CountryId,
+                                cityId: arrayOfArrays[i].CityId,
+                                provinceId: arrayOfArrays[i].ProvinceId,
+                                city: arrayOfArrays[i].City,
+                                province: arrayOfArrays[i].Province,
+                            });
+                            // set the fields
                             $('#@(prefix + "_Honorific")').val(arrayOfArrays[i].Honorific);
                             $('#@(prefix + "_FirstName")').val(arrayOfArrays[i].FirstName);
                             $('#@(prefix + "_LastName")').val(arrayOfArrays[i].LastName);
                             $('#@(prefix + "_Company")').val(arrayOfArrays[i].Company);
                             $('#@(prefix + "_Address1")').val(arrayOfArrays[i].Address1);
                             $('#@(prefix + "_Address2")').val(arrayOfArrays[i].Address2);
-                            $('#@(prefix + "_City")').val(arrayOfArrays[i].City);
-                            $('#@(prefix + "_Province")').val(arrayOfArrays[i].Province);
                             $('#@(prefix + "_PostalCode")').val(arrayOfArrays[i].PostalCode);
-                            $('#@(prefix + "_Country")').val(arrayOfArrays[i].Country);
                         }
                     }
                 }
             });
+            // use a custom event to handle hiding/showing the form
+            $('#@guid').parent().on('visibilityChanged', function () {
+                // country, province, city are managed by the js library
+                myaddress.resetAddress({}, {
+                    countryId: $('#@Html.Id(prefix + ".CountryId")').val(),
+                    cityId: $('#@Html.Id(prefix + ".CityId")').val(),
+                    provinceId: $('#@Html.Id(prefix + ".ProvinceId")').val(),
+                    city: $('#@Html.Id(prefix + ".City")').val(),
+                    province: $('#@Html.Id(prefix + ".Province")').val(),
+                });
+            });
+            // on page load, set the first saved address
             $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
         });
-    </script>
+</script>
 }

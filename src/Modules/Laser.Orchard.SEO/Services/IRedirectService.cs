@@ -1,10 +1,7 @@
 ﻿using Laser.Orchard.SEO.Models;
 using Orchard;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Laser.Orchard.SEO.Services {
     public interface IRedirectService : IDependency {
@@ -22,26 +19,6 @@ namespace Laser.Orchard.SEO.Services {
         /// <param name="itemIds">The ids of the RedirectRule objects</param>
         /// <returns>An IEnumerable of RedirectRule objects</returns>
         IEnumerable<RedirectRule> GetRedirects(int[] itemIds);
-
-        /// <summary>
-        /// Get the total number of RedirectRule objects.
-        /// </summary>
-        /// <returns>The total number of RedirectRule objects.</returns>
-        int GetRedirectsTotalCount();
-
-        /// <summary>
-        /// Get the RedirectRule object with the given Id
-        /// </summary>
-        /// <param name="id">The id of the desired RedirectRule object</param>
-        /// <returns>The desired RedirectRule object</returns>
-        RedirectRule GetRedirect(int id);
-
-        /// <summary>
-        /// Get the RedirectRule object for the given SourceUrl
-        /// </summary>
-        /// <param name="path">The SourceUrl of the desired RedirectRule object</param>
-        /// <returns>The desired RedirectRule object</returns>
-        RedirectRule GetRedirect(string path);
 
         /// <summary>
         /// Updates the RedirectRule object. The object is identified by the id.
@@ -66,11 +43,22 @@ namespace Laser.Orchard.SEO.Services {
         /// </summary>
         /// <param name="id">The id of the RedirectRule object to be deleted</param>
         void Delete(int id);
-
+        
         /// <summary>
-        /// Deletes the RedirectRule object. The object is identified by the id.
+        /// Get the redirects cached in memory
         /// </summary>
-        /// <param name="redirectRule">The RedirectRule object to be deleted.</param>
-        void Delete(RedirectRule redirectRule);
+        /// <returns></returns>
+        IEnumerable<RedirectRule> GetCachedRedirects();
+        
+        /// <summary>
+        /// Get the queryable redirects from the DB
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<RedirectRule> GetTable();
+        
+        /// <summary>
+        /// Evict cache for redirects
+        /// </summary>
+        void ClearCache();
     }
 }

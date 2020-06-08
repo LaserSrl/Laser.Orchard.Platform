@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -133,8 +133,12 @@ msgid "Manage {0} Content"
 msgstr "Gestire Contenuto {0}"
 
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
+msgid "Manage Content"
+msgstr "Gestire Contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
 msgid "Manage content"
-msgstr "Gestisci contenuto"
+msgstr "Gestire contenuto"
 
 msgctxt "~/Modules/Laser.Orchard.AdvancedSearch/Views/Admin/List.cshtml"
 msgid "Not translated to: {0}"

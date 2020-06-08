@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -8,6 +8,14 @@
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressConfigurationAdmin/Index.cshtml"
+msgid "Address Configuration Settings"
+msgstr "Impostazioni di Configurazione Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressConfigurationAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Address"
 msgstr "Indirizzo"
@@ -15,6 +23,10 @@ msgstr "Indirizzo"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Address Type"
 msgstr "Tipo di Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "City"
@@ -47,6 +59,22 @@ msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codic
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Postal or ZIP code"
 msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Select a city from the list."
+msgstr "Seleziona una città dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Select a valid country from the list."
+msgstr "Seleziona uno stato valido dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "State, province, prefecture, republic or region"
@@ -177,6 +205,10 @@ msgid "Country"
 msgstr "Stato"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Country: {0}"
+msgstr "Stato: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "First Name"
 msgstr "Nome"
 
@@ -185,8 +217,12 @@ msgid "Last Name"
 msgstr "Cognome"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "New address"
+msgstr "Nuovo indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "none"
-msgstr "Nessuno"
+msgstr "Nuovo indirizzo"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Please include middle name or initial as appropriate."
@@ -228,6 +264,270 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "You may leave this blank for the United States."
 msgstr "Lasciare vuoto per gli Stati Uniti d'America."
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Any content will be inserted into the fields, both as text and as a token will be sent as it is to Google Tag Manager (also with html tags or special characters)"
+msgstr "Qualsiasi contenuto verrà inserito nei campi, sia come testo che come token verrà inviato così com'è a Google Tag Manager (anche con tag html o caratteri speciali)"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Brand"
+msgstr "Marchio"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Category"
+msgstr "Categoria"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Id"
+msgstr "Id"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The brand associated with the product"
+msgstr "Il marchio associato al prodotto"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The category to which the product belongs"
+msgstr "La categoria a cui appartiene il prodotto"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The maximum number of characters passed for each field to the GTM will be 255, at the end of the maximum length the string will be truncated"
+msgstr "Il numero massimo di caratteri passati per ciascun campo al GTM sarà 255, alla fine della lunghezza massima la stringa verrà troncata"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The name of the product"
+msgstr "Il nome del prodotto"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The product ID or SKU"
+msgstr "L'ID del prodotto o SKU"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "The variant of the product"
+msgstr "La variante del prodotto"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
+msgid "Variant"
+msgstr "Variante"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Address (second line)"
+msgstr "Indirizzo (seconda riga)"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Company"
+msgstr "Azienda"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "First Name"
+msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Honorific"
+msgstr "Onorifico"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Last Name"
+msgstr "Cognome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Please include company name if relevant."
+msgstr "Includere il nome dell'azienda, se pertinente."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Please include middle name or initial as appropriate."
+msgstr "Per favore, includete il secondo nome o l'iniziale in maniera opportuna."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'WA' per lo stato di Washington negli Stati Uniti d'America."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Postal Code"
+msgstr "CAP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Province or state"
+msgstr "Provincia o Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Select a city from the list."
+msgstr "Seleziona una città dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Select a valid country from the list."
+msgstr "Seleziona uno stato valido dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Title"
+msgstr "Titolo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
+msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Amount"
+msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Date"
+msgstr "Data"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Failed"
+msgstr "Fallito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Outcome"
+msgstr "Esito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Payment Info"
+msgstr "Informazioni Pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "POS"
+msgstr "POS"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Reason"
+msgstr "Causale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Transacion ID"
+msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AddressType.cshtml"
+msgid "Enable this territory for billing address configuration."
+msgstr "Abilita questo territorio per la configurazione dell'indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AddressType.cshtml"
+msgid "Enable this territory for shipping address configuration."
+msgstr "Abilita questo territorio per la configurazione dell'indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AdministrativeType.cshtml"
+msgid "Administrative Type for this territory"
+msgstr "Tipo Amministrativo per questo territorio"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryHierarchyIsCountriesHierarchy.cshtml"
+msgid "This hierarchy is selected to be the reference for valid countries."
+msgstr "Questa gerarchia è selezionata per essere il riferimento per gli stati validi."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryHierarchyIsCountriesHierarchyLocalization.cshtml"
+msgid "A localization of this hierarchy is selected to be the reference for valid countries."
+msgstr "Una localizzazione di questa gerarchia è selezionata come riferimento per paesi validi."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryPartIsSelectedCountry.cshtml"
+msgid "This territory is selected to be a reference for valid countries."
+msgstr "Questo territorio è selezionato come riferimento per paesi validi."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfiguration.cshtml"
+msgid "Select the hierarchy that contains the territories to be used to validate addresses. Later you will be able to select specific territories."
+msgstr "Seleziona la gerarchia che contiene i territori da utilizzare per convalidare gli indirizzi. Successivamente sarai in grado di selezionare territori specifici."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfiguration.cshtml"
+msgid "Territories for address configuration"
+msgstr "Territori per la configurazione dell'indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfiguration.cshtml"
+msgid "You need to select a hierarchy to pick the territories to allow in the system."
+msgstr "È necessario selezionare una gerarchia per selezionare i territori da consentire nel sistema."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "(Administrative type: {0})"
+msgstr "(Tipo amministrativo: {0})"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Children: "
+msgstr "Figlio:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Children: {0}"
+msgstr "Figlio: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Cities: {0}"
+msgstr "Città: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Click to expand."
+msgstr "Fai click per espandere."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Countries: {0}"
+msgstr "Stati: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Provinces: {0}"
+msgstr "Province: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
+msgid "Undefined"
+msgstr "Non definito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetailsMissing.cshtml"
+msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
+msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
 msgid "{0} &times; {1}"
 msgstr "{0} &times; {1}"
@@ -239,6 +539,34 @@ msgstr "Torna al carrello"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
 msgid "Checkout"
 msgstr "Checkout"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "(Administrative type: {0})"
+msgstr "(Tipo amministrativo: {0})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "Address configuration settings updated"
+msgstr "Impostazioni di configurazione dell'indirizzo aggiornate"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "City"
+msgstr "Città"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "Not authorized to manage address configuration settings"
+msgstr "Non autorizzato a gestire le impostazioni di configurazione dell'indirizzo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
+msgid "Undefined"
+msgstr "Non definito"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
 msgid "Address created successfully."
@@ -267,4 +595,72 @@ msgstr "Eseguire l'accesso per visualizzare i propri indirizzi salvati."
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
 msgid "That address has been removed."
 msgstr "L'indirizzo è stato rimosso."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "There are no products in the cart. Go back to the catalog and add products."
+msgstr "Non ci sono prodotti nel carrello. Torna al catalogo e aggiungi prodotti."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.AddressOrderPartDriver"
+msgid "Cannot manage orders"
+msgstr "Impossibile gestire gli ordini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
+msgid "Cannot manage orders"
+msgstr "Impossibile gestire gli ordini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
+msgid "City"
+msgstr "Città"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
+msgid "Country"
+msgstr "Stato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
+msgid "Undefined"
+msgstr "Non definito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
+msgid "Address Configuration"
+msgstr "Configurazione Indirizzo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
+msgid "Base"
+msgstr "Base"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
+msgid "E-Commerce"
+msgstr "E-Commerce"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationService"
+msgid "Select a country"
+msgstr "Seleziona uno stato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
+msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
+msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
+msgid "No valid countries were configured. Have an administrator configure one <a href=\"{0}\">here</a>."
+msgstr "Nessuno stato valido è stato configurato. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Failed"
+msgstr "Pagamento Fallito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Succeeded"
+msgstr "Pagamento Riuscito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PosServiceIntegration"
+msgid "Payment made with {0}"
+msgstr "Pagamento fatto tramite {0}"
 

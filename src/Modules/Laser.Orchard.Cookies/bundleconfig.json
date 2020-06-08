@@ -4,5 +4,11 @@
     "inputFiles": [
       "Styles/cookiecuttr.css"
     ]
+  },
+  {
+    "outputFileName": "Scripts/jquery.cookiecuttr.min.js",
+    "inputFiles": [
+      "Scripts/jquery.cookiecuttr.js"
+    ]
   }
 ]

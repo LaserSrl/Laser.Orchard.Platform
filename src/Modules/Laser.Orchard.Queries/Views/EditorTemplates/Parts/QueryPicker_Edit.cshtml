@@ -3,27 +3,15 @@
     Script.Require("jQuery_UI_Multiselect_Widget").AtHead();
     Style.Require("jQuery_UI_Multiselect_Widget").AtHead();
     using (Script.Foot()) {
-    <script type="text/javascript">
-        $(function () {
-@*            var queryCombo = $("#QueryPickerPart_SelectedIds optgroup:first-child");
-            @foreach (var item in Model.AvailableQueries) {
-                <text>
-                queryCombo.append("<option value=\"@item.Key\" @((Model.SelectedIds.Contains(item.Key))? "selected" : "")>@item.Value</option>");
-                </text>
-            }
-            queryCombo = $("#QueryPickerPart_SelectedIds optgroup:nth-child(2)");
-            @foreach (var item in Model.OneShotQueries) {
-                <text>
-                queryCombo.append("<option value=\"@item.Key\" @((Model.SelectedIds.Contains(item.Key))? "selected" : "")>@item.Value</option>");
-                </text>
-            }*@
-            $("#QueryPickerPart_SelectedIds").multiselect();
-        });
-    </script>
+        <script type="text/javascript">
+            $(function () {
+                $("#QueryPickerPart_SelectedIds").multiselect();
+            });
+        </script>
     };
 }
 <fieldset>
-    <label>@T("User defined queries picker")</label>
+    <label>@T("Custom queries picker")</label>
     <label class="hint">@T("Pick a user defined query")</label>
 
     <select id="QueryPickerPart_SelectedIds" multiple="multiple" name="QueryPickerPart.SelectedIds">
@@ -38,6 +26,9 @@
             }
         </optgroup>
     </select>
-    <span id="QueriesTotal">
-        @T("found {0:N0} content items", Model.TotalItemsCount.Value)</span>
+    @if (Model.TotalItemsCount.HasValue) {
+        <span id="QueriesTotal">
+            @T("found {0:N0} content items", Model.TotalItemsCount.Value)
+        </span>
+    }
 </fieldset>

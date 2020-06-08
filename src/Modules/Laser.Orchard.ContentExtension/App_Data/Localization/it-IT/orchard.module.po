@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -52,6 +52,22 @@ msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/Admin/Settings.cshtml"
 msgid "Update settings"
 msgstr "Aggiorna le impostazioni"
 
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/DynamicProjectionDisplay/AjaxList.cshtml"
+msgid "No content found. try again by changing the filters"
+msgstr "Nessun contenuto trovato. Prova cambiando i criteri di filtro."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/DynamicProjectionDisplay/List.cshtml"
+msgid "Apply"
+msgstr "Applica"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/DynamicProjectionDisplay/List.cshtml"
+msgid "Page returned an error an results cannot be displayed."
+msgstr "La pagina ha restituito un errore e non è possibile visualizzare i risultati."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/DynamicProjectionDisplay/List.cshtml"
+msgid "Search filters"
+msgstr "Filtri di ricerca"
+
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "({0})"
 msgstr "({0})"
@@ -69,12 +85,40 @@ msgid "Area"
 msgstr "Area"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Check if the query returns an HqlResult and NOT a list of content items."
+msgstr "Selezionare nel caso in cui la query ritorni un HqlResult e NON una lista di contenuti."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Check to add a pager to the list."
 msgstr "Seleziona per aggiungere i pulsanti di paginazione alla lista."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Choose a form to be used as filtering form."
+msgstr "Scegliere un form da usare come form di filtro."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Choose a form to be used to render results."
+msgstr "Scegliere un form da usare per visualizzare i risultati."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Content type"
+msgstr "Tipo di Contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "ContentType for filtering"
+msgstr "Tipo di contenuto utilizzato per filtrare"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Controller"
 msgstr "Controller"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Custom razor for filtering"
+msgstr "Razor personalizzato utilizzato per filtrare"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Custom razor for results"
+msgstr "Razor personalizzato per visualizzare i risultati"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Edit Query"
@@ -121,6 +165,18 @@ msgid "Position"
 msgstr "Posizione"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Query"
+msgstr "Ricerca"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Razor file"
+msgstr "File Razor"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Returns an Hql result"
+msgstr "Restituisce il risultato di una query Hql"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Shape"
 msgstr "Shape"
 
@@ -149,6 +205,10 @@ msgid "The Controller used for generate menu link."
 msgstr "Il Controller utilizzato per generare il menu link."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The css class used as icon for the admin menu item."
+msgstr "La classe css utilizzata come icona per la voce del menu di amministrazione."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The Icon used for menu link."
 msgstr "L'icona usata per il menu link."
 
@@ -165,6 +225,10 @@ msgid "The position in the menu."
 msgstr "La posizione nel menu."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The position of item in the admin menu."
+msgstr "la posizione della voce del menu di amministrazione."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The query to display."
 msgstr "La ricerca da visualizzare."
 
@@ -173,8 +237,28 @@ msgid "The Shape used for search form."
 msgstr "La Shape usata per il form di ricerca."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "The text of the admin menu item."
+msgstr "Il testo della voce del menu di amministrazione."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The text that should appear in the menu."
 msgstr "Il testo che dovrebbe apparire nel menu."
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "There are not forms set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder"
+msgstr "Non c'è alcun form disponibile. È possibile crearne uno aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/Code"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "There are not razors set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder"
+msgstr "Non c'è alcun razor disponibile. È possibile crearne uno aggiungendo un file cshtml nella cartella /App_Data/Sites/{tenant}/Code"
+
+msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
+msgid "Type a ContentType name. Leave empty to not use a ContenType as form for filtering."
+msgstr "Digitare il nome di un tipo di contenuto. Lasciare vuoto nel caso in cui non si desideri utilizzare un particolare tipo di contenuto come form di filtro."
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
+msgid "check your input!"
+msgstr "verificare i valori inseriti!"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "ContentType Permission settings updated."

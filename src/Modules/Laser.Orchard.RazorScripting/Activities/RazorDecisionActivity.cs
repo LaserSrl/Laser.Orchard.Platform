@@ -9,6 +9,7 @@ using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
 using Orchard;
 using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
+using Orchard.Mvc.Html;
 
 namespace Laser.Orchard.RazorScripting.Activities {
 
@@ -46,7 +47,7 @@ namespace Laser.Orchard.RazorScripting.Activities {
         }
 
         public override IEnumerable<LocalizedString> GetPossibleOutcomes(WorkflowContext workflowContext, ActivityContext activityContext) {
-            return GetOutcomes(activityContext).Select(outcome => T(outcome));
+            return GetOutcomes(activityContext).Select(outcome => T.Encode(outcome));
         }
 
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
@@ -54,7 +55,7 @@ namespace Laser.Orchard.RazorScripting.Activities {
             //  var script = "@{" + activityContext.GetState<string>("RazorScript") + "}"; Orchard mi elimina il codice scritto nelle graffe
             string outcome = _razorExecuteService.ExecuteString(script, (dynamic)workflowContext.Content.ContentItem, null);
             outcome = (outcome ?? "").Replace("\r\n", "");
-            yield return T(Convert.ToString(outcome));
+            yield return T.Encode(Convert.ToString(outcome));
         }
 
         private IEnumerable<string> GetOutcomes(ActivityContext context) {

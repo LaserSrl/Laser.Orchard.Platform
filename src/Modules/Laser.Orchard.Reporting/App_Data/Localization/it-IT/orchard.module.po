@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -117,6 +117,10 @@ msgid "Chart Types"
 msgstr "Tipi di Grafico"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Column Aliases"
+msgstr "Alias delle colonne"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
 msgid "Create"
 msgstr "Crea"
 
@@ -125,12 +129,20 @@ msgid "Name"
 msgstr "Nome"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "New HQL Query"
+msgstr "Nuova Query HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
 msgid "Query"
 msgstr "Ricerca"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
+msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query."
+msgstr "Specificare i nomi delle colonne da mostrare nel report, separati da virgola. Il report mostrerà, per ogni riga, solo i valori corrispondenti alle colonne specificate, nell'ordine in cui sono scritte. Se non viene specificato alcun nome di colonna, il report mostrerà le colonne così come definite dalla query."
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/CreateHql.cshtml"
 msgid "Title"
@@ -149,8 +161,16 @@ msgid "Dashboards"
 msgstr "Dashboard"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
 msgid "Name"
 msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/DashboardList.cshtml"
+msgid "New Dashboard"
+msgstr "Nuova Dashboard"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
 msgid "Download"
@@ -217,6 +237,10 @@ msgid "Chart Types"
 msgstr "Tipi di Grafico"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Column Aliases"
+msgstr "Alias delle colonne"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
 msgid "Edit"
 msgstr "Modifica"
 
@@ -225,12 +249,20 @@ msgid "Name"
 msgstr "Nome"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "New HQL Query"
+msgstr "Nuova Query HQL"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
 msgid "Query"
 msgstr "Ricerca"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
+msgid "Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query."
+msgstr "Specificare i nomi delle colonne da mostrare nel report, separati da virgola. Il report mostrerà, per ogni riga, solo i valori corrispondenti alle colonne specificate, nell'ordine in cui sono scritte. Se non viene specificato alcun nome di colonna, il report mostrerà le colonne così come definite dalla query."
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/EditHql.cshtml"
 msgid "Title"
@@ -287,6 +319,14 @@ msgstr "Aggiorna"
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
 msgid "Apply Filter"
 msgstr "Applica Filtro"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
+msgid "Edit"
+msgstr "Modifica"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowReports.cshtml"
 msgid "Execute Data Reports"
@@ -451,4 +491,8 @@ msgstr "Selezionare una opzione"
 msgctxt "Laser.Orchard.Reporting.Services.ReportManager"
 msgid "[No Title]"
 msgstr "[Nessun Titolo]"
+
+msgctxt "Laser.Orchard.Reporting.Services.ReportManager"
+msgid "No results found for your search."
+msgstr "La tua ricerca non ha trovato alcun risultato."
 

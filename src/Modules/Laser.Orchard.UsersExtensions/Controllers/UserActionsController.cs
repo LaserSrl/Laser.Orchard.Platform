@@ -5,6 +5,7 @@ using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
 using Orchard.Security;
+using Orchard.Users.Events;
 using Orchard.Users.Services;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -20,12 +21,14 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IUsersExtensionsServices usersExtensionsServices,
             IUserService userService,
             IUtilsServices utilsServices,
-            IEnumerable<IIdentityProvider> identityProviders) : base(
+            IUserEventHandler userEventHandler,
+        IEnumerable<IIdentityProvider> identityProviders) : base(
                  orchardServices,
                  utilsServices,
                  usersExtensionsServices,
                  identityProviders,
-                 userService
+                 userService,
+                 userEventHandler
                  ) { }
 
 
@@ -105,7 +108,13 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return GetUserRegistrationModelLogic();
         }
 
+        [HttpGet]
+        [AlwaysAccessible]
+        public JsonResult ChallengeEmailApiSsl(string nonce) {
+            return ChallengeEmailApiLogic(nonce);
+        }
+
         #endregion [https calls]
-                
+
     }
 }

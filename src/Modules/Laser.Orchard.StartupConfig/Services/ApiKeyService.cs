@@ -48,6 +48,19 @@ namespace Laser.Orchard.StartupConfig.Services {
                 };
             });
         }
+
+        // surpisingly, we should cache the CurrentSite
+        private ProtectionSettingsPart _currentSettings;
+        private ProtectionSettingsPart CurrentSettings {
+            get {
+                if (_currentSettings == null) {
+                    _currentSettings = _orchardServices
+                        .WorkContext.CurrentSite.As<ProtectionSettingsPart>();
+                }
+                return _currentSettings;
+            }
+        }
+
         public string ValidateRequestByApiKey(string additionalCacheKey, bool protectAlways = false) {
             _request = HttpContext.Current.Request;
             if (additionalCacheKey != null) {
@@ -56,22 +69,22 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             bool check = false;
             if (protectAlways == false) {
-                var settings = _orchardServices.WorkContext.CurrentSite.As<ProtectionSettingsPart>();
-                if (String.IsNullOrWhiteSpace(settings.ProtectedEntries)) {
+
+                if (string.IsNullOrWhiteSpace(CurrentSettings.ProtectedEntries)) {
                     return additionalCacheKey; // non ci sono entries da proteggere
                 }
-                var protectedControllers = settings.ProtectedEntries.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var protectedControllers = CurrentSettings.ProtectedEntries.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var area = _request.RequestContext.RouteData.Values["area"];
                 var controller = _request.RequestContext.RouteData.Values["controller"];
                 var action = _request.RequestContext.RouteData.Values["action"];
                 var entryToVerify = "";
                 if (action == null) {
                     // caso che si verifica con le web api (ApiController)
-                    entryToVerify = String.Format("{0}.{1}", area, controller);
+                    entryToVerify = string.Format("{0}.{1}", area, controller);
                 }
                 else {
                     // caso che si verifica con i normali Controller
-                    entryToVerify = String.Format("{0}.{1}.{2}", area, controller, action);
+                    entryToVerify = string.Format("{0}.{1}.{2}", area, controller, action);
                 }
                 if (protectedControllers.Contains(entryToVerify, StringComparer.InvariantCultureIgnoreCase)) {
                     check = true;
@@ -85,7 +98,10 @@ namespace Laser.Orchard.StartupConfig.Services {
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
                 var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
                 var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                if (!TryValidateKey(myApikey, myAkiv, (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"), myApiChannel)) {
+                if (!TryValidateKey(
+                        myApikey, myAkiv, 
+                        (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"), 
+                        myApiChannel)) {
                     additionalCacheKey = "UnauthorizedApi";
                 }
                 else {
@@ -129,7 +145,6 @@ namespace Laser.Orchard.StartupConfig.Services {
             _request = HttpContext.Current.Request;
             try {
                 byte[] mykey;
-                var settings = _orchardServices.WorkContext.CurrentSite.As<ProtectionSettingsPart>();
                 mykey = _apiKeySettingService.EncryptionKeys(channel).ToByteArray();
                 byte[] myiv = Convert.FromBase64String(akiv);
                 if (String.IsNullOrWhiteSpace(token)) {
@@ -162,8 +177,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (tokens.Length >= 2) {
                     unixTimeStamp = Convert.ToInt32(tokens[1]);
                 }
-                //var settings = _orchardServices.WorkContext.CurrentSite.As<ProtectionSettingsPart>();
-                var item = settings.ExternalApplicationList.ExternalApplications.FirstOrDefault(x => x.ApiKey.Equals(pureKey));
+
+                var item = CurrentSettings.ExternalApplicationList.ExternalApplications.FirstOrDefault(x => x.ApiKey.Equals(pureKey));
                 if (item == null) {
                     item = DefaultApplication.ApiKey.Equals(pureKey) ? DefaultApplication : item; //this may be a test request
                 }
@@ -171,7 +186,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                     Logger.Error("Decrypted key not found: key = " + key);
                     return false;
                 }
-
 
                 var floorLimit = Math.Abs(unixTimeStampNow - unixTimeStamp);
                 if (item.EnableTimeStampVerification) {

@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.AdvancedSearch.ViewModels;
 using Laser.Orchard.StartupConfig.Localization;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Aspects;
@@ -59,6 +60,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         private readonly IRepository<FieldIndexPartRecord> _cpfRepo;
         private readonly ILocalizationService _localizationService;
+        private readonly ICommonsServices _commonService;
 
         public AdminController(
             IOrchardServices orchardServices,
@@ -75,7 +77,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             IDateLocalization dataLocalization,
             ITaxonomyService taxonomyService,
             IRepository<FieldIndexPartRecord> cpfRepo,
-            ILocalizationService localizationService) {
+            ILocalizationService localizationService,
+            ICommonsServices commonService) {
             Services = orchardServices;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
@@ -93,6 +96,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             _notifier = notifier;
             _cpfRepo = cpfRepo;
             _localizationService = localizationService;
+            _commonService = commonService;
         }
 
         dynamic Shape { get; set; }
@@ -250,8 +254,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             // FILTER MODELS: START //
             // language filter model
-            model.AdvancedOptions.LanguageOptions = _cultureRepo.Table
-                            .Select(ctd => new KeyValuePair<int, string>(ctd.Id, ctd.Culture));
+            model.AdvancedOptions.LanguageOptions = _commonService.ListCultures().Select(x=> new KeyValuePair<int, string>(x.Id, x.Culture));
             // taxonomy filter model
             var termList = new List<KeyValuePair<int, string>>();
             foreach (var taxonomy in _taxonomyService.GetTaxonomies()) {

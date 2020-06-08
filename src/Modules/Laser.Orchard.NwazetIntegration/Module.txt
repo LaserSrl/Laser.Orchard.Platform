@@ -8,4 +8,4 @@ Description: Integration of Nwazet e-commerce in Krake.
 Features:
     Laser.Orchard.NwazetIntegration:
         Description: Integration of Nwazet e-commerce in Krake.
-		Dependencies: Laser.Orchard.PaymentGateway, Nwazet.Orders, Nwazet.Shipping, Laser.Orchard.CommunicationGateway,Nwazet.Commerce
+		Dependencies: Laser.Orchard.PaymentGateway, Nwazet.Orders, Nwazet.Shipping, Laser.Orchard.CommunicationGateway, Nwazet.Commerce, Territories, Laser.Orchard.jQueryPlugins

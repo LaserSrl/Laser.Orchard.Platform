@@ -17,10 +17,22 @@ namespace Laser.Orchard.UsersExtensions {
         }
 
         public int Create() {
+            ContentDefinitionManager.AlterPartDefinition("UserRegistrationPolicyPart", part=> part
+                .Attachable(true)
+                .WithDescription("When a content is in editing mode, it adds the ability to accept/deny a policy and save the choice.")
+                );
+
             ContentDefinitionManager.AlterTypeDefinition("User", content => content
                 .WithPart("UserRegistrationPolicyPart"));
 
-            return 1;
+            ContentDefinitionManager.AlterPartDefinition("FavoriteCulturePart", builder => builder
+                .Attachable(false));
+            ContentDefinitionManager.AlterTypeDefinition("User", content => content
+                .WithPart("FavoriteCulturePart"));
+            _contentDefinitionEventHandlers.ContentPartAttached(
+                new ContentPartAttachedContext { ContentTypeName = "User", ContentPartName = "FavoriteCulturePart" });
+
+            return 3;
         }
 
         /// <summary>
@@ -38,5 +50,14 @@ namespace Laser.Orchard.UsersExtensions {
 
             return 2;
         }
+
+        public int UpdateFrom2() {
+            ContentDefinitionManager.AlterPartDefinition("UserRegistrationPolicyPart", part => part
+                .Attachable(true)
+                .WithDescription("When a content is in editing mode, it adds the ability to accept/deny a policy and save the choice.")
+                );
+            return 3;
+        }
+
     }
 }

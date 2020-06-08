@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Orchard.Mvc.Routes;
 using Orchard.WebApi.Routes;
 
@@ -42,6 +44,20 @@ namespace Laser.Orchard.Vimeo {
                         controller = "VimeoUploadAPI",
                         action = "ErrorHandler"
                     }
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Admin/Vimeo",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Vimeo"},
+                            {"controller", "Admin"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Vimeo"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }

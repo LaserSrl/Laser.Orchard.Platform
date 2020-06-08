@@ -1,0 +1,39 @@
+﻿@using Orchard.ContentManagement;
+@model Laser.Orchard.CommunicationGateway.Mailchimp.Models.MailchimpSubscriptionPartSettings
+@{
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });
+    var selectedItems = new string[] { };
+    if (Model.PolicyTextReferences != null) {
+        selectedItems = Model.PolicyTextReferences;
+    }
+}
+<fieldset>
+    <div>
+        <h4>@T("Notifier front-end verbosity")</h4>
+        @Html.CheckBoxFor(m => m.NotifySubscriptionResult)
+        @Html.LabelFor(m => m.NotifySubscriptionResult, T("Notify subscription result").Text, new { @class = "forcheckbox" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.AudienceId, T("Audiences ids"))
+        @Html.TextBoxFor(m => m.AudienceId, new { @class = "text large" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.MemberEmail, T("Member e-mail"))
+        @Html.TextBoxFor(m => m.MemberEmail, new { @class = "text large tokenized" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.PutPayload, T("Put payload"))
+        @Html.TextAreaFor(m => m.PutPayload, new { @class = "text large tokenized" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.PolicyTextReferences, T("Required Policies"))
+        <select multiple="multiple" name="@Html.FieldNameFor(m => m.PolicyTextReferences)" id="@Html.FieldIdFor(m => m.PolicyTextReferences)">
+            @foreach (var policy in items) {
+                <option value="{@policy.ContentItem.Id}" @(selectedItems.Contains("{" + policy.ContentItem.Id + "}") ? "selected=\"selected\"" : "")>@policy.Title</option>
+            }
+        </select>
+        @Html.Hint(@T("Insert Required Policies."))
+    </div>
+</fieldset>
+@Display.TokenHint()

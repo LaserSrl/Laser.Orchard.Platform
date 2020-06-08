@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,10 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryPickerPartSettings.cshtml"
+msgid "Picker is for hql queries"
+msgstr "Lista a discesa per le query hql"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "Caption"
@@ -19,6 +23,10 @@ msgstr "vuoto (default) = nessun filtro"
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "Settings - Query User Filter Extension"
 msgstr "Impostazioni - Estensione per Ricerche utente"
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
+msgid "Custom queries picker"
+msgstr "Selezione di una query personalizzata"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/EditorTemplates/Parts/QueryPicker_Edit.cshtml"
 msgid "found {0:N0} content items"
@@ -63,6 +71,10 @@ msgstr "Salva"
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
 msgid "You may optionally give a description to this filter, to be used in the dashboard screens."
 msgstr "Puoi opzionalmente, per questo filtro, fornire una descrizione che sarà visualizzata nelle schermate del Pannello Amministrativo."
+
+msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/Edit.cshtml"
+msgid "Edit HQL Query"
+msgstr "Modifica Query HQL"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "a moment ago"

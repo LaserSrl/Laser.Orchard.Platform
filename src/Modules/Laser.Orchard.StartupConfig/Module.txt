@@ -5,8 +5,8 @@ Website: http://www.laser-group.com
 Version: 1.8
 OrchardVersion: 1.8
 Description: Laser Framework that enables many general features
-Dependencies: Orchard.MediaLibrary, Orchard.Fields, Orchard.ContentPicker, Orchard.Localization, Orchard.Modules, Orchard.Tokens ,Orchard.Roles
-Category: Administration
+Dependencies: Orchard.MediaLibrary, Orchard.Fields, Orchard.ContentPicker, Orchard.Localization, Orchard.Modules, Orchard.Resources, Orchard.Tokens ,Orchard.Roles
+Category: Admin
 Features:
     Laser.Orchard.StartupConfig.UriCultureSelector:
         Name: Laser Uri Culture selector
@@ -20,9 +20,9 @@ Features:
 		Dependencies: 
 	Laser.Orchard.StartupConfig.MediaExtensions:
 		Name: Laser Media Extension
-		Description: Expose a route to transform images
+		Description: Expose a route to transform images and enable the ability to manage the owned default folder for a user
 		Category: Media
-		Dependencies: Orchard.MediaProcessing
+		Dependencies: Orchard.MediaLibrary,Orchard.MediaProcessing
 	Laser.Orchard.StartupConfig.WorkflowExtensions:
 		Name: Laser Workflow Extension
 		Description: Expose useful functions for workflows
@@ -62,3 +62,13 @@ Features:
 		Name: Laser Extend Admin Controller To Frontend
 		Description: Replicate some admin controller to Frontend
 		Category: Frontend
+	Laser.Orchard.StartupConfig.ContentPickerContentCreation
+		Name: Content Picker Field Content Creation
+		Description: Enable feature to create contents when using a Content Picker Field
+		Category: Content
+		Dependencies: Orchard.ContentPicker, Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.TinyMceEnhancement
+		Name: TinyMce Enhancement
+		Description: Enable feature to customize TinyMce
+		Category: Content
+		Dependencies: TinyMce, Laser.Orchard.StartupConfig

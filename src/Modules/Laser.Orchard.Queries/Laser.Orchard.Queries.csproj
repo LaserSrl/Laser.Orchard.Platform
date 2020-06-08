@@ -118,13 +118,17 @@
     <Compile Include="Forms\ParametrizedHQLForm.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\MyCustomQueryPart.cs" />
+    <Compile Include="Models\QueryPickerPartSettings.cs" />
     <Compile Include="Models\QueryPickerPart.cs" />
     <Compile Include="Models\QueryUserFilterExtensionPart.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Providers\HQLQueryFilterProvider.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Services\ICustomQuery.cs" />
     <Compile Include="Services\IQueryPickerService.cs" />
+    <Compile Include="Settings\QueryPickerPartSettingsHooks.cs" />
     <Compile Include="Settings\QueryUserFilterExtensionPartEditEvents.cs" />
     <Compile Include="Settings\QueryUserFilterExtensionPartSettingVM.cs" />
     <Compile Include="ViewModels\ContentIndexVM.cs" />
@@ -204,7 +208,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\QueryPickerPartSettings.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

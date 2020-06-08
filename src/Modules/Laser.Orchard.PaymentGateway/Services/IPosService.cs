@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
 using Orchard;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -49,10 +50,32 @@ public interface IPosService : IDependency {
     /// <param name="paymentGuid">The guid of the record that contains the information about the payment.</param>
     /// <returns>The url of the virtual POS where the payment should happen.</returns>
     string GetPosUrl(string paymentGuid);
+    /// <summary>
+    /// Get Correct Url
+    /// </summary>
+    /// <param name="payment"></param>
+    /// <returns></returns>
+    string GetChargeAdminUrl(PaymentRecord payment);
+
+    /// <summary>
+    /// Get the type of the Controller for the action that will start the payment using a specific
+    /// payment gateway.
+    /// </summary>
+    /// <returns>The Type of the Controller.</returns>
+    /// <remarks>This method is used along GetPosActionName() when testing which payment gateway
+    /// is being used (if any).</remarks>
+    Type GetPosActionControllerType();
+    /// <summary>
+    /// Get the name of the Action that will start the payment using a specific payment gateway.
+    /// </summary>
+    /// <returns>The name of the action.</returns>
+    /// <remarks>This method is used along GetPosActionControllerType() when testing which payment gateway
+    /// is being used (if any).</remarks>
+    string GetPosActionName();
     #endregion
 
     #region Methods implemented in the abstract service base
-    string GetPaymentInfoUrl(int paymentId);
+        string GetPaymentInfoUrl(int paymentId);
     PaymentRecord StartPayment(PaymentRecord values, string newPaymentGuid = null);
     PaymentRecord GetPaymentInfo(int paymentId);
     void EndPayment(int paymentId, bool success, string error, string info, string transactionId = "");

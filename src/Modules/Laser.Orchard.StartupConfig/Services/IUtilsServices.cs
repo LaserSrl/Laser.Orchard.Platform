@@ -197,15 +197,15 @@ namespace Laser.Orchard.StartupConfig.Services {
                     rsp.ResolutionAction = ResolutionAction.AcceptPolicies;
                     break;
 
-                case ResponseType.MissingParameters:
+                case ResponseType.ToConfirmEmail:
                     rsp.Success = false;
                     if (message != "")
                         rsp.Message = message;
                     else
-                        rsp.Message = T("One or more parameters are null").ToString();
-                    rsp.ErrorCode = ErrorCode.MissingParameters;
+                        rsp.Message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
+                    rsp.ErrorCode = ErrorCode.ToConfirmEmail;
                     rsp.Data = data;
-                    rsp.ResolutionAction = ResolutionAction.AddParameter;
+                    rsp.ResolutionAction = ResolutionAction.ToConfirmEmail;
                     break;
             }
             return rsp;

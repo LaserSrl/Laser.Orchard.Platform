@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -387,6 +387,38 @@ msgstr "Data di inizio"
 msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
 msgid "Starting date of the event"
 msgstr "Data di inizio dell'evento"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "Activity End Date"
+msgstr "Data di fine dell'attività"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "Activity End Date (as String)"
+msgstr "Data fine attività (come stringa)"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "Activity Start Date"
+msgstr "Data di inizio dell'attività"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "Activity Start Date (as String)"
+msgstr "Data inizio attività (come stringa)"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "End date of Activity"
+msgstr "Data di fine dell'attività"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "Start date of Activity"
+msgstr "Data d'inizio dell'attività"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "String representing the end date of Activity"
+msgstr "Stringa che rappresenta la data di fine dell'attività"
+
+msgctxt "Laser.Orchard.Events.Tokens.ActivityPartTokens"
+msgid "String representing the start date of Activity"
+msgstr "Stringa che rappresenta la data d'inizio dell'attività"
 
 msgctxt "Laser.Orchard.Events.Tokens.EventTokens"
 msgid "End date of the parent Calendar"

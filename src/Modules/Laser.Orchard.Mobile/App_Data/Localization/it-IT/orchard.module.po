@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -141,8 +141,20 @@ msgid "Approved"
 msgstr "Approvato"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Communication errors"
+msgstr "Errori di comunicazione"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Contact"
 msgstr "Contatto"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Delivery Informations"
+msgstr "Informazioni sulla consegna delle notifiche"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Do you want to retry sending this notification to devices that encountered communication errors and to newly registered devices?"
+msgstr "Si vuole provare a inviare nuovamente questa notifica push ai dispositivi che hanno riscontrato errori di comunicazione e ai nuovi dispositivi registrati?"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Enter recipients manually"
@@ -213,6 +225,18 @@ msgid "result(s)"
 msgstr "risultato/i"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry"
+msgstr "Riprova"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry is running. Please wait for its completion and reload this page."
+msgstr "È in corso il tentativo di reinvio. Attendere il suo completamento e ricaricare la pagina."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Retry successfully planned."
+msgstr "Reinvio pianificato correttamente."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Select Devices"
 msgstr "Seleziona Dispositivi"
 
@@ -223,6 +247,10 @@ msgstr "Invio di test"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Send push to selected contact"
 msgstr "Invia la push al contatto selezionato"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Summary (ok/tot)"
+msgstr "Riepilogo (ok/tot)"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Test over developer devices"
@@ -259,6 +287,10 @@ msgstr "Titolo"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "To Device"
 msgstr "Dispositivi"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
+msgid "Try to send again this notification to devices that encountered communication errors and to newly registered devices"
+msgstr "Prova a inviare nuovamente questa notifica push ai dispositivi che hanno riscontrato errori di comunicazione e ai nuovi dispositivi registrati"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/MobilePush_Edit.cshtml"
 msgid "Type user's first 3 chars..."
@@ -419,6 +451,10 @@ msgstr "Visualizza Opzioni di Test"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "Suggested value: 2. Set to 0 for no retries in case of errors on first sending."
 msgstr "Valore suggerito: 2. Impostare a 0 per inibire nuovi tentativi di invio in caso di errore al primo tentativo."
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/PushMobileSettings_Edit.cshtml"
 msgid "Will able back office to send push to development device"
@@ -648,6 +684,62 @@ msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/SmsPlaceholder.csh
 msgid "Value"
 msgstr "Valore"
 
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "apple app site association"
+msgstr "Associazione sito/app di Apple"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "apple developer domain association"
+msgstr "associazione dominio sviluppatori apple"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable return file from the route: /apple-app-site-association"
+msgstr "Abilita l'esposizione del file tramite url: /apple-app-site-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable return file from the route: /apple-developer-domain-association"
+msgstr "Abilita il file di ritorno dalla route: /apple-developer-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the App Site File"
+msgstr "Abilita il File App Site"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the Developer Domain File"
+msgstr "Abilita il file di dominio dello sviluppatore"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the Manifest File"
+msgstr "Abilita il file di manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content"
+msgstr "Contenuto del file"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content for apple-app-site-association"
+msgstr "Contenuto del file per apple-app-site-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content for apple-developer-domain-association"
+msgstr "Contenuto del file per apple-developer-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Manage Manifest File"
+msgstr "Gestisci il file manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Manage Manifest Files"
+msgstr "Gestisci Files Manifest"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Save File apple-app-site-association"
+msgstr "Salva il file apple-app-site-association"
+
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/Parts/MobileContact.cshtml"
 msgid "Mobile"
 msgstr "Mobile"
@@ -669,8 +761,24 @@ msgid "Actions"
 msgstr "Azioni"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Actual Machine Name: {0}"
+msgstr "Nome Macchina corrente: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Are you sure you want to reassign ALL devices from the selected Machine Name to {0}?"
+msgstr "Sei sicuro di voler riassegnare alla Macchina {0} TUTTI i dispositivi a cui è associato il Nome Macchina selezionato?"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Assign to Current Machine"
+msgstr "Assegna alla Macchina Corrente"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Clear"
 msgstr "Cancella"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Clear Search"
+msgstr "Cancella Ricerca"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "DataInserimento"
@@ -701,6 +809,10 @@ msgid "List of devices."
 msgstr "Elenco dei dispositivi."
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "Machine Name to reassign:"
+msgstr "Nome Macchina da riassegnare:"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Produzione"
 msgstr "Production"
 
@@ -729,6 +841,10 @@ msgid "Show All"
 msgstr "Visualizza Tutto"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
+msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+msgstr "Per consentire l'invio di notifiche push a dispositivi registrati su server diversi, aggiungere la riga seguente al file Settings.txt (valori separati da spazio):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Token"
 msgstr "Token"
 
@@ -739,6 +855,18 @@ msgstr "UUIdentifier"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Validated"
 msgstr "Convalidato"
+
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "Cannot manage apple manifest file"
+msgstr "Impossibile gestire il file di manifest Apple"
+
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "File not saved."
+msgstr "File non salvato."
+
+msgctxt "Laser.Orchard.Mobile.Controllers.ManifestAppFileAdminController"
+msgid "File settings successfully saved."
+msgstr "Impostazioni del file salvate correttamente."
 
 msgctxt "Laser.Orchard.Mobile.Controllers.TaxonomiePushController"
 msgid "Can't retrieve user category, user not logged in"
@@ -779,6 +907,14 @@ msgstr "Contenuto Correlato"
 msgctxt "Laser.Orchard.Mobile.Migrations"
 msgid "Related Content"
 msgstr "Contenuto Correlato"
+
+msgctxt "Laser.Orchard.Mobile.Navigation.ManifestAppFileNavigation"
+msgid "Manifest App File"
+msgstr "File Manifest dell'App"
+
+msgctxt "Laser.Orchard.Mobile.Navigation.ManifestAppFileNavigation"
+msgid "Settings"
+msgstr "Impostazioni"
 
 msgctxt "Laser.Orchard.Mobile.Projections.DeveiceFilter"
 msgid "Content with userpart"

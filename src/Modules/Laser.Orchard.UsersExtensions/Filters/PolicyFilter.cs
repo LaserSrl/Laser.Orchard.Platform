@@ -31,12 +31,14 @@ namespace Laser.Orchard.UsersExtensions.Filters {
 
         public ILogger Logger { get; set; }
 
-        public PolicyFilter(IContentSerializationServices contentSerializationServices,
-                            IHttpContextAccessor httpContextAccessor,
-                            IPolicyServices policyServices,
-                            IUsersExtensionsServices userExtensionServices,
-                            IUtilsServices utilsServices,
-                            IWorkContextAccessor workContext) {
+        public PolicyFilter(
+            IContentSerializationServices contentSerializationServices,
+            IHttpContextAccessor httpContextAccessor,
+            IPolicyServices policyServices,
+            IUsersExtensionsServices userExtensionServices,
+            IUtilsServices utilsServices,
+            IWorkContextAccessor workContext) {
+
             _contentSerializationServices = contentSerializationServices;
             _httpContextAccessor = httpContextAccessor;
             _policyServices = policyServices;
@@ -49,19 +51,26 @@ namespace Laser.Orchard.UsersExtensions.Filters {
                 "Laser.Orchard.Policy.Controllers.PoliciesController",
                 "Orchard.Users.Controllers.AccountController",
                 "Laser.Orchard.OpenAuthentication.Controllers.AccountController",
-                "Orchard.Taxonomies.Controllers.LocalizedTaxonomyController"
+                "Orchard.Taxonomies.Controllers.LocalizedTaxonomyController",
+                "Nwazet.Commerce.Controllers.ShoppingCartController.NakedCart"
             };
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {
             bool isAdminService = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AdminServiceAttribute), false).Any();
 
-            if (_workContext.GetContext().CurrentUser != null && !allowedControllers.Contains(filterContext.Controller.GetType().FullName) && !AdminFilter.IsApplied(filterContext.RequestContext) && !isAdminService) {
+            var fullActionName = filterContext.Controller.GetType().FullName + "." + filterContext.ActionDescriptor.ActionName;
+
+            if (_workContext.GetContext().CurrentUser != null && 
+                !allowedControllers.Contains(filterContext.Controller.GetType().FullName) && 
+                !allowedControllers.Contains(fullActionName)  &&
+                !AdminFilter.IsApplied(filterContext.RequestContext) &&
+                !isAdminService) {
                 var language = _workContext.GetContext().CurrentCulture;
                 IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices.GetUserLinkedPolicies(language);
 
                 if (neededPolicies.Count() > 0) {
-                    var missingPolicies = MissingPolices();
+                    var missingPolicies = MissingRegistrationPolices();
                     if (missingPolicies.Count() > 0) {
 
                         if (filterContext.Controller.GetType().FullName == "Laser.Orchard.WebServices.Controllers.JsonController") {
@@ -118,17 +127,25 @@ namespace Laser.Orchard.UsersExtensions.Filters {
         public void OnActionExecuted(ActionExecutedContext filterContext) { }
 
         public void KeyGenerated(StringBuilder key) {
-            var missingPolicies = MissingPolices();
+            var missingPolicies = MissingRegistrationPolices();
             if (missingPolicies != null && missingPolicies.Count() > 0)
                 key.Append("pendingpolicies=" + String.Join("_", missingPolicies.Select(s => s)) + ";");
         }
 
-        private IEnumerable<int> MissingPolices() {
+        private IEnumerable<int> MissingRegistrationPolices() {
             if (_missingPolicies != null)
                 return _missingPolicies;
             var language = _workContext.GetContext().CurrentCulture;
-            IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices.GetUserLinkedPolicies(language);
-            var userPolicies = _policyServices.GetPoliciesForUserOrSession(false, language).Policies.Where(w => w.Accepted || (w.AnswerDate > DateTime.MinValue && !w.PolicyText.UserHaveToAccept)).Select(s => s.PolicyTextId).ToList();
+            // the following calls fetch information from the db. In the services where
+            // they are implemented, they should be cached.
+            IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices
+                .GetUserLinkedPolicies(language);
+            var userPolicies = _policyServices
+                .GetPoliciesForCurrentUser(false, language)
+                .Policies
+                .Where(w => w.Accepted || (w.AnswerDate > DateTime.MinValue && !w.PolicyText.UserHaveToAccept))
+                .Select(s => s.PolicyTextId)
+                .ToList();
             _missingPolicies = neededPolicies.Select(s => s.Id).ToList().Where(w => !userPolicies.Any(a => a == w));
             return _missingPolicies;
         }

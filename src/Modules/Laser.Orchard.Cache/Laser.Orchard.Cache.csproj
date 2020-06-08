@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,6 +98,7 @@
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes.cs" />
     <Compile Include="Services\ICacheAliasServices.cs" />
     <Compile Include="ViewModels\CacheUrlVM.cs" />
     <Compile Include="ViewModels\SearchIndexVM.cs" />

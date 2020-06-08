@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -16,6 +16,10 @@ msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorV
 msgid "The script to run everytime the content item is edited. You can use ContentItem, Services, WorkContext, T() and AddModelError()."
 msgstr "Lo script che viene eseguito ogni volta che un contenuto è modificato. Si possono usare: ContentItem, Services, WorkContext, T() and AddModelError()."
 
+msgctxt "~/Modules/Laser.Orchard.RazorScripting/Views/DefinitionTemplates/RazorValidationPartSettings.cshtml"
+msgid "The script to run everytime the content item is edited. You can use Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. If the script returns a NOT empty string, the part assumes that the content is in error."
+msgstr "Script da eseguire durante l'aggiornamento del contenuto. Si possono usare gli oggetti Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. Quando l'output dello script è una stringa NON vuota, la parte considera il contenuto in errore e non effettua l'aggiornamento."
+
 msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
 msgid "Evaluates an expression."
 msgstr "Valuta un'espressione"
@@ -29,8 +33,16 @@ msgid "A comma-separated list of possible outcomes."
 msgstr "Un una lista di possibili risultati, separati da una virgola."
 
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "A name for the razor that explain what it does."
+msgstr "Un nome per il razor che spiega cosa fa."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "Possible Outcomes."
 msgstr "Possibili risultati."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "Razor name."
+msgstr "Nome del Razor."
 
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "RazorScript"
@@ -39,6 +51,10 @@ msgstr "RazorScript"
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "The script to run every time the Razor Decision Activity is invoked. You can use ContentItem, Services, WorkContext, and T(). Call SetOutcome(string outcome) to define the outcome of the activity."
 msgstr "Lo script da eseguire ogni volta che il Razor Decision Activity è invocato. Si possono usare: ContentItem, Services, WorkContext, e T(). Chiamare SetOutcome (string outcome ) per definire i risultati dell'attività."
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
+msgid "The script to run every time the Razor Decision Activity is invoked. You can use Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. If the script renders a string, that string has threated as outcome."
+msgstr "Lo script da eseguire ogni volta che il Razor Decision Activity è invocato. Si possono usare: Model.ContentItem, Model.OrchardServices, Model.T(), Model.Tokens. Se lo script ritorna una stringa, la stringa è trattata come il risultato."
 
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "You must provide a Script"

@@ -36,6 +36,8 @@ namespace Laser.Orchard.PaymentGateway.Services {
         /// <returns></returns>
         public abstract string GetPosActionUrl(int paymentId);
         public abstract string GetPosActionUrl(string paymentGuid);
+        public abstract Type GetPosActionControllerType();
+        public abstract string GetPosActionName();
 
         /// <summary>
         /// Get the url of the virtual pos
@@ -299,6 +301,20 @@ namespace Laser.Orchard.PaymentGateway.Services {
             List<string> ret = new List<string>();
             ret.Add("EUR");
             return ret;
+        }
+
+        public virtual string GetChargeAdminUrl(PaymentRecord payment) {
+            if (payment.PosName == GetPosName())
+            {
+                return InnerChargeAdminUrl(payment);
+            }
+            return null;
+        }
+
+        protected virtual string InnerChargeAdminUrl(PaymentRecord payment) {
+            var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
+            var url = urlHelper.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway" });
+            return string.Format("{0}?paymentId={1}", url, payment.Id);
         }
     }
 }

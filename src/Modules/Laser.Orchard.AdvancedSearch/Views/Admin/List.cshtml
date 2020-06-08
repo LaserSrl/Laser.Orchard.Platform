@@ -3,18 +3,23 @@
 @using Laser.Orchard.AdvancedSearch.ViewModels;
 @using Laser.Orchard.AdvancedSearch;
 @using Orchard.Security;
+@using Orchard;
+@using Orchard.ContentManagement;
 
 
 @{
+    IOrchardServices _orchardServices;
+    WorkContext.TryResolve<IOrchardServices>(out _orchardServices);
+
     Script.Require("jQuery");
     Script.Require("jQueryUI_Core").AtHead();
     Script.Require("jQueryUI_Autocomplete").AtHead();
- //   Script.Require("Bootstrap").AtHead();
+    //   Script.Require("Bootstrap").AtHead();
     Style.Require("jQuery_Autocomplete").AtHead();
     Style.Require("AdvancedSearch").AtHead();
     Style.Require("FontAwesome430").AtHead();
     Style.Require("Accordion").AtHead();
- //   Style.Require("Bootstrap").AtHead();
+    //   Style.Require("Bootstrap").AtHead();
     var typeDisplayName = Model.TypeDisplayName;
     var pageTitle = T("Manage Content");
     var createLinkText = T("Create New Content");
@@ -34,13 +39,6 @@
                 if (!(inputvalueignorelist.indexOf((this.name + $(this).val())) >= 0)) {
                     if (this.name == 'AdvancedOptions.HasMedia') {
                         if (this.checked == true) {
-                            //if (!$(this).parent().hasClass('open')) {
-                            //    $(this).parent().parent().addClass('open');
-                            //    $(this).parent().parent().css({ display: "block" });
-                            //    //if ($($(this).parent().parent().parent().find('.accordion-section-title')).hasClass('active')) {
-                            //    //   $($(this).parent().parent().parent().find('.accordion-section-title')).addClass('active');
-                            //    //}
-                            //}
                             if (!$(this).parentsUntil($('.accordion-section-content')).parent().hasClass('open')) {
                                 $(this).parentsUntil($('.accordion-section-content')).parent().addClass('open');
                                 $(this).parentsUntil($('.accordion-section-content')).parent().css({ display: "block" });
@@ -66,7 +64,6 @@
             function close_accordion_section() {
                 var conpnl = $('.accordion .accordion-section-title');
                 conpnl.removeClass('active');
-                //  $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
             }
 
             $('.accordion-section-title').click(function (e) {
@@ -76,7 +73,6 @@
                 if ($(e.target).is('.active')) {
                     close_accordion_section();
                     $(e.target).parent().find(' .accordion-section-content').slideUp(300).removeClass('open')
-                    //  $('.accordion ').slideUp(300).removeClass('open');
                 } else {
                     close_accordion_section();
 
@@ -129,7 +125,7 @@
 }
 
 @using (Script.Foot()) {
-    
+
     <script type="text/javascript">
         function removeFilterAndReload(index) {
             //each filter is hardcoded to a case statement. This is rather ugly.
@@ -180,7 +176,7 @@
             return false;
         }
     </script>
-    
+
     <script>
         function checkOwnedByMeCheckBox() {
             var cbOwnedByMe = document.getElementById("isOwnedByMe"); //this is the checkbox object
@@ -214,7 +210,17 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="col-sm-4 align-right gray-label">@T("Content creation:")</label>
-                        @Html.ActionLink(createLinkText.Text, "Create", new { Area = "Contents", Id = (string)Model.Options.SelectedFilter }, new { @class = "button primaryAction" })
+                        @{
+                            if (!String.IsNullOrWhiteSpace((string)Model.Options.SelectedFilter)) {
+                                var dummyContent = _orchardServices.ContentManager.New(Model.Options.SelectedFilter);
+                                ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(dummyContent);
+                                var url = Url.RouteUrl(metadata.CreateRouteValues);
+                                <a class="button primaryAction" href="@url">@createLinkText.Text</a>
+                            }
+                            else {
+                                @Html.ActionLink(createLinkText.Text, "Create", new { Area = "Contents", Id = (string)Model.Options.SelectedFilter }, new { @class = "button primaryAction" })
+                            }
+                        }
                     </div>
                     <div class="col-sm-6">
                         <label class="col-sm-3 align-right gray-label">@T("Builk actions:")</label>
@@ -236,8 +242,8 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">@T("Content filtering")</h3>
-                @* Use a javascript to add labels here for each filter that is not default. Those labels should be clickable: on click, the page 
-                should reload, with the condition connected to the label reset to default.*@
+                @* Use a javascript to add labels here for each filter that is not default. Those labels should be clickable: on click, the page
+                    should reload, with the condition connected to the label reset to default.*@
                 <div id="appliedFilters" class="row">
                     @* Generate labels with razor. Each label has a script to remove the corresponding filter and reload the page. *@
                     <ul>
@@ -261,20 +267,21 @@
                         @if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
                             if (Model.AdvancedOptions.SelectedTermId != 0) {
                                 var term = Model.AdvancedOptions.TermById(Model.AdvancedOptions.SelectedTermId);
-                            @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString());
+                                @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString());
                             }
                         }
                         @{
-                        bool seeAll = Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
-                        bool mayChoose = Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
-                        bool onlyMine = seeAll ? (bool)Model.AdvancedOptions.OwnedByMeSeeAll : (bool)Model.AdvancedOptions.OwnedByMe;
-                        if (mayChoose) { //seeAll impliese mayChoose
-                            if (onlyMine) {
-                            @FilterActiveTag(7, @T("Only show my items.").ToString());
-                            } else if (Model.AdvancedOptions.SelectedOwner != null && !String.IsNullOrEmpty(Model.AdvancedOptions.SelectedOwner.ToString())) {
-                            @FilterActiveTag(6, @T("Only show items by: {0}", Model.AdvancedOptions.SelectedOwner.ToString()).ToString());
+                            bool seeAll = Authorizer.Authorize(AdvancedSearchPermissions.SeesAllContent);
+                            bool mayChoose = Authorizer.Authorize(AdvancedSearchPermissions.MayChooseToSeeOthersContent);
+                            bool onlyMine = seeAll ? (bool)Model.AdvancedOptions.OwnedByMeSeeAll : (bool)Model.AdvancedOptions.OwnedByMe;
+                            if (mayChoose) { //seeAll impliese mayChoose
+                                if (onlyMine) {
+                                    @FilterActiveTag(7, @T("Only show my items.").ToString());
+                                }
+                                else if (Model.AdvancedOptions.SelectedOwner != null && !String.IsNullOrEmpty(Model.AdvancedOptions.SelectedOwner.ToString())) {
+                                    @FilterActiveTag(6, @T("Only show items by: {0}", Model.AdvancedOptions.SelectedOwner.ToString()).ToString());
+                                }
                             }
-                        }
                         }
                         @if (Model.AdvancedOptions.SelectedFromDate != null) {
                             @FilterActiveTag(8, @T("{0} from {1}", Model.AdvancedOptions.DateFilterType.ToString(), Model.AdvancedOptions.SelectedFromDate.ToString()).ToString());
@@ -286,7 +293,7 @@
                             @FilterActiveTag(10, @T("Only items with media.").ToString());
                         }
 
-@*In this case we create some hidden input fields to hold the values from the model*@
+                        @*In this case we create some hidden input fields to hold the values from the model*@
                         @Html.Hidden("AdvancedOptions.CPFIdToSearch", (string)(Model.AdvancedOptions.CPFIdToSearch != null ? Model.AdvancedOptions.CPFIdToSearch.ToString() : ""), new { id = "CPFIdToSearch" })
                         @Html.Hidden("AdvancedOptions.CPFName", (string)(Model.AdvancedOptions.CPFName != null ? Model.AdvancedOptions.CPFName.ToString() : ""), new { id = "CPFName" })
                         @if (Model.AdvancedOptions.CPFIdToSearch != null && !String.IsNullOrWhiteSpace(Model.AdvancedOptions.CPFName)) {
@@ -391,28 +398,30 @@
                         <div class="col-xs-12 col-md-4">
                             @try {
                                 if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
-                                <label for="termsResults" class="bulk-filter">@T("Terms")</label>
-                                <select id="termsResults" name="AdvancedOptions.SelectedTermId">
-                                    @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), "0", T("any (show all)").ToString())
-                                    @{ int optgroupinserted = 0;
-                                       foreach (var languageOption in Model.AdvancedOptions.TaxonomiesOptions) {
-                                           if ((string)languageOption.Key.ToString() == "-1") {
-                                               if (optgroupinserted > 0) {
-                                                   Html.Raw("</optgroup>");
-                                               }
-                                               optgroupinserted = 1;
-                                        @Html.Raw("<optgroup label=\"" + (string)languageOption.Value + "\">");
-                                           } else {
-                                        @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), (string)languageOption.Key.ToString(), (string)languageOption.Value)
-                                           }
-                                       }
-                                       if (optgroupinserted > 0) {
-                                        @Html.Raw("</optgroup>");
-                                       }
-                                    }
-                                </select>
+                                    <label for="termsResults" class="bulk-filter">@T("Terms")</label>
+                                    <select id="termsResults" name="AdvancedOptions.SelectedTermId">
+                                        @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), "0", T("any (show all)").ToString())
+                                        @{ int optgroupinserted = 0;
+                                            foreach (var languageOption in Model.AdvancedOptions.TaxonomiesOptions) {
+                                                if ((string)languageOption.Key.ToString() == "-1") {
+                                                    if (optgroupinserted > 0) {
+                                                        Html.Raw("</optgroup>");
+                                                    }
+                                                    optgroupinserted = 1;
+                                                    @Html.Raw("<optgroup label=\"" + (string)languageOption.Value + "\">");
+                                                }
+                                                else {
+                                                    @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), (string)languageOption.Key.ToString(), (string)languageOption.Value)
+                                                }
+                                            }
+                                            if (optgroupinserted > 0) {
+                                                @Html.Raw("</optgroup>");
+                                            }
+                                        }
+                                    </select>
                                 }
-                            } catch { }
+                            }
+                            catch { }
                         </div>
                     </div>
                 </div>
@@ -429,7 +438,7 @@
                         </div>
                         <div class="col-xs-12 col-md-2">
                             <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
-                            @Html.EditorFor(m => AdvancedOptions.SelectedFromDateEditor, new { id = "dateFromResults"})
+                            @Html.EditorFor(m => AdvancedOptions.SelectedFromDateEditor, new { id = "dateFromResults" })
                             @*@Html.TextBox("AdvancedOptions.SelectedFromDate", (string)(Model.AdvancedOptions.SelectedFromDate != null ? Model.AdvancedOptions.SelectedFromDate.ToString() : ""), new { id = "dateFromResults" })*@
                         </div>
                         <div class="col-xs-12 col-md-2">
@@ -450,8 +459,8 @@
             </div>
             <!-- /.box-body -->
         </div>
-    </div>    
-    
+    </div>
+
     <fieldset class="contentItems bulk-items">
         @Display(Model.ContentItems)
     </fieldset>

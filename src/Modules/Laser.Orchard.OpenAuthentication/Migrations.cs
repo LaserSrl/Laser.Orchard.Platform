@@ -183,8 +183,26 @@ namespace Laser.Orchard.OpenAuthentication {
             SchemaBuilder.AlterTable("OpenAuthenticationSettingsPartRecord", t => t.AddColumn<bool>("AutoMergeNewUsersEnabled"));
             return 14;
         }
+        public int UpdateFrom14() {
+            SchemaBuilder.CreateTable("ProviderAttributeRecord",
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<int>("ProviderId")
+                    .Column<string>("AttributeKey")
+                    .Column<string>("AttributeValue")
+                );
+            SchemaBuilder.AlterTable("ProviderAttributeRecord",
+                table => table.AddUniqueConstraint("UC_ProviderAttributeRecord_1", new string[] { "ProviderId", "AttributeKey" })
+                );
+            SchemaBuilder.CreateForeignKey(
+                "FK_ProviderAttributeProvider",
+                "ProviderAttributeRecord", new[] { "ProviderId" },
+                "ProviderConfigurationRecord", new[] { "Id" });
+            return 15;
+        }
 
-        
+
+
 
     }
 }

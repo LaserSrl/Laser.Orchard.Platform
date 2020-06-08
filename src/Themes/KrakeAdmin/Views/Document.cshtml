@@ -1,11 +1,13 @@
-﻿@using Orchard.Mvc.Html;
+﻿@*Based on AdminLTE template https://adminlte.io/themes/AdminLTE/*@
+
+@using Orchard.Mvc.Html;
 @using Orchard.UI.Resources;
 @using Orchard.Environment.Configuration
 @{
     var settings = WorkContext.Resolve<ShellSettings>();
-    var tenantName = settings.Name;   
+    var tenantName = settings.Name;
     var css_TenantPath = "~/App_Data/Sites/" + tenantName + "/Styles/";
-    if (File.Exists(Server.MapPath(css_TenantPath + "Tenant.css")))  {
+    if (File.Exists(Server.MapPath(css_TenantPath + "Tenant.css"))) {
         Style.Include(css_TenantPath + "Tenant.css").AtHead();
     }
     @*Change favicon*@
@@ -17,12 +19,19 @@ Script.Include("html5.js").UseCondition("lt IE 9").AtHead();
 string title = Convert.ToString(Model.Title);
 string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
 
+//---- include meta ----//
+SetMeta("X-UA-Compatible", "IE=edge,chrome=1");
+
 //---- include js libraries ----//
+// Base theme
+Script.Require("jQuery").AtHead();
+Script.Require("ShapesBase").AtFoot();
+Script.Include("admin.js").AtFoot();
+
 //generic & tools
 Script.Require("Bootstrap").AtHead();
 Script.Include("jquery.autosize.min.js").AtHead();
 // specific for krake theme
-Script.Require("jQuery").AtHead();
 Script.Include("App.js").AtHead();
 Script.Include("AppCard.js").AtHead();
 Script.Include("AppForm.js").AtHead();
@@ -34,30 +43,36 @@ Script.Include("jquery.nanoscroller.min.js").AtHead();
 //custom
 Script.Include("krake.js").AtHead(); //dsweb custom library
 Script.Include("main.js").AtHead(); //laser-orchard custom library
+Script.Require("jQuery_DataTables").AtHead();
 
 //---- include css files ----//
-// generic & utilities
 Style.Require("Bootstrap").AtHead();
+Style.Require("jQuery_DataTables").AtHead();
+
+// Base theme
+Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
+Style.Include("ie.css").UseCondition("gte IE 9").SetAttribute("media", "screen, projection");
+Style.Include("ie8.css").UseCondition("IE 8").SetAttribute("media", "screen, projection");
+Style.Include("ie7.css").UseCondition("lte IE 7").SetAttribute("media", "screen, projection");
+
+// generic & utilities
 Style.Require("FontAwesome").AtHead();
 Style.Include("iconic-font.min.css").AtHead();
 Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,100,900").AtHead();
 //custom
-Style.Include("krake.css?date=30062016").AtHead(); //dsweb custom styles TO DO JOIN with krakeadmin.css!!
-Style.Include("krakeadmin.css?date=29112016").AtHead(); //dsweb custom styles
-Style.Include("krake-navicon.css").AtHead();
-
-
-
-
+Style.Require("BaseAdmin").AtHead(); //Based On AdminLTE https://adminlte.io/themes/AdminLTE/ MIT License
+Style.Require("KrakeAdmin").AtHead(); //Custom styles NB:krake.css has been merged into krakeadmin.css
+Style.Require("KrakeNavigation").AtHead();
 }
-<!DOCTYPE html> 
-<html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()"> 
-<head> 
+<!DOCTYPE html>
+<html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()">
+<head>
     <meta charset="utf-8" />
-    <title>@Html.Title(title, siteName)</title> 
+    <title>@Html.Title(title, siteName)</title>
+    @Display(Model.BeforeHead)
     @Display(Model.Head)
-    <script>        (function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script> 
-</head> 
+    <script>(function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script>
+</head>
 <body class="menubar-hoverable header-fixed menubar-pin">
     @* Layout (template) is in the Body zone @ the default position (nothing, zero, zilch) *@
     @Display(Model.Body)

@@ -354,6 +354,9 @@ namespace Laser.Orchard.Commons.Services {
                             if (filterFields == null || filterFields.Length == 0 || filterFields.Contains(part.PartDefinition.Name.ToLower()) || !part.PartDefinition.Name.EndsWith("Part"))
                                 SafeCall(() => Dump(part, part.PartDefinition.Name));
                         }
+                        else if (part.PartDefinition.Name == "UserPart") {
+                            SafeCall(() => Dump(new UserViewModel(((dynamic)part).Email), "UserPart"));
+                        }
                     }
                 }
             }
@@ -519,7 +522,16 @@ namespace Laser.Orchard.Commons.Services {
             SaveCurrentNode();
             _current.Add(_current = new XElement(tag));
         }
+
+        //Fake UserPart in order to expose some properties of the User
+        private class UserViewModel {
+            public UserViewModel(string email) {
+                Email = email ?? "";
+            }
+
+            public string Email { get; private set; }
+        }
     }
 
-
+   
 }

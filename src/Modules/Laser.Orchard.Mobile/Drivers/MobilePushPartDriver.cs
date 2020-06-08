@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Laser.Orchard.Mobile.Models;
+using Laser.Orchard.Mobile.Services;
 using Laser.Orchard.Mobile.Settings;
 using Laser.Orchard.Mobile.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
@@ -23,6 +24,7 @@ namespace Laser.Orchard.Mobile.Drivers {
         private readonly IControllerContextAccessor _controllerContextAccessor;
         private readonly IRepository<PushNotificationRecord> _repoPushNotification;
         private readonly ShellSettings _shellSettings;
+        private readonly IPushGatewayService _pushGatewayService;
         public Localizer T { get; set; }
 
         protected override string Prefix {
@@ -30,11 +32,13 @@ namespace Laser.Orchard.Mobile.Drivers {
         }
 
         public MobilePushPartDriver(IOrchardServices orchardServices, IControllerContextAccessor controllerContextAccessor,
-                                    IRepository<PushNotificationRecord> repoPushNotification, ShellSettings shellSettings) {
+                                    IRepository<PushNotificationRecord> repoPushNotification, ShellSettings shellSettings,
+                                    IPushGatewayService pushGatewayService) {
             _orchardServices = orchardServices;
             _controllerContextAccessor = controllerContextAccessor;
             _repoPushNotification = repoPushNotification;
             _shellSettings = shellSettings;
+            _pushGatewayService = pushGatewayService;
         }
 
         protected override DriverResult Display(MobilePushPart part, string displayType, dynamic shapeHelper)
@@ -67,6 +71,7 @@ namespace Laser.Orchard.Mobile.Drivers {
 
         protected override DriverResult Editor(MobilePushPart part, IUpdateModel updater, dynamic shapeHelper) {
             var viewModel = new MobilePushVM();
+            viewModel.PartId = part.Id;
             var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
             viewModel.ShowTestOptions = pushSettings.ShowTestOptions;
             if (updater != null) {
@@ -111,6 +116,7 @@ namespace Laser.Orchard.Mobile.Drivers {
             // Valorizzo TextNumberPushTest
             viewModel.PushTestNumber = _repoPushNotification.Count(x => x.Produzione == false);
             viewModel.ListOfDevice = GetListOfDeviceTypes(pushSettings);
+            viewModel.SentCounters = _pushGatewayService.GetNotificationsCounters(part.ContentItem);
             if (part.ContentItem.ContentType == "CommunicationAdvertising") {
                 // Flag Approvato all'interno del tab
                 viewModel.PushAdvertising = true;

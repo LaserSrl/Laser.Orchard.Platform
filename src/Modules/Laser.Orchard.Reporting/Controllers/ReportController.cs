@@ -21,9 +21,9 @@ using Orchard.Themes;
 using Orchard.ContentPicker.Fields;
 using Orchard.Security;
 using System.Text;
-using System.IO;
 using Laser.Orchard.Commons.Services;
 using System.Collections.Generic;
+using occ = Orchard.Core.Contents;
 
 namespace Laser.Orchard.Reporting.Controllers {
     [ValidateInput(false), Admin]
@@ -144,7 +144,8 @@ namespace Laser.Orchard.Reporting.Controllers {
                 Query = new QueryPartRecord { Id = model.QueryId.Value },
                 GroupByCategory = groupByDescriptor.Category,
                 GroupByType = groupByDescriptor.Type,
-                AggregateMethod = model.AggregateMethod
+                AggregateMethod = model.AggregateMethod,
+                GUID = Guid.NewGuid().ToString()
             };
 
             this.reportRepository.Create(newReport);
@@ -170,7 +171,9 @@ namespace Laser.Orchard.Reporting.Controllers {
                 Query = new QueryPartRecord { Id = model.QueryId.Value },
                 GroupByCategory = "",
                 GroupByType = "",
-                AggregateMethod = 0
+                AggregateMethod = 0,
+                ColumnAliases = model.ColumnAliases,
+                GUID = Guid.NewGuid().ToString()
             };
 
             reportRepository.Create(newReport);
@@ -256,6 +259,9 @@ namespace Laser.Orchard.Reporting.Controllers {
             report.GroupByCategory = groupByDescriptor.Category;
             report.GroupByType = groupByDescriptor.Type;
             report.AggregateMethod = model.AggregateMethod;
+            if (string.IsNullOrWhiteSpace(report.GUID)) {
+                report.GUID = Guid.NewGuid().ToString();
+            }
 
             this.reportRepository.Update(report);
             this.reportRepository.Flush();
@@ -290,6 +296,10 @@ namespace Laser.Orchard.Reporting.Controllers {
             report.GroupByCategory = "";
             report.GroupByType = "";
             report.AggregateMethod = 0;
+            report.ColumnAliases = model.ColumnAliases;
+            if (string.IsNullOrWhiteSpace(report.GUID)) {
+                report.GUID = Guid.NewGuid().ToString();
+            }
 
             reportRepository.Update(report);
             reportRepository.Flush();
@@ -338,6 +348,7 @@ namespace Laser.Orchard.Reporting.Controllers {
                 ReportId = report.Id,
                 Title = report.Title,
                 Name = report.Name,
+                ColumnAliases = report.ColumnAliases,
                 QueryId = report.Query != null ? (int?)report.Query.Id : null
             };
 
@@ -440,6 +451,11 @@ namespace Laser.Orchard.Reporting.Controllers {
             else {
                 model.Reports = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
             }
+            var ctList = services.ContentManager.GetContentTypeDefinitions().Where(t => t.Parts.Any(p => p.PartDefinition.Name == "DataReportViewerPart"));
+            foreach(var ct in ctList) {
+                model.ContentTypes.Add(ct);
+            }
+            model.BaseUrlForCreate = GetBaseUrlForCreate();
             return View(model);
         }
         public ActionResult ShowDashboard(ShowDashboardViewModel model) {
@@ -488,6 +504,10 @@ namespace Laser.Orchard.Reporting.Controllers {
             }
             else {
                 model.Dashboards = list.Skip(pager.GetStartIndex()).Take(pager.PageSize);
+            }
+            var dummyContent = services.ContentManager.New("DataReportDashboard");
+            if (_authorizer.Authorize(occ.Permissions.CreateContent, dummyContent)) {
+                model.UrlForCreateDashboard = GetBaseUrlForCreate() + "DataReportDashboard";
             }
             return View(model);
         }
@@ -566,6 +586,11 @@ namespace Laser.Orchard.Reporting.Controllers {
                     Value = query.Id.ToString()
                 });
             }
+        }
+        private string GetBaseUrlForCreate() {
+            var dummyContent = services.ContentManager.New("DataReportDashboard");
+            ContentItemMetadata metadata = services.ContentManager.GetItemMetadata(dummyContent);
+            return Url.RouteUrl(metadata.CreateRouteValues).Replace("DataReportDashboard", "");
         }
     }
 }

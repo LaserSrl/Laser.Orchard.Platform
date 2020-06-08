@@ -1,9 +1,8 @@
-﻿
-
-<h1>@T("Redirects")</h1>
+﻿<h1>@T("Redirects")</h1>
 
 <div class="manage">
-    @Html.ActionLink(T("Add").Text, "Add", "RedirectsAdmin", null, new { @class = "button primaryAction" })
+    @Html.ActionLink(T("Add").Text, "Add", "RedirectsAdmin", new { page = Request.QueryString["page"] }, new { @class = "button primaryAction" })
+    @Html.ActionLink(T("Clean Redirects Cache").Text, "ClearCache", "RedirectsAdmin", new { page = Request.QueryString["page"] }, new { @class = "button primaryAction" })
 </div>
 
 @Html.Partial("ListPartial")

@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2019 Laser s.r.l.
+# Copyright (c) 2020 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -137,6 +137,10 @@ msgid "A task has been scheduled to update reaction summaries for existing conte
 msgstr "Un attività in background si sta occupando di aggiornare i totali per i contenuti esistenti."
 
 msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
+msgid "check your input!"
+msgstr "verificare i valori inseriti!"
+
+msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
 msgid "Settings update failed: {0}"
 msgstr "Aggiornamento impostazioni fallito: {0}"
 
@@ -261,6 +265,18 @@ msgid "Value"
 msgstr "Valore"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "Max"
+msgstr "Max"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "Min"
+msgstr "Min"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "Reactions"
+msgstr "Reazioni"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
 msgid "The field {0} is required."
 msgstr "Il campo {0} è obbligatorio."
 
@@ -271,6 +287,10 @@ msgstr "Il campo {0} deve contenere un valore valido."
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
 msgid "The field {0} should contain a valid number"
 msgstr "Il campo {0} deve contenere un numero"
+
+msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
+msgid "Value"
+msgstr "Valore"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQuerySort"
 msgid "Ordered by {0}, ascending"

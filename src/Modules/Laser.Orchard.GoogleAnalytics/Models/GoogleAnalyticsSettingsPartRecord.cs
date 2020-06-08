@@ -34,6 +34,11 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         public virtual bool AnonymizeIp { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether we should use Google Tag Manager rather than Analytics.js.
+        /// </summary>
+        public virtual bool UseTagManager { get; set; }
+
+        /// <summary>
 		/// Initializes a new instance of the <see cref="GoogleAnalyticsSettingsPartRecord"/> class. Sets the default value
         /// of <see cref="P:UseAsyncTracking"/> to <c>true</c>, <see cref="P:TrackOnAdmin"/> to <c>false</c>, <see cref="P:TrackOnFrontEnd"/> to <c>false</c> and <see cref="P:AnonymizeIp"/> to <c>true</c>.
 		/// </summary>
@@ -42,6 +47,7 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
 			TrackOnAdmin = false;
             TrackOnFrontEnd = true;
             AnonymizeIp = true;
-		}
+            UseTagManager = false;
+        }
 	}
 }

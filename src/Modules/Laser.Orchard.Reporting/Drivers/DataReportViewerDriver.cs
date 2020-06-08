@@ -95,7 +95,8 @@ namespace Laser.Orchard.Reporting.Drivers {
                     ChartCssClass = partSettings.ChartTagCssClass,
                     ContainerCssClass = partSettings.ContainerTagCssClass,
                     ColorsArray = serializer.Serialize(colors),
-                    HtmlId = part.Record.Id
+                    HtmlId = part.Record.Id,
+                    AdditionalChartWidth = Convert.ToInt32(Math.Floor(reportData.Max(x => x.Label.Length) * 0.33)) //0.33: empirical value to adjust chart width
                 };
 
                 if (part.Record.ChartType == (int)ChartTypes.PieChart)
@@ -216,6 +217,8 @@ namespace Laser.Orchard.Reporting.Drivers {
                 report.SetAttributeValue("GroupByCategory", reportRecord.GroupByCategory ?? "");
                 report.SetAttributeValue("GroupByType", reportRecord.GroupByType ?? "");
                 report.SetAttributeValue("AggregateMethod", reportRecord.AggregateMethod);
+                report.SetAttributeValue("ColumnAliases", reportRecord.ColumnAliases ?? "");
+                report.SetAttributeValue("GUID", reportRecord.GUID ?? "");
                 var query = _contentManager.Get(reportRecord.Query.Id);
                 report.SetAttributeValue("QueryId", _contentManager.GetItemMetadata(query).Identity.ToString());
                 root.Add(report);
@@ -245,12 +248,22 @@ namespace Laser.Orchard.Reporting.Drivers {
             }
             var report = root.Element("Report");
             if(report != null) {
+                var guid = report.Attribute("GUID")?.Value ?? "";
                 ReportRecord reportRecord = null;
-                if (part.Record.Report == null) {
-                    reportRecord = new ReportRecord();
-                } else {
-                    reportRecord = part.Record.Report;
+                // match report record based on GUID
+                bool newReportRecord = false;
+                if (!string.IsNullOrWhiteSpace(guid)) {
+                    reportRecord = reportRepository.Table.FirstOrDefault(r => r.GUID == guid);
                 }
+                if (reportRecord == null) {
+                    newReportRecord = true;
+                    reportRecord = new ReportRecord() {
+                        GUID = string.IsNullOrWhiteSpace(guid)
+                            ? Guid.NewGuid().ToString()
+                            : guid
+                    };
+                }
+                
                 var name = report.Attribute("Name");
                 if (name != null) {
                     reportRecord.Name = name.Value;
@@ -275,6 +288,10 @@ namespace Laser.Orchard.Reporting.Drivers {
                 if (aggregateMethod != null) {
                     reportRecord.AggregateMethod = Convert.ToInt32(aggregateMethod.Value);
                 }
+                var columnAliases = report.Attribute("ColumnAliases");
+                if (columnAliases != null) {
+                    reportRecord.ColumnAliases = columnAliases.Value;
+                }
                 var queryId = report.Attribute("QueryId");
                 if (queryId != null) {
                     var ciQuery = _contentManager.ResolveIdentity(new ContentIdentity(queryId.Value));
@@ -283,8 +300,10 @@ namespace Laser.Orchard.Reporting.Drivers {
                         reportRecord.Query.Id = ciQuery.Id;
                     }
                 }
-                if(part.Record.Report == null) {
+                if (part.Record.Report == null) {
                     part.Record.Report = reportRecord;
+                }
+                if (newReportRecord) {
                     reportRepository.Create(reportRecord);
                 } else {
                     reportRepository.Update(reportRecord);
