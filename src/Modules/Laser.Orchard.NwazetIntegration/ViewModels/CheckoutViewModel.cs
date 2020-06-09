@@ -55,18 +55,25 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
-        public string SerializedAddresses { get; private set; }
+        public string SerializedAddresses { get; set; }
         public string EncodeAddresses() {
-            SerializedAddresses = JsonConvert.SerializeObject(AsAddressesVM());
+            SerializedAddresses = HttpUtility.HtmlEncode(JsonConvert.SerializeObject(AsAddressesVM()));
             return SerializedAddresses;
         }
         public void DecodeAddresses() {
-            SetAddressesVM(JsonConvert.DeserializeObject<AddressesVM>(SerializedAddresses));
+            SetAddressesVM(
+                JsonConvert.DeserializeObject<AddressesVM>(
+                    HttpUtility.HtmlDecode(SerializedAddresses)));
         }
         #endregion
 
         #region Shipping
         public List<ShippingOption> AvailableShippingOptions { get; set; }
+        /// <summary>
+        /// This is ShippingOption.FormValue for the selected option, used to pull it
+        /// from teh form.
+        /// </summary>
+        public string ShippingOption { get; set; }
         #endregion
     }
 }

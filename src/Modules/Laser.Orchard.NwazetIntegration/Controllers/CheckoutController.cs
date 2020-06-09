@@ -4,6 +4,7 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Themes;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IEnumerable<IShippingMethodProvider> _shippingMethodProviders;
         private readonly IShoppingCart _shoppingCart;
         private readonly ICurrencyProvider _currencyProvider;
+        private readonly IContentManager _contentManager;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -52,7 +54,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IEnumerable<IValidationProvider> validationProviders,
             IEnumerable<IShippingMethodProvider> shippingMethodProviders,
             IShoppingCart shoppingCart,
-            ICurrencyProvider currencyProvider) {
+            ICurrencyProvider currencyProvider,
+            IContentManager contentManager) {
 
             _workContextAccessor = workContextAccessor;
             _checkoutSettingsService = checkoutSettingsService;
@@ -62,6 +65,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _shippingMethodProviders = shippingMethodProviders;
             _shoppingCart = shoppingCart;
             _currencyProvider = currencyProvider;
+            _contentManager = contentManager;
         }
 
         public ActionResult CheckoutStart() {
@@ -95,11 +99,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     model.Phone = cel[1];
                 }
                 // also load the list of existing addresses for them
-                model.ListAvailableBillingAddress = 
+                model.ListAvailableBillingAddress =
                     _nwazetCommunicationService.GetBillingByUser(user);
                 // we are only going to load the shipping addresses if shipping is required
-                if(IsShippingRequired()) {
-                    model.ListAvailableShippingAddress = 
+                if (IsShippingRequired()) {
+                    model.ListAvailableShippingAddress =
                         _nwazetCommunicationService.GetShippingByUser(user);
                 }
             }
@@ -135,7 +139,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // addresses they just configured.
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (user != null) {
-                // TODO: save addresses
+                if (model.BillingAddressVM != null && model.BillingAddressVM.AddressRecord != null) {
+                    _nwazetCommunicationService.AddAddress(model.BillingAddressVM.AddressRecord, user);
+                }
+                if (model.ShippingAddressVM != null && model.ShippingAddressVM.AddressRecord != null) {
+                    _nwazetCommunicationService.AddAddress(model.ShippingAddressVM.AddressRecord, user);
+                }
             }
             // In case validation is successful, depending on whether shipping is required, we
             // should redirect to a different action/step. 
@@ -147,6 +156,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // Put the model we validated in TempData so it can be reused in the next action.
             TempData["CheckoutViewModel"] = model;
             if (IsShippingRequired()) {
+                // Set values into the ShoppingCart storage
+                var country = _addressConfigurationService
+                    ?.GetCountry(model.ShippingAddressVM.CountryId);
+                _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
                 return RedirectToAction("Shipping");
             }
             return RedirectToAction("Review");
@@ -159,7 +173,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (TempData.ContainsKey("CheckoutViewModel")) {
                 model = (CheckoutViewModel)TempData["CheckoutViewModel"];
             }
-            if (model.ShippingAddressVM == null 
+            if (model.ShippingAddressVM == null
                 && !string.IsNullOrWhiteSpace(model.SerializedAddresses)) {
                 model.DecodeAddresses();
             }
@@ -170,9 +184,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     .ToList();
                 // Hack: based on the address coming in model.ShippingAddressVM, we can 
                 // compute the actual destinations to be used at this stage
-                var countryName = _addressConfigurationService
-                    ?.GetCountry(model.ShippingAddressVM.CountryId)
+                var country = _addressConfigurationService
+                    ?.GetCountry(model.ShippingAddressVM.CountryId);
+                var countryName = country
                     ?.Record?.TerritoryInternalRecord.Name;
+                // we should make sure that the country name is filled in for the shipping
+                // address view model, so we can display it.
+                if (string.IsNullOrWhiteSpace(model.ShippingAddressVM.Country)) {
+                    model.ShippingAddressVM.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                }
                 // get all possible providers for shipping methods
                 var shippingMethods = _shippingMethodProviders
                     .SelectMany(p => p.GetShippingMethods())
@@ -201,9 +221,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                                 $"{model.ShippingAddressVM.CityId}",
                             _workContextAccessor));
                 // remove duplicate shipping options
-                model.AvailableShippingOptions = allShippingOptions.Distinct().ToList();
+                model.AvailableShippingOptions = allShippingOptions.Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
                 // to correctly display prices, the view will need the currency provider
                 model.CurrencyProvider = _currencyProvider;
+                // encode addresses so we can hide them in the form
+                model.EncodeAddresses();
                 return View(model);
             }
             // to get here something must have gone very wrong. Perhaps the user
@@ -217,14 +239,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         public ActionResult ShippingPOST(CheckoutViewModel model) {
             // validate the choice of shipping method then redirect to the action that lets
             // the user review their order.
+            // Addresses come from the form as encoded in a single thing, because at
+            // this stage the user will have already selected them earlier.
+            model.DecodeAddresses();
+            // the selected shipping option
+            if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
+                // TODO: they selected no shipping!
+                // redirect them somewhere
+            }
+            var selectedOption = ShippingService.RebuildShippingOption(model.ShippingOption);
+            _shoppingCart.ShippingOption = selectedOption;
+
             return View(model);
         }
 
-        public ActionResult Review() {
+        public ActionResult Review(CheckoutViewModel model) {
             // In this step the user will be able to review their order, and finally go ahead
             // and finalize. We may want to have a null payment provider for free stuff?
 
-            return null;
+            return View(model);
         }
 
         [HttpPost, ActionName("Review")]
