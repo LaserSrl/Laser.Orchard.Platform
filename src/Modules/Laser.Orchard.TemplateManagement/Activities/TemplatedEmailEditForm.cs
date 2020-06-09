@@ -15,13 +15,16 @@ namespace Laser.Orchard.TemplateManagement.Activities {
     public class TemplatedEmailEditForm : IFormProvider {
         private readonly ITemplateService _templateServices;
         private readonly IFeatureManager _featureManager;
+        private readonly IContentManager _contentManager;
+
         protected dynamic Shape { get; set; }
         public Localizer T { get; set; }
 
-        public TemplatedEmailEditForm(IShapeFactory shapeFactory, ITemplateService templateServices, IFeatureManager featureManager) {
+        public TemplatedEmailEditForm(IShapeFactory shapeFactory, ITemplateService templateServices, IFeatureManager featureManager, IContentManager contentManager) {
             Shape = shapeFactory;
             _templateServices = templateServices;
             _featureManager = featureManager;
+            _contentManager = contentManager;
             T = NullLocalizer.Instance;
         }
 
@@ -146,7 +149,7 @@ namespace Laser.Orchard.TemplateManagement.Activities {
                     var allTemplates = _templateServices.GetTemplates().Where(w => !w.IsLayout);
 
                     foreach (var template in allTemplates) {
-                        f._Parts.Add(new SelectListItem { Value = template.Id.ToString(), Text = template.Title });
+                        f._Parts.Add(new SelectListItem { Value = _contentManager.GetItemMetadata(template).Identity.ToString(), Text = template.Title });
                     }
                     return f;
                 };

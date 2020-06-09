@@ -91,8 +91,15 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             List<string> attachments = new List<string>();
             var templateId = 0;
             var customTemplateId = activityContext.GetState<string>("CustomTemplateId");
-            if(int.TryParse(customTemplateId, out templateId) == false) {
-                int.TryParse(emailTemplate, out templateId);
+
+            if (!int.TryParse(customTemplateId, out templateId)) {
+                var tmp = _orchardServices.ContentManager.ResolveIdentity(new ContentIdentity(emailTemplate));
+                if (tmp != null) {
+                    templateId = tmp.Id;
+                }
+                else {
+                    int.TryParse(emailTemplate, out templateId);
+                }
             }
             int contentVersion = 0;
             ContentItem content = null;
