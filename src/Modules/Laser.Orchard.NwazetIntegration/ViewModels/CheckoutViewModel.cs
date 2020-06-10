@@ -5,7 +5,9 @@ using Nwazet.Commerce.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
+using System.Web.Security;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
     public class CheckoutViewModel {
@@ -55,25 +57,48 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
+        private const string AddressEncryptionPurpose = "Serialize Address Information";
         public string SerializedAddresses { get; set; }
         public string EncodeAddresses() {
-            SerializedAddresses = HttpUtility.HtmlEncode(JsonConvert.SerializeObject(AsAddressesVM()));
+
+            SerializedAddresses = Convert.ToBase64String(
+                MachineKey.Protect(
+                    Encoding.UTF8.GetBytes(
+                        JsonConvert.SerializeObject(AsAddressesVM())),
+                    AddressEncryptionPurpose
+                    ));
             return SerializedAddresses;
         }
         public void DecodeAddresses() {
-            SetAddressesVM(
-                JsonConvert.DeserializeObject<AddressesVM>(
-                    HttpUtility.HtmlDecode(SerializedAddresses)));
+            var bytes = Convert.FromBase64String(SerializedAddresses);
+            var unprotected = MachineKey.Unprotect(bytes, AddressEncryptionPurpose);
+            if (unprotected != null) {
+                SetAddressesVM(
+                    JsonConvert.DeserializeObject<AddressesVM>(
+                        Encoding.UTF8.GetString(unprotected)));
+            }
         }
         #endregion
 
         #region Shipping
+        public bool ShippingRequired { get; set; }
         public List<ShippingOption> AvailableShippingOptions { get; set; }
         /// <summary>
         /// This is ShippingOption.FormValue for the selected option, used to pull it
-        /// from teh form.
+        /// from the form. This is called "ShippingOption" for retrocompatibility and
+        /// to allow reusing pre-existing shapes.
         /// </summary>
         public string ShippingOption { get; set; }
+        public ShippingOption SelectedShippingOption { get; set; }
+        #endregion
+
+        #region Payments
+        public IEnumerable<IPosService> PosServices { get; set; }
+        /// <summary>
+        /// Will contian the name of the selected PosService when the user
+        /// selects it from the form.
+        /// </summary>
+        public string SelectedPosService { get; set; }
         #endregion
     }
 }

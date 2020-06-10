@@ -1,0 +1,43 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model CheckoutViewModel
+@{
+
+    var title = Layout.Title = T("Checkout: Review Order");
+}
+<h1>@title</h1>
+<div class="ship-errors checkout-errors"></div>
+<div class="cart-summary">
+    TODO: DISPLAY CART SUMMARY
+</div>
+<div class="address-summary">
+    TODO: DISPLAY ADDRESS SUMMARY
+    @*serialized address data*@
+    @Html.HiddenFor(m => m.SerializedAddresses)
+</div>
+@if (Model.ShippingRequired) {
+<div class="shipping-summary">
+    TODO: DISPLAY SHIPPING SUMMARY
+    @*serialized shipping data*@
+    @Html.HiddenFor(m => m.ShippingOption)
+</div>
+}
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Review"), FormMethod.Post, new { @id = "review-form" })) {
+    @*serialized order data*@
+    @Html.HiddenFor(m => m.SerializedAddresses)
+    @Html.HiddenFor(m => m.ShippingOption)
+    <div class="review-order-notice">
+        @T("Take a moment to review your order before moving to payments.")
+    </div>
+    <div class="pos-buttons">
+        <h2 id="PaymentMethodsTitle">@T("Pay using:")</h2>
+        @foreach (var pos in Model.PosServices) {
+            <button type="submit"
+                    name="SelectedPosService"
+                    value="@pos.GetPosName()"
+                    style="padding: 10px 10px;">
+                @pos.GetPosName()
+            </button>
+        }
+    </div>
+}

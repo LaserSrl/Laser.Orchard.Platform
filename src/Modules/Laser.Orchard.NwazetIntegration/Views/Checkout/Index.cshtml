@@ -16,6 +16,10 @@
 <h1>@title</h1>
 <div class="ship-errors checkout-errors"></div>
 @Html.ValidationSummary()
+<div class="cart-summary">
+    TODO: DISPLAY CART SUMMARY
+</div>
+
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
 
@@ -60,6 +64,6 @@
     <div>
         <a href="@Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce"})">@T("Back to cart")</a>
         @*<button type="submit" id="cartButton" name="Submit" value="cart" style="padding: 10px 10px">@T("Back to cart")</button>*@
-        <button type="submit" id="payButton" name="Submit" value="save" style="padding: 10px 10px">@T("Next")</button>
+        <button type="submit" name="Submit" value="save" style="padding: 10px 10px">@T("Next")</button>
     </div>
 }

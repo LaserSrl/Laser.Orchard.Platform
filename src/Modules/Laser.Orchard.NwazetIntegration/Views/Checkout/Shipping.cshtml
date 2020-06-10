@@ -6,6 +6,12 @@
 }
 <h1>@title</h1>
 <div class="ship-errors checkout-errors"></div>
+<div class="cart-summary">
+    TODO: DISPLAY CART SUMMARY
+</div>
+<div class="address-summary">
+    TODO: DISPLAY ADDRESS SUMMARY
+</div>
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Shipping"), FormMethod.Post, new { @id = "shipping-form" })) {
     @*serialized address data*@
