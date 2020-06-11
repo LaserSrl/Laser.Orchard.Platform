@@ -18,7 +18,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IPaymentService _paymentService;
         private readonly IWorkContextAccessor _workContextAccessor;
-        private readonly ICheckoutSettingsService _checkoutSettingsService;
+        private readonly ICheckoutHelperService _checkoutHelperService;
 
         public PosServiceIntegration(
             IOrchardServices orchardServices, 
@@ -28,7 +28,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             ICurrencyProvider currencyProvider,
             IPaymentService paymentService,
             IWorkContextAccessor workContextAccessor,
-            ICheckoutSettingsService checkoutSettingsService) {
+            ICheckoutHelperService checkoutHelperService) {
 
             _orchardServices = orchardServices;
             _posServices = posServices;
@@ -37,7 +37,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _currencyProvider = currencyProvider;
             _paymentService = paymentService;
             _workContextAccessor = workContextAccessor;
-            _checkoutSettingsService = checkoutSettingsService;
+            _checkoutHelperService = checkoutHelperService;
 
             T = NullLocalizer.Instance;
 
@@ -64,7 +64,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // whether any shipping option has been selected yet like we used to do. It makes
             // sense, however, to check whether the user is allowed to checkout.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            insertOrder &= _checkoutSettingsService.UserMayCheckout(user);
+            insertOrder &= _checkoutHelperService.UserMayCheckout(user);
             // can't checkout with an empty cart
             insertOrder &= productQuantities.Any();
             if (insertOrder) {

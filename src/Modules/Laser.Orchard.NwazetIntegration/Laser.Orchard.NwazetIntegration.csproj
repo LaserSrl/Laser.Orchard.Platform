@@ -151,13 +151,15 @@
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
-    <Compile Include="Services\CheckoutSettingsService.cs" />
+    <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
     <Compile Include="Services\GTMProductService.cs" />
-    <Compile Include="Services\ICheckoutSettingsService.cs" />
+    <Compile Include="Services\ICheckoutCondition.cs" />
+    <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />

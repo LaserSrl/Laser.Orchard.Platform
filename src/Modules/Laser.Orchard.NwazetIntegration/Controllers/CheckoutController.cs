@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
@@ -38,7 +39,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
           the checkout process, because it will affect the required steps.
          */
         private readonly IWorkContextAccessor _workContextAccessor;
-        private readonly ICheckoutSettingsService _checkoutSettingsService;
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IEnumerable<IValidationProvider> _validationProviders;
@@ -47,12 +47,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IContentManager _contentManager;
         private readonly IEnumerable<IPosService> _posServices;
-        private readonly IOrderService _orderService;
-        private readonly IProductPriceService _productPriceService;
+        private readonly ICheckoutHelperService _checkoutHelperService;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
-            ICheckoutSettingsService checkoutSettingsService,
             IAddressConfigurationService addressConfigurationService,
             INwazetCommunicationService nwazetCommunicationService,
             IEnumerable<IValidationProvider> validationProviders,
@@ -61,11 +59,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ICurrencyProvider currencyProvider,
             IContentManager contentManager,
             IEnumerable<IPosService> posServices,
-            IOrderService orderService,
-            IProductPriceService productPriceService) {
+            ICheckoutHelperService checkoutHelperService) {
 
             _workContextAccessor = workContextAccessor;
-            _checkoutSettingsService = checkoutSettingsService;
             _addressConfigurationService = addressConfigurationService;
             _nwazetCommunicationService = nwazetCommunicationService;
             _validationProviders = validationProviders;
@@ -74,11 +70,23 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _currencyProvider = currencyProvider;
             _contentManager = contentManager;
             _posServices = posServices;
-            _orderService = orderService;
-            _productPriceService = productPriceService;
+            _checkoutHelperService = checkoutHelperService;
+        }
+
+        private string RequestUrl {
+            get {
+                return _workContextAccessor.GetContext().HttpContext.Request.Url.ToString();
+            }
         }
 
         public ActionResult CheckoutStart() {
+            var user = _workContextAccessor.GetContext().CurrentUser;
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
+            }
             return RedirectToAction("Index");
         }
 
@@ -88,11 +96,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // with some information already in it in case of validation errors when posting
             // it.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
@@ -135,11 +143,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // input changes, because if there is no shipping there's no need for the shipping
             // address.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             model.ShippingRequired = IsShippingRequired(); //we'll reuse this
             var validationSuccess = TryUpdateModel(model.BillingAddressVM)
@@ -188,21 +196,20 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         public ActionResult Shipping(CheckoutViewModel model) {
             // In this step the user will select the shipping method from a list
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
             if (TempData.ContainsKey("CheckoutViewModel")) {
                 model = (CheckoutViewModel)TempData["CheckoutViewModel"];
             }
-            if (model.ShippingAddressVM == null
-                && !string.IsNullOrWhiteSpace(model.SerializedAddresses)) {
-                model.DecodeAddresses();
-            }
+            // deserialize addresses
+            ReinflateViewModelAddresses(model);
+
             model.ShippingRequired = IsShippingRequired();
             if (model.ShippingAddressVM != null) {
                 var productQuantities = _shoppingCart
@@ -267,15 +274,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // validate the choice of shipping method then redirect to the action that lets
             // the user review their order.
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             // Addresses come from the form as encoded in a single thing, because at
             // this stage the user will have already selected them earlier.
-            model.DecodeAddresses();
+            ReinflateViewModelAddresses(model);
             // the selected shipping option
             if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // TODO: they selected no shipping!
@@ -295,11 +302,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // In this step the user will be able to review their order, and finally go ahead
             // and finalize. We may want to have a null payment provider for free stuff?
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
@@ -307,10 +314,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model = (CheckoutViewModel)TempData["CheckoutViewModel"];
             }
             // decode stuff that may be encoded
-            if (model.ShippingAddressVM == null
-                && !string.IsNullOrWhiteSpace(model.SerializedAddresses)) {
-                model.DecodeAddresses();
-            }
+            ReinflateViewModelAddresses(model);
             model.ShippingRequired = IsShippingRequired();
             if (model.ShippingRequired && model.SelectedShippingOption == null) {
                 if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
@@ -333,11 +337,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // redirect the user to their payment method of choice
             // is there any validation that should be happening here?
             var user = _workContextAccessor.GetContext().CurrentUser;
-            if (!_checkoutSettingsService.UserMayCheckout(user)) {
-                // TODO: change the UserMayCheckout
-                // Have a method that returns the action I should redirect the user to
-                // in case they can't checkout (e.g. LogOn or AccessDenied)
-                // redirect to login, perhaps with a message
+            if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
+                if (redirect != null) {
+                    return redirect;
+                }
+                return Redirect(RequestUrl);
             }
             if (string.IsNullOrWhiteSpace(model.SelectedPosService)) {
                 // the user selected no payment method
@@ -352,21 +356,18 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 //TODO: handle this error
             }
             // Re-validate the entire model to be safe
-            // Validate shipping/billing address
-            if (model.ShippingAddressVM == null
-                && !string.IsNullOrWhiteSpace(model.SerializedAddresses)) {
-                model.DecodeAddresses();
-            }
-            var country = _addressConfigurationService
-                    ?.GetCountry(model.ShippingAddressVM != null 
-                        ? model.ShippingAddressVM.CountryId
-                        : model.BillingAddressVM.CountryId);
-            var countryName = country
-                ?.Record?.TerritoryInternalRecord.Name;
+            ReinflateViewModelAddresses(model);
+            // later we'll need the country and postal code
+            var countryName = !string.IsNullOrWhiteSpace(model.ShippingAddressVM?.Country)
+                ? model.ShippingAddressVM?.Country
+                : (!string.IsNullOrWhiteSpace(model.BillingAddressVM?.Country)
+                    ? model.BillingAddressVM?.Country
+                    : "");
             var postalCode = model.ShippingAddressVM != null
                 ? model.ShippingAddressVM.PostalCode
                 : model.BillingAddressVM.PostalCode;
             // Validate ShippingOption
+            model.ShippingRequired = IsShippingRequired();
             if (model.ShippingRequired && model.SelectedShippingOption == null) {
                 if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
                     // TODO: manage this error condition
@@ -379,60 +380,38 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 _shoppingCart.ShippingOption = selectedOption;
                 model.SelectedShippingOption = selectedOption;
             }
-            // Validate Cart
-            // Cart: Create list of CheckoutItems for the order
-            var chckoutItems = _shoppingCart.GetProducts()
-                .Select(scp => new CheckoutItem {
-                    Attributes = scp.AttributeIdsToValues,
-                    LinePriceAdjustment = scp.LinePriceAdjustment,
-                    OriginalPrice = scp.OriginalPrice,
-                    Price = scp.Product.DiscountPrice >= 0 && scp.Product.DiscountPrice < scp.Product.Price
-                        ? _productPriceService.GetDiscountPrice(scp.Product, countryName, null)
-                        : _productPriceService.GetPrice(scp.Product, countryName, null),
-                    ProductId = scp.Product.Id,
-                    PromotionId = scp.Promotion == null ? null : (int?)(scp.Promotion.Id),
-                    Quantity = scp.Quantity,
-                    Title = _contentManager.GetItemMetadata(scp.Product).DisplayText
-                });
-
+            // TODO: Validate Cart
             // Here we want to:
             // 1. Create the PayementGatewayCharge we'll use for events
             var paymentGuid = Guid.NewGuid().ToString();
-            var charge = new PaymentGatewayCharge("Checkout Controller", paymentGuid);
             // 2. Create the Order ContentItem
-            var order = _orderService.CreateOrder(
-                charge,
-                chckoutItems,
-                _shoppingCart.Subtotal(),
-                _shoppingCart.Total(),
-                _shoppingCart.Taxes(),
-                _shoppingCart.ShippingOption,
-                model.ShippingAddress,
-                model.BillingAddress,
-                model.Email,
-                model.PhonePrefix + " " + model.Phone,
-                model.SpecialInstructions,
-                OrderPart.Pending, //.Cancelled,
-                null,
-                false,
-                user != null ? user.Id : -1,
-                0,
-                "",
-                _currencyProvider.CurrencyCode);
-            // 2.1. Verify address information in the AddressOrderPart
-            //   (we have to do this explicitly because the management of Order
-            //   ContentItems does not go through drivers and such)
-            // 2.2. Unpublish the order
+            var order = _checkoutHelperService.CreateOrder(model.AsAddressesVM(), paymentGuid, countryName, postalCode);
+
             // 3. Don't attach the address from the Order to the Contact for
             //   the user, because that was done when inputing the address.
             // 3.1. If there is a User, we may wish to add their email and phone
             //   number to the Contact.
             // 4. Create the payment record for the Order.
+            var reason = string.Format("Purchase Order {0}", order.OrderKey);
+            var payment = new PaymentRecord {
+                Reason = reason,
+                Amount = order.Total,
+                Currency = order.CurrencyCode,
+                ContentItemId = order.Id
+            };
             // 4.1. Invoke the StartPayment method for the selected IPosService.
+            payment = selectedService.StartPayment(payment, paymentGuid);
             // 5. Get form the IPosService the controller URL and redirect there.
-            return null;
+            return Redirect(selectedService.GetPosActionUrl(payment.Guid));
         }
 
+        private bool IsCartValid() {
+            // test for validation for the cart
+            // TODO: Is there anything else besides "something is in the cart"?
+            // TODO: move this to a provider that will "serve" the UserMayCheckout method
+
+            return _shoppingCart.Items.Any();
+        }
 
         private bool IsShippingRequired() {
             //TODO
@@ -446,6 +425,42 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
+        }
+        private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
+            // addresses
+            if ((vm.ShippingAddressVM == null || vm.BillingAddressVM == null)
+                && !string.IsNullOrWhiteSpace(vm.SerializedAddresses)) {
+                vm.DecodeAddresses();
+            }
+            Func<string, int, string> inflateName = (str, id) => {
+                if (string.IsNullOrWhiteSpace(str)) {
+                    var territory = _addressConfigurationService
+                        .SingleTerritory(id);
+                    if (territory != null) {
+                        return _contentManager
+                            .GetItemMetadata(territory).DisplayText;
+                    }
+                }
+                return str;
+            };
+            if (vm.ShippingAddressVM != null) {
+                // reinflate the names of country, province and city
+                vm.ShippingAddressVM.Country = inflateName(
+                    vm.ShippingAddressVM.Country, vm.ShippingAddressVM.CountryId);
+                vm.ShippingAddressVM.Province = inflateName(
+                    vm.ShippingAddressVM.Province, vm.ShippingAddressVM.ProvinceId);
+                vm.ShippingAddressVM.City = inflateName(
+                    vm.ShippingAddressVM.City, vm.ShippingAddressVM.CityId);
+            }
+            if (vm.BillingAddressVM != null) {
+                // reinflate the names of country, province and city
+                vm.BillingAddressVM.Country = inflateName(
+                    vm.BillingAddressVM.Country, vm.BillingAddressVM.CountryId);
+                vm.BillingAddressVM.Province = inflateName(
+                    vm.BillingAddressVM.Province, vm.BillingAddressVM.ProvinceId);
+                vm.BillingAddressVM.City = inflateName(
+                    vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
+            }
         }
 
         private bool ValidateVM(AddressEditViewModel vm) {
