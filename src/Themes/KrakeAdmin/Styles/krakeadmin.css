@@ -17,7 +17,6 @@ html {
     background: #e5e6e6;
 }
 
-
 #header {
     background: transparent none repeat scroll 0 0;
     height: 70px !important;
@@ -1476,8 +1475,13 @@ fieldset {
     padding: 5px;
 }
 
+
 .layout-widgets-placement ul.widgets li h3 {
     float: left;
+}
+
+.layout-toolbox-items section {
+    padding: 0;
 }
 
 .zone-local-navigation a {
