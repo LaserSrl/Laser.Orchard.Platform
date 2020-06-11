@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement;
+﻿using Laser.Orchard.Reporting.Models;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Contents.Extensions;
@@ -6,16 +7,23 @@ using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Data.Migration.Schema;
 using Orchard.Roles.Models;
+using System;
 using System.Linq;
 
 namespace Laser.Orchard.Reporting {
     public class Migrations : DataMigrationImpl {
         private readonly IContentManager _contentManager;
         private readonly IRepository<PermissionRecord> _permissionRepository;
+        private readonly IRepository<ReportRecord> _reportRepository;
 
-        public Migrations(IContentManager contentManager, IRepository<PermissionRecord> permissionRepository) {
+        public Migrations(
+            IContentManager contentManager,
+            IRepository<PermissionRecord> permissionRepository,
+            IRepository<ReportRecord> reportRepository) {
+
             _contentManager = contentManager;
             _permissionRepository = permissionRepository;
+            _reportRepository = reportRepository;
         }
 
         public int Create() {
@@ -144,6 +152,18 @@ namespace Laser.Orchard.Reporting {
                 }
             }
             return 7;
+        }
+
+        public int UpdateFrom7() {
+            SchemaBuilder.AlterTable("ReportRecord", table =>
+                table.AddColumn<string>("GUID"));
+            return 8;
+        }
+        public int UpdateFrom8() {
+            foreach (var rr in _reportRepository.Table.Where(r => r.GUID == null || r.GUID == "")) {
+                rr.GUID = Guid.NewGuid().ToString();
+            }
+            return 9;
         }
     }
 }
