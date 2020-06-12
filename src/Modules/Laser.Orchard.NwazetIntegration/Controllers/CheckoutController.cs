@@ -7,6 +7,8 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
+using Orchard.Environment.Configuration;
+using Orchard.Mvc.Routes;
 using Orchard.Themes;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IContentManager _contentManager;
         private readonly IEnumerable<IPosService> _posServices;
         private readonly ICheckoutHelperService _checkoutHelperService;
+        private readonly ShellSettings _shellSettings;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -59,7 +62,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ICurrencyProvider currencyProvider,
             IContentManager contentManager,
             IEnumerable<IPosService> posServices,
-            ICheckoutHelperService checkoutHelperService) {
+            ICheckoutHelperService checkoutHelperService,
+            ShellSettings shellSettings) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -71,11 +75,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _contentManager = contentManager;
             _posServices = posServices;
             _checkoutHelperService = checkoutHelperService;
+            _shellSettings = shellSettings;
+
+            if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
+                _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
         }
 
-        private string RequestUrl {
+        private readonly UrlPrefix _urlPrefix;
+        private string RedirectUrl {
             get {
-                return _workContextAccessor.GetContext().HttpContext.Request.Url.ToString();
+                var request = _workContextAccessor.GetContext().HttpContext.Request;
+                if (request.UrlReferrer != null) {
+                    if (request.UrlReferrer.Host.Equals(request.Url.Host, StringComparison.OrdinalIgnoreCase)) {
+                        return request.UrlReferrer.ToString();
+                    }
+                }
+                if (_urlPrefix != null) {
+                    return _urlPrefix.PrependLeadingSegments("~");
+                }
+                return "~/";
             }
         }
 
@@ -85,7 +103,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             return RedirectToAction("Index");
         }
@@ -100,7 +118,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
@@ -147,7 +165,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             model.ShippingRequired = IsShippingRequired(); //we'll reuse this
             var validationSuccess = TryUpdateModel(model.BillingAddressVM)
@@ -200,7 +218,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
@@ -278,7 +296,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             // Addresses come from the form as encoded in a single thing, because at
             // this stage the user will have already selected them earlier.
@@ -306,7 +324,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             // Try to fetch the model from TempData to handle the case where we have been
             // redirected here.
@@ -341,7 +359,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (redirect != null) {
                     return redirect;
                 }
-                return Redirect(RequestUrl);
+                return Redirect(RedirectUrl);
             }
             if (string.IsNullOrWhiteSpace(model.SelectedPosService)) {
                 // the user selected no payment method

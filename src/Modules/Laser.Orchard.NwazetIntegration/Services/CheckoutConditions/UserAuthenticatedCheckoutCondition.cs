@@ -47,8 +47,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
             // centralize verification for the "permission" to checkout. This way
             // we can safely expand this condition later, possibly by building here 
             // an extension point.
-            redirect = new RedirectToRouteResult("AccessDenied",
-                new RouteValueDictionary(new { area = "Orchard.Users", controller = "Account" }));
+            redirect = new RedirectResult(Url
+                .Action("AccessDenied", "Account", new { area = "Orchard.Users" }));
             var mayCheckout = UserMayCheckout(user);
 
             return mayCheckout;

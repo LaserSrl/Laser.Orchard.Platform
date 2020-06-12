@@ -151,6 +151,7 @@
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
