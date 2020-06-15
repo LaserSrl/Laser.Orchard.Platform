@@ -247,6 +247,10 @@
     <Content Include="Views\_Content.cshtml" />
     <Content Include="Views\_Widget.Wrapper.cshtml" />
     <Content Include="packages.config" />
+    <Content Include="Views\Parts.Layout.cshtml" />
+    <Content Include="Views\Elements\Column.cshtml" />
+    <Content Include="Views\Elements\Grid.cshtml" />
+    <Content Include="Views\Elements\Image.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
