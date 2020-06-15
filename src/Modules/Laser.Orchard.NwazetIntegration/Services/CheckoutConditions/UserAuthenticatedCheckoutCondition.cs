@@ -58,7 +58,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
             var mayCheckout = !((user ?? _workContextAccessor.GetContext().CurrentUser) == null
                 && AuthenticationRequired);
             if (!mayCheckout) {
-                _notifier.Warning(T("<a href=\"{0}\">LogIn</a> to proceed with the checkout.",
+                _notifier.Warning(T("<a href=\"{0}\">Please log on to complete your order.</a>",
                     Url.Action("LogOn", "Account", new { area = "Orchard.Users" })));
             }
             return mayCheckout;
