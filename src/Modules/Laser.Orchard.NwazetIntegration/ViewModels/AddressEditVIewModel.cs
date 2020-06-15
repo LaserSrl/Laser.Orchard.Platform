@@ -127,7 +127,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public static AddressEditViewModel CreateVM(
             IAddressConfigurationService _addressConfigurationService) {
-            //TODO: Handle address type correctly
+
             return new AddressEditViewModel() {
                 Countries = _addressConfigurationService
                     .CountryOptions(),
@@ -144,6 +144,25 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             var vm = CreateVM(_addressConfigurationService);
             vm.AddressType = addressRecordType;
             return vm;
+        }
+
+        public static AddressEditViewModel CreateVM(
+            IAddressConfigurationService _addressConfigurationService,
+            AddressRecordType addressRecordType,
+            AddressEditViewModel viewModel) {
+
+            if (viewModel == null) {
+                viewModel = CreateVM(_addressConfigurationService);
+            } else {
+                viewModel.Countries = _addressConfigurationService
+                    .CountryOptions();
+                viewModel.ShippingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.ShippingAddress);
+                viewModel.BillingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.BillingAddress);
+            }
+            viewModel.AddressType = addressRecordType;
+            return viewModel;
         }
     }
 }

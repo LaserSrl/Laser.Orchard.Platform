@@ -4,6 +4,7 @@ using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -78,6 +79,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                         Encoding.UTF8.GetString(unprotected)));
             }
         }
+        public bool ResetAddresses { get; set; }
         #endregion
 
         #region Shipping

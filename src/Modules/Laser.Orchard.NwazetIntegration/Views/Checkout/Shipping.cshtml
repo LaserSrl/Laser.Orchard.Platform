@@ -10,7 +10,7 @@
     TODO: DISPLAY CART SUMMARY
 </div>
 <div class="address-summary">
-    TODO: DISPLAY ADDRESS SUMMARY
+    @Display.AddressSummaryForm(ViewModel: Model)
 </div>
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Shipping"), FormMethod.Post, new { @id = "shipping-form" })) {

@@ -321,6 +321,7 @@
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Checkout\Shipping.cshtml" />
     <Content Include="Views\Checkout\Review.cshtml" />
+    <Content Include="Views\AddressSummaryForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

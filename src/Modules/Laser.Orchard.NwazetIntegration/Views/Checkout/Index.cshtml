@@ -59,7 +59,7 @@
     <div class="hint">@T("Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries.")</div>
 
     <label for="@Html.Id("specialInstructions")">@T("Special Instructions")</label>
-    <textarea id="@Html.Id("specialInstructions")" name="@Html.Name("SpecialInstructions")" rows="6" cols="80" class="input-xxlarge"></textarea>
+    @Html.TextAreaFor(m => m.SpecialInstructions, new { rows = "6", cols = "80", @class="input-xxlarge"})
 
     <div>
         <a href="@Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce"})">@T("Back to cart")</a>

@@ -13,6 +13,7 @@ using Orchard.Themes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -128,30 +129,69 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.ShippingRequired = IsShippingRequired();
             if (user != null) {
                 // If the user is authenticated, set the model's email and any other information
-                // we can get from the user's contact
-                model.Email = user.Email;
-                var cel = _nwazetCommunicationService.GetPhone(user);
-                if (cel.Length == 2) {
-                    model.PhonePrefix = cel[0];
-                    model.Phone = cel[1];
+                // we can get from the user's contact, but avoid overwriting previous input
+                if (string.IsNullOrWhiteSpace(model.Email)) {
+                    model.Email = user.Email;
+                }
+                if (string.IsNullOrWhiteSpace(model.Phone)) {
+                    var cel = _nwazetCommunicationService.GetPhone(user);
+                    if (cel.Length == 2) {
+                        model.PhonePrefix = cel[0];
+                        model.Phone = cel[1];
+                    }
                 }
                 // also load the list of existing addresses for them
                 model.ListAvailableBillingAddress =
                     _nwazetCommunicationService.GetBillingByUser(user);
                 // we are only going to load the shipping addresses if shipping is required
-                if (IsShippingRequired()) {
+                if (model.ShippingRequired) {
                     model.ListAvailableShippingAddress =
                         _nwazetCommunicationService.GetShippingByUser(user);
                 }
             }
-            model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
+            // If no addresses are selected yet, but the user has saved addresses, we will have
+            // them initially skip inputing their address. IF at any point they hit a link to
+            // change addresses, they'll be redirected to this action, and the selected addresses
+            // will not be null.
+            if (// can/should we set a default billing address
+                (model.BillingAddressVM == null && model.ListAvailableBillingAddress.Any())
+                // can/should we set a default shipping address
+                && (!model.ShippingRequired
+                    || (model.ShippingRequired && model.ShippingAddressVM == null && model.ListAvailableShippingAddress.Any()))) {
+                model.BillingAddressVM = new AddressEditViewModel(model
+                    .ListAvailableBillingAddress
+                    // pick the one used/updated most recently
+                    .OrderByDescending(a => a.TimeStampUTC)
+                    .First());
+                if (model.ShippingRequired) {
+                    model.ShippingAddressVM = new AddressEditViewModel(model
+                        .ListAvailableShippingAddress
+                        // pick the one used/updated most recently
+                        .OrderByDescending(a => a.TimeStampUTC)
+                        .First());
+                }
+                // redirect to next step
+                // Put the model we validated in TempData so it can be reused in the next action.
+                TempData["CheckoutViewModel"] = model;
+                if (model.ShippingRequired) {
+                    // Set values into the ShoppingCart storage
+                    var country = _addressConfigurationService
+                        ?.GetCountry(model.ShippingAddressVM.CountryId);
+                    _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                    _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
+                }
+                // we redirect to this post action, where we do validation
+                return IndexPOST(model);
+            }
+            model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress, model.BillingAddressVM);
             // test whether shipping will be required for the order, because that will change
             // what must be displayed for the addresses as well as what happens when we go ahead
             // with the checkout: if no shipping is required, we can go straight to order review
             // and then payment.
-            if (IsShippingRequired() && model.ShippingAddressVM == null) {
-                model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
+            if (model.ShippingRequired) {
+                model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
             }
+
             return View(model);
         }
 
@@ -167,16 +207,28 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 }
                 return Redirect(RedirectUrl);
             }
-            model.ShippingRequired = IsShippingRequired(); //we'll reuse this
-            var validationSuccess = TryUpdateModel(model.BillingAddressVM)
-                && ValidateVM(model.BillingAddressVM);
-            if (model.ShippingRequired) {
-                validationSuccess &= TryUpdateModel(model.ShippingAddressVM)
-                    && ValidateVM(model.ShippingAddressVM);
+            // check if the user is trying to reset the selected addresses to select different
+            // ones.
+            if (model.ResetAddresses) {
+                ReinflateViewModelAddresses(model);
+                // Put the model we validated in TempData so it can be reused in the next action.
+                TempData["CheckoutViewModel"] = model;
+                return RedirectToAction("Index");
             }
-            validationSuccess &= ValidateAddresses(model);
+            model.ShippingRequired = IsShippingRequired(); //we'll reuse this
+            // Ensure address types are initialized correctly 
+            model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
+            model.BillingAddressVM.AddressRecord.AddressType = AddressRecordType.BillingAddress;
+            model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
+            model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
+            // validate
+            var validationSuccess = ValidateVM(model);
             if (!validationSuccess) {
                 // don't move on, but rather leave the user on this form
+                model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress, model.BillingAddressVM);
+                if (model.ShippingRequired) {
+                    model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
+                }
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -444,6 +496,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
         }
+        private AddressEditViewModel CreateVM(AddressRecordType addressRecordType, AddressEditViewModel vm) {
+            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType,vm);
+        }
         private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
             // addresses
             if ((vm.ShippingAddressVM == null || vm.BillingAddressVM == null)
@@ -481,6 +536,20 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
         }
 
+        private bool ValidateVM(CheckoutViewModel vm) {
+            // validate Email
+            var validEmail = !string.IsNullOrWhiteSpace(vm.Email)
+                && Regex.IsMatch(vm.Email, Constants.EmailPattern, 
+                    RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
+                && ValidateVM(vm.BillingAddressVM);
+            if (vm.ShippingRequired) {
+                validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
+                    && ValidateVM(vm.ShippingAddressVM);
+            }
+            validationSuccess &= ValidateAddresses(vm);
+            return validEmail && validationSuccess;
+        }
         private bool ValidateVM(AddressEditViewModel vm) {
             bool response = true;
             foreach (var valP in _validationProviders) {
