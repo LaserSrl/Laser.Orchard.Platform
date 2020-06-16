@@ -10,15 +10,11 @@
     TODO: DISPLAY CART SUMMARY
 </div>
 <div class="address-summary">
-    TODO: DISPLAY ADDRESS SUMMARY
-    @*serialized address data*@
-    @Html.HiddenFor(m => m.SerializedAddresses)
+    @Display.AddressSummaryForm(ViewModel: Model)
 </div>
-@if (Model.ShippingRequired) {
+@if (Model.ShippingRequired && Model.SelectedShippingOption != null) {
 <div class="shipping-summary">
-    TODO: DISPLAY SHIPPING SUMMARY
-    @*serialized shipping data*@
-    @Html.HiddenFor(m => m.ShippingOption)
+    @Display.ShippingSummaryForm(ViewModel: Model)
 </div>
 }
 @using (Html.BeginFormAntiForgeryPost(

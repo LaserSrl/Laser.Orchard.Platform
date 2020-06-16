@@ -92,6 +92,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public string ShippingOption { get; set; }
         public ShippingOption SelectedShippingOption { get; set; }
+        public bool ResetShipping { get; set; }
         #endregion
 
         #region Payments

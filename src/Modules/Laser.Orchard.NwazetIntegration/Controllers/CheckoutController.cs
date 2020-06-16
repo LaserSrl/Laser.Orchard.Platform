@@ -191,7 +191,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (model.ShippingRequired) {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
             }
-
+            // to correctly display prices, the view will need the currency provider
+            model.CurrencyProvider = _currencyProvider;
             return View(model);
         }
 
@@ -229,6 +230,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (model.ShippingRequired) {
                     model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
                 }
+                // to correctly display prices, the view will need the currency provider
+                model.CurrencyProvider = _currencyProvider;
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -326,6 +329,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             _workContextAccessor));
                 // remove duplicate shipping options
                 model.AvailableShippingOptions = allShippingOptions.Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
+                // if there is no option selected, and there is only one possible option, we can skip
+                // the selection. If the user is trying to reset their selection, there is a selected
+                // option so it should not trigger this condition
+                if (string.IsNullOrWhiteSpace(model.ShippingOption) && model.AvailableShippingOptions.Count == 1) {
+                    model.ShippingOption = model.AvailableShippingOptions.First().FormValue;
+                    return ShippingPOST(model);
+                }
                 // to correctly display prices, the view will need the currency provider
                 model.CurrencyProvider = _currencyProvider;
                 // encode addresses so we can hide them in the form
@@ -353,6 +363,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // Addresses come from the form as encoded in a single thing, because at
             // this stage the user will have already selected them earlier.
             ReinflateViewModelAddresses(model);
+            // check if the user is trying to reset the selected shipping option.
+            if (model.ResetShipping) {
+                // Put the model we validated in TempData so it can be reused in the next action.
+                TempData["CheckoutViewModel"] = model;
+                return RedirectToAction("Shipping");
+            }
             // the selected shipping option
             if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // TODO: they selected no shipping!
@@ -399,6 +415,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // 1. The summary of all the user's choices up until this point.
             // 2. The list of buttons for the available payment options.
             model.PosServices = _posServices;
+            // to correctly display prices, the view will need the currency provider
+            model.CurrencyProvider = _currencyProvider;
             return View(model);
         }
 
