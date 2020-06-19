@@ -18,6 +18,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
             AvailableShippingOptions = new List<ShippingOption>();
         }
+        /// <summary>
+        /// Used in CheckoutController actions to signal that we should shortcircuit
+        /// where we can and move forward towards payment
+        /// </summary>
+        public bool UseDefaultAddress { get; set; }
+        public bool UseDefaultShipping { get; set; }
 
         public ICurrencyProvider CurrencyProvider;
 

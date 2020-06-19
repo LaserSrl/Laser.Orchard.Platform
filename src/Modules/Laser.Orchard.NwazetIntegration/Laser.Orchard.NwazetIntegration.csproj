@@ -103,6 +103,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
