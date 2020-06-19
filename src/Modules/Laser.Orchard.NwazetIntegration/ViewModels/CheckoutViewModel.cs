@@ -21,6 +21,50 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public ICurrencyProvider CurrencyProvider;
 
+        #region Cart
+        public IShoppingCart ShoppingCart;
+        public IProductPriceService ProductPriceService;
+
+        public IEnumerable<ShoppingCartQuantityProduct> GetProductQuantities() {
+            return ShoppingCart
+                .GetProducts()
+                .Where(p => p.Product != null && p.Quantity > 0);
+        }
+
+        public decimal GetPrice(ShoppingCartQuantityProduct productQuantity) {
+            return ProductPriceService.GetPrice(
+                productQuantity.Product,
+                ShoppingCart?.Country,
+                ShoppingCart?.ZipCode);
+        }
+        public decimal GetOriginalPrice(ShoppingCartQuantityProduct productQuantity) {
+            return ProductPriceService.GetPrice(
+                productQuantity.Product,
+                ShoppingCart?.Country,
+                ShoppingCart?.ZipCode);
+        }
+        public decimal GetDiscountedPrice(ShoppingCartQuantityProduct productQuantity) {
+            return ProductPriceService.GetPrice(
+                productQuantity.Product,
+                productQuantity.Price,
+                ShoppingCart?.Country,
+                ShoppingCart?.ZipCode);
+        }
+        public decimal GetLinePriceAdjustement(ShoppingCartQuantityProduct productQuantity) {
+            return ProductPriceService.GetPrice(
+                productQuantity.Product,
+                productQuantity.LinePriceAdjustment,
+                ShoppingCart?.Country,
+                ShoppingCart?.ZipCode);
+        }
+        
+        public decimal GetShopppingTotal() {
+            return ShoppingCart.Total(
+                ShoppingCart.Subtotal(),
+                ShoppingCart.Taxes());
+        }
+        #endregion
+
         #region Addresses
         public AddressesVM AsAddressesVM() {
             return new AddressesVM {

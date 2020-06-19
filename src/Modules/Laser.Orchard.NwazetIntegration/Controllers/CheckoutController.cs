@@ -52,6 +52,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IEnumerable<IPosService> _posServices;
         private readonly ICheckoutHelperService _checkoutHelperService;
         private readonly ShellSettings _shellSettings;
+        private readonly IProductPriceService _productPriceService;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -64,7 +65,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IContentManager contentManager,
             IEnumerable<IPosService> posServices,
             ICheckoutHelperService checkoutHelperService,
-            ShellSettings shellSettings) {
+            ShellSettings shellSettings,
+            IProductPriceService productPriceService) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -77,6 +79,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _posServices = posServices;
             _checkoutHelperService = checkoutHelperService;
             _shellSettings = shellSettings;
+            _productPriceService = productPriceService;
 
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
@@ -191,8 +194,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (model.ShippingRequired) {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
             }
-            // to correctly display prices, the view will need the currency provider
-            model.CurrencyProvider = _currencyProvider;
+            InjectServices(model);
             return View(model);
         }
 
@@ -230,8 +232,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (model.ShippingRequired) {
                     model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
                 }
-                // to correctly display prices, the view will need the currency provider
-                model.CurrencyProvider = _currencyProvider;
+                InjectServices(model);
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -340,6 +341,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.CurrencyProvider = _currencyProvider;
                 // encode addresses so we can hide them in the form
                 model.EncodeAddresses();
+                InjectServices(model);
                 return View(model);
             }
             // to get here something must have gone very wrong. Perhaps the user
@@ -404,8 +406,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.ShippingRequired = IsShippingRequired();
             if (model.ShippingRequired && model.SelectedShippingOption == null) {
                 if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
-                    // TODO: manage this error condition
                     // Here we need a selected shipping method, but we don't have it somehow
+                    // so we redirect back to shipping selection
+                    // Put the model in TempData so it can be reused in the next action.
+                    TempData["CheckoutViewModel"] = model;
+                    return RedirectToAction("Shipping");
                 }
                 var selectedOption = ShippingService.RebuildShippingOption(model.ShippingOption);
                 _shoppingCart.ShippingOption = selectedOption;
@@ -413,10 +418,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             // We will need to display:
             // 1. The summary of all the user's choices up until this point.
+            //    (that's already in the model)
             // 2. The list of buttons for the available payment options.
             model.PosServices = _posServices;
-            // to correctly display prices, the view will need the currency provider
-            model.CurrencyProvider = _currencyProvider;
+
+            InjectServices(model);
             return View(model);
         }
 
@@ -552,6 +558,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 vm.BillingAddressVM.City = inflateName(
                     vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
             }
+        }
+
+        private void InjectServices(CheckoutViewModel vm) {
+
+            // to correctly display prices, the view will need the currency provider
+            vm.CurrencyProvider = _currencyProvider;
+            vm.ShoppingCart = _shoppingCart;
+            vm.ProductPriceService = _productPriceService;
         }
 
         private bool ValidateVM(CheckoutViewModel vm) {

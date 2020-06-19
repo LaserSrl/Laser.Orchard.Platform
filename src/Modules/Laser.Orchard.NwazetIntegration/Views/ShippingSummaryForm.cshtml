@@ -20,11 +20,12 @@
     @* Serialized shipping method *@
     @Html.Hidden("ShippingOption", viewModel.ShippingOption)
 
-    <div class="">
+    <div class="reset-shipping">
         <button type="submit"
                 name="ResetShipping"
                 value="true"
-                style="">
+                style=""
+                class="reset-button reset-shipping-button">
             @T("Click here to change the selected shipping option.")
         </button>
     </div>

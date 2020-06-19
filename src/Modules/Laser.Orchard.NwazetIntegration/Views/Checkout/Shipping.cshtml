@@ -6,8 +6,9 @@
 }
 <h1>@title</h1>
 <div class="ship-errors checkout-errors"></div>
+@Html.ValidationSummary()
 <div class="cart-summary">
-    TODO: DISPLAY CART SUMMARY
+    @Display.CheckoutCartSummary(ViewModel: Model)
 </div>
 <div class="address-summary">
     @Display.AddressSummaryForm(ViewModel: Model)
@@ -19,9 +20,9 @@
     @*Available shipping options*@
     if (Model.AvailableShippingOptions != null && Model.AvailableShippingOptions.Any()) {
         @Display.ShippingOptions(
-            ShippingOptions: Model.AvailableShippingOptions, 
-            Country: Model.ShippingAddressVM.Country, 
-            ZipCode: Model.ShippingAddressVM.PostalCode, 
+            ShippingOptions: Model.AvailableShippingOptions,
+            Country: Model.ShippingAddressVM.Country,
+            ZipCode: Model.ShippingAddressVM.PostalCode,
             CurrencyProvider: Model.CurrencyProvider)
     } else {
         @T("No shipping option available for the selected address. Go <a herf=\"{0}\">back to configure a different one</a>.",

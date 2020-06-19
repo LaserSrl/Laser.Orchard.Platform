@@ -230,6 +230,10 @@
       <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
       <Name>Orchard.Localization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
       <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
       <Name>Orchard.Tokens</Name>
@@ -323,6 +327,7 @@
     <Content Include="Views\Checkout\Review.cshtml" />
     <Content Include="Views\AddressSummaryForm.cshtml" />
     <Content Include="Views\ShippingSummaryForm.cshtml" />
+    <Content Include="Views\CheckoutCartSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

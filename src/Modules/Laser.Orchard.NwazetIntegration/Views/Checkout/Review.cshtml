@@ -6,16 +6,17 @@
 }
 <h1>@title</h1>
 <div class="ship-errors checkout-errors"></div>
+@Html.ValidationSummary()
 <div class="cart-summary">
-    TODO: DISPLAY CART SUMMARY
+    @Display.CheckoutCartSummary(ViewModel: Model)
 </div>
 <div class="address-summary">
     @Display.AddressSummaryForm(ViewModel: Model)
 </div>
 @if (Model.ShippingRequired && Model.SelectedShippingOption != null) {
-<div class="shipping-summary">
-    @Display.ShippingSummaryForm(ViewModel: Model)
-</div>
+    <div class="shipping-summary">
+        @Display.ShippingSummaryForm(ViewModel: Model)
+    </div>
 }
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Review"), FormMethod.Post, new { @id = "review-form" })) {
@@ -25,6 +26,27 @@
     <div class="review-order-notice">
         @T("Take a moment to review your order before moving to payments.")
     </div>
+    <fieldset class="order-review">
+        <legend>@T("Order summary")</legend>
+        <div>
+            <div class="row order-review-subtotal">
+                <div class="order-review-label">@T("Products")</div>
+                <div class="order-review-value">@Model.CurrencyProvider.GetPriceString(Model.ShoppingCart.Subtotal())</div>
+            </div>
+            @if (Model.ShippingRequired && Model.SelectedShippingOption != null) {
+                <div class="row order-review-shipping">
+                    <div class="order-review-label">@T("Shipping")</div>
+                    <div class="order-review-value">
+                        @Model.CurrencyProvider.GetPriceString(Model.SelectedShippingOption.Price)
+                    </div>
+                </div>
+            }
+            <div class="row order-review-total">
+                <div class="order-review-label">@T("Total")</div>
+                <div class="order-review-value">@Model.CurrencyProvider.GetPriceString(Model.GetShopppingTotal())</div>
+            </div>
+        </div>
+    </fieldset>
     <div class="pos-buttons">
         <h2 id="PaymentMethodsTitle">@T("Pay using:")</h2>
         @foreach (var pos in Model.PosServices) {

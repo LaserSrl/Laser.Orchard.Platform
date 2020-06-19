@@ -17,7 +17,7 @@
 <div class="ship-errors checkout-errors"></div>
 @Html.ValidationSummary()
 <div class="cart-summary">
-    TODO: DISPLAY CART SUMMARY
+    @Display.CheckoutCartSummary(ViewModel: Model)
 </div>
 
 @using (Html.BeginFormAntiForgeryPost(

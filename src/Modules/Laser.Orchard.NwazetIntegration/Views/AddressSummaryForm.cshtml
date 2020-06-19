@@ -123,11 +123,12 @@
     @Html.Hidden("SerializedAddresses", viewModel.SerializedAddresses)
     @* We aren't also putting in this form the shipping options, even when they exist,
         because when we go and reset the address those should automatically reset as well*@
-    <div class="">
+    <div class="reset-addresses">
         <button type="submit"
                 name="ResetAddresses"
                 value="true"
-                style="">
+                style=""
+                class="reset-button reset-addresses-button">
             @T("Click here to change the selected addresses.")
         </button>
     </div>
