@@ -508,7 +508,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var dateTimeNow = DateTime.UtcNow;
                 var instanceId = GetHash(
                     (currentUser != null ? currentUser.Id.ToString() : SessionID)
-                    + editModel.Id.ToString() + dateTimeNow.ToString());
+                    + editModel.Id.ToString() + dateTimeNow.ToString()
+                    // salt this string
+                    + Guid.NewGuid().ToString());
                 var instanceRecord = new UserAnswerInstanceRecord() {
                     QuestionnairePartRecord_Id = editModel.Id,
                     User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) 
