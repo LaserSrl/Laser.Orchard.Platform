@@ -523,15 +523,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // 5. Get form the IPosService the controller URL and redirect there.
             return Redirect(selectedService.GetPosActionUrl(payment.Guid));
         }
-
-        private bool IsCartValid() {
-            // test for validation for the cart
-            // TODO: Is there anything else besides "something is in the cart"?
-            // TODO: move this to a provider that will "serve" the UserMayCheckout method
-
-            return _shoppingCart.Items.Any();
-        }
-
+        
         private bool IsShippingRequired() {
             //TODO
             // This should get the current order under process, as well as any other relevant

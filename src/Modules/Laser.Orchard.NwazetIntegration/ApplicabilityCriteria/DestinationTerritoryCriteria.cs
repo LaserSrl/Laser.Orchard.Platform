@@ -22,7 +22,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     T("Destination in territories Criterion"),
                     ApplyCriteria,
                     DisplayCriteria,
-                    "TODO");
+                    DestinationTerritoryForm.FormName);
         }
 
         public void ApplyCriteria(CriterionContext context) {
@@ -42,6 +42,10 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         return tmp;
                     })
                     .Where(i => i > 0);
+                // these ids are for the InternalTerritoryRecords
+                // As soon as one of them is among the configured territories for
+                // the criterion, or is a child of a configured territory, the
+                // criterion is known to apply.
             }
         }
 
