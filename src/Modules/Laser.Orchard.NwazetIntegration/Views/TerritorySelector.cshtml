@@ -1,0 +1,32 @@
+﻿@using Laser.Orchard.NwazetIntegration.Services;
+@{ 
+
+    Style.Require("jQueryUI_Orchard");
+    Script.Require("jQueryUI");
+
+    var addressConfigurationSettingsService =
+        WorkContext.Resolve<IAddressConfigurationSettingsService>();
+
+    var hierarchy = addressConfigurationSettingsService.ShippingCountriesHierarchy;
+    var selectedTerritories = Model.SelectedTerritories;
+}
+
+<fieldset class="territories-wrapper" 
+          data-name-prefix="@Html.FieldNameFor(m => m)" 
+          data-id-prefix="@Html.FieldIdFor(m => m)">
+    <legend>@T("Select the territories this shipping is valid for.")</legend>
+    @if (hierarchy != null) {
+        <div class="territories-editor text text-medium"
+             data-autocomplete-url="@Url.HttpRouteUrl("",
+                new { area = "Laser.Orchard.NwazetIntegration",
+                    controller = "TerritoriesApi" })"
+             data-hierarchy-id="@hierarchy.Id"
+             data-selected-territories="@selectedTerritories">
+            <ul></ul>
+            <div class="hint">
+                @T("Enter multiple territory names. Hit <i>tab</i>, <i>enter</i> or <i>,</i> to add multiple terms.") </div>
+        </div>
+    } else {
+        <div></div>
+    }
+</fieldset>

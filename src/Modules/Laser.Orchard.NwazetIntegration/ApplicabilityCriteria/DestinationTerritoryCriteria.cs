@@ -8,7 +8,6 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
-    [OrchardFeature("Nwazet.FlexibleShippingImplementations")]
     public class DestinationTerritoryCriteria : IApplicabilityCriterionProvider {
 
         public Localizer T { get; set; }
