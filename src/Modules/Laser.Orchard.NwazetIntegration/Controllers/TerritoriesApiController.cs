@@ -1,5 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
 using Orchard.ContentManagement;
+using Orchard.Core.Title.Models;
 using Orchard.Localization;
 using Orchard.Security;
 using System;
@@ -29,7 +31,23 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (!_authorizer.Authorize(StandardPermissions.AccessAdminPanel)) {
                 throw new UnauthorizedAccessException("Can't access the admin");
             }
-            throw new NotImplementedException();
+            var hierarchy = _contentManager.Get<TerritoryHierarchyPart>(hierarchyId);
+
+            if (hierarchy != null) {
+                var parts = _contentManager
+                    .Query<TerritoryPart, TerritoryPartRecord>()
+                    .Where(tpr => tpr.Hierarchy.Id == hierarchyId)
+                    .Join<TitlePartRecord>()
+                    .Where(tpr => tpr.Title.Contains(query))
+                    .List();
+
+                return parts.Select(tp => new TerritoryTag {
+                    Label = tp.As<TitlePart>().Title,
+                    Value = tp.Record.TerritoryInternalRecord.NameHash
+                });
+            }
+
+            return new List<TerritoryTag>();
         }
     }
 }

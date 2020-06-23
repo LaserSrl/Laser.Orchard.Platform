@@ -215,6 +215,14 @@
     <Content Include="Scripts\ship.min.js">
       <DependentUpon>ship.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\tagit.js" />
+    <Content Include="Scripts\tagit.min.js">
+      <DependentUpon>tagit.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\territories-autocomplete.js" />
+    <Content Include="Scripts\territories-autocomplete.min.js">
+      <DependentUpon>territories-autocomplete.js</DependentUpon>
+    </Content>
     <Content Include="Styles\admin-style.css" />
     <Content Include="Styles\admin-style.min.css">
       <DependentUpon>admin-style.css</DependentUpon>
