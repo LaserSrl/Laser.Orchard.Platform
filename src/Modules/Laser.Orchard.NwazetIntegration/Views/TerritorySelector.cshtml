@@ -1,5 +1,6 @@
 ﻿@using Laser.Orchard.NwazetIntegration.Services;
 @using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Newtonsoft.Json;
 @{ 
     var addressConfigurationSettingsService =
         WorkContext.Resolve<IAddressConfigurationSettingsService>();
@@ -11,23 +12,23 @@
         Script.Require("NWazetIntegration.TerritoriesAutoComplete");
     }
 
-    var tIndex = 0;
-    var checkedTerritories = Model.Territories != null
-        ? Model.Territories.ToList()
-        : new List<TerritoryTag>();
-    object selectedTerritories = null;
-    //Newtonsoft.Json.JsonConvert.SerializeObject(
-    //    checkedTerritories.Select(x => new { label = x.Name, value = x.Id, levels = 0, disabled = true }));
+    var serializedTerritories = Model.Value ?? "[]";
+    serializedTerritories = serializedTerritories
+                    .Replace("{{", "{")
+                    .Replace("}}", "}");
 
-    var namePrefix = Html.FieldNameFor(m => m);
+    var namePrefix = Model.Name ?? Html.FieldNameFor(m => m);
     namePrefix = (string.IsNullOrWhiteSpace(namePrefix) ? "" : namePrefix + ".");
-    var idPrefix = Html.FieldIdFor(m => m);
+    var idPrefix = Model.Id ?? Html.FieldIdFor(m => m);
     idPrefix = (string.IsNullOrWhiteSpace(idPrefix) ? "" : idPrefix + "_");
 }
 
 <fieldset class="territories-wrapper"
           data-name-prefix="@namePrefix"
-          data-id-prefix="@idPrefix">
+          data-id-prefix="@idPrefix"
+          data-model-name="@Model.Name"
+          data-model-id="@Model.Id"
+          data-prevent-tokenization="true">
     <legend>@T("Select the territories this shipping is valid for.")</legend>
     @if (hierarchy != null) {
         <div class="territories-editor text text-medium"
@@ -35,39 +36,18 @@
                 new { area = "Laser.Orchard.NwazetIntegration",
                     controller = "TerritoriesApi" })"
              data-hierarchy-id="@hierarchy.Id"
-             data-selected-territories="@selectedTerritories">
+             data-selected-territories="@serializedTerritories">
             <ul></ul>
             <div class="hint">
                 @T("Enter multiple territory names. Hit <i>tab</i>, <i>enter</i> or <i>,</i> to add multiple terms.")
             </div>
         </div>
-        <div class="hidden-territories-state">
-            <ul class="territories">
-                @foreach (var entry in checkedTerritories) {
-                    var ti = tIndex;
-                    <li>
-                        @{
-                            <input type="checkbox"
-                               value="true"
-                               checked="checked"
-                               name="@(namePrefix + "Territories["+ti+"].Selected")" @* @Html.FieldNameFor(m => m.Terms[ti].IsChecked)*@
-                               id="@(idPrefix + "Territories_"+ti+"__Selected")" @* @Html.FieldIdFor(m => m.Terms[ti].IsChecked) *@
-                               data-territory="@entry.Label" @* @entry.Name *@
-                               data-territory-identity="@entry.Value" @* @entry.Name.ToLower() *@ />
-                        }
-                        <label class="forcheckbox"
-                               for="@(idPrefix + "Territories_"+ti+"__Selected")" @* @Html.FieldIdFor(m => m.Terms[ti].IsChecked) *@ >
-                            @entry.Label@*@entry.Name*@
-                        </label>
-                        <input type="hidden"
-                               name="@(namePrefix + "Territories["+ti+"].Selected")" @* @Html.FieldNameFor(m => m.Terms[ti].Id) *@
-                               id="@(idPrefix + "Territories_"+ti+"__Selected")" @* @Html.FieldIdFor(m => m.Terms[ti].Id) *@
-                               value="@entry.Value" @* @entry.Id *@ />
-                    </li>
-                    tIndex++;
-                }
-            </ul>
-        </div>
+        <input type="hidden"
+               name="@Model.Name"
+               id="@Model.Id"
+               value="@(serializedTerritories
+                    .Replace("{","{{")
+                    .Replace("}","}}"))" />
     } else {
         <div>
             @T("No countries' hierarchy was configured.")

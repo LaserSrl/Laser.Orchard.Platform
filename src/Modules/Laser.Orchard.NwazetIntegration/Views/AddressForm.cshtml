@@ -27,6 +27,9 @@
         .ToLowerInvariant();
 
     var guid = Guid.NewGuid().ToString();
+
+    var selectCountries = (address.AddressType == AddressRecordType.BillingAddress
+        ? address.BillingCountries : address.ShippingCountries) ?? address.Countries;
 }
 <div style="float:right">
     <fieldset>
@@ -64,7 +67,7 @@
         @Html.Hidden(prefix + ".CountryId", address.CountryId)
     } else {
         <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
-        @Html.DropDownList(prefix + ".CountryId", address.Countries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
+        @Html.DropDownList(prefix + ".CountryId", selectCountries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
         <div class="hint">@T("Select your Country from the list.")</div>
     }
 

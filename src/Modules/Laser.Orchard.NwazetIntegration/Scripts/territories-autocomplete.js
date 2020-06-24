@@ -1,43 +1,40 @@
 ﻿(function ($) {
     /* Helper functions
     **********************************************************************/
-    var createTerritoryCheckbox = function ($wrapper, tag, checked) {
-        var $ul = $("ul.territories", $wrapper);
-        var namePrefix = $wrapper
-            .data("name-prefix");
-        if (namePrefix != "") {
-            namePrefix = namePrefix + ".";
+    var addTagToForm = function ($wrapper, tag, checked) {
+        var modelId = $wrapper
+            .data("model-id");
+        var territoriesHidden = $("#" + modelId, $wrapper);
+        var jsonString = territoriesHidden.val();
+        // The json we have in the page may be used for tokenization
+        var preventTokens = $wrapper
+            .data("prevent-tokenization") == true;
+        if (preventTokens) {
+            jsonString = jsonString
+                .replace(/{{/g, "{")
+                .replace(/}}/g, "}");
         }
-        var idPrefix = $wrapper
-            .data("id-prefix");
-        if (idPrefix != "") {
-            idPrefix = idPrefix + "_";
-        }
-        var nextIndex = $("li", $ul).length;
-        var id = tag.value; //tag.value is a string for territories
-        var checkboxId = idPrefix + "Territories_" + nextIndex + "__IsChecked";
-        var checkboxName = namePrefix + "Territories[" + nextIndex + "].IsChecked";
-        var checkboxHtml = "<input type=\"checkbox\" value=\""
-            + (checked ? "true\" checked=\"checked\"" : "false")
-            + " data-territory=\"" + tag.label
-            + "\" data-territory-identity=\"" + tag.label.toLowerCase()
-            + "\" id=\"" + checkboxId
-            + "\" name=\"" + checkboxName + "\" />";
-        var inputHtml = checkboxHtml;
-        var $li = $("<li>" +
-            inputHtml +
-            "<input type=\"hidden\" value=\"" + id
-                + "\" id=\"" + idPrefix + "Territories_" + nextIndex + "__Id"
-                + "\" name=\"" + namePrefix + "Territories[" + nextIndex + "].Id" + "\" />" +
-            "<input type=\"hidden\" value=\"" + tag.label
-                + "\" id=\"" + idPrefix + "Territories_" + nextIndex + "__Name"
-                + "\" name=\"" + namePrefix + "Territories[" + nextIndex + "].Name" + "\" />" +
-            "<label class=\"forcheckbox\" for=\"" + checkboxId + "\">" + tag.label + "</label>" +
-            "</li>").hide();
+        var territoriesArray = JSON.parse(jsonString);
+        // the array of all tags except the current
+        var arr = territoriesArray.filter(function (val) {
+            return val.value != tag.value
+        });
 
-        $ul.append($li);
-        $li.fadeIn();
+        if (checked) {
+            // add to list
+            arr.push(tag);
+        } else {
+            // remove from list
+        }
+        var outString = JSON.stringify(arr);
+        if (preventTokens) {
+            outString = outString
+                .replace(/{/g, "{{")
+                .replace(/}/g, "}}");
+        }
+        territoriesHidden.val(outString);
     };
+
 
     /* Event handlers
     **********************************************************************/
@@ -45,34 +42,21 @@
 
         if (tagLabelOrValue == null)
             return;
-
+        
         var $input = this.appendTo;
         var $wrapper = $input.parents("fieldset:first");
         var $tagIt = $("ul.tagit", $wrapper);
-        var territories = $("ul.territories", $wrapper);
-        var initialTags = $(".territories-editor", $wrapper)
-            .data("selected-territories");
-        
-        territories.empty();
 
+        if (action == "popped") {
+            // removing tag
+            addTagToForm($wrapper, tag, false);
+        }
+        
         var tags = $tagIt.tagit("tags");
         $(tags).each(function (index, tag) {
-            createTerritoryCheckbox($wrapper, tag, true);
+            addTagToForm($wrapper, tag, true);
         });
-
-        // Add any tags that are no longer selected but were initially on page load.
-        // These are required to be posted back so they can be removed.
-        var removedTags = $.grep(initialTags,
-            function (initialTag) {
-                return $.grep(tags,
-                    function (tag) {
-                        return tag.value === initialTag.value
-                    }).length === 0
-            });
-        $(removedTags).each(function (index, tag) {
-            createTerrritoryCheckbox($wrapper, tag, false);
-        });
-
+        
     };
 
     var renderAutocompleteItem = function (ul, item) {

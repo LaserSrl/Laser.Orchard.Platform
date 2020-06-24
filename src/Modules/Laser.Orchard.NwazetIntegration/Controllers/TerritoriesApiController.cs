@@ -43,7 +43,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
                 return parts.Select(tp => new TerritoryTag {
                     Label = tp.As<TitlePart>().Title,
-                    Value = tp.Record.TerritoryInternalRecord.NameHash
+                    Value = tp.Record.TerritoryInternalRecord.Id + ";" + tp.Record.TerritoryInternalRecord.NameHash
                 });
             }
 
