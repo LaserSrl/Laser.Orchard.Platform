@@ -54,9 +54,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -100,13 +97,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Handler\PayPalSiteSettingsHandler.cs" />
+    <Compile Include="Models\PayPalSiteSettingsPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets.json" />
-    <Content Include="Assets\Styles.less" />
-    <Content Include="Styles\Styles.css" />
-    <Content Include="Styles\Styles.min.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -123,10 +119,17 @@
       <Name>Orchard.Core</Name>
       <Private>$(MvcBuildViews)</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
+      <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
+      <Name>Laser.Orchard.PaymentGateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
+      <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
+      <Name>Laser.Orchard.StartupConfig</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
