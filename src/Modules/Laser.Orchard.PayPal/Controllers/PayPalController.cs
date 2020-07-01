@@ -50,12 +50,12 @@ namespace Laser.Orchard.PayPal.Controllers {
             }
             pid = payment.Id;
             var settings = _orchardServices.WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
-            //if (settings.CurrencyCode != payment.Currency) {
-            //    //throw new Exception(string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode));
-            //    string error = string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode);
-            //    _posService.EndPayment(payment.Id, false, error, error);
-            //    return Redirect(_posService.GetPaymentInfoUrl(payment.Id));
-            //}
+            if (settings.CurrencyCode != payment.Currency) {
+                //throw new Exception(string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode));
+                string error = string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode);
+                _posService.EndPayment(payment.Id, false, error, error);
+                return Redirect(_posService.GetPaymentInfoUrl(payment.Id));
+            }
             PaymentVM model = new PaymentVM();
             model.Record = payment;
             model.TenantBaseUrl = Url.Action("Index").Replace("/Laser.Orchard.PayPal/PayPal", "");

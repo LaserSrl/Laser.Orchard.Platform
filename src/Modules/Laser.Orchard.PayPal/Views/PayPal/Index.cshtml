@@ -12,16 +12,60 @@
 
     var strScript = string.Empty;
     if (!string.IsNullOrEmpty(config.ClientId)) {
-        strScript = "https://www.paypal.com/sdk/js?client-id=" + config.ClientId;
+        strScript = "https://www.paypal.com/sdk/js?client-id=" + config.ClientId + "&intent=capture";
         if (!string.IsNullOrEmpty(config.CurrencyCode)) {
             strScript += "&currency=" + config.CurrencyCode;
         }
-    }
+        if (!config.Card && !config.Credit && !config.Bancontact && !config.Blik && !config.Eps && !config.Giropay && !config.Ideal &&
+          !config.Mybank && !config.Przelewy && !config.Sepa && !config.Sofort && !config.Venmo) {
+            strScript += "&disable-funding=card,credit,bancontact,blik,eps,giropay,ideal,mybank,p24,sepa,sofort,venmo";
+        }
+        else if (!config.Card || !config.Credit || !config.Bancontact || !config.Blik || !config.Eps || !config.Giropay || !config.Ideal ||
+          !config.Mybank || !config.Przelewy || !config.Sepa || !config.Sofort || !config.Venmo) {
+            strScript += "&disable-funding=";
+            if (!config.Card) {
+                strScript += "card,";
+            }
+            if (!config.Credit) {
+                strScript += "credit,";
+            }
+            if (!config.Bancontact) {
+                strScript += "bancontact,";
+            }
+            if (!config.Blik) {
+                strScript += "blik,";
+            }
+            if (!config.Eps) {
+                strScript += "eps,";
+            }
+            if (!config.Giropay) {
+                strScript += "giropay,";
+            }
+            if (!config.Ideal) {
+                strScript += "ideal,";
+            }
+            if (!config.Mybank) {
+                strScript += "mybank,";
+            }
+            if (!config.Przelewy) {
+                strScript += "p24,";
+            }
+            if (!config.Sepa) {
+                strScript += "sepa,";
+            }
+            if (!config.Sofort) {
+                strScript += "sofort,";
+            }
+            if (!config.Venmo) {
+                strScript += "venmo,";
+            }
 
+            strScript = strScript.Remove(strScript.Length - 1);
+        }
+    }
 }
 
 @using (Script.Head()) {
-    @*<script src="@scriptStr&currency=EUR&intent=capture&disable-funding=credit,bancontact,blik,eps,giropay,ideal,mybank,p24,sepa,sofort,venmo"></script>*@
     if (strScript != string.Empty) {
         <script src="@strScript"></script>
         <script type="text/javascript">
