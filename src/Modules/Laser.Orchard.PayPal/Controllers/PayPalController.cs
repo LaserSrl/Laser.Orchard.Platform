@@ -3,28 +3,33 @@ using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PayPal.Models;
 using Laser.Orchard.PayPal.Services;
 using Laser.Orchard.PayPal.ViewModels;
+using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Themes;
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.PayPal.Controllers {
     public class PayPalController : Controller {
         private readonly IOrchardServices _orchardServices;
         private readonly PayPalPosService _posService;
-        //private readonly IBraintreeService _braintreeService;
+        private readonly IPayPalService _PayPalService;
 
         public PayPalController(
             IOrchardServices orchardServices, 
             IRepository<PaymentRecord> repository, 
-            IPaymentEventHandler paymentEventHandler 
-            /*,IBraintreeService braintreeService*/) {
+            IPaymentEventHandler paymentEventHandler,
+            IPayPalService PayPalService) {
             _orchardServices = orchardServices;
             _posService = new PayPalPosService(orchardServices, repository, paymentEventHandler);
-            //_braintreeService = braintreeService;
+            _PayPalService = PayPalService;
 
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
@@ -60,6 +65,25 @@ namespace Laser.Orchard.PayPal.Controllers {
             model.Record = payment;
             model.TenantBaseUrl = Url.Action("Index").Replace("/Laser.Orchard.PayPal/PayPal", "");
             return View("Index", model);
+        }
+
+        [Themed]
+        [HttpGet]
+        public ActionResult FinalizePayment(int rid) {
+            var orderId = _orchardServices.WorkContext.HttpContext.Request["OrderId"];
+            if (string.IsNullOrWhiteSpace(orderId)) {
+                // error 400
+            }
+            else {
+                CheckOrderResult result = _PayPalService.VerifyOrderIdPayPal(orderId);
+                // success 200
+
+                // manage response error 
+                // in controller
+                // in call ajax
+            }
+           
+            return null;
         }
     }
 }

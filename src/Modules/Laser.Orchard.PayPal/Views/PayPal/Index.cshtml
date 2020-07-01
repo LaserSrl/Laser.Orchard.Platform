@@ -102,10 +102,10 @@
                                     }
                                 ]
                             },*@
-                            description:'Payment ticket',
+                            description:'@Model.Record.Reason',
                             purchase_units: [{
                                 amount: {
-                                    value: '@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'
+                                    value: '0.1' @*'@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'*@
                                 }
                             }]
                         });
@@ -113,8 +113,22 @@
                     onApprove: function (data, actions) {
                         // This function captures the funds from the transaction.
                         return actions.order.capture().then(function (details) {
-                            @*$("#waitfrom").show();
-                                $.ajax({
+                            $("#div-warning").css("display", "block");
+                            $.ajax({
+                                type: 'GET',
+                                url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/FinalizePayment" + '?OrderId=' + details.id,
+                                data: { rid: '@Model.Record.Id' },
+                                success: function(data){
+
+                                },
+                                error: function (data) {
+
+                                }
+                            });
+
+
+
+                            @*    $.ajax({
                                     type: 'POST',
                                     url: '@Url.Action("Trigger", "Signal", new { Area = "Laser.Orchard.WebServices" })' + '?OrderId=' + details.id,
                                     data: {
@@ -145,6 +159,9 @@
                     }
                     ,
                     onClick: function (data, actions) {
+                        if (data.fundingSource == "paypal") {
+                            $("#div-warning").css("display", "block");
+                        }
                         //$('#btnPagamentoInLoco').prop('disabled', true);
                         //$("#PagamentoFailure").css("display", "none");
                         //if (data.fundingSource == "paypal") {
@@ -153,13 +170,11 @@
                     },
                     /*Normally when a buyer cancels a payment, the buyer is returned to the parent page*/
                     onCancel: function (data, actions) {
-                        //$("#waitfrom").hide();
-                        //$("#btnPagamentoInLoco").prop('disabled', false);
+                        $("#div-warning").css("display", "none");
                     },
                     onError: function (err) {
-                        //$("#waitfrom").hide();
-                        //$("#btnPagamentoInLoco").prop('disabled', false);
-                        //$("#PagamentoFailure").css("display", "block");
+                        $("#PagamentoFailure").css("display", "block");
+                        $("#div-warning").css("display", "none");
                     }
                 }).render('#paypal-button');
             }
@@ -168,7 +183,15 @@
     }
 }
 
+<div id="PagamentoFailure" class="alert alert-danger" style="display:none">
+    <span>@T("Oops! Error payment! Try again.")</span>
+    <p>
+        <span id="ErrorMessage"></span>
+    </p>
+</div>
 <h1>@T("Pay with PayPal")</h1>
+<div id="div-warning" style="color:red;font-weight:700; display:none">@T("Loading...")</div>
+
 <br />
 @T("Amount"): @Model.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) @Model.Record.Currency
 <br />
