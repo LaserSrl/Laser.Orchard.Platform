@@ -14,5 +14,9 @@ namespace Laser.Orchard.PayPal.Models {
             get { return this.Retrieve(x => x.ClientId); }
             set { this.Store(x => x.ClientId, value); }
         }
+        public string CurrencyCode {
+            get { return this.Retrieve(x => x.CurrencyCode); }
+            set { this.Store(x => x.CurrencyCode, value); }
+        }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model Laser.Orchard.PayPal.Models.PayPalSiteSettingsPart
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <legend>@T("PayPal Setting")</legend>
+        <div>
+            <label for="@Html.FieldIdFor(m=>m.ClientId)">@T("Client Id")</label>
+            @Html.TextBoxFor(m => m.ClientId, new { @class = "text large" })
+            <span class="hint">@T("The Client Id of your PayPal account")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m=>m.SecretId)">@T("Secret Id")</label>
+            @Html.TextBoxFor(m => m.SecretId, new { @class = "text large" })
+            <span class="hint">@T("The Secret Id of your PayPal account")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.CurrencyCode)">@T("Currency Code")</label>
+            @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "text large" })
+            <span class="hint">@T("Currency code to configure the payment.")</span>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save")</button>
+
+}

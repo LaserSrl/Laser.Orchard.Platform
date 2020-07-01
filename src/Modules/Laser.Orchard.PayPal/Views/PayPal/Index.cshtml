@@ -1,0 +1,135 @@
+﻿@using Orchard;
+@using Orchard.ContentManagement;
+@using System.Globalization;
+@using Laser.Orchard.PayPal.Models;
+
+@model Laser.Orchard.PayPal.ViewModels.PaymentVM
+
+@{
+    Script.Require("jQuery").AtHead();
+
+    var config = WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
+
+    var strScript = string.Empty;
+    if (!string.IsNullOrEmpty(config.ClientId)) {
+        strScript = "https://www.paypal.com/sdk/js?client-id=" + config.ClientId;
+        if (!string.IsNullOrEmpty(config.CurrencyCode)) {
+            strScript += "&currency=" + config.CurrencyCode;
+        }
+    }
+
+}
+
+@using (Script.Head()) {
+    @*<script src="@scriptStr&currency=EUR&intent=capture&disable-funding=credit,bancontact,blik,eps,giropay,ideal,mybank,p24,sepa,sofort,venmo"></script>*@
+    if (strScript != string.Empty) {
+        <script src="@strScript"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#paypal-button').is(':visible')) {
+                paypal.Buttons({
+                    // Customize button (optional)
+                    style: {
+                        size: 'small',
+                        color: 'gold',
+                        shape: 'pill',
+                        label: 'paypal',
+                        layout: 'vertical',
+                        fundingicons: true
+                    },
+                    enableStandardCardFields: true,
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            @*invoice_id: '@queryStrPrenotazione',
+                            item_list: {
+                                items: [
+                                    {
+                                        currency: "EUR",
+                                        name: "Intero",
+                                        price: "@totalFull.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',','.')",
+                                        quantity: "@prenotazione.Interi.Value"
+                                    },
+                                    {
+                                        currency: "EUR",
+                                        name: "Ridotto",
+                                        price: "@totalReduced.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')",
+                                        quantity: "@prenotazione.Ridotti.Value"
+                                    }
+                                ]
+                            },*@
+                            description:'Payment ticket',
+                            purchase_units: [{
+                                amount: {
+                                    value: '@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            @*$("#waitfrom").show();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("Trigger", "Signal", new { Area = "Laser.Orchard.WebServices" })' + '?OrderId=' + details.id,
+                                    data: {
+                                        __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                        signalName: 'PagamentoPayPal',
+                                        contentId: @prenotazioneId
+                                    },
+                                    success: function (data) {
+                                        if (Boolean(data["Success"])) {
+                                            $("#OrderId").text(details.id);
+                                            $("#PagamentoPayPalSuccess").css("display", "block");
+                                            $(".payment-action").css("display", "none");
+                                            $(".page-order").css("display", "none")
+                                        }
+                                        else {
+                                            $("PagamentoPayPalSuccess").css("display", "none");
+                                        }
+                                        $("#waitfrom").hide();
+                                        $("#btnPagamentoInLoco").prop('disabled', false);
+                                    },
+                                    error: function () {
+                                        $('PagamentoPayPalSuccess').css("display", "none");
+                                        $("#waitfrom").hide();
+                                        $("#btnPagamentoInLoco").prop('disabled', false);
+                                        }
+                                });*@
+                        });
+                    }
+                    ,
+                    onClick: function (data, actions) {
+                        //$('#btnPagamentoInLoco').prop('disabled', true);
+                        //$("#PagamentoFailure").css("display", "none");
+                        //if (data.fundingSource == "paypal") {
+                        //    $("#waitfrom").show();
+                        //}
+                    },
+                    /*Normally when a buyer cancels a payment, the buyer is returned to the parent page*/
+                    onCancel: function (data, actions) {
+                        //$("#waitfrom").hide();
+                        //$("#btnPagamentoInLoco").prop('disabled', false);
+                    },
+                    onError: function (err) {
+                        //$("#waitfrom").hide();
+                        //$("#btnPagamentoInLoco").prop('disabled', false);
+                        //$("#PagamentoFailure").css("display", "block");
+                    }
+                }).render('#paypal-button');
+            }
+        });
+        </script>
+    }
+}
+
+<h1>@T("Pay with PayPal")</h1>
+<br />
+@T("Amount"): @Model.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) @Model.Record.Currency
+<br />
+
+<div class="container-paypal" style="padding-top:20px; min-width: 400px; display: inline-block;">
+    <div id="paypal-button"></div>
+</div>
+

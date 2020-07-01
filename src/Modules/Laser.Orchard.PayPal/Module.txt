@@ -1,11 +1,11 @@
 ﻿Name: Laser.Orchard.PayPal
 AntiForgery: enabled
 Author: The Orchard Team
-Website: https://orchardproject.net
+Website: http://www.laser-group.com
 Version: 1.0
 OrchardVersion: 1.10.3
-Description: Description for the module
 Features:
     Laser.Orchard.PayPal:
-        Description: Description for feature Laser.Orchard.PayPal.
+        Description: This module enable Laser.Orchard.PayPal.
 		Dependencies: Laser.Orchard.StartupConfig,Laser.Orchard.PaymentGateway
+		FeatureDescription:This module enable PayPal payment method
