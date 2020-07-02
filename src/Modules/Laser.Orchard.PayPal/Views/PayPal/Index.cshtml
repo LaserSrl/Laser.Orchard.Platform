@@ -85,8 +85,8 @@
                     createOrder: function (data, actions) {
                         // This function sets up the details of the transaction, including the amount and line item details.
                         return actions.order.create({
-                            @*invoice_id: '@queryStrPrenotazione',
-                            item_list: {
+                            invoice_id: '@Model.Record.Guid',
+                            @*item_list: {
                                 items: [
                                     {
                                         currency: "EUR",
@@ -115,14 +115,18 @@
                         return actions.order.capture().then(function (details) {
                             $("#div-warning").css("display", "block");
                             $.ajax({
-                                type: 'GET',
+                                type: 'POST',
                                 url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/FinalizePayment" + '?OrderId=' + details.id,
-                                data: { rid: '@Model.Record.Id' },
+                                data: {
+                                    __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                    rid: '@Model.Record.Id'
+                                },
                                 success: function(data){
-
+                                    $("#div-warning").css("display", "none");
                                 },
                                 error: function (data) {
-
+                                    alert(data.statusText);
+                                    $("#div-warning").css("display", "none");
                                 }
                             });
 
@@ -175,6 +179,7 @@
                     onError: function (err) {
                         $("#PagamentoFailure").css("display", "block");
                         $("#div-warning").css("display", "none");
+                        alert("Oops! Error payment! Try again");
                     }
                 }).render('#paypal-button');
             }

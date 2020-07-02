@@ -5,8 +5,8 @@ using System.Web;
 
 namespace Laser.Orchard.PayPal.Models {
     public class CheckOrderResult {
-        public string Status { get; set; }
-        public string OrderIdReturned { get; set; }
-        public bool Error { get; set; }
+        public bool Success { get; set; }
+        public string MessageError { get; set; }
+        public string Info { get; set; }
     }
 }

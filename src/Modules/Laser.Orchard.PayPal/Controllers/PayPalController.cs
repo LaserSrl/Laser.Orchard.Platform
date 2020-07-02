@@ -67,23 +67,25 @@ namespace Laser.Orchard.PayPal.Controllers {
             return View("Index", model);
         }
 
-        [Themed]
-        [HttpGet]
+        [HttpPost]
         public ActionResult FinalizePayment(int rid) {
+            CheckOrderResult result = new CheckOrderResult();
             var orderId = _orchardServices.WorkContext.HttpContext.Request["OrderId"];
             if (string.IsNullOrWhiteSpace(orderId)) {
-                // error 400
+                result.Success = false;
+                result.MessageError = "Order id cannot be empty";
             }
             else {
-                CheckOrderResult result = _PayPalService.VerifyOrderIdPayPal(orderId);
-                // success 200
-
-                // manage response error 
-                // in controller
-                // in call ajax
+                result = _PayPalService.VerifyOrderIdPayPal(orderId);
             }
-           
-            return null;
+
+            _posService.EndPayment(rid, result.Success, result.MessageError, result.Info);
+            if (!result.Success) {
+                Logger.Error("Error on payment for order {0} Error: {1}", rid, result.MessageError);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, result.MessageError);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

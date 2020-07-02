@@ -21,8 +21,8 @@ namespace Laser.Orchard.PayPal.Services {
 
             var config = _orchardServices.WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
             if (string.IsNullOrWhiteSpace(config.SecretId) || string.IsNullOrWhiteSpace(config.ClientId)) {
-                checkResult.Status = "Config is missing";
-                checkResult.Error = true;
+                checkResult.MessageError = "Config is missing";
+                checkResult.Success = false;
             }
             else {
                 try {
@@ -51,19 +51,30 @@ namespace Laser.Orchard.PayPal.Services {
                         if (streamReader != null) {
                             var json = JObject.Parse(stremReader);
                             var id = json["id"] == null ? string.Empty : json["id"].ToString();
-                            checkResult.OrderIdReturned = id;
-                            checkResult.Status = json["status"].ToString(); // Completed
-                            checkResult.Error = false;
+                            if (id.Trim() == oid.Trim() && json["status"].ToString()=="COMPLETED") {
+                                checkResult.Success = true;
+                            }
+                            else {
+                                checkResult.Success = false;
+                                if(id.Trim() != oid.Trim()) { 
+                                    checkResult.MessageError = string.Format("Order id sent ({0}) does not match order verification id ({1})",oid.Trim(),id.Trim());
+                                }
+
+                                if(json["status"].ToString() != "COMPLETED") {
+                                    checkResult.MessageError += string.Format("Status of order is not completed : {0}", json["status"].ToString());
+                                }
+                            }
+                            checkResult.Info = stremReader;
                         }
                     }
                 }
                 catch (WebException e) {
-                    checkResult.Error = true;
-                    checkResult.Status = e.Message;
+                    checkResult.Success = false;
+                    checkResult.MessageError = e.Message;
                 }
                 catch (Exception ex) {
-                    checkResult.Error = true;
-                    checkResult.Status = ex.Message;
+                    checkResult.Success = false;
+                    checkResult.MessageError = ex.Message;
                 }
             }
             return checkResult;
