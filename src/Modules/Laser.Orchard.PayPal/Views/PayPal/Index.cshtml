@@ -85,27 +85,12 @@
                     createOrder: function (data, actions) {
                         // This function sets up the details of the transaction, including the amount and line item details.
                         return actions.order.create({
+                            //Invoice ID is the reference number associated with the transaction on thePayPal account
                             invoice_id: '@Model.Record.Guid',
-                            @*item_list: {
-                                items: [
-                                    {
-                                        currency: "EUR",
-                                        name: "Intero",
-                                        price: "@totalFull.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',','.')",
-                                        quantity: "@prenotazione.Interi.Value"
-                                    },
-                                    {
-                                        currency: "EUR",
-                                        name: "Ridotto",
-                                        price: "@totalReduced.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')",
-                                        quantity: "@prenotazione.Ridotti.Value"
-                                    }
-                                ]
-                            },*@
                             description:'@Model.Record.Reason',
                             purchase_units: [{
                                 amount: {
-                                    value: '0.1' @*'@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'*@
+                                    value: '1.00' @*'@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'*@
                                 }
                             }]
                         });
@@ -119,46 +104,15 @@
                                 url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/FinalizePayment" + '?OrderId=' + details.id,
                                 data: {
                                     __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
-                                    rid: '@Model.Record.Id'
+                                    pId: '@Model.Record.Id'
                                 },
                                 success: function(data){
-                                    $("#div-warning").css("display", "none");
+                                    PaymentResult();
                                 },
                                 error: function (data) {
-                                    alert(data.statusText);
-                                    $("#div-warning").css("display", "none");
+                                    PaymentResult();
                                 }
                             });
-
-
-
-                            @*    $.ajax({
-                                    type: 'POST',
-                                    url: '@Url.Action("Trigger", "Signal", new { Area = "Laser.Orchard.WebServices" })' + '?OrderId=' + details.id,
-                                    data: {
-                                        __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
-                                        signalName: 'PagamentoPayPal',
-                                        contentId: @prenotazioneId
-                                    },
-                                    success: function (data) {
-                                        if (Boolean(data["Success"])) {
-                                            $("#OrderId").text(details.id);
-                                            $("#PagamentoPayPalSuccess").css("display", "block");
-                                            $(".payment-action").css("display", "none");
-                                            $(".page-order").css("display", "none")
-                                        }
-                                        else {
-                                            $("PagamentoPayPalSuccess").css("display", "none");
-                                        }
-                                        $("#waitfrom").hide();
-                                        $("#btnPagamentoInLoco").prop('disabled', false);
-                                    },
-                                    error: function () {
-                                        $('PagamentoPayPalSuccess').css("display", "none");
-                                        $("#waitfrom").hide();
-                                        $("#btnPagamentoInLoco").prop('disabled', false);
-                                        }
-                                });*@
                         });
                     }
                     ,
@@ -166,34 +120,42 @@
                         if (data.fundingSource == "paypal") {
                             $("#div-warning").css("display", "block");
                         }
-                        //$('#btnPagamentoInLoco').prop('disabled', true);
-                        //$("#PagamentoFailure").css("display", "none");
-                        //if (data.fundingSource == "paypal") {
-                        //    $("#waitfrom").show();
-                        //}
+
                     },
                     /*Normally when a buyer cancels a payment, the buyer is returned to the parent page*/
                     onCancel: function (data, actions) {
                         $("#div-warning").css("display", "none");
                     },
                     onError: function (err) {
-                        $("#PagamentoFailure").css("display", "block");
                         $("#div-warning").css("display", "none");
-                        alert("Oops! Error payment! Try again");
+                        //alert("Oops! Error payment! Try again");
+                        $.ajax({
+                            type: 'POST',
+                            url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
+                            data: {
+                                __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                pId: '@Model.Record.Id'
+                            },
+                            success: function (data) {
+                                PaymentResult();
+                            }
+                        });
                     }
                 }).render('#paypal-button');
+            }
+
+            function PaymentResult() {
+                $("#div-warning").css("display", "none");
+                // redirect to info page payment
+                window.location.href = '@Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid })';
             }
         });
         </script>
     }
 }
 
-<div id="PagamentoFailure" class="alert alert-danger" style="display:none">
-    <span>@T("Oops! Error payment! Try again.")</span>
-    <p>
-        <span id="ErrorMessage"></span>
-    </p>
-</div>
+<div></div>
+
 <h1>@T("Pay with PayPal")</h1>
 <div id="div-warning" style="color:red;font-weight:700; display:none">@T("Loading...")</div>
 

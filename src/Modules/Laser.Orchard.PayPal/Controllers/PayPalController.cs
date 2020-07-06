@@ -68,8 +68,10 @@ namespace Laser.Orchard.PayPal.Controllers {
         }
 
         [HttpPost]
-        public ActionResult FinalizePayment(int rid) {
+        public ActionResult FinalizePayment(int pId) {
             CheckOrderResult result = new CheckOrderResult();
+            var payment = _posService.GetPaymentInfo(pId);
+
             var orderId = _orchardServices.WorkContext.HttpContext.Request["OrderId"];
             if (string.IsNullOrWhiteSpace(orderId)) {
                 result.Success = false;
@@ -79,11 +81,27 @@ namespace Laser.Orchard.PayPal.Controllers {
                 result = _PayPalService.VerifyOrderIdPayPal(orderId);
             }
 
-            _posService.EndPayment(rid, result.Success, result.MessageError, result.Info);
+            _posService.EndPayment(pId, result.Success, result.MessageError, result.Info);
             if (!result.Success) {
-                Logger.Error("Error on payment for order {0} Error: {1}", rid, result.MessageError);
+                Logger.Error("Error on payment for order {0} Error: {1}", payment.ContentItemId, result.MessageError);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, result.MessageError);
             }
+            
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        public ActionResult ErrorPay(int pId) {
+            // this controller manage only response negative.
+            // is called into action onError manage from javascript PayPal
+            CheckOrderResult result = new CheckOrderResult();
+            result.Success = false;
+            result.MessageError = string.Format("Something went wrong during the payment");
+
+            var payment = _posService.GetPaymentInfo(pId);
+            _posService.EndPayment(payment.Id, result.Success, result.MessageError, result.Info);
+
+            Logger.Error("Error on payment for order {0} Error: {1}", payment.ContentItemId, result.MessageError);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
