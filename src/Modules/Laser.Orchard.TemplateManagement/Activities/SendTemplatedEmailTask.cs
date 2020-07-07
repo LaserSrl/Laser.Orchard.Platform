@@ -174,14 +174,7 @@ namespace Laser.Orchard.TemplateManagement.Activities {
                 if (template.ContentItem.As<LocalizationPart>().Culture != null && template.ContentItem.As<LocalizationPart>().Culture.Culture != currentCulture) {
                     var localizationPart = _localizationService.GetLocalizedContentItem(template.ContentItem, currentCulture);
                     // if exist culture replace template
-                    if (localizationPart != null) {
-                        var workflowContext = contentModel.WorkflowContext;
-                        contentModel = new {
-                            ContentItem = localizationPart.As<ContentItem>(),
-                            FormCollection = _orchardServices.WorkContext.HttpContext == null ? new NameValueCollection() : _orchardServices.WorkContext.HttpContext.Request.Form,
-                            QueryStringCollection = _orchardServices.WorkContext.HttpContext == null ? new NameValueCollection() : _orchardServices.WorkContext.HttpContext.Request.QueryString,
-                            WorkflowContext = workflowContext
-                        };
+                    if (localizationPart != null) { 
                         template = localizationPart.As<TemplatePart>();
                         templateId = template.Id;
                     }
