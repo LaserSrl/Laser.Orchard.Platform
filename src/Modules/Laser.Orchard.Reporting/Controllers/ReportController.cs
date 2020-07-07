@@ -144,7 +144,8 @@ namespace Laser.Orchard.Reporting.Controllers {
                 Query = new QueryPartRecord { Id = model.QueryId.Value },
                 GroupByCategory = groupByDescriptor.Category,
                 GroupByType = groupByDescriptor.Type,
-                AggregateMethod = model.AggregateMethod
+                AggregateMethod = model.AggregateMethod,
+                GUID = Guid.NewGuid().ToString()
             };
 
             this.reportRepository.Create(newReport);
@@ -171,7 +172,8 @@ namespace Laser.Orchard.Reporting.Controllers {
                 GroupByCategory = "",
                 GroupByType = "",
                 AggregateMethod = 0,
-                ColumnAliases = model.ColumnAliases
+                ColumnAliases = model.ColumnAliases,
+                GUID = Guid.NewGuid().ToString()
             };
 
             reportRepository.Create(newReport);
@@ -257,6 +259,9 @@ namespace Laser.Orchard.Reporting.Controllers {
             report.GroupByCategory = groupByDescriptor.Category;
             report.GroupByType = groupByDescriptor.Type;
             report.AggregateMethod = model.AggregateMethod;
+            if (string.IsNullOrWhiteSpace(report.GUID)) {
+                report.GUID = Guid.NewGuid().ToString();
+            }
 
             this.reportRepository.Update(report);
             this.reportRepository.Flush();
@@ -292,6 +297,9 @@ namespace Laser.Orchard.Reporting.Controllers {
             report.GroupByType = "";
             report.AggregateMethod = 0;
             report.ColumnAliases = model.ColumnAliases;
+            if (string.IsNullOrWhiteSpace(report.GUID)) {
+                report.GUID = Guid.NewGuid().ToString();
+            }
 
             reportRepository.Update(report);
             reportRepository.Flush();

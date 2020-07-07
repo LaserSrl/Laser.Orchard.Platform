@@ -2,7 +2,7 @@
 @using Orchard.Widgets.Models
 @{
     dynamic item = Model.ContentItem;
-    string tipoContenuto = item.HtmlWidget.Specializzazione.Value;
+    string tipoContenuto = item.HtmlWidget != null && item.HtmlWidget.Specializzazione!=null ? item.HtmlWidget.Specializzazione.Value : "";
 }
 @switch (tipoContenuto) {
     case "Footer Logo":

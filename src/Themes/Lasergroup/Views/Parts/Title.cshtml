@@ -2,26 +2,29 @@
 @{
     Layout.Title = Model.Title;
     ContentItem content = Model.ContentItem;
-    dynamic item = Model.ContentItem;
-    var contentType = content.ContentType;
+    string contentType = "";
     var imageSrc = "";
     var imageAlt = "";
     var imageTitle = "";
     ContentPart contentGenericPart = null;
     ContentField sottoTitoloField = null;
     ContentField imageField = null;
-    contentGenericPart = content.Parts.Where(x => x.PartDefinition.Name == contentType).FirstOrDefault();
-    if (contentGenericPart != null) {
+    dynamic item = Model.ContentItem;
+    if (item != null) {
+        contentType = content.ContentType;
         contentGenericPart = content.Parts.Where(x => x.PartDefinition.Name == contentType).FirstOrDefault();
-        sottoTitoloField = contentGenericPart.Fields.Where(f => f.Name == "Sottotitolo").FirstOrDefault();
-        imageField = contentGenericPart.Fields.Where(f => f.Name == "Image").FirstOrDefault();
-        if (imageField != null && ((dynamic)imageField).MediaParts.Count > 0) {
-            imageSrc = ((dynamic)imageField).FirstMediaUrl;
-            imageAlt = ((dynamic)imageField).MediaParts[0].Title;
-            imageTitle = ((dynamic)imageField).MediaParts[0].AlternateText;
+        if (contentGenericPart != null) {
+            contentGenericPart = content.Parts.Where(x => x.PartDefinition.Name == contentType).FirstOrDefault();
+            sottoTitoloField = contentGenericPart.Fields.Where(f => f.Name == "Sottotitolo").FirstOrDefault();
+            imageField = contentGenericPart.Fields.Where(f => f.Name == "Image").FirstOrDefault();
+            if (imageField != null && ((dynamic)imageField).MediaParts.Count > 0) {
+                imageSrc = ((dynamic)imageField).FirstMediaUrl;
+                imageAlt = ((dynamic)imageField).MediaParts[0].Title;
+                imageTitle = ((dynamic)imageField).MediaParts[0].AlternateText;
+            }
         }
     }
     Layout.BaseClass = "page page-template navbar-fixed";
 }
-@Display(New.Parts_Title_Default(Title: Model.Title, Subtitle: (sottoTitoloField!=null)?((dynamic)sottoTitoloField).Value:"", ImageUrl: imageSrc, ImageTitle: imageTitle, ImageAlternateText: imageAlt))
-@Display(New.Parts_Body_Default(Html: (item.BodyPart!=null) ?item.BodyPart.Text:"", Content: content))
+@Display(New.Parts_Title_Default(Title: Model.Title, Subtitle: (sottoTitoloField != null) ? ((dynamic)sottoTitoloField).Value : "", ImageUrl: imageSrc, ImageTitle: imageTitle, ImageAlternateText: imageAlt))
+@Display(New.Parts_Body_Default(Html: (item != null && item.BodyPart != null) ? item.BodyPart.Text : "", Content: content))
