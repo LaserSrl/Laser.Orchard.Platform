@@ -20,8 +20,6 @@ using Orchard.UI.Notify;
 using System.Collections.Specialized;
 using Orchard.JobsQueue.Services;
 using Orchard.Localization.Services;
-using Orchard.Localization.Models;
-using Laser.Orchard.TemplateManagement.Models;
 
 namespace Laser.Orchard.TemplateManagement.Activities {
 
@@ -33,8 +31,6 @@ namespace Laser.Orchard.TemplateManagement.Activities {
         private readonly ITemplateService _templateServices;
         private readonly INotifier _notifier;
         private readonly IJobsQueueService _jobsQueueService;
-        private readonly ILocalizationService _localizationService;
-        private readonly IWorkContextAccessor _workContextAccessor;
 
 
         public const string MessageType = "ActionTemplatedEmail";
@@ -45,17 +41,13 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             IMembershipService membershipService,
             ITemplateService templateServices,
             INotifier notifier,
-            IJobsQueueService jobsQueueService,
-            ILocalizationService localizationService,
-            IWorkContextAccessor workContextAccessor
+            IJobsQueueService jobsQueueService
 ) {
             _messageService = messageService;
             _orchardServices = orchardServices;
             _membershipService = membershipService;
             _templateServices = templateServices;
             _jobsQueueService = jobsQueueService;
-            _localizationService = localizationService;
-            _workContextAccessor = workContextAccessor;
 
             T = NullLocalizer.Instance;
             _notifier = notifier;
@@ -176,19 +168,8 @@ namespace Laser.Orchard.TemplateManagement.Activities {
 
         private bool SendEmail(dynamic contentModel, int templateId, IEnumerable<string> sendTo, IEnumerable<string> cc, IEnumerable<string> bcc, bool NotifyReadEmail, string fromEmail = null, string replyTo = null, IEnumerable<string> attachments = null, bool queued = false, int priority = 0) {
             var template = _templateServices.GetTemplate(templateId);
-            if (template != null && template.ContentItem.As<LocalizationPart>() != null) {
-                var currentCulture = _workContextAccessor.GetContext().CurrentCulture;
-                if (template.ContentItem.As<LocalizationPart>().Culture != null && template.ContentItem.As<LocalizationPart>().Culture.Culture != currentCulture) {
-                    var localizationPart = _localizationService.GetLocalizedContentItem(template.ContentItem, currentCulture);
-                    // if exist culture replace template
-                    if (localizationPart != null) { 
-                        template = localizationPart.As<TemplatePart>();
-                        templateId = template.Id;
-                    }
-                }
-            }
 
-            var body = _templateServices.RitornaParsingTemplate(contentModel, templateId);
+            var body = _templateServices.RitornaParsingTemplate(contentModel, template.Id);
             if (body.StartsWith("Error On Template")) {
                 _notifier.Add(NotifyType.Error, T("Error on template, mail not sent"));
                 return false;

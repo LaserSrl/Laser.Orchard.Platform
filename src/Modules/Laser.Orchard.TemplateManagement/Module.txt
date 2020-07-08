@@ -5,6 +5,7 @@ Website:
 Version: 1.8
 OrchardVersion: 1.10
 Description: Template Management features.
+Dependencies: Orchard.Localization
 Features:
     Laser.Orchard.TemplateManagement:
         Name:  Laser Orchard Template Management
