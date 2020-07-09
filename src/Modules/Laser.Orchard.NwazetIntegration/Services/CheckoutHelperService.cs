@@ -20,7 +20,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IEnumerable<IOrderAdditionalInformationProvider> _orderAdditionalInformationProviders;
-        private readonly IEnumerable<ICheckoutCondition> _checkoutConditions;
+        private readonly Lazy<IEnumerable<ICheckoutCondition>> _checkoutConditions;
 
         public CheckoutHelperService(
             IShoppingCart shoppingCart,
@@ -30,7 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             IWorkContextAccessor workContextAccessor,
             ICurrencyProvider currencyProvider,
             IEnumerable<IOrderAdditionalInformationProvider> orderAdditionalInformationProviders,
-            IEnumerable<ICheckoutCondition> checkoutConditions) {
+            Lazy<IEnumerable<ICheckoutCondition>> checkoutConditions) {
 
             _shoppingCart = shoppingCart;
             _productPriceService = productPriceService;
@@ -39,7 +39,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _workContextAccessor = workContextAccessor;
             _currencyProvider = currencyProvider;
             _orderAdditionalInformationProviders = orderAdditionalInformationProviders;
-            _checkoutConditions = checkoutConditions.OrderByDescending(cc => cc.Priority);
+            _checkoutConditions = checkoutConditions;
+        }
+
+        private IEnumerable<ICheckoutCondition> CheckoutConditions {
+            get {
+                return _checkoutConditions.Value.OrderByDescending(cc => cc.Priority);
+            }
         }
 
         public OrderPart CreateOrder(
@@ -132,7 +138,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public bool UserMayCheckout(IUser user, out ActionResult redirect) {
-            foreach (var condition in _checkoutConditions) {
+            foreach (var condition in CheckoutConditions) {
                 // as soon as a condition tells us the user may not checkout, 
                 // stop checking
                 if (!condition.UserMayCheckout(user, out redirect)) {
@@ -146,7 +152,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public bool UserMayCheckout(IUser user) {
             // there is no condition returning false
-            return !_checkoutConditions.Any(cc => !cc.UserMayCheckout(user));
+            return !CheckoutConditions.Any(cc => !cc.UserMayCheckout(user));
         }
     }
 }
