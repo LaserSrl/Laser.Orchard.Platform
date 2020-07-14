@@ -47,5 +47,10 @@ namespace Laser.Orchard.PayPal.Services {
         public override string GetSettingsControllerName() {
             return "Admin";
         }
+
+        protected override string InnerChargeAdminUrl(PaymentRecord payment) {
+            // temporarily put the activity section because PayPal does not return the transaction id
+            return "https://www.sandbox.paypal.com/myaccount/transactions";
+        }
     }
 }
