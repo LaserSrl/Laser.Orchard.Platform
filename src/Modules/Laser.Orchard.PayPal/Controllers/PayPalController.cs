@@ -81,7 +81,7 @@ namespace Laser.Orchard.PayPal.Controllers {
                 result = _PayPalService.VerifyOrderIdPayPal(orderId);
             }
 
-            _posService.EndPayment(pId, result.Success, result.MessageError, result.Info);
+            _posService.EndPayment(pId, result.Success, result.MessageError, result.Info, orderId);
             if (!result.Success) {
                 Logger.Error("Error on payment for order {0} Error: {1}", payment.ContentItemId, result.MessageError);
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, result.MessageError);
