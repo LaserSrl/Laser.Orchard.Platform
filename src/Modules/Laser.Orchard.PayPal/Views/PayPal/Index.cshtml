@@ -1,0 +1,192 @@
+﻿@using Orchard;
+@using System.Globalization;
+@using Orchard.ContentManagement;
+@using Laser.Orchard.PayPal.Models;
+
+@model Laser.Orchard.PayPal.ViewModels.PaymentVM
+
+@functions{
+    public string PayPalScript(PayPalSiteSettingsPart config) {
+        string strScript = string.Empty;
+        if (!string.IsNullOrEmpty(config.ClientId)) {
+            strScript = "https://www.paypal.com/sdk/js?client-id=" + config.ClientId + "&intent=capture";
+            if (!string.IsNullOrEmpty(config.CurrencyCode)) {
+                strScript += "&currency=" + config.CurrencyCode;
+            }
+            if (!config.Card && !config.Credit && !config.Bancontact && !config.Blik && !config.Eps && !config.Giropay && !config.Ideal &&
+              !config.Mybank && !config.Przelewy && !config.Sepa && !config.Sofort && !config.Venmo) {
+                strScript += "&disable-funding=card,credit,bancontact,blik,eps,giropay,ideal,mybank,p24,sepa,sofort,venmo";
+            }
+            else if (!config.Card || !config.Credit || !config.Bancontact || !config.Blik || !config.Eps || !config.Giropay || !config.Ideal ||
+              !config.Mybank || !config.Przelewy || !config.Sepa || !config.Sofort || !config.Venmo) {
+                strScript += "&disable-funding=";
+                if (!config.Card) {
+                    strScript += "card,";
+                }
+                if (!config.Credit) {
+                    strScript += "credit,";
+                }
+                if (!config.Bancontact) {
+                    strScript += "bancontact,";
+                }
+                if (!config.Blik) {
+                    strScript += "blik,";
+                }
+                if (!config.Eps) {
+                    strScript += "eps,";
+                }
+                if (!config.Giropay) {
+                    strScript += "giropay,";
+                }
+                if (!config.Ideal) {
+                    strScript += "ideal,";
+                }
+                if (!config.Mybank) {
+                    strScript += "mybank,";
+                }
+                if (!config.Przelewy) {
+                    strScript += "p24,";
+                }
+                if (!config.Sepa) {
+                    strScript += "sepa,";
+                }
+                if (!config.Sofort) {
+                    strScript += "sofort,";
+                }
+                if (!config.Venmo) {
+                    strScript += "venmo,";
+                }
+
+                strScript = strScript.Remove(strScript.Length - 1);
+            }
+        }
+        return strScript;
+    }
+}
+
+
+@{
+    Script.Require("jQuery").AtHead();
+
+    var config = WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
+
+    var strScript = PayPalScript(config);
+
+}
+
+@using (Script.Head()) {
+    if (strScript != string.Empty) {
+        <script src="@strScript&locale=@WorkContext.CurrentCulture.Replace('-','_')"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#paypal-button').is(':visible')) {
+                paypal.Buttons({
+                    // Customize button (optional)
+                    style: {
+                        size: 'small',
+                        color: 'gold',
+                        shape: 'pill',
+                        label: 'paypal',
+                        layout: 'vertical',
+                        fundingicons: true
+                    },
+                    enableStandardCardFields: true,
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            //Invoice ID is the reference number associated with the transaction on thePayPal account
+                            purchase_units: [{
+                                custom_id: '@Model.Record.Id',
+                                description:'@Model.Record.Reason',
+                                amount: {
+                                    value: '@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            $("#div-warning").css("display", "block");
+                            $.ajax({
+                                type: 'POST',
+                                url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/FinalizePayment" + '?OrderId=' + details.id,
+                                data: {
+                                    __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                    pId: '@Model.Record.Id'
+                                },
+                                success: function(data){
+                                    PaymentResult();
+                                },
+                                error: function (data) {
+                                    PaymentResult();
+                                }
+                            });
+                        });
+                    }
+                    ,
+                    onClick: function (data, actions) {
+                        if (data.fundingSource == "paypal") {
+                            $("#div-warning").css("display", "block");
+
+                            $(".disable-button").css("display", "block");
+                            $(".container-paypal").css("opacity", "0.2");
+                        }
+
+                    },
+                    /*Normally when a buyer cancels a payment, the buyer is returned to the parent page*/
+                    onCancel: function (data, actions) {
+                        $("#div-warning").css("display", "none");
+
+                        $(".disable-button").css("display", "none");
+                        $(".container-paypal").css("opacity", "1");
+                    },
+                    onError: function (err) {
+                        $("#div-warning").css("display", "none");
+                        //alert("Oops! Error payment! Try again");
+                        $.ajax({
+                            type: 'POST',
+                            url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
+                            data: {
+                                __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                pId: '@Model.Record.Id'
+                            },
+                            success: function (data) {
+                                PaymentResult();
+                            }
+                        });
+                    }
+                }).render('#paypal-button');
+            }
+
+            function PaymentResult() {
+                 // redirect to info page payment
+                window.location.href = '@Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid })';
+
+                $("#div-warning").css("display", "none");
+
+                $(".disable-button").css("display", "none");
+                $(".container-paypal").css("opacity", "1");
+            }
+
+            @if (Model.Record.Amount <= 0) {
+                <text>
+                $(".disable-button").css("display", "block");
+                $(".payment-action").css("opacity", "0.2");
+                </text>
+            }
+        });
+        </script>
+    }
+}
+
+<h1>@T("Pay with PayPal")</h1>
+<div id="div-warning" style="color:red;font-weight:700; display:none">@T("Loading...")</div>
+<br />
+@T("Amount"): @Model.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) @Model.Record.Currency
+<br />
+<div class="container-paypal" style="padding-top:20px; min-width: 400px; display: inline-block;">
+    <div class="disable-button" style="width:100%; height:100%; position:absolute; z-index:999; display:none"></div>
+    <div id="paypal-button"></div>
+</div>
+
