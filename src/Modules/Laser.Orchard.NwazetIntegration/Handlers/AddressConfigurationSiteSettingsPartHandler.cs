@@ -1,11 +1,9 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Nwazet.Commerce.Models;
-using Nwazet.Commerce.Services;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.Environment.Extensions;
 using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
@@ -104,7 +102,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         }
 
         private void Invalidate() {
-            _signals.Trigger(Constants.CacheEvictSignal);
+            _signals.Trigger(Constants.AddressConfigurationCacheEvictSignal);
         }
     }
 }

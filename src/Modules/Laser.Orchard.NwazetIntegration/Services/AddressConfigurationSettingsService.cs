@@ -4,7 +4,6 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Settings;
@@ -96,7 +95,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private T GetFromCache<T>(string cacheKey, Func<T> method) {
             return _cacheManager.Get(cacheKey, true, ctx => {
                 // invalidation signal 
-                ctx.Monitor(_signals.When(Constants.CacheEvictSignal));
+                ctx.Monitor(_signals.When(Constants.AddressConfigurationCacheEvictSignal));
                 // cache
                 return method();
             });
@@ -240,21 +239,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 });
             }
         }
-
-        //public IEnumerable<CountryAlpha2> CountryISOCodes {
-        //    get {
-        //        return GetFromCache(_countryCodesCacheKey, () => {
-        //            return Settings != null
-        //                ? Settings.CountryCodes
-        //                : new CountryAlpha2[] { };
-        //        });
-        //    }
-        //}
-
-        //public string GetCountryISOCode(int id) {
-        //    return CountryISOCodes
-        //        .FirstOrDefault(cc => cc.TerritoryId == id)
-        //        .ISOCode ?? string.Empty;
-        //}
+        
     }
 }

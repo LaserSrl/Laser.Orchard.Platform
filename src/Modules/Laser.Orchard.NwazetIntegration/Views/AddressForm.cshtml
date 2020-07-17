@@ -11,15 +11,29 @@
     List<AddressRecord> addressList = Model.ListAddress;
     string idlistaddress = "List" + prefix;
 
+    // prefix of elements that will be copied to the ones for this
+    // address when this ones are hidden away
+    string otherPrefix = Model.OtherPrefix;
+    // handle the case where the OtherPrefix is null, because this didn't
+    // always exist.
+    if (string.IsNullOrWhiteSpace(otherPrefix)) {
+        otherPrefix = prefix == "shippingAddressVM"
+            ? "billingAddressVM"
+            : "shippingAddressVM";
+    }
+
     string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
         .ToString()
         .ToLowerInvariant();
 
     var guid = Guid.NewGuid().ToString();
+
+    var selectCountries = (address.AddressType == AddressRecordType.BillingAddress
+        ? address.BillingCountries : address.ShippingCountries) ?? address.Countries;
 }
 <div style="float:right">
     <fieldset>
-        @if (prefix == "shippingAddress") {
+        @if (address.AddressType == AddressRecordType.ShippingAddress) {
 
             <legend>@T("Stored Shipping Address")</legend>
         } else {
@@ -53,8 +67,8 @@
         @Html.Hidden(prefix + ".CountryId", address.CountryId)
     } else {
         <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
-        @Html.DropDownList(prefix + ".CountryId", address.Countries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
-        <div class="hint">@T("You may leave this blank for the United States.")</div>
+        @Html.DropDownList(prefix + ".CountryId", selectCountries, new { id = prefix + "_CountryId", @class = "input-medium required address-input" })
+        <div class="hint">@T("Select your Country from the list.")</div>
     }
 
     @Html.Hidden(prefix + ".CityId", address.CityId)
@@ -103,10 +117,42 @@
                 provincesInput: '#@Html.Id(prefix + ".Province")',
                 provinceId: '#@Html.Id(prefix + ".ProvinceId")',
                 getCities: {
-                    url: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                    url: '@Url.Action("GetCities", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                    @if (address.AddressType == AddressRecordType.ShippingAddress) {
+                        // when the city input for the shipping address is changed, we have to reattach the
+                        // event handler used to update the billing address if the option to use the same
+                        // address is flagged
+                        <text>
+                            after: function (cityInput) {
+                                cityInput.change(function () {
+                                    if (!$("#toggle-billing-address").prop("checked")) return;
+                                    var name = cityInput.attr("name").substr(@(prefix.Length + 1));
+                                    $('input[name="@(otherPrefix + ".")' + name + '"]')
+                                        .val(cityInput.val())
+                                        .trigger('change');
+                                });
+                            }
+                        </text>
+                    }
                 },
                 getProvinces: {
-                    url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })'
+                    url: '@Url.Action("GetProvinces", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                    @if (address.AddressType == AddressRecordType.ShippingAddress) {
+                        // when the province input for the shipping address is changed, we have to reattach the
+                        // event handler used to update the billing address if the option to use the same
+                        // address is flagged
+                        <text>
+                            after: function (provinceInput) {
+                                provinceInput.change(function () {
+                                    if (!$("#toggle-billing-address").prop("checked")) return;
+                                    var name = provinceInput.attr("name").substr(@(prefix.Length + 1));
+                                    $('input[name="@(otherPrefix + ".")' + name + '"]')
+                                        .val(provinceInput.val())
+                                        .trigger('change');
+                                });
+                            }
+                        </text>
+                    }
                 },
                 isBilling: function () { return @isBillingAddress; }
             });
@@ -152,6 +198,21 @@
                     provinceId: $('#@Html.Id(prefix + ".ProvinceId")').val(),
                     city: $('#@Html.Id(prefix + ".City")').val(),
                     province: $('#@Html.Id(prefix + ".Province")').val(),
+                });
+
+                // when an address is being hidden and reset, it may fail to
+                // carry over the previous value, because some input element may
+                // be in the process of being transformed when we are assigning
+                // to it. Since when we are hiding an address it is to make it
+                // default to the other one, we can copy the values again here,
+                // after resetting its configuration, to make sure they carried
+                // over correctly.
+                $('input[name^="@(otherPrefix)."]').each(function () {
+                    var input = $(this),
+                        name = input.attr("name").substr(@(otherPrefix.Length + 1));
+                    $('input[name="@(prefix).' + name + '"]')
+                        .val(input.val())
+                        .trigger('change');
                 });
             });
             // on page load, set the first saved address

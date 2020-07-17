@@ -383,6 +383,7 @@
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
+    <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Drivers\PerItemCachePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
