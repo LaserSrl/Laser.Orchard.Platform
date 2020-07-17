@@ -48,7 +48,7 @@
                 .val(input.val())
                 .trigger('change');
         });
-    if (!!!preventRequiredMark) {
+    if (!("preventRequiredMark" in window) || !!!preventRequiredMark) {
         addressForm.find(".required").after(
             $("<span class='error-indicator' title='" + required + "'>*</span>"));
     }
