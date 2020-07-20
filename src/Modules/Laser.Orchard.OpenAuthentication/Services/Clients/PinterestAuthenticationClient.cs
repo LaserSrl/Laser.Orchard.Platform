@@ -1,6 +1,7 @@
 ﻿using DotNetOpenAuth.AspNet;
 using Laser.Orchard.OpenAuthentication.Models;
 using Laser.Orchard.OpenAuthentication.Security;
+using Laser.Orchard.OpenAuthentication.ViewModels;
 using Newtonsoft.Json;
 using Orchard.Localization;
 using System;
@@ -17,23 +18,23 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             get { return "Pinterest"; }
         }
 
-        public IAuthenticationClient Build(ProviderConfigurationRecord providerConfigurationRecord) {
-            string ClientId = providerConfigurationRecord.ProviderIdKey;
-            string ClientSecret = providerConfigurationRecord.ProviderSecret;
+        public IAuthenticationClient Build(ProviderConfigurationViewModel providerConfiguration) {
+            string ClientId = providerConfiguration.ProviderIdKey;
+            string ClientSecret = providerConfiguration.ProviderSecret;
             var client = new PinterestOAuth2Client(ClientId, ClientSecret);
             return client;
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
-            var userData = (Build(clientConfiguration) as PinterestOAuth2Client).GetUserDataDictionary(userAccessToken);
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
+            var userData = (Build(providerConfiguration) as PinterestOAuth2Client).GetUserDataDictionary(userAccessToken);
             userData["accesstoken"] = userAccessToken;
             string id = userData["id"];
             string name = userData["first_name"] + userData["last_name"];
             return new AuthenticationResult(true, this.ProviderName, id, name, userData);
         }
 
-        public AuthenticationResult GetUserData(ProviderConfigurationRecord clientConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl) {
-            return GetUserData(clientConfiguration, previousAuthResult, token);
+        public AuthenticationResult GetUserData(ProviderConfigurationViewModel providerConfiguration, AuthenticationResult previousAuthResult, string token, string userAccessSecretKey, string returnUrl) {
+            return GetUserData(providerConfiguration, previousAuthResult, token);
         }
 
         public OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams clientData) {

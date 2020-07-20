@@ -4,17 +4,17 @@
 
     string pageAlias = item.AutoroutePart.DisplayAlias;
 
-    if (item.Page.Colorebase.Value != "Default") {
+    if (item.Page != null && item.Page.Colorebase != null && item.Page.Colorebase.Value != "Default") {
         Layout.BaseClass = item.Page.Colorebase.Value.ToLower() + " page page-template page-template-page-" + pageAlias + " navbar-fixed";
     }
     else {
         Layout.BaseClass = "page page-template page-template-page-" + pageAlias + " navbar-fixed";
     }
-    
-    var sottotitolo = item.Page.Sottotitolo.Value;
+
+    var sottotitolo = item.Page != null ? (item.Page.Sottotitolo != null ? item.Page.Sottotitolo.Value : "") : "";
 
     string classeDivTitolo = "col-xs-12 col-sm-6 col-intro-desc";
-    if (item.Page.Elementografico.Ids.Length > 0) {
+    if (item.Page != null && item.Page.Elementografico != null && item.Page.Elementografico.Ids.Length > 0) {
         classeDivTitolo = "col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-6 col-intro-desc";
     }
 }
@@ -26,15 +26,17 @@
             <h1 class="handel-got-d title">@Model.Title</h1>
             <h2 class="page-claim">@sottotitolo</h2>
             <div class="page-desc">
-                @Html.Raw(item.BodyPart.Text)
+                @if (item.BodyPart != null) {
+                    @Html.Raw(item.BodyPart.Text)
+                }
             </div>
         </div>
-        @if (item.Page.Gallery.Ids.Length > 0) {
+        @if (item.Page != null && item.Page.Gallery != null && item.Page.Gallery.Ids.Length > 0) {
             <div class="col-xs-12 col-sm-6 text-center">
                 <img src="@item.Page.Gallery.FirstMediaUrl" title="@item.Page.Gallery.MediaParts[0].Title" alt="@item.Page.Gallery.MediaParts[0].AlternateText" class="img-responsive">
             </div>
         }
-        @if (item.Page.Elementografico.Ids.Length > 0) {
+        @if (item.Page != null && item.Page.Elementografico != null && item.Page.Elementografico.Ids.Length > 0) {
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-xl-6 no-padding">
                 <div class="space-40"></div>
                 <div class="row">
@@ -50,22 +52,22 @@
                     </div>
                     <div class="col-sm-12 col-md-7 col-lg-6 col-other-data">
                         @{
-            IEnumerable<object> items = item.Page.Elementografico.ContentItems[0].StatisticheSommario.Dettagli.ContentItems;
+                            IEnumerable<object> items = item.Page.Elementografico.ContentItems[0].StatisticheSommario.Dettagli.ContentItems;
 
-            foreach (var detail in items) {
-                dynamic itemDetail = (dynamic)detail;
-                            <div class="row no-margin">
-                                <div class="col-xs-3 col-lg-3 no-padding">
-                                    <h5 class="other-value">@itemDetail.StatisticheDetail.Numero.Value<span>@itemDetail.StatisticheDetail.Simbolo.Value</span></h5>
+                            foreach (var detail in items) {
+                                dynamic itemDetail = (dynamic)detail;
+                                <div class="row no-margin">
+                                    <div class="col-xs-3 col-lg-3 no-padding">
+                                        <h5 class="other-value">@itemDetail.StatisticheDetail.Numero.Value<span>@itemDetail.StatisticheDetail.Simbolo.Value</span></h5>
+                                    </div>
+                                    <div class="col-xs-3 col-lg-3 no-padding">
+                                        <img src="@itemDetail.StatisticheDetail.Image.FirstMediaUrl" title="@itemDetail.StatisticheDetail.Image.MediaParts[0].Title" alt="@itemDetail.StatisticheDetail.Image.MediaParts[0].AlternateText" class="img-responsive">
+                                    </div>
+                                    <div class="col-xs-6 col-lg-6">
+                                        <h3 class="other-label">@itemDetail.TitlePart.Title</h3>
+                                    </div>
                                 </div>
-                                <div class="col-xs-3 col-lg-3 no-padding">
-                                    <img src="@itemDetail.StatisticheDetail.Image.FirstMediaUrl"  title="@itemDetail.StatisticheDetail.Image.MediaParts[0].Title" alt="@itemDetail.StatisticheDetail.Image.MediaParts[0].AlternateText" class="img-responsive">
-                                </div>
-                                <div class="col-xs-6 col-lg-6">
-                                    <h3 class="other-label">@itemDetail.TitlePart.Title</h3>
-                                </div>
-                            </div>
-            }
+                            }
                         }
                     </div>
                 </div>
