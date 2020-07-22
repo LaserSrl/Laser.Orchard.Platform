@@ -11,7 +11,7 @@ namespace Laser.Orchard.NwazetIntegration {
 
             manifest
                 .DefineScript("NwazetIntegration.Addresses")
-                .SetUrl("ship.min.js", "ship.js")
+                .SetUrl("ship.min.js?v=1.1", "ship.js?v=1.1")
                 .SetDependencies("jQuery");
 
             manifest
