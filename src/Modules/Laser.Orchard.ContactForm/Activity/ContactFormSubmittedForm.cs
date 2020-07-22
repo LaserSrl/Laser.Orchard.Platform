@@ -12,14 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.ButtonToWorkflows.Activity {
-    public class ButtonToWorkflowsForm : IFormProvider {
+namespace Laser.Orchard.ContactForm.Activity {
+    public class ContactFormSubmittedForm : IFormProvider {
         protected dynamic _shapeFactory { get; set; }
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;
         public Localizer T { get; set; }
 
-        public ButtonToWorkflowsForm(IShapeFactory shapeFactory, IContentManager contentManager, IContentDefinitionManager contentDefinitionManager) {
+        public ContactFormSubmittedForm(IShapeFactory shapeFactory, IContentManager contentManager, IContentDefinitionManager contentDefinitionManager) {
             _shapeFactory = shapeFactory;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
