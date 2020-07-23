@@ -10,7 +10,7 @@ using Orchard;
 using Orchard.Core.Common.Models;
 using Orchard.ContentManagement;
 
-namespace Laser.Orchard.ButtonToWorkflows.Activity {
+namespace Laser.Orchard.ContactForm.Activity {
     public class ContactFormSubmittedEvent : Event {
         protected readonly IOrchardServices _orchardServices;
         public ContactFormSubmittedEvent(IOrchardServices orchardServices) {
