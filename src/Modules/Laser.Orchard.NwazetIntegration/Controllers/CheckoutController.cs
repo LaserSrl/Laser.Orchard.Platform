@@ -560,6 +560,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return str;
             };
             if (vm.ShippingAddressVM != null) {
+                if (vm.ShippingAddress == null) {
+                    vm.ShippingAddress = AddressFromVM(vm.ShippingAddressVM);
+                }
                 // reinflate the names of country, province and city
                 vm.ShippingAddressVM.Country = inflateName(
                     vm.ShippingAddressVM.Country, vm.ShippingAddressVM.CountryId);
@@ -569,6 +572,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     vm.ShippingAddressVM.City, vm.ShippingAddressVM.CityId);
             }
             if (vm.BillingAddressVM != null) {
+                if (vm.BillingAddress == null) {
+                    vm.BillingAddress = AddressFromVM(vm.BillingAddressVM);
+                }
                 // reinflate the names of country, province and city
                 vm.BillingAddressVM.Country = inflateName(
                     vm.BillingAddressVM.Country, vm.BillingAddressVM.CountryId);
@@ -577,6 +583,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 vm.BillingAddressVM.City = inflateName(
                     vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
             }
+        }
+
+        private Address AddressFromVM(AddressEditViewModel vm) {
+            //FixUpdate(vm);
+            return new Address {
+                Honorific = vm.Honorific,
+                FirstName = vm.FirstName,
+                LastName = vm.LastName,
+                Company = vm.Company,
+                Address1 = vm.Address1,
+                Address2 = vm.Address2,
+                PostalCode = vm.PostalCode,
+                // advanced address stuff
+                // The string values here are the DisplayText properties of
+                // configured territories, or "custom" text entered by the user.
+                Country = vm.Country,
+                City = vm.City,
+                Province = vm.Province
+            };
         }
 
         private void InjectServices(CheckoutViewModel vm) {
