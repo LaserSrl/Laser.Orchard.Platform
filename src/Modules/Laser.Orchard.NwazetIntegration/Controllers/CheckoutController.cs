@@ -387,6 +387,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // check if the user is trying to reset the selected shipping option.
             if (model.ResetShipping) {
                 // Put the model we validated in TempData so it can be reused in the next action.
+                _shoppingCart.ShippingOption = null;
                 TempData["CheckoutViewModel"] = model;
                 return RedirectToAction("Shipping");
             }
@@ -521,6 +522,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // 4.1. Invoke the StartPayment method for the selected IPosService.
             payment = selectedService.StartPayment(payment, paymentGuid);
             // 5. Get form the IPosService the controller URL and redirect there.
+            // Put the model in TempData so it can be reused in the next action.
+            TempData["CheckoutViewModel"] = model;
             return Redirect(selectedService.GetPosActionUrl(payment.Guid));
         }
         
@@ -544,64 +547,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
         private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
             // addresses
-            if ((vm.ShippingAddressVM == null || vm.BillingAddressVM == null)
-                && !string.IsNullOrWhiteSpace(vm.SerializedAddresses)) {
-                vm.DecodeAddresses();
-            }
-            Func<string, int, string> inflateName = (str, id) => {
-                if (string.IsNullOrWhiteSpace(str)) {
-                    var territory = _addressConfigurationService
-                        .SingleTerritory(id);
-                    if (territory != null) {
-                        return _contentManager
-                            .GetItemMetadata(territory).DisplayText;
-                    }
-                }
-                return str;
-            };
-            if (vm.ShippingAddressVM != null) {
-                if (vm.ShippingAddress == null) {
-                    vm.ShippingAddress = AddressFromVM(vm.ShippingAddressVM);
-                }
-                // reinflate the names of country, province and city
-                vm.ShippingAddressVM.Country = inflateName(
-                    vm.ShippingAddressVM.Country, vm.ShippingAddressVM.CountryId);
-                vm.ShippingAddressVM.Province = inflateName(
-                    vm.ShippingAddressVM.Province, vm.ShippingAddressVM.ProvinceId);
-                vm.ShippingAddressVM.City = inflateName(
-                    vm.ShippingAddressVM.City, vm.ShippingAddressVM.CityId);
-            }
-            if (vm.BillingAddressVM != null) {
-                if (vm.BillingAddress == null) {
-                    vm.BillingAddress = AddressFromVM(vm.BillingAddressVM);
-                }
-                // reinflate the names of country, province and city
-                vm.BillingAddressVM.Country = inflateName(
-                    vm.BillingAddressVM.Country, vm.BillingAddressVM.CountryId);
-                vm.BillingAddressVM.Province = inflateName(
-                    vm.BillingAddressVM.Province, vm.BillingAddressVM.ProvinceId);
-                vm.BillingAddressVM.City = inflateName(
-                    vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
-            }
-        }
-
-        private Address AddressFromVM(AddressEditViewModel vm) {
-            //FixUpdate(vm);
-            return new Address {
-                Honorific = vm.Honorific,
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
-                Company = vm.Company,
-                Address1 = vm.Address1,
-                Address2 = vm.Address2,
-                PostalCode = vm.PostalCode,
-                // advanced address stuff
-                // The string values here are the DisplayText properties of
-                // configured territories, or "custom" text entered by the user.
-                Country = vm.Country,
-                City = vm.City,
-                Province = vm.Province
-            };
+            CheckoutViewModel.ReinflateViewModelAddresses(vm, _contentManager, _addressConfigurationService);
         }
 
         private void InjectServices(CheckoutViewModel vm) {
