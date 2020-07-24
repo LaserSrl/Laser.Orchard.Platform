@@ -1,7 +1,9 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
+using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -153,5 +155,68 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public string SelectedPosService { get; set; }
         #endregion
+
+        public static void ReinflateViewModelAddresses(
+            CheckoutViewModel vm, IContentManager contentManager, IAddressConfigurationService addressConfigurationService) {
+            // addresses
+            if ((vm.ShippingAddressVM == null || vm.BillingAddressVM == null)
+                && !string.IsNullOrWhiteSpace(vm.SerializedAddresses)) {
+                vm.DecodeAddresses();
+            }
+            Func<string, int, string> inflateName = (str, id) => {
+                if (string.IsNullOrWhiteSpace(str)) {
+                    var territory = addressConfigurationService
+                        .SingleTerritory(id);
+                    if (territory != null) {
+                        return contentManager
+                            .GetItemMetadata(territory).DisplayText;
+                    }
+                }
+                return str;
+            };
+            if (vm.ShippingAddressVM != null) {
+                if (vm.ShippingAddress == null) {
+                    vm.ShippingAddress = AddressFromVM(vm.ShippingAddressVM);
+                }
+                // reinflate the names of country, province and city
+                vm.ShippingAddressVM.Country = inflateName(
+                    vm.ShippingAddressVM.Country, vm.ShippingAddressVM.CountryId);
+                vm.ShippingAddressVM.Province = inflateName(
+                    vm.ShippingAddressVM.Province, vm.ShippingAddressVM.ProvinceId);
+                vm.ShippingAddressVM.City = inflateName(
+                    vm.ShippingAddressVM.City, vm.ShippingAddressVM.CityId);
+            }
+            if (vm.BillingAddressVM != null) {
+                if (vm.BillingAddress == null) {
+                    vm.BillingAddress = AddressFromVM(vm.BillingAddressVM);
+                }
+                // reinflate the names of country, province and city
+                vm.BillingAddressVM.Country = inflateName(
+                    vm.BillingAddressVM.Country, vm.BillingAddressVM.CountryId);
+                vm.BillingAddressVM.Province = inflateName(
+                    vm.BillingAddressVM.Province, vm.BillingAddressVM.ProvinceId);
+                vm.BillingAddressVM.City = inflateName(
+                    vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
+            }
+        }
+
+        private static Address AddressFromVM(AddressEditViewModel vm) {
+            //FixUpdate(vm);
+            return new Address {
+                Honorific = vm.Honorific,
+                FirstName = vm.FirstName,
+                LastName = vm.LastName,
+                Company = vm.Company,
+                Address1 = vm.Address1,
+                Address2 = vm.Address2,
+                PostalCode = vm.PostalCode,
+                // advanced address stuff
+                // The string values here are the DisplayText properties of
+                // configured territories, or "custom" text entered by the user.
+                Country = vm.Country,
+                City = vm.City,
+                Province = vm.Province
+            };
+        }
     }
 }
