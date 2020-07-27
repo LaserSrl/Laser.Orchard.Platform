@@ -356,6 +356,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.CurrencyProvider = _currencyProvider;
                 // encode addresses so we can hide them in the form
                 model.EncodeAddresses();
+                // make sure services are injected so they may be used
                 InjectServices(model);
                 return View(model);
             }
@@ -444,6 +445,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // 2. The list of buttons for the available payment options.
             model.PosServices = _posServices;
 
+            // encode addresses so we can hide them in the form
+            model.EncodeAddresses();
+            // make sure services are injected so they may be used
             InjectServices(model);
             return View(model);
         }
