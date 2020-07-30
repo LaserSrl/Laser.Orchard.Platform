@@ -1,15 +1,11 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSiteSettingsHandler : ContentHandler {
         public MailchimpSiteSettingsHandler(IMailchimpService service) {

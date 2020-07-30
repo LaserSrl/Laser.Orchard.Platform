@@ -1,0 +1,67 @@
+﻿@{
+    var httpVerbs = new string[] {
+"GET","POST","PUT","DELETE"
+};
+    var hiddenTemplates = "";
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            $(function () {
+                $("#requesttype").change(function () {
+                    $("#url").val($("#url").val() + $("#url-" + $(this).children("option:selected").val()).text());
+                    $("#payload").val($("#payload").val() + $("#payload-" + $(this).children("option:selected").val()).text());
+                });
+            });
+
+        </script>
+
+    }
+}
+<fieldset>
+    <div>
+        <label for"requesttype">@T("Api Call type")</label>
+        <select name="RequestType" id="requesttype">
+            <option value="">@T("(Select a type)")</option>
+            @foreach (var type in Model.RequestTypes) {
+                <option value="@type.Type.ToString()"
+                        @(Model.RequestType != null && Model.RequestType == type.Type.ToString() ? "selected=\"selected\"" : "")>
+                    @type.Type.ToString()
+                </option>
+                hiddenTemplates += "<div style=\"display:none\" id=\"url-" + type.Type.ToString() + "\">" + type.UrlTemplate + "</div>";
+                hiddenTemplates += "<div style=\"display:none\" id=\"payload-" + type.Type.ToString() + "\">" + type.PayloadTemplate + "</div>";
+            }
+        </select>
+        @Html.Raw(hiddenTemplates)
+    </div>
+    <div>
+        <label for="url">
+            @T("Url") @Model.BaseUrl
+            <input type="text" id="url" name="Url" value="@Model.Url" class="text large tokenized" />
+        </label>
+    </div>
+    <div>
+        <label for="httpverb">
+            <label for"requesttype">@T("Http VERB")</label>
+            <select type="text" id="httpverb" name="HttpVerb">
+                @foreach (var verb in httpVerbs) {
+                    <option value="@verb" @(verb == Model.HttpVerb ? "selected=\"selected\"" : "")>@verb</option>
+                }
+            </select>
+        </label>
+    </div>
+    <div>
+        <label for="payload">
+            @T("Payload")
+            <textarea type="text" id="payload" name="Payload" value="@Model.Payload" class="text large tokenized">@Model.Payload</textarea>
+        </label>
+    </div>
+    <div>
+        <label for"requiredpolicies">@T("Required Policies")</label>
+        <select multiple="multiple" name="RequiredPolicies" id="requiredpolicies">
+            @foreach (var policy in Model.Policies) {
+                <option value="{@policy.ContentItem.Id}" @(Model.RequiredPolicies != null && Model.RequiredPolicies.Contains("{" + policy.ContentItem.Id + "}") ? "selected=\"selected\"" : "")>@policy.ContentItem.TitlePart.Title</option>
+            }
+        </select>
+        @Html.Hint(@T("Insert Required Policies."))
+    </div>
+
+</fieldset>

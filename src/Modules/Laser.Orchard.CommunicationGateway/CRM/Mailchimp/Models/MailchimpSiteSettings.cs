@@ -1,7 +1,7 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Models {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSiteSettings : ContentPart {
 

@@ -1,5 +1,5 @@
 ﻿@using Orchard.ContentManagement;
-@model Laser.Orchard.CommunicationGateway.Mailchimp.Models.MailchimpSubscriptionPartSettings
+@model Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models.MailchimpSubscriptionPartSettings
 @{
     var contentManager = WorkContext.Resolve<IContentManager>();
     var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });
@@ -25,6 +25,23 @@
     <div>
         @Html.LabelFor(m => m.PutPayload, T("Put payload"))
         @Html.TextAreaFor(m => m.PutPayload, new { @class = "text large tokenized" })
+        <span class="hint">@T("Payload Example:")
+            <textarea readonly="readonly" class="text large" style="background-color:efefef">
+{{
+    "email_address": "{Content.UserEmail}",
+    "status": "subscribed",
+    "merge_fields": {{
+  	    "FNAME": "{Content.Fields.ProfilePart.Nome}",
+        "LNAME": "{Content.Fields.ProfilePart.Cognome}",
+        "ADDRESS": "{Content.Fields.ProfilePart.Address}",
+        "PHONE": "{Content.Fields.ProfilePart.PhoneNumber}",
+        "BIRTHDAY": "{Content.Fields.ProfilePart.MM}/{Content.Fields.ProfilePart.dd}"
+    }},
+    "language":"it",
+    "vip": false
+}}
+            </textarea>
+        </span>
     </div>
     <div>
         @Html.LabelFor(m => m.PolicyTextReferences, T("Required Policies"))

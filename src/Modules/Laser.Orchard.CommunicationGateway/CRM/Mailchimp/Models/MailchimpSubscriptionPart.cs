@@ -1,14 +1,9 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Orchard.ContentManagement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Script.Serialization;
 using Orchard.Environment.Extensions;
-using Orchard.ContentManagement.Utilities;
+using System.Web.Script.Serialization;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Models {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPart : ContentPart {
 
