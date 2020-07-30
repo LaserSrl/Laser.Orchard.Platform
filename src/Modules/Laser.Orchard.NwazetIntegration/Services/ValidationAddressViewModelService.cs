@@ -12,7 +12,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public ValidationAddressViewModelService(
             IAddressConfigurationService addressConfigurationService) {
             _addressConfigurationService = addressConfigurationService;
+
+            T = NullLocalizer.Instance;
         }
+
+        public Localizer T { get; set; }
 
         /// <summary>
         /// validation of the vm coming from a create/edit action
@@ -62,6 +66,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     return false;
                 }
             }
+            // TODO: zip code validation depends on the country:
+            // https://en.wikipedia.org/wiki/List_of_postal_codes
             return true;
         }
         private bool SubValidation(IEnumerable<TerritoryPart> list, TerritoryPart item) {
@@ -94,7 +100,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public List<LocalizedString> Validate(AddressesVM vm) {
-            return new List<LocalizedString>();
+            var error = new List<LocalizedString>();
+            if (!string.IsNullOrWhiteSpace(vm.Phone)) {
+                // validate format for phone number
+                foreach (char c in vm.Phone) {
+                    if (c < '0' || c > '9') {
+                        error.Add(T("Phone number may contain only digits."));
+                        break;
+                    }
+                }
+                // TODO: PhonePrefix should be one from a list of valid international prefixes
+            }
+            return error;
         }
     }
 }
