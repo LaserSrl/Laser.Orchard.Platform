@@ -84,6 +84,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return new string[2];
         }
 
+        public void SetPhone (string prefix, string number, IUser user) {
+            var contactpart = _communicationService.GetContactFromUser(user.Id);
+            if (contactpart == null) { // non dovrebbe mai succedere (inserito nel caso cambiassimo la logica già implementata)
+                _communicationService.UserToContact(user);
+                contactpart = _communicationService.GetContactFromUser(user.Id);
+            }
+            if (contactpart != null) {
+                // TODO: this method overrides previous saved number. We may want to fix that.
+                _communicationService.AddSmsToContact(prefix, number, contactpart.ContentItem, true);
+            }
+        }
+
         public void OrderToContact(OrderPart order) {
             // tutto in try catch perchè viene scatenato appena finito il pagamento e quindi non posso permettermi di annullare la transazione
             try {
