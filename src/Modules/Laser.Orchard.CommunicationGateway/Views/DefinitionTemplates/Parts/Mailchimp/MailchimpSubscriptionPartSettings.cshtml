@@ -1,5 +1,5 @@
 ﻿@using Orchard.ContentManagement;
-@model Laser.Orchard.CommunicationGateway.Mailchimp.Models.MailchimpSubscriptionPartSettings
+@model Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models.MailchimpSubscriptionPartSettings
 @{
     var contentManager = WorkContext.Resolve<IContentManager>();
     var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });

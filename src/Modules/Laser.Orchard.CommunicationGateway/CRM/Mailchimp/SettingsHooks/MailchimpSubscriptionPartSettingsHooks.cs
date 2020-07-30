@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.ViewModels;
-using Newtonsoft.Json;
-using Orchard.Services;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
 using Orchard.Environment.Extensions;
+using System.Collections.Generic;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.SettingsHooks {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.SettingsHooks {
 
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartSettingsHooks : ContentDefinitionEditorEventsBase {

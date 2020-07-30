@@ -1,16 +1,12 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Orchard.Environment.Extensions;
 using Orchard.Users.Models;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartDriver : ContentPartDriver<MailchimpSubscriptionPart> {
         private readonly IMailchimpApiService _service;

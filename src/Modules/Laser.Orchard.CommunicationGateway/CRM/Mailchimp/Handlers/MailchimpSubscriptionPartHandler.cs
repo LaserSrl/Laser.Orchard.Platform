@@ -1,6 +1,5 @@
-﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
 
 using Orchard;
 using Orchard.ContentManagement;
@@ -14,7 +13,7 @@ using Orchard.UI.Notify;
 using Orchard.Users.Models;
 using System;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Handlers {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartHandler : ContentHandler {
         private IMailchimpApiService _apiService;
