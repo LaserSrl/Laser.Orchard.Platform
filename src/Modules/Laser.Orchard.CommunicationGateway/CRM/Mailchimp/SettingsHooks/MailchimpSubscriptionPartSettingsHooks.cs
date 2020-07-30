@@ -6,16 +6,20 @@ using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.ViewModels;
 using Orchard.Environment.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.SettingsHooks {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.SettingsHooks
+{
 
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
-    public class MailchimpSubscriptionPartSettingsHooks : ContentDefinitionEditorEventsBase {
+    public class MailchimpSubscriptionPartSettingsHooks : ContentDefinitionEditorEventsBase
+    {
         const string TEMPLATE_NAME = "Parts/Mailchimp/MailchimpSubscriptionPartSettings";
         const string PREFIX = "MailchimpSubscriptionPartSettings";
 
         public override IEnumerable<TemplateViewModel> TypePartEditor(
-            ContentTypePartDefinition definition) {
+            ContentTypePartDefinition definition)
+        {
 
             if (definition.PartDefinition.Name != "MailchimpSubscriptionPart") yield break;
             var model = definition.Settings.GetModel<MailchimpSubscriptionPartSettings>();
@@ -24,7 +28,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.SettingsHooks {
 
         public override IEnumerable<TemplateViewModel> TypePartEditorUpdate(
             ContentTypePartDefinitionBuilder builder,
-            IUpdateModel updateModel) {
+            IUpdateModel updateModel)
+        {
 
             if (builder.Name != "MailchimpSubscriptionPart") yield break;
 
@@ -37,7 +42,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.SettingsHooks {
             builder.WithSetting("MailchimpSubscriptionPartSettings.MemberEmail",
                 model.MemberEmail);
             builder.WithSetting("MailchimpSubscriptionPartSettings.PolicyTextReferences",
-                string.Join(",", model.PolicyTextReferences ?? new string[] { }));
+                model.PolicyTextReferences != null && model.PolicyTextReferences.Count() > 0 ? string.Join(",", model.PolicyTextReferences) : null);
             builder.WithSetting("MailchimpSubscriptionPartSettings.NotifySubscriptionResult",
                 model.NotifySubscriptionResult.ToString());
 

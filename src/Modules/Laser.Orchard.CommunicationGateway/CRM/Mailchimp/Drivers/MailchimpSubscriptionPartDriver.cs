@@ -5,6 +5,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Orchard.Users.Models;
+using System.Linq;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
@@ -30,7 +31,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
             }
             else {
                 var subscription = part.Subscription;
-                if (subscription.Audience == null || settings.AudienceId != subscription.Audience.Identifier) {
+                if (subscription.Audience == null || settings.AudienceId != subscription.Audience?.Identifier) {
                     var audience = _service.Audience(settings.AudienceId);
                     selectableAudience = new SelectableAudience {
                         Audience = new Audience { Identifier = settings.AudienceId, Name = audience.Name },
