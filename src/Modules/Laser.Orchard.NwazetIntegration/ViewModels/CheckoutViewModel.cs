@@ -81,6 +81,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 BillingAddress = BillingAddress,
                 BillingAddressVM = BillingAddressVM,
                 Email = Email,
+                PhonePrefix = PhonePrefix,
                 Phone = Phone,
                 SpecialInstructions = SpecialInstructions,
                 ListAvailableShippingAddress = ListAvailableShippingAddress,
@@ -93,6 +94,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             BillingAddress = vm.BillingAddress;
             BillingAddressVM = vm.BillingAddressVM;
             Email = vm.Email;
+            PhonePrefix = vm.PhonePrefix;
             Phone = vm.Phone;
             SpecialInstructions = vm.SpecialInstructions;
             ListAvailableShippingAddress = vm.ListAvailableShippingAddress;

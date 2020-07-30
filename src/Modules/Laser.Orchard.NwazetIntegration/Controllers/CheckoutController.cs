@@ -256,6 +256,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (model.ShippingAddressVM != null && model.ShippingAddressVM.AddressRecord != null) {
                     _nwazetCommunicationService.AddAddress(model.ShippingAddressVM.AddressRecord, user);
                 }
+                if (!string.IsNullOrWhiteSpace(model.PhonePrefix) || !string.IsNullOrWhiteSpace(model.Phone)) {
+                    _nwazetCommunicationService.SetPhone(model.PhonePrefix, model.Phone, user);
+                }
             }
             // In case validation is successful, depending on whether shipping is required, we
             // should redirect to a different action/step. 

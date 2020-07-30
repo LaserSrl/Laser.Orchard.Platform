@@ -10,5 +10,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return this.Retrieve(p => p.CheckoutRequiresAuthentication); }
             set { this.Store(p => p.CheckoutRequiresAuthentication, value); }
         }
+
+        public bool PhoneIsRequired {
+            get { return this.Retrieve(p => p.PhoneIsRequired); }
+            set { this.Store(p => p.PhoneIsRequired, value); }
+        }
     }
 }

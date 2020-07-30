@@ -30,7 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                 && filterContext.ActionDescriptor.ActionName.Equals("Show")) {
                 var result = filterContext.Result as ShapeResult;
                 // if everything is fine, add the front-end VAT information
-                if (result.TempData.ContainsKey("OrderId")) {
+                if (result != null && result.TempData.ContainsKey("OrderId")) {
                     // this is the same check that is performed in the controller to
                     // decide whether to actually show the order.
                     var part = _contentManager.Get<OrderPart>((int)((dynamic)result.Model).OrderId);
