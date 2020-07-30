@@ -10,6 +10,7 @@ using Orchard.Security;
 using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -80,7 +81,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             var syncronized = false;
             var urlTokens = new Dictionary<string, string> {
                 { "{list-id}",sub.Audience.Identifier},
-                { "{member-id}",CalculateMD5Hash(memberEmail) }
+                { "{member-id}",CalculateMD5HashOfLowerCase(memberEmail) }
             };
             string  result = "";
             if (sub.Subscribed) {
@@ -194,7 +195,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             };
         }
 
-        private string CalculateMD5Hash(string input) {
+        private string CalculateMD5HashOfLowerCase(string input) {
+            // Mailchimp expect the input to be lowercase
+            input = input.ToLower(CultureInfo.InvariantCulture);
             // step 1, calculate MD5 hash from input
             MD5 md5 = MD5.Create();
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
