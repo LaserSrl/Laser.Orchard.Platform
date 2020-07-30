@@ -9,8 +9,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public CheckoutSettingsPartViewModel() { }
         public CheckoutSettingsPartViewModel(CheckoutSettingsPart part) {
             CheckoutRequiresAuthentication = part.CheckoutRequiresAuthentication;
+            PhoneIsRequired = part.PhoneIsRequired;
         }
 
         public bool CheckoutRequiresAuthentication { get; set; }
+        public bool PhoneIsRequired { get; set; }
     }
 }

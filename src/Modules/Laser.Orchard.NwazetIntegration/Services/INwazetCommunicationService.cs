@@ -10,6 +10,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         List<AddressRecord> GetShippingByUser(IUser user);
         List<AddressRecord> GetBillingByUser(IUser user);
         string[] GetPhone(IUser user);
+        void SetPhone(string prefix, string number, IUser user);
 
         // In the following CRUD methods, the ones that do not have a IUser parameter
         // are generally to be used for admin functionalities. The other methods are 

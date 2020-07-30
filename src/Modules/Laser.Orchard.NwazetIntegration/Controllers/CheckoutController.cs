@@ -251,10 +251,19 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // addresses they just configured.
             if (user != null) {
                 if (model.BillingAddressVM != null && model.BillingAddressVM.AddressRecord != null) {
+                    if (model.ListbillingAddressVM > 0) {
+                        model.BillingAddressVM.AddressRecord.Id = model.ListbillingAddressVM;
+                    }
                     _nwazetCommunicationService.AddAddress(model.BillingAddressVM.AddressRecord, user);
                 }
                 if (model.ShippingAddressVM != null && model.ShippingAddressVM.AddressRecord != null) {
+                    if (model.ListshippingAddressVM> 0) {
+                        model.ShippingAddressVM.AddressRecord.Id = model.ListshippingAddressVM;
+                    }
                     _nwazetCommunicationService.AddAddress(model.ShippingAddressVM.AddressRecord, user);
+                }
+                if (!string.IsNullOrWhiteSpace(model.PhonePrefix) || !string.IsNullOrWhiteSpace(model.Phone)) {
+                    _nwazetCommunicationService.SetPhone(model.PhonePrefix, model.Phone, user);
                 }
             }
             // In case validation is successful, depending on whether shipping is required, we

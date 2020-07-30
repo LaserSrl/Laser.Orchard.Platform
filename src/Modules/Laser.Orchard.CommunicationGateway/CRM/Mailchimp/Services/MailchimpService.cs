@@ -1,27 +1,19 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
-using Newtonsoft.Json.Linq;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.Policy.Services;
+using Laser.Orchard.Policy.ViewModels;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
 using Orchard.Security;
+using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
-using Orchard.Environment.Extensions;
-using Orchard.Tokens;
-using System.Web.Script.Serialization;
 using System.Linq;
-using Laser.Orchard.Policy.Services;
-using Laser.Orchard.Policy.Models;
-using Laser.Orchard.Policy.ViewModels;
-using Laser.Orchard.CommunicationGateway.CRM.Mailchimp;
-using Orchard.Data;
-using Laser.Orchard.StartupConfig.Services;
+using System.Text;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Services {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpService : IMailchimpService {
         private readonly IOrchardServices _orchardServices;

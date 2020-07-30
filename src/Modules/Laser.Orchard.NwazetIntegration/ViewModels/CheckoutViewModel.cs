@@ -81,6 +81,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 BillingAddress = BillingAddress,
                 BillingAddressVM = BillingAddressVM,
                 Email = Email,
+                PhonePrefix = PhonePrefix,
                 Phone = Phone,
                 SpecialInstructions = SpecialInstructions,
                 ListAvailableShippingAddress = ListAvailableShippingAddress,
@@ -93,6 +94,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             BillingAddress = vm.BillingAddress;
             BillingAddressVM = vm.BillingAddressVM;
             Email = vm.Email;
+            PhonePrefix = vm.PhonePrefix;
             Phone = vm.Phone;
             SpecialInstructions = vm.SpecialInstructions;
             ListAvailableShippingAddress = vm.ListAvailableShippingAddress;
@@ -100,8 +102,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
         public Address ShippingAddress { get; set; }
         public AddressEditViewModel ShippingAddressVM { get; set; }
+        // used to carry over selected address from the form
+        public int ListshippingAddressVM { get; set; }
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
+        // used to carry over selected address from the form
+        public int ListbillingAddressVM { get; set; }
         public string Email { get; set; }
         public string PhonePrefix { get; set; }
         public string Phone { get; set; }
