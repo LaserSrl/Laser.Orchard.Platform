@@ -65,6 +65,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     return false;
                 }
             }
+            if (provinceTP == null) {
+                // maybe we did not find a territory because it's not configured,
+                // but we had a free text input for the province
+                var provinceName = vm.Province.Trim();
+                if (provinceName.Length < 2) {
+                    // at least two characters
+                    return false;
+                }
+            }
             var validCities = _addressConfigurationService
                 .GetAllCities(vm.AddressType, 
                     // use province if it exists, otherwise country
@@ -83,6 +92,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             // TODO: zip code validation depends on the country:
             // https://en.wikipedia.org/wiki/List_of_postal_codes
+            // as a first step, we want zipcode to be non empty and all digits.
+            // This is not correct because there are some territories that have
+            // letters in theri zip codes. We will fix this when the time comes.
+            if (string.IsNullOrWhiteSpace(vm.PostalCode)) {
+                return false;
+            } else {
+                foreach (char c in vm.PostalCode) {
+                    if (c < '0' || c > '9') {
+                        return false;
+                    }
+                }
+            }
             return true;
         }
         private bool SubValidation(IEnumerable<TerritoryPart> list, TerritoryPart item) {
