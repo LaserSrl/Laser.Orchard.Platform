@@ -4,8 +4,10 @@ using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
+using Orchard.Core.Common.Models;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
+using Orchard.Localization.Models;
 using Orchard.Security;
 using Orchard.Tokens;
 using System;
@@ -21,11 +23,11 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         private readonly IPolicyServices _policyService;
         private readonly IControllerContextAccessor _controllerAccessor;
 
-        public MailchimpService(ShellSettings shellSettings, 
-            IOrchardServices orchardServices, 
-            IEncryptionService encryptionService, 
+        public MailchimpService(ShellSettings shellSettings,
+            IOrchardServices orchardServices,
+            IEncryptionService encryptionService,
             ITokenizer tokenizer,
-            IPolicyServices policyService, 
+            IPolicyServices policyService,
             IControllerContextAccessor controllerAccessor) {
             _orchardServices = orchardServices;
             _encryptionService = encryptionService;
@@ -52,19 +54,29 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             IEnumerable<PolicyAnswer> allAnswers = TryFindPolicyAnswers(part);
 
 
-            if (settings.PolicyTextReferences != null && settings.PolicyTextReferences.Any()) {
+            if (settings.PolicyTextReferencesToArray() != null && settings.PolicyTextReferencesToArray().Any()) {
                 var accepted = allAnswers.Where(x => x.Accepted).Select(x => "{" + x.PolicyTextId + "}").ToList();
-                var requiredPolicies = settings.PolicyTextReferences.OrderBy(x => x).ToList();
+                var requiredPolicies = settings.PolicyTextReferencesToArray().OrderBy(x => x).ToList();
                 var missingPoliciesIds = requiredPolicies.Except(accepted);
                 if (missingPoliciesIds.Any()) { // If Required Policies have not been accepted
-                    throw new MissingPoliciesException();
+                    var ids = missingPoliciesIds.Select(x => int.Parse(x.Trim(new char[] { '{', '}' }))).ToArray();
+                    // GET the policies with the current culture
+                    // TODO: make the culture check optional via settings
+                    var localizedMissingPoliciesids = _orchardServices.ContentManager.GetMany<CommonPart>(ids, VersionOptions.Published, QueryHints.Empty).Where(x => x.As<LocalizationPart>() == null || 
+                        (x.As<LocalizationPart>() != null
+                        && x.As<LocalizationPart>().Culture != null
+                        && x.As<LocalizationPart>().Culture.Culture == _orchardServices.WorkContext.CurrentCulture))
+                        .Select(x => x.Id);
+                    if (localizedMissingPoliciesids.Count() > 0) {
+                        throw new MissingPoliciesException();
+                    }
                 }
             }
         }
 
         private IEnumerable<PolicyAnswer> TryFindPolicyAnswers(MailchimpSubscriptionPart part) {
             // Read Answers from the DB
-            var answers = _policyService.GetPolicyAnswersForContent(part.Id).Select(x=>new PolicyAnswer {
+            var answers = _policyService.GetPolicyAnswersForContent(part.Id).Select(x => new PolicyAnswer {
                 PolicyTextId = x.PolicyTextInfoPartRecord.Id,
                 Accepted = x.Accepted
             }).ToList();
