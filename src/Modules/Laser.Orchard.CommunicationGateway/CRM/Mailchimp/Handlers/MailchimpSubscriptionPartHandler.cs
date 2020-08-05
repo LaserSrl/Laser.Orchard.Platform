@@ -70,7 +70,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                 try {
                     _service.CheckAcceptedPolicy(context.ContentItem.As<MailchimpSubscriptionPart>());
                 }
-                catch (MissingPoliciesException ex) {
+                catch (MissingPoliciesException) {
                     context.Updater.AddModelError("MissingPolicies", T("You have to accept all required policies in order to subscribe to the newsletter."));
                     _modelIsValid = false;
                 }

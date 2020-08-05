@@ -53,25 +53,33 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
 
             IEnumerable<PolicyAnswer> allAnswers = TryFindPolicyAnswers(part);
 
+            if (// sanity checks
+                part.Subscription != null
+                && part.Subscription.Audience != null
+                && !string.IsNullOrWhiteSpace(part.Subscription.Audience.Identifier)
+                // and only try to check stuff if the user subscribed
+                && part.Subscription.Subscribed) {
 
-            if (settings.PolicyTextReferencesToArray() != null && settings.PolicyTextReferencesToArray().Any()) {
-                var accepted = allAnswers.Where(x => x.Accepted).Select(x => "{" + x.PolicyTextId + "}").ToList();
-                var requiredPolicies = settings.PolicyTextReferencesToArray().OrderBy(x => x).ToList();
-                var missingPoliciesIds = requiredPolicies.Except(accepted);
-                if (missingPoliciesIds.Any()) { // If Required Policies have not been accepted
-                    var ids = missingPoliciesIds.Select(x => int.Parse(x.Trim(new char[] { '{', '}' }))).ToArray();
-                    // GET the policies with the current culture
-                    // TODO: make the culture check optional via settings
-                    var localizedMissingPoliciesids = _orchardServices.ContentManager.GetMany<CommonPart>(ids, VersionOptions.Published, QueryHints.Empty).Where(x => x.As<LocalizationPart>() == null || 
-                        (x.As<LocalizationPart>() != null
-                        && x.As<LocalizationPart>().Culture != null
-                        && x.As<LocalizationPart>().Culture.Culture == _orchardServices.WorkContext.CurrentCulture))
-                        .Select(x => x.Id);
-                    if (localizedMissingPoliciesids.Count() > 0) {
-                        throw new MissingPoliciesException();
+                if (settings.PolicyTextReferencesToArray() != null && settings.PolicyTextReferencesToArray().Any()) {
+                    var accepted = allAnswers.Where(x => x.Accepted).Select(x => "{" + x.PolicyTextId + "}").ToList();
+                    var requiredPolicies = settings.PolicyTextReferencesToArray().OrderBy(x => x).ToList();
+                    var missingPoliciesIds = requiredPolicies.Except(accepted);
+                    if (missingPoliciesIds.Any()) { // If Required Policies have not been accepted
+                        var ids = missingPoliciesIds.Select(x => int.Parse(x.Trim(new char[] { '{', '}' }))).ToArray();
+                        // GET the policies with the current culture
+                        // TODO: make the culture check optional via settings
+                        var localizedMissingPoliciesids = _orchardServices.ContentManager.GetMany<CommonPart>(ids, VersionOptions.Published, QueryHints.Empty).Where(x => x.As<LocalizationPart>() == null ||
+                            (x.As<LocalizationPart>() != null
+                            && x.As<LocalizationPart>().Culture != null
+                            && x.As<LocalizationPart>().Culture.Culture == _orchardServices.WorkContext.CurrentCulture))
+                            .Select(x => x.Id);
+                        if (localizedMissingPoliciesids.Count() > 0) {
+                            throw new MissingPoliciesException();
+                        }
                     }
                 }
             }
+            
         }
 
         private IEnumerable<PolicyAnswer> TryFindPolicyAnswers(MailchimpSubscriptionPart part) {
