@@ -84,20 +84,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return null;
         }
 
+        private IContentQuery<TerritoryPart> CountriesQuery() {
+            return _territoriesService
+                .GetTerritoriesQuery(ConfiguredHierarchy)
+                // Is country
+                .Join<TerritoryAdministrativeTypePartRecord>()
+                .Where(tat => tat.AdministrativeType == TerritoryAdministrativeType.Country);
+        }
+
         public IEnumerable<TerritoryPart> GetAllCountries() {
 
-            return _territoriesService.GetTerritoriesQuery(ConfiguredHierarchy)
-                .Where(tpr => _settingsService.SelectedCountryIds.Contains(tpr.TerritoryInternalRecord.Id))
+            return CountriesQuery()
                 .List();
         }
 
         public IEnumerable<TerritoryPart> GetAllCountries(AddressRecordType addressRecordType) {
-            var query = _territoriesService
-                // Query for territories in hierarchy
-                .GetTerritoriesQuery(ConfiguredHierarchy)
-                // only those marked as country
-                .Where(tpr => _settingsService
-                    .SelectedCountryIds.Contains(tpr.TerritoryInternalRecord.Id))
+            var query = CountriesQuery()
                 // only those marked for the given record type
                 .Join<TerritoryAddressTypePartRecord>();
             if (addressRecordType == AddressRecordType.ShippingAddress) {
@@ -111,7 +113,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
-        public List<SelectListItem> CountryOptions(int id = -1) {
+        public IEnumerable<SelectListItem> CountryOptions(int id = -1) {
             var countries = GetAllCountries();
             var options = new List<SelectListItem>();
             options.Add(new SelectListItem() {
@@ -125,11 +127,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
                     Text = _contentManager.GetItemMetadata(tp).DisplayText,
                     Selected = id == tp.Record.TerritoryInternalRecord.Id
-                }));
+                }).OrderBy(sli => sli.Text));
             return options;
         }
 
-        public List<SelectListItem> CountryOptions(
+        public IEnumerable<SelectListItem> CountryOptions(
             AddressRecordType addressRecordType, int id = -1) {
             var countries = GetAllCountries(addressRecordType);
             var options = new List<SelectListItem>();
@@ -144,14 +146,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     Value = tp.Record.TerritoryInternalRecord.Id.ToString(),
                     Text = _contentManager.GetItemMetadata(tp).DisplayText,
                     Selected = id == tp.Record.TerritoryInternalRecord.Id
-                }));
+                }).OrderBy(sli => sli.Text));
             return options;
+        }
+
+        private IContentQuery<TerritoryPart> ProvincesQuery() {
+            return _territoriesService
+                .GetTerritoriesQuery(ConfiguredHierarchy)
+                // Only those marked as province
+                .Join<TerritoryAdministrativeTypePartRecord>()
+                .Where(tat => tat.AdministrativeType == TerritoryAdministrativeType.Province);
         }
 
         public IEnumerable<TerritoryPart> GetAllProvinces() {
 
-            return _territoriesService.GetTerritoriesQuery(ConfiguredHierarchy)
-                .Where(tpr => _settingsService.SelectedProvinceIds.Contains(tpr.TerritoryInternalRecord.Id))
+            return ProvincesQuery()
                 .List();
         }
 
@@ -235,7 +244,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public IEnumerable<TerritoryPart> GetAllCities() {
 
             return _territoriesService.GetTerritoriesQuery(ConfiguredHierarchy)
-                .Where(tpr => _settingsService.SelectedCityIds.Contains(tpr.TerritoryInternalRecord.Id))
+                // only those marked as city
+                .Join<TerritoryAdministrativeTypePartRecord>()
+                .Where(tat => tat.AdministrativeType == TerritoryAdministrativeType.City)
                 .List();
         }
 
@@ -310,13 +321,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var allRecords = GetAllChildrenRecords(parent.Record.Children);
             var selectedRecords = allRecords
                 .Where(tpr => selection.Contains(tpr.TerritoryInternalRecord.Id));
-            return _contentManager
-                // GetMany will break if there are too many ids
-                .GetMany<TerritoryPart>(
-                    selectedRecords.Select(r => r.Id),
-                    // Consider eventually using the version from the hierarchy?
-                    VersionOptions.Published,
-                    QueryHints.Empty);
+
+            // GetMany will break if there are too many ids, so we query a bunch at a time
+            int tried = 0;
+            var children = new List<TerritoryPart>();
+            while (tried < selectedRecords.Count()) {
+                children.AddRange(
+                    _contentManager
+                        .GetMany<TerritoryPart>(
+                            selectedRecords.Skip(tried).Take(1000).Select(r => r.Id),
+                            // Consider eventually using the version from the hierarchy?
+                            VersionOptions.Published,
+                            QueryHints.Empty));
+                tried += 1000;
+            }
+
+            return children;
         }
 
         private IEnumerable<TerritoryPartRecord> GetAllChildrenRecords(

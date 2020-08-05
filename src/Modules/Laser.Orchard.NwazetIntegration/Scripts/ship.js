@@ -26,6 +26,10 @@
             // trigger a custom visibility event
             $(".billing-address").trigger('visibilityChanged');
         });
+    if (toggleCheckbox.prop("checked")) {
+        // if the checkbox begins as checked
+        $(".billing-address").hide();
+    }
     $('input[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
@@ -44,8 +48,10 @@
                 .val(input.val())
                 .trigger('change');
         });
-    addressForm.find(".required").after(
-        $("<span class='error-indicator' title='" + required + "'>*</span>"));
+    if (!("preventRequiredMark" in window) || !!!preventRequiredMark) {
+        addressForm.find(".required").after(
+            $("<span class='error-indicator' title='" + required + "'>*</span>"));
+    }
     addressForm.submit(function (e) {
         var validated = true,
             firstErrorElement,

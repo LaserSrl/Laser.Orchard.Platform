@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Orchard.Environment.Extensions;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Environment.Extensions;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class Subscriber {
         public string Identifier { get; set; }

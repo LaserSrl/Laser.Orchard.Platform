@@ -1,13 +1,6 @@
-﻿using Orchard.ContentManagement;
-using Orchard.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using Orchard.Environment.Extensions;
+﻿using Orchard.Environment.Extensions;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSiteSettingsEdit {
 
