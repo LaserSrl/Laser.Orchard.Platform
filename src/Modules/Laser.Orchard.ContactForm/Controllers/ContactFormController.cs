@@ -6,7 +6,9 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.Localization;
 using Orchard.Mvc.Extensions;
+using Orchard.Workflows.Services;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.ContactForm.Controllers {
@@ -18,17 +20,20 @@ namespace Laser.Orchard.ContactForm.Controllers {
         private readonly IOrchardServices _orchardServices;
         private readonly IFrontEndEditService _frontEndEditeService;
         private readonly IContentManager _contentManager;
+        private readonly IWorkflowManager _workflowManager;
 
         public ContactFormController(
             IContactFormService contactFormService,
             IOrchardServices orchardServices,
             IFrontEndEditService frontEndEditService,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            IWorkflowManager workflowManager) {
 
             _contactFormService = contactFormService;
             _orchardServices = orchardServices;
             _frontEndEditeService = frontEndEditService;
             _contentManager = contentManager;
+            _workflowManager = workflowManager;
         }
 
         Func<ContentTypePartDefinition, string, bool> OnlyShowReCaptcha =
@@ -49,7 +54,7 @@ namespace Laser.Orchard.ContactForm.Controllers {
         /// <param name="subject">The subject.</param>
         /// <param name="message">The message.</param>
 
-        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaid = -1, int Accept = 0) {
+        public ActionResult SendContactEmail(int id, string returnUrl, string name, string email, string confirmEmail, string subject, string message, int mediaId = -1, int accept = 0) {
             var redirectionUrl = returnUrl;
             try {
 
@@ -70,7 +75,7 @@ namespace Laser.Orchard.ContactForm.Controllers {
                     }
                 }
                 ContactFormRecord contactForm = _contactFormService.GetContactForm(id);
-                if (contactForm.AcceptPolicy && Accept != 1) {
+                if (contactForm.AcceptPolicy && accept != 1) {
                     TempData["form"] = Request.Form;
                     return this.RedirectLocal(Request.UrlReferrer.ToString());
                 }
@@ -83,7 +88,13 @@ namespace Laser.Orchard.ContactForm.Controllers {
                             subject = subject.Replace("{DOMAIN}", Request.Url.Host);
                     }
 
-                    _contactFormService.SendContactEmail(name, confirmEmail, email, subject, message, mediaid, contactForm, _orchardServices.WorkContext.HttpContext.Request.Form);
+                    _contactFormService.SendContactEmail(name, confirmEmail, email, subject, message, mediaId, contactForm, _orchardServices.WorkContext.HttpContext.Request.Form);
+                    // after sending email it triggers a worflow event in order to execute arbitrary code.
+                    _workflowManager.TriggerEvent("ContactFormSubmittedEvent",
+                                                  stubItem,
+                                                  () => new Dictionary<string, object> {
+                                                    {"Content", stubItem}
+                                                  });
                     if (!string.IsNullOrWhiteSpace(contactForm.ThankyouPage)) {
                         redirectionUrl = contactForm.ThankyouPage;
                     }
