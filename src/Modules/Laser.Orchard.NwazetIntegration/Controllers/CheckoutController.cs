@@ -395,7 +395,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // this stage the user will have already selected them earlier.
             ReinflateViewModelAddresses(model);
             // check if the user is trying to reset the selected shipping option.
-            if (model.ResetShipping) {
+            if (model.ResetShipping || string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // Put the model we validated in TempData so it can be reused in the next action.
                 _shoppingCart.ShippingOption = null;
                 TempData["CheckoutViewModel"] = model;
