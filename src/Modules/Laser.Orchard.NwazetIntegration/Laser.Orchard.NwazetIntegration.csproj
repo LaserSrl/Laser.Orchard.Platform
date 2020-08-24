@@ -112,8 +112,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
