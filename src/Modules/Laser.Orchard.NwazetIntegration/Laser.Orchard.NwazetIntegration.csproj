@@ -126,6 +126,7 @@
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\ProductVatConfigurationPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryTag.cs" />
@@ -358,6 +360,7 @@
     <Content Include="Views\ShippingSummaryForm.cshtml" />
     <Content Include="Views\CheckoutCartSummary.cshtml" />
     <Content Include="Views\TerritorySelector.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ProductPriceWithVATEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
