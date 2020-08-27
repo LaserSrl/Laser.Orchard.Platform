@@ -21,6 +21,9 @@
     var discountTaxableGuid = "dt" + guidBase;
     var discountTaxedGuid = "dv" + guidBase;
     var hintGuid = "hint" + guidBase;
+
+    //var currentCulture = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator;
 }
 <fieldset>
     <small class="form-text text-muted">
@@ -121,8 +124,9 @@
             if (TestIsFloat(tPrice)) {
 
                 var value = ComputTaxable(parseFloat(tPrice));
-                regularBasePrice.text(priceBaseText.replace('__PRICE__', value));
-                originalPrice.val(value);
+                var v = value.toString().replace('.', '@decimalSeparator');
+                regularBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                originalPrice.val(v);
             }
         }
 
@@ -135,8 +139,9 @@
                     discountBasePrice.text('');
                     discountPrice.val('');
                 } else {
-                    discountBasePrice.text(priceBaseText.replace('__PRICE__', value));
-                    discountPrice.val(value);
+                    var v = value.toString().replace('.', '@decimalSeparator');
+                    discountBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                    discountPrice.val(v);
                 }
             } else {
                 discountBasePrice.text('');
