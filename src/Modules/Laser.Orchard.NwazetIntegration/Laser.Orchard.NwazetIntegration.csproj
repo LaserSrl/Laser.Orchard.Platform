@@ -112,8 +112,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
