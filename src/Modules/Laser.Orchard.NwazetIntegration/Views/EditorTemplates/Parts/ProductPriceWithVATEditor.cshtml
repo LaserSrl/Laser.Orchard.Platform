@@ -1,0 +1,172 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model ProductPriceEditorViewModel
+@{ 
+    var hintText = string.IsNullOrWhiteSpace(Model.DefaultTerritoryName)
+        ? T("Base prices are computed using VAT __RATE__% from the selected category.").Text
+        : T("Base prices are computed using VAT __RATE__% from the selected category and for the selected default region ({0}).", Model.DefaultTerritoryName).Text;
+
+    var initialRate = Model.VatRates[Model.DefaultVatConfigurationId];
+    if (Model.SelectedVatConfigurationId > 0) {
+        initialRate = Model.VatRates[Model.SelectedVatConfigurationId];
+    }
+
+    var guidBase = Guid.NewGuid().ToString();
+    var regularFieldsetGuid = "rf" + guidBase;
+    var regularTaxableGuid = "rt" + guidBase;
+    var regularTaxedGuid = "rv" + guidBase;
+    var discountFieldsetGuid = "df" + guidBase;
+    var discountTaxableGuid = "dt" + guidBase;
+    var discountTaxedGuid = "dv" + guidBase;
+    var hintGuid = "hint" + guidBase;
+}
+<fieldset>
+    <small class="form-text text-muted">
+        @T("Edit the prices after tax.")
+    </small>
+    <fieldset id="@regularFieldsetGuid">
+        <div class="form-group">
+            <label>@T("Regular price")</label>
+            <div class="form-group col-md-4">
+                <label>@T("Before VAT")</label>
+                <input class="form-control"
+                       type="text"
+                       id="@regularTaxableGuid"
+                       value="@Model.BasePrice"
+                       disabled>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@T("After VAT")</label>
+                <input class="form-control"
+                       type="text"
+                       id="@regularTaxedGuid"
+                       value="@(Model.BasePrice * (1m+initialRate))">
+            </div>
+        </div>
+    </fieldset>
+    <fieldset id="@discountFieldsetGuid">
+        <div class="form-group">
+            <label>@T("Discounted Price")</label>
+
+            <div class="form-group col-md-4">
+                <label>@T("Before VAT")</label>
+                <input class="form-control"
+                       type="text"
+                       id="@discountTaxableGuid"
+                       value="@(Model.DiscountPrice >= 0.0m ? Model.DiscountPrice.ToString() : "")"
+                       disabled>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@T("After VAT")</label>
+                <input class="form-control"
+                       type="text"
+                       id="@discountTaxedGuid"
+                       value="@(Model.DiscountPrice >= 0.0m ? (Model.DiscountPrice * (1m+initialRate)).ToString() : "")">
+            </div>
+        </div>
+        <small class="form-text text-muted">
+            @T("Leave this empty if you don't want to apply a discount. A value of 0 would represent a free product.")
+        </small>
+    </fieldset>
+    <small class="form-text text-muted" id="@hintGuid">
+
+    </small>
+</fieldset>
+
+@using(Script.Foot()) {
+
+    <script type="text/javascript">
+        var hintBaseText = "@hintText";
+        var rates = {};
+        
+        @foreach(var config in Model.VatRates) {
+            <text>rates[@config.Key] = @config.Value;</text>
+        }
+
+        // initial values
+        var rate = @initialRate;
+        // dropdown where we select the vat configuration
+        var vatConfigDropDown = $('#ProductVatConfigurationPart_VatConfigurationId');
+        // "original" price element
+        var originalPrice = $('#NwazetCommerceProduct_Product_Price');
+        // "original" discount element
+        var discountPrice = $('#NwazetCommerceProduct_DiscountPrice');
+        // element to update the information on the selected VAT rate
+        var hintElement = $('#@hintGuid');
+        // regular price inputs
+        var regularBasePrice = $('#@regularTaxableGuid');
+        var regularTaxedPrice = $('#@regularTaxedGuid');
+        // discount price inputs
+        var discountBasePrice = $('#@discountTaxableGuid');
+        var discountTaxedPrice = $('#@discountTaxedGuid');
+
+        // hide original prices and their labels
+        originalPrice.hide();
+        $('label[for="NwazetCommerceProduct_Product_Price"]').hide()
+        discountPrice.hide();
+        $('label[for="NwazetCommerceProduct_DiscountPrice"]').hide()
+
+        function UpdateHint() {
+            var hintText = hintBaseText.replace('__RATE__', rate*100.0);
+            // Set hint text
+            hintElement.text(hintText);
+        }
+
+        function TestIsFloat(value) {
+            return !isNaN(value - parseFloat(value));
+        }
+
+        function UpdateRegularPrices() {
+            // regular prices
+            var tPrice = regularTaxedPrice.val();
+            if (TestIsFloat(tPrice)) {
+                var value = parseFloat(tPrice) / (1.0 + rate)
+                regularBasePrice.val(value);
+                originalPrice.val(value);
+            }
+        }
+
+        function UpdateDiscountedPrices() {
+            // discounted prices
+            var tPrice = discountTaxedPrice.val();
+            if (TestIsFloat(tPrice)) {
+                var value = parseFloat(tPrice) / (1.0 + rate)
+                if (value < 0) {
+                    discountBasePrice.val('');
+                    discountPrice.val('');
+                } else {
+                    discountBasePrice.val(value);
+                    discountPrice.val(value);
+                }
+            } else {
+                discountBasePrice.val('');
+                discountPrice.val('');
+            }
+        }
+
+        function UpdateBasePrices() {
+            // regular prices
+            UpdateRegularPrices()
+            // discounted prices
+            UpdateDiscountedPrices()
+        }
+
+        vatConfigDropDown.on('change', function () {
+            // currently selected vat config
+            rate = rates[$this.val()];
+            // recompute prices before tax
+            UpdateBasePrices()
+            // re update hint text
+            UpdateHint();
+        });
+        regularTaxedPrice.on('change', function () {
+            // recompute prices before tax
+            UpdateRegularPrices()
+        });
+        discountTaxedPrice.on('change', function () {
+            // recompute prices before tax
+            UpdateDiscountedPrices()
+        });
+
+        UpdateHint();
+    </script>
+}
