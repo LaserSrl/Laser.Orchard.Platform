@@ -1,4 +1,5 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using System.Globalization;
 @model ProductPriceEditorViewModel
 @{ 
     var hintText = string.IsNullOrWhiteSpace(Model.DefaultTerritoryName)
@@ -20,6 +21,9 @@
     var discountTaxableGuid = "dt" + guidBase;
     var discountTaxedGuid = "dv" + guidBase;
     var hintGuid = "hint" + guidBase;
+
+    //var currentCulture = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator;
 }
 <fieldset>
     <small class="form-text text-muted">
@@ -64,11 +68,11 @@
         var rates = {};
 
         @foreach(var config in Model.VatRates) {
-            <text>rates[@config.Key] = @config.Value;</text>
+            <text>rates[@config.Key] = @config.Value.ToString(CultureInfo.InvariantCulture);</text>
         }
 
         // initial values
-        var rate = @initialRate;
+        var rate = @initialRate.ToString(CultureInfo.InvariantCulture);
         // dropdown where we select the vat configuration
         var vatConfigDropDown = $('#ProductVatConfigurationPart_VatConfigurationId');
         // "original" price element
@@ -120,8 +124,9 @@
             if (TestIsFloat(tPrice)) {
 
                 var value = ComputTaxable(parseFloat(tPrice));
-                regularBasePrice.text(priceBaseText.replace('__PRICE__', value));
-                originalPrice.val(value);
+                var v = value.toString().replace('.', '@decimalSeparator');
+                regularBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                originalPrice.val(v);
             }
         }
 
@@ -131,14 +136,15 @@
             if (TestIsFloat(tPrice)) {
                 var value = ComputTaxable(parseFloat(tPrice));
                 if (value < 0) {
-                    discountBasePrice.text(priceBaseText.replace('__PRICE__', value));
+                    discountBasePrice.text('');
                     discountPrice.val('');
                 } else {
-                    discountBasePrice.val(value);
-                    discountPrice.val(value);
+                    var v = value.toString().replace('.', '@decimalSeparator');
+                    discountBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                    discountPrice.val(v);
                 }
             } else {
-                discountBasePrice.val('');
+                discountBasePrice.text('');
                 discountPrice.val('');
             }
         }
