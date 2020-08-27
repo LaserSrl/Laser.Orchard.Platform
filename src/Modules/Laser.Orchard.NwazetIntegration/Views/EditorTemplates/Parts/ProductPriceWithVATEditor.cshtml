@@ -1,4 +1,5 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using System.Globalization;
 @model ProductPriceEditorViewModel
 @{ 
     var hintText = string.IsNullOrWhiteSpace(Model.DefaultTerritoryName)
@@ -64,11 +65,11 @@
         var rates = {};
 
         @foreach(var config in Model.VatRates) {
-            <text>rates[@config.Key] = @config.Value;</text>
+            <text>rates[@config.Key] = @config.Value.ToString(CultureInfo.InvariantCulture);</text>
         }
 
         // initial values
-        var rate = @initialRate;
+        var rate = @initialRate.ToString(CultureInfo.InvariantCulture);
         // dropdown where we select the vat configuration
         var vatConfigDropDown = $('#ProductVatConfigurationPart_VatConfigurationId');
         // "original" price element
