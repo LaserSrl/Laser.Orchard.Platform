@@ -18,13 +18,16 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         private readonly IVatConfigurationService _vatConfigurationService;
         private readonly IVatConfigurationProvider _vatConfigurationProvider;
+        private readonly IProductPriceService _productPriceService;
 
         public ProductVatConfigurationPartDriver(
             IVatConfigurationService vatConfigurationService,
-            IVatConfigurationProvider vatConfigurationProvider) {
+            IVatConfigurationProvider vatConfigurationProvider,
+            IProductPriceService productPriceService) {
 
             _vatConfigurationService = vatConfigurationService;
             _vatConfigurationProvider = vatConfigurationProvider;
+            _productPriceService = productPriceService;
         }
 
         protected override string Prefix {
@@ -59,7 +62,14 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                     : 0.0m,
                 DiscountPrice = productPart != null
                     ? productPart.DiscountPrice
+                    : -1.0m,
+                BaseTaxedPrice = productPart != null
+                    ? _productPriceService.GetPrice(productPart)
                     : 0.0m,
+                DiscountTaxedPrice = productPart != null
+                    ? _productPriceService.GetDiscountPrice(productPart) >= 0 
+                        ? _productPriceService.GetDiscountPrice(productPart) : -1.0m
+                    : -1.0m,
                 SelectedVatConfigurationId = part.UseDefaultVatCategory
                     ? 0
                     : part.VatConfigurationPart.Record.Id,

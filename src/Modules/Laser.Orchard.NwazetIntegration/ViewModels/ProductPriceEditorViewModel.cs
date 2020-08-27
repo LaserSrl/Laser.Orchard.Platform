@@ -12,6 +12,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public decimal BasePrice { get; set; }
         public decimal DiscountPrice { get; set; }
+        public decimal BaseTaxedPrice { get; set; }
+        public decimal DiscountTaxedPrice { get; set; }
 
         public int SelectedVatConfigurationId { get; set; }
         public int DefaultVatConfigurationId { get; set; }
