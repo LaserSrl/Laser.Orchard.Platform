@@ -132,14 +132,14 @@
             if (TestIsFloat(tPrice)) {
                 var value = ComputTaxable(parseFloat(tPrice));
                 if (value < 0) {
-                    discountBasePrice.text(priceBaseText.replace('__PRICE__', value));
+                    discountBasePrice.text('');
                     discountPrice.val('');
                 } else {
-                    discountBasePrice.val(value);
+                    discountBasePrice.text(priceBaseText.replace('__PRICE__', value));
                     discountPrice.val(value);
                 }
             } else {
-                discountBasePrice.val('');
+                discountBasePrice.text('');
                 discountPrice.val('');
             }
         }
