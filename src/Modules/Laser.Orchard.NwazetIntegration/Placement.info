@@ -16,4 +16,6 @@
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
   <Place Parts_Product_TagManager="Content:1"/>
   <Place Parts_ProductPriceWithVAT_Edit="Content:3.5" />
+  <!--Hide away the editor shape for shipping areas-->
+  <Place Parts_ShippingMethodShippingAreas_Edit="-"/>
 </Placement>
