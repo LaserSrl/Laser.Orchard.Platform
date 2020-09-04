@@ -57,7 +57,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 // error condition
                 return false;
             }
-            var provinceTP = GetTerritory(vm.Province);
+            var provinceTP = GetTerritory(vm.Province)
+                ?? _addressConfigurationService.SingleTerritory(vm.ProvinceId);
             if (validProvinces.Any()) {
                 // there may not be any configured province, and that is ok,
                 // but if any is configured, we check that the one selected is valid
@@ -85,7 +86,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (validCities.Any()) {
                 // there may not be any configured city, and that is ok,
                 // but if any is configured, we check that the one selected is valid
-                var cityTP = GetTerritory(vm.City);
+                var cityTP = GetTerritory(vm.City)
+                    ?? _addressConfigurationService.SingleTerritory(vm.CityId);
                 if (!SubValidation(validCities, cityTP)) {
                     return false;
                 }

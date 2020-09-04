@@ -78,6 +78,20 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <returns></returns>
         IEnumerable<TerritoryPart> GetAllCities(AddressRecordType addressRecordType, TerritoryPart parent);
         /// <summary>
+        /// Get the list of all TerritoryParts that exist in the hierarchy underneath
+        /// the given territory and that are also configured as cities and that are
+        /// marked for the given address type (shipping/billing) based on a given hint
+        /// for the city name
+        /// </summary>
+        /// <param name="addressRecordType">The type of address</param>
+        /// <param name="parent"></param>
+        /// <param name="nameQuery">Hint for the city name (autocomplete)</param>
+        /// <param name="maxOptions">Max number of results.</param>
+        /// <returns></returns>
+        IEnumerable<TerritoryPart> GetAllCities(
+            AddressRecordType addressRecordType, TerritoryPart parent, 
+            string nameQuery, int maxOptions = 20);
+        /// <summary>
         /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured city if it exists.
         /// </summary>
@@ -92,7 +106,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// Given the Name of a TerritoryInternalRecord (i.e. the territories' truth)
         /// find the corresponding configured city if it exists.
         /// </summary>
-        /// <param name="internalId">The Name of a TerritoryInternalRecord for the city 
+        /// <param name="name">The Name of a TerritoryInternalRecord for the city 
         /// we are looking for</param>
         /// <returns>The TerritoryPart for the desired city if found, null otherwise.</returns>
         /// <remarks>This method will not return the city the territory with the 
@@ -145,6 +159,20 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// We are open to returning more results in some special cases, but the main reason
         /// why we are returning an IEnumerable is to simplify code using this API.</remarks>
         IEnumerable<TerritoryPart> GetAllProvinces(AddressRecordType addressRecordType, TerritoryPart country, TerritoryPart city);
+        /// <summary>
+        /// Given the Id of a TerritoryInternalRecord (i.e. the territories' truth)
+        /// find the corresponding configured province if it exists.
+        /// </summary>
+        /// <param name="internalId"></param>
+        /// <returns></returns>
+        TerritoryPart GetProvince(int internalId);
+        /// <summary>
+        /// Given the Name of a TerritoryInternalRecord (i.e. the territories' truth)
+        /// find the corresponding configured province if it exists.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        TerritoryPart GetProvince(string name);
         /// <summary>
         /// Get a single Territory from the configured Hierarchy
         /// </summary>

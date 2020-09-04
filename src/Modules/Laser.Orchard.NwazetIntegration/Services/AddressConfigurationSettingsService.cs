@@ -4,6 +4,7 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
+using Orchard.Core.Title.Models;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Settings;
@@ -180,6 +181,29 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .ToArray();
         }
 
+        private int[] SelectedIdsForType(
+            TerritoryAdministrativeType adminType,
+            string nameQuery) {
+            var hierarchyIds = ShippingCountriesHierarchies
+                .Select(h => h.Record.Id)
+                .ToArray();
+            return _contentManager
+                .Query<TerritoryAdministrativeTypePart, TerritoryAdministrativeTypePartRecord>()
+                .Where(tatpr => tatpr.AdministrativeType == adminType)
+                .Join<TitlePartRecord>()
+                .Where(tpr => tpr.Title.Contains(nameQuery))
+                .OrderBy(tpr => tpr.Title)
+                .Join<TerritoryPartRecord>()
+                .Where(tpr =>
+                    hierarchyIds
+                        .Contains(tpr.Hierarchy.Id))
+                .List()
+                .Where(tp => tp.Record.TerritoryInternalRecord != null)
+                .Select(tp => tp.Record.TerritoryInternalRecord.Id)
+                .Distinct()
+                .ToArray();
+        }
+
         public int[] SelectedCountryIds {
             get {
                 return GetFromCache(_countryIdsCacheKey, () => {
@@ -229,6 +253,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     return new int[] { };
                 });
             }
+        }
+
+        public int[] SelectedCityIdsByName(string nameQuery) {
+            if (ShippingCountriesHierarchies.Any()) {
+                return SelectedIdsForType(TerritoryAdministrativeType.City, nameQuery);
+            }
+            return new int[] { };
         }
 
         public IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords {
