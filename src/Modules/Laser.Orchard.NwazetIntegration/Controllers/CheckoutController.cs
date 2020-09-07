@@ -245,6 +245,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
                 }
                 InjectServices(model);
+                if (user != null) {
+                    // also load the list of existing addresses for them
+                    model.ListAvailableBillingAddress =
+                        _nwazetCommunicationService.GetBillingByUser(user);
+                    // we are only going to load the shipping addresses if shipping is required
+                    if (model.ShippingRequired) {
+                        model.ListAvailableShippingAddress =
+                            _nwazetCommunicationService.GetShippingByUser(user);
+                    }
+                }
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -586,6 +596,37 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return validEmail && validationSuccess;
         }
         private bool ValidateVM(AddressEditViewModel vm) {
+            int id = -1;
+            if (vm.CityId > 0) {
+                if (int.TryParse(vm.City, out id)) {
+                    // the form sent the city's id instead of its name
+                    vm.City = _addressConfigurationService
+                        .GetCity(vm.CityId)
+                        ?.As<TitlePart>()
+                        ?.Title
+                        ?? string.Empty;
+                }
+            }
+            if (vm.ProvinceId > 0) {
+                if (int.TryParse(vm.Province, out id)) {
+                    // the form sent the city's id instead of its name
+                    vm.Province = _addressConfigurationService
+                        .GetProvince(vm.ProvinceId)
+                        ?.As<TitlePart>()
+                        ?.Title
+                        ?? string.Empty;
+                }
+            }
+            if (vm.CountryId > 0) {
+                if (int.TryParse(vm.Country, out id)) {
+                    // the form sent the city's id instead of its name
+                    vm.Country = _addressConfigurationService
+                        .GetCountry(vm.CountryId)
+                        ?.As<TitlePart>()
+                        ?.Title
+                        ?? string.Empty;
+                }
+            }
             bool response = true;
             foreach (var valP in _validationProviders) {
                 if (!valP.Validate(vm)) {

@@ -11,12 +11,12 @@ namespace Laser.Orchard.NwazetIntegration {
 
             manifest
                 .DefineScript("NwazetIntegration.Addresses")
-                .SetUrl("ship.min.js?v=1.1", "ship.js?v=1.1")
+                .SetUrl("ship.min.js?v=1.2", "ship.js?v=1.2")
                 .SetDependencies("jQuery");
 
             manifest
                 .DefineScript("NwazetIntegration.AddressConfiguration")
-                .SetUrl("address-configuration.min.js", "address-configuration.js")
+                .SetUrl("address-configuration.min.js?v=1.2", "address-configuration.js?v=1.2")
                 .SetDependencies("jQuery");
 
             manifest
