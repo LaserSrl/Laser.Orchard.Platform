@@ -22,4 +22,8 @@
         @Html.TextBoxFor(m => m.GoogleApiKey, new { @class = "text-medium" })
         <span class="hint">@T("Api Key provided by google.")</span>
     </div>
+    <div>
+        @Html.CheckBoxFor(m => m.KeepCultureConsistentWithContext) 
+        <label for="@Html.FieldIdFor(m => m.KeepCultureConsistentWithContext)" class="forcheckbox">@T("Keep the map's culture/language consistent with the current culture")</label>
+    </div>
 </fieldset>

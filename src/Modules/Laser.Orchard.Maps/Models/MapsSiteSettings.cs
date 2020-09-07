@@ -25,5 +25,11 @@ namespace Laser.Orchard.Maps.Models {
             get { return this.Retrieve(x => x.MaxZoom); }
             set { this.Store(x => x.MaxZoom, value); }
         }
+
+        public bool KeepCultureConsistentWithContext {
+            get { return this.Retrieve(x => x.KeepCultureConsistentWithContext); }
+            set { this.Store(x => x.KeepCultureConsistentWithContext, value); }
+        }
+
     }
 }
