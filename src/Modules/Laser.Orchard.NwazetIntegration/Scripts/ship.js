@@ -17,9 +17,21 @@
                 $('select[name^="shippingAddressVM."]').each(function () {
                     var input = $(this),
                         name = input.attr("name").substr(18);
-                    $('select[name="billingAddressVM.' + name + '"]')
-                        .val(input.val())
-                        .trigger('change');
+                    var other = $('select[name="billingAddressVM.' + name + '"]');
+                    var newValue = input.val();
+                    if (other.find('option[value="' + newValue + '"]').length > 0) {
+                        
+                    } else {
+                        // add and select the option
+                        var newOption =
+                            new Option(
+                                input.find('option[value=' + newValue + ']').text(), //text
+                                newValue, //value
+                                true, //defaultSelected
+                                true); //selected
+                        other.append(newOption);
+                    }
+                    other.val(newValue).trigger('change');
                 });
             }
 
@@ -42,11 +54,27 @@
     $('select[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
+
+            // selects can only have their value
+            // set if the corresponding option element exists. 
             var input = $(this),
                 name = input.attr("name").substr(18);
-            $('select[name="billingAddressVM.' + name + '"]')
-                .val(input.val())
-                .trigger('change');
+            var other = $('select[name="billingAddressVM.' + name + '"]');
+            var newValue = input.val();
+            if (other.find('option[value="' + newValue + '"]').length > 0) {
+
+            } else {
+                // add and select the option
+                var newOption =
+                    new Option(
+                        input.find('option[value=' + newValue + ']').text(), //text
+                        newValue, //value
+                        true, //defaultSelected
+                        true); //selected
+                other.append(newOption);
+            }
+            other.val(newValue).trigger('change');
+            
         });
     if (!("preventRequiredMark" in window) || !!!preventRequiredMark) {
         addressForm.find(".required").after(
