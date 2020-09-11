@@ -618,7 +618,7 @@ msgstr "Prima dell'IVA: __PRICE__"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Discounted Price (after VAT)"
-msgstr "Prezzo scontato (IVA esclusa)"
+msgstr "Prezzo scontato (IVA inclusa)"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Edit the prices after tax."
@@ -626,7 +626,7 @@ msgstr "Modifica i prezzi al netto delle tasse."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Regular price (after VAT)"
-msgstr "Prezzo normale (IVA esclusa)"
+msgstr "Prezzo normale (IVA inclusa)"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AddressType.cshtml"
 msgid "Enable this territory for billing address configuration."
