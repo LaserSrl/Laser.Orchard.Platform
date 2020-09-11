@@ -427,6 +427,10 @@ button.link:hover {
         border-radius: 5px 5px 0px 0px;
     }
 
+.localmenu-content-picker li {
+    padding-bottom: 0.4em;
+}
+
 .ui-widget-header {
     background: #f0f0ee !important;
 }
@@ -582,6 +586,23 @@ legend {
 .mce-container button {
     min-width: 30px;
 }
+
+.mce-wordcount {
+    right: 110px !important;
+}
+
+.mce-branding {
+    position: absolute !important;
+    top: 3px !important;
+    right: 0 !important;
+    padding: 8px !important;
+    font-size: 0.7em !important;
+}
+
+    .mce-branding a {
+        font-size: 1em !important;
+        cursor: pointer !important;
+    }
 
 #activity-toolbar > div label {
     min-width: 22px !important;
@@ -1224,6 +1245,10 @@ fieldset {
     padding-bottom: 10px;
 }
 
+fieldset small {
+    font-size: 0.8em;
+}
+
 .add,
 .button.grey,
 #btn-CalendarEvent_Gallery_Field_Ids.button,
@@ -1325,6 +1350,10 @@ fieldset {
     display: inline-block;
     white-space: nowrap;
     text-align: left;
+}
+
+#orchard-content-picker .page-size-options > div:first-child {
+    display: block;
 }
 
     .page-size-options select {
@@ -5197,7 +5226,7 @@ textarea.autosize {
         opacity: 0.5;
     }
 
-    .form-group .form-control:focus {
+    .form-group .form-control:not(.text):focus {
         border-color: rgba(12, 12, 12, 0.12);
     }
 
@@ -11499,6 +11528,10 @@ input#adminfilter {
 }
 
 /*content picker field*/
+.content-picker-tab {
+    border-top: 3px solid #de625e !important;
+}
+
 .content-picker-tab #searchText {
     margin-top: 10px;
     margin-left: 10px;

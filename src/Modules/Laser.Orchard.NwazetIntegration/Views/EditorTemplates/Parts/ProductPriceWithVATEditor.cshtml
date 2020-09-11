@@ -27,13 +27,13 @@
 
 
 <fieldset>
-    <small class="form-text text-muted">
+    <label class="form-text text-muted">
         @T("Edit the prices after tax.")
-    </small>
+    </label>
     <fieldset id="@regularFieldsetGuid">
         <div class="form-group">
             <label>@T("Regular price (after VAT)")</label>
-            <input class="form-control"
+            <input class="form-control text small"
                    type="text"
                    id="@regularTaxedGuid"
                    value="@(Model.BaseTaxedPrice)">
@@ -47,7 +47,7 @@
         <fieldset id="@discountFieldsetGuid">
             <div class="form-group">
                 <label>@T("Discounted Price (after VAT)")</label>
-                <input class="form-control"
+                <input class="form-control text small"
                        type="text"
                        id="@discountTaxedGuid"
                        value="@(Model.DiscountPrice >= 0.0m ? Model.DiscountTaxedPrice.ToString() : "")">
@@ -66,7 +66,7 @@
     using (Script.Foot()) {
 
         <script type="text/javascript">
-            var hintBaseText = "@hintText";
+            var hintBaseText = "@Html.Raw(hintText)";
             var priceBaseText = "@beforeVatText";
             var rates = {};
 
