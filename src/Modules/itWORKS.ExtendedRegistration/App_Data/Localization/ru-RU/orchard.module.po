@@ -1,0 +1,18 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2020 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The new password and confirmation password do not match."
+msgstr "Новый пароль и пароль подтверждения не совпадают."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "User with that username and/or email already exists."
+msgstr "Пользователь с таким именем пользователя и / или электронной почтой уже существует."
+

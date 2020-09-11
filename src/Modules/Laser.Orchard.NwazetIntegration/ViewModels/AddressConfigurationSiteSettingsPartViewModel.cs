@@ -23,6 +23,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
             _contentManager = part.ContentItem.ContentManager;
 
+
             ShippingCountriesHierarchyId = part.ShippingCountriesHierarchyId;
             CountriesHierarchy = part.ShippingCountriesHierarchyId == 0
                     ? null
@@ -38,7 +39,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
 
         private IContentManager _contentManager;
-        private IAddressConfigurationSettingsService _addressConfigurationSettingsService;
 
         #region base configuration
         public int ShippingCountriesHierarchyId { get; set; }
@@ -56,6 +56,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             return result;
         }
         #endregion
+
 
         #region details configuration
 

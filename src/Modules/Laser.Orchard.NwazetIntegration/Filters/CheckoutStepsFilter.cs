@@ -42,85 +42,142 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         public Action CheckoutStep(ActionExecutedContext filterContext) {
-            // How to turn this into something flexible:
-            // using an ordered collection of providers, each will have a method 
-            // that takes the filterContext and returns the "handler" method to perform
-            // if there is a match. The first one to return something to execute
-            // would win and prevent the others from even checking.
-            if (filterContext.Controller is ShoppingCartController
-                && filterContext.ActionDescriptor
-                    .ActionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
-                // step 1: "Choose shipping option" 
-                // or 
-                // step 2: "Summary with shipping costs"
-                var result = filterContext.Result as ShapeResult;
-                if (result != null) {
-                    var model = (dynamic)result.Model;
-                    // get products in the cart
-                    var shopItems = (IEnumerable<dynamic>)model.ShopItems;
-                    var products = shopItems
-                        ?.Select(sci => {
-                            var product = (ProductPart)sci.Product;
-                            var quantity = (int)sci.Quantity;
-                            var part = product.As<GTMProductPart>();
-                            _GTMProductService.FillPart(part);
-                            var vm = new GTMProductVM(part);
-                            vm.Quantity = quantity;
-                            return vm;
-                        }) ?? new List<GTMProductVM>();
 
-                    object actionField = null;
-                    if (model.ShippingOption != null) {
-                        var shippingOption = (ShippingOption)model.ShippingOption;
-                        // shipping option selected => step 2
-                        actionField = new {
-                            step = 2,
-                            option = shippingOption.ToString()
-                        };
-                    } else if (!string.IsNullOrWhiteSpace(model.Country)){
-                        // Should select shipping options next => step 1
-                        actionField = new { step = 1 };
-                    }
-                    if (actionField != null) {
-                        return AddShape(actionField, products)(filterContext);
-                    }
-                }
-            } else if (filterContext.Controller is AddressesController
-                && filterContext.ActionDescriptor
+            // new checkout controller
+            if (filterContext.Controller is CheckoutController) {
+                if (filterContext.ActionDescriptor
                     .ActionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
-                // step 3: "Add/choose addresses"
-                var result = filterContext.Result as ViewResult;
-                if (result != null) {
-                    var model = result.Model as AddressesVM;
-                    if (model != null) {
-                        // this is probably always true
-                        return AddShape(new { step = 3 })(filterContext);
+                    // step 1: insert addresses
+                    var result = filterContext.Result as ViewResult;
+                    if (result != null) {
+                        var model = result.Model as CheckoutViewModel;
+                        if (model != null) {
+                            // this is probably always true
+                            return AddShape(new { step = 1 }, GetProducts(model))(filterContext);
+                        }
                     }
-                }
-            } else if (filterContext.Controller is PaymentController
-                && filterContext.ActionDescriptor
-                    .ActionName.Equals("Pay", StringComparison.InvariantCultureIgnoreCase)) {
-                // step 4: "Summary with addresses"
-                var result = filterContext.Result as ViewResult;
-                if (result != null) {
-                    var model = result.Model as PaymentVM;
-                    if (model != null) {
-                        // this is probably always true
-                        return AddShape(new { step = 4 })(filterContext);
+                } else if (filterContext.ActionDescriptor
+                    .ActionName.Equals("Shipping", StringComparison.InvariantCultureIgnoreCase)) {
+                    // step 2: select shipping
+                    var result = filterContext.Result as ViewResult;
+                    if (result != null) {
+                        var model = result.Model as CheckoutViewModel;
+                        if (model != null) {
+                            // this is probably always true
+                            return AddShape(new { step = 2 }, GetProducts(model))(filterContext);
+                        }
+                    }
+                } else if (filterContext.ActionDescriptor
+                     .ActionName.Equals("Review", StringComparison.InvariantCultureIgnoreCase)) {
+                    // step 3: review
+                    var result = filterContext.Result as ViewResult;
+                    if (result != null) {
+                        var model = result.Model as CheckoutViewModel;
+                        if (model != null) {
+                            // this is probably always true
+                            if (model.SelectedShippingOption != null) {
+                                return AddShape(new { step = 3,
+                                    option = model.SelectedShippingOption.ToString()
+                                }, GetProducts(model))(filterContext);
+                            } else {
+                                return AddShape(new { step = 3 }, GetProducts(model))(filterContext);
+                            }
+                        }
                     }
                 }
             } else {
-                // possibly step 5: "Payment"
-                var selectedPos = _posServices
-                    .FirstOrDefault(ps => ps.GetPosActionControllerType() == filterContext.Controller.GetType()
-                        && filterContext.ActionDescriptor
-                            .ActionName.Equals(ps.GetPosActionName(), StringComparison.InvariantCultureIgnoreCase));
-                if (selectedPos != null) {
-                    // step 5 indeed
-                    //TODO: this was only really tested for Braintree
-                    return AddShape(new {
-                        step = 5,
-                        options = selectedPos.GetPosName() })(filterContext);
+                // How to turn this into something flexible:
+                // using an ordered collection of providers, each will have a method 
+                // that takes the filterContext and returns the "handler" method to perform
+                // if there is a match. The first one to return something to execute
+                // would win and prevent the others from even checking.
+                if (filterContext.Controller is ShoppingCartController
+                    && filterContext.ActionDescriptor
+                        .ActionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
+                    // step 1: "Choose shipping option" 
+                    // or 
+                    // step 2: "Summary with shipping costs"
+                    var result = filterContext.Result as ShapeResult;
+                    if (result != null) {
+                        var model = (dynamic)result.Model;
+                        // get products in the cart
+                        var shopItems = (IEnumerable<dynamic>)model.ShopItems;
+                        var products = shopItems
+                            ?.Select(sci => {
+                                var product = (ProductPart)sci.Product;
+                                var quantity = (int)sci.Quantity;
+                                var part = product.As<GTMProductPart>();
+                                _GTMProductService.FillPart(part);
+                                var vm = new GTMProductVM(part);
+                                vm.Quantity = quantity;
+                                return vm;
+                            }) ?? new List<GTMProductVM>();
+
+                        object actionField = null;
+                        if (model.ShippingOption != null) {
+                            var shippingOption = (ShippingOption)model.ShippingOption;
+                            // shipping option selected => step 2
+                            actionField = new {
+                                step = 2,
+                                option = shippingOption.ToString()
+                            };
+                        } else if (!string.IsNullOrWhiteSpace(model.Country)) {
+                            // Should select shipping options next => step 1
+                            actionField = new { step = 1 };
+                        }
+                        if (actionField != null) {
+                            return AddShape(actionField, products)(filterContext);
+                        }
+                    }
+                } else if (filterContext.Controller is AddressesController
+                    && filterContext.ActionDescriptor
+                        .ActionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
+                    // step 3: "Add/choose addresses"
+                    var result = filterContext.Result as ViewResult;
+                    if (result != null) {
+                        var model = result.Model as AddressesVM;
+                        if (model != null) {
+                            // this is probably always true
+                            return AddShape(new { step = 3 })(filterContext);
+                        }
+                    }
+                } else if (filterContext.Controller is PaymentController
+                    && filterContext.ActionDescriptor
+                        .ActionName.Equals("Pay", StringComparison.InvariantCultureIgnoreCase)) {
+                    // step 4: "Summary with addresses"
+                    var result = filterContext.Result as ViewResult;
+                    if (result != null) {
+                        var model = result.Model as PaymentVM;
+                        if (model != null) {
+                            // this is probably always true
+                            return AddShape(new { step = 4 })(filterContext);
+                        }
+                    }
+                } else {
+                    // possibly step 5: "Payment"
+                    var selectedPos = _posServices
+                        .FirstOrDefault(ps => ps.GetPosActionControllerType() == filterContext.Controller.GetType()
+                            && filterContext.ActionDescriptor
+                                .ActionName.Equals(ps.GetPosActionName(), StringComparison.InvariantCultureIgnoreCase));
+                    if (selectedPos != null) {
+
+                        if (filterContext.Controller.TempData.ContainsKey("CheckoutViewModel")) {
+                            var model = (CheckoutViewModel)filterContext.Controller.TempData["CheckoutViewModel"];
+                            if (model != null) {
+                                // "new" checkout flow
+                                return AddShape(new {
+                                    step = 4,
+                                    options = selectedPos.GetPosName()
+                                })(filterContext);
+                            }
+                        }
+                        // step 5 indeed
+                        //TODO: this was only really tested for Braintree
+                        return AddShape(new {
+                            step = 5,
+                            options = selectedPos.GetPosName()
+                        })(filterContext);
+                    }
                 }
             }
 
@@ -139,6 +196,20 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                          GTMProducts: products,
                          ActionFieldJSON: JsonConvert.SerializeObject(actionField)));
             };
+        }
+
+        private IEnumerable<GTMProductVM> GetProducts(CheckoutViewModel checkoutVM) {
+            var shopItems = checkoutVM.GetProductQuantities();
+            return shopItems
+                ?.Select(sci => {
+                    var product = sci.Product;
+                    var quantity = sci.Quantity;
+                    var part = product.As<GTMProductPart>();
+                    _GTMProductService.FillPart(part);
+                    var vm = new GTMProductVM(part);
+                    vm.Quantity = quantity;
+                    return vm;
+                }) ?? new List<GTMProductVM>();
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {

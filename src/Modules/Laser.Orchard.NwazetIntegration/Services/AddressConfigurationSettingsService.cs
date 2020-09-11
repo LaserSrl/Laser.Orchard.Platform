@@ -4,7 +4,7 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
+using Orchard.Core.Title.Models;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Settings;
@@ -96,7 +96,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private T GetFromCache<T>(string cacheKey, Func<T> method) {
             return _cacheManager.Get(cacheKey, true, ctx => {
                 // invalidation signal 
-                ctx.Monitor(_signals.When(Constants.CacheEvictSignal));
+                ctx.Monitor(_signals.When(Constants.AddressConfigurationCacheEvictSignal));
                 // cache
                 return method();
             });
@@ -181,6 +181,29 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .ToArray();
         }
 
+        private int[] SelectedIdsForType(
+            TerritoryAdministrativeType adminType,
+            string nameQuery) {
+            var hierarchyIds = ShippingCountriesHierarchies
+                .Select(h => h.Record.Id)
+                .ToArray();
+            return _contentManager
+                .Query<TerritoryAdministrativeTypePart, TerritoryAdministrativeTypePartRecord>()
+                .Where(tatpr => tatpr.AdministrativeType == adminType)
+                .Join<TitlePartRecord>()
+                .Where(tpr => tpr.Title.Contains(nameQuery))
+                .OrderBy(tpr => tpr.Title)
+                .Join<TerritoryPartRecord>()
+                .Where(tpr =>
+                    hierarchyIds
+                        .Contains(tpr.Hierarchy.Id))
+                .List()
+                .Where(tp => tp.Record.TerritoryInternalRecord != null)
+                .Select(tp => tp.Record.TerritoryInternalRecord.Id)
+                .Distinct()
+                .ToArray();
+        }
+
         public int[] SelectedCountryIds {
             get {
                 return GetFromCache(_countryIdsCacheKey, () => {
@@ -232,6 +255,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
+        public int[] SelectedCityIdsByName(string nameQuery) {
+            if (ShippingCountriesHierarchies.Any()) {
+                return SelectedIdsForType(TerritoryAdministrativeType.City, nameQuery);
+            }
+            return new int[] { };
+        }
+
         public IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords {
             get {
                 return GetFromCache(_cityTerritoryRecordsCacheKey, () => {
@@ -240,21 +270,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 });
             }
         }
-
-        //public IEnumerable<CountryAlpha2> CountryISOCodes {
-        //    get {
-        //        return GetFromCache(_countryCodesCacheKey, () => {
-        //            return Settings != null
-        //                ? Settings.CountryCodes
-        //                : new CountryAlpha2[] { };
-        //        });
-        //    }
-        //}
-
-        //public string GetCountryISOCode(int id) {
-        //    return CountryISOCodes
-        //        .FirstOrDefault(cc => cc.TerritoryId == id)
-        //        .ISOCode ?? string.Empty;
-        //}
+        
     }
 }

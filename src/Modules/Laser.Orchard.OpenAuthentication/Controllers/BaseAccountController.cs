@@ -2,6 +2,7 @@
 using Laser.Orchard.OpenAuthentication.Extensions;
 using Laser.Orchard.OpenAuthentication.Security;
 using Laser.Orchard.OpenAuthentication.Services;
+using Laser.Orchard.StartupConfig.Extensions;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;

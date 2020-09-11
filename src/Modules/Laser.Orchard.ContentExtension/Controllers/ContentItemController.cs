@@ -490,14 +490,15 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         if (string.IsNullOrEmpty(validateMessage) == false) {
                             rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
                         }
+                        dynamic data = new ExpandoObject();
+                        data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
+                        data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
                         if (NewOrModifiedContent.As<AutoroutePart>() != null) {
-                            dynamic data = new ExpandoObject();
                             data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
-                            data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
-                            data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
-                            rsp.Data = data;
                         }
-                    } catch (Exception ex) {
+                        rsp.Data = data;
+                    }
+                    catch (Exception ex) {
                         rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
                     }
                 }

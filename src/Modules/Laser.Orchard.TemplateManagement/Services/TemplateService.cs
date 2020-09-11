@@ -20,6 +20,8 @@ using Laser.Orchard.TemplateManagement.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard.MediaLibrary.Services;
 using System.IO;
+using Orchard.Localization.Models;
+using Orchard.Localization.Services;
 
 namespace Laser.Orchard.TemplateManagement.Services {
 
@@ -57,6 +59,8 @@ namespace Laser.Orchard.TemplateManagement.Services {
         private readonly ShellSettings _shellSettings;
         private readonly ITagForCache _tagForCache;
         private readonly IMediaLibraryService _mediaLibraryService;
+        private readonly ILocalizationService _localizationService;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public TemplateService(
             ITagForCache tagForCache,
@@ -66,7 +70,9 @@ namespace Laser.Orchard.TemplateManagement.Services {
             IMessageService messageService,
             IJobsQueueService jobsQueueService,
             ShellSettings shellSettings,
-            IMediaLibraryService mediaLibraryService) {
+            IMediaLibraryService mediaLibraryService,
+            ILocalizationService localizationService,
+            IWorkContextAccessor workContextAccessor) {
 
             _contentManager = services.ContentManager;
             _tagForCache = tagForCache;
@@ -77,6 +83,8 @@ namespace Laser.Orchard.TemplateManagement.Services {
             _notifier = notifier;
             _shellSettings = shellSettings;
             _mediaLibraryService = mediaLibraryService;
+            _localizationService = localizationService;
+            _workContextAccessor = workContextAccessor;
         }
 
         public IEnumerable<TemplatePart> GetLayouts() {
@@ -92,7 +100,19 @@ namespace Laser.Orchard.TemplateManagement.Services {
         }
 
         public TemplatePart GetTemplate(int id) {
-            return _contentManager.Get<TemplatePart>(id);
+            var templatePart = _contentManager.Get<TemplatePart>(id);
+            if (templatePart != null && templatePart.ContentItem.As<LocalizationPart>() != null) {
+                var currentCulture = _workContextAccessor.GetContext().CurrentCulture;
+                if (templatePart.ContentItem.As<LocalizationPart>().Culture != null && templatePart.ContentItem.As<LocalizationPart>().Culture.Culture != currentCulture) {
+                    var localizationPart = _localizationService.GetLocalizedContentItem(templatePart.ContentItem, currentCulture);
+                    // if exist culture replace template
+                    if (localizationPart != null) {
+                        templatePart = localizationPart.As<TemplatePart>();
+                    }
+                }
+            }
+
+            return templatePart;
         }
 
         public string ParseTemplate(TemplatePart template, ParseTemplateContext context) {

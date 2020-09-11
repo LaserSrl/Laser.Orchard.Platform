@@ -11,6 +11,13 @@ namespace Laser.Orchard.StartupConfig.Projections {
         public string PropertyName { get; set; }
         public bool Ascending { get; set; }
 
+        /// <summary>
+        /// This string is not used in processing the sorting, but it's made available
+        /// to avoid having to use dynamic types in case we want to display in frontend
+        /// a selection among configured criteria.
+        /// </summary>
+        public string FilterLabel { get; set; }
+
         public bool IsForField() {
             return !string.IsNullOrWhiteSpace(PartName)
                 && !string.IsNullOrWhiteSpace(FieldName);

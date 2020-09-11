@@ -17,15 +17,31 @@
                 $('select[name^="shippingAddressVM."]').each(function () {
                     var input = $(this),
                         name = input.attr("name").substr(18);
-                    $('select[name="billingAddressVM.' + name + '"]')
-                        .val(input.val())
-                        .trigger('change');
+                    var other = $('select[name="billingAddressVM.' + name + '"]');
+                    var newValue = input.val();
+                    if (other.find('option[value="' + newValue + '"]').length > 0) {
+                        
+                    } else {
+                        // add and select the option
+                        var newOption =
+                            new Option(
+                                input.find('option[value=' + newValue + ']').text(), //text
+                                newValue, //value
+                                true, //defaultSelected
+                                true); //selected
+                        other.append(newOption);
+                    }
+                    other.val(newValue).trigger('change');
                 });
             }
 
             // trigger a custom visibility event
             $(".billing-address").trigger('visibilityChanged');
         });
+    if (toggleCheckbox.prop("checked")) {
+        // if the checkbox begins as checked
+        $(".billing-address").hide();
+    }
     $('input[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
@@ -38,14 +54,32 @@
     $('select[name^="shippingAddressVM."]')
         .change(function () {
             if (!toggleCheckbox.prop("checked")) return;
+
+            // selects can only have their value
+            // set if the corresponding option element exists. 
             var input = $(this),
                 name = input.attr("name").substr(18);
-            $('select[name="billingAddressVM.' + name + '"]')
-                .val(input.val())
-                .trigger('change');
+            var other = $('select[name="billingAddressVM.' + name + '"]');
+            var newValue = input.val();
+            if (other.find('option[value="' + newValue + '"]').length > 0) {
+
+            } else {
+                // add and select the option
+                var newOption =
+                    new Option(
+                        input.find('option[value=' + newValue + ']').text(), //text
+                        newValue, //value
+                        true, //defaultSelected
+                        true); //selected
+                other.append(newOption);
+            }
+            other.val(newValue).trigger('change');
+            
         });
-    addressForm.find(".required").after(
-        $("<span class='error-indicator' title='" + required + "'>*</span>"));
+    if (!("preventRequiredMark" in window) || !!!preventRequiredMark) {
+        addressForm.find(".required").after(
+            $("<span class='error-indicator' title='" + required + "'>*</span>"));
+    }
     addressForm.submit(function (e) {
         var validated = true,
             firstErrorElement,

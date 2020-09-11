@@ -104,29 +104,63 @@ AddressConfiguration.prototype = {
         var textInput = el.find(textInputSelector);
         var idInput = el.find(idInputSelector);
         idInput.val(idValue);
-        if (idValue > 0) {
+        var id = parseInt(idValue);
+        if (id > 0) {
             // a selection was made
             if (textInput.is('select')) {
+                // check whether the option is there already
+                if ($(textInputSelector + " option[value='" + idValue + "']").length > 0) {
+                    // if it's there, select it
+                    textInput.val(idValue);
+                } else {
+                    // if it's not there, add it and select it
+                    // create a DOM option
+                    var newOption =
+                        new Option(
+                            textValue, //text
+                            idValue, //value
+                            true, //defaultSelected
+                            true); //selected
+                    textInput.append(newOption);
+                }
             } else {
-                // build it as a select with the option already selected?
+                // build it as a select with the option already selected
+                var newInput = '<select ';
+                for (var a = 0; a < textInput[0].attributes.length; a++) {
+                    newInput += textInput[0].attributes[a].name + '="' + textInput[0].attributes[a].value + '" ';
+                }
+                newInput += '></select>';
+                textInput.replaceWith(newInput);
+                textInput = el.find(textInputSelector);
+                // create a DOM option
+                var newOption =
+                    new Option(
+                        textValue, //text
+                        idValue, //value
+                        true, //defaultSelected
+                        true); //selected
+                textInput.append(newOption);
             }
             // set the value
             textInput.val(idValue);
         } else {
-            // negative id => freetext
-            // build the input as freetext
-            var newInput = '<input type="text" ';
-            for (var a = 0; a < textInput[0].attributes.length; a++) {
-                newInput += textInput[0].attributes[a].name + '="'
-                    + textInput[0].attributes[a].value + '" ';
+            // id could be NaN, in which case id > 0 and id <= 0 will both be false
+            if (id <= 0) {
+                // negative id => freetext
+                // build the input as freetext
+                var newInput = '<input type="text" ';
+                for (var a = 0; a < textInput[0].attributes.length; a++) {
+                    newInput += textInput[0].attributes[a].name + '="'
+                        + textInput[0].attributes[a].value + '" ';
+                }
+                newInput += '/>';
+                // place the input in the page
+                textInput.replaceWith(newInput);
+                // reference to the new input
+                textInput = el.find(textInputSelector);
+                // set the value
+                textInput.val(textValue);
             }
-            newInput += '/>';
-            // place the input in the page
-            textInput.replaceWith(newInput);
-            // reference to the new input
-            textInput = el.find(textInputSelector);
-            // set the value
-            textInput.val(textValue);
         }
         return textInput;
     },
@@ -232,94 +266,132 @@ AddressConfiguration.prototype = {
             this._enableAllCity(el, options, true)
         } else {
             if (this._checkCountryOption(el, options)) {
-                var viewModel = {
-                    CountryId: el.find(options.countriesInput).val(),
-                    IsBillingAddress: options.isBilling()
-                };
-                $.post(options.getCities.url, {
-                    viewmodel: viewModel,
-                    __RequestVerificationToken: options.token
-                })
-                    .done(function (data) {
-                        // We are here when the call returns and OK HTTP code
-                        // it still may not be successfull, so we have to check 
-                        // in the received data
-                        if (data.Success) {
-                            // city's input
-                            var city = el.find(options.citiesInput);
-                            // get the text for the currently selected city
-                            var cityName = city.val();
-                            if (city.is('select')) {
-                                // in case the input for the city is currently a select, we don't want
-                                // to necessarily carry that name to the text box we may create later
-                                // get the text for the selected option
-                                cityName = ""; //city.find('option:selected').text();
-                            }
-                            cityName = cityName.toLowerCase();
-                            // detach handlers
-                            niAC._detachCityHandlers(el, options);
-                            // call delegates?
-                            if (options.getCities.before) {
-                                options.getCities.before(city);
-                            }
-                            // populate the choices for the city
-                            if (data.Cities && data.Cities.length > 0) {
-                                // multiple cities => dropdown
-                                var newInput = '<select ';
-                                for (var a = 0; a < city[0].attributes.length; a++) {
-                                    newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
+                var countryId = el.find(options.countriesInput).val();
+                var isBillingAddress = options.isBilling();
+                var callServer = true;
+                if (options.getCities.shouldLoad) {
+                    callServer = options.getCities.shouldLoad(el, options);
+                }
+                if (callServer) {
+                    var viewModel = {
+                        CountryId: countryId,
+                        IsBillingAddress: isBillingAddress
+                    };
+                    $.post(options.getCities.url, {
+                        viewmodel: viewModel,
+                        __RequestVerificationToken: options.token
+                    })
+                        .done(function (data) {
+                            // We are here when the call returns and OK HTTP code
+                            // it still may not be successfull, so we have to check 
+                            // in the received data
+                            if (data.Success) {
+                                // city's input
+                                var city = el.find(options.citiesInput);
+                                // get the text for the currently selected city
+                                var cityName = city.val();
+                                if (city.is('select')) {
+                                    // in case the input for the city is currently a select, we don't want
+                                    // to necessarily carry that name to the text box we may create later
+                                    // get the text for the selected option
+                                    cityName = ""; //city.find('option:selected').text();
                                 }
-                                newInput += '></select>';
-                                city.replaceWith(newInput);
-                                city = el.find(options.citiesInput);
-                                var cityId = el.find(options.cityId).val();
-                                // remove old values
-                                //city.empty();
-                                for (var i = 0; i < data.Cities.length; i++) {
-                                    // create a DOM option
-                                    var newOption =
-                                        new Option(
-                                            data.Cities[i].Text, //text
-                                            data.Cities[i].Value, //value
-                                            !!data.Cities[i].DefaultSelected, //defaultSelected
-                                            !!data.Cities[i].Selected
+                                cityName = cityName.toLowerCase();
+                                // detach handlers
+                                niAC._detachCityHandlers(el, options);
+                                // call delegates?
+                                if (options.getCities.before) {
+                                    options.getCities.before(city);
+                                }
+                                // populate the choices for the city
+                                if (data.Cities && data.Cities.length > 0) {
+                                    // multiple cities => dropdown
+                                    var newInput = '<select ';
+                                    for (var a = 0; a < city[0].attributes.length; a++) {
+                                        newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
+                                    }
+                                    newInput += '></select>';
+                                    city.replaceWith(newInput);
+                                    city = el.find(options.citiesInput);
+                                    var cityId = el.find(options.cityId).val();
+                                    // remove old values
+                                    //city.empty();
+                                    for (var i = 0; i < data.Cities.length; i++) {
+                                        // create a DOM option
+                                        var newOption =
+                                            new Option(
+                                                data.Cities[i].Text, //text
+                                                data.Cities[i].Value, //value
+                                                !!data.Cities[i].DefaultSelected, //defaultSelected
+                                                !!data.Cities[i].Selected
                                                 || (cityId == 0 && cityName.length > 0 && cityName == data.Cities[i].Text.toLowerCase())
                                                 || data.Cities[i].Value == cityId); //selected
-                                    city.append(newOption);
+                                        city.append(newOption);
+                                    }
+                                } else {
+                                    // no configured city => free text
+                                    var newInput = '<input type="text" ';
+                                    for (var a = 0; a < city[0].attributes.length; a++) {
+                                        newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
+                                    }
+                                    newInput += '/>';
+                                    city.replaceWith(newInput);
+                                    city = el.find(options.citiesInput);
+                                    // set the text to the previous text
+                                    city.val(cityName);
+                                    // unset the cityId field
+                                    el.find(options.cityId).val('0');
                                 }
+                                // call delegates?
+                                if (options.getCities.after) {
+                                    options.getCities.after(city);
+                                }
+                                // reattach handlers
+                                niAC._attachCityHandlers(el, options);
+                                // enable the city's input
+                                niAC._enableAllCity(el, options, true)
+                                // trigger change event
+                                city.trigger("change");
                             } else {
-                                // no configured city => free text
-                                var newInput = '<input type="text" ';
-                                for (var a = 0; a < city[0].attributes.length; a++) {
-                                    newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
-                                }
-                                newInput += '/>';
-                                city.replaceWith(newInput);
-                                city = el.find(options.citiesInput);
-                                // set the text to the previous text
-                                city.val(cityName);
-                                // unset the cityId field
-                                el.find(options.cityId).val('0');
+                                // notify?
+                                // retry?
                             }
-                            // call delegates?
-                            if (options.getCities.after) {
-                                options.getCities.after(city);
-                            }
-                            // reattach handlers
-                            niAC._attachCityHandlers(el, options);
-                            // enable the city's input
-                            niAC._enableAllCity(el, options, true)
-                            // trigger change event
-                            city.trigger("change");
-                        } else {
-                            // notify?
-                            // retry?
-                        }
-                    })
-                    .fail(function () {
-                        // we are here when we receive an HTTP error code
-                    })
-                    .always(function () { });
+                        })
+                        .fail(function () {
+                            // we are here when we receive an HTTP error code
+                        })
+                        .always(function () { });
+                } else {
+                    // just enable the input and call its configuration
+                    // city's input
+                    var city = el.find(options.citiesInput);
+                    // get the text for the currently selected city
+                    var cityName = city.val();
+                    if (city.is('select')) {
+                        // in case the input for the city is currently a select, we don't want
+                        // to necessarily carry that name to the text box we may create later
+                        // get the text for the selected option
+                        cityName = ""; //city.find('option:selected').text();
+                    }
+                    cityName = cityName.toLowerCase();
+                    // detach handlers
+                    niAC._detachCityHandlers(el, options);
+                    // call delegates?
+                    if (options.getCities.before) {
+                        options.getCities.before(city);
+                    }
+                    // call delegates?
+                    if (options.getCities.after) {
+                        options.getCities.after(city);
+                    }
+                    // reattach handlers
+                    niAC._attachCityHandlers(el, options);
+                    // enable the city's input
+                    niAC._enableAllCity(el, options, true)
+                    // trigger change event
+                    city.trigger("change");
+                }
+                
             }
         }
     },
@@ -350,101 +422,152 @@ AddressConfiguration.prototype = {
             if (!cityId) {
                 cityId = 0; // handle case where the select is unset
             }
-            var viewModel = {
-                CountryId: el.find(options.countriesInput).val(),
-                CityId: cityId,
-                CityName: cityName, //in case city is input rather than select
-                IsBillingAddress: options.isBilling()
-            };
-            $.post(options.getProvinces.url, {
-                viewmodel: viewModel,
-                __RequestVerificationToken: options.token
-            })
-                .done(function (data) {
-					// We are here when the call returns and OK HTTP code
-					// it still may not be successfull, so we have to check 
-                    // in the received data
-                    if (data.Success) {
-                        // province input
-                        var province = el.find(options.provincesInput);
-                        // get the text for the currently configured province
-                        var provinceName = province.val();
-                        if (province.is('select')) {
-                            // in case the input for the province is currently a select, we don't want
-                            // to necessarily carry that name to the text box we may create later
-                            // get the text for the selected option
-                            provinceName = ""; //province.find('option:selected').text();
+            if (options.getProvinces.cityIsRequired && (cityId == 0 && cityName == "")) {
+                // province input
+                var province = el.find(options.provincesInput);
+                // get the text for the currently configured province
+                var provinceName = province.val();
+                if (province.is('select')) {
+                    // in case the input for the province is currently a select, we don't want
+                    // to necessarily carry that name to the text box we may create later
+                    // get the text for the selected option
+                    provinceName = ""; //province.find('option:selected').text();
+                }
+                provinceName = provinceName.toLowerCase();
+                // detach handlers
+                niAC._detachProvinceHandlers(el, options);
+                // call delegates?
+                if (options.getProvinces.before) {
+                    options.getProvinces.before(province);
+                }
+                // if the city is free text we should also have the province be free
+                var city = el.find(options.citiesInput);
+                var cityIsFreeText =
+                    (!!options.cityIsFreeText)
+                    || (!city.is('select'));
+                if (cityIsFreeText) {
+                    // if the province input is not free text, change it
+                    if (province.is('select')) {
+                        var newInput = '<input type="text" ';
+                        for (var a = 0; a < province[0].attributes.length; a++) {
+                            newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
                         }
-                        provinceName = provinceName.toLowerCase();
-                        // detach handlers
-                        niAC._detachProvinceHandlers(el, options);
-                        // call delegates?
-                        if (options.getProvinces.before) {
-                            options.getProvinces.before(province);
-                        }
-                        if (data.Provinces && data.Provinces.length > 0) {
-                            // dropdown
-                            var newInput = '<select ';
-                            for (var a = 0; a < province[0].attributes.length; a++) {
-                                newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
-                            }
-                            newInput += '></select>';
-                            province.replaceWith(newInput);
-                            province = el.find(options.provincesInput);
-                            var provinceId = el.find(options.provinceId);
-                            // remove old values
-                            //province.empty();
-                            for (var i = 0; i < data.Provinces.length; i++) {
-                                // create a DOM option
-                                var newOption =
-                                    new Option(
-                                        data.Provinces[i].Text, //text
-                                        data.Provinces[i].Value, //value
-                                        !!data.Provinces[i].DefaultSelected, //defaultSelected
-                                        !!data.Provinces[i].Selected
-                                        || (provinceId == 0 && provinceName.length > 0 && provinceName == data.Provinces[i].Text.toLowerCase())
-                                            || data.Provinces[i].Value == provinceId); //selected
-                                province.append(newOption);
-                            }
-                        } else {
-                            // no configured province => free text
-                            var newInput = '<input type="text" ';
-                            for (var a = 0; a < province[0].attributes.length; a++) {
-                                newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
-                            }
-                            newInput += '/>';
-                            province.replaceWith(newInput);
-                            province = el.find(options.provincesInput);
-                            // set the text to the previous text
-                            province.val(provinceName);
-                            // unset the provinceId field
-                            el.find(options.provinceId).val('0');
-                        }
-                        // call delegates?
-                        if (options.getProvinces.after) {
-                            options.getProvinces.after(province);
-                        }
-                        // reattach handlers
-                        niAC._attachProvinceHandlers(el, options);
-                        // enable inputs
-                        niAC._enableAllProvince(el, options, true);
-                        // trigger change event
-                        province.trigger("change");
-                    } else {
-						// notify?
-						// retry?
+                        newInput += '/>';
+                        province.replaceWith(newInput);
+                        province = el.find(options.provincesInput);
+                        // set the text to the previous text
+                        province.val(provinceName);
+                        // unset the provinceId field
+                        el.find(options.provinceId).val('0');
                     }
+                }
+                // call delegates?
+                if (options.getProvinces.after) {
+                    options.getProvinces.after(province);
+                }
+                // reattach handlers
+                niAC._attachProvinceHandlers(el, options);
+                // enable inputs
+                niAC._enableAllProvince(el, options, cityIsFreeText);
+                // trigger change event
+                province.trigger("change");
+            } else {
+                var viewModel = {
+                    CountryId: el.find(options.countriesInput).val(),
+                    CityId: cityId,
+                    CityName: cityName, //in case city is input rather than select
+                    IsBillingAddress: options.isBilling()
+                };
+                $.post(options.getProvinces.url, {
+                    viewmodel: viewModel,
+                    __RequestVerificationToken: options.token
                 })
-                .fail(function () {
-                    // we are here when we receive an HTTP error code
-                })
-                .always(function () { });
+                    .done(function (data) {
+                        // We are here when the call returns and OK HTTP code
+                        // it still may not be successfull, so we have to check 
+                        // in the received data
+                        if (data.Success) {
+                            // province input
+                            var province = el.find(options.provincesInput);
+                            // get the text for the currently configured province
+                            var provinceName = province.val();
+                            if (province.is('select')) {
+                                // in case the input for the province is currently a select, we don't want
+                                // to necessarily carry that name to the text box we may create later
+                                // get the text for the selected option
+                                provinceName = ""; //province.find('option:selected').text();
+                            }
+                            provinceName = provinceName.toLowerCase();
+                            // detach handlers
+                            niAC._detachProvinceHandlers(el, options);
+                            // call delegates?
+                            if (options.getProvinces.before) {
+                                options.getProvinces.before(province);
+                            }
+                            if (data.Provinces && data.Provinces.length > 0) {
+                                // dropdown
+                                var newInput = '<select ';
+                                for (var a = 0; a < province[0].attributes.length; a++) {
+                                    newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
+                                }
+                                newInput += '></select>';
+                                province.replaceWith(newInput);
+                                province = el.find(options.provincesInput);
+                                var provinceId = el.find(options.provinceId);
+                                // remove old values
+                                //province.empty();
+                                for (var i = 0; i < data.Provinces.length; i++) {
+                                    // create a DOM option
+                                    var newOption =
+                                        new Option(
+                                            data.Provinces[i].Text, //text
+                                            data.Provinces[i].Value, //value
+                                            !!data.Provinces[i].DefaultSelected, //defaultSelected
+                                            !!data.Provinces[i].Selected
+                                            || (provinceId == 0 && provinceName.length > 0 && provinceName == data.Provinces[i].Text.toLowerCase())
+                                            || data.Provinces[i].Value == provinceId); //selected
+                                    province.append(newOption);
+                                }
+                            } else {
+                                // no configured province => free text
+                                var newInput = '<input type="text" ';
+                                for (var a = 0; a < province[0].attributes.length; a++) {
+                                    newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
+                                }
+                                newInput += '/>';
+                                province.replaceWith(newInput);
+                                province = el.find(options.provincesInput);
+                                // set the text to the previous text
+                                province.val(provinceName);
+                                // unset the provinceId field
+                                el.find(options.provinceId).val('0');
+                            }
+                            // call delegates?
+                            if (options.getProvinces.after) {
+                                options.getProvinces.after(province);
+                            }
+                            // reattach handlers
+                            niAC._attachProvinceHandlers(el, options);
+                            // enable inputs
+                            niAC._enableAllProvince(el, options, true);
+                            // trigger change event
+                            province.trigger("change");
+                        } else {
+                            // notify?
+                            // retry?
+                        }
+                    })
+                    .fail(function () {
+                        // we are here when we receive an HTTP error code
+                    })
+                    .always(function () { });
+            }
         }
     },
     _enableAllProvince: function (el, options, status) {
         // status is the status we want to reach:
         // true => we want to enable => we set disabled to false
-        // false => we want to disable => we set disabed to true
+        // false => we want to disable => we set disabled to true
         el.find(options.provincesInput).prop("disabled", !!!status);
         el.find(options.withProvinceSelector).prop("disabled", !!!status);
     },
@@ -498,6 +621,27 @@ $.addressConfiguration = {
          * Shipping/Billing address
          * */
         isBilling: function () { return false; },
+        /*
+         Options to configure Province
+            getProvinces
+                .cityIsRequired: prevents fetching from server if no city is selected
+                .url: url from which provinces will be read
+                .before: function (provinceInput){}
+                    this is executed before updating the province in the UI
+                .after: function (provinceInput){}
+                     this is executed after updating the province in the UI
+         */
+        /*
+         Options to configure City
+            getCities
+                .shouldLoad: function(el, options) {}
+                    tells whether the script should attempt to load cities form server
+                .url: url from which cities will be read
+                .before: function (cityInput){}
+                     this is executed before updating the city in the UI
+                .after: function (cityInput){}
+                      this is executed after updating the city in the UI
+         */
     }
 };
 $.fn.addressConfiguration = function (options) {
