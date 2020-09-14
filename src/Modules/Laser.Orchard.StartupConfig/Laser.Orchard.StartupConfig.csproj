@@ -142,16 +142,36 @@
     <None Include="Assets\laser-base.scss" />
     <Content Include="Scripts\laser-tinymce.js" />
     <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
+    <Content Include="Styles\font-awesome\css\all.css" />
+    <Content Include="Styles\font-awesome\css\all.min.css">
+      <DependentUpon>all.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\font-awesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Styles\font-awesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Styles\font-awesome\webfonts\fa-solid-900.svg" />
     <Content Include="Styles\laser-base.css" />
     <Content Include="Styles\laser-base.min.css">
       <DependentUpon>laser-base.css</DependentUpon>
     </Content>
     <Content Include="Views\EditorTemplates\Parts.Common.SummaryInfoFor_Edit.cshtml" />
     <Content Include="Assets\_colors.scss" />
+    <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Styles\font-awesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Styles\font-awesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Styles\font-awesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Styles\font-awesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Styles\font-awesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Styles\font-awesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Styles\font-awesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Styles\font-awesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Styles\font-awesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Styles\font-awesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff2" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -400,6 +420,8 @@
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
+    <Compile Include="Services\IThemeHelperService.cs" />
+    <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
