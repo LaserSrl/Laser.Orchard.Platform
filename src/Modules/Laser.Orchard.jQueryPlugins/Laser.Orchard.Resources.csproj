@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -95,6 +96,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BootstrapItalia\assets\resizer-3x2.svg" />
+    <Content Include="BootstrapItalia\assets\upload-drag-drop-icon.svg" />
+    <Content Include="BootstrapItalia\css\bootstrap-italia.min.css" />
+    <Content Include="BootstrapItalia\fonts\Lora\OFL.txt" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\LICENSE.txt" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\OFL.txt" />
+    <Content Include="BootstrapItalia\js\bootstrap-italia.bundle.min.js" />
+    <Content Include="BootstrapItalia\js\bootstrap-italia.min.js" />
+    <Content Include="BootstrapItalia\svg\sprite.svg" />
     <Content Include="Scripts\image-picker.min.js" />
     <Content Include="Scripts\jqPlot\jquery.jqplot.js" />
     <Content Include="Scripts\jqPlot\jquery.jqplot.min.js" />
@@ -158,6 +168,49 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\custom\jquery.nestedmodels.js" />
     <Content Include="packages.config" />
+    <Content Include="BootstrapItalia\css\bootstrap-italia.min.css.map" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Bold.ttf" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Bold.woff" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Bold.woff2" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Regular.ttf" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Regular.woff" />
+    <Content Include="BootstrapItalia\fonts\Lora\Lora-Regular.woff2" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Bold.ttf" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Bold.woff" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Bold.woff2" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Light.ttf" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Light.woff" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Light.woff2" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Medium.ttf" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Medium.woff" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Medium.woff2" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Regular.ttf" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Regular.woff" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Regular.woff2" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Thin.ttf" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Thin.woff" />
+    <Content Include="BootstrapItalia\fonts\Roboto_Mono\RobotoMono-Thin.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Black.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Black.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Black.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Bold.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Bold.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Bold.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-ExtraLight.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-ExtraLight.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-ExtraLight.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Light.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Light.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Light.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Regular.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Regular.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-Regular.woff2" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-SemiBold.ttf" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-SemiBold.woff" />
+    <Content Include="BootstrapItalia\fonts\Titillium_Web\TitilliumWeb-SemiBold.woff2" />
+    <Content Include="BootstrapItalia\js\bootstrap-italia.bundle.min.js.map" />
+    <Content Include="BootstrapItalia\js\bootstrap-italia.min.js.map" />
+    <Content Include="BootstrapItalia\Web.config" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

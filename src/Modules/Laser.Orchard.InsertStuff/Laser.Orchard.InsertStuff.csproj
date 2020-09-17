@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,9 +154,9 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Laser.Orchard.jQueryPlugins\Laser.Orchard.jQueryPlugins.csproj">
+    <ProjectReference Include="..\Laser.Orchard.jQueryPlugins\Laser.Orchard.Resources.csproj">
       <Project>{7a05758d-761e-4b5d-8a64-b93be5da3c93}</Project>
-      <Name>Laser.Orchard.jQueryPlugins</Name>
+      <Name>Laser.Orchard.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
