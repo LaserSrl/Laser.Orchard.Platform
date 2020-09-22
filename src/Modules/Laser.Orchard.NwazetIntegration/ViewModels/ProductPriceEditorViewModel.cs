@@ -52,7 +52,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
             // There are two different cases here: FlexibleShippingMethodPart or the others
             HasDiscount = false;
-            var rate = vatConfigurationService.GetRate(vatPart.VatConfigurationPart);
+            var rate = vatConfigurationService.GetRate(vatPart.VatConfigurationPart ?? vatConfigurationService.GetDefaultCategory());
             if (shipping is FlexibleShippingMethodPart) {
                 ShowShape = true;
                 var flexible = shipping as FlexibleShippingMethodPart;
