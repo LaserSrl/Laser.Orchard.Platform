@@ -195,9 +195,9 @@
                 </text>
             }
 
-            regularBasePrice.text(priceBaseText.replace('__PRICE__', @Model.BasePrice));
+            regularBasePrice.text(priceBaseText.replace('__PRICE__', '@Model.BasePrice'));
             @if(Model.HasDiscount && Model.DiscountPrice >= 0) {
-                <text>discountBasePrice.text(priceBaseText.replace('__PRICE__', @Model.DiscountPrice));</text>
+                <text>discountBasePrice.text(priceBaseText.replace('__PRICE__', '@Model.DiscountPrice'));</text>
             }
             UpdateHint();
         </script>
