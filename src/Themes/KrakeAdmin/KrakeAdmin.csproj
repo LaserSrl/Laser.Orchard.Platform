@@ -211,6 +211,7 @@
     <Content Include="Views\Parts.Contents.Clone.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts.Contents.Publish.SummaryAdmin.cshtml" />
     <Content Include="Views\Pager.cshtml" />
+    <Content Include="Views\Content-Order.SummaryAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminThemeOverride.cs" />
