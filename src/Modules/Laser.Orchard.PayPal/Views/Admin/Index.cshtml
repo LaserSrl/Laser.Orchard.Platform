@@ -1,0 +1,81 @@
+﻿@model Laser.Orchard.PayPal.Models.PayPalSiteSettingsPart
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <legend>@T("PayPal Setting")</legend>
+        <div>
+            <label for="@Html.FieldIdFor(m=>m.ClientId)">@T("Client Id")</label>
+            @Html.TextBoxFor(m => m.ClientId, new { @class = "text large" })
+            <span class="hint">@T("The Client Id of your PayPal account")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m=>m.SecretId)">@T("Secret Id")</label>
+            @Html.TextBoxFor(m => m.SecretId, new { @class = "text large" })
+            <span class="hint">@T("The Secret Id of your PayPal account")</span>
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.CurrencyCode)">@T("Currency Code")</label>
+            @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "text large" })
+            <span class="hint">@T("Currency code to configure the payment.")</span>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>@T("Enable Fundings")</legend>
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Card, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Card)">@T("Credit or debit cards") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Credit, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Credit)">@T("PayPal Credit") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Bancontact, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Bancontact)">@T("Bancontact") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Blik, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Blik)">@T("BLIK") </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Eps, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Eps)">@T("eps") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Giropay, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Giropay)">@T("giropay") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Ideal, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Ideal)">@T("iDEAL") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Mybank, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Mybank)">@T("MyBank") </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Przelewy, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Przelewy)">@T("Przelewy24") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Sepa, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Sepa)">@T("SEPA-Lastschrift") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Sofort, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Sofort)">@T("Sofort") </label>
+            </div>
+            <div class="col-sm-3">
+                @Html.CheckBoxFor(m => m.Venmo, new { @class = "check-box" })
+                <label class="forcheckbox" for="@Html.FieldIdFor(m => m.Venmo)">@T("Venmo") </label>
+            </div>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save")</button>
+
+}
