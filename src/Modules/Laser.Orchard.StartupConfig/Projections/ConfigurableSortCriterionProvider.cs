@@ -164,6 +164,18 @@ namespace Laser.Orchard.StartupConfig.Projections {
                     }
                 }
             }
+            if (criterion.Children.Any()) {
+                foreach (var childCriterion in criterion.Children) {
+                    if (childCriterion.IsForField()) {
+                        // order based on a field
+                        ApplyCriterionForField(context, childCriterion);
+                    }
+                    else if (childCriterion.IsForPart()) {
+                        // order based on a part's property
+                        ApplyCriterionForPart(context, childCriterion);
+                    }
+                }
+            }
         }
         #endregion
 
@@ -233,6 +245,18 @@ namespace Laser.Orchard.StartupConfig.Projections {
                 Logger.Error(
                     T("It was impossible to uniquely identify a type for {0}. Perhaps it lacks a MemberBinding configuration?", 
                     criterion.PartRecordTypeName).Text);
+            }
+            if (criterion.Children.Any()) {
+                foreach (var childCriterion in criterion.Children) {
+                    if (childCriterion.IsForField()) {
+                        // order based on a field
+                        ApplyCriterionForField(context, childCriterion);
+                    }
+                    else if (childCriterion.IsForPart()) {
+                        // order based on a part's property
+                        ApplyCriterionForPart(context, childCriterion);
+                    }
+                }
             }
         }
         #endregion
