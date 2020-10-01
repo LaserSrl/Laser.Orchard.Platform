@@ -146,7 +146,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return new List<RequestTypeInfo> {
                 new RequestTypeInfo {
                     Type = RequestTypes.Member,
-                    UrlTemplate = "lists/[list-id(replace-with-real-data}]/members/[member-id(replace-with-real-data}]",
+                    UrlTemplate = "lists/{list-id}/members/{member-id}]", //DoNot change this template! theese fake tokens are used during url generation
                     PayloadTemplate = "\"email_address\": \"hermes.sbicego@laser1.com\", "+
                                         "\"status\": \"subscribed\","+
                                         "\"merge_fields\": {\"FNAME\": \"Hermes\","+
@@ -166,7 +166,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                     UrlTemplate = "lists/{list-id}" },
                 new RequestTypeInfo {
                     Type = RequestTypes.Tags,
-                    UrlTemplate = "lists/[list-id(replace-with-real-data}]/members/[member-id(replace-with-real-data}]/tags",
+                    UrlTemplate = "lists/{list-id}/members/{member-id}/tags",
                     PayloadTemplate = "\"tags\":[{{\r\n\"name\": \"tag1\", \"status\": \"active\"\r\n}},\r\n{{\r\n\"name\": \"tag2\", \"status\": \"inactive\"\r\n}}]" }
                 };
         }
