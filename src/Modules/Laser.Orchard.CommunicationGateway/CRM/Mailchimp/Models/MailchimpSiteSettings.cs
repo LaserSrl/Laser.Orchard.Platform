@@ -14,5 +14,15 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models {
                 this.Store("ApiKey", value);
             }
         }
+
+        public string DefaultAudience {
+            get {
+                return this.Retrieve<string>("DefaultAudience");
+            }
+
+            set {
+                this.Store("DefaultAudience", value);
+            }
+        }
     }
 }

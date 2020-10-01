@@ -38,7 +38,7 @@ namespace Laser.Orchard.StartupConfig.Providers {
                 .Chain("User", "User", content => content.As<UserPart>() ?? null);
             context.For<IContent>("Content")
                 .Token("UserEmail", content => content.As<UserPart>() != null ? content.As<UserPart>().Email : null)
-                .Chain("UserEmail", "UserEmail", content => content.As<UserPart>() ?? null);
+                .Chain("UserEmail", "Text", content => content.As<UserPart>() != null ? content.As<UserPart>().Email : null);
 
 
 

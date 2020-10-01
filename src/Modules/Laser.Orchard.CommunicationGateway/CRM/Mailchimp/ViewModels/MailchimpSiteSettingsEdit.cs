@@ -6,5 +6,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels {
 
         public string NewApiKey { get; set; }
         public string ApiKey { get; set; }
+        public string DefaultAudience { get; set; }
     }
 }
