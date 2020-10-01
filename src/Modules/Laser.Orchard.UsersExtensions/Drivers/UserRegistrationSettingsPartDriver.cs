@@ -114,7 +114,7 @@ namespace Laser.Orchard.UsersExtensions.Drivers {
                 // parse everything else
                 part.PolicyTextReferences = references
                     .Skip(2) // both All and DependsOnContent are false
-                    .Select(r => $"{{{context.GetItemFromSession(r).Id.ToString()}}}")
+                    .Select(r => $"{{{(context.GetItemFromSession(r) == null ? string.Empty : context.GetItemFromSession(r).Id.ToString())}}}")
                     .ToArray();
             }
         }
