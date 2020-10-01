@@ -97,6 +97,21 @@ namespace Laser.Orchard.ZoneAlternates {
                     if (!displayedContext.ShapeMetadata.Alternates.Contains(shapeName)) {
                         displayedContext.ShapeMetadata.Alternates.Add(shapeName);
                     }
+                    string wrapperName = "Widget_Wrapper__" + zoneName;
+                    // Widget.Wrapper-[ZoneName].cshtml: "Widget.Wrapper-myZoneName.cshtml"
+                    if (!displayedContext.ShapeMetadata.Wrappers.Contains(wrapperName)) {
+                        displayedContext.ShapeMetadata.Wrappers.Add(wrapperName);
+                        // we remove the default wrapper for widgets here. The resulting behaviour will
+                        // be:
+                        // - if the alternate wrapper for the zone exists, it will be used
+                        // - if it doesn't exist, it will fall back to the default wrapper
+                        if (displayedContext.ShapeMetadata.Wrappers.Contains("Widget_Wrapper")) {
+                            displayedContext.ShapeMetadata.Wrappers.Remove("Widget_Wrapper");
+                        }
+                        if (displayedContext.ShapeMetadata.Wrappers.Contains("Widget.Wrapper")) {
+                            displayedContext.ShapeMetadata.Wrappers.Remove("Widget.Wrapper");
+                        }
+                    }
                 }
             });
         }
