@@ -149,6 +149,7 @@
     <Compile Include="CRM\Mailchimp\Services\IMailchimpService.cs" />
     <Compile Include="CRM\Mailchimp\Services\MailchimpApiService.cs" />
     <Compile Include="CRM\Mailchimp\SettingsHooks\MailchimpSubscriptionPartSettingsHooks.cs" />
+    <Compile Include="CRM\Mailchimp\Tokens\MailchimpTokens.cs" />
     <Compile Include="CRM\Mailchimp\ViewModels\APICallEdit.cs" />
     <Compile Include="CRM\Mailchimp\ViewModels\MailchimpSiteSettingsEdit.cs" />
     <Compile Include="CRM\Mailchimp\ViewModels\RequestTypeInfo.cs" />
