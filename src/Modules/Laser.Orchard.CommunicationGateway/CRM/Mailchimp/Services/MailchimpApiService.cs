@@ -146,7 +146,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return new List<RequestTypeInfo> {
                 new RequestTypeInfo {
                     Type = RequestTypes.Member,
-                    UrlTemplate = "lists/{list-id}/members/{member-id}]", //DoNot change this template! theese fake tokens are used during url generation
+                    UrlTemplate = "lists/{list-id}/members/{member-id}", //DoNot change this template! theese fake tokens are used during url generation
                     PayloadTemplate = "\"email_address\": \"hermes.sbicego@laser1.com\", "+
                                         "\"status\": \"subscribed\","+
                                         "\"merge_fields\": {\"FNAME\": \"Hermes\","+
