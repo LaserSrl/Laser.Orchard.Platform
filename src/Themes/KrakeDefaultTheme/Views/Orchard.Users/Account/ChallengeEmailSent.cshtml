@@ -1,0 +1,15 @@
+﻿@{
+    Layout.Title = Html.TitleForPage(T("Challenge Email Sent").ToString());
+}
+
+<div class="fullscreen accounts-page">
+    <div class="d-flex align-items-center">
+        @Display.ResultBox(
+            AlternativeIconClass: "fa fa-info-circle fa-4x text-info",
+            MainMessage: T("Challenge Email Sent"),
+            SubMessage: T("An email has been sent to you. Please click on the link it contains to validate your email address."),
+            ButtonLink: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? Url.Content(Request.QueryString["ReturnUrl"]) : null,
+            ButtonText: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? T("Go back") : null
+       )
+    </div>
+</div>
