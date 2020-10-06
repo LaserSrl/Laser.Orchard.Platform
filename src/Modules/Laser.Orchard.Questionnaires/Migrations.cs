@@ -319,5 +319,13 @@ namespace Laser.Orchard.Questionnaires {
             SchemaBuilder.AlterTable("AnswerRecord", t => t.DropColumn("Identifier"));
             return 32;
         }
+
+        public int UpdateFrom32() {
+            SchemaBuilder
+                // string properties are the same length as those in UserAnswersRecord
+                .AlterTable("UserAnswerInstanceRecord", t => 
+                    t.AlterColumn("SessionID", col => col.WithType(System.Data.DbType.String).WithLength(400)));
+            return 33;
+        }
     }
 }

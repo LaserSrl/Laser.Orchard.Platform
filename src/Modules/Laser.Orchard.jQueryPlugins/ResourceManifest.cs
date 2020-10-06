@@ -89,6 +89,12 @@ namespace Laser.Orchard.jQueryPlugins {
 
             manifest.DefineStyle("Select2")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css");
+
+            // Bootstrap Italia
+            manifest.DefineStyle("BootstrapItalia")
+                .SetUrl("../BootstrapItalia/css/bootstrap-italia.min.css");
+            manifest.DefineScript("BootstrapItalia")
+                .SetUrl("../BootstrapItalia/js/bootstrap-italia.bundle.min.js");
         }
     }
 }

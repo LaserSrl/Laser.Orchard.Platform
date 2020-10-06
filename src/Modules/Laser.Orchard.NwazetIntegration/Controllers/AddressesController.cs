@@ -326,6 +326,27 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return Json(new List<string>());
         }
 
+
+        [HttpGet]
+        [ActionName("citiesapi")]
+        public JsonResult GetCities(string query, int countryId, bool isBillingAddress) {
+            var country = _addressConfigurationService.GetCountry(countryId);
+            if (country != null) {
+                var cities = _addressConfigurationService.GetAllCities(
+                    isBillingAddress
+                        ? AddressRecordType.BillingAddress
+                        : AddressRecordType.ShippingAddress,
+                    country,
+                    query);
+
+                return Json(cities.Select(tp => new TerritoryTag {
+                    Label = tp.As<TitlePart>().Title,
+                    Value = tp.Record.TerritoryInternalRecord.Id.ToString()
+                }), JsonRequestBehavior.AllowGet);
+            }
+            return Json(new List<TerritoryTag>(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GetProvinces(ConfigurationRequestViewModel viewModel) {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
@@ -383,12 +404,30 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 }
             }
 
+            var cityId = address.CityId;
+            if (cityId <= 0 && !string.IsNullOrWhiteSpace(address.City)) {
+                var tp = _addressConfigurationService.GetCity(address.City);
+                if (tp != null) {
+                    cityId = tp.Record.TerritoryInternalRecord.Id;
+                }
+            }
+
+            var provinceId = address.ProvinceId;
+            if (provinceId <= 0 && !string.IsNullOrWhiteSpace(address.Province)) {
+                var tp = _addressConfigurationService.GetProvince(address.Province);
+                if (tp != null) {
+                    provinceId = tp.Record.TerritoryInternalRecord.Id;
+                }
+            }
+
             return new AddressEditViewModel(address) {
                 Countries = _addressConfigurationService
                     .CountryOptions(address.AddressType, countryId),
                 ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress),
                 BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress),
-                CountryId = countryId
+                CountryId = countryId,
+                CityId = cityId,
+                ProvinceId = provinceId
             };
         }
 

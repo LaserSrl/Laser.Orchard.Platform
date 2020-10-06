@@ -29,13 +29,15 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
         protected override DriverResult Editor(MailchimpSiteSettings part, IUpdateModel updater, dynamic shapeHelper) {
             return ContentShape("Parts_MailchimpSiteSettings_Edit", () => {
                 var model = new MailchimpSiteSettingsEdit {
-                    ApiKey = part.ApiKey
+                    ApiKey = part.ApiKey,
+                    DefaultAudience = part.DefaultAudience
                 };
                 if (updater != null) {
                     updater.TryUpdateModel(model, Prefix, null, null);
                     if (!string.IsNullOrWhiteSpace(model.NewApiKey)) {
                         part.ApiKey = _service.CryptApiKey(model.NewApiKey);
                     }
+                    part.DefaultAudience = model.DefaultAudience;
                 }
                 return shapeHelper.EditorTemplate(TemplateName: TemplateName, Model: model, Prefix: Prefix);
             }).OnGroup("Mailchimp");

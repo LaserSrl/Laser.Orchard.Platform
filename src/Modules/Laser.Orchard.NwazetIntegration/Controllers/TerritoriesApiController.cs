@@ -1,4 +1,6 @@
-﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.ViewModels;
 using Nwazet.Commerce.Models;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
@@ -14,13 +16,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
     public class TerritoriesApiController : ApiController {
         private readonly IContentManager _contentManager;
         private readonly IAuthorizer _authorizer;
+        private readonly IAddressConfigurationService _addressConfigurationService;
 
         public TerritoriesApiController(
             IContentManager contentManager,
-            IAuthorizer authorizer) {
+            IAuthorizer authorizer,
+            IAddressConfigurationService addressConfigurationService) {
 
             _contentManager = contentManager;
             _authorizer = authorizer;
+            _addressConfigurationService = addressConfigurationService;
 
             T = NullLocalizer.Instance;
         }
@@ -49,5 +54,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             return new List<TerritoryTag>();
         }
+
     }
 }

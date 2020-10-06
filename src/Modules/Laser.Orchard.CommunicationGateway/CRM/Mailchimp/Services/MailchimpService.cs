@@ -12,7 +12,9 @@ using Orchard.Security;
 using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
@@ -80,6 +82,22 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 }
             }
             
+        }
+
+        public string ComputeSubscriberHash(string input) {
+            // Mailchimp expect the input to be lowercase
+            input = input.ToLower(CultureInfo.InvariantCulture);
+            // step 1, calculate MD5 hash from input
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++) {
+                sb.Append(hash[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
 
         private IEnumerable<PolicyAnswer> TryFindPolicyAnswers(MailchimpSubscriptionPart part) {
