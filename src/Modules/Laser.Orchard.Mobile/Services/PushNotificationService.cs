@@ -144,7 +144,7 @@ namespace Laser.Orchard.Mobile.Services {
         #region [CRUD PushNotification]
 
         public void StorePushNotification(PushNotificationRecord pushElement) {
-            PushNotificationRecord oldPush = _pushNotificationRepository.Fetch(x => (x.UUIdentifier == pushElement.UUIdentifier || x.Token == pushElement.Token) && x.Produzione == pushElement.Produzione && x.Device == pushElement.Device).FirstOrDefault();
+            PushNotificationRecord oldPush = _pushNotificationRepository.Fetch(x => (x.UUIdentifier == pushElement.UUIdentifier || x.Token == pushElement.Token) && x.Produzione == pushElement.Produzione).FirstOrDefault();
             DateTime adesso = DateTime.Now;
             string oldUUId = "";
             if (oldPush != null) { // se dispositivo già registrato sovrascrivo lo stesso record

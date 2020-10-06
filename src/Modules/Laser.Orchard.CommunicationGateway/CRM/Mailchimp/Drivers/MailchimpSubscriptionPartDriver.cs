@@ -6,14 +6,18 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Orchard.Users.Models;
 using System.Linq;
+using Orchard.Tokens;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartDriver : ContentPartDriver<MailchimpSubscriptionPart> {
         private readonly IMailchimpApiService _service;
+        private readonly ITokenizer _tokenizer;
 
-        public MailchimpSubscriptionPartDriver(IMailchimpApiService service) {
+
+        public MailchimpSubscriptionPartDriver(IMailchimpApiService service, ITokenizer tokenizer) {
             _service = service;
+            _tokenizer = tokenizer;
         }
         protected override string Prefix => "MailchimpSubscription";
 
@@ -26,15 +30,16 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
         protected override DriverResult Editor(MailchimpSubscriptionPart part, IUpdateModel updater, dynamic shapeHelper) {
             var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
             SelectableAudience selectableAudience ;
-            if (string.IsNullOrWhiteSpace(settings.AudienceId)) {
+            var audienceId = _tokenizer.Replace(settings.AudienceId, new { Content = part.ContentItem });
+            if (string.IsNullOrWhiteSpace(audienceId)) {
                 selectableAudience = new SelectableAudience();
             }
             else {
                 var subscription = part.Subscription;
-                if (subscription.Audience == null || settings.AudienceId != subscription.Audience?.Identifier) {
-                    var audience = _service.Audience(settings.AudienceId);
+                if (subscription.Audience == null || audienceId != subscription.Audience?.Identifier) {
+                    var audience = _service.Audience(audienceId);
                     selectableAudience = new SelectableAudience {
-                        Audience = new Audience { Identifier = settings.AudienceId, Name = audience.Name },
+                        Audience = new Audience { Identifier = audienceId, Name = audience.Name },
                         Selected = !part.Is<UserPart>(),
                         RequiredPolicies = settings.PolicyTextReferencesToArray()
                     };

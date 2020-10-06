@@ -143,6 +143,8 @@ namespace Laser.Orchard.Mobile.Drivers {
             var _list = new List<SelectListItem>();
             if(string.IsNullOrWhiteSpace(pushSettings.AndroidApiKey) == false) {
                 _list.Add(new SelectListItem() { Value = TipoDispositivo.Android.ToString(), Text = TipoDispositivo.Android.ToString() });
+                _list.Add(new SelectListItem() { Value = TipoDispositivo.AppleFCM.ToString(), Text = TipoDispositivo.AppleFCM.ToString() });
+
             }
             if (string.IsNullOrWhiteSpace(pushSettings.ApplePathCertificateFile) == false) {
                 _list.Add(new SelectListItem() { Value = TipoDispositivo.Apple.ToString(), Text = TipoDispositivo.Apple.ToString() });

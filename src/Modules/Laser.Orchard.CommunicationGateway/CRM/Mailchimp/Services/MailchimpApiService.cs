@@ -81,9 +81,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             var syncronized = false;
             var urlTokens = new Dictionary<string, string> {
                 { "{list-id}",sub.Audience.Identifier},
-                { "{member-id}",CalculateMD5HashOfLowerCase(memberEmail) }
+                { "{member-id}",_mailchimpService.ComputeSubscriberHash(memberEmail) }
             };
-            string  result = "";
+            string result = "";
             if (sub.Subscribed) {
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 JObject body = JObject.Parse(putPayload ?? "{}");
@@ -108,7 +108,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                     response = httpClient.PutAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
                 }
                 else if (httpVerb == HttpVerbs.Post) {
-                    response = httpClient.PutAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
+                    response = httpClient.PostAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
                 }
                 else if (httpVerb == HttpVerbs.Delete) {
                     response = httpClient.DeleteAsync(new Uri(requestUrl)).Result;
@@ -146,7 +146,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return new List<RequestTypeInfo> {
                 new RequestTypeInfo {
                     Type = RequestTypes.Member,
-                    UrlTemplate = "lists/{list-id}/members/{member-id}",
+                    UrlTemplate = "lists/{list-id}/members/{member-id}", //DoNot change this template! theese fake tokens are used during url generation
                     PayloadTemplate = "\"email_address\": \"hermes.sbicego@laser1.com\", "+
                                         "\"status\": \"subscribed\","+
                                         "\"merge_fields\": {\"FNAME\": \"Hermes\","+
@@ -163,7 +163,11 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                     UrlTemplate ="lists/" },
                 new RequestTypeInfo {
                     Type = RequestTypes.List,
-                    UrlTemplate = "lists/{list-id}" }
+                    UrlTemplate = "lists/{list-id}" },
+                new RequestTypeInfo {
+                    Type = RequestTypes.Tags,
+                    UrlTemplate = "lists/{list-id}/members/{member-id}/tags",
+                    PayloadTemplate = "\"tags\":[{{\r\n\"name\": \"tag1\", \"status\": \"active\"\r\n}},\r\n{{\r\n\"name\": \"tag2\", \"status\": \"inactive\"\r\n}}]" }
                 };
         }
 
@@ -195,21 +199,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             };
         }
 
-        private string CalculateMD5HashOfLowerCase(string input) {
-            // Mailchimp expect the input to be lowercase
-            input = input.ToLower(CultureInfo.InvariantCulture);
-            // step 1, calculate MD5 hash from input
-            MD5 md5 = MD5.Create();
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-
-            // step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++) {
-                sb.Append(hash[i].ToString("x2"));
-            }
-            return sb.ToString();
-        }
         private void SetHeader(HttpClient client) {
             client.DefaultRequestHeaders.Add("Authorization", "Basic " + GetBase64AuthenticationToken());
         }

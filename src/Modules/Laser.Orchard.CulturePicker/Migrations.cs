@@ -3,9 +3,19 @@ using Orchard.Core.Contents.Extensions;
 using Laser.Orchard.CulturePicker.Models;
 using Orchard.Data.Migration;
 using System.Collections.Generic;
+using Orchard.ContentManagement;
+using Orchard.Core.Common.Models;
+using System;
+using System.Linq;
 
 namespace Laser.Orchard.CulturePicker {
     public class Migrations : DataMigrationImpl {
+        private readonly IContentManager _contentManager;
+
+        public Migrations(IContentManager contentManager) {
+            _contentManager = contentManager;
+        }
+
 
         public int Create() {
             ContentDefinitionManager.AlterPartDefinition(typeof (CulturePickerPart).Name, cfg => cfg
@@ -45,7 +55,19 @@ namespace Laser.Orchard.CulturePicker {
             return 3;
         }
 
-        
+        public int UpdateFrom3() {
+            ContentDefinitionManager.AlterTypeDefinition("CulturePickerWidget", cfg => cfg
+                .WithPart("IdentityPart"));
+
+            var query = _contentManager.Query().ForType("CulturePickerWidget");
+            foreach (var item in query.List().Where(ci=>ci.As<IdentityPart>() != null)) {
+                if (string.IsNullOrEmpty(item.As<IdentityPart>().Identifier)) {
+                    item.As<IdentityPart>().Identifier = Guid.NewGuid().ToString("n");
+                }
+            }
+
+            return 4;
+        }    
 
     }
 }
