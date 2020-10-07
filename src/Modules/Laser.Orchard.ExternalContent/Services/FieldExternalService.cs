@@ -379,7 +379,11 @@ namespace Laser.Orchard.ExternalContent.Services {
                 string mytemplate = File.ReadAllText(myfile);
                 string myfile2 = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\common.cshtml";
                 if (System.IO.File.Exists(myfile2)) {
-                    mytemplate = File.ReadAllText(myfile2) + mytemplate; ;
+                    mytemplate = File.ReadAllText(myfile2) + mytemplate;
+
+                    // add the date of common.cshtml to the key, to update the file even if only the common has changed and not just the file
+                    DateTime d2 = System.IO.File.GetLastWriteTime(myfile2);
+                    key += d2.ToShortDateString() + d2.ToLongTimeString();
                 }
                 if (!string.IsNullOrEmpty(mytemplate)) {
                     var docwww = XDocument.Parse(xmlpage);
