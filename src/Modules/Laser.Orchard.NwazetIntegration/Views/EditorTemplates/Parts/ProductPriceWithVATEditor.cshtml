@@ -133,7 +133,7 @@
                 var tPrice = regularTaxedPrice.val();
                 if (TestIsFloat(tPrice)) {
 
-                    var value = ComputTaxable(parseFloat(tPrice));
+                    var value = ComputTaxable(parseFloat(tPrice.replace('@decimalSeparator', '.')));
                     var v = value.toString().replace('.', '@decimalSeparator');
                     regularBasePrice.text(priceBaseText.replace('__PRICE__', v));
                     originalPrice.val(v);
@@ -146,7 +146,7 @@
                     // discounted prices
                     var tPrice = discountTaxedPrice.val();
                     if (TestIsFloat(tPrice)) {
-                        var value = ComputTaxable(parseFloat(tPrice));
+                        var value = ComputTaxable(parseFloat(tPrice.replace('@decimalSeparator', '.')));
                         if (value < 0) {
                             discountBasePrice.text('');
                             discountPrice.val('');
