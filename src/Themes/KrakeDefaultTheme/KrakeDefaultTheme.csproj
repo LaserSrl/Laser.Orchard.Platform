@@ -322,6 +322,12 @@
   <ItemGroup>
     <Content Include="Views\Orchard.Users\Account\ChangePasswordSuccess.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orchard.Users\Account\LostPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PasswordChangeForm.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
