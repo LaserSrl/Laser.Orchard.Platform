@@ -1,0 +1,44 @@
+﻿@{
+    /*
+    Call this as:
+        @Display.ResultBox(
+            AlternativeIconClass: string,           //Css class to use to change the icon with fontawesome. Default one is a success icon.
+            MainMessage: string,                    //The main message shown in the box
+            SubMessage: string,                     //The detail message shown in the box
+            ButtonLink: string,                     //The url of the button
+            ButtonText: string                      //The message of the button
+        )
+    */
+
+    var iconClass = "mb0 align-self-center d-flex mr-3";
+
+    if (Model.AlternativeIconClass != null) {
+        iconClass = Model.AlternativeIconClass + " " + iconClass;
+    }
+    else {
+        iconClass = "fa fa-check fa-4x text-success " + iconClass;
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <div class="text-center col-padding-low">
+            <div class="media border border-secondary rounded p-4">
+                <i class="@iconClass"></i>
+                <div class="media-body">
+                    <h4 class="mb20 mb-1">
+                        @Model.MainMessage
+                    </h4>
+                    @if (Model.SubMessage != null) {
+                        <div class="account-links">
+                            <p>@Model.SubMessage</p>
+                        </div>
+                    }
+                    @if (Model.ButtonLink != null && Model.ButtonText != null) {
+                        <a href='@Model.ButtonLink' class='btn btn-primary'>@Model.ButtonText</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
