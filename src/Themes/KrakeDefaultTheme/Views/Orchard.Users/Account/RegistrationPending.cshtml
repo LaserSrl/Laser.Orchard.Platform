@@ -1,0 +1,15 @@
+﻿@{
+    Layout.Title = Html.TitleForPage(T("User Registration Pending").ToString());
+}
+
+<div class="fullscreen accounts-page">
+    <div class="d-flex align-items-center">
+        @Display.ResultBox(
+            AlternativeIconClass: "fa fa-exclamation-triangle fa-4x text-warning",
+            MainMessage: T("User Registration Pending"),
+            SubMessage: T("Your user account has been created but has to be approved before it can be used."),
+            ButtonLink: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? Url.Content(Request.QueryString["ReturnUrl"]) : null,
+            ButtonText: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? T("Go back") : null
+       )
+    </div>
+</div>

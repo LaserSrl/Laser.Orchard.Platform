@@ -1,0 +1,16 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Users.Models;
+@{
+    Layout.Title = Html.TitleForPage(T("Challenge Email").ToString());
+    var moderationEnabled = WorkContext.CurrentSite.As<RegistrationSettingsPart>().UsersAreModerated;
+}
+
+<div class="fullscreen accounts-page">
+    <div class="d-flex align-items-center">
+        @Display.ResultBox(
+            MainMessage: moderationEnabled ? T("Your email address has been validated. You will receive an email when your user is approved."): T("Your email address has been validated."),
+            ButtonLink: moderationEnabled ? null : Url.Action("LogOn", new { Controller = "Account", Area = "Orchard.Users" }),
+            ButtonText: T("Sign in")
+       )
+    </div>
+</div>
