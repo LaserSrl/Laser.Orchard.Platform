@@ -44,6 +44,7 @@ namespace Laser.Orchard.Braintree.Controllers {
         /// <param name="pid">Payment ID</param>
         /// <returns></returns>
         [Themed]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(int pid = 0, string guid = "") {
             PaymentRecord payment;
             if (pid > 0) {

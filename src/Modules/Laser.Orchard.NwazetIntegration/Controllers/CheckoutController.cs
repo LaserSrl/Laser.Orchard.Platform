@@ -110,6 +110,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
         }
 
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CheckoutStart() {
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
@@ -125,6 +126,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return RedirectToAction("Index");
         }
 
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(CheckoutViewModel model) {
             // This will be the entry point for the checkout process.
             // This method should probably have parameters to handle displaying its form
@@ -211,6 +213,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpPost, ActionName("Index")]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult IndexPOST(CheckoutViewModel model) {
             // Depending on whether shipping is required or not, the validation of what has been
             // input changes, because if there is no shipping there's no need for the shipping
@@ -298,6 +301,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return RedirectToAction("Review");
         }
 
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Shipping(CheckoutViewModel model) {
             // In this step the user will select the shipping method from a list
             var user = _workContextAccessor.GetContext().CurrentUser;
@@ -391,6 +395,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpPost, ActionName("Shipping")]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ShippingPOST(CheckoutViewModel model) {
             // validate the choice of shipping method then redirect to the action that lets
             // the user review their order.
@@ -426,6 +431,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return RedirectToAction("Review");
         }
 
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Review(CheckoutViewModel model) {
             // In this step the user will be able to review their order, and finally go ahead
             // and finalize. We may want to have a null payment provider for free stuff?
@@ -472,6 +478,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpPost, ActionName("Review")]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ReviewPOST(CheckoutViewModel model) {
             // redirect the user to their payment method of choice
             // is there any validation that should be happening here?
