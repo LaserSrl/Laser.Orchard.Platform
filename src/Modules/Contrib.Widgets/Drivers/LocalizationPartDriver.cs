@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Contrib.Widgets.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.ContentManagement.Handlers;
 using Orchard.Localization.Models;
-using Orchard.Localization.Services;
-using Orchard.Localization.ViewModels;
 
-namespace Contrib.Widgets.Drivers {
+namespace Contrib.Widgets.Drivers
+{
     public class LocalizationPartDriver : ContentPartDriver<LocalizationPart> {
         private const string TemplatePrefix = "Contrib.Widget";
         private readonly IContentManager _contentManager;
         private readonly IWorkContextAccessor _workContext;
-
         public LocalizationPartDriver(IContentManager contentManager, IWorkContextAccessor workContext) {
             _contentManager = contentManager;
             _workContext = workContext;

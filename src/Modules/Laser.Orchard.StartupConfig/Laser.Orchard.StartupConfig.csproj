@@ -404,12 +404,17 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
+    <Compile Include="Drivers\PerItemCachePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
+    <Compile Include="Handlers\PerItemCachePartHandler.cs" />
+    <Compile Include="Models\PerItemCachePart.cs" />
+    <Compile Include="Models\PerItemCachePartSettings.cs" />
+    <Compile Include="Permission\PerItemCachePermission.cs" />
     <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
     <Compile Include="Handlers\EnsureAsFrontEndInvisiblePartHandler.cs" />
     <Compile Include="MediaExtensions\UserFolder\Drivers\OwnedFolderPartDriver.cs" />
@@ -458,6 +463,7 @@
     <Compile Include="Settings\DisplayTextPartSettingsHooks.cs" />
     <Compile Include="Settings\JsonDataTablePartSettingsHooks.cs" />
     <Compile Include="Settings\IdentityPartOnEveryTypeDefinitionHooks.cs" />
+    <Compile Include="Settings\PerItemCachePartSettingsEvents.cs" />
     <Compile Include="TaxonomiesExtensions\Drivers\TaxonomyExtensionPartDriver.cs" />
     <Compile Include="Controllers\UsersGroupsSettingsController.cs" />
     <Compile Include="Drivers\UsersGroupsDriver.cs" />
@@ -670,6 +676,8 @@
     <Content Include="Views\FrontEndClientStorage\Index.cshtml" />
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
+    <Content Include="Views\DefinitionTemplates\PerItemCachePartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PerItemCachePart_Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

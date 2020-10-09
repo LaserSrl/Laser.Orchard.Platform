@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -165,6 +166,7 @@
     <Compile Include="Services\EventsService.cs" />
     <Compile Include="Services\IEventsService.cs" />
     <Compile Include="Settings\ActivityPartSettingsHooks.cs" />
+    <Compile Include="Tokens\ActivityPartTokens.cs" />
     <Compile Include="Tokens\EventTokens.cs" />
     <Compile Include="ViewModels\ActivityViewModel.cs" />
     <Compile Include="ViewModels\AggregatedEventViewModel.cs" />

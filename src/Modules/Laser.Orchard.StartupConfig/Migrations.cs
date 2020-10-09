@@ -269,4 +269,21 @@ namespace Laser.Orchard.StartupConfig {
             return 1;
         }
     }
+
+    [OrchardFeature("Laser.Orchard.StartupConfig.PerItemCache")]
+    public class MigrationPerItemCache : DataMigrationImpl {
+        public int Create() {
+                SchemaBuilder.CreateTable("PerItemCachePartRecord",
+                 table => table
+                    .ContentPartVersionRecord()
+                    .Column<string>("PerItemKeyParam", column => column.WithLength(1024))
+                );
+
+                ContentDefinitionManager.AlterPartDefinition("PerItemCachePart", p => p.Attachable(true));
+            return 1;
+        }
+    }
+
+
+
 }
