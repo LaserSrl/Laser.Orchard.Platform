@@ -34,7 +34,15 @@
 @using (Script.Head()) {
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#applyFiltersButton').click(
+                function (e) {
+                    var newOption = new Option("None", "0", false, true);
+                    if ($('#termsResults').find(':selected').length == 0) {
+                        $('#termsResults').append(newOption).trigger('change');
+                    }
+                });
             $('#termsResults').select2({
+                allowClear: true,
                 placeholder: '@T("any (show all)")'
             });
             var aft = $("input[name=__RequestVerificationToken]:first").val();
@@ -131,7 +139,7 @@
 @using (Script.Foot()) {
 
     <script type="text/javascript">
-        function removeFilterAndReload(index) {
+        function removeFilterAndReload(sender, index) {
             //each filter is hardcoded to a case statement. This is rather ugly.
             switch (index) {
                 case 0:
@@ -150,7 +158,12 @@
                     document.getElementById("languageUntranslatedResults").value = "0";
                     break;
                 case 5:
-                    document.getElementById("termsResults").value = "0";
+                    var listOfvalues = $("#termsResults").val();
+                    var remove_Item = $(sender).data("target");
+                    listOfvalues = $.grep(listOfvalues, function (value) {
+                        return value != remove_Item;
+                    });
+                    $("#termsResults").val(listOfvalues);
                     break;
                 case 6:
                     document.getElementById("ownerResults").value = "";
@@ -195,9 +208,9 @@
     </script>
 }
 
-@helper FilterActiveTag(int filter, string text) {
+@helper FilterActiveTag(int filter, string text, string target="") {
     <li>
-        <a href="javascript:void(0)" onclick="removeFilterAndReload(@filter)" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
+        <a href="javascript:void(0)" onclick="removeFilterAndReload(this, @filter)" data-target="@target" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
             @text <i class="fa fa-times"></i>
         </a>
     </li>
@@ -271,7 +284,7 @@
                         @if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
                             if (Model.AdvancedOptions.SelectedTermIds != null) {
                                 foreach (var term in Model.AdvancedOptions.SelectedTermIds) {
-                                    @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString());
+                                    @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString(), term.ToString());
                                 }
                             }
                         }
@@ -415,7 +428,7 @@
                                                     @Html.Raw("<optgroup label=\"" + (string)taxOption.Value + "\">");
                                                 }
                                                 else {
-                                        <option value="@taxOption.Key.ToString()" @(Model.AdvancedOptions.SelectedTermIds!=null && Model.AdvancedOptions.SelectedTermIds.Contains(taxOption.Key)?"selected=\"selected\"":"")>@taxOption.Value</option>
+                                                    <option value="@taxOption.Key.ToString()" @(Model.AdvancedOptions.SelectedTermIds != null && Model.AdvancedOptions.SelectedTermIds.Contains(taxOption.Key) ? "selected=\"selected\"" : "")>@taxOption.Value</option>
                                                 }
                                             }
                                             if (optgroupinserted > 0) {

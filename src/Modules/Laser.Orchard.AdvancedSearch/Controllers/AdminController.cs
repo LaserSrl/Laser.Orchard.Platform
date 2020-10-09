@@ -275,8 +275,14 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                                         GetListableTypes(false);
 
             foreach (var ct in listContentTypes) {
-                var taxFields = _contentDefinitionService.GetType(ct.Name).Fields.Where(w =>
-                    w._Definition.FieldDefinition.Name == "TaxonomyField");
+                var contentType = _contentDefinitionService.GetType(ct.Name);
+                var taxFields = contentType.Fields.Where(w =>
+                    w._Definition.FieldDefinition.Name == "TaxonomyField").ToList(); //TaxonomyFields within the content
+                var taxPartFields = contentType.Parts
+                    /*.Where(w => w._Definition.PartDefinition.Fields.Any(x => x.Name == "TaxonomyField"))*/
+                    .SelectMany(x => x.PartDefinition.Fields).Where(x => x.FieldDefinition.Name == "TaxonomyField"); //TaxonomyFields within the parts of the content
+                taxFields.AddRange(taxPartFields);
+
                 foreach (var tf in taxFields) {
                     var taxName = tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy;
                     if (string.IsNullOrWhiteSpace(taxName)) {
@@ -554,7 +560,9 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 routeValues["AdvancedOptions.SelectedLanguageId"] = advancedOptions.SelectedLanguageId; //todo: don't hard-code the key
                 routeValues["AdvancedOptions.SelectedUntranslatedLanguageId"] = advancedOptions.SelectedUntranslatedLanguageId; //todo: don't hard-code the key
                 for (int i = 0; i < (advancedOptions.SelectedTermIds != null ? advancedOptions.SelectedTermIds.Count() : 0); i++) {
-                    routeValues.Add("AdvancedOptions.SelectedTermIds[" + i + "]", advancedOptions.SelectedTermIds[i]); //todo: don't hard-code the key
+                    if (advancedOptions.SelectedTermIds[i] > 0) {
+                        routeValues.Add("AdvancedOptions.SelectedTermIds[" + i + "]", advancedOptions.SelectedTermIds[i]); //todo: don't hard-code the key
+                    }
                 }
                 //condition to add the owner to the query string only if we are not going to ignore it anyway
                 if (    //user may see everything
