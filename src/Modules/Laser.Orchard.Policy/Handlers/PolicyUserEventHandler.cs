@@ -20,7 +20,7 @@ namespace Laser.Orchard.Policy.Handlers {
 
         public void LoggedIn(IUser user) {
             try {
-                var policy = _policyService.GetPoliciesForUserOrSession(true); // attacca il cookie delle policy quando un utente si logga
+                var policy = _policyService.GetPoliciesForCurrentUser(true); // attacca il cookie delle policy quando un utente si logga
             } catch { }
         }
 

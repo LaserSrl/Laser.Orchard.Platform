@@ -70,47 +70,11 @@
                             var content = $(template);
                             $(thumbContainerSelector + ' ul').append(content);
                         }
-                    
-                        //refreshIds();
-
-                        //if (selectedData.length) {
-                        //    showSaveMsg();
-                        //}
                     }
                 });
             }
 
         }
-        @*        window.addEventListener("message", receiveMessage, false);
-        function removeFile(testo, el, idtextare) {
-            document.getElementById(idtextare).value = document.getElementById(idtextare).value.replace(testo, '');
-            el.parentNode.parentNode.setAttribute('style', 'display:none');
-        }
-        function receiveMessage(event) {
-                elemento = event.data.Valore1;
-                document.getElementById(event.data.FieldID).value += elemento;
-                var referenceNode = document.getElementById(event.data.FieldID).nextElementSibling.firstChild;
-                var newNode = document.createElement('tr');
-                //  newNode.className = "table-row";
-                var col1 = document.createElement('td');
-                //col1.className = "table-col";
-                var linknode = document.createElement('a');
-
-                linknode.href = '@Href("~")orders/Checkout/GetTicketFile?path=' + elemento.replace('|[{}]|', '');
-                          linknode.text = (elemento.substring(elemento.lastIndexOf('/') + 1)).replace('|[{}]|', '');
-                          col1.appendChild(linknode);
-                          var buttonremove = document.createElement("button");
-                          buttonremove.setAttribute('type', 'button');
-                          buttonremove.innerHTML = '@T("Remove")';
-                buttonremove.className = "primaryAction";
-                buttonremove.setAttribute('onclick', "removeFile('" + elemento + "', this,'" + event.data.FieldID + "');");
-                var col2 = document.createElement('td');
-                col2.className = "col25";
-                col2.appendChild(buttonremove);
-                newNode.appendChild(col1);
-                newNode.appendChild(col2);
-                referenceNode.parentNode.insertBefore(newNode, referenceNode.parentNode.lastElementChild);
-        }*@
         //]]>
     </script>
           
@@ -123,7 +87,6 @@
         };
         function TestQuestionNumber() {
             if (@TempData["QuestionsLimitsNumber"]>0){
-                //  var numitems = $('div.j_question').size();
                 var numitems = $('#j_menuquestion li').size();
                 if (numitems >= @TempData["QuestionsLimitsNumber"]) {
                     $("#AddQuestionButton").hide();
@@ -236,12 +199,6 @@
         @Html.EditorFor(m => m.UseRecaptcha)
         <label for="@Html.FieldIdFor(m => m.UseRecaptcha)" class="forcheckbox">@T("Use recaptcha")</label>
     </div>
-    @*Campi non più ultilizzati*@
-@*    <div>@Html.EditorFor(m => m.MustAcceptTerms)
-        <label for="@Html.FieldIdFor(m => m.MustAcceptTerms)" class="forcheckbox">@T("Must accept terms and conditions")</label>
-    </div>
-    <label for="@Html.FieldIdFor(m => m.TermsText)">@T("Terms and conditions text")</label>
-    @Html.TextAreaFor(m => m.TermsText, 25, 80, new { @class = "html tinymce" })*@
     <br />
     <p id="AddQuestionButton">
         <i class="fa fa-plus" style="color: green"></i>@Html.LinkToAddNestedForm(x => x.Questions, T("Add Question").Text, "#questions", ".j_question", "question", null, "TestQuestionNumber(); ScriviMenuTab();")
@@ -255,17 +212,11 @@
 </fieldset>
 
 @using (Script.Foot()) {
-@*     @Html.MakeSortableTab("#questions", ".position-field");*@
     <script type="text/javascript">
-
-
         $('div.j_question').each(function () {
             var condizione_value = $(this).find(".j_condizione").val();
             var lista_condizione_value = condizione_value.split(' ');
             var testo = "<select multiple='multiple' class='multis'>";
-            //numdom++;
-            //var iddomanda ="#QuestionNum_"+ $(this).find(".j_iddomanda").val();
-            //menutab += "<li><a href='"+iddomanda+"'>" + numdom + "</a></li>";
             $('div.j_question').each(function () {
 
                 testo = testo + "<optgroup label=\"" + $(this).find('textarea.domanda')[0].value + "\">";

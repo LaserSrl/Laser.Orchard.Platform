@@ -1,7 +1,9 @@
-﻿@using Orchard.Environment.Configuration;
+﻿@using Orchard.ContentManagement;
+@using Orchard.Environment.Configuration;
 @using Orchard.Projections.Services;
 @using Orchard.Taxonomies.Fields;
 @using Orchard.Taxonomies.Services;
+@using Orchard.Mvc.Html;
 @{
     int page = 1;
     int pageSize = Model.ContentItem.ProjectionPart.Record.Items;
@@ -37,12 +39,14 @@
     <div id="showcase-slider">
         @foreach (var item in queryItems) {
             var resulted = (dynamic)item;
+            var contentItem = (ContentItem)item;
             <div class="showcase-item">
                 <div class="row">
                     <div class="col-xs-12 col-md-5 col-lg-4 showcase-item-img">
                         <div class="showcase-item-logo">
-                            <a href="@resulted.AutoroutePart.Path">
-                                <img width="113" height="109" src="@resulted.Prodotto.Logo.FirstMediaUrl" class="img-responsive wp-post-image" alt="@resulted.Prodotto.TitlePart.Title.ToLower()" /></a>
+                            <a href="@Url.ItemDisplayUrl(contentItem)">
+                                <img width="113" height="109" src="@resulted.Prodotto.Logo.FirstMediaUrl" class="img-responsive wp-post-image" alt="@resulted.Prodotto.TitlePart.Title.ToLower()" />
+                            </a>
                         </div>
                         <div class="showcase-perspective">
                             <img src="@resulted.Prodotto.Gallery.FirstMediaUrl" class="img-responsive perspective-layer">
@@ -52,12 +56,12 @@
                                     <h5 class="category-layer-title">@tipo.Name</h5>
                                 </div>
                             }
-                            <a href="@resulted.AutoroutePart.Path" class="showcase-plus-link">+</a>
+                            <a href="@Url.ItemDisplayUrl(contentItem)" class="showcase-plus-link">+</a>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-7 col-lg-8">
                         <div class="showcase-item-contain">
-                            <h2 class="showcase-item-title"><a href="@resulted.AutoroutePart.Path">@resulted.Prodotto.TitlePart.Title</a></h2>
+                            <h2 class="showcase-item-title"><a href="@Url.ItemDisplayUrl(contentItem)">@resulted.Prodotto.TitlePart.Title</a></h2>
                             <div class="space-10"></div>
                             <h3 class="showcase-item-claim">@resulted.Prodotto.Sottotitolo.Value</h3>
                             <div class="space-20"></div>

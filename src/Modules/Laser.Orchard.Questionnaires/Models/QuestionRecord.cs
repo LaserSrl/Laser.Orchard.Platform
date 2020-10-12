@@ -6,11 +6,13 @@ using System.Web;
 
 namespace Laser.Orchard.Questionnaires.Models {
     public class QuestionRecord {
+
         public QuestionRecord() {
             Answers = new List<AnswerRecord>();
             Published = true;
         }
         public virtual int Id { get; set; }
+        public virtual string GUIdentifier { get; set; }
         [MaxLength(500)]
         public virtual string Question { get; set; }
         public virtual QuestionType QuestionType { get; set; }
@@ -18,6 +20,7 @@ namespace Laser.Orchard.Questionnaires.Models {
         public virtual bool IsRequired { get; set; }
         public virtual bool Published { get; set; }
         public virtual int Position { get; set; }
+
         [MaxLength(200)]
         public virtual string Section { get; set; }
         public virtual string Condition { get; set; }
@@ -27,8 +30,6 @@ namespace Laser.Orchard.Questionnaires.Models {
         public virtual IList<AnswerRecord> Answers { get; set; }
         public virtual string AllFiles { get; set; }
 
-        //public virtual string Url { get; set; }
-        //public virtual string ListFiles { get; set; }
-        
+
     }
 }

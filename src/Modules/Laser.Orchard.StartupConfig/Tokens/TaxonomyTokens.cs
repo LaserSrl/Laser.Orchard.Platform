@@ -30,11 +30,11 @@ namespace Laser.Orchard.StartupConfig.Tokens {
 
             context.For<TaxonomyField>("TaxonomyField")
                     .Token("TermsIds", field => String.Join(", ", field.Terms.Select(t => t.Id).ToArray()))
-                // todo: extend Chain() in order to accept a filter like in Token() so that we can chain on an expression
-                   .Chain("Terms:0", "Content", t => t.Terms.ElementAt(0))
-                   .Chain("Terms:1", "Content", t => t.Terms.ElementAt(1))
-                   .Chain("Terms:2", "Content", t => t.Terms.ElementAt(2))
-                   .Chain("Terms:3", "Content", t => t.Terms.ElementAt(3))
+                   // todo: extend Chain() in order to accept a filter like in Token() so that we can chain on an expression
+                   .Chain("Terms:0", "Content", t => t.Terms.Count() > 0 ? t.Terms.ElementAt(0) : null)
+                   .Chain("Terms:1", "Content", t => t.Terms.Count() > 1 ? t.Terms.ElementAt(1) : null)
+                   .Chain("Terms:2", "Content", t => t.Terms.Count() > 2 ? t.Terms.ElementAt(2) : null)
+                   .Chain("Terms:3", "Content", t => t.Terms.Count() > 3 ? t.Terms.ElementAt(3) : null)
                    ;
         }
     }

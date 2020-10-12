@@ -5,5 +5,5 @@ Website: http://www.laser-group.com
 Version: 1.8
 OrchardVersion: 1.8
 Description: A simple contact form that is a content part and a widget. It sends an email to a specified address and integrates with Orchard spam protection, providing an option to send spam to an alternate email address.
-Dependencies: Orchard.Email, Orchard.Resources, Orchard.MediaLibrary, Settings, Laser.Orchard.TemplateManagement, Laser.Orchard.TemplateManagement.Parsers.Razor, Laser.Orchard.StartupConfig
+Dependencies: Orchard.Email, Orchard.Resources, Orchard.MediaLibrary, Settings, Orchard.Forms, Orchard.Widgets, Orchard.Workflows, Laser.Orchard.TemplateManagement, Laser.Orchard.TemplateManagement.Parsers.Razor, Laser.Orchard.StartupConfig
 Category: Messaging

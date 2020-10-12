@@ -231,7 +231,7 @@ namespace Laser.Orchard.Mobile.Services {
 
             string queryForPush = "";
             if (countOnly) {
-                queryForPush = "SELECT count(MobileRecord) as Tot, sum(case MobileRecord.Device when 'Android' then 1 else 0 end) as Android, sum(case MobileRecord.Device when 'Apple' then 1 else 0 end) as Apple, sum(case MobileRecord.Device when 'WindowsMobile' then 1 else 0 end) as WindowsMobile";
+                queryForPush = "SELECT count(MobileRecord) as Tot, sum(case MobileRecord.Device when 'Android' then 1 else 0 end) as Android, sum(case MobileRecord.Device when 'Apple' then 1 else 0 end) as Apple,sum(case MobileRecord.Device when 'AppleFCM' then 1 else 0 end) as AppleFCM, sum(case MobileRecord.Device when 'WindowsMobile' then 1 else 0 end) as WindowsMobile";
             } else {
                 queryForPush = "SELECT MobileRecord.Id as Id, MobileRecord.Device as Device, MobileRecord.Produzione as Produzione, MobileRecord.Validated as Validated, MobileRecord.Language as Language, MobileRecord.UUIdentifier as UUIdentifier, MobileRecord.Token as Token, MobileRecord.RegistrationUrlHost as RegistrationUrlHost, MobileRecord.RegistrationUrlPrefix as RegistrationUrlPrefix, MobileRecord.RegistrationMachineName as RegistrationMachineName";
             }
@@ -403,7 +403,10 @@ namespace Laser.Orchard.Mobile.Services {
                 if (device.Device == TipoDispositivo.Apple) {
                     PushApple(singoloDevice, device.Produzione, pushMessage, true);
                 }
-                if (device.Device == TipoDispositivo.WindowsMobile) {
+                if (device.Device == TipoDispositivo.AppleFCM) {
+                    PushAppleFCM(singoloDevice, device.Produzione, pushMessage, true);
+                }
+                    if (device.Device == TipoDispositivo.WindowsMobile) {
                     PushWindows(singoloDevice, device.Produzione, pushMessage, true);
                 }
             }
@@ -588,6 +591,9 @@ namespace Laser.Orchard.Mobile.Services {
                             PushApple(listDevices.Where(x => x.Device == TipoDispositivo.Apple).ToList(),
                                 produzione,
                                 pushMessage);
+                            PushAppleFCM(listDevices.Where(x => x.Device == TipoDispositivo.AppleFCM).ToList(),
+                              produzione,
+                              pushMessage);
                             PushWindows(listDevices.Where(x => x.Device == TipoDispositivo.WindowsMobile).ToList(),
                                 produzione,
                                 pushMessage);
@@ -789,6 +795,12 @@ namespace Laser.Orchard.Mobile.Services {
             if (newpush.ValidPayload) {
                 PushApple(allDevice, produzione, newpush, repeatable);
             }
+
+            allDevice = GetListMobileDevice(contenttype, queryDevice, TipoDispositivo.AppleFCM, produzione, language, queryIds);
+           // if (newpush.ValidPayload) {
+                PushAppleFCM(allDevice, produzione, newpush, repeatable);
+//            }
+
         }
 
         private void SendAllWindowsPart(MobilePushPart mpp, Int32 idcontent, Int32 idContentRelated, string language, bool produzione, string queryDevice, int[] queryIds, bool repeatable = false) {
@@ -1075,6 +1087,137 @@ namespace Laser.Orchard.Mobile.Services {
             }
             // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
         }
+
+
+        private void PushAppleFCM(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
+            pushMessage.Sound = "sound.caf";
+
+            listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
+
+            // calcola la configurazione per Android
+            var pushSettings = _orchardServices.WorkContext.CurrentSite.As<PushMobileSettingsPart>();
+            string setting = "";
+            if (produzione)
+                setting = pushSettings.AndroidApiKey;
+            else
+                setting = pushSettings.AndroidApiKeyDevelopment;
+            
+            if (listdispositivo.Count > 0) {
+                if (string.IsNullOrWhiteSpace(setting)) {
+                    LogInfo("Error PushAppleFCM: missing Android API Key.");
+                    _result.Errors = "Error PushAppleFCM: missing Android API Key.";
+                    return;
+                }
+            }
+            else {
+                // nessuna push da inviare
+                return;
+            }
+            var config = new GcmConfiguration(setting);
+            var serviceUrl = pushSettings.AndroidPushServiceUrl;
+            var notificationIcon = pushSettings.AndroidPushNotificationIcon;
+            if (string.IsNullOrWhiteSpace(serviceUrl)) {
+                // default: FCM
+                config.OverrideUrl("https://fcm.googleapis.com/fcm/send");
+            }
+            else {
+                config.OverrideUrl(serviceUrl);
+            }
+
+            // compone il payload
+            StringBuilder sbaps = new StringBuilder();
+            sbaps.Clear();
+            sbaps.AppendFormat("{{ \"alert\":{{\"body\": \"{0}\", \"sound\":\"{1}\"}}}}", FormatJsonValue(pushMessage.Text), FormatJsonValue(pushMessage.Sound));
+            var sbapsParsed = JObject.Parse(sbaps.ToString());
+            StringBuilder sb = new StringBuilder();
+            sb.Clear();
+            sb.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+            if (!string.IsNullOrEmpty(pushMessage.Eu)) {
+                sb.AppendFormat(",\"Eu\":\"{0}\"", FormatJsonValue(pushMessage.Eu));
+            }
+            else {
+                sb.AppendFormat(",\"Id\":{0}", pushMessage.idContent);
+                sb.AppendFormat(",\"Rid\":{0}", pushMessage.idRelated);
+                sb.AppendFormat(",\"Ct\":\"{0}\"", FormatJsonValue(pushMessage.Ct));
+                sb.AppendFormat(",\"Al\":\"{0}\"", FormatJsonValue(pushMessage.Al));
+            }
+            sb.Append("}");
+            var sbParsed = JObject.Parse(sb.ToString());
+            // sezione notification
+            StringBuilder sbNotification = new StringBuilder();
+            sbNotification.Clear();
+            JObject sbNotificationParsed = null;
+         //   if (string.IsNullOrWhiteSpace(notificationIcon) == false) {
+                sbNotification.AppendFormat("{{ \"body\": \"{0}\"", FormatJsonValue(pushMessage.Text));
+                //sbNotification.AppendFormat(",\"title\":\"{0}\"", FormatJsonValue(pushMessage.Text));
+               // sbNotification.AppendFormat(",\"icon\":\"{0}\"", notificationIcon);
+                sbNotification.Append("}");
+                sbNotificationParsed = JObject.Parse(sbNotification.ToString());
+          //  }
+
+            int offset = 0;
+            int size = pushSettings.PushSendBufferSize == 0 ? 50 : pushSettings.PushSendBufferSize;
+            while (offset < listdispositivo.Count) {
+                InitializeRecipients(listdispositivo, offset, size, pushMessage.idContent, repeatable, pushSettings);
+                if (pushSettings.CommitSentOnly == false) {
+                    InitializeRecipientsOnDb();
+                }
+                // ciclo con retry sui nuovi
+                GcmNotification objNotification = null;
+                for (int i = 0; i < 2; i++) { // cicla 2 volte: la prima per i device in input, la seconda per quelli changed
+                    var push = new GcmServiceBroker(config);
+                    push.OnNotificationSucceeded += (notification) => {
+                        NotificationSent(notification);
+                    };
+                    push.OnNotificationFailed += (notification, aggregateEx) => {
+                        aggregateEx.Handle(ex => {
+                            if (ex is DeviceSubscriptionExpiredException) {
+                                var expiredException = (DeviceSubscriptionExpiredException)ex;
+                                var oldId = expiredException.OldSubscriptionId;
+                                var newId = expiredException.NewSubscriptionId;
+                                if (!string.IsNullOrWhiteSpace(newId)) {
+                                    DeviceSubscriptionChanged(notification.GetType().Name, oldId, newId, expiredException.Notification, produzione, TipoDispositivo.AppleFCM, repeatable);
+                                }
+                                else
+                                    DeviceSubscriptionExpired(notification.GetType().Name, oldId, expiredException.ExpiredAt, produzione, TipoDispositivo.AppleFCM);
+                            }
+                            else {
+                                NotificationFailed(notification, aggregateEx);
+                            }
+                            // Mark it as handled
+                            return true;
+                        });
+                    };
+                    push.Start();
+                    foreach (var device in _sentRecords.Where(x => x.Value.Outcome == "")) {
+                        try {
+                            objNotification = new GcmNotification {
+                                RegistrationIds = new List<string> { device.Key },
+                                Data = sbParsed,
+                                Aps= sbapsParsed,
+                                Priority = GcmNotificationPriority.High,
+                    
+
+                            // necessario per bypassare il fatto che l'app non sia in whitelist
+                            //TimeToLive = 172800 //2 giorni espressi in secondi
+                        };
+                            objNotification.Notification = sbNotificationParsed;
+                            push.QueueNotification(objNotification);
+                        }
+                        catch (Exception ex) {
+                            LogError("PushAppleFCM retry error:  " + ex.Message + " StackTrace: " + ex.StackTrace);
+                        }
+                    }
+                    push.Stop();
+                    push = null;
+                } // end retry cicle
+
+                UpdateDevicesAndOutcomesOnDb(produzione);
+                offset += size;
+            }
+            // check se ha tentato di inviare tutto o se è uscito per limite di push per ogni run
+        }
+
         private void PushApple(List<PushNotificationRecord> listdispositivo, bool produzione, PushMessage pushMessage, bool repeatable = false) {
             listdispositivo = CleanRecipients(listdispositivo, pushMessage.idContent, repeatable);
 

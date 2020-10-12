@@ -10,6 +10,7 @@ using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.SEO.Controllers {
@@ -43,7 +44,7 @@ namespace Laser.Orchard.SEO.Controllers {
         [HttpGet]
         public ActionResult Index(PagerParameters pagerParameters) {
             var pager = new Pager(_siteService.GetSiteSettings(), pagerParameters);
-            var tot = _redirectService.GetRedirectsTotalCount();
+            var tot = _redirectService.GetTable().Count();
             var pagerShape = _orchardServices.New.Pager(pager).TotalItemCount(tot);
             // adjust page value (in case of a previous deletion)
             var firstItemInPage = pager.PageSize * (pager.Page - 1) + 1;
@@ -53,11 +54,9 @@ namespace Laser.Orchard.SEO.Controllers {
             }
 
             var items = _redirectService.GetRedirects(pager.GetStartIndex(), pager.PageSize);
-            int numCached = _redirectService.CountCached();
             dynamic viewModel = Shape.ViewModel()
                 .Redirects(items)
-                .Pager(pagerShape)
-                .CachedCounter(numCached);
+                .Pager(pagerShape);
             return View((object)viewModel);
         }
 
@@ -80,7 +79,7 @@ namespace Laser.Orchard.SEO.Controllers {
 
         [HttpGet]
         public ActionResult Edit(int id) {
-            var redirect = _redirectService.GetRedirect(id);
+            var redirect = _redirectService.GetTable().FirstOrDefault(x => x.Id == id);
             if (redirect == null)
                 return HttpNotFound();
 
@@ -89,7 +88,7 @@ namespace Laser.Orchard.SEO.Controllers {
 
         [HttpPost, ActionName("Edit")]
         public ActionResult EditPost(int id) {
-            var redirect = _redirectService.GetRedirect(id);
+            var redirect = _redirectService.GetTable().FirstOrDefault(x => x.Id == id);
             if (redirect == null)
                 return HttpNotFound();
 
@@ -127,11 +126,7 @@ namespace Laser.Orchard.SEO.Controllers {
 
         [HttpPost]
         public ActionResult Delete(int id) {
-            var redirect = _redirectService.GetRedirect(id);
-            if (redirect == null)
-                return HttpNotFound();
-
-            _redirectService.Delete(redirect);
+            _redirectService.Delete(id);
             _orchardServices.Notifier.Information(T("Redirect record was deleted"));
             return RedirectToAction("Index", new { page = Request["page"] });
         }

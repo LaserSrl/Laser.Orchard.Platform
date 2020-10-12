@@ -5,6 +5,7 @@ using Orchard.Localization;
 using Orchard.ContentManagement;
 using Laser.Orchard.Reporting.Models;
 using Orchard.Core.Title.Models;
+using Orchard.Core.Common.Models;
 
 namespace Laser.Orchard.Reporting.Security {
     public class Permissions : IPermissionProvider {
@@ -63,7 +64,7 @@ namespace Laser.Orchard.Reporting.Security {
             foreach (var report in reportList) {
                 var title = (report.ContentItem.Has<TitlePart>() ? report.ContentItem.As<TitlePart>().Title : T("[No Title]").ToString());
                 result.Add(report.Id, new Permission {
-                    Name = string.Format("ShowDataReport{0}", report.Id),
+                    Name = string.Format("ShowDataReport{0}", report.As<IdentityPart>().Identifier),
                     Description = string.Format("Show Data Report {0}", title),
                     ImpliedBy = new List<Permission>() { ShowAllDataReports }
                 });
@@ -76,7 +77,7 @@ namespace Laser.Orchard.Reporting.Security {
             foreach (var dashboard in dashboardList) {
                 var title = (dashboard.Has<TitlePart>() ? dashboard.As<TitlePart>().Title : T("[No Title]").ToString());
                 result.Add(dashboard.Id, new Permission {
-                    Name = string.Format("ShowDashboard{0}", dashboard.Id),
+                    Name = string.Format("ShowDashboard{0}", dashboard.As<IdentityPart>().Identifier),
                     Description = string.Format("Show Dashboard {0}", title),
                     ImpliedBy = new List<Permission>() { ShowAllDataDashboard }
                 });

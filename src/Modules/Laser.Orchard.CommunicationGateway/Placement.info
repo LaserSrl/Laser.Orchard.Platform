@@ -48,4 +48,7 @@
   <Place Parts_Advertising_Edit="Content:4.2"/>
   <Place Parts_QueryPicker_Edit="Content:5"/>
   <Place Parts_CommunicationContact_Edit="Content:after" />"
+  <!-- Mailchimp -->
+  <Place Parts_MailchimpSubscription_Edit="Content:10" Parts_MailchimpSiteSettings_Edit="Content:1"/>
+
 </Placement>

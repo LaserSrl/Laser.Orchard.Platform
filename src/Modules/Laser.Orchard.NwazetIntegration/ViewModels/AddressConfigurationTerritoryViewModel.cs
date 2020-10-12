@@ -1,4 +1,5 @@
-﻿using Nwazet.Commerce.Models;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Nwazet.Commerce.Models;
 using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -16,24 +17,23 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             TerritoryPart part, 
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
-            IEnumerable<int> cities,
-            IEnumerable<CountryAlpha2> countryCodes) : this() {
+            IEnumerable<int> cities) : this() {
 
             _contentManager = part.ContentItem.ContentManager;
 
             Territory = part;
             TerritoryId = part.Record.TerritoryInternalRecord.Id;
 
-            IsCountry = countries.Contains(TerritoryId);
-            IsProvince = provinces.Contains(TerritoryId);
-            IsCity = cities.Contains(TerritoryId);
+            var adminTypePart = part.As<TerritoryAdministrativeTypePart>();
+            if (adminTypePart != null) {
+                AdministrativeType = adminTypePart.AdministrativeType;
+            } else {
+                AdministrativeType = TerritoryAdministrativeType.None;
+            }
 
-            CountryISO = countryCodes
-                // if there is no value for the given ID, FirstOrDefault
-                // returns a CountryAlpha2 struct with ISOCode = null. THis
-                // happens because CountryAlpha2 is a struct rather than a class
-                .FirstOrDefault(cc => cc.TerritoryId == TerritoryId)
-                .ISOCode ?? string.Empty;
+            IsCountry = AdministrativeType == TerritoryAdministrativeType.Country;
+            IsProvince = AdministrativeType == TerritoryAdministrativeType.Province;
+            IsCity = AdministrativeType == TerritoryAdministrativeType.City;
 
             DisplayText = _contentManager
                 .GetItemMetadata(part)
@@ -42,15 +42,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 DisplayText = part.Record.TerritoryInternalRecord.Name;
             }
 
-            foreach (var ci in part.Children) {
-                var tp = ci.As<TerritoryPart>();
-                if (tp != null) {
-                    // constructing this here means we are going depth first
-                    var child = new AddressConfigurationTerritoryViewModel(
-                        tp, countries, provinces, cities, countryCodes, this);
-                    Children.Add(child);
-                }
-            }
+            ChildrenCount = part.Record.Children.Count();
         }
 
         public AddressConfigurationTerritoryViewModel(
@@ -58,12 +50,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
             IEnumerable<int> cities,
-            IEnumerable<CountryAlpha2> countryCodes,
             AddressConfigurationTerritoryViewModel parent) 
-            : this(part, countries, provinces, cities, countryCodes) {
+            : this(part, countries, provinces, cities) {
             Parent = parent;
         }
-
 
         private IContentManager _contentManager;
 
@@ -74,6 +64,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public int TerritoryId { get; set; }
         public string DisplayText { get; set; }
 
+        public TerritoryAdministrativeType AdministrativeType { get; set; }
+
         public AddressConfigurationTerritoryViewModel Parent { get; set; }
         // This will be the first level children
         public List<AddressConfigurationTerritoryViewModel> Children { get; set; }
@@ -81,11 +73,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public bool IsCountry { get; set; }
         public bool IsProvince { get; set; }
         public bool IsCity { get; set; }
-
-        /// <summary>
-        /// ISO 3166-1 Alpha-2 code for a country.
-        /// </summary>
-        public string CountryISO { get; set; }
+        
+        public int ChildrenCount { get; set; }
 
         public int AllChildrenCount =>
             // count of this object's direct children

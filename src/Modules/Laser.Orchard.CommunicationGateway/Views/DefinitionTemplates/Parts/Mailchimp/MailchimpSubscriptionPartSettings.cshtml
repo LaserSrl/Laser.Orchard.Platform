@@ -1,0 +1,77 @@
+﻿@using Orchard.ContentManagement;
+@model Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models.MailchimpSubscriptionPartSettings
+@{
+    Script.Require("JQuery").AtHead();
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    var items = contentManager.List<Orchard.Core.Title.Models.TitlePart>(new string[] { "PolicyText" });
+    var selectedItems = new string[] { };
+    if (Model.PolicyTextReferences != null) {
+        selectedItems = Model.PolicyTextReferencesToArray();
+    }
+}
+<fieldset>
+    <div>
+        <h4>@T("Notifier front-end verbosity")</h4>
+        @Html.CheckBoxFor(m => m.NotifySubscriptionResult)
+        @Html.LabelFor(m => m.NotifySubscriptionResult, T("Notify subscription result").Text, new { @class = "forcheckbox" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.AudienceId, T("Audiences ids"))
+        @Html.TextBoxFor(m => m.AudienceId, new { @class = "text large tokenized" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.MemberEmail, T("Member e-mail"))
+        @Html.TextBoxFor(m => m.MemberEmail, new { @class = "text large tokenized" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.PutPayload, T("Put payload"))
+        @Html.TextAreaFor(m => m.PutPayload, new { @class = "text large tokenized" })
+        <span class="hint">@T("Payload Example:")
+            <textarea readonly="readonly" class="text large" style="background-color:#efefef">
+{{
+    "email_address": "{Content.UserEmail}",
+    "status": "subscribed",
+    "merge_fields": {{
+  	    "FNAME": "{Content.Fields.ProfilePart.Nome}",
+        "LNAME": "{Content.Fields.ProfilePart.Cognome}",
+        "ADDRESS": "{Content.Fields.ProfilePart.Address}",
+        "PHONE": "{Content.Fields.ProfilePart.PhoneNumber}",
+        "BIRTHDAY": "{Content.Fields.ProfilePart.MM}/{Content.Fields.ProfilePart.dd}"
+    }},
+    "language":"it",
+    "vip": false
+}}
+            </textarea>
+        </span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.PolicyTextReferences, T("Required Policies"))
+        <select multiple="multiple" name="@(Html.FieldNameFor(m => m.PolicyTextReferences))_select" id="@(Html.FieldIdFor(m => m.PolicyTextReferences))_select">
+            @foreach (var policy in items) {
+                <option value="{@policy.ContentItem.Id}" @(selectedItems.Contains("{" + policy.ContentItem.Id + "}") ? "selected=\"selected\"" : "")>@policy.Title</option>
+            }
+        </select>
+        @Html.HiddenFor(m => m.PolicyTextReferences)
+        @Html.Hint(@T("Insert Required Policies."))
+    </div>
+</fieldset>
+@Display.TokenHint()
+@using(Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#@(Html.FieldIdFor(m => m.PolicyTextReferences))_select').change(function () {
+                var selectedoptions = this.selectedOptions;
+                var selected = "";
+                for (i = 0; i < selectedoptions.length; i++) {
+                    var item = selectedoptions[i];
+                    if (selected != "") {
+                        selected += ",";
+                    }
+                    selected += item.value;
+                }
+                $('#@(Html.FieldIdFor(m => m.PolicyTextReferences))').val(selected);
+            });
+        });
+
+    </script>
+}

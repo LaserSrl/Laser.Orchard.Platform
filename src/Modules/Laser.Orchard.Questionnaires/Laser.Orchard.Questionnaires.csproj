@@ -92,13 +92,16 @@
     <Compile Include="Models\QuestionnairePartRecord.cs" />
     <Compile Include="Models\QuestionRecord.cs" />
     <Compile Include="Models\RankingPart.cs" />
+    <Compile Include="Models\UserAnswerInstanceRecord.cs" />
     <Compile Include="Models\UserAnswersRecord.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\IQuestionnairesServices.cs" />
+    <Compile Include="Services\IQuestionAnswerRepositoryService.cs" />
     <Compile Include="Services\QuestionnairesServices.cs" />
+    <Compile Include="Services\QuestionAnswerRepositoryService.cs" />
     <Compile Include="Settings\GamePartEditorEvents.cs" />
     <Compile Include="Settings\GamePartSettingVM.cs" />
     <Compile Include="Settings\QuestionnairesPartEditorEvents.cs" />
@@ -124,7 +127,7 @@
     <Content Include="Views\EditorTemplates\Parts\Questionnaire_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Parts\Questionnaire_FrontEnd_Edit.cshtml" />
+    <Content Include="Views\Parts\_Questionnaire_FrontEnd_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\Questionnaire_Summary.cshtml" />
@@ -171,6 +174,7 @@
     <Content Include="Views\QuestionnaireStats\Detail.cshtml" />
     <Content Include="Views\QuestionnaireStats\QuestionDetail.cshtml" />
     <Content Include="Views\LocalNavRankings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Questionnaire_FrontEnd_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">

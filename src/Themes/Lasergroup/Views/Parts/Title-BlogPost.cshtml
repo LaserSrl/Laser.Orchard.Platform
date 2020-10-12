@@ -16,7 +16,8 @@
 
     if (!string.IsNullOrWhiteSpace(urlPrefix)) {
         urlPrefix = urlPrefix + "/";
-    } else {
+    }
+    else {
         urlPrefix = "";
     }
     baseUrl = baseUrl.TrimEnd('/');
@@ -24,28 +25,30 @@
     var pathShareBar = baseUrl + "/" + urlPrefix + item.AutoroutePart.Path;
 
     string bodyHtml = item.BodyPart.Text;
-    var description = Html.Excerpt(bodyHtml, 100).ToString().Replace("<p>", "").Replace("</p>","");
-    if (!string.IsNullOrEmpty(item.SeoPart.Description)) {
+    var description = Html.Excerpt(bodyHtml, 100).ToString().Replace("<p>", "").Replace("</p>", "");
+    if (item.SeoPart != null && !string.IsNullOrEmpty(item.SeoPart.Description)) {
         description = item.SeoPart.Description;
     }
 
-        var tagsHtml = new List<IHtmlString>();
+    var tagsHtml = new List<IHtmlString>();
+    if (Model.ContentItem.TagsPart != null) {
         foreach (var t in Model.ContentItem.TagsPart.CurrentTags) {
             if (tagsHtml.Any()) {
                 tagsHtml.Add(new HtmlString(", "));
             }
             tagsHtml.Add(Html.ActionLink((string)t, "Search", "Home", new { area = "Orchard.Tags", tagName = (string)t }, new { }));
         }
+    }
 }
 
 @*sostituito con ShareLink
-@using (Script.Head()) {
-    <meta property="og:url" content="@pathShareBar" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="@Model.Title" />
-    <meta property="og:image" content="@item.BlogPost.Image.FirstMediaUrl" />
-    <meta property="og:description" content="@description" />
-}*@
+    @using (Script.Head()) {
+        <meta property="og:url" content="@pathShareBar" />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content="@Model.Title" />
+        <meta property="og:image" content="@item.BlogPost.Image.FirstMediaUrl" />
+        <meta property="og:description" content="@description" />
+    }*@
 
 <div class="container single-news-title">
     <div class="col-xs-12 col-sm-12 col-intro-desc news-block">
@@ -61,15 +64,15 @@
         <div class="sharebar">
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_32x32_style addthis_default_style"
-                addthis:url="@pathShareBar"
-                addthis:title="@Model.Title">
+                 addthis:url="@pathShareBar"
+                 addthis:title="@Model.Title">
                 <a class="addthis_button_facebook"></a>
                 <a class="addthis_button_twitter"></a>
                 <a class="addthis_button_email"></a>
                 <a class="addthis_button_google"></a>
                 <a class="addthis_button_compact"></a>
             </div>
-            <script type="text/javascript">        var addthis_config = { "data_track_clickback": true };</script>
+            <script type="text/javascript">var addthis_config = { "data_track_clickback": true };</script>
             <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=laser.srl.ao@gmail.com"></script>
             <!-- AddThis Button END -->
         </div>
@@ -77,13 +80,14 @@
 </div>
 
 <div id="news">
-    <div class="container">
-        <div class="text-center news-block">
-            <div class="single-news-top"></div>
-            <img src="@item.BlogPost.Image.FirstMediaUrl"  title="@item.BlogPost.Image.MediaParts[0].Title" alt="@item.BlogPost.Image.MediaParts[0].AlternateText"  class="img-responsive wp-post-image" alt="@item.BlogPost.Image.MediaParts[0].Title">
+    @if (item.BlogPost.Image != null) {
+        <div class="container">
+            <div class="text-center news-block">
+                <div class="single-news-top"></div>
+                <img src="@item.BlogPost.Image.FirstMediaUrl" title="@item.BlogPost.Image.MediaParts[0].Title" alt="@item.BlogPost.Image.MediaParts[0].AlternateText" class="img-responsive wp-post-image" alt="@item.BlogPost.Image.MediaParts[0].Title">
+            </div>
         </div>
-    </div>
-
+    }
     <div class="space-20"></div>
     <div class="container">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 news-block news-text">
@@ -100,7 +104,7 @@
                     @for (int i = 0; i < medias.Count; i++) {
                         <div class="col-xs-6 col-sm-4 col-md-2 text-center">
                             <a href="@medias[i].MediaUrl" class="thumbnail" data-sub-html="">
-                                <img src="@Display.ResizeMediaUrl(Width: 350, Height: 350, Mode: "crop", Alignment: "middlecenter", Path: medias[i].MediaUrl)"  title="@medias[i].Title" alt="@medias[i].AlternateText"  class="img-responsive">
+                                <img src="@Display.ResizeMediaUrl(Width: 350, Height: 350, Mode: "crop", Alignment: "middlecenter", Path: medias[i].MediaUrl)" title="@medias[i].Title" alt="@medias[i].AlternateText" class="img-responsive">
                             </a>
                         </div>
                     }
@@ -112,7 +116,7 @@
             @if (tagsHtml.Any()) {
                 <p class="tags">
                     <span>@T("Tags:")</span>
-                    @foreach (var htmlString in tagsHtml) { @htmlString }
+                    @foreach (var htmlString in tagsHtml) {@htmlString}
                 </p>
             }
         </div>

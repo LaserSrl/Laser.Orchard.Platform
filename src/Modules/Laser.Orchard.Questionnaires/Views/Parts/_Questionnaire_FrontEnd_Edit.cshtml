@@ -1,0 +1,8 @@
+﻿@using Laser.Orchard.Questionnaires.ViewModels
+@using Orchard.Utility.Extensions;
+@using Orchard.MediaLibrary.Models;
+@using Orchard.ContentManagement;
+@{
+    //Model is a shape.
+    @Display(New.Partial(TemplateName:"Parts/Questionnaire_Edit", Model:(QuestionnaireWithResultsViewModel)Model.Questionnaire, Prefix:"Questionnaire"));
+}

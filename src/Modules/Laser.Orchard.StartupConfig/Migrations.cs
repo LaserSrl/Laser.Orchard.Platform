@@ -19,7 +19,67 @@ namespace Laser.Orchard.StartupConfig {
                                                             .WithField("Creator", cfg => cfg.OfType("NumericField").WithDisplayName("Id of user Creator"))
                                                             .WithField("LastModifier", cfg => cfg.OfType("NumericField").WithDisplayName("Id of last user that have modified the content item"))
                                                             );
-            return 1;
+            ContentDefinitionManager.AlterPartDefinition("PublishExtensionPart", b => b
+                .Attachable()
+                .WithField("PublishExtensionStatus", cfg => cfg.OfType("EnumerationField")
+                    .WithSetting("EnumerationFieldSettings.Required", "true")
+                    .WithSetting("EnumerationFieldSettings.ListMode", "Dropdown")
+                    .WithSetting("EnumerationFieldSettings.Options", "Created\r\nLoaded\r\nAccepted\r\nRejected")
+                    .WithDisplayName("Status"))
+
+                );
+            SchemaBuilder.CreateTable("FavoriteCulturePartRecord", table =>
+                    table.ContentPartVersionRecord()
+                    .Column<int>("Culture_Id", cfg => cfg.Nullable())
+                    );
+            SchemaBuilder.AlterTable("FavoriteCulturePartRecord", table =>
+               table.CreateIndex("CultureIdIndex", "Culture_Id"));
+            ContentDefinitionManager.AlterPartDefinition("FavoriteCulturePart", part =>
+                part.Attachable(false));
+            ContentDefinitionManager.AlterPartDefinition("AuthenticationRequiredPart", b => b
+                .Attachable()
+            );
+            ContentDefinitionManager.AlterTypeDefinition("AuthenticatedProjection", cfg => cfg
+                .WithPart("CommonPart")
+                .WithPart(typeof(TitlePart).Name)
+                .WithPart(typeof(AutoroutePart).Name)
+                .WithPart(typeof(MenuPart).Name)
+                .WithPart(typeof(ProjectionPart).Name)
+                .WithPart(typeof(AdminMenuPart).Name)
+                .WithPart(typeof(AuthenticationRequiredPart).Name)
+                .Creatable(true)
+                .Draftable(false)
+                .Listable()
+                );
+            ContentDefinitionManager.AlterPartDefinition("DisplayTextPart", p => p.Attachable(true));
+            ContentDefinitionManager.AlterPartDefinition("ScheduledTaskParametersPart", part => part
+                .WithField("Parameters", cfg => cfg.OfType("TextField")));
+            ContentDefinitionManager.AlterTypeDefinition("ScheduledTaskParameters", cfg => cfg
+                .WithPart("ScheduledTaskParametersPart")
+                .Creatable(false)
+                .Draftable(false)
+                .Listable(false)
+                .Securable(false));
+            ContentDefinitionManager.AlterPartDefinition("HeaderFooterWidget",
+                p => p
+                    .WithField("HtmlHeader", cfg => cfg.OfType("TextField")
+                        .WithDisplayName("Html Header")
+                        .WithSetting("TextFieldSettings.Flavor", "Textarea"))
+                    .WithField("HtmlFooter", cfg => cfg.OfType("TextField")
+                        .WithDisplayName("Html Footer")
+                        .WithSetting("TextFieldSettings.Flavor", "Textarea")));
+
+            ContentDefinitionManager.AlterTypeDefinition("HeaderFooterWidget",
+            cfg => cfg
+                .WithPart("CommonPart")
+                .WithPart("HeaderFooterWidget")
+                .WithPart("WidgetPart")
+                .WithSetting("Stereotype", "Widget")
+            );
+            ContentDefinitionManager.AlterPartDefinition("EnsureAsFrontEndInvisiblePart",
+                p => p.Attachable(true));
+
+            return 10;
         }
 
         public int UpdateFrom1() {
@@ -104,6 +164,11 @@ namespace Laser.Orchard.StartupConfig {
                 .WithSetting("Stereotype", "Widget")
             );
             return 9;
+        }
+        public int UpdateFrom9() {
+            ContentDefinitionManager.AlterPartDefinition("EnsureAsFrontEndInvisiblePart",
+                                                    p => p.Attachable(true));
+            return 10;
         }
     }
 

@@ -14,8 +14,9 @@
     Script.Require("jQuery");
     Script.Require("jQueryUI_Core").AtHead();
     Script.Require("jQueryUI_Autocomplete").AtHead();
-    //   Script.Require("Bootstrap").AtHead();
+    Script.Require("Select2").AtHead();
     Style.Require("jQuery_Autocomplete").AtHead();
+    Style.Require("Select2").AtHead();
     Style.Require("AdvancedSearch").AtHead();
     Style.Require("FontAwesome430").AtHead();
     Style.Require("Accordion").AtHead();
@@ -33,19 +34,23 @@
 @using (Script.Head()) {
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#applyFiltersButton').click(
+                function (e) {
+                    var newOption = new Option("None", "0", false, true);
+                    if ($('#termsResults').find(':selected').length == 0) {
+                        $('#termsResults').append(newOption).trigger('change');
+                    }
+                });
+            $('#termsResults').select2({
+                allowClear: true,
+                placeholder: '@T("any (show all)")'
+            });
             var aft = $("input[name=__RequestVerificationToken]:first").val();
             inputvalueignorelist = new Array('AdvancedOptions.SelectedLanguageId0', 'AdvancedOptions.SelectedOwner', 'AdvancedOptions.SelectedFromDate', 'AdvancedOptions.SelectedToDate', 'AdvancedOptions.DateFilterType0', 'AdvancedOptions.SelectedTermId0', 'AdvancedOptions.HasMediafalse');
             $('.accordion-section-content :input').each(function () {
                 if (!(inputvalueignorelist.indexOf((this.name + $(this).val())) >= 0)) {
                     if (this.name == 'AdvancedOptions.HasMedia') {
                         if (this.checked == true) {
-                            //if (!$(this).parent().hasClass('open')) {
-                            //    $(this).parent().parent().addClass('open');
-                            //    $(this).parent().parent().css({ display: "block" });
-                            //    //if ($($(this).parent().parent().parent().find('.accordion-section-title')).hasClass('active')) {
-                            //    //   $($(this).parent().parent().parent().find('.accordion-section-title')).addClass('active');
-                            //    //}
-                            //}
                             if (!$(this).parentsUntil($('.accordion-section-content')).parent().hasClass('open')) {
                                 $(this).parentsUntil($('.accordion-section-content')).parent().addClass('open');
                                 $(this).parentsUntil($('.accordion-section-content')).parent().css({ display: "block" });
@@ -71,7 +76,6 @@
             function close_accordion_section() {
                 var conpnl = $('.accordion .accordion-section-title');
                 conpnl.removeClass('active');
-                //  $('.accordion .accordion-section-content').slideUp(300).removeClass('open');
             }
 
             $('.accordion-section-title').click(function (e) {
@@ -81,7 +85,6 @@
                 if ($(e.target).is('.active')) {
                     close_accordion_section();
                     $(e.target).parent().find(' .accordion-section-content').slideUp(300).removeClass('open')
-                    //  $('.accordion ').slideUp(300).removeClass('open');
                 } else {
                     close_accordion_section();
 
@@ -136,7 +139,7 @@
 @using (Script.Foot()) {
 
     <script type="text/javascript">
-        function removeFilterAndReload(index) {
+        function removeFilterAndReload(sender, index) {
             //each filter is hardcoded to a case statement. This is rather ugly.
             switch (index) {
                 case 0:
@@ -155,7 +158,12 @@
                     document.getElementById("languageUntranslatedResults").value = "0";
                     break;
                 case 5:
-                    document.getElementById("termsResults").value = "0";
+                    var listOfvalues = $("#termsResults").val();
+                    var remove_Item = $(sender).data("target");
+                    listOfvalues = $.grep(listOfvalues, function (value) {
+                        return value != remove_Item;
+                    });
+                    $("#termsResults").val(listOfvalues);
                     break;
                 case 6:
                     document.getElementById("ownerResults").value = "";
@@ -200,9 +208,9 @@
     </script>
 }
 
-@helper FilterActiveTag(int filter, string text) {
+@helper FilterActiveTag(int filter, string text, string target="") {
     <li>
-        <a href="javascript:void(0)" onclick="removeFilterAndReload(@filter)" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
+        <a href="javascript:void(0)" onclick="removeFilterAndReload(this, @filter)" data-target="@target" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
             @text <i class="fa fa-times"></i>
         </a>
     </li>
@@ -274,9 +282,10 @@
                             @FilterActiveTag(4, @T("Not translated to: {0}", culture.ToString()).ToString());
                         }
                         @if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
-                            if (Model.AdvancedOptions.SelectedTermId != 0) {
-                                var term = Model.AdvancedOptions.TermById(Model.AdvancedOptions.SelectedTermId);
-                                @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString());
+                            if (Model.AdvancedOptions.SelectedTermIds != null) {
+                                foreach (var term in Model.AdvancedOptions.SelectedTermIds) {
+                                    @FilterActiveTag(5, @T("Taxonomy term: {0}", term.ToString()).ToString(), term.ToString());
+                                }
                             }
                         }
                         @{
@@ -408,19 +417,18 @@
                             @try {
                                 if (Model.AdvancedOptions.TaxonomiesOptions != null && Model.AdvancedOptions.TaxonomiesOptions.Count > 0) {
                                     <label for="termsResults" class="bulk-filter">@T("Terms")</label>
-                                    <select id="termsResults" name="AdvancedOptions.SelectedTermId">
-                                        @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), "0", T("any (show all)").ToString())
+                                    <select id="termsResults" name="AdvancedOptions.SelectedTermIds" multiple="multiple" style="width:100%;max-width:100%;">
                                         @{ int optgroupinserted = 0;
-                                            foreach (var languageOption in Model.AdvancedOptions.TaxonomiesOptions) {
-                                                if ((string)languageOption.Key.ToString() == "-1") {
+                                            foreach (var taxOption in Model.AdvancedOptions.TaxonomiesOptions) {
+                                                if ((string)taxOption.Key.ToString() == "-1") {
                                                     if (optgroupinserted > 0) {
                                                         Html.Raw("</optgroup>");
                                                     }
                                                     optgroupinserted = 1;
-                                                    @Html.Raw("<optgroup label=\"" + (string)languageOption.Value + "\">");
+                                                    @Html.Raw("<optgroup label=\"" + (string)taxOption.Value + "\">");
                                                 }
                                                 else {
-                                                    @Html.SelectOption((string)Model.AdvancedOptions.SelectedTermId.ToString(), (string)languageOption.Key.ToString(), (string)languageOption.Value)
+                                                    <option value="@taxOption.Key.ToString()" @(Model.AdvancedOptions.SelectedTermIds != null && Model.AdvancedOptions.SelectedTermIds.Contains(taxOption.Key) ? "selected=\"selected\"" : "")>@taxOption.Value</option>
                                                 }
                                             }
                                             if (optgroupinserted > 0) {

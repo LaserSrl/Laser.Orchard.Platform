@@ -1,4 +1,7 @@
-﻿using Nwazet.Commerce.Permissions;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
+using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Permissions;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Localization;
@@ -20,6 +23,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IContentManager _contentManager;
         private readonly ITransactionManager _transactionManager;
         private readonly INotifier _notifier;
+        private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly IAddressConfigurationSettingsService _addressSettingsService;
 
         private const string groupInfoId = "AddressConfigurationSiteSettings";
         
@@ -28,15 +33,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ISiteService siteService,
             IContentManager contentManager,
             ITransactionManager transactionManager,
-            INotifier notifier) {
+            INotifier notifier,
+            IAddressConfigurationService addressConfigurationService,
+            IAddressConfigurationSettingsService addressSettingsService) {
 
             _authorizer = authorizer;
             _siteService = siteService;
             _contentManager = contentManager;
             _transactionManager = transactionManager;
             _notifier = notifier;
+            _addressConfigurationService = addressConfigurationService;
+            _addressSettingsService = addressSettingsService;
 
             T = NullLocalizer.Instance;
+
+            administrativeTypeNames = new Dictionary<TerritoryAdministrativeType, string>();
+            administrativeTypeNames.Add(TerritoryAdministrativeType.None, T("Undefined").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.Country, T("Country").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.Province, T("Province").Text);
+            administrativeTypeNames.Add(TerritoryAdministrativeType.City, T("City").Text);
         }
 
         public Localizer T { get; set; }
@@ -85,6 +100,48 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
         void IUpdateModel.AddModelError(string key, LocalizedString errorMessage) {
             ModelState.AddModelError(key, errorMessage.ToString());
+        }
+
+        private Dictionary<TerritoryAdministrativeType, string> administrativeTypeNames;
+
+        [HttpPost]
+        public JsonResult GetChildren(int territoryId = 0) {
+            var parent = _addressConfigurationService
+                .SingleTerritory(territoryId);
+            if (parent == null) {
+                // this is an error
+                return null;
+            } else {
+                return Json(new {
+                    Success = true,
+                    Territories = parent.Children
+                        .Select(ci => {
+                            var tp = ci.As<TerritoryPart>();
+                            var id = tp.Record.TerritoryInternalRecord.Id;
+                            var adminTypePart = tp.As<TerritoryAdministrativeTypePart>();
+                            var adminType = TerritoryAdministrativeType.None;
+                            if (adminTypePart != null) {
+                                adminType = adminTypePart.AdministrativeType;
+                            }
+                            var isCountry = adminType == TerritoryAdministrativeType.Country;
+                            var isProvince = adminType == TerritoryAdministrativeType.Province;
+                            var isCity = adminType == TerritoryAdministrativeType.City;
+                            var isNone = adminType == TerritoryAdministrativeType.None;
+                            return new {
+                                Id = id,
+                                DisplayText = _contentManager
+                                    .GetItemMetadata(ci).DisplayText
+                                    + " " + T("(Administrative type: {0})", administrativeTypeNames[adminType]),
+                                IsCountry = isCountry,
+                                IsProvince = isProvince,
+                                IsCity = isCity,
+                                IsNone = isNone,
+                                HasChildren = tp.Record.Children.Any(),
+                                ChildrenCount = tp.Record.Children.Count()
+                            };
+                        })
+                });
+            }
         }
     }
 }

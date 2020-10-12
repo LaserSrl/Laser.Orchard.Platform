@@ -35,11 +35,11 @@ namespace KrakeAdmin.Filters {
 
         public void OnResultExecuting(ResultExecutingContext filterContext) {                 
             if (isAdminKrakePicker(filterContext.RouteData) || isAdminKrakeTranslator(filterContext.RouteData)) {
+                _resourceManager.Require("stylesheet", ResourceManifest.BaseAdmin).AtHead();
+                _resourceManager.Require("stylesheet", ResourceManifest.Bootstrap).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.Site).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.KrakeAdmin).AtHead();
-                _resourceManager.Require("stylesheet", ResourceManifest.Krake).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.KrakeNavigation).AtHead();
-                _resourceManager.Require("stylesheet", ResourceManifest.Bootstrap).AtHead();
 
                 _originalWriter = filterContext.HttpContext.Response.Output;
                 _tempWriter = new StringWriterWithEncoding(_originalWriter.Encoding, _originalWriter.FormatProvider);

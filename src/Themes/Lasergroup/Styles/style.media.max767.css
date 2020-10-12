@@ -92,4 +92,9 @@
     .navbar-lang.navbar-nav > li > a{ border:0; border-left:1px solid #eee; padding: 10px 15px; }
     .navbar-lang.navbar-nav > li:first-child > a{ border:0; }
     .navbar-lang.navbar-nav li.active a {color: #ff0903!important;}
+
+    .form-contatto-vertical .col-sm-1 {width: 8.33333333%;float: left;}
+
+    .form-contatto-vertical .col-sm-10 {width: 83.33333333%;float: left;}
+
 }

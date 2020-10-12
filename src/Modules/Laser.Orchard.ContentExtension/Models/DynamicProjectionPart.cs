@@ -17,24 +17,39 @@ namespace Laser.Orchard.ContentExtension.Models {
             set { this.Store(x => x.Icon, value); }
         }
         public bool OnAdminMenu {
-            get { return Record.OnAdminMenu; }
-            set { Record.OnAdminMenu = value; }
+            get { return this.Retrieve<bool>(x=>x.OnAdminMenu); }
+            set { this.Store(x => x.OnAdminMenu, value); }
         }
 
         [StringLength(DynamicProjectionPartRecord.DefaultMenuTextLength)]
         public string AdminMenuText {
-            get { return Record.AdminMenuText; }
-            set { Record.AdminMenuText = value; }
+            get { return this.Retrieve<string>(x => x.AdminMenuText); }
+            set { this.Store(x => x.AdminMenuText, value); }
         }
 
         public string AdminMenuPosition {
-            get { return Record.AdminMenuPosition; }
-            set { Record.AdminMenuPosition = value; }
+            get { return this.Retrieve<string>(x => x.AdminMenuPosition); }
+            set { this.Store(x => x.AdminMenuPosition, value); }
         }
 
-         public string Shape {
-            get { return Record.Shape; }
-            set { Record.Shape = value; }
+        public string Shape {
+            get { return this.Retrieve<string>(x => x.Shape); }
+            set { this.Store(x => x.Shape, value); }
+        }
+
+        public bool ReturnsHqlResults {
+            get { return this.Retrieve<bool>(x => x.ReturnsHqlResults); }
+            set { this.Store(x => x.ReturnsHqlResults, value); }
+        }
+
+        public string TypeForFilterForm {
+            get { return this.Retrieve<string>(x => x.TypeForFilterForm); }
+            set { this.Store(x => x.TypeForFilterForm, value); }
+        }
+
+        public string ShapeForResults {
+            get { return this.Retrieve<string>(x => x.ShapeForResults); }
+            set { this.Store(x => x.ShapeForResults, value); }
         }
 
     }
@@ -51,8 +66,13 @@ namespace Laser.Orchard.ContentExtension.Models {
         public virtual string AdminMenuPosition { get; set; }
         public virtual bool OnAdminMenu { get; set; }
         public virtual string Icon { get; set; }
-        public virtual string Shape { get; set; }
-        
+        public virtual string Shape { get; set; } /*Shape for custom filter forms */
+        public virtual string TypeForFilterForm { get; set; }
+        public virtual bool ReturnsHqlResults { get; set; }
+        public virtual string ShapeForResults { get; set; }
+
+
+
         public virtual int Items { get; set; }
 
         /// <summary>

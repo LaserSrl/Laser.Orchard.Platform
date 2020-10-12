@@ -689,8 +689,24 @@ msgid "apple app site association"
 msgstr "Associazione sito/app di Apple"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "apple developer domain association"
+msgstr "associazione dominio sviluppatori apple"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Enable return file from the route: /apple-app-site-association"
 msgstr "Abilita l'esposizione del file tramite url: /apple-app-site-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable return file from the route: /apple-developer-domain-association"
+msgstr "Abilita il file di ritorno dalla route: /apple-developer-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the App Site File"
+msgstr "Abilita il File App Site"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "Enable the Developer Domain File"
+msgstr "Abilita il file di dominio dello sviluppatore"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Enable the Manifest File"
@@ -699,6 +715,14 @@ msgstr "Abilita il file di manifest"
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "File Content"
 msgstr "Contenuto del file"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content for apple-app-site-association"
+msgstr "Contenuto del file per apple-app-site-association"
+
+msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
+msgid "File Content for apple-developer-domain-association"
+msgstr "Contenuto del file per apple-developer-domain-association"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/ManifestAppFileAdmin/Index.cshtml"
 msgid "Manage Manifest File"

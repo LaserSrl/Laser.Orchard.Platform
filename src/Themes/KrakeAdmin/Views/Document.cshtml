@@ -12,51 +12,64 @@
     }
     @*Change favicon*@
     @*RegisterLink(new LinkEntry {Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content("~/modules/orchard.themes/Content/orchard.ico")});*@
-    var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
-    RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(folderStylePath + "/Images/logo_krake.ico") });
-    Script.Include("html5.js").UseCondition("lt IE 9").AtHead();
+var folderStylePath = Url.Content("~/Themes/KrakeAdmin/Styles");
+RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(folderStylePath + "/Images/logo_krake.ico") });
+Script.Include("html5.js").UseCondition("lt IE 9").AtHead();
 
-    string title = Convert.ToString(Model.Title);
-    string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
+string title = Convert.ToString(Model.Title);
+string siteName = Convert.ToString(WorkContext.CurrentSite.SiteName);
 
-    //---- include js libraries ----//
-    //generic & tools
-    Script.Require("Bootstrap").AtHead();
-    Script.Include("jquery.autosize.min.js").AtHead();
-    // specific for krake theme
-    Script.Require("jQuery").AtHead();
-    Script.Include("App.js").AtHead();
-    Script.Include("AppCard.js").AtHead();
-    Script.Include("AppForm.js").AtHead();
-    Script.Include("AppNavigation.js").AtHead();
-    Script.Include("AppNavSearch.js").AtHead();
-    Script.Include("AppOffcanvas.js").AtHead();
-    Script.Include("AppVendor.js").AtHead();
-    Script.Include("jquery.nanoscroller.min.js").AtHead();
-    //custom
-    Script.Include("krake.js").AtHead(); //dsweb custom library
-    Script.Include("main.js").AtHead(); //laser-orchard custom library
+//---- include meta ----//
+SetMeta("X-UA-Compatible", "IE=edge,chrome=1");
 
-    //---- include css files ----//
-    // generic & utilities
-    Style.Require("Bootstrap").AtHead();
-    Style.Require("FontAwesome").AtHead();
-    Style.Include("iconic-font.min.css").AtHead();
-    Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,100,900").AtHead();
-    //custom
-    Style.Require("Krake").AtHead(); //dsweb custom styles TO DO JOIN with krakeadmin.css!!
-    Style.Require("KrakeAdmin").AtHead(); //dsweb custom styles
-    Style.Require("KrakeNavigation").AtHead();
+//---- include js libraries ----//
+// Base theme
+Script.Require("jQuery").AtHead();
+Script.Require("ShapesBase").AtFoot();
+Script.Include("admin.js").AtFoot();
 
+//generic & tools
+Script.Require("Bootstrap").AtHead();
+Script.Include("jquery.autosize.min.js").AtHead();
+// specific for krake theme
+Script.Include("App.js").AtHead();
+Script.Include("AppCard.js").AtHead();
+Script.Include("AppForm.js").AtHead();
+Script.Include("AppNavigation.js").AtHead();
+Script.Include("AppNavSearch.js").AtHead();
+Script.Include("AppOffcanvas.js").AtHead();
+Script.Include("AppVendor.js").AtHead();
+Script.Include("jquery.nanoscroller.min.js").AtHead();
+//custom
+Script.Include("krake.js").AtHead(); //dsweb custom library
+Script.Include("main.js").AtHead(); //laser-orchard custom library
+Script.Require("jQuery_DataTables").AtHead();
 
+//---- include css files ----//
+Style.Require("Bootstrap").AtHead();
+Style.Require("jQuery_DataTables").AtHead();
 
+// Base theme
+Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
+Style.Include("ie.css").UseCondition("gte IE 9").SetAttribute("media", "screen, projection");
+Style.Include("ie8.css").UseCondition("IE 8").SetAttribute("media", "screen, projection");
+Style.Include("ie7.css").UseCondition("lte IE 7").SetAttribute("media", "screen, projection");
 
+// generic & utilities
+Style.Require("FontAwesome").AtHead();
+Style.Include("iconic-font.min.css").AtHead();
+Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700,500,300,100,900").AtHead();
+//custom
+Style.Require("BaseAdmin").AtHead(); //Based On AdminLTE https://adminlte.io/themes/AdminLTE/ MIT License
+Style.Require("KrakeAdmin").AtHead(); //Custom styles NB:krake.css has been merged into krakeadmin.css
+Style.Require("KrakeNavigation").AtHead();
 }
 <!DOCTYPE html>
 <html lang="@WorkContext.CurrentCulture" class="static @Html.ClassForPage()">
 <head>
     <meta charset="utf-8" />
     <title>@Html.Title(title, siteName)</title>
+    @Display(Model.BeforeHead)
     @Display(Model.Head)
     <script>(function (d) { d.className = "dyn" + d.className.substring(6, d.className.length); })(document.documentElement);</script>
 </head>

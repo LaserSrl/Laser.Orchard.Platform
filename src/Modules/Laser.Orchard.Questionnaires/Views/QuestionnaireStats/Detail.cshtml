@@ -1,36 +1,37 @@
 ﻿@using Laser.Orchard.Questionnaires.ViewModels
 @using System.Linq
-@model List<QuestionnaireStatsViewModel>
+@model QuestionnaireStatsViewModel
 @{
+    Style.Require("Bootstrap").AtHead();
+    Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
+    Style.Require("FontAwesome").AtHead();
+    Style.Require("DateTimeEditor").AtHead();
+    Style.Require("jQueryCalendars_Picker").AtHead();
+    Style.Require("jqPlot").AtHead();
+    Style.Require("QuestionnaireAdmin").AtHead();
 
-    Style.Require("DateTimeEditor");
-
-    Style.Require("jQueryCalendars_Picker");
-    //Style.Require("jQueryTimeEntry");
-    //Style.Require("jQueryDateTimeEditor");
 
     Script.Require("jQueryCalendars_Picker").AtFoot();
-    //Script.Require("jQueryTimeEntry").AtFoot();
+    Script.Require("Bootstrap").AtHead();
+    Script.Require("jqPlotPieChart").AtHead();
+    Script.Require("jqPlotEnhancedPieLegendRenderer").AtHead();
 
     const int answersToShow = 3;
     Layout.Title = T("Questionnaire Answers");
 
-    Script.Require("jqPlotPieChart");
-    Script.Require("jqPlotEnhancedPieLegendRenderer");
 
-    Style.Require("jqPlot");
-    Style.Require("QuestionnaireAdmin");
     var urlBack = Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] });
 
     var width = 0;
     var height = 0;
-    var maxAnswers = Model.OrderByDescending(o => o.Answers.Count).FirstOrDefault();
+    var maxAnswers = Model.QuestionsStatsList.OrderByDescending(o => o.Answers.Count).FirstOrDefault();
 
     if (maxAnswers != null) {
         if (maxAnswers.Answers.Count <= 4) {
             width = 500;
             height = 300;
-        } else {
+        }
+        else {
             width = 600;
             height = 400;
         }
@@ -41,84 +42,170 @@
     <a href="@Url.Action("Index", "QuestionnaireStats", new { area = "Laser.Orchard.Questionnaires" })">@T("Questionnaire Statistics")</a>
     &#62; @Layout.Title
 </p>
-<h3><u>@Model.First().QuestionnaireTitle</u></h3>
-@using (Html.BeginForm("Detail", "QuestionnaireStats", FormMethod.Get)) {
-    <fieldset class="bulk-actions">
-        <label for="search">@T("Search:")</label>
-        @*        @Html.TextBoxFor(m => m.SearchExpression)*@
-        <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
-        <span class="date">
-            @Html.TextBox("from", Request.QueryString["from"], new { id = "dateFromResults", @class = "text" })
-        </span>
-        <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
-        <span class="date">
-            @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
-        </span>
-        @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
-    </fieldset>
-    <fieldset class="bulk-items st-btn-fieldset">
-        <button type="submit">@T("Filter")</button>
-        <a href="@Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] })" class="button">@T("Clear")</a>
-    </fieldset>
-    <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
-        <button type="submit" name="export" value="true">@T("Export")</button>
-        <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
-    </fieldset>
-}
 
-@if (Model.Count == 1 && Model.First().Answers == null) {
-    <div style="margin-top: 15px;">@T("This questionnaire contains no answers.")</div>
-} else {
-    <div style="margin-top: 15px;">
-        @{
-            foreach (var question in Model) {
-                <div id="answer-@question.QuestionId" class="st-answer">
-                    <div id="answerlist-@question.QuestionId" class="answerlist">
-                        <h5>@question.Question</h5>
-                        @{
-                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
-
-                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
-                            } else {
-                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
-                            }
-                        }
-
-                        @foreach (var answer in answersList) {
-                            <div>
-                                &bull; @answer.Answer
-                                <span style="font-weight: bold">( @answer.Count )</span>
-                            </div>
-                        }
+<div class="row">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">@T("Filter options") </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @using (Html.BeginForm("Detail", "QuestionnaireStats", FormMethod.Get)) {
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <fieldset class="bulk-actions">
+                                <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
+                                <span class="date">
+                                    @Html.TextBox("from", Request.QueryString["from"], new { id = "dateFromResults", @class = "text" })
+                                </span>
+                                <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
+                                <span class="date">
+                                    @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
+                                </span>
+                                @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
+                            </fieldset>
+                            <fieldset class="bulk-items st-btn-fieldset">
+                                <button type="submit">@T("Filter")</button>
+                                <a href="@Url.Action("Detail", new { idQuestionario = Request.QueryString["idQuestionario"] })" class="button">@T("Clear")</a>
+                            </fieldset>
+                        </div>
                     </div>
-
-                    @if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                        <div id="answerchart-@question.QuestionId" class="answerchart" style="width:@(width + "px"); height:@(height + "px");"></div>
-                    }
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
+                                <button type="submit" name="export" value="true">@T("Export")</button>
+                                <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
+                            </fieldset>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
                 </div>
+                <!-- /.row -->
+            }
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
 
-                if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
-                    <div style="margin-top: 5px; margin-left: 9px;">
-                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@T("Statistics for {0}", Model.Title)</h3>
+        </div>
+        <div class="box-body">
+            @if (Model.QuestionsStatsList.Count == 0) {
+                <div class="row">
+                    <div class="col-xs-12">
+                        @T("This questionnaire contains no answers.")
+                    </div>
+                </div>
+            }
+            else {
+                <div class="row">
+                    <div class="col-xs-4">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>@Model.ReplyingPeopleCount</h3>
+                                <p>@T("People")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Number of people replying to questionnaire") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-xs-4">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>@Model.QuestionsStatsList.Select(x => x.Answers.Sum(c => c.Count)).Sum()</h3>
+
+                                <p>@T("Answers")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-commenting" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Total number of given answers") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-xs-4">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>@((Model.FullyAnsweringPeople * 100 / Model.ReplyingPeopleCount).ToString("F0"))<sup style="font-size: 20px">%</sup></h3>
+
+                                <p>@T("Completeness")</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                            </div>
+                            <span class="small-box-footer">@T("Percentage of reply to all questions") </span>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        @{
+                            foreach (var question in Model.QuestionsStatsList) {
+                                <div id="answer-@question.QuestionId" class="st-answer">
+                                    <div id="answerlist-@question.QuestionId" class="answerlist">
+                                        <h5>@question.Question</h5>
+                                        @{
+                                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+
+                                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
+                                            }
+                                            else {
+                                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                                            }
+                                        }
+
+                                        @foreach (var answer in answersList) {
+                                            <div>
+                                                &bull; @answer.Answer
+                                                <span style="font-weight: bold">( @answer.Count )</span>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                        <div id="answerchart-@question.QuestionId" class="answerchart" style="width:@(width + "px"); height:@(height + "px");"></div>
+                                    }
+                                </div>
+
+                                if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                                    <div style="margin-top: 5px; margin-left: 9px;">
+                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
                            new {
                                area = "Laser.Orchard.Questionnaires",
-                               idQuestionario = Model.First().QuestionnairePart_Id,
+                               idQuestionario = Model.QuestionsStatsList.First().QuestionnairePart_Id,
                                idDomanda = question.QuestionId,
                                from = Request.QueryString["from"],
                                to = Request.QueryString["to"]
                            })">
-                            @T("Show all answers")
-                        </a>
+                                            @T("Show all answers")
+                                        </a>
+                                    </div>
+                                }
+                                <div class="line-separator"></div>
+                                <br />
+                            }
+                        }
                     </div>
-                }
-                <div class="line-separator"></div>
-                <br />
+                </div>
             }
-        }
+        </div>
     </div>
-}
-
+</div>
 @{
     using (Script.Foot()) {
         <script type="text/javascript">
@@ -135,7 +222,7 @@
                 });
                 </Text>
                 }
-                @foreach (var question in Model) {
+                @foreach (var question in Model.QuestionsStatsList) {
                     if (question.QuestionType != Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
                         <Text>
                 var data = [];

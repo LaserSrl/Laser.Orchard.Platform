@@ -111,6 +111,17 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 provinceId = part.BillingProvinceId;
             }
 
+            // if properties are null, get them from the address that was in OrderPart
+            if (string.IsNullOrWhiteSpace(city)) {
+                city = address.City;
+            }
+            if (string.IsNullOrWhiteSpace(province)) {
+                province = address.Province;
+            }
+            if (string.IsNullOrWhiteSpace(country)) {
+                country = address.Country;
+            }
+
             return new AddressRecord {
                 AddressType = addressType,
                 Honorific = address.Honorific,
@@ -148,7 +159,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             return new AddressEditViewModel(address) {
-                Countries = _addressConfigurationService.CountryOptions(countryId),
+                Countries = _addressConfigurationService
+                    .CountryOptions(address.AddressType, countryId),
                 CountryId = countryId
             };
         }

@@ -1,11 +1,13 @@
 ﻿using Laser.Orchard.AdvancedSearch.ViewModels;
 using Laser.Orchard.StartupConfig.Localization;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Aspects;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentTypes.Services;
+using Orchard.ContentTypes.ViewModels;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Containers.Models;
 using Orchard.Core.Contents;
@@ -26,6 +28,7 @@ using Orchard.Settings;
 using Orchard.Taxonomies.Helpers;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
+using Orchard.Taxonomies.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
@@ -59,6 +62,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
         private readonly IRepository<FieldIndexPartRecord> _cpfRepo;
         private readonly ILocalizationService _localizationService;
+        private readonly ICommonsServices _commonService;
 
         public AdminController(
             IOrchardServices orchardServices,
@@ -75,7 +79,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             IDateLocalization dataLocalization,
             ITaxonomyService taxonomyService,
             IRepository<FieldIndexPartRecord> cpfRepo,
-            ILocalizationService localizationService) {
+            ILocalizationService localizationService,
+            ICommonsServices commonService) {
             Services = orchardServices;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
@@ -93,6 +98,7 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             _notifier = notifier;
             _cpfRepo = cpfRepo;
             _localizationService = localizationService;
+            _commonService = commonService;
         }
 
         dynamic Shape { get; set; }
@@ -141,10 +147,10 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
             // FILTER QUERIES: START //
 
             // terms query
-            if (model.AdvancedOptions.SelectedTermId > 0) {
-                var termId = model.AdvancedOptions.SelectedTermId;
-                query = query.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => a.TermRecord.Id == termId));
-                lQuery = lQuery.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => a.TermRecord.Id == termId));
+            if (model.AdvancedOptions.SelectedTermIds != null && model.AdvancedOptions.SelectedTermIds.Count() > 0) {
+                var termIds = model.AdvancedOptions.SelectedTermIds;
+                query = query.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => termIds.Contains(a.TermRecord.Id)));
+                lQuery = lQuery.Join<TermsPartRecord>().Where(x => x.Terms.Any(a => termIds.Contains(a.TermRecord.Id)));
             }
 
             // owner query
@@ -165,14 +171,16 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 var user = _contentManager.Query<UserPart, UserPartRecord>().Where(u => u.NormalizedUserName == lowerName || u.Email == email).List().FirstOrDefault();
                 query = query.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
                 lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
-            } else if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedOwner)) {
+            }
+            else if (!String.IsNullOrWhiteSpace(model.AdvancedOptions.SelectedOwner)) {
                 var lowerName = model.AdvancedOptions.SelectedOwner == null ? "" : model.AdvancedOptions.SelectedOwner.ToLowerInvariant();
                 var email = model.AdvancedOptions.SelectedOwner;
                 var user = _contentManager.Query<UserPart, UserPartRecord>().Where(u => u.NormalizedUserName == lowerName || u.Email == email).List().FirstOrDefault();
                 if (user != null) {
                     query = query.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.OwnerId == user.Id);
-                } else {
+                }
+                else {
                     _notifier.Add(NotifyType.Warning, T("No user found. Ownership filter not applied."));
                 }
             }
@@ -186,10 +194,12 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Created) {
                     query = query.Join<CommonPartRecord>().Where(x => x.CreatedUtc >= fromD && x.CreatedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.CreatedUtc >= fromD && x.CreatedUtc <= toD);
-                } else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Modified) {
+                }
+                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Modified) {
                     query = query.Join<CommonPartRecord>().Where(x => x.ModifiedUtc >= fromD && x.ModifiedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.ModifiedUtc >= fromD && x.ModifiedUtc <= toD);
-                } else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Published) {
+                }
+                else if (model.AdvancedOptions.DateFilterType == DateFilterOptions.Published) {
                     query = query.Join<CommonPartRecord>().Where(x => x.PublishedUtc >= fromD && x.PublishedUtc <= toD);
                     lQuery = lQuery.Join<CommonPartRecord>().Where(x => x.PublishedUtc >= fromD && x.PublishedUtc <= toD);
                 }
@@ -250,11 +260,49 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             // FILTER MODELS: START //
             // language filter model
-            model.AdvancedOptions.LanguageOptions = _cultureRepo.Table
-                            .Select(ctd => new KeyValuePair<int, string>(ctd.Id, ctd.Culture));
+            model.AdvancedOptions.LanguageOptions = _commonService.ListCultures().Select(x => new KeyValuePair<int, string>(x.Id, x.Culture));
+
             // taxonomy filter model
+            // Only taxonomies hosted by current filtered content types should be shown
             var termList = new List<KeyValuePair<int, string>>();
-            foreach (var taxonomy in _taxonomyService.GetTaxonomies()) {
+            var listTaxonomyIds = new List<int>();
+
+            /* there is a filter for a specific type?
+                    yes: get only the filterd one 
+                    no: get all listable types */
+            var listContentTypes = !string.IsNullOrWhiteSpace(model.TypeName) ?
+                                        _contentDefinitionManager.ListTypeDefinitions().Where(x => x.Name.Equals(model.TypeName, StringComparison.InvariantCultureIgnoreCase)) :
+                                        GetListableTypes(false);
+
+            foreach (var ct in listContentTypes) {
+                var contentType = _contentDefinitionService.GetType(ct.Name);
+                var taxFields = contentType.Fields.Where(w =>
+                    w._Definition.FieldDefinition.Name == "TaxonomyField").ToList(); //TaxonomyFields within the content
+                var taxPartFields = contentType.Parts
+                    /*.Where(w => w._Definition.PartDefinition.Fields.Any(x => x.Name == "TaxonomyField"))*/
+                    .SelectMany(x => x.PartDefinition.Fields).Where(x => x.FieldDefinition.Name == "TaxonomyField"); //TaxonomyFields within the parts of the content
+                taxFields.AddRange(taxPartFields);
+
+                foreach (var tf in taxFields) {
+                    var taxName = tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy;
+                    if (string.IsNullOrWhiteSpace(taxName)) {
+                        continue;//TaxonomyField is not yet set
+                    }
+                    else {
+                        var taxonomySetForField = _taxonomyService.GetTaxonomyByName(tf.Settings.GetModel<TaxonomyFieldSettings>().Taxonomy);
+                        if (taxonomySetForField == null) continue; //handles missing taxonomy name
+                                                                   // show taxonomies and their localizations 
+                        listTaxonomyIds.Add(taxonomySetForField.Id);
+                        if (taxonomySetForField.As<LocalizationPart>() != null) {
+                            listTaxonomyIds.AddRange(_localizationService.GetLocalizations(taxonomySetForField).Select(x => x.Id));
+                        }
+                    }
+
+                }
+
+            }
+            //TODO: optimize code 
+            foreach (var taxonomy in _taxonomyService.GetTaxonomies().Where(x => listTaxonomyIds.Contains(x.Id))) {
                 termList.Add(new KeyValuePair<int, string>(-1, taxonomy.Name));
                 foreach (var term in _taxonomyService.GetTerms(taxonomy.Id)) {
                     var gap = new string('-', term.GetLevels());
@@ -265,6 +313,9 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                     termList.Add(new KeyValuePair<int, string>(term.Id, gap + term.Name));
                 }
             }
+
+
+
             model.AdvancedOptions.TaxonomiesOptions = termList;
 
             // extended status
@@ -419,7 +470,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                         selLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedLanguageId ||
                                 x.CultureId == 0;
-                    } else {
+                    }
+                    else {
                         selLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedLanguageId;
                     }
@@ -433,7 +485,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                         untranLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedUntranslatedLanguageId ||
                                 x.CultureId == 0;
-                    } else {
+                    }
+                    else {
                         untranLangPredicate =
                             x => x.CultureId == model.AdvancedOptions.SelectedUntranslatedLanguageId;
                     }
@@ -453,7 +506,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 pagerShape = Shape.Pager(pager).TotalItemCount(query.Count());
                 pageOfContentItems = query.Slice(pager.GetStartIndex(), pager.PageSize).ToList();
 
-            } else {
+            }
+            else {
                 Services.Notifier.Error(T("Not authorized to visualize any item."));
             }
 
@@ -505,7 +559,11 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
                 routeValues["Options.ContentsStatus"] = options.ContentsStatus; //todo: don't hard-code the key
                 routeValues["AdvancedOptions.SelectedLanguageId"] = advancedOptions.SelectedLanguageId; //todo: don't hard-code the key
                 routeValues["AdvancedOptions.SelectedUntranslatedLanguageId"] = advancedOptions.SelectedUntranslatedLanguageId; //todo: don't hard-code the key
-                routeValues["AdvancedOptions.SelectedTermId"] = advancedOptions.SelectedTermId; //todo: don't hard-code the key
+                for (int i = 0; i < (advancedOptions.SelectedTermIds != null ? advancedOptions.SelectedTermIds.Count() : 0); i++) {
+                    if (advancedOptions.SelectedTermIds[i] > 0) {
+                        routeValues.Add("AdvancedOptions.SelectedTermIds[" + i + "]", advancedOptions.SelectedTermIds[i]); //todo: don't hard-code the key
+                    }
+                }
                 //condition to add the owner to the query string only if we are not going to ignore it anyway
                 if (    //user may see everything
                         (seeAll
@@ -536,7 +594,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
                 if (GetListableTypes(false).Any(ctd => string.Equals(ctd.Name, options.SelectedFilter, StringComparison.OrdinalIgnoreCase))) {
                     routeValues["id"] = options.SelectedFilter;
-                } else {
+                }
+                else {
                     routeValues.Remove("id");
                 }
             }
@@ -770,7 +829,8 @@ namespace Laser.Orchard.AdvancedSearch.Controllers {
 
             try {
                 Services.ContentManager.Clone(contentItem);
-            } catch (InvalidOperationException) {
+            }
+            catch (InvalidOperationException) {
                 Services.Notifier.Warning(T("Could not clone the content item."));
                 return this.RedirectLocal(returnUrl, () => RedirectToAction("List"));
             }

@@ -31,7 +31,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     Message = T("No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>.", _settingsUrl),
                     Type = NotifyType.Error
                 };
-            } else if (!_addressConfigurationSettingsService.SelectedTerritoryRecords.Any()) {
+            } else if (!_addressConfigurationSettingsService.SelectedCountryIds.Any()) {
                 yield return new NotifyEntry {
                     Message = T("No valid countries were configured. Have an administrator configure one <a href=\"{0}\">here</a>.", _settingsUrl),
                     Type = NotifyType.Error

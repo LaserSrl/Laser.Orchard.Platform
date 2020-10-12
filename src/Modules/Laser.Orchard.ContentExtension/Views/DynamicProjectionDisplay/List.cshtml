@@ -1,16 +1,84 @@
 ﻿@using Orchard.ContentManagement
 @using Orchard.Fields.Fields
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(":button.primaryAction").hide();
-        $("#FormAjaxList").submit(function (e) {
-            var url = '@Url.Action("AjaxList", "DynamicProjectionDisplay", new { area = "Laser.Orchard.ContentExtension"})'
+@using Orchard.DisplayManagement;
+@{
+    IContentManager _contentManager;
+    WorkContext.TryResolve<IContentManager>(out _contentManager);
+    Layout.Title = Model.Part.AdminMenuText;
+
+    Script.Require("JQuery").AtHead();
+    Style.Require("Bootstrap").AtHead();
+    Style.Require("AdminDynamicProjections").AtHead();
+    Func<ContentItem, IShape> ToShape = Model.CalculateFilterContentShape;
+}
+<div class="row">
+    <div class="col-12">
+        <form id="FormAjaxList" method="get">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@T("Search filters")</h3>
+                </div>
+                <div class="box-body">
+                    <input type='hidden' name='contentid' value='@Model.Part.Id' />
+                    <input type='hidden' name='page' value='1' />
+                    @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
+                        if (!string.IsNullOrEmpty(Model.Form)) {
+                            @Html.Partial((string)(Model.Form), (ContentItem)Model.FilterContent) // passing the shape in order to have a way to alterate it
+                        }
+                        if (Model.FilterContent != null) {
+                            @Display(ToShape(Model.FilterContent)); //Model.CalculateFilterContentShape is a delegate calculating shape from content and defined
+                        }
+                    }
+                </div>
+                <div class="box-footer align-right padding-right-35">
+                    <button type="submit" value="submit">@T("Apply")</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div id="AjaxList">
+    </div>
+}
+
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        @*public functions always accessible beacuase they need to be call by List.cshtml (this one) and AjaxList.cstml*@
+        var transformPager = function () { @*Change pageSizes from ul li to select*@
+            $('ul.selector').each(function () {
+                var self = $(this),
+                    options = $.map(self.find("li"), function (li) {
+                        var self = $(li);
+                        return $("<option/>", {
+                            value: self.children("a").attr("href"),
+                            text: self.text(),
+                            selected: self.hasClass("selected")
+                        })[0];
+                    }),
+                    select = $("<select/>", {
+                        id: self.attr("id") + "Selector",
+                        "class": self.attr("class"),
+                        name: self.attr("name") + "Selector"
+                    }).change(onSelectChange).append(options);
+                self.replaceWith(select);
+            });
+        };
+        var onSelectChange = function () { @*When the select of pageSizes changes its value, if calls AjaxList in order to refresh the list*@
+            var url = $(this).val();
             $.ajax({
                 type: "GET",
                 url: url,
-                data: $("#FormAjaxList").serialize(),
                 success: function (data) {
-                    // Handle the fact that returnUrls have likely been generated using the 
+                    // Handle the fact that returnUrls have likely been generated using the
                     // ajax request, hence following them is wrong.
                     var retUrlRegex = /returnUrl=\S*AjaxList/g;
                     var result = data.replace(retUrlRegex, function (x) {
@@ -20,33 +88,63 @@
                     });
                     $("#AjaxList").html(result);
                 }
+            }).done(function () {
+                transformPager();
+                setTimeout(function () {
+                    $("#overlay").fadeOut(300);
+                }, 500);
+            });;
+            $(this).attr("disabled", true);
+        };
+
+        $(document).ready(function () {
+
+            transformPager();
+
+            $(window).on("reinitialize", function () {
+                transformPager();
             });
+
+        $(document).ajaxSend(function () {
+            $("#overlay").fadeIn(300);
+        });
+
+        $(":button.primaryAction").hide();
+        $("#FormAjaxList").submit(function (e) {
+            var url = '@Url.Action("AjaxList", "DynamicProjectionDisplay", new { area = "Laser.Orchard.ContentExtension" })'
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: $("#FormAjaxList").serialize(),
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                },
+                success: function (data) {
+                    // Handle the fact that returnUrls have likely been generated using the
+                    // ajax request, hence following them is wrong.
+                    var retUrlRegex = /returnUrl=\S*AjaxList/g;
+                    var result = data.replace(retUrlRegex, function (x) {
+                        // the returnUrl should point to the List action, rather than the
+                        // one for the ajax request.
+                        return x.replace("AjaxList", "List");
+                    });
+                    $("#AjaxList").html(result);
+                }
+            }).done(function () {
+                transformPager();
+                setTimeout(function () {
+                    $("#overlay").fadeOut(300);
+                }, 500);
+            }).fail(function () {
+                    alert("@T("Page returned an error an results cannot be displayed.")");
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(300);
+                    }, 500);
+                })
+                ;
             e.preventDefault();
         });
         $("#FormAjaxList").submit();
     });
-</script>
-@{
-    IContentManager _contentManager;
-    WorkContext.TryResolve<IContentManager>(out _contentManager);
-    Layout.Title = Model.Part.AdminMenuText;
-
-    Script.Require("JQuery").AtHead();
-}
-<form id="FormAjaxList" method="get">
-    <input type='hidden' name='contentid' value='@Request.QueryString["contentid"]' />
-    <input type='hidden' name='page' value='1' />
-    @if (!string.IsNullOrEmpty(Model.Form) || Model.FilterContent != null) {
-        if (!string.IsNullOrEmpty(Model.Form)) {
-            @Html.Partial((string)(Model.Form))
-        }
-        if (Model.FilterContent != null) {
-            @Display(_contentManager.BuildEditor(Model.FilterContent));
-        }
-        <button type="submit" value="submit">Applica</button>
-    }
-</form>
-@using (Html.BeginFormAntiForgeryPost()) {
-    <div id="AjaxList">
-    </div>
+    </script>
 }

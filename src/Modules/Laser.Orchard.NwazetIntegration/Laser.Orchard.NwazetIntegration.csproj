@@ -26,6 +26,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +69,10 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -76,6 +82,9 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -103,46 +112,103 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
+    <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\ProductVatConfigurationPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
+    <Compile Include="Drivers\TerritoryAddressTypePartDriver.cs" />
+    <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
+    <Compile Include="Filters\CheckoutStepsFilter.cs" />
+    <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
+    <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
+    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
+    <Compile Include="Migration\MigrationsGTM.cs" />
+    <Compile Include="Models\AddedMeasuringPurchase.cs" />
+    <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\GTMProductPart.cs" />
+    <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\ProductVatConfigurationPartInputPriceSettings.cs" />
+    <Compile Include="Models\TerritoryAddressTypePart.cs" />
+    <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
+    <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
+    <Compile Include="PartSettings\GTMProductEditEvent.cs" />
+    <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
+    <Compile Include="Services\GTMCartExtensionProvider.cs" />
+    <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
+    <Compile Include="Services\GTMProductService.cs" />
+    <Compile Include="Services\ICheckoutCondition.cs" />
+    <Compile Include="Services\ICheckoutHelperService.cs" />
+    <Compile Include="Services\IGTMMeasuringPurchase.cs" />
+    <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
-    <Compile Include="Services\IPosServiceIntegration.cs" />
+    <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
+    <Compile Include="Services\NwazetCommunicationService.cs" />
+    <Compile Include="Services\PosServiceIntegration.cs" />
+    <Compile Include="Services\IValidationProvider.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
+    <Compile Include="ViewModels\GTMProductSettingVM.cs" />
+    <Compile Include="ViewModels\GTMProductVM.cs" />
+    <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
+    <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
+    <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryTag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets.json" />
@@ -151,9 +217,21 @@
     <Content Include="Scripts\address-configuration.min.js">
       <DependentUpon>address-configuration.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\ecommerce-tag-manager.js" />
+    <Content Include="Scripts\ecommerce-tag-manager.min.js">
+      <DependentUpon>ecommerce-tag-manager.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\ship.js" />
     <Content Include="Scripts\ship.min.js">
       <DependentUpon>ship.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\tagit.js" />
+    <Content Include="Scripts\tagit.min.js">
+      <DependentUpon>tagit.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\territories-autocomplete.js" />
+    <Content Include="Scripts\territories-autocomplete.min.js">
+      <DependentUpon>territories-autocomplete.js</DependentUpon>
     </Content>
     <Content Include="Styles\admin-style.css" />
     <Content Include="Styles\admin-style.min.css">
@@ -178,9 +256,21 @@
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Forms\Orchard.Forms.csproj">
+      <Project>{642A49D7-8752-4177-80D6-BFBBCFAD3DE0}</Project>
+      <Name>Orchard.Forms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Localization\Orchard.Localization.csproj">
       <Project>{fbc8b571-ed50-49d8-8d9d-64ab7454a0d6}</Project>
       <Name>Orchard.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.MediaLibrary\Orchard.MediaLibrary.csproj">
+      <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
+      <Name>Orchard.MediaLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
+      <Name>Orchard.Tokens</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Workflows\Orchard.Workflows.csproj">
       <Project>{7059493c-8251-4764-9c1e-2368b8b485bc}</Project>
@@ -263,7 +353,31 @@
     </None>
     <Content Include="Views\EditorTemplates\Parts\Order.AdvancedAddress.cshtml" />
     <Content Include="Views\EditorTemplates\AddressEditViewModel.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.AdministrativeType.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.AddressType.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\CheckoutSettings.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\Shipping.cshtml" />
+    <Content Include="Views\Checkout\Review.cshtml" />
+    <Content Include="Views\AddressSummaryForm.cshtml" />
+    <Content Include="Views\ShippingSummaryForm.cshtml" />
+    <Content Include="Views\CheckoutCartSummary.cshtml" />
+    <Content Include="Views\TerritorySelector.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ProductPriceWithVATEditor.cshtml" />
+    <Content Include="Views\DefinitionTemplates\ProductVatConfigurationPartInputPriceSettingsVM.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Product.TagManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\GTMShoppingCart.cshtml" />
+    <Content Include="Views\GTMPurchase.cshtml" />
+    <Content Include="Views\GTMCheckoutStep.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -308,4 +422,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
+  </Target>
 </Project>

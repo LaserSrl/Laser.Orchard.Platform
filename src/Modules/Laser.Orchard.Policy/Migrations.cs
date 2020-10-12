@@ -11,7 +11,10 @@ namespace Laser.Orchard.Policy {
             SchemaBuilder.CreateTable("PolicyTextInfoPartRecord", table => table
                 .ContentPartRecord()
                 .Column<bool>("UserHaveToAccept")
-                .Column<int>("Priority"));
+                .Column<int>("Priority")
+                .Column<string>("PolicyType", col => col.WithLength(25))
+                .Column<bool>("AddPolicyToRegistration")
+                );
 
             SchemaBuilder.CreateTable("UserPolicyPartRecord", table => table
                 .ContentPartRecord());
@@ -22,21 +25,35 @@ namespace Laser.Orchard.Policy {
                 .Column<int>("PolicyTextInfoPartRecord_Id")
                 .Column<DateTime>("AnswerDate")
                 .Column<bool>("Accepted")
+                .Column<int>("UserPartRecord_Id", col => col.Nullable())
+                );
+
+            SchemaBuilder.CreateTable("UserPolicyAnswersHistoryRecord", table => table
+                .Column<int>("Id", col => col.Identity().PrimaryKey())
+                .Column<int>("UserPolicyPartRecord_Id")
+                .Column<int>("PolicyTextInfoPartRecord_Id")
+                .Column<DateTime>("AnswerDate")
+                .Column<DateTime>("EndValidity")
+                .Column<bool>("Accepted")
+                .Column<int>("UserPartRecord_Id", col => col.Nullable())
                 );
 
             // Creating Policy ContentPart
             ContentDefinitionManager.AlterPartDefinition("PolicyPart", part => part
                 .Attachable(true)
+                .WithDescription("Adds the ability to define from which policies the content dependes on.")
                 );
             // Creating PolicyText ContentPart
             ContentDefinitionManager.AlterPartDefinition("PolicyTextInfoPart", part => part
                 .Attachable(false)
+                .WithDescription("Adds the ability to define a content as a policy.")
                 );
 
             // Creating PolicyText ContentItem
             ContentDefinitionManager.AlterTypeDefinition("PolicyText", content => content
                 .Draftable(false)
                 .Creatable()
+                .Listable()
                 .WithPart("CommonPart")
                 .WithPart("TitlePart")
                 .WithPart("AutoroutePart", part => part.WithSetting("AutorouteSettings.PatternDefinitions", "[{Name:'Policy', Pattern: 'policy/{Content.Slug}', Description: 'policy/my-page'}]"))
@@ -45,10 +62,14 @@ namespace Laser.Orchard.Policy {
                 .WithPart("PolicyTextInfoPart")
                 );
 
+            ContentDefinitionManager.AlterPartDefinition("UserPolicyPart", part => part
+            .Attachable(true)
+            .WithDescription("Summarizes the choices of the policies for a content and ties policy functionalities around a user."));
+
             ContentDefinitionManager.AlterTypeDefinition("User", content => content
                 .WithPart("UserPolicyPart"));
 
-            return 1;
+            return 8;
         }
 
         public int UpdateFrom1() {
@@ -89,6 +110,31 @@ namespace Laser.Orchard.Policy {
             SchemaBuilder.AlterTable("PolicyTextInfoPartRecord", table => table
                 .AddColumn<bool>("AddPolicyToRegistration"));
             return 6;
+        }
+
+        public int UpdateFrom6() {
+            ContentDefinitionManager.AlterPartDefinition("PolicyPart", part => part
+                .WithDescription("Adds the ability to define from which policies the content dependes on.")
+                );
+
+            ContentDefinitionManager.AlterPartDefinition("PolicyTextInfoPart", part => part
+                .WithDescription("Adds the ability to define a content as a policy.")
+                );
+
+            ContentDefinitionManager.AlterPartDefinition("UserPolicyPart", part => part
+            .Attachable(true)
+            .WithDescription("Resume the choices of the policies for the content."));
+
+
+            return 7;
+        }
+
+        public int UpdateFrom7() {
+
+            ContentDefinitionManager.AlterPartDefinition("UserPolicyPart", part => part
+                .WithDescription("Summarizes the choices of the policies for a content and ties policy functionalities around a user."));
+
+            return 8;
         }
     }
 }

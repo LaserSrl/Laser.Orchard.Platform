@@ -51,14 +51,21 @@ namespace Laser.Orchard.UsersExtensions.Filters {
                 "Laser.Orchard.Policy.Controllers.PoliciesController",
                 "Orchard.Users.Controllers.AccountController",
                 "Laser.Orchard.OpenAuthentication.Controllers.AccountController",
-                "Orchard.Taxonomies.Controllers.LocalizedTaxonomyController"
+                "Orchard.Taxonomies.Controllers.LocalizedTaxonomyController",
+                "Nwazet.Commerce.Controllers.ShoppingCartController.NakedCart"
             };
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {
             bool isAdminService = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AdminServiceAttribute), false).Any();
 
-            if (_workContext.GetContext().CurrentUser != null && !allowedControllers.Contains(filterContext.Controller.GetType().FullName) && !AdminFilter.IsApplied(filterContext.RequestContext) && !isAdminService) {
+            var fullActionName = filterContext.Controller.GetType().FullName + "." + filterContext.ActionDescriptor.ActionName;
+
+            if (_workContext.GetContext().CurrentUser != null && 
+                !allowedControllers.Contains(filterContext.Controller.GetType().FullName) && 
+                !allowedControllers.Contains(fullActionName)  &&
+                !AdminFilter.IsApplied(filterContext.RequestContext) &&
+                !isAdminService) {
                 var language = _workContext.GetContext().CurrentCulture;
                 IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices.GetUserLinkedPolicies(language);
 
@@ -134,7 +141,7 @@ namespace Laser.Orchard.UsersExtensions.Filters {
             IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices
                 .GetUserLinkedPolicies(language);
             var userPolicies = _policyServices
-                .GetPoliciesForUserOrSession(false, language)
+                .GetPoliciesForCurrentUser(false, language)
                 .Policies
                 .Where(w => w.Accepted || (w.AnswerDate > DateTime.MinValue && !w.PolicyText.UserHaveToAccept))
                 .Select(s => s.PolicyTextId)

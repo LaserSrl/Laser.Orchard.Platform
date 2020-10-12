@@ -10,5 +10,23 @@
     "inputFiles": [
       "Scripts/ship.js"
     ]
+  },
+  {
+    "outputFileName": "Scripts/ecommerce-tag-manager.min.js",
+    "inputFiles": [
+      "Scripts/ecommerce-tag-manager.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/territories-autocomplete.min.js",
+    "inputFiles": [
+      "Scripts/territories-autocomplete.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/tagit.min.js",
+    "inputFiles": [
+      "Scripts/tagit.js"
+    ]
   }
 ]

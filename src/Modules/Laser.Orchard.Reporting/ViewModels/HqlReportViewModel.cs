@@ -34,5 +34,7 @@ namespace Laser.Orchard.Reporting.ViewModels {
 
         [Required]
         public int? QueryId { get; set; }
+
+        public string ColumnAliases { get; set; }
     }
 }

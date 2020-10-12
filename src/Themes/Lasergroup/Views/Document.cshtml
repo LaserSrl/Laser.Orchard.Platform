@@ -14,10 +14,10 @@
     Script.Include("slick.js", "head.deferred.min.js")
         .SetAttribute("defer", "").AtHead();
 
-    Style.Include("styles.css", "style.premedia.min.css").AtHead();
-    Style.Include("slick.css", "style.premedia.min.css").AtHead();
+    Style.Include("styles.css", "style.premedia.min.css?v=3").AtHead();
+    Style.Include("slick.css", "style.premedia.min.css?v=3").AtHead();
 
-    Style.Include("style.css?v=3", "style.premedia.min.css").AtHead();
+    Style.Include("style.css?v=3", "style.premedia.min.css?v=3").AtHead();
 
     Style.Include("style.media.min768.css?v=3", "style.media.min768.min.css?v=3")
         .SetAttribute("media", "(min-width:768px)")
@@ -32,7 +32,7 @@
     Style.Include("style.media.max1649.css?v=3", "style.media.max1649.min.css?v=3")
         .SetAttribute("media", "(max-width:1649px)")
         .AtHead();
-    Style.Include("style.media.max767.css?v=3", "style.media.max767.min.css?v=3")
+    Style.Include("style.media.max767.css?v=4", "style.media.max767.min.css?v=4")
         .SetAttribute("media", "(max-width:767px)")
         .AtHead();
 

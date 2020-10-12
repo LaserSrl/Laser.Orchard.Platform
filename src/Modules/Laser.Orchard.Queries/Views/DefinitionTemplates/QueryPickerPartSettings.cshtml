@@ -1,0 +1,6 @@
+﻿@model Laser.Orchard.Queries.Models.QueryPickerPartSettings
+<fieldset>
+    @Html.CheckBoxFor(m => m.IsForHqlQueries)
+    @Html.LabelFor(m => m.IsForHqlQueries, T("Picker is for hql queries").Text, new { @class = "forcheckbox" })
+</fieldset>
+

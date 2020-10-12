@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
 using Orchard;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -55,6 +56,22 @@ public interface IPosService : IDependency {
     /// <param name="payment"></param>
     /// <returns></returns>
     string GetChargeAdminUrl(PaymentRecord payment);
+
+    /// <summary>
+    /// Get the type of the Controller for the action that will start the payment using a specific
+    /// payment gateway.
+    /// </summary>
+    /// <returns>The Type of the Controller.</returns>
+    /// <remarks>This method is used along GetPosActionName() when testing which payment gateway
+    /// is being used (if any).</remarks>
+    Type GetPosActionControllerType();
+    /// <summary>
+    /// Get the name of the Action that will start the payment using a specific payment gateway.
+    /// </summary>
+    /// <returns>The name of the action.</returns>
+    /// <remarks>This method is used along GetPosActionControllerType() when testing which payment gateway
+    /// is being used (if any).</remarks>
+    string GetPosActionName();
     #endregion
 
     #region Methods implemented in the abstract service base

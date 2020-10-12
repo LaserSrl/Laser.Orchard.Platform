@@ -51,7 +51,7 @@
                     @foreach (var item in items) {
                         <tr class="remX">
                             <td class="quantity">@item.Quantity &times;</td>
-                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])">@item.Title</a></td>
+                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])" data-product-id="@item.ProductId">@item.Title</a></td>
                             <td class="price">@currencyInUse.PriceAsString(item.Price, cultureInUse)</td>
                             <td class="price">@currencyInUse.PriceAsString(item.LinePriceAdjustment, cultureInUse)</td>
                         </tr>

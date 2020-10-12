@@ -6,10 +6,12 @@ using System.Web;
 
 namespace Laser.Orchard.Questionnaires.Models {
     public class AnswerRecord {
+
         public AnswerRecord() {
             Published = true;
         }
         public virtual int Id { get; set; }
+        public virtual string GUIdentifier { get; set; }
         [MaxLength(1200)]
         public virtual string Answer { get; set; }
         public virtual bool Published { get; set; }
@@ -19,5 +21,7 @@ namespace Laser.Orchard.Questionnaires.Models {
 
         public virtual bool CorrectResponse { get; set; }
         public virtual string AllFiles { get; set; }
+
+
     }
 }
