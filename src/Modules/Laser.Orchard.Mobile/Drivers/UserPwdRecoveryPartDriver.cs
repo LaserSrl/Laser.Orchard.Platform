@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Laser.Orchard.Mobile.Models;
-using Laser.Orchard.Mobile.ViewModels;
+﻿using Laser.Orchard.Mobile.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;

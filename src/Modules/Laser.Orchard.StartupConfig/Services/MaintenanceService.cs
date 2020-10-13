@@ -28,9 +28,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         public List<MaintenanceVM> Get() {
             var listofcontentitems = _orchardServices.ContentManager.Query<MaintenancePart>(VersionOptions.Published).List();
             List<MaintenanceVM> ListMaintenanceVM = new List<MaintenanceVM>();
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<MaintenancePart, MaintenanceVM>();
+            });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
             foreach (var y in listofcontentitems) {
                 MaintenanceVM MaintenanceVM = new MaintenanceVM();
-                Mapper.Map<MaintenancePart, MaintenanceVM>(y.As<MaintenancePart>(), MaintenanceVM);
+                _mapper.Map<MaintenancePart, MaintenanceVM>(y.As<MaintenancePart>(), MaintenanceVM);
                 ListMaintenanceVM.Add(MaintenanceVM);
             }
             return ListMaintenanceVM;
@@ -38,9 +44,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         public List<MaintenanceVM> ListAll() {
             var listofcontentitems = _orchardServices.ContentManager.Query<MaintenancePart>(VersionOptions.Latest).List();
             List<MaintenanceVM> ListMaintenanceVM = new List<MaintenanceVM>();
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<MaintenancePart, MaintenanceVM>();
+            });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
             foreach (var y in listofcontentitems) {
                 MaintenanceVM MaintenanceVM = new MaintenanceVM();
-                Mapper.Map<MaintenancePart, MaintenanceVM>(y.As<MaintenancePart>(), MaintenanceVM);
+                _mapper.Map<MaintenancePart, MaintenanceVM>(y.As<MaintenancePart>(), MaintenanceVM);
                 MaintenanceVM.IDcontentitem = y.Id;
                 MaintenanceVM.Published = y.HasPublished();
                 ListMaintenanceVM.Add(MaintenanceVM);

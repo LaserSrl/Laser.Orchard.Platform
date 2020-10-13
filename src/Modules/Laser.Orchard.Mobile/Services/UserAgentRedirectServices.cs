@@ -24,31 +24,37 @@ namespace Laser.Orchard.Mobile.Services {
         }
 
         public UserAgentRedirectEdit BuildEditModelForUserAgentRedirectPart(UserAgentRedirectPart part) {
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<AppStoreRedirectRecord, AppStoreEdit>();
                 cfg.CreateMap<UserAgentRedirectPart, UserAgentRedirectEdit>()
                     .ForMember(dest => dest.Stores, opt => opt.MapFrom(src => src.Stores));
             });
-            var viewModel = Mapper.Map<UserAgentRedirectEdit>(part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            var viewModel = _mapper.Map<UserAgentRedirectEdit>(part);
             return (viewModel);
         }
 
 
         public void Update(ContentItem content, UserAgentRedirectEdit editModel) {
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<AppStoreEdit, AppStoreRedirectRecord>();
                 cfg.CreateMap<UserAgentRedirectEdit, UserAgentRedirectPart>()
                     .ForMember(dest => dest.Stores, opt => opt.Ignore());
             });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
             var part = content.As<UserAgentRedirectPart>();
-            Mapper.Map(editModel, part);
+            _mapper.Map(editModel, part);
             var partRecord = part.Record;
             var partId = part.Id;
 
             // Update and Delete 
             foreach (var item in editModel.Stores.Where(w => w.Id > 0)) {
                 AppStoreRedirectRecord record = _appStoreRedirectRepository.Get(item.Id);
-                Mapper.Map(item, record);
+                _mapper.Map(item, record);
                 var recordQuestionID = record.Id;
                 record.UserAgentRedirectPartRecord = partRecord;
                 if (item.Delete) {

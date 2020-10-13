@@ -132,10 +132,13 @@ namespace Laser.Orchard.Twitter.Drivers {
    
         protected override DriverResult Editor(TwitterPostPart part, dynamic shapeHelper) {
             TwitterPostVM vm = new TwitterPostVM();
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<TwitterPostPart, TwitterPostVM>();
             });
-            Mapper.Map<TwitterPostPart, TwitterPostVM>(part, vm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<TwitterPostPart, TwitterPostVM>(part, vm);
             TwitterPostPartSettingVM setting = part.Settings.GetModel<TwitterPostPartSettingVM>();
             if (!string.IsNullOrEmpty(setting.Title))
                 vm.ShowTitle = false;
@@ -170,10 +173,13 @@ namespace Laser.Orchard.Twitter.Drivers {
         protected override DriverResult Editor(TwitterPostPart part, IUpdateModel updater, dynamic shapeHelper) {
             TwitterPostVM vm = new TwitterPostVM();
             updater.TryUpdateModel(vm, Prefix, null, null);
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap< TwitterPostVM, TwitterPostPart > ();
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<TwitterPostVM, TwitterPostPart>();
             });
-            Mapper.Map<TwitterPostVM, TwitterPostPart>(vm, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<TwitterPostVM, TwitterPostPart>(vm, part);
             if (vm.SelectedList != null)
                 part.AccountList = vm.SelectedList.Select(x => Int32.Parse(x)).ToArray();
             else
