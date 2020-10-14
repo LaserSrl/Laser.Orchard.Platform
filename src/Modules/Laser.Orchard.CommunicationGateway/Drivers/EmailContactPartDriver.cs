@@ -25,16 +25,19 @@ namespace Laser.Orchard.CommunicationGateway.Drivers {
         private readonly IRepository<CommunicationEmailRecord> _repoEmail;
         private readonly ITransactionManager _transaction;
         private readonly IOrchardServices _orchardServices;
+        private IMapper _mapper;
 
         public EmailContactPartDriver(IRepository<CommunicationEmailRecord> repoEmail, ITransactionManager transaction, IOrchardServices orchardServices) {
             _repoEmail = repoEmail;
             T = NullLocalizer.Instance;
             _transaction = transaction;
             _orchardServices = orchardServices;
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<CommunicationEmailRecord, View_EmailVM_element>();
                 cfg.CreateMap<View_EmailVM_element, CommunicationEmailRecord>();
             });
+            _mapper = mapperConfiguration.CreateMapper();
         }
 
         protected override DriverResult Display(EmailContactPart part, string displayType, dynamic shapeHelper) {
@@ -48,7 +51,7 @@ namespace Laser.Orchard.CommunicationGateway.Drivers {
                         List<CommunicationEmailRecord> oldviewModel = part.EmailEntries.Value.ToList();
                         foreach (CommunicationEmailRecord cm in oldviewModel) {
                             vm = new View_EmailVM_element();
-                            Mapper.Map<CommunicationEmailRecord, View_EmailVM_element>(cm, vm);
+                            _mapper.Map<CommunicationEmailRecord, View_EmailVM_element>(cm, vm);
                             viewModel.Elenco.Add(vm);
                         }
                     }
@@ -72,7 +75,7 @@ namespace Laser.Orchard.CommunicationGateway.Drivers {
                 List<CommunicationEmailRecord> oldviewModel = part.EmailEntries.Value.ToList();
                 foreach (CommunicationEmailRecord cm in oldviewModel) {
                     vm = new View_EmailVM_element();
-                    Mapper.Map<CommunicationEmailRecord, View_EmailVM_element>(cm, vm);
+                    _mapper.Map<CommunicationEmailRecord, View_EmailVM_element>(cm, vm);
                     viewModel.Elenco.Add(vm);
                 }
             }
@@ -118,7 +121,7 @@ namespace Laser.Orchard.CommunicationGateway.Drivers {
                     else {
                         View_EmailVM_element vm = new View_EmailVM_element();
                         CommunicationEmailRecord cmr = new CommunicationEmailRecord();
-                        Mapper.Map<View_EmailVM_element, CommunicationEmailRecord>(vm, cmr);
+                        _mapper.Map<View_EmailVM_element, CommunicationEmailRecord>(vm, cmr);
                         cmr.Email = vmel.Email;
                         cmr.Validated = vmel.Validated;
                         cmr.AccettatoUsoCommerciale = vmel.AccettatoUsoCommerciale;
