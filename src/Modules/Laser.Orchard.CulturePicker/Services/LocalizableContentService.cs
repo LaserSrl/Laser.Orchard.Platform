@@ -140,14 +140,16 @@ namespace Laser.Orchard.CulturePicker.Services {
             bool redirect = false; //tells wheter there has been a translation of id
             foreach (int id in originalIds) {
                 var item = _contentManager.Get(id);
-                var locInfo = _localizationService.GetLocalizations(item, VersionOptions.Published); //AllVersions);
-                var tran = locInfo.Where(e => e.Culture.Culture == cultureName).FirstOrDefault();
-                if (tran == null)
-                    translatedIds.Add(id);
-                else {
-                    translatedIds.Add(tran.Id);
-                    if (tran.Id != id)
-                        redirect = true;
+                if (item.As<LocalizationPart>() != null) {
+                    var locInfo = _localizationService.GetLocalizations(item, VersionOptions.Published); //AllVersions);
+                    var tran = locInfo.Where(e => e.Culture.Culture == cultureName).FirstOrDefault();
+                    if (tran == null)
+                        translatedIds.Add(id);
+                    else {
+                        translatedIds.Add(tran.Id);
+                        if (tran.Id != id)
+                            redirect = true;
+                    }
                 }
             }
             return redirect;
