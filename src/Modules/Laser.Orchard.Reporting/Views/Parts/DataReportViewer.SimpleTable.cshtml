@@ -42,7 +42,7 @@
                                 itemList.Add(string.Format("{0}: {1}", headers[idx], Convert.ToString(element, CultureInfo.InvariantCulture)));
                                 break;
                             default:
-                                itemList.Add(string.Format("{0}: \"{1}\"", headers[idx], Html.Encode(element.ToString())));
+                                itemList.Add(string.Format("{0}: \"{1}\"", headers[idx], Html.Encode(element.ToString().Replace("\n", "\\r\\n").Replace(Environment.NewLine, "\\r\\n").Replace("\"", "\\\""))));
                                 break;
                         }
                     } else {
