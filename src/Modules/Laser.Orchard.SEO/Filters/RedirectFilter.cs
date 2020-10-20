@@ -66,6 +66,17 @@ namespace Laser.Orchard.SEO.Filters {
 
             //if querystring is in redirects table, use it
             var pathQs = string.Join("/", strippedSegments) + url.Query;
+
+            // specific condition for the not found page
+            // error handled in case the secure socket filter checks the existence of the page
+            if (filterContext.RouteData.Values["area"]!=null && filterContext.RouteData.Values["area"].ToString().Equals("Common") &&
+               filterContext.ActionDescriptor.ActionName.Equals("NotFound") &&
+               filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Error")) {
+                if (!string.IsNullOrEmpty(filterContext.HttpContext.Request.QueryString["path"])) {
+                    pathQs = filterContext.HttpContext.Request.QueryString["path"].ToString();
+                }
+            }
+
             var redirect = _redirectService.GetCachedRedirects().FirstOrDefault(x => x.SourceUrl == pathQs);
             if (redirect == null) {
                 // else strip querystring to look for a match
