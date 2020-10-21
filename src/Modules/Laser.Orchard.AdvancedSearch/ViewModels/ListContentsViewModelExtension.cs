@@ -17,7 +17,7 @@ namespace Laser.Orchard.AdvancedSearch.ViewModels {
     public class AdvancedContentOptions {
         public int SelectedLanguageId { get; set; }
         public int SelectedUntranslatedLanguageId { get; set; }
-        public int SelectedTermId { get; set; }
+        public List<int> SelectedTermIds { get; set; }
         public string SelectedOwner { get; set; }
         public string SelectedStatus { get; set; }
 

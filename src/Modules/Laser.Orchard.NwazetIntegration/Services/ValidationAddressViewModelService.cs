@@ -92,16 +92,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     return false;
                 }
             }
-            // TODO: zip code validation depends on the country:
             // https://en.wikipedia.org/wiki/List_of_postal_codes
-            // as a first step, we want zipcode to be non empty and all digits.
-            // This is not correct because there are some territories that have
-            // letters in theri zip codes. We will fix this when the time comes.
+            // we had to make the change because we first checked 
+            // it was just a number
+            // during use we noticed that the Netherlands have PS in the cap
+            // therefore changed the control over the character
             if (string.IsNullOrWhiteSpace(vm.PostalCode)) {
                 return false;
             } else {
                 foreach (char c in vm.PostalCode) {
-                    if (c < '0' || c > '9') {
+                    if (!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c)) {
                         return false;
                     }
                 }
