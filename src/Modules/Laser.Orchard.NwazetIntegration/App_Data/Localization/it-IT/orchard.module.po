@@ -980,3 +980,7 @@ msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelServ
 msgid "Phone number prefix is required."
 msgstr "Il prefisso del numero di telefono è obbligatorio."
 
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Postal or ZIP code may contain only characters or digits."
+msgstr "Il codice postale o CAP può contenere solo lettere o numeri."
+
