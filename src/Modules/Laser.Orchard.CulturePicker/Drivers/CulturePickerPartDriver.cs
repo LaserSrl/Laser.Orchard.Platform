@@ -31,7 +31,9 @@ namespace Laser.Orchard.CulturePicker.Drivers {
             var siteAvailableCultures = _cultureManager.ListCultures().AsQueryable();
             var context = _workContextAccessor.GetContext();
             var baseUrl = context.CurrentSite.BaseUrl;
+            baseUrl = baseUrl.Replace("http://", "").Replace("https://", "");
             var cleanUrl = context.HttpContext.Request.Url.AbsoluteUri.Replace(baseUrl, "");
+            cleanUrl = cleanUrl.Replace("http://", "").Replace("https://", "");
             cleanUrl = context.HttpContext.Server.UrlDecode(cleanUrl);
             cleanUrl = cleanUrl.StartsWith("/") ? cleanUrl.Substring(1) : cleanUrl;
             // reading settings
