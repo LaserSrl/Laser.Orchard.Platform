@@ -2654,12 +2654,11 @@ hr {
     font-weight: 400;
 }
 
-.text-medium,
-strong {
+.text-medium {
     font-weight: 500;
 }
 
-.text-bold {
+.text-bold, strong {
     font-weight: 700;
 }
 
