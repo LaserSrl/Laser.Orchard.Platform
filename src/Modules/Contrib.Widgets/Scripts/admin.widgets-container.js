@@ -21,6 +21,14 @@ var WidgetsContainer;
                 formActionValue.val("submit.Save");
                 $("input[type='hidden'][name='returnUrl']").val(url);
             }
+
+            // Added parameter to identify action   
+            var inputExecutedAction = document.createElement("input");
+            inputExecutedAction.type = "hidden";
+            inputExecutedAction.name = "executed-action";
+            inputExecutedAction.value = url;
+            fieldset.append(inputExecutedAction);
+
             form.submit();
         });
         $("div.widgets").on("click", "a.remove-widget", function (e) {
