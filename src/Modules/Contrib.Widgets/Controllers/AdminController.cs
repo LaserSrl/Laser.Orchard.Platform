@@ -9,6 +9,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Mvc.Extensions;
+using Orchard.Taxonomies.Services;
 using Orchard.UI.Notify;
 using Orchard.Widgets.Models;
 using Orchard.Widgets.Services;
@@ -25,12 +26,15 @@ namespace Contrib.Widgets.Controllers {
         private readonly IWidgetsService _widgetsService;
         private readonly IWidgetManager _widgetManager;
         private readonly IContentManager _contentManager;
+        private readonly ITaxonomyService _taxonomyService;
 
-        public AdminController(IOrchardServices services, IWidgetsService widgetsService, IWidgetManager widgetManager, IContentManager contentManager) {
+
+        public AdminController(IOrchardServices services, IWidgetsService widgetsService, IWidgetManager widgetManager, IContentManager contentManager, ITaxonomyService taxonomyService) {
             _services = services;
             _widgetsService = widgetsService;
             _widgetManager = widgetManager;
             _contentManager = contentManager;
+            _taxonomyService = taxonomyService;
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
         }
@@ -40,14 +44,34 @@ namespace Contrib.Widgets.Controllers {
 
         [HttpPost]
         public ActionResult CreateContent(string id, string zone) {
-            var contentItem = _contentManager.New(id);
+            // point case for taxonomies
+            // the have a different save than normal
+            var queryString=_services.WorkContext.HttpContext.Request.QueryString;
+            int taxonomyId = 0;
+            int parentTermId = 0;
 
-            if (!_services.Authorizer.Authorize(Orchard.Core.Contents.Permissions.EditContent, contentItem, T("Couldn't create content")))
-                return new HttpUnauthorizedResult();
+            ContentItem contentItem = null;
+            
+            if(int.TryParse(queryString["taxonomyId"],out taxonomyId) && int.TryParse(queryString["parentTermId"], out parentTermId)) {
+                var taxonomy = _taxonomyService.GetTaxonomy(Convert.ToInt32(taxonomyId));
+                var parentTerm = _taxonomyService.GetTerm(Convert.ToInt32(parentTermId));
+                var term = _taxonomyService.NewTerm(taxonomy, parentTerm);
 
-            _contentManager.Create(contentItem, VersionOptions.Draft);
+                // Create content item before updating so attached fields save correctly
+                _contentManager.Create(term, VersionOptions.Draft);
 
+                contentItem = term.ContentItem;
+            }
+            else { 
+                contentItem = _contentManager.New(id);
+
+                if (!_services.Authorizer.Authorize(Orchard.Core.Contents.Permissions.EditContent, contentItem, T("Couldn't create content")))
+                    return new HttpUnauthorizedResult();
+
+                _contentManager.Create(contentItem, VersionOptions.Draft);
+            }
             var model = _contentManager.UpdateEditor(contentItem, this);
+
             if (!ModelState.IsValid) {
                 _services.TransactionManager.Cancel();
                 return View(model);

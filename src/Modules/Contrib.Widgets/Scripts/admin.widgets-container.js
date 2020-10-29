@@ -15,8 +15,18 @@ var WidgetsContainer;
 
             var formActionValue = fieldset.find("input[name='submit.Save']");
             var url = $(this).attr("href");
-            if(hostId === 0) {
+            if (hostId === 0) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const taxonomyId = urlParams.get('taxonomyId');
+                const parentTermId = urlParams.get('parentTermId');
+
+                if (taxonomyId !== null && parentTermId !== null) {
+                    url += "&taxonomyId=" + taxonomyId;
+                    url += "&parentTermId=" + parentTermId;
+                }
+
                 form.attr("action", url);
+
             } else {
                 formActionValue.val("submit.Save");
                 $("input[type='hidden'][name='returnUrl']").val(url);
