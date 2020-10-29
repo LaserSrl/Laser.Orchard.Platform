@@ -27,13 +27,18 @@ namespace Laser.Orchard.StartupConfig.Tokens {
         public void Evaluate(EvaluateContext context) {
             context.For("Shape", "")
                 .Token(t => t.StartsWith("RazorExecute", StringComparison.OrdinalIgnoreCase) ? t.Substring(0, (t.IndexOf(".") > 0 ? t.IndexOf(".") : t.Length)) : null,
-                    (fullToken, data) => { _fullTokenName = fullToken; return ExecuteRazorCode(fullToken); })
-                .Chain(_fullTokenName, "Text", d => ExecuteRazorCode(_fullTokenName));
+                    (fullToken, data) => { _fullTokenName = fullToken; return ExecuteRazorCode(context, fullToken); })
+                .Chain(_fullTokenName, "Text", d => ExecuteRazorCode(context, _fullTokenName));
         }
 
         private string ExecuteRazorCode(string fullToken) {
             string fileName = fullToken.Substring("RazorExecute:".Length);
             return _razorExecuteService.Execute(fileName + ".cshtml", _currentContentAccessor.CurrentContentItem);
+        }
+
+        private string ExecuteRazorCode(EvaluateContext context, string fullToken) {
+            string fileName = fullToken.Substring("RazorExecute:".Length);
+            return _razorExecuteService.Execute(fileName + ".cshtml", _currentContentAccessor.CurrentContentItem, context.Data);
         }
     }
 }
