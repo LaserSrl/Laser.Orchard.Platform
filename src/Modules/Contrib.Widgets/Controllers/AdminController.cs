@@ -51,6 +51,7 @@ namespace Contrib.Widgets.Controllers {
             int parentTermId = 0;
 
             ContentItem contentItem = null;
+            dynamic model;
             
             if(int.TryParse(queryString["taxonomyId"],out taxonomyId) && int.TryParse(queryString["parentTermId"], out parentTermId)) {
                 var taxonomy = _taxonomyService.GetTaxonomy(Convert.ToInt32(taxonomyId));
@@ -60,7 +61,17 @@ namespace Contrib.Widgets.Controllers {
                 // Create content item before updating so attached fields save correctly
                 _contentManager.Create(term, VersionOptions.Draft);
 
+                model = _contentManager.UpdateEditor(term, this);
+
+                if (!ModelState.IsValid) {
+                    _services.TransactionManager.Cancel();
+                    return View(model);
+                }
+
                 contentItem = term.ContentItem;
+
+                _contentManager.Publish(term.ContentItem);
+                _taxonomyService.ProcessPath(term);
             }
             else { 
                 contentItem = _contentManager.New(id);
@@ -69,12 +80,12 @@ namespace Contrib.Widgets.Controllers {
                     return new HttpUnauthorizedResult();
 
                 _contentManager.Create(contentItem, VersionOptions.Draft);
-            }
-            var model = _contentManager.UpdateEditor(contentItem, this);
+                model = _contentManager.UpdateEditor(contentItem, this);
 
-            if (!ModelState.IsValid) {
-                _services.TransactionManager.Cancel();
-                return View(model);
+                if (!ModelState.IsValid) {
+                    _services.TransactionManager.Cancel();
+                    return View(model);
+                }
             }
 
             _services.Notifier.Information(string.IsNullOrWhiteSpace(contentItem.TypeDefinition.DisplayName)
