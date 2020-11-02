@@ -102,6 +102,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             } else {
                 foreach (char c in vm.PostalCode) {
                     if (!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c)) {
+                        vm.Errors.Add(T("Postal or ZIP code may contain only characters or digits.").Text);
                         return false;
                     }
                 }
