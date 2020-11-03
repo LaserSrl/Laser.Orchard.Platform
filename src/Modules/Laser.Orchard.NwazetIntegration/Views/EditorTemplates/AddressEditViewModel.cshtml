@@ -118,7 +118,11 @@
                 @if (Model.CityId > 0) {
                     <select id="@Html.FieldIdFor(m => m.City)"
                             class="required address-input text"
-                            name="@Html.NameFor(m => m.City)"></select>
+                            name="@Html.NameFor(m => m.City)">
+                        @if(!string.IsNullOrEmpty(Model.City) && Model.CityId != 0) { 
+                            <option selected="selected" value="@Model.CityId">@Model.City</option>
+                        }
+                    </select>
                 } else {
                     <input id="@Html.FieldIdFor(m => m.City)"
                            class="required address-input text"
