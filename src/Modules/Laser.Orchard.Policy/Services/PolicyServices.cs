@@ -54,6 +54,9 @@ namespace Laser.Orchard.Policy.Services {
         IEnumerable<UserPolicyAnswersRecord> GetPolicyAnswersForContent(int contentId);
         bool? HasPendingPolicies(ContentItem contentItem);
         IList<IContent> PendingPolicies(ContentItem contentItem);
+
+        // we can use this to rpevent caching the contentitems when we only need their ids
+        IEnumerable<int> GetPendingPolicyIds(PolicyPart part);
     }
 
     public class PolicyServices : IPolicyServices {
@@ -410,6 +413,62 @@ namespace Laser.Orchard.Policy.Services {
             });
 
         }
+
+        public IEnumerable<int> GetPolicyIds(string culture = null, int[] ids = null) {
+            var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
+
+            // figure out the culture Id we should use in the query
+            int currentLanguageId;
+            IContentQuery<PolicyTextInfoPart> query;
+            CultureRecord cultureRecord = null;
+            if (!string.IsNullOrWhiteSpace(culture)) {
+                cultureRecord = GetCultureByName(culture);
+            }
+            if (cultureRecord == null) {
+                //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
+                cultureRecord = GetCultureByName(_workContext.GetContext().CurrentCulture);
+            }
+            if (cultureRecord == null) {
+                cultureRecord = GetCultureByName(_cultureManager.GetSiteCulture());
+            }
+            currentLanguageId = cultureRecord.Id;
+
+            // cacheKey = KeyBase_List_of_Ids
+            var cacheKey = string.Join("_",
+                "policyIds",
+                KeyBase,
+                currentLanguageId.ToString(),
+                ids == null
+                    ? "NoID"
+                    : string.Join("_", ids.Select(i => i.ToString())));
+            // cache the query results
+            return _cacheManager.Get(cacheKey, true, ctx => {
+                ctx.Monitor(_signals.When("PolicyTextInfoPart_EvictAll"));
+                if (ids != null) {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .Where(x => ids.Contains(x.Id))
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                } else {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                }
+
+                return query.List<PolicyTextInfoPart>().Select(ptip => ptip.Id);
+            });
+
+        }
+
+
         public IEnumerable<PolicyTextInfoPart> GetAllPublishedPolicyTexts() {
             var qry = _contentManager.Query<PolicyTextInfoPart>(new string[] { "PolicyText" });
             return qry.List();
@@ -632,6 +691,50 @@ namespace Laser.Orchard.Policy.Services {
             return GetPendingPolicies(contentItem)
                 .Select(s => (IContent)s.ContentItem)
                 .ToList();
+        }
+        public IEnumerable<int> GetPendingPolicyIds(PolicyPart part) {
+            RealPolicyInclusionSetter(part);
+            if (!IsPolicyIncluded(part)) return null;
+
+            var loggedUser = _workContext.GetContext().CurrentUser;
+            // get the name of a culture to pass to find policies
+            string cultureName = null;
+            if (part.As<LocalizationPart>() != null
+                && part.As<LocalizationPart>().Culture != null
+                && part.As<LocalizationPart>().Culture.Id > 0) {
+
+                cultureName = part.As<LocalizationPart>().Culture.Culture;
+            } else {
+                //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
+                cultureName = _workContext.GetContext().CurrentCulture;
+            }
+            var policyIds = GetPolicyIds(cultureName);
+            // figure out which policies the user has not answered
+            var answeredIds = loggedUser != null
+                ? loggedUser
+                    .As<UserPolicyPart>().UserPolicyAnswers.Select(s => s.PolicyTextInfoPartRecord.Id)
+                : GetCookieOrVolatileAnswers()
+                    .Select(s => s.PolicyTextId);
+            var items = policyIds.Where(p => !answeredIds.Contains(p));
+            var settings = part.Settings.GetModel<PolicyPartSettings>();
+            if (!settings.PolicyTextReferences.Contains("{All}")) {
+                string[] filterComplexIds = GetPoliciesForContent(part);
+                if (filterComplexIds != null) {
+                    if (filterComplexIds.Length == 1) {
+                        filterComplexIds = filterComplexIds[0]
+                            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    var filterIds = filterComplexIds.Select(s => {
+                        int id = 0;
+                        int.TryParse(s.Replace("{", "").Replace("}", ""), out id);
+                        return id;
+                    }).ToArray();
+
+                    items = items.Where(p => filterIds.Contains(p));
+                }
+            }
+
+            return items;
         }
     }
 }

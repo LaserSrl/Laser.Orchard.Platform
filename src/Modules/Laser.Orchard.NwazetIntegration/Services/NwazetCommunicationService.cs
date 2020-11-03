@@ -155,11 +155,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         private void StoreAddress(Address address, AddressOrderPart addressPart, AddressRecordType addressType, ContentItem contact) {
 
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Address, AddressRecord>();
             });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
             var addressToStore = new AddressRecord();
-            Mapper.Map<Address, AddressRecord>(address, addressToStore);
+            _mapper.Map<Address, AddressRecord>(address, addressToStore);
             if (addressPart != null) {
                 switch (addressType) {
                     case AddressRecordType.ShippingAddress:
