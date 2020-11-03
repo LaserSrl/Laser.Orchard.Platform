@@ -27,6 +27,8 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                 var settings = _contentManager.Query<AdvancedSettingsPart, AdvancedSettingsPartRecord>().Where(x => x.Name.Equals(settingName, StringComparison.InvariantCultureIgnoreCase)).Slice(0, 1).SingleOrDefault();
                 return settings?.ContentItem;
             });
+            // rehydrate ContentManager to prevent expired lifetime scopes
+            advancedSettings.ContentManager = _contentManager;
             return advancedSettings;
         }
 
