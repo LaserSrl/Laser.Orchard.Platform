@@ -263,11 +263,12 @@ AddressConfiguration.prototype = {
     // enable and populate city input
     _enableCityInput: function (el, options) {
         if (!!options.cityIsFreeText) {
-            this._enableAllCity(el, options, true)
+            this._enableAllCity(el, options, true);
         } else {
             if (this._checkCountryOption(el, options)) {
                 var countryId = el.find(options.countriesInput).val();
                 var isBillingAddress = options.isBilling();
+                var cityId = el.find(options.cityId).val();
                 var callServer = true;
                 if (options.getCities.shouldLoad) {
                     callServer = options.getCities.shouldLoad(el, options);
@@ -275,6 +276,7 @@ AddressConfiguration.prototype = {
                 if (callServer) {
                     var viewModel = {
                         CountryId: countryId,
+                        CityId: cityId,
                         IsBillingAddress: isBillingAddress
                     };
                     $.post(options.getCities.url, {

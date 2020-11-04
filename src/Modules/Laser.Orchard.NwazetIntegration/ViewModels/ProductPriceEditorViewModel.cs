@@ -57,7 +57,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 ShowShape = true;
                 var flexible = shipping as FlexibleShippingMethodPart;
                 BasePrice = flexible.DefaultPrice;
-                BaseTaxedPrice = flexible.DefaultPrice * (1.0m + rate);
+                BaseTaxedPrice = Math.Round(flexible.DefaultPrice * (1.0m + rate), 2);
                 OriginalPriceId = "FlexibleShippingMethodPart_DefaultPrice";
             }
             // NOTE: VAT configuration currently only works properly and is tested
