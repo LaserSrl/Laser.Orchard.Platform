@@ -876,6 +876,10 @@ msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
 msgid "Impossible to start payment with the selected provider. Please try again."
 msgstr "Impossibile avviare il pagamento con il fornitore selezionato. Per favore riprova."
 
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
+msgid "Select a shipment to proceed with your order"
+msgstr "Seleziona una spedizione per procedere con il tuo ordine"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.AddressOrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
