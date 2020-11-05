@@ -108,9 +108,9 @@
         });
         if (!validated) {
             e.preventDefault();
-            if (firstErrorElement) {
-                firstErrorElement.scrollIntoView();
-            }
+            //if (firstErrorElement) {
+            //    firstErrorElement.scrollIntoView();
+            //}
             return false;
         }
     });
