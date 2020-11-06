@@ -13,13 +13,16 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
     public class DestinationTerritoryCriteria : IApplicabilityCriterionProvider {
         private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
         private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly ITerritoryPartRecordService _territoryPartRecordService;
 
         public DestinationTerritoryCriteria(
             ITerritoriesRepositoryService territoriesRepositoryService,
-            IAddressConfigurationService addressConfigurationService) {
+            IAddressConfigurationService addressConfigurationService,
+            ITerritoryPartRecordService territoryPartRecordService) {
 
             _territoriesRepositoryService = territoriesRepositoryService;
             _addressConfigurationService = addressConfigurationService;
+            _territoryPartRecordService = territoryPartRecordService;
 
             T = NullLocalizer.Instance;
         }
@@ -87,7 +90,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                             foreach (var internalId in selectedInternalIds) {
                                 var part = _addressConfigurationService.SingleTerritory(internalId);
                                 if (part != null) {
-                                    var records = part.Record.Children;
+                                    //var records = part.Record.Children;
+                                    var records = _territoryPartRecordService.GetTerritoriesChild(part);
                                     // while we haven't found that we are done
                                     while (!applicable
                                         // and there still are records to check
@@ -165,7 +169,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                             foreach (var internalId in selectedInternalIds) {
                                 var part = _addressConfigurationService.SingleTerritory(internalId);
                                 if (part != null) {
-                                    var records = part.Record.Children;
+                                    var records = _territoryPartRecordService
+                                        .GetTerritoriesChild(part); //part.Record.Children;
                                     // while we haven't found that we are done
                                     while (!applicable
                                         // and there still are records to check
