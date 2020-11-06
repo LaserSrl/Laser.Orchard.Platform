@@ -416,7 +416,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var result = new List<TerritoryPartRecord>(records);
             if (records.Any()) {
                 // if there are children, add those as well as their children
-                result.AddRange(GetAllChildrenRecords(records.SelectMany(r => r.Children)));
+                result.AddRange(GetAllChildrenRecords(records.SelectMany(r =>_territoryPartRecordService.GetTerritoriesChild(r))));
             }
             return result.Where(tpr => tpr != null && tpr.TerritoryInternalRecord != null);
         }

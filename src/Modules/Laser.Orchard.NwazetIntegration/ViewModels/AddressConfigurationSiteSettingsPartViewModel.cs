@@ -98,7 +98,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             // Initialize the dictionaries we'll use to edit the configuration
             TerritoryTypeMap = new Dictionary<int, TerritoryAdministrativeType>();
 
-            //foreach (var territory in CountriesHierarchy.Record.Territories) {
             foreach (var territory in _territoryPartRecordService.GetHierarchyTerritories(CountriesHierarchy)) {
                 var tType = TerritoryAdministrativeType.None;
                 var internalId = territory.TerritoryInternalRecord.Id;

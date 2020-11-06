@@ -104,7 +104,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                                             break;
                                         }
                                         // prepare for next iteration
-                                        records = records.SelectMany(r => r.Children).ToList();
+                                        records = records.SelectMany(r => _territoryPartRecordService.GetTerritoriesChild(r)).ToList();
                                     }
                                 }
 
@@ -183,7 +183,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                                             break;
                                         }
                                         // prepare for next iteration
-                                        records = records.SelectMany(r => r.Children).ToList();
+                                        records = records.SelectMany(r => _territoryPartRecordService.GetTerritoriesChild(r)).ToList();
                                     }
                                 }
 
