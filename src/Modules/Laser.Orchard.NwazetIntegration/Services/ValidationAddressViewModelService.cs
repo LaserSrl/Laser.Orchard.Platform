@@ -51,21 +51,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (!SubValidation(validCountries, countryTP)) {
                 return false;
             }
-            var validProvinces = _addressConfigurationService
-                .GetAllProvinces(vm.AddressType, countryTP);
-            if (validProvinces == null) {
-                // error condition
-                return false;
-            }
+
             var provinceTP = GetTerritory(vm.Province)
                 ?? _addressConfigurationService.SingleTerritory(vm.ProvinceId);
-            if (validProvinces.Any()) {
-                // there may not be any configured province, and that is ok,
-                // but if any is configured, we check that the one selected is valid
-                if (!SubValidation(validProvinces, provinceTP)) {
-                    return false;
-                }
-            }
+
             if (provinceTP == null) {
                 // maybe we did not find a territory because it's not configured,
                 // but we had a free text input for the province
@@ -75,23 +64,52 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     return false;
                 }
             }
-            var validCities = _addressConfigurationService
-                .GetAllCities(vm.AddressType, 
-                    // use province if it exists, otherwise country
-                    provinceTP == null ? countryTP : provinceTP);
-            if (validCities == null) {
-                // error condition
-                return false;
-            }
-            if (validCities.Any()) {
-                // there may not be any configured city, and that is ok,
-                // but if any is configured, we check that the one selected is valid
-                var cityTP = GetTerritory(vm.City)
-                    ?? _addressConfigurationService.SingleTerritory(vm.CityId);
-                if (!SubValidation(validCities, cityTP)) {
-                    return false;
+            else {
+                // check in the configuration parts if they are a valid province or not
+                var adminTypePart = provinceTP.As<TerritoryAdministrativeTypePart>();
+                if (adminTypePart != null) {
+                    if (adminTypePart.AdministrativeType == TerritoryAdministrativeType.Province) {
+                        var territoryAddressTypePart = provinceTP.As<TerritoryAddressTypePart>();
+                        if (territoryAddressTypePart != null) {
+                            if (vm.AddressType == AddressRecordType.ShippingAddress) {
+                                if (!territoryAddressTypePart.Shipping) {
+                                    return false;
+                                }
+                            }
+                            else {
+                                if (!territoryAddressTypePart.Billing) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
+
+            var cityTP = GetTerritory(vm.City)
+                 ?? _addressConfigurationService.SingleTerritory(vm.CityId);
+            // check in the configuration parts if they are a valid city or not
+            if (cityTP != null) {
+                var adminTypePart = cityTP.As<TerritoryAdministrativeTypePart>();
+                if (adminTypePart != null) {
+                    if (adminTypePart.AdministrativeType == TerritoryAdministrativeType.City) {
+                        var territoryAddressTypePart = cityTP.As<TerritoryAddressTypePart>();
+                        if (territoryAddressTypePart != null) {
+                            if (vm.AddressType == AddressRecordType.ShippingAddress) {
+                                if (!territoryAddressTypePart.Shipping) {
+                                    return false;
+                                }
+                            }
+                            else {
+                                if (!territoryAddressTypePart.Billing) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // https://en.wikipedia.org/wiki/List_of_postal_codes
             // we had to make the change because we first checked 
             // it was just a number

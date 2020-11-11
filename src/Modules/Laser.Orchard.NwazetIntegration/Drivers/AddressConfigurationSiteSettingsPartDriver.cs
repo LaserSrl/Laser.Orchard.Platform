@@ -26,17 +26,20 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
         private readonly IAddressConfigurationSettingsService _addressConfigurationSettingsService;
+        private readonly ITerritoryPartRecordService _territoryPartRecordService;
 
         public AddressConfigurationSiteSettingsPartDriver(
             IContentManager contentManager,
             IAddressConfigurationService addressConfigurationService,
             ITerritoriesRepositoryService territoriesRepositoryService,
-            IAddressConfigurationSettingsService addressConfigurationSettingsService) {
+            IAddressConfigurationSettingsService addressConfigurationSettingsService,
+            ITerritoryPartRecordService territoryPartRecordService) {
 
             _contentManager = contentManager;
             _addressConfigurationService = addressConfigurationService;
             _territoriesRepositoryService = territoriesRepositoryService;
             _addressConfigurationSettingsService = addressConfigurationSettingsService;
+            _territoryPartRecordService = territoryPartRecordService;
         }
 
         protected override string Prefix {
@@ -111,7 +114,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         }
         private AddressConfigurationSiteSettingsPartViewModel CreateBaseVM(
             AddressConfigurationSiteSettingsPart part) {
-            return new AddressConfigurationSiteSettingsPartViewModel(part) {
+            return new AddressConfigurationSiteSettingsPartViewModel(part,_territoryPartRecordService) {
                 AllHierarchies = _contentManager
                     .Query<TerritoryHierarchyPart>(VersionOptions.Published)
                     .List()
@@ -121,7 +124,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private AddressConfigurationSiteSettingsPartViewModel CreateDetailVM(
             AddressConfigurationSiteSettingsPart part) {
 
-            var vm = new AddressConfigurationSiteSettingsPartViewModel(part, _addressConfigurationSettingsService) {
+            var vm = new AddressConfigurationSiteSettingsPartViewModel(part,_territoryPartRecordService, _addressConfigurationSettingsService) {
             };
 
             return vm;
