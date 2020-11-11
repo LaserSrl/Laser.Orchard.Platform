@@ -219,6 +219,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 var adminType = parent.As<TerritoryAdministrativeTypePart>();
                 if (adminType != null && adminType.AdministrativeType == TerritoryAdministrativeType.Province) {
                     provinces.Add(parent);
+                    // Added the break to the first province that is found
+                    // otherwise it would continue to search asking if the province
+                    // has another province
+                    break;
                 }
                 parent = parent.ParentPart;
             }
