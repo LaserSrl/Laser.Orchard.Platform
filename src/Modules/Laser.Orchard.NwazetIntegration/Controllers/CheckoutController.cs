@@ -513,9 +513,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 : (!string.IsNullOrWhiteSpace(model.BillingAddressVM?.Country)
                     ? model.BillingAddressVM?.Country
                     : "");
+            _shoppingCart.Country = countryName;
             var postalCode = model.ShippingAddressVM != null
                 ? model.ShippingAddressVM.PostalCode
                 : model.BillingAddressVM.PostalCode;
+            _shoppingCart.ZipCode = postalCode;
             // Validate ShippingOption
             model.ShippingRequired = IsShippingRequired();
             if (model.ShippingRequired && model.SelectedShippingOption == null) {
