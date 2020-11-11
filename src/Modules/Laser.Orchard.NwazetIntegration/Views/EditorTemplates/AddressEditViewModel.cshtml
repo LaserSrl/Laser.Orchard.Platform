@@ -140,9 +140,13 @@
                     <div class="hint"></div>
                 </div>
                 @if (Model.ProvinceId > 0) {
-                    <select id="@Html.FieldIdFor(m => m.Province)"
-                            class="required address-input text"
-                            name="@Html.NameFor(m => m.Province)"></select>
+	                <select id="@Html.FieldIdFor(m => m.Province)"
+	                        class="required address-input text"
+	                        name="@Html.NameFor(m => m.Province)">
+	                    @if (!string.IsNullOrEmpty(Model.Province) && Model.ProvinceId != 0) {
+	                        <option selected="selected" value="@Model.ProvinceId">@Model.Province</option>
+	                    }
+                    </select>
                 } else {
                     <input id="@Html.FieldIdFor(m => m.Province)"
                            class="required address-input text-small"
