@@ -72,50 +72,56 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         })
                         .Where(i => i > 0);
 
-                    // populates the list of the fathers of the territory only once
-                    // the dictionary contains the id of the territory and the list of all its fathers until the last
-                    if (hierarchyTerritoriesIds.Count() == 0 && ids.Count() > 0) {
-                        List<int> listParents = new List<int>();
-                        var hierarchyId = _addressConfigurationSettingsService.ShippingCountriesHierarchy.Id;
-                        var territoryId = ids.ToList()[ids.Count() - 1];
-                        List<int> territoriesIds = new List<int>();
-                        territoriesIds.Add(territoryId);
-                        var parentId = _territoryPartRecordService.GetParentTerritoryId(territoryId, hierarchyId);
-                        // if the territory has no relatives the list will contain only its own id
-                        // otherwise it will call the method that populates its list
-                        if (parentId != 0) {
-                            listParents = _territoryPartRecordService.
-                                GetListOfParentIds(parentId,
-                                        hierarchyId,
-                                        territoriesIds);
+                    if (ids.Count() > 0) {
+                        // populates the list of the fathers of the territory only once
+                        // the dictionary contains the id of the territory and the list of all its fathers until the last
+                        if (hierarchyTerritoriesIds.Count() == 0) {
+                            List<int> listParents = new List<int>();
+                            var hierarchyId = _addressConfigurationSettingsService.ShippingCountriesHierarchy.Id;
+                            var territoryId = ids.ToList()[ids.Count() - 1];
+                            List<int> territoriesIds = new List<int>();
+                            territoriesIds.Add(territoryId);
+                            var parentId = _territoryPartRecordService.GetParentTerritoryId(territoryId, hierarchyId);
+                            // if the territory has no relatives the list will contain only its own id
+                            // otherwise it will call the method that populates its list
+                            if (parentId != 0) {
+                                listParents = _territoryPartRecordService.
+                                    GetListOfParentIds(parentId,
+                                            hierarchyId,
+                                            territoriesIds);
+                            }
+                            else {
+                                listParents = territoriesIds;
+                            }
+                            hierarchyTerritoriesIds.Add(territoryId, listParents);
                         }
-                        else {
-                            listParents = territoriesIds;
-                        }
-                        hierarchyTerritoriesIds.Add(territoryId, listParents);
-                    }
 
-                    // these ids are for the InternalTerritoryRecords
-                    // As soon as one of them is among the configured territories for
-                    // the criterion, or is a child of a configured territory, the
-                    // criterion is known to apply.
-                    if (hierarchyTerritoriesIds.Count() > 0) {
-                        foreach (var idsT in hierarchyTerritoriesIds.Values) {
-                            var destinationInternalRecords = idsT.Select(i =>
-                                _territoriesRepositoryService.GetTerritoryInternal(i));
-                            var selectedTerritories = (List<TerritoryTag>)(JsonConvert
-                                .DeserializeObject<List<TerritoryTag>>(
-                                    context.State["Territories"]?.ToString() ?? "[]"));
-                            if (destinationInternalRecords.Any(tir =>
-                                selectedTerritories.Any(st =>
-                                    st.NameHash.Equals(tir.NameHash)))) {
-                                // a territory we are sending stuff to is among those selected
-                                applicable = true;
+                        // these ids are for the InternalTerritoryRecords
+                        // As soon as one of them is among the configured territories for
+                        // the criterion, or is a child of a configured territory, the
+                        // criterion is known to apply.
+                        if (hierarchyTerritoriesIds.Count() > 0) {
+                            foreach (var idsT in hierarchyTerritoriesIds.Values) {
+                                var destinationInternalRecords = idsT.Select(i =>
+                                    _territoriesRepositoryService.GetTerritoryInternal(i));
+                                var selectedTerritories = (List<TerritoryTag>)(JsonConvert
+                                    .DeserializeObject<List<TerritoryTag>>(
+                                        context.State["Territories"]?.ToString() ?? "[]"));
+                                if (destinationInternalRecords.Any(tir =>
+                                    selectedTerritories.Any(st =>
+                                        st.NameHash.Equals(tir.NameHash)))) {
+                                    // a territory we are sending stuff to is among those selected
+                                    applicable = true;
+                                }
                             }
                         }
+                        context.IsApplicable &= applicable;
+                    }
+                    else {
+                        context.IsApplicable = false;
                     }
                 }
-                context.IsApplicable &= applicable;
+               
             }
 
         }
@@ -145,50 +151,59 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
                     // populates the list of the fathers of the territory only once
                     // the dictionary contains the id of the territory and the list of all its fathers until the last
-                    if (hierarchyTerritoriesIds.Count() == 0 && ids.Count() > 0) {
-                        List<int> listParents = new List<int>();
-                        var hierarchyId = _addressConfigurationSettingsService.ShippingCountriesHierarchy.Id;
-                        var territoryId = ids.ToList()[ids.Count() - 1];
-                        List<int> territoriesIds = new List<int>();
-                        territoriesIds.Add(territoryId);
-                        var parentId = _territoryPartRecordService.GetParentTerritoryId(territoryId, hierarchyId);
-                        // if the territory has no relatives the list will contain only its own id
-                        // otherwise it will call the method that populates its list
-                        if (parentId != 0) {
-                            listParents = _territoryPartRecordService.
-                                GetListOfParentIds(parentId,
-                                        hierarchyId,
-                                        territoriesIds);
+                    if (ids.Count() > 0) {
+                        if (hierarchyTerritoriesIds.Count() == 0) {
+                            List<int> listParents = new List<int>();
+                            var hierarchyId = _addressConfigurationSettingsService.ShippingCountriesHierarchy.Id;
+                            var territoryId = ids.ToList()[ids.Count() - 1];
+                            List<int> territoriesIds = new List<int>();
+                            territoriesIds.Add(territoryId);
+                            var parentId = _territoryPartRecordService.GetParentTerritoryId(territoryId, hierarchyId);
+                            // if the territory has no relatives the list will contain only its own id
+                            // otherwise it will call the method that populates its list
+                            if (parentId != 0) {
+                                listParents = _territoryPartRecordService.
+                                    GetListOfParentIds(parentId,
+                                            hierarchyId,
+                                            territoriesIds);
+                            }
+                            else {
+                                listParents = territoriesIds;
+                            }
+                            hierarchyTerritoriesIds.Add(territoryId, listParents);
                         }
-                        else {
-                            listParents = territoriesIds;
-                        }
-                        hierarchyTerritoriesIds.Add(territoryId, listParents);
-                    }
 
-                    // these ids are for the InternalTerritoryRecords
-                    // As soon as one of them is among the configured territories for
-                    // the criterion, or is a child of a configured territory, the
-                    // criterion is known to apply.
-                    if (hierarchyTerritoriesIds.Count() > 0) {
-                        foreach (var idsT in hierarchyTerritoriesIds.Values) {
-                            var destinationInternalRecords = idsT.Select(i =>
-                                _territoriesRepositoryService.GetTerritoryInternal(i));
-                            var selectedTerritories = (List<TerritoryTag>)(JsonConvert
-                                .DeserializeObject<List<TerritoryTag>>(
-                                    context.State["Territories"]?.ToString() ?? "[]"));
-                            if (destinationInternalRecords.Any(tir =>
-                                selectedTerritories.Any(st =>
-                                    st.NameHash.Equals(tir.NameHash)))) {
-                                // a territory we are sending stuff to is among those selected
-                                applicable = true;
+                        // these ids are for the InternalTerritoryRecords
+                        // As soon as one of them is among the configured territories for
+                        // the criterion, or is a child of a configured territory, the
+                        // criterion is known to apply.
+                        if (hierarchyTerritoriesIds.Count() > 0) {
+                            foreach (var idsT in hierarchyTerritoriesIds.Values) {
+                                var destinationInternalRecords = idsT.Select(i =>
+                                    _territoriesRepositoryService.GetTerritoryInternal(i));
+                                var selectedTerritories = (List<TerritoryTag>)(JsonConvert
+                                    .DeserializeObject<List<TerritoryTag>>(
+                                        context.State["Territories"]?.ToString() ?? "[]"));
+                                if (destinationInternalRecords.Any(tir =>
+                                    selectedTerritories.Any(st =>
+                                        st.NameHash.Equals(tir.NameHash)))) {
+                                    // a territory we are sending stuff to is among those selected
+                                    applicable = true;
+                                }
                             }
                         }
+                        context.IsApplicable &= outerCriterion(applicable);
+                    }
+                    else {
+                        // Added the else because the first time he enters to do this check
+                        // it does not have the id list compiled and therefore does not do any checking
+                        // IsApplicable does not have to do any reasoning other than denying that the check was successful
+                        // this else was added after we noticed that in the negative condition
+                        // the outerCriterion converted the applicable assignment to false
+                        context.IsApplicable = false;
                     }
                 }
-                context.IsApplicable &= outerCriterion(applicable);
             }
-
         }
 
         public LocalizedString DisplayTrueCriteria(CriterionContext context) {
