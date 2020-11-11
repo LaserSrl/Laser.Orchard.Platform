@@ -743,12 +743,24 @@ namespace Laser.Orchard.Questionnaires.Services {
                 var storedQuestions = part.Questions.ToList(); // ensure list of questions is in memory
                 var storedAnswers = storedQuestions.SelectMany(x => x.Answers).ToList();// ensure list of answers is in memory
 
-                Mapper.Initialize(cfg => {
+                // upgrade to AutoMapperInstance API
+                var baseMapperConfig = new MapperConfiguration(cfg => {
                     cfg.CreateMap<QuestionnaireEditModel, QuestionnairePart>().ForMember(dest => dest.Questions, opt => opt.Ignore());
                     cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
                 });
-                Mapper.Map<QuestionnaireEditModel, QuestionnairePart>(partEditModel, part);
+
+                var baseMapper = baseMapperConfig.CreateMapper();
+                baseMapper.Map<QuestionnaireEditModel, QuestionnairePart>(partEditModel, part);
                 var mappingA = new Dictionary<string, string>();
+
+                var questionConfig = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
+                });
+                var questionMapper = questionConfig.CreateMapper();
+                var answerConfig = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<AnswerEditModel, AnswerRecord>();
+                });
+                var answerMapper = answerConfig.CreateMapper();
 
                 // Insert, Update and Delete questions
                 foreach (var quest in partEditModel.Questions) {
@@ -778,10 +790,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                         }
                     }
                     else {
-                        Mapper.Initialize(cfg => {
-                            cfg.CreateMap<QuestionEditModel, QuestionRecord>().ForMember(dest => dest.Answers, opt => opt.Ignore());
-                        });
-                        Mapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
+                        questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
                         questionRecord.QuestionnairePartRecord_Id = PartID;
                         if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
                             questionRecord.Id = originalQuestionRecordId;
@@ -805,10 +814,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                     }
                                     var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
 
-                                    Mapper.Initialize(cfg => {
-                                        cfg.CreateMap<AnswerEditModel, AnswerRecord>();
-                                    });
-                                    Mapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+                                    answerMapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
                                     answerRecord.QuestionRecord_Id = recordQuestionID;
                                     if (answerRecord.Id == 0 && originalAnswerRecordId > 0) {
                                         answerRecord.Id = originalAnswerRecordId;
@@ -845,23 +851,27 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
         public QuestionnaireEditModel BuildEditModelForQuestionnairePart(QuestionnairePart part) {
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<QuestionRecord, QuestionEditModel>().ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers.OrderBy(o => o.Position)));
                 cfg.CreateMap<QuestionnairePart, QuestionnaireEditModel>().ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions));
                 cfg.CreateMap<AnswerRecord, AnswerEditModel>();
             });
+            var mapper = mapperConfiguration.CreateMapper();
+
             part.QuestionsToDisplay = null; // ensure we actually use the Questions from the record (see how the Questions property is defined in the part)
-            var editModel = Mapper.Map<QuestionnaireEditModel>(part);
+            var editModel = mapper.Map<QuestionnaireEditModel>(part);
             return (editModel);
         }
 
         public QuestionnaireViewModel BuildViewModelForQuestionnairePart(QuestionnairePart part) {
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<QuestionRecord, QuestionEditModel>().ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers.OrderBy(o => o.Position)));
                 cfg.CreateMap<QuestionnairePart, QuestionnaireEditModel>().ForMember(dest => dest.Questions, opt => opt.MapFrom(src => src.Questions));
                 cfg.CreateMap<AnswerRecord, AnswerEditModel>();
             });
-            var viewModel = Mapper.Map<QuestionnaireViewModel>(part);
+            var mapper = mapperConfiguration.CreateMapper();
+            
+            var viewModel = mapper.Map<QuestionnaireViewModel>(part);
             return (viewModel);
         }
 
@@ -870,35 +880,41 @@ namespace Laser.Orchard.Questionnaires.Services {
         public QuestionnaireWithResultsViewModel BuildViewModelWithResultsForQuestionnairePart(QuestionnairePart part) {
             // Mapper.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
 
+            // upgrade to AutoMapperInstance API
+            MapperConfiguration mapperConfiguration;
+
             if (part.Settings.GetModel<QuestionnairesPartSettingVM>().QuestionsSortedRandomlyNumber > 0) {
-                if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse)
-                    Mapper.Initialize(cfg => {
+                if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse) {
+                    mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                else
-                    Mapper.Initialize(cfg => {
+                } else {
+                    mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published).OrderBy(o => o.Position)));
                     });
+                }
             }
             else {
-                if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse)
-                    Mapper.Initialize(cfg => {
+                if (part.Settings.GetModel<QuestionnairesPartSettingVM>().RandomResponse) {
+                    mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                else
-                    Mapper.Initialize(cfg => {
+                } else {
+                    mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom<IOrderedEnumerable<QuestionRecord>>(src => src.Questions.Where(w => w.Published).OrderBy(o => o.Position)));
                     });
+                }
             }
-            var viewModel = Mapper.Map<QuestionnaireWithResultsViewModel>(part);
+            var mapper = mapperConfiguration.CreateMapper();
+            var viewModel = mapper.Map<QuestionnaireWithResultsViewModel>(part);
             return (viewModel);
         }
 

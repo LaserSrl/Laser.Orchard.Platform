@@ -37,9 +37,6 @@ namespace Laser.Orchard.Facebook.Drivers {
 
         protected override DriverResult Editor(FacebookAccountPart part, dynamic shapeHelper) {
             FacebookAccountVM vm = new FacebookAccountVM();
-            Mapper.Initialize(cfg => {
-               cfg.CreateMap<FacebookAccountPart, FacebookAccountVM>();
-            });
 
             var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<FacebookAccountPart, FacebookAccountVM>();
