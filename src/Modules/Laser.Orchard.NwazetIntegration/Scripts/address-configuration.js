@@ -186,7 +186,7 @@ AddressConfiguration.prototype = {
     _attachCountryHandlers: function (el, options) {
         var countryInput = el.find(options.countriesInput);
         if (options.useDefaultCountryChangeHandler) {
-            countryInput.on('change', {el:el, options:options}, niAC._baseCountryChangeHandler);
+            countryInput.on('change', { el: el, options: options }, niAC._baseCountryChangeHandler);
         }
         if (options.onChangeCountry) {
             countryInput.on('change', options.onChangeCountry);
@@ -216,7 +216,7 @@ AddressConfiguration.prototype = {
             });
         }
         if (options.useDefaultProvinceChangeHandler) {
-            provinceInput.on('change', {el:el, options:options}, niAC._baseProvinceChangeHandler);
+            provinceInput.on('change', { el: el, options: options }, niAC._baseProvinceChangeHandler);
         }
         if (options.onChangeProvince) {
             provinceInput.on('change', options.onChangeProvince);
@@ -306,29 +306,32 @@ AddressConfiguration.prototype = {
                                     options.getCities.before(city);
                                 }
                                 // populate the choices for the city
+
                                 if (data.Cities && data.Cities.length > 0) {
-                                    // multiple cities => dropdown
-                                    var newInput = '<select ';
-                                    for (var a = 0; a < city[0].attributes.length; a++) {
-                                        newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
-                                    }
-                                    newInput += '></select>';
-                                    city.replaceWith(newInput);
-                                    city = el.find(options.citiesInput);
-                                    var cityId = el.find(options.cityId).val();
-                                    // remove old values
-                                    //city.empty();
-                                    for (var i = 0; i < data.Cities.length; i++) {
-                                        // create a DOM option
-                                        var newOption =
-                                            new Option(
-                                                data.Cities[i].Text, //text
-                                                data.Cities[i].Value, //value
-                                                !!data.Cities[i].DefaultSelected, //defaultSelected
-                                                !!data.Cities[i].Selected
-                                                || (cityId == 0 && cityName.length > 0 && cityName == data.Cities[i].Text.toLowerCase())
-                                                || data.Cities[i].Value == cityId); //selected
-                                        city.append(newOption);
+                                    if (city.is(":hidden") == false) {
+                                        // multiple cities => dropdown
+                                        var newInput = '<select ';
+                                        for (var a = 0; a < city[0].attributes.length; a++) {
+                                            newInput += city[0].attributes[a].name + '="' + city[0].attributes[a].value + '" ';
+                                        }
+                                        newInput += '></select>';
+                                        city.replaceWith(newInput);
+                                        city = el.find(options.citiesInput);
+                                        var cityId = el.find(options.cityId).val();
+                                        // remove old values
+                                        //city.empty();
+                                        for (var i = 0; i < data.Cities.length; i++) {
+                                            // create a DOM option
+                                            var newOption =
+                                                new Option(
+                                                    data.Cities[i].Text, //text
+                                                    data.Cities[i].Value, //value
+                                                    !!data.Cities[i].DefaultSelected, //defaultSelected
+                                                    !!data.Cities[i].Selected
+                                                    || (cityId == 0 && cityName.length > 0 && cityName == data.Cities[i].Text.toLowerCase())
+                                                    || data.Cities[i].Value == cityId); //selected
+                                            city.append(newOption);
+                                        }
                                     }
                                 } else {
                                     // no configured city => free text
@@ -393,7 +396,7 @@ AddressConfiguration.prototype = {
                     // trigger change event
                     city.trigger("change");
                 }
-                
+
             }
         }
     },
@@ -507,28 +510,30 @@ AddressConfiguration.prototype = {
                                 options.getProvinces.before(province);
                             }
                             if (data.Provinces && data.Provinces.length > 0) {
-                                // dropdown
-                                var newInput = '<select ';
-                                for (var a = 0; a < province[0].attributes.length; a++) {
-                                    newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
-                                }
-                                newInput += '></select>';
-                                province.replaceWith(newInput);
-                                province = el.find(options.provincesInput);
-                                var provinceId = el.find(options.provinceId);
-                                // remove old values
-                                //province.empty();
-                                for (var i = 0; i < data.Provinces.length; i++) {
-                                    // create a DOM option
-                                    var newOption =
-                                        new Option(
-                                            data.Provinces[i].Text, //text
-                                            data.Provinces[i].Value, //value
-                                            !!data.Provinces[i].DefaultSelected, //defaultSelected
-                                            !!data.Provinces[i].Selected
-                                            || (provinceId == 0 && provinceName.length > 0 && provinceName == data.Provinces[i].Text.toLowerCase())
-                                            || data.Provinces[i].Value == provinceId); //selected
-                                    province.append(newOption);
+                                if (province.is(":hidden") == false) {
+                                    // dropdown
+                                    var newInput = '<select ';
+                                    for (var a = 0; a < province[0].attributes.length; a++) {
+                                        newInput += province[0].attributes[a].name + '="' + province[0].attributes[a].value + '" ';
+                                    }
+                                    newInput += '></select>';
+                                    province.replaceWith(newInput);
+                                    province = el.find(options.provincesInput);
+                                    var provinceId = el.find(options.provinceId);
+                                    // remove old values
+                                    //province.empty();
+                                    for (var i = 0; i < data.Provinces.length; i++) {
+                                        // create a DOM option
+                                        var newOption =
+                                            new Option(
+                                                data.Provinces[i].Text, //text
+                                                data.Provinces[i].Value, //value
+                                                !!data.Provinces[i].DefaultSelected, //defaultSelected
+                                                !!data.Provinces[i].Selected
+                                                || (provinceId == 0 && provinceName.length > 0 && provinceName == data.Provinces[i].Text.toLowerCase())
+                                                || data.Provinces[i].Value == provinceId); //selected
+                                        province.append(newOption);
+                                    }
                                 }
                             } else {
                                 // no configured province => free text

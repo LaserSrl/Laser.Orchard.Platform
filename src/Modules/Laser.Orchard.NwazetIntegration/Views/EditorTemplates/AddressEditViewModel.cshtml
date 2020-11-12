@@ -119,11 +119,13 @@
                     <select id="@Html.FieldIdFor(m => m.City)"
                             class="required address-input text"
                             name="@Html.NameFor(m => m.City)">
-                        @if(!string.IsNullOrEmpty(Model.City) && Model.CityId != 0) { 
+                        @if (!string.IsNullOrEmpty(Model.City) && Model.CityId != 0) {
                             <option selected="selected" value="@Model.CityId">@Model.City</option>
                         }
                     </select>
-                } else {
+                    @Html.HiddenFor(m => m.City)
+                }
+                else {
                     <input id="@Html.FieldIdFor(m => m.City)"
                            class="required address-input text"
                            name="@Html.NameFor(m => m.City)" type="text"
@@ -140,14 +142,16 @@
                     <div class="hint"></div>
                 </div>
                 @if (Model.ProvinceId > 0) {
-	                <select id="@Html.FieldIdFor(m => m.Province)"
-	                        class="required address-input text"
-	                        name="@Html.NameFor(m => m.Province)">
-	                    @if (!string.IsNullOrEmpty(Model.Province) && Model.ProvinceId != 0) {
-	                        <option selected="selected" value="@Model.ProvinceId">@Model.Province</option>
-	                    }
+                    <select id="@Html.FieldIdFor(m => m.Province)"
+                            class="required address-input text"
+                            name="@Html.NameFor(m => m.Province)">
+                        @if (!string.IsNullOrEmpty(Model.Province) && Model.ProvinceId != 0) {
+                            <option selected="selected" value="@Model.ProvinceId">@Model.Province</option>
+                        }
                     </select>
-                } else {
+                    @Html.HiddenFor(m => m.Province)
+                }
+                else {
                     <input id="@Html.FieldIdFor(m => m.Province)"
                            class="required address-input text-small"
                            name="@Html.NameFor(m => m.Province)" type="text"
