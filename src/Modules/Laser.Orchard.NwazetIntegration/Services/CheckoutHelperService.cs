@@ -74,7 +74,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var orderContext = new OrderContext {
                 WorkContextAccessor = _workContextAccessor,
                 ShoppingCart = _shoppingCart,
-                Charge = charge
+                Charge = charge,
+                ShippingAddress = model.ShippingAddress,
+                BillingAddress = model.BillingAddress
             };
             var order = _orderService.CreateOrder(
                 charge,
