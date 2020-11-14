@@ -8,6 +8,8 @@ using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor;
 using Orchard.Environment.State;
 using Orchard.Localization;
+using Orchard.Projections.Models;
+using Orchard.Projections.Services;
 using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ namespace Laser.Orchard.HiddenFields.Services {
     public class HiddenStringFieldUpdateProcessor : IHiddenStringFieldUpdateProcessor {
 
         private readonly IContentManager _contentManager;
+        private readonly IFieldIndexService _fieldIndexService;
         private readonly IProcessingEngine _processingEngine;
         private readonly ShellSettings _shellSettings;
         private readonly IShellDescriptorManager _shellDescriptorManager;
@@ -36,6 +39,7 @@ namespace Laser.Orchard.HiddenFields.Services {
             ShellSettings shellSettings,
             IShellDescriptorManager shellDescriptionManager,
             IContentDefinitionManager contentDefinitionManager,
+            IFieldIndexService fieldIndexService, 
             ITokenizer tokenizer) {
 
             _contentManager = contentManager;
@@ -43,6 +47,7 @@ namespace Laser.Orchard.HiddenFields.Services {
             _shellSettings = shellSettings;
             _shellDescriptorManager = shellDescriptionManager;
             _contentDefinitionManager = contentDefinitionManager;
+            _fieldIndexService = fieldIndexService;
             _tokenizer = tokenizer;
 
             T = NullLocalizer.Instance;
@@ -75,19 +80,36 @@ namespace Laser.Orchard.HiddenFields.Services {
             var parts = _contentManager.GetMany<ContentItem>(contentItemIds, VersionOptions.Published, new QueryHints())
                 .Select(ci => ci.Parts.FirstOrDefault(pa => pa.PartDefinition.Name == partName));
             if (settings.Tokenized) {
-                foreach (var item in parts.Select(pa => 
-                    new KeyValuePair<HiddenStringField, Dictionary<string, object>>(
-                        pa.Fields.FirstOrDefault(fi => IsMyField(fi, fieldName)) as HiddenStringField,
-                        new Dictionary<string, object> { { "Content", pa.ContentItem } }
-                        ))) {
+                foreach (var part in parts) {
+                    var item = new KeyValuePair<HiddenStringField, Dictionary<string, object>>(
+                        part.Fields.FirstOrDefault(fi => IsMyField(fi, fieldName)) as HiddenStringField,
+                        new Dictionary<string, object> { { "Content", part.ContentItem } });
                     item.Key.Value = _tokenizer.Replace(settings.TemplateString, item.Value);
+                    //Updates the index for projections
+                    _fieldIndexService.Set(
+                        part.ContentItem.As<FieldIndexPart>(),
+                        part.PartDefinition.Name,
+                        item.Key.Name,
+                        "",
+                        item.Key.Value,
+                        typeof(string));
                 }
             } else {
-                var fields = parts.SelectMany(pa => pa.Fields
+                foreach (var part in parts) {
+                    var fields = part.Fields
                     .Where(fi => IsMyField(fi, fieldName))
-                    .Select(fi => fi as HiddenStringField));
-                foreach (var field in fields) {
-                    field.Value = settings.TemplateString;
+                    .Select(fi => fi as HiddenStringField);
+                    foreach (var field in fields) {
+                        field.Value = settings.TemplateString;
+                        //Updates the index for projections
+                        _fieldIndexService.Set(
+                            part.ContentItem.As<FieldIndexPart>(),
+                            part.PartDefinition.Name,
+                            field.Name,
+                            "",
+                            field.Value,
+                            typeof(string));
+                    }
                 }
             }
         }
