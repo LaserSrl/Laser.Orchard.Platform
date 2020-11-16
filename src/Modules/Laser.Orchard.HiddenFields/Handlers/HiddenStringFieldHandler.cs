@@ -26,17 +26,18 @@ namespace Laser.Orchard.HiddenFields.Handlers {
             var fields = context.ContentItem.Parts
                     .SelectMany(pa => pa.Fields
                         .Where(fi => fi is HiddenStringField)
-                        .Select(fi => fi as HiddenStringField))
-                    .Where(fi => string.IsNullOrWhiteSpace(fi.Value));
+                        .Select(fi => fi as HiddenStringField));
             if (fields.Any()) {
                 var tokens = new Dictionary<string, object> { { "Content", context.ContentItem } };
 
                 foreach (var fi in fields) {
                     var settings = fi.PartFieldDefinition
                         .Settings.GetModel<HiddenStringFieldSettings>();
-                    fi.Value = settings.Tokenized ?
-                        _tokenizer.Replace(settings.TemplateString, tokens) :
-                        settings.TemplateString;
+                    if (string.IsNullOrWhiteSpace(fi.Value) || settings.AutomaticAdjustmentOnEdit) {
+                        fi.Value = settings.Tokenized ?
+                            _tokenizer.Replace(settings.TemplateString, tokens) :
+                            settings.TemplateString;
+                    }
                 }
             }
         }

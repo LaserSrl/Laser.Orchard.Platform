@@ -51,6 +51,7 @@ namespace Laser.Orchard.HiddenFields.Settings {
                 if (updateModel.TryUpdateModel(model, "HiddenStringFieldSettingsEventsViewModel", null, null)) {
                     builder.WithSetting("HiddenStringFieldSettings.Tokenized", model.Settings.Tokenized.ToString());
                     builder.WithSetting("HiddenStringFieldSettings.TemplateString", model.Settings.TemplateString);
+                    builder.WithSetting("HiddenStringFieldSettings.AutomaticAdjustmentOnEdit", model.Settings.AutomaticAdjustmentOnEdit.ToString());
 
                     _updateProcessor.AddTask(model.ProcessVariant, model.Settings, builder);
 
