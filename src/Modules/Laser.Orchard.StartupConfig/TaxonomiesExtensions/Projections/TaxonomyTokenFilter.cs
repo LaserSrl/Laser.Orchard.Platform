@@ -41,7 +41,8 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
                 var terms = idList.Select(_taxonomyService.GetTerm).ToList();
                 var allTerms = new List<TermPart>();
                 foreach (var term in terms) {
-                    if (context.State.IncludeChildren != null)
+                    bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
+                    if (includeChildren)
                         allTerms.AddRange(_taxonomyService.GetChildren(term));
                     if (term != null)
                         allTerms.Add(term);
@@ -51,7 +52,7 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
 
                 var allIds = allTerms.Select(x => x != null ? x.Id : 0).Where(x => x > 0).ToList();
                 if (allIds.Count() == 0) {
-                    throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString()); 
+                    throw new Exception(T("None of the ids \"{0}\" is a term.", ids).ToString());
                 }
                 int op = Convert.ToInt32(context.State.Operator);
 
