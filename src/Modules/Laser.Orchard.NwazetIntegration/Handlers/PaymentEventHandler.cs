@@ -75,7 +75,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 foreach (var handler in _cartLifeCycleEventHandlers) {
                     handler.Finalized();
                 }
-                _shoppingCart.Clear();
+                _shoppingCart.ClearAll();
                 // raise order and payment events
                 _contentManager.Publish(order.ContentItem);
                 TriggerEvents(order);
