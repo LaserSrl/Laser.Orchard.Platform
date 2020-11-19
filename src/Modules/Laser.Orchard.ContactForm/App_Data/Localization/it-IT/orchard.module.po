@@ -220,6 +220,30 @@ msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Your Name"
 msgstr "Il Vostro Nome"
 
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedEvent"
+msgid "A contact form is submitted"
+msgstr "È stato compilato e inviato un form di contatto"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedEvent"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedEvent"
+msgid "Marketing"
+msgstr "Marketing"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedForm"
+msgid "Any"
+msgstr "Qualsiasi"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedForm"
+msgid "Contact Forms - Contents"
+msgstr "Form di contatto - Contenuti"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedForm"
+msgid "Select any contact form. If the contact form is not in the list, you need to add the IdentityPart and valorize it."
+msgstr "Selezionare un form di contatto. Se il form di contatto non è presente in lista, è necessario aggiungere e valorizzare l'IdentityPart sul relativo tipo di contenuto."
+
 msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormDriver"
 msgid "The destination folder for the uploaded files has been succesfully created!"
 msgstr "La cartella di destinazione per i file da caricare è stata creata con successo!"
