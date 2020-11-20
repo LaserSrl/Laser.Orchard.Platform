@@ -6,6 +6,7 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Settings;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
+using System.Web.Routing;
 
 namespace Contrib.Widgets.Handlers {
     [OrchardFeature("Contrib.Widgets")]
@@ -34,6 +35,22 @@ namespace Contrib.Widgets.Handlers {
                 return;
 
             _contentManager.Publish(part.ContentItem);
+        }
+
+        protected override void GetItemMetadata(GetContentItemMetadataContext context) {
+            var widgetExPart = context.ContentItem.As<WidgetExPart>();
+
+            if (widgetExPart == null  || widgetExPart.Host == null)
+                return;
+
+            context.Metadata.EditorRouteValues = new RouteValueDictionary {
+                {"Area", "Contrib.Widgets"},
+                {"Controller", "Admin"},
+                {"Action", "EditWidget"},
+                {"hostId", widgetExPart.Host.Id},
+                {"Id", widgetExPart.Id}
+            };
+
         }
 
         protected override void Activated(ActivatedContentContext context) {
