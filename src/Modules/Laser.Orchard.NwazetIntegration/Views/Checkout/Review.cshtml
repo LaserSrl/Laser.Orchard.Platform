@@ -41,6 +41,15 @@
                     </div>
                 </div>
             }
+            @foreach (var alteration in Model.ShoppingCart.PriceAlterationAmounts) {
+
+                <div class="row order-review-alterations">
+                    <div class="order-review-label">@alteration.Label</div>
+                    <div class="order-review-value">
+                        @Model.CurrencyProvider.GetPriceString(alteration.Amount)
+                    </div>
+                </div>
+            }
             <div class="row order-review-total">
                 <div class="order-review-label">@T("Total")</div>
                 <div class="order-review-value">@Model.CurrencyProvider.GetPriceString(Model.GetShopppingTotal())</div>
