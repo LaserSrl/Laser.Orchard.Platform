@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             TerritoryPart part, 
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
-            IEnumerable<int> cities) : this() {
+            IEnumerable<int> cities,
+            ITerritoryPartRecordService _territoryPartRecordService) : this() {
 
             _contentManager = part.ContentItem.ContentManager;
 
@@ -42,7 +44,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 DisplayText = part.Record.TerritoryInternalRecord.Name;
             }
 
-            ChildrenCount = part.Record.Children.Count();
+            ChildrenCount = _territoryPartRecordService.GetTerritoriesChildCount(part); //part.Record.Children.Count();
         }
 
         public AddressConfigurationTerritoryViewModel(
@@ -50,8 +52,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             IEnumerable<int> countries,
             IEnumerable<int> provinces,
             IEnumerable<int> cities,
-            AddressConfigurationTerritoryViewModel parent) 
-            : this(part, countries, provinces, cities) {
+            AddressConfigurationTerritoryViewModel parent,
+            ITerritoryPartRecordService _territoryPartRecordService) 
+            : this(part, countries, provinces, cities,_territoryPartRecordService) {
             Parent = parent;
         }
 
