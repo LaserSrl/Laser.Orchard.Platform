@@ -228,6 +228,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // check if the user is trying to reset the selected addresses to select different
             // ones.
             if (model.ResetAddresses) {
+                // reset shipment to redo the calculation correctly, 
+                // removing from the total the shipment that will have to be reselected
+                _shoppingCart.ShippingOption = null;
+
                 ReinflateViewModelAddresses(model);
                 // Put the model we validated in TempData so it can be reused in the next action.
                 TempData["CheckoutViewModel"] = model;
@@ -316,6 +320,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (TempData.ContainsKey("CheckoutViewModel")) {
                 model = (CheckoutViewModel)TempData["CheckoutViewModel"];
             }
+
+            // Check if the mail returned an error: "A shipment has not been selected"
+            if (TempData.ContainsKey("ShippingError")) {
+                ModelState.AddModelError("_FORM", TempData["ShippingError"].ToString());
+            }
+
             // deserialize addresses
             ReinflateViewModelAddresses(model);
 
@@ -414,6 +424,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // Put the model we validated in TempData so it can be reused in the next action.
                 _shoppingCart.ShippingOption = null;
                 TempData["CheckoutViewModel"] = model;
+
+                // used tempdata because doing the "redirecttoaction" doesn't keep the modelstate value saved
+                // it is an error only if I am not doing a reset shipping, 
+                // because if I am doing a reset shipping it is normal for the shipping options to be null
+                if (!model.ResetShipping) {
+                    TempData["ShippingError"] = T("Select a shipment to proceed with your order").Text;
+                }
                 return RedirectToAction("Shipping");
             }
             // the selected shipping option

@@ -235,6 +235,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
+                FixUpdate(newAddress);
+                
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -284,6 +286,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.ShippingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.ShippingAddress);
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
+                FixUpdate(newAddress);
+                
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -311,6 +315,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         ? AddressRecordType.BillingAddress
                         : AddressRecordType.ShippingAddress,
                     country);
+                if (viewModel.CityId != 0) { 
+                    var selectedCity = _addressConfigurationService.GetCity(viewModel.CityId);
+                    if (selectedCity != null && !cities.Any(c=>c.Record.TerritoryInternalRecord.Id == viewModel.CityId)) {
+                        cities = cities.Concat(new[] { selectedCity });
+                    }
+                }
                 return Json(new {
                     Success = true,
                     Cities = cities

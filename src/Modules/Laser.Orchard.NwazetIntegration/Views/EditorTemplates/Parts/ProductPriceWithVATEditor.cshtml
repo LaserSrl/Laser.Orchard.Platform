@@ -176,7 +176,7 @@
 
             vatConfigDropDown.on('change', function () {
                 // currently selected vat config
-                rate = rates[$this.val()];
+                rate = rates[$(this).val()];
                 // recompute prices before tax
                 UpdateBasePrices()
                 // re update hint text
