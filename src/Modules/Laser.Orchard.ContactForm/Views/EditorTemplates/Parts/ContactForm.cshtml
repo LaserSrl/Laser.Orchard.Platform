@@ -21,7 +21,7 @@
     <div class="editor-field">
         <label>@Html.CheckBoxFor(model => model.ContactForm.UseStaticSubject) @T("Use Same Subject for All Emails"):</label>
         <span>@Html.TextBoxFor(model => model.ContactForm.StaticSubjectMessage, new { @class = "text-box" })</span>
-        <span class="hint">@T("If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked, the subject specified in the template will be used. If no template is specified, the subject specified in the textbox above will be used.")</span>
+        <span class="hint">@T("If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked and the above textbox is empty, the subject specified in the template will be used otherwise the above textbox value will be used as the email subject. If no template is specified, the subject specified in the textbox above will be used.")</span>
     </div>
 </fieldset>
 <fieldset>
