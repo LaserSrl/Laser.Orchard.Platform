@@ -141,6 +141,10 @@ msgid "Google Api Key"
 msgstr "Apy Key di google"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Keep the map's culture/language consistent with the current culture"
+msgstr "Mantieni la lingua della mappa allineata con la lingua corrente"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
 msgid "Maps"
 msgstr "Mappe"
 
