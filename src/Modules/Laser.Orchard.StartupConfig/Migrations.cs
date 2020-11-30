@@ -269,4 +269,14 @@ namespace Laser.Orchard.StartupConfig {
             return 1;
         }
     }
+
+    [OrchardFeature("Laser.Orchard.StartupConfig.CacheEvictorPart")]
+    public class MigrationCacheEvictorTable : DataMigrationImpl {
+        public int Create() {
+            ContentDefinitionManager.AlterPartDefinition("CacheEvictorPart", b => b
+                .Attachable(true)
+                .WithDescription("Used for any content. Specify the id of the reference content(s) to cache evict."));
+            return 1;
+        }
+    }
 }
