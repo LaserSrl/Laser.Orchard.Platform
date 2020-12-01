@@ -402,7 +402,6 @@
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
-    <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
