@@ -4,6 +4,6 @@ namespace Laser.Orchard.StartupConfig.Models {
     [OrchardFeature("Laser.Orchard.StartupConfig.CacheEvictorPart")]
     public class CacheEvictorPartSettings {
         public string EvictItem { get; set; }
-        public string IdentityEvicItem { get; set; }
+        public string IdentityEvictItem { get; set; }
     }
 }
