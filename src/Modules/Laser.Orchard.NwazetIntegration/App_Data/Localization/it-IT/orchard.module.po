@@ -405,8 +405,16 @@ msgid "Quantity"
 msgstr "Quantità"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
 msgid "Unit price"
 msgstr "Prezzo Unitario"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Value"
+msgstr "Valore"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
 msgid "Your cart"
