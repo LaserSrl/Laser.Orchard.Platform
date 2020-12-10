@@ -106,12 +106,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var addressPart = order.As<AddressOrderPart>();
             if (addressPart != null) {
                 // shipping info
-                addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
-                addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
-                addressPart.ShippingCityName = model.ShippingAddressVM.City;
-                addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
-                addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
-                addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                if (model.ShippingAddressVM != null) {
+                    // may not have a shipping address is shipping isn't required
+                    addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
+                    addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
+                    addressPart.ShippingCityName = model.ShippingAddressVM.City;
+                    addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
+                    addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
+                    addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                }
                 // billing
                 addressPart.BillingCountryName = model.BillingAddressVM.Country;
                 addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
