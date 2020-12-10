@@ -241,8 +241,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // Ensure address types are initialized correctly 
             model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
             model.BillingAddressVM.AddressRecord.AddressType = AddressRecordType.BillingAddress;
-            model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
-            model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
+            if (model.ShippingAddressVM != null) {
+                model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
+                model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
+            }
             // validate
             var validationSuccess = ValidateVM(model);
             if (!validationSuccess) {
