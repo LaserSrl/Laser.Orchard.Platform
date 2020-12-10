@@ -583,8 +583,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // This should get the current order under process, as well as any other relevant
             // setting, as well as the user object, to determine whether anything has to be 
             // shipped.
+            var required = _workContextAccessor.GetContext().CurrentSite
+                .As<CheckoutSettingsPart>().ShippingIsRequired;
+            if (required) {
+                // the site settings short-circuits the tests
+                return true;
+            }
             // Any phyisical product
-            var required = _shoppingCart.GetProducts().Any(pq => !pq.Product.IsDigital);
+            required = _shoppingCart.GetProducts().Any(pq => !pq.Product.IsDigital);
             return required;
         }
         private AddressEditViewModel CreateVM() {
