@@ -27,6 +27,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 if (updater.TryUpdateModel(vm, Prefix, null, null)) {
                     part.CheckoutRequiresAuthentication = vm.CheckoutRequiresAuthentication;
                     part.PhoneIsRequired = vm.PhoneIsRequired;
+                    part.ShippingIsRequired = vm.ShippingIsRequired;
                 }
             }
             return Editor(part, shapeHelper);

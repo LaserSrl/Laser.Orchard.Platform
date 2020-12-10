@@ -15,5 +15,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return this.Retrieve(p => p.PhoneIsRequired); }
             set { this.Store(p => p.PhoneIsRequired, value); }
         }
+
+        public bool ShippingIsRequired {
+            get { return this.Retrieve(p => p.ShippingIsRequired); }
+            set { this.Store(p => p.ShippingIsRequired, value); }
+        }
     }
 }
