@@ -72,3 +72,8 @@ Features:
 		Description: Enable feature to customize TinyMce
 		Category: Content
 		Dependencies: TinyMce, Laser.Orchard.StartupConfig
+	Laser.Orchard.StartupConfig.CacheEvictorPart
+		Name: Laser CacheEvictor Part
+		Description: Part for cache evict
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig

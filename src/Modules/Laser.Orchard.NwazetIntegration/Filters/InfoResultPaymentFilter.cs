@@ -65,7 +65,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             var products = _contentManager
                                .GetMany<IContent>(
                                    checkoutItems.Select(p => p.ProductId).Distinct(),
-                                   VersionOptions.Latest,
+                                   VersionOptions.Published,
                                    QueryHints.Empty)
                                 .ToList();
                             // initialize list of GTMProductVM

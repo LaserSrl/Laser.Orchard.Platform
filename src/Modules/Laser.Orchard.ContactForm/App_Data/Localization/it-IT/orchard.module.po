@@ -49,6 +49,10 @@ msgid "If checked, an upload button will be added to the form."
 msgstr "Se selezionato, un bottone di caricamento verrà aggiunto al form."
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
+msgid "If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked and the above textbox is empty, the subject specified in the template will be used otherwise the above textbox value will be used as the email subject. If no template is specified, the subject specified in the textbox above will be used."
+msgstr "Se non selezionato verrà mostrato sul form a front-end un campo Oggetto. Tokens: {DOMAIN},{NAME}.<br/>Se selezionato e la textbox viene lasciata vuota, verrà utilizzato come oggetto della mail l'oggetto specificato all'interno del template, altrimenti verrà utilizzato come oggetto della mail il testo della textbox. Se non viene selezionato alcun template di email, sarà utilizzato come oggetto il testo presente nella textbox."
+
+msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/EditorTemplates/Parts/ContactForm.cshtml"
 msgid "If not checked, a 'Subject' field will display on the form. Tokens: {DOMAIN}, {NAME}.<br/>If checked, the subject specified in the template will be used. If no template is specified, the subject specified in the textbox above will be used."
 msgstr "Se non selezionato, un campo 'Oggetto' verrà visualizzato nel form. Tokens: {DOMAIN}, {NAME}.<br/>Se selezionato, verrà usato l'oggetto specificato nel template. Se nessun template è stato selezionato, verrà usato l'oggetto specificato nella casella di testo soprastante."
 
