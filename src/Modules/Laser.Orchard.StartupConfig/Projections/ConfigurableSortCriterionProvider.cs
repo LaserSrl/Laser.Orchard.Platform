@@ -13,6 +13,9 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.Projections.FieldTypeEditors;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard;
+using Orchard.Projections.Descriptors;
+using Orchard.Forms.Services;
 
 namespace Laser.Orchard.StartupConfig.Projections {
     public class ConfigurableSortCriterionProvider : ISortCriterionProvider {
@@ -20,17 +23,20 @@ namespace Laser.Orchard.StartupConfig.Projections {
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IEnumerable<IContentFieldDriver> _contentFieldDrivers;
         private readonly IEnumerable<IFieldTypeEditor> _fieldTypeEditors;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public ConfigurableSortCriterionProvider(
             IEnumerable<IMemberBindingProvider> bindingProviders,
             IContentDefinitionManager contentDefinitionManager,
             IEnumerable<IContentFieldDriver> contentFieldDrivers,
-            IEnumerable<IFieldTypeEditor> fieldTypeEditors) {
+            IEnumerable<IFieldTypeEditor> fieldTypeEditors,
+            IWorkContextAccessor workContextAccessor) {
 
             _bindingProviders = bindingProviders;
             _contentDefinitionManager = contentDefinitionManager;
             _contentFieldDrivers = contentFieldDrivers;
             _fieldTypeEditors = fieldTypeEditors;
+            _workContextAccessor = workContextAccessor;
 
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
@@ -64,13 +70,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
                     }
                     // get the ith criterion
                     var criterionToUse = criteriaArray[criterionIndex];
-                    if (criterionToUse.IsForField()) {
-                        // order based on a field
-                        ApplyCriterionForField(context, criterionToUse);
-                    } else if (criterionToUse.IsForPart()) {
-                        // order based on a part's property
-                        ApplyCriterionForPart(context, criterionToUse);
-                    }
+                    CriterionApplication(context, criterionToUse);
                 }
             } catch (Exception ex) {
                 // impossible to parse the array
@@ -82,6 +82,22 @@ namespace Laser.Orchard.StartupConfig.Projections {
                     + Environment.NewLine
                     + T("Error: {0}", ex.Message).Text;
                 Logger.Error(eMsg);
+            }
+        }
+
+        private void CriterionApplication(
+            SortCriterionContext context, SortCriterionConfiguration criterionToUse) {
+            if (criterionToUse.IsForField()) {
+                // order based on a field
+                ApplyCriterionForField(context, criterionToUse);
+            }
+            else if (criterionToUse.IsForPart()) {
+                // order based on a part's property
+                ApplyCriterionForPart(context, criterionToUse);
+            }
+            else if (criterionToUse.IsForProvider()) {
+                // we can invoke another provider to do its thing
+                InvokeOtherProvider(context, criterionToUse);
             }
         }
 
@@ -166,14 +182,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
             }
             if (criterion.Children.Any()) {
                 foreach (var childCriterion in criterion.Children) {
-                    if (childCriterion.IsForField()) {
-                        // order based on a field
-                        ApplyCriterionForField(context, childCriterion);
-                    }
-                    else if (childCriterion.IsForPart()) {
-                        // order based on a part's property
-                        ApplyCriterionForPart(context, childCriterion);
-                    }
+                    CriterionApplication(context, childCriterion);
                 }
             }
         }
@@ -248,14 +257,67 @@ namespace Laser.Orchard.StartupConfig.Projections {
             }
             if (criterion.Children.Any()) {
                 foreach (var childCriterion in criterion.Children) {
-                    if (childCriterion.IsForField()) {
-                        // order based on a field
-                        ApplyCriterionForField(context, childCriterion);
+                    CriterionApplication(context, childCriterion);
+                }
+            }
+        }
+        #endregion
+
+        #region Sort using another provider
+        private IEnumerable<ISortCriterionProvider> _allSortProviders { get; set; }
+        private IEnumerable<ISortCriterionProvider> allSortProviders { get {
+                if (_allSortProviders == null) {
+                    var workContext = _workContextAccessor.GetContext();
+                    IEnumerable<ISortCriterionProvider> provs;
+                    if (workContext.TryResolve(out provs)) {
+                        _allSortProviders = provs;
+                    } else {
+                        _allSortProviders = Enumerable.Empty<ISortCriterionProvider>();
                     }
-                    else if (childCriterion.IsForPart()) {
-                        // order based on a part's property
-                        ApplyCriterionForPart(context, childCriterion);
-                    }
+                }
+                return _allSortProviders;
+            }
+        }
+        private IEnumerable<TypeDescriptor<SortCriterionDescriptor>> DescribeSortCriteria(
+            IEnumerable<ISortCriterionProvider> _sortCriterionProviders) {
+            var context = new DescribeSortCriterionContext();
+
+            foreach (var provider in _sortCriterionProviders) {
+                provider.Describe(context);
+            }
+            return context.Describe();
+        }
+        private void InvokeOtherProvider(
+            SortCriterionContext context, SortCriterionConfiguration criterion) {
+            if (allSortProviders.Any()) {
+                // pretend we are the ProjectionManager here
+                var availableSortCriteria = DescribeSortCriteria(allSortProviders).ToList();
+                // look for the specific filter component
+                var descriptor = availableSortCriteria
+                    .SelectMany(x => x.Descriptors)
+                    .FirstOrDefault(x =>
+                        x.Category == criterion.SortCriterionProviderCategory
+                        && x.Type == criterion.SortCriterionProviderType);
+                if (descriptor == null) {
+                    Logger.Error(
+                        T("It was impossible to find a descriptor for sort provider with category {0} and type {1}.",
+                        criterion.SortCriterionProviderCategory, criterion.SortCriterionProviderType).Text);
+                } else {
+                    var criterionState = FormParametersHelper.ToDynamic(criterion.SortCriterionProviderState ?? "");
+                    criterionState.Sort = criterion.Ascending;
+                    var sortCriterionContext = new SortCriterionContext {
+                        Query = context.Query,
+                        State = criterionState,
+                        QueryPartRecord = context.QueryPartRecord,
+                        Tokens = context.Tokens
+                    };
+                    descriptor.Sort(sortCriterionContext);
+                    context.Query = sortCriterionContext.Query;
+                }
+            }
+            if (criterion.Children.Any()) {
+                foreach (var childCriterion in criterion.Children) {
+                    CriterionApplication(context, childCriterion);
                 }
             }
         }

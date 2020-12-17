@@ -13,6 +13,10 @@ namespace Laser.Orchard.StartupConfig.Projections {
         public string PartRecordTypeName { get; set; }
         public string PropertyName { get; set; }
         public bool Ascending { get; set; }
+        // ability to configure other existing providers
+        public string SortCriterionProviderCategory { get; set; }
+        public string SortCriterionProviderType { get; set; }
+        public string SortCriterionProviderState { get; set; }
 
         public List<SortCriterionConfiguration> Children { get; set; }
 
@@ -31,6 +35,11 @@ namespace Laser.Orchard.StartupConfig.Projections {
         public bool IsForPart() {
             return !string.IsNullOrWhiteSpace(PartRecordTypeName)
                 && !string.IsNullOrWhiteSpace(PropertyName);
+        }
+
+        public bool IsForProvider() {
+            return !string.IsNullOrWhiteSpace(SortCriterionProviderCategory)
+                && !string.IsNullOrWhiteSpace(SortCriterionProviderType);
         }
     }
 }
