@@ -287,14 +287,20 @@ namespace Laser.Orchard.StartupConfig.Projections {
             }
             return context.Describe();
         }
+        private IEnumerable<SortCriterionDescriptor> _allDescriptors { get; set; }
+        private IEnumerable<SortCriterionDescriptor> AllDescriptors() {
+            if (_allDescriptors == null) {
+                _allDescriptors = DescribeSortCriteria(allSortProviders)
+                    .SelectMany(x => x.Descriptors);
+            }
+            return _allDescriptors;
+        }
         private void InvokeOtherProvider(
             SortCriterionContext context, SortCriterionConfiguration criterion) {
             if (allSortProviders.Any()) {
                 // pretend we are the ProjectionManager here
-                var availableSortCriteria = DescribeSortCriteria(allSortProviders).ToList();
                 // look for the specific filter component
-                var descriptor = availableSortCriteria
-                    .SelectMany(x => x.Descriptors)
+                var descriptor = AllDescriptors()
                     .FirstOrDefault(x =>
                         x.Category == criterion.SortCriterionProviderCategory
                         && x.Type == criterion.SortCriterionProviderType);
