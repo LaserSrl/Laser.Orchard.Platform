@@ -1,5 +1,8 @@
 ﻿@using Laser.Orchard.Braintree.ViewModels
 @{ 
+    Script.Require("jQuery").AtFoot();
+    Script.Include("https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js").AtFoot();
+
     var viewModel = (PaymentVM)Model.ViewModel;
     @* TODO: Parametrize more of this *@
     var warningSelector = (string)Model.WarningSelector;
