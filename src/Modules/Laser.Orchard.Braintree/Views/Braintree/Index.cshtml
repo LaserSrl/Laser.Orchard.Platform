@@ -2,35 +2,8 @@
 @{
     Script.Require("jQuery").AtHead();
 }
-@using (Script.Head()) {
-    <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
-    <script>
-	    $(document).ready(function() {
-		    $.ajax({
-			    type: "GET",
-			    url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.Braintree/Braintree/GetToken",
-			    data: "",
-			    dataType: "text",
-			    success: letUserPay,
-			    error: showError
-		    });
-	    });
-	    function letUserPay(data, textStatus, jqXHR) {
-	        var clientToken = data;
+@Display.BraintreeDropin(ViewModel: Model)
 
-	        braintree.setup(clientToken, "dropin", {
-	            container: "payment-form",
-	            onReady: function () {
-	                $("#div-warning").css("display", "none");
-	                $("#pay-button").removeAttr("disabled");
-	            }
-	        });
-	    }
-	    function showError(jqXHR, textStatus) {
-		    alert("Error: " + textStatus);
-	    }
-    </script>
-}
 <h1>@T("Pay with Braintree and PayPal")</h1>
 <div id="div-warning" style="color:red;font-weight:700">@T("Loading...")</div>
 <form id="checkout" method="post" action="@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.Braintree/Braintree/Pay">
@@ -38,6 +11,7 @@
     <br />
     @T("Amount"): @Model.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) @Model.Record.Currency<br />
     <input type="hidden" name="pid" value="@Model.Record.Id" />
+    <input type="hidden" id="nonce" name="payment_method_nonce" />
     <button id="pay-button" type="submit" disabled="disabled" style="padding: 10px 10px">@T("Pay now")</button>
     @Html.AntiForgeryToken()
 </form>
