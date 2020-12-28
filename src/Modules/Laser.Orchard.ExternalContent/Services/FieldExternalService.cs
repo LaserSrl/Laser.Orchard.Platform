@@ -538,6 +538,10 @@ namespace Laser.Orchard.ExternalContent.Services {
         }
 
         private static string GetHttpPage(string uri, HttpVerbOptions httpMethod, HttpDataTypeOptions httpDataType, string additionalHeadersText, string bodyRequest, string certificatePath = null, string privateKey = null) {
+            // updated version tls
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             Stream dataStream = null;
             String strResult;
             WebResponse objResponse;

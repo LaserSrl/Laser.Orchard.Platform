@@ -24,6 +24,10 @@ msgctxt "~/Themes/Lasergroup/Views/EditorTemplates/Parts.Comment.cshtml"
 msgid "Hi, {0}!"
 msgstr "Ciao, {0}!"
 
+msgctxt "~/Themes/Lasergroup/Views/Elements/Image.cshtml"
+msgid "Image not found"
+msgstr "Immagine non trovata"
+
 msgctxt "~/Themes/Lasergroup/Views/ElencoProdotti.cshtml"
 msgid "Show more showcases"
 msgstr "Carica altri showcases"

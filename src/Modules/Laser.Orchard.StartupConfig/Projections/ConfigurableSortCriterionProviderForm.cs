@@ -37,7 +37,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
                         Name: "CriteriaArray",
                         Title: T("Array of objects describing the sort criteria."),
                         Classes: new[] { "tokenized" },
-                        Description: T("This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and }). The additional \"FilterLabel\" property is available for use as a label for this filter when providing a frontend selection."))
+                        Description: T("This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. In case you want to use a different provider, you must provide its \"SortCriterionProviderCategory\" and \"SortCriterionProviderType\". You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and }). The additional \"FilterLabel\" property is available for use as a label for this filter when providing a frontend selection."))
                     );
 
                 return f;
@@ -80,14 +80,19 @@ namespace Laser.Orchard.StartupConfig.Projections {
                             T("The array of Criteria may not be null").Text);
                 }
                 for (int i = 0; i < criteria.Length; i++) {
-                    if (!criteria[i].IsForPart() && !criteria[i].IsForField()) {
+                    var forPart = criteria[i].IsForPart();
+                    var forField = criteria[i].IsForField();
+                    var forProvider = criteria[i].IsForProvider();
+                    var boolCount = (forPart ? 1 : 0) + (forField ? 1 : 0) + (forProvider ? 1 : 0);
+                    // misconfigurations
+                    if (!criteria[i].IsForPart() && !criteria[i].IsForField() && !criteria[i].IsForProvider()) {
                         context.ModelState
                             .AddModelError("CriteriaArray",
-                                T("Criterion at index {0} is neither for a part or a field.", i.ToString()).Text);
-                    } else if (criteria[i].IsForPart() && criteria[i].IsForField()) {
+                                T("Criterion at index {0} is neither for a part or a field or a provider.", i.ToString()).Text);
+                    } else if (boolCount > 1) {
                         context.ModelState
                             .AddModelError("CriteriaArray",
-                                T("Criterion at index {0} is configured for both a part and a field.", i.ToString()).Text);
+                                T("Criterion at index {0} is configured for more than a single option (part, field or provider).", i.ToString()).Text);
                     }
                 }
             } catch (Exception ex) {

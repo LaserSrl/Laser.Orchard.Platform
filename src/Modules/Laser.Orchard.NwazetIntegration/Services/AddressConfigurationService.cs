@@ -18,19 +18,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IContentManager _contentManager;
         private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
         private readonly IRepository<TerritoryInternalRecord> _territoryInternalRecord;
+        private readonly ITerritoryPartRecordService _territoryPartRecordService;
 
         public AddressConfigurationService(
             IAddressConfigurationSettingsService settingsService,
             ITerritoriesService territoriesService,
             IContentManager contentManager,
             ITerritoriesRepositoryService territoriesRepositoryService,
-            IRepository<TerritoryInternalRecord> territoryInternalRecord) {
+            IRepository<TerritoryInternalRecord> territoryInternalRecord,
+            ITerritoryPartRecordService territoryPartRecordService) {
 
             _settingsService = settingsService;
             _territoriesService = territoriesService;
             _contentManager = contentManager;
             _territoriesRepositoryService = territoriesRepositoryService;
             _territoryInternalRecord = territoryInternalRecord;
+            _territoryPartRecordService = territoryPartRecordService;
 
             T = NullLocalizer.Instance;
         }
@@ -216,6 +219,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 var adminType = parent.As<TerritoryAdministrativeTypePart>();
                 if (adminType != null && adminType.AdministrativeType == TerritoryAdministrativeType.Province) {
                     provinces.Add(parent);
+                    // Added the break to the first province that is found
+                    // otherwise it would continue to search asking if the province
+                    // has another province
+                    break;
                 }
                 parent = parent.ParentPart;
             }
@@ -387,7 +394,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // that correspond to the territories that have been selected
             // based on the Ids.
             // Depth first recursion
-            var allRecords = GetAllChildrenRecords(parent.Record.Children);
+            var allRecords = GetAllChildrenRecords(_territoryPartRecordService.GetTerritoriesChild(parent));//parent.Record.Children
             var selectedRecords = allRecords
                 .Where(tpr => selection.Contains(tpr.TerritoryInternalRecord.Id));
 
@@ -413,7 +420,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var result = new List<TerritoryPartRecord>(records);
             if (records.Any()) {
                 // if there are children, add those as well as their children
-                result.AddRange(GetAllChildrenRecords(records.SelectMany(r => r.Children)));
+                result.AddRange(GetAllChildrenRecords(records.SelectMany(r =>_territoryPartRecordService.GetTerritoriesChild(r))));
             }
             return result.Where(tpr => tpr != null && tpr.TerritoryInternalRecord != null);
         }

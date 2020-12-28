@@ -1,0 +1,11 @@
+﻿@model Laser.Orchard.StartupConfig.Models.CacheEvictorPartSettings
+
+@Display.TokenHint()
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.EvictItem)">@T("Evict Item")</label>
+    <div>
+        @Html.TextAreaFor(m => m.EvictItem, new { @class = "text medium", rows = "4" })
+        <span class="hint">@T("Insert Ids separated by a ; e.g. 5;10;15")</span>
+    </div>
+</fieldset>

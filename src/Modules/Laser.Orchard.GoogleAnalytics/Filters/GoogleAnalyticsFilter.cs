@@ -1,16 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using Laser.Orchard.GoogleAnalytics.Models;
+using Laser.Orchard.GoogleAnalytics.Services;
+using Laser.Orchard.GoogleAnalytics.ViewModels;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Mvc.Filters;
 using Orchard.UI.Resources;
-using Laser.Orchard.GoogleAnalytics.Models;
-using OUI = Orchard.UI;
-using Laser.Orchard.GoogleAnalytics.Services;
-using Orchard.Caching;
-using System.Web;
-using Orchard.DisplayManagement;
 using System.Collections.Generic;
+using System.Web;
+using System.Web.Mvc;
+using OUI = Orchard.UI;
 
 namespace Laser.Orchard.GoogleAnalytics.Filters {
     [OrchardFeature("Laser.Orchard.GoogleAnalytics")]
@@ -91,15 +92,15 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
 
         #endregion
 
-        private GoogleAnalyticsSettingsPart SettingsPart {
+        private GASettingsVM SettingsPart {
             get {
                 return _cacheManager.Get(Constants.SiteSettingsCacheKey, true, ctx => {
                     // check whether we should invalidate the cache
                     ctx.Monitor(_signals.When(Constants.SiteSettingsEvictSignal));
-                    return _workContextAccessor
+                    return new GASettingsVM(_workContextAccessor
                         .GetContext()
                         .CurrentSite
-                        .As<GoogleAnalyticsSettingsPart>();
+                        .As<GoogleAnalyticsSettingsPart>());
                 });
             }
         }

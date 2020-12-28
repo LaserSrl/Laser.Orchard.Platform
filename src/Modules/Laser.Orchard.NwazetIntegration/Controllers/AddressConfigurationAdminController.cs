@@ -2,6 +2,7 @@
 using Laser.Orchard.NwazetIntegration.Services;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Permissions;
+using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Localization;
@@ -25,6 +26,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly INotifier _notifier;
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly IAddressConfigurationSettingsService _addressSettingsService;
+        private readonly ITerritoryPartRecordService _territoryPartRecordService;
 
         private const string groupInfoId = "AddressConfigurationSiteSettings";
         
@@ -35,7 +37,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ITransactionManager transactionManager,
             INotifier notifier,
             IAddressConfigurationService addressConfigurationService,
-            IAddressConfigurationSettingsService addressSettingsService) {
+            IAddressConfigurationSettingsService addressSettingsService,
+            ITerritoryPartRecordService territoryPartRecordService) {
 
             _authorizer = authorizer;
             _siteService = siteService;
@@ -44,6 +47,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _notifier = notifier;
             _addressConfigurationService = addressConfigurationService;
             _addressSettingsService = addressSettingsService;
+            _territoryPartRecordService = territoryPartRecordService;
 
             T = NullLocalizer.Instance;
 
@@ -127,6 +131,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             var isProvince = adminType == TerritoryAdministrativeType.Province;
                             var isCity = adminType == TerritoryAdministrativeType.City;
                             var isNone = adminType == TerritoryAdministrativeType.None;
+                            var recordsChildrenCount = _territoryPartRecordService.GetTerritoriesChildCount(tp);
                             return new {
                                 Id = id,
                                 DisplayText = _contentManager
@@ -136,8 +141,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                                 IsProvince = isProvince,
                                 IsCity = isCity,
                                 IsNone = isNone,
-                                HasChildren = tp.Record.Children.Any(),
-                                ChildrenCount = tp.Record.Children.Count()
+                                HasChildren = recordsChildrenCount >0 ? true : false,
+                                ChildrenCount = recordsChildrenCount
                             };
                         })
                 });

@@ -36,10 +36,13 @@ namespace Laser.Orchard.Twitter.Drivers {
 
         protected override DriverResult Editor(TwitterAccountPart part, dynamic shapeHelper) {
             TwitterAccountVM vm = new TwitterAccountVM();
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<TwitterAccountPart, TwitterAccountVM>();
             });
-            Mapper.Map<TwitterAccountPart, TwitterAccountVM>(part, vm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<TwitterAccountPart, TwitterAccountVM>(part, vm);
 
             return ContentShape("Parts_TwitterAccount",
                                 () => shapeHelper.EditorTemplate(TemplateName: "Parts/TwitterAccount",
@@ -50,10 +53,13 @@ namespace Laser.Orchard.Twitter.Drivers {
         protected override DriverResult Editor(TwitterAccountPart part, IUpdateModel updater, dynamic shapeHelper) {
             TwitterAccountVM vm = new TwitterAccountVM();
             updater.TryUpdateModel(vm, Prefix, null, null);
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<TwitterAccountVM, TwitterAccountPart>();
             });
-            Mapper.Map<TwitterAccountVM, TwitterAccountPart>(vm, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<TwitterAccountVM, TwitterAccountPart>(vm, part);
             return Editor(part, shapeHelper);
         }
 

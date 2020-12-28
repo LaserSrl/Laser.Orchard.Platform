@@ -16,7 +16,7 @@ namespace Laser.Orchard.NwazetIntegration {
 
             manifest
                 .DefineScript("NwazetIntegration.AddressConfiguration")
-                .SetUrl("address-configuration.min.js?v=1.2", "address-configuration.js?v=1.2")
+                .SetUrl("address-configuration.min.js?v=1.3", "address-configuration.js?v=1.3")
                 .SetDependencies("jQuery");
 
             manifest
