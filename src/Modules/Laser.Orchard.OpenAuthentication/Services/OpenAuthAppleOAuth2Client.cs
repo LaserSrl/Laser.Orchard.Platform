@@ -116,10 +116,6 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             var result = "";
             lock (_httpClient) {
                 _httpClient.DefaultRequestHeaders.Clear();
-                // specify to use TLS 1.2 as default connection if needed
-                if (url.ToLowerInvariant().StartsWith("https:")) {
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                }
                 // call web api
                 Task<HttpResponseMessage> t = null;
                 _httpClient.DefaultRequestHeaders.Add("User-Agent", "krake");
