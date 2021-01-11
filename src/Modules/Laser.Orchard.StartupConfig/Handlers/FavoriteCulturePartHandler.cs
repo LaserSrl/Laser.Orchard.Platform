@@ -39,6 +39,11 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                 part.Culture = culture != null ? culture.Culture : "";
                 part.Culture_Id = culture != null ? culture.Id: 0;
             }
+            else {
+                var culture = _commonService.ListCultures().SingleOrDefault(x => x.Culture == part.Culture);
+                part.Culture = culture != null ? culture.Culture : "";
+                part.Culture_Id = culture != null ? culture.Id : 0;
+            }
         }
     }
 }
