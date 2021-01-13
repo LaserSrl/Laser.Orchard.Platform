@@ -55,9 +55,8 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
@@ -95,6 +94,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -172,6 +174,7 @@
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Views\DefinitionTemplates\CacheEvictorPartSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -405,6 +408,9 @@
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\CacheEvictorHandler.cs" />
+    <Compile Include="Models\CacheEvictorPart.cs" />
+    <Compile Include="Models\CacheEvictorPartSettings.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
@@ -422,6 +428,7 @@
     <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
+    <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />

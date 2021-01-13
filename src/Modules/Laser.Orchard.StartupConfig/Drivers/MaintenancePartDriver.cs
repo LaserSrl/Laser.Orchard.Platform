@@ -30,7 +30,12 @@ namespace Laser.Orchard.StartupConfig.Drivers {
         //GET
         protected override DriverResult Editor(MaintenancePart part, dynamic shapeHelper) {
             MaintenanceVM MaintenanceVM = new MaintenanceVM();
-            Mapper.Map<MaintenancePart, MaintenanceVM>(part, MaintenanceVM);
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<MaintenancePart, MaintenanceVM>();
+            });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<MaintenancePart, MaintenanceVM>(part, MaintenanceVM);
             List<string> AllTenantName = new List<string>();
             AllTenantName.Add("All Tenant");
             AllTenantName.AddRange(_maintenance.GetAllTenantName());
@@ -51,7 +56,13 @@ namespace Laser.Orchard.StartupConfig.Drivers {
         protected override DriverResult Editor(MaintenancePart part, IUpdateModel updater, dynamic shapeHelper) {
             MaintenanceVM MaintenanceVM = new MaintenanceVM();
             if (updater.TryUpdateModel(MaintenanceVM, Prefix, null, null)) {
-                Mapper.Map<MaintenanceVM, MaintenancePart>( MaintenanceVM,part);
+
+                var mapperConfiguration = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<MaintenanceVM, MaintenancePart>();
+                });
+                IMapper _mapper = mapperConfiguration.CreateMapper();
+
+                _mapper.Map<MaintenanceVM, MaintenancePart>( MaintenanceVM,part);
                 part.Selected_Tenant=string.Join(",",MaintenanceVM.Selected_TenantVM);
             }
             else {

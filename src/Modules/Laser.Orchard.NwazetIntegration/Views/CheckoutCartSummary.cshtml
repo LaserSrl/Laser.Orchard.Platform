@@ -64,6 +64,43 @@
             </div>
         </div>
     }
+    @foreach (var alteration in viewModel.ShoppingCart.PriceAlterationAmounts) {
+        <div class="product product-line row">
+            <div class="product-info">
+                <div class="product-name">
+                    @if (!string.IsNullOrWhiteSpace(alteration.RemovalAction)) {
+                        using (Html.BeginFormAntiForgeryPost(
+                            alteration.RemovalAction)) {
+                            
+                            <span class="product-title">@alteration.Label</span>
+                            <input type="hidden"
+                                name="coupon.Code"
+                                value="@alteration.Key">
+                            <button class="btn"
+                                type="submit"
+                                formaction="@alteration.RemovalAction"
+                                title="@T("Remove")"
+                                ><i class="fa fa-times"></i></button>
+                        }
+                    } else {
+                        <span class="product-title">@alteration.Label</span>
+                    }
+                </div>
+            </div>
+            <div class="product-info line-info">
+                <div class="product-unit-price">@* TODO: check this view *@
+                </div>
+                <div class="product-quantity">
+                </div>
+                <div class="product-line-price">
+                    <div class="product-info-label">@T("Value")</div>
+                    <div class="product-info-value">
+                        @viewModel.CurrencyProvider.GetPriceString(alteration.Amount)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     @* Display cart "totals" (excluding shipping) *@
 
     <div>

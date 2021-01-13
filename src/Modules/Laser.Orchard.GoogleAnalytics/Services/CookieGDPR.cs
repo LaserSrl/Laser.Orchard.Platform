@@ -1,13 +1,14 @@
-﻿using Laser.Orchard.Cookies.Services;
-using System.Collections.Generic;
-using System.Web;
-using Laser.Orchard.Cookies;
-using System.Text;
-using Orchard;
-using Orchard.ContentManagement;
-using OUI = Orchard.UI;
+﻿using Laser.Orchard.Cookies;
+using Laser.Orchard.Cookies.Services;
 using Laser.Orchard.GoogleAnalytics.Models;
+using Laser.Orchard.GoogleAnalytics.ViewModels;
+using Orchard;
 using Orchard.Caching;
+using Orchard.ContentManagement;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
+using OUI = Orchard.UI;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
     public interface IGoogleAnalyticsCookie : ICookieGDPR {
@@ -68,15 +69,15 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             return GoogleAnalyticsScript(allowedTypes);
         }
 
-        private GoogleAnalyticsSettingsPart SettingsPart {
+        private GASettingsVM SettingsPart {
             get {
                 return _cacheManager.Get(Constants.SiteSettingsCacheKey, true, ctx => {
                     // check whether we should invalidate the cache
                     ctx.Monitor(_signals.When(Constants.SiteSettingsEvictSignal));
-                    return _workContextAccessor
+                    return new GASettingsVM(_workContextAccessor
                         .GetContext()
                         .CurrentSite
-                        .As<GoogleAnalyticsSettingsPart>();
+                        .As<GoogleAnalyticsSettingsPart>());
                 });
             }
         }

@@ -9,16 +9,36 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Automatically regenerate when editing content"
+msgstr "Rigenera automaticamente il valore campo ad ogni aggiornamento del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Background bulk update"
+msgstr "Aggiornamento massivo in background"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Check to enable token replacement in the field contents."
 msgstr "Seleziona per abilitare nel campo la sostituzione dei token."
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Default value"
+msgstr "Valore di default"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Default value."
 msgstr "Valore iniziale"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Enter a default value for the field."
+msgstr "Inserire il valore di default del campo."
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Selecting a value different than None will start a background update of these hidden fields."
 msgstr "Selezionando un valore diverso da Nessuno verrà avviato un aggiornamento in background dei campi nascosti"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "This option will cause the field to automatically be regenerated with the default value when you edit existing content and save it again, otherwise it will always keep the old value."
+msgstr "Questa opzione consente di rigenerare automaticamente il valore del campo ad ogni salvataggio. Nel caso in cui l'opzione sia deselezionata, sarà assegnato un valore al campo solo se vuoto."
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Tokenized"

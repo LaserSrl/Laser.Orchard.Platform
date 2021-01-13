@@ -63,9 +63,11 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
                 if (termIds.Any()) {
                     // if there are no term ids, it makes no sense to be here
                     Func<int, IEnumerable<TermPart>> selectManyExpression;
-                    if (context.State.IncludeChidren != null) {
+                    bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
+                    if (includeChildren) {
                         selectManyExpression = tid => termsWithChildren(_taxonomyService, tid);
-                    } else {
+                    }
+                    else {
                         selectManyExpression = tid => termsWithoutChildren(_taxonomyService, tid);
                     }
                     var terms = termIds

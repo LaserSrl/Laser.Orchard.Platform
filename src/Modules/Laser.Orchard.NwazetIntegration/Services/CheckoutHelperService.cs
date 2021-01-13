@@ -71,6 +71,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var charge = new PaymentGatewayCharge("Checkout Controller", paymentGuid);
             // 2. Create the Order ContentItem
             var user = _workContextAccessor.GetContext().CurrentUser;
+            var orderContext = new OrderContext {
+                WorkContextAccessor = _workContextAccessor,
+                ShoppingCart = _shoppingCart,
+                Charge = charge,
+                ShippingAddress = model.ShippingAddress,
+                BillingAddress = model.BillingAddress
+            };
             var order = _orderService.CreateOrder(
                 charge,
                 checkoutItems,
@@ -89,7 +96,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 user != null ? user.Id : -1,
                 0,
                 "",
-                _currencyProvider.CurrencyCode);
+                _currencyProvider.CurrencyCode,
+                _orderAdditionalInformationProviders
+                    .SelectMany(oaip => oaip.PrepareAdditionalInformation(orderContext)));
 
             // 2.1. Verify address information in the AddressOrderPart
             //   (we have to do this explicitly because the management of Order
@@ -97,12 +106,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var addressPart = order.As<AddressOrderPart>();
             if (addressPart != null) {
                 // shipping info
-                addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
-                addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
-                addressPart.ShippingCityName = model.ShippingAddressVM.City;
-                addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
-                addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
-                addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                if (model.ShippingAddressVM != null) {
+                    // may not have a shipping address is shipping isn't required
+                    addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
+                    addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
+                    addressPart.ShippingCityName = model.ShippingAddressVM.City;
+                    addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
+                    addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
+                    addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                }
                 // billing
                 addressPart.BillingCountryName = model.BillingAddressVM.Country;
                 addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
