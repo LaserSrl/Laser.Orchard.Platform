@@ -399,6 +399,7 @@
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
+    <Compile Include="Controllers\BearerTokenController.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />
@@ -415,11 +416,14 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
+    <Compile Include="Models\BearerTokenApiResponseObject.cs" />
+    <Compile Include="Models\BearerTokenAuthRequest.cs" />
     <Compile Include="Models\CacheEvictorPart.cs" />
     <Compile Include="Models\CacheEvictorPartSettings.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
+    <Compile Include="Routes\BearerTokenRoutes.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
