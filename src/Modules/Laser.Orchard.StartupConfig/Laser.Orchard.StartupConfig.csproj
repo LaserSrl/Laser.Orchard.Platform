@@ -431,7 +431,12 @@
     <Compile Include="Models\EnsureAsFrontEndInvisiblePart.cs" />
     <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
     <Compile Include="Security\BearerTokenIdentity.cs" />
+    <Compile Include="Security\IBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\TenantNameBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedBearerTokenDataProvider.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\BearerTokenAuthenticationService.cs" />
     <Compile Include="Services\BearerTokenEncryptionService.cs" />
     <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />

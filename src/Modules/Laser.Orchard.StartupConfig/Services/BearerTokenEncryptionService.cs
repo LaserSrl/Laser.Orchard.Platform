@@ -53,7 +53,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 );
 
             var baseToken = FormsAuthentication.Encrypt(fTicket);
-
+            // bearer tokens are base64 strings
             var token = Convert.ToBase64String(
                     Encoding.UTF8.GetBytes(baseToken),
                     Base64FormattingOptions.None);
