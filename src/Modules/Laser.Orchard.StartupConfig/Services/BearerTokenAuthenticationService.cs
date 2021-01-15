@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.StartupConfig.Security;
+﻿using Laser.Orchard.StartupConfig.Helpers;
+using Laser.Orchard.StartupConfig.Security;
 using Newtonsoft.Json;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
@@ -15,6 +16,9 @@ using System.Web;
 namespace Laser.Orchard.StartupConfig.Services {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]
     public class BearerTokenAuthenticationService : FormsAuthenticationService, IAuthenticationService {
+        // We inherit from FormsAuthenticationService so that we can correctly
+        // provide the CurrentUser when they are authenticating with a token rather
+        // than with the .ASPXAUTH cookie.
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMembershipService _membershipService;
@@ -78,7 +82,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 var userData = bearerIdentity.Ticket.UserData ?? "";
                 var userDataDictionary = new Dictionary<string, string>();
                 try {
-                    userDataDictionary = DeserializeUserData(userData);
+                    userDataDictionary = BearerTokenHelpers.DeserializeUserData(userData);
                 } catch (Exception) {
                     return null;
                 }
@@ -107,16 +111,5 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
 
-        #region Serialization of UserData Dictionary
-        // Use Newtonsoft.Json to handle this
-        private string SerializeUserDataDictionary(IDictionary<string, string> userDataDictionary) {
-            return JsonConvert.SerializeObject(userDataDictionary, Formatting.None);
-        }
-
-        private Dictionary<string, string> DeserializeUserData(string userData) {
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(userData);
-        }
-
-        #endregion
     }
 }

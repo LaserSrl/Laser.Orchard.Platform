@@ -23,6 +23,9 @@ namespace Laser.Orchard.StartupConfig.Security.Providers {
             }
             return userPart.RegistrationStatus.ToString();
         }
+        public override string Key {
+            get { return "User.Approved"; }
+        }
 
         public override bool IsValid(IUser user, IDictionary<string, string> userData) {
             var userPart = user.As<UserPart>();

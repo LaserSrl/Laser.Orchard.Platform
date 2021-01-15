@@ -181,6 +181,8 @@
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\DefinitionTemplates\CacheEvictorPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartNew.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -408,6 +410,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
+    <Compile Include="Drivers\ApiCredentialsPartDriver.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
@@ -415,11 +418,17 @@
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\ApiCredentialsPartHandler.cs" />
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
+    <Compile Include="Helpers\BearerTokenHelpers.cs" />
+    <Compile Include="Migrations\BearerTokenAuthenticationMigrations.cs" />
+    <Compile Include="Models\ApiCredentialsPart.cs" />
+    <Compile Include="Models\ApiCredentialsPartRecord.cs" />
     <Compile Include="Models\BearerTokenApiResponseObject.cs" />
     <Compile Include="Models\BearerTokenAuthRequest.cs" />
     <Compile Include="Models\CacheEvictorPart.cs" />
     <Compile Include="Models\CacheEvictorPartSettings.cs" />
+    <Compile Include="Permission\ApiCredentialsPermissions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
@@ -439,11 +448,14 @@
     <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\TenantNameBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\UserApprovedBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\UserNameBearerTokenDataProvider.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\ApiCredentialsManagementService.cs" />
     <Compile Include="Services\BearerTokenAuthenticationService.cs" />
     <Compile Include="Services\BearerTokenEncryptionService.cs" />
     <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IApiCredentialsManagementService.cs" />
     <Compile Include="Services\IBearerTokenEncryptionService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
@@ -555,6 +567,7 @@
     <Compile Include="Tokens\ReplaceToken.cs" />
     <Compile Include="Tokens\SiteTokens.cs" />
     <Compile Include="Tokens\StripHtmlToken.cs" />
+    <Compile Include="ViewModels\ApiCredentialsPartViewModel.cs" />
     <Compile Include="ViewModels\CommandsExecuteViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceIndexVM.cs" />
     <Compile Include="ViewModels\MaintenanceVM.cs" />
@@ -698,6 +711,7 @@
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

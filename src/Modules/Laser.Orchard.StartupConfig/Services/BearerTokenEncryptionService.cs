@@ -1,8 +1,11 @@
-﻿using Laser.Orchard.StartupConfig.Security;
+﻿using Laser.Orchard.StartupConfig.Helpers;
+using Laser.Orchard.StartupConfig.Security;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
+using Orchard.Security;
 using Orchard.Services;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Web.Security;
 
@@ -13,13 +16,16 @@ namespace Laser.Orchard.StartupConfig.Services {
         // encryption that is used for FomrsAuthentication
         private readonly IClock _clock;
         private readonly ShellSettings _shellSettings;
+        private readonly IEnumerable<IBearerTokenDataProvider> _bearerTokenDataProviders;
 
         public BearerTokenEncryptionService(
             IClock clock,
-            ShellSettings shellSettings) {
+            ShellSettings shellSettings,
+            IEnumerable<IBearerTokenDataProvider> bearerTokenDataProviders) {
 
             _clock = clock;
             _shellSettings = shellSettings;
+            _bearerTokenDataProviders = bearerTokenDataProviders;
 
             ExpirationTimeSpan = TimeSpan.FromMinutes(30);
         }
@@ -40,14 +46,36 @@ namespace Laser.Orchard.StartupConfig.Services {
              */
         }
 
-        public string CreateTokenFromTicket(BearerTokenAuthenticationTicket ticket) {
+        public string CreateNewTokenForUser(IUser user) {
+            var ticket = CreateNewTicket(user);
+
+            if (ticket == null) {
+                return null;
+            }
+
+            return CreateTokenFromTicket(ticket);
+        }
+
+        public BearerTokenAuthenticationTicket CreateNewTicket(IUser user) {
+            if (user == null || string.IsNullOrWhiteSpace(user.UserName)) {
+                return null;
+            }
             var now = _clock.UtcNow.ToLocalTime();
+            var userData = ComputeUserData(user);
+
+            return new BearerTokenAuthenticationTicket(
+                1, user.UserName,
+                now.Add(ExpirationTimeSpan), now,
+                userData);
+        }
+
+        public string CreateTokenFromTicket(BearerTokenAuthenticationTicket ticket) {
 
             var fTicket = new FormsAuthenticationTicket(
                 ticket.Version,
                 ticket.Name,
-                now,
-                now.Add(ExpirationTimeSpan),
+                ticket.IssueDate,
+                ticket.Expiration,
                 false,// bearer token can't be persistent
                 ticket.UserData
                 );
@@ -79,6 +107,22 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             return null;
         }
-        
+
+        private string ComputeUserData(IUser user) {
+            // serialize dictionary to userData string
+            return BearerTokenHelpers.SerializeUserDataDictionary(ComputeUserDataDictionary(user));
+        }
+        private Dictionary<string, string> ComputeUserDataDictionary(IUser user) {
+            var userDataDictionary = new Dictionary<string, string>();
+            userDataDictionary.Add("UserName", user.UserName);
+            foreach (var userDataProvider in _bearerTokenDataProviders) {
+                var key = userDataProvider.Key;
+                var value = userDataProvider.ComputeUserDataElement(user);
+                if (key != null && value != null) {
+                    userDataDictionary.Add(key, value);
+                }
+            }
+            return userDataDictionary;
+        }
     }
 }
