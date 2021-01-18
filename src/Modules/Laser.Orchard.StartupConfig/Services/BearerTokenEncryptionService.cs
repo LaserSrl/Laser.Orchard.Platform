@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.Helpers;
 using Laser.Orchard.StartupConfig.Security;
-using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.Security;
 using Orchard.Services;
@@ -15,16 +14,13 @@ namespace Laser.Orchard.StartupConfig.Services {
         // in this implementation we are going to cheat and user the same
         // encryption that is used for FomrsAuthentication
         private readonly IClock _clock;
-        private readonly ShellSettings _shellSettings;
         private readonly IEnumerable<IBearerTokenDataProvider> _bearerTokenDataProviders;
 
         public BearerTokenEncryptionService(
             IClock clock,
-            ShellSettings shellSettings,
             IEnumerable<IBearerTokenDataProvider> bearerTokenDataProviders) {
 
             _clock = clock;
-            _shellSettings = shellSettings;
             _bearerTokenDataProviders = bearerTokenDataProviders;
 
             ExpirationTimeSpan = TimeSpan.FromMinutes(30);

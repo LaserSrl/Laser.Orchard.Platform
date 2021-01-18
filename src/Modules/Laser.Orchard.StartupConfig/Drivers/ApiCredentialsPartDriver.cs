@@ -2,16 +2,12 @@
 using Laser.Orchard.StartupConfig.Security;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
-using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Security;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Drivers {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]
@@ -57,22 +53,15 @@ namespace Laser.Orchard.StartupConfig.Drivers {
                     shapes.Add(ContentShape("Parts_ApiCredentialsPart_Edit",
                         () => shapeHelper.EditorTemplate(
                             TemplateName: "Parts/ApiCredentialsPart",
-                            Model: new ApiCredentialsPartViewModel {
-                                Key = part.Key,
-                                Secret = part.Secret
+                            Model: new ApiCredentialsPartViewModel(part) {
+                                ApiKey = part.ApiKey,
+                                ApiSecret = _apiCredentialsMembershipService.GetSecret(part)
                             },
-                            Key: part.Key,
-                            Secret: _apiCredentialsMembershipService.GetSecret(part),
                             Prefix: Prefix)));
                 }
             }
-
-
+            
             return Combined(shapes.ToArray());
-        }
-
-        protected override DriverResult Editor(ApiCredentialsPart part, IUpdateModel updater, dynamic shapeHelper) {
-            return Editor(part, shapeHelper);
         }
 
         private bool AuthorizeEdit(ApiCredentialsPart part) {
@@ -86,17 +75,19 @@ namespace Laser.Orchard.StartupConfig.Drivers {
                 return;
             }
 
-            part.Key = context.Attribute(part.PartDefinition.Name, "Key");
-            part.Secret = context.Attribute(part.PartDefinition.Name, "Secret");
-            //part.HashAlgorithm = context.Attribute(part.PartDefinition.Name, "HashAlgorithm");
-            //part.SecretSalt = context.Attribute(part.PartDefinition.Name, "SecretSalt");
+            part.ApiKey = context.Attribute(part.PartDefinition.Name, "ApiKey");
+            part.ApiSecret = context.Attribute(part.PartDefinition.Name, "ApiSecret");
+            part.ApiSecretHash = context.Attribute(part.PartDefinition.Name, "ApiSecretHash");
+            part.HashAlgorithm = context.Attribute(part.PartDefinition.Name, "HashAlgorithm");
+            part.SecretSalt = context.Attribute(part.PartDefinition.Name, "SecretSalt");
         }
 
         protected override void Exporting(ApiCredentialsPart part, ExportContentContext context) {
-            context.Element(part.PartDefinition.Name).SetAttributeValue("Key", part.Key);
-            context.Element(part.PartDefinition.Name).SetAttributeValue("Secret", part.Secret);
-            //context.Element(part.PartDefinition.Name).SetAttributeValue("HashAlgorithm", part.HashAlgorithm);
-            //context.Element(part.PartDefinition.Name).SetAttributeValue("SecretSalt", part.SecretSalt);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ApiKey", part.ApiKey);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ApiSecret", part.ApiSecret);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ApiSecretHash", part.ApiSecretHash);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("HashAlgorithm", part.HashAlgorithm);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("SecretSalt", part.SecretSalt);
         }
     }
 }

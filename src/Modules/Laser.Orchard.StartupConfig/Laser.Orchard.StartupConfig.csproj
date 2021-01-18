@@ -401,6 +401,7 @@
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
+    <Compile Include="Controllers\ApiCredentialsAdminController.cs" />
     <Compile Include="Controllers\BearerTokenController.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
@@ -446,9 +447,10 @@
     <Compile Include="Security\BearerTokenIdentity.cs" />
     <Compile Include="Security\IBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\IApiCredentialsValidationProvider.cs" />
     <Compile Include="Security\Providers\TenantNameBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedApiCredentialsValidationProvider.cs" />
     <Compile Include="Security\Providers\UserApprovedBearerTokenDataProvider.cs" />
-    <Compile Include="Security\Providers\UserNameBearerTokenDataProvider.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
     <Compile Include="Services\ApiCredentialsManagementService.cs" />
     <Compile Include="Services\BearerTokenAuthenticationService.cs" />

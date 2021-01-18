@@ -10,13 +10,17 @@ namespace Laser.Orchard.StartupConfig.Migrations {
             SchemaBuilder.CreateTable("ApiCredentialsPartRecord",
                 table => table
                     .ContentPartRecord()
-                    .Column<string>("Key")
-                    .Column<string>("Secret")
+                    .Column<string>("ApiKey")
+                    .Column<string>("ApiSecret")
+                    .Column<string>("ApiSecretHash")
+                    .Column<string>("HashAlgorithm")
+                    .Column<string>("SecretSalt")
                     .Column<DateTime>("CreatedUtc")
                     .Column<DateTime>("LastLoginUtc")
                 );
             return 1;
         }
+        
 
     }
 }

@@ -8,23 +8,28 @@ using System.Web;
 namespace Laser.Orchard.StartupConfig.Models {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]
     public class ApiCredentialsPart : ContentPart<ApiCredentialsPartRecord> {
-        public string Key {
-            get { return Retrieve(x => x.Key); }
-            set { Store(x => x.Key, value); }
+        public string ApiKey {
+            get { return Retrieve(x => x.ApiKey); }
+            set { Store(x => x.ApiKey, value); }
         }
 
-        public string Secret {
-            get { return Retrieve(x => x.Secret); }
-            set { Store(x => x.Secret, value); }
+        public string ApiSecret {
+            get { return Retrieve(x => x.ApiSecret); }
+            set { Store(x => x.ApiSecret, value); }
         }
-        //public string HashAlgorithm {
-        //    get { return Retrieve(x => x.HashAlgorithm); }
-        //    set { Store(x => x.HashAlgorithm, value); }
-        //}
-        //public string SecretSalt {
-        //    get { return Retrieve(x => x.SecretSalt); }
-        //    set { Store(x => x.SecretSalt, value); }
-        //}
+
+        public string ApiSecretHash {
+            get { return Retrieve(x => x.ApiSecretHash); }
+            set { Store(x => x.ApiSecretHash, value); }
+        }
+        public string HashAlgorithm {
+            get { return Retrieve(x => x.HashAlgorithm); }
+            set { Store(x => x.HashAlgorithm, value); }
+        }
+        public string SecretSalt {
+            get { return Retrieve(x => x.SecretSalt); }
+            set { Store(x => x.SecretSalt, value); }
+        }
 
         public DateTime? CreatedUtc {
             get { return Retrieve(x => x.CreatedUtc); }

@@ -2,10 +2,7 @@
 using Orchard.Environment.Extensions;
 using Orchard.Security;
 using Orchard.Users.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Security.Providers {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]

@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.Helpers;
 using Laser.Orchard.StartupConfig.Security;
-using Newtonsoft.Json;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.Mvc;
@@ -11,7 +10,6 @@ using Orchard.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Services {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]
