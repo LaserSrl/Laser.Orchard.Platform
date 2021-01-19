@@ -81,3 +81,4 @@ Features:
 		Name: Bearer Token Authentication for Orchard
 		Description: Enables using Bearer Tokens to authenticate users
 		Category: Security
+		Dependencies: Orchard.Users
