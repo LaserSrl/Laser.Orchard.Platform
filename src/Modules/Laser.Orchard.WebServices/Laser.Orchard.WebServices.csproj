@@ -135,6 +135,7 @@
     <Compile Include="Controllers\WebApiController.cs" />
     <Compile Include="Drivers\WebServiceSettingsPartDriver.cs" />
     <Compile Include="Handlers\WebServiceSettingsHandler.cs" />
+    <Compile Include="Models\RestApiResponse.cs" />
     <Compile Include="Models\WebServiceSettingsPart.cs" />
     <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />

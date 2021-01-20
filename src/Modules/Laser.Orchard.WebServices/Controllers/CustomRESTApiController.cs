@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement;
+﻿using Laser.Orchard.WebServices.Models;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Workflows.Activities;
@@ -50,8 +51,7 @@ namespace Laser.Orchard.WebServices.Controllers {
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-
-                var result = SignalInvocation("post", actionName, contentId);
+                msg = SignalInvocation("post", actionName, contentId);
             }
             return ResponseMessage(msg);
         }
@@ -126,9 +126,9 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
 
-        private object SignalInvocation(string verb, string actionName, int contentId) {
+        private HttpResponseMessage SignalInvocation(string verb, string actionName, int contentId) {
             // we want what we return here to map to HttpResponseMessage
-            object restResult = new object();
+            RestApiResponse restResult = new RestApiResponse();
             var signalName = SignalName(verb, actionName);
             try {
                 var content = _contentManager.Get(contentId);
@@ -149,10 +149,13 @@ namespace Laser.Orchard.WebServices.Controllers {
                     + "signalName: " + signalName + Environment.NewLine
                     + "Exception.Message: " + ex.Message + Environment.NewLine 
                     + "Exception.StackTrace: " + ex.StackTrace);
-                throw new HttpResponseException(
-                    new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError));
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
-            return restResult;
+            //TODO
+            if (restResult == null) {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+            return restResult.ToMessage();
         }
 
         private string SignalName(string verb, string actionName) {
@@ -160,13 +163,13 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         private HttpResponseMessage ActionValidation(string verb, string actionName) {
-            // this method will throw the corresponding HTTPResponseException if it should 
-            // block the method.
+            // this method will return an HttpResponseMessage if there is any
+            // validation issue.
             if (!ActionExists(verb, actionName)) {
-                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             if (!MethodIsAllowed(verb, actionName)) {
-                var msg = new HttpResponseMessage(System.Net.HttpStatusCode.MethodNotAllowed) {
+                var msg = new HttpResponseMessage(HttpStatusCode.MethodNotAllowed) {
                     Content = new StringContent("")
                 };
                 foreach (var method in AllowedMethods(actionName)) {
@@ -174,7 +177,8 @@ namespace Laser.Orchard.WebServices.Controllers {
                 }
                 return msg;
             }
-
+            // returning null tells callers that they should go ahead and provide
+            // a response themselves
             return null;
         }
 
