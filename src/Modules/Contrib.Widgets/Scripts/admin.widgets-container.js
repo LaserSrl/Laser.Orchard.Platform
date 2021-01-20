@@ -15,29 +15,12 @@ var WidgetsContainer;
 
             var formActionValue = fieldset.find("input[name='submit.Save']");
             var url = $(this).attr("href");
-            if (hostId === 0) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const taxonomyId = urlParams.get('taxonomyId');
-                const parentTermId = urlParams.get('parentTermId');
-
-                if (taxonomyId !== null && parentTermId !== null) {
-                    url += "&taxonomyId=" + taxonomyId;
-                    url += "&parentTermId=" + parentTermId;
-                }
-
+            if(hostId === 0) {
                 form.attr("action", url);
-
             } else {
                 formActionValue.val("submit.Save");
                 $("input[type='hidden'][name='returnUrl']").val(url);
             }
-
-            // Added parameter to identify action   
-            var inputExecutedAction = document.createElement("input");
-            inputExecutedAction.type = "hidden";
-            inputExecutedAction.name = "executed-action";
-            inputExecutedAction.value = url;
-            fieldset.append(inputExecutedAction);
 
             form.submit();
         });
