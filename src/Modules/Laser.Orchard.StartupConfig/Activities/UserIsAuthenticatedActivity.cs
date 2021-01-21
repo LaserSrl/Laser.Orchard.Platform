@@ -36,8 +36,9 @@ namespace Laser.Orchard.StartupConfig.Activities {
             WorkflowContext workflowContext, ActivityContext activityContext) {
             if (_workContextAccessor.GetContext().CurrentUser != null) {
                 yield return T("Authenticated");
+            } else {
+                yield return T("Anonymous");
             }
-            yield return T("Anonymous");
         }
 
         public override IEnumerable<LocalizedString> GetPossibleOutcomes(

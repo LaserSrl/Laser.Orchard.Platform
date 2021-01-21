@@ -37,7 +37,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                                     .Trim();
                                 // decrypt the token
                                 var ticket = _bearerTokenEncryptionService.ParseToken(token);
-                                if (ticket != null) {
+                                if (ticket != null && !ticket.Expired) {
                                     // create an Identity for the Bearer Token
                                     var bearerIdentity =
                                         new BearerTokenIdentity(ticket);
