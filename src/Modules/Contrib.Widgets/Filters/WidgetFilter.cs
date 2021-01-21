@@ -39,6 +39,10 @@ namespace Contrib.Widgets.Filters {
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) {
+            if (!((dynamic)filterContext.Controller).ModelState.IsValid) {
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(zone) && hostId != 0) {
                 UrlHelper urlHelper = new UrlHelper(_httpContextAccessor.Current().Request.RequestContext);
                 filterContext.Result = new RedirectResult(
@@ -59,7 +63,7 @@ namespace Contrib.Widgets.Filters {
         public void Creating(CreateContentContext context) { }
 
         public void Created(CreateContentContext context) {
-            if (!string.IsNullOrWhiteSpace(zone) && hostId==0) {
+            if (!string.IsNullOrWhiteSpace(zone) && hostId != context.ContentItem.Id) {
                 hostId = context.ContentItem.Id;
             }
         }
