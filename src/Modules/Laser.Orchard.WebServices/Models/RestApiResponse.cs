@@ -17,6 +17,10 @@ namespace Laser.Orchard.WebServices.Models {
             StatusCode = HttpStatusCode.NotFound;
             Headers = new Dictionary<string, string>();
         }
+        public RestApiResponse(HttpStatusCode code) : this() {
+            // Default to not found.
+            StatusCode = code;
+        }
 
         public HttpStatusCode StatusCode { get; set; }
         // This will be serialized

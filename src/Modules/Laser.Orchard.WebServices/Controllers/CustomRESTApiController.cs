@@ -41,6 +41,11 @@ namespace Laser.Orchard.WebServices.Controllers {
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
+                msg = SignalInvocation("get", actionName, contentId);
+            }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             return ResponseMessage(msg);
         }
@@ -53,6 +58,10 @@ namespace Laser.Orchard.WebServices.Controllers {
                 // TODO:
                 msg = SignalInvocation("post", actionName, contentId);
             }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
             return ResponseMessage(msg);
         }
         public IHttpActionResult Put(string actionName, int contentId = 0) {
@@ -62,6 +71,11 @@ namespace Laser.Orchard.WebServices.Controllers {
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
+                msg = SignalInvocation("put", actionName, contentId);
+            }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             return ResponseMessage(msg);
         }
@@ -72,6 +86,11 @@ namespace Laser.Orchard.WebServices.Controllers {
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
+                msg = SignalInvocation("patch", actionName, contentId);
+            }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             return ResponseMessage(msg);
         }
@@ -82,6 +101,11 @@ namespace Laser.Orchard.WebServices.Controllers {
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
+                msg = SignalInvocation("delete", actionName, contentId);
+            }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             return ResponseMessage(msg);
         }
@@ -95,6 +119,13 @@ namespace Laser.Orchard.WebServices.Controllers {
                 // TODO:
                 // The response from this shoud have and empty body, but the 
                 // headers should be identical to those we would send with a GET
+                var resp = InnerSignalInvocation("get", actionName, contentId);
+                resp.Content = "";
+                msg = resp.ToMessage();
+            }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             return ResponseMessage(msg);
         }
@@ -122,11 +153,14 @@ namespace Laser.Orchard.WebServices.Controllers {
                 // if the verb is not allowed, calling it should return a 405
                 //httpResponse.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
             }
+            if (msg == null) {
+                // fallback
+                msg = new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
             return ResponseMessage(msg);
         }
 
-
-        private HttpResponseMessage SignalInvocation(string verb, string actionName, int contentId) {
+        private RestApiResponse InnerSignalInvocation(string verb, string actionName, int contentId) {
             // we want what we return here to map to HttpResponseMessage
             RestApiResponse restResult = new RestApiResponse();
             var signalName = SignalName(verb, actionName);
@@ -147,11 +181,15 @@ namespace Laser.Orchard.WebServices.Controllers {
                     + "actionName: " + actionName + Environment.NewLine
                     + "contentId: " + contentId.ToString() + Environment.NewLine
                     + "signalName: " + signalName + Environment.NewLine
-                    + "Exception.Message: " + ex.Message + Environment.NewLine 
+                    + "Exception.Message: " + ex.Message + Environment.NewLine
                     + "Exception.StackTrace: " + ex.StackTrace);
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return new RestApiResponse(HttpStatusCode.InternalServerError);
             }
-            //TODO
+            return restResult;
+        }
+        private HttpResponseMessage SignalInvocation(string verb, string actionName, int contentId) {
+            // we want what we return here to map to HttpResponseMessage
+            RestApiResponse restResult = InnerSignalInvocation(verb, actionName, contentId);
             if (restResult == null) {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
