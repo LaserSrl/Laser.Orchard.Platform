@@ -203,6 +203,10 @@ namespace Laser.Orchard.WebServices.Controllers {
         private HttpResponseMessage ActionValidation(string verb, string actionName) {
             // this method will return an HttpResponseMessage if there is any
             // validation issue.
+            // TODO: a provider for these
+            // TODO: a setting for these
+            // TODO: a way to have "composite" actionNames, like 
+            //   /foo/bar/stuff
             if (!ActionExists(verb, actionName)) {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }
