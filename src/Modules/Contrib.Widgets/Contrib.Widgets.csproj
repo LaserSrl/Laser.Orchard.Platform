@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\LocalizationPartDriver.cs" />
     <Compile Include="Drivers\WidgetExPartDriver.cs" />
+    <Compile Include="Filters\WidgetFilter.cs" />
     <Compile Include="Handlers\WidgetExPartHandler.cs" />
     <Compile Include="Handlers\WidgetPartHandler.cs" />
     <Compile Include="Handlers\WidgetsContainerPartHandler.cs" />
@@ -224,6 +225,7 @@
   <ItemGroup>
     <Content Include="bundleconfig.json" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

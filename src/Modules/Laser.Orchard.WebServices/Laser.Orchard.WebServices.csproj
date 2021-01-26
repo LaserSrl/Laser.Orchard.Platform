@@ -115,6 +115,7 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CustomRESTApiController.cs" />
     <Compile Include="Controllers\SignalApiController.cs" />
     <Compile Include="Controllers\GiroParchiController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
@@ -125,7 +126,9 @@
     <Compile Include="Controllers\WebApiController.cs" />
     <Compile Include="Drivers\WebServiceSettingsPartDriver.cs" />
     <Compile Include="Handlers\WebServiceSettingsHandler.cs" />
+    <Compile Include="Models\RestApiResponse.cs" />
     <Compile Include="Models\WebServiceSettingsPart.cs" />
+    <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\IWebApiService.cs" />
     <Compile Include="ViewModels\Eventi015VM.cs" />

@@ -82,3 +82,8 @@ Features:
 		Description: Part for cache evict
 		Category: Content
 		Dependencies: Laser.Orchard.StartupConfig
+	Laser.Orchard.BearerTokenAuthentication
+		Name: Bearer Token Authentication for Orchard
+		Description: Enables using Bearer Tokens to authenticate users
+		Category: Security
+		Dependencies: Orchard.Users

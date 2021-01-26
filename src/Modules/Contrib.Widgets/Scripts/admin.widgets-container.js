@@ -21,6 +21,7 @@ var WidgetsContainer;
                 formActionValue.val("submit.Save");
                 $("input[type='hidden'][name='returnUrl']").val(url);
             }
+
             form.submit();
         });
         $("div.widgets").on("click", "a.remove-widget", function (e) {
