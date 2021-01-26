@@ -492,7 +492,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         if (!string.IsNullOrEmpty(validateMessage)) {
                             rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
                         }
-                        // Have a validation actually return a reposnse saying there
+                        // Have a validation actually return a response saying there
                         // was a validation error
                         validateMessage = ValidateMessage(NewOrModifiedContent, "Validation");
                         if (!string.IsNullOrEmpty(validateMessage)) {
