@@ -9,3 +9,8 @@ Features:
 		Description: Expose your contents in Json format
 		Dependencies:  Laser.Orchard.StartupConfig,Orchard.Autoroute,Orchard.Projections,Orchard.Taxonomies,Laser.Orchard.Policy
 		Category: Services
+    Laser.Orchard.CustomRestApi:
+		Name: Custom REST API
+		Description: Allows configuration of custome API entrypoints.
+		Dependencies: Orchard.Workflows
+		Category: Services

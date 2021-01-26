@@ -489,8 +489,17 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             NewOrModifiedContent.As<LocalizationPart>().MasterContentItem = NewOrModifiedContent;
                         }
                         validateMessage = ValidateMessage(NewOrModifiedContent, "");
-                        if (string.IsNullOrEmpty(validateMessage) == false) {
+                        if (!string.IsNullOrEmpty(validateMessage)) {
                             rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
+                        }
+                        // Have a validation actually return a response saying there
+                        // was a validation error
+                        validateMessage = ValidateMessage(NewOrModifiedContent, "Validation");
+                        if (!string.IsNullOrEmpty(validateMessage)) {
+                            rsp = _utilsServices.GetResponse(ResponseType.Validation, validateMessage);
+                            // TODO: define better resolution actions depending
+                            // error details?
+                            rsp.ResolutionAction = ResolutionAction.AddParameter;
                         }
                         dynamic data = new ExpandoObject();
                         data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);

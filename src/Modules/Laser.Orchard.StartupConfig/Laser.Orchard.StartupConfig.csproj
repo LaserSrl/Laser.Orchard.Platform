@@ -62,6 +62,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +76,9 @@
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="RazorEngine, Version=3.9.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\RazorEngine.3.9.0\lib\net45\RazorEngine.dll</HintPath>
@@ -175,6 +181,8 @@
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\DefinitionTemplates\CacheEvictorPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartNew.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -376,6 +384,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessManagement\BadgeInfo.cs" />
+    <Compile Include="Activities\UserIsAuthenticatedActivity.cs" />
     <Compile Include="Activities\WebApiResponseActivity.cs" />
     <Compile Include="Activities\WebApiResponseEditForm.cs" />
     <Compile Include="Activities\RequestInspectorActivity.cs" />
@@ -393,6 +402,8 @@
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
+    <Compile Include="Controllers\ApiCredentialsAdminController.cs" />
+    <Compile Include="Controllers\BearerTokenController.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />
@@ -401,6 +412,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
+    <Compile Include="Drivers\ApiCredentialsPartDriver.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
@@ -409,12 +421,21 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Drivers\PerItemCachePartDriver.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\ApiCredentialsPartHandler.cs" />
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
+    <Compile Include="Helpers\BearerTokenHelpers.cs" />
+    <Compile Include="Migrations\BearerTokenAuthenticationMigrations.cs" />
+    <Compile Include="Models\ApiCredentialsPart.cs" />
+    <Compile Include="Models\ApiCredentialsPartRecord.cs" />
+    <Compile Include="Models\BearerTokenApiResponseObject.cs" />
+    <Compile Include="Models\BearerTokenAuthRequest.cs" />
     <Compile Include="Models\CacheEvictorPart.cs" />
     <Compile Include="Models\CacheEvictorPartSettings.cs" />
+    <Compile Include="Permission\ApiCredentialsPermissions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
+    <Compile Include="Routes\BearerTokenRoutes.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Handlers\PerItemCachePartHandler.cs" />
@@ -428,8 +449,22 @@
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
     <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
     <Compile Include="Models\EnsureAsFrontEndInvisiblePart.cs" />
+    <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
+    <Compile Include="Security\BearerTokenIdentity.cs" />
+    <Compile Include="Security\IBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\IApiCredentialsValidationProvider.cs" />
+    <Compile Include="Security\Providers\TenantNameBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedApiCredentialsValidationProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedBearerTokenDataProvider.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\ApiCredentialsManagementService.cs" />
+    <Compile Include="Services\BearerTokenAuthenticationService.cs" />
+    <Compile Include="Services\BearerTokenEncryptionService.cs" />
+    <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IApiCredentialsManagementService.cs" />
+    <Compile Include="Services\IBearerTokenEncryptionService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
@@ -541,6 +576,7 @@
     <Compile Include="Tokens\ReplaceToken.cs" />
     <Compile Include="Tokens\SiteTokens.cs" />
     <Compile Include="Tokens\StripHtmlToken.cs" />
+    <Compile Include="ViewModels\ApiCredentialsPartViewModel.cs" />
     <Compile Include="ViewModels\CommandsExecuteViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceIndexVM.cs" />
     <Compile Include="ViewModels\MaintenanceVM.cs" />
@@ -686,6 +722,7 @@
     <Content Include="Views\DefinitionTemplates\PerItemCachePartSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\PerItemCachePart_Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
