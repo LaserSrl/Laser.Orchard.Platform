@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CustomRESTApiController.cs" />
+    <Compile Include="Controllers\CustomRestApiSettingsAdminController.cs" />
     <Compile Include="Controllers\SignalApiController.cs" />
     <Compile Include="Controllers\GiroParchiController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
@@ -133,13 +134,20 @@
     <Compile Include="Controllers\SignalController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\WebApiController.cs" />
+    <Compile Include="Drivers\CustomRestApiSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\WebServiceSettingsPartDriver.cs" />
+    <Compile Include="Handlers\CustomRestApiSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\WebServiceSettingsHandler.cs" />
+    <Compile Include="Helpers\CustomRestApiHelper.cs" />
+    <Compile Include="Models\CustomRestApiSiteSettingsPart.cs" />
+    <Compile Include="Models\RestApiAction.cs" />
     <Compile Include="Models\RestApiResponse.cs" />
     <Compile Include="Models\WebServiceSettingsPart.cs" />
+    <Compile Include="Navigation\CustomRestApiSettingsAdminMenu.cs" />
     <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\IWebApiService.cs" />
+    <Compile Include="ViewModels\CustomRestApiSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Eventi015VM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +222,8 @@
     <Content Include="Views\GiroParchi\Import.cshtml" />
     <Content Include="Views\GenericObject.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\WebServiceSettings.cshtml" />
+    <Content Include="Views\CustomRestApiSettingsAdmin\Index.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\CustomRestApiSiteSettingsPart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

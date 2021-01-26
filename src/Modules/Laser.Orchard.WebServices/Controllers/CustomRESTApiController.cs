@@ -1,7 +1,10 @@
-﻿using Laser.Orchard.WebServices.Models;
+﻿using Laser.Orchard.WebServices.Helpers;
+using Laser.Orchard.WebServices.Models;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Logging;
+using Orchard.Settings;
 using Orchard.Workflows.Activities;
 using Orchard.Workflows.Services;
 using System;
@@ -10,9 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.WebServices.Controllers {
@@ -21,16 +22,29 @@ namespace Laser.Orchard.WebServices.Controllers {
     public class CustomRESTApiController : ApiController {
         private readonly IWorkflowManager _workflowManager;
         private readonly IContentManager _contentManager;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
+        private readonly ISiteService _siteService;
 
-        public CustomRESTApiController(
+        public CustomRESTApiController (
             IWorkflowManager workflowManager,
-            IContentManager contentManager) {
+            IContentManager contentManager, 
+            ICacheManager cacheManager, 
+            ISignals signals,
+            ISiteService siteService) {
 
             _workflowManager = workflowManager;
             _contentManager = contentManager;
+            _cacheManager = cacheManager;
+            _signals = signals;
+            _siteService = siteService;
 
             Log = NullLogger.Instance;
+
+            _settingsDictionary = GetAllSettings();
         }
+
+        private Dictionary<string, RestApiAction> _settingsDictionary;
 
         public ILogger Log { get; set; }
 
@@ -225,24 +239,30 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         private bool ActionExists(string verb, string actionName) {
-            // TODO
-            if ("delete".Equals(verb, StringComparison.InvariantCultureIgnoreCase)) {
-                return false;
-            }
-            return true;
+            return _settingsDictionary.ContainsKey(actionName.ToUpperInvariant());
         }
         private bool MethodIsAllowed(string verb, string actionName) {
-            // TODO
-            if ("patch".Equals(verb, StringComparison.InvariantCultureIgnoreCase)) {
-                return false;
-            }
-            return true;
+
+            return AllowedMethods(actionName)
+                .Any(v => verb.Equals(v, StringComparison.InvariantCultureIgnoreCase));
         }
-        private string[] AllowedMethods(string actionName) {
-            // TODO
-            return new string[] {
-                "GET", "POST", "PUT", "PATCH", "DELETE"
-            };
+        private IEnumerable<string> AllowedMethods(string actionName) {
+            if (_settingsDictionary.ContainsKey(actionName.ToUpperInvariant())) {
+                return _settingsDictionary[actionName.ToUpperInvariant()].Verbs;
+            }
+            return new string[] { };
+        }
+
+        private Dictionary<string, RestApiAction> GetAllSettings() {
+            return _cacheManager.Get(CustomRestApiHelper.SettingsCacheKey, true, context => {
+                context.Monitor(_signals.When(CustomRestApiHelper.SettingsCacheKey));
+                var part = _siteService.GetSiteSettings().As<CustomRestApiSiteSettingsPart>();
+                var settings = new Dictionary<string, RestApiAction>();
+                foreach (var item in part.GetActionsConfiguration()) {
+                    settings.Add(item.Name.ToUpperInvariant(), item);
+                }
+                return settings;
+            });
         }
     }
 }
