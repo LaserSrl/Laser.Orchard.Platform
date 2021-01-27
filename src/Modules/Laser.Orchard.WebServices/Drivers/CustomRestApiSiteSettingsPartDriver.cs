@@ -58,6 +58,9 @@ namespace Laser.Orchard.WebServices.Drivers {
 
         private IEnumerable<LocalizedString> ActionsConfigurationIsValid(
             CustomRestApiSiteSettingsPartViewModel vm) {
+            // TODO: this method should be improved to have a validation on the verbs.
+            // Also, make sure this method stays up to date whenever the RestApiAction
+            // class gets changed.
             IEnumerable<RestApiAction> configs;
             try {
                 configs = vm.GetActionsConfiguration();
@@ -75,7 +78,7 @@ namespace Laser.Orchard.WebServices.Drivers {
                 }
                 var groups = configs.GroupBy(raa => raa.Name);
                 foreach (var dup in groups.Where(g => g.Count() > 1)) {
-                    yield return T("Action Name is dusplsicate: {0}", dup.Key);
+                    yield return T("Action Name is duplicate: {0}", dup.Key);
                 }
             }
         }

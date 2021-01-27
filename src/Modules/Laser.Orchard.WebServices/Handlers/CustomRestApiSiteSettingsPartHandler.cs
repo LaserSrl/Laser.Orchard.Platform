@@ -23,6 +23,7 @@ namespace Laser.Orchard.WebServices.Handlers {
         }
 
         private void EvictCache(CustomRestApiSiteSettingsPart part) {
+            // Settings part is cached to avoid expensive trips to the db on every call
             _signals.Trigger(CustomRestApiHelper.SettingsCacheKey);
         }
     }

@@ -31,6 +31,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 .Where(s => s.StartsWith("Bearer ", StringComparison.InvariantCultureIgnoreCase));
                             if (authHeader.Count() == 1) {
                                 // If we have multiple bearer tokens in the call, we don't use any of them
+                                // TODO: is this the right call? should we attempt to figure out a way to 
+                                // pick the "correct" token?
                                 // Extract token value
                                 var token = authHeader.First()
                                     .Substring(7)

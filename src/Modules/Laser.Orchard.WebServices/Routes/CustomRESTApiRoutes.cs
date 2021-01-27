@@ -7,6 +7,8 @@ namespace Laser.Orchard.WebServices.Routes {
     [OrchardFeature("Laser.Orchard.CustomRestApi")]
     public class CustomRESTApiRoutes : IHttpRouteProvider {
         public IEnumerable<RouteDescriptor> GetRoutes() {
+            // TODO: we could add a way to have further routes dynamically
+            // (through providers/settings).
             yield return (
                 new HttpRouteDescriptor {
                     // Aliases formed by Autoroute have Priority 80

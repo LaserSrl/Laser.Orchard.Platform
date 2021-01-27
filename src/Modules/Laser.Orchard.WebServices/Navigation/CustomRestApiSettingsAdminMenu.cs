@@ -17,6 +17,9 @@ namespace Laser.Orchard.WebServices.Navigation {
         public Localizer T { get; set; }
 
         public void GetNavigation(NavigationBuilder builder) {
+            // TODO: in case we ever decide to have a specific permission, we should take care
+            // to where the menu link ends up, and what it shows. For example, if the "Settings"
+            // menu is shown, which of its children are also shown by default?
             builder
                 .Add(item => item
                     .Caption(T("Settings"))

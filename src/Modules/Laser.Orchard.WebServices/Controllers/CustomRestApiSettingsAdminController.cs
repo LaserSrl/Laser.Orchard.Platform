@@ -16,6 +16,8 @@ namespace Laser.Orchard.WebServices.Controllers {
         private readonly IOrchardServices _orchardServices;
         private readonly ISiteService _siteService;
         
+        // We are handling the settings for this feature through its own controller to easily expand
+        // them with additional parts and drivers.
         public CustomRestApiSettingsAdminController(
             IOrchardServices orchardServices,
             ISiteService siteService) {

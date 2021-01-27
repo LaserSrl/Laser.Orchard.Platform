@@ -218,7 +218,6 @@ namespace Laser.Orchard.WebServices.Controllers {
             // this method will return an HttpResponseMessage if there is any
             // validation issue.
             // TODO: a provider for these
-            // TODO: a setting for these
             // TODO: a way to have "composite" actionNames, like 
             //   /foo/bar/stuff
             if (!ActionExists(verb, actionName)) {
@@ -261,6 +260,8 @@ namespace Laser.Orchard.WebServices.Controllers {
                 foreach (var item in part.GetActionsConfiguration()) {
                     settings.Add(item.Name.ToUpperInvariant(), item);
                 }
+                //TODO: improve this with providers injecting further configurations
+                //TODO: handle duplicate actionNames somehow. Perhaps a priority of providers?
                 return settings;
             });
         }

@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Orchard.Environment.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.WebServices.Models {
     [OrchardFeature("Laser.Orchard.CustomRestApi")]
@@ -18,5 +15,8 @@ namespace Laser.Orchard.WebServices.Models {
             DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
             NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Verbs { get; set; }
+        // TODO: consider extenting this with further properties.
+        // For example, we may want to do something other than invoking
+        // a workflow to handle a call.
     }
 }
