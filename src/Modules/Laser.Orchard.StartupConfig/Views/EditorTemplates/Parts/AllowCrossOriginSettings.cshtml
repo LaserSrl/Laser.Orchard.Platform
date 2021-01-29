@@ -1,0 +1,41 @@
+﻿@model Laser.Orchard.StartupConfig.Models.AllowCrossOriginSettingsPart
+<fieldset>
+    <legend>@T("Cross Origin Settings")</legend>
+    
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.RemoveXFrameHeaderBackEnd)" class="forcheckbox" title="@T("Allow Cross-Origin access to the backend.")">
+                @Html.EditorFor(m => m.RemoveXFrameHeaderBackEnd)
+                @T("Allow Cross-Origin access to the backend.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("If this is true, it will remove the X-Frame-Options header from responses for backend pages.")
+        </span>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.RemoveXFrameHeaderFrontEnd)" class="forcheckbox" title="@T("Allow Cross-Origin access to the frontend.")">
+                @Html.EditorFor(m => m.RemoveXFrameHeaderFrontEnd)
+                @T("Allow Cross-Origin access to the frontend.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("If this is true, it will remove the X-Frame-Options header from responses for frontend pages.")
+        </span>
+    </div>
+    <span>@T("Forms with antiforgery tokens add the X-Frame-Options header to further harden against XSRF attacks. However this prevents use cases where we want our forms in an iframe. The options above allow removing that header.")</span>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.SetSameSiteNoneForAuthCookies)" class="forcheckbox" title="@T("Set SameSite: None policy for authentication cookies.")">
+                @Html.EditorFor(m => m.SetSameSiteNoneForAuthCookies)
+                @T("Set SameSite: None policy for authentication cookies.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("If this is true, authentication cookies will be passed with an attribute allowing them to be used across origin boundaries. This is required to authenticate users in an iframe in most modern browsers. Such authentication will generally still fail in incognito mode or similar cases where the client has stricter CORS policies regarding third party cookies.")
+        </span>
+    </div>
+</fieldset>

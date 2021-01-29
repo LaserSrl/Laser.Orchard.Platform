@@ -74,4 +74,7 @@
 
   <!-- TinyMce Enhancement -->
   <Place Parts_TinyMceSiteSettings_Edit="Content:1" />
+
+  <!-- Settings to remove the X-Frame-Options header -->
+  <Place Parts_AllowCrossOriginSettings_Edit="Content:12" />
 </Placement>

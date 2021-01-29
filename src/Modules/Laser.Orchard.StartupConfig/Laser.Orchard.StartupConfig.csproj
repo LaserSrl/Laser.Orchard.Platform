@@ -183,6 +183,7 @@
     <Content Include="Views\DefinitionTemplates\CacheEvictorPartSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartNew.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\AllowCrossOriginSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -412,6 +413,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
+    <Compile Include="Drivers\AllowCrossOriginSettingsPartDriver.cs" />
     <Compile Include="Drivers\ApiCredentialsPartDriver.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
@@ -419,11 +421,14 @@
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
+    <Compile Include="Filters\AllowCrossOriginFilter.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\AllowCrossOriginSettingsPartHandler.cs" />
     <Compile Include="Handlers\ApiCredentialsPartHandler.cs" />
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
     <Compile Include="Helpers\BearerTokenHelpers.cs" />
     <Compile Include="Migrations\BearerTokenAuthenticationMigrations.cs" />
+    <Compile Include="Models\AllowCrossOriginSettingsPart.cs" />
     <Compile Include="Models\ApiCredentialsPart.cs" />
     <Compile Include="Models\ApiCredentialsPartRecord.cs" />
     <Compile Include="Models\BearerTokenApiResponseObject.cs" />

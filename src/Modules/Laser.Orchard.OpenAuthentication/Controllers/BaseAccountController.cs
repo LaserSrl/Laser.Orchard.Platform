@@ -89,7 +89,8 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             AuthenticationResult result = _orchardOpenAuthWebSecurity.VerifyAuthentication(Url.OpenAuthLogOn(returnUrl));
 
             if (!result.IsSuccessful) {
-                return AuthenticationFailed(Url.LogOn(returnUrl));
+                _notifier.Error(T("Your authentication request failed."));
+                return new RedirectResult(Url.LogOn(returnUrl));
             }
 
             if (_orchardOpenAuthWebSecurity.Login(result.Provider, result.ProviderUserId)) {
@@ -278,9 +279,9 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             AuthenticationResult dummy = new AuthenticationResult(true);
             return _openAuthClientProvider.GetUserData(__provider__, dummy, token, secret, returnUrl);
         }
-        private RedirectResult AuthenticationFailed(string returnUrl) {
+        private ActionResult AuthenticationFailed(string returnUrl) {
             _notifier.Error(T("Your authentication request failed."));
-            return new RedirectResult(Url.LogOn(returnUrl));
+            return this.RedirectLocal(returnUrl, Url.LogOn(returnUrl));
         }
         private ActionResult WebSignInSuccessful(string provider, string returnUrl) {
             return WebSignInSuccessful(T("You have been logged using your {0} account.", provider), returnUrl);
