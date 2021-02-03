@@ -184,6 +184,7 @@
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartNew.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\AllowCrossOriginSettings.cshtml" />
+    <Content Include="Views\DefinitionTemplates\FrontendEditorConfigurationSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -314,6 +315,10 @@
       <Project>{0e7646e8-fe8f-43c1-8799-d97860925ec4}</Project>
       <Name>Orchard.ContentTypes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.CustomForms\Orchard.CustomForms.csproj">
+      <Project>{2cf067ca-064b-43c6-8b88-5e3b99a65f1d}</Project>
+      <Name>Orchard.CustomForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Email\Orchard.Email.csproj">
       <Project>{05660f47-d649-48bd-9ded-df4e01e7cff9}</Project>
       <Name>Orchard.Email</Name>
@@ -418,6 +423,7 @@
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
+    <Compile Include="Drivers\FrontendEditConfigurationPartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
@@ -428,6 +434,7 @@
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
     <Compile Include="Helpers\BearerTokenHelpers.cs" />
     <Compile Include="Migrations\BearerTokenAuthenticationMigrations.cs" />
+    <Compile Include="Migrations\FrontendEditorConfigurationMigrations.cs" />
     <Compile Include="Models\AllowCrossOriginSettingsPart.cs" />
     <Compile Include="Models\ApiCredentialsPart.cs" />
     <Compile Include="Models\ApiCredentialsPartRecord.cs" />
@@ -435,6 +442,7 @@
     <Compile Include="Models\BearerTokenAuthRequest.cs" />
     <Compile Include="Models\CacheEvictorPart.cs" />
     <Compile Include="Models\CacheEvictorPartSettings.cs" />
+    <Compile Include="Models\FrontendEditConfigurationPart.cs" />
     <Compile Include="Permission\ApiCredentialsPermissions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
@@ -462,6 +470,7 @@
     <Compile Include="Services\BearerTokenAuthenticationService.cs" />
     <Compile Include="Services\BearerTokenEncryptionService.cs" />
     <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
+    <Compile Include="Services\ConfigurableEditorBuilderWrapper.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
     <Compile Include="Services\IApiCredentialsManagementService.cs" />
     <Compile Include="Services\IBearerTokenEncryptionService.cs" />
@@ -469,6 +478,8 @@
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
+    <Compile Include="Settings\FrontendEditorConfigurationSettings.cs" />
+    <Compile Include="Settings\FrontendEditorConfigurationSettingsEvents.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
