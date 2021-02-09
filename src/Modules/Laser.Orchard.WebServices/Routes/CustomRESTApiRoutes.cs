@@ -12,8 +12,9 @@ namespace Laser.Orchard.WebServices.Routes {
             yield return (
                 new HttpRouteDescriptor {
                     // Aliases formed by Autoroute have Priority 80
+                    Name= "DefaultApi",
                     Priority = 85,
-                    RouteTemplate = "API/REST/{actionName}",
+                    RouteTemplate = "API/REST/{customActionName}",
                     Defaults = new {
                         area = "Laser.Orchard.WebServices",
                         controller = "CustomRESTApi"

@@ -48,14 +48,14 @@ namespace Laser.Orchard.WebServices.Controllers {
 
         public ILogger Log { get; set; }
 
-        public IHttpActionResult Get(string actionName, int contentId = 0) {
+        public IHttpActionResult Get(string customActionName, int contentId = 0) {
             // CRUD: read
-            var msg = ActionValidation("get", actionName);
+            var msg = ActionValidation("get", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-                msg = SignalInvocation("get", actionName, contentId);
+                msg = SignalInvocation("get", customActionName, contentId);
             }
             if (msg == null) {
                 // fallback
@@ -63,14 +63,14 @@ namespace Laser.Orchard.WebServices.Controllers {
             }
             return ResponseMessage(msg);
         }
-        public IHttpActionResult Post(string actionName, int contentId = 0) {
+        public IHttpActionResult Post(string customActionName, int contentId = 0) {
             // CRUD: create
-            var msg = ActionValidation("post", actionName);
+            var msg = ActionValidation("post", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-                msg = SignalInvocation("post", actionName, contentId);
+                msg = SignalInvocation("post", customActionName, contentId);
             }
             if (msg == null) {
                 // fallback
@@ -78,14 +78,14 @@ namespace Laser.Orchard.WebServices.Controllers {
             }
             return ResponseMessage(msg);
         }
-        public IHttpActionResult Put(string actionName, int contentId = 0) {
+        public IHttpActionResult Put(string customActionName, int contentId = 0) {
             // CRUD: Update/Replace
-            var msg = ActionValidation("put", actionName);
+            var msg = ActionValidation("put", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-                msg = SignalInvocation("put", actionName, contentId);
+                msg = SignalInvocation("put", customActionName, contentId);
             }
             if (msg == null) {
                 // fallback
@@ -93,14 +93,14 @@ namespace Laser.Orchard.WebServices.Controllers {
             }
             return ResponseMessage(msg);
         }
-        public IHttpActionResult Patch (string actionName, int contentId = 0) {
+        public IHttpActionResult Patch (string customActionName, int contentId = 0) {
             // CRUD: Update/Modify
-            var msg = ActionValidation("patch", actionName);
+            var msg = ActionValidation("patch", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-                msg = SignalInvocation("patch", actionName, contentId);
+                msg = SignalInvocation("patch", customActionName, contentId);
             }
             if (msg == null) {
                 // fallback
@@ -108,14 +108,14 @@ namespace Laser.Orchard.WebServices.Controllers {
             }
             return ResponseMessage(msg);
         }
-        public IHttpActionResult Delete(string actionName, int contentId = 0) {
+        public IHttpActionResult Delete(string customActionName, int contentId = 0) {
             // CRUD: Delete
-            var msg = ActionValidation("delete", actionName);
+            var msg = ActionValidation("delete", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
-                msg = SignalInvocation("delete", actionName, contentId);
+                msg = SignalInvocation("delete", customActionName, contentId);
             }
             if (msg == null) {
                 // fallback
@@ -124,16 +124,16 @@ namespace Laser.Orchard.WebServices.Controllers {
             return ResponseMessage(msg);
         }
 
-        public IHttpActionResult Head(string actionName, int contentId = 0) {
+        public IHttpActionResult Head(string customActionName, int contentId = 0) {
             // CRUD: read
-            var msg = ActionValidation("head", actionName);
+            var msg = ActionValidation("head", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
                 // TODO:
                 // The response from this shoud have and empty body, but the 
                 // headers should be identical to those we would send with a GET
-                var resp = InnerSignalInvocation("get", actionName, contentId);
+                var resp = InnerSignalInvocation("get", customActionName, contentId);
                 resp.Content = "";
                 msg = resp.ToMessage();
             }
@@ -143,8 +143,8 @@ namespace Laser.Orchard.WebServices.Controllers {
             }
             return ResponseMessage(msg);
         }
-        public IHttpActionResult Options(string actionName) {
-            var msg = ActionValidation("options", actionName);
+        public IHttpActionResult Options(string customActionName) {
+            var msg = ActionValidation("options", customActionName);
             // if validation already has a message to send, it means we should not
             // execute this method, but rather return that.
             if (msg == null) {
@@ -153,7 +153,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                 };
 
                 msg.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                foreach (var method in AllowedMethods(actionName)) {
+                foreach (var method in AllowedMethods(customActionName)) {
                     msg.Content.Headers.Allow.Add(method);
                 }
 
