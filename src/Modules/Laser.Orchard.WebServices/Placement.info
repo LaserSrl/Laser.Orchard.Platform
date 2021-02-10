@@ -1,3 +1,4 @@
 ﻿<Placement>
   <Place Parts_WebServiceSettings_Edit="Content:12" />
+  <Place SiteSettings_CustomRestApiSiteSettingsPart="Content:1"/>
 </Placement>

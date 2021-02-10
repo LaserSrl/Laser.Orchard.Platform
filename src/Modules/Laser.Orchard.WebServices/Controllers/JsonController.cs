@@ -407,7 +407,8 @@ namespace Laser.Orchard.WebServices.Controllers
                         sb.Append(",");
                     }
                     sb.Append("{");
-                    dumper = new ObjectDumper(deeplevel, _filterContentFieldsParts, false, tinyResponse, complexBehaviour);
+                    // quando c'è da accettare una policy non deve essere preso in considerazione il filtro per field
+                    dumper = new ObjectDumper(deeplevel, null, false, tinyResponse, complexBehaviour);
                     projectionDump = dumper.Dump(item, String.Format("[{0}]", i));
                     JsonConverter.ConvertToJSon(projectionDump, sb, minified, realformat);
                     sb.Append("}");

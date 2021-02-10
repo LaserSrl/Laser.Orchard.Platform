@@ -1,0 +1,7 @@
+﻿@model Laser.Orchard.StartupConfig.Settings.FrontendEditorConfigurationSettings
+
+<fieldset>
+    @Html.CheckBoxFor(m => m.AllowFrontEndEdit)
+    <label for="@Html.FieldIdFor(m => m.AllowFrontEndEdit)" class="forcheckbox">@T("Allow edit on front end")</label>
+    <span class="hint">@T("Check to allow editing the contents of this part/field from the front-end, e.g. in a CustomForm.")</span>
+</fieldset>
