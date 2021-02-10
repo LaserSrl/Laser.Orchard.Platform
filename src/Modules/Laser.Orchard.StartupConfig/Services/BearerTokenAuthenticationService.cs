@@ -16,7 +16,8 @@ namespace Laser.Orchard.StartupConfig.Services {
     public class BearerTokenAuthenticationService : FormsAuthenticationService, IAuthenticationService {
         // We inherit from FormsAuthenticationService so that we can correctly
         // provide the CurrentUser when they are authenticating with a token rather
-        // than with the .ASPXAUTH cookie.
+        // than with the .ASPXAUTH cookie. We also replicate a lot of the logic from
+        // that class when analysing an identity related to a bearer token.
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMembershipService _membershipService;

@@ -80,6 +80,10 @@ namespace Laser.Orchard.StartupConfig.Drivers {
             part.ApiSecretHash = context.Attribute(part.PartDefinition.Name, "ApiSecretHash");
             part.HashAlgorithm = context.Attribute(part.PartDefinition.Name, "HashAlgorithm");
             part.SecretSalt = context.Attribute(part.PartDefinition.Name, "SecretSalt");
+            // We are not importing/exporting CreatedUtc and LastLoginUtc for similarity to 
+            // what's done for UserPart. LastLogin should anyway be updated by "use" of the
+            // application. CreatedUtc shouldn't be overwritten when importing an existing 
+            // User, but it will whenever the credentials are refreshed.
         }
 
         protected override void Exporting(ApiCredentialsPart part, ExportContentContext context) {

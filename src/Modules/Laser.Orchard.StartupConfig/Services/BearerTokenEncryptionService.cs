@@ -110,10 +110,12 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
         private Dictionary<string, string> ComputeUserDataDictionary(IUser user) {
             var userDataDictionary = new Dictionary<string, string>();
+            // we are already adding UserName, so we don't need a provider for it
             userDataDictionary.Add("UserName", user.UserName);
             foreach (var userDataProvider in _bearerTokenDataProviders) {
                 var key = userDataProvider.Key;
                 var value = userDataProvider.ComputeUserDataElement(user);
+                // TODO: how should duplicate keys be handled? As is, this would throw.
                 if (key != null && value != null) {
                     userDataDictionary.Add(key, value);
                 }
