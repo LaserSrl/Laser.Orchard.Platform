@@ -64,8 +64,7 @@ namespace Laser.Orchard.StartupConfig.Filters {
             if (SetSameSiteNoneForAuthCookies) {
                 if (HttpContext.Current.Response.Cookies.AllKeys.Contains(FormsAuthentication.FormsCookieName)) {
                     if (HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName].Secure) {
-                        // TODO: the SameSite property exists in .net 4.7.2 and following so fix this after the update. The desired value is SameSite.None.
-                        ((dynamic)HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName]).SameSite = 0;
+                        HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName].SameSite = SameSiteMode.None;
                     }
                 }
             }
