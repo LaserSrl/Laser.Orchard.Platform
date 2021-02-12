@@ -52,15 +52,27 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             try {
                 return _cacheManager.Get(
                     "Laser.Orchard.OpenAuthentication.Providers",
+                    true, //prevent concurrent calls to this
                     ctx => {
                         ctx.Monitor(_signals.When("Laser.Orchard.OpenAuthentication.Providers.Changed"));
                         var configuration = _repository.Table.ToList()
-                        .Select(x => {
-                            var cfg = new ProviderConfigurationViewModel();
-                            x.ToViewModel(cfg);
+                            .Select(x => {
+                                var cfg = new ProviderConfigurationViewModel();
+                                x.ToViewModel(cfg);
+                                // https://stackoverflow.com/a/6064422/2669614
+                                // Basically, by doing a "subquery" here, we were trying to execute a query while iterating
+                                // over the results of another. This causes an exception:
+                                // System.InvalidOperationException: A Command è già associato un DataReader aperto, che deve essere chiuso.
+                                //cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
+                                return cfg;
+                            });
+                        foreach (var cfg in configuration) {
+                            // so we moved the "subquery" here.
+                            // This could be further optimized, because as is we are doing a query for each
+                            // provider, rather than a single one for all of them.
                             cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
-                            return cfg;
-                        });
+                            // A different solution would be to join everything in a single query (if the model supports it)
+                        }
                         return configuration.ToList();
                     });
             }
