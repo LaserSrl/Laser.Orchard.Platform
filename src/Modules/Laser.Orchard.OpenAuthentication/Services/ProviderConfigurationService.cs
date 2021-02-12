@@ -71,8 +71,41 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                             // This could be further optimized, because as is we are doing a query for each
                             // provider, rather than a single one for all of them.
                             cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
-                            // A different solution would be to join everything in a single query (if the model supports it)
+                            
                         }
+                        // A different solution would be to join everything in a single query, like below
+                        // but nhibernate does not implement GroupJoin
+                        //var myConfigQuery = _repository.Table
+                        //    .GroupJoin(
+                        //        _repositoryAttributes.Table,
+                        //        pcr => pcr.Id,
+                        //        par => par.ProviderId,
+                        //        (pcr, pars) => new {
+                        //            ProviderConfigurationRecord = pcr,
+                        //            ProviderAttributeRecords = pars
+                        //        })
+                        //    .ToList();
+                        //var myConfig = myConfigQuery
+                        //    .Select(obj => {
+                        //        var cfg = new ProviderConfigurationViewModel();
+                        //        obj.ProviderConfigurationRecord.ToViewModel(cfg);
+                        //        var client = _authenticationClients
+                        //            .FirstOrDefault(x => x.ProviderName == obj.ProviderConfigurationRecord.ProviderName);
+                        //        if (client != null && client.GetAttributeKeys().Any()) {
+                        //            foreach (var item in client.GetAttributeKeys()) {
+                        //                var origValue = obj.ProviderAttributeRecords
+                        //                    .FirstOrDefault(x => x.AttributeKey == item.Key);
+                        //                cfg.Attributes.Add(new ProviderAttributeViewModel() {
+                        //                    AttributeKey = item.Key,
+                        //                    AttributeValue = origValue != null ? origValue.AttributeValue : "",
+                        //                    AttributeDescription = item.Value
+                        //                });
+                        //            }
+                        //        }
+                        //        return cfg;
+                        //    }); 
+
+
                         return configuration.ToList();
                     });
             }
