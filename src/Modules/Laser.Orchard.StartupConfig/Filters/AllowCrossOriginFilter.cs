@@ -43,13 +43,13 @@ namespace Laser.Orchard.StartupConfig.Filters {
             if (settings != null) {
                 RemoveXFrameHeaderFrontEnd = settings.RemoveXFrameHeaderFrontEnd;
                 RemoveXFrameHeaderBackEnd = settings.RemoveXFrameHeaderBackEnd;
-                SetSameSiteNoneForAuthCookies = settings.SetSameSiteNoneForAuthCookies;
+                SameSiteModeSetting = settings.CookieSameSiteMode;
             }
         }
 
         private bool RemoveXFrameHeaderFrontEnd { get; set; }
         private bool RemoveXFrameHeaderBackEnd { get; set; }
-        private bool SetSameSiteNoneForAuthCookies { get; set; }
+        private CookieSameSiteModeSetting SameSiteModeSetting { get; set; }
 
         public void OnResultExecuted(ResultExecutedContext filterContext) {
             if (AdminFilter.IsApplied(new RequestContext(filterContext.HttpContext, new RouteData()))) {
@@ -61,12 +61,36 @@ namespace Laser.Orchard.StartupConfig.Filters {
                     HttpContext.Current.Response.Headers.Remove("X-Frame-Options");
                 }
             }
-            if (SetSameSiteNoneForAuthCookies) {
-                if (HttpContext.Current.Response.Cookies.AllKeys.Contains(FormsAuthentication.FormsCookieName)) {
-                    if (HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName].Secure) {
-                        // TODO: the SameSite property exists in .net 4.7.2 and following so fix this after the update. The desired value is SameSite.None.
-                        ((dynamic)HttpContext.Current.Response.Cookies[FormsAuthentication.FormsCookieName]).SameSite = 0;
-                    }
+            if (HttpContext.Current.Response.Cookies.AllKeys.Any()) {
+                Action<HttpCookie> attributeOp;
+                // Different SameSite attribute values have known issues with some browsers:
+                // https://docs.microsoft.com/en-us/aspnet/samesite/system-web-samesite#known
+                // https://devblogs.microsoft.com/aspnet/upcoming-samesite-cookie-changes-in-asp-net-and-asp-net-core/
+                switch (SameSiteModeSetting) {
+                    case CookieSameSiteModeSetting.Unspecified:
+                        attributeOp = (c) => c.SameSite = (SameSiteMode)(-1);
+                        break;
+                    case CookieSameSiteModeSetting.None:
+                        // set samesite = none only if the cookie is set as secure
+                        attributeOp = (c) => {
+                            if (c.Secure) {
+                                c.SameSite = SameSiteMode.None;
+                            }
+                        };
+                        break;
+                    case CookieSameSiteModeSetting.Lax:
+                        attributeOp = (c) => c.SameSite = SameSiteMode.Lax;
+                        break;
+                    case CookieSameSiteModeSetting.Strict:
+                        attributeOp = (c) => c.SameSite = SameSiteMode.Strict;
+                        break;
+                    case CookieSameSiteModeSetting.DontAlter:
+                    default:
+                        attributeOp = (c) => { };
+                        break;
+                }
+                foreach (var key in HttpContext.Current.Response.Cookies.AllKeys) {
+                    attributeOp(HttpContext.Current.Response.Cookies[key]);
                 }
             }
         }

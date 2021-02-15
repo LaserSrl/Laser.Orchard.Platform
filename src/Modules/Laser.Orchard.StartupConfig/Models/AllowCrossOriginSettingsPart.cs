@@ -17,9 +17,9 @@ namespace Laser.Orchard.StartupConfig.Models {
             get { return this.Retrieve(x => x.RemoveXFrameHeaderFrontEnd, false); }
             set { this.Store(x => x.RemoveXFrameHeaderFrontEnd, value); }
         }
-        public bool SetSameSiteNoneForAuthCookies {
-            get { return this.Retrieve(x => x.SetSameSiteNoneForAuthCookies, false); }
-            set { this.Store(x => x.SetSameSiteNoneForAuthCookies, value); }
+        public CookieSameSiteModeSetting CookieSameSiteMode {
+            get { return this.Retrieve(x => x.CookieSameSiteMode, CookieSameSiteModeSetting.DontAlter); }
+            set { this.Store(x => x.CookieSameSiteMode, value); }
         }
     }
 }
