@@ -71,7 +71,12 @@ namespace Laser.Orchard.StartupConfig.Filters {
                         attributeOp = (c) => c.SameSite = (SameSiteMode)(-1);
                         break;
                     case CookieSameSiteModeSetting.None:
-                        attributeOp = (c) => c.SameSite = SameSiteMode.None;
+                        // set samesite = none only if the cookie is set as secure
+                        attributeOp = (c) => {
+                            if (c.Secure) {
+                                c.SameSite = SameSiteMode.None;
+                            }
+                        };
                         break;
                     case CookieSameSiteModeSetting.Lax:
                         attributeOp = (c) => c.SameSite = SameSiteMode.Lax;
