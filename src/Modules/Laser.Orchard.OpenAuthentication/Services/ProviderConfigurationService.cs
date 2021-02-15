@@ -66,13 +66,13 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                                 //cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
                                 return cfg;
                             });
-                        foreach (var cfg in configuration) {
-                            // so we moved the "subquery" here.
-                            // This could be further optimized, because as is we are doing a query for each
-                            // provider, rather than a single one for all of them.
-                            cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
+                        //foreach (var cfg in configuration) {
+                        //    // so we moved the "subquery" here.
+                        //    // This could be further optimized, because as is we are doing a query for each
+                        //    // provider, rather than a single one for all of them.
+                        //    cfg.Attributes.AddRange(GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName));
                             
-                        }
+                        //}
                         // A different solution would be to join everything in a single query, like below
                         // but nhibernate does not implement GroupJoin
                         //var myConfigQuery = _repository.Table
@@ -104,9 +104,9 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                         //        }
                         //        return cfg;
                         //    }); 
-
-
-                        return configuration.ToList();
+                        return configuration
+                            .Select(cfg => new ProviderConfigurationViewModel(cfg, GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName)))
+                            .ToList();
                     });
             }
             catch (Exception ex) {
