@@ -2,6 +2,7 @@
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Mvc.Filters;
+using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using System;
@@ -25,14 +26,17 @@ namespace Laser.Orchard.StartupConfig.Filters {
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
         private readonly ISiteService _siteService;
+        private readonly ISslSettingsProvider _sslSettingsProvider;
         public AllowCrossOriginFilter(
             ICacheManager cacheManager,
             ISignals signals,
-            ISiteService siteService) {
+            ISiteService siteService,
+            ISslSettingsProvider sslSettingsProvider) {
 
             _cacheManager = cacheManager;
             _signals = signals;
             _siteService = siteService;
+            _sslSettingsProvider = sslSettingsProvider;
 
             var settings = _cacheManager.Get(AllowCrossOriginSettingsPart.SettingsCacheKey, true, context => {
                 context.Monitor(_signals.When(AllowCrossOriginSettingsPart.SettingsCacheKey));
@@ -45,11 +49,14 @@ namespace Laser.Orchard.StartupConfig.Filters {
                 RemoveXFrameHeaderBackEnd = settings.RemoveXFrameHeaderBackEnd;
                 SameSiteModeSetting = settings.CookieSameSiteMode;
             }
+
+            RequireSSL = new Lazy<bool>(() => _sslSettingsProvider.GetRequiresSSL());
         }
 
         private bool RemoveXFrameHeaderFrontEnd { get; set; }
         private bool RemoveXFrameHeaderBackEnd { get; set; }
         private CookieSameSiteModeSetting SameSiteModeSetting { get; set; }
+        private Lazy<bool> RequireSSL { get; set; }
 
         public void OnResultExecuted(ResultExecutedContext filterContext) {
             if (AdminFilter.IsApplied(new RequestContext(filterContext.HttpContext, new RouteData()))) {
@@ -73,6 +80,10 @@ namespace Laser.Orchard.StartupConfig.Filters {
                     case CookieSameSiteModeSetting.None:
                         // set samesite = none only if the cookie is set as secure
                         attributeOp = (c) => {
+                            if (!c.Secure) {
+                                // see if we require SSL on all pages
+                                c.Secure = RequireSSL.Value;
+                            }
                             if (c.Secure) {
                                 c.SameSite = SameSiteMode.None;
                             }
