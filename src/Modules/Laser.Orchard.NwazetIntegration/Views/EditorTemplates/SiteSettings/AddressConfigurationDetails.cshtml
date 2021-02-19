@@ -141,13 +141,23 @@ index++;
                     .fail(function () { })
                     .always(function () {
                         $('.territory-children-counts').on('click', function () {
-                            _handleClick(this);
+                            if ($(this).parent().parent().find('>.children-list').length) {
+                                // it exists
+                                $(this).parent().parent().find('>.children-list').remove();
+                            } else {
+                                _handleClick(this);
+                            }
                             //$(this).parent().parent().find('>.children-list').toggle();
                         });
                     });
             };
             $('.territory-children-counts').on('click', function () {
-                _handleClick(this);
+                if($(this).parent().parent().find('>.children-list').length) {
+                    // it exists
+                    $(this).parent().parent().find('>.children-list').remove();
+                } else {
+                    _handleClick(this);
+                }
                 //$(this).parent().parent().find('>.children-list').toggle();
             });
         });
