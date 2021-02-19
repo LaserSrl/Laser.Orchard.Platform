@@ -105,11 +105,7 @@ namespace Laser.Orchard.ShareLink.Drivers {
             updater.TryUpdateModel(vm, Prefix, null, null);
 
             var mapperConfiguration = new MapperConfiguration(cfg => {
-                cfg.CreateMap<ShareLinkVM, ShareLinkPart>()
-                .ForSourceMember(src => src.ShowSharedImage, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedLink, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedText, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedBody, opt => opt.Ignore());
+                cfg.CreateMap<ShareLinkVM, ShareLinkPart>();
             });
             IMapper _mapper = mapperConfiguration.CreateMapper();
 

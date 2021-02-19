@@ -1,0 +1,59 @@
+﻿@model Laser.Orchard.StartupConfig.Models.AllowCrossOriginSettingsPart
+<fieldset>
+    <legend>@T("Cross Origin Settings")</legend>
+    
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.RemoveXFrameHeaderBackEnd)" class="forcheckbox" title="@T("Allow Cross-Origin access to the backend.")">
+                @Html.EditorFor(m => m.RemoveXFrameHeaderBackEnd)
+                @T("Allow Cross-Origin access to the backend.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("If this is true, it will remove the X-Frame-Options header from responses for backend pages.")
+        </span>
+    </div>
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.RemoveXFrameHeaderFrontEnd)" class="forcheckbox" title="@T("Allow Cross-Origin access to the frontend.")">
+                @Html.EditorFor(m => m.RemoveXFrameHeaderFrontEnd)
+                @T("Allow Cross-Origin access to the frontend.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("If this is true, it will remove the X-Frame-Options header from responses for frontend pages.")
+        </span>
+    </div>
+    <span>@T("Forms with antiforgery tokens add the X-Frame-Options header to further harden against XSRF attacks. However this prevents use cases where we want our forms in an iframe. The options above allow removing that header.")</span>
+    
+    <div class="form-group">
+        <label>@T("Set the SameSite attribute for cookies.")</label>
+        @Html.DropDownListFor(
+            m => m.CookieSameSiteMode,
+            new SelectList(Enum.GetValues(typeof(Laser.Orchard.StartupConfig.CookieSameSiteModeSetting)), Model.CookieSameSiteMode),
+            new { @class = "form-control" })
+        <div class="hint">
+            <span>
+                @T("Set the behaviour regarding the SameSite attribute for all cookies being set by the site.")
+            </span>
+            <ul>
+                <li>
+                    @T("Don't Alter: keep the attribute value originally set by the feature that added the cookie.")
+                </li>
+                <li>
+                    @T("Unspecified: set the attribute so that the server will not send it to clients.")
+                </li>
+                <li>
+                    @T("None: cookies with this attribute will be sent by the client with all requests (even cross origin requests). This is the value that is needed to send the cookies e.g. in an iframe.")
+                </li>
+                <li>
+                    @T("Lax: The cookie will be sent with \"same-site\" requests, and with \"cross-site\" top level navigation.")
+                </li>
+                <li>
+                    @T("Strict: When the value is Strict the cookie will only be sent along with \"same-site\" requests.")
+                </li>
+            </ul>
+        </div>
+    </div>
+</fieldset>

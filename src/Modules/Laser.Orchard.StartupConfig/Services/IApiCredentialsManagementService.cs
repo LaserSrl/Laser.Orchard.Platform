@@ -5,7 +5,7 @@ using Orchard.Users.Models;
 namespace Laser.Orchard.StartupConfig.Services {
     public interface IApiCredentialsManagementService : IDependency {
         /// <summary>
-        /// returns the plain text secret for the user represented by the part.
+        /// Returns the plain text secret for the user represented by the part.
         /// </summary>
         /// <param name="part"></param>
         /// <returns></returns>

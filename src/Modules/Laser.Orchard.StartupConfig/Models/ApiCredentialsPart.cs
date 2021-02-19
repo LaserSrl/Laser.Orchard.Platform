@@ -1,9 +1,6 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.Models {
     [OrchardFeature("Laser.Orchard.BearerTokenAuthentication")]
@@ -36,6 +33,8 @@ namespace Laser.Orchard.StartupConfig.Models {
             set { Store(x => x.CreatedUtc, value); }
         }
 
+        // TODO: do we need this? We are not using it currently. May be we should
+        // update the UserPart's LastLoginUtc when logging in with Api credentials?
         public DateTime? LastLoginUtc {
             get { return Retrieve(x => x.LastLoginUtc); }
             set { Store(x => x.LastLoginUtc, value); }

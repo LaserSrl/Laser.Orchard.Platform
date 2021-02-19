@@ -59,6 +59,9 @@ namespace Laser.Orchard.jQueryPlugins {
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js")
                 .SetDependencies("jQuery");
 
+            manifest.DefineScript("ChartJS")
+                .SetCdn("https://cdn.jsdelivr.net/npm/chart.js@2.8.0");
+
             //Styles
 
             manifest.DefineStyle("jQuery_DataTables").SetUrl("jqDataTable/jquery.dataTables.min.css");

@@ -26,6 +26,7 @@ namespace Laser.Orchard.StartupConfig.Helpers {
         // valid characters for the random string
         private static readonly char[] chars =
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+        // this can be used as a simpler alternative to System.Web.Security.Membership.GeneratePassword(int, int)
         public static string RandomString(int length = 48) {
             byte[] data = new byte[4 * length];
             using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider()) {
@@ -44,7 +45,7 @@ namespace Laser.Orchard.StartupConfig.Helpers {
         #endregion
 
         #region Hashing of secrets
-        // This region replicates logic similar to what is done ofr passwords in Orchard.Users
+        // This region replicates logic similar to what is done for passwords in Orchard.Users
         public const string PBKDF2 = "PBKDF2";
         public const string DefaultHashAlgorithm = PBKDF2;
         public static void SetSecretHashed(ApiCredentialsPart credentialsPart, string secret) {
@@ -92,7 +93,6 @@ namespace Laser.Orchard.StartupConfig.Helpers {
 
             return bytesAreEqual;
         }
-
 
         private static string ComputeHashBase64(string hashAlgorithmName, byte[] saltBytes, string secret) {
             var combinedBytes = CombineSaltAndSecret(saltBytes, secret);

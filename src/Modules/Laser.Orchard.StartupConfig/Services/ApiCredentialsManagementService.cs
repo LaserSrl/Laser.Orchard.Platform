@@ -47,7 +47,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             var key = Convert.ToBase64String(
                 Encoding.UTF8.GetBytes(BearerTokenHelpers.RandomString(24)),
                 Base64FormattingOptions.None);
-            // test that we haven't used this already.
+            // test that we haven't used this already. It's random but better safe than sorry.
             while (GetPartByKey(key) != null) {
                 key = Convert.ToBase64String(
                     Encoding.UTF8.GetBytes(BearerTokenHelpers.RandomString(24)),
