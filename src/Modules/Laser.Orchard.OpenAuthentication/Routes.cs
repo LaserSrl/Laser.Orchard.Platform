@@ -87,6 +87,21 @@ namespace Laser.Orchard.OpenAuthentication {
                                                  },
                             new RouteDescriptor {
                                                      Route = new Route(
+                                                         "External/WebTokenLogOn",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", Constants.LocalArea},
+                                                                                      {"controller", "Account"},
+                                                                                      {"action", "ExternalTokenLogonWeb"}
+                                                                                  },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", Constants.LocalArea}
+                                                                                  },
+                                                         new MvcRouteHandler())
+
+                                                 },
+                            new RouteDescriptor {
+                                                     Route = new Route(
                                                          "AKExternal/TokenLogOn",
                                                          new RouteValueDictionary {
                                                                                       {"area", Constants.LocalArea},

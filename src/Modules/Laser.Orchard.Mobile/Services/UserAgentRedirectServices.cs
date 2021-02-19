@@ -65,7 +65,8 @@ namespace Laser.Orchard.Mobile.Services {
             }
             // Create
             foreach (var item in editModel.Stores.Where(w => w.Id == 0 && w.Delete == false)) {
-                var record = Mapper.Map<AppStoreRedirectRecord>(item);
+                AppStoreRedirectRecord record = new AppStoreRedirectRecord();
+                _mapper.Map(item, record);
                 record.UserAgentRedirectPartRecord = partRecord;
                 _appStoreRedirectRepository.Create(record);
             }
