@@ -98,6 +98,10 @@ namespace Laser.Orchard.jQueryPlugins {
                 .SetUrl("../BootstrapItalia/css/bootstrap-italia.min.css");
             manifest.DefineScript("BootstrapItalia")
                 .SetUrl("../BootstrapItalia/js/bootstrap-italia.bundle.min.js");
+
+            manifest.DefineScript("PasswordStrength")
+                .SetCdn("https://cdn.jsdelivr.net/npm/pwstrength-bootstrap@3.0.9/dist/pwstrength-bootstrap.min.js")
+                .SetDependencies("jQuery");
         }
     }
 }
