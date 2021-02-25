@@ -104,7 +104,7 @@ namespace Laser.Orchard.StartupConfig {
             if (autoroutePart != null) {
                 var alias = autoroutePart.DisplayAlias;
                 if (!string.IsNullOrWhiteSpace(alias)) {
-                    personalized.Add("__alias__" + alias);
+                    personalized.Add("__alias__" + alias.Replace("-", "__").Replace(".", "_"));
                 }
             }
 
