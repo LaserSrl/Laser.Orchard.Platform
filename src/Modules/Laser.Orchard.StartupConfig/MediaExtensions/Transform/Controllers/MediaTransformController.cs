@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Mvc;
 using Orchard.Utility.Extensions;
 using Orchard.Environment.Configuration;
+using Laser.Orchard.Commons.Attributes;
 
 namespace Laser.Orchard.StartupConfig.Controllers {
 
@@ -32,7 +33,9 @@ namespace Laser.Orchard.StartupConfig.Controllers {
             _httpContextAccessor = httpContextAccessor;
         }
 
-        [AlwaysAccessible]
+        [AlwaysAccessible, AdminService]
+        // the AdminService attribute prevents the PolicyFilter to check policies 
+        // when a file is called through this action.
         public RedirectResult Image(string Path, int? Width, int? Height, string Mode, string Alignment, string PadColor) {
             var httpContext = _httpContextAccessor.Current();
             int n = 0;
