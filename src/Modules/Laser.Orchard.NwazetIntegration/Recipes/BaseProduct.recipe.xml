@@ -199,7 +199,43 @@
           </Layout>
         </Layouts>
       </QueryPart>
-      <TitlePart Title="ProdottoDefault per categorie" />
+      <TitlePart Title="Tutti i ProdottoDefault con filtri per categorie" />
+    </Query>
+    <Query Id="/Identifier=1a0b7903917f403e84e37b9b02c88348" Status="Published">
+      <BooleanField.OneShotQuery Value="false" />
+      <BooleanField.UserQuery Value="false" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-03-01T10:47:20.5431198Z" PublishedUtc="2021-03-01T10:47:20.600442Z" ModifiedUtc="2021-03-01T10:47:20.5800648Z" />
+      <IdentityPart Identifier="1a0b7903917f403e84e37b9b02c88348" />
+      <QueryPart VersionScope="Published">
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;ProdottoDefault&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="Localization" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;/Form&gt;" Type="ForCurrentCultureWithUntranslated" />
+            <Filter Category="Taxonomy" Description="Ha come termine {Content.Id} (e/o figli)" Position="2" State="&lt;Form&gt;&lt;Description&gt;Ha come termine {Content.Id} (e/o figli)&lt;/Description&gt;&lt;TermToken&gt;{Content.Id}&lt;/TermToken&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsTokenized" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno." Position="3" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaPrincipaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno." Position="4" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaSecondariaTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno." Position="5" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaAddizionaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="ProductSearchPartContentFields" Description="Contiene tutte le parole presenti in Querystring[&quot;q&quot;]" Position="6" State="&lt;Form&gt;&lt;Description&gt;Contiene tutte le parole presenti in Querystring[&quot;q&quot;]&lt;/Description&gt;&lt;Operator&gt;ContainsAllIfProvided&lt;/Operator&gt;&lt;Value&gt;{Request.QueryString:q}&lt;/Value&gt;&lt;/Form&gt;" Type="ProductSearchPart.CalculatedKeywords." />
+            <Filter Category="ProductPart" Description="" Position="7" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;Between&lt;/Operator&gt;&lt;Value&gt;&lt;/Value&gt;&lt;Min&gt;{Shape.Execute:GetMinPriceWithVatFromQueryString}&lt;/Min&gt;&lt;Max&gt;{Shape.Execute:GetMaxPriceWithVatFromQueryString}&lt;/Max&gt;&lt;/Form&gt;" Type="ProductPriceWithVat" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="General" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;CriterionIndex&gt;{Request.QueryString:sort}&lt;/CriterionIndex&gt;&lt;CriteriaArray&gt;[{{&#xD;&#xA;&quot;PartName&quot;: &quot;ProductDefaultPart&quot;,&#xD;&#xA;&quot;FieldName&quot;: &quot;Popolarita&quot;,&#xD;&#xA;&quot;Ascending&quot;: false,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Popularity&quot;,&#xD;&#xA;&quot;Children&quot;:[&#xD;&#xA;   {{&#xD;&#xA;      &quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;      &quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;      &quot;Ascending&quot;: true,&#xD;&#xA;     &quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;   }}&#xD;&#xA;]&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (Z-A)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (low to high)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (high to low)&quot;&#xD;&#xA;}}&#xD;&#xA;]&lt;/CriteriaArray&gt;&lt;/Form&gt;" Type="ConfigurableSorting" />
+        </SortCriteria>
+        <Layouts>
+          <Layout Category="Html" Description="Shop Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Shop Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;3&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-4 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+          <Layout Category="Html" Description="Brand Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Brand Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;4&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-3 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+        </Layouts>
+      </QueryPart>
+      <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
     </Query>
     <Taxonomy Id="/alias=en\/additional-category" Status="Published">
       <NumericField.Creator Value="2" />
