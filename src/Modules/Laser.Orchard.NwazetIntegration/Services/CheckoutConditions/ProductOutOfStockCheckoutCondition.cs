@@ -48,8 +48,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
         public bool UserMayCheckout(IUser user) {
             var products = _shoppingCart.GetProducts();
             var notEnoughStock = products.Where(qp =>
+                // check stock
                 qp.Quantity > qp.Product.Inventory
-                && !qp.Product.AllowBackOrder);
+                // if back orders are allowed, it's like having enough stock
+                && !qp.Product.AllowBackOrder
+                // if the product is digital, we may have an infinite number of them
+                && !(products.First().Product.IsDigital && !products.First().Product.ConsiderInventory));
             if (notEnoughStock.Any()) {
                 _notifier.Warning(
                     T("There isn't enough stock to complete your order for the following products: {0}. <a href=\"{1}\">Please review your cart.</a>",
