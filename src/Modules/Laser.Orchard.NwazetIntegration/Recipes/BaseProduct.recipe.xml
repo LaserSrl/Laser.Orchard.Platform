@@ -130,7 +130,7 @@
                                               HiddenStringFieldSettings.AutomaticAdjustmentOnEdit="True" />
         <Keywords.TextField DisplayName="Keywords" TextFieldSettings.Flavor="Large" TextFieldSettings.Required="False" />
       </ProductSearchPart>
-      <ProductRelationshipPart>
+      <ProductRelationshipPart ContentPartSettings.Attachable="True">
         <RelatedProducts.ContentPickerField DisplayName="Potrebbe piacerti anche:"
                                             ContentPickerFieldSettings.Required="False"
                                             ContentPickerFieldSettings.Multiple="True"
