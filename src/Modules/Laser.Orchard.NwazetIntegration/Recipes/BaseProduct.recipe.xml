@@ -88,7 +88,7 @@
       <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
       <InventoryPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="This part provides a way to manage inventory for a product. This part allows storage of the portion of inventory that is managed by the merchant themselves.It should only be attached to ContentTypes that have a ProductPart. " />
       <LocalizationPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides the user interface to localize content items." />
-      <PricePart ContentPartSettings.Description="This part provides advanced ways to manage and use price for a product." />
+      <PricePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="This part provides advanced ways to manage and use price for a product." />
       <ProdottoDefault ContentPartSettings.Attachable="True">
         <LabelSecondaria.TextField DisplayName="Label Secondaria" TextFieldSettings.Required="False" FieldIndexing.Included="True"
                          TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine." />
