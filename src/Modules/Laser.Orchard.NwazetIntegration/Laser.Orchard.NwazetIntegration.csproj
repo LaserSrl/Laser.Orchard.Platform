@@ -207,6 +207,9 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
+    <Content Include="Recipes\BaseProduct.recipe.xml" />
+    <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
+    <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />
     <Content Include="Scripts\address-configuration.min.js">
       <DependentUpon>address-configuration.js</DependentUpon>
