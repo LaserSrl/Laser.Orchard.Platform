@@ -51,6 +51,7 @@
         <CommonPart />
         <LocalizationPart />
         <TaxonomyExtensionPart />
+        <TaxonomyFilterPart />
         <TaxonomyPart />
         <TitlePart />
       </Taxonomy>
@@ -157,6 +158,10 @@
       <SeoPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Consente la personalizzazione degli attributi SEO (title, keywords, description, meta)." />
       <ShareLinkPart ContentPartSettings.Attachable="True" />
       <TaxonomyExtensionPart />
+      <TaxonomyFilterPart ContentPartSettings.Attachable="True" ContentPartLayoutSettings.Placeable="False">
+        <CollapseItemsAfter.NumericField DisplayName="CollapseItemsAfter" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="-1" NumericFieldSettings.Maximum="" />
+        <ShowContextualSubterms.BooleanField DisplayName="ShowContextualSubterms" BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="" />
+      </TaxonomyFilterPart>
       <TaxonomyPart />
       <TermPart>
         <HideInFrontEnd.BooleanField DisplayName="Nascondi" BooleanFieldSettings.Hint="Se selezionato nasconde la voce nei menu e nei filtri. Non ha invece effetto sulla visibilità della pagina." BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="" />
