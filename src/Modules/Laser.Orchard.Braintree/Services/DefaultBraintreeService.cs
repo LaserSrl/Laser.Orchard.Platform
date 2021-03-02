@@ -25,7 +25,7 @@ namespace Laser.Orchard.Braintree.Services {
 
         public string GetClientToken() {
             var gateway = GetGateway();
-            var clientToken = gateway.ClientToken.generate();
+            var clientToken = gateway.ClientToken.Generate();
             return clientToken;
         }
 
@@ -77,12 +77,12 @@ namespace Laser.Orchard.Braintree.Services {
                         tran.BillingAddress.CountryName);
                 }
                 result.CurrencyIsoCode = tran.CurrencyIsoCode;
-                if (tran.Customer != null) {
+                if (tran.CustomerDetails != null) {
                     result.Customer = string.Format("{0} {1}, {2}, ({3})",
-                        tran.Customer.FirstName,
-                        tran.Customer.LastName,
-                        tran.Customer.Company,
-                        tran.Customer.Email);
+                        tran.CustomerDetails.FirstName,
+                        tran.CustomerDetails.LastName,
+                        tran.CustomerDetails.Company,
+                        tran.CustomerDetails.Email);
                 }
                 result.MerchantAccountId = tran.MerchantAccountId;
                 result.OrderId = tran.OrderId;
@@ -143,12 +143,12 @@ namespace Laser.Orchard.Braintree.Services {
                         tran.BillingAddress.CountryName);
                 }
                 result.CurrencyIsoCode = tran.CurrencyIsoCode;
-                if (tran.Customer != null) {
+                if (tran.CustomerDetails != null) {
                     result.Customer = string.Format("{0} {1}, {2}, ({3})",
-                        tran.Customer.FirstName,
-                        tran.Customer.LastName,
-                        tran.Customer.Company,
-                        tran.Customer.Email);
+                        tran.CustomerDetails.FirstName,
+                        tran.CustomerDetails.LastName,
+                        tran.CustomerDetails.Company,
+                        tran.CustomerDetails.Email);
                 }
                 result.MerchantAccountId = tran.MerchantAccountId;
                 result.OrderId = tran.OrderId;
