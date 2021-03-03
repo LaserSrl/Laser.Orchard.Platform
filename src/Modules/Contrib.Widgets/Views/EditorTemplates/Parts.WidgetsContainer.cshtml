@@ -53,8 +53,8 @@
     <legend>@T("Widgets")</legend>
 
     @* Used for the filter *@
-    <input type="hidden" id="clickedZone" name="clickedZone" />
-    <input type="hidden" id="hostIdSaved" name="hostIdSaved" value="@contentItem.Id" />
+    <input type="hidden" id="ContribWidget.ClickedZone" name="ContribWidget.ClickedZone" />
+    <input type="hidden" id="ContribWidget.HostIdSaved" name="ContribWidget.HostIdSaved" value="@contentItem.Id" />
 
     <div class="expando">
         <div class="widgets group">
@@ -77,13 +77,13 @@
                                             <button class="button grey add-widget"
                                                     type="submit"
                                                     name="submit.Zone"
-                                                    onclick="document.getElementById('clickedZone').value = '@zone'">
+                                                    onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">
                                                 @T("Add")
                                             </button>
                                         }
                                         else {
                                             <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
-                                                onclick="document.getElementById('clickedZone').value = '@zone'">@T("Add")</a>
+                                                onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
                                         }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">

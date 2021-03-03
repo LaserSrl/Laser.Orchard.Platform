@@ -10,6 +10,7 @@ using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.ViewModels;
 using Orchard.ContentManagement.Handlers;
 using System;
+using System.Web;
 
 namespace Contrib.Widgets.Filters {
     public class WidgetFilter : FilterProvider, IActionFilter, IContentHandler {
@@ -29,27 +30,31 @@ namespace Contrib.Widgets.Filters {
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {
-            if (!string.IsNullOrWhiteSpace(filterContext.HttpContext.Request.Form["clickedZone"])) {
-                zone = filterContext.HttpContext.Request.Form["clickedZone"];
+            if (string.IsNullOrWhiteSpace(filterContext.HttpContext.Request.Form["ContribWidget.ClickedZone"]) ||
+                string.IsNullOrWhiteSpace(filterContext.HttpContext.Request.Form["ContribWidget.HostIdSaved"])) {
+                return;
             }
 
-            if (!string.IsNullOrWhiteSpace(filterContext.HttpContext.Request.Form["hostIdSaved"])) {
-                hostId = Convert.ToInt32(filterContext.HttpContext.Request.Form["hostIdSaved"]);
-            }
+            zone = filterContext.HttpContext.Request.Form["ContribWidget.ClickedZone"];
+            hostId = Convert.ToInt32(filterContext.HttpContext.Request.Form["ContribWidget.HostIdSaved"]);
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) {
+            if (string.IsNullOrWhiteSpace(zone) || hostId == 0) {
+                return;
+            }
+
             if (!((dynamic)filterContext.Controller).ModelState.IsValid) {
                 return;
             }
 
-            if (!string.IsNullOrWhiteSpace(zone) && hostId != 0) {
-                UrlHelper urlHelper = new UrlHelper(_httpContextAccessor.Current().Request.RequestContext);
-                filterContext.Result = new RedirectResult(
-                    urlHelper.Action("ListWidgets",
-                        "Admin",
-                        new { area = "Contrib.Widgets", hostId = hostId, zone = zone }));
-            }
+            
+            UrlHelper urlHelper = new UrlHelper(_httpContextAccessor.Current().Request.RequestContext);
+            filterContext.Result = new RedirectResult(
+                urlHelper.Action("ListWidgets",
+                    "Admin",
+                    new { area = "Contrib.Widgets", hostId = hostId, zone = zone }));
+            
         }
 
         public void Activating(ActivatingContentContext context) { }
