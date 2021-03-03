@@ -59,6 +59,9 @@ namespace Laser.Orchard.jQueryPlugins {
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js")
                 .SetDependencies("jQuery");
 
+            manifest.DefineScript("ChartJS")
+                .SetCdn("https://cdn.jsdelivr.net/npm/chart.js@2.8.0");
+
             //Styles
 
             manifest.DefineStyle("jQuery_DataTables").SetUrl("jqDataTable/jquery.dataTables.min.css");
@@ -95,6 +98,13 @@ namespace Laser.Orchard.jQueryPlugins {
                 .SetUrl("../BootstrapItalia/css/bootstrap-italia.min.css");
             manifest.DefineScript("BootstrapItalia")
                 .SetUrl("../BootstrapItalia/js/bootstrap-italia.bundle.min.js");
+
+            manifest.DefineScript("I18Next")
+                .SetCdn("https://unpkg.com/i18next@19.9.0/dist/umd/i18next.min.js")
+                .SetDependencies("jQuery");
+            manifest.DefineScript("PasswordStrength")
+                .SetCdn("https://cdn.jsdelivr.net/npm/pwstrength-bootstrap@3.0.9/dist/pwstrength-bootstrap.min.js")
+                .SetDependencies("jQuery");
         }
     }
 }

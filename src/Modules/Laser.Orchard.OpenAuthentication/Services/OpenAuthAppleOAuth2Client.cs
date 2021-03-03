@@ -6,13 +6,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.IdentityModel.Tokens;
 using Orchard.Logging;
 using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using DotNetOpenAuth.AspNet;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
     public class AppleOAuth2Client : OAuth2Client {
@@ -82,7 +82,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             var userData = new Dictionary<string, string>();
             var jwtHandler = new JwtSecurityTokenHandler();
             var securityToken = (JwtSecurityToken)jwtHandler.ReadToken(accessToken);
-            foreach(var claim in securityToken.Claims) {
+            foreach (var claim in securityToken.Claims) {
                 userData.Add(claim.Type, claim.Value);
             }
             return userData;
@@ -104,7 +104,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
             var response = MakePostRequest(_tokenEndpoint, postData.ToString());
 
-            if ( ! string.IsNullOrWhiteSpace(response)) {
+            if (!string.IsNullOrWhiteSpace(response)) {
                 var json = JObject.Parse(response);
                 var accessToken = json.Value<string>("id_token");
                 // returns id_token because it contains user data and GetUserData() extracts these informations from it
@@ -116,10 +116,6 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             var result = "";
             lock (_httpClient) {
                 _httpClient.DefaultRequestHeaders.Clear();
-                // specify to use TLS 1.2 as default connection if needed
-                if (url.ToLowerInvariant().StartsWith("https:")) {
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                }
                 // call web api
                 Task<HttpResponseMessage> t = null;
                 _httpClient.DefaultRequestHeaders.Add("User-Agent", "krake");

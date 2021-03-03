@@ -16,7 +16,8 @@
   <Place Fields_Numeric_Edit__CommonPart-Creator="Content:10;Wrapper=displaynone"/>
   <Place Fields_Numeric_Edit__CommonPart-LastModifier="Content:10;Wrapper=displaynone"/>
   <Place Parts_Common_Container_Edit="Content:5;Wrapper=displaynone"/>
-
+  <!-- Bearer Token / API Credentials -->
+  <Place Parts_ApiCredentialsPart_Edit="Content:1" />
 
   <Place Parts_ContentPickerConnector="Content:1"/>
 
@@ -73,4 +74,7 @@
 
   <!-- TinyMce Enhancement -->
   <Place Parts_TinyMceSiteSettings_Edit="Content:1" />
+
+  <!-- Settings to remove the X-Frame-Options header -->
+  <Place Parts_AllowCrossOriginSettings_Edit="Content:12" />
 </Placement>

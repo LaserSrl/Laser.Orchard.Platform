@@ -28,11 +28,6 @@ namespace Laser.Orchard.PayPal.Services {
                 try {
                     var url = "https://api.sandbox.paypal.com/v2/checkout/orders/" + oid;
 
-                    // specify to use TLS 1.2 as default connection if needed
-                    if (url.ToLowerInvariant().StartsWith("https:")) {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                    }
-
                     HttpWebRequest request;
                     HttpWebResponse response;
 

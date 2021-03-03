@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Laser.Orchard.StartupConfig</RootNamespace>
     <AssemblyName>Laser.Orchard.StartupConfig</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -55,28 +55,41 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.IdentityModel.JsonWebTokens.5.2.4\lib\net451\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.IdentityModel.Logging.5.2.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.IdentityModel.Tokens.5.2.4\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.4.0.1.4000\lib\net40\NHibernate.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.9.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\RazorEngine.3.9.0\lib\net45\RazorEngine.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -85,18 +98,14 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\System.IdentityModel.Tokens.Jwt.5.2.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -104,37 +113,29 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -175,6 +176,10 @@
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="Styles\font-awesome\webfonts\fa-solid-900.woff2" />
     <Content Include="Views\DefinitionTemplates\CacheEvictorPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartNew.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\AllowCrossOriginSettings.cshtml" />
+    <Content Include="Views\DefinitionTemplates\FrontendEditorConfigurationSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -305,6 +310,10 @@
       <Project>{0e7646e8-fe8f-43c1-8799-d97860925ec4}</Project>
       <Name>Orchard.ContentTypes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.CustomForms\Orchard.CustomForms.csproj">
+      <Project>{2cf067ca-064b-43c6-8b88-5e3b99a65f1d}</Project>
+      <Name>Orchard.CustomForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Email\Orchard.Email.csproj">
       <Project>{05660f47-d649-48bd-9ded-df4e01e7cff9}</Project>
       <Name>Orchard.Email</Name>
@@ -376,6 +385,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessManagement\BadgeInfo.cs" />
+    <Compile Include="Activities\UserIsAuthenticatedActivity.cs" />
     <Compile Include="Activities\WebApiResponseActivity.cs" />
     <Compile Include="Activities\WebApiResponseEditForm.cs" />
     <Compile Include="Activities\RequestInspectorActivity.cs" />
@@ -393,6 +403,8 @@
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettingsEvent.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreateItemVM.cs" />
     <Compile Include="ContentPickerContentCreation\ViewModels\ContentPickerCreationWindowVM.cs" />
+    <Compile Include="Controllers\ApiCredentialsAdminController.cs" />
+    <Compile Include="Controllers\BearerTokenController.cs" />
     <Compile Include="Controllers\FrontEndClientStorageController.cs" />
     <Compile Include="Controllers\CommandsController.cs" />
     <Compile Include="Controllers\FrontEndContentController.cs" />
@@ -401,19 +413,36 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UsersAutocompleteController.cs" />
     <Compile Include="CultureCommands\CultureCommandsExtension.cs" />
+    <Compile Include="Drivers\AllowCrossOriginSettingsPartDriver.cs" />
+    <Compile Include="Drivers\ApiCredentialsPartDriver.cs" />
     <Compile Include="Drivers\AuthenticationRequiredPartDriver.cs" />
     <Compile Include="Drivers\CommonPartDriver.cs" />
     <Compile Include="Drivers\EnsureAsFrontEndInvisiblePartDriver.cs" />
+    <Compile Include="Drivers\FrontendEditConfigurationPartDriver.cs" />
     <Compile Include="Drivers\JsonDataTableFieldDriver.cs" />
     <Compile Include="Drivers\JsonDataTablePartDriver.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
+    <Compile Include="Filters\AllowCrossOriginFilter.cs" />
     <Compile Include="FrontendExtensions\Shapes\ImageShapes.cs" />
+    <Compile Include="Handlers\AllowCrossOriginSettingsPartHandler.cs" />
+    <Compile Include="Handlers\ApiCredentialsPartHandler.cs" />
     <Compile Include="Handlers\CacheEvictorHandler.cs" />
+    <Compile Include="Helpers\BearerTokenHelpers.cs" />
+    <Compile Include="Migrations\BearerTokenAuthenticationMigrations.cs" />
+    <Compile Include="Migrations\FrontendEditorConfigurationMigrations.cs" />
+    <Compile Include="Models\AllowCrossOriginSettingsPart.cs" />
+    <Compile Include="Models\ApiCredentialsPart.cs" />
+    <Compile Include="Models\ApiCredentialsPartRecord.cs" />
+    <Compile Include="Models\BearerTokenApiResponseObject.cs" />
+    <Compile Include="Models\BearerTokenAuthRequest.cs" />
     <Compile Include="Models\CacheEvictorPart.cs" />
     <Compile Include="Models\CacheEvictorPartSettings.cs" />
+    <Compile Include="Models\FrontendEditConfigurationPart.cs" />
+    <Compile Include="Permission\ApiCredentialsPermissions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
+    <Compile Include="Routes\BearerTokenRoutes.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
     <Compile Include="Routes\PermissionExtensionRoutes.cs" />
     <Compile Include="Handlers\CurrentContentCacheEvictionHandler.cs" />
@@ -423,12 +452,29 @@
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
     <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
     <Compile Include="Models\EnsureAsFrontEndInvisiblePart.cs" />
+    <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
+    <Compile Include="Security\BearerTokenIdentity.cs" />
+    <Compile Include="Security\IBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\IApiCredentialsValidationProvider.cs" />
+    <Compile Include="Security\Providers\TenantNameBearerTokenDataProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedApiCredentialsValidationProvider.cs" />
+    <Compile Include="Security\Providers\UserApprovedBearerTokenDataProvider.cs" />
     <Compile Include="Security\WidgetsFrontEndAuthorizationEventHandler.cs" />
+    <Compile Include="Services\ApiCredentialsManagementService.cs" />
+    <Compile Include="Services\BearerTokenAuthenticationService.cs" />
+    <Compile Include="Services\BearerTokenEncryptionService.cs" />
+    <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
+    <Compile Include="Services\ConfigurableEditorBuilderWrapper.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
+    <Compile Include="Services\IApiCredentialsManagementService.cs" />
+    <Compile Include="Services\IBearerTokenEncryptionService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
+    <Compile Include="Settings\FrontendEditorConfigurationSettings.cs" />
+    <Compile Include="Settings\FrontendEditorConfigurationSettingsEvents.cs" />
     <Compile Include="Settings\JsonDataTableFieldSettingsHooks.cs" />
     <Compile Include="Handlers\JsonDataTablePartHandler.cs" />
     <Compile Include="IdentityProvider\IIdentityProvider.cs" />
@@ -535,6 +581,7 @@
     <Compile Include="Tokens\ReplaceToken.cs" />
     <Compile Include="Tokens\SiteTokens.cs" />
     <Compile Include="Tokens\StripHtmlToken.cs" />
+    <Compile Include="ViewModels\ApiCredentialsPartViewModel.cs" />
     <Compile Include="ViewModels\CommandsExecuteViewModel.cs" />
     <Compile Include="ViewModels\MaintenanceIndexVM.cs" />
     <Compile Include="ViewModels\MaintenanceVM.cs" />
@@ -678,6 +725,7 @@
     <Content Include="Views\EditorTemplates\Fields\ContentPickerCreateItem.Edit.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -734,11 +782,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.405\build\BuildWebCompiler.targets'))" />
   </Target>
 </Project>

@@ -101,7 +101,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             var requestUrl = GetBaseUrl() + url;
             var syncronized = false;
             using (var httpClient = new HttpClient()) {
-                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                 SetHeader(httpClient);
                 HttpResponseMessage response;
                 if (httpVerb == HttpVerbs.Put) {

@@ -11093,6 +11093,8 @@ sub.badge {
     text-align: right;
     font-size: 12px;
     opacity: 0.6;
+}
+.thumbnail .overlay {
     height: 40px;
 }
 

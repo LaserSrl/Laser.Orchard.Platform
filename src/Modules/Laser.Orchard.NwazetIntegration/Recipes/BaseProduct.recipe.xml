@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Orchard>
+  <Recipe>
+    <Name>SetupProdottoDefault</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the ContentType ProdottoDefault.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, Laser.Orchard.ShareLink, Nwazet.Commerce, Projector, Orchard.Taxonomies, Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
+  <ContentDefinition>
+    <Types>
+      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" 
+                    DisplayName="Prodotto base" TypeIndexing.Indexes="AdminSearch:latest">
+        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.UseCulturePattern="True" 
+                       AutorouteSettings.AutomaticAdjustmentOnEdit="False"
+                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" 
+                       AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]"/>
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <GTMProductPart GTMProductSettingVM.Id="Sku" GTMProductSettingVM.Name="{Content.DisplayText}" 
+                        GTMProductSettingVM.Brand="" 
+                        GTMProductSettingVM.Category="{Content.ContentType}/{Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0.DisplayText}" 
+                        GTMProductSettingVM.Variant="" />
+        <IdentityPart />
+        <InventoryPart />
+        <LocalizationPart />
+        <PricePart />
+        <ProdottoDefault />
+        <ProductDefaultPart />
+        <ProductPart />
+        <ProductSearchPart />
+        <ProductRelationshipPart />
+        <ProductVatConfigurationPart ProductVatConfigurationPartInputPriceSettings.InputFinalPrice="True" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" SeoPartSettings.RobotsNoImageIndex="False" 
+                 SeoPartSettings.GoogleNoSiteLinkSearchBox="False" SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody="" ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage="" ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False" ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TitlePart />
+      </ProdottoDefault>
+      <Query DisplayName="Query">
+        <CommonPart />
+        <IdentityPart />
+        <QueryPart />
+        <QueryUserFilterExtensionPart QueryUserFilterExtensionPartSettingVM.QueryUserFilter="ProfilePartContentFields" />
+        <TitlePart />
+      </Query>
+      <Taxonomy DisplayName="Taxonomy">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart />
+        <LocalizationPart />
+        <TaxonomyExtensionPart />
+        <TaxonomyPart />
+        <TitlePart />
+      </Taxonomy>
+      <CategoriaAddizionaleTerm Taxonomy="Categoria Addizionale" ContentPermissionsTypeSettings.SecurableContentItems="False" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Addizionale Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaAddizionaleTerm>
+      <CategoriaPrincipaleTerm Taxonomy="Categoria Principale" ContentPermissionsTypeSettings.SecurableContentItems="False" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Principale Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaPrincipaleTerm>
+      <CategoriaSecondariaTerm Taxonomy="Categoria Secondaria" ContentPermissionsTypeSettings.SecurableContentItems="False" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Secondaria Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaSecondariaTerm>
+    </Types>
+    <Parts>
+      <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+      <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True">
+        <Creator.NumericField DisplayName="Id of user Creator" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
+        <LastModifier.NumericField DisplayName="Id of last user that have modified the content item" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
+      </CommonPart>
+      <GTMProductPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Google Tag Manager" />
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <InventoryPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="This part provides a way to manage inventory for a product. This part allows storage of the portion of inventory that is managed by the merchant themselves.It should only be attached to ContentTypes that have a ProductPart. " />
+      <LocalizationPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides the user interface to localize content items." />
+      <PricePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="This part provides advanced ways to manage and use price for a product." />
+      <ProdottoDefault ContentPartSettings.Attachable="True">
+        <LabelSecondaria.TextField DisplayName="Label Secondaria" TextFieldSettings.Required="False" FieldIndexing.Included="True"
+                         TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine." />
+        <CategoriaAddizionale.TaxonomyField DisplayName="Categoria Addizionale" TaxonomyFieldSettings.Taxonomy="Categoria Addizionale" TaxonomyFieldSettings.LeavesOnly="False" 
+                                 TaxonomyFieldSettings.Required="False" TaxonomyFieldSettings.SingleChoice="False" TaxonomyFieldSettings.Autocomplete="False" 
+                                 TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" />
+        <CategoriaSecondaria.TaxonomyField DisplayName="Categoria Secondaria" TaxonomyFieldSettings.Taxonomy="Categoria Secondaria" TaxonomyFieldSettings.LeavesOnly="False" 
+                               TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
+                               TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" />
+      </ProdottoDefault>
+      <ProductDefaultPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="ContentFields for the base product" ContentPartLayoutSettings.Placeable="False">
+        <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False" 
+                                           TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
+                                           TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" FieldIndexing.Included="True" />
+        <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Textarea" />
+        <Label.TextField DisplayName="Label" TextFieldSettings.Required="False" FieldIndexing.Included="True"
+                         TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine."/>
+        <Popolarita.EnumerationField DisplayName="Popolarità" 
+                                     EnumerationFieldSettings.Hint="I prodotti più popolari (= numero maggiore) verranno mostrati per primi." 
+                                     EnumerationFieldSettings.Required="True" 
+                                     EnumerationFieldSettings.Options="0&#xD;&#xA;100&#xD;&#xA;200&#xD;&#xA;300&#xD;&#xA;400" 
+                                     EnumerationFieldSettings.ListMode="Dropdown" 
+                                     EnumerationFieldSettings.DefaultValue="0" />
+        <ProductImage.MediaLibraryPickerField DisplayName="Gallery" 
+                                              MediaLibraryPickerFieldSettings.Hint="Galleria di immagini per il prodotto. Immagini quadrate con almeno 600px di lato." 
+                                              MediaLibraryPickerFieldSettings.Required="True" 
+                                              MediaLibraryPickerFieldSettings.Multiple="True" 
+                                              MediaLibraryPickerFieldLocalizationSettings.TryToLocalizeMedia="True" 
+                                              MediaLibraryPickerFieldLocalizationSettings.RemoveItemsWithoutLocalization="False" 
+                                              MediaLibraryPickerFieldLocalizationSettings.RemoveItemsWithNoLocalizationPart="False" />
+        <QuickDetail.TextField DisplayName="Dettaglio breve" 
+                               TextFieldSettings.Hint="Etichetta che viene mostrata accanto al titolo nella pagina del prodotto, ed accanto alla categoria nei cataloghi." 
+                               TextFieldSettings.Required="False" />
+      </ProductDefaultPart>
+      <ProductPart ContentPartSettings.Attachable="True" />
+      <ProductSearchPart ContentPartSettings.Attachable="True" ContentPartLayoutSettings.Placeable="False">
+        <CalculatedKeywords.HiddenStringField DisplayName="CalculatedKeywords" HiddenStringFieldSettings.Tokenized="True" 
+                                              HiddenStringFieldSettings.TemplateString="{Content.Parameter:TitlePart-Title} {Content.Fields.ProductSearchPart.Keywords} {Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0}" 
+                                              HiddenStringFieldSettings.AutomaticAdjustmentOnEdit="True" />
+        <Keywords.TextField DisplayName="Keywords" TextFieldSettings.Flavor="Large" TextFieldSettings.Required="False" />
+      </ProductSearchPart>
+      <ProductRelationshipPart ContentPartSettings.Attachable="True">
+        <RelatedProducts.ContentPickerField DisplayName="Potrebbe piacerti anche:"
+                                            ContentPickerFieldSettings.Required="False"
+                                            ContentPickerFieldSettings.Multiple="True"
+                                            ContentPickerFieldSettings.ShowContentTab="True"
+                                            ContentPickerFieldSettings.DisplayedContentTypes="ProductPart"
+                                            ContentPickerSearchFieldSettings.ShowSearchTab="True"
+                                            ContentPickerSearchFieldSettings.DisplayedContentTypes="ProductPart"
+                                            ContentPickerFieldExtensionSettings.CascadePublish="False"
+                                            CPContentCreationSettings.EnableContentCreation="False"
+                                            ContentPickerFieldLocalizationSettings.TryToLocalizeItems="True"
+                                            ContentPickerFieldLocalizationSettings.RemoveItemsWithoutLocalization="False"
+                                            ContentPickerFieldLocalizationSettings.RemoveItemsWithNoLocalizationPart="False"
+                                            ContentPickerFieldLocalizationSettings.AssertItemsHaveSameCulture="False"
+                                            ContentPickerFieldLocalizationSettings.BlockForItemsWithNoLocalizationPart="False"
+                                            ContentPickerSearchFieldSettings.SearchIndex="AdminSearch" />
+      </ProductRelationshipPart>
+      <ProductVatConfigurationPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="This part provides a way to associate a VAT Configuration to ContentItems. Use this with care." />
+      <ProjectionPart ContentPartSettings.Attachable="True" />
+      <QueryPart />
+      <QueryUserFilterExtensionPart ContentPartSettings.Attachable="False">
+        <OneShotQuery.BooleanField BooleanFieldSettings.Hint="If checked, the query will be shown in a separate group" BooleanFieldSettings.DefaultValue="false" />
+        <UserQuery.BooleanField BooleanFieldSettings.Hint="If checked, the query will modified by users" BooleanFieldSettings.DefaultValue="false" />
+      </QueryUserFilterExtensionPart>
+      <SeoPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Consente la personalizzazione degli attributi SEO (title, keywords, description, meta)." />
+      <ShareLinkPart ContentPartSettings.Attachable="True" />
+      <TaxonomyExtensionPart />
+      <TaxonomyPart />
+      <TermPart>
+        <HideInFrontEnd.BooleanField DisplayName="Nascondi" BooleanFieldSettings.Hint="Se selezionato nasconde la voce nei menu e nei filtri. Non ha invece effetto sulla visibilità della pagina." BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="" />
+        <Icon.MediaLibraryPickerField DisplayName="Icon" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </TermPart>
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  <Content>
+    <Query Id="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371" Status="Published">
+      <BooleanField.OneShotQuery Value="false" />
+      <BooleanField.UserQuery Value="false" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:33:49.1559724Z" PublishedUtc="2021-02-26T14:33:49.2712192Z" ModifiedUtc="2021-02-26T14:33:49.2487563Z" />
+      <IdentityPart Identifier="4a39a4f1ff7f42a48e896c1181f4c371" />
+      <QueryPart VersionScope="Published">
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;ProdottoDefault&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="Localization" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;/Form&gt;" Type="ForCurrentCultureWithUntranslated" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno." Position="2" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaPrincipaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno." Position="3" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaSecondariaTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno." Position="4" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaAddizionaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="ProductSearchPartContentFields" Description="Contiene tutte le parole presenti in Querystring[&quot;q&quot;]" Position="5" State="&lt;Form&gt;&lt;Description&gt;Contiene tutte le parole presenti in Querystring[&quot;q&quot;]&lt;/Description&gt;&lt;Operator&gt;ContainsAllIfProvided&lt;/Operator&gt;&lt;Value&gt;{Request.QueryString:q}&lt;/Value&gt;&lt;/Form&gt;" Type="ProductSearchPart.CalculatedKeywords." />
+            <Filter Category="ProductPart" Description="" Position="6" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;Between&lt;/Operator&gt;&lt;Value&gt;&lt;/Value&gt;&lt;Min&gt;{Shape.Execute:GetMinPriceWithVatFromQueryString}&lt;/Min&gt;&lt;Max&gt;{Shape.Execute:GetMaxPriceWithVatFromQueryString}&lt;/Max&gt;&lt;/Form&gt;" Type="ProductPriceWithVat" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="General" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;CriterionIndex&gt;{Request.QueryString:sort}&lt;/CriterionIndex&gt;&lt;CriteriaArray&gt;[{{&#xD;&#xA;&quot;PartName&quot;: &quot;ProductDefaultPart&quot;,&#xD;&#xA;&quot;FieldName&quot;: &quot;Popolarita&quot;,&#xD;&#xA;&quot;Ascending&quot;: false,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Popularity&quot;,&#xD;&#xA;&quot;Children&quot;:[&#xD;&#xA;   {{&#xD;&#xA;      &quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;      &quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;      &quot;Ascending&quot;: true,&#xD;&#xA;     &quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;   }}&#xD;&#xA;]&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (Z-A)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (low to high)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (high to low)&quot;&#xD;&#xA;}}&#xD;&#xA;]&lt;/CriteriaArray&gt;&lt;/Form&gt;" Type="ConfigurableSorting" />
+        </SortCriteria>
+        <Layouts>
+          <Layout Category="Html" Description="Shop Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Shop Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;3&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-4 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+          <Layout Category="Html" Description="Brand Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Brand Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;4&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-3 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+        </Layouts>
+      </QueryPart>
+      <TitlePart Title="Tutti i ProdottoDefault con filtri per categorie" />
+    </Query>
+    <Query Id="/Identifier=1a0b7903917f403e84e37b9b02c88348" Status="Published">
+      <BooleanField.OneShotQuery Value="false" />
+      <BooleanField.UserQuery Value="false" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-03-01T10:47:20.5431198Z" PublishedUtc="2021-03-01T10:47:20.600442Z" ModifiedUtc="2021-03-01T10:47:20.5800648Z" />
+      <IdentityPart Identifier="1a0b7903917f403e84e37b9b02c88348" />
+      <QueryPart VersionScope="Published">
+        <FilterGroups>
+          <FilterGroup>
+            <Filter Category="Content" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;ContentTypes&gt;ProdottoDefault&lt;/ContentTypes&gt;&lt;/Form&gt;" Type="ContentTypes" />
+            <Filter Category="Localization" Description="" Position="1" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;/Form&gt;" Type="ForCurrentCultureWithUntranslated" />
+            <Filter Category="Taxonomy" Description="Ha come termine {Content.Id} (e/o figli)" Position="2" State="&lt;Form&gt;&lt;Description&gt;Ha come termine {Content.Id} (e/o figli)&lt;/Description&gt;&lt;TermToken&gt;{Content.Id}&lt;/TermToken&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsTokenized" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno." Position="3" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaPrincipale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaPrincipaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno." Position="4" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaSecondaria (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaSecondariaTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="Taxonomy" Description="Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno." Position="5" State="&lt;Form&gt;&lt;Description&gt;Almeno uno tra i termini da querystring CategoriaAddizionale (e/o figli) se ce n'è almeno uno.&lt;/Description&gt;&lt;Terms&gt;{Request.QueryString:CategoriaAddizionaleTerm}&lt;/Terms&gt;&lt;Operator&gt;0&lt;/Operator&gt;&lt;IncludeChildren&gt;true&lt;/IncludeChildren&gt;&lt;/Form&gt;" Type="HasTermsIfAny" />
+            <Filter Category="ProductSearchPartContentFields" Description="Contiene tutte le parole presenti in Querystring[&quot;q&quot;]" Position="6" State="&lt;Form&gt;&lt;Description&gt;Contiene tutte le parole presenti in Querystring[&quot;q&quot;]&lt;/Description&gt;&lt;Operator&gt;ContainsAllIfProvided&lt;/Operator&gt;&lt;Value&gt;{Request.QueryString:q}&lt;/Value&gt;&lt;/Form&gt;" Type="ProductSearchPart.CalculatedKeywords." />
+            <Filter Category="ProductPart" Description="" Position="7" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;Operator&gt;Between&lt;/Operator&gt;&lt;Value&gt;&lt;/Value&gt;&lt;Min&gt;{Shape.Execute:GetMinPriceWithVatFromQueryString}&lt;/Min&gt;&lt;Max&gt;{Shape.Execute:GetMaxPriceWithVatFromQueryString}&lt;/Max&gt;&lt;/Form&gt;" Type="ProductPriceWithVat" />
+          </FilterGroup>
+        </FilterGroups>
+        <SortCriteria>
+          <SortCriterion Category="General" Description="" Position="0" State="&lt;Form&gt;&lt;Description&gt;&lt;/Description&gt;&lt;CriterionIndex&gt;{Request.QueryString:sort}&lt;/CriterionIndex&gt;&lt;CriteriaArray&gt;[{{&#xD;&#xA;&quot;PartName&quot;: &quot;ProductDefaultPart&quot;,&#xD;&#xA;&quot;FieldName&quot;: &quot;Popolarita&quot;,&#xD;&#xA;&quot;Ascending&quot;: false,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Popularity&quot;,&#xD;&#xA;&quot;Children&quot;:[&#xD;&#xA;   {{&#xD;&#xA;      &quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;      &quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;      &quot;Ascending&quot;: true,&#xD;&#xA;     &quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;   }}&#xD;&#xA;]&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;Orchard.Core.Title.Models.TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (A-Z)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;TitlePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;Title&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Name (Z-A)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;Ascending&quot;: true,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (low to high)&quot;&#xD;&#xA;}},&#xD;&#xA;{{&#xD;&#xA;&quot;PartRecordTypeName&quot;: &quot;PricePartRecord&quot;,&#xD;&#xA;&quot;PropertyName&quot;: &quot;EffectiveUnitPrice&quot;,&#xD;&#xA;&quot;FilterLabel&quot;: &quot;Price (high to low)&quot;&#xD;&#xA;}}&#xD;&#xA;]&lt;/CriteriaArray&gt;&lt;/Form&gt;" Type="ConfigurableSorting" />
+        </SortCriteria>
+        <Layouts>
+          <Layout Category="Html" Description="Shop Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Shop Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;3&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-4 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+          <Layout Category="Html" Description="Brand Grid" State="&lt;Form&gt;&lt;QueryId&gt;596&lt;/QueryId&gt;&lt;Category&gt;Html&lt;/Category&gt;&lt;Type&gt;Grid&lt;/Type&gt;&lt;Description&gt;Brand Grid&lt;/Description&gt;&lt;Display&gt;0&lt;/Display&gt;&lt;DisplayType&gt;Summary&lt;/DisplayType&gt;&lt;Alignment&gt;horizontal&lt;/Alignment&gt;&lt;Columns&gt;4&lt;/Columns&gt;&lt;GridTag&gt;div&lt;/GridTag&gt;&lt;GridId&gt;&lt;/GridId&gt;&lt;GridClass&gt;shop-product-wrap grid-view row mbn-40&lt;/GridClass&gt;&lt;RowTag&gt;&lt;/RowTag&gt;&lt;RowClass&gt;&lt;/RowClass&gt;&lt;CellTag&gt;div&lt;/CellTag&gt;&lt;CellClass&gt;col-md-3 col-sm-6 col-6&lt;/CellClass&gt;&lt;EmptyCell&gt;&lt;/EmptyCell&gt;&lt;/Form&gt;" Display="0" DisplayType="Summary" Type="Grid">
+            <Properties />
+            <Group />
+          </Layout>
+        </Layouts>
+      </QueryPart>
+      <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
+    </Query>
+    <Taxonomy Id="/alias=en\/additional-category" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="en/additional-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:45:09.0081263Z" ModifiedUtc="2021-02-26T15:45:08.9745751Z" />
+      <LocalizationPart MasterContentItem="/alias=it\/categoria-addizionale" Culture="en-US" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
+      <TitlePart Title="Additional Category" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=en\/main-category" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="en/main-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:43:10.0484318Z" ModifiedUtc="2021-02-26T15:43:10.0200633Z" />
+      <LocalizationPart MasterContentItem="/alias=it\/categoria-principale" Culture="en-US" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
+      <TitlePart Title="Main Category" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=en\/secondary-category" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="en/secondary-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:44:38.1068856Z" ModifiedUtc="2021-02-26T15:44:38.0600153Z" />
+      <LocalizationPart MasterContentItem="/alias=it\/categoria-secondaria" Culture="en-US" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
+      <TitlePart Title="Secondary Category" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=it\/categoria-addizionale" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="it/categoria-addizionale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:44:48.5729531Z" ModifiedUtc="2021-02-26T15:44:48.5555373Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
+      <TitlePart Title="Categoria Addizionale" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=it\/categoria-principale" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="it/categoria-principale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:42:32.8663488Z" ModifiedUtc="2021-02-26T15:42:32.8302326Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
+      <TitlePart Title="Categoria Principale" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=it\/categoria-secondaria" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AutoroutePart Alias="it/categoria-secondaria" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:43:18.8265254Z" ModifiedUtc="2021-02-26T15:43:18.8089412Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
+      <TitlePart Title="Categoria Secondaria" />
+    </Taxonomy>
+  </Content>
+</Orchard>
