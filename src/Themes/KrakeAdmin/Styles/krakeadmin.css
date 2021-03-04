@@ -1483,6 +1483,9 @@ fieldset small {
     color: #253849;
 }
 
+.widgets-listed li li, #widgets-layer-visibility li {
+    padding: 5px 5px 5px 25px;
+}
 #widgets-available li a {
     border: 1px solid #eaeaea;
     display: block;
@@ -1505,8 +1508,24 @@ fieldset small {
 }
 
 
-.layout-widgets-placement ul.widgets li h3 {
+#main .layout-widgets-placement ul.widgets li h3 {
     float: left;
+    margin: 0 0.25em 0 0;
+}
+
+    #main .layout-widgets-placement ul.widgets li h3:before {
+        font-family: FontAwesome;
+        content: "\f047";
+        margin-left: -15px;
+        color: #999;
+    }
+
+.widgets .layout-widgets-placement .zones-container .zones ol li ul.widgets li {
+    position: relative;
+    background: #f3f4f5;
+    margin: 10px 0;
+    padding: 5px 5px 5px 25px;
+    color: #333;
 }
 
 .layout-toolbox-items section {
@@ -1567,6 +1586,7 @@ div#widgets-layer-visibility {
     max-block-size: fit-content;
     max-width: 40%;
     vertical-align: middle;
+    margin: 0 0.25em 0 0;
 }
 
 #main li.widgets-other-layer h3 {
@@ -1574,6 +1594,7 @@ div#widgets-layer-visibility {
     max-block-size: fit-content;
     max-width: 40%;
     vertical-align: middle;
+    margin: 0 0.25em 0 0;
 }
 
 @media screen and (max-width: 1400px) {
@@ -1610,12 +1631,8 @@ li .widgets-other-layer form {
 }
 
 .widgets-this-layer .widgets-actions {
-    right: unset;
-    top: unset;
-    float: right;
     right: 5px;
     max-width: 35%;
-    top: 0px;
 }
 
 .widgets-listed .widgets-zone-widgets .widgets-other-layer div.contentType {
@@ -1626,12 +1643,8 @@ li .widgets-other-layer form {
 }
 
 .widgets-other-layer .widgets-actions {
-    right: unset;
-    top: unset;
-    float: right;
     right: 5px;
     max-width: 35%;
-    top: 0px;
 }
 /*--------------------------*/
 
@@ -11715,3 +11728,5 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     font-size: 0.9em;
     line-height: 1.6em;
 }
+
+
