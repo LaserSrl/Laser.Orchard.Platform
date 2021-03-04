@@ -11728,5 +11728,7 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     font-size: 0.9em;
     line-height: 1.6em;
 }
-
-
+/* Google Maps Styles */
+.gm-style button, .gm-style a.button {
+    color: rgb(0, 0, 0) !important;
+}
