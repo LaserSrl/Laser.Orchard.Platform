@@ -19,6 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ListAvailableBillingAddress = new List<AddressRecord>();
 
             AvailableShippingOptions = new List<ShippingOption>();
+            BillAtSameShippingAddress = true;
         }
         /// <summary>
         /// Used in CheckoutController actions to signal that we should shortcircuit
@@ -26,7 +27,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public bool UseDefaultAddress { get; set; }
         public bool UseDefaultShipping { get; set; }
-
+        public bool BillAtSameShippingAddress { get; set; }
         public ICurrencyProvider CurrencyProvider;
 
         #region Cart
