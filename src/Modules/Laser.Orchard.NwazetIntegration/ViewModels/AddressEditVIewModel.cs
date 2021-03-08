@@ -164,6 +164,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     viewModel.BillingCountries = _addressConfigurationService
                     .CountryOptions(AddressRecordType.BillingAddress, viewModel.CountryId);
                 }
+                if (viewModel.ProvinceId <= 0 && !string.IsNullOrWhiteSpace(viewModel.Province)) { viewModel.ProvinceId = -1; }
+                if (viewModel.CityId <= 0 && !string.IsNullOrWhiteSpace(viewModel.City)) { viewModel.CityId = -1; }
+
             }
             viewModel.AddressType = addressRecordType;
             return viewModel;

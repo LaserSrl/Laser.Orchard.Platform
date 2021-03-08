@@ -121,6 +121,7 @@
 
     @*serialized address data*@
     @Html.Hidden("SerializedAddresses", viewModel.SerializedAddresses)
+    @Html.Hidden("BillAtSameShippingAddress", viewModel.BillAtSameShippingAddress)
     @* We aren't also putting in this form the shipping options, even when they exist,
         because when we go and reset the address those should automatically reset as well*@
     <div class="reset-addresses">
