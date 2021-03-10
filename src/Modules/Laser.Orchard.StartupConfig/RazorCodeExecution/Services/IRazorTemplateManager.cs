@@ -106,7 +106,14 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                     if (string.IsNullOrEmpty(defFileName))
                         defFileName = key;
                     defFileName = System.IO.Path.GetTempPath() + defFileName + ".cshtml";
-                    code = "@{System.Diagnostics.Debugger.Break();}" + code;
+                    // add a breakpoint so we can debug the templates
+                    code = 
+                        "@{"
+                        +   "if (System.Diagnostics.Debugger.IsAttached) {"
+                        +     "System.Diagnostics.Debugger.Break();"
+                        +   "}"
+                        + "}" 
+                        + code;
                     File.WriteAllText(defFileName, code);
 
                     RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(code, defFileName));
