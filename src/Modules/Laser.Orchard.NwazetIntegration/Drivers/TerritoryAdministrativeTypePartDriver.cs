@@ -76,6 +76,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 var vm = new TerritoryAdministrativeTypeEditViewModel();
                 if (updater.TryUpdateModel(vm, Prefix, null, null)) {
                     part.AdministrativeType = vm.AdministrativeType;
+                    part.HasCities = vm.HasCities;
+                    part.HasProvinces = vm.HasProvinces;
                     part.Record.TerritoryInternalRecord = territory.Record.TerritoryInternalRecord;
                 }
             }

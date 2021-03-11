@@ -303,6 +303,17 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         #region Actions for advanced address configuration
+        [HttpGet]
+        public JsonResult GetAdministrativeInfo(int territoryId) {
+            var part = _contentManager.Query<TerritoryAdministrativeTypePart, TerritoryAdministrativeTypePartRecord>().Where(x => x.TerritoryInternalRecord.Id == territoryId).Slice(0,1).SingleOrDefault();
+            if (part != null) {
+                return Json(new { part.HasCities, part.HasProvinces, part.AdministrativeType }, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                return null;
+            }
+        }
+
 
         [HttpPost]
         public JsonResult GetCities(ConfigurationRequestViewModel viewModel) {
@@ -357,8 +368,21 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return Json(new List<TerritoryTag>(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [ActionName("provincesapi")]
+        public JsonResult GetProvincesGet(string query, int countryId, int cityId, string cityName, bool isBillingAddress) {
+            var jsonResult = GetProvincesPost(new ConfigurationRequestViewModel {
+                CountryId = countryId,
+                CityId = cityId,
+                CityName = cityName,
+                IsBillingAddress = isBillingAddress
+            });
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
         [HttpPost]
-        public JsonResult GetProvinces(ConfigurationRequestViewModel viewModel) {
+        [ActionName("GetProvinces")]
+        public JsonResult GetProvincesPost(ConfigurationRequestViewModel viewModel) {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
             var city = string.IsNullOrWhiteSpace(viewModel.CityName)
                 ? _addressConfigurationService.GetCity(viewModel.CityId)

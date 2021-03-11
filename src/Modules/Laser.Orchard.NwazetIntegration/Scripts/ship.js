@@ -1,12 +1,15 @@
-﻿$(function () {
+﻿var global_CopyingAddresses = false;
+var global_ChangingProgrammatically = false;
+
+$(function () {
     var addressForm = $("#address-form"),
         errorZone = $(".ship-errors"),
         toggleCheckbox = $("#toggle-billing-address");
     toggleCheckbox
         .change(function () {
             $(".billing-address").toggle($(this).val());
-            
-            if ($(this).val() == "on") {
+            global_CopyingAddresses = true;
+            if ($(this).val() === "on" || $(this).val() === "true") {
                 $('input[name^="shippingAddressVM."]').each(function () {
                     var input = $(this),
                         name = input.attr("name").substr(18);
@@ -19,9 +22,7 @@
                         name = input.attr("name").substr(18);
                     var other = $('select[name="billingAddressVM.' + name + '"]');
                     var newValue = input.val();
-                    if (other.find('option[value="' + newValue + '"]').length > 0) {
-                        
-                    } else {
+                    if (other.find('option[value="' + newValue + '"]').length === 0) {
                         // add and select the option
                         var newOption =
                             new Option(
@@ -37,6 +38,7 @@
 
             // trigger a custom visibility event
             $(".billing-address").trigger('visibilityChanged');
+            global_CopyingAddresses = false;
         });
     if (toggleCheckbox.prop("checked")) {
         // if the checkbox begins as checked
@@ -61,9 +63,7 @@
                 name = input.attr("name").substr(18);
             var other = $('select[name="billingAddressVM.' + name + '"]');
             var newValue = input.val();
-            if (other.find('option[value="' + newValue + '"]').length > 0) {
-
-            } else {
+            if (other.find('option[value="' + newValue + '"]').length === 0) {
                 // add and select the option
                 var newOption =
                     new Option(
@@ -74,9 +74,9 @@
                 other.append(newOption);
             }
             other.val(newValue).trigger('change');
-            
+
         });
-    if (!("preventRequiredMark" in window) || !!!preventRequiredMark) {
+    if (!("preventRequiredMark" in window) || !preventRequiredMark) {
         addressForm.find(".required").after(
             $("<span class='error-indicator' title='" + required + "'>*</span>"));
     }
@@ -92,7 +92,7 @@
                 var id = requiredField.attr("id"),
                     label = addressForm.find("label[for='" + id + "']").html();
                 requiredField.addClass("required-error");
-                if (alreadyRequired.indexOf(label) == -1) {
+                if (alreadyRequired.indexOf(label) === -1) {
                     errorZone.show().append(
                         $("<div></div>").html(requiredFormat.replace("{0}", label))
                     );
@@ -115,3 +115,4 @@
         }
     });
 });
+

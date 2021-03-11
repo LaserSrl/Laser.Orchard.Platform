@@ -7,3 +7,12 @@
         Model.AdministrativeTypes,
         htmlAttributes: new { @class="form-control" })
 </div>
+
+<div class="form-group">
+    @Html.CheckBoxFor(m => m.HasCities)
+    @Html.LabelFor(m => m.HasCities, T("Contains cities").Text, htmlAttributes: new { @class = "forcheckbox" })
+</div>
+<div class="form-group">
+    @Html.CheckBoxFor(m => m.HasProvinces)
+    @Html.LabelFor(m => m.HasProvinces, T("Contains provinces").Text, htmlAttributes: new { @class = "forcheckbox" })
+</div>
