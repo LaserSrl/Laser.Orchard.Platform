@@ -70,7 +70,7 @@ $(function () {
 
     var productInArray = function (array, partId) {
         var product = {};
-        for (i = 0; i < array.length; i++) {
+        for (var i = 0; i < array.length; i++) {
             var currentProduct = array[i];
             if (currentProduct.partId == partId) {
                 // found it
@@ -90,7 +90,7 @@ $(function () {
             var addedToCart = [];
             var removedFromCart = [];
             // go through all products in the cart
-            for (i = 0; i < quantityElements.length; i++) {
+            for (var i = 0; i < quantityElements.length; i++) {
                 var prodId = $(quantityElements[i]).attr('data-cart-product-id');
                 var currentQuantity = $(quantityElements[i]).val();
                 if (prodId && currentQuantity) { // sanity check

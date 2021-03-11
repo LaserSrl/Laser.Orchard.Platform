@@ -23,16 +23,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var data = DeserializeInformation(info.Information);
             var vatDue = orderPart.Items
                 .Sum(checkoutItem =>
-                    data.ContainsKey(checkoutItem.ProductId)
-                        ? TaxDue(data[checkoutItem.ProductId]) * checkoutItem.Quantity
+                    data.ContainsKey(checkoutItem.AsUniqueKey())
+                        ? TaxDue(data[checkoutItem.AsUniqueKey()]) * checkoutItem.Quantity
                         : 0m
                 );
 
             //add shipping
             var shippingTax = 0.0m;
             if (orderPart.ShippingOption != null) {
-                if (data.ContainsKey(orderPart.ShippingOption.ShippingMethodId)) {
-                    var rateAndPrice = data[orderPart.ShippingOption.ShippingMethodId];
+                if (data.ContainsKey(orderPart.ShippingOption.ShippingMethodId.ToString())) {
+                    var rateAndPrice = data[orderPart.ShippingOption.ShippingMethodId.ToString()];
                     shippingTax += TaxDue(rateAndPrice);
                 }
             }
@@ -40,8 +40,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return vatDue + shippingTax;
         }
 
-        private static Dictionary<int, RateAndPrice> DeserializeInformation(string info) {
-            return JsonConvert.DeserializeObject<Dictionary<int, RateAndPrice>>(info);
+        private static Dictionary<string, RateAndPrice> DeserializeInformation(string info) {
+            return JsonConvert.DeserializeObject<Dictionary<string, RateAndPrice>>(info);
         }
 
         private static decimal TaxDue(RateAndPrice rap) {

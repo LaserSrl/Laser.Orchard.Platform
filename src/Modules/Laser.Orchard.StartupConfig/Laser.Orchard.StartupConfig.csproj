@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\laser-base.scss" />
+    <Content Include="Recipes\TinyMCEToolbarExtension.recipe.xml" />
     <Content Include="Scripts\laser-tinymce.js" />
     <Content Include="Scripts\tinymceplugins\sample1\plugin.min.js" />
     <Content Include="Styles\font-awesome\css\all.css" />
@@ -397,6 +398,7 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="Rules\HttpHeaderCondition.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreationWindowDriver.cs" />
     <Compile Include="ContentPickerContentCreation\Settings\CPContentCreationSettings.cs" />

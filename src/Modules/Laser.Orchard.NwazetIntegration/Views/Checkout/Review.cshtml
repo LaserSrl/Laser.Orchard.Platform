@@ -22,6 +22,7 @@
     Url.Action("Review"), FormMethod.Post, new { @id = "review-form" })) {
     @*serialized order data*@
     @Html.HiddenFor(m => m.SerializedAddresses)
+    @Html.HiddenFor(m => m.BillAtSameShippingAddress)
     @Html.HiddenFor(m => m.ShippingOption)
     <div class="review-order-notice">
         @T("Take a moment to review your order before moving to payments.")

@@ -156,10 +156,17 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             } else {
                 viewModel.Countries = _addressConfigurationService
                     .CountryOptions();
-                viewModel.ShippingCountries = _addressConfigurationService
-                    .CountryOptions(AddressRecordType.ShippingAddress);
-                viewModel.BillingCountries = _addressConfigurationService
-                    .CountryOptions(AddressRecordType.BillingAddress);
+                if (addressRecordType == AddressRecordType.ShippingAddress) {
+                    viewModel.ShippingCountries = _addressConfigurationService
+                        .CountryOptions(AddressRecordType.ShippingAddress, viewModel.CountryId);
+                }
+                if (addressRecordType == AddressRecordType.BillingAddress) {
+                    viewModel.BillingCountries = _addressConfigurationService
+                    .CountryOptions(AddressRecordType.BillingAddress, viewModel.CountryId);
+                }
+                if (viewModel.ProvinceId <= 0 && !string.IsNullOrWhiteSpace(viewModel.Province)) { viewModel.ProvinceId = -1; }
+                if (viewModel.CityId <= 0 && !string.IsNullOrWhiteSpace(viewModel.City)) { viewModel.CityId = -1; }
+
             }
             viewModel.AddressType = addressRecordType;
             return viewModel;

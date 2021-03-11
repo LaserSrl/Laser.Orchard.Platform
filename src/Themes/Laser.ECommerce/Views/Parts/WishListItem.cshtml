@@ -1,16 +1,24 @@
 ﻿@using Nwazet.Commerce.Models
+@using Nwazet.Commerce.Services;
 @using Nwazet.Commerce.ViewModels
 @using System.Collections.Generic
 @using Orchard.ContentManagement
+@using Nwazet.Commerce.Extensions;
 
 @{
     Style.Include("wishlists.nwazet-commerce.css", "wishlists.nwazet-commerce.min.css");
 
     string imageUrl = (Model.ProductImage != null && Model.ProductImage.MediaParts.Count > 0) ? Model.ProductImage.MediaParts[0].MediaUrl : null;
-    var title = Model.Title
-        + (Model.ProductAttributes == null || Model.ProductAttributes.Count == 0
-                ? "" : " (" + string.Join(", ", ((Dictionary<int, ProductAttributeValueExtended>)Model.ProductAttributes).Values
-                    .Select(v => v.Value + (v.ExtensionProviderInstance != null ? v.ExtensionProviderInstance.DisplayString(v.ExtendedValue) : ""))) + ")");
+    var title = Model.Title;
+    var productAttributes = (IDictionary<int, ProductAttributeValueExtended>)Model.ProductAttributes;
+    if (productAttributes != null && productAttributes.Any()) {
+        var additionalText = 
+            AttributeNameUtilities.AttributesDisplayText(productAttributes: productAttributes, product: (IContent)Model.ContentItem, separator: ", ");
+        
+        if (!string.IsNullOrWhiteSpace(additionalText)) {
+            title += "(" + additionalText + ")";
+        }
+    }
     var unitPrice = (decimal)Model.DiscountedPrice;
     var unitPriceOriginal = (decimal)Model.OriginalPrice;
     string originalUnitPrice = "";

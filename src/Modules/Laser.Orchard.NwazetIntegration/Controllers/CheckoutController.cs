@@ -627,6 +627,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     && ValidateVM(vm.ShippingAddressVM);
             }
             validationSuccess &= ValidateAddresses(vm);
+            if (!validEmail) {
+                ModelState.AddModelError($"{nameof(vm.Email)}", T("E-mail is invalid.").Text);
+            }
             return validEmail && validationSuccess;
         }
         private bool ValidateVM(AddressEditViewModel vm) {
