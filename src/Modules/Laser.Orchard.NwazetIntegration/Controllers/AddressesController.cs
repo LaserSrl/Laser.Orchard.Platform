@@ -111,7 +111,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // create order
                         var paymentGuid = Guid.NewGuid().ToString();
                         var order = _checkoutHelperService.CreateOrder(model, paymentGuid, countryName);
-                        
+
                         // save the addresses for the contact doing the order.
                         _nwazetCommunicationService.OrderToContact(order);
                         var reason = string.Format("Purchase Order {0}", order.OrderKey);
@@ -128,7 +128,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                                 nonce = nonce,
                                 newPaymentGuid = paymentGuid
                             });
-                    } else {
+                    }
+                    else {
                         _notifier.Information(T("There are no products in the cart. Go back to the catalog and add products."));
                         result = View("Index", model);
                     }
@@ -236,7 +237,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
                 FixUpdate(newAddress);
-                
+
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -287,7 +288,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
                 FixUpdate(newAddress);
-                
+
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -305,7 +306,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #region Actions for advanced address configuration
         [HttpGet]
         public JsonResult GetAdministrativeInfo(int territoryId) {
-            var part = _contentManager.Query<TerritoryAdministrativeTypePart, TerritoryAdministrativeTypePartRecord>().Where(x => x.TerritoryInternalRecord.Id == territoryId).Slice(0,1).SingleOrDefault();
+            var country = _addressConfigurationService.GetCountry(territoryId);
+            var part = country?.As<TerritoryAdministrativeTypePart>();
             if (part != null) {
                 return Json(new { part.HasCities, part.HasProvinces, part.AdministrativeType }, JsonRequestBehavior.AllowGet);
             }
@@ -320,15 +322,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
             if (country == null) {
                 // this is an error
-            } else {
+            }
+            else {
                 var cities = _addressConfigurationService.GetAllCities(
                     viewModel.IsBillingAddress
                         ? AddressRecordType.BillingAddress
                         : AddressRecordType.ShippingAddress,
                     country);
-                if (viewModel.CityId != 0) { 
+                if (viewModel.CityId != 0) {
                     var selectedCity = _addressConfigurationService.GetCity(viewModel.CityId);
-                    if (selectedCity != null && !cities.Any(c=>c.Record.TerritoryInternalRecord.Id == viewModel.CityId)) {
+                    if (selectedCity != null && !cities.Any(c => c.Record.TerritoryInternalRecord.Id == viewModel.CityId)) {
                         cities = cities.Concat(new[] { selectedCity });
                     }
                 }
@@ -389,7 +392,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 : _addressConfigurationService.GetCity(viewModel.CityName);
             if (country == null) {
                 // this is an error
-            } else {
+            }
+            else {
                 // city may be null: that is handled in the service
                 var provinces = _addressConfigurationService.GetAllProvinces(
                     viewModel.IsBillingAddress
@@ -515,7 +519,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (cityTP != null) {
                 vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
                 vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
-            } else {
+            }
+            else {
                 vm.CityId = -1;
             }
             // Province: we may be settings either the Id or the string, but either way the
@@ -524,7 +529,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (provinceTP != null) {
                 vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
                 vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
-            } else {
+            }
+            else {
                 vm.ProvinceId = -1;
             }
         }

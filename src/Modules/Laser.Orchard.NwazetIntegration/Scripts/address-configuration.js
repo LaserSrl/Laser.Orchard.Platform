@@ -1,15 +1,11 @@
 ﻿function buildAddressUI(options) {
-
-    //Set up select2 for Country, City and Province
-    $('#' + options.elementsPrefix + 'CountryId').select2({
-        placeholder: options.countryPlaceholder,
-        width: '100%'
-    });
-    $('#' + options.elementsPrefix + 'CitySelectedId').select2({
-        placeholder: options.cityPlaceholder,
-        width: '100%',
+    var countriesSelect2Options = {
+        placeholder: $('#' + options.elementsPrefix + 'CountryId').attr("placeholder")
+    };
+    var citiesSelect2Options = {
+        placeholder: $('#' + options.elementsPrefix + 'CitySelectedId').attr("placeholder"),
         ajax: {
-            url: options.getCitiesUrl,
+            url: options.cities.getUrl,
             data: function (params) {
                 var query = {
                     query: params.term,
@@ -32,24 +28,23 @@
                 };
             }
         }
-    });
-    $('#' + options.elementsPrefix + 'ProvinceSelectedId').select2({
-        placeholder: options.provincePlaceholder,
-        width: '100%',
-        ajax: {
-            url: options.getProvincesUrl,
-            data: function (params) {
-                var query = {
-                    query: params.term,
-                    countryId: $('#' + options.elementsPrefix + 'CountryId option').filter(':selected').val(),
-                    cityId: $('#' + options.elementsPrefix + 'CityId').val(),
-                    cityName: "",
-                    isBillingAddress: options.isBillingAddress
-                };
+    };
+    var provincesSelect2Options = {
+        placeholder: $('#' + options.elementsPrefix + 'ProvinceSelectedId').attr("placeholder"),
+            ajax: {
+            url: options.provinces.getUrl,
+                data: function (params) {
+                    var query = {
+                        query: params.term,
+                        countryId: $('#' + options.elementsPrefix + 'CountryId option').filter(':selected').val(),
+                        cityId: $('#' + options.elementsPrefix + 'CityId').val(),
+                        cityName: "",
+                        isBillingAddress: options.isBillingAddress
+                    };
 
-                // Query parameters will be ?query=[term]&countryId=123&isBillingAddress=true|false
-                return query;
-            },
+                    // Query parameters will be ?query=[term]&countryId=123&isBillingAddress=true|false
+                    return query;
+                },
             processResults: function (data) {
                 return {
                     results: $.map(data.Provinces, function (item) {
@@ -62,7 +57,21 @@
                 };
             }
         }
-    });
+    };
+    // merge defaults with additional options
+    var countriesOptions = $.extend(countriesSelect2Options, options.countries.select2Options);
+    var citiesOptions = $.extend(citiesSelect2Options, options.cities.select2Options);
+    var provincesOptions = $.extend(provincesSelect2Options, options.provinces.select2Options);
+
+    $('#' + options.elementsPrefix + 'CountryId').select2(
+        countriesOptions
+    );
+    $('#' + options.elementsPrefix + 'CitySelectedId').select2(
+        citiesOptions
+    );
+    $('#' + options.elementsPrefix + 'ProvinceSelectedId').select2(
+        provincesOptions
+    );
 
     //Select 2 Events START
     //On Select 2 City Change
@@ -117,7 +126,7 @@
             };
             var shouldResetAddressesOnAjaxSuccess = !global_CopyingAddresses;
             $.ajax({
-                url: options.administrativeInfoUrl,
+                url: options.countries.administrativeInfoUrl,
                 data: ajaxParams,
                 success: function (result) {
                     var hasCities = result.HasCities;
@@ -234,12 +243,12 @@ function Select2ShippingAddressVisibility(select2Element, show) {
 
 function EnsureVisibility(options) {
     //Ensure visibility of select2/Text inputs based on their Id values
-    if (options.cityId > 0) {
+    if (options.cities.selectedId > 0) {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'CitySelectedId'), true);
     } else {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'CitySelectedId'), false);
     }
-    if (options.provinceId > 0) {
+    if (options.provinces.selectedId > 0) {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'ProvinceSelectedId'), true);
     } else {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'ProvinceSelectedId'), false);
