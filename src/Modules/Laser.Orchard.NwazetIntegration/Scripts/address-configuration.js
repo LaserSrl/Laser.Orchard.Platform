@@ -1,7 +1,7 @@
 ﻿function buildAddressUI(options) {
-    var global_CopyingAddresses = (typeof global_CopyingAddresses === 'undefined') ? false : global_CopyingAddresses;
-    var global_ChangingProgrammatically = (typeof global_ChangingProgrammatically === 'undefined') ? false : global_ChangingProgrammatically;
-    var global_PreventResetChoices = false;
+    global_CopyingAddresses = (typeof global_CopyingAddresses === 'undefined') ? false : global_CopyingAddresses;
+    global_ChangingProgrammatically = (typeof global_ChangingProgrammatically === 'undefined') ? false : global_ChangingProgrammatically;
+    global_PreventResetChoices = false;
     var countriesSelect2Options = {
         placeholder: $('#' + options.elementsPrefix + 'CountryId').attr("placeholder")
     };
@@ -236,8 +236,6 @@
     EnsureVisibility(options);
 
 }
-
-
 
 function Select2ShippingAddressVisibility(select2Element, show) {
     var textElement = $('#' + select2Element.attr('id').slice(0, -10));
