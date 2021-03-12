@@ -19,7 +19,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ListAvailableBillingAddress = new List<AddressRecord>();
 
             AvailableShippingOptions = new List<ShippingOption>();
-            BillAtSameShippingAddress = true;
         }
         /// <summary>
         /// Used in CheckoutController actions to signal that we should shortcircuit

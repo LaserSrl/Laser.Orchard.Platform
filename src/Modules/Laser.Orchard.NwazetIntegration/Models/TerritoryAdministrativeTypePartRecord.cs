@@ -8,6 +8,8 @@ using System.Web;
 namespace Laser.Orchard.NwazetIntegration.Models {
     public class TerritoryAdministrativeTypePartRecord : ContentPartRecord {
         public virtual TerritoryAdministrativeType AdministrativeType { get; set; }
+        public virtual bool HasCities { get; set; }
+        public virtual bool HasProvinces { get; set; }
         public virtual TerritoryInternalRecord TerritoryInternalRecord { get; set; }
     }
 }

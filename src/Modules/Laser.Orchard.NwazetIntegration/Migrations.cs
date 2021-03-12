@@ -94,5 +94,13 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 6;
         }
+        public int UpdateFrom6() {
+            SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
+                table => table.AddColumn<bool>("HasCities"));
+            SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
+                table => table.AddColumn<bool>("HasProvinces"));
+
+            return 7;
+        }
     }
 }

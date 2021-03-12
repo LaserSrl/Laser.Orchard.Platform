@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
+using Nwazet.Commerce.Extensions;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
@@ -158,7 +159,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_territoryRecordsCacheKey, () => {
                     return _territoriesRepositoryService
-                        .GetTerritories(SelectedTerritoryIds);
+                        .GetTerritories(SelectedTerritoryIds)
+                        .CreateSafeDuplicate();
                 });
             }
         }
@@ -219,7 +221,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_countryTerritoryRecordsCacheKey, () => {
                     return _territoriesRepositoryService
-                        .GetTerritories(SelectedCountryIds);
+                        .GetTerritories(SelectedCountryIds)
+                        .CreateSafeDuplicate();
                 });
             }
         }
@@ -239,7 +242,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_provinceTerritoryRecordsCacheKey, () => {
                     return _territoriesRepositoryService
-                        .GetTerritories(SelectedProvinceIds);
+                        .GetTerritories(SelectedProvinceIds)
+                        .CreateSafeDuplicate();
                 });
             }
         }
@@ -266,7 +270,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             get {
                 return GetFromCache(_cityTerritoryRecordsCacheKey, () => {
                     return _territoriesRepositoryService
-                        .GetTerritories(SelectedCityIds);
+                        .GetTerritories(SelectedCityIds)
+                        .CreateSafeDuplicate();
                 });
             }
         }
