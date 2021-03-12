@@ -78,19 +78,22 @@
 }
 @using (Html.BeginFormAntiForgeryPost()) {
     @Html.ValidationSummary()
-    <fieldset class="actions">
-
-        @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",
-            new { area = "Laser.Orchard.NwazetIntegration" })
-    </fieldset>
     <fieldset class="contentItems bulk-items">
         <legend>@T("Shipping Addresses")</legend>
+        <fieldset class="actions">
+            @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",
+                new { area = "Laser.Orchard.NwazetIntegration" })
+        </fieldset>
         @foreach (var address in Model.ShippingAddresses) {
             @DrawAddress(address)
         }
     </fieldset>
     <fieldset class="contentItems bulk-items">
         <legend>@T("Billing Addresses")</legend>
+        <fieldset class="actions">
+            @Html.ActionLink(T("Add Address").Text, "Create", "Addresses",
+                new { area = "Laser.Orchard.NwazetIntegration", type = 1 })
+        </fieldset>
         @foreach (var address in Model.BillingAddresses) {
             @DrawAddress(address)
         }

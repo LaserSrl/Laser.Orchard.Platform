@@ -1,4 +1,7 @@
 ﻿function buildAddressUI(options) {
+    var global_CopyingAddresses = (typeof global_CopyingAddresses === 'undefined') ? false : global_CopyingAddresses;
+    var global_ChangingProgrammatically = (typeof global_ChangingProgrammatically === 'undefined') ? false : global_ChangingProgrammatically;
+    var global_PreventResetChoices = false;
     var countriesSelect2Options = {
         placeholder: $('#' + options.elementsPrefix + 'CountryId').attr("placeholder")
     };
@@ -31,20 +34,20 @@
     };
     var provincesSelect2Options = {
         placeholder: $('#' + options.elementsPrefix + 'ProvinceSelectedId').attr("placeholder"),
-            ajax: {
+        ajax: {
             url: options.provinces.getUrl,
-                data: function (params) {
-                    var query = {
-                        query: params.term,
-                        countryId: $('#' + options.elementsPrefix + 'CountryId option').filter(':selected').val(),
-                        cityId: $('#' + options.elementsPrefix + 'CityId').val(),
-                        cityName: "",
-                        isBillingAddress: options.isBillingAddress
-                    };
+            data: function (params) {
+                var query = {
+                    query: params.term,
+                    countryId: $('#' + options.elementsPrefix + 'CountryId option').filter(':selected').val(),
+                    cityId: $('#' + options.elementsPrefix + 'CityId').val(),
+                    cityName: "",
+                    isBillingAddress: options.isBillingAddress
+                };
 
-                    // Query parameters will be ?query=[term]&countryId=123&isBillingAddress=true|false
-                    return query;
-                },
+                // Query parameters will be ?query=[term]&countryId=123&isBillingAddress=true|false
+                return query;
+            },
             processResults: function (data) {
                 return {
                     results: $.map(data.Provinces, function (item) {
@@ -124,7 +127,7 @@
             var ajaxParams = {
                 territoryId: e.currentTarget.selectedOptions[0].value
             };
-            var shouldResetAddressesOnAjaxSuccess = !global_CopyingAddresses;
+            var shouldResetAddressesOnAjaxSuccess = !global_CopyingAddresses && !global_PreventResetChoices;
             $.ajax({
                 url: options.countries.administrativeInfoUrl,
                 data: ajaxParams,
@@ -223,8 +226,14 @@
         }
     });
 
+    if (parseInt($('#' + options.elementsPrefix + 'CountryId').val()) > 0) {
+        global_PreventResetChoices = true;
+        $('#' + options.elementsPrefix + 'CountryId').trigger("change");
+        global_PreventResetChoices = false;
+    }
+
     // after creation of all Select2 UI we ensure visibility
-    EnsureVisibility(options); 
+    EnsureVisibility(options);
 
 }
 
@@ -254,3 +263,4 @@ function EnsureVisibility(options) {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'ProvinceSelectedId'), false);
     }
 }
+

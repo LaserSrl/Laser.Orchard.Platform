@@ -209,14 +209,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
-        public ActionResult Create() {
+        public ActionResult Create(int type=0) {
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (user == null) {
                 // we should never be here, because the AuthorizeAttribute should
                 // take care of anonymous users.
                 return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
             }
-            return View(CreateVM());
+            var model = CreateVM();
+            model.AddressType = type == 0 ? AddressRecordType.ShippingAddress : AddressRecordType.BillingAddress;
+            return View(model);
         }
         [HttpPost, Themed,
             OutputCache(NoStore = true, Duration = 0), Authorize,
