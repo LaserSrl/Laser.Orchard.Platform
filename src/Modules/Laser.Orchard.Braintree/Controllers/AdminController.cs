@@ -1,20 +1,15 @@
 ﻿using Laser.Orchard.Braintree.Models;
 using Laser.Orchard.PaymentGateway.Controllers;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.DisplayManagement;
-using Orchard.Localization;
-using Orchard.UI.Notify;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Laser.Orchard.Braintree.Controllers {
     public class AdminController : PosAdminBaseController {
-        public AdminController(IOrchardServices orchardServices) : base(orchardServices) {
+        public AdminController(IOrchardServices orchardServices,
+            ISignals signals) : base(orchardServices, signals) {
         }
+        protected override string CacheKey => BraintreeSiteSettingsPart.CacheKey;
         protected override ContentPart GetSettingsPart() {
             return _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
         }

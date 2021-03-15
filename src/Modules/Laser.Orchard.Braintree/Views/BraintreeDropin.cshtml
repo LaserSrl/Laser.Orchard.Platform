@@ -166,7 +166,7 @@
                 </text>
             }
             braintree.dropin.create(
-                $.extend(baseDropinOptions, { threeDSecure: true }),
+                $.extend({}, baseDropinOptions, { threeDSecure: true }),
                 function (err, instance) {
                     if (err) {
                         threeDSEnabled = false;

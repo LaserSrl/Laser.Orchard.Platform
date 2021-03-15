@@ -127,6 +127,7 @@
     <Compile Include="Routes.cs" />
     <Compile Include="Services\BraintreePosService.cs" />
     <Compile Include="Services\DefaultBraintreeService.cs" />
+    <Compile Include="Services\IBraintreePosService.cs" />
     <Compile Include="Services\IBraintreeService.cs" />
     <Compile Include="Services\MissingSettingsBanner.cs" />
     <Compile Include="Services\PaymentContext.cs" />

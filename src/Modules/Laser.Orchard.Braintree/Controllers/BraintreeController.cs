@@ -22,12 +22,16 @@ using System.Web.Mvc;
 namespace Laser.Orchard.Braintree.Controllers {
     public class BraintreeController : Controller {
         private readonly IOrchardServices _orchardServices;
-        private readonly BraintreePosService _posService;
+        private readonly IBraintreePosService _posService;
         private readonly IBraintreeService _braintreeService;
 
-        public BraintreeController(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IBraintreeService braintreeService) {
+        public BraintreeController(
+            IOrchardServices orchardServices, 
+            IBraintreeService braintreeService,
+            IBraintreePosService posService) {
+
             _orchardServices = orchardServices;
-            _posService = new BraintreePosService(orchardServices, repository, paymentEventHandler);
+            _posService = posService;
             _braintreeService = braintreeService;
 
             Logger = NullLogger.Instance;
@@ -53,7 +57,7 @@ namespace Laser.Orchard.Braintree.Controllers {
                 payment = _posService.GetPaymentInfo(guid);
             }
             pid = payment.Id;
-            var settings = _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+            var settings = _posService.GetSettings();
             if (settings.CurrencyCode != payment.Currency) {
                 //throw new Exception(string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode));
                 string error = string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode);
