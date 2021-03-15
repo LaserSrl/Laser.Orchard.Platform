@@ -11,10 +11,11 @@ $(function () {
             global_CopyingAddresses = true;
             if ($(this).val() === "on" || $(this).val() === "true") {
                 $('input[name^="shippingAddressVM."]').each(function () {
-                    addressHasChanged($(this));
+                    shippingAddressHasChanged($(this));
                 });
+                shippingAddressHasChanged($('select[name="shippingAddressVMListAddress"]'));
                 $('select[name^="shippingAddressVM."]').each(function () {
-                    addressHasChanged($(this));
+                    shippingAddressHasChanged($(this));
                 });
             }
 
@@ -28,16 +29,23 @@ $(function () {
     }
     $('input[name^="shippingAddressVM."]')
         .change(function () {
-            addressHasChanged($(this));
+            shippingAddressHasChanged($(this));
+        });
+    $('select[name="shippingAddressVMListAddress"]')
+        .change(function () {
+            shippingAddressHasChanged($(this));
         });
     $('select[name^="shippingAddressVM."]')
         .change(function () {
-            addressHasChanged($(this));
+            shippingAddressHasChanged($(this));
         });
+
+
     if (!("preventRequiredMark" in window) || !preventRequiredMark) {
         addressForm.find(".required").after(
             $("<span class='error-indicator' title='" + required + "'>*</span>"));
     }
+
     addressForm.submit(function (e) {
         var validated = true,
             firstErrorElement,
@@ -74,31 +82,33 @@ $(function () {
     });
 });
 
-function addressHasChanged(sender) {
+function shippingAddressHasChanged(sender) {
     var toggleCheckbox = $("#toggle-billing-address");
 
     if (!toggleCheckbox.prop("checked")) return;
-    // selects can only have their value
-    // set if the corresponding option element exists. 
     var input = sender,
-        name = input.attr("name").substr(18);
+        name = input.attr("name").indexOf(".") > 0 ? input.attr("name").substr("shippingAddressVM.".length) : input.attr("name").substr("shippingAddressVM".length);
 
     if (sender.prop("tagName").toLowerCase() == "input") {
         $('input[name="billingAddressVM.' + name + '"]')
             .val(input.val())
             .trigger('change');
     } else if (sender.prop("tagName").toLowerCase() == "select") {
-        var other = $('select[name="billingAddressVM.' + name + '"]');
-        var newValue = input.val();
+        var other;
         if (name != "ListAddress") {
-            // add and select the option
-            newOption = new Option(
-                input.find('option[value=' + newValue + ']').text(), //text
-                newValue, //value
-                true, //defaultSelected
-                true); //selected
-            other.append(newOption);
+            other = $('select[name="billingAddressVM.' + name + '"]');
+            var newValue = input.val();
+            if (other.find('option[value="' + newValue + '"]').length == 0) {
+                // add and select the option
+                newOption = new Option(
+                    input.find('option[value=' + newValue + ']').text(), //text
+                    newValue, //value
+                    true, //defaultSelected
+                    true); //selected
+                other.append(newOption);
+            }
         } else {
+            other = $('select[name="billingAddressVMListAddress"]');
             newValue = "-1";
         }
 
