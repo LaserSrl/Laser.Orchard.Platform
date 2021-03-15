@@ -39,6 +39,21 @@
         <span class="hint">@T("If checked, the payment starts automatically.")</span>
     </div>
 </fieldset>
+    <fieldset>
+        <legend>@T("GooglePay Settings")</legend>
+        <div class="form-group">
+            <label for="@Html.FieldIdFor(m => m.GooglePayMerchantId)">@T("GooglePay Merchant ID")</label>
+            @Html.TextBoxFor(m => m.GooglePayMerchantId,
+                 htmlAttributes: new {
+                     @class = "form-control",
+                     placeholder = @T("GooglePay Merchant ID").Text,
+                     title = @T("GooglePay Merchant ID.").Text })
+            <span class="hint">
+                @T("The Mercahnt ID provided by Google for your Google Pay account. This is required to enable GooglePay as a payment method on production environments. If this is empty, users will not be shown the option to use GooglePay. In test/sandobox environments, any non-empty value is valid.")
+            </span>
+            @Html.ValidationMessage("GooglePayMerchantId", "*")
+        </div>
+    </fieldset>
 
     <button class="primaryAction" type="submit">@T("Save")</button>
 }
