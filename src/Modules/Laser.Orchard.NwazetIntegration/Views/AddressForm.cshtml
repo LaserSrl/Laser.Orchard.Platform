@@ -4,12 +4,13 @@
 @using Laser.Orchard.NwazetIntegration.Models
 @using Laser.Orchard.NwazetIntegration.ViewModels
 @{
-    Script.Require("jQuery").AtHead();
+    Style.Require("Select2").AtHead();
+    Script.Require("Select2").AtFoot();
     Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
     string prefix = Model.Prefix;
     AddressEditViewModel address = Model.Address;
     List<AddressRecord> addressList = Model.ListAddress;
-    string idlistaddress = "List" + prefix;
+    string idListAddress = prefix + "ListAddress";
 
     // prefix of elements that will be copied to the ones for this
     // address when this ones are hidden away
@@ -41,7 +42,7 @@
             <legend>@T("Stored Billing Address")</legend>
         }
 
-        <select id="@idlistaddress" name="@idlistaddress">
+        <select id="@Html.Id(idListAddress)" name="@Html.Name(idListAddress)">
             <option value=-1 title="@T("New address")">
                 @T("New address")
             </option>

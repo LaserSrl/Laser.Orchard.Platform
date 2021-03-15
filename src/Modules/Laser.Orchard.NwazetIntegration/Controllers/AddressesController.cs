@@ -209,7 +209,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
-        public ActionResult Create(int type=0) {
+        public ActionResult Create(int type = 0) {
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (user == null) {
                 // we should never be here, because the AuthorizeAttribute should
@@ -515,22 +515,32 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var countryTP = _addressConfigurationService
                 .GetCountry(vm.CountryId);
             vm.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
-            // City: we may be settings either the Id or the string, but either way the
-            //   property we are setting is vm.City. We get the territory and set the Id
-            var cityTP = GetTerritory(vm.City);
-            if (cityTP != null) {
-                vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
-                vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
+            // City: we may be settings either the Id or the string
+            if (vm.CityId > 0) {
+                var cityTP = GetTerritory(vm.CityId.ToString());
+                if (cityTP != null) {
+                    vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
+                    vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
+                }
+                else {
+                    vm.CityId = -1;
+                    vm.City = "";
+                }
             }
             else {
                 vm.CityId = -1;
             }
-            // Province: we may be settings either the Id or the string, but either way the
-            //   property we are setting is vm.Province. We get the territory and set the Id
-            var provinceTP = GetTerritory(vm.Province);
-            if (provinceTP != null) {
-                vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
-                vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
+            // Province: we may be settings either the Id or the string
+            if (vm.ProvinceId > 0) {
+                var provinceTP = GetTerritory(vm.ProvinceId.ToString());
+                if (provinceTP != null) {
+                    vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
+                    vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
+                }
+                else {
+                    vm.ProvinceId = -1;
+                    vm.Province = "";
+                }
             }
             else {
                 vm.ProvinceId = -1;
