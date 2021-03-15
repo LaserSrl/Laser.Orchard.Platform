@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Exported from Orchard-->
+<Orchard>
+  <Recipe>
+    <Name>Hierarchy - Territory Vat Configuration</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the Default rate for each VAT categories</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Content>
+    <TerritoryHierarchy Id="/Identifier=mondohierarchy" Status="Published">
+      <HierarchyVatConfigurationPart>
+        <HierarchyVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=01b5289178f24aa788da8a0baa279bc2" />
+        <HierarchyVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=ff97b7ebf6644f03b1a0592d687020b9" />
+        <HierarchyVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=8faed3b2666141c49cb4fd5613c7104c" />
+        <HierarchyVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=228caffa3de04bc080f23e63367c1182" />
+      </HierarchyVatConfigurationPart>
+    </TerritoryHierarchy>
+  </Content>
+  <Content>
+    <Territory Id="/Identifier=mondohierarchyUnione Europea" Status="Published">
+      <TerritoryVatConfigurationPart>
+        <TerritoryVatConfiguration Rate="10.00000" VatConfigurationPartIdentity="/Identifier=01b5289178f24aa788da8a0baa279bc2" />
+        <TerritoryVatConfiguration Rate="4.00000" VatConfigurationPartIdentity="/Identifier=ff97b7ebf6644f03b1a0592d687020b9" />
+        <TerritoryVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=8faed3b2666141c49cb4fd5613c7104c" />
+        <TerritoryVatConfiguration Rate="22.00000" VatConfigurationPartIdentity="/Identifier=228caffa3de04bc080f23e63367c1182" />
+      </TerritoryVatConfigurationPart>
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyExtra UE" Status="Published">
+      <TerritoryVatConfigurationPart>
+        <TerritoryVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=01b5289178f24aa788da8a0baa279bc2" />
+        <TerritoryVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=ff97b7ebf6644f03b1a0592d687020b9" />
+        <TerritoryVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=8faed3b2666141c49cb4fd5613c7104c" />
+        <TerritoryVatConfiguration Rate="0.00000" VatConfigurationPartIdentity="/Identifier=228caffa3de04bc080f23e63367c1182" />
+      </TerritoryVatConfigurationPart>
+    </Territory>
+  </Content>
+</Orchard>
