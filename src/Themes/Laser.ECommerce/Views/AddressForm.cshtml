@@ -2,13 +2,35 @@
 @using System.Web.Mvc
 @using Nwazet.Commerce.Models
 @using Laser.Orchard.NwazetIntegration.Models
+@using Laser.Orchard.NwazetIntegration.ViewModels
 @{
-    Script.Require("jQuery").AtHead();
+    Style.Require("Select2").AtHead();
+    Script.Require("Select2").AtFoot();
+    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
     string prefix = Model.Prefix;
-    Address address = Model.Address;
-    List<AddressRecord>
-    addressList = Model.ListAddress;
-    string idlistaddress = "List" + prefix;
+    AddressEditViewModel address = Model.Address;
+    List<AddressRecord> addressList = Model.ListAddress;
+    string idListAddress = prefix + ".ListAddress";
+
+    // prefix of elements that will be copied to the ones for this
+    // address when this ones are hidden away
+    string otherPrefix = Model.OtherPrefix;
+    // handle the case where the OtherPrefix is null, because this didn't
+    // always exist.
+    if (string.IsNullOrWhiteSpace(otherPrefix)) {
+        otherPrefix = prefix == "shippingAddressVM"
+            ? "billingAddressVM"
+            : "shippingAddressVM";
+    }
+
+    string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)
+        .ToString()
+        .ToLowerInvariant();
+
+    var guid = Guid.NewGuid().ToString();
+
+    var selectCountries = (address.AddressType == AddressRecordType.BillingAddress
+        ? address.BillingCountries : address.ShippingCountries) ?? address.Countries;
 
 }
 <div style="float:right">
@@ -49,55 +71,97 @@
 <input id="@Html.Id(prefix + ".Address2")" type="text" name="@Html.Name(prefix + ".Address2")" value="@address.Address2" class="input-xxlarge" />
 <label for="@Html.Id(prefix + ".Address2")">@T("Address2")</label>
 <div class="hint">&nbsp;</div>
-<input id="@Html.Id(prefix + ".City")" type="text" name="@Html.Name(prefix + ".City")" value="@address.City" class="input-large required" />
-<label for="@Html.Id(prefix + ".City")">@T("City")</label>
-<div class="hint">&nbsp;</div>
-<input id="@Html.Id(prefix + ".Province")" type="text" name="@Html.Name(prefix + ".Province")" value="@address.Province" class="input-mini" />
-<label for="@Html.Id(prefix + ".Province")">@T("State, province, prefecture, republic or region")</label>
+<label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
+<select name="@Html.Name(prefix + ".CountryId")"
+        class="address-input"
+        id="@Html.Id(prefix + ".CountryId")">
+    @foreach (var item in selectCountries) {
+        <option value="@item.Value" @(item.Selected ? "selected=\"selected\"" : "\"\"")>
+            @item.Text
+        </option>
+    }
+</select> <div class="hint">@T("Select your Country from the list.")</div>
+
+<label for="@Html.Id(prefix + ".City")" class="required">@T("City")</label>
+@Html.Hidden(prefix + ".CityId", address.CityId)
+<select id="@Html.Id(prefix + ".CitySelectedId")"
+        class="address-input"
+        name="@Html.Name(prefix + ".CitySelectedId")"
+        data-requiredfield="@(prefix + ".CityId")">
+    @if (address.CityId > 0) {
+        <option value="@address.CityId" selected="selected">@address.City</option>
+    }
+</select>
+<input type="text" id="@Html.Id(prefix + ".City")"
+       placeholder="@T("City")"
+       class="required address-input"
+       name="@Html.Name(prefix + ".City")"
+       value="@address.City" />
+<label for="@Html.Id(prefix + ".Address1")" class="required">@T("Address")</label>
+<input id="@Html.Id(prefix + ".Address1")" type="text" name="@Html.Name(prefix + ".Address1")" value="@address.Address1" class="input-xxlarge required" />
+<input id="@Html.Id(prefix + ".Address2")" type="text" name="@Html.Name(prefix + ".Address2")" value="@address.Address2" class="input-xxlarge" />
+
+<label for="@Html.Id(prefix + ".Province")" class="required">@T("State, province, prefecture, republic or region")</label>
+@Html.Hidden(prefix + ".ProvinceId", address.ProvinceId)
+<select id="@Html.Id(prefix + ".ProvinceSelectedId")"
+        class="address-input"
+        name="@Html.Name(prefix + ".ProvinceSelectedId")"
+        data-requiredfield="@(prefix + ".Province")">
+    @if (address.ProvinceId > 0) {
+        <option value="@address.ProvinceId" selected="selected">@address.Province</option>
+    }
+</select>
+<input id="@Html.Id(prefix + ".Province")"
+       placeholder="@T("State, province, prefecture, republic or region")"
+       class="required address-input" pattern="^[-a-zA-Z].{1,}"
+       title="@T("Province, starting with a letter.")"
+       name="@Html.Name(prefix + ".Province")" type="text"
+       value="@address.Province" />
 <div class="hint">@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")</div>
 
 <input id="@Html.Id(prefix + ".PostalCode")" type="text" name="@Html.Name(prefix + ".PostalCode")" value="@address.PostalCode" class="input-small" />
 <label for="@Html.Id(prefix + ".PostalCode")">@T("Postal or ZIP code")</label>
 <div class="hint">&nbsp;</div>
-<input id="@Html.Id(prefix + ".Country")" type="text" name="@Html.Name(prefix + ".Country")" value="@address.Country" class="input-medium" />
-<label for="@Html.Id(prefix + ".Country")">@T("Country")</label>
-
 <div class="hint">@T("You may leave this blank for the United States.")</div>
 
 
 @using (Script.Foot()) {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#@idlistaddress').on('change', function () {
-                var arrayOfArrays = JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))');
-                if ($(this).val() == -1) {
-                    $('#@(prefix + "_Honorific")').val('');
-                    $('#@(prefix + "_FirstName")').val('');
-                    $('#@(prefix + "_LastName")').val('');
-                    $('#@(prefix + "_Company")').val('');
-                    $('#@(prefix + "_Address1")').val('');
-                    $('#@(prefix + "_Address2")').val('');
-                    $('#@(prefix + "_City")').val('');
-                    $('#@(prefix + "_Province")').val('');
-                    $('#@(prefix + "_PostalCode")').val('');
-                } else {
-                    for (i = 0; i < arrayOfArrays.length; i++) {
-                        if (arrayOfArrays[i].Id == $(this).val()) {
-                            $('#@(prefix + "_Honorific")').val(arrayOfArrays[i].Honorific);
-                            $('#@(prefix + "_FirstName")').val(arrayOfArrays[i].FirstName);
-                            $('#@(prefix + "_LastName")').val(arrayOfArrays[i].LastName);
-                            $('#@(prefix + "_Company")').val(arrayOfArrays[i].Company);
-                            $('#@(prefix + "_Address1")').val(arrayOfArrays[i].Address1);
-                            $('#@(prefix + "_Address2")').val(arrayOfArrays[i].Address2);
-                            $('#@(prefix + "_City")').val(arrayOfArrays[i].City);
-                            $('#@(prefix + "_Province")').val(arrayOfArrays[i].Province);
-                            $('#@(prefix + "_PostalCode")').val(arrayOfArrays[i].PostalCode);
-                            $('#@(prefix + "_Country")').val(arrayOfArrays[i].Country);
-                        }
-                    }
+    $(document).ready(function () {
+        var addressOptions = {
+            guid: '@guid',
+            arrayOfStoredAddresses: JSON.parse('@Html.Raw(Json.Encode(Model.ListAddress))'),
+            elementsPrefix: '@Html.Id(prefix + "_")',
+            isBillingAddress: (true @Html.Raw(address.AddressType == AddressRecordType.BillingAddress? " && true":" && false")),
+
+            countries: {
+                administrativeInfoUrl: '@Url.Action("GetAdministrativeInfo", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @address.CountryId,
+                select2Options: {
+                    placeholder: '@T("Select a country")',
+                    width: '100%'
                 }
-            });
-            $('#@idlistaddress').val($('#@idlistaddress option:eq(1)').val()).trigger('change');
-        });
+            },
+            cities: {
+                getUrl: '@Url.Action("citiesapi", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @address.CityId,
+                select2Options: {
+                    placeholder: '@T("Select a city")',
+                    width: '100%',
+                    minimumInputLength: '2'
+                }
+            },
+            provinces: {
+                getUrl: '@Url.Action("provincesapi", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @address.ProvinceId,
+                select2Options: {
+                    placeholder: '@T("Select a province")',
+                    width: '100%',
+                    minimumInputLength: '1'
+                }
+            }
+        };
+        buildAddressUI(addressOptions);
+    });
     </script>
 }

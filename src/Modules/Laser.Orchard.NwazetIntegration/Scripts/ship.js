@@ -11,28 +11,10 @@ $(function () {
             global_CopyingAddresses = true;
             if ($(this).val() === "on" || $(this).val() === "true") {
                 $('input[name^="shippingAddressVM."]').each(function () {
-                    var input = $(this),
-                        name = input.attr("name").substr(18);
-                    $('input[name="billingAddressVM.' + name + '"]')
-                        .val(input.val())
-                        .trigger('change');
+                    addressHasChanged($(this));
                 });
                 $('select[name^="shippingAddressVM."]').each(function () {
-                    var input = $(this),
-                        name = input.attr("name").substr(18);
-                    var other = $('select[name="billingAddressVM.' + name + '"]');
-                    var newValue = input.val();
-                    if (other.find('option[value="' + newValue + '"]').length === 0) {
-                        // add and select the option
-                        var newOption =
-                            new Option(
-                                input.find('option[value=' + newValue + ']').text(), //text
-                                newValue, //value
-                                true, //defaultSelected
-                                true); //selected
-                        other.append(newOption);
-                    }
-                    other.val(newValue).trigger('change');
+                    addressHasChanged($(this));
                 });
             }
 
@@ -46,35 +28,11 @@ $(function () {
     }
     $('input[name^="shippingAddressVM."]')
         .change(function () {
-            if (!toggleCheckbox.prop("checked")) return;
-            var input = $(this),
-                name = input.attr("name").substr(18);
-            $('input[name="billingAddressVM.' + name + '"]')
-                .val(input.val())
-                .trigger('change');
+            addressHasChanged($(this));
         });
     $('select[name^="shippingAddressVM."]')
         .change(function () {
-            if (!toggleCheckbox.prop("checked")) return;
-
-            // selects can only have their value
-            // set if the corresponding option element exists. 
-            var input = $(this),
-                name = input.attr("name").substr(18);
-            var other = $('select[name="billingAddressVM.' + name + '"]');
-            var newValue = input.val();
-            if (other.find('option[value="' + newValue + '"]').length === 0) {
-                // add and select the option
-                var newOption =
-                    new Option(
-                        input.find('option[value=' + newValue + ']').text(), //text
-                        newValue, //value
-                        true, //defaultSelected
-                        true); //selected
-                other.append(newOption);
-            }
-            other.val(newValue).trigger('change');
-
+            addressHasChanged($(this));
         });
     if (!("preventRequiredMark" in window) || !preventRequiredMark) {
         addressForm.find(".required").after(
@@ -116,3 +74,37 @@ $(function () {
     });
 });
 
+function addressHasChanged(sender) {
+    var toggleCheckbox = $("#toggle-billing-address");
+
+    if (!toggleCheckbox.prop("checked")) return;
+    // selects can only have their value
+    // set if the corresponding option element exists. 
+    var input = sender,
+        name = input.attr("name").substr(18);
+
+    if (sender.prop("tagName").toLowerCase() == "input") {
+        $('input[name="billingAddressVM.' + name + '"]')
+            .val(input.val())
+            .trigger('change');
+    } else if (sender.prop("tagName").toLowerCase() == "select") {
+        var other = $('select[name="billingAddressVM.' + name + '"]');
+        var newValue = input.val();
+        if (name != "ListAddress") {
+            // add and select the option
+            newOption = new Option(
+                input.find('option[value=' + newValue + ']').text(), //text
+                newValue, //value
+                true, //defaultSelected
+                true); //selected
+            other.append(newOption);
+        } else {
+            newValue = "-1";
+        }
+
+        other.val(newValue);
+        if (newValue != "-1" || name != 'ListAddress') {
+            other.trigger('change');
+        }
+    }
+}
