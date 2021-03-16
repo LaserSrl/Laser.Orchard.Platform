@@ -19,7 +19,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ListAvailableBillingAddress = new List<AddressRecord>();
 
             AvailableShippingOptions = new List<ShippingOption>();
-            BillAtSameShippingAddress = true;
         }
         /// <summary>
         /// Used in CheckoutController actions to signal that we should shortcircuit
@@ -104,11 +103,13 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public Address ShippingAddress { get; set; }
         public AddressEditViewModel ShippingAddressVM { get; set; }
         // used to carry over selected address from the form
-        public int ListshippingAddressVM { get; set; }
+        // property should not be changed cause its editor is manually generated in AddressForm.cshtml
+        public int ShippingAddressVMListAddress { get; set; }
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
         // used to carry over selected address from the form
-        public int ListbillingAddressVM { get; set; }
+        // property should not be changed cause its editor is manually generated in AddressForm.cshtml
+        public int BillingAddressVMListAddress { get; set; }
         public string Email { get; set; }
         public string PhonePrefix { get; set; }
         public string Phone { get; set; }
