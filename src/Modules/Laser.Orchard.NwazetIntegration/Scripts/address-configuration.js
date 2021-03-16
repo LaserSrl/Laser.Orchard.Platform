@@ -235,7 +235,7 @@
 
     //BackEnd specific handlers 
     if (options.basicAddress != null) {
-        //$(options.basicAddress.selector).hide();
+        $(options.basicAddress.selector).hide();
         var syncElements = [{
             source: "Honorific", target: "Honorific"
         }, {
