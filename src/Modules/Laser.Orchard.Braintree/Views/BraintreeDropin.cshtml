@@ -1,11 +1,13 @@
 ﻿@using Laser.Orchard.Braintree.ViewModels
 @using Laser.Orchard.Braintree.Models;
+@using Laser.Orchard.Braintree.Services;
 @using Orchard.ContentManagement;
 @{ 
     Script.Require("jQuery").AtFoot();
     Script.Include("https://js.braintreegateway.com/web/dropin/1.27.0/js/dropin.min.js").AtFoot();
 
-    var settings = WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+    var _braintreePosService = WorkContext.Resolve<IBraintreePosService>();
+    var settings = _braintreePosService.GetSettings();
 
     var viewModel = (PaymentVM)Model.ViewModel;
     @* TODO: Parametrize more of this *@
