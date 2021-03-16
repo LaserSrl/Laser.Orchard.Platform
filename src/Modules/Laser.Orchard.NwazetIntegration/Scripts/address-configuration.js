@@ -170,36 +170,36 @@
             $('#' + options.guid).find('input').val('');
             // clear what's currently populated for the address
             global_CopyingAddresses = true;
-            $('#' + options.elementsPrefix + 'Honorific').val("");
-            $('#' + options.elementsPrefix + 'FirstName').val("");
-            $('#' + options.elementsPrefix + 'LastName').val("");
-            $('#' + options.elementsPrefix + 'Company').val("");
-            $('#' + options.elementsPrefix + 'Address1').val("");
-            $('#' + options.elementsPrefix + 'Address2').val("");
-            $('#' + options.elementsPrefix + 'PostalCode').val("");
-            $('#' + options.elementsPrefix + 'CityId').val(0);
-            $('#' + options.elementsPrefix + 'ProvinceId').val(0);
-            $('#' + options.elementsPrefix + 'CitySelectedId').empty();
-            $('#' + options.elementsPrefix + 'ProvinceSelectedId').empty();
-            $('#' + options.elementsPrefix + 'City').val("");
-            $('#' + options.elementsPrefix + 'Province').val("");
+            $('#' + options.elementsPrefix + 'Honorific').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'FirstName').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'LastName').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'Company').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'Address1').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'Address2').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'PostalCode').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'CityId').val(0).trigger("change");
+            $('#' + options.elementsPrefix + 'ProvinceId').val(0).trigger("change");
+            $('#' + options.elementsPrefix + 'CitySelectedId').empty().trigger("change");
+            $('#' + options.elementsPrefix + 'ProvinceSelectedId').empty().trigger("change");
+            $('#' + options.elementsPrefix + 'City').val("").trigger("change");
+            $('#' + options.elementsPrefix + 'Province').val("").trigger("change");
             global_CopyingAddresses = false;
         } else {
             // figure out what address is selected
             for (i = 0; i < arrayOfStoredAddresses.length; i++) {
                 if (arrayOfStoredAddresses[i].Id == $(this).val()) {
                     // set the fields
-                    $('#' + options.elementsPrefix + 'Honorific').val(arrayOfStoredAddresses[i].Honorific);
-                    $('#' + options.elementsPrefix + 'FirstName').val(arrayOfStoredAddresses[i].FirstName);
-                    $('#' + options.elementsPrefix + 'LastName').val(arrayOfStoredAddresses[i].LastName);
-                    $('#' + options.elementsPrefix + 'Company').val(arrayOfStoredAddresses[i].Company);
-                    $('#' + options.elementsPrefix + 'Address1').val(arrayOfStoredAddresses[i].Address1);
-                    $('#' + options.elementsPrefix + 'Address2').val(arrayOfStoredAddresses[i].Address2);
-                    $('#' + options.elementsPrefix + 'PostalCode').val(arrayOfStoredAddresses[i].PostalCode);
-                    $('#' + options.elementsPrefix + 'CityId').val(arrayOfStoredAddresses[i].CityId);
-                    $('#' + options.elementsPrefix + 'ProvinceId').val(arrayOfStoredAddresses[i].ProvinceId);
-                    $('#' + options.elementsPrefix + 'City').val(arrayOfStoredAddresses[i].City);
-                    $('#' + options.elementsPrefix + 'Province').val(arrayOfStoredAddresses[i].Province);
+                    $('#' + options.elementsPrefix + 'Honorific').val(arrayOfStoredAddresses[i].Honorific).trigger("change");
+                    $('#' + options.elementsPrefix + 'FirstName').val(arrayOfStoredAddresses[i].FirstName).trigger("change");
+                    $('#' + options.elementsPrefix + 'LastName').val(arrayOfStoredAddresses[i].LastName).trigger("change");
+                    $('#' + options.elementsPrefix + 'Company').val(arrayOfStoredAddresses[i].Company).trigger("change");
+                    $('#' + options.elementsPrefix + 'Address1').val(arrayOfStoredAddresses[i].Address1).trigger("change");
+                    $('#' + options.elementsPrefix + 'Address2').val(arrayOfStoredAddresses[i].Address2).trigger("change");
+                    $('#' + options.elementsPrefix + 'PostalCode').val(arrayOfStoredAddresses[i].PostalCode).trigger("change");
+                    $('#' + options.elementsPrefix + 'CityId').val(arrayOfStoredAddresses[i].CityId).trigger("change");
+                    $('#' + options.elementsPrefix + 'ProvinceId').val(arrayOfStoredAddresses[i].ProvinceId).trigger("change");
+                    $('#' + options.elementsPrefix + 'City').val(arrayOfStoredAddresses[i].City).trigger("change");
+                    $('#' + options.elementsPrefix + 'Province').val(arrayOfStoredAddresses[i].Province).trigger("change");
                     // Set the value, creating a new option if necessary
                     var newOption;
                     if ($('#' + options.elementsPrefix + 'CitySelectedId').find("option[value='" + arrayOfStoredAddresses[i].CityId + "']").length) {
