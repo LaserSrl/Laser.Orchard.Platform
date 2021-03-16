@@ -3,37 +3,57 @@
 @using(Html.BeginFormAntiForgeryPost()) {
 <fieldset>
     <legend>@T("Braintree PayPal Settings")</legend>
-    <div>
+    <div class="form-group">
         @Html.CheckBoxFor(m => m.ProductionEnvironment, new { @class = "check-box" })
         <label class="forcheckbox" for="@Html.FieldIdFor(m => m.ProductionEnvironment)">@T("Production Environment") </label>
         <span class="hint">@T("If checked, it means this is a production environment.")</span>
     </div>
-    <div>
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.MerchantId)">@T("Merchant ID")</label>
-        @Html.TextBoxFor(m => m.MerchantId, new { @class = "text large" })
+        @Html.TextBoxFor(m => m.MerchantId,
+            htmlAttributes: new {
+                @class = "form-control text large",
+                placeholder = @T("Merchant ID").Text,
+                title = @T("Merchant ID.").Text })
         <span class="hint">@T("The Merchant ID assigned by Braintree during merchant registration.")</span>
     </div>
-    <div>
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.MerchantAccountId)">@T("Merchant Account")</label>
-        @Html.TextBoxFor(m => m.MerchantAccountId, new { @class = "text large" })
+        @Html.TextBoxFor(m => m.MerchantAccountId,
+            htmlAttributes: new {
+                @class = "form-control text large",
+                placeholder = @T("Merchant Account ID").Text,
+                title = @T("Merchant Account ID.").Text})
         <span class="hint">@T("The Merchant Account ID identifying the specific merchant. Leave empty to use the default Merchant for the account.")</span>
     </div>
-    <div>
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.CurrencyCode)">@T("Currency Code")</label>
-        @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "text large" })
+        @Html.TextBoxFor(m => m.CurrencyCode,
+            htmlAttributes: new {
+                @class = "form-control text large",
+                placeholder = @T("Currency Code").Text,
+                title = @T("Currency Code.").Text })
         <span class="hint">@T("Currency code bound to the merchant ID in Braintree configuration.")</span>
     </div>
-    <div>
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.PublicKey)">@T("Public Key")</label>
-        @Html.TextBoxFor(m => m.PublicKey, new { @class = "text large" })
+        @Html.TextBoxFor(m => m.PublicKey,
+            htmlAttributes: new {
+                @class = "form-control text large",
+                placeholder = @T("Public Key").Text,
+                title = @T("Public Key.").Text })
         <span class="hint">@T("The Public Key assigned by Braintree during merchant registration.")</span>
     </div>
-    <div>
+    <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.PrivateKey)">@T("Private Key")</label>
-        @Html.TextBoxFor(m => m.PrivateKey, new { @class = "text large" })
+        @Html.TextBoxFor(m => m.PrivateKey,
+            htmlAttributes: new {
+                @class = "form-control text large",
+                placeholder = @T("Private Key").Text,
+                title = @T("Private Key.").Text })
         <span class="hint">@T("The Private Key assigned by Braintree during merchant registration.")</span>
     </div>
-     <div>
+     <div class="form-group">
         @Html.CheckBoxFor(m => m.AutomaticPayment, new { @class = "check-box" })
         <label class="forcheckbox" for="@Html.FieldIdFor(m => m.AutomaticPayment)">@T("Automatic Payment") </label>
         <span class="hint">@T("If checked, the payment starts automatically.")</span>
@@ -49,9 +69,39 @@
                      placeholder = @T("GooglePay Merchant ID").Text,
                      title = @T("GooglePay Merchant ID.").Text })
             <span class="hint">
-                @T("The Mercahnt ID provided by Google for your Google Pay account. This is required to enable GooglePay as a payment method on production environments. If this is empty, users will not be shown the option to use GooglePay. In test/sandobox environments, any non-empty value is valid.")
+                @T("The Merchant ID provided by Google for your Google Pay account. This is required to enable GooglePay as a payment method on production environments. If this is empty, users will not be shown the option to use GooglePay. In test/sandobox environments, any non-empty value is valid.")
+                @T("If GooglePay is not enabled in your Braintree dashboard, leave this empty.")
             </span>
             @Html.ValidationMessage("GooglePayMerchantId", "*")
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>@T("ApplePay Settings")</legend>
+        <div class="form-group">
+            <label for="@Html.FieldIdFor(m => m.ApplePayDisplayName)">@T("ApplePay Display Name")</label>
+            @Html.TextBoxFor(m => m.ApplePayDisplayName,
+                 htmlAttributes: new {
+                     @class = "form-control",
+                     placeholder = @T("ApplePay Display Name").Text,
+                     title = @T("ApplePay Display Name.").Text })
+            <span class="hint">
+                @T("The display name used for ApplePay. This is required if you wish to enable ApplePay as a payment provider.")
+                @T("If ApplePay is not enabled in your Braintree dashboard, leave this empty.")
+            </span>
+            @Html.ValidationMessage("ApplePayDisplayName", "*")
+        </div>
+        <div class="form-group">
+            <label for="@Html.FieldIdFor(m => m.ApplePayLabel)">@T("ApplePay Label")</label>
+            @Html.TextBoxFor(m => m.ApplePayLabel,
+                 htmlAttributes: new {
+                     @class = "form-control",
+                     placeholder = @T("ApplePay Label").Text,
+                     title = @T("ApplePay Label.").Text })
+            <span class="hint">
+                @T("The label used for each transaction with ApplePay. This is required if you wish to enable ApplePay as a payment provider.")
+                @T("If ApplePay is not enabled in your Braintree dashboard, leave this empty.")
+            </span>
+            @Html.ValidationMessage("ApplePayLabel", "*")
         </div>
     </fieldset>
 

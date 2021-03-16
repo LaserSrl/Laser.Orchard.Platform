@@ -29,6 +29,16 @@
 
     // if we have no googlepay merchantId, we don't even try to set it up
     var gpMerchantId = settings.GooglePayMerchantId;
+    var apDisplayName = settings.ApplePayDisplayName;
+    var apLabel = settings.ApplePayLabel;
+    // "additional" payment methods. Them bein enabled here means we'll try to add
+    // them as an option in the dropin. They will not render or be available unless 
+    // they are also configured in the Braintree dashboard. For example, here we may
+    // try to setup Paypal, but if the merchant hasn't associated their account in
+    // the Braintree dashboard, nothing will show.
+    var enablePaypal = true;
+    var enableGooglePay = !string.IsNullOrWhiteSpace(gpMerchantId);
+    var enableApplePay = !string.IsNullOrWhiteSpace(apDisplayName) && !string.IsNullOrWhiteSpace(apLabel);
 }
 
 
@@ -143,14 +153,24 @@
             var baseDropinOptions = {
                 authorization: _clientToken,
                 container: '@paymentFormSelector',
-                paypal: {
-                    flow: 'checkout',
-                    amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
-                    currency: '@viewModel.Record.Currency'
-                },
                 locale: '@WorkContext.CurrentCulture.Replace("-", "_")'
             };
-            @if (!string.IsNullOrWhiteSpace(gpMerchantId)) {
+            
+            @if (enablePaypal) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        paypal: {
+                            flow: 'checkout',
+                            amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
+                            currency: '@viewModel.Record.Currency'
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableGooglePay) {
                 <text>
                 baseDropinOptions = $.extend(
                     baseDropinOptions,
@@ -161,6 +181,24 @@
                                 totalPriceStatus: 'FINAL',
                                 totalPrice: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
                                 currencyCode: '@viewModel.Record.Currency'
+                            }
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableApplePay) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        applePay: {
+                            displayName: '@apDisplayName',
+                            paymentRequests: {
+                                total: {
+                                    label: '@apLabel',
+                                    amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)'
+                                }
                             }
                         }
                     }
