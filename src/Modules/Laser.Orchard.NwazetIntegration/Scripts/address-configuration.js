@@ -233,6 +233,51 @@
         global_PreventResetChoices = false;
     }
 
+    //BackEnd specific handlers 
+    if (options.basicAddress != null) {
+        //$(options.basicAddress.selector).hide();
+        var syncElements = [{
+            source: "Honorific", target: "Honorific"
+        }, {
+            source: "FirstName", target: "FirstName"
+        }, {
+            source: "LastName", target: "LastName"
+        }, {
+            source: "Company", target: "Company"
+        }, {
+            source: "PostalCode", target: "PostalCode"
+        }, {
+            source: "Address1", target: "Address1"
+        }, {
+            source: "Address2", target: "Address2"
+        }, {
+            source: "City", target: "City"
+        }, {
+            source: "Province", target: "Province"
+        }, {
+            source: "CitySelectedId", target: "City"
+        }, {
+            source: "ProvinceSelectedId", target: "Province"
+        }, {
+            source: "CountryId", target: "Country"
+        }];
+        syncElements.forEach(function (item, index) {
+            $('#' + options.elementsPrefix + item.source).on('change', function (e) {
+                if ($(this).prop("tagName").toLowerCase() == "input") {
+                    $('#' + options.basicAddress.elementsPrefix + item.target).val($(this).val());
+                } else if ($(this).prop("tagName").toLowerCase() == "select") {
+                    if ($('option:selected', this) != null) {
+                        $('#' + options.basicAddress.elementsPrefix + item.target).val($('option:selected', this).text());
+                    } else {
+                        $('#' + options.basicAddress.elementsPrefix + item.target).val('');
+                    }
+                }
+            });
+
+        });
+    }
+
+
     // after creation of all Select2 UI we ensure visibility
     EnsureVisibility(options);
 
