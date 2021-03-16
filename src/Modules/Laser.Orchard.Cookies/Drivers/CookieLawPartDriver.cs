@@ -90,7 +90,7 @@ namespace Laser.Orchard.Cookies.Drivers {
             element.SetAttributeValue("cookieResetButtonText", part.cookieResetButtonText);
             element.SetAttributeValue("cookieWhatAreLinkText", part.cookieWhatAreLinkText);
             element.SetAttributeValue("cookiePolicyLink", part.cookiePolicyLink);
-            element.SetAttributeValue("cookieWhatAreTheyLink", part.cookieTitle);
+            element.SetAttributeValue("cookieTitle", part.cookieTitle);
             element.SetAttributeValue("cookieMessage", part.cookieMessage);
             element.SetAttributeValue("cookieWhatAreTheyLink", part.cookieWhatAreTheyLink);
         }
