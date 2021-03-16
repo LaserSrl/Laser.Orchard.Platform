@@ -9,6 +9,7 @@
 @using Orchard.Core.Common.Models;
 @using System.Web.Mvc;
 @using System.Web.Routing;
+@using Orchard.Mvc.Html;
 
 @{
     Style.Require("TheAdminWidgetContainerStyle");
@@ -51,6 +52,10 @@
 
     <legend>@T("Widgets")</legend>
 
+    @* Used for the filter *@
+    <input type="hidden" id="ContribWidget.ClickedZone" name="ContribWidget.ClickedZone" />
+    <input type="hidden" id="ContribWidget.HostIdSaved" name="ContribWidget.HostIdSaved" value="@contentItem.Id" />
+
     <div class="expando">
         <div class="widgets group">
             <div class="layout-widgets-placement">
@@ -68,7 +73,18 @@
                                 <li>
                                     <h2>@zone</h2>
                                     <div class="zone-actions">
-                                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId">@T("Add")</a>
+                                        @if (contentItem.Id == 0) {
+                                            <button class="button grey add-widget"
+                                                    type="submit"
+                                                    name="submit.Zone"
+                                                    onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">
+                                                @T("Add")
+                                            </button>
+                                        }
+                                        else {
+                                            <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
+                                                onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
+                                        }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
@@ -103,7 +119,7 @@
                                                     String culture = "";
                                                     if (numberLocPart > 0) {
                                                         dynamic localizationPart = widget.ContentItem.Parts.Where(x => x.PartDefinition.Name == "LocalizationPart").First();
-                                                        if(localizationPart.Culture != null) {
+                                                        if (localizationPart.Culture != null) {
                                                             culture = "(" + localizationPart.Culture.Culture + ")";
                                                         }
                                                     }
@@ -130,7 +146,8 @@
                                                                 @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                 @T(" | ")
                                                             }
-                                                        } else {
+                                                        }
+                                                        else {
                                                             if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
                                                                 @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                 @T(" | ")
