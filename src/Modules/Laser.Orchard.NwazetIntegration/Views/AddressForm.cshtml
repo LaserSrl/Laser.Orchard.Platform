@@ -74,7 +74,9 @@
     <label for="@Html.Id(prefix + ".CountryId")" class="required">@T("Country")</label>
     <select name="@Html.Name(prefix + ".CountryId")"
             class="address-input"
-            id="@Html.Id(prefix + ".CountryId")">
+            id="@Html.Id(prefix + ".CountryId")"
+            data-requiredpattern="^[1-9][0-9]*$"
+            data-requiredvisibleelement="select2-@Html.Id(prefix + ".CountryId")-container">
         @foreach (var item in selectCountries) {
             <option value="@item.Value" @(item.Selected ? "selected=\"selected\"" : "\"\"")>
                 @item.Text
@@ -87,7 +89,10 @@
     <select id="@Html.Id(prefix + ".CitySelectedId")"
             class="address-input"
             name="@Html.Name(prefix + ".CitySelectedId")"
-            data-requiredfield="@(prefix + ".CityId")">
+            data-requiredfield="@Html.Id(prefix + ".CityId")"
+            data-requiredlabelfor="@Html.Id(prefix + ".City")"
+            data-requiredpattern="^[1-9][0-9]*$"
+            data-requiredvisibleelement="select2-@Html.Id(prefix + ".CitySelectedId")-container">
         @if (address.CityId > 0) {
             <option value="@address.CityId" selected="selected">@address.City</option>
         }
@@ -106,7 +111,10 @@
     <select id="@Html.Id(prefix + ".ProvinceSelectedId")"
             class="address-input"
             name="@Html.Name(prefix + ".ProvinceSelectedId")"
-            data-requiredfield="@(prefix + ".Province")">
+            data-requiredfield="@Html.Id(prefix + ".ProvinceId")"
+            data-requiredlabelfor="@Html.Id(prefix + ".Province")"
+            data-requiredpattern="^[1-9][0-9]*$"
+            data-requiredvisibleelement="select2-@Html.Id(prefix + ".ProvinceSelectedId")-container">
         @if (address.ProvinceId > 0) {
             <option value="@address.ProvinceId" selected="selected">@address.Province</option>
         }

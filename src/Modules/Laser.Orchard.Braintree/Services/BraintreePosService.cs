@@ -4,6 +4,7 @@ using Laser.Orchard.PaymentGateway;
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using System;
@@ -15,9 +16,20 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.Braintree.Services {
-    public class BraintreePosService : PosServiceBase {
-        public BraintreePosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler)
+    public class BraintreePosService : PosServiceBase, IBraintreePosService {
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
+
+        public BraintreePosService(
+            IOrchardServices orchardServices, 
+            IRepository<PaymentRecord> repository, 
+            IPaymentEventHandler paymentEventHandler,
+            ICacheManager cacheManager,
+            ISignals signals)
             : base(orchardServices, repository, paymentEventHandler) {
+
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
         public override string GetPosName() {
             return "Braintree and PayPal";
@@ -48,14 +60,12 @@ namespace Laser.Orchard.Braintree.Services {
         }
 
         public override List<string> GetAllValidCurrencies() {
-            return new string[] { _orchardServices.WorkContext
-                .CurrentSite.As<BraintreeSiteSettingsPart>().CurrencyCode}.ToList();
+            return new string[] { GetSettings().CurrencyCode}.ToList();
         }
 
         protected override string InnerChargeAdminUrl(PaymentRecord payment)
         {
-            var config = _orchardServices.WorkContext
-             .CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = GetSettings();
             string merchant = config?.MerchantId;
             if (!config.ProductionEnvironment){
                 return string.Format("https://sandbox.braintreegateway.com/merchants/{0}/transactions/{1}",
@@ -67,6 +77,16 @@ namespace Laser.Orchard.Braintree.Services {
                                      merchant,
                                      payment.TransactionId);
             }
+        }
+
+        public BraintreeSettings GetSettings() {
+            return _cacheManager.Get(BraintreeSiteSettingsPart.CacheKey,
+                ctx => {
+                    ctx.Monitor(_signals.When(BraintreeSiteSettingsPart.CacheKey));
+                    var settingsPart = _orchardServices.WorkContext
+                        .CurrentSite.As<BraintreeSiteSettingsPart>();
+                    return new BraintreeSettings (settingsPart);
+                });
         }
     }
 }
