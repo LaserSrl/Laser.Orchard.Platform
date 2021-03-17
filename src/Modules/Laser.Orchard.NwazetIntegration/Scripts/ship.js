@@ -50,20 +50,21 @@ $(function () {
         var validated = true,
             firstErrorElement,
             alreadyRequired = [];
+        errorZone.empty() //reset the error zone
         addressForm.find(".required").each(function () {
             var requiredField = $(this).data("requiredfield") ?
                 $('#' + $(this).data("requiredfield")) :
                 $(this);
-            var requiredLabelFor = requiredField.data("requiredlabelfor") ?
-                addressForm.find("label[for='" + requiredField.data("requiredlabelfor") + "']").html() :
-                addressForm.find("label[for='" + requiredField.attr("id") + "']").html();
+            var requiredLabelFor = $(this).data("requiredlabelfor") ?
+                addressForm.find("label[for='" + $(this).data("requiredlabelfor") + "']").html() :
+                addressForm.find("label[for='" + $(this).attr("id") + "']").html();
             var requiredVisibleElement = $(this).data("requiredvisibleelement") ?
                 $('#' + $(this).data("requiredvisibleelement")) :
                 requiredField;
             var requiredPattern = $(this).data("requiredpattern") ?
                 $(this).data("requiredpattern") :
                 "";
-            if ((requiredField.is('input') || requiredField.is('select'))) {
+            if ((requiredField.is('input') || requiredField.is('select')) && requiredVisibleElement.is(":visible")) {
                 var currentFieldIsValid = true;
                 if ((toggleCheckbox.val() === "on" || toggleCheckbox.val() === "true") && requiredField.parents('.billing-address').length) {
                     return true;  //continue looping
@@ -87,8 +88,23 @@ $(function () {
                     }
                     if (!firstErrorElement) {
                         firstErrorElement = requiredVisibleElement;
-                        firstErrorElement.focus();
-                    }
+                        var elOffset = $(this).offset().top;
+                        var elHeight = $(this).height();
+                        var windowHeight = $(window).height();
+                        var offset;
+
+                        if (elHeight < windowHeight) {
+                            offset = elOffset - ((windowHeight / 2) - (elHeight / 2));
+                        }
+                        else {
+                            offset = elOffset;
+                        }
+                        $("body,html").animate( //scroll to first error field
+                            {
+                                scrollTop: offset
+                            },
+                            800 //speed
+                        );                    }
                 } else {
                     requiredVisibleElement.removeClass("required-error");
                 }
