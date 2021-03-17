@@ -51,32 +51,51 @@ $(function () {
             firstErrorElement,
             alreadyRequired = [];
         addressForm.find(".required").each(function () {
-            var requiredField = $(this);
-            if ((requiredField.is('input') || requiredField.is('select'))
-                && !requiredField.val()) {
-                validated = false;
-                var id = requiredField.attr("id"),
-                    label = addressForm.find("label[for='" + id + "']").html();
-                requiredField.addClass("required-error");
-                if (alreadyRequired.indexOf(label) === -1) {
-                    errorZone.show().append(
-                        $("<div></div>").html(requiredFormat.replace("{0}", label))
-                    );
-                    alreadyRequired.push(label);
+            var requiredField = $(this).data("requiredfield") ?
+                $('#' + $(this).data("requiredfield")) :
+                $(this);
+            var requiredLabelFor = requiredField.data("requiredlabelfor") ?
+                addressForm.find("label[for='" + requiredField.data("requiredlabelfor") + "']").html() :
+                addressForm.find("label[for='" + requiredField.attr("id") + "']").html();
+            var requiredVisibleElement = $(this).data("requiredvisibleelement") ?
+                $('#' + $(this).data("requiredvisibleelement")) :
+                requiredField;
+            var requiredPattern = $(this).data("requiredpattern") ?
+                $(this).data("requiredpattern") :
+                "";
+            if ((requiredField.is('input') || requiredField.is('select'))) {
+                var currentFieldIsValid = true;
+                if ((toggleCheckbox.val() === "on" || toggleCheckbox.val() === "true") && requiredField.parents('.billing-address').length) {
+                    return true;  //continue looping
                 }
-                if (!firstErrorElement) {
-                    firstErrorElement = this;
-                    firstErrorElement.focus();
+                if (requiredPattern == "" && !requiredField.val()) {
+                    validated = currentFieldIsValid = false;
+                } else {
+                    var validPattern = new RegExp(requiredPattern);
+
+                    if (!validPattern.test(requiredField.val())) {
+                        validated = currentFieldIsValid = false;
+                    }
                 }
-            } else {
-                requiredField.removeClass("required-error");
+                if (!currentFieldIsValid) {
+                    requiredVisibleElement.addClass("required-error");
+                    if (alreadyRequired.indexOf(requiredLabelFor) === -1) {
+                        errorZone.show().append(
+                            $("<div></div>").html(requiredFormat.replace("{0}", requiredLabelFor))
+                        );
+                        alreadyRequired.push(requiredLabelFor);
+                    }
+                    if (!firstErrorElement) {
+                        firstErrorElement = requiredVisibleElement;
+                        firstErrorElement.focus();
+                    }
+                } else {
+                    requiredVisibleElement.removeClass("required-error");
+                }
             }
         });
         if (!validated) {
             e.preventDefault();
-            //if (firstErrorElement) {
-            //    firstErrorElement.scrollIntoView();
-            //}
             return false;
         }
     });
