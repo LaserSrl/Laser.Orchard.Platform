@@ -2,6 +2,7 @@
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
+using Orchard.Core.Title.Models;
 using Orchard.Data;
 using Orchard.Localization;
 using Orchard.Localization.Services;
@@ -43,52 +44,61 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _settingsService.GetConfiguredHierarchy();
 
         public TerritoryPart GetCountry(int internalId) {
-            if (_settingsService.SelectedCountryIds.Contains(internalId)) {
-                return SingleTerritory(internalId);
+            var territory = SingleTerritory(internalId);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.Country) {
+                return territory;
             }
             return null;
         }
 
         public TerritoryPart GetCountry(string name) {
-            var tp = SingleTerritory(name);
-            if (tp != null) {
-                return _settingsService.SelectedCountryIds.Contains(tp.Record.TerritoryInternalRecord.Id)
-                    ? tp // return it if it is a country
-                    : null;
+            var territory = SingleTerritory(name);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.Country) {
+                return territory;
             }
             return null;
         }
 
         public TerritoryPart GetCity(int internalId) {
-            if (_settingsService.SelectedCityIds.Contains(internalId)) {
-                return SingleTerritory(internalId);
+            var territory = SingleTerritory(internalId);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.City) {
+                return territory;
             }
             return null;
         }
 
         public TerritoryPart GetCity(string name) {
-            var tp = SingleTerritory(name);
-            if (tp != null) {
-                return _settingsService.SelectedCityIds.Contains(tp.Record.TerritoryInternalRecord.Id)
-                    ? tp // return it if it is a city
-                    : null;
+            var territory = SingleTerritory(name);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.City) {
+                return territory;
             }
             return null;
         }
 
         public TerritoryPart GetProvince(int internalId) {
-            if (_settingsService.SelectedProvinceIds.Contains(internalId)) {
-                return SingleTerritory(internalId);
+            var territory = SingleTerritory(internalId);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.Province) {
+                return territory;
             }
             return null;
         }
 
         public TerritoryPart GetProvince(string name) {
-            var tp = SingleTerritory(name);
-            if (tp != null) {
-                return _settingsService.SelectedProvinceIds.Contains(tp.Record.TerritoryInternalRecord.Id)
-                    ? tp // return it if it is a province
-                    : null;
+            var territory = SingleTerritory(name);
+            if (territory != null
+                && territory.Is<TerritoryAdministrativeTypePart>()
+                && territory.As<TerritoryAdministrativeTypePart>().AdministrativeType == TerritoryAdministrativeType.Province) {
+                return territory;
             }
             return null;
         }
@@ -130,7 +140,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 return query
                     .Where(tatpr => tatpr.Shipping)
                 .List();
-            } else {
+            }
+            else {
                 return query
                     .Where(tatpr => tatpr.Billing)
                 .List();
@@ -188,81 +199,57 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .List();
         }
 
+        // Refactorized START
         public IEnumerable<TerritoryPart> GetAllProvinces(
             TerritoryPart country, TerritoryPart city) {
-            if (city == null) {
-                return GetAllProvinces(country);
-            }
+            if (city != null) {
+                return GetTerritoryParents(new TerritoryQueryContext {
+                    TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                    ForTerritory = city
+                });
 
-            var provinces = new List<TerritoryPart>();
-            var parent = city.ParentPart;
-            while (parent != null) {
-                var adminType = parent.As<TerritoryAdministrativeTypePart>();
-                if (adminType != null && adminType.AdministrativeType == TerritoryAdministrativeType.Province) {
-                    provinces.Add(parent);
-                }
-                parent = parent.ParentPart;
             }
-            // only provinces that contain the city
-            return provinces;
+            else {
+                return GetTerritoryChildren(new TerritoryQueryContext {
+                    TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                    ForTerritory = country
+                });
+            }
         }
         public IEnumerable<TerritoryPart> GetAllProvinces(
             AddressRecordType addressRecordType, TerritoryPart country, TerritoryPart city) {
+            if (city != null) {
+                return GetTerritoryParents(new TerritoryQueryContext {
+                    AddressRecordType = addressRecordType,
+                    TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                    ForTerritory = city
+                });
 
-            if (city == null) {
-                return GetAllProvinces(addressRecordType, country);
+            }
+            else {
+                return GetTerritoryChildren(new TerritoryQueryContext {
+                    AddressRecordType = addressRecordType,
+                    TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                    ForTerritory = country
+                });
             }
 
-            var provinces = new List<TerritoryPart>();
-            var parent = city.ParentPart;
-            while (parent != null) {
-                var adminType = parent.As<TerritoryAdministrativeTypePart>();
-                if (adminType != null && adminType.AdministrativeType == TerritoryAdministrativeType.Province) {
-                    provinces.Add(parent);
-                    // Added the break to the first province that is found
-                    // otherwise it would continue to search asking if the province
-                    // has another province
-                    break;
-                }
-                parent = parent.ParentPart;
-            }
-            // only provinces that contain the city
-            return provinces;
         }
 
         public IEnumerable<TerritoryPart> GetAllProvinces(TerritoryPart country) {
-            var root = country;
-            // make sure root we'll use belongs to hierarchy
-            if (country.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTerritory(country.Record.TerritoryInternalRecord.Id);
-            }
-            if (root == null) {
-                // if the root is not valid for the hierarchy, we cannot return 
-                // any province.
-                return Enumerable.Empty<TerritoryPart>();
-            }
-
-            return GetChildren(root, _settingsService.SelectedProvinceIds);
+            return GetTerritoryChildren(new TerritoryQueryContext {
+                TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                ForTerritory = country
+            });
         }
+
         public IEnumerable<TerritoryPart> GetAllProvinces(
             AddressRecordType addressRecordType, TerritoryPart country) {
-            var root = country;
-            // make sure root we'll use belongs to hierarchy
-            if (country.Record.Hierarchy.Id != ConfiguredHierarchy.Id) {
-                root = SingleTerritory(country.Record.TerritoryInternalRecord.Id);
-            }
-            if (root == null) {
-                // if the root is not valid for the hierarchy, we cannot return 
-                // any province.
-                return Enumerable.Empty<TerritoryPart>();
-            }
-
-            var provinceIds = _settingsService
-                .SelectedProvinceIds;
-
-
-            return GetSomeChildren(addressRecordType, root, provinceIds, 0, 512);
-
+            return GetTerritoryChildren(new TerritoryQueryContext {
+                AddressRecordType = addressRecordType,
+                TerritoryAdministrativeType = TerritoryAdministrativeType.Province,
+                ForTerritory = country
+            });
         }
 
         public IEnumerable<TerritoryPart> GetAllCities() {
@@ -275,47 +262,39 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public IEnumerable<TerritoryPart> GetAllCities(TerritoryPart parent) {
-            var root = parent;
-            // make sure root we'll use belongs to hierarchy
-            if (parent.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTerritory(parent.Record.TerritoryInternalRecord.Id);
-            }
-            if (root == null) {
-                // if the root is not valid for the hierarchy, we cannot return 
-                // any province.
-                return Enumerable.Empty<TerritoryPart>();
-            }
-            // usually parent will be either a country or a province, but it doesn't
-            // really affect our code here.
-            return GetChildren(root, _settingsService.SelectedCityIds);
+            return GetTerritoryChildren(new TerritoryQueryContext {
+                TerritoryAdministrativeType = TerritoryAdministrativeType.City,
+                ForTerritory = parent
+            });
         }
 
         public IEnumerable<TerritoryPart> GetAllCities(
             AddressRecordType addressRecordType, TerritoryPart parent) {
-            var root = parent;
-            // make sure root we'll use belongs to hierarchy
-            if (parent.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTerritory(parent.Record.TerritoryInternalRecord.Id);
-            }
-            if (root == null) {
-                // if the root is not valid for the hierarchy, we cannot return 
-                // any city.
-                return Enumerable.Empty<TerritoryPart>();
-            }
-            
-            var cityIds = _settingsService
-                .SelectedCityIds;
-
-            return GetSomeChildren(addressRecordType, root, cityIds, 0, 512);
+            return GetTerritoryChildren(new TerritoryQueryContext {
+                AddressRecordType = addressRecordType,
+                TerritoryAdministrativeType = TerritoryAdministrativeType.City,
+                ForTerritory = parent
+            });
         }
 
         public IEnumerable<TerritoryPart> GetAllCities(
-            AddressRecordType addressRecordType, TerritoryPart parent, 
+            AddressRecordType addressRecordType, TerritoryPart parent,
             string nameQuery, int maxOptions = 20) {
-            var root = parent;
+            return GetTerritoryChildren(new TerritoryQueryContext {
+                AddressRecordType = addressRecordType,
+                TerritoryAdministrativeType = TerritoryAdministrativeType.City,
+                Filter = nameQuery,
+                ForTerritory = parent
+            });
+        }
+        // Refactorized END
+
+        private IEnumerable<TerritoryPart> GetTerritoryChildren(TerritoryQueryContext context) {
+            IEnumerable<TerritoryPart> list;
+            var root = context.ForTerritory;
             // make sure root we'll use belongs to hierarchy
-            if (parent.HierarchyPart.Id != ConfiguredHierarchy.Id) {
-                root = SingleTerritory(parent.Record.TerritoryInternalRecord.Id);
+            if (root.HierarchyPart.Id != ConfiguredHierarchy.Id) {
+                root = SingleTerritory(root.Record.TerritoryInternalRecord.Id);
             }
             if (root == null) {
                 // if the root is not valid for the hierarchy, we cannot return 
@@ -323,120 +302,93 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 return Enumerable.Empty<TerritoryPart>();
             }
 
-            //var filtered = new List<TerritoryPart>();
-            var cityIds = _settingsService
-                .SelectedCityIdsByName(nameQuery);
+            var rootPath = root.TerritoriesFullPath;
+            var query = _contentManager.Query();
+            query = query.Join<TerritoryPartRecord>()
+            .Where(x => x.TerritoriesFullPath.StartsWith(rootPath) && x.Hierarchy.Id == ConfiguredHierarchy.Id);
 
-            return GetSomeChildren(addressRecordType, root, cityIds, maxOptions, maxOptions);
-        }
-        
-        private IEnumerable<TerritoryPart>  GetSomeChildren(
-            AddressRecordType addressRecordType, TerritoryPart root,
-            int[] childrenIds, int limitCount = 0,
-            int maxOptions = 20) {
-
-            var filtered = new List<TerritoryPart>();
-
-            for (int i = 0; (limitCount <= 0 ? true : filtered.Count() < limitCount); i++) {
-                var childrenQuery = _territoriesService
-                    // Query for territories in hierarchy
-                    .GetTerritoriesQuery(ConfiguredHierarchy)
-                    // only those marked as city and that contain the query text
-                    .Where(tpr => childrenIds.Skip(i * maxOptions).Take(maxOptions).ToArray()
-                        .Contains(tpr.TerritoryInternalRecord.Id));
-                IEnumerable<TerritoryPart> children;
-                if (addressRecordType == AddressRecordType.ShippingAddress) {
-                    children = childrenQuery
-                        // only those marked for the given record type
-                        .Join<TerritoryAddressTypePartRecord>()
-                        .Where(tatpr => tatpr.Shipping)
-                        .Slice(i * maxOptions, maxOptions);
-                } else {
-                    children = childrenQuery
-                        // only those marked for the given record type
-                        .Join<TerritoryAddressTypePartRecord>()
-                        .Where(tatpr => tatpr.Billing)
-                        .Slice(i * maxOptions, maxOptions);
+            if (context.AddressRecordType.HasValue) {
+                query = query.Join<TerritoryAdministrativeTypePartRecord>()
+                    .Where(x => x.AdministrativeType == context.TerritoryAdministrativeType.Value);
+            }
+            if (context.AddressRecordType.HasValue) {
+                if (context.AddressRecordType == AddressRecordType.ShippingAddress) {
+                    query = query.Join<TerritoryAddressTypePartRecord>()
+                        .Where(x => x.Shipping);
                 }
-
-                filtered.AddRange(children
-                    .Where(tp => {
-                        var p = tp.ParentPart;
-                        while (p != null) {
-                            if (p == root) {
-                                return true;
-                            }
-                            p = p.ParentPart;
-                        }
-                        return false;
-                    }));
-                if (children.Count() < maxOptions) {
-                    // we arelady had fewer than maxOptions cities to choose from
-                    break;
+                else if (context.AddressRecordType == AddressRecordType.BillingAddress) {
+                    query = query.Join<TerritoryAddressTypePartRecord>()
+                        .Where(x => x.Billing);
                 }
             }
-            if (limitCount <= 0) {
-                return filtered;
-            } else {
-                return filtered.Take(limitCount);
+            if (!string.IsNullOrWhiteSpace(context.Filter)) {
+                query = query.Join<TitlePartRecord>()
+                    .Where(x => x.Title.Contains(context.Filter))
+                    .OrderBy(x => x.Title);
             }
+            else {
+                query = query.Join<TitlePartRecord>()
+                    .OrderBy(x => x.Title);
+
+            }
+            if (context.MaxResultItems.HasValue) {
+                list = query.ForPart<TerritoryPart>().Slice(0, context.MaxResultItems.Value);
+            }
+            else {
+                list = query.ForPart<TerritoryPart>().List();
+            }
+            return list;
+
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parent"></param>
-        /// <param name="selection">This is an array of int that represents a list of Ids
-        /// for selected territories.</param>
-        /// <returns></returns>
-        private IEnumerable<TerritoryPart> GetChildren(TerritoryPart parent, int[] selection) {
-            // we need root's children of all levels within hierarchy
-            // that correspond to the territories that have been selected
-            // based on the Ids.
-            // Depth first recursion
-            var allRecords = GetAllChildrenRecords(_territoryPartRecordService.GetTerritoriesChild(parent));//parent.Record.Children
-            var selectedRecords = allRecords
-                .Where(tpr => selection.Contains(tpr.TerritoryInternalRecord.Id));
-
-            // GetMany will break if there are too many ids, so we query a bunch at a time
-            int tried = 0;
-            var children = new List<TerritoryPart>();
-            while (tried < selectedRecords.Count()) {
-                children.AddRange(
-                    _contentManager
-                        .GetMany<TerritoryPart>(
-                            selectedRecords.Skip(tried).Take(1000).Select(r => r.Id),
-                            // Consider eventually using the version from the hierarchy?
-                            VersionOptions.Published,
-                            QueryHints.Empty));
-                tried += 1000;
+        private IEnumerable<TerritoryPart> GetTerritoryParents(TerritoryQueryContext context) {
+            IEnumerable<TerritoryPart> list;
+            var root = context.ForTerritory;
+            // make sure root we'll use belongs to hierarchy
+            if (root.HierarchyPart.Id != ConfiguredHierarchy.Id) {
+                root = SingleTerritory(root.Record.TerritoryInternalRecord.Id);
+            }
+            if (root == null) {
+                // if the root is not valid for the hierarchy, we cannot return 
+                // any city.
+                return Enumerable.Empty<TerritoryPart>();
             }
 
-            return children;
-        }
+            var rootPath = root.TerritoriesFullPath;
+            var parentIds = rootPath.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries).Select(x => {
+                int id = 0;
+                int.TryParse(x, out id);
+                return id;
+            }).ToList();
+            parentIds.ToList().Remove(root.Id);
+            var queryHints = new QueryHints()
+                    .ExpandRecords<TerritoryAdministrativeTypePartRecord, TitlePartRecord>();
+            var query = _contentManager.Query();
 
-        private IEnumerable<TerritoryPartRecord> GetAllChildrenRecords(
-            IEnumerable<TerritoryPartRecord> records) {
-            var result = new List<TerritoryPartRecord>(records);
-            if (records.Any()) {
-                // if there are children, add those as well as their children
-                result.AddRange(GetAllChildrenRecords(records.SelectMany(r =>_territoryPartRecordService.GetTerritoriesChild(r))));
+            query = query
+                .Join<TerritoryAdministrativeTypePartRecord>()
+                .Where(x => x.AdministrativeType == context.TerritoryAdministrativeType.Value && parentIds.Contains(x.Id))
+                .Join<TitlePartRecord>()
+                .OrderBy(x => x.Title);
+
+            if (context.MaxResultItems.HasValue) {
+                list = query.ForPart<TerritoryPart>().Slice(0, context.MaxResultItems.Value);
             }
-            return result.Where(tpr => tpr != null && tpr.TerritoryInternalRecord != null);
-        }
-
-        private IEnumerable<TerritoryPart> GetAllChildrenParts(
-            IEnumerable<TerritoryPart> parts) {
-            var result = new List<TerritoryPart>(parts);
-            if (parts.Any()) {
-                // if there are children, add those as well as their children
-                result.AddRange(
-                    GetAllChildrenParts(
-                        parts.SelectMany(r => 
-                            r.Children.AsPart<TerritoryPart>())));
+            else {
+                list = query.ForPart<TerritoryPart>().List();
             }
-            return result;
-        }
+            return list;
 
+        }
+    }
+
+    internal class TerritoryQueryContext {
+        internal TerritoryQueryContext() {
+            Filter = "";
+        }
+        public AddressRecordType? AddressRecordType { get; set; }
+        public TerritoryPart ForTerritory { get; set; }
+        public string Filter { get; set; }
+        public TerritoryAdministrativeType? TerritoryAdministrativeType { get; set; }
+        public int? MaxResultItems { get; set; }
     }
 }
