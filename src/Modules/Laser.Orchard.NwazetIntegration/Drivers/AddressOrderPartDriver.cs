@@ -18,6 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IAuthorizer _authorizer;
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly IContentManager _contentManager;
+
+        private bool _checkValidation = true;
         public AddressOrderPartDriver(
             IAuthorizer authorizer,
             IAddressConfigurationService addressConfigurationService,
@@ -56,30 +58,31 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             var updatedModel = new OrderAddressEditorViewModel();
-            if (updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
-                // shipping
-                // before assigning the viewmodel value to the address I check 
-                // that the city and province values ​​are correct
-                ValidateVM(updatedModel.ShippingAddressVM);
-
-                part.ShippingCountryId = updatedModel.ShippingAddressVM.CountryId;
-                part.ShippingCountryName = updatedModel.ShippingAddressVM.Country;
-                part.ShippingCityId = updatedModel.ShippingAddressVM.CityId;
-                part.ShippingCityName = updatedModel.ShippingAddressVM.City;
-                part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
-                part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
-                // billing
-                // before assigning the viewmodel value to the address I check 
-                // that the city and province values ​​are correct
-                ValidateVM(updatedModel.BillingAddressVM);
-
-                part.BillingCountryId = updatedModel.BillingAddressVM.CountryId;
-                part.BillingCountryName = updatedModel.BillingAddressVM.Country;
-                part.BillingCityId = updatedModel.BillingAddressVM.CityId;
-                part.BillingCityName = updatedModel.BillingAddressVM.City;
-                part.BillingProvinceId = updatedModel.BillingAddressVM.ProvinceId;
-                part.BillingProvinceName = updatedModel.BillingAddressVM.Province;
+            if (!updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
+                _checkValidation = false;
             }
+            // shipping
+            // before assigning the viewmodel value to the address I check 
+            // that the city and province values ​​are correct
+            ValidateVM(updatedModel.ShippingAddressVM);
+
+            part.ShippingCountryId = updatedModel.ShippingAddressVM.CountryId;
+            part.ShippingCountryName = updatedModel.ShippingAddressVM.Country;
+            part.ShippingCityId = updatedModel.ShippingAddressVM.CityId;
+            part.ShippingCityName = updatedModel.ShippingAddressVM.City;
+            part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
+            part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
+            // billing
+            // before assigning the viewmodel value to the address I check 
+            // that the city and province values ​​are correct
+            ValidateVM(updatedModel.BillingAddressVM);
+
+            part.BillingCountryId = updatedModel.BillingAddressVM.CountryId;
+            part.BillingCountryName = updatedModel.BillingAddressVM.Country;
+            part.BillingCityId = updatedModel.BillingAddressVM.CityId;
+            part.BillingCityName = updatedModel.BillingAddressVM.City;
+            part.BillingProvinceId = updatedModel.BillingAddressVM.ProvinceId;
+            part.BillingProvinceName = updatedModel.BillingAddressVM.Province;
 
             return Editor(part, shapeHelper);
         }
@@ -154,15 +157,18 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 provinceId = part.BillingProvinceId;
             }
 
-            // if properties are null, get them from the address that was in OrderPart
-            if (string.IsNullOrWhiteSpace(city)) {
-                city = address.City;
-            }
-            if (string.IsNullOrWhiteSpace(province)) {
-                province = address.Province;
-            }
-            if (string.IsNullOrWhiteSpace(country)) {
-                country = address.Country;
+            //// if properties are null, get them from the address that was in OrderPart
+            //// in the event of incorrect validation, this code must not be executedin the event of incorrect validation, this code must not be executed
+            if (_checkValidation) {
+                if (string.IsNullOrWhiteSpace(city)) {
+                    city = address.City;
+                }
+                if (string.IsNullOrWhiteSpace(province)) {
+                    province = address.Province;
+                }
+                if (string.IsNullOrWhiteSpace(country)) {
+                    country = address.Country;
+                }
             }
 
             return new AddressRecord {
