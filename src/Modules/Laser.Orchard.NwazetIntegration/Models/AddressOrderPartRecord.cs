@@ -16,6 +16,8 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual string ShippingProvinceName { get; set; }
         public virtual int ShippingProvinceId { get; set; }
 
+        public virtual bool ShippingAddressIsOptional { get; set; }
+
         public virtual string BillingCountryName { get; set; }
         public virtual int BillingCountryId { get; set; }
 
