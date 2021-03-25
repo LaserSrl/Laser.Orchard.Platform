@@ -40,15 +40,15 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     ProductContentTypeForm.FormName);
         }
 
-        public LocalizedString DisplayFalseLabel(CouponLineCriterionContext ctx) {
+        public LocalizedString DisplayFalseLabel(CouponContext ctx) {
             return T("Cart line is not a product of type {0}", ProductTypes(ctx));
         }
 
-        public LocalizedString DisplayTrueLabel(CouponLineCriterionContext ctx) {
+        public LocalizedString DisplayTrueLabel(CouponContext ctx) {
             return T("Cart line is a product of type {0}", ProductTypes(ctx));
         }
         
-        private string ProductTypes(CouponLineCriterionContext context) =>
+        private string ProductTypes(CouponContext context) =>
             (string)context.State.ContentTypes;
 
         public void ApplyCriterion(CouponLineCriterionContext context,
