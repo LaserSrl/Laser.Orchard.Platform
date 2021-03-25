@@ -58,20 +58,29 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             var updatedModel = new OrderAddressEditorViewModel();
-            if (!updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
-                _checkValidation = false;
-            }
-            // shipping
-            // before assigning the viewmodel value to the address I check 
-            // that the city and province values ​​are correct
-            ValidateVM(updatedModel.ShippingAddressVM);
 
-            part.ShippingCountryId = updatedModel.ShippingAddressVM.CountryId;
-            part.ShippingCountryName = updatedModel.ShippingAddressVM.Country;
-            part.ShippingCityId = updatedModel.ShippingAddressVM.CityId;
-            part.ShippingCityName = updatedModel.ShippingAddressVM.City;
-            part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
-            part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
+            if (!part.ShippingAddressIsOptional) {
+                if (!updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
+                    _checkValidation = false;
+                }
+                // shipping
+                // before assigning the viewmodel value to the address I check 
+                // that the city and province values ​​are correct
+                ValidateVM(updatedModel.ShippingAddressVM);
+
+                part.ShippingCountryId = updatedModel.ShippingAddressVM.CountryId;
+                part.ShippingCountryName = updatedModel.ShippingAddressVM.Country;
+                part.ShippingCityId = updatedModel.ShippingAddressVM.CityId;
+                part.ShippingCityName = updatedModel.ShippingAddressVM.City;
+                part.ShippingProvinceId = updatedModel.ShippingAddressVM.ProvinceId;
+                part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
+            }
+            else {
+                if (!updater.TryUpdateModel(updatedModel, Prefix, null, new[] { "ShippingAddressVM" })) {
+                    _checkValidation = false;
+                }
+            }
+            
             // billing
             // before assigning the viewmodel value to the address I check 
             // that the city and province values ​​are correct
