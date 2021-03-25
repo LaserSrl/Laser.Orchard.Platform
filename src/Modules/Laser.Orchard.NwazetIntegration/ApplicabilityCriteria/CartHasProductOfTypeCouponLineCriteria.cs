@@ -7,17 +7,19 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
-    public class CartHasProductOfTypeCouponCriteria
-        : ICouponLineApplicabilityCriterionProvider {
+    public class CartHasProductOfTypeCouponLineCriteria
+        : BaseCouponCriterionProvider, ICouponLineApplicabilityCriterionProvider {
         
-        public CartHasProductOfTypeCouponCriteria() {
-
-
-
+        public CartHasProductOfTypeCouponLineCriteria() {
+            
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
+
+        public override string ProviderName => "CartHasProductOfTypeCouponLineCriteria";
+
+        public override LocalizedString ProviderDisplayName => T("Line Criteria on product ContentType");
 
         public void Describe(DescribeCouponLineApplicabilityContext describe) {
             describe
