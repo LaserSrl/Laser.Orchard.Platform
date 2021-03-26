@@ -1,5 +1,7 @@
 ﻿using Nwazet.Commerce.Descriptors.CouponApplicability;
 using Nwazet.Commerce.Services.Couponing;
+using Orchard;
+using Orchard.Caching;
 using Orchard.Localization;
 using System;
 using System.Collections.Generic;
@@ -7,17 +9,23 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
-    public class CartHasProductOfTypeCouponCriteria
-        : ICouponLineApplicabilityCriterionProvider {
+    public class CartHasProductOfTypeCouponLineCriteria
+        : BaseCouponCriterionProvider, ICouponLineApplicabilityCriterionProvider {
         
-        public CartHasProductOfTypeCouponCriteria() {
-
-
-
+        public CartHasProductOfTypeCouponLineCriteria(
+            IWorkContextAccessor workContextAccessor,
+            ICacheManager cacheManager,
+            ISignals signals) 
+            : base (workContextAccessor, cacheManager, signals) {
+            
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
+
+        public override string ProviderName => "CartHasProductOfTypeCouponLineCriteria";
+
+        public override LocalizedString ProviderDisplayName => T("Line Criteria on product ContentType");
 
         public void Describe(DescribeCouponLineApplicabilityContext describe) {
             describe
