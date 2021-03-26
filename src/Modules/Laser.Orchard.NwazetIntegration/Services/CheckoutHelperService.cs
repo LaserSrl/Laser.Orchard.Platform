@@ -114,6 +114,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
                     addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
                     addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                    // added information to manage saving in bo
+                    addressPart.ShippingAddressIsOptional = false;
+                }
+                else {
+                    addressPart.ShippingAddressIsOptional = true;
                 }
                 // billing
                 addressPart.BillingCountryName = model.BillingAddressVM.Country;
