@@ -117,7 +117,7 @@
         }
     </fieldset>
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Index"), FormMethod.Post, new { @id = "address-summary" })) {
+    Url.Action("Index", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "address-summary" })) {
 
     @*serialized address data*@
     @Html.Hidden("SerializedAddresses", viewModel.SerializedAddresses)
