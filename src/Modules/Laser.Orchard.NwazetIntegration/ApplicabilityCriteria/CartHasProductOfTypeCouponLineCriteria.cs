@@ -1,5 +1,7 @@
 ﻿using Nwazet.Commerce.Descriptors.CouponApplicability;
 using Nwazet.Commerce.Services.Couponing;
+using Orchard;
+using Orchard.Caching;
 using Orchard.Localization;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,11 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
     public class CartHasProductOfTypeCouponLineCriteria
         : BaseCouponCriterionProvider, ICouponLineApplicabilityCriterionProvider {
         
-        public CartHasProductOfTypeCouponLineCriteria() {
+        public CartHasProductOfTypeCouponLineCriteria(
+            IWorkContextAccessor workContextAccessor,
+            ICacheManager cacheManager,
+            ISignals signals) 
+            : base (workContextAccessor, cacheManager, signals) {
             
             T = NullLocalizer.Instance;
         }
