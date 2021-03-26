@@ -72,8 +72,9 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                     new PaymentGatewayCharge("Payment Gateway", payment.Guid));
                 order.LogActivity(OrderPart.Event, string.Format("Payed on POS {0}.", payment.PosName));
                 // svuota il carrello
+                var cartContext = new CartFinalizedContext() { Order = order };
                 foreach (var handler in _cartLifeCycleEventHandlers) {
-                    handler.Finalized();
+                    handler.Finalized(cartContext);
                 }
                 _shoppingCart.ClearAll();
                 // raise order and payment events

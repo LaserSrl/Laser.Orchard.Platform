@@ -26,7 +26,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public bool UseDefaultAddress { get; set; }
         public bool UseDefaultShipping { get; set; }
-
+        public bool BillAtSameShippingAddress { get; set; }
         public ICurrencyProvider CurrencyProvider;
 
         #region Cart
@@ -103,11 +103,13 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public Address ShippingAddress { get; set; }
         public AddressEditViewModel ShippingAddressVM { get; set; }
         // used to carry over selected address from the form
-        public int ListshippingAddressVM { get; set; }
+        // property should not be changed cause its editor is manually generated in AddressForm.cshtml
+        public int ShippingAddressVMListAddress { get; set; }
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
         // used to carry over selected address from the form
-        public int ListbillingAddressVM { get; set; }
+        // property should not be changed cause its editor is manually generated in AddressForm.cshtml
+        public int BillingAddressVMListAddress { get; set; }
         public string Email { get; set; }
         public string PhonePrefix { get; set; }
         public string Phone { get; set; }

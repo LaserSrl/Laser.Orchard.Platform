@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Orchard>
+  <Recipe>
+    <Name>DefaultShippingMethods</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the Default flexible shipping methods.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Nwazet.FlexibleShippingImplementations" />
+  <Command>
+    recipes execute "Laser.Orchard.NwazetIntegration" "SetupMVPTerritories"
+  </Command>
+  <ContentDefinition>
+    <Types>
+      <FlexibleShippingMethod DisplayName="Flexible Shipping Method">
+        <FlexibleShippingMethodPart />
+        <IdentityPart />
+        <TitlePart />
+      </FlexibleShippingMethod>
+    </Types>
+    <Parts>
+      <FlexibleShippingMethodPart />
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  <Content>
+    <FlexibleShippingMethod Id="/Identifier=181afcf01b6b42ae9b251a95417c8d6e" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione EU" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="0">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="In EU" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;In EU&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Unione Europea&quot;,&quot;value&quot;:&quot;119;f1c5769cbe953bc15865eedb6709c5d886548a76bd8bcd68dd0d94755588cd53&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Destination" Description="non in Italia" Type="Destination not in territories" State="&lt;Form&gt;&lt;Description&gt;non in Italia&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Italia&quot;,&quot;value&quot;:&quot;56;a7ca3e3d756601d5a22a4c0d8629da0c0ce425e5be526078d3e4583737150f52&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&gt;= 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;gt;= 70&lt;/Description&gt;&lt;Operator&gt;GreaterThanEquals&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="181afcf01b6b42ae9b251a95417c8d6e" />
+      <TitlePart Title="Gratis EU" />
+    </FlexibleShippingMethod>
+    <FlexibleShippingMethod Id="/Identifier=283b856a4fa94d608cddcb5fd13e2f10" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione ITALIA" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="0">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="in Italia" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;in Italia&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Italia&quot;,&quot;value&quot;:&quot;56;a7ca3e3d756601d5a22a4c0d8629da0c0ce425e5be526078d3e4583737150f52&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&gt;= 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;gt;= 70&lt;/Description&gt;&lt;Operator&gt;GreaterThanEquals&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="283b856a4fa94d608cddcb5fd13e2f10" />
+      <TitlePart Title="Gratis Italia" />
+    </FlexibleShippingMethod>
+    <FlexibleShippingMethod Id="/Identifier=310a8998aab24e47acf108535f6a5817" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione EU" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="15">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="In EU" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;In EU&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Unione Europea&quot;,&quot;value&quot;:&quot;119;f1c5769cbe953bc15865eedb6709c5d886548a76bd8bcd68dd0d94755588cd53&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Destination" Description="Non Italia" Type="Destination not in territories" State="&lt;Form&gt;&lt;Description&gt;Non Italia&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Italia&quot;,&quot;value&quot;:&quot;56;a7ca3e3d756601d5a22a4c0d8629da0c0ce425e5be526078d3e4583737150f52&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&lt; 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;lt; 70&lt;/Description&gt;&lt;Operator&gt;LessThan&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="310a8998aab24e47acf108535f6a5817" />
+      <TitlePart Title="Standard EU" />
+    </FlexibleShippingMethod>
+    <FlexibleShippingMethod Id="/Identifier=3208741684744e22a6bcd95b8d7802a3" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione ITALIA" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="10">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="In italia" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;In italia&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Italia&quot;,&quot;value&quot;:&quot;56;a7ca3e3d756601d5a22a4c0d8629da0c0ce425e5be526078d3e4583737150f52&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&lt; 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;lt; 70&lt;/Description&gt;&lt;Operator&gt;LessThan&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="3208741684744e22a6bcd95b8d7802a3" />
+      <TitlePart Title="Standard Italia" />
+    </FlexibleShippingMethod>
+    <FlexibleShippingMethod Id="/Identifier=63bc8fdef5aa4fb2a2a443e662421ee2" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione MONDO" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="0">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="extra UE" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;extra UE&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Stati Extra UE&quot;,&quot;value&quot;:&quot;120;ddae3f303ab421442960b32df41250cbc96916ddb69c2a11e84f130f8c6ceb04&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&gt;= 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;gt;= 70&lt;/Description&gt;&lt;Operator&gt;GreaterThanEquals&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="63bc8fdef5aa4fb2a2a443e662421ee2" />
+      <TitlePart Title="Gratis Extra EU" />
+    </FlexibleShippingMethod>
+    <FlexibleShippingMethod Id="/Identifier=cf7f901c43534bb8b3499c6b0cb53d98" Status="Published">
+      <FlexibleShippingMethodPart Name="Spedizione MONDO" ShippingCompany="" IncludedShippingAreas="" ExcludedShippingAreas="" DefaultPrice="20">
+        <ApplicabilityCriteria>
+          <Criterion Category="Destination" Description="extra UE" Type="Destination in territories" State="&lt;Form&gt;&lt;Description&gt;extra UE&lt;/Description&gt;&lt;Territories&gt;[{{&quot;label&quot;:&quot;Stati Extra UE&quot;,&quot;value&quot;:&quot;120;ddae3f303ab421442960b32df41250cbc96916ddb69c2a11e84f130f8c6ceb04&quot;,&quot;element&quot;:{{&quot;0&quot;:{{}},&quot;length&quot;:1}},&quot;index&quot;:0}}]&lt;/Territories&gt;&lt;/Form&gt;" />
+          <Criterion Category="Cart" Description="&lt; 70" Type="Cart Subtotal" State="&lt;Form&gt;&lt;Description&gt;&amp;lt; 70&lt;/Description&gt;&lt;Operator&gt;LessThan&lt;/Operator&gt;&lt;Value&gt;70&lt;/Value&gt;&lt;Min&gt;&lt;/Min&gt;&lt;Max&gt;&lt;/Max&gt;&lt;/Form&gt;" />
+        </ApplicabilityCriteria>
+      </FlexibleShippingMethodPart>
+      <IdentityPart Identifier="cf7f901c43534bb8b3499c6b0cb53d98" />
+      <TitlePart Title="Standard Extra EU" />
+    </FlexibleShippingMethod>
+  </Content>
+</Orchard>

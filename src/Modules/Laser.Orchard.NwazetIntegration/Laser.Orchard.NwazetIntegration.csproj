@@ -106,6 +106,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
@@ -209,6 +210,7 @@
     <Content Include="Assets\Styles.less" />
     <Content Include="Recipes\BaseProduct.recipe.xml" />
     <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
+    <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
     <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
     <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />

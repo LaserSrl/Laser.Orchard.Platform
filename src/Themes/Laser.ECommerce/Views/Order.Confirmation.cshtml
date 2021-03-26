@@ -3,6 +3,7 @@
 @using Orchard.ContentManagement
 @using Orchard.Mvc.Html
 @using System.Globalization
+@using Nwazet.Commerce.Extensions;
 @{
     var title = Layout.Title = T("Order #{0}", Model.OrderId);
     var items = (Model.CheckoutItems as IEnumerable<CheckoutItem> ?? new CheckoutItem[] { }).ToList();
@@ -49,9 +50,22 @@
                 </tfoot>
                 <tbody>
                     @foreach (var item in items) {
+                        var displayText = item.Title;
+                        var productAttributes = (IDictionary<int, ProductAttributeValueExtended>)item.Attributes;
+                        if (productAttributes != null && productAttributes.Any()) {
+                            var productCi = (IContent)Model.Products[item.ProductId];
+                            var additionalText = 
+                                AttributeNameUtilities.AttributesDisplayText(productAttributes, productCi);
+                    
+                            if (!string.IsNullOrWhiteSpace(additionalText)) {
+                                displayText += " (" +
+                                    additionalText.Trim()
+                                    + ")";
+                            }
+                        }
                         <tr class="remX">
                             <td class="quantity">@item.Quantity &times;</td>
-                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])" data-product-id="@item.ProductId">@item.Title</a></td>
+                            <td class="description"><a href="@Url.ItemDisplayUrl((IContent) Model.Products[item.ProductId])" data-product-id="@item.ProductId">@displayText</a></td>
                             <td class="price">@currencyInUse.PriceAsString(item.Price, cultureInUse)</td>
                             <td class="price">@currencyInUse.PriceAsString(item.LinePriceAdjustment, cultureInUse)</td>
                         </tr>

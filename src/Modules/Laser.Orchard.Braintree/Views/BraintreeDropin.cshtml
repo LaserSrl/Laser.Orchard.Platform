@@ -1,7 +1,13 @@
 ﻿@using Laser.Orchard.Braintree.ViewModels
+@using Laser.Orchard.Braintree.Models;
+@using Laser.Orchard.Braintree.Services;
+@using Orchard.ContentManagement;
 @{ 
     Script.Require("jQuery").AtFoot();
-    Script.Include("https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js").AtFoot();
+    Script.Include("https://js.braintreegateway.com/web/dropin/1.27.0/js/dropin.min.js").AtFoot();
+
+    var _braintreePosService = WorkContext.Resolve<IBraintreePosService>();
+    var settings = _braintreePosService.GetSettings();
 
     var viewModel = (PaymentVM)Model.ViewModel;
     @* TODO: Parametrize more of this *@
@@ -20,6 +26,19 @@
     var payBtnId = "pay-button";
     var formId = "checkout";
     var nonceinputId = "nonce";
+
+    // if we have no googlepay merchantId, we don't even try to set it up
+    var gpMerchantId = settings.GooglePayMerchantId;
+    var apDisplayName = settings.ApplePayDisplayName;
+    var apLabel = settings.ApplePayLabel;
+    // "additional" payment methods. Them bein enabled here means we'll try to add
+    // them as an option in the dropin. They will not render or be available unless 
+    // they are also configured in the Braintree dashboard. For example, here we may
+    // try to setup Paypal, but if the merchant hasn't associated their account in
+    // the Braintree dashboard, nothing will show.
+    var enablePaypal = true;
+    var enableGooglePay = !string.IsNullOrWhiteSpace(gpMerchantId);
+    var enableApplePay = !string.IsNullOrWhiteSpace(apDisplayName) && !string.IsNullOrWhiteSpace(apLabel);
 }
 
 
@@ -131,36 +150,76 @@
             // wipe the container
             $('@paymentFormSelector').empty();
             // try to set the dropin up to use 3DSecure
-            braintree.dropin.create({
-                    authorization: _clientToken,
-                    container: '@paymentFormSelector',
-                    paypal: {
-                        flow: 'checkout',
-                        amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
-                        currency: '@viewModel.Record.Currency'
-                    },
-                    locale: '@WorkContext.CurrentCulture.Replace("-", "_")',
-                    threeDSecure: true
-                }, function (err, instance) {
+            var baseDropinOptions = {
+                authorization: _clientToken,
+                container: '@paymentFormSelector',
+                locale: '@WorkContext.CurrentCulture.Replace("-", "_")'
+            };
+            
+            @if (enablePaypal) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        paypal: {
+                            flow: 'checkout',
+                            amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
+                            currency: '@viewModel.Record.Currency'
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableGooglePay) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        googlePay: {
+                            merchantId: '@gpMerchantId',
+                            transactionInfo: {
+                                totalPriceStatus: 'FINAL',
+                                totalPrice: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
+                                currencyCode: '@viewModel.Record.Currency'
+                            }
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableApplePay) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        applePay: {
+                            displayName: '@apDisplayName',
+                            paymentRequest: {
+                                total: {
+                                    label: '@apLabel',
+                                    amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)'
+                                }
+                            }
+                        }
+                    }
+                );
+                </text>
+            }
+            braintree.dropin.create(
+                $.extend({}, baseDropinOptions, { threeDSecure: true }),
+                function (err, instance) {
                     if (err) {
                         threeDSEnabled = false;
                         console.log(err.message);
                         // error in creating the dropin is likely due to 3DS not being configured by the merchant
                         // try to go without 3ds2
                         $('@paymentFormSelector').empty();
-                        braintree.dropin.create({
-                            authorization: _clientToken,
-                            container: '@paymentFormSelector',
-                            paypal: {
-                                flow: 'checkout',
-                                amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
-                                currency: '@viewModel.Record.Currency'
-                            },
-                            locale: '@WorkContext.CurrentCulture.Replace("-", "_")',
-                        }, function (err2, dropInstance) {
-                            console.log('created without 3dsecure');
-                            dropin = dropInstance;
-                            setupForm();
+                        braintree.dropin.create(
+                            baseDropinOptions,
+                            function (err2, dropInstance) {
+                                console.log('created without 3dsecure');
+                                dropin = dropInstance;
+                                setupForm();
                         });
                     } else {
                         threeDSEnabled = true;
