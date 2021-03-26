@@ -28,6 +28,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         public override LocalizedString ProviderDisplayName => T("Line Criteria on product ContentType");
 
         public void Describe(DescribeCouponLineApplicabilityContext describe) {
+            var isAvailableForConfiguration = IsAvailableForConfiguration();
+            var isAvailableForProcessing = IsAvailableForProcessing();
             describe
                 .For("Cart", T("Cart products"), T("Cart products"))
                 // Product in line MUST BE one of the selected types
@@ -37,6 +39,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => ApplyCriterion(ctx, (b) => b),
                     (ctx) => DisplayTrueLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
+                    isAvailableForConfiguration, isAvailableForProcessing,
                     ProductContentTypeForm.FormName)
                 // Product in line MUST NOT BE one of the selected types
                 .Element("Line product is not of type",
@@ -45,6 +48,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => ApplyCriterion(ctx, (b) => !b),
                     (ctx) => DisplayFalseLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
+                    isAvailableForConfiguration, isAvailableForProcessing,
                     ProductContentTypeForm.FormName);
         }
 
