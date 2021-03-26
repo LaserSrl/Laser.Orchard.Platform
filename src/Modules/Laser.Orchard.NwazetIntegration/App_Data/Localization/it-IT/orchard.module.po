@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -149,8 +149,8 @@ msgid "Please provide an e-mail address for us to use in order to give you updat
 msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
-msgid "Please provide an international phone prefix, For example 0039 for Italy"
-msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
 msgid "Required information"
@@ -341,8 +341,8 @@ msgid "Please provide an e-mail address for us to use in order to give you updat
 msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
-msgid "Please provide an international phone prefix, For example 0039 for Italy"
-msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Required information"
@@ -630,7 +630,7 @@ msgstr "Prezzo scontato (IVA inclusa)"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Edit the prices after tax."
-msgstr "Modifica i prezzi al netto delle tasse."
+msgstr "Modifica i prezzi al netto dell'iva."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Regular price (after VAT)"
@@ -718,11 +718,15 @@ msgstr "Non definito"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetailsMissing.cshtml"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
-msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. È necessario configurarne una accedendo alle <a href=\"{0}\">impostazioni</a>."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
 msgid "A phone number is required for checkout."
 msgstr "È richiesto un numero di telefono per l'acquisto."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
+msgid "A shipping address is required for checkout."
+msgstr "E' richiesto un indirizzo di spedizione per il checkout."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
 msgid "Require users to be authenticated to start a checkout."
@@ -758,7 +762,7 @@ msgstr "Immettere più nomi di territorio. Premi <i> tab </i>, <i> invio </i> o 
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/TerritorySelector.cshtml"
 msgid "No countries' hierarchy was configured."
-msgstr "Non è stata configurata la gerarchia dei paesi."
+msgstr "Non è stata configurata la gerarchia degli stati."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/TerritorySelector.cshtml"
 msgid "Select the territories this shipping is valid for."
@@ -958,7 +962,7 @@ msgstr "<a href=\"{0}\"> Accedi per completare l'ordine. </a>"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
-msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. È necessario configurarne una accedendo alle <a href=\"{0}\">impostazioni</a>."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No valid countries were configured. Have an administrator configure one <a href=\"{0}\">here</a>."
