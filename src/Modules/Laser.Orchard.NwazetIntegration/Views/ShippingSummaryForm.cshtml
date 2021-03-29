@@ -15,7 +15,9 @@
     </fieldset>
 }
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Shipping"), FormMethod.Post, new { @id = "shipping-summary" })) {
+    Url.Action("Shipping", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "shipping-summary" })) {
+
+    <input type="hidden" name="Email" value="@viewModel.Email" />
 
     @* Serialized shipping method *@
     @Html.Hidden("ShippingOption", viewModel.ShippingOption)
