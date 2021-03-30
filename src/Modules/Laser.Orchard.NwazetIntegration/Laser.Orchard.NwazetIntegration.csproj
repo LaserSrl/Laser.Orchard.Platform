@@ -106,6 +106,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicabilityCriteria\CallHasUUIDCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
