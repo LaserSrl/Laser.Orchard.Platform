@@ -118,6 +118,7 @@
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CouponApiController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
+    <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
