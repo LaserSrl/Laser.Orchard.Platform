@@ -102,5 +102,12 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 7;
         }
+
+        public int UpdateFrom7() {
+            SchemaBuilder.AlterTable("AddressOrderPartRecord",
+                table => table.AddColumn<bool>("ShippingAddressIsOptional"));
+
+            return 8;
+        }
     }
 }
