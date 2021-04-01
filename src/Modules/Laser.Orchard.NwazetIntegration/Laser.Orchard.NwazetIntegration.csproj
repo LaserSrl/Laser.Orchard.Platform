@@ -169,7 +169,7 @@
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
-    <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
