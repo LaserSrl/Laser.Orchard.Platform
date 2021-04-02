@@ -23,12 +23,9 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             : base(workContextAccessor, cacheManager, signals) {
 
             _httpContextAccessor = httpContextAccessor;
-
-            T = NullLocalizer.Instance;
+            
         }
-
-        public Localizer T { get; set; }
-
+        
         public override string ProviderName => "CallHasSpecificHeaderCouponCriteria";
 
         public override LocalizedString ProviderDisplayName => T("Criteria on the request header");
