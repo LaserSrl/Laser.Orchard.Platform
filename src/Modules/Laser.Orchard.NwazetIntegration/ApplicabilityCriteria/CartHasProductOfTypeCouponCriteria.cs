@@ -44,7 +44,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         T("Coupon {0} is only available if cart contains products of type {1}.", ctx.CouponRecord.Code, ProductTypes(ctx))),
                     (ctx) => DisplayTrueLabel(ctx),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    null) // null form because there's nothing special to configure
+                    ProductContentTypeForm.FormName)
                 .Element("Cart doesn't have Products of given type",
                     T("Cart doesn't have Products of given type"),
                     T("Cart doesn't have Products of given type"),
@@ -54,7 +54,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         T("Coupon {0} is only available if cart doesn't contain products of type {1}.", ctx.CouponRecord.Code, ProductTypes(ctx))),
                     (ctx) => DisplayFalseLabel(ctx),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    null);
+                    ProductContentTypeForm.FormName);
         }
 
         public void ApplyCriteria(CouponApplicabilityCriterionContext context,
