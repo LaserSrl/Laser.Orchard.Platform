@@ -16,6 +16,7 @@ using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.Extensions.Models;
+using Orchard.Environment.Features;
 using Orchard.FileSystems.VirtualPath;
 using Orchard.Logging;
 using Orchard.Mvc.ViewEngines.ThemeAwareness;
@@ -23,8 +24,6 @@ using Orchard.Utility.Extensions;
 
 namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
     public class TenantShapeBindingStrategy : IShapeTableProvider {
-        private readonly ShellDescriptor _shellDescriptor;
-        private readonly IExtensionManager _extensionManager;
         private readonly ICacheManager _cacheManager;
         private readonly IVirtualPathMonitor _virtualPathMonitor;
         private readonly IVirtualPathProvider _virtualPathProvider;
@@ -34,7 +33,7 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
         private readonly Work<ILayoutAwareViewEngine> _viewEngine;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ShellSettings _shellSettings;
-        private readonly RequestContext _requestContext;
+        private readonly IFeatureManager _featureManager;
 
         public TenantShapeBindingStrategy(
             IEnumerable<IShapeTemplateHarvester> harvesters,
@@ -48,12 +47,11 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
             Work<ILayoutAwareViewEngine> viewEngine,
             IWorkContextAccessor workContextAccessor,
             ShellSettings shellSettings,
-            RequestContext requestContext
+            RequestContext requestContext,
+            IFeatureManager featureManager
             ) {
 
             _harvesters = harvesters;
-            _shellDescriptor = shellDescriptor;
-            _extensionManager = extensionManager;
             _cacheManager = cacheManager;
             _virtualPathMonitor = virtualPathMonitor;
             _virtualPathProvider = virtualPathProvider;
@@ -61,9 +59,9 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
             _parallelCacheContext = parallelCacheContext;
             _viewEngine = viewEngine;
             _workContextAccessor = workContextAccessor;
-            _requestContext = requestContext;
             Logger = NullLogger.Instance;
             _shellSettings = shellSettings;
+            _featureManager = featureManager;
         }
 
         public ILogger Logger { get; set; }
@@ -77,42 +75,52 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
         public void Discover(ShapeTableBuilder builder) {
             Logger.Information("Start discovering shapes");
 
+            // Getting enabled themes
             var harvesterInfos = _harvesters.Select(harvester => new { harvester, subPaths = harvester.SubPaths() });
-
-            var availableFeatures = _extensionManager.AvailableFeatures();
+            var availableFeatures = _featureManager.GetEnabledFeatures();
             var activeThemes = availableFeatures.Where(FeatureIsTheme);
             var activeThemesExtensions = Once(activeThemes);
 
-            var hits = _parallelCacheContext.RunInParallel(activeThemesExtensions, extensionDescriptor => {
+            // Getting folders in Alternates folder (The folder name should be the name of one Theme)
+            var appDataPath = @"~/App_Data/Sites";
+            var tenantName = _shellSettings.Name;
+            var alternatesFolderName = "Alternates";
+            var alternateFolderPath = Path.Combine(appDataPath, tenantName, alternatesFolderName).Replace(Path.DirectorySeparatorChar, '/');
+            var alternateThemeFolders = _virtualPathProvider.ListDirectories(alternateFolderPath).Select(Path.GetDirectoryName).ToReadOnlyCollection();
+            // Cycling folders
+            var hits = _parallelCacheContext.RunInParallel(alternateThemeFolders, folderFullPath => {
                 Logger.Information("Start discovering candidate views filenames");
                 var pathContexts = harvesterInfos.SelectMany(harvesterInfo => harvesterInfo.subPaths.Select(subPath => {
-                    var appDataPath = @"~/App_Data/Sites";
-                    var tenantName = _shellSettings.Name;
-                    var alternatesFolderName = "Alternates";
+                    //check if the folder name match with an enabled theme
+                    //otherwise it returns a null object
+                    var extensionDescriptor = activeThemesExtensions.SingleOrDefault(x => x.Id.Equals(new DirectoryInfo(folderFullPath).Name, System.StringComparison.OrdinalIgnoreCase));
+                    if (extensionDescriptor != null) {
+                        var basePath = Path.Combine(appDataPath, tenantName, alternatesFolderName, extensionDescriptor.Id).Replace(Path.DirectorySeparatorChar, '/');
+                        var monitorPath = Path.Combine(appDataPath, tenantName, alternatesFolderName).Replace(Path.DirectorySeparatorChar, '/');
+                        var virtualPath = Path.Combine(basePath, subPath).Replace(Path.DirectorySeparatorChar, '/');
+                        IList<string> fileNames;
+                        if (!_virtualPathProvider.DirectoryExists(virtualPath)) {
+                            fileNames = new List<string>();
+                        }
+                        else {
+                            fileNames = _cacheManager.Get(virtualPath, true, ctx => {
 
-                    var basePath = Path.Combine(appDataPath, tenantName, alternatesFolderName, extensionDescriptor.Id).Replace(Path.DirectorySeparatorChar, '/');
-                    var monitorPath = Path.Combine(appDataPath, tenantName, alternatesFolderName).Replace(Path.DirectorySeparatorChar, '/');
-                    var virtualPath = Path.Combine(basePath, subPath).Replace(Path.DirectorySeparatorChar, '/');
-                    IList<string> fileNames;
-                    if (!_virtualPathProvider.DirectoryExists(virtualPath)) {
-                        fileNames = new List<string>();
+                                if (!DisableMonitoring) {
+                                    Logger.Debug("Monitoring virtual path \"{0}\"", virtualPath);
+                                    ctx.Monitor(_virtualPathMonitor.WhenPathChanges(virtualPath));
+                                }
+
+                                return _virtualPathProvider.ListFiles(virtualPath).Select(Path.GetFileName).ToReadOnlyCollection();
+                            });
+                        }
+                        return new { harvesterInfo.harvester, basePath, subPath, virtualPath, fileNames, extensionDescriptor };
                     }
-                    else {
-                        fileNames = _cacheManager.Get(virtualPath, true, ctx => {
-
-                            if (!DisableMonitoring) {
-                                Logger.Debug("Monitoring virtual path \"{0}\"", virtualPath);
-                                ctx.Monitor(_virtualPathMonitor.WhenPathChanges(virtualPath));
-                            }
-
-                            return _virtualPathProvider.ListFiles(virtualPath).Select(Path.GetFileName).ToReadOnlyCollection();
-                        });
-                    }
-                    return new { harvesterInfo.harvester, basePath, subPath, virtualPath, fileNames };
-                })).ToList();
+                    return null;
+                }))
+                .Where(context => context != null) //remove null objects cause the inspected folder belongs to a disabled theme
+                .ToList();
 
                 Logger.Information("Done discovering candidate views filenames");
-
                 var fileContexts = pathContexts.SelectMany(pathContext => _shapeTemplateViewEngines.SelectMany(ve => {
                     var fileNames = ve.DetectTemplateFileNames(pathContext.fileNames);
                     return fileNames.Select(
@@ -124,23 +132,25 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
                 }));
 
                 var shapeContexts = fileContexts.SelectMany(fileContext => {
+                    var extensionDescriptor = fileContext.pathContext.extensionDescriptor;
                     var harvestShapeInfo = new HarvestShapeInfo {
                         SubPath = fileContext.pathContext.subPath,
                         FileName = fileContext.fileName,
-                        TemplateVirtualPath = fileContext.fileVirtualPath
+                        TemplateVirtualPath = fileContext.fileVirtualPath,
+
                     };
                     var harvestShapeHits = fileContext.pathContext.harvester.HarvestShape(harvestShapeInfo);
-                    return harvestShapeHits.Select(harvestShapeHit => new { harvestShapeInfo, harvestShapeHit, fileContext });
+                    return harvestShapeHits.Select(harvestShapeHit => new { harvestShapeInfo, harvestShapeHit, fileContext, extensionDescriptor });
                 });
 
-                return shapeContexts.Select(shapeContext => new { extensionDescriptor, shapeContext }).ToList();
-            }).SelectMany(hits2 => hits2);
+                return shapeContexts.Select(shapeContext => new { shapeContext }).ToList();
 
+            }).SelectMany(hits2 => hits2);
 
             foreach (var iter in hits) {
                 // templates are always associated with the namesake feature of module or theme
                 var hit = iter;
-                var featureDescriptors = iter.extensionDescriptor.Features.Where(fd => fd.Id == hit.extensionDescriptor.Id);
+                var featureDescriptors = iter.shapeContext.extensionDescriptor.Features.Where(fd => fd.Id == hit.shapeContext.extensionDescriptor.Id);
                 foreach (var featureDescriptor in featureDescriptors) {
                     Logger.Debug("Binding {0} as shape [{1}] for feature {2}",
                         hit.shapeContext.harvestShapeInfo.TemplateVirtualPath,
