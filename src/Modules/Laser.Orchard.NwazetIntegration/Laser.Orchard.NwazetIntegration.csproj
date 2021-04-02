@@ -106,6 +106,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ValidateAttributesActivity.cs" />
     <Compile Include="Activities\ValidateCheckoutActivity.cs" />
     <Compile Include="ApplicabilityCriteria\CallHasSpecificHeaderCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\AttributesValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
+    <Compile Include="Services\WorkflowActtributesValidation.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />

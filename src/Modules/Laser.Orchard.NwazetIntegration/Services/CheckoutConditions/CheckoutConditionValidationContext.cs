@@ -7,6 +7,10 @@ using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
     public class CheckoutConditionValidationContext {
+        public CheckoutConditionValidationContext() {
+            UserMayCheckout = true;
+        }
+
         // Inputs for the validation
         // Activities manipulating this context should get further
         // services they may need themselves, to avoid creating unnecessary
