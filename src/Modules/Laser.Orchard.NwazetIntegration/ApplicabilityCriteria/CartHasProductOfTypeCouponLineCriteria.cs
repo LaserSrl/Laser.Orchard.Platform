@@ -18,10 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             ISignals signals) 
             : base (workContextAccessor, cacheManager, signals) {
             
-            T = NullLocalizer.Instance;
         }
-
-        public Localizer T { get; set; }
+        
 
         public override string ProviderName => "CartHasProductOfTypeCouponLineCriteria";
 
