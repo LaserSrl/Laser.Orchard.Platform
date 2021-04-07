@@ -1,0 +1,20 @@
+﻿@model Laser.Orchard.StartupConfig.AppleEnvironment.ViewModels.MerchantDomainAssociationViewModel
+
+<h1>@Html.TitleForPage(T("Manage Merchant Domain Association file").ToString())</h1>
+@Html.ValidationSummary()
+@using (Html.BeginFormAntiForgeryPost()) {
+    <fieldset>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Text)">@T("File Content for /.well-known/apple-developer-merchantid-domain-association")</label>
+            @Html.TextAreaFor(m => m.Text, new { @class = "textMedium", rows = "16" })
+            @Html.ValidationMessageFor(m => m.Text, "*")
+            <span class="hint">@T("ApplePay Merchant Domain Association")</span>
+            <div class="checkbox-and-label">
+                @Html.CheckBoxFor(m => m.Enable)
+                <label for="@Html.FieldIdFor(m => m.Enable)" class="forcheckbox">@T("Enable ApplePay Merchant Domain Association File") </label>
+                <span class="hint">@T("Enable return file from the route: /.well-known/apple-developer-merchantid-domain-association")</span>
+            </div>
+        </div>
+    </fieldset>
+    <button class="primaryAction" type="submit">@T("Save")</button>
+}

@@ -87,3 +87,7 @@ Features:
 		Description: Options to edit content items on frontend.
 		Category: Content
 		Dependencies: Orchard.CustomForms
+	Laser.Orchard.ApplePay.DomainAssociation
+		Name: ApplePay Domain Association
+        Description: Enable the merchant domains verification.
+		Category: Payments
