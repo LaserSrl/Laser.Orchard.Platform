@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -1479,6 +1479,30 @@ msgstr "Esegue il codice razor presente nel file specificato."
 msgctxt "Laser.Orchard.StartupConfig.Tokens.RazorCodeExecutionToken"
 msgid "RazorExecute:<file name>"
 msgstr "RazorExecute:<file name>"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "A string intended to be used to start URLs. It resolves to either \"/\" if no prefix is set or \"/prefix/\" if there is a prefix for the tenant. If there is an application path that is correctly prepended."
+msgstr "Una stringa il cui scopo è essere usata all'inizio di URLs. Risulta in \"/\" se non è impostato nessun prefisso, o \"/prefisso/\" se c'è un prefisso configurato per il tenanto. Se è necessario inserire il path dell'applicazione, esso viene preposto correttamente."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Request Url Prefix"
+msgstr "Prefisso dell'Url richiesto"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Site Settings"
+msgstr "Impostazioni del Sito"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "The URL Prefix configured in the tenant's settings."
+msgstr "Il prefisso Url configurato nelle impostazioni del tenant."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Tokens for Site Settings"
+msgstr "Token per le impostazioni del Sito"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Top Level for Tenant"
+msgstr "Primo livello per il Tenant"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.StripHtmlToken"
 msgid "Strip an HTML string."
