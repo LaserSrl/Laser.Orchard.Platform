@@ -9,3 +9,4 @@ Features:
     Laser.Orchard.PaymentGateway:
         Description: Gateway di pagamento.
 		Dependencies: Laser.Orchard.StartupConfig
+		Category: Payments
