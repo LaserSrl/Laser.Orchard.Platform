@@ -131,17 +131,31 @@ namespace Laser.Orchard.Translator.Controllers {
         private void ImportFromPO(List<string> foldersToImport, ElementToTranslate type) {
             string parentFolder = "";
             string fileName = "";
+            string containerType = "";
 
-            if (type == ElementToTranslate.Module) {
-                parentFolder = "Modules";
-                fileName = "orchard.module.po";
+            switch (type) {
+                case ElementToTranslate.Module:
+                    parentFolder = "Modules";
+                    fileName = "orchard.module.po";
+                    containerType = "M";
+                    break;
+                case ElementToTranslate.Theme:
+                    parentFolder = "Themes";
+                    fileName = "orchard.theme.po";
+                    containerType = "T";
+                    break;
+                case ElementToTranslate.Tenant:
+                    // TODO: verify that the import feature for translations
+                    // works and figure out what should happen for alternates
+                    // that are specific for tenants
+                    //parentFolder = "Themes";
+                    //fileName = "orchard.po";
+                    //containerType = "A";
+                    //break;
+                default:
+                    return;
             }
-            else if (type == ElementToTranslate.Theme) {
-                parentFolder = "Themes";
-                fileName = "orchard.theme.po";
-            }
-            else
-                return;
+            
 
             foreach (var folder in foldersToImport) {
                 var path = Path.Combine(_utilsServices.TenantPath, parentFolder, folder, "App_Data", "Localization");
@@ -156,10 +170,7 @@ namespace Laser.Orchard.Translator.Controllers {
 
                                 translation.ContainerName = folder;
 
-                                if (type == ElementToTranslate.Module)
-                                    translation.ContainerType = "M";
-                                else if (type == ElementToTranslate.Theme)
-                                    translation.ContainerType = "T";
+                                translation.ContainerType = containerType;
 
                                 translation.Context = match.Groups[1].Value;
                                 translation.Message = match.Groups[2].Value;
