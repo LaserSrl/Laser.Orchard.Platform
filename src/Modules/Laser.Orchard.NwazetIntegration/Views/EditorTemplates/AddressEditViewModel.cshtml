@@ -64,7 +64,7 @@
                placeholder="@(placeholder != null ? placeholder.Text : "")" />
     </div>
 }
-<fieldset class="address-editor" id="@guid">
+<fieldset class="address-editor" id="@guid" data-address-type="@Model.AddressType.ToString().ToLowerInvariant()">
     <legend>@addressTypeTitle</legend>
     @* Personal information *@
     <div class="row">
