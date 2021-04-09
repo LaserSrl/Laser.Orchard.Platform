@@ -28,6 +28,7 @@ namespace Laser.Orchard.Translator.Controllers {
 
         public ActionResult ImportTranslations() {
             //  _translatorServices.DeleteAllTranslations();
+            //TODO: Add the stuff for tenants?
 
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
 

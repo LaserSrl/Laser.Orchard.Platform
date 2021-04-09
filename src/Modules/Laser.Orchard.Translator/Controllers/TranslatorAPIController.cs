@@ -24,6 +24,7 @@ namespace Laser.Orchard.Translator.Controllers
             Log = NullLogger.Instance;
         }
 
+        private readonly string[] _validContainerTypes = new string[] { "A", "M", "T" };
         [System.Web.Mvc.HttpPost]
         public bool AddRecords([FromBody] List<TranslationRecord> records)
         {
@@ -78,12 +79,26 @@ namespace Laser.Orchard.Translator.Controllers
                 var folderList = records.GroupBy(g => new { g.ContainerName, g.ContainerType })
                                             .Select(g => new { g.Key.ContainerName, g.Key.ContainerType });
 
+                if (folderList.Any(f => !_validContainerTypes.Contains(f.ContainerType))) {
+                    Log.Error("TranslatorAPIController.AddRecords error - Some record has invalid ContainerType");
+                    return false;
+                }
                 foreach (var folder in folderList)
                 {
-                    if (folder.ContainerType == "M")
-                        _translatorServices.EnableFolderTranslation(folder.ContainerName, ElementToTranslate.Module);
-                    else if (folder.ContainerType == "T")
-                        _translatorServices.EnableFolderTranslation(folder.ContainerName, ElementToTranslate.Theme);
+                    var folderType = ElementToTranslate.Module;
+                    switch (folder.ContainerType) {
+                        case "M":
+                            folderType = ElementToTranslate.Module;
+                            break;
+                        case "T":
+                            folderType = ElementToTranslate.Theme;
+                            break;
+                        case "A":
+                            folderType = ElementToTranslate.Tenant;
+                            break;
+                    }
+                    _translatorServices.EnableFolderTranslation(folder.ContainerName, folderType);
+
                 }
 
                 return true;
