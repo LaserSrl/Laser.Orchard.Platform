@@ -19,7 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly IContentManager _contentManager;
 
-        private bool _checkValidation = true;
+        private bool _justUpdated = false;
         public AddressOrderPartDriver(
             IAuthorizer authorizer,
             IAddressConfigurationService addressConfigurationService,
@@ -60,9 +60,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             var updatedModel = new OrderAddressEditorViewModel();
 
             if (!part.ShippingAddressIsOptional) {
-                if (!updater.TryUpdateModel(updatedModel, Prefix, null, null)) {
-                    _checkValidation = false;
-                }
+                updater.TryUpdateModel(updatedModel, Prefix, null, null);
+
                 // shipping
                 // before assigning the viewmodel value to the address I check 
                 // that the city and province values ​​are correct
@@ -76,11 +75,10 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 part.ShippingProvinceName = updatedModel.ShippingAddressVM.Province;
             }
             else {
-                if (!updater.TryUpdateModel(updatedModel, Prefix, null, new[] { "ShippingAddressVM" })) {
-                    _checkValidation = false;
-                }
+                updater.TryUpdateModel(updatedModel, Prefix, null, new[] { "ShippingAddressVM" });
             }
-            
+            _justUpdated = true;
+
             // billing
             // before assigning the viewmodel value to the address I check 
             // that the city and province values ​​are correct
@@ -167,8 +165,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             //// if properties are null, get them from the address that was in OrderPart
-            //// in the event of incorrect validation, this code must not be executedin the event of incorrect validation, this code must not be executed
-            if (_checkValidation) {
+            //// if the data is updated not be necessary to read values from the OrderPart
+            if (!_justUpdated) {
                 if (string.IsNullOrWhiteSpace(city)) {
                     city = address.City;
                 }
