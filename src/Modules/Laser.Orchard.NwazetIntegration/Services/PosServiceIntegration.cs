@@ -68,7 +68,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // can't checkout with an empty cart
             insertOrder &= productQuantities.Any();
             if (insertOrder) {
-                return _shapeFactory.Pos();
+                return _shapeFactory.Pos(
+                    AdditionalFormShapes: null);
             }
             else {
                 return null;

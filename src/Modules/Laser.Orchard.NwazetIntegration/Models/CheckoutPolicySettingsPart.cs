@@ -7,6 +7,11 @@ using System.Web;
 namespace Laser.Orchard.NwazetIntegration.Models {
     public class CheckoutPolicySettingsPart : ContentPart {
 
+        public const string AllPoliciesOption = "{All}";
+        public const string NoPolicyOption = "{None}";
+
+        public const string CacheKey = "CheckoutPolicySettingsPart_CacheKey";
+
         public string[] PolicyTextReferences {
             get {
                 return (Retrieve<string>("PolicyTextReferences") ?? "")
