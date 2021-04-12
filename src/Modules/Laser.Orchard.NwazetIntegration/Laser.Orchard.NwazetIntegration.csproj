@@ -176,6 +176,7 @@
     <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\UserAcceptedPoliciesCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\WorkflowCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutHelperService.cs" />
@@ -309,9 +310,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PaymentGatewayOrder.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Addresses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\NwazetContact.cshtml" />
