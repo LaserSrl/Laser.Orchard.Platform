@@ -13,5 +13,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         /// <returns></returns>
         IEnumerable<dynamic> AdditionalCheckoutStartShapes();
+
+        /// <summary>
+        /// This will validate the values received when posting to start
+        /// the checkout process.
+        /// </summary>
+        /// <param name="context"></param>
+        void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context);
     }
 }

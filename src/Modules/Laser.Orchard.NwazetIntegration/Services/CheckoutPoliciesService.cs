@@ -6,11 +6,13 @@ using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
+using Orchard.Localization;
 using Orchard.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public class CheckoutPoliciesService 
@@ -35,8 +37,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _policyServices = policyServices;
             _shapeFactory = shapeFactory;
 
+            T = NullLocalizer.Instance;
+
             _checkoutPoliciesByLanguage = new Dictionary<string, IEnumerable<PolicyTextInfoPart>>();
+
         }
+
+        public Localizer T { get; set; }
 
         // dictionary of required policies for each language
         // to memorize partial results and prevent refetching them
@@ -57,6 +64,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         #endregion
 
         #region ICheckoutExtensionProvider
+        private const string Prefix = "CheckoutPolicy";
         public IEnumerable<dynamic> AdditionalCheckoutStartShapes() {
             // The shape from this will add the option for the user to accept 
             // checkout policies.
@@ -74,8 +82,50 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var allCheckoutPolicies = CheckoutPoliciesForUser();
 
             yield return _shapeFactory.CheckoutPoliciesCheckoutStartShape(
-                AllCheckoutPolicies: allCheckoutPolicies
+                AllCheckoutPolicies: allCheckoutPolicies,
+                Prefix: Prefix
                 );
+        }
+        
+        public void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context) {
+            var allCheckoutPolicies = CheckoutPoliciesForUser();
+            // save the fact that the user has accepted the policies
+            var policiesAnswersToUpdate = new List<PolicyForUserViewModel>();
+            foreach (var policy in allCheckoutPolicies) {
+                var fieldName = string.Join(".", Prefix, policy.PolicyText.Id, "Accepted");
+                var valueResult = context.ValueProvider.GetValue(fieldName);
+                // If we haven't received the value from the request, do nothing.
+                if (valueResult != null) {
+                    // since we are binding a boolean, we follow the same logic we had in 
+                    // Orchard.Mvc.ModelBinders.BooleanBinderProvider
+                    // AttemptedValue may be "true,false" because in a form there may be
+                    // a checkbox and an hidden input. This Split+Aggregate don't affect
+                    // binding booleans from anywhere other than a form, because generally
+                    // other IValueProvider implementations will not give a list of possible
+                    // values to aggregate.
+                    var attemptedValues = valueResult.AttemptedValue.Split(new char[] { ',' });
+                    var value = attemptedValues
+                        .Select(v => Convert.ToBoolean(v))
+                        // This Aggregate operation works because the "true" is normally only there when
+                        // the checkbox was selected, while the false is always there thanks to the hidden
+                        // input.
+                        .Aggregate((a, b) => a || b);
+
+                    if (policy.PolicyText.UserHaveToAccept && !value) {
+                        // user hasn't accepted a mandatory policy
+                        context.ModelState.AddModelError(fieldName,
+                            T("Please agree to the terms and conditions before making a purchase.").Text); // TODO
+                    }
+                    if (value != policy.Accepted) {
+                        // we are going to update the value of acceptance for the policy:
+                        policy.Accepted = value;
+                        policiesAnswersToUpdate.Add(policy);
+                    }
+                }
+            }
+            if (policiesAnswersToUpdate.Any()) {
+                _policyServices.PolicyForUserMassiveUpdate(policiesAnswersToUpdate);
+            }
         }
         #endregion
 

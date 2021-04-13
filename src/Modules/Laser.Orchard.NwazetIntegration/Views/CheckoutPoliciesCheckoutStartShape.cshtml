@@ -1,9 +1,13 @@
 ﻿@using Laser.Orchard.Policy.ViewModels;
+@functions {
+    string prefix;
+}
 @{ 
     // this shape should be inside the form that will be posted 
     // to actually start the checkout process
 
     var allCheckoutPolicies = (IEnumerable<PolicyForUserViewModel>)Model.AllCheckoutPolicies;
+    prefix = (string)Model.Prefix;
 
     var requiredPolicies = allCheckoutPolicies
         .Where(pvm => pvm.PolicyText.UserHaveToAccept);
@@ -15,7 +19,9 @@
         .Where(pvm => !pvm.Accepted);
 }
 @helper DrawSinglePolicy(PolicyForUserViewModel policy) { 
-var inputName = "CheckoutPolicy."+ policy.PolicyText.Id + ".Accepted";
+var inputName = string.Join(".", prefix, policy.PolicyText.Id, "Accepted");
+var inputId = string.Join("_", prefix, policy.PolicyText.Id, "Accepted");
+
 if (policy.Accepted) {
     <input type="hidden"
             name="@inputName"
@@ -24,18 +30,20 @@ if (policy.Accepted) {
     /* do what Html.CheckboxFor would do */
     <div class="checkout-policy">
         <input type="checkbox" value="true"
-               name="@inputName" />
+               name="@inputName" 
+               id="@inputId"/>
         <input type="hidden" value="false"
                name="@inputName" />
         @if(policy.PolicyText.UserHaveToAccept) {
-            <label class="checkout-policy-label checkout-policy-mandatory required">
+            <label class="checkout-policy-label checkout-policy-mandatory required" for="@inputId">
                 @T("I have read and agree to {0}", Html.ItemDisplayLink(policy.PolicyText))
             </label>
         } else {
-            <label class="checkout-policy-label checkout-policy-optional">
+            <label class="checkout-policy-label checkout-policy-optional" for="@inputId">
                 @T("(optional) I have read and agree to {0}", Html.ItemDisplayLink(policy.PolicyText))
             </label>
         }
+        @Html.ValidationMessage(inputName)
     </div>
 }
 }

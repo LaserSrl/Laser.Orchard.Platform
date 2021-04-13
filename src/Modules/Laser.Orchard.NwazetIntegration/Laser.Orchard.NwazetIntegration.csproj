@@ -182,6 +182,7 @@
     <Compile Include="Services\CheckoutConditions\UserAcceptedPoliciesCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\WorkflowCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutExtensionContext.cs" />
     <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
