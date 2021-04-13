@@ -3414,18 +3414,36 @@ a.text-success:hover {
     }
 
     .header-nav .header-nav-brand {
-        display: inline-table;
+        display: inline-block;
         padding: 0;
         height: 64px;
+        position: fixed;
+        width:70%;
+    }
+
+    @media (min-width: 1000px) and (max-width: 1400px) {
+        .header-nav .header-nav-brand {
+            width: 60%;
+        }
+    }
+
+    @media (max-width: 999px) {
+        .header-nav .header-nav-brand {
+            width: 55%;
+        }
     }
 
         .header-nav .header-nav-brand .brand-holder {
-            display: table-cell;
+            display: block;
             padding-left: 33px;
-            padding-top: 15px;
+            padding-top: 30px;
             vertical-align: middle;
+            overflow: hidden;
+            height: 54px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
+        
         .header-nav .header-nav-brand a {
             text-decoration: none;
         }
