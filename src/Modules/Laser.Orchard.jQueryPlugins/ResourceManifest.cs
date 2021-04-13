@@ -105,6 +105,18 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("PasswordStrength")
                 .SetCdn("https://cdn.jsdelivr.net/npm/pwstrength-bootstrap@3.0.9/dist/pwstrength-bootstrap.min.js")
                 .SetDependencies("jQuery");
+
+            //FullCalendar
+            manifest.DefineScript("FullCalendar")
+                .SetUrl("fullcalendar/fullcalendar-5.6.0/lib/main.min.js", "fullcalendar/fullcalendar-5.6.0/lib/main.js")
+                .SetDependencies("JQuery");
+            manifest.DefineScript("FullCalendar.Locales")
+                .SetUrl("fullcalendar/fullcalendar-5.6.0/lib/locales-all.min.js", "fullcalendar/fullcalendar-5.6.0/lib/locales-all.js")
+                .SetDependencies("FullCalendar");
+
+            manifest.DefineStyle("FullCalendar")
+                .SetUrl("fullcalendar/fullcalendar-5.6.0/main.min.css", "fullcalendar/fullcalendar-5.6.0/main.css");
+
         }
     }
 }
