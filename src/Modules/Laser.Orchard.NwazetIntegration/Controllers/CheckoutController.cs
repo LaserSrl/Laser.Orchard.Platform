@@ -56,6 +56,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ShellSettings _shellSettings;
         private readonly IProductPriceService _productPriceService;
         private readonly INotifier _notifier;
+        private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -70,7 +71,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ICheckoutHelperService checkoutHelperService,
             ShellSettings shellSettings,
             IProductPriceService productPriceService,
-            INotifier notifier) {
+            INotifier notifier,
+            IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -85,6 +87,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _shellSettings = shellSettings;
             _productPriceService = productPriceService;
             _notifier = notifier;
+            _checkoutExtensionProviders = checkoutExtensionProviders;
 
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
@@ -111,7 +114,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult CheckoutStart() {
+        public ActionResult CheckoutStart(FormCollection formCollection) {
+            var extensionContext = new CheckoutExtensionContext() {
+                ValueProvider = ValueProvider,
+                ModelState = ModelState,
+                FormCollection = formCollection
+            };
+            foreach (var provider in _checkoutExtensionProviders) {
+                provider.ProcessAdditionalCheckoutStartInformation(extensionContext);
+            }
+            if (!ModelState.IsValid) {
+                // redirect back to the page the user is coming from
+                // or the cart if it's not from within the tenant
+                var referrer = Request.UrlReferrer;
+                if (Request.Url.Host == referrer.Host) {
+                    return Redirect(referrer.ToString());
+                }
+                return RedirectToAction("Index", "ShoppingCart", new { area = "Nwazet.Commerce" });
+            }
+
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
                 if (redirect != null) {

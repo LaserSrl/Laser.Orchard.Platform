@@ -1,5 +1,6 @@
 ﻿public enum ElementToTranslate
 {
-    Module,
-    Theme
+    Module, // -> TranslationRecord.ContainerType = "M"
+    Theme, // -> TranslationRecord.ContainerType = "T"
+    Tenant // -> TranslationRecord.ContainerType = "A"
 }
