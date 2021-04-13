@@ -90,7 +90,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context) {
             var allCheckoutPolicies = CheckoutPoliciesForUser();
             // save the fact that the user has accepted the policies
-            var policiesAnswersToUpdate = new List<PolicyForUserViewModel>();
+            var updatePolicies = false;
             foreach (var policy in allCheckoutPolicies) {
                 var fieldName = string.Join(".", Prefix, policy.PolicyText.Id, "Accepted");
                 var valueResult = context.ValueProvider.GetValue(fieldName);
@@ -114,17 +114,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     if (policy.PolicyText.UserHaveToAccept && !value) {
                         // user hasn't accepted a mandatory policy
                         context.ModelState.AddModelError(fieldName,
-                            T("Please agree to the terms and conditions before making a purchase.").Text); // TODO
+                            T("Please agree to the terms and conditions before making a purchase.").Text);
                     }
                     if (value != policy.Accepted) {
                         // we are going to update the value of acceptance for the policy:
                         policy.Accepted = value;
-                        policiesAnswersToUpdate.Add(policy);
+                        updatePolicies = true;
                     }
                 }
             }
-            if (policiesAnswersToUpdate.Any()) {
-                _policyServices.PolicyForUserMassiveUpdate(policiesAnswersToUpdate);
+            if (updatePolicies) {
+                _policyServices.PolicyForUserMassiveUpdate(allCheckoutPolicies.ToList());
             }
         }
         #endregion
