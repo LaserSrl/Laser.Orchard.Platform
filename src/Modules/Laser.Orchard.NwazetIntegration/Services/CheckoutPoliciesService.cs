@@ -5,6 +5,7 @@ using Laser.Orchard.Policy.ViewModels;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
+using Orchard.DisplayManagement;
 using Orchard.Security;
 using System;
 using System.Collections.Generic;
@@ -12,29 +13,36 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
-    public class CheckoutPoliciesService : ICheckoutPoliciesService {
+    public class CheckoutPoliciesService 
+        : ICheckoutPoliciesService, ICheckoutExtensionProvider {
+
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
         private readonly IPolicyServices _policyServices;
+        private readonly dynamic _shapeFactory;
 
         public CheckoutPoliciesService(
             IWorkContextAccessor workContextAccessor,
             ICacheManager cacheManager,
             ISignals signals,
-            IPolicyServices policyServices) {
+            IPolicyServices policyServices,
+            IShapeFactory shapeFactory) {
 
             _workContextAccessor = workContextAccessor;
             _cacheManager = cacheManager;
             _signals = signals;
             _policyServices = policyServices;
+            _shapeFactory = shapeFactory;
 
             _checkoutPoliciesByLanguage = new Dictionary<string, IEnumerable<PolicyTextInfoPart>>();
         }
 
         // dictionary of required policies for each language
+        // to memorize partial results and prevent refetching them
         private Dictionary<string, IEnumerable<PolicyTextInfoPart>> _checkoutPoliciesByLanguage;
 
+        #region ICheckoutPoliciesService
         public bool UserHasAllAcceptedPolicies(IUser user = null, string culture = null) {
 
             var policiesForUser = CheckoutPoliciesForUser(user, culture);
@@ -46,8 +54,33 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // and hasn't been.
             return !policiesForUser.Any(pvm => pvm.PolicyText.UserHaveToAccept && !pvm.Accepted);
         }
+        #endregion
 
-        public IEnumerable<PolicyForUserViewModel> CheckoutPoliciesForUser(IUser user = null, string culture = null) {
+        #region ICheckoutExtensionProvider
+        public IEnumerable<dynamic> AdditionalCheckoutStartShapes() {
+            // The shape from this will add the option for the user to accept 
+            // checkout policies.
+            // There will be one "line" (with a checkbox) for each configured
+            // policy that the user hasn't accepted yet.
+            // If the user has already accepted a given policy, that line 
+            // will not show.
+
+            // The shape will need:
+            // - The list of all required policies that are configured for checkout.
+            //   - Accepted vs to accept
+            // - The list of all optional policies that are configured for checkout.
+            //   - Accepted vs to accept
+            // These four lists, added up together:
+            var allCheckoutPolicies = CheckoutPoliciesForUser();
+
+            yield return _shapeFactory.CheckoutPoliciesCheckoutStartShape(
+                AllCheckoutPolicies: allCheckoutPolicies
+                );
+        }
+        #endregion
+
+        #region private methods
+        private IEnumerable<PolicyForUserViewModel> CheckoutPoliciesForUser(IUser user = null, string culture = null) {
             var settings = GetSettings();
             if (settings.PolicyTextReferences.Contains(CheckoutPolicySettingsPart.NoPolicyOption)) {
                 // no policy is configured for checkout
@@ -70,7 +103,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 // no policy is configured for checkout
                 return Enumerable.Empty<PolicyForUserViewModel>();
             }
-            // State of all the site's policies for the user. THis includes the ones
+            // State of all the site's policies for the user. This includes the ones
             // for which the user hasn't given an answer yet.
             var userPolicies = _policyServices
                 .GetPoliciesForUserOrSession(userToCheck, false, cultureToCheck)
@@ -121,5 +154,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             return _checkoutPolicyIds;
         }
+        #endregion
+
+
     }
 }

@@ -16,13 +16,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICheckoutPoliciesService _checkoutPoliciesService;
         private readonly INotifier _notifier;
-        private readonly dynamic _shapeFactory;
 
         public UserAcceptedPoliciesCheckoutCondition(
             IWorkContextAccessor workContextAccessor,
             ICheckoutPoliciesService checkoutPoliciesService,
-            INotifier notifier,
-            IShapeFactory shapeFactory) {
+            INotifier notifier) {
 
             _workContextAccessor = workContextAccessor;
             _checkoutPoliciesService = checkoutPoliciesService;
@@ -64,20 +62,5 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
             return true;
         }
 
-        public IEnumerable<dynamic> AdditionalCheckoutStartShapes() {
-            // The shape from this will add the option for the user to accept 
-            // checkout policies.
-            // There will be one "line" (with a checkbox) for each configured
-            // policy that the user hasn't accepted yet.
-            // If the user has already accepted a given policy, that line 
-            // will not show.
-
-            // The shape will need:
-            // - The list of all required policies that are configured for checkout.
-            // - The list of all optional policies that are configured for checkout.
-            // - The list of all policies that the user has already accepted.
-
-            yield return null;
-        }
     }
 }

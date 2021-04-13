@@ -190,6 +190,7 @@
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
     <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\ICheckoutCondition.cs" />
+    <Compile Include="Services\ICheckoutExtensionProvider.cs" />
     <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\ICheckoutPoliciesService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
@@ -386,6 +387,7 @@
     <Content Include="Views\EditorTemplates\Parts\ProductPriceWithVATEditor.cshtml" />
     <Content Include="Views\DefinitionTemplates\ProductVatConfigurationPartInputPriceSettingsVM.cshtml" />
     <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
+    <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
