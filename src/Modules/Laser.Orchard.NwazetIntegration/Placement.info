@@ -15,6 +15,8 @@
   <Place Parts_Territory_AdministrativeType_Edit="Content:2.1" />
   <Place Parts_Territory_AddressType_Edit="Content:2.1" />
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
+  <Place Parts_Order_PaymentInfo="Content:1.60"/>
+  <Place Parts_Order_CheckoutPolicies="Content:1.61"/>
   <Place Parts_Product_TagManager="Content:1"/>
   <Place Parts_ProductPriceWithVAT_Edit="Content:3.5" />
   <!--Hide away the editor shape for shipping areas-->

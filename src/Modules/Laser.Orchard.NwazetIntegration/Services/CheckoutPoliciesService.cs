@@ -61,6 +61,40 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // and hasn't been.
             return !policiesForUser.Any(pvm => pvm.PolicyText.UserHaveToAccept && !pvm.Accepted);
         }
+
+        public IEnumerable<PolicyForUserViewModel> CheckoutPoliciesForUser(IUser user = null, string culture = null) {
+            var settings = GetSettings();
+            if (settings.PolicyTextReferences.Contains(CheckoutPolicySettingsPart.NoPolicyOption)) {
+                // no policy is configured for checkout
+                return Enumerable.Empty<PolicyForUserViewModel>();
+            }
+            // check the user and culture
+            var workContext = _workContextAccessor.GetContext();
+            var userToCheck = user ?? workContext.CurrentUser;
+            var cultureToCheck = string.IsNullOrWhiteSpace(culture)
+                ? workContext.CurrentCulture : culture;
+            // get checkout policies for the language (if any)
+            if (!_checkoutPoliciesByLanguage.ContainsKey(cultureToCheck)) {
+                // fetch the required policies for the language
+                _checkoutPoliciesByLanguage.Add(
+                    cultureToCheck,
+                    CheckoutPoliciesForCulture(cultureToCheck));
+            }
+            var checkoutPolicies = _checkoutPoliciesByLanguage[cultureToCheck];
+            if (!checkoutPolicies.Any()) {
+                // no policy is configured for checkout
+                return Enumerable.Empty<PolicyForUserViewModel>();
+            }
+            // State of all the site's policies for the user. This includes the ones
+            // for which the user hasn't given an answer yet.
+            var userPolicies = _policyServices
+                .GetPoliciesForUserOrSession(userToCheck, false, cultureToCheck)
+                .Policies;
+            // out of those, only return the ones that are configured for checkout
+            return userPolicies
+                .Where(up => checkoutPolicies.Any(cp => cp.Id == up.PolicyText.Id));
+        }
+
         #endregion
 
         #region ICheckoutExtensionProvider
@@ -130,39 +164,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         #endregion
 
         #region private methods
-        private IEnumerable<PolicyForUserViewModel> CheckoutPoliciesForUser(IUser user = null, string culture = null) {
-            var settings = GetSettings();
-            if (settings.PolicyTextReferences.Contains(CheckoutPolicySettingsPart.NoPolicyOption)) {
-                // no policy is configured for checkout
-                return Enumerable.Empty<PolicyForUserViewModel>();
-            }
-            // check the user and culture
-            var workContext = _workContextAccessor.GetContext();
-            var userToCheck = user ?? workContext.CurrentUser;
-            var cultureToCheck = string.IsNullOrWhiteSpace(culture)
-                ? workContext.CurrentCulture : culture;
-            // get checkout policies for the language (if any)
-            if (!_checkoutPoliciesByLanguage.ContainsKey(cultureToCheck)) {
-                // fetch the required policies for the language
-                _checkoutPoliciesByLanguage.Add(
-                    cultureToCheck,
-                    CheckoutPoliciesForCulture(cultureToCheck));
-            }
-            var checkoutPolicies = _checkoutPoliciesByLanguage[cultureToCheck];
-            if (!checkoutPolicies.Any()) {
-                // no policy is configured for checkout
-                return Enumerable.Empty<PolicyForUserViewModel>();
-            }
-            // State of all the site's policies for the user. This includes the ones
-            // for which the user hasn't given an answer yet.
-            var userPolicies = _policyServices
-                .GetPoliciesForUserOrSession(userToCheck, false, cultureToCheck)
-                .Policies;
-            // out of those, only return the ones that are configured for checkout
-            return userPolicies
-                .Where(up => checkoutPolicies.Any(cp => cp.Id == up.PolicyText.Id));
-        }
-
+        
         private CheckoutPolicySettingsPart GetSettings() {
             return _cacheManager.Get(CheckoutPolicySettingsPart.CacheKey,
                 ctx => {
