@@ -5,7 +5,7 @@
     Layout.Title = T("Checkout with Stripe");
     var title = T("Checkout with <a href=\"https://stripe.com/\">Stripe</a>");
     Script.Require("jQuery");
-    Script.Include("https://js.stripe.com/v1/");
+    Script.Require("Stripe");
     var nameFormatter = WorkContext.Resolve<IAddressFormatter>();
     var address = Model.BillingAddress;
     using (Script.Foot()) {
