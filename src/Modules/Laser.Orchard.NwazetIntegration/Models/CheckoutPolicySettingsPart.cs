@@ -11,6 +11,7 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public const string NoPolicyOption = "{None}";
 
         public const string CacheKey = "CheckoutPolicySettingsPart_CacheKey";
+        public const string OrderXElementName = "CheckoutPolicy";
 
         public string[] PolicyTextReferences {
             get {
