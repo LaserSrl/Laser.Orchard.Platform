@@ -124,6 +124,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 provider.ProcessAdditionalCheckoutStartInformation(extensionContext);
             }
             if (!ModelState.IsValid) {
+                TempData["ModelState"] = ModelState;
                 // redirect back to the page the user is coming from
                 // or the cart if it's not from within the tenant
                 var referrer = Request.UrlReferrer;
