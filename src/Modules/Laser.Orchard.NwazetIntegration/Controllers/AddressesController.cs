@@ -71,89 +71,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         public Localizer T { get; set; }
-
-        [Themed]
-        public ActionResult Index(AddressesVM model) {
-            ActionResult result = null;
-            var thecurrentUser = _orchardServices.WorkContext.CurrentUser;
-
-            switch (model.Submit) {
-                case "cart":
-                    result = RedirectToAction("Index", "ShoppingCart", new { area = "Nwazet.Commerce" });
-                    break;
-                case "save":
-                    // validate addresses
-                    if (!TryUpdateModel(model.ShippingAddressVM) || !TryUpdateModel(model.BillingAddressVM) ||
-                        !ValidateVM(model.ShippingAddressVM) || !ValidateVM(model.BillingAddressVM) ||
-                        !ValidateVM(model)) {
-
-                        // in case of error, repopulate the default lists
-                        model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
-                        model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
-                        if (thecurrentUser != null) {
-                            model.ListAvailableBillingAddress = _nwazetCommunicationService.GetBillingByUser(thecurrentUser);
-                            model.ListAvailableShippingAddress = _nwazetCommunicationService.GetShippingByUser(thecurrentUser);
-                        }
-                        result = View("Index", model);
-                        break;
-                    }
-                    // Hack: based on the address coming in model.ShippingAddressVM, we can compute the actual
-                    // destinations to be used for tax computations at this stage
-                    var countryName = _addressConfigurationService
-                        ?.GetCountry(model.ShippingAddressVM.CountryId)
-                        ?.Record?.TerritoryInternalRecord.Name;
-
-                    // check if there are products in the cart
-                    if (_shoppingCart.GetProducts().Any()) {
-                        // update addresses based on those populated in the form
-                        model.ShippingAddress = AddressFromVM(model.ShippingAddressVM);
-                        model.BillingAddress = AddressFromVM(model.BillingAddressVM);
-                        // create order
-                        var paymentGuid = Guid.NewGuid().ToString();
-                        var order = _checkoutHelperService.CreateOrder(model, paymentGuid, countryName);
-                        
-                        // save the addresses for the contact doing the order.
-                        _nwazetCommunicationService.OrderToContact(order);
-                        var reason = string.Format("Purchase Order {0}", order.OrderKey);
-                        var payment = new PaymentRecord {
-                            Reason = reason,
-                            Amount = order.Total,
-                            Currency = order.CurrencyCode,
-                            ContentItemId = order.Id
-                        };
-                        var nonce = _paymentService.CreatePaymentNonce(payment);
-                        result = RedirectToAction("Pay", "Payment",
-                            new {
-                                area = "Laser.Orchard.PaymentGateway",
-                                nonce = nonce,
-                                newPaymentGuid = paymentGuid
-                            });
-                    } else {
-                        _notifier.Information(T("There are no products in the cart. Go back to the catalog and add products."));
-                        result = View("Index", model);
-                    }
-                    break;
-                default:
-                    model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress);
-                    model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress);
-                    if (thecurrentUser != null) {
-                        model.ListAvailableBillingAddress = _nwazetCommunicationService.GetBillingByUser(thecurrentUser);
-                        model.ListAvailableShippingAddress = _nwazetCommunicationService.GetShippingByUser(thecurrentUser);
-                        model.Email = thecurrentUser.Email;
-                        var cel = _nwazetCommunicationService.GetPhone(thecurrentUser);
-                        if (cel.Length == 2) {
-                            model.PhonePrefix = cel[0];
-                            model.Phone = cel[1];
-                        }
-
-
-                    }
-                    result = View("Index", model);
-                    break;
-            }
-            return result;
-        }
-
+        
         private Address AddressFromVM(AddressEditViewModel vm) {
             FixUpdate(vm);
             return new Address {
@@ -208,14 +126,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [HttpGet, Themed, OutputCache(NoStore = true, Duration = 0), Authorize]
-        public ActionResult Create() {
+        public ActionResult Create(int type = 0) {
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (user == null) {
                 // we should never be here, because the AuthorizeAttribute should
                 // take care of anonymous users.
                 return new HttpUnauthorizedResult(T("Sign In to  manage your saved addresses.").Text);
             }
-            return View(CreateVM());
+            var model = CreateVM();
+            model.AddressType = type == 0 ? AddressRecordType.ShippingAddress : AddressRecordType.BillingAddress;
+            return View(model);
         }
         [HttpPost, Themed,
             OutputCache(NoStore = true, Duration = 0), Authorize,
@@ -236,7 +156,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
                 FixUpdate(newAddress);
-                
+
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -287,7 +207,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 newAddress.BillingCountries = _addressConfigurationService.CountryOptions(AddressRecordType.BillingAddress);
 
                 FixUpdate(newAddress);
-                
+
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
                 return View(newAddress);
             }
@@ -303,21 +223,34 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         #endregion
 
         #region Actions for advanced address configuration
+        [HttpGet]
+        public JsonResult GetAdministrativeInfo(int territoryId) {
+            var country = _addressConfigurationService.GetCountry(territoryId);
+            var part = country?.As<TerritoryAdministrativeTypePart>();
+            if (part != null) {
+                return Json(new { part.HasCities, part.HasProvinces, part.AdministrativeType }, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                return null;
+            }
+        }
+
 
         [HttpPost]
         public JsonResult GetCities(ConfigurationRequestViewModel viewModel) {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
             if (country == null) {
                 // this is an error
-            } else {
+            }
+            else {
                 var cities = _addressConfigurationService.GetAllCities(
                     viewModel.IsBillingAddress
                         ? AddressRecordType.BillingAddress
                         : AddressRecordType.ShippingAddress,
                     country);
-                if (viewModel.CityId != 0) { 
+                if (viewModel.CityId != 0) {
                     var selectedCity = _addressConfigurationService.GetCity(viewModel.CityId);
-                    if (selectedCity != null && !cities.Any(c=>c.Record.TerritoryInternalRecord.Id == viewModel.CityId)) {
+                    if (selectedCity != null && !cities.Any(c => c.Record.TerritoryInternalRecord.Id == viewModel.CityId)) {
                         cities = cities.Concat(new[] { selectedCity });
                     }
                 }
@@ -357,15 +290,29 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return Json(new List<TerritoryTag>(), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [ActionName("provincesapi")]
+        public JsonResult GetProvincesGet(string query, int countryId, int cityId, string cityName, bool isBillingAddress) {
+            var jsonResult = GetProvincesPost(new ConfigurationRequestViewModel {
+                CountryId = countryId,
+                CityId = cityId,
+                CityName = cityName,
+                IsBillingAddress = isBillingAddress
+            });
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return jsonResult;
+        }
         [HttpPost]
-        public JsonResult GetProvinces(ConfigurationRequestViewModel viewModel) {
+        [ActionName("GetProvinces")]
+        public JsonResult GetProvincesPost(ConfigurationRequestViewModel viewModel) {
             var country = _addressConfigurationService.GetCountry(viewModel.CountryId);
             var city = string.IsNullOrWhiteSpace(viewModel.CityName)
                 ? _addressConfigurationService.GetCity(viewModel.CityId)
                 : _addressConfigurationService.GetCity(viewModel.CityName);
             if (country == null) {
                 // this is an error
-            } else {
+            }
+            else {
                 // city may be null: that is handled in the service
                 var provinces = _addressConfigurationService.GetAllProvinces(
                     viewModel.IsBillingAddress
@@ -485,22 +432,34 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var countryTP = _addressConfigurationService
                 .GetCountry(vm.CountryId);
             vm.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
-            // City: we may be settings either the Id or the string, but either way the
-            //   property we are setting is vm.City. We get the territory and set the Id
-            var cityTP = GetTerritory(vm.City);
-            if (cityTP != null) {
-                vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
-                vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
-            } else {
+            // City: we may be settings either the Id or the string
+            if (vm.CityId > 0) {
+                var cityTP = GetTerritory(vm.CityId.ToString());
+                if (cityTP != null) {
+                    vm.CityId = cityTP.Record.TerritoryInternalRecord.Id;
+                    vm.City = _contentManager.GetItemMetadata(cityTP).DisplayText;
+                }
+                else {
+                    vm.CityId = -1;
+                    vm.City = "";
+                }
+            }
+            else {
                 vm.CityId = -1;
             }
-            // Province: we may be settings either the Id or the string, but either way the
-            //   property we are setting is vm.Province. We get the territory and set the Id
-            var provinceTP = GetTerritory(vm.Province);
-            if (provinceTP != null) {
-                vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
-                vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
-            } else {
+            // Province: we may be settings either the Id or the string
+            if (vm.ProvinceId > 0) {
+                var provinceTP = GetTerritory(vm.ProvinceId.ToString());
+                if (provinceTP != null) {
+                    vm.ProvinceId = provinceTP.Record.TerritoryInternalRecord.Id;
+                    vm.Province = _contentManager.GetItemMetadata(provinceTP).DisplayText;
+                }
+                else {
+                    vm.ProvinceId = -1;
+                    vm.Province = "";
+                }
+            }
+            else {
                 vm.ProvinceId = -1;
             }
         }

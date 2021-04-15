@@ -1,9 +1,13 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.MediaLibrary.Fields;
 @using Orchard.ContentManagement;
+@using Nwazet.Commerce.Models;
+@using Nwazet.Commerce.Services;
+@using Nwazet.Commerce.Extensions;
 @{
     var viewModel = (CheckoutViewModel)Model.ViewModel;
     var _contentManager = WorkContext.Resolve<IContentManager>();
+    var _attributeExtensionProviders = WorkContext.Resolve<IEnumerable<IProductAttributeExtensionProvider>>();
 }
 <fieldset class="cart-summary-checkout">
     <legend>@T("Your cart")</legend>
@@ -28,6 +32,18 @@
 
         var linePriceAdjustment = viewModel.GetLinePriceAdjustement(pq);
         var linePrice = pq.Quantity * unitPrice + linePriceAdjustment;
+        
+        var itemDisplayText = _contentManager.GetItemMetadata(pq.Product).DisplayText;
+        var productAttributes = (IDictionary<int, ProductAttributeValueExtended>)pq.AttributeIdsToValues;
+        if (productAttributes != null && productAttributes.Any()) {
+            var additionalText = 
+                AttributeNameUtilities.AttributesDisplayText(productAttributes, (IContent)pq.Product, _attributeExtensionProviders);
+            if (!string.IsNullOrWhiteSpace(additionalText)) {
+                itemDisplayText += " (" +
+                    additionalText.Trim()
+                    + ")";
+            }
+        }
 
         <div class="product product-line row">
             <div class="product-info">
@@ -40,7 +56,7 @@
                         </div>
                     }
                     <div class="product-name">
-                        <span class="product-title">@_contentManager.GetItemMetadata(pq.Product).DisplayText</span>
+                        <span class="product-title">@itemDisplayText</span>
                     </div>
                 </a>
             </div>

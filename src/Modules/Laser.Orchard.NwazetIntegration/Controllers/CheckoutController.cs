@@ -56,6 +56,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly ShellSettings _shellSettings;
         private readonly IProductPriceService _productPriceService;
         private readonly INotifier _notifier;
+        private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -70,7 +71,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ICheckoutHelperService checkoutHelperService,
             ShellSettings shellSettings,
             IProductPriceService productPriceService,
-            INotifier notifier) {
+            INotifier notifier,
+            IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -85,6 +87,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _shellSettings = shellSettings;
             _productPriceService = productPriceService;
             _notifier = notifier;
+            _checkoutExtensionProviders = checkoutExtensionProviders;
 
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
@@ -111,7 +114,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         }
 
         [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult CheckoutStart() {
+        public ActionResult CheckoutStart(FormCollection formCollection) {
+            var extensionContext = new CheckoutExtensionContext() {
+                ValueProvider = ValueProvider,
+                ModelState = ModelState,
+                FormCollection = formCollection
+            };
+            foreach (var provider in _checkoutExtensionProviders) {
+                provider.ProcessAdditionalCheckoutStartInformation(extensionContext);
+            }
+            if (!ModelState.IsValid) {
+                // redirect back to the page the user is coming from
+                // or the cart if it's not from within the tenant
+                var referrer = Request.UrlReferrer;
+                if (Request.Url.Host == referrer.Host) {
+                    return Redirect(referrer.ToString());
+                }
+                return RedirectToAction("Index", "ShoppingCart", new { area = "Nwazet.Commerce" });
+            }
+
             var user = _workContextAccessor.GetContext().CurrentUser;
             if (!_checkoutHelperService.UserMayCheckout(user, out ActionResult redirect)) {
                 if (redirect != null) {
@@ -209,6 +230,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
             }
             InjectServices(model);
+            FinalizeVM(model);
             return View(model);
         }
 
@@ -270,14 +292,19 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // addresses they just configured.
             if (user != null) {
                 if (model.BillingAddressVM != null && model.BillingAddressVM.AddressRecord != null) {
-                    if (model.ListbillingAddressVM > 0) {
-                        model.BillingAddressVM.AddressRecord.Id = model.ListbillingAddressVM;
+                    var countryTP = _addressConfigurationService.GetCountry(model.BillingAddressVM.CountryId);
+                    model.BillingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
+
+                    if (model.BillingAddressVMListAddress > 0) {
+                        model.BillingAddressVM.AddressRecord.Id = model.BillingAddressVMListAddress;
                     }
                     _nwazetCommunicationService.AddAddress(model.BillingAddressVM.AddressRecord, user);
                 }
                 if (model.ShippingAddressVM != null && model.ShippingAddressVM.AddressRecord != null) {
-                    if (model.ListshippingAddressVM> 0) {
-                        model.ShippingAddressVM.AddressRecord.Id = model.ListshippingAddressVM;
+                    var countryTP = _addressConfigurationService.GetCountry(model.ShippingAddressVM.CountryId);
+                    model.ShippingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
+                    if (model.ShippingAddressVMListAddress > 0) {
+                        model.ShippingAddressVM.AddressRecord.Id = model.ShippingAddressVMListAddress;
                     }
                     _nwazetCommunicationService.AddAddress(model.ShippingAddressVM.AddressRecord, user);
                 }
@@ -475,7 +502,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // so we redirect back to shipping selection
                     // Put the model in TempData so it can be reused in the next action.
                     // This is an attempt to skip shipping, so try to shortcircuit.
-                    model.UseDefaultShipping = true; 
+                    model.UseDefaultShipping = true;
                     TempData["CheckoutViewModel"] = model;
                     return RedirectToAction("Shipping");
                 }
@@ -577,7 +604,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             TempData["CheckoutViewModel"] = model;
             return Redirect(selectedService.GetPosActionUrl(payment.Guid));
         }
-        
+
         private bool IsShippingRequired() {
             //TODO
             // This should get the current order under process, as well as any other relevant
@@ -600,7 +627,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
         }
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType, AddressEditViewModel vm) {
-            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType,vm);
+            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType, vm);
         }
         private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
             // addresses
@@ -618,7 +645,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private bool ValidateVM(CheckoutViewModel vm) {
             // validate Email
             var validEmail = !string.IsNullOrWhiteSpace(vm.Email)
-                && Regex.IsMatch(vm.Email, Constants.EmailPattern, 
+                && Regex.IsMatch(vm.Email, Constants.EmailPattern,
                     RegexOptions.IgnoreCase | RegexOptions.Compiled);
             var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
                 && ValidateVM(vm.BillingAddressVM);
@@ -627,6 +654,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     && ValidateVM(vm.ShippingAddressVM);
             }
             validationSuccess &= ValidateAddresses(vm);
+            if (!validEmail) {
+                ModelState.AddModelError($"{nameof(vm.Email)}", T("E-mail is invalid.").Text);
+            }
             return validEmail && validationSuccess;
         }
         private bool ValidateVM(AddressEditViewModel vm) {
@@ -685,6 +715,30 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             return response;
         }
-
+        private void FinalizeVM(CheckoutViewModel vm) {
+            if (vm.ShippingAddressVM == null || vm.BillingAddressVM == null) {
+                return;
+            }
+            if (
+            vm.ShippingAddressVM.CountryId == vm.BillingAddressVM.CountryId &&
+            vm.ShippingAddressVM.Country == vm.BillingAddressVM.Country &&
+            vm.ShippingAddressVM.CityId == vm.BillingAddressVM.CityId &&
+            vm.ShippingAddressVM.City == vm.BillingAddressVM.City &&
+            vm.ShippingAddressVM.Company == vm.BillingAddressVM.Company &&
+            vm.ShippingAddressVM.Address1 == vm.BillingAddressVM.Address1 &&
+            vm.ShippingAddressVM.Address2 == vm.BillingAddressVM.Address2 &&
+            vm.ShippingAddressVM.FirstName == vm.BillingAddressVM.FirstName &&
+            vm.ShippingAddressVM.LastName == vm.BillingAddressVM.LastName &&
+            vm.ShippingAddressVM.Honorific == vm.BillingAddressVM.Honorific &&
+            vm.ShippingAddressVM.PostalCode == vm.BillingAddressVM.PostalCode &&
+            vm.ShippingAddressVM.ProvinceId == vm.BillingAddressVM.ProvinceId &&
+            vm.ShippingAddressVM.Province == vm.BillingAddressVM.Province
+          ) {
+                vm.BillAtSameShippingAddress = true;
+            }
+            else {
+                vm.BillAtSameShippingAddress = false;
+            }
+        }
     }
 }

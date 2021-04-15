@@ -106,16 +106,24 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\ValidateAttributesActivity.cs" />
+    <Compile Include="Activities\ValidateCheckoutActivity.cs" />
+    <Compile Include="ApplicabilityCriteria\CallHasSpecificHeaderCouponCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CouponApiController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
+    <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
@@ -131,6 +139,7 @@
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
@@ -143,6 +152,7 @@
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
+    <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
@@ -161,20 +171,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
+    <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
+    <Compile Include="Services\AttributesValidationContext.cs" />
+    <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
-    <Compile Include="Services\CheckoutConditions\MinimumOrderQuantityCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductOutOfStockCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\ProductsRequireAuthenticationCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\UserAcceptedPoliciesCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\UserAuthenticatedCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutConditions\WorkflowCheckoutCondition.cs" />
+    <Compile Include="Services\CheckoutExtensionContext.cs" />
     <Compile Include="Services\CheckoutHelperService.cs" />
+    <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
+    <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
     <Compile Include="Services\GTMProductService.cs" />
     <Compile Include="Services\ICheckoutCondition.cs" />
+    <Compile Include="Services\ICheckoutExtensionProvider.cs" />
     <Compile Include="Services\ICheckoutHelperService.cs" />
+    <Compile Include="Services\ICheckoutPoliciesService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -185,10 +205,14 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
+    <Compile Include="Services\WorkflowActtributesValidation.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
+    <Compile Include="ViewModels\CheckoutPoliciesOrderViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutPolicySettingsPartEditViewModel.cs" />
     <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
@@ -209,6 +233,7 @@
     <Content Include="Assets\Styles.less" />
     <Content Include="Recipes\BaseProduct.recipe.xml" />
     <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
+    <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
     <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
     <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />
@@ -286,6 +311,10 @@
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Policy\Laser.Orchard.Policy.csproj">
+      <Project>{09a8fbda-b443-4f01-bc64-8115ac31abb3}</Project>
+      <Name>Laser.Orchard.Policy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Pos.cshtml" />
@@ -295,9 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PaymentGatewayOrder.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Addresses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\NwazetContact.cshtml" />
@@ -363,6 +389,9 @@
     <Content Include="Views\TerritorySelector.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ProductPriceWithVATEditor.cshtml" />
     <Content Include="Views\DefinitionTemplates\ProductVatConfigurationPartInputPriceSettingsVM.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
+    <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Order.CheckoutPolicies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

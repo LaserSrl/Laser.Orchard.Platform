@@ -15,10 +15,13 @@ namespace Laser.Orchard.Braintree.Services
     public class MissingSettingsBanner : INotificationProvider
     {
         private readonly IOrchardServices _orchardServices;
+        private readonly IBraintreePosService _posService;
 
-        public MissingSettingsBanner(IOrchardServices orchardServices)
+        public MissingSettingsBanner(IOrchardServices orchardServices,
+            IBraintreePosService posService)
         {
             _orchardServices = orchardServices;
+            _posService = posService;
             T = NullLocalizer.Instance;
         }
 
@@ -26,7 +29,7 @@ namespace Laser.Orchard.Braintree.Services
 
         public IEnumerable<NotifyEntry> GetNotifications()
         {
-            var settings = _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+            var settings = _posService.GetSettings();
             if (settings == null || string.IsNullOrWhiteSpace(settings.MerchantId))
             {
                 var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);

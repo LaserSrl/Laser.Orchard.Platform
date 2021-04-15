@@ -6,6 +6,7 @@
   </Match>
   <Place Parts_NwazetContact="Content:5" />
   <Place SiteSettings_CheckoutSettings="Content:4.1" />
+  <Place SiteSettings_CheckoutPolicySettings="Content:4.2" />
   <Place SiteSettings_AddressConfiguration="Content:4.5" />
   <Place SiteSettings_AddressConfiguration_Details="Content:1" />
   <Place Parts_TerritoryHierarchy_IsCountriesHierarchy="Content:2.3"/>
@@ -14,6 +15,8 @@
   <Place Parts_Territory_AdministrativeType_Edit="Content:2.1" />
   <Place Parts_Territory_AddressType_Edit="Content:2.1" />
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
+  <Place Parts_Order_PaymentInfo="Content:1.60"/>
+  <Place Parts_Order_CheckoutPolicies="Content:1.61"/>
   <Place Parts_Product_TagManager="Content:1"/>
   <Place Parts_ProductPriceWithVAT_Edit="Content:3.5" />
   <!--Hide away the editor shape for shipping areas-->

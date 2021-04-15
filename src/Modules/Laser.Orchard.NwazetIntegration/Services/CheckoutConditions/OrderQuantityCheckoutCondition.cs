@@ -11,13 +11,13 @@ using Orchard.Security;
 using Orchard.UI.Notify;
 
 namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
-    public class MinimumOrderQuantityCheckoutCondition : ICheckoutCondition {
+    public class OrderQuantityCheckoutCondition : ICheckoutCondition {
         private readonly IShoppingCart _shoppingCart;
         private readonly INotifier _notifier;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IContentManager _contentManager;
 
-        public MinimumOrderQuantityCheckoutCondition(
+        public OrderQuantityCheckoutCondition(
             IShoppingCart shoppingCart,
             INotifier notifier,
             IWorkContextAccessor workContextAccessor,
@@ -46,6 +46,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
         }
 
         public bool UserMayCheckout(IUser user) {
+            var userMayCheckout = true;
             var products = _shoppingCart.GetProducts();
             var notEnoughInCart = products.Where(qp =>
                 qp.Quantity < qp.Product.MinimumOrderQuantity);
@@ -59,9 +60,23 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
                         string.Join(", ", productNotes),
                         Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce" })));
 
-                return false;
+                userMayCheckout = false;
             }
-            return true;
+            var tooMuchInCart = products.Where(qp =>
+                qp.Quantity > qp.Product.MaximumOrderQuantity && qp.Product.MaximumOrderQuantity > 0 /*0 = Nolimits*/);
+            if (tooMuchInCart.Any()) {
+                var productNotes = tooMuchInCart
+                    .Select(qp => T("{0} (maximum {1})",
+                         _contentManager.GetItemMetadata(qp.Product).DisplayText,
+                         qp.Product.MaximumOrderQuantity).Text);
+                _notifier.Warning(
+                    T("The following products may only be ordered in smaller quantities: {0}. <a href=\"{1}\">Please review your cart.</a>",
+                        string.Join(", ", productNotes),
+                        Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce" })));
+
+                userMayCheckout = false;
+            }
+            return userMayCheckout;
         }
     }
 }

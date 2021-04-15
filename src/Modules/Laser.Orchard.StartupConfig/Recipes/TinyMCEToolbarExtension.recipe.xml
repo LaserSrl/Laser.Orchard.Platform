@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Orchard>
+  <Recipe>
+    <Name>TinyMCE Toolbar Extension</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up TinyMCE with TextColor and Blockquotes.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Laser.Orchard.StartupConfig.TinyMceEnhancement" />
+  <Settings>
+    <TinyMceSiteSettingsPart AdditionalPlugins="" InitScript="selector: &quot;textarea.tinymce&quot;, &#xD;&#xA;theme: &quot;modern&quot;, &#xD;&#xA;schema: &quot;html5&quot;, &#xD;&#xA;convert_urls: false, &#xD;&#xA;valid_elements: &quot;*[*]&quot;, &#xD;&#xA;// Shouldn't be needed due to the valid_elements setting, but TinyMCE would strip script.src without it. &#xD;&#xA;extended_valid_elements: &quot;script[type|defer|src|language]&quot;, &#xD;&#xA;//menubar: false, &#xD;&#xA;//statusbar: false, &#xD;&#xA;skin: &quot;orchardlightgray&quot;, &#xD;&#xA;language: language, &#xD;&#xA;auto_focus: autofocus, &#xD;&#xA;directionality: directionality, &#xD;&#xA;toolbar: &quot;undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify blockquote  ltr rtl | medialibrary link unlink charmap | forecolor code fullscreen&quot;, &#xD;&#xA;plugins: [&quot;advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount, medialibrary&quot;],&#xD;&#xA;textcolor_map: [&#xD;&#xA;    &quot;CC2121&quot;, &quot;Rosso&quot;,&#xD;&#xA;    &quot;FE6D4C&quot;, &quot;Pesca&quot;,&#xD;&#xA;    &quot;1DA1F2&quot;, &quot;Azzurro&quot;,&#xD;&#xA;    &quot;81CA33&quot;, &quot;Verde&quot;&#xD;&#xA;  ]" />
+  </Settings>
+</Orchard>

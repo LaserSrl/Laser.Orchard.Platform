@@ -14,13 +14,16 @@ namespace Laser.Orchard.Braintree.Services {
     public class DefaultBraintreeService : IBraintreeService {
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
+        private readonly IBraintreePosService _posService;
 
         public DefaultBraintreeService(
             IOrchardServices orchardServices,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            IBraintreePosService posService) {
 
             _orchardServices = orchardServices;
             _contentManager = contentManager;
+            _posService = posService;
         }
 
         public string GetClientToken() {
@@ -33,8 +36,7 @@ namespace Laser.Orchard.Braintree.Services {
             string paymentMethodNonce,
             decimal amount,
             Dictionary<string, string> customFields) {
-            var config = _orchardServices.WorkContext
-                .CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             string merchant = config?.MerchantAccountId;
             TransactionResult result = new TransactionResult();
             var request = new Bt.TransactionRequest {
@@ -98,8 +100,7 @@ namespace Laser.Orchard.Braintree.Services {
         }
 
         public TransactionResult Pay(PaymentContext context) {
-            var config = _orchardServices.WorkContext
-                .CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             string merchant = config?.MerchantAccountId;
             TransactionResult result = new TransactionResult();
             var request = new Bt.TransactionRequest {
@@ -164,7 +165,7 @@ namespace Laser.Orchard.Braintree.Services {
         }
 
         private Bt.BraintreeGateway GetGateway() {
-            var config = _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             var env = (config.ProductionEnvironment) ? Bt.Environment.PRODUCTION : Bt.Environment.SANDBOX;
 
             return new Bt.BraintreeGateway {

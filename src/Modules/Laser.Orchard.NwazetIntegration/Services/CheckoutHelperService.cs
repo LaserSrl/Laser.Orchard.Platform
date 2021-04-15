@@ -114,6 +114,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
                     addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
                     addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                    // added information to manage saving in bo
+                    addressPart.ShippingAddressIsOptional = false;
+                }
+                else {
+                    addressPart.ShippingAddressIsOptional = true;
                 }
                 // billing
                 addressPart.BillingCountryName = model.BillingAddressVM.Country;
@@ -131,7 +136,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             foreach (var oaip in _orderAdditionalInformationProviders) {
                 oaip.StoreAdditionalInformation(order);
             }
-            order.LogActivity(OrderPart.Event, "Order created");
+            order.LogActivity(OrderPart.Event, "Order created", _workContextAccessor.GetContext()?.CurrentUser?.UserName ?? (!string.IsNullOrWhiteSpace(model.Email) ? model.Email : "Anonymous"));
             // 2.2. Unpublish the order
             // we unpublish the order here. The service from Nwazet creates it
             // and publishes it. This would cause issues whenever a user leaves

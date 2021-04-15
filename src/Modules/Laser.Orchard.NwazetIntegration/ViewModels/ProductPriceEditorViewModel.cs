@@ -11,6 +11,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public ProductPriceEditorViewModel() {
             VatRates = new Dictionary<int, decimal>();
             VATDropDownId = "ProductVatConfigurationPart_VatConfigurationId";
+            BaseTaxedPriceId = "ProductVatConfigurationPart_BaseTaxedPrice";
+            BasePriceIdVM = "ProductVatConfigurationPart_BasePrice";
+            DiscountPriceIdVM = "ProductVatConfigurationPart_DiscountPrice";
+            DiscountTaxedPriceId = "ProductVatConfigurationPart_DiscountTaxedPrice";
+            SelectedVatConfigurationIdHidden = "ProductVatConfigurationPart_SelectedVatConfigurationId";
             OriginalPriceId = "NwazetCommerceProduct_Product_Price";
             DiscountPriceId = "NwazetCommerceProduct_DiscountPrice";
 
@@ -66,15 +71,20 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
 
         public decimal BasePrice { get; set; }
-        public decimal DiscountPrice { get; set; }
+        public string BasePriceIdVM { get; set; }
+        public decimal? DiscountPrice { get; set; }
+        public string DiscountPriceIdVM { get; set; }
         public decimal BaseTaxedPrice { get; set; }
-        public decimal DiscountTaxedPrice { get; set; }
+        public string BaseTaxedPriceId { get; set; }
+        public decimal? DiscountTaxedPrice { get; set; }
+        public string DiscountTaxedPriceId { get; set; }
         // should DiscountPrice be used/displayed/edited?
         public bool HasDiscount { get; set; }
         // should we show anything?
         public bool ShowShape { get; set; }
 
         public int SelectedVatConfigurationId { get; set; }
+        public string SelectedVatConfigurationIdHidden { get; set; }
         public int DefaultVatConfigurationId { get; set; }
 
         public string DefaultTerritoryName { get; set; }

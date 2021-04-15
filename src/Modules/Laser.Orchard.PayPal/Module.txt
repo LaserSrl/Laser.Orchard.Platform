@@ -9,3 +9,4 @@ Features:
         Description: This module enable Laser.Orchard.PayPal.
 		Dependencies: Laser.Orchard.StartupConfig,Laser.Orchard.PaymentGateway
 		FeatureDescription:This module enable PayPal payment method
+		Category: Payments

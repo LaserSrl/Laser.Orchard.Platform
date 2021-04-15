@@ -34,6 +34,11 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { Store(r => r.ShippingProvinceId, value); }
         }
 
+        public bool ShippingAddressIsOptional {
+            get { return Retrieve(r => r.ShippingAddressIsOptional); }
+            set { Store(r => r.ShippingAddressIsOptional, value); }
+        }
+
         public string BillingCountryName {
             get { return Retrieve(r => r.BillingCountryName); }
             set { Store(r => r.BillingCountryName, value); }

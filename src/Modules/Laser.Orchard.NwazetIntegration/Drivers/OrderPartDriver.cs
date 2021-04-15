@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Permissions;
@@ -6,6 +7,9 @@ using Orchard;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Data;
 using Orchard.Localization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Drivers {
     public class OrderPartDriver : ContentPartDriver<OrderPart> {
@@ -31,9 +35,12 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (!_orchardServices.Authorizer.Authorize(OrderPermissions.ManageOrders, null, T("Cannot manage orders")))
                 return null;
 
+            var shapes = new List<DriverResult>();
+
+            // PayentInfo
             PaymentRecord payment = _paymentService.GetPaymentByGuid(order.Charge?.TransactionId);
 
-            return ContentShape("Parts_Order_PaymentInfo",
+            shapes.Add( ContentShape("Parts_Order_PaymentInfo",
                 () => {
                     if (payment == null) {
                         return null;
@@ -52,7 +59,33 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                     return shapeHelper.EditorTemplate(
                         TemplateName: "Parts/Order.PaymentInfo",
                         Model: model);
-                });
+                }));
+
+            // Checkout policies
+            var policyXElements = order.AdditionalElements
+                .Where(el => CheckoutPolicySettingsPart.OrderXElementName
+                    .Equals(el.Name.ToString(), StringComparison.InvariantCultureIgnoreCase));
+            if (policyXElements.Any()) {
+                var vm = new CheckoutPoliciesOrderViewModel();
+                vm.Policies.AddRange(policyXElements.Select(xel => {
+                    var partXel = xel.Element("PolicyTextInfoPart");
+                    var pvm = new CheckoutPolicyOrderViewModel();
+                    pvm.Accepted = bool.Parse(xel.Attribute("Accepted").Value);
+                    pvm.Mandatory = bool.Parse(partXel.Attribute("UserHaveToAccept").Value);
+                    pvm.AnswerDateUTC = DateTime.Parse(xel.Attribute("AnswerDate").Value).ToUniversalTime();
+                    pvm.PolicyTextInfoPartId = int.Parse(xel.Attribute("PolicyTextId").Value);
+                    pvm.PolicyTextInfoPartVersionNumber = int.Parse(xel.Attribute("VersionNumber").Value);
+                    return pvm;
+                }));
+                shapes.Add(ContentShape("Parts_Order_CheckoutPolicies",
+                    () => {
+                    return shapeHelper.EditorTemplate(
+                        TemplateName: "Parts/Order.CheckoutPolicies",
+                        Model: vm);
+                    }));
+            }
+
+            return Combined(shapes.ToArray());
         }
     }
 }

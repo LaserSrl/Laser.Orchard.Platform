@@ -1010,4 +1010,7 @@ territories import "Extra UE"
       <TitlePart Title="Svezia" />
     </Territory>
   </Content>
+  <Command>
+    territories calculatefullpath
+  </Command>
 </Orchard>
