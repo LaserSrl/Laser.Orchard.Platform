@@ -124,7 +124,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context) {
             var allCheckoutPolicies = CheckoutPoliciesForUser();
             // save the fact that the user has accepted the policies
-            var updatePolicies = false;
+            var policiesToUpdate = new List<PolicyForUserViewModel>();
             foreach (var policy in allCheckoutPolicies) {
                 var fieldName = string.Join(".", Prefix, policy.PolicyText.Id, "Accepted");
                 var valueResult = context.ValueProvider.GetValue(fieldName);
@@ -153,12 +153,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     if (value != policy.Accepted) {
                         // we are going to update the value of acceptance for the policy:
                         policy.Accepted = value;
-                        updatePolicies = true;
+                        policiesToUpdate.Add(policy);
                     }
                 }
             }
-            if (updatePolicies) {
-                _policyServices.PolicyForUserMassiveUpdate(allCheckoutPolicies.ToList());
+            if (policiesToUpdate.Any()) {
+                _policyServices.PolicyForUserMassiveUpdate(policiesToUpdate);
             }
         }
         #endregion

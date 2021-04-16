@@ -27,6 +27,7 @@ namespace Laser.Orchard.Policy.Controllers {
         }
         //
         // GET: /Policies/
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(string lang = null, string policies = null, bool editMode = false) {
             PoliciesForUserViewModel model = _policyServices.GetPoliciesForCurrentUser(false, lang);
 
