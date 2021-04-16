@@ -105,6 +105,8 @@ namespace Laser.Orchard.Policy.Services {
             IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
             // get all the policy texts for the language given (handling defaults)
             var policies = GetPolicies(language);
+            // get answers from  cookies or context:
+            IList<PolicyForUserViewModel> cookieAnswers = GetCookieOrVolatileAnswers();
 
             if (loggedUser != null) { // loggato
                 model = policies.Select(s => {
@@ -113,6 +115,27 @@ namespace Laser.Orchard.Policy.Services {
                         .UserPolicyAnswers
                         .Where(w => w.PolicyTextInfoPartRecord.Id.Equals(s.Id))
                         .SingleOrDefault();
+                    // there may be a more recent answer in the call context, for example 
+                    // when in this same request the user just gave one. This wouldn't be
+                    // reflected in the User's ContentItem yet.
+                    var fromCookie = cookieAnswers
+                        .Where(w => w.PolicyTextId.Equals(s.Id))
+                        .SingleOrDefault();
+                    if (answer == null 
+                        || (fromCookie != null 
+                            // we compare by rounding to the second, because dates from the db 
+                            // seem to be rounded like that
+                            && RoundToSecond(fromCookie.AnswerDate) > answer.AnswerDate)) {
+                        return new PolicyForUserViewModel {
+                            PolicyText = s,
+                            PolicyTextId = s.Id,
+                            AnswerId = fromCookie != null ? fromCookie.AnswerId : 0,
+                            AnswerDate = fromCookie != null ? fromCookie.AnswerDate : DateTime.MinValue,
+                            OldAccepted = fromCookie != null ? fromCookie.Accepted : false,
+                            Accepted = fromCookie != null ? fromCookie.Accepted : false,
+                            UserId = fromCookie != null ? fromCookie.UserId : null
+                        };
+                    }
                     return new PolicyForUserViewModel {
                         PolicyText = s,
                         PolicyTextId = s.Id,
@@ -127,9 +150,9 @@ namespace Laser.Orchard.Policy.Services {
             else { // non loggato
                 // since we are getting the possible answers from the call's context, we
                 // cannot be storing the results of this next step in a cache.
-                IList<PolicyForUserViewModel> answers = GetCookieOrVolatileAnswers();
+
                 model = policies.Select(s => {
-                    var answer = answers
+                    var answer = cookieAnswers
                         .Where(w => w.PolicyTextId.Equals(s.Id))
                         .SingleOrDefault();
                     return new PolicyForUserViewModel {
@@ -202,6 +225,10 @@ namespace Laser.Orchard.Policy.Services {
                         record.PolicyTextInfoPartRecord = policyText;
                         if (shouldCreateRecord) {
                             _userPolicyAnswersRepository.Create(record);
+                            // if we create a new record for the answer, update the
+                            // corresponding viewmodel accordingly, so that they remain aligned
+                            viewModel.AnswerId = record.Id;
+                            viewModel.AnswerDate = record.AnswerDate;
                             _policyEventHandler.PolicyChanged(new PolicyEventViewModel {
                                 policyType = record.PolicyTextInfoPartRecord.PolicyType,
                                 accepted = record.Accepted,
@@ -791,6 +818,10 @@ namespace Laser.Orchard.Policy.Services {
             }
 
             return items;
+        }
+
+        private static DateTime RoundToSecond(DateTime dt) {
+            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
         }
     }
 }
