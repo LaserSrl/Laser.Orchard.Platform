@@ -94,14 +94,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\Calendar\fullcalendar.js" />
-    <Content Include="Scripts\Calendar\fullcalendar.min.js" />
-    <Content Include="Scripts\Calendar\gcal.js" />
-    <Content Include="Scripts\Calendar\lang-all.js" />
     <Content Include="Scripts\datepicker.js" />
-    <Content Include="Styles\Calendar\fullcalendar.css" />
-    <Content Include="Styles\Calendar\fullcalendar.min.css" />
-    <Content Include="Styles\Calendar\fullcalendar.print.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />

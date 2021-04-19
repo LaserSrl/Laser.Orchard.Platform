@@ -166,36 +166,50 @@ namespace Laser.Orchard.Translator.Services {
             }
         }
 
+        /// <summary>
+        /// Add the folder for which translations where requested to the corresponding list
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <param name="folderType"></param>
         public void EnableFolderTranslation(string folderName, ElementToTranslate folderType)
         {
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
             // missing settings
             translatorSettings.ModulesToTranslate = translatorSettings.ModulesToTranslate ?? "";
             translatorSettings.ThemesToTranslate = translatorSettings.ThemesToTranslate ?? "";
+            translatorSettings.TenantsToTranslate = translatorSettings.TenantsToTranslate ?? "";
 
             List<string> enabledFolders = new List<string>();
-            if (folderType == ElementToTranslate.Module)
-                enabledFolders = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
-            else if (folderType == ElementToTranslate.Theme)
-                enabledFolders = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+            switch (folderType) {
+                case ElementToTranslate.Module:
+                    enabledFolders = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.ModulesToTranslate))
+                            translatorSettings.ModulesToTranslate += ",";
 
-            if (!enabledFolders.Contains(folderName))
-            {
-                if (folderType == ElementToTranslate.Module)
-                {
-                    if (!String.IsNullOrWhiteSpace(translatorSettings.ModulesToTranslate))
-                        translatorSettings.ModulesToTranslate += ",";
+                        translatorSettings.ModulesToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.Theme:
+                    enabledFolders = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.ThemesToTranslate))
+                            translatorSettings.ThemesToTranslate += ",";
 
-                    translatorSettings.ModulesToTranslate += folderName;
-                }
-                else if (folderType == ElementToTranslate.Theme)
-                {
-                    if (!String.IsNullOrWhiteSpace(translatorSettings.ThemesToTranslate))
-                        translatorSettings.ThemesToTranslate += ",";
+                        translatorSettings.ThemesToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.Tenant:
+                    enabledFolders = translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.TenantsToTranslate))
+                            translatorSettings.TenantsToTranslate += ",";
 
-                    translatorSettings.ThemesToTranslate += folderName;
-                }
+                        translatorSettings.TenantsToTranslate += folderName;
+                    }
+                    break;
             }
+
         }
 
         public IList<string> GetSuggestedTranslations(string message, string language) {

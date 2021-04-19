@@ -105,6 +105,8 @@ namespace Laser.Orchard.Policy.Services {
             IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
             // get all the policy texts for the language given (handling defaults)
             var policies = GetPolicies(language);
+            // get answers from  cookies or context:
+            IList<PolicyForUserViewModel> cookieAnswers = GetCookieOrVolatileAnswers();
 
             if (loggedUser != null) { // loggato
                 model = policies.Select(s => {
@@ -113,6 +115,27 @@ namespace Laser.Orchard.Policy.Services {
                         .UserPolicyAnswers
                         .Where(w => w.PolicyTextInfoPartRecord.Id.Equals(s.Id))
                         .SingleOrDefault();
+                    // there may be a more recent answer in the call context, for example 
+                    // when in this same request the user just gave one. This wouldn't be
+                    // reflected in the User's ContentItem yet.
+                    var fromCookie = cookieAnswers
+                        .Where(w => w.PolicyTextId.Equals(s.Id))
+                        .SingleOrDefault();
+                    if (answer == null 
+                        || (fromCookie != null 
+                            // we compare by rounding to the second, because dates from the db 
+                            // seem to be rounded like that
+                            && RoundToSecond(fromCookie.AnswerDate) > answer.AnswerDate)) {
+                        return new PolicyForUserViewModel {
+                            PolicyText = s,
+                            PolicyTextId = s.Id,
+                            AnswerId = fromCookie != null ? fromCookie.AnswerId : 0,
+                            AnswerDate = fromCookie != null ? fromCookie.AnswerDate : DateTime.MinValue,
+                            OldAccepted = fromCookie != null ? fromCookie.Accepted : false,
+                            Accepted = fromCookie != null ? fromCookie.Accepted : false,
+                            UserId = fromCookie != null ? fromCookie.UserId : null
+                        };
+                    }
                     return new PolicyForUserViewModel {
                         PolicyText = s,
                         PolicyTextId = s.Id,
@@ -127,9 +150,9 @@ namespace Laser.Orchard.Policy.Services {
             else { // non loggato
                 // since we are getting the possible answers from the call's context, we
                 // cannot be storing the results of this next step in a cache.
-                IList<PolicyForUserViewModel> answers = GetCookieOrVolatileAnswers();
+
                 model = policies.Select(s => {
-                    var answer = answers
+                    var answer = cookieAnswers
                         .Where(w => w.PolicyTextId.Equals(s.Id))
                         .SingleOrDefault();
                     return new PolicyForUserViewModel {
@@ -202,6 +225,10 @@ namespace Laser.Orchard.Policy.Services {
                         record.PolicyTextInfoPartRecord = policyText;
                         if (shouldCreateRecord) {
                             _userPolicyAnswersRepository.Create(record);
+                            // if we create a new record for the answer, update the
+                            // corresponding viewmodel accordingly, so that they remain aligned
+                            viewModel.AnswerId = record.Id;
+                            viewModel.AnswerDate = record.AnswerDate;
                             _policyEventHandler.PolicyChanged(new PolicyEventViewModel {
                                 policyType = record.PolicyTextInfoPartRecord.PolicyType,
                                 accepted = record.Accepted,
@@ -252,7 +279,8 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public IList<PolicyForUserViewModel> GetCookieOrVolatileAnswers() {
-            var viewModelCollection = _controllerContextAccessor.Context != null ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
+            var viewModelCollection = _controllerContextAccessor.Context != null 
+                ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
             IList<PolicyForUserViewModel> answers;
             try {
                 if (viewModelCollection == null) {
@@ -270,49 +298,99 @@ namespace Laser.Orchard.Policy.Services {
 
         public void CreateAndAttachPolicyCookie(IList<PolicyForUserViewModel> viewModelCollection, bool writeMode) {
 
+            // does this method do anything if writeMode == false?
+
+            // Suppose for example that the existing policies are A, B, C, D.
+            // A and B are mandatory.
+            // A, C and D were already accepted.
+            // viewModelCollection contains new answers for A (accepted), B (accepted) and C (refused).
+
             var newCollection = new List<PolicyForUserViewModel>();
 
-            //Controllo se esistono già delle policy answers nel cookie
+            // Controllo se esistono già delle policy answers nel cookie
             IList<PolicyForUserViewModel> previousPolicyAnswers = GetCookieAnswers();
+            // previousPolicyAnswers contains A, B and C
             if (previousPolicyAnswers.Count > 0) {
                 foreach (PolicyForUserViewModel policyAnswer in previousPolicyAnswers) {
-                    var upToDateAnswer = viewModelCollection.Where(x => x.PolicyTextId == policyAnswer.PolicyTextId).SingleOrDefault();
+                    // "Nuova" risposta per una policy per cui c'è già una risposta?
+                    var upToDateAnswer = viewModelCollection
+                        .Where(x => x.PolicyTextId == policyAnswer.PolicyTextId)
+                        .SingleOrDefault();
                     if (upToDateAnswer == null) {
-                        newCollection.Add(policyAnswer); // Se la risposta nel cookie non ha un corrispettivo nel json la aggiungo sempre al nuovo cookie
-                    }
-                    else if (upToDateAnswer.Accepted == policyAnswer.Accepted) {
-                        newCollection.Add(policyAnswer); // Se si ripete con lo stesso esito riporto quella vecchia in modo da mantenere la data di accettazione
-                        viewModelCollection.Remove(upToDateAnswer);
+                        // This is the case for policy D
+                        // Se la risposta nel cookie non ha un corrispettivo nel json la 
+                        // aggiungo sempre al nuovo cookie
+                        newCollection.Add(policyAnswer);
+                    }  else if (upToDateAnswer.Accepted == policyAnswer.Accepted) {
+                        // This is the case for policy A
+                        // Se si ripete con lo stesso esito riporto quella vecchia in 
+                        // modo da mantenere la data di accettazione
+                        newCollection.Add(policyAnswer); 
+                    } else {
+                        // The "new" answer is different than the "old" answer for the
+                        // same policy. i.e. we had accepted, and now we refused; or we 
+                        // had not accepted, and now we have.
+                        // This is the case for policy C
                     }
                 }
             }
+            // newCollection here contains the answers for A and D.
+            // viewModelCollection contains answers for: 
+            // - A (hasn't changed) 
+            // - B (new)
+            // - C (has changed)
+
+            // Qui newCollection contiene tutte le risposte "vecchie" che non stavamo
+            // provando ad aggiornare, definite come:
+            // - Risposta "vecchia" per la cui policy non c'è una nuova risposta
+            // oppure
+            // - Risposta "vecchia" per la cui policy c'è una nuova risposta con lo stesso
+            //   valore (accetta/rifiuta di nuovo)
 
             if (writeMode) {
                 // When in write mode it stores values into a cookie
-                newCollection.AddRange(viewModelCollection.Select(x => {
+
+                var newAnswers = viewModelCollection
+                    .Where(pvm => !newCollection.Any(old => old.PolicyTextId == pvm.PolicyTextId));
+                // newAnswers contains B and C
+
+                // Add the "new" answers to newCollection. As a result, newCollection
+                // now contains all answers (past and present).
+                newCollection.AddRange(newAnswers.Select(x => {
                     x.AnswerDate = DateTime.UtcNow;
                     //x.PolicyText = null; // annullo la parte per evitare circolarità nella serializzazione
                     return x;
                 }));
 
                 string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
+                    // We would like to avoid fetching the ContentItem for the policy
+                    // through the IContentManager, but the policy's ContentItem we may
+                    // have in the view model w here may be stale/detached
                     var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
-                    if (policyText == null) return false;
-                    else {
+                    if (policyText == null) {
+                        return false;
+                    } else {
                         var policyTextRecord = policyText.Record;
-                        return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                        // We will "save" the state for accepted mandatory policies and for
+                        // optional policies (regardless of them being accepted).
+                        return (policyTextRecord.UserHaveToAccept && w.Accepted) 
+                            || !policyTextRecord.UserHaveToAccept;
                     }
                 }));
 
                 var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
                     Expires = DateTime.Now.AddMonths(6)
                 };
-                if (_controllerContextAccessor.Context != null)
-                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
+                // Since the cookie's value is in Base64, if we were to read from it we would
+                // need to decypher it. To minimize doing that, we store the answers also in
+                // the Controller ViewBag, so that within a request we can read from it directly.
+                if (_controllerContextAccessor.Context != null) {
+                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = newCollection;
+                }
+                // Update or add the cookie
                 if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
                     _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
-                }
-                else {
+                } else {
                     _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
                 }
             }
@@ -388,7 +466,7 @@ namespace Laser.Orchard.Policy.Services {
                     ? "NoID"
                     : string.Join("_", ids.Select(i => i.ToString())));
             // cache the query results
-            return _cacheManager.Get(cacheKey, true, ctx => {
+            var results = _cacheManager.Get(cacheKey, true, ctx => {
                 ctx.Monitor(_signals.When("PolicyTextInfoPart_EvictAll"));
                 if (ids != null) {
                     query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
@@ -411,7 +489,12 @@ namespace Laser.Orchard.Policy.Services {
 
                 return query.List<PolicyTextInfoPart>();
             });
-
+            // reinflate those results by updating their contentManager. This prevents
+            // lazyfields and such from breaking and throwing exceptions.
+            foreach (var ptip in results) {
+                ptip.ContentItem.ContentManager = _contentManager;
+            }
+            return results;
         }
 
         public IEnumerable<int> GetPolicyIds(string culture = null, int[] ids = null) {
@@ -735,6 +818,10 @@ namespace Laser.Orchard.Policy.Services {
             }
 
             return items;
+        }
+
+        private static DateTime RoundToSecond(DateTime dt) {
+            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
         }
     }
 }

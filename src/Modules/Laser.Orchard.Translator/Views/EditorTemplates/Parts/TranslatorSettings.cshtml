@@ -12,4 +12,9 @@
         @Html.TextAreaFor(m => m.ThemesToTranslate)
         <span class="hint">@T("Comma separated list of themes that must be translated.")</span>
     </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.TenantsToTranslate)">@T("Tenants to Translate")</label>
+        @Html.TextAreaFor(m => m.TenantsToTranslate)
+        <span class="hint">@T("Comma separated list of tenants that have custom translations.")</span>
+    </div>
 </fieldset>

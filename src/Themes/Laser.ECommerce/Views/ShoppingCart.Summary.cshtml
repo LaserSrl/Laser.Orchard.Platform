@@ -9,6 +9,10 @@
     var cartUrl = Url.Action("Index", "ShoppingCart", new { area = "NWazet.Commerce" });
     @Html.Hidden("Country", (string)Model.Country)
     @Html.Hidden("ZipCode", (string)Model.ZipCode)
+    @Html.Hidden("NwazetCart.Painter.SourceAction", (string)Model.SourceAction)
+    @Html.Hidden("NwazetCart.Painter.MovedQuantity", (int)Model.MovedQuantity)
+    @Html.Hidden("NwazetCart.Painter.Guid", Guid.NewGuid())
+    @Html.Hidden("NwazetCart.Painter.SourceLineKey", (string)Model.SourceLineKey)
     <div class="header-right-component">
         <a href="@cartUrl">
             <div class="total">

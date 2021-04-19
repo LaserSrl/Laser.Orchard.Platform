@@ -154,7 +154,7 @@ $(function () {
 
     // AddToCart1: This uses the event launched by the shoppingcart.js script
     $(document)
-        .on("nwazet.addedtocart", "form.addtocart", function (e) {
+        .on("nwazet.addedtocart", "form.addtocart", function (e, context) {
             // in $(this) we have the form
             var formData = $(this)
                 // serialize to an array of oblects like {name: '', value:''}
@@ -178,7 +178,7 @@ $(function () {
                 // this is a strange error condition that should not happen naturally
                 return;
             }
-            var quantity = formData.quantity;
+            var quantity = context.movedQuantity;
             productAdded.quantity = quantity;
             window.dataLayer.push({
                 'event': 'addToCart',
@@ -190,7 +190,7 @@ $(function () {
             });
         })
     // RemoveFromCart1: use the event from shoppingcart.js
-        .on("nwazet.removefromcart", ".shoppingcart .delete", function (e) {
+        .on("nwazet.removefromcart", "form.addtocart", function (e) {
             // $(this) is the element that was clicked to trigger the event
             // (generally an anchor tag)
             // id of the product we are trying to delete

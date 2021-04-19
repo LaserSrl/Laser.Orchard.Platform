@@ -65,6 +65,13 @@ namespace Laser.Orchard.Translator.Controllers
                     children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Themes"), ElementToTranslate.Theme),
                     data = new Dictionary<string, string>() { { "type", "T" } }
                 });
+
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-A",
+                    text = T("Tenants").ToString(),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Tenant"), ElementToTranslate.Tenant),
+                    data = new Dictionary<string, string>() { { "type", "T" } }
+                });
             }
 
             return Json(tree, JsonRequestBehavior.AllowGet);
@@ -75,10 +82,21 @@ namespace Laser.Orchard.Translator.Controllers
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
 
             List<string> elementsToTranslate = new List<string>();
-            if (elementType == ElementToTranslate.Module)
-                elementsToTranslate = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
-            else if (elementType == ElementToTranslate.Theme)
-                elementsToTranslate = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+            var folderType = "";
+            switch (elementType) {
+                case ElementToTranslate.Module:
+                    elementsToTranslate = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
+                    folderType = "M";
+                    break;
+                case ElementToTranslate.Theme:
+                    elementsToTranslate = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+                    folderType = "T";
+                    break;
+                case ElementToTranslate.Tenant:
+                    elementsToTranslate = translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList();
+                    folderType = "A";
+                    break;
+            }
 
             // rimossa questa verifica in quanto se non presente la cartella su server (cosa possibile in quanto potrei voler tradurre un tema o un modulo non ancora deployato) non presenta il nodo da tradurre
             //var list = new List<string>(Directory.GetDirectories(parentFolder));
@@ -92,12 +110,6 @@ namespace Laser.Orchard.Translator.Controllers
             foreach (var item in list)
             {
                 Dictionary<string, string> additionalData = new Dictionary<string, string>();
-                string folderType = "";
-
-                if (elementType == ElementToTranslate.Module)
-                    folderType = "M";
-                else if (elementType == ElementToTranslate.Theme)
-                    folderType = "T";
 
                 int percent = GetCompletionPercent(language, item, folderType);
                 if (percent < 0)

@@ -19,6 +19,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IPaymentService _paymentService;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICheckoutHelperService _checkoutHelperService;
+        private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
+
 
         public PosServiceIntegration(
             IOrchardServices orchardServices, 
@@ -28,7 +30,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             ICurrencyProvider currencyProvider,
             IPaymentService paymentService,
             IWorkContextAccessor workContextAccessor,
-            ICheckoutHelperService checkoutHelperService) {
+            ICheckoutHelperService checkoutHelperService,
+            IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders) {
 
             _orchardServices = orchardServices;
             _posServices = posServices;
@@ -38,6 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _paymentService = paymentService;
             _workContextAccessor = workContextAccessor;
             _checkoutHelperService = checkoutHelperService;
+            _checkoutExtensionProviders = checkoutExtensionProviders;
 
             T = NullLocalizer.Instance;
 
@@ -68,7 +72,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // can't checkout with an empty cart
             insertOrder &= productQuantities.Any();
             if (insertOrder) {
-                return _shapeFactory.Pos();
+                return _shapeFactory.Pos(
+                    AdditionalFormShapes: _checkoutExtensionProviders
+                        .SelectMany(cep => cep.AdditionalCheckoutStartShapes()));
             }
             else {
                 return null;
