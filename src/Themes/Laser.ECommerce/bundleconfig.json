@@ -66,6 +66,12 @@
     ]
   },
   {
+    "outputFileName": "Scripts/cartspinner.min.js",
+    "inputFiles": [
+      "Scripts/cartspinner.js"
+    ]
+  },
+  {
     "outputFileName": "Scripts/ship.min.js",
     "inputFiles": [
       "Scripts/ship.js"

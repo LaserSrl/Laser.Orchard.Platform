@@ -99,6 +99,10 @@
     <Content Include="Recipes\SetupTaxonomies.recipe.xml" />
     <Content Include="Recipes\SetupWidgets.recipe.xml" />
     <Content Include="Recipes\SetupWineDemo.recipe.xml" />
+    <Content Include="Scripts\cartspinner.js" />
+    <Content Include="Scripts\cartspinner.min.js">
+      <DependentUpon>cartspinner.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\easyResponsiveTabs.js" />
     <Content Include="Scripts\easyResponsiveTabs.min.js">
       <DependentUpon>easyResponsiveTabs.js</DependentUpon>

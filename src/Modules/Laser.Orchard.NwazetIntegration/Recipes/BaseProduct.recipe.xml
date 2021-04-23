@@ -35,8 +35,13 @@
         <ProductVatConfigurationPart ProductVatConfigurationPartInputPriceSettings.InputFinalPrice="True" />
         <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
                  SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" SeoPartSettings.RobotsNoImageIndex="False" 
-                 SeoPartSettings.GoogleNoSiteLinkSearchBox="False" SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
-        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody="" ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage="" ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False" ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+                 SeoPartSettings.GoogleNoSiteLinkSearchBox="False" SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" 
+                 SeoPartSettings.JsonLd="&lt;script type=&quot;application/ld+json&quot;&gt;&#xD;&#xA;{{&#xD;&#xA;  &quot;@context&quot;: &quot;http://schema.org/&quot;,&#xD;&#xA;  &quot;@type&quot;: &quot;Product&quot;,&#xD;&#xA;  &quot;name&quot;: &quot;{Content.DisplayText}&quot;,&#xD;&#xA;  &quot;image&quot;: [&#xD;&#xA;    &quot;{Site.BaseUrl}{Content.Fields.ProductDefaultPart.ProductImage.Url}&quot;&#xD;&#xA;   ],&#xD;&#xA;  &quot;description&quot;: &quot;{Content.SeoDescription}&quot;,&#xD;&#xA;  &quot;offers&quot;: {{&#xD;&#xA;    &quot;@type&quot;: &quot;Offer&quot;,&#xD;&#xA;    &quot;priceCurrency&quot;: &quot;EUR&quot;,&#xD;&#xA;    &quot;price&quot;: &quot;{Content.FrontendPriceString}&quot;,&#xD;&#xA; &quot;url&quot;:&quot;{Site.BaseUrl}{Content.DisplayUrl}&quot;&#xD;&#xA;  }}&#xD;&#xA;}}&#xD;&#xA;&lt;/script&gt;" 
+                 SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="{Site.BaseUrl}{Content.DisplayUrl}" ShareLinkPartSettingVM.SharedBody="" 
+                       ShareLinkPartSettingVM.SharedText="{Content.DisplayText}" ShareLinkPartSettingVM.SharedImage="{Content.Fields.ProductDefaultPart.ProductImage.Url}" 
+                       ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False" 
+                       ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </ProdottoDefault>
       <Query DisplayName="Query">
