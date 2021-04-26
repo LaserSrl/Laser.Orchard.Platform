@@ -1,4 +1,5 @@
-﻿using Orchard.Security;
+﻿using Orchard.Localization;
+using Orchard.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
         // Activities manipulating this context should set these values.
         public bool UserMayCheckout { get; set; }
         public ActionResult Redirect { get; set; }
+        public LocalizedString Message { get; set; }
     }
 }

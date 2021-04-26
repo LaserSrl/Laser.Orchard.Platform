@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Laser.Orchard.NwazetIntegration.Activities;
+using Orchard.Localization;
 using Orchard.Security;
+using Orchard.UI.Notify;
 using Orchard.Workflows.Services;
 
 namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
@@ -12,12 +14,19 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
         : ICheckoutCondition {
 
         private readonly IWorkflowManager _workflowManager;
+        private readonly INotifier _notifier;
 
         public WorkflowCheckoutCondition(
-            IWorkflowManager workflowManager) {
+            IWorkflowManager workflowManager,
+            INotifier notifier) {
 
             _workflowManager = workflowManager;
+            _notifier = notifier;
+
+            T = NullLocalizer.Instance;
         }
+
+        public Localizer T { get; set; }
 
         public int Priority => 1;
 
@@ -34,6 +43,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutConditions {
 
             var context = CreateContext(user);
             InvokeValidation(context);
+
+            if (!context.UserMayCheckout) {
+                if (context.Message != null) {
+                    _notifier.Warning(context.Message);
+                }
+            }
 
             return context.UserMayCheckout;
         }

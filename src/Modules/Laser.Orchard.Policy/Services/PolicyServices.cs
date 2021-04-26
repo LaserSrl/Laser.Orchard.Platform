@@ -105,8 +105,6 @@ namespace Laser.Orchard.Policy.Services {
             IList<PolicyForUserViewModel> model = new List<PolicyForUserViewModel>();
             // get all the policy texts for the language given (handling defaults)
             var policies = GetPolicies(language);
-            // get answers from  cookies or context:
-            IList<PolicyForUserViewModel> cookieAnswers = GetCookieOrVolatileAnswers();
 
             if (loggedUser != null) { // loggato
                 model = policies.Select(s => {
@@ -118,22 +116,26 @@ namespace Laser.Orchard.Policy.Services {
                     // there may be a more recent answer in the call context, for example 
                     // when in this same request the user just gave one. This wouldn't be
                     // reflected in the User's ContentItem yet.
-                    var fromCookie = cookieAnswers
-                        .Where(w => w.PolicyTextId.Equals(s.Id))
-                        .SingleOrDefault();
+                    // get answers from context:
+                    IList<PolicyForUserViewModel> contextAnswers = GetVolatileAnswers();
+                    var fromContext = contextAnswers != null
+                        ? contextAnswers
+                            .Where(w => w.PolicyTextId.Equals(s.Id))
+                            .SingleOrDefault()
+                        : (PolicyForUserViewModel)null;
                     if (answer == null 
-                        || (fromCookie != null 
+                        || (fromContext != null 
                             // we compare by rounding to the second, because dates from the db 
                             // seem to be rounded like that
-                            && RoundToSecond(fromCookie.AnswerDate) > answer.AnswerDate)) {
+                            && RoundToSecond(fromContext.AnswerDate) > answer.AnswerDate)) {
                         return new PolicyForUserViewModel {
                             PolicyText = s,
                             PolicyTextId = s.Id,
-                            AnswerId = fromCookie != null ? fromCookie.AnswerId : 0,
-                            AnswerDate = fromCookie != null ? fromCookie.AnswerDate : DateTime.MinValue,
-                            OldAccepted = fromCookie != null ? fromCookie.Accepted : false,
-                            Accepted = fromCookie != null ? fromCookie.Accepted : false,
-                            UserId = fromCookie != null ? fromCookie.UserId : null
+                            AnswerId = fromContext != null ? fromContext.AnswerId : 0,
+                            AnswerDate = fromContext != null ? fromContext.AnswerDate : DateTime.MinValue,
+                            OldAccepted = fromContext != null ? fromContext.Accepted : false,
+                            Accepted = fromContext != null ? fromContext.Accepted : false,
+                            UserId = fromContext != null ? fromContext.UserId : null
                         };
                     }
                     return new PolicyForUserViewModel {
@@ -148,9 +150,11 @@ namespace Laser.Orchard.Policy.Services {
                 }).ToList();
             }
             else { // non loggato
-                // since we are getting the possible answers from the call's context, we
-                // cannot be storing the results of this next step in a cache.
+                   // since we are getting the possible answers from the call's context, we
+                   // cannot be storing the results of this next step in a cache.
 
+                // get answers from  cookies or context:
+                IList<PolicyForUserViewModel> cookieAnswers = GetCookieOrVolatileAnswers();
                 model = policies.Select(s => {
                     var answer = cookieAnswers
                         .Where(w => w.PolicyTextId.Equals(s.Id))
@@ -279,8 +283,7 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public IList<PolicyForUserViewModel> GetCookieOrVolatileAnswers() {
-            var viewModelCollection = _controllerContextAccessor.Context != null 
-                ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
+            var viewModelCollection = GetVolatileAnswers();
             IList<PolicyForUserViewModel> answers;
             try {
                 if (viewModelCollection == null) {
@@ -294,6 +297,12 @@ namespace Laser.Orchard.Policy.Services {
                 answers = new List<PolicyForUserViewModel>();
             }
             return answers;
+        }
+
+        private IList<PolicyForUserViewModel> GetVolatileAnswers() {
+            var viewModelCollection = _controllerContextAccessor.Context != null
+                ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
+            return (IList<PolicyForUserViewModel>)viewModelCollection;
         }
 
         public void CreateAndAttachPolicyCookie(IList<PolicyForUserViewModel> viewModelCollection, bool writeMode) {
