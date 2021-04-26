@@ -11,6 +11,8 @@
                             new Dictionary<string, object> {
         {"class", "addtocart"},
         {"data-productid", productId},
+        {"data-form-role","addtocart" },
+        { "data-call-type", "ajax" },
         {"enctype", "multipart/form-data"}
                             })) {
     if (Model.ProductAttributes != null) {
@@ -24,7 +26,10 @@
             <div class="addtocart-quantity-and-button">
                 <input name="id" value="@productId" type="hidden" />
                 <input name="quantity" value="@quantityValue" class="addtocart-quantity" type="hidden" />
-                <p><button type="submit" class="addtocart-button item_add">@T("Add to cart")</button></p>
+                <div data-cart-button-state="button">
+                    <p><button type="submit" class="addtocart-button item_add">@T("Add to cart")</button></p>
+                </div>
+                <div data-cart-button-state="spinner" style="display:none"><span>@T("Adding")</span></div>
             </div>
         </div>
     </div>
