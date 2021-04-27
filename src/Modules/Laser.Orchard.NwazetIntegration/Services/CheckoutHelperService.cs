@@ -65,7 +65,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     ProductId = scp.Product.Id,
                     PromotionId = scp.Promotion == null ? null : (int?)(scp.Promotion.Id),
                     Quantity = scp.Quantity,
-                    Title = _contentManager.GetItemMetadata(scp.Product).DisplayText
+                    Title = _contentManager.GetItemMetadata(scp.Product).DisplayText,
+                    ProductVersion = scp.Product.ContentItem.Version
                 });
 
             var charge = new PaymentGatewayCharge("Checkout Controller", paymentGuid);
