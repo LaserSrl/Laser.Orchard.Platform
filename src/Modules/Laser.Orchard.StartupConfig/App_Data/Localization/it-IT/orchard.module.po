@@ -20,6 +20,14 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
 msgid "Command line"
 msgstr "Linea di Comando"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Insert Ids separated by a ; e.g. 5;10;15"
+msgstr "Inserisci gli Id separati da ; (punto e virgola). Ad esempio 5;10;15"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorSettings.cshtml"
+msgid "Insert Ids separated by a ; e.g. 5;10;15"
+msgstr "Inserisci gli Id separati da ; (punto e virgola). Ad esempio 5;10;15"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "For help consult {0}"
 msgstr "Per aiuto consultare {0}"
@@ -71,6 +79,14 @@ msgstr "Testo da mostrare"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text to show in back-end lists."
 msgstr "Testo dal mostrare nelle liste di back-end."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/FrontendEditorConfigurationSettings.cshtml"
+msgid "Allow edit on front end"
+msgstr "Permetti la modifica dal front end"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/FrontendEditorConfigurationSettings.cshtml"
+msgid "Check to allow editing the contents of this part/field from the front-end, e.g. in a CustomForm."
+msgstr "Seleziona per permettere la modifica del contenuto di questa parte/campo dal frontend, ad esempio in un CustomForm."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/JsonDataTableFieldSettings.cshtml"
 msgid "Columns Definition"
@@ -223,6 +239,86 @@ msgstr "Stato"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Unpublish on"
 msgstr "Spubblica il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Allow Cross-Origin access to the backend."
+msgstr "Permetti accessi Cross-Origin al backend."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Allow Cross-Origin access to the frontend."
+msgstr "Permetti accessi Cross-Origin al frontend."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Cross Origin Settings"
+msgstr "Impostazioni per il Cross-Origin"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Don't Alter: keep the attribute value originally set by the feature that added the cookie."
+msgstr "Don't Alter: mantieni il valore di attributo impostato dalla funzionalità che ha aggiunto il cookie."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Forms with antiforgery tokens add the X-Frame-Options header to further harden against XSRF attacks. However this prevents use cases where we want our forms in an iframe. The options above allow removing that header."
+msgstr "I forms con antiforgery tokens aggiungono l'header X-Frame-Options per aumentare ulteriormente la difesa da attacchi XSRF. Una conseguenza di ciò è che viene impedito di avere quei forms in un iframe. Queste opzioni permettono di rimuovere quell'header."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "If this is true, it will remove the X-Frame-Options header from responses for backend pages."
+msgstr "Se questo è vero, verrà rimosso l'header X-Frame-Options dalle risposte per pagine del backend."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "If this is true, it will remove the X-Frame-Options header from responses for frontend pages."
+msgstr "Se questo è vero, verrà rimosso l'header X-Frame-Options dalle risposte per pagine del frontend."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Lax: The cookie will be sent with \"same-site\" requests, and with \"cross-site\" top level navigation."
+msgstr "Lax: Il cookie sarà inviato con richieste \"same-site\", e con navigazione di primo livello \"cross-site\"."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "None: cookies with this attribute will be sent by the client with all requests (even cross origin requests). This is the value that is needed to send the cookies e.g. in an iframe."
+msgstr "None: Con questo attributo i cookies verranno inviati dal client con ogni richiesta (anche cross-origin). Questo è il valore da usare perchè siano inviati ad esempio in un iframe."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Set the behaviour regarding the SameSite attribute for all cookies being set by the site."
+msgstr "Imposta il comportamento riguardo l'attributo SameSite per tutti i cookies inviati dal sito."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Set the SameSite attribute for cookies."
+msgstr "Imposta l'attributo SameSite per i cookies."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Strict: When the value is Strict the cookie will only be sent along with \"same-site\" requests."
+msgstr "Strict: quando il valore è \"Strict\" il cookie verrà inviato solo con richieste \"same-site\"."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Unspecified: set the attribute so that the server will not send it to clients."
+msgstr "Unspecified: imposta l'atributo in modo che il server non lo invii ai clients."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPart.cshtml"
+msgid "API Credentials"
+msgstr "Credenziali API"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPart.cshtml"
+msgid "API Key: {0}"
+msgstr "Chiave API: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPart.cshtml"
+msgid "API Secret: {0}"
+msgstr "Segreto API: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPart.cshtml"
+msgid "By generating new credentials you will lose all unsaved changes to this content."
+msgstr "Generando nuove credenziali perderai tutte le modifiche non salvate per questo contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPart.cshtml"
+msgid "Generate new credentials"
+msgstr "Genera nuove credenziali"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPartNew.cshtml"
+msgid "API Credentials"
+msgstr "Credenziali API"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPartNew.cshtml"
+msgid "Save the User to manage API Credentials."
+msgstr "Salva l'Utente per gestire le credenziali API."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Cannot perform requested operation"
@@ -456,6 +552,30 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.csht
 msgid "Unpublish"
 msgstr "Annulla Pubblicazione"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "ApplePay Merchant Domain Association"
+msgstr ""Merchant Domain Association" di Apple Pay"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "Enable ApplePay Merchant Domain Association File"
+msgstr "Abilita il file "Merchant Domain Association" di Apple Pay"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "Enable return file from the route: /.well-known/apple-developer-merchantid-domain-association"
+msgstr "Rende disponibile il file alla rotta: /.well-known/apple-developer-merchantid-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "File Content for /.well-known/apple-developer-merchantid-domain-association"
+msgstr "Contenuto del file per /.well-known/apple-developer-merchantid-domain-association"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "Manage Merchant Domain Association file"
+msgstr "Gestisci il file "Manage Domain Association""
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MerchantDomainAssociationAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Parts/ContentPickerConnector.cshtml"
 msgid "No content items."
 msgstr "Nessun contenuto."
@@ -604,6 +724,22 @@ msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "Users"
 msgstr "Utenti"
 
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserIsAuthenticatedActivity"
+msgid "Anonymous"
+msgstr "Anonimo"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserIsAuthenticatedActivity"
+msgid "Authenticated"
+msgstr "Autenticato"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserIsAuthenticatedActivity"
+msgid "Tells whether the current request has an authenticated user."
+msgstr "Informa se la richiesta corrente ha un utente autenticato."
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserIsAuthenticatedActivity"
+msgid "User"
+msgstr "Utente"
+
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseActivity"
 msgid "Done"
 msgstr "Fatto"
@@ -692,6 +828,22 @@ msgctxt "Laser.Orchard.StartupConfig.Activities.WorkflowChangeOwnerForm"
 msgid "Set Owner of content picker element"
 msgstr "Impostare il Proprietario del picker del contenuto"
 
+msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Controllers.MerchantDomainAssociationAdminController"
+msgid "Cannot manage Apple Merchant Domain Association file"
+msgstr "Impossibile gestire il file "Merchant Domain Association" di Apple Pay"
+
+msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Controllers.MerchantDomainAssociationAdminController"
+msgid "File settings successfully saved."
+msgstr "Impostazioni del file salvate correttamente."
+
+msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Navigation.MerchantDomainAssociationNavigation"
+msgid "ApplePay Merchant Domain Association File"
+msgstr "File per la "Merchant Domain Association" di Apple Pay"
+
+msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Navigation.MerchantDomainAssociationNavigation"
+msgid "Settings"
+msgstr "Impostazioni"
+
 msgctxt "Laser.Orchard.StartupConfig.ColorPicker.ColorPickerFieldDriver"
 msgid "The Hex value string associated with the color (eg. #ff0000)."
 msgstr "Il valore esadecimale associato al colore (es. #ff0000)."
@@ -699,6 +851,18 @@ msgstr "Il valore esadecimale associato al colore (es. #ff0000)."
 msgctxt "Laser.Orchard.StartupConfig.ColorPicker.ColorPickerFieldDriver"
 msgid "Value"
 msgstr "Valore"
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.ApiCredentialsAdminController"
+msgid "New credentials have been generated."
+msgstr "Sono state generate nuove credenziali."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.ApiCredentialsAdminController"
+msgid "Not authorized to manage API credentials."
+msgstr "Non autorizzato a gestire le credenziali API."
+
+msgctxt "Laser.Orchard.StartupConfig.Controllers.BearerTokenController"
+msgid "Invalid credentials."
+msgstr "Credenziali non valide."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.CommandsController"
 msgid "Not authorized to use the web console"
@@ -969,6 +1133,10 @@ msgid "Index: {0}"
 msgstr "Indice: {0}"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
+msgid "It was impossible to find a descriptor for sort provider with category {0} and type {1}."
+msgstr "Non è stato possibile trovare un descrittore per il provider di ordinamento con categoria {0} e tipo {1}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
 msgid "It was impossible to uniquely identify a property named {0} for type {1}. Perhaps it lacks a MemberBinding configuration?"
 msgstr "Non è stato possibile identificare univocamente una proprietà chiamata {0} per il tipo {1}. Forse manca la sua configurazione per il MemberBinding?"
 
@@ -1009,6 +1177,14 @@ msgid "Criterion at index {0} is configured for both a part and a field."
 msgstr "Il criterio in posizione {0} è configurato sia per una parte che per un campo."
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is configured for more than a single option (part, field or provider)."
+msgstr "Il criterio all'indice {0} è configurato per più di una sola opzione (parte, campo o provider)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "Criterion at index {0} is neither for a part or a field or a provider."
+msgstr "Il criterio all'indice {0} non è configurato per un'opzione valida (parte, campo o provider)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
 msgid "Criterion at index {0} is neither for a part or a field."
 msgstr "Il criterio in posizione {0} non è nè per una parte nè per un campo."
 
@@ -1031,6 +1207,10 @@ msgstr "Inserisci un valore per l'indice (sono permessi i token)."
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
 msgid "The array of Criteria may not be null"
 msgstr "L'array dei criteri non può essere null."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
+msgid "This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. In case you want to use a different provider, you must provide its \"SortCriterionProviderCategory\" and \"SortCriterionProviderType\". You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and }). The additional \"FilterLabel\" property is available for use as a label for this filter when providing a frontend selection."
+msgstr "Questo campo è usato per un array di oggetti che descrivono la configurazione per ciascun criterio. Nel caso si voglia ordinare sulla base di una proprietà della ContentPart, bisogna dare un valore per \"PartRecordTypeName\" e \"PropertyName\". Nel caso si voglia ordinare sul valore di una proprietà di un ContentField, bisogna dare \"PartName\" e \"FieldName\"; in questo caso \"PropertyName\" è opzionale. Nel caso si voglia usare un provider different, bisogna dare il suo \"SortCriterionProviderCategory\" e \"SortCriterionProviderType\". Si può anche dare una proprietà booleana \"Ascending\" per controllare la direzione dell'ordinamento. Poichè questo campo potrebbe essere tokenizzato, bisogna usare le doppie graffe per delimitare gli oggetti JSON (quindi {{ e }} invece di { e }). La proprietà addizionale \"FilterLabel\" è disponibile per essere usata come etichetta per questo filtro quando si mette a disposizione una selezione a frontend."
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderForm"
 msgid "This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and })"
@@ -1331,6 +1511,14 @@ msgstr "Azione non autorizzata"
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "Validation error"
 msgstr "Errore di validazione"
+
+msgctxt "Laser.Orchard.StartupConfig.Settings.CacheEvictorPartSettingsHook"
+msgid "CacheEvictorPart - {0} is not an id"
+msgstr "CacheEvictorPart - {0} non è un id"
+
+msgctxt "Laser.Orchard.StartupConfig.Settings.CacheEvictorPartSettingsHook"
+msgid "CacheEvictorPart - The loaded id {0} does not exist"
+msgstr "CacheEvictorPart - L'id {0} caricato non esiste"
 
 msgctxt "Laser.Orchard.StartupConfig.Settings.IdentityPartOnEveryTypeContentDefinitionEventHandler"
 msgid "The content type must have a form of identity. IdentityPart was added."
