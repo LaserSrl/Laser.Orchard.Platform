@@ -1,0 +1,14 @@
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/PayPal/Index.cshtml"
+msgid "Amount"
+msgstr "Importo"
+

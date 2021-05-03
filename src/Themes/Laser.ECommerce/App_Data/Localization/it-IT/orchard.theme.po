@@ -472,6 +472,10 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.csht
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
 
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
+
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.RemoveFromWishList.cshtml"
 msgid "Remove"
 msgstr "Rimuovi"
@@ -548,9 +552,17 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
 
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
+
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.cshtml"
 msgid "Add to WishList"

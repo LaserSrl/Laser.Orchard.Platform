@@ -85,15 +85,21 @@ namespace Laser.Orchard.Translator.Controllers
             var folderType = "";
             switch (elementType) {
                 case ElementToTranslate.Module:
-                    elementsToTranslate = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
+                    elementsToTranslate = translatorSettings.ModulesToTranslate != null
+                        ? translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
                     folderType = "M";
                     break;
                 case ElementToTranslate.Theme:
-                    elementsToTranslate = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+                    elementsToTranslate = translatorSettings.ThemesToTranslate != null
+                        ? translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
                     folderType = "T";
                     break;
                 case ElementToTranslate.Tenant:
-                    elementsToTranslate = translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList();
+                    elementsToTranslate = translatorSettings.TenantsToTranslate != null
+                        ? translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
                     folderType = "A";
                     break;
             }
