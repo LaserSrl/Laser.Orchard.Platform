@@ -1,0 +1,47 @@
+﻿@using Laser.Orchard.SecureData.ViewModels
+
+@model EncryptedStringFieldEditViewModel
+
+@{ 
+    var inputType = Model.Settings.IsVisible ? "text" : "password";
+}
+
+<fieldset>
+    <div class="form-group">
+        <label for="@Html.FieldIdFor(m=>m.Value)">@Model.DisplayName</label>
+        <input type="@inputType" id="@Html.FieldIdFor(m=>m.Value)" 
+               name="@Html.FieldNameFor(m=>m.Value)"
+               class="form-control"
+               @if (Model.Settings.Required)
+               {
+                   <text>required</text>
+               }
+               @if (!string.IsNullOrWhiteSpace(Model.Settings.Pattern))
+               {
+                   <text>pattern="@Model.Settings.Pattern"</text>
+               }
+               />
+    </div>
+    @if (Model.Settings.ConfirmRequired) {
+        <div class="form-group">
+            <label for="@Html.FieldIdFor(m => m.ConfirmValue)">@T("Confirm {0}", Model.DisplayName)</label>
+            <input type="@inputType" id="@Html.FieldIdFor(m => m.ConfirmValue)"
+                   name="@Html.FieldNameFor(m => m.ConfirmValue)"
+                   class="form-control"
+                   @if (Model.Settings.Required) { <text> required</text>
+                   }
+                   @if (!string.IsNullOrWhiteSpace(Model.Settings.Pattern)) {
+                       <text> pattern="@Model.Settings.Pattern" </text>  
+                   }
+                   />
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Settings.Hint))
+    {
+        <span class="hint">@Model.Settings.Hint</span>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Settings.Pattern))
+    {
+        <span class="hint">@T("Pattern: {0}", Model.Settings.Pattern)</span>
+    }
+</fieldset>
