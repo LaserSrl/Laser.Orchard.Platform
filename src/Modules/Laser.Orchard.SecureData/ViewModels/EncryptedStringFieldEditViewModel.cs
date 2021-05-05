@@ -10,5 +10,18 @@ namespace Laser.Orchard.SecureData.ViewModels {
         public string ConfirmValue { get; set; }
         public string DisplayName { get; set; }
         public EncryptedStringFieldSettings Settings { get; set; }
+        /// <summary>
+        /// SaveIfEmpty = True -> if Required = False and IsVisible = False, Value is saved even if it's empty.
+        /// SaveIfEmpty = False -> Value is never saved when empty.
+        /// </summary>
+        public bool SaveIfEmpty { get; set; }
+        /// <summary>
+        /// HasValue = True -> there already is a value saved in the Field.
+        /// </summary>
+        public bool HasValue { get; set; }
+
+        public EncryptedStringFieldEditViewModel(EncryptedStringFieldSettings settings) {
+            Settings = settings;
+        }
     }
 }

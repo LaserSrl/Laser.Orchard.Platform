@@ -8,16 +8,22 @@ using Orchard.ContentManagement.Handlers;
 using Laser.Orchard.SecureData.Security;
 using Orchard.Security;
 using Laser.Orchard.SecureData.ViewModels;
+using System.Text.RegularExpressions;
+using Laser.Orchard.SecureData.Services;
 
 namespace Laser.Orchard.SecureData.Drivers {
     public class EncryptedStringFieldDriver : ContentFieldDriver<EncryptedStringField> {
         private readonly IAuthorizer _authorizer;
+        private readonly ISecureFieldService _secureFieldService;
+
         // Variables to set the templates to show in the content editor (backoffice).
         private readonly string TemplateNameAuthorized = "Fields/EncryptedStringField.Edit";
         private readonly string TemplateNameUnauthorized = "Fields/EncryptedStringField.Unauthorized";
+        private readonly string ShapeType = "Fields_EncryptedString_Edit";
 
-        public EncryptedStringFieldDriver(IAuthorizer authorizer) {
+        public EncryptedStringFieldDriver(IAuthorizer authorizer, ISecureFieldService secureFieldService) {
             _authorizer = authorizer;
+            _secureFieldService = secureFieldService;
 
             T = NullLocalizer.Instance;
         }
@@ -38,48 +44,25 @@ namespace Laser.Orchard.SecureData.Drivers {
             if (AuthorizeEdit(part, field)) {
                 // If user is authorized, the following code is showing the view.
                 // TemplateName: TemplateNameAuthorized -> it's the actual view with the edit form.
-                return ContentShape("Fields_EncryptedString_Edit", GetDifferentiator(field, part),
-                    () => {
-                        return shapeHelper.EditorTemplate(
-                            TemplateName: TemplateNameAuthorized,
-                            Model: CreateViewModel(field),
-                            Prefix: GetPrefix(field, part));
-                    });
+                return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, CreateViewModel(field), shapeHelper);
             } else {
                 // If user is unauthorized, I show nothing.
                 // TemplateName: TemplateNameUnauthorized -> it's an empty view; Model: null.
-                return ContentShape("Fields_EncryptedString_Edit", GetDifferentiator(field, part),
-                    () => {
-                        return shapeHelper.EditorTemplate(
-                            TemplateName: TemplateNameUnauthorized,
-                            Model: null,
-                            Prefix: GetPrefix(field, part));
-                    });
+                return ContentShapeFromViewModel(part, field, TemplateNameUnauthorized, null, shapeHelper);
             }
         }
 
         // This function saves the field after a post, then shows the field form again.
         protected override DriverResult Editor(ContentPart part, EncryptedStringField field, IUpdateModel updater, dynamic shapeHelper) {
             if (AuthorizeEdit(part, field)) {
-                var viewModel = new EncryptedStringFieldEditViewModel();
+                var viewModel = new EncryptedStringFieldEditViewModel(field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>());
                 string prefix = GetPrefix(field, part);
 
                 if (updater.TryUpdateModel(viewModel, prefix, null, null)) {
-                    var settings = field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>();
-
-                    // If field is mandatory, check if both Value and ConfirmValue contain a value.
-                    // Field.Value -> data I have already save on database.
-                    // ViewModel.Value -> data sent by the edit form.
-                    // If field.Value is empty the field is a new record on database or the record has been saved with no value.
-                    if (settings.Required && string.IsNullOrWhiteSpace(viewModel.Value) && string.IsNullOrWhiteSpace(field.Value)) {
-                        updater.AddModelError(prefix, T("The field '{0}' is mandatory.", T(field.DisplayName)));
+                    if (Validate(viewModel, field, prefix, updater)) {
+                        _secureFieldService.EncodeValue(field, viewModel.Value);
                     } else {
-                        // Check if Value and Confirm Value contain the same value.
-                        if (settings.ConfirmRequired && !viewModel.Value.Equals(viewModel.ConfirmValue)) {
-                            updater.AddModelError(prefix, T("'{0}' and 'Confirm {0}' must contain the same value.", T(field.DisplayName)));
-                        } else {
-                            field.Value = viewModel.Value;
-                        }
+                        return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
                     }
                 }
             }
@@ -88,16 +71,74 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Editor(part, field, shapeHelper);
         }
 
+        private DriverResult ContentShapeFromViewModel(ContentPart part, EncryptedStringField field, string templateName, EncryptedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
+            return ContentShape(ShapeType, GetDifferentiator(field, part),
+                    () => {
+                        return shapeHelper.EditorTemplate(
+                            TemplateName: templateName,
+                            Model: viewModel,
+                            Prefix: GetPrefix(field, part));
+                    });
+        }
+
+        private bool Validate(EncryptedStringFieldEditViewModel viewModel, EncryptedStringField field, string prefix, IUpdateModel updater) {
+            var settings = field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>();
+
+            if (settings.Required) {
+                if (settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value)) {
+                    updater.AddModelError(prefix, T("The field {0} is mandatory.", T(field.DisplayName)));
+                    return false;
+                }
+
+                if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && string.IsNullOrWhiteSpace(field.Value)) {
+                    updater.AddModelError(prefix, T("The field {0} is mandatory.", T(field.DisplayName)));
+                    return false;
+                }
+
+                if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value)) {
+                    // Keep the Value already saved.
+                    return false;
+                }
+            }
+
+            if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value) && !viewModel.SaveIfEmpty) {
+                // Keep the Value already saved.
+                return false;
+            }
+
+            if (settings.ConfirmRequired && !viewModel.Value.Equals(viewModel.ConfirmValue)) {
+                updater.AddModelError(prefix, T("The value of the field {0} must match the Confirm value.", T(field.DisplayName), settings.Pattern));
+                return false;
+            }
+
+            if (!CheckPattern(viewModel.Value, settings.Pattern)) {
+                updater.AddModelError(prefix, T("The value of the field {0} is not valid." + Environment.NewLine + "Pattern: {1}", T(field.DisplayName), settings.Pattern));
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckPattern(string value, string pattern) {
+            if (string.IsNullOrWhiteSpace(pattern)) {
+                return true;
+            }
+
+            return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
+        }
+
         private bool AuthorizeEdit(ContentPart part, EncryptedStringField field) {
-            return _authorizer.Authorize(EncryptedStringFieldPermissions.ManageAllEncryptedStringFields);
+            // TODO: check authorizations on fields.
+            return _authorizer.Authorize(_secureFieldService.GetOwnPermission(part, field), part);
         }
 
         private EncryptedStringFieldEditViewModel CreateViewModel(EncryptedStringField field) {
             var settings = field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>();
 
-            var vm = new EncryptedStringFieldEditViewModel {
-                Settings = settings,
-                DisplayName = field.PartFieldDefinition.DisplayName
+            var vm = new EncryptedStringFieldEditViewModel(settings) {
+                //Settings = settings,
+                DisplayName = field.PartFieldDefinition.DisplayName,
+                HasValue = !string.IsNullOrWhiteSpace(field.Value)
             };
 
             // Show the value if it's visible only.
@@ -108,17 +149,16 @@ namespace Laser.Orchard.SecureData.Drivers {
             return vm;
         }
 
+        private string GetDecryptedValue(EncryptedStringField field) {
+            return _secureFieldService.DecodeValue(field);
+        }
+
         // This routine is used to search content.
         protected override void Describe(DescribeMembersContext context) {
             context
                 .Member(null, typeof(string), T("Value"), T("The value of the field."))
                 // TODO: Decode the encrypted value.
                 .Enumerate<EncryptedStringField>(() => field => new[] { field.Value });
-        }
-
-        private string GetDecryptedValue(EncryptedStringField field) {
-            // TODO: decrypt the value.
-            return field.Value;
         }
     }
 }

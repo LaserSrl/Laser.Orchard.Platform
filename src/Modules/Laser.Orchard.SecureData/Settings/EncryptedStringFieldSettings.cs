@@ -8,8 +8,8 @@
         /// </summary>
         public bool ConfirmRequired { get; set; }
         /// <summary>
-        /// Visible = True -> show decrypted value to authorized users.
-        /// Visible = False -> never show decrypted value.
+        /// IsVisible = True -> show decrypted value to authorized users.
+        /// IsVisible = False -> never show decrypted value.
         /// </summary>
         public bool IsVisible { get; set; }
     }
