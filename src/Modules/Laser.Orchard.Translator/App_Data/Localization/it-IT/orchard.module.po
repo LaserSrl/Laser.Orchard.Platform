@@ -13,12 +13,20 @@ msgid "Comma separated list of modules that must be translated."
 msgstr "Elenco separato da virgola dei moduli da tradurre."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of tenants that have custom translations."
+msgstr "Elenco separato da virgola dei tenants che hanno traduzioni custom."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Comma separated list of themes that must be translated."
 msgstr "Elenco separato da virgola dei temi da tradurre."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Modules to Translate"
 msgstr "Moduli da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Tenants to Translate"
+msgstr "Tenants da tradurre"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Themes to Translate"
@@ -149,6 +157,10 @@ msgid "Please select a module or a theme."
 msgstr "Si prega di selezionare un modulo o un tema."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Please select a module, a theme or a tenant."
+msgstr "Seleziona un modulo, tema o tenant."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
 msgid "Show Details"
 msgstr "Visualizza Dettagli"
 
@@ -195,6 +207,10 @@ msgstr "Moduli"
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "N/D"
 msgstr "N/D"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Tenants"
+msgstr "Tenants"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Themes"
