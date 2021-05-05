@@ -452,6 +452,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.csh
 msgid "Your cart"
 msgstr "Il tuo carrello"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
+msgid "(optional) I have read and agree to {0}"
+msgstr "(opzionale) Ho letto e accetto {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
+msgid "I have read and agree to {0}"
+msgstr "Ho letto e accetto {0}"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Any content will be inserted into the fields, both as text and as a token will be sent as it is to Google Tag Manager (also with html tags or special characters)"
 msgstr "Qualsiasi contenuto verrà inserito nei campi, sia come testo che come token verrà inviato così com'è a Google Tag Manager (anche con tag html o caratteri speciali)"
@@ -616,6 +624,30 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/O
 msgid "Shipping Address"
 msgstr "Indirizzo di spedizione"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "<a href=\"{0}\">{1}</a>"
+msgstr "<a href=\"{0}\">{1}</a>"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "mandatory"
+msgstr "obbligatoria"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "optional"
+msgstr "opzionale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "Policies"
+msgstr "Informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "User accepted the {0} policy \"{1}\" on {2}"
+msgstr "L'utente ha accettato l'informativa {0} \"{1}\" il {2}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "User rejected the {0} policy \"{1}\" on {2}"
+msgstr "L'utente ha rifiutato l'informativa {0} \"{1}\" il {2}"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Amount"
 msgstr "Importo"
@@ -771,6 +803,26 @@ msgstr "Non definito"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetailsMissing.cshtml"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
 msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. È necessario configurarne una accedendo alle <a href=\"{0}\">impostazioni</a>."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "All Policies"
+msgstr "Tutte le informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "No Policies"
+msgstr "Nessuna Informativa"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Policies required for checkout"
+msgstr "Informative richieste per il checkout"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Select policies"
+msgstr "Seleziona le informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Users who don't accept the selected policies will not be allowed to checkout."
+msgstr "Gli utenti che non accettino le informative non potranno effettuare il checkout."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
 msgid "A phone number is required for checkout."
@@ -1184,9 +1236,17 @@ msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.ProductsReq
 msgid "Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>"
 msgstr "Alcuni prodotti nel tuo carrello richiedono che tu sia autenticato. <a href=\"{0}\">Effettua login per completare l'ordine.</a>"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.UserAcceptedPoliciesCheckoutCondition"
+msgid "You need to accept our terms and conditions in order to checkout."
+msgstr "È necessario accettare i termini e le condizioni prima di effettuare un acquisto."
+
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.UserAuthenticatedCheckoutCondition"
 msgid "<a href=\"{0}\">Please log on to complete your order.</a>"
 msgstr "<a href=\"{0}\"> Accedi per completare l'ordine. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutPoliciesService"
+msgid "Please agree to the terms and conditions before making a purchase."
+msgstr "È necessario accettare i termini e le condizioni prima di effettuare un acquisto."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
