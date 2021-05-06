@@ -96,13 +96,13 @@ namespace Laser.Orchard.SecureData.Drivers {
                 }
 
                 if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value)) {
-                    // Keep the Value already saved.
+                    // Keep the already saved Value without showing a error.
                     return false;
                 }
             }
 
             if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value) && !viewModel.SaveIfEmpty) {
-                // Keep the Value already saved.
+                // Keep the already saved Value without showing a error.
                 return false;
             }
 
@@ -142,21 +142,16 @@ namespace Laser.Orchard.SecureData.Drivers {
 
             // Show the value if it's visible only.
             if (settings.IsVisible) {
-                vm.Value = GetDecryptedValue(field);
+                vm.Value = _secureFieldService.DecodeValue(field);
             }
 
             return vm;
-        }
-
-        private string GetDecryptedValue(EncryptedStringField field) {
-            return _secureFieldService.DecodeValue(field);
         }
 
         // This routine is used to search content.
         protected override void Describe(DescribeMembersContext context) {
             context
                 .Member(null, typeof(string), T("Value"), T("The value of the field."))
-                // TODO: Decode the encrypted value.
                 .Enumerate<EncryptedStringField>(() => field => new[] { field.Value });
         }
     }

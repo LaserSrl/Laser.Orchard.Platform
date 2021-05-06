@@ -16,7 +16,9 @@
 
 <fieldset>
     <div class="form-group">
-        <label for="@Html.FieldIdFor(m=>m.Value)">@Model.DisplayName</label>
+        <label for="@Html.FieldIdFor(m=>m.Value)"
+               @if (required) { <text> class="required"</text> }
+               >@Model.DisplayName</label>
         <input type="@inputType" id="@Html.FieldIdFor(m=>m.Value)"
                name="@Html.FieldNameFor(m=>m.Value)"
                class="form-control"
@@ -27,7 +29,9 @@
     </div>
     @if (Model.Settings.ConfirmRequired) {
         <div class="form-group">
-            <label for="@Html.FieldIdFor(m => m.ConfirmValue)">@T("Confirm {0}", Model.DisplayName)</label>
+            <label for="@Html.FieldIdFor(m => m.ConfirmValue)"
+                   @if (required) { <text> class="required"</text> }
+                   >@T("Confirm {0}", Model.DisplayName)</label>
             <input type="@inputType" id="@Html.FieldIdFor(m => m.ConfirmValue)"
                    name="@Html.FieldNameFor(m => m.ConfirmValue)"
                    class="form-control"

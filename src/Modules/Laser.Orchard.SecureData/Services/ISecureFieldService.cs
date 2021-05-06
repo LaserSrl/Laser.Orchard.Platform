@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Laser.Orchard.SecureData.Services {
     public interface ISecureFieldService : IDependency {
+        string EncodeString(string str, string encryptionKey);
         void EncodeValue(EncryptedStringField field, string value);
         string DecodeValue(EncryptedStringField field);
         bool IsValueEqual(EncryptedStringField field, string value);
