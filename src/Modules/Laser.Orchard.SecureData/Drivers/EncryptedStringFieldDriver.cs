@@ -128,8 +128,7 @@ namespace Laser.Orchard.SecureData.Drivers {
         }
 
         private bool AuthorizeEdit(ContentPart part, EncryptedStringField field) {
-            // TODO: check authorizations on fields.
-            return _authorizer.Authorize(_secureFieldService.GetOwnPermission(part, field), part);
+            return _authorizer.Authorize(new EncryptedStringFieldEditPermission(part, field), part);
         }
 
         private EncryptedStringFieldEditViewModel CreateViewModel(EncryptedStringField field) {

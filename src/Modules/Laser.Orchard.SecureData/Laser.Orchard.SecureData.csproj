@@ -103,6 +103,8 @@
     <Compile Include="Drivers\EncryptedStringFieldDriver.cs" />
     <Compile Include="Fields\EncryptedStringField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\EncryptedStringFieldAuthorizationEventHandler.cs" />
+    <Compile Include="Security\EncryptedStringFieldEditPermission.cs" />
     <Compile Include="Security\EncryptedStringFieldPermissions.cs" />
     <Compile Include="Services\SecureFieldService.cs" />
     <Compile Include="Services\ISecureFieldService.cs" />
