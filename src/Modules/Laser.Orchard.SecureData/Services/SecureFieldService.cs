@@ -13,9 +13,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 
 namespace Laser.Orchard.SecureData.Services {
     public class SecureFieldService : ISecureFieldService {
+        private const string PBKDF2 = "PBKDF2";
+        private const string DefaultHashAlgorithm = PBKDF2;
+
         private readonly IEncryptionService _encryptionService;
         private readonly ShellSettings _shellSettings;
 
@@ -37,6 +41,14 @@ namespace Laser.Orchard.SecureData.Services {
             return Convert.ToBase64String(Encode(Encoding.UTF8.GetBytes(str), Encoding.UTF8.GetBytes(algorithmIV)));
         }
 
+        public string HashString(string str, string salt) {
+            var saltBytes = salt.ToByteArray();
+  
+            string hashedString = ComputeHashBase64(DefaultHashAlgorithm, saltBytes, str);
+            
+            return hashedString;
+        }
+
         public string DecodeValue(EncryptedStringField field) {
             if (field == null || field.Value == null) {
                 return null;
@@ -53,12 +65,21 @@ namespace Laser.Orchard.SecureData.Services {
             }
         }
 
+        public void HashValue(HashedStringField field, string value) {
+            if (value != null) {
+                field.Value = HashString(value, field.Salt);
+            } else {
+                field.Value = null;
+            }
+        }
+
         public bool IsValueEqual(ContentPart part, EncryptedStringField field, string value) {
             return string.Equals(field.Value, EncodeString(value, part.PartDefinition.Name + "." + field.Name), StringComparison.Ordinal);
         }
 
         public Permission GetOwnPermission(string partName, string fieldName) {
             string fieldFullName = partName + "." + fieldName;
+            // TODO: Permission management for HashedStringFields.
             return new Permission {
                 Description = T("Manage own {0} encrypted string fields", fieldFullName).Text,
                 Name = "ManageOwnEncryptedStringFields_" + fieldFullName,
@@ -73,11 +94,16 @@ namespace Laser.Orchard.SecureData.Services {
             return GetOwnPermission(part.PartDefinition.Name, field.Name);
         }
 
+        public Permission GetOwnPermission(ContentPart part, HashedStringField field) {
+            return GetOwnPermission(part.PartDefinition.Name, field.Name);
+        }
+
         public Permission GetAllPermission(string partName, string fieldName) {
             string fieldFullName = partName + "." + fieldName;
+            // TODO: Permission management for HashedStringFields.
             return new Permission {
                 Description = T("Manage all {0} encrypted string fields", fieldFullName).Text,
-                Name = "ManagAllEncryptedStringFields_" + fieldFullName,
+                Name = "ManageAllEncryptedStringFields_" + fieldFullName,
                 ImpliedBy = new Permission[] {
                     EncryptedStringFieldPermissions.ManageAllEncryptedStringFields
                 }
@@ -86,6 +112,29 @@ namespace Laser.Orchard.SecureData.Services {
 
         public Permission GetAllPermission(ContentPart part, EncryptedStringField field) {
             return GetAllPermission(part.PartDefinition.Name, field.Name);
+        }
+
+        public Permission GetAllPermission(ContentPart part, HashedStringField field) {
+            return GetAllPermission(part.PartDefinition.Name, field.Name);
+        }
+
+        private static string ComputeHashBase64(string hashAlgorithmName, byte[] saltBytes, string password) {
+            var combinedBytes = CombineSaltAndPassword(saltBytes, password);
+
+            // Extending HashAlgorithm would be too complicated: http://stackoverflow.com/questions/6460711/adding-a-custom-hashalgorithmtype-in-c-sharp-asp-net?lq=1
+            if (hashAlgorithmName == PBKDF2) {
+                // HashPassword() already returns a base64 string.
+                return Crypto.HashPassword(Encoding.Unicode.GetString(combinedBytes));
+            } else {
+                using (var hashAlgorithm = HashAlgorithm.Create(hashAlgorithmName)) {
+                    return Convert.ToBase64String(hashAlgorithm.ComputeHash(combinedBytes));
+                }
+            }
+        }
+
+        private static byte[] CombineSaltAndPassword(byte[] saltBytes, string password) {
+            var passwordBytes = Encoding.Unicode.GetBytes(password);
+            return saltBytes.Concat(passwordBytes).ToArray();
         }
 
         #region "Symmetric Encryption Algorithm"
@@ -99,7 +148,7 @@ namespace Laser.Orchard.SecureData.Services {
             using (var ms = new MemoryStream()) {
                 using (var symmetricAlgorithm = CreateSymmetricAlgorithm()) {
                     // IV has to have a length of symmetricAlgorithm.BlockSize.
-                    iv = ResizeIV(symmetricAlgorithm, customIV); 
+                    iv = ResizeIV(symmetricAlgorithm, customIV);
                     symmetricAlgorithm.IV = iv;
 
                     using (var cs = new CryptoStream(ms, symmetricAlgorithm.CreateEncryptor(), CryptoStreamMode.Write)) {

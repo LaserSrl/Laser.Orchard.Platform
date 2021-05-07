@@ -58,7 +58,7 @@ namespace Laser.Orchard.SecureData.Filters {
                             T("Value for {0}", localField.DisplayName),
                             context => ApplyFilter(context, part, field),
                             DisplayFilter,
-                            EncryptedStringFieldForm.FormName);
+                            SecureStringFieldForm.FormName);
                 }
             }
         }

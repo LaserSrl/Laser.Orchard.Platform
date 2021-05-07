@@ -6,7 +6,7 @@ namespace Laser.Orchard.SecureData.Fields {
     public class EncryptedStringField : ContentField {
         public string Value {
             get { return Storage.Get<string>(); }
-            set { Storage.Set(value ?? String.Empty); }
+            set { Storage.Set(value ?? string.Empty); }
         }
     }
 }

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.SecureData.Fields {
-    public class EncryptedStringFieldForm : IFormProvider {
-        public static string FormName = "EncryptedStringFieldForm";
+    public class SecureStringFieldForm : IFormProvider {
+        public static string FormName = "SecureStringFieldForm";
         public Localizer T { get; set; }
         protected dynamic Shape { get; set; }
 
-        public EncryptedStringFieldForm(IShapeFactory shapeFactory) {
+        public SecureStringFieldForm(IShapeFactory shapeFactory) {
             Shape = shapeFactory;
             T = NullLocalizer.Instance;
         }
@@ -26,7 +26,7 @@ namespace Laser.Orchard.SecureData.Fields {
                             Id: "Value",
                             Name: "Value",
                             Title: T("Value"),
-                            Description: T("Encrypted value of the field."),
+                            Description: T("Secure value of the field."),
                             Classes: new[] { "text", "tokenized" }
                         ),
                         _ReturnAllElements: Shape.CheckBox(

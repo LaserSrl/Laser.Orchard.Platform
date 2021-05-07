@@ -1,45 +1,46 @@
-﻿using System;
-using Laser.Orchard.SecureData.Fields;
+﻿using Laser.Orchard.SecureData.Fields;
+using Laser.Orchard.SecureData.Services;
 using Laser.Orchard.SecureData.Settings;
-using Orchard.Localization;
+using Laser.Orchard.SecureData.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.ContentManagement.Handlers;
-using Laser.Orchard.SecureData.Security;
+using Orchard.Localization;
 using Orchard.Security;
-using Laser.Orchard.SecureData.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
-using Laser.Orchard.SecureData.Services;
+using System.Web;
 
 namespace Laser.Orchard.SecureData.Drivers {
-    public class EncryptedStringFieldDriver : ContentFieldCloningDriver<EncryptedStringField> {
-        private readonly IAuthorizer _authorizer;
-        private readonly ISecureFieldService _secureFieldService;
+    public class HashedStringFieldDriver : ContentFieldCloningDriver<HashedStringField> {
+        private IAuthorizer _authorizer;
+        private ISecureFieldService _secureFieldService;
 
         // Variables to set the templates to show in the content editor (backoffice).
-        private static string TemplateNameAuthorized = "Fields/EncryptedStringField.Edit";
-        private static string TemplateNameUnauthorized = "Fields/EncryptedStringField.Unauthorized";
-        private static string ShapeType = "Fields_EncryptedString_Edit";
+        private static string TemplateNameAuthorized = "Fields/HashStringField.Edit";
+        private static string TemplateNameUnauthorized = "Fields/HasStringField.Unauthorized";
+        private static string ShapeType = "Fields_HashString_Edit";
 
-        public EncryptedStringFieldDriver(IAuthorizer authorizer, ISecureFieldService secureFieldService) {
+        public Localizer T { get; set; }
+
+        public HashedStringFieldDriver(IAuthorizer authorizer, ISecureFieldService secureFieldService) {
             _authorizer = authorizer;
             _secureFieldService = secureFieldService;
 
             T = NullLocalizer.Instance;
         }
 
-        public Localizer T { get; set; }
-
         public static string GetPrefix(ContentField field, ContentPart part) {
             return part.PartDefinition.Name + "." + field.Name;
         }
 
-        public static string GetDifferentiator(EncryptedStringField field, ContentPart part) {
+        public static string GetDifferentiator(HashedStringField field, ContentPart part) {
             return field.Name;
         }
 
         // This function shows the view for the field.
-        protected override DriverResult Editor(ContentPart part, EncryptedStringField field, dynamic shapeHelper) {
+        protected override DriverResult Editor(ContentPart part, HashedStringField field, dynamic shapeHelper) {
             // Permission management.
             if (AuthorizeEdit(part, field)) {
                 // If user is authorized, the following code is showing the view.
@@ -53,14 +54,14 @@ namespace Laser.Orchard.SecureData.Drivers {
         }
 
         // This function saves the field after a post, then shows the field form again.
-        protected override DriverResult Editor(ContentPart part, EncryptedStringField field, IUpdateModel updater, dynamic shapeHelper) {
+        protected override DriverResult Editor(ContentPart part, HashedStringField field, IUpdateModel updater, dynamic shapeHelper) {
             if (AuthorizeEdit(part, field)) {
-                var viewModel = new EncryptedStringFieldEditViewModel(field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>());
+                var viewModel = new HashedStringFieldEditViewModel(field.PartFieldDefinition.Settings.GetModel<HashedStringFieldSettings>());
                 string prefix = GetPrefix(field, part);
 
                 if (updater.TryUpdateModel(viewModel, prefix, null, null)) {
                     if (Validate(viewModel, field, prefix, updater)) {
-                        _secureFieldService.EncodeValue(part, field, viewModel.Value);
+                        _secureFieldService.HashValue(field, viewModel.Value);
                     } else {
                         return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
                     }
@@ -71,7 +72,7 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Editor(part, field, shapeHelper);
         }
 
-        private DriverResult ContentShapeFromViewModel(ContentPart part, EncryptedStringField field, string templateName, EncryptedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
+        private DriverResult ContentShapeFromViewModel(ContentPart part, HashedStringField field, string templateName, HashedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
             return ContentShape(ShapeType, GetDifferentiator(field, part),
                     () => {
                         return shapeHelper.EditorTemplate(
@@ -81,27 +82,23 @@ namespace Laser.Orchard.SecureData.Drivers {
                     });
         }
 
-        private bool Validate(EncryptedStringFieldEditViewModel viewModel, EncryptedStringField field, string prefix, IUpdateModel updater) {
-            var settings = field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>();
+        private bool Validate(HashedStringFieldEditViewModel viewModel, HashedStringField field, string prefix, IUpdateModel updater) {
+            var settings = field.PartFieldDefinition.Settings.GetModel<HashedStringFieldSettings>();
 
             if (settings.Required) {
-                if (settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value)) {
+                // If there is no previous Value and there is no Value in the viewModel.
+                if (string.IsNullOrWhiteSpace(field.Value) && string.IsNullOrWhiteSpace(viewModel.Value)) {
                     updater.AddModelError(prefix, T("The field {0} is mandatory.", T(field.DisplayName)));
                     return false;
                 }
 
-                if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && string.IsNullOrWhiteSpace(field.Value)) {
-                    updater.AddModelError(prefix, T("The field {0} is mandatory.", T(field.DisplayName)));
-                    return false;
-                }
-
-                if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value)) {
+                if (string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value)) {
                     // Keep the already saved Value without showing a error.
                     return false;
                 }
             }
 
-            if (!settings.IsVisible && string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value) && !viewModel.SaveIfEmpty) {
+            if (string.IsNullOrWhiteSpace(viewModel.Value) && !string.IsNullOrWhiteSpace(field.Value) && !viewModel.SaveIfEmpty) {
                 // Keep the already saved Value without showing a error.
                 return false;
             }
@@ -127,36 +124,20 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
         }
 
-        private bool AuthorizeEdit(ContentPart part, EncryptedStringField field) {
-            return _authorizer.Authorize(new EncryptedStringFieldEditPermission(part, field), part);
+        private bool AuthorizeEdit(ContentPart part, ContentField field) {
+            return true;
         }
 
-        private EncryptedStringFieldEditViewModel CreateViewModel(EncryptedStringField field) {
-            var settings = field.PartFieldDefinition.Settings.GetModel<EncryptedStringFieldSettings>();
+        private HashedStringFieldEditViewModel CreateViewModel(HashedStringField field) {
+            var settings = field.PartFieldDefinition.Settings.GetModel<HashedStringFieldSettings>();
 
-            var vm = new EncryptedStringFieldEditViewModel(settings) {
+            var vm = new HashedStringFieldEditViewModel(settings) {
                 //Settings = settings,
                 DisplayName = field.PartFieldDefinition.DisplayName,
                 HasValue = !string.IsNullOrWhiteSpace(field.Value)
             };
-
-            // Show the value if it's visible only.
-            if (settings.IsVisible) {
-                vm.Value = _secureFieldService.DecodeValue(field);
-            }
-
+            
             return vm;
-        }
-
-        // This routine is used to search content.
-        protected override void Describe(DescribeMembersContext context) {
-            context
-                .Member(null, typeof(string), T("Value"), T("The value of the field."))
-                .Enumerate<EncryptedStringField>(() => field => new[] { field.Value });
-        }
-
-        protected override void Cloning(ContentPart part, EncryptedStringField originalField, EncryptedStringField cloneField, CloneContentContext context) {
-            cloneField.Value = originalField.Value;
         }
     }
 }
