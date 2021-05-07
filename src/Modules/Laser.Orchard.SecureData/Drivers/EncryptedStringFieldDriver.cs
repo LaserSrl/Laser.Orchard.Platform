@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 using Laser.Orchard.SecureData.Services;
 
 namespace Laser.Orchard.SecureData.Drivers {
-    public class EncryptedStringFieldDriver : ContentFieldDriver<EncryptedStringField> {
+    public class EncryptedStringFieldDriver : ContentFieldCloningDriver<EncryptedStringField> {
         private readonly IAuthorizer _authorizer;
         private readonly ISecureFieldService _secureFieldService;
 
@@ -153,6 +153,10 @@ namespace Laser.Orchard.SecureData.Drivers {
             context
                 .Member(null, typeof(string), T("Value"), T("The value of the field."))
                 .Enumerate<EncryptedStringField>(() => field => new[] { field.Value });
+        }
+
+        protected override void Cloning(ContentPart part, EncryptedStringField originalField, EncryptedStringField cloneField, CloneContentContext context) {
+            cloneField.Value = originalField.Value;
         }
     }
 }
