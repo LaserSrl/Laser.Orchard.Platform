@@ -60,7 +60,7 @@ namespace Laser.Orchard.SecureData.Drivers {
 
                 if (updater.TryUpdateModel(viewModel, prefix, null, null)) {
                     if (Validate(viewModel, field, prefix, updater)) {
-                        _secureFieldService.EncodeValue(field, viewModel.Value);
+                        _secureFieldService.EncodeValue(part, field, viewModel.Value);
                     } else {
                         return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
                     }

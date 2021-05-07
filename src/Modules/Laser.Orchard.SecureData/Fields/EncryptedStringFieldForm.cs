@@ -9,7 +9,7 @@ using System.Web;
 namespace Laser.Orchard.SecureData.Fields {
     public class EncryptedStringFieldForm : IFormProvider {
         public static string FormName = "EncryptedStringFieldForm";
-        public Localizer T { get; set;  }
+        public Localizer T { get; set; }
         protected dynamic Shape { get; set; }
 
         public EncryptedStringFieldForm(IShapeFactory shapeFactory) {
@@ -28,6 +28,12 @@ namespace Laser.Orchard.SecureData.Fields {
                             Title: T("Value"),
                             Description: T("Encrypted value of the field."),
                             Classes: new[] { "text", "tokenized" }
+                        ),
+                        _ReturnAllElements: Shape.CheckBox(
+                            Id: "ShowAllIfNoValue",
+                            Name: "ShowAllIfNoValue",
+                            Title: T("Return all elements if Value is empty."),
+                            Description: T("Return all elements if no filter is provided.")
                         )
                     );
                     return f;

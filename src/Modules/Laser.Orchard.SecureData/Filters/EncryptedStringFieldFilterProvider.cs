@@ -56,7 +56,7 @@ namespace Laser.Orchard.SecureData.Filters {
                             localPart.Name + "." + localField.Name,
                             T(localField.DisplayName),
                             T("Value for {0}", localField.DisplayName),
-                            context=>ApplyFilter(context, part, field),
+                            context => ApplyFilter(context, part, field),
                             DisplayFilter,
                             EncryptedStringFieldForm.FormName);
                 }
@@ -64,27 +64,53 @@ namespace Laser.Orchard.SecureData.Filters {
         }
 
         public void ApplyFilter(FilterContext context, ContentPartDefinition part, ContentPartFieldDefinition field) {
-            string value = _secureFieldService.EncodeString(Convert.ToString(context.State.Value), field.DisplayName);
+            string rawValue = Convert.ToString(context.State.Value);
+            bool returnAllElements = false;
+
+            string value = string.Empty;
+
+            // CheckBox True Value in Form is "on".
+            if (context.State.ShowAllIfNoValue.Value == "on" && string.IsNullOrWhiteSpace(rawValue)) {
+                returnAllElements = true;
+            } else {
+                value = _secureFieldService.EncodeString(rawValue, part.Name + "." + field.Name);
+            }
 
             string propertyName = String.Join(".", part.Name, field.Name, "");
 
             // This is the actual join between the FieldIndexPartRecord table and the StringFieldIndexRecords table, which contains the values of each property.
             Action<IAliasFactory> relationship = x => x.ContentPartRecord<FieldIndexPartRecord>().Property("StringFieldIndexRecords", propertyName.ToSafeName());
 
-            // Search on the "Value" column the value I'm searching.
-            Action<IHqlExpressionFactory> valueFilter = x => x.Eq("Value", value);
             // Search on the "PropertyName" column the name of the property to apply the filter to.
-            Action<IHqlExpressionFactory> completeFilter = x => x.And(y => y.Eq("PropertyName", propertyName), valueFilter);
+            Action<IHqlExpressionFactory> propertyFilter = x => x.Eq("PropertyName", propertyName);
 
             var query = (IHqlQuery)context.Query;
+
+            if (!returnAllElements) {
+                // Add the filter on the "Value" column.
+                Action<IHqlExpressionFactory> completeFilter = x => x.And(y => y.Eq("Value", value), propertyFilter);
+
+                context.Query = query
+                    .Where(relationship, completeFilter);
+
+                return;
+            }
+
             // This is the actual query execution, applying the filters ("completeFilter" variable) on the table / view created with "relationships" variable.
             context.Query = query
-                .Where(relationship, completeFilter);
+                    .Where(relationship, propertyFilter);
+
             return;
         }
 
         public LocalizedString DisplayFilter(FilterContext context) {
-            return T("Value of the field is equal to '{0}'", Convert.ToString(context.State.Value));
+            string description = "Value of the field is equal to '{0}'.";
+
+            if (context.State.ShowAllIfNoValue.Value == "on") {
+                description += " If '{0}' is empty, returns all results.";
+            }
+
+            return T(description, Convert.ToString(context.State.Value));
         }
     }
 }

@@ -28,33 +28,33 @@ namespace Laser.Orchard.SecureData.Services {
             T = NullLocalizer.Instance;
         }
 
-        private string DecodeString(string str, string encryptionKey) {
-            return Encoding.UTF8.GetString(Decode(Convert.FromBase64String(str), Encoding.UTF8.GetBytes(encryptionKey)));
+        private string DecodeString(string str) {
+            return Encoding.UTF8.GetString(Decode(Convert.FromBase64String(str)));
         }
 
-        public string EncodeString(string str, string encryptionKey) {
+        public string EncodeString(string str, string algorithmIV) {
             //return Convert.ToBase64String(_encryptionService.Encode(Encoding.UTF8.GetBytes(str)));
-            return Convert.ToBase64String(Encode(Encoding.UTF8.GetBytes(str), Encoding.UTF8.GetBytes(encryptionKey)));
+            return Convert.ToBase64String(Encode(Encoding.UTF8.GetBytes(str), Encoding.UTF8.GetBytes(algorithmIV)));
         }
 
         public string DecodeValue(EncryptedStringField field) {
             if (field == null || field.Value == null) {
                 return null;
             }
-            return DecodeString(field.Value, field.DisplayName);
+            return DecodeString(field.Value);
         }
 
-        public void EncodeValue(EncryptedStringField field, string value) {
+        public void EncodeValue(ContentPart part, EncryptedStringField field, string value) {
             // Encoding.UTF8.GetBytes can't encode null values.
             if (value != null) {
-                field.Value = EncodeString(value, field.DisplayName);
+                field.Value = EncodeString(value, part.PartDefinition.Name + "." + field.Name);
             } else {
                 field.Value = null;
             }
         }
 
-        public bool IsValueEqual(EncryptedStringField field, string value) {
-            return string.Equals(field.Value, EncodeString(value, field.DisplayName), StringComparison.Ordinal);
+        public bool IsValueEqual(ContentPart part, EncryptedStringField field, string value) {
+            return string.Equals(field.Value, EncodeString(value, part.PartDefinition.Name + "." + field.Name), StringComparison.Ordinal);
         }
 
         public Permission GetOwnPermission(string partName, string fieldName) {
@@ -88,17 +88,19 @@ namespace Laser.Orchard.SecureData.Services {
             return GetAllPermission(part.PartDefinition.Name, field.Name);
         }
 
-        #region "Encode Algorithm"
-        public byte[] Encode(byte[] data, byte[] encryptionKey) {
+        #region "Symmetric Encryption Algorithm"
+        // The algorithm is modified from the DefaultEncryptionService because we need IV not to be random to make search functions on EncryptedStringFields work.
+        public byte[] Encode(byte[] data, byte[] customIV) {
             // cipherText ::= IV || ENC(EncryptionKey, IV, plainText) || HMAC(SigningKey, IV || ENC(EncryptionKey, IV, plainText))
 
             byte[] encryptedData;
-            // TODO: Verificare eccezione generata da ToByteArray().
-            byte[] iv = encryptionKey;
+            byte[] iv;
 
             using (var ms = new MemoryStream()) {
-                using (var symmetricAlgorithm = CreateSymmetricAlgorithm(iv)) {
-                    //iv = encryptionKey.ToByteArray();
+                using (var symmetricAlgorithm = CreateSymmetricAlgorithm()) {
+                    // IV has to have a length of symmetricAlgorithm.BlockSize.
+                    iv = ResizeIV(symmetricAlgorithm, customIV); 
+                    symmetricAlgorithm.IV = iv;
 
                     using (var cs = new CryptoStream(ms, symmetricAlgorithm.CreateEncryptor(), CryptoStreamMode.Write)) {
                         cs.Write(data, 0, data.Length);
@@ -119,12 +121,11 @@ namespace Laser.Orchard.SecureData.Services {
             return iv.Concat(encryptedData).Concat(signedData).ToArray();
         }
 
-        public byte[] Decode(byte[] encodedData, byte[] encryptionKey) {
+        public byte[] Decode(byte[] encodedData) {
             // extract parts of the encoded data
-            using (var symmetricAlgorithm = CreateSymmetricAlgorithm(encryptionKey)) {
+            using (var symmetricAlgorithm = CreateSymmetricAlgorithm()) {
                 using (var hashAlgorithm = CreateHashAlgorithm()) {
-                    // TODO: Verificare eccezione generata da ToByteArray().
-                    var iv = new byte[encryptionKey.Length];
+                    var iv = new byte[symmetricAlgorithm.BlockSize / 8];
                     var signature = new byte[hashAlgorithm.HashSize / 8];
                     var data = new byte[encodedData.Length - iv.Length - signature.Length];
 
@@ -153,9 +154,9 @@ namespace Laser.Orchard.SecureData.Services {
             }
         }
 
-        private SymmetricAlgorithm CreateSymmetricAlgorithm(byte[] encryptionKey) {
+        private SymmetricAlgorithm CreateSymmetricAlgorithm() {
             var algorithm = SymmetricAlgorithm.Create(_shellSettings.EncryptionAlgorithm);
-            algorithm.Key = encryptionKey;
+            algorithm.Key = _shellSettings.EncryptionKey.ToByteArray();
             return algorithm;
         }
 
@@ -163,6 +164,16 @@ namespace Laser.Orchard.SecureData.Services {
             var algorithm = HMAC.Create(_shellSettings.HashAlgorithm);
             algorithm.Key = _shellSettings.HashKey.ToByteArray();
             return algorithm;
+        }
+
+        private byte[] ResizeIV(SymmetricAlgorithm algorithm, byte[] iv) {
+            var resizedIV = iv.ToList();
+
+            while (resizedIV.Count < algorithm.BlockSize / 8) {
+                resizedIV.AddRange(resizedIV);
+            }
+
+            return resizedIV.Take(algorithm.BlockSize / 8).ToArray();
         }
         #endregion
 
