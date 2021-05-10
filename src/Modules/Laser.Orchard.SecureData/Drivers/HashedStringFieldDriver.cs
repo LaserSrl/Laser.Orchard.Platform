@@ -1,26 +1,25 @@
 ﻿using Laser.Orchard.SecureData.Fields;
+using Laser.Orchard.SecureData.Security;
 using Laser.Orchard.SecureData.Services;
 using Laser.Orchard.SecureData.Settings;
 using Laser.Orchard.SecureData.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using Orchard.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace Laser.Orchard.SecureData.Drivers {
-    public class HashedStringFieldDriver : ContentFieldCloningDriver<HashedStringField> {
+    public class HashedStringFieldDriver : ContentFieldDriver<HashedStringField> {
         private IAuthorizer _authorizer;
         private ISecureFieldService _secureFieldService;
 
         // Variables to set the templates to show in the content editor (backoffice).
-        private static string TemplateNameAuthorized = "Fields/HashStringField.Edit";
-        private static string TemplateNameUnauthorized = "Fields/HasStringField.Unauthorized";
-        private static string ShapeType = "Fields_HashString_Edit";
+        private static string TemplateNameAuthorized = "Fields/HashedStringField.Edit";
+        private static string TemplateNameUnauthorized = "Fields/HashedStringField.Unauthorized";
+        private static string ShapeType = "Fields_HashedString_Edit";
 
         public Localizer T { get; set; }
 
@@ -124,8 +123,8 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
         }
 
-        private bool AuthorizeEdit(ContentPart part, ContentField field) {
-            return true;
+        private bool AuthorizeEdit(ContentPart part, HashedStringField field) {
+            return _authorizer.Authorize(new HashedStringFieldEditPermission(part, field), part);
         }
 
         private HashedStringFieldEditViewModel CreateViewModel(HashedStringField field) {
@@ -136,8 +135,29 @@ namespace Laser.Orchard.SecureData.Drivers {
                 DisplayName = field.PartFieldDefinition.DisplayName,
                 HasValue = !string.IsNullOrWhiteSpace(field.Value)
             };
-            
+
             return vm;
+        }
+
+        protected override void Describe(DescribeMembersContext context) {
+            context
+                .Member(null, typeof(string), T("Value"), T("The value of the field."))
+                .Member("HashAlgorithm", typeof(string), T("HashAlgorithm"), T("The algorithm the field value is hashed with."))
+                .Member("Salt", typeof(string), T("Salt"), T("The salt used to hash the field value."));
+        }
+
+        protected override void Importing(ContentPart part, HashedStringField field, ImportContentContext context) {
+            context.ImportAttribute(field.FieldDefinition.Name + "." + field.Name, "HashAlgorithm", v => field.HashAlgorithm = v);
+            context.ImportAttribute(field.FieldDefinition.Name + "." + field.Name, "Salt", v => field.Salt = v);
+            context.ImportAttribute(field.FieldDefinition.Name + "." + field.Name, "Value", v => field.Value = v);
+        }
+
+        // --> For ContentFieldDriver, if Cloning routine is not overriden, Exporting and Importing routines are executed.
+        // For ContentCloningFieldDriver, Cloning has to be overriden because there is no fallback to Exporting / Importing routines.
+        protected override void Exporting(ContentPart part, HashedStringField field, ExportContentContext context) {
+            context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("HashAlgorithm", field.HashAlgorithm);
+            context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("Salt", field.Salt);
+            context.Element(field.FieldDefinition.Name + "." + field.Name).SetAttributeValue("Value", field.Value);
         }
     }
 }

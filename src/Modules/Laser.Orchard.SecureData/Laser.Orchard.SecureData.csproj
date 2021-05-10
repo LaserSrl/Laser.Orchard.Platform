@@ -117,6 +117,7 @@
     <Compile Include="Services\ISecureFieldService.cs" />
     <Compile Include="Settings\EncryptedStringFieldEditorEvents.cs" />
     <Compile Include="Settings\EncryptedStringFieldSettings.cs" />
+    <Compile Include="Settings\HashedStringFieldEditorEvents.cs" />
     <Compile Include="Settings\HashedStringFieldSettings.cs" />
     <Compile Include="ViewModels\EncryptedStringFieldEditViewModel.cs" />
     <Compile Include="ViewModels\HashedStringFieldEditViewModel.cs" />

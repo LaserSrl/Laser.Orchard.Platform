@@ -13,13 +13,13 @@ namespace Laser.Orchard.SecureData.Fields {
         }
 
         public string HashAlgorithm {
-            get { return Storage.Get<string>(); }
-            set {   Storage.Set(value ?? string.Empty); }
+            get { return Storage.Get<string>("HashAlgorithm"); }
+            set { Storage.Set("HashAlgorithm", value ?? string.Empty); }
         }
 
         public string Salt {
-            get { return Storage.Get<string>(); }
-            set { Storage.Set(value ?? string.Empty); }
+            get { return Storage.Get<string>("Salt"); }
+            set { Storage.Set("Salt", value ?? string.Empty); }
         }
     }
 }

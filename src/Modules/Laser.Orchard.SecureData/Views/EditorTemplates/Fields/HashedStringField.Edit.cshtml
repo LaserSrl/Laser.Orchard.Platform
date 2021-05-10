@@ -32,7 +32,7 @@
                 </div>
             }
 
-        @if (!required) {
+        @if (!Model.Settings.Required) {
             <div>
                 @Html.CheckBoxFor(m => m.SaveIfEmpty) <label for="@Html.FieldIdFor(m => m.SaveIfEmpty)" class="forcheckbox">@T("SaveIfEmpty")</label>
                 <span class="hint">@T("Save value even if it's empty.")</span>

@@ -24,7 +24,7 @@ namespace Laser.Orchard.SecureData.Security {
                     context.Adjusted = true;
                 } else {
                     // All Permission.
-                    context.Permission = _secureFieldService.GetAllPermission(fieldPermission.Part, fieldPermission.Field); ;
+                    context.Permission = _secureFieldService.GetAllPermission(fieldPermission.Part, fieldPermission.Field); 
                     context.Adjusted = true;
                 }
             }

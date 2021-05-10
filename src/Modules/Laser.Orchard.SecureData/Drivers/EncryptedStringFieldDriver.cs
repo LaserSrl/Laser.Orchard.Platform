@@ -155,6 +155,8 @@ namespace Laser.Orchard.SecureData.Drivers {
                 .Enumerate<EncryptedStringField>(() => field => new[] { field.Value });
         }
 
+        // For ContentFieldDriver, if Cloning routine is not overriden, Exporting and Importing routines are executed.
+        // For ContentCloningFieldDriver, Cloning has to be overriden because there is no fallback to Exporting / Importing routines.
         protected override void Cloning(ContentPart part, EncryptedStringField originalField, EncryptedStringField cloneField, CloneContentContext context) {
             cloneField.Value = originalField.Value;
         }

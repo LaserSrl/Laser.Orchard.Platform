@@ -59,8 +59,8 @@ namespace Laser.Orchard.SecureData.Security {
                     .Where(cpfd =>
                         cpfd.FieldDefinition.Name.Equals("EncryptedStringField"))
                         .Select(cpfd => new[] {
-                            _secureFieldService.GetAllPermission(cpd.Name, cpfd.Name),
-                            _secureFieldService.GetOwnPermission(cpd.Name, cpfd.Name)}));
+                            _secureFieldService.GetAllEncryptedPermission(cpd.Name, cpfd.Name),
+                            _secureFieldService.GetOwnEncryptedPermission(cpd.Name, cpfd.Name)}));
             permissions.AddRange(tmp.SelectMany(p => p));
 
             return permissions;
