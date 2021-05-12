@@ -211,7 +211,17 @@ namespace Laser.Orchard.SecureData.Services {
         }
 
         public bool IsValueEqual(HashedStringField field, string value) {
+            // Preliminary checks.
+            if (string.IsNullOrWhiteSpace(field.Salt)) {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(field.HashAlgorithm)) {
+                return false;
+            }
+
             bool isValid;
+
             var saltBytes = Convert.FromBase64String(field.Salt);
 
             if (field.HashAlgorithm == PBKDF2) {

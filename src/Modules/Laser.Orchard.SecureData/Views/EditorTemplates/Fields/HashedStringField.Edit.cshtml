@@ -35,7 +35,11 @@
         @if (!Model.Settings.Required) {
             <div>
                 @Html.CheckBoxFor(m => m.SaveIfEmpty) <label for="@Html.FieldIdFor(m => m.SaveIfEmpty)" class="forcheckbox">@T("SaveIfEmpty")</label>
-                <span class="hint">@T("Save value even if it's empty.")</span>
+                <span class="hint">@T("Save value even if it's empty. An empty value must be compliant with pattern.")</span>
+            </div>
+            <div>
+                @Html.CheckBoxFor(m => m.ResetField) <label for="@Html.FieldIdFor(m => m.ResetField)" class="forcheckbox">@T("ResetField")</label>
+                <span class="hint">@T("Reset Value, Salt and HashAlgorithm for current HashedStringField.")</span>
             </div>
         }
 
