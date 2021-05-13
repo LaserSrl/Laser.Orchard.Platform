@@ -181,10 +181,15 @@ namespace Laser.Orchard.WebServices.Controllers {
             try {
                 var content = _contentManager.Get(contentId);
                 var tokens = new Dictionary<string, object> {
+                    // Content called for the action, if any.
                     { "Content", content },
+                    // Custom Api configuration.
                     { "HttpVerb", verb },
                     { "RESTActionName", actionName },
+                    { "AllowedMethods", AllowedMethods(actionName) },
+                    // Workflow signal activity to invoke.
                     { SignalActivity.SignalEventName, signalName },
+                    // Workflow will have to change this response.
                     { "RESTApiResponse", restResult }
                 };
                 _workflowManager

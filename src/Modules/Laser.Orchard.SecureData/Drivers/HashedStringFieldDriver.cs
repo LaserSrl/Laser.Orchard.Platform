@@ -59,10 +59,17 @@ namespace Laser.Orchard.SecureData.Drivers {
                 string prefix = GetPrefix(field, part);
 
                 if (updater.TryUpdateModel(viewModel, prefix, null, null)) {
-                    if (Validate(viewModel, field, prefix, updater)) {
-                        _secureFieldService.HashValue(field, viewModel.Value);
+                    if (!viewModel.Settings.Required && viewModel.ResetField) {
+                        // Resets to NULL Value, Salt and HashAlgorithm of the HashedString Field.
+                        field.Value = null;
+                        field.HashAlgorithm = null;
+                        field.Salt = null;
                     } else {
-                        return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
+                        if (Validate(viewModel, field, prefix, updater)) {
+                            _secureFieldService.HashValue(field, viewModel.Value);
+                        } else {
+                            return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
+                        }
                     }
                 }
             }
@@ -116,9 +123,10 @@ namespace Laser.Orchard.SecureData.Drivers {
         }
 
         private bool CheckPattern(string value, string pattern) {
-            if (string.IsNullOrWhiteSpace(pattern)) {
-                return true;
-            }
+            // An empty string must comply with the Pattern.
+            //if (string.IsNullOrWhiteSpace(pattern)) {
+            //    return true;
+            //}
 
             return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
         }

@@ -19,6 +19,10 @@ namespace Laser.Orchard.SecureData.ViewModels {
         /// HasValue = True -> there already is a value saved in the Field.
         /// </summary>
         public bool HasValue { get; set; }
+        /// <summary>
+        /// ResetField = True -> Value, Salt and HashAlgorithm are set to NULL.
+        /// </summary>
+        public bool ResetField { get; set; }
 
         public HashedStringFieldEditViewModel(HashedStringFieldSettings settings) {
             Settings = settings;
