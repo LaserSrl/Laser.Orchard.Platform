@@ -1,0 +1,38 @@
+﻿@using Laser.Orchard.SecureData.Settings
+
+@model EncryptedStringFieldSettings
+
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.Hint)">@T("Help text")</label>
+        @Html.TextAreaFor(m => m.Hint, new { @class = "text medium", rows = "5" })
+        <span class="hint">@T("The help text is written under the field when the user is entering a value.")</span>
+        @Html.ValidationMessageFor(m => m.Hint)
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.Required) <label for="@Html.FieldIdFor(m => m.Required)" class="forcheckbox">@T("Required")</label>
+        <span class="hint">@T("Check if the field is required.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.ConfirmRequired) <label for="@Html.FieldIdFor(m => m.ConfirmRequired)" class="forcheckbox">@T("ConfirmRequired")</label>
+        <span class="hint">@T("Check if the confirm field is shown and required.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.IsVisible) <label for="@Html.FieldIdFor(m => m.IsVisible)" class="forcheckbox">@T("IsVisible")</label>
+        <span class="hint">@T("Always show decrypted value to authorized users.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="editor-field">
+        <label for="@Html.FieldIdFor(m => m.Pattern)">@T("Pattern")</label>
+        @Html.TextBoxFor(m => m.Pattern, new { @class = "text medium" })
+        @Html.ValidationMessageFor(m => m.Pattern)
+        <span class="hint">@T("Declaring what pattern should be used for validating a field’s value, in the form of a regular expression. (optional)")</span>
+    </div>
+</fieldset>
