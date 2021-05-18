@@ -101,13 +101,15 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         // check again, in case the ids do not match any term
                         if (terms.Any()) {
                             var result = false;
-                            // if no term is selected in the product, we already know this will fail
+                            // if no term is selected in the product, we already know this will be false
                             if (termsPart != null) {
                                 var selectedTerms = termsPart.TermParts.Select(tcip => tcip.TermPart);
                                 if (selectedTerms.Any()) {
                                     result = terms.Any(t => selectedTerms.Contains(t));
                                 }
                             }
+
+                            result = outerCriterion(result);
 
                             if (!result) {
                                 var productName = "";
