@@ -15,6 +15,7 @@
         { "data-call-type", "ajax" },
         {"enctype", "multipart/form-data"}
                 })) {
+    Script.Require("Nwazet.ProductAvailability").AtFoot();
     if (Model.ProductAttributes != null) {
         foreach (var productAttributeShape in Model.ProductAttributes) {
             @Display(productAttributeShape)
