@@ -114,7 +114,7 @@ namespace Laser.Orchard.SecureData.Drivers {
                 return false;
             }
 
-            if (!CheckPattern(viewModel.Value, settings.Pattern)) {
+            if (!string.IsNullOrWhiteSpace(settings.Pattern) && !CheckPattern(viewModel.Value, settings.Pattern)) {
                 updater.AddModelError(prefix, T("The value of the field {0} is not valid." + Environment.NewLine + "Pattern: {1}", T(field.DisplayName), settings.Pattern));
                 return false;
             }
