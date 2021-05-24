@@ -14,8 +14,7 @@
 <div id="media-library">
     <div id="media-library-toolbar">
         @{
-            if (!string.IsNullOrWhiteSpace(Model.containerName))
-            {
+            if (!string.IsNullOrWhiteSpace(Model.containerName)) {
                 <span id="folder-name">@Model.containerName</span>
                 <span id="language">@Model.language</span>
             }
@@ -36,7 +35,8 @@
                                     <li>
                                         <div class="media-library-folder">
                                             <div id="message-@messageData.id" class="media-library-folder-title">
-                                                @if (messageData.localized) { <i class="fa fa-check"></i> } else { <i class="fa fa-times"></i> }
+                                                @if (messageData.localized) {<i class="fa fa-check"></i> }
+                                                else { <i class="fa fa-times"></i>}
                                                 <span data-id="@messageData.id">@messageData.message</span>
                                             </div>
                                         </div>
@@ -66,12 +66,15 @@
                                                                          selectedFolderType = Model.containerType })">
         @T("Back")
     </a>
+    |
+    <button class="button" id="create-new-translation">
+        @T("Create new")
+    </button>
 </div>
 
 @{
-    using (Script.Foot())
-    {
-    <script type="text/javascript">
+    using (Script.Foot()) {
+        <script type="text/javascript">
         $(function () {
             $('.media-library-folder-title').click(function () {
                 $('.selected').removeClass('selected');
@@ -82,8 +85,14 @@
                 $('#translator-form-frame').attr('src', iFrameUrl);
             });
 
+            $('#create-new-translation').click(function () {
+                $('.selected').removeClass('selected');
+                var iFrameUrl = '@Html.Raw(Url.Action("TranslatorForm", "Translator", new { id = 0, containerName=Model.containerName, containerType=Model.containerType, language=Model.language }))';
+                $('#translator-form-frame').attr('src', iFrameUrl);
+            });
+
             $("#tabs").tabs({ heightStyle: "content" });
         });
-    </script>
+        </script>
     }
 }

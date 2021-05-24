@@ -24,62 +24,94 @@
 <body id="translator-body">
     @Html.ValidationSummary()
     <div id="main" class="iframe-main">
-        <div id="translation-container">
-            @{
-                if (Model.Id != 0) {
-                
-                    using (Html.BeginForm("TranslatorForm", "Translator",
-                                          new { area = "Laser.Orchard.Translator" },
-                                          FormMethod.Post,
-                                          new { id = "translation-form" })) {
-                @Html.AntiForgeryTokenOrchard()
+        <div id="translation-container container">
+            <div class="row">
+                <div class="col-12">
+                    @{
+                        if (!string.IsNullOrWhiteSpace(Model.ContainerName) && !string.IsNullOrWhiteSpace(Model.ContainerType) && !string.IsNullOrWhiteSpace(Model.Language)) {
+                            using (Html.BeginForm("TranslatorForm", "Translator",
+                                                  new { area = "Laser.Orchard.Translator" },
+                                                  FormMethod.Post,
+                                                  new { id = "translation-form" })) {
+                                @Html.AntiForgeryTokenOrchard()
 
-                <h2>@Model.Message</h2>
-                if (authorized) {
-                    @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", style= "display:none;", @class = "text large" })
-                    <button type="button" id="edit-message">Edit Message ID</button>
-                }
-                <div id="translation-text-container">
-                    @Html.LabelFor(m => m.Context, @T("Context"))
-                    @Html.TextBoxFor(m => m.Context, new { @class = "text large" })
-                </div>
-                <div id="translated-text-container">
-                    @Html.LabelFor(m => m.TranslatedMessage, @T("Translation"))
-                    @Html.TextAreaFor(m => m.TranslatedMessage)
-                </div>
-                
-                @Html.HiddenFor(m => m.Id);
-                @Html.HiddenFor(m => m.Language);
-                @Html.HiddenFor(m => m.Message, new { name = "OrigMessage" });
-                @Html.HiddenFor(m => m.ContainerName);
-                @Html.HiddenFor(m => m.ContainerType);
+                                <h2>@Model.Message</h2>
+                                if (authorized) {
+                                    if (Model.Id > 0) {
+                                        @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", style = "display:none;", @class = "text large" })
+                                        <button type="button" id="edit-message">Edit Message ID</button>
+                                    }
+                                    else {
+                                        @Html.LabelFor(m => m.Message, T("Message ID"))
+                                        @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", @class = "text large" })
+                                    }
+                                }
+                                <div id="translation-text-container">
+                                    @Html.LabelFor(m => m.Context, @T("Context"))
+                                    @Html.TextBoxFor(m => m.Context, new { @class = "text large" })
+                                </div>
+                                <div id="translated-text-container">
+                                    @Html.LabelFor(m => m.TranslatedMessage, @T("Translation"))
+                                    @Html.TextAreaFor(m => m.TranslatedMessage)
+                                </div>
 
-                                                     if (ViewData.ModelState.IsValid)
-                                                     {
-                <input id="save-translation" name="saveTranslation" class="button" type="submit" value="@T("Save")" />
-                                                         if (authorized)
-                                                         {
-                <input id="delete-translation" name="deleteTranslation" class="button" type="submit" value="@T("Delete")" />
-                                                         }
-                                                     }
-                                                         }
+                                @Html.HiddenFor(m => m.Id);
+                                @Html.HiddenFor(m => m.Language);
+                                @Html.HiddenFor(m => m.ContainerName);
+                                @Html.HiddenFor(m => m.ContainerType);
+                                @Html.Hidden("OrigMessage", Model.Message);
+                                <div class="row">
+                                    <!-- /.col -->
+                                    <div class="col-xs-6">
+                                        <p class="lead">@T("Information")</p>
 
-                                                         if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0)
-                                                         {
-                                                             var suggestedTranslationsIndex = 0;
-                   <div id="suggestions-area">
-                        <h2>@T("Suggestions")</h2>
-                        <ul>
-                            @foreach (var suggested in ViewBag.SuggestedTranslations)
-                            {
-                                <li><a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a></li>
-                                suggestedTranslationsIndex++;
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width:50%">@T("Language")</th>
+                                                        <td>@Model.Language</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:50%">@T("Container Name")</th>
+                                                        <td>@Model.ContainerName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:50%">@T("Container Type")</th>
+                                                        <td>@Model.ContainerType</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                if (ViewData.ModelState.IsValid) {
+                                    <input id="save-translation" name="saveTranslation" class="button" type="submit" value="@T("Save")" />
+                                    if (authorized && Model.Id > 0) {
+                                        <input id="delete-translation" name="deleteTranslation" class="button" type="submit" value="@T("Delete")" />
+                                    }
+                                }
                             }
-                        </ul>
-                    </div>
-                                                         }
-                                          }
-                }
+
+                            if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0) {
+                                var suggestedTranslationsIndex = 0;
+                                <div id="suggestions-area">
+                                    <h2>@T("Suggestions")</h2>
+                                    <ul>
+                                        @foreach (var suggested in ViewBag.SuggestedTranslations) {
+                                            <li>
+                                                <a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a>
+                                            </li>
+                                            suggestedTranslationsIndex++;
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
         </div>
     </div>
 

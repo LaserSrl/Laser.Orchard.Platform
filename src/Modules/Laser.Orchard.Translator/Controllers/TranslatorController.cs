@@ -40,13 +40,19 @@ namespace Laser.Orchard.Translator.Controllers {
             return View(translationDetailVM);
         }
 
-        public ActionResult TranslatorForm(int id) {
+        public ActionResult TranslatorForm(int id, string containerName="", string containerType="", string language="" ) {
             TranslationRecord messageRecord = _translatorServices.GetTranslations().Where(m => m.Id == id).FirstOrDefault();
             if (messageRecord != null) {
                 ViewBag.SuggestedTranslations = _translatorServices.GetSuggestedTranslations(messageRecord.Message, messageRecord.Language);
                 return View(messageRecord);
             } else {
-                return View(new TranslationRecord());
+                var model = new TranslationRecord {
+                    ContainerName = containerName,
+                    ContainerType = containerType,
+                    Language = language
+                };
+                
+                return View(model);
             }
         }
 
@@ -97,7 +103,7 @@ namespace Laser.Orchard.Translator.Controllers {
                 return View(messageRecord);
             } else {
                 ViewBag.DeleteSuccess = true;
-                return View(new TranslationRecord { Id = 0 });
+                return Content(T("The translation has been deleted.").Text);
             }
         }
 
