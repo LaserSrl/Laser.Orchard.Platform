@@ -2,6 +2,7 @@
 @using System.Globalization;
 @using Orchard.ContentManagement;
 @using Orchard.Core.Common.Models;
+@using Orchard.Core.Contents;
 
 @{
     Script.Require("Bootstrap").AtHead();
@@ -72,9 +73,15 @@
                 <span class="info-box-icon bg-@statusBackgroundColor"><i class="@statusIconClass"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text col-sm-4">@T("Status")</span>
-                    <span class="info-box-number col-sm-8"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
+                    <span class="info-box-number col-sm-4"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
+                    <span class="col-sm-4">
+                        @if (contentItem.HasPublished()) {
+                            @Html.ItemDisplayLink(T("View").Text, contentItem, new { @class = "btn btn-success btn-xs" })
+                        }
+                    </span>
+                    <br />
                     <span class="info-box-text col-sm-4">@T("Draft")</span>
-                    <span class="info-box-number col-sm-8"><i class="fa fa-circle fa-lg text-@statusDraftBackgrundColor"></i> @statusDraftText</span>
+                    <span class="info-box-number col-sm-4"><i class="fa fa-circle fa-lg text-@statusDraftBackgrundColor"></i> @statusDraftText</span>
                     @{
                         var publishLaterPart = ((dynamic)Model.ContentItem).PublishLaterPart;
                         if (publishLaterPart != null) {
@@ -97,12 +104,28 @@
                             var isPublished = (archiveLaterPart.ContentItem.VersionRecord != null && archiveLaterPart.ContentItem.VersionRecord.Published);
                             if ((isPublished && scheduledArchiveUtc != null && scheduledArchiveUtc > DateTime.UtcNow)) {
                                 <span class="info-box-text col-sm-4">@T("Unpublish on")</span>
-                                <span class="info-box-number col-sm-8">
+                                <span class="info-box-number col-sm-4">
                                     <i class="fa fa-calendar-times-o fa-lg text-red" aria-hidden="true"></i> @Display.DateTime(DateTimeUtc: (DateTime)scheduledArchiveUtc, CustomFormat: null)
                                 </span>
                             }
                         }
                     }
+                    <span class="col-sm-4">
+                        @if (contentItem.HasPublished()) {
+                            if (contentItem.HasDraft()) {
+                                if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
+                                    @Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs" })
+                                }
+                            }
+                        }
+                        else {
+                            if (contentItem.HasDraft()) {
+                                if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
+                                    @Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs" })
+                                }
+                            }
+                        }
+                    </span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
