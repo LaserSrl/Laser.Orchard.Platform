@@ -23,7 +23,8 @@ namespace Laser.Orchard.ButtonToWorkflows.Handlers {
             try {
                 if (context.Task.TaskType != TaskType) return;
 
-                _workflowManager.TriggerEvent("DynamicButtonEvent", context.Task.ContentItem, () => new Dictionary<string, object> { { "ButtonName", context.Task.ContentItem.As<DynamicButtonToWorkflowsPart>().ButtonName } });
+                _workflowManager.TriggerEvent("DynamicButtonEvent", context.Task.ContentItem, () => 
+                    new Dictionary<string, object> { { "ButtonName", context.Task.ContentItem.As<DynamicButtonToWorkflowsPart>().ButtonName }, { "Content", context.Task.ContentItem } });
             }
             catch (Exception ex) {
                 Logger.Error(ex, "Error in DynamicButtonToWorflowsScheduledTaskHandler. ContentItem: {0}, ScheduledUtc: {1:yyyy-MM-dd HH.mm.ss}", context.Task.ContentItem, context.Task.ScheduledUtc);

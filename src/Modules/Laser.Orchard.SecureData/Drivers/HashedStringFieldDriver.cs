@@ -109,12 +109,12 @@ namespace Laser.Orchard.SecureData.Drivers {
                 return false;
             }
 
-            if (settings.ConfirmRequired && !viewModel.Value.Equals(viewModel.ConfirmValue)) {
+            if (settings.ConfirmRequired && !string.Equals(viewModel.Value, viewModel.ConfirmValue)) {
                 updater.AddModelError(prefix, T("The value of the field {0} must match the Confirm value.", T(field.DisplayName), settings.Pattern));
                 return false;
             }
 
-            if (!CheckPattern(viewModel.Value, settings.Pattern)) {
+            if (!string.IsNullOrWhiteSpace(settings.Pattern) && !CheckPattern(viewModel.Value, settings.Pattern)) {
                 updater.AddModelError(prefix, T("The value of the field {0} is not valid." + Environment.NewLine + "Pattern: {1}", T(field.DisplayName), settings.Pattern));
                 return false;
             }
@@ -128,7 +128,7 @@ namespace Laser.Orchard.SecureData.Drivers {
             //    return true;
             //}
 
-            return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
+            return (value != null ? Regex.IsMatch(value, pattern, RegexOptions.Compiled) : false);
         }
 
         private bool AuthorizeEdit(ContentPart part, HashedStringField field) {
