@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Activities\ValidateAttributesActivity.cs" />
     <Compile Include="Activities\ValidateCheckoutActivity.cs" />
+    <Compile Include="ApplicabilityCriteria\CallHasSpecificCookieCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CallHasSpecificHeaderCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
+    <Compile Include="ApplicabilityCriteria\CookieValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
