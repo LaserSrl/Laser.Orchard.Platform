@@ -1,0 +1,10 @@
+﻿Name: Laser.Orchard.SecureData
+AntiForgery: enabled
+Author: Laser srl
+Website: http://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10.3
+Description: Fields and parts for data encryption and protection.
+Features:
+    Laser.Orchard.SecureData:
+        Description: Fields and parts for data encryption and protection.
