@@ -411,6 +411,7 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="Rules\HttpCookieCondition.cs" />
     <Compile Include="Rules\HttpHeaderCondition.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreationWindowDriver.cs" />
