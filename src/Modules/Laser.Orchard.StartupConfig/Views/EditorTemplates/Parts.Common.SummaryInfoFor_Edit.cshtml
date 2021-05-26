@@ -3,6 +3,7 @@
 @using Orchard.ContentManagement;
 @using Orchard.Core.Common.Models;
 @using Orchard.Core.Contents;
+@using Orchard.Autoroute.Models;
 
 @{
     Script.Require("Bootstrap").AtHead();
@@ -18,6 +19,7 @@
 
     var contentItem = Model.ContentItem == null ? null : (ContentItem)Model.ContentItem;
 
+    var autoroutePart = contentItem.As<AutoroutePart>();
 }
 @{
     // Defaults
@@ -75,8 +77,17 @@
                     <span class="info-box-text col-sm-4">@T("Status")</span>
                     <span class="info-box-number col-sm-4"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
                     <span class="col-sm-4">
-                        @if (contentItem.HasPublished()) {
-                            @Html.ItemDisplayLink(T("View").Text, contentItem, new { @class = "btn btn-success btn-xs" })
+                        @if (autoroutePart != null) {
+                            if (contentItem.HasPublished()) {
+                                <a href="@Url.ItemDisplayUrl(contentItem)"
+                                   class="btn btn-success btn-xs text-white width-80"
+                                   target="_blank"
+                                   title="@T("View")">
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                    @T("View").Text
+                                </a>
+                                @*@Html.ItemDisplayLink(T("View").Text, contentItem, new { @class = "btn btn-success btn-xs text-white" })*@
+                            }
                         }
                     </span>
                     <br />
@@ -111,17 +122,33 @@
                         }
                     }
                     <span class="col-sm-4">
-                        @if (contentItem.HasPublished()) {
-                            if (contentItem.HasDraft()) {
-                                if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
-                                    @Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs" })
+                        @if (autoroutePart != null) {
+                            if (contentItem.HasPublished()) {
+                                if (contentItem.HasDraft()) {
+                                    if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
+                                        <a href="@Url.Action("Display", "Item",  new { area = "Contents", id = contentItem.Id, version = contentItem.Version })"
+                                           class="btn btn-warning btn-xs text-white width-80"
+                                           target="_blank"
+                                           title="@T("Preview")">
+                                            <span class="glyphicon glyphicon-new-window"></span>
+                                            @T("Preview").Text
+                                        </a>
+                                        @*@Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs text-white" })*@
+                                    }
                                 }
                             }
-                        }
-                        else {
-                            if (contentItem.HasDraft()) {
-                                if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
-                                    @Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs" })
+                            else {
+                                if (contentItem.HasDraft()) {
+                                    if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
+                                        <a href="@Url.Action("Display", "Item",  new { area = "Contents", id = contentItem.Id, version = contentItem.Version })"
+                                           class="btn btn-warning btn-xs text-white width-80"
+                                           target="_blank"
+                                           title="@T("Preview")">
+                                            <span class="glyphicon glyphicon-new-window"></span>
+                                            @T("Preview").Text
+                                        </a>
+                                        @*@Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs text-white" })*@
+                                    }
                                 }
                             }
                         }

@@ -30,9 +30,13 @@ namespace Contrib.Widgets.Services {
 
         public LayerPart GetContentLayer() {
             var contentLayer = _widgetsService.GetLayers().FirstOrDefault(x => x.Name == "ContentWidgets")
-                ?? _widgetsService.CreateLayer("ContentWidgets", "This layer never activates, but is needed for the widgets hosted by content items for now.", "false");
+                ?? _widgetsService.CreateLayer("ContentWidgets", ContentWidgetLayerDescription(), "false");
 
             return contentLayer;
+        }
+
+        public string ContentWidgetLayerDescription() {
+            return "This layer never activates, but is needed for the widgets hosted by content items for now.";
         }
     }
 }

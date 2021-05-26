@@ -1,4 +1,5 @@
 ﻿using Contrib.Widgets.Models;
+using Contrib.Widgets.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
@@ -13,12 +14,15 @@ namespace Contrib.Widgets {
     public class Migrations : DataMigrationImpl {
         private readonly IContentManager _contentManager;
         private readonly IWidgetsService _widgetsService;
+        private readonly IWidgetManager _widgetManager;
 
         public Migrations(
             IContentManager contentManager, 
-            IWidgetsService widgetsService) {
+            IWidgetsService widgetsService,
+            IWidgetManager widgetManager) {
             _contentManager = contentManager;
             _widgetsService = widgetsService;
+            _widgetManager = widgetManager;
         }
 
         public int Create() {
@@ -90,7 +94,7 @@ namespace Contrib.Widgets {
 
         public int UpdateFrom4() {
             if(!_widgetsService.GetLayers().Any(x => x.Name == "ContentWidgets")) {
-                _widgetsService.CreateLayer("ContentWidgets", "This layer never activates, but is needed for the widgets hosted by content items for now.", "false");
+                _widgetsService.CreateLayer("ContentWidgets", _widgetManager.ContentWidgetLayerDescription(), "false");
             }
             return 5;
         }
