@@ -10,12 +10,12 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
-    public class CallHasSpecificHeaderCouponCriteria
+    public class CallHasSpecificCookieCouponCriteria
         : BaseCouponCriterionProvider, ICouponApplicabilityCriterionProvider {
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CallHasSpecificHeaderCouponCriteria (
+        public CallHasSpecificCookieCouponCriteria(
             IWorkContextAccessor workContextAccessor,
             ICacheManager cacheManager,
             ISignals signals,
@@ -26,9 +26,9 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             
         }
         
-        public override string ProviderName => "CallHasSpecificHeaderCouponCriteria";
+        public override string ProviderName => "CallHasSpecificCookieCouponCriteria";
 
-        public override LocalizedString ProviderDisplayName => T("Criteria on the request header");
+        public override LocalizedString ProviderDisplayName => T("Criteria on the request cookies");
 
         public void Describe(DescribeCouponApplicabilityContext describe) {
             var isAvailableForConfiguration = IsAvailableForConfiguration();
@@ -36,20 +36,20 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
             describe
                 .For("Request", T("Http Request"), T("Http Request"))
-                .Element("Test request header",
-                    T("Test request header"),
-                    T("Test request header"),
+                .Element("Test request cookies",
+                    T("Test request cookies"),
+                    T("Test request cookies"),
                     (ctx) => ApplyCriteria(ctx),
                     (ctx) => ApplyCriteria(ctx),
-                    (ctx) => HeaderValueForm.DisplayFilter(ctx.State, T),
+                    (ctx) => CookieValueForm.DisplayFilter(ctx.State, T),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    HeaderValueForm.FormName);
+                    CookieValueForm.FormName);
         }
 
         private void ApplyCriteria(CouponApplicabilityCriterionContext context) {
 
             if (context.IsApplicable) {
-                var result = HeaderValueForm.GetFilterPredicate(context.State)(_httpContextAccessor.Current().Request);
+                var result = CookieValueForm.GetFilterPredicate(context.State)(_httpContextAccessor.Current().Request);
 
                 if (!result) {
                     context.ApplicabilityContext.Message = 

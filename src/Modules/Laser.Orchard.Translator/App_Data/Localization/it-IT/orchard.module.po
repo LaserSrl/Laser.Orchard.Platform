@@ -41,6 +41,10 @@ msgid "Back"
 msgstr "Indietro"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Create new"
+msgstr "Crea nuovo"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -89,12 +93,32 @@ msgid "Click to use this translation"
 msgstr "Clicca per usare questa traduzione"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Container Name"
+msgstr "Nome Contenitore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Container Type"
+msgstr "Tipo Contenitore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Context"
 msgstr "Contesto"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Delete"
 msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Information"
+msgstr "Informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Message ID"
+msgstr "ID messaggio"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Save"
@@ -195,6 +219,10 @@ msgstr "Si è verificato un errore nel salvataggio delle impostazioni di traduzi
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
 msgid "An error occurred while saving the translation. Please reload the page and retry."
 msgstr "Si è verificato un errore durante il salvataggio della traduzione. Si prega di ricaricare la pagina e riprovare."
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
+msgid "The translation has been deleted."
+msgstr "La traduzione è stata cancellata."
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
 msgid "Unable to delete the translation."
