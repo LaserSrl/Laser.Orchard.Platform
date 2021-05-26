@@ -896,6 +896,22 @@ msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Events"
 msgstr "Eventi"
 
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Coupon code {0} is not valid"
+msgstr "Il codice coupon {0} non è valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Criteria on the request cookies"
+msgstr "Criteri sui cookies della request"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Http Request"
+msgstr "Richiesta HTTP (HTTP Request)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Test request cookies"
+msgstr "Verifica i cookies della request"
+
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Coupon code {0} is not valid"
 msgstr "Il codice coupon {0} non è valido"
@@ -903,6 +919,10 @@ msgstr "Il codice coupon {0} non è valido"
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Criteria on the request header"
 msgstr "Criteri per determinate intestazioni delle richiesta (Request Headers)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Http Request"
+msgstr "Richiesta HTTP (HTTP Request)"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Request header"
@@ -991,6 +1011,102 @@ msgstr "Il carrello contiene prodotti di un determinato tipo"
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
 msgid "Cart products"
 msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of of the given category or one of its children."
+msgstr "L'elemento nel carrello appartiene alla categoria data o uno dei suoi figli."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of of the given category."
+msgstr "L'elemento nel carrello appartiene alla categoria data."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of of the given category or one of its children."
+msgstr "L'elemento nel carrello non appartiene alla categoria data o uno dei suoi figli."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of of the given category."
+msgstr "L'elemento nel carrello non appartiene alla categoria data."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Coupon {0} is not valid for {1}."
+msgstr "Il coupon {0} non è valido per {1}."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Coupon {0} is not valid for any product in your cart."
+msgstr "Il coupon {0} non è valido per alcun elemento del carrello."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line Criteria on product TaxonomyFields"
+msgstr "Criteri di riga sui TaxonomyFields del prodotto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line product is in the given category (if any was selected)"
+msgstr "L'elemento nel carrello appartiene alla determinata categoria (se almeno una è stata selezionata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line product is not in the given category (if any was selected)"
+msgstr "L'elemento nel carrello non appartiene alla determinata categoria (se almeno una è stata selezionata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Enter the name of the cookie."
+msgstr "Inserisci il nome del cookie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Enter the value for the cookie."
+msgstr "Inserisci il valore del cookie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Insert a value for the Name of the cookie to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per il nome del cookie da verificare (può essere un token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request doesn't have Cookie"
+msgstr "La request non ha il Cookie"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request doesn't have cookie '{0}'"
+msgstr "La request non ha il cookie '{0}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with any value)"
+msgstr "La request ha il Cookie (con qualunque valore)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with different value)"
+msgstr "La request ha il Cookie (con un valore diverso)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with specific value)"
+msgstr "La request ha il Cookie (con un valore specifico)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with any value"
+msgstr "La request ha il cookie '{0}' con qualunque valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with value '{1}'"
+msgstr "La request ha il cookie '{0}' con valore '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with value different than '{1}'"
+msgstr "La request ha il cookie '{0}' con valore diverso da '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Value"
+msgstr "Valore"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
 msgid "Destination in territories"

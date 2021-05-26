@@ -21,8 +21,16 @@ msgid "Command line"
 msgstr "Linea di Comando"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Evict Item"
+msgstr "Elimina Elemento"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
 msgid "Insert Ids separated by a ; e.g. 5;10;15"
 msgstr "Inserisci gli Id separati da ; (punto e virgola). Ad esempio 5;10;15"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorSettings.cshtml"
+msgid "Evict Item"
+msgstr "Elimina Elemento"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorSettings.cshtml"
 msgid "Insert Ids separated by a ; e.g. 5;10;15"
