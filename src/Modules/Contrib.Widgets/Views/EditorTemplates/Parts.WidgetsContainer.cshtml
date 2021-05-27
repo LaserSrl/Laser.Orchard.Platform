@@ -10,6 +10,8 @@
 @using System.Web.Mvc;
 @using System.Web.Routing;
 @using Orchard.Mvc.Html;
+@using Orchard.Core.Contents;
+
 
 @{
     Style.Require("TheAdminWidgetContainerStyle");
@@ -83,7 +85,7 @@
                                         }
                                         else {
                                             <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
-                                                onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
+                                               onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
                                         }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
@@ -124,37 +126,46 @@
                                                         }
                                                     }
                                                 }
-                                                <h3>
-                                                    <a href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget) @culture</a>
-                                                </h3><span>
-                                                    <div class="contentType">
-                                                        - @widget.TypeDefinition.DisplayName
-                                                        @if (scheduledTime) {
-                                                            <img class="icon scheduledDates" src="@Href("~/Modules/Orchard.PublishLater/Content/Admin/images/scheduled.gif")" data-html="true" rel="tooltip" alt="@T("Scheduled")" title="@scheduledTitle" style="white-space: pre-wrap;" />
-                                                        }
-                                                    </div>
-                                                    <div class="widget-actions">
-                                                        @if (widget.IsPublished) {
-                                                            if (widget.HasDraft) {
-                                                                if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                    @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
-                                                                    @T(" | ")
+                                                <div clss="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <h3 class="display-content">
+                                                                <a class="margin-left-5" href="@Url.Action("EditWidget", "Admin", new { area = "Contrib.Widgets", hostId = contentItem.Id, id = widget.Id, returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">@Html.ItemDisplayText(widget) @culture</a>
+                                                            </h3>
+                                                            <span class="contentType">
+                                                                - @widget.TypeDefinition.DisplayName
+                                                                @if (scheduledTime) {
+                                                                    <img class="icon scheduledDates" src="@Href("~/Modules/Orchard.PublishLater/Content/Admin/images/scheduled.gif")" data-html="true" rel="tooltip" alt="@T("Scheduled")" title="@scheduledTitle" style="white-space: pre-wrap;" />
                                                                 }
-                                                            }
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="widget-action float-right">
+                                                                @if (widget.IsPublished) {
+                                                                    if (widget.HasDraft) {
+                                                                        if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                            @Html.Link(T("Publish Draft").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                            @T(" | ")
+                                                                        }
+                                                                    }
 
-                                                            if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
-                                                                @T(" | ")
-                                                            }
-                                                        }
-                                                        else {
-                                                            if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
-                                                                @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
-                                                                @T(" | ")
-                                                            }
-                                                        }
-                                                        <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
+                                                                    if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                        @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                        @T(" | ")
+                                                                    }
+                                                                }
+                                                                else {
+                                                                    if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
+                                                                        @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
+                                                                        @T(" | ")
+                                                                    }
+                                                                }
+                                                                <a href="#" class="remove-widget" data-confirm="@T("Are you sure you want to delete this widget? Note: the widget will be removed permanently when you save the content item.")">@T("Remove")</a>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
+
                                             </li>
                                         }
                                     </ul>
