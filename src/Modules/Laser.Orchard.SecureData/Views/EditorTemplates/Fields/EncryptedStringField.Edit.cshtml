@@ -13,6 +13,9 @@
             required = false;
         }
     }
+
+    string revealValueId = "reveal" + Html.FieldIdFor(m => m.Value);
+    string revealConfirmValueId = "reveal" + Html.FieldIdFor(m => m.ConfirmValue);
 }
 
 <fieldset>
@@ -26,7 +29,7 @@
                    @if (!string.IsNullOrWhiteSpace(Model.Settings.Pattern)) { <text> pattern="@Model.Settings.Pattern" </text> }
                    @if (Model.Settings.IsVisible) { <text> value="@Model.Value" </text> } />
             <span class="input-group-btn">
-                <button class="btn btn-default reveal" type="button" id="revealValue"><i class="glyphicon glyphicon-eye-open"></i></button>
+                <button class="btn btn-default reveal" type="button" id="@revealValueId"><i class="glyphicon glyphicon-eye-open"></i></button>
             </span>
         </div>
         @if (Model.Settings.ConfirmRequired) {
@@ -39,7 +42,7 @@
                            @if (required) { <text> required</text> }
                            @if (!string.IsNullOrWhiteSpace(Model.Settings.Pattern)) { <text> pattern="@Model.Settings.Pattern" </text> } />
                     <span class="input-group-btn">
-                        <button class="btn btn-default reveal" type="button" id="revealConfirmValue"><i class="glyphicon glyphicon-eye-open"></i></button>
+                        <button class="btn btn-default reveal" type="button" id="@revealConfirmValueId"><i class="glyphicon glyphicon-eye-open"></i></button>
                     </span>
                 </div>
             }
@@ -69,26 +72,26 @@
     @using (Script.Foot()) {
         <script>
             jQuery(document).ready(function ($) {
-                $("#revealValue").on('click', function () {
+                $("#@revealValueId").on('click', function () {
                     var $pwd = $("#@Html.FieldIdFor(m => m.Value)");
                     if ($pwd.attr('type') === 'password') {
                         $pwd.attr('type', 'text');
                     } else {
                         $pwd.attr('type', 'password');
                     }
-                    $("i", $("#revealValue")).toggleClass("glyphicon-eye-open");
-                    $("i", $("#revealValue")).toggleClass("glyphicon-eye-close");
+                    $("i", $("#@revealValueId")).toggleClass("glyphicon-eye-open");
+                    $("i", $("#@revealValueId")).toggleClass("glyphicon-eye-close");
                 });
 
-                $("#revealConfirmValue").on('click', function () {
+                $("#@revealConfirmValueId").on('click', function () {
                     var $pwd = $("#@Html.FieldIdFor(m => m.ConfirmValue)");
                     if ($pwd.attr('type') === 'password') {
                         $pwd.attr('type', 'text');
                     } else {
                         $pwd.attr('type', 'password');
                     }
-                    $("i", $("#revealConfirmValue")).toggleClass("glyphicon-eye-open");
-                    $("i", $("#revealConfirmValue")).toggleClass("glyphicon-eye-close");
+                    $("i", $("#@revealConfirmValueId")).toggleClass("glyphicon-eye-open");
+                    $("i", $("#@revealConfirmValueId")).toggleClass("glyphicon-eye-close");
                 });
             });
         </script>
