@@ -3275,12 +3275,12 @@ a.text-success:hover {
     }
 }
 
-@media (max-width: 768px) {
+/*@media (max-width: 768px) {
     #base {
         padding-left: 0;
         padding-right: 0;
     }
-}
+}*/
 
 #header {
     position: absolute;
@@ -3822,7 +3822,7 @@ body:not(.menubar-first) .menubar-fixed-panel {
 }
 
 @media (max-width: 768px) {
-    #menubar {
+    /*#menubar {
         width: 240px;
         z-index: 113;
         -webkit-transform: translate(-250px, 0);
@@ -3833,13 +3833,23 @@ body:not(.menubar-first) .menubar-fixed-panel {
         -moz-transition: -moz-transform 0.5s ease-in;
         -o-transition: -o-transform 0.5s ease-in;
         transition: transform 0.5s ease-in;
-    }
+    }*/
 
     .menubar-visible #menubar {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         -o-transform: translate(0, 0);
         transform: translate(0, 0);
+        -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        transition: transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+    }
+    #menubar {
+        -webkit-transform: translate(0.1px,0);
+        -ms-transform: translate(0.1px,0);
+        -o-transform: translate(0.1px,0);
+        transform: translate(0.1px,0);
         -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
@@ -11746,6 +11756,15 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     font-size: 0.9em;
     line-height: 1.6em;
 }
+
+
+@media (min-width: 1200px) and (max-width: 1320px) {
+    .custom-width-info-box {
+        width:100%!important;
+    }
+}
+
+
 /* Google Maps Styles */
 .gm-style button, .gm-style a.button {
     color: rgb(0, 0, 0) !important;
@@ -11774,4 +11793,8 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 
 .display-content{
     display:contents!important;
+}
+
+table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text {
+    min-width: unset;
 }
