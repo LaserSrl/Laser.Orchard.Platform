@@ -3275,13 +3275,6 @@ a.text-success:hover {
     }
 }
 
-/*@media (max-width: 768px) {
-    #base {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}*/
-
 #header {
     position: absolute;
     left: 0;
@@ -3822,19 +3815,6 @@ body:not(.menubar-first) .menubar-fixed-panel {
 }
 
 @media (max-width: 768px) {
-    /*#menubar {
-        width: 240px;
-        z-index: 113;
-        -webkit-transform: translate(-250px, 0);
-        -ms-transform: translate(-250px, 0);
-        -o-transform: translate(-250px, 0);
-        transform: translate(-250px, 0);
-        -webkit-transition: -webkit-transform 0.5s ease-in;
-        -moz-transition: -moz-transform 0.5s ease-in;
-        -o-transition: -o-transform 0.5s ease-in;
-        transition: transform 0.5s ease-in;
-    }*/
-
     .menubar-visible #menubar {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
