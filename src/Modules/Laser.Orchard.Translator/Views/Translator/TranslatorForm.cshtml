@@ -40,8 +40,7 @@
                                     if (Model.Id > 0) {
                                         @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", style = "display:none;", @class = "text large" })
                                         <button type="button" id="edit-message">Edit Message ID</button>
-                                    }
-                                    else {
+                                    } else {
                                         @Html.LabelFor(m => m.Message, T("Message ID"))
                                         @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", @class = "text large" })
                                     }
@@ -54,6 +53,21 @@
                                     @Html.LabelFor(m => m.TranslatedMessage, @T("Translation"))
                                     @Html.TextAreaFor(m => m.TranslatedMessage)
                                 </div>
+
+                                if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0) {
+                                    var suggestedTranslationsIndex = 0;
+                                    <div id="suggestions-area">
+                                        <h2>@T("Suggestions")</h2>
+                                        <ul>
+                                            @foreach (var suggested in ViewBag.SuggestedTranslations) {
+                                                <li>
+                                                    <a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a>
+                                                </li>
+                                                suggestedTranslationsIndex++;
+                                            }
+                                        </ul>
+                                    </div>
+                                }
 
                                 @Html.HiddenFor(m => m.Id);
                                 @Html.HiddenFor(m => m.Language);
@@ -92,21 +106,6 @@
                                         <input id="delete-translation" name="deleteTranslation" class="button" type="submit" value="@T("Delete")" />
                                     }
                                 }
-                            }
-
-                            if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0) {
-                                var suggestedTranslationsIndex = 0;
-                                <div id="suggestions-area">
-                                    <h2>@T("Suggestions")</h2>
-                                    <ul>
-                                        @foreach (var suggested in ViewBag.SuggestedTranslations) {
-                                            <li>
-                                                <a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a>
-                                            </li>
-                                            suggestedTranslationsIndex++;
-                                        }
-                                    </ul>
-                                </div>
                             }
                         }
                     }

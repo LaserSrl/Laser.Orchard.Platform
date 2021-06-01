@@ -70,7 +70,14 @@ namespace Laser.Orchard.Translator.Controllers
                     id = "translatortree-parent-A",
                     text = T("Tenants").ToString(),
                     children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Tenant"), ElementToTranslate.Tenant),
-                    data = new Dictionary<string, string>() { { "type", "T" } }
+                    data = new Dictionary<string, string>() { { "type", "A" } }
+                });
+
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-U",
+                    text = T("Undefined").ToString(),
+                    //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Undefined"), ElementToTranslate.Undefined),
+                    data = new Dictionary<string, string>() { { "type", "U" } }
                 });
             }
 

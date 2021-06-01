@@ -16,7 +16,7 @@ namespace Laser.Orchard.Translator.Services {
         IQueryable<TranslationRecord> GetTranslations();
         IQueryable<TranslationFolderSettingsRecord> GetTranslationFoldersSettings();
         IList<string> GetSuggestedTranslations(string message, string language);
-        bool TryAddOrUpdateTranslation(TranslationRecord translation);
+        bool TryAddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true);
         bool TryAddOrUpdateTranslationFolderSettings(TranslationFolderSettingsRecord translation);
         void EnableFolderTranslation(string folderName, ElementToTranslate folderType);
         bool DeleteTranslation(TranslationRecord record);
@@ -57,9 +57,9 @@ namespace Laser.Orchard.Translator.Services {
             return _translationFoldersSettingsRecordRepository.Table;
         }
 
-        public bool TryAddOrUpdateTranslation(TranslationRecord translation) {
+        public bool TryAddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true) {
             try {
-                AddOrUpdateTranslation(translation);
+                AddOrUpdateTranslation(translation, forceUpdate);
                 return true;
             }
             catch (Exception ex) {
@@ -78,7 +78,7 @@ namespace Laser.Orchard.Translator.Services {
             }
         }
 
-        private void AddOrUpdateTranslation(TranslationRecord translation) {
+        private void AddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true) {
             //Validate the translations
             if (string.IsNullOrWhiteSpace(translation.ContainerName) ||
                 string.IsNullOrWhiteSpace(translation.ContainerType) ||
@@ -112,8 +112,10 @@ namespace Laser.Orchard.Translator.Services {
                 foreach (var item in existingTranslations) {
                     if (translation.Message.Equals(item.Message, StringComparison.InvariantCulture) ||
                         searchById) {
-                        existingTranslation = item;
-                        updateRecord = true;
+                        if (forceUpdate || string.IsNullOrWhiteSpace(item.TranslatedMessage)) {
+                            existingTranslation = item;
+                            updateRecord = true;
+                        }
                         break;
                     }
                 }

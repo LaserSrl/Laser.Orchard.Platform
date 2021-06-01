@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\MessageTranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorController.cs" />
     <Compile Include="Controllers\TranslatorTreeController.cs" />

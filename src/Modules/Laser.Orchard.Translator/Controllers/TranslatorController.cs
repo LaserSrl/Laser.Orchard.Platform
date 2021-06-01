@@ -24,7 +24,7 @@ namespace Laser.Orchard.Translator.Controllers {
 
             var messages = _translatorServices.GetTranslations()
                 .Where(m => m.Language == language
-                    && m.ContainerName == folderName
+                    && (m.ContainerName == folderName || folderType == "U")
                     && m.ContainerType == folderType)
                 .Select(x => new StringSummaryViewModel {
                     id = x.Id,
