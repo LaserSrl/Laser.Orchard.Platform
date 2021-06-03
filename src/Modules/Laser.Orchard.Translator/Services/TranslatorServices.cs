@@ -126,6 +126,9 @@ namespace Laser.Orchard.Translator.Services {
                 existingTranslation.TranslatedMessage = translation.TranslatedMessage;
                 existingTranslation.Message = translation.Message;  // #GM 2015-09-22
 
+                existingTranslation.ContainerName = translation.ContainerName;
+                existingTranslation.ContainerType = translation.ContainerType;
+
                 _translationRecordRepository.Update(existingTranslation);
                 _translationRecordRepository.Flush();
             }
