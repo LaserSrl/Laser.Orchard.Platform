@@ -84,13 +84,25 @@ namespace Laser.Orchard.Translator.Controllers {
         [FormValueRequired("saveTranslation")]
         public ActionResult SaveTranslation(TranslationRecordViewModel translationVM) {
             TranslationRecord translation = translationVM.ToTranslationRecord();
-            bool success = _translatorServices.TryAddOrUpdateTranslation(translation);
+            // I need to check if parent page needs to be refreshed.
+            // If I'm creating a new record, I have to refresh parent page.
+            // I also need to refresh parent page if I changed the ContainerType of my record.
+            // I also need to refresh parent page if I changed the Language of my record.
+            bool refreshParent = (translationVM.Id == 0 || !translation.ContainerType.Equals(translationVM.ContainerType, System.StringComparison.InvariantCulture) || !translationVM.OriginalLanguage.Equals(translationVM.Language, System.StringComparison.InvariantCulture));
+            
+            // If I'm saving a new translation, I must not overwrite an existing matching translation.
+            bool success = _translatorServices.TryAddOrUpdateTranslation(translation, translation.Id == 0 ? false : true);
             ViewBag.SuggestedTranslations = _translatorServices.GetSuggestedTranslations(translation.Message, translation.Language);
 
             if (!success) {
                 ModelState.AddModelError("SaveTranslationError", T("An error occurred while saving the translation. Please reload the page and retry.").ToString());
+                ViewBag.RefreshParent = false;
+                ViewBag.SaveSuccess = false;
+            } else if (refreshParent) {
+                ViewBag.RefreshParent = true;
                 ViewBag.SaveSuccess = false;
             } else {
+                ViewBag.RefreshParent = false;
                 ViewBag.SaveSuccess = true;
             }
 
@@ -119,13 +131,13 @@ namespace Laser.Orchard.Translator.Controllers {
 
             if (!success) {
                 ModelState.AddModelError("DeleteTranslationError", T("Unable to delete the translation.").ToString());
-                ViewBag.DeleteSuccess = false;
+                ViewBag.RefreshParent = false;
                 var viewModel = new TranslationRecordViewModel(messageRecord) {
                     CultureList = _translatorServices.GetCultureList()
                 };
                 return View(viewModel);
             } else {
-                ViewBag.DeleteSuccess = true;
+                ViewBag.RefreshParent = true;
                 return Content(T("The translation has been deleted.").Text);
             }
         }

@@ -77,7 +77,7 @@ namespace Laser.Orchard.Translator.Controllers
                     id = "translatortree-parent-U",
                     text = T("Undefined").ToString(),
                     //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Undefined"), ElementToTranslate.Undefined),
-                    data = new Dictionary<string, string>() { { "type", "U" } }
+                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", GetCompletionPercent(language, string.Empty, "U").ToString() + "%" } }
                 });
             }
 
@@ -150,12 +150,14 @@ namespace Laser.Orchard.Translator.Controllers
 
         private int GetCompletionPercent(string language, string containerName, string containerType)
         {
-            var translationCount = _translatorServices.GetTranslations().Where(t => t.Language == language
-                                                                                 && t.ContainerName == containerName
-                                                                                 && t.ContainerType == containerType)
-                                                                        .AsParallel()
-                                                                        .GroupBy(t => !String.IsNullOrWhiteSpace(t.TranslatedMessage))
-                                                                        .Select(t => new { translated = t.Key, count = t.Count() });
+            // When I'm looking for completion percentage of Undefined container type translation records are not grouped by container name, so I need to exclude it from the filters.
+            var translationCount = _translatorServices.GetTranslations()
+                .Where(t => t.Language == language
+                    && (t.ContainerType == "U" || (t.ContainerType != "U" && t.ContainerName == containerName))
+                    && t.ContainerType == containerType)
+                .AsParallel()
+                .GroupBy(t => !String.IsNullOrWhiteSpace(t.TranslatedMessage))
+                .Select(t => new { translated = t.Key, count = t.Count() });
 
             var countDictionary = translationCount.ToDictionary(g => g.translated, g => g.count);
 

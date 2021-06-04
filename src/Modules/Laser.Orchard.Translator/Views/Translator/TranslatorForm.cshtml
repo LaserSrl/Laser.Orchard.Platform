@@ -127,8 +127,9 @@
                                 }
 
                                 @Html.HiddenFor(m => m.Id);
-                                @*@Html.HiddenFor(m => m.ContainerName);
-                                @Html.HiddenFor(m => m.ContainerType);*@
+                                @Html.HiddenFor(m => m.ContainerName);
+                                @Html.HiddenFor(m => m.ContainerType);
+                                @Html.HiddenFor(m => m.OriginalLanguage);
                                 @Html.Hidden("OrigMessage", Model.Message);
                                 <div class="row">
                                     <!-- /.col -->
@@ -185,6 +186,11 @@
                 $("#@Html.FieldIdFor(m => m.TranslatedMessage)").val($(this).text());
             });
 
+            if ('@ViewBag.RefreshParent' == 'True') {
+                window.parent.location.reload();
+                window.close();
+            }
+
             if ('@ViewBag.SaveSuccess' == 'True') {
                 window.parent.$('#message-@Model.Id').children("span").html("@Model.Message");
                 if ('@String.IsNullOrWhiteSpace(Model.TranslatedMessage)' == 'True')
@@ -192,12 +198,7 @@
                 else
                     window.parent.$('#message-@Model.Id').children("i").attr("class", "fa fa-check");
             }
-
-            if ('@ViewBag.DeleteSuccess' == 'True') {
-                window.parent.location.reload();
-                window.close();
-            }
-
+            
             $("#translation-form input[type=submit]").click(function () {
                 $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
                 $(this).attr("clicked", "true");

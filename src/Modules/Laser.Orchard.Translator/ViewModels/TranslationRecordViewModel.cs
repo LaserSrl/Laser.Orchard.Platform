@@ -31,6 +31,7 @@ namespace Laser.Orchard.Translator.ViewModels {
         public string TranslatedMessage { get; set; }
 
         public string Language { get; set; }
+        public string OriginalLanguage { get; set; }
         public IEnumerable<string> CultureList { get; set; }
 
         public TranslationRecordViewModel() {
@@ -46,6 +47,7 @@ namespace Laser.Orchard.Translator.ViewModels {
             Message = tr.Message;
             TranslatedMessage = tr.TranslatedMessage;
             Language = tr.Language;
+            OriginalLanguage = tr.Language;
         }
 
         public TranslationRecord ToTranslationRecord() {
