@@ -19,7 +19,8 @@ namespace Laser.Orchard.SecureData.Drivers {
         // Variables to set the templates to show in the content editor (backoffice).
         private static string TemplateNameAuthorized = "Fields/EncryptedStringField.Edit";
         private static string TemplateNameUnauthorized = "Fields/EncryptedStringField.Unauthorized";
-        private static string ShapeType = "Fields_EncryptedString_Edit";
+        private static string ShapeTypeAuthorized = "Fields_EncryptedString_Edit";
+        private static string ShapeTypeUnauthorized = "Fields_EncryptedString_Unauthorized_Edit";
 
         public EncryptedStringFieldDriver(IAuthorizer authorizer, ISecureFieldService secureFieldService) {
             _authorizer = authorizer;
@@ -44,11 +45,11 @@ namespace Laser.Orchard.SecureData.Drivers {
             if (AuthorizeEdit(part, field)) {
                 // If user is authorized, the following code is showing the view.
                 // TemplateName: TemplateNameAuthorized -> it's the actual view with the edit form.
-                return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, CreateViewModel(field), shapeHelper);
+                return ContentShapeFromViewModel(part, field, ShapeTypeAuthorized, TemplateNameAuthorized, CreateViewModel(field), shapeHelper);
             } else {
                 // If user is unauthorized, I show nothing.
                 // TemplateName: TemplateNameUnauthorized -> it's an empty view; Model: null.
-                return ContentShapeFromViewModel(part, field, TemplateNameUnauthorized, null, shapeHelper);
+                return ContentShapeFromViewModel(part, field, ShapeTypeUnauthorized, TemplateNameUnauthorized, null, shapeHelper);
             }
         }
 
@@ -62,7 +63,7 @@ namespace Laser.Orchard.SecureData.Drivers {
                     if (Validate(viewModel, field, prefix, updater)) {
                         _secureFieldService.EncodeValue(part, field, viewModel.Value);
                     } else {
-                        return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
+                        return ContentShapeFromViewModel(part, field, ShapeTypeAuthorized, TemplateNameAuthorized, viewModel, shapeHelper);
                     }
                 }
             }
@@ -71,8 +72,8 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Editor(part, field, shapeHelper);
         }
 
-        private DriverResult ContentShapeFromViewModel(ContentPart part, EncryptedStringField field, string templateName, EncryptedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
-            return ContentShape(ShapeType, GetDifferentiator(field, part),
+        private DriverResult ContentShapeFromViewModel(ContentPart part, EncryptedStringField field, string shapeType, string templateName, EncryptedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
+            return ContentShape(shapeType, GetDifferentiator(field, part),
                     () => {
                         return shapeHelper.EditorTemplate(
                             TemplateName: templateName,
