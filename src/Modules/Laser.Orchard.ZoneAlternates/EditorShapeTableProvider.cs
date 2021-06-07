@@ -70,35 +70,20 @@ namespace Laser.Orchard.ZoneAlternates {
                     progressiveHierarchyString = progressiveHierarchyString.Substring(0, progressiveHierarchyString.LastIndexOf("__"));
                     if (context.Shape.Metadata.Alternates.Contains(progressiveHierarchyString)) {
                         context.ShapeMetadata.Alternates.Insert(context.Shape.Metadata.Alternates.IndexOf(progressiveHierarchyString) + 1, alternateName);
-                        // Adding alternate name for shape template name.
-                        context.ShapeMetadata.Alternates.Insert(context.Shape.Metadata.Alternates.IndexOf(progressiveHierarchyString) + 2, alternateName + "__" + EncodeAlternateElement(context.Shape.TemplateName));
                         found = true;
                         break;
                     }
                     else if (context.Shape.Metadata.Alternates.Contains(progressiveHierarchyString + "__" + specializedName)) { // if it's a field, the type of the field should be placed before the field name alternate
                         context.ShapeMetadata.Alternates.Insert(context.Shape.Metadata.Alternates.IndexOf(progressiveHierarchyString + "__" + specializedName), alternateName);
-                        // Adding alternate name for shape template name.
-                        context.ShapeMetadata.Alternates.Insert(context.Shape.Metadata.Alternates.IndexOf(progressiveHierarchyString + "__" + specializedName) + 1, alternateName + "__" + EncodeAlternateElement(context.Shape.TemplateName));
                         found = true;
                         break;
                     }
                 }
                 if (!found) {
                     context.ShapeMetadata.Alternates.Add(alternateName);
-                        // Adding alternate name for shape template name.
-                    context.ShapeMetadata.Alternates.Add(alternateName + "__" + EncodeAlternateElement(context.Shape.TemplateName));
                 }
             }
         }
 
-        private string EncodeAlternateElement(string alternateElement) {
-            // TODO: check if Replaces are ok.
-            // After these Replaces, the string "__" is replaced with the string "-" in the list of Alternates.
-            return alternateElement
-                .Replace(".", "__")
-                .Replace("\\", "__")
-                .Replace("/", "__")
-                .Replace("-", "__");
-        }
     }
 }

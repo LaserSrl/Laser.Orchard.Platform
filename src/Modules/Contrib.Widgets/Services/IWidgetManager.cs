@@ -8,8 +8,5 @@ namespace Contrib.Widgets.Services {
         IEnumerable<WidgetExPart> GetWidgets(int hostId);
         IEnumerable<WidgetExPart> GetWidgets(int hostId, bool published);
         LayerPart GetContentLayer();
-
-        // description to default layer ContentWidget
-        string ContentWidgetLayerDescription();
     }
 }

@@ -4,15 +4,22 @@
     Style.Require("FontAwesome430").AtHead();
     using (Script.Foot()) {
         <script type="text/javascript">
+            $(document).ready(function () {
+                if (localStorage.getItem("container") === "show") {
+                    $("#seo-data-container").show();
+                }
+            });
             $(function () {
                 $('#seo-label a').click(function () {
                     if ($("#seo-data-container").is(":visible")) {
                         $("i", this).attr('class', 'fa fa-chevron-right');
                         $("#seo-data-container").hide(400);
+                        localStorage.setItem("container",'hide');
                     }
                     else {
                         $("i", this).attr('class', 'fa fa-chevron-down');
                         $("#seo-data-container").show(400);
+                        localStorage.setItem("container",'show');
                     }
                     $('html, body').animate({
                         scrollTop: $($(this).attr('href')).offset().top
@@ -31,7 +38,7 @@
 }
 
 <fieldset class="editor">
-    <legend id="seo-label"><a href="#seo-label"><i class="fa fa-chevron-right"></i></a> @T("SEO attributes")</legend>
+    <legend id="seo-label"><a href="#seo-label"><i class="fa fa-chevron-right"></i>@T("SEO attributes")</a></legend>
     @if (emptySeo) {
         <span class="hint">@T("SEO attributes are empty!")</span>
     }
