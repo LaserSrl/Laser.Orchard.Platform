@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\MessageTranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorAPIController.cs" />
     <Compile Include="Controllers\TranslatorController.cs" />
     <Compile Include="Controllers\TranslatorTreeController.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\TranslatorServices.cs" />
     <Compile Include="ViewModels\TranslationDetailViewModel.cs" />
+    <Compile Include="ViewModels\TranslationRecordViewModel.cs" />
     <Compile Include="ViewModels\TranslationTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\TranslationTreeViewModel.cs" />
   </ItemGroup>
