@@ -335,7 +335,8 @@ namespace Laser.Orchard.StartupConfig.Services {
 
                 foreach (var property in properties) {
                     try {
-                        if (!_skipFieldProperties.Contains(property.Name)) {
+                        if (!_skipFieldProperties.Contains(property.Name) && 
+                                !(CustomAttributeData.GetCustomAttributes(property).Where(x => x.AttributeType.FullName.Equals("Newtonsoft.Json.JsonIgnoreAttribute")).Any())) {
                             object val = property.GetValue(field, BindingFlags.GetProperty, null, null, null);
                             if (val != null) {
                                 PopulateJObject(ref fieldObject, property, val, _skipFieldProperties, actualLevel);
