@@ -77,7 +77,7 @@ namespace Laser.Orchard.Translator.Controllers
                     id = "translatortree-parent-U",
                     text = T("Undefined").ToString(),
                     //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Undefined"), ElementToTranslate.Undefined),
-                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", GetCompletionPercent(language, string.Empty, "U").ToString() + "%" } }
+                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", GetCompletionPercent(language, string.Empty, "U").ToString() + " etichette" } }
                 });
             }
 
@@ -147,7 +147,7 @@ namespace Laser.Orchard.Translator.Controllers
 
             return treeList;
         }
-
+        
         private int GetCompletionPercent(string language, string containerName, string containerType)
         {
             // When I'm looking for completion percentage of Undefined container type translation records are not grouped by container name, so I need to exclude it from the filters.
@@ -160,6 +160,11 @@ namespace Laser.Orchard.Translator.Controllers
                 .Select(t => new { translated = t.Key, count = t.Count() });
 
             var countDictionary = translationCount.ToDictionary(g => g.translated, g => g.count);
+
+            // If containter type is Undefined returns the number of messages.
+            if (containerType == "U") {
+                return countDictionary[true] + countDictionary[false];
+            }
 
             if (!countDictionary.ContainsKey(true))
                 return !countDictionary.ContainsKey(false) ? -1 : 0;
