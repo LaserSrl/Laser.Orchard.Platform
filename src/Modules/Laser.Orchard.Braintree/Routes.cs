@@ -55,7 +55,7 @@ namespace Laser.Orchard.Braintree
                 },
                 new RouteDescriptor {
                     Route = new Route(
-                        "Payment/Braintree",
+                        "payment/braintree",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.Braintree"},
                             {"controller", "Braintree"},

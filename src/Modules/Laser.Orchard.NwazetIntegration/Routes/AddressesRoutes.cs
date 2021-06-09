@@ -12,7 +12,7 @@ namespace Laser.Orchard.NwazetIntegration.Routes {
             return new[] {
                 new RouteDescriptor {
                     Route = new Route(
-                        "Addresses",
+                        "addresses",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.NwazetIntegration"},
                             {"controller", "Addresses"},
@@ -26,7 +26,7 @@ namespace Laser.Orchard.NwazetIntegration.Routes {
                 },
                 new RouteDescriptor {
                     Route = new Route(
-                        "Addresses/Create",
+                        "addresses/create",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.NwazetIntegration"},
                             {"controller", "Addresses"},
@@ -40,7 +40,7 @@ namespace Laser.Orchard.NwazetIntegration.Routes {
                 },
                 new RouteDescriptor {
                     Route = new Route(
-                        "Addresses/{id}",
+                        "addresses/{id}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.NwazetIntegration"},
                             {"controller", "Addresses"},
