@@ -52,6 +52,20 @@ namespace Laser.Orchard.Braintree
                             {"area", "Laser.Orchard.Braintree"}
                         },
                         new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Payment/Braintree",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Braintree"},
+                            {"controller", "Braintree"},
+                            {"action", "Index"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.Braintree"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }
