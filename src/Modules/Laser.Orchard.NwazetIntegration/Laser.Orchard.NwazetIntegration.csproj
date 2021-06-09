@@ -173,6 +173,7 @@
     <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
