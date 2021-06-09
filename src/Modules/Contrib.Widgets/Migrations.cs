@@ -13,15 +13,12 @@ namespace Contrib.Widgets {
     [OrchardFeature("Contrib.Widgets")]
     public class Migrations : DataMigrationImpl {
         private readonly IContentManager _contentManager;
-        private readonly IWidgetsService _widgetsService;
         private readonly IWidgetManager _widgetManager;
 
         public Migrations(
             IContentManager contentManager, 
-            IWidgetsService widgetsService,
             IWidgetManager widgetManager) {
             _contentManager = contentManager;
-            _widgetsService = widgetsService;
             _widgetManager = widgetManager;
         }
 
@@ -93,9 +90,9 @@ namespace Contrib.Widgets {
         }
 
         public int UpdateFrom4() {
-            if(!_widgetsService.GetLayers().Any(x => x.Name == "ContentWidgets")) {
-                _widgetsService.CreateLayer("ContentWidgets", _widgetManager.ContentWidgetLayerDescription(), "false");
-            }
+            // Used this method because it was the operation I needed.
+            // Create the ContentWidgets layer if it doesn't already exist
+            _widgetManager.GetContentLayer();
             return 5;
         }
     }
