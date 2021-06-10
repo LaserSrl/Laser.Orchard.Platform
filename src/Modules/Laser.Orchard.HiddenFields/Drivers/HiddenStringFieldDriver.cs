@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.HiddenFields.Fields;
+using Laser.Orchard.HiddenFields.Security;
 using Laser.Orchard.HiddenFields.Settings;
 using Laser.Orchard.HiddenFields.ViewModels;
 using Orchard;
@@ -6,6 +7,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
+using Orchard.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,12 @@ namespace Laser.Orchard.HiddenFields.Drivers {
 
         public Localizer T { get; set; }
         private readonly IOrchardServices _orchardServices;
+        private readonly IAuthorizer _authorizer;
 
-        public HiddenStringFieldDriver(IOrchardServices orchardServices) {
+        public HiddenStringFieldDriver(IOrchardServices orchardServices, IAuthorizer authorizer) {
             T = NullLocalizer.Instance;
             _orchardServices = orchardServices;
+            _authorizer = authorizer;
         }
 
         private static string GetPrefix(HiddenStringField field, ContentPart part) {
@@ -40,6 +44,15 @@ namespace Laser.Orchard.HiddenFields.Drivers {
 
         //GET
         protected override DriverResult Editor(ContentPart part, HiddenStringField field, dynamic shapeHelper) {
+            /*
+             if (HoPermissionSee(part, field)) {
+                return ContentShape(
+                    tutto come sotto tranne
+                    IsEditAuthorized = HoPermissionEdit(part, field)
+            ); 
+            }
+            return una shape vuota
+             */
             //require at least the "see" permission
             if (!_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MaySeeHiddenFields))
                 return null;
@@ -64,6 +77,10 @@ namespace Laser.Orchard.HiddenFields.Drivers {
             if (!_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MaySeeHiddenFields))
                 return null;
 
+            if (AuthorizeEdit(part, field)) {
+
+            }
+
             //to update, require the "edit" permission
             if (_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MayEditHiddenFields)) {
                 var fs = field.PartFieldDefinition.Settings.GetModel<HiddenStringFieldSettings>();
@@ -80,6 +97,10 @@ namespace Laser.Orchard.HiddenFields.Drivers {
             }
 
             return Editor(part, field, shapeHelper);
+        }
+
+        private bool AuthorizeEdit(ContentPart part, HiddenStringField field) {
+            return _authorizer.Authorize(new HiddenFieldEditPermission(part, field), part);
         }
 
         protected override void Importing(ContentPart part, HiddenStringField field, ImportContentContext context) {
