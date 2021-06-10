@@ -5985,6 +5985,13 @@ span.help-block {
         color: #20252b;
     }
 
+/* Styles to override some parameter for the password eye, used in EncryptedStringField view */
+.btn-default.reveal, .btn-default.reveal:hover {
+    color: #444 !important;
+    min-width: 0px;
+    background-color: #FFFFFF;
+}
+
 .open .dropdown-toggle.btn-default-dark.btn-flat,
 .open .dropdown-toggle.btn-default-dark.btn-icon-toggle {
     color: #20252b;
