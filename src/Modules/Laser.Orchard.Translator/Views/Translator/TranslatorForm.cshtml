@@ -1,6 +1,8 @@
-﻿@model Laser.Orchard.Translator.Models.TranslationRecord
+﻿@model Laser.Orchard.Translator.ViewModels.TranslationRecordViewModel
 
+@using Laser.Orchard.Translator.Models;
 @using Laser.Orchard.Translator.Permissions;
+@using Orchard.ContentManagement;
 
 @{
     Script.Require("jQuery").AtHead();
@@ -11,6 +13,60 @@
     Style.Include("~/themes/theadmin/styles/ie6.css").UseCondition("lte IE 6").SetAttribute("media", "screen, projection");
 
     var authorized = AuthorizedFor(TranslatorPermission.ManageTranslations);
+
+    var settings = WorkContext.CurrentSite.As<TranslatorSettingsPart>();
+
+    var containers = new List<SelectListItem>();
+
+
+    var modulesGroup = new SelectListGroup() {
+        Name = "Modules"
+    };
+    var themesGroup = new SelectListGroup() {
+        Name = "Themes"
+    };
+    var tenantsGroup = new SelectListGroup() {
+        Name = "Tenants"
+    };
+    var undefinedGroup = new SelectListGroup() {
+        Name = "Undefined"
+    };
+
+    if (Model.ContainerType == "U") {
+        containers.Add(new SelectListItem() {
+            Text = Model.ContainerName,
+            Value = "U" + Model.ContainerName,
+            Group = undefinedGroup,
+            Selected = true
+        });
+    }
+
+    if (settings.ModulesToTranslate != null) {
+        containers.AddRange(settings.ModulesToTranslate.Replace(" ", "").Split(',').Select(s => new SelectListItem() {
+            Text = s,
+            Value = "M" + s,
+            Group = modulesGroup,
+            Selected = Model.ContainerType == "M" && Model.ContainerName.Equals(s)
+        }));
+    }
+
+    if (settings.ThemesToTranslate != null) {
+        containers.AddRange(settings.ThemesToTranslate.Replace(" ", "").Split(',').Select(s => new SelectListItem() {
+            Text = s,
+            Value = "T" + s,
+            Group = themesGroup,
+            Selected = Model.ContainerType == "T" && Model.ContainerName.Equals(s)
+        }));
+    }
+
+    if (settings.TenantsToTranslate != null) {
+        containers.AddRange(settings.TenantsToTranslate.Replace(" ", "").Split(',').Select(s => new SelectListItem() {
+            Text = s,
+            Value = "A" + s,
+            Group = tenantsGroup,
+            Selected = Model.ContainerType == "A" && Model.ContainerName.Equals(s)
+        }));
+    }
 }
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -29,10 +85,11 @@
                 <div class="col-12">
                     @{
                         if (!string.IsNullOrWhiteSpace(Model.ContainerName) && !string.IsNullOrWhiteSpace(Model.ContainerType) && !string.IsNullOrWhiteSpace(Model.Language)) {
+
                             using (Html.BeginForm("TranslatorForm", "Translator",
-                                                  new { area = "Laser.Orchard.Translator" },
-                                                  FormMethod.Post,
-                                                  new { id = "translation-form" })) {
+                                      new { area = "Laser.Orchard.Translator" },
+                                      FormMethod.Post,
+                                      new { id = "translation-form" })) {
                                 @Html.AntiForgeryTokenOrchard()
 
                                 <h2>@Model.Message</h2>
@@ -40,8 +97,7 @@
                                     if (Model.Id > 0) {
                                         @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", style = "display:none;", @class = "text large" })
                                         <button type="button" id="edit-message">Edit Message ID</button>
-                                    }
-                                    else {
+                                    } else {
                                         @Html.LabelFor(m => m.Message, T("Message ID"))
                                         @Html.TextBoxFor(m => m.Message, new { id = "translation-message-id", @class = "text large" })
                                     }
@@ -55,10 +111,25 @@
                                     @Html.TextAreaFor(m => m.TranslatedMessage)
                                 </div>
 
+                                if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0) {
+                                    var suggestedTranslationsIndex = 0;
+                                    <div id="suggestions-area">
+                                        <h2>@T("Suggestions")</h2>
+                                        <ul>
+                                            @foreach (var suggested in ViewBag.SuggestedTranslations) {
+                                                <li>
+                                                    <a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a>
+                                                </li>
+                                                suggestedTranslationsIndex++;
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+
                                 @Html.HiddenFor(m => m.Id);
-                                @Html.HiddenFor(m => m.Language);
                                 @Html.HiddenFor(m => m.ContainerName);
                                 @Html.HiddenFor(m => m.ContainerType);
+                                @Html.HiddenFor(m => m.OriginalLanguage);
                                 @Html.Hidden("OrigMessage", Model.Message);
                                 <div class="row">
                                     <!-- /.col -->
@@ -70,13 +141,21 @@
                                                 <tbody>
                                                     <tr>
                                                         <th style="width:50%">@T("Language")</th>
-                                                        <td>@Model.Language</td>
+                                                        <td>
+                                                            <span id="language-span">@Model.Language</span>
+
+                                                            @Html.DropDownListFor(m => m.Language, new SelectList(Model.CultureList.ToList(), Model.Language), new { style = "display:none;" })
+                                                        </td>
+                                                        <td rowspan="3" style="vertical-align: middle;"><input id="enable-edit" name="enableEdit" class="button" value="@T("Abilita modifica")" /></td>
                                                     </tr>
                                                     <tr>
                                                         <th style="width:50%">@T("Container Name")</th>
-                                                        <td>@Model.ContainerName</td>
+                                                        <td>
+                                                            <span id="containername-span">@Model.ContainerName</span>
+                                                            @Html.DropDownListFor(m => m.ContainerTypeAndName, containers, new { style = "display:none;" })
+                                                        </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr id="containertype-tr">
                                                         <th style="width:50%">@T("Container Type")</th>
                                                         <td>@Model.ContainerType</td>
                                                     </tr>
@@ -88,25 +167,11 @@
                                 </div>
                                 if (ViewData.ModelState.IsValid) {
                                     <input id="save-translation" name="saveTranslation" class="button" type="submit" value="@T("Save")" />
+                                    <input id="save-new-translation" name="saveNewTranslation" class="button" type="submit" value="@T("Save as New")" />
                                     if (authorized && Model.Id > 0) {
                                         <input id="delete-translation" name="deleteTranslation" class="button" type="submit" value="@T("Delete")" />
                                     }
                                 }
-                            }
-
-                            if (ViewBag.SuggestedTranslations != null && ViewBag.SuggestedTranslations.Count > 0) {
-                                var suggestedTranslationsIndex = 0;
-                                <div id="suggestions-area">
-                                    <h2>@T("Suggestions")</h2>
-                                    <ul>
-                                        @foreach (var suggested in ViewBag.SuggestedTranslations) {
-                                            <li>
-                                                <a class="suggested-translation-item" title="@T("Click to use this translation")" id="suggestedTranslations_@suggestedTranslationsIndex" href="#">@suggested</a>
-                                            </li>
-                                            suggestedTranslationsIndex++;
-                                        }
-                                    </ul>
-                                </div>
                             }
                         }
                     }
@@ -121,6 +186,11 @@
                 $("#@Html.FieldIdFor(m => m.TranslatedMessage)").val($(this).text());
             });
 
+            if ('@ViewBag.RefreshParent' == 'True') {
+                window.parent.location.reload();
+                window.close();
+            }
+
             if ('@ViewBag.SaveSuccess' == 'True') {
                 window.parent.$('#message-@Model.Id').children("span").html("@Model.Message");
                 if ('@String.IsNullOrWhiteSpace(Model.TranslatedMessage)' == 'True')
@@ -128,12 +198,7 @@
                 else
                     window.parent.$('#message-@Model.Id').children("i").attr("class", "fa fa-check");
             }
-
-            if ('@ViewBag.DeleteSuccess' == 'True') {
-                window.parent.location.reload();
-                window.close();
-            }
-
+            
             $("#translation-form input[type=submit]").click(function () {
                 $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
                 $(this).attr("clicked", "true");
@@ -143,8 +208,8 @@
                 var button = $("input[type=submit][clicked=true]").attr("id");
                 if (button == 'delete-translation')
                     return confirm("@T("This operation will completely remove any association between the message and the module. You won't be able to translate this message for this module anymore until it's imported again. Do you want to continue?")");
-                else
-                    return true;
+
+                return true;
             });
 
             $('#edit-message').click(function () {
@@ -159,6 +224,15 @@
                     $('#translation-message-id').val("@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.Message))");
                     $('#edit-message').text("Edit Message ID");
                 }
+            });
+
+            $('#enable-edit').click(function () {
+                $('#language-span').hide();
+                $('#containername-span').hide();
+                $('#containertype-tr').hide();
+                $('#enable-edit').hide();
+                $("#@Html.FieldIdFor(m => m.Language)").show();
+                $("#@Html.FieldIdFor(m => m.ContainerTypeAndName)").show();
             });
         });
     </script>
