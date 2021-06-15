@@ -69,6 +69,8 @@ namespace Laser.Orchard.HiddenFields.Services {
                 Name = "MaySeeOwnHiddenFields_" + fieldFullName,
                 ImpliedBy = new Permission[] {
                     HiddenFieldsPermissions.MaySeeHiddenFields,
+                    HiddenFieldsPermissions.MaySeeOwnHiddenFields,
+                    GetSeeAllHiddenPermission(partName,fieldName),
                     GetOwnHiddenPermission(partName,fieldName)
                 }
             };
