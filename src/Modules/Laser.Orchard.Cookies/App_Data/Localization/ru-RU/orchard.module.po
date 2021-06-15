@@ -1,0 +1,50 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
+msgid "Change your choice"
+msgstr "Измените свой выбор"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "GDPR Cookie"
+msgstr "файлы GDPR Cookie"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "More infos"
+msgstr "Больше информации"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "OK"
+msgstr "Готово"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "This website uses cookies"
+msgstr "Этот веб-сайт использует файлы cookie"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "We use cookies on this website. For more infos please visit the following link."
+msgstr "Мы используем файлы cookie на этом веб-сайте. Для получения более подробной информации перейдите по следующей ссылке."
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Marketing"
+msgstr "Маркетинг"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Preferences"
+msgstr "Предпочтения"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Statistical"
+msgstr "Статистический"
+
+msgctxt "Laser.Orchard.Cookies.Services.GDPRScript"
+msgid "Technical"
+msgstr "Технический"
+

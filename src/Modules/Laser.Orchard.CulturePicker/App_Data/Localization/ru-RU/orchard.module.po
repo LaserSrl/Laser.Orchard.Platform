@@ -1,0 +1,18 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Parts/CulturePicker.cshtml"
+msgid "Flag"
+msgstr "Флаг"
+
+msgctxt "~/Modules/Laser.Orchard.CulturePicker/Views/Parts/CulturePicker.cshtml"
+msgid "Language:"
+msgstr "Язык:"
+
