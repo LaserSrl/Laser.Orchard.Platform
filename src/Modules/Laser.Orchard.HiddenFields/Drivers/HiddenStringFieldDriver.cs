@@ -44,20 +44,9 @@ namespace Laser.Orchard.HiddenFields.Drivers {
 
         //GET
         protected override DriverResult Editor(ContentPart part, HiddenStringField field, dynamic shapeHelper) {
-            /*
-             if (HoPermissionSee(part, field)) {
-                return ContentShape(
-                    tutto come sotto tranne
-                    IsEditAuthorized = HoPermissionEdit(part, field)
-            ); 
-            }
-            return una shape vuota
-             */
             //require at least the "see" permission
-            if (!_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MaySeeHiddenFields))
-                return null;
-
-            return ContentShape("Fields_Hidden_String_Edit", GetDifferentiator(field, part),
+            if (AuthorizeSee(part, field)) {
+                return ContentShape("Fields_Hidden_String_Edit", GetDifferentiator(field, part),
                 () => {
                     var fs = field.PartFieldDefinition.Settings.GetModel<HiddenStringFieldSettings>();
                     //tokenization happens in the handler
@@ -65,24 +54,26 @@ namespace Laser.Orchard.HiddenFields.Drivers {
                         Field = field,
                         Value = field.Value,
                         Settings = fs,
-                        IsEditAuthorized = _orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MayEditHiddenFields)
+                        IsEditAuthorized = AuthorizeEdit(part,field)
                     };
                     return shapeHelper.EditorTemplate(TemplateName: "Fields.Hidden.String.Edit", Model: vm, Prefix: GetPrefix(field, part));
                 });
+            }
+
+            // it is better to return an empty shape instead of null
+            return ContentShape("Fields_Hidden_String_Edit_Unauthorized", GetDifferentiator(field, part),
+             () => {
+                 return shapeHelper.EditorTemplate(
+                     TemplateName: "Fields.Hidden.String.Edit.Unauthorized", 
+                     Model: new HiddenStringFieldDriverViewModel(), 
+                     Prefix: GetPrefix(field, part));
+             });
         }
 
         //POST
         protected override DriverResult Editor(ContentPart part, HiddenStringField field, IUpdateModel updater, dynamic shapeHelper) {
             //require at least the "see" permission
-            if (!_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MaySeeHiddenFields))
-                return null;
-
-            if (AuthorizeEdit(part, field)) {
-
-            }
-
-            //to update, require the "edit" permission
-            if (_orchardServices.Authorizer.Authorize(HiddenFieldsPermissions.MayEditHiddenFields)) {
+            if (AuthorizeSee(part, field)) {
                 var fs = field.PartFieldDefinition.Settings.GetModel<HiddenStringFieldSettings>();
                 //tokenization happens in the handler
                 var vm = new HiddenStringFieldDriverViewModel {
@@ -101,6 +92,10 @@ namespace Laser.Orchard.HiddenFields.Drivers {
 
         private bool AuthorizeEdit(ContentPart part, HiddenStringField field) {
             return _authorizer.Authorize(new HiddenFieldEditPermission(part, field), part);
+        }
+
+        private bool AuthorizeSee(ContentPart part, HiddenStringField field) {
+            return _authorizer.Authorize(new HiddenFieldSeePermission(part, field), part);
         }
 
         protected override void Importing(ContentPart part, HiddenStringField field, ImportContentContext context) {

@@ -15,6 +15,9 @@ namespace Laser.Orchard.HiddenFields.Services {
         Permission GetAllHiddenPermission(string partName, string fieldName);
 
         Permission GetSeeAllHiddenPermission(string partName, string fieldName);
+        Permission GetSeeOwnPermission(ContentPart part, HiddenStringField field);
         Permission GetSeeOwnHiddenPermission(string partName, string fieldName);
+        Permission GetSeeAllPermission(ContentPart part, HiddenStringField field);
+
     }
 }

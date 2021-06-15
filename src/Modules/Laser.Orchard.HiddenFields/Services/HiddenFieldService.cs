@@ -22,7 +22,7 @@ namespace Laser.Orchard.HiddenFields.Services {
                 Description = T("Edit all {0} hidden string fields", fieldFullName).Text,
                 Name = "MayEditHiddenFields_" + fieldFullName,
                 ImpliedBy = new Permission[] {
-                    HiddenFieldsPermissions.MayEditHiddenFields
+                    HiddenFieldsPermissions.MayEditHiddenFields,
                 }
             };
         }
@@ -52,9 +52,14 @@ namespace Laser.Orchard.HiddenFields.Services {
                 Description = T("See all {0} hidden string fields", fieldFullName).Text,
                 Name = "MaySeeAllHiddenFields_" + fieldFullName,
                 ImpliedBy = new Permission[] {
-                    HiddenFieldsPermissions.MaySeeHiddenFields
+                    HiddenFieldsPermissions.MaySeeHiddenFields,
+                    GetAllHiddenPermission(partName,fieldName)
                 }
             };
+        }
+
+        public Permission GetSeeAllPermission(ContentPart part, HiddenStringField field) {
+            return GetSeeAllHiddenPermission(part.PartDefinition.Name, field.Name);
         }
 
         public Permission GetSeeOwnHiddenPermission(string partName, string fieldName) {
@@ -63,9 +68,14 @@ namespace Laser.Orchard.HiddenFields.Services {
                 Description = T("See own {0} hidden string fields", fieldFullName).Text,
                 Name = "MaySeeOwnHiddenFields_" + fieldFullName,
                 ImpliedBy = new Permission[] {
-                    HiddenFieldsPermissions.MaySeeHiddenFields
+                    HiddenFieldsPermissions.MaySeeHiddenFields,
+                    GetOwnHiddenPermission(partName,fieldName)
                 }
             };
+        }
+
+        public Permission GetSeeOwnPermission(ContentPart part, HiddenStringField field) {
+            return GetSeeOwnHiddenPermission(part.PartDefinition.Name, field.Name);
         }
     }
 }

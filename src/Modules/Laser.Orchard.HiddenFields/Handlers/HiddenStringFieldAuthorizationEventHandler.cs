@@ -17,18 +17,34 @@ namespace Laser.Orchard.HiddenFields.Handlers {
         }
 
         public void Adjust(CheckAccessContext context) {
-            if (!context.Granted && context.Permission is HiddenFieldEditPermission) {
-                var fieldPermission = context.Permission as HiddenFieldEditPermission;
-                // qui dovrò controllare anche GetSeeOwn e GetSeeAll
-                if (HasOwnership(context.User, context.Content)) {
-                    // Own Permission.
-                    context.Permission = _hiddenFieldService.GetOwnPermission(fieldPermission.Part, fieldPermission.Field);
-                    context.Adjusted = true;
+            if (!context.Granted) { 
+                if (context.Permission is HiddenFieldEditPermission) {
+                    // permission edit
+                    var fieldPermission = context.Permission as HiddenFieldEditPermission;
+                    if (HasOwnership(context.User, context.Content)) {
+                        // Own Permission.
+                        context.Permission = _hiddenFieldService.GetOwnPermission(fieldPermission.Part, fieldPermission.Field);
+                        context.Adjusted = true;
+                    }
+                    else {
+                        // All Permission.
+                        context.Permission = _hiddenFieldService.GetAllPermission(fieldPermission.Part, fieldPermission.Field);
+                        context.Adjusted = true;
+                    }
                 }
-                else {
-                    // All Permission.
-                    context.Permission = _hiddenFieldService.GetAllPermission(fieldPermission.Part, fieldPermission.Field);
-                    context.Adjusted = true;
+                else if(context.Permission is HiddenFieldSeePermission) {
+                    // permission see
+                    var fieldPermission = context.Permission as HiddenFieldSeePermission;
+                    if (HasOwnership(context.User, context.Content)) {
+                        // Own Permission.
+                        context.Permission = _hiddenFieldService.GetSeeOwnPermission(fieldPermission.Part, fieldPermission.Field);
+                        context.Adjusted = true;
+                    }
+                    else {
+                        // All Permission.
+                        context.Permission = _hiddenFieldService.GetSeeAllPermission(fieldPermission.Part, fieldPermission.Field);
+                        context.Adjusted = true;
+                    }
                 }
             }
         }
