@@ -51,7 +51,21 @@ namespace Laser.Orchard.NwazetIntegration.Routes {
                             {"area", "Laser.Orchard.NwazetIntegration"}
                         },
                         new MvcRouteHandler())
-                }
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "addresses/delete/{id}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.NwazetIntegration"},
+                            {"controller", "Addresses"},
+                            {"action", "Delete"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.NwazetIntegration"}
+                        },
+                        new MvcRouteHandler())
+                },
             };
         }
 

@@ -333,6 +333,12 @@ namespace Laser.Orchard.Commons.Services {
                     continue;
                 }
                 if (member is PropertyInfo) {
+                    // If a custom attribute of the member is Newtonsoft.Json.JsonIgnoreAttribute, I have to skip the dump operation for the current member.
+                    if (CustomAttributeData.GetCustomAttributes(member)
+                        .Any(x => x.AttributeType == typeof(Newtonsoft.Json.JsonIgnoreAttribute))) { 
+                        continue;
+                    }
+
                     var prop = (PropertyInfo)member;
                     if (prop.GetIndexParameters().Length == 0 && prop.CanRead && _skipMembers.Contains(prop.GetValue(o, null))) {
                         continue;
