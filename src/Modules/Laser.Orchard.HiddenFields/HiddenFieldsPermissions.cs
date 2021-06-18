@@ -31,13 +31,20 @@ namespace Laser.Orchard.HiddenFields {
         //With this permission, we give admins the ability to modify the hidden fields' values in the back-end
         public static readonly Permission MayEditOwnHiddenFields = new Permission {
             Description = "Edit own hidden string fields",
-            Name = "MayEditOwnHiddenFields"
+            Name = "MayEditOwnHiddenFields",
+            ImpliedBy = new[] { MayEditHiddenFields }
         };
         //With this permission, we give users the ability to see the values in the hidden fields in the back-end
         public static readonly Permission MaySeeHiddenFields = new Permission {
             Description = "A user with this permission is able to see the values of the hidden fields.",
             Name = "MaySeeHiddenFields",
             ImpliedBy = new[] { MayEditHiddenFields }
+        };
+        //With this permission, we give admins the ability to modify the hidden fields' values in the back-end
+        public static readonly Permission MaySeeOwnHiddenFields = new Permission {
+            Description = "See own hidden string fields",
+            Name = "MaySeeOwnHiddenFields",
+            ImpliedBy = new[] { MaySeeHiddenFields, MayEditOwnHiddenFields }
         };
 
         public virtual Feature Feature { get; set; }
@@ -48,6 +55,7 @@ namespace Laser.Orchard.HiddenFields {
             permissions.Add(MayEditHiddenFields);
             permissions.Add(MayEditOwnHiddenFields);
             permissions.Add(MaySeeHiddenFields);
+            permissions.Add(MaySeeOwnHiddenFields);
 
             IEnumerable<ContentPartDefinition> partDefinitions = _contentDefinitionManager.ListPartDefinitions();
 
