@@ -55,33 +55,41 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
                 var op = (DateTimeOperator)Enum.Parse(typeof(DateTimeOperator), Convert.ToString(formState.Operator));
 
+                var currentCulture = CultureInfo.CurrentCulture;
+
                 string dateFrom = Convert.ToString(formState.DateFrom);
                 string timeFrom = Convert.ToString(formState.TimeFrom);
+                var cultureFrom = CultureInfo.GetCultureInfo(formState.CultureFrom.Value);
+                var dateReferenceFrom = Convert.ToDateTime(dateFrom + " " + timeFrom, cultureFrom).ToUniversalTime();
+
                 string dateTo = Convert.ToString(formState.DateTo);
                 string timeTo = Convert.ToString(formState.TimeTo);
+                var cultureTo = CultureInfo.GetCultureInfo(formState.CultureTo.Value);
+                var dateReferenceTo = Convert.ToDateTime(dateTo + " " + timeTo, cultureTo).ToUniversalTime();
 
+                var utcNow = DateTime.UtcNow;
+                
                 switch (op) {
                     case DateTimeOperator.LessThan:
-                        if (DateTime.UtcNow > Convert.ToDateTime(dateTo + " " + timeTo, CultureInfo.InvariantCulture)) {
+                        if (utcNow > dateReferenceTo) {
                             context.IsApplicable = false;
                             context.ApplicabilityContext.IsApplicable = false;
                         }
                         break;
 
                     case DateTimeOperator.GreaterThan:
-                        if (DateTime.UtcNow < Convert.ToDateTime(dateFrom + " " + timeFrom, CultureInfo.InvariantCulture)) {
+                        if (utcNow < dateReferenceFrom) {
                             context.IsApplicable = false;
                             context.ApplicabilityContext.IsApplicable = false;
                         }
                         break;
 
                     case DateTimeOperator.Between:
-                        if (DateTime.UtcNow < Convert.ToDateTime(dateFrom + " " + timeFrom, CultureInfo.InvariantCulture) || 
-                                DateTime.UtcNow > Convert.ToDateTime(dateTo + " " + timeTo, CultureInfo.InvariantCulture)) {
+                        if (utcNow < dateReferenceFrom || 
+                                utcNow > dateReferenceTo) {
                             context.IsApplicable = false;
                             context.ApplicabilityContext.IsApplicable = false;
                         }
-
                         break;
 
                     default:
@@ -89,10 +97,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         context.IsApplicable = false;
                         context.ApplicabilityContext.IsApplicable = false;
                         break;
-
                 }
-
-
             }
         }
 
@@ -101,9 +106,10 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
             string dateFrom = Convert.ToString(context.State.DateFrom);
             string timeFrom = Convert.ToString(context.State.TimeFrom);
+
             string dateTo = Convert.ToString(context.State.DateTo);
             string timeTo = Convert.ToString(context.State.TimeTo);
-
+            
             switch (op) {
                 case DateTimeOperator.LessThan:
                     return T("{0} is before {1} {2}", T("Current date").Text, dateTo, timeTo);

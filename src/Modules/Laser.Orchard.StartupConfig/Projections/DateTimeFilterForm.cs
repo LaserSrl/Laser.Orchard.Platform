@@ -31,12 +31,14 @@ namespace Laser.Orchard.StartupConfig.Projections {
         protected LocalizedString _operatorHint { get; set; }
         protected string _formName { get; set; }
         private readonly Work<IResourceManager> _resourceManager;
+        private readonly Lazy<CultureInfo> _currentCulture;
 
         public DateTimeFilterForm(IShapeFactory shapeFactory,
             Work<IResourceManager> resourceManager,
             IWorkContextAccessor workContextAccessor) {
             Shape = shapeFactory;
             _resourceManager = resourceManager;
+            _currentCulture = new Lazy<CultureInfo>(() => CultureInfo.GetCultureInfo(workContextAccessor.GetContext().CurrentCulture));
             T = NullLocalizer.Instance;
 
             _dateFromHint = T("Select date and time the coupon begins to be valid");
@@ -70,43 +72,46 @@ namespace Laser.Orchard.StartupConfig.Projections {
                             Title: "From",
                             Hint: _dateFromHint,
                             _Date: Shape.TextBox(
-                                    Id: "datefrom",
-                                    Name: "DateFrom",
-                                    EnableWrapper: false
-                                ),
+                                Id: "datefrom",
+                                Name: "DateFrom",
+                                EnableWrapper: false
+                            ),
                             _Time: Shape.TextBox(
-                                    Id: "timefrom",
-                                    Name: "TimeFrom",
-                                    EnableWrapper: false
-                                )
+                                Id: "timefrom",
+                                Name: "TimeFrom",
+                                EnableWrapper: false
+                            ),
+                            // I need to declare culture inside the DateTimeEditorForm to properly manage it in the razor.
+                            _Culture: Shape.Hidden(
+                                Id: "culturefrom",
+                                Name: "CultureFrom",
+                                EnableWrapper: false,
+                                Value: _currentCulture
+                            )
                         ),
                         _To: Shape.DateTimeEditorForm(
                             Id: "div-to",
                             Title: "To",
                             Hint: _dateToHint,
                             _Date: Shape.TextBox(
-                                    Id: "dateto",
-                                    Name: "DateTo",
-                                    EnableWrapper: false
-                                ),
+                                Id: "dateto",
+                                Name: "DateTo",
+                                EnableWrapper: false
+                            ),
                             _Time: Shape.TextBox(
-                                    Id: "timeto",
-                                    Name: "TimeTo",
-                                    EnableWrapper: false
-                                )
+                                Id: "timeto",
+                                Name: "TimeTo",
+                                EnableWrapper: false
+                           ),
+                            // I need to declare culture inside the DateTimeEditorForm to properly manage it in the razor.
+                           _Culture: Shape.Hidden(
+                                Id: "cultureto",
+                                Name: "CultureTo",
+                                EnableWrapper: false,
+                                Value: _currentCulture
+                            )
                         )
                     );
-
-                    _resourceManager.Value.Require("stylesheet", "jQueryCalendars_Picker");
-                    _resourceManager.Value.Require("stylesheet", "jQueryTimeEntry");
-                    _resourceManager.Value.Require("stylesheet", "jQueryDateTimeEditor");
-
-                    _resourceManager.Value.Require("script", "jQuery");
-
-                    _resourceManager.Value.Require("script", "jQueryCalendars_Picker").AtFoot();
-                    _resourceManager.Value.Require("script", "JQueryTimeEntry").AtFoot();
-
-                    _resourceManager.Value.Include("script", "~/Modules/Laser.Orchard.StartupConfig/Scripts/datetime-editor-filter.js", "~/Modules/Laser.Orchard.StartupConfig/Scripts/datetime-editor-filter.js").AtFoot();
 
                     f._Op._Operator.Add(new SelectListItem { Value = Convert.ToString(DateTimeOperator.LessThan), Text = T("Is less than").Text });
                     f._Op._Operator.Add(new SelectListItem { Value = Convert.ToString(DateTimeOperator.Between), Text = T("Is between").Text });
@@ -137,9 +142,12 @@ namespace Laser.Orchard.StartupConfig.Projections {
 
         public Localizer T { get; set; }
         private readonly IDateLocalizationServices _dateLocalizationServices;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
-        public DateTimeFilterFormValidator(IDateLocalizationServices dateLocalizationServices) {
+        public DateTimeFilterFormValidator(IDateLocalizationServices dateLocalizationServices,
+                IWorkContextAccessor workContextAccessor) {
             _dateLocalizationServices = dateLocalizationServices;
+            _workContextAccessor = workContextAccessor;
             T = NullLocalizer.Instance;
         }
 
@@ -152,24 +160,27 @@ namespace Laser.Orchard.StartupConfig.Projections {
             string timeFrom = context.ValueProvider.GetValue("TimeFrom").AttemptedValue;
             string dateTo = context.ValueProvider.GetValue("DateTo").AttemptedValue;
             string timeTo = context.ValueProvider.GetValue("TimeTo").AttemptedValue;
-            DateTime from = DateTime.UtcNow;
-            DateTime to = DateTime.UtcNow;
+            var cultureFrom = CultureInfo.GetCultureInfo(context.ValueProvider.GetValue("CultureFrom").AttemptedValue);
+            var cultureTo = CultureInfo.GetCultureInfo(context.ValueProvider.GetValue("CultureTo").AttemptedValue);
+            var utcNow = DateTime.UtcNow;
+            DateTime from = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow);
+            DateTime to = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow);
 
             switch (op) {
                 case DateTimeOperator.Between:
                     bool parseOk = true;
 
                     try {
-                        from = _dateLocalizationServices.ConvertFromLocalizedString(dateFrom, timeFrom).Value;
+                        from = Convert.ToDateTime(dateFrom + " " + timeFrom, cultureFrom);
                         } catch {
                         context.ModelState.AddModelError("DateFrom", T("Invalid dates and times").Text);
                         parseOk = false;
                     }
 
                     try {
-                        to = _dateLocalizationServices.ConvertFromLocalizedString(dateTo, timeTo).Value;
+                        to = Convert.ToDateTime(dateTo + " " + timeTo, cultureTo);
                     } catch {
-                        context.ModelState.AddModelError("DatTo", T("Invalid dates and times").Text);
+                        context.ModelState.AddModelError("DateTo", T("Invalid dates and times").Text);
                         parseOk = false;
                     }
 
@@ -181,7 +192,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
 
                 case DateTimeOperator.LessThan:
                     try {
-                        to = _dateLocalizationServices.ConvertFromLocalizedString(dateTo, timeTo).Value;
+                        to = Convert.ToDateTime(dateTo + " " + timeTo, cultureTo);
                     } catch {
                         context.ModelState.AddModelError("DateTo", T("Invalid dates and times").Text);
                     }
@@ -190,7 +201,7 @@ namespace Laser.Orchard.StartupConfig.Projections {
 
                 case DateTimeOperator.GreaterThan:
                     try {
-                        from = _dateLocalizationServices.ConvertFromLocalizedString(dateFrom, timeFrom).Value;
+                        from = Convert.ToDateTime(dateFrom + " " + timeFrom, cultureFrom);
                     } catch {
                         context.ModelState.AddModelError("DateFrom", T("Invalid dates and times").Text);
                     }
@@ -201,28 +212,26 @@ namespace Laser.Orchard.StartupConfig.Projections {
                     context.ModelState.AddModelError("Operator", T("Invalid operator").Text);
                     break;
             }
-
-            //context.ValueProvider.GetValue("DateFrom").AttemptedValue = from.ToString(CultureInfo.InvariantCulture.DateTimeFormat.ShortDatePattern);
-
         }
 
         public void Building(OrchardForms.BuildingContext context) {
             if (context.Shape.Id == "DateTimeFilterForm") {
-                // Default values for dates and times is Now.
-                context.Shape._From._Date.Value = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture.DateTimeFormat.ShortDatePattern);
-                context.Shape._From._Time.Value = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture.DateTimeFormat.ShortTimePattern);
+                var siteCulture = CultureInfo.GetCultureInfo(_workContextAccessor.GetContext().CurrentCulture);
+                var utcNow = DateTime.UtcNow;
 
-                context.Shape._To._Date.Value = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture.DateTimeFormat.ShortDatePattern);
-                context.Shape._To._Time.Value = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture.DateTimeFormat.ShortTimePattern);
+                // Default values for dates and times is UtcNow.
+                context.Shape._From._Date.Value = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow).ToString(siteCulture.DateTimeFormat.ShortDatePattern);
+                context.Shape._From._Time.Value = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow).ToString(siteCulture.DateTimeFormat.ShortTimePattern);
+                context.Shape._From._Culture.Value = siteCulture.Name;
+
+                context.Shape._To._Date.Value = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow).ToString(siteCulture.DateTimeFormat.ShortDatePattern);
+                context.Shape._To._Time.Value = _dateLocalizationServices.ConvertToSiteTimeZone(utcNow).ToString(siteCulture.DateTimeFormat.ShortTimePattern);
+                context.Shape._To._Culture.Value = siteCulture.Name;
             }
         }
 
         public void Built(OrchardForms.BuildingContext context) { }
 
-        public void Validated(OrchardForms.ValidatingContext context) {
-            if (context.FormName != DateTimeFilterForm.FormName) return;
-
-            
-        }
+        public void Validated(OrchardForms.ValidatingContext context) { }
     }
 }
