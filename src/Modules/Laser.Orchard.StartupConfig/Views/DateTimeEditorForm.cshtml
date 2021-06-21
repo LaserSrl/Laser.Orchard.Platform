@@ -1,0 +1,74 @@
+﻿@using Orchard.Core.Common.ViewModels
+@using Orchard;
+@using Orchard.Localization.Models;
+@using Orchard.Localization.Services;
+@using System.Globalization;
+
+@{
+    var dateId = Model._Date.Id;
+    var timeId = Model._Time.Id;
+
+    IDateLocalizationServices dateLocalizationServices = WorkContext.Resolve<IDateLocalizationServices>();
+    IWorkContextAccessor workContextAccessor = WorkContext.Resolve<IWorkContextAccessor>();
+
+    var options = new DateLocalizationOptions();
+    options.EnableTimeZoneConversion = false;
+
+    var modelCulture = CultureInfo.GetCultureInfo(Model._Culture.Value);
+    var currentCulture = CultureInfo.GetCultureInfo(workContextAccessor.GetContext().CurrentCulture);
+
+    var cultureDate = Convert.ToDateTime(Model._Date.Value + " " + Model._Time.Value, modelCulture);
+
+    Model._Date.Value = dateLocalizationServices.ConvertToLocalizedDateString(cultureDate, options);
+    Model._Time.Value = dateLocalizationServices.ConvertToLocalizedTimeString(cultureDate, options);
+
+    Model._Culture.Value = currentCulture;
+
+    Style.Require("jQueryCalendars_Picker");
+    Style.Require("jQueryTimeEntry");
+    Style.Require("jQueryDateTimeEditor");
+
+    Script.Require("jQuery");
+    Script.Require("jQueryCalendars_Picker").AtFoot();
+    Script.Require("JQueryTimeEntry").AtFoot();
+    Script.Require("DateTimeEditorFilter").AtFoot();
+}
+
+
+<div id="@Model.Id">
+
+    <label for="@Model._Date.Id">@Model.Title</label>
+    @Display(Model._Culture)
+    <span class="date">@Display(Model._Date)</span>
+    <span class="time">@Display(Model._Time)</span>
+    <span class="hint">@Model.Hint.Text</span>
+
+</div>
+
+@using (Script.Foot()) {
+
+    @* Generate the localization scripts. *@
+    @Display.CalendarsPickerLocalization()
+    @Display.TimeEntryLocalization()
+
+    <script type="text/javascript">
+        $(function() {
+
+            // Calendar picker and time entry.
+            $("#@dateId").calendarsPicker({
+                showAnim: "",
+                onSelect: function (selected) {
+                    if (typeof calendarsPicker_onSelect !== "undefined") {
+                        calendarsPicker_onSelect(selected, this);
+                    }
+                },
+                renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
+                    picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
+                    month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
+                })
+            });
+
+            $("#@timeId").timeEntry();
+        });
+    </script>
+}
