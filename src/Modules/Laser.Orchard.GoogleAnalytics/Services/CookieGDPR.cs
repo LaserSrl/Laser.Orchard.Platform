@@ -105,7 +105,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             if (SettingsPart.AnonymizeIp || allowedTypes.Contains(CookieType.Statistical) == false) {
                 script.AppendLine("ga('set', 'anonymizeIp', true);");
             }
-            //script.AppendLine("ga('send', 'pageview');");
+			if (allowedTypes.Contains(CookieType.Statistical)) {
+				script.AppendLine("ga('send', 'pageview');");
+            }
             script.AppendLine("</script>");
             script.AppendLine("<!-- End Google Analytics -->");
             // Register Google's new, recommended asynchronous universal analytics script to the header
