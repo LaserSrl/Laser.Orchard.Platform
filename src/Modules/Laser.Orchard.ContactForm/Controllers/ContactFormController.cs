@@ -111,7 +111,7 @@ namespace Laser.Orchard.ContactForm.Controllers {
                         ModelState.AddModelError("mediaId", T("The attachment is mandatory.").Text);
                     }
                     if (string.IsNullOrEmpty(message)) {
-                        ModelState.AddModelError("message", T("The message text is mandatory").Text);
+                        ModelState.AddModelError("message", T("The message text is mandatory.").Text);
                     }
                     isValid = false;
                 }
@@ -119,11 +119,11 @@ namespace Laser.Orchard.ContactForm.Controllers {
                     Match emailMatch = Regex.Match(email, emailAddressRegex);
                     Match confirmEmailMatch = Regex.Match(confirmEmail, emailAddressRegex);
                     if (!emailMatch.Success) {
-                        ModelState.AddModelError("email", T("Invalid email address").Text);
+                        ModelState.AddModelError("email", T("Invalid email address.").Text);
                         isValid = false;
                     }
                     if (!confirmEmailMatch.Success) {
-                        ModelState.AddModelError("confirmEmail", T("Invalid confirm email address").Text);
+                        ModelState.AddModelError("confirmEmail", T("Invalid confirm email address.").Text);
                         isValid = false;
                     }
                     if (isValid && email != confirmEmail) {
