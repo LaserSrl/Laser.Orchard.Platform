@@ -248,6 +248,54 @@ msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedForm"
 msgid "Select any contact form. If the contact form is not in the list, you need to add the IdentityPart and valorize it."
 msgstr "Selezionare un form di contatto. Se il form di contatto non è presente in lista, è necessario aggiungere e valorizzare l'IdentityPart sul relativo tipo di contenuto."
 
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormValidating"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormValidating"
+msgid "Marketing"
+msgstr "Marketing"
+
+msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormValidating"
+msgid "Validation of additional contact form fields"
+msgstr "Convalida dei campi aggiuntivi del modulo di contatto"
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "Confirm email must be matching to the email."
+msgstr "La conferma email deve corrispondere alla email."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "Invalid confirm email address."
+msgstr "Indirizzo e-mail di conferma non valido."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "Invalid email address."
+msgstr "Indirizzo di posta elettronica non valido."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "Please correct the errors and try again."
+msgstr "Si prega di correggere gli errori e riprovare."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "The attachment is mandatory."
+msgstr "L'allegato è obbligatorio."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "The confirm email is mandatory."
+msgstr "La conferma email è obbligatoria."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "The email is mandatory."
+msgstr "L'email è obbligatoria."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "The message text is mandatory."
+msgstr "Il testo del messaggio è obbligatorio."
+
+msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormController"
+msgid "The sender name is mandatory."
+msgstr "Il nome del mittente è obbligatorio."
+
 msgctxt "Laser.Orchard.ContactForm.Controllers.ContactFormDriver"
 msgid "The destination folder for the uploaded files has been succesfully created!"
 msgstr "La cartella di destinazione per i file da caricare è stata creata con successo!"

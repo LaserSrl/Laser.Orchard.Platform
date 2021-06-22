@@ -27,19 +27,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public IEnumerable<dynamic> CartExtensionShapes() {
 
-            var productQuantities = _shoppingCart
-                .GetProducts();
+            if (_GTMProductService.ShoulAddEcommerceTags()) {
+                var productQuantities = _shoppingCart
+                    .GetProducts();
 
-            var gtmObjs = productQuantities
-                .Select(pq => {
-                    var part = pq.Product.As<GTMProductPart>();
-                    _GTMProductService.FillPart(part);
-                    var vm = new GTMProductVM(part);
-                    vm.Quantity = pq.Quantity;
-                    return vm;
-                });
+                var gtmObjs = productQuantities
+                    .Select(pq => {
+                        var part = pq.Product.As<GTMProductPart>();
+                        _GTMProductService.FillPart(part);
+                        var vm = new GTMProductVM(part);
+                        vm.Quantity = pq.Quantity;
+                        return vm;
+                    });
 
-            yield return _shapeFactory.GTMShoppingCart(GTMProducts: gtmObjs);
+                yield return _shapeFactory.GTMShoppingCart(GTMProducts: gtmObjs);
+            }
         }
     }
 }

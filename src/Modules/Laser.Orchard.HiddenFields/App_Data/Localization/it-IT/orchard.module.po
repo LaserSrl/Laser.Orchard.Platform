@@ -176,6 +176,22 @@ msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
 msgid "Field {0} {1} \"{2}\""
 msgstr "Campo (Field) {0} {1} \"{2}\""
 
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "Edit all {0} hidden string fields"
+msgstr "Modifica tutti gli hidden string nascosti {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "Edit own {0} hidden string fields"
+msgstr "Modifica tutti i tuoi hidden string nascosti {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "See all {0} hidden string fields"
+msgstr "Vedi tutti gli hidden string {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "See own {0} hidden string fields"
+msgstr "Vedi tutti i tuoi hidden string {0}"
+
 msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
 msgid "All fields"
 msgstr "Tutti i campi"
