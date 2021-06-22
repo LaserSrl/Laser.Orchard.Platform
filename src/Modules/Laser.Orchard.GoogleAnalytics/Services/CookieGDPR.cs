@@ -65,6 +65,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             if (SettingsPart.UseTagManager) {
                 return GoogleTagManagerScript(allowedTypes);
             }
+
             // analytics.js deployment
             return GoogleAnalyticsScript(allowedTypes);
         }
@@ -88,15 +89,25 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("<script async src='//www.google-analytics.com/analytics.js'></script>");
             script.AppendLine("<script>");
             script.AppendLine("window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;");
+
+            script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {");
             if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
-                script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', 'auto');");
+                script.AppendLine("'cookieDomain': 'auto',");
             } else {
-                script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {'cookieDomain': '" + SettingsPart.DomainName + "'});");
+                script.AppendLine("'cookieDomain': '" + SettingsPart.DomainName + "',");
             }
+            if (!allowedTypes.Contains(CookieType.Statistical)) {
+                script.AppendLine("'storage': 'none',");
+                script.AppendLine("storeGac: false,");
+            }
+            script.AppendLine("});");
+
             if (SettingsPart.AnonymizeIp || allowedTypes.Contains(CookieType.Statistical) == false) {
                 script.AppendLine("ga('set', 'anonymizeIp', true);");
             }
-            script.AppendLine("ga('send', 'pageview');");
+			if (allowedTypes.Contains(CookieType.Statistical)) {
+				script.AppendLine("ga('send', 'pageview');");
+            }
             script.AppendLine("</script>");
             script.AppendLine("<!-- End Google Analytics -->");
             // Register Google's new, recommended asynchronous universal analytics script to the header
@@ -140,6 +151,31 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("		});");
             script.AppendLine("	});");
             // done handlers for changes in cookie consent
+            // tag manager consent settings
+            script.AppendLine("window.dataLayer.push(");
+            script.AppendLine("    'consent', 'default', {");
+            script.AppendLine("        'ad_storage': 'denied',");
+            script.AppendLine("        'functionality_storage': 'denied',");
+            script.AppendLine("        'security_storage': 'granted',");
+            script.AppendLine("        'personalization_storage': 'denied',");
+            script.AppendLine("        'analytics_storage': 'denied'");
+            script.AppendLine("	    });");
+            if (allowedTypes.Contains(CookieType.Statistical) 
+                || allowedTypes.Contains(CookieType.Marketing)
+                || allowedTypes.Contains(CookieType.Preferences)) {
+                script.AppendLine("window.dataLayer.push('consent', 'update', {");
+                if (allowedTypes.Contains(CookieType.Marketing)) {
+                    script.AppendLine("    'ad_storage': 'granted',");
+                }
+                if (allowedTypes.Contains(CookieType.Preferences)) {
+                    script.AppendLine("    'personalization_storage': 'granted',");
+                }
+                if (allowedTypes.Contains(CookieType.Statistical)) {
+                    script.AppendLine("    'analytics_storage': 'granted'");
+                }
+                script.AppendLine("	});");
+            }
+            // done tag manager consent settings
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
             script.AppendLine("new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],");
