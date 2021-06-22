@@ -163,7 +163,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             if (allowedTypes.Contains(CookieType.Statistical) 
                 || allowedTypes.Contains(CookieType.Marketing)
                 || allowedTypes.Contains(CookieType.Preferences)) {
-                script.AppendLine("window.dataLayer.push({'consent', 'update', {");
+                script.AppendLine("window.dataLayer.push('consent', 'update', {");
                 if (allowedTypes.Contains(CookieType.Marketing)) {
                     script.AppendLine("    'ad_storage': 'granted',");
                 }
