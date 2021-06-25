@@ -11785,3 +11785,33 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text {
     min-width: unset;
 }
+
+
+.table-bundle-autocomplete {
+    border-spacing: 3px;
+    max-width: 90%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.row-bundle-autocomplete {
+    border: 1px solid #e5e6e6;
+    margin-left:15px;
+}
+
+.quantity-bundle-autocomplete {
+    width: 70px !important;
+    height: 30px !important;
+}
+
+.bundle-autocomplete-d-none{
+   display:none;
+}
+
+.center-align-bundle-autocomplete {
+    text-align: center;
+}
+
+.text-through {
+    text-decoration: line-through;
+}
