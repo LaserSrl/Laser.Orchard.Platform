@@ -1,4 +1,6 @@
-﻿using Laser.Orchard.NwazetIntegration.Models;
+﻿using Laser.Orchard.Cookies;
+using Laser.Orchard.Cookies.Services;
+using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Models;
@@ -8,6 +10,7 @@ using Orchard.ContentManagement;
 using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
@@ -15,15 +18,26 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly IOrchardServices _orchardServices;
         private readonly ITokenizer _tokenizer;
         private readonly IProductPriceService _productPriceService;
+        private readonly IGDPRScript _gdprScriptService;
 
         public GTMProductService(
             IOrchardServices orchardServicies,
             ITokenizer tokenizer,
-            IProductPriceService productPriceService) {
+            IProductPriceService productPriceService,
+            IGDPRScript gdprScriptService) {
 
             _orchardServices = orchardServicies;
             _tokenizer = tokenizer;
             _productPriceService = productPriceService;
+            _gdprScriptService = gdprScriptService;
+        }
+
+        private IEnumerable<CookieType> _acceptedCookies;
+        public bool ShoulAddEcommerceTags() {
+            if (_acceptedCookies == null || !_acceptedCookies.Any()) {
+                _acceptedCookies = _gdprScriptService.GetAcceptedCookieTypes();
+            }
+            return _acceptedCookies.Contains(CookieType.Statistical);
         }
 
         public void FillPart(GTMProductPart part) {
@@ -78,6 +92,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
             return output;
         }
+
         public string GetJsonString(GTMActionField af) {
             if (af == null) {
                 return string.Empty;

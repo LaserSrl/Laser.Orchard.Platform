@@ -48,35 +48,32 @@
 </fieldset>
 
 @{using (Html.BeginForm("Index",
-                        "Translator",
-                         new { area = "Laser.Orchard.Translator" },
-                         FormMethod.Post,
-                         new { id = "showDetailsForm", style = "display:none" }))
-  {
-    @Html.AntiForgeryTokenOrchard()
-    <input id="language" name="Language" type="hidden" />
-    <input id="folderName" name="FolderName" type="hidden" />
-    <input id="folderType" name="FolderType" type="hidden" />
-    <input id="showTranslator" class="button" type="submit" value="@T("Show Details")" />
-  }
+                            "Translator",
+                             new { area = "Laser.Orchard.Translator" },
+                             FormMethod.Post,
+                             new { id = "showDetailsForm", style = "display:none" })) {
+        @Html.AntiForgeryTokenOrchard()
+        <input id="language" name="Language" type="hidden" />
+        <input id="folderName" name="FolderName" type="hidden" />
+        <input id="folderType" name="FolderType" type="hidden" />
+        <input id="showTranslator" class="button" type="submit" value="@T("Show Details")" />
+    }
 }
 
 <fieldset style="margin-top:10px; @Html.Raw(displayAdvancedButtons)">
     <legend style="padding-bottom: 5px;">@T("Advanced Operations")</legend>
 
-    @{using (Html.BeginForm("ImportTranslations", "ImportExport", new { area = "Laser.Orchard.Translator" }, FormMethod.Post, new { id = "importForm", style = "display:inline;" }))
-      {
-        @Html.AntiForgeryTokenOrchard()
-        <input id="importTranslations" class="button" type="submit" value="@T("Import Translations")" />
-      }
+    @{using (Html.BeginForm("ImportTranslations", "ImportExport", new { area = "Laser.Orchard.Translator" }, FormMethod.Post, new { id = "importForm", style = "display:inline;" })) {
+            @Html.AntiForgeryTokenOrchard()
+            <input id="importTranslations" class="button" type="submit" value="@T("Import Translations")" />
+        }
     }
     <a class="button" href="@Url.Action("ExportTranslations", "ImportExport")">@T("Export Translations")</a>
 </fieldset>
 
 @{
-    using (Script.Foot())
-    {
-    <script type="text/javascript">
+    using (Script.Foot()) {
+        <script type="text/javascript">
         $(function () {
             var $loading = $('#translation-tree-load').hide();
             $(document)
@@ -86,7 +83,7 @@
                 .ajaxStop(function () {
                     if ($('#SelectLanguage').val() != '')
                         $('#translation-tree-choice-message').hide();
-                    
+
                     $loading.hide();
             });
 
@@ -139,7 +136,7 @@
             $('#showDetailsForm').submit(function () {
                 var selectedNodes = $('#folderTree').jstree().get_selected(true);
 
-                if (selectedNodes.length == 0 || selectedNodes[0].parents.length < 2)
+                if ((selectedNodes.length == 0 || selectedNodes[0].parents.length < 2) && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-U'))
                 {
                     alert("@T("Please select a module, a theme or a tenant.")");
                     return false;
@@ -158,6 +155,6 @@
                 $('#showDetailsForm').submit();
             });
         });
-    </script>
+        </script>
     }
 }
