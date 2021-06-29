@@ -20,7 +20,7 @@ namespace Laser.Orchard.Cookies
 
             manifest.DefineStyle("CookieCuttr")
                 .SetUrl("cookiecuttr.min.css", "cookiecuttr.css")
-                .SetVersion("1.0.0");
+                .SetVersion("1.0.4");
         }
     }
 }

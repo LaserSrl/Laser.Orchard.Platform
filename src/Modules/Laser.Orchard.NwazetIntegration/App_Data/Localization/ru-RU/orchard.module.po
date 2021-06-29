@@ -1,0 +1,170 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "City"
+msgstr "Город"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Company"
+msgstr "Компания"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Country"
+msgstr "Страна"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "First Name"
+msgstr "Имя"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "If your country is not available in the list, contact us."
+msgstr "Если вашей страны нет в списке, пожалуйста, свяжитесь с нами."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Last Name"
+msgstr "Фамилия"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "New address"
+msgstr "Новый адрес"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Почтовый индекс"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Postal or ZIP code. Only characters or digits."
+msgstr "Почтовый индекс. Только символы или цифры"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Province, starting with a letter."
+msgstr "Провинция, начиная с буквы."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a city"
+msgstr "Выберите город"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a country"
+msgstr "Выберите страну"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a province"
+msgstr "Выберите провинцию"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "State, province, prefecture, republic or region"
+msgstr "Штат, провинция, префектура, республика, регион или область"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Stored Billing Address"
+msgstr "Сохраненный расчетный адрес"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Stored Shipping Address"
+msgstr "Сохраненный адрес доставки"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Street Address"
+msgstr "Адрес улицы"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Street Address Line 1"
+msgstr "Улица линия 1"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Street Address Line 2 (Optional)"
+msgstr "Улица линия 2 (необязательно)"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Billing to:"
+msgstr "Выставить счет на:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Click here to change the selected addresses"
+msgstr "Нажмите здесь, чтобы изменить выбранные адреса"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Email address"
+msgstr "Адрес электронной почты"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Phone number"
+msgstr "Телефонный номер"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Shipping to:"
+msgstr "Доставка:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Back to cart"
+msgstr "Вернуться в корзину"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Change option"
+msgstr "Изменить вариант"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Products"
+msgstr "Товары"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Sub total"
+msgstr "Промежуточный итог"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Total"
+msgstr "Итого"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
+msgid "I have read and agree to {0}"
+msgstr "Я прочитал и принимаю {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
+msgid "Proceed To Checkout"
+msgstr "Перейти к оформлению заказа"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
+msgid "Done"
+msgstr "Готово"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
+msgid "Done"
+msgstr "Готово"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Address created successfully."
+msgstr "Адрес сохранен успешно"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "Address updated successfully."
+msgstr "Адрес успешно обновлен."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
+msgid "That address has been removed."
+msgstr "Данный адрес был удален."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationService"
+msgid "Select a country"
+msgstr "Выберите страну"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutPoliciesService"
+msgid "Please agree to the terms and conditions before making a purchase."
+msgstr "Пожалуйста, согласитесь с условиями перед совершением покупки"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Failed"
+msgstr "Платеж не прошел"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
+msgid "Payment Succeeded"
+msgstr "Платеж прошел успешно"
+

@@ -66,7 +66,8 @@ namespace Laser.Orchard.Braintree.Controllers {
             }
             PaymentVM model = new PaymentVM();
             model.Record = payment;
-            model.TenantBaseUrl = Url.Action("Index").Replace("/Laser.Orchard.Braintree/Braintree", "");
+            // changed the path to a route, so I also change the replace
+            model.TenantBaseUrl = Url.Action("Index").Replace("/payment/braintree", "");
             return View("Index", model);
         }
 

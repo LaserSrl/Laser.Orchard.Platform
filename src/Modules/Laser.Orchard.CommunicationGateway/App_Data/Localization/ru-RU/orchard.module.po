@@ -1,0 +1,14 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "Laser.Orchard.CommunicationGateway.Services.CommunicationService"
+msgid "This contact has been bound to its user on {0:yyyy-MM-dd HH:mm} by contact synchronize function. "
+msgstr "Этот контакт был привязан к данному пользователю {0: гггг-ММ-дд ЧЧ: мм} функцией синхронизации контактов."
+

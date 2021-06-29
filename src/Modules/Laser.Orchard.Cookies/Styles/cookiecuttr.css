@@ -192,3 +192,29 @@ p#ccPoweredBy, p#ccPoweredBy a:link, p#ccPoweredBy a:visited, p#ccPoweredBy a:ho
         float: left;
     }
 }
+
+.cc-overlay #ccPoweredBy {
+    float: none!important;
+}
+
+.cc-cookie-box #ccPoweredBy {
+    float: left;
+}
+
+.cc-cookie-box #ccPoweredBy > div {
+    bottom: auto !important;
+}
+
+.cc-cookie-box #ccPoweredBy + div {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    float: right;
+}
+
+@media (max-width: 767px) {
+    .cc-cookie-box #ccPoweredBy, .cc-cookie-box #ccPoweredBy + div {
+        float: none;
+        margin-bottom: 10px;
+    }
+}

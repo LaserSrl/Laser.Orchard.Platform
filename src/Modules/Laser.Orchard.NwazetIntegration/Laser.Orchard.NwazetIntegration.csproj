@@ -173,6 +173,7 @@
     <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
@@ -313,6 +314,10 @@
     <ProjectReference Include="..\Laser.Orchard.CommunicationGateway\Laser.Orchard.CommunicationGateway.csproj">
       <Project>{bb12e69f-0976-407d-a716-542b7d22ee5f}</Project>
       <Name>Laser.Orchard.CommunicationGateway</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{bdb0cd8d-7c6c-46f0-a041-6b2e1e0f9c9e}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
