@@ -33,6 +33,7 @@ namespace Contrib.Reviews.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateInput(false)]
         public ActionResult Create(int contentId, string comment, string returnUrl) {
             IUser currentUser = _orchardServices.WorkContext.CurrentUser;
 
