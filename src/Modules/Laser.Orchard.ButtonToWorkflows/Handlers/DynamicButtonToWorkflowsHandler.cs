@@ -40,11 +40,15 @@ namespace Laser.Orchard.ButtonToWorkflows.Handlers {
 
         public Localizer T { get; set; }
 
-        public DynamicButtonToWorkflowsPartHandler(INotifier notifier, IScheduledTaskManager scheduledTaskManager, IWorkflowManager workflowManager) {
+        public DynamicButtonToWorkflowsPartHandler(
+            INotifier notifier, 
+            IScheduledTaskManager scheduledTaskManager, 
+            IWorkflowManager workflowManager) {
+
             _notifier = notifier;
             _scheduledTaskManager = scheduledTaskManager;
-            _workflowManager = workflowManager;
             T = NullLocalizer.Instance;
+            _workflowManager = workflowManager;
 
             OnUpdated<DynamicButtonToWorkflowsPart>((context, part) => {
                 try {
@@ -52,29 +56,37 @@ namespace Laser.Orchard.ButtonToWorkflows.Handlers {
                         var content = context.ContentItem;
 
                         if (part.ActionAsync) {
-                            _scheduledTaskManager.CreateTask("Laser.Orchard.DynamicButtonToWorkflows.Task", DateTime.UtcNow.AddMinutes(1), part.ContentItem);
+                            // the task will need to use part.ButtonName to invoke the correct
+                            // process. We generate a task that contains that in its type. Then
+                            // we will parse that out when processing the task.
+                            _scheduledTaskManager
+                                .CreateTask(
+                                    DynamicButtonToWorflowsScheduledTaskHandler.TaskType(part.ButtonName), 
+                                    DateTime.UtcNow.AddMinutes(1), 
+                                    part.ContentItem);
 
                             if (!string.IsNullOrEmpty(part.MessageToWrite))
                                 _notifier.Add(NotifyType.Information, T(part.MessageToWrite));
-                        }
-                        else {
-                            _workflowManager.TriggerEvent("DynamicButtonEvent", content, () => new Dictionary<string, object> { { "ButtonName", part.ButtonName }, { "Content", content } });
+                        } else {
+                            _workflowManager
+                                .TriggerEvent("DynamicButtonEvent", 
+                                    content, 
+                                    () => new Dictionary<string, object> {
+                                        { "ButtonName", part.ButtonName },
+                                        { "Content", content } });
 
                             if (!string.IsNullOrEmpty(part.MessageToWrite))
                                 _notifier.Add(NotifyType.Information, T(part.MessageToWrite));
-
-                            part.ButtonName = "";
-                            part.MessageToWrite = "";
-                            part.ActionAsync = false;
+                            
                         }
+                        part.ButtonName = "";
+                        part.MessageToWrite = "";
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Logger.Error(ex, "Error in DynamicButtonToWorkflowsPartHandler. ContentItem: {0}", context.ContentItem);
 
                     part.ButtonName = "";
                     part.MessageToWrite = "";
-                    part.ActionAsync = false;
                 }
             });
         }
