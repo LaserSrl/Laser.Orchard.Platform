@@ -163,7 +163,7 @@ namespace Laser.Orchard.Translator.Controllers
 
             // If containter type is Undefined returns the number of messages.
             if (containerType == "U") {
-                return countDictionary[true] + countDictionary[false];
+                return (countDictionary.ContainsKey(true) ? countDictionary[true] : 0) + (countDictionary.ContainsKey(false) ? countDictionary[false] : 0);
             }
 
             if (!countDictionary.ContainsKey(true))

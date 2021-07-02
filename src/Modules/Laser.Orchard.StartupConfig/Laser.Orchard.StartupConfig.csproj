@@ -145,6 +145,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\datetime-editor-filter.js" />
+    <Content Include="Scripts\datetime-editor-filter.min.js">
+      <DependentUpon>datetime-editor-filter.js</DependentUpon>
+    </Content>
     <Content Include="Views\MerchantDomainAssociationAdmin\Index.cshtml" />
     <None Include="Assets\laser-base.scss" />
     <Content Include="Recipes\TinyMCEToolbarExtension.recipe.xml" />
@@ -185,6 +189,7 @@
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPart.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\AllowCrossOriginSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\FrontendEditorConfigurationSettings.cshtml" />
+    <Content Include="Views\DateTimeEditorForm.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -411,6 +416,7 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="Rules\HttpCookieCondition.cs" />
     <Compile Include="Rules\HttpHeaderCondition.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />

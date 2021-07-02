@@ -4,5 +4,11 @@
     "inputFiles": [
       "Styles/font-awesome/css/all.css"
     ]
+  },
+  {
+    "outputFileName": "Scripts/datetime-editor-filter.min.js",
+    "inputFiles": [
+      "Scripts/datetime-editor-filter.js"
+    ]
   }
 ]
