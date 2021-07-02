@@ -1108,6 +1108,38 @@ msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
 msgid "Value"
 msgstr "Valore"
 
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueFormValidator"
+msgid "Insert a value for the Name of the cookie to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per il nome del cookie da verificare (può essere un token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is after {1} {2}"
+msgstr "{0} è dopo a {1} {2}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is before {1} {2}"
+msgstr "{0} è prima di {1} {2}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is between {1} {2} and {3} {4}"
+msgstr "{0} è compreso tra {1} {2} e {3} {4}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Criterion on the date validity of the coupon."
+msgstr "Criterio di validità sulla data del coupon."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Current date"
+msgstr "La data corrente"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Invalid operator"
+msgstr "Operatore non valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Range of dates the coupon can be used in"
+msgstr "Date tra le quali il coupon può essere utilizzato"
+
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
 msgid "Destination in territories"
 msgstr "Destinazione nei territori"
@@ -1187,6 +1219,10 @@ msgstr "La richiesta (Request) contiene l'intestazione (Header) '{0}' con valore
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
 msgid "Value"
 msgstr "Valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueFormValidator"
+msgid "Insert a value for the Name of the header to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per la chiave dell'intestazione (Header Key/Name) da testare (sono consentiti valori con Token)."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
 msgid "Any"
