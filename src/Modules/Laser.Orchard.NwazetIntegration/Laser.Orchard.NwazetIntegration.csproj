@@ -113,6 +113,7 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponApplicabilityCriterion.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DateCouponApplicabilityCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
