@@ -40,6 +40,9 @@ namespace Laser.Orchard.StartupConfig {
                 .SetDependencies("jQueryUI");
             manifest.DefineStyle("ContentPickerThemeHiding")
                 .SetUrl("contentPickerCreation\\ContentPickerThemeHiding.css", "contentPickerCreation\\ContentPickerThemeHiding.css");
+
+            manifest.DefineScript("DatetimeEditorFilter")
+               .SetUrl("datetime-editor-filter.min.js", "datetime-editor-filter.js");
         }
     }
 }

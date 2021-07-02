@@ -8,7 +8,99 @@
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
 
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Bancontact"
+msgstr "Bancontact"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "BLIK"
+msgstr "BLIK"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Client Id"
+msgstr "Client Id"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Credit or debit cards"
+msgstr "Carta di credito o di debito"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Currency Code"
+msgstr "Codice Valuta"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Currency code to configure the payment."
+msgstr "Codice della valuta per configurare il pagamento."
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Enable Fundings"
+msgstr "Abilita i finanziamenti"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "eps"
+msgstr "eps"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "giropay"
+msgstr "giropay"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "iDEAL"
+msgstr "iDEAL"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "MyBank"
+msgstr "MyBank"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "PayPal Credit"
+msgstr "Credito PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "PayPal Setting"
+msgstr "Impostazione PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Przelewy24"
+msgstr "Przelewy24"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Secret Id"
+msgstr "Secret Id"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "SEPA-Lastschrift"
+msgstr "SEPA-Lastschrift"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Sofort"
+msgstr "Sofort"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "The Client Id of your PayPal account"
+msgstr "Il Client Id del tuo account PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "The Secret Id of your PayPal account"
+msgstr "Il Secret Id del tuo account PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Venmo"
+msgstr "Venmo"
+
 msgctxt "~/Modules/Laser.Orchard.PayPal/Views/PayPal/Index.cshtml"
 msgid "Amount"
 msgstr "Importo"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/PayPal/Index.cshtml"
+msgid "Loading..."
+msgstr "Caricamento in corso..."
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/PayPal/Index.cshtml"
+msgid "Pay with PayPal"
+msgstr "Paga con PayPal"
 

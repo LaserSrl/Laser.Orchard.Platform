@@ -3275,13 +3275,6 @@ a.text-success:hover {
     }
 }
 
-@media (max-width: 768px) {
-    #base {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
 #header {
     position: absolute;
     left: 0;
@@ -3822,24 +3815,21 @@ body:not(.menubar-first) .menubar-fixed-panel {
 }
 
 @media (max-width: 768px) {
-    #menubar {
-        width: 240px;
-        z-index: 113;
-        -webkit-transform: translate(-250px, 0);
-        -ms-transform: translate(-250px, 0);
-        -o-transform: translate(-250px, 0);
-        transform: translate(-250px, 0);
-        -webkit-transition: -webkit-transform 0.5s ease-in;
-        -moz-transition: -moz-transform 0.5s ease-in;
-        -o-transition: -o-transform 0.5s ease-in;
-        transition: transform 0.5s ease-in;
-    }
-
     .menubar-visible #menubar {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         -o-transform: translate(0, 0);
         transform: translate(0, 0);
+        -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        transition: transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+    }
+    #menubar {
+        -webkit-transform: translate(0.1px,0);
+        -ms-transform: translate(0.1px,0);
+        -o-transform: translate(0.1px,0);
+        transform: translate(0.1px,0);
         -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
@@ -5994,6 +5984,13 @@ span.help-block {
     .btn-default-dark.btn-icon-toggle {
         color: #20252b;
     }
+
+/* Styles to override some parameter for the password eye, used in EncryptedStringField view */
+.btn-default.reveal, .btn-default.reveal:hover {
+    color: #444 !important;
+    min-width: 0px;
+    background-color: #FFFFFF;
+}
 
 .open .dropdown-toggle.btn-default-dark.btn-flat,
 .open .dropdown-toggle.btn-default-dark.btn-icon-toggle {
@@ -11746,6 +11743,15 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     font-size: 0.9em;
     line-height: 1.6em;
 }
+
+
+@media (min-width: 1200px) and (max-width: 1320px) {
+    .custom-width-info-box {
+        width:100%!important;
+    }
+}
+
+
 /* Google Maps Styles */
 .gm-style button, .gm-style a.button {
     color: rgb(0, 0, 0) !important;
@@ -11754,4 +11760,58 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 /* Red text for validation error hints. */
 .field-validation-error {
     color: #dd4b39; /* This is the same red used for validation errors in the header of the page. */
+}
+
+.text-white{
+    color:white !important;
+}
+
+.width-80{
+    width:80% !important;
+}
+
+.float-right{
+    float:right;
+}
+
+.margin-left-5{
+    margin-left:5px;
+}
+
+.display-content{
+    display:contents!important;
+}
+
+table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text {
+    min-width: unset;
+}
+
+
+.table-bundle-autocomplete {
+    border-spacing: 3px;
+    max-width: 90%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.row-bundle-autocomplete {
+    border: 1px solid #e5e6e6;
+    margin-left:15px;
+}
+
+.quantity-bundle-autocomplete {
+    width: 70px !important;
+    height: 30px !important;
+}
+
+.bundle-autocomplete-d-none{
+   display:none;
+}
+
+.center-align-bundle-autocomplete {
+    text-align: center;
+}
+
+.text-through {
+    text-decoration: line-through;
 }

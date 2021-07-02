@@ -35,7 +35,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             var isAvailableForProcessing = IsAvailableForProcessing();
 
             describe
-                .For("Request", T("Request header"), T("Request header"))
+                .For("Request", T("Http Request"), T("Http Request"))
                 .Element("Test request header",
                     T("Test request header"),
                     T("Test request header"),

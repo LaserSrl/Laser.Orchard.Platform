@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement;
+﻿using Newtonsoft.Json;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.FieldStorage;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace Laser.Orchard.SecureData.Fields {
             set { Storage.Set(value ?? string.Empty); }
         }
 
+        [JsonIgnore]
         public string HashAlgorithm {
             get { return Storage.Get<string>("HashAlgorithm"); }
             set { Storage.Set("HashAlgorithm", value ?? string.Empty); }
         }
-
+        
+        [JsonIgnore]
         public string Salt {
             get { return Storage.Get<string>("Salt"); }
             set { Storage.Set("Salt", value ?? string.Empty); }

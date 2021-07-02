@@ -19,7 +19,8 @@ namespace Laser.Orchard.SecureData.Drivers {
         // Variables to set the templates to show in the content editor (backoffice).
         private static string TemplateNameAuthorized = "Fields/HashedStringField.Edit";
         private static string TemplateNameUnauthorized = "Fields/HashedStringField.Unauthorized";
-        private static string ShapeType = "Fields_HashedString_Edit";
+        private static string ShapeTypeAuthorized = "Fields_HashedString_Edit";
+        private static string ShapeTypeUnauthorized = "Fields_HashedString_Unauthorized_Edit";
 
         public Localizer T { get; set; }
 
@@ -44,11 +45,11 @@ namespace Laser.Orchard.SecureData.Drivers {
             if (AuthorizeEdit(part, field)) {
                 // If user is authorized, the following code is showing the view.
                 // TemplateName: TemplateNameAuthorized -> it's the actual view with the edit form.
-                return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, CreateViewModel(field), shapeHelper);
+                return ContentShapeFromViewModel(part, field, ShapeTypeAuthorized, TemplateNameAuthorized, CreateViewModel(field), shapeHelper);
             } else {
                 // If user is unauthorized, I show nothing.
                 // TemplateName: TemplateNameUnauthorized -> it's an empty view; Model: null.
-                return ContentShapeFromViewModel(part, field, TemplateNameUnauthorized, null, shapeHelper);
+                return ContentShapeFromViewModel(part, field, ShapeTypeUnauthorized, TemplateNameUnauthorized, null, shapeHelper);
             }
         }
 
@@ -68,7 +69,7 @@ namespace Laser.Orchard.SecureData.Drivers {
                         if (Validate(viewModel, field, prefix, updater)) {
                             _secureFieldService.HashValue(field, viewModel.Value);
                         } else {
-                            return ContentShapeFromViewModel(part, field, TemplateNameAuthorized, viewModel, shapeHelper);
+                            return ContentShapeFromViewModel(part, field, ShapeTypeAuthorized, TemplateNameAuthorized, viewModel, shapeHelper);
                         }
                     }
                 }
@@ -78,8 +79,8 @@ namespace Laser.Orchard.SecureData.Drivers {
             return Editor(part, field, shapeHelper);
         }
 
-        private DriverResult ContentShapeFromViewModel(ContentPart part, HashedStringField field, string templateName, HashedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
-            return ContentShape(ShapeType, GetDifferentiator(field, part),
+        private DriverResult ContentShapeFromViewModel(ContentPart part, HashedStringField field, string shapeType, string templateName, HashedStringFieldEditViewModel viewModel, dynamic shapeHelper) {
+            return ContentShape(shapeType, GetDifferentiator(field, part),
                     () => {
                         return shapeHelper.EditorTemplate(
                             TemplateName: templateName,
@@ -109,12 +110,12 @@ namespace Laser.Orchard.SecureData.Drivers {
                 return false;
             }
 
-            if (settings.ConfirmRequired && !viewModel.Value.Equals(viewModel.ConfirmValue)) {
+            if (settings.ConfirmRequired && !string.Equals(viewModel.Value, viewModel.ConfirmValue)) {
                 updater.AddModelError(prefix, T("The value of the field {0} must match the Confirm value.", T(field.DisplayName), settings.Pattern));
                 return false;
             }
 
-            if (!CheckPattern(viewModel.Value, settings.Pattern)) {
+            if (!string.IsNullOrWhiteSpace(settings.Pattern) && !CheckPattern(viewModel.Value, settings.Pattern)) {
                 updater.AddModelError(prefix, T("The value of the field {0} is not valid." + Environment.NewLine + "Pattern: {1}", T(field.DisplayName), settings.Pattern));
                 return false;
             }
@@ -128,7 +129,7 @@ namespace Laser.Orchard.SecureData.Drivers {
             //    return true;
             //}
 
-            return Regex.IsMatch(value, pattern, RegexOptions.Compiled);
+            return (value != null ? Regex.IsMatch(value, pattern, RegexOptions.Compiled) : false);
         }
 
         private bool AuthorizeEdit(ContentPart part, HashedStringField field) {

@@ -36,13 +36,11 @@ namespace Laser.Orchard.Braintree.Services {
         }
         public override string GetPosActionUrl(string paymentGuid) {
             UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree" })
-                + "?guid=" + paymentGuid;
+            return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree", guid = paymentGuid });
         }
         public override string GetPosActionUrl(int paymentId) {
             UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree" })
-                + "?pid=" + paymentId.ToString();
+            return urlHelper.Action("Index", "Braintree", new { area = "Laser.Orchard.Braintree", pid = paymentId.ToString() });
         }
         public override Type GetPosActionControllerType() {
             return typeof(BraintreeController);

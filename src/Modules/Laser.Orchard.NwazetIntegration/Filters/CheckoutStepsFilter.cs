@@ -17,6 +17,8 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.NwazetIntegration.Services;
 using Newtonsoft.Json;
 using Laser.Orchard.PaymentGateway.ViewModels;
+using Laser.Orchard.Cookies.Services;
+using Laser.Orchard.Cookies;
 
 namespace Laser.Orchard.NwazetIntegration.Filters {
     public class CheckoutStepsFilter : FilterProvider, IActionFilter {
@@ -38,7 +40,10 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) {
-            CheckoutStep(filterContext)();
+            
+            if (_GTMProductService.ShoulAddEcommerceTags()) {
+                CheckoutStep(filterContext)();
+            }
         }
 
         public Action CheckoutStep(ActionExecutedContext filterContext) {

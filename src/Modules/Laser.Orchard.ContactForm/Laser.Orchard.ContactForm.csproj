@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Activity\ContactFormSubmittedEvent.cs" />
     <Compile Include="Activity\ContactFormSubmittedForm.cs" />
+    <Compile Include="Activity\ContactFormValidating.cs" />
     <Compile Include="Controllers\ContactFormController.cs" />
     <Compile Include="Controllers\EmailAPIController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
