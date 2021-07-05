@@ -69,6 +69,10 @@ msgid "More info"
 msgstr "Mostra più informazioni"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "  |  "
+msgstr "|"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
 msgid "Archive"
 msgstr "Archivia"
 

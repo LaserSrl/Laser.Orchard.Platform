@@ -57,6 +57,10 @@ msgid "Use hierarchical association"
 msgstr "Utilizzare l'associazione gerarchica"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid " | "
+msgstr "|"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "-- Choose a culture to copy widgets from its version --"
 msgstr "-- Scegliere una Culture dalla cui versione copiare i widget --"
 

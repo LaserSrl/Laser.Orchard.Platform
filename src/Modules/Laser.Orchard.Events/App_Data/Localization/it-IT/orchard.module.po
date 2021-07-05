@@ -356,6 +356,10 @@ msgctxt "Laser.Orchard.Events.Projections.ActivityRangeForm"
 msgid "Retrieve activities ending in or before this date"
 msgstr "Recupera attivita' che finiscono in o precedentemente a questa data"
 
+msgctxt "Laser.Orchard.Events.Projections.ActivityRangeFormValidator"
+msgid "At least one date must be provided"
+msgstr "Almeno una tra le date dev'essere specificata"
+
 msgctxt "Laser.Orchard.Events.Projections.ActivityStartDateSortCriterionProvider"
 msgid "Activity Part Record"
 msgstr "Record della parte Actvity"
