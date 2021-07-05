@@ -888,6 +888,10 @@ msgctxt "Laser.Orchard.Questionnaires.Services.to"
 msgid "Operation Fail: Questionnaire already filled"
 msgstr "Operazione fallita: questionario già compilato"
 
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionAttribute"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"
+
 msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
 msgid "Please, accept our terms and conditions!"
 msgstr "Si prega di accettare i termini e le condizioni!"
