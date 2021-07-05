@@ -348,6 +348,14 @@ msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtm
 msgid "Username:"
 msgstr "Nome utente:"
 
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthRecordCreatedActivity"
+msgid "Open Auth UserProviderRecord is created."
+msgstr "UserProviderRecord creato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthRecordUpdatedActivity"
+msgid "Open Auth UserProviderRecord is updated."
+msgstr "UserProviderRecord aggiornato."
+
 msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
 msgid "Done"
 msgstr "Done"
@@ -371,6 +379,14 @@ msgstr "UserProviderRecord creato."
 msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
 msgid "Open Auth UserProviderRecord is updated."
 msgstr "UserProviderRecord aggiornato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserCreatedActivity"
+msgid "Open Auth User is created."
+msgstr "Utente open auth creato."
+
+msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserCreatingActivity"
+msgid "Open Auth User is creating."
+msgstr "Creazione in corso dell'utente open auth."
 
 msgctxt "Laser.Orchard.OpenAuthentication.AdminMenu"
 msgid "Open Authentication"

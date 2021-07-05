@@ -28,6 +28,10 @@ msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
 msgid "Misc"
 msgstr "Varie"
 
+msgctxt "Laser.Orchard.RazorScripting.Forms.DecisionFormsValidator"
+msgid "You must provide a Script"
+msgstr "È necessario fornire uno Script"
+
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "A comma-separated list of possible outcomes."
 msgstr "Un una lista di possibili risultati, separati da una virgola."

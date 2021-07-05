@@ -165,19 +165,7 @@ namespace Laser.Orchard.Braintree.Controllers {
             var outcome = FinalizePayment(nonce, sPid);
             return Redirect(_posService.GetPaymentInfoUrl(outcome.Pid));
         }
-
-        public class MobilePay {
-            public string payment_method_nonce { get; set; }
-            public string pid { get; set; }
-        }
-
-        private class PaymentResult {
-            public int Pid { get; set; }
-            public bool Success { get; set; }
-            public string Error { get; set; }
-            public string TransactionId { get; set; }
-        }
-
+        
         private Dictionary<string, string> GetBraintreeError() {
             // error code Braintree, message error
             return new Dictionary<string, string> {
@@ -281,6 +269,18 @@ namespace Laser.Orchard.Braintree.Controllers {
                 {"2100",T("Your PayPal permissions are not set up to allow channel initiated billing transactions. Contact PayPal's Support team for information on how to enable this. Once resolved, you can attempt to process the transaction again.").Text},
                 {"3000",T("Processor Network Unavailable – Try Again").Text}
               };
+        }
+
+        public class MobilePay {
+            public string payment_method_nonce { get; set; }
+            public string pid { get; set; }
+        }
+
+        private class PaymentResult {
+            public int Pid { get; set; }
+            public bool Success { get; set; }
+            public string Error { get; set; }
+            public string TransactionId { get; set; }
         }
     }
 }
