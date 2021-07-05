@@ -60,17 +60,17 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         public LocalizedString DisplayFalseLabel(CouponContext ctx) {
             bool.TryParse(ctx.State.IncludeChildren?.Value, out bool includeChildren);
             if (includeChildren) {
-                return T("Cart line is not a product of of the given category or one of its children.");
+                return T("Cart line is not a product of the given category or one of its children.");
             }
-            return T("Cart line is not a product of of the given category.");
+            return T("Cart line is not a product of the given category.");
         }
 
         public LocalizedString DisplayTrueLabel(CouponContext ctx) {
             bool.TryParse(ctx.State.IncludeChildren?.Value, out bool includeChildren);
             if (includeChildren) {
-                return T("Cart line is a product of of the given category or one of its children.");
+                return T("Cart line is a product of the given category or one of its children.");
             }
-            return T("Cart line is a product of of the given category.");
+            return T("Cart line is a product of the given category.");
         }
 
         public void ApplyCriterion(CouponLineCriterionContext context,
@@ -105,7 +105,18 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                             if (termsPart != null) {
                                 var selectedTerms = termsPart.TermParts.Select(tcip => tcip.TermPart);
                                 if (selectedTerms.Any()) {
-                                    result = terms.Any(t => selectedTerms.Contains(t));
+                                    int op = Convert.ToInt32(context.State.Operator);
+
+                                    switch (op) {
+                                        case 0:
+                                        // is one of
+                                        result = terms.Any(t => selectedTerms.Contains(t));
+                                        break;
+                                        case 1:
+                                        // is all of
+                                        result = terms.All(t => selectedTerms.Contains(t));
+                                        break;
+                                    }
                                 }
                             }
 

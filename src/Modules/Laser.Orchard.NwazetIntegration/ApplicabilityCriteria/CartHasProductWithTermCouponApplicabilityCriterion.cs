@@ -1,10 +1,10 @@
-﻿using Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections;
+﻿using Laser.Orchard.NwazetIntegration.Filters;
 using Nwazet.Commerce.Descriptors.CouponApplicability;
+using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services.Couponing;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
@@ -42,19 +42,19 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                .For("Cart", T("Cart products"), T("Cart products"))
                // Product MUST have selected term
                .Element("Cart has Products in the category",
-                    T("Cart has Products of the given category (if any was selected)"),
-                    T("Cart has Products of the given category (if any was selected)"),
-                    (ctx) => ApplyCriterion(ctx, (b) => b, T("Coupon {0} is not valid for any product in your cart.", ctx.CouponRecord.Code)),
-                    (ctx) => ApplyCriterion(ctx, (b) => b, T("Coupon {0} is not valid for any product in your cart.", ctx.CouponRecord.Code)),
+                    T("Lines products are in the given category (if any was selected)"),
+                    T("Lines products are in the given category (if any was selected)"),
+                    (ctx) => ApplyCriterion(ctx, (b) => b),
+                    (ctx) => ApplyCriterion(ctx, (b) => b),
                     (ctx) => DisplayTrueLabel(ctx),
                     isAvailableForConfiguration, isAvailableForProcessing,
                     SelectTermsForm.FormName)
                // Product MUST not have selected term
                .Element("Cart has not Products in the category",
-                    T("Cart has not Products of the given category (if any was selected)"),
-                    T("Cart has not Products of the given category(if any was selected))"),
-                    (ctx) => ApplyCriterion(ctx, (b) => !b, T("Coupon {0} is not valid for any product in your cart.", ctx.CouponRecord.Code)),
-                    (ctx) => ApplyCriterion(ctx, (b) => !b, T("Coupon {0} is not valid for any product in your cart.", ctx.CouponRecord.Code)),
+                    T("Lines products are not in the given category (if any was selected)"),
+                    T("Lines products are not in the given category (if any was selected))"),
+                    (ctx) => ApplyCriterion(ctx, (b) => !b),
+                    (ctx) => ApplyCriterion(ctx, (b) => !b),
                     (ctx) => DisplayFalseLabel(ctx),
                     isAvailableForConfiguration, isAvailableForProcessing,
                     SelectTermsForm.FormName);
@@ -62,24 +62,44 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         public LocalizedString DisplayFalseLabel(CouponContext ctx) {
             bool.TryParse(ctx.State.IncludeChildren?.Value, out bool includeChildren);
             if (includeChildren) {
-                return T("Cart has not a products of the given category or one of its children.");
+                return T("Cart lines are not a products of the given category or one of its children.");
             }
-            return T("Cart has not a products of the given category.");
+            return T("Cart lines are not a products of the given category.");
         }
 
         public LocalizedString DisplayTrueLabel(CouponContext ctx) {
             bool.TryParse(ctx.State.IncludeChildren?.Value, out bool includeChildren);
-            if (includeChildren) {
-                return T("Cart has a products of the given category or one of its children.");
+
+            var opCart = (SelectTermsOperator)Enum.Parse(typeof(SelectTermsOperator), Convert.ToString(ctx.State.OperatorCart));
+
+            switch (opCart) {
+                case SelectTermsOperator.AllProducts:
+                    if (includeChildren) {
+                        return T("Each lines are a products of the given category or one of its children.");
+                    }
+                    return T("Each lines are a products of the given category.");
+                case SelectTermsOperator.OneProduct:
+                    if (includeChildren) {
+                        return T("At least one lines are a products of the given category or one of its children.");
+                    }
+                    return T("At least one lines are a products of the given category.");
+                case SelectTermsOperator.InsideCart:
+                    if (includeChildren) {
+                        return T("Among products, there must be the given category or one of its children.");
+                    }
+                    return T("Among products, there must be the given category.");
+                default:
+                    if (includeChildren) {
+                        return T("Cart lines are a products of the given category or one of its children.");
+                    }
+                    return T("Cart lines are a products of the given category.");
             }
-            return T("Cart has a products of the given category.");
         }
 
         public void ApplyCriterion(CouponApplicabilityCriterionContext context,
             // Use outerCriterion to negate the test, so we can easily do
             // contains / doesn't contain
-            Func<bool, bool> outerCriterion,
-            LocalizedString failureMessage) {
+            Func<bool, bool> outerCriterion) {
 
             if (context.IsApplicable) {
                 // If there is no configured term, this delegate will not affect the
@@ -104,18 +124,45 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                               .ApplicabilityContext
                               .ShoppingCart
                               .GetProducts();
-                            var termsPart = products.Select(p => p.Product.ContentItem.As<TermPart>());
 
-                            // if no term is selected in the product, we already know this will be false
-                            if (termsPart.Any()) {
-                                result = terms.Any(t => termsPart.Contains(t));
+                            // "is one of" or "is all of"
+                            int op = Convert.ToInt32(context.State.Operator);
+
+                            var opCart = (SelectTermsOperator)Enum.Parse(typeof(SelectTermsOperator), Convert.ToString(context.State.OperatorCart));
+
+                            List<ShoppingCartQuantityProduct> checkedProductsList = new List<ShoppingCartQuantityProduct>();
+                            switch (opCart) {
+                                case SelectTermsOperator.AllProducts:
+                                    checkedProductsList = GetProductByTerm(terms, products, op);
+                                    if (products.Count() == checkedProductsList.Count()) {
+                                        result = true;
+                                    }
+                                break;
+                                case SelectTermsOperator.OneProduct:
+                                    checkedProductsList = GetProductByTerm(terms, products, op);
+                                    result = checkedProductsList.Any();
+                                break;
+                                case SelectTermsOperator.InsideCart:
+                                    var termsPart = products
+                                         .Where(p => p.Product.As<TermsPart>() != null)
+                                         .SelectMany(p => p.Product.As<TermsPart>().TermParts);
+
+                                    // if no term is selected in the product, we already know this will be false
+                                    if (termsPart.Any()) {
+                                        var selectedTerms = termsPart.Select(p => p.TermPart);
+
+                                        switch (op) {
+                                            case 0: // is one of
+                                                result = terms.Any(t => selectedTerms.Contains(t));
+                                            break;
+                                            case 1: // is all of
+                                                result = terms.All(t => selectedTerms.Contains(t));
+                                            break;
+                                        }
+                                    }
+                                break;
                             }
-
                             result = outerCriterion(result);
-
-                            if (!result) {
-                                context.ApplicabilityContext.Message = failureMessage;
-                            }
 
                             context.ApplicabilityContext.IsApplicable = result;
                             context.IsApplicable = result;
@@ -136,5 +183,33 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             }
             return ts;
         }
+
+        private List<ShoppingCartQuantityProduct> GetProductByTerm(
+                IEnumerable<TermPart> terms, 
+                IEnumerable<ShoppingCartQuantityProduct> products, 
+                int op) {
+
+            var productsList = new List<ShoppingCartQuantityProduct>();
+            foreach (var p in products) {
+                if (p.Product.As<TermsPart>() != null) {
+                    var selectedTerms = p.Product.As<TermsPart>().TermParts.Select(tcip => tcip.TermPart);
+                    switch (op) {
+                        case 0: // is one of
+                        if (terms.Any(t => selectedTerms.Contains(t))) {
+                            productsList.Add(p);
+                        }
+                    break;
+                        case 1: // is all of
+                        if (terms.All(t => selectedTerms.Contains(t))) {
+                            productsList.Add(p);
+                        }
+                    break;
+                    }
+                }
+            }
+
+            return productsList;
+        }
+
     }
 }
