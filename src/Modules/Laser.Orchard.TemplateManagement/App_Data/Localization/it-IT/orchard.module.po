@@ -132,6 +132,14 @@ msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
 msgid "Sent"
 msgstr "Inviata"
 
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailFormsValidator"
+msgid "You must provide an e-mail address"
+msgstr "E' necessario fornire un indirizzo e-mail"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailFormsValidator"
+msgid "You must select at least one recipient"
+msgstr "E' necessario selezionare almeno un destinatario"
+
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "A default template to format your email message."
 msgstr "Un template di default per il formato del messaggio di posta elettronica."

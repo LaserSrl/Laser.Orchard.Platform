@@ -116,6 +116,14 @@ msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
 msgid "Select some content types."
 msgstr "Selezionare i tipi di contenuto"
 
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.CustomButton2"
+msgid "Custom Button"
+msgstr "Pulsante Personalizzato"
+
+msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.CustomButton3"
+msgid "Custom Button"
+msgstr "Pulsante Personalizzato"
+
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
 msgid "Content Event"
 msgstr "Evento del Contenuto"

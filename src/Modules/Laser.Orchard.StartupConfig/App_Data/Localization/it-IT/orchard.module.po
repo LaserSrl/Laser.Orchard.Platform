@@ -229,6 +229,10 @@ msgid "not Published"
 msgstr "Non pubblicato"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Preview"
+msgstr "Anteprima"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Publish on"
 msgstr "Pianificato il"
 
@@ -247,6 +251,10 @@ msgstr "Stato"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Unpublish on"
 msgstr "Spubblica il"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "View"
+msgstr "Visualizza"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
 msgid "Allow Cross-Origin access to the backend."
@@ -513,6 +521,10 @@ msgid "Loading thumbnail..."
 msgstr "Aggiornamento anteprima..."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
+msgid " | "
+msgstr "|"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
 msgid "Action"
 msgstr "Azione"
 
@@ -607,6 +619,10 @@ msgstr "Nome Gruppo"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
 msgid "New Group ->"
 msgstr "Nuovo Gruppo ->"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
+msgid "Separate group names with || for massive insertions ( e.g. \"Group 1||Group 2||Group 3\" )"
+msgstr "Separa i nomi dei gruppi con || per inserimenti massivi (ad esempio \"Gruppo 1||Gruppo2||Gruppo3\")"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
 msgid "Update settings"
@@ -1224,6 +1240,66 @@ msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvid
 msgid "This field is used for an array of objects that will describe the configuration for each criterion. In case you want to sort based on the property of a ContentPart, you must provide a value for \"PartRecordTypeName\" and \"PropertyName\". In case you want to sort by the value of a property of a ContentField, you must provide \"PartName\" and \"FieldName\"; in this case \"PropertyName\" is optional. You may also provide an \"Ascending\" boolean property to affect the sort direction. Since this field may be tokenized, you should use double braces to delimit JSON objects (i.e. use {{ and }} instead of { and })"
 msgstr "Questo campo è usato per un array di oggetti che descriveranno la configurazione per ciascun criterio. Nel caso in cui si voglia ordinare sulla base di una proprietà di una ContentPart, bisogna valorizzare \"PartRecordTypeName\" e \"PropertyName\". Nel caso in cui si voglia ordinare sulla base di una proprietà di un ContentField, bisogna valorizzare \"PartName\" e \"FieldName\"; in questo caso \"PropertyName\" è opzionale. Si può anche valorizzare una proprietà booleana \"Ascending\" per modificare la direzione di ordinamento. Visto che questo campo può contenere dei tokens, bisogna usare le doppie graffe per delimitare gli oggetti JSON (i.e. usare {{ e }} invece di { e })."
 
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
+msgid "Criterion at index {0} is configured for more than a single option (part, field or provider)."
+msgstr "Il criterio all'indice {0} è configurato per più di una sola opzione (parte, campo o provider)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
+msgid "Criterion at index {0} is neither for a part or a field or a provider."
+msgstr "Il criterio all'indice {0} non è configurato per un'opzione valida (parte, campo o provider)"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
+msgid "Error while parsing the json array: {0}"
+msgstr "Errore nell'interpretare l'array json: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
+msgid "Insert a value for the Index (it is allowed to be a token)."
+msgstr "Inserisci un valore per l'indice (sono permessi i token)."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProviderFormValidator"
+msgid "The array of Criteria may not be null"
+msgstr "L'array dei criteri non può essere null."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Is between"
+msgstr "È compreso"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Is greater than"
+msgstr "È maggiore di"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Is less than"
+msgstr "È minore di"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Select date and time the coupon begins to be valid"
+msgstr "Seleziona data e ora in cui il coupon comincia ad essere valido"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Select date and time the coupon ends to be valid"
+msgstr "Seleziona data e ora in cui il coupon smette di essere valido"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterForm"
+msgid "Select how do you want to apply the date and time validity of the coupon"
+msgstr "Seleziona come vuoi applicare la validità di data e ora per il coupon"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterFormValidator"
+msgid "First date must be before second date"
+msgstr "La prima data deve essere precedente alla seconda"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterFormValidator"
+msgid "Invalid dates and times"
+msgstr "Data e ora non valide"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.DateTimeFilterFormValidator"
+msgid "Invalid operator"
+msgstr "Operatore non valido"
+
 msgctxt "Laser.Orchard.StartupConfig.Projections.FavoriteCultureFilter"
 msgid "Content Items associated with {0} as favorite culture."
 msgstr "Contenuti associati alla cultura preferita {0}."
@@ -1469,6 +1545,10 @@ msgid "The razor view to run every time the Decision Activity is invoked. You ca
 msgstr "La Vista Razor da eseguire ogni volta che la Decision Activity viene invocata. E' possibile usare Model.ContentItem, Model.T, Model.OrchardServices. L'output Razor (es."
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
+msgid "You must provide a Razor View"
+msgstr "E' necessario fornire una Vista Razor"
+
+msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteFormValidator"
 msgid "You must provide a Razor View"
 msgstr "E' necessario fornire una Vista Razor"
 
