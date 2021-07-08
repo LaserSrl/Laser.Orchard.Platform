@@ -20,7 +20,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Contrib.Voting.Filters {
-    public class VoteFilterBase : OProjections.IFilterProvider {
+    public abstract class VoteFilterBase : OProjections.IFilterProvider {
         protected IRepository<ResultRecord> _resultRecords;
         protected string functionName = string.Empty;
 
@@ -36,14 +36,12 @@ namespace Contrib.Voting.Filters {
             dvalue = FromStateValue(context.State.Value);
             dmin = FromStateValue(context.State.Min);
             dmax = FromStateValue(context.State.Max);
-            //bool showNotReviewed = false;
             var op = (NumericOperator)Enum.Parse(
                 typeof(NumericOperator), Convert.ToString(context.State.Operator));
-
-            // LEAVING COMMENTED CODE FOR FUTURE INSPIRATION / USE.
-            //if (context.State.ShowAllIfNoValue.Value == "on") {
-            //    showNotReviewed = true;
-            //}
+            bool showNotReviewed = false;
+            if (context.State.NotReviewed != null && context.State.NotReviewed.Value == "true") {
+                showNotReviewed = true;
+            }
 
             // If no valid value is in my context, I don't have to apply this filter.
             switch (op) {
@@ -54,100 +52,89 @@ namespace Contrib.Voting.Filters {
 
                 case NumericOperator.Equals:
                 case NumericOperator.NotEquals:
+                case NumericOperator.GreaterThan:
+                case NumericOperator.GreaterThanEquals:
+                case NumericOperator.LessThan:
+                case NumericOperator.LessThanEquals:
                     if (dvalue == 0) return;
                     break;
 
+                default:
+                    return;
+            }
+            
+            string sqlStrBase = "SELECT rr.ContentItemRecord.Id FROM Contrib.Voting.Models.ResultRecord AS rr";
+
+            string sqlStr;
+            Dictionary<string, object> sqlParams;
+            GetHQLStatement(op, dvalue, dmin, dmax, out sqlStr, out sqlParams);
+
+            // If I need to show elements that have not been reviewed, the query has to be something like:
+            // ... WHERE Id IN (filtered query on voting table) OR Id NOT IN (unfiltered query on voting table)
+            if (showNotReviewed) {
+                context.Query.Where(x => x.ContentItem(), a => a
+                    .Or(b => b
+                        .Not(c => c
+                            .InSubquery("Id", sqlStrBase, new Dictionary<string, object>())),
+                    y => y.InSubquery("Id", sqlStr, sqlParams)));
+            } else {
+                context.Query.Where(x => x.ContentItem(), y => y.InSubquery("Id", sqlStr, sqlParams));
+            }
+        }
+
+        private void GetHQLStatement(NumericOperator op, decimal val, decimal min, decimal max,
+                                    out string sqlStr, out Dictionary<string,object> sqlParams) {
+            sqlParams = new Dictionary<string, object>();
+            sqlStr = "SELECT rr.ContentItemRecord.Id FROM Contrib.Voting.Models.ResultRecord AS rr WHERE rr.FunctionName = :functionname AND ";
+            sqlParams.Add("functionname", functionName);
+
+            switch (op) {
+                case NumericOperator.Between:
+                    sqlStr += "rr.Value BETWEEN :min AND :max";
+                    sqlParams.Add("min", min);
+                    sqlParams.Add("max", max);
+                    break;
+
+                case NumericOperator.Equals:
+                    sqlStr += "rr.Value = :value";
+                    sqlParams.Add("value", val);
+                    break;
+
                 case NumericOperator.GreaterThan:
+                    sqlStr += "rr.Value > :value";
+                    sqlParams.Add("value", val);
+                    break;
+
                 case NumericOperator.GreaterThanEquals:
-                    if (dmin == 0) return;
+                    sqlStr += "rr.Value >= :value";
+                    sqlParams.Add("value", val);
                     break;
 
                 case NumericOperator.LessThan:
-                case NumericOperator.LessThanEquals:
-                    if (dmax == 0) return;
+                    sqlStr += "rr.Value < :value";
+                    sqlParams.Add("value", val);
                     break;
 
-                default:
+                case NumericOperator.LessThanEquals:
+                    sqlStr += "rr.Value <= :value";
+                    sqlParams.Add("value", val);
+                    break;
+
+                case NumericOperator.NotBetween:
+                    sqlStr += "rr.Value NOT BETWEEN :min AND :max";
+                    sqlParams.Add("min", min);
+                    sqlParams.Add("max", max);
+                    break;
+
+                case NumericOperator.NotEquals:
+                    sqlStr += "rr.Value <> :value";
+                    sqlParams.Add("value", val);
                     break;
             }
-
-            contentIds = _resultRecords
-                .Fetch(
-                    GetFilterByOperator(op, dvalue, dmin, dmax/*, showNotReviewed*/)
-                    )
-                .Select(y => y.ContentItemRecord.Id)
-                .Distinct().ToList();
-
-            // LEAVING COMMENTED CODE FOR FUTURE INSPIRATION / USE.
-            //// To show records having no reviews, I need to invert my filter.
-            //if (showNotReviewed) {
-            //    context.Query.Where(x => x.ContentItem(), y => y.Not(z => z.In("Id", contentIds.ToArray())));
-            //} else {
-            context.Query.Where(x => x.ContentItem(), y => y.In("Id", contentIds.ToArray()));
-            //}
         }
 
         public virtual LocalizedString DisplayFilter(FilterContext context) {
             return T("Votes / reviews filter");
-        }
-
-        protected Expression<Func<ResultRecord, bool>> GetFilterByOperator(NumericOperator op, decimal val, decimal min, decimal max/*, bool showNotReviewed*/) {
-            // LEAVING COMMENTED CODE FOR FUTURE INSPIRATION / USE.
-            //// My starting _resultRecords list contains elements which have at least one review.
-            //// To show records having no reviews, I need to invert my filter.
-            //// E.g. the Between operator needs to work like the NotBetween operator.
-            switch (op) {
-                case NumericOperator.Between:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && ((decimal)x.Value < min || (decimal)x.Value > max);
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value >= min && (decimal)x.Value <= max;
-
-                case NumericOperator.Equals:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value != val;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value == val;
-
-                case NumericOperator.GreaterThan:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value <= min;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value > min;
-
-                case NumericOperator.GreaterThanEquals:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value < min;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value >= min;
-
-                case NumericOperator.LessThan:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value >= max;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value < max;
-
-                case NumericOperator.LessThanEquals:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value > max;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value <= max;
-
-                case NumericOperator.NotBetween:
-                    //if (showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value >= min && (decimal)x.Value <= max;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && ((decimal)x.Value < min || (decimal)x.Value > max);
-
-                case NumericOperator.NotEquals:
-                    //if(showNotReviewed) {
-                    //    return x => x.FunctionName.ToUpper() == "AVERAGE" && (decimal)x.Value == val;
-                    //}
-                    return x => x.FunctionName.ToUpper() == functionName.ToUpper() && (decimal)x.Value != val;
-
-                default:
-                    return null;
-            }
         }
 
         protected decimal FromStateValue(dynamic sValue) {
@@ -160,20 +147,21 @@ namespace Contrib.Voting.Filters {
         }
     }
 
-    public class VoteFilterForm : IFormProvider {
+    public abstract class VoteFilterForm : IFormProvider {
         public Localizer T { get; set; }
         protected dynamic Shape { get; set; }
         protected Work<IResourceManager> _resourceManager;
 
-        protected string FormName = string.Empty;
+        protected string _formName { get; set; }
 
         public void Describe(DescribeContext context) {
             Func<IShapeFactory, dynamic> form =
                 shape => {
                     var f = Shape.Form(
-                        Id: FormName,
+                        Id: _formName,
                        _Operator: Shape.SelectList(
-                            Id: "operator", Name: "Operator",
+                            Id: "operator", 
+                            Name: "Operator",
                             Title: T("Operator"),
                             Size: 1,
                             Multiple: false
@@ -181,7 +169,8 @@ namespace Contrib.Voting.Filters {
                        _FieldSetSingle: Shape.FieldSet(
                            Id: "fieldset-single",
                            _Value: Shape.TextBox(
-                               Id: "value", Name: "Value",
+                               Id: "value", 
+                               Name: "Value",
                                Title: T("Value"),
                                Classes: new[] { "tokenized" }
                                )
@@ -189,7 +178,8 @@ namespace Contrib.Voting.Filters {
                        _FieldSetMin: Shape.FieldSet(
                            Id: "fieldset-min",
                            _Min: Shape.TextBox(
-                               Id: "min", Name: "Min",
+                               Id: "min", 
+                               Name: "Min",
                                Title: T("Min"),
                                Classes: new[] { "tokenized" }
                                )
@@ -197,19 +187,21 @@ namespace Contrib.Voting.Filters {
                        _FieldSetMax: Shape.FieldSet(
                            Id: "fieldset-max",
                            _Max: Shape.TextBox(
-                               Id: "max", Name: "Max",
+                               Id: "max", 
+                               Name: "Max",
                                Title: T("Max"),
                                Classes: new[] { "tokenized" }
                                )
-                           )/*, // LEAVING COMMENTED CODE FOR FUTURE INSPIRATION / USE.
+                           ),
                        _FieldSetShowNotReviewed: Shape.FieldSet(
                            Id: "fieldset-not-reviewed",
                            _ShowNotReviewed: Shape.Checkbox(
-                               Id: "notReviewed", Name: "NotReviewed",
+                               Id: "notReviewed", 
+                               Name: "NotReviewed",
                                Title: T("Show not reviewed"),
-                               Classes: new[] { "tokenized" }
+                               Value: "true"
                                )
-                           )*/
+                           )
                    );
                     _resourceManager.Value.Require("script", "jQuery");
                     _resourceManager.Value.Include("script", "~/Modules/Orchard.Projections/Scripts/numeric-editor-filter.js", "~/Modules/Orchard.Projections/Scripts/numeric-editor-filter.js");
@@ -224,7 +216,7 @@ namespace Contrib.Voting.Filters {
                     f._Operator.Add(new SelectListItem { Value = Convert.ToString(NumericOperator.NotBetween), Text = T("Is not between").Text });
                     return f;
                 };
-            context.Form(FormName, form);
+            context.Form(_formName, form);
         }
     }
 }

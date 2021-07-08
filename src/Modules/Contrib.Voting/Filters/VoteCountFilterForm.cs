@@ -12,12 +12,13 @@ using System.Web.Mvc;
 
 namespace Contrib.Voting.Filters {
     public class VoteCountFilterForm : VoteFilterForm {
-        //public static string FormName = "VoteCountFilterForm";
+        public static string FormName = "VoteCountFilterForm";
+
         public VoteCountFilterForm(IShapeFactory shapeFactory, Work<IResourceManager> resourceManager) {
             Shape = shapeFactory;
             _resourceManager = resourceManager;
             T = NullLocalizer.Instance;
-            FormName = "VoteCountFilterForm";
+            _formName = FormName;
         }
     }
 }
