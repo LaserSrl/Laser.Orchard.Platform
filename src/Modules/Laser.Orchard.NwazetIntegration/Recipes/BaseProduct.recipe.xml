@@ -9,7 +9,10 @@
     <Description>Set up the ContentType ProdottoDefault.</Description>
     <IsSetupRecipe>false</IsSetupRecipe>
   </Recipe>
-  <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, Laser.Orchard.ShareLink, Nwazet.Commerce, Orchard.Projections, Orchard.Taxonomies, Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
+  <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, 
+           Laser.Orchard.ShareLink, Nwazet.Commerce, 
+           Orchard.Projections, Orchard.Taxonomies, 
+           Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
   <ContentDefinition>
     <Types>
       <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" 
@@ -308,4 +311,9 @@
       <TitlePart Title="Categoria Secondaria" />
     </Taxonomy>
   </Content>
+  <Settings>
+    <CheckoutPolicySettingsPart PolicyTextReferences="{False},{True}" />
+    <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
+    <VatConfigurationSiteSettingsPart DefaultTerritoryForVatId="56" DefaultVatConfigurationId="0" />
+  </Settings>
 </Orchard>
