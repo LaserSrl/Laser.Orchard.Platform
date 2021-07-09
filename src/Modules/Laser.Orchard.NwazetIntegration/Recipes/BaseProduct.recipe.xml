@@ -12,7 +12,9 @@
   <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, 
            Laser.Orchard.ShareLink, Nwazet.Commerce, 
            Orchard.Projections, Orchard.Taxonomies, 
-           Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
+           Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
+           Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
+           Laser.Orchard.InsertStuff" />
   <ContentDefinition>
     <Types>
       <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
