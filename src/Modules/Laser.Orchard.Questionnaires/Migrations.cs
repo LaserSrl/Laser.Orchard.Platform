@@ -191,7 +191,9 @@ namespace Laser.Orchard.Questionnaires {
         }
         public int UpdateFrom17() {
             SchemaBuilder.AlterTable("QuestionRecord", t => t.AlterColumn("Question", col => col.WithType(System.Data.DbType.String).WithLength(500)));
-            return 18;
+            return 19;
+            // skip UpdateFrom18 because it's using an obsolete mthod to update
+            // permissions for stereotype roles
         }
 
         public int UpdateFrom18() {

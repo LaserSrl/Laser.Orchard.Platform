@@ -241,6 +241,7 @@
     <Content Include="Recipes\BaseProduct.recipe.xml" />
     <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
     <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
+    <Content Include="Recipes\SetupEcommerceTerritoriesVATShipping.recipe.xml" />
     <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
     <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />

@@ -21,10 +21,6 @@ namespace Laser.Orchard.AdvancedSearch {
         public Localizer T { get; set; }
 
         public int Create() {
-            //update permissions based on the stereotypes
-            var stereotypes = new AdvancedSearchPermissions().GetDefaultStereotypes();
-            _utilsServices.UpdateStereotypesPermissions(stereotypes);
-            
             return 1;
         }
 

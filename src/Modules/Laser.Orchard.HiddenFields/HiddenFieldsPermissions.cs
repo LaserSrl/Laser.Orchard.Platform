@@ -13,7 +13,6 @@ namespace Laser.Orchard.HiddenFields {
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IHiddenFieldService _hiddenFieldService;
 
-        public HiddenFieldsPermissions() {}
         public HiddenFieldsPermissions(
             IContentDefinitionManager contentDefinitionManager,
             IHiddenFieldService hiddenFieldService) {
@@ -83,6 +82,26 @@ namespace Laser.Orchard.HiddenFields {
                 new PermissionStereotype{
                     Name = "Administrator",
                     Permissions =  GetPermissions().ToArray()
+                },
+                new PermissionStereotype{
+                    Name = "Authenticated",
+                    Permissions =  new Permission[] { MaySeeHiddenFields }
+                },
+                new PermissionStereotype{
+                    Name = "Author",
+                    Permissions =  new Permission[] { MaySeeHiddenFields }
+                },
+                new PermissionStereotype{
+                    Name = "Contributor",
+                    Permissions =  new Permission[] { MaySeeHiddenFields }
+                },
+                new PermissionStereotype{
+                    Name = "Editor",
+                    Permissions =  new Permission[] { MaySeeHiddenFields }
+                },
+                new PermissionStereotype{
+                    Name = "Moderator",
+                    Permissions =  new Permission[] { MaySeeHiddenFields }
                 },
             };
         }

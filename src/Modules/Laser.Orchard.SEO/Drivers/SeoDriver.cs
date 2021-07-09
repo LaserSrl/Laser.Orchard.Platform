@@ -123,83 +123,61 @@ namespace Laser.Orchard.SEO.Drivers {
         }
 
         protected override void Importing(SeoPart part, ImportContentContext context) {
-            var importedTitleOverride = context.Attribute(part.PartDefinition.Name, "TitleOverride");
-            if (importedTitleOverride != null) {
-                part.TitleOverride = importedTitleOverride;
-            }
-            var importedCanonicalUrl = context.Attribute(part.PartDefinition.Name, "CanonicalUrl");
-            if (importedCanonicalUrl != null) {
-                part.CanonicalUrl = importedCanonicalUrl;
-            }
-            var importedKeywords = context.Attribute(part.PartDefinition.Name, "Keywords");
-            if (importedKeywords != null) {
-                part.Keywords = importedKeywords;
+            var partDefinitionName = part.PartDefinition.Name;
+            if (context.Data.Element(partDefinitionName) == null) {
+                return;
             }
 
-            var importedDescription = context.Attribute(part.PartDefinition.Name, "Description");
-            if (importedDescription != null) {
-                part.Description = importedDescription;
-            }
+            // ImportAttribute handles null checks internally
+            context.ImportAttribute(partDefinitionName, "TitleOverride", s =>
+                part.TitleOverride = s
+            );
+            context.ImportAttribute(partDefinitionName, "CanonicalUrl", s =>
+                part.CanonicalUrl = s
+            );
+            context.ImportAttribute(partDefinitionName, "Keywords", s =>
+                part.Keywords = s
+            );
+            context.ImportAttribute(partDefinitionName, "Description", s =>
+                part.Description = s
+            );
 
-            var importedRobotsNoIndex = context.Attribute(part.PartDefinition.Name, "RobotsNoIndex");
-            if (importedRobotsNoIndex != null) {
-                part.RobotsNoIndex = Convert.ToBoolean(importedRobotsNoIndex);
-            }
-
-            var importedRobotsNoFollow = context.Attribute(part.PartDefinition.Name, "RobotsNoFollow");
-            if (importedRobotsNoFollow != null) {
-                part.RobotsNoFollow = Convert.ToBoolean(importedRobotsNoFollow);
-            }
-
-            var importedRobotsNoSnippet = context.Attribute(part.PartDefinition.Name, "RobotsNoSnippet");
-            if (importedRobotsNoSnippet != null) {
-                part.RobotsNoSnippet = Convert.ToBoolean(importedRobotsNoSnippet);
-            }
-
-            var importedRobotsNoOdp = context.Attribute(part.PartDefinition.Name, "RobotsNoOdp");
-            if (importedRobotsNoOdp != null) {
-                part.RobotsNoOdp = Convert.ToBoolean(importedRobotsNoOdp);
-            }
-
-            var importedRobotsNoArchive = context.Attribute(part.PartDefinition.Name, "RobotsNoArchive");
-            if (importedRobotsNoArchive != null) {
-                part.RobotsNoArchive = Convert.ToBoolean(importedRobotsNoArchive);
-            }
-
-            var importedRobotsUnavailableAfter = context.Attribute(part.PartDefinition.Name, "RobotsUnavailableAfter");
-            if (importedRobotsUnavailableAfter != null) {
-                part.RobotsUnavailableAfter = Convert.ToBoolean(importedRobotsUnavailableAfter);
-            }
-
-            var importedRobotsUnavailableAfterDate = context.Attribute(part.PartDefinition.Name, "RobotsUnavailableAfterDate");
-            if (importedRobotsUnavailableAfterDate != null) {
-                part.RobotsUnavailableAfterDate = DateTime.Parse(importedRobotsUnavailableAfterDate);
-            }
-
-            var importedRobotsNoImageIndex = context.Attribute(part.PartDefinition.Name, "RobotsNoImageIndex");
-            if (importedRobotsNoImageIndex != null) {
-                part.RobotsNoImageIndex = Convert.ToBoolean(importedRobotsNoImageIndex);
-            }
-
-            var importedGoogleNoSiteLinkSearchBox = context.Attribute(part.PartDefinition.Name, "GoogleNoSiteLinkSearchBox");
-            if (importedGoogleNoSiteLinkSearchBox != null) {
-                part.GoogleNoSiteLinkSearchBox = Convert.ToBoolean(importedGoogleNoSiteLinkSearchBox);
-            }
-
-            var importedGoogleNoTranslate = context.Attribute(part.PartDefinition.Name, "GoogleNoTranslate");
-            if (importedGoogleNoTranslate != null) {
-                part.GoogleNoTranslate = Convert.ToBoolean(importedGoogleNoTranslate);
-            }
-
-            var importedHideDetailMicrodata = context.Attribute(part.PartDefinition.Name, "HideDetailMicrodata");
-            if (importedHideDetailMicrodata != null) {
-                part.HideDetailMicrodata = Convert.ToBoolean(importedHideDetailMicrodata);
-            }
-
-            var importedHideAggregatedMicrodata = context.Attribute(part.PartDefinition.Name, "HideAggregatedMicrodata");
-            if (importedHideDetailMicrodata != null) {
-                part.HideAggregatedMicrodata = Convert.ToBoolean(importedHideAggregatedMicrodata);
-            }
+            context.ImportAttribute(partDefinitionName, "RobotsNoIndex", s =>
+                part.RobotsNoIndex = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsNoFollow", s =>
+                part.RobotsNoFollow = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsNoSnippet", s =>
+                part.RobotsNoSnippet = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsNoOdp", s =>
+                part.RobotsNoOdp = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsNoArchive", s =>
+                part.RobotsNoArchive = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsUnavailableAfter", s =>
+                part.RobotsUnavailableAfter = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsUnavailableAfterDate", s =>
+                part.RobotsUnavailableAfterDate = DateTime.Parse(s)
+            );
+            context.ImportAttribute(partDefinitionName, "RobotsNoImageIndex", s =>
+                part.RobotsNoImageIndex = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "GoogleNoSiteLinkSearchBox", s =>
+                part.GoogleNoSiteLinkSearchBox = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "GoogleNoTranslate", s =>
+                part.GoogleNoTranslate = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "HideDetailMicrodata", s =>
+                part.HideDetailMicrodata = Convert.ToBoolean(s)
+            );
+            context.ImportAttribute(partDefinitionName, "HideAggregatedMicrodata", s =>
+                part.HideAggregatedMicrodata = Convert.ToBoolean(s)
+            );
         }
 
         protected override void Exporting(SeoPart part, ExportContentContext context) {
