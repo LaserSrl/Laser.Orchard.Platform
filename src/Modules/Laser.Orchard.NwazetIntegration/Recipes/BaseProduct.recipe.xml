@@ -15,10 +15,12 @@
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
   <ContentDefinition>
     <Types>
-      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" 
-                    DisplayName="Prodotto base" TypeIndexing.Indexes="AdminSearch:latest">
-        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.UseCulturePattern="True" 
-                       AutorouteSettings.AutomaticAdjustmentOnEdit="False"
+      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
+                       ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" 
+                       ContentTypeLayoutSettings.Placeable="False" DisplayName="Prodotto base"
+                       TypeIndexing.Indexes="AdminSearch:latest,,Search">
+        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" 
+                       AutorouteSettings.UseCulturePattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False"
                        AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" 
                        AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]"/>
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
