@@ -20,36 +20,160 @@ namespace Laser.Orchard.Questionnaires {
 
         public int Create() {
             SchemaBuilder.CreateTable("QuestionnairePartRecord", table => table
-                .ContentPartRecord());
+                .ContentPartRecord()
+                // UpdateFrom2: adding columns.
+                .Column<bool>("MustAcceptTerms", col => col.WithDefault(false))
+                .Column<string>("TermsText", col => col.Unlimited())
+                .Column<bool>("UseRecaptcha", col => col.WithDefault(false))
+            );
+
 
             SchemaBuilder.CreateTable("QuestionRecord", table => table
                 .Column<int>("Id", col => col.PrimaryKey().Identity())
-                .Column<string>("Question", col => col.WithLength(200))
+                // UpdateFrom17: altering columns.
+                //.Column<string>("Question", col => col.WithLength(200))
+                .Column<string>("Question", col => col.WithLength(500))
                 .Column<string>("QuestionType", col => col.WithLength(20))
                 .Column<bool>("Published", col => col.WithDefault(true))
                 .Column<int>("Position")
-                .Column<int>("QuestionnairePartRecord_Id"));
+                .Column<int>("QuestionnairePartRecord_Id")
+                // UpdateFrom2: adding columns.
+                .Column<string>("Section", col => col.WithLength(200))
+                .Column<string>("Condition", col => col.Unlimited())
+                .Column<string>("AnswerType", col => col.WithLength(50))
+                .Column<bool>("IsRequired", col => col.WithDefault(true))
+                .Column<string>("ConditionType", col => col.WithLength(50))
+                // UpdateFrom14: adding columns.
+                .Column<string>("AllFiles", column => column.Unlimited())
+                // UpdateFrom26: adding columns.
+                // UpdateFrom31: renaming columns.
+                //.Column<string>("Identifier", column => column.Unlimited())
+                .Column<string>("GUIdentifier", column => column.Unlimited())
+            );
+
 
             SchemaBuilder.CreateTable("AnswerRecord", table => table
                 .Column<int>("Id", col => col.PrimaryKey().Identity())
-                .Column<string>("Answer", col => col.WithLength(200))
+                // UpdateFrom24: altering columns.
+                //.Column<string>("Answer", col => col.WithLength(200))
+                .Column<string>("Answer", col => col.WithLength(1200))
                 .Column<bool>("Published", col => col.WithDefault(true))
                 .Column<int>("Position")
-                .Column<int>("QuestionRecord_Id"));
+                .Column<int>("QuestionRecord_Id")
+                // UpdateFrom4: adding columns.
+                .Column<bool>("CorrectResponse", col => col.WithDefault(false))
+                // UpdateFrom14: adding columns.
+                .Column<string>("AllFiles", column => column.Unlimited())
+                // UpdateFrom26: adding columns.
+                // UpdateFrom31: renaming columns.
+                //.Column<string>("Identifier", column => column.Unlimited())
+                .Column<string>("GUIdentifier", column => column.Unlimited())
+            );
+            
 
             SchemaBuilder.CreateTable("UserAnswersRecord", table => table
                 .Column<int>("Id", col => col.PrimaryKey().Identity())
                 .Column<int>("User_Id")
                 .Column<int>("QuestionRecord_Id")
                 .Column<int>("AnswerRecord_Id")
-                .Column<string>("AnswerText", col => col.WithLength(200))
-                .Column<DateTime>("AnswerDate"));
+                // UpdateFrom24: altering columns.
+                //.Column<string>("AnswerText", col => col.WithLength(200))
+                .Column<string>("AnswerText", col => col.WithLength(1200))
+                .Column<DateTime>("AnswerDate")
+                // UpdateFrom1: adding columns.
+                // UpdateFrom23: altering columns.
+                //.Column<string>("QuestionText", col => col.WithLength(200))
+                .Column<string>("QuestionText", col => col.WithLength(500))
+                // UpdateFrom2: adding columns.
+                .Column<int>("QuestionnairePartRecord_Id")
+                // UpdateFrom25: altering columns.
+                //.Column<string>("SessionID", col => col.WithLength(24))
+                .Column<string>("SessionID", col => col.WithLength(400))
+                // UpdateFrom20: adding columns.
+                .Column<string>("Context", col => col.WithLength(255))
+                // UpdateFrom27: adding columns.
+                .Column<string>("AnswerInstance", column => column.WithLength(64))
+                // UpdateFrom28: adding columns.
+                .Column<string>("QuestionType", col => col.WithLength(20))
+            );
+
+            // UpdateFrom28: creating indexes.
+            SchemaBuilder
+                .AlterTable("UserAnswersRecord", table => table
+                    .CreateIndex("IX_User_Id", "User_Id"))
+                .AlterTable("UserAnswersRecord", table => table
+                    .CreateIndex("IX_QuestionnairePartRecord_Id", "QuestionnairePartRecord_Id"))
+                .AlterTable("UserAnswersRecord", table => table
+                    .CreateIndex("IX_AnswerInstance", "AnswerInstance"));
+
+
+            // UpdateFrom5: table creation.
+            SchemaBuilder.CreateTable("GamePartRecord", table => table
+                .ContentPartRecord()
+                // UpdateFrom9: adding columns.
+                .Column<string>("AbstractText")
+                .Column<DateTime>("GameDate")
+                .Column<string>("RankingIOSIdentifier")
+                .Column<string>("RankingAndroidIdentifier")
+                .Column<int>("MyOrder")
+                // UpdateFrom10: adding columns.
+                .Column<bool>("workflowfired")
+                // UpdateFrom12: adding columns.
+                .Column<Int32>("QuestionsSortedRandomlyNumber")
+                .Column<bool>("RandomResponse")
+                .Column<Decimal>("AnswerPoint")
+                .Column<Decimal>("AnswerTime")
+                // UpdateFrom13: adding columns.
+                .Column<int>("State")
+                // UpdateFrom16: adding columns.
+                .Column<String>("GameType")
+            );
+
+
+            // UpdateFrom7: table creation.
+            SchemaBuilder.CreateTable("RankingPartRecord", table => table
+                .ContentPartRecord()
+                .Column<int>("Point")
+                .Column<string>("Identifier")
+                .Column<string>("UsernameGameCenter")
+                .Column<string>("Device")
+                .Column<int>("ContentIdentifier")
+                .Column<DateTime>("RegistrationDate")
+                // UpdateFrom8: adding columns.
+                .Column<bool>("AccessSecured", col => col.WithDefault(false))
+                .Column<int>("User_Id")
+            );
+
+
+            // UpdateFrom29: table creation.
+            SchemaBuilder.CreateTable("UserAnswerInstanceRecord", table => table
+                .Column<int>("Id", col => col.PrimaryKey().Identity())
+                .Column<int>("QuestionnairePartRecord_Id")
+                .Column<int>("User_Id")
+                // string properties are the same length as those in UserAnswersRecord
+                // UpdateFrom32: altering columns.
+                //.Column<string>("SessionID", col => col.WithLength(24))
+                .Column<string>("SessionID", col => col.WithLength(400))
+                .Column<string>("Context", col => col.WithLength(255))
+                .Column<DateTime>("AnswerDate")
+                .Column<string>("AnswerInstance", col => col.WithLength(64))
+            );
+            
+            // UpdateFrom30: adding indexes.
+            SchemaBuilder
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery", "QuestionnairePartRecord_Id", "User_Id", "AnswerDate"))
+                .AlterTable("UserAnswerInstanceRecord", table => table
+                    .CreateIndex("IX_LatestAnswersQuery_WithContext", "QuestionnairePartRecord_Id", "User_Id", "AnswerDate", "Context"));
+
 
             SchemaBuilder.CreateForeignKey("UserAnswersAnswer_Answer", "UserAnswersRecord", new string[] { "AnswerRecord_Id" }, "AnswerRecord", new string[] { "Id" });
             SchemaBuilder.CreateForeignKey("UserAnswersQuestion_Question", "UserAnswersRecord", new string[] { "QuestionRecord_Id" }, "QuestionRecord", new string[] { "Id" });
 
+
             ContentDefinitionManager.AlterPartDefinition(typeof(QuestionnairePart).Name, cfg => cfg
                 .Attachable());
+
 
             ContentDefinitionManager.AlterTypeDefinition("Questionnaire", cfg => cfg
                 .WithPart(typeof(QuestionnairePart).Name)
@@ -59,9 +183,33 @@ namespace Laser.Orchard.Questionnaires {
                 .WithPart("BodyPart")
                 .WithPart("AutoroutePart")
                 .Creatable()
-                .Draftable());
+                .Draftable()
+                // UpdateFrom22: altering part definition.
+                .Listable()
+            );
+            
 
-            return 1;
+            // UpdateFrom6: altering part definition.
+            ContentDefinitionManager.AlterPartDefinition(typeof(GamePart).Name, cfg => cfg
+                .Attachable());
+
+
+            // UpdateFrom7: altering part definition.
+            ContentDefinitionManager.AlterTypeDefinition("Ranking", cfg => cfg
+                .WithPart(typeof(RankingPart).Name)
+                .WithPart("CommonPart")
+            );
+
+
+            // UpdateFrom19: altering part definition.
+            ContentDefinitionManager.AlterTypeDefinition("QuestionnaireStatsExport", type => type.WithPart("TitlePart")
+                .Draftable(false)
+                .Creatable(false));
+
+
+            // Create function is the complete migration for the module.
+            //return 1;
+            return 33;
         }
 
         public int UpdateFrom1() {
