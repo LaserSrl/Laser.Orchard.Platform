@@ -236,7 +236,9 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
-    <Content Include="Recipes\BaseProduct.recipe.xml" />
+    <Content Include="Recipes\BaseProduct.recipe.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
     <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
     <Content Include="Recipes\SetupEcommerceTerritoriesVATShipping.recipe.xml" />
