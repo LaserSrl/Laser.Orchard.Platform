@@ -89,6 +89,10 @@ msgid "WARNING: this setting is applied to all languages."
 msgstr "ATTENZIONE: questa impostazione verrà applicata a tutte le lingue."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Abilita modifica"
+msgstr "Abilita modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Click to use this translation"
 msgstr "Clicca per usare questa traduzione"
 
@@ -123,6 +127,10 @@ msgstr "ID messaggio"
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Save as New"
+msgstr "Salva come nuovo"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Suggestions"
@@ -243,6 +251,10 @@ msgstr "Tenants"
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Themes"
 msgstr "Temi"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Undefined"
+msgstr "Non definito"
 
 msgctxt "Laser.Orchard.Translator.Handlers.TranslatorSettingsHandler"
 msgid "Translator"

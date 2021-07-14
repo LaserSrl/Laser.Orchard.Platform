@@ -164,6 +164,10 @@ msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Vimeo video has been published."
 msgstr "Il video è stato pubblicato su Vimeo."
 
+msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoPublishedActivity"
+msgid "Vimeo video has been published."
+msgstr "Il video è stato pubblicato su Vimeo."
+
 msgctxt "Laser.Orchard.Vimeo.Controllers.AdminController"
 msgid "{0}"
 msgstr "{0}"

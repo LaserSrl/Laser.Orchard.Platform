@@ -764,6 +764,14 @@ msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers.UserEventHand
 msgid "Wait... it seems you have not accepted all our required policies. Your account has been verified, but your email have not been subscribed. Please, retry after having accepted our policies."
 msgstr "Aspetta... pare tu non abbia accettato tutte le policies richieste. Il tuo account è stato verificato, ma la tua email non è stata registrata. Per favore, riprova dopo avere accettato le nostre policies."
 
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Tokens.MailchimpSiteTokens"
+msgid "Gets the Mailchimp default audience defined as site settings."
+msgstr "Recupera l'audience Mailchimp di default così come definita dalle impostazioni del sito."
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Tokens.MailchimpSiteTokens"
+msgid "Mailchimp default audience"
+msgstr "Audience Mailchimp di default"
+
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Tokens.MailchimpTextTokens"
 msgid "Converts a string to a Mailchimp subscriber hash"
 msgstr "Converte una stringa in un hash di un sottoscrittore di Mailchimp (Mailchimp subscriber hash)"
