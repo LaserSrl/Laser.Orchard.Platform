@@ -407,8 +407,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                             RegistraValore(fieldObj, "Height", (value as dynamic).Height);
                         if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Upload"))
                             RegistraValore(fieldObj, "Upload", (value as dynamic).Height);
-                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Base64File"))
-                            RegistraFile(fieldObj, (value as dynamic).Base64File);
+                        if ((((IDictionary<string, object>)((dynamic)value)).ContainsKey("Base64File")) &&
+                                (((IDictionary<string, object>)((dynamic)value)).ContainsKey("FileName")))
+                            RegistraFile(fieldObj, (value as dynamic).Base64File, (value as dynamic).FileName);
                     } else {
                         RegistraValore(fieldObj, "Value", value);
                     }
@@ -421,19 +422,51 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
         }
 
-        private void RegistraFile(object obj, string fileContent) {
+        private void RegistraFile(object obj, string fileContent, string fileName) {
             var settings = ((ContentField)obj).PartFieldDefinition.Settings;
-            string url = settings["SecureFileFieldSettings.SecureDirectoryName"];
+            string secureDirectory = settings["SecureFileFieldSettings.SecureDirectoryName"];
             string urlType = settings["SecureFileFieldSettings.UrlType"];
-            string blobAccount = settings["SecureFileFieldSettings.SecureBlobAccountName"];
-            IStorageProvider provider;
+            string generateFileName = settings["SecureFileFieldSettings.GenerateFileName"];
+            string blobAccount = string.Empty;
+            if (settings.ContainsKey("SecureFileFieldSettings.SecureBlobAccountName"))                
+                blobAccount = settings["SecureFileFieldSettings.SecureBlobAccountName"];
+            bool guidFileName = false;
+            bool.TryParse(generateFileName, out guidFileName);
+            if (guidFileName) {
+                var extension = Path.GetExtension(fileName);
+                fileName = Guid.NewGuid().ToString("n") + extension;
+            }
+            RegistraValore(obj, "Url", fileName);
+            DateTime upload = DateTime.UtcNow;
+            RegistraValore(obj, "Upload", upload);
             if (!string.IsNullOrEmpty(blobAccount)) {
                 string secureKey = settings["SecureFileFieldSettings.SecureSharedKey"];
                 string endpoint = settings["SecureFileFieldSettings.SecureBlobEndpoint"];
                 //provider = new SecureAzureBlobStorageProvider(blobAccount, secureKey, endpoint, true, url); 
             } else {
                 // Test implementation for Scontrino Content Creation.
+                // Folder generation based on settings.
+                switch (urlType.ToString().ToUpperInvariant()) {
+                    case "CUSTOM":
+                        string customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
+                        if (!string.IsNullOrWhiteSpace(customSubfolder)) {
+                            secureDirectory = Path.Combine(secureDirectory, customSubfolder);
+                            if (!Directory.Exists(secureDirectory))
+                                Directory.CreateDirectory(secureDirectory);
+                        }
+                        break;
 
+                    case "UPLOADDATE":
+                        string subfolder = upload.Year.ToString() + upload.Month.ToString("00") + upload.Day.ToString("00");
+                        secureDirectory = Path.Combine(secureDirectory, subfolder);
+                        if (!Directory.Exists(secureDirectory))
+                            Directory.CreateDirectory(secureDirectory);
+                        break;
+                }
+
+                byte[] bytes = Convert.FromBase64String(fileContent);
+                string filePath = Path.Combine(secureDirectory, fileName);
+                File.WriteAllBytes(filePath, bytes);
             }
         }
 
