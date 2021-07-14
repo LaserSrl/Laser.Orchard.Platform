@@ -1,10 +1,13 @@
 ﻿@using Laser.Orchard.Cookies;
 @using Laser.Orchard.Cookies.Services
+@using Laser.Orchard.Cookies.Providers;
 @{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
     // before the DOMLoadedEvent
     Script.Require("CookieCuttr");
+
+    var _defaultCookieProvider = WorkContext.Resolve<ICookieProvider>();
 
     var settings = Model.CookieSettings;
     var part = Model.CookieLawPart;
@@ -17,14 +20,14 @@
     var cookieBannerPosition = "overlay";
     switch ((CookieBannerPosition)settings.cookiePosition) {
         case CookieBannerPosition.Top:
-            cookieBannerPosition = "top";
-            break;
+        cookieBannerPosition = "top";
+        break;
         case CookieBannerPosition.Bottom:
-            cookieBannerPosition = "bottom";
-            break;
+        cookieBannerPosition = "bottom";
+        break;
         default: // Overlay
-            cookieBannerPosition = "overlay";
-            break;
+        cookieBannerPosition = "overlay";
+        break;
     }
 
     var gdprScriptService = Model.GDPRScriptservice;
@@ -39,52 +42,78 @@
     using (Script.Foot()) {
         if (settings.DisableCookieGDPRManagement == false) {
             <script type="text/javascript">
-$(document).ready(function() {
-    var cookiesettings = { };
-    cookiesettings.cookieTitle = '@part.cookieTitle';
-    if (@(part.cookieMessage.Length) > 0)
-        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>").Replace("'", "&apos;"))';
-    cookiesettings.cookiePolicyLink = '@Html.Raw(part.cookiePolicyLink.Replace("'", "\\'"))';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + "<p id=\"ccPolicyMsgLink\"><a href=\"" + cookiesettings.cookiePolicyLink + "\">@part.cookiePolicyPageMessage</a></p>";
-    // user options
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;width:100%"><div class="cc-cookie-checks">';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
-    // positioning
-    cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
-    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
-    // buttons
-    cookiesettings.cookieAcceptButton = true;
-    cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
-    cookiesettings.cookieResetButton = @cookieResetButton;
-    cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
-    cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
-    var getCookie = function (cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    };
-    cookiesettings.cookieAccepted = getCookie("cc_cookie_accept").startsWith(cookiesettings.cookieExpectedValue);
-    if (@isPolicyPage) {
-        cookiesettings.cookiePolicyPage = true;
-    }
-    // footer
-    cookiesettings.cookieExpandMessage = "@T("Change your choice")";
-    cookiesettings.cookiePoweredBy = "@siteName";
-    cookiesettings.cookiePoweredByIcon = "@iconUrl";
+                $(document).ready(function () {
+                    // read list cookie and assign at general var
+                    window.TechnicalCookies = [];
+                    @foreach(var cookie in _defaultCookieProvider.GetTechnicalCookies()) {
+                        <text>
+                        window.TechnicalCookies.push("@cookie");
+                        </text>
+                    }
+                    window.PreferencesCookies = [];
+                    @foreach(var cookie in _defaultCookieProvider.GetPreferencesCookies()) {
+                        <text>
+                        window.PreferencesCookies.push("@cookie");
+                        </text>
+                    }
+                    window.StatisticalCookies = [];
+                    @foreach(var cookie in _defaultCookieProvider.GetStatisticalCookies()) {
+                        <text>
+                        window.StatisticalCookies.push("@cookie");
+                        </text>
+                    }
+                    window.MarketingCookies = [];
+                    @foreach(var cookie in _defaultCookieProvider.GetMarketingCookies()) {
+                        <text>
+                        window.MarketingCookies.push("@cookie");
+                        </text>
+                    }
 
-    $.cookieCuttr(cookiesettings);
-});
+                    var cookiesettings = { };
+                    cookiesettings.cookieTitle = '@part.cookieTitle';
+                    if (@(part.cookieMessage.Length) > 0)
+                        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>").Replace("'", "&apos;"))';
+                    cookiesettings.cookiePolicyLink = '@Html.Raw(part.cookiePolicyLink.Replace("'", "\\'"))';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + "<p id=\"ccPolicyMsgLink\"><a href=\"" + cookiesettings.cookiePolicyLink + "\">@part.cookiePolicyPageMessage</a></p>";
+                    // user options
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;width:100%"><div class="cc-cookie-checks">';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
+                    // positioning
+                    cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
+                    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
+                    // buttons
+                    cookiesettings.cookieAcceptButton = true;
+                    cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
+                    cookiesettings.cookieResetButton = @cookieResetButton;
+                    cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+                    cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
+                    var getCookie = function (cname) {
+                        var name = cname + "=";
+                        var decodedCookie = decodeURIComponent(document.cookie);
+                        var ca = decodedCookie.split(';');
+                        for (var i = 0; i < ca.length; i++) {
+                            var c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    };
+                    cookiesettings.cookieAccepted = getCookie("cc_cookie_accept").startsWith(cookiesettings.cookieExpectedValue);
+                    if (@isPolicyPage) {
+                        cookiesettings.cookiePolicyPage = true;
+                    }
+                    // footer
+                    cookiesettings.cookieExpandMessage = "@T("Change your choice")";
+                    cookiesettings.cookiePoweredBy = "@siteName";
+                    cookiesettings.cookiePoweredByIcon = "@iconUrl";
+
+                    $.cookieCuttr(cookiesettings);
+                });
             </script>
         }
 

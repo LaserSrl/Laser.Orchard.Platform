@@ -147,6 +147,10 @@
 			}
             // setting the cookies
             $('.cc-cookie-accept').click(function (e) {
+                var savedCookies = [];
+                // technical always selected
+                savedCookies = savedCookies.concat(window.TechnicalCookies);
+
                 e.preventDefault();
 
                 var acceptedOptions = {
@@ -158,21 +162,33 @@
                 if ($("#chkPreferences").prop("checked")) {
                     aux1 = aux1 + "1";
                     acceptedOptions.preferences = true;
+                    savedCookies = savedCookies.concat(window.PreferencesCookies);
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkStatistical").prop("checked")) {
                     aux1 = aux1 + "1";
                     acceptedOptions.statistical = true;
+                    savedCookies = savedCookies.concat(window.StatisticalCookies);
                 } else {
                     aux1 = aux1 + "0";
                 }
                 if ($("#chkMarketing").prop("checked")) {
                     aux1 = aux1 + "1";
                     acceptedOptions.marketing = true;
+                    savedCookies = savedCookies.concat(window.MarketingCookies);
                 } else {
                     aux1 = aux1 + "0";
                 }
+
+                // removed all cookie that not in savedCookies list
+                var allCookie = $.cookie();
+                for (var cookie in allCookie) {
+                    if (!savedCookies.includes(cookie)) {
+                        $.removeCookie(cookie);
+                    }
+                }
+
                 $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
                     expires: cookieExpires,
                     path: '/'

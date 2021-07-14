@@ -133,6 +133,8 @@
     <Compile Include="Models\CookieLawPart.cs" />
     <Compile Include="Models\CookieSettingsPart.cs" />
     <Compile Include="Models\HubSpotSettingsPart.cs" />
+    <Compile Include="Providers\DefaultCookieProvider.cs" />
+    <Compile Include="Providers\ICookieProvider.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Services\GDPRScript.cs" />
     <Compile Include="Services\HubSpotCookieGDPR.cs" />
