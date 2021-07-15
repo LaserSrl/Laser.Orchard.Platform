@@ -18,7 +18,7 @@ namespace Laser.Orchard.Cookies.Providers {
             </component>
              */
 
-            DefaultTechnicalCookies = "PoliciesAnswers,cc_cookie_accept,cultureData,ASPXAUTH,ASP.NET_SessionId";
+            DefaultTechnicalCookies = "PoliciesAnswers,cc_cookie_accept,cultureData,.ASPXAUTH,ASP.NET_SessionId";
         }
 
         public string DefaultTechnicalCookies { get; set; }
