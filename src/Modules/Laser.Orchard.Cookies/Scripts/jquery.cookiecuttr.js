@@ -185,7 +185,7 @@
                 var allCookie = $.cookie();
                 for (var cookie in allCookie) {
                     if (!savedCookies.includes(cookie)) {
-                        $.removeCookie(cookie);
+                        $.removeCookie(cookie, { path: '/' });
                     }
                 }
 

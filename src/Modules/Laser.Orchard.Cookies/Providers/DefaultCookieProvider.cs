@@ -11,7 +11,7 @@ namespace Laser.Orchard.Cookies.Providers {
             /*
              <component instance-scope="per-lifetime-scope"
                        type="Laser.Orchard.Cookies.Providers.DefaultCookieProvider, Laser.Orchard.Cookies"
-                       service="Laser.Orchard.Cookies.Providers.IDefaultCookieProvider">
+                       service="Laser.Orchard.Cookies.Providers.ICookieProvider, Laser.Orchard.Cookies">
                 <properties>
                     <property name="DefaultTechnicalCookies" value="DefaultTechnicalCookies_1, DefaultTechnicalCookies_2" />
                 </properties>
