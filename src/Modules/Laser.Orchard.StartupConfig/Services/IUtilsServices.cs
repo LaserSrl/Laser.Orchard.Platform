@@ -27,6 +27,7 @@ using Laser.Orchard.StartupConfig.IdentityProvider;
 using System.Collections;
 using Orchard.Localization.Services;
 using Orchard.FileSystems.Media;
+using Orchard.Tokens;
 
 namespace Laser.Orchard.StartupConfig.Services {
 
@@ -98,13 +99,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly ITaxonomyService _taxonomyService;
         private readonly IOrchardServices _orchardServices;
         private readonly ILocalizationService _localizationServices;
+        private readonly ITokenizer _tokenizer;
 
-        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices) {
+        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices, ITokenizer tokenizer) {
             _moduleService = moduleService;
             _roleService = roleService;
             _taxonomyService = taxonomyService;
             _orchardServices = orchardServices;
             _localizationServices = localizationServices;
+            _tokenizer = tokenizer;
             var mediaPath = HostingEnvironment.IsHosted
                                 ? HostingEnvironment.MapPath("~/Media/") ?? ""
                                 : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
@@ -425,7 +428,6 @@ namespace Laser.Orchard.StartupConfig.Services {
         private void RegistraFile(object obj, string fileContent, string fileName) {
             var settings = ((ContentField)obj).PartFieldDefinition.Settings;
             string secureDirectory = settings["SecureFileFieldSettings.SecureDirectoryName"];
-            string urlType = settings["SecureFileFieldSettings.UrlType"];
             string generateFileName = settings["SecureFileFieldSettings.GenerateFileName"];
             string blobAccount = string.Empty;
             if (settings.ContainsKey("SecureFileFieldSettings.SecureBlobAccountName"))                
@@ -446,23 +448,19 @@ namespace Laser.Orchard.StartupConfig.Services {
             } else {
                 // Test implementation for Scontrino Content Creation.
                 // Folder generation based on settings.
-                switch (urlType.ToString().ToUpperInvariant()) {
-                    case "CUSTOM":
-                        string customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
-                        if (!string.IsNullOrWhiteSpace(customSubfolder)) {
-                            secureDirectory = Path.Combine(secureDirectory, customSubfolder);
-                            if (!Directory.Exists(secureDirectory))
-                                Directory.CreateDirectory(secureDirectory);
-                        }
-                        break;
-
-                    case "UPLOADDATE":
-                        string subfolder = upload.Year.ToString() + upload.Month.ToString("00") + upload.Day.ToString("00");
-                        secureDirectory = Path.Combine(secureDirectory, subfolder);
-                        if (!Directory.Exists(secureDirectory))
-                            Directory.CreateDirectory(secureDirectory);
-                        break;
+                string customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
+                string subfolder = string.Empty;
+                if (!string.IsNullOrWhiteSpace(customSubfolder)) {
+                    subfolder = _tokenizer.Replace(customSubfolder, new Dictionary<string, object> { { "Content", obj } });
                 }
+                if (!string.IsNullOrWhiteSpace(subfolder)) {
+                    secureDirectory = Path.Combine(secureDirectory, subfolder);
+                    if (!Directory.Exists(secureDirectory))
+                        Directory.CreateDirectory(secureDirectory);
+                }
+
+                // Now I save the Subfolder property of the field, as I need this information to read the secure file.
+                RegistraValore(obj, "Subfolder", subfolder);
 
                 byte[] bytes = Convert.FromBase64String(fileContent);
                 string filePath = Path.Combine(secureDirectory, fileName);
