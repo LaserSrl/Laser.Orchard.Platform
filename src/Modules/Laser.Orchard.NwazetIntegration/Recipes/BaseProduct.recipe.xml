@@ -315,6 +315,5 @@
     <CheckoutPolicySettingsPart PolicyTextReferences="{False},{False},{/alias=it\/policy\/condizioni-di-acquisto},{/alias=it\/policy\/privacy-policy}" />
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
-    <VatConfigurationSiteSettingsPart DefaultTerritoryForVatId="56" DefaultVatConfigurationId="0" />
   </Settings>
 </Orchard>

@@ -1086,6 +1086,6 @@
   </Command>
   <Settings>
     <AddressConfigurationSiteSettingsPart ShippingCountriesHierarchyIdentity="/Identifier=mondohierarchy" />
-    <VatConfigurationSiteSettingsPart DefaultVatConfigurationIdentity="/Identifier=228caffa3de04bc080f23e63367c1182" />
+    <VatConfigurationSiteSettingsPart DefaultVatConfigurationIdentity="/Identifier=228caffa3de04bc080f23e63367c1182" DefaultTerritoryForVatName="Italia" />
   </Settings>
 </Orchard>
