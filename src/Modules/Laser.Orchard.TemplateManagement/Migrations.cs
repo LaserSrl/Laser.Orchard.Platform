@@ -22,30 +22,49 @@ namespace Laser.Orchard.TemplateManagement {
         }
 
         public int Create() {
-            SchemaBuilder.CreateTable("TemplatePartRecord", table => table
-            .ContentPartRecord()
-            .Column<string>("Title", c => c.WithLength(256))
-            .Column<string>("Subject", c => c.WithLength(256))
-            .Column<string>("Text", c => c.Unlimited())
-            .Column<int>("LayoutIdSelected", c => c.Nullable())
-            .Column<bool>("IsLayout", c => c.NotNull()));
+            SchemaBuilder
+                .CreateTable("TemplatePartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<string>("Title", c => c.WithLength(256))
+                    .Column<string>("Subject", c => c.WithLength(256))
+                    .Column<string>("Text", c => c.Unlimited())
+                    .Column<int>("LayoutIdSelected", c => c.Nullable())
+                    .Column<bool>("IsLayout", c => c.NotNull()));
 
-            SchemaBuilder.CreateTable("SiteSettingsPartRecord", table => table
-            .ContentPartRecord()
-            .Column<string>("DefaultParserIdSelected"));
+            SchemaBuilder
+                .CreateTable("SiteSettingsPartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<string>("DefaultParserIdSelected"));
 
-            ContentDefinitionManager.AlterPartDefinition("TemplatePart", part => part.Attachable());
-            ContentDefinitionManager.AlterTypeDefinition("CustomTemplate", type => type
-            .WithPart("CommonPart", part => part
-            .WithSetting("OwnerEditorSettings.ShowOwnerEditor", "False"))
-            .WithPart("TemplatePart")
-            .WithPart("IdentityPart") // Identity Part for Import Export capability
-            .DisplayedAs("Custom Template")
-            .Draftable()
-            .Creatable());
+            ContentDefinitionManager
+                .AlterPartDefinition("TemplatePart", part => part
+                    .Attachable());
+            ContentDefinitionManager
+                .AlterTypeDefinition("CustomTemplate", type => type
+                    .WithPart("CommonPart", part => part
+                    .WithSetting("OwnerEditorSettings.ShowOwnerEditor", "False"))
+                    .WithPart("TemplatePart")
+                    .WithPart("IdentityPart") // Identity Part for Import Export capability
+                    .DisplayedAs("Custom Template")
+                    .Draftable()
+                    .Creatable()
+                    .Listable());
 
-            // nella prima creazione è inutile fare gli update 1-3, perché creo già Type e Part con i nomi corretti
-            return 4;
+            SchemaBuilder
+                .CreateTable("CustomTemplatePickerPartRecord", table => table
+                    .ContentPartRecord()
+                    .Column<int>("TemplateIdSelected", c => c.Nullable()));
+            ContentDefinitionManager
+                .AlterPartDefinition("CustomTemplatePickerPart", part => part
+                    .Attachable(false));
+
+            ContentDefinitionManager
+                .AlterTypeDefinition("Template", type => type
+                    .Listable(false));
+
+            // UpdateFrom8 is only required if there are SendTemplatedEmail Activities
+            // already configured. That's not the case when first enabling the feature.
+            return 9;
         }
 
         public int UpdateFrom1() {
@@ -108,7 +127,10 @@ namespace Laser.Orchard.TemplateManagement {
             return 8;
         }
         public int UpdateFrom8() {
-            var templates = _contentManager.Query<TemplatePart>().List();
+            // note that doing Query<TPart>() is terrible because it fetches ALL CONTENT ITEMS
+            // and the filters, in memory, for those that have the Part attached. Adding TRecord
+            // should cause a Join to pre-filter out a bunch of stuff.
+            var templates = _contentManager.Query<TemplatePart, TemplatePartRecord>().List();
             var sendTemplateActivities = _repositoryActivity.Table.Where(x => x.Name == "SendTemplatedEmail").ToList();
 
             foreach (var sendActivity in sendTemplateActivities) {

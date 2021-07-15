@@ -52,15 +52,15 @@ msgctxt "Laser.Orchard.WebServices.Controllers.TermsController"
 msgid "Missing Icon field in Term Part."
 msgstr "Campo Icona assente per il termine."
 
-msgctxt "Laser.Orchard.WebServices.Drivers.gets"
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
 msgid "Action Name is duplicate: {0}"
 msgstr "Il nome della action è duplicato: {0}"
 
-msgctxt "Laser.Orchard.WebServices.Drivers.gets"
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
 msgid "Action Name is required."
 msgstr "Il nome della Action è obbligatorio."
 
-msgctxt "Laser.Orchard.WebServices.Drivers.gets"
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
 msgid "Failed to parse the json."
 msgstr "Impossibile interpretare il json."
 
