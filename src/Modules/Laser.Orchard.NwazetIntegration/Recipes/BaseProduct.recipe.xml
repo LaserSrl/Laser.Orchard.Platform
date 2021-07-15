@@ -280,36 +280,6 @@
       </QueryPart>
       <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
     </Query>
-    <Taxonomy Id="/alias=en\/additional-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/additional-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:45:09.0081263Z" ModifiedUtc="2021-02-26T15:45:08.9745751Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-addizionale" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
-      <TitlePart Title="Additional Category" />
-    </Taxonomy>
-    <Taxonomy Id="/alias=en\/main-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/main-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:43:10.0484318Z" ModifiedUtc="2021-02-26T15:43:10.0200633Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-principale" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
-      <TitlePart Title="Main Category" />
-    </Taxonomy>
-    <Taxonomy Id="/alias=en\/secondary-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/secondary-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:44:38.1068856Z" ModifiedUtc="2021-02-26T15:44:38.0600153Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-secondaria" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
-      <TitlePart Title="Secondary Category" />
-    </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-addizionale" Status="Published">
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
