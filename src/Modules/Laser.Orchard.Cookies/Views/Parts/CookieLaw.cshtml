@@ -1,13 +1,12 @@
 ﻿@using Laser.Orchard.Cookies;
 @using Laser.Orchard.Cookies.Services
-@using Laser.Orchard.Cookies.Providers;
 @{
     Style.Require("CookieCuttr");
     // I cannot defer loading the CookieCuttr script, because the inline script below is parsed
     // before the DOMLoadedEvent
     Script.Require("CookieCuttr");
 
-    var _defaultCookieProvider = WorkContext.Resolve<ICookieProvider>();
+    var _defaultCookieProvider = WorkContext.Resolve<ICookieService>();
 
     var settings = Model.CookieSettings;
     var part = Model.CookieLawPart;
@@ -37,38 +36,34 @@
         foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
             <text>@Html.Raw(cookie.GetHeadScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
         }
+
+        var technicalCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetTechnicalCookies()));
+        var preferencesCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetPreferencesCookies()));
+        var statisticalCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetStatisticalCookies()));
+        var marketingCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetMarketingCookies()));
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // read list cookie and assign at general var
+                // list of TechnicalCookies
+                window.TechnicalCookies = window.TechnicalCookies || [];
+                window.TechnicalCookies = window.TechnicalCookies.concat(@technicalCookies);
+                // list of PreferencesCookies
+                window.PreferencesCookies = window.PreferencesCookies || [];
+                window.PreferencesCookies = window.PreferencesCookies.concat(@preferencesCookies);
+                // list of StatisticalCookies
+                window.StatisticalCookies = window.StatisticalCookies || [];
+                window.StatisticalCookies = window.StatisticalCookies.concat(@statisticalCookies);
+                // list of MarketingCookies
+                window.MarketingCookies = window.MarketingCookies || [];
+                window.MarketingCookies = window.MarketingCookies.concat(@marketingCookies);
+            });
+        </script>
     }
 
     using (Script.Foot()) {
         if (settings.DisableCookieGDPRManagement == false) {
             <script type="text/javascript">
                 $(document).ready(function () {
-                    // read list cookie and assign at general var
-                    window.TechnicalCookies = [];
-                    @foreach(var cookie in _defaultCookieProvider.GetTechnicalCookies()) {
-                        <text>
-                        window.TechnicalCookies.push("@cookie");
-                        </text>
-                    }
-                    window.PreferencesCookies = [];
-                    @foreach(var cookie in _defaultCookieProvider.GetPreferencesCookies()) {
-                        <text>
-                        window.PreferencesCookies.push("@cookie");
-                        </text>
-                    }
-                    window.StatisticalCookies = [];
-                    @foreach(var cookie in _defaultCookieProvider.GetStatisticalCookies()) {
-                        <text>
-                        window.StatisticalCookies.push("@cookie");
-                        </text>
-                    }
-                    window.MarketingCookies = [];
-                    @foreach(var cookie in _defaultCookieProvider.GetMarketingCookies()) {
-                        <text>
-                        window.MarketingCookies.push("@cookie");
-                        </text>
-                    }
-
                     var cookiesettings = { };
                     cookiesettings.cookieTitle = '@part.cookieTitle';
                     if (@(part.cookieMessage.Length) > 0)

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Laser.Orchard.Cookies.Providers {
     public class DefaultCookieProvider : ICookieProvider {
+
         public DefaultCookieProvider() {
 
             // We may use AutoFac to override the default cookies:
@@ -19,6 +20,8 @@ namespace Laser.Orchard.Cookies.Providers {
              */
 
             DefaultTechnicalCookies = "PoliciesAnswers,cc_cookie_accept,cultureData,.ASPXAUTH,ASP.NET_SessionId";
+            DefaulStatisticalCookies = "_ga,_gid";
+            DefaultMarketingCookies = "__atuvc,__atuvs";
         }
 
         public string DefaultTechnicalCookies { get; set; }
