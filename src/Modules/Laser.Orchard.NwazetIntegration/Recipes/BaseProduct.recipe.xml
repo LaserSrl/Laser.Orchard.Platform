@@ -14,7 +14,7 @@
            Orchard.Projections, Orchard.Taxonomies, 
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
            Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
-           Laser.Orchard.InsertStuff" />
+           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions" />
   <ContentDefinition>
     <Types>
       <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
@@ -52,6 +52,15 @@
                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </ProdottoDefault>
+      <ProjectionPage ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Projection">
+        <AdminMenuPart AdminMenuPartTypeSettings.DefaultPosition="5" />
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/mia-projection&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <LocalizationPart />
+        <MenuPart />
+        <ProjectionPart />
+        <TitlePart />
+      </ProjectionPage>
       <Query DisplayName="Query">
         <CommonPart />
         <IdentityPart />
@@ -63,6 +72,7 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart />
         <LocalizationPart />
+        <ProjectionPart ContentPartSettings.Attachable="True" />
         <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" 
                  SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
                  SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" 
@@ -209,6 +219,16 @@
     </Parts>
   </ContentDefinition>
   <Content>
+    <ProjectionPage Id="/alias=it\/catalogo" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <AutoroutePart Alias="it/catalogo" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2021-07-16T13:13:31.2303512Z" PublishedUtc="2021-07-16T13:13:31.8628787Z" ModifiedUtc="2021-07-16T13:13:31.815074Z" />
+      <LocalizationPart Culture="it-IT" />
+      <ProjectionPart Items="12" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="120" DisplayPager="true" Query="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371" LayoutIndex="0" />
+      <TitlePart Title="Catalogo completo" />
+    </ProjectionPage>
     <Query Id="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371" Status="Published">
       <BooleanField.OneShotQuery Value="false" />
       <BooleanField.UserQuery Value="false" />
