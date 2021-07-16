@@ -98,6 +98,7 @@
     <Compile Include="Permissions.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="Services\AdditionalCookieProvider.cs" />
     <Compile Include="Services\IQuestionnairesServices.cs" />
     <Compile Include="Services\IQuestionAnswerRepositoryService.cs" />
     <Compile Include="Services\QuestionnairesServices.cs" />
@@ -311,6 +312,10 @@
     <ProjectReference Include="..\Laser.Orchard.ContentExtension\Laser.Orchard.ContentExtension.csproj">
       <Project>{0889fcd5-17e7-401a-8377-e308b797ac66}</Project>
       <Name>Laser.Orchard.ContentExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
+      <Project>{BDB0CD8D-7C6C-46F0-A041-6B2E1E0F9C9E}</Project>
+      <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.Events\Laser.Orchard.Events.csproj">
       <Project>{fc5b52ec-3cf9-42da-850d-36d110bbe121}</Project>

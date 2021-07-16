@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Laser.Orchard.Accessibility.Services {
+namespace Laser.Orchard.Questionnaires.Services {
     public class AdditionalCookieProvider : ICookieProvider {
         public AdditionalCookieProvider() {
-            DefaultTechnicalCookies = "Accessibility,AccessibilitySize";
+            DefaultTechnicalCookies = "Questionnaires";
         }
 
         public string DefaultTechnicalCookies { get; set; }
