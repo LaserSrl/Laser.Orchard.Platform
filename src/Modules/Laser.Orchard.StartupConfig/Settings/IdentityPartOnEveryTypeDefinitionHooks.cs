@@ -15,7 +15,17 @@ namespace Laser.Orchard.StartupConfig.Settings {
     public class IdentityPartOnEveryTypeContentDefinitionEventHandler : ContentDefinitionEditorEventsBase, IContentDefinitionEventHandler {
         //We want all our ContentTypes top have an identity, to allwo proper cloning/importing/exporting
         //Some parts contribute to an item's identity, so if those are in the type we don't need to add an identity part
-        private readonly string[] PartsWithIdentity = { "IdentityPart", "AutoroutePart", "UserPart" };
+        public string PartsWithIdentity = "IdentityPart, AutoroutePart, UserPart, LayerPart";
+        // We may use AutoFac to override the default parts:
+        /*
+         <component instance-scope="per-lifetime-scope"
+                   type="Laser.Orchard.StartupConfig.Setting.IdentityPartOnEveryTypeContentDefinitionEventHandler, Laser.Orchard.StartupConfig"
+                   service="Orchard.ContentTypes.Events.IContentDefinitionEventHandler">
+            <properties>
+                <property name="PartsWithIdentity" value="FirstContentPart, SecondContentPart" />
+            </properties>
+        </component>
+         */
 
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IOrchardServices _orchardServices;
@@ -28,6 +38,7 @@ namespace Laser.Orchard.StartupConfig.Settings {
             _orchardServices = orchardServices;
 
             T = NullLocalizer.Instance;
+
         }
 
         private Localizer T;
@@ -38,7 +49,10 @@ namespace Laser.Orchard.StartupConfig.Settings {
         private bool TypeHasIdentity(ContentTypeDefinition definition) {
             return definition
                 .Parts.Any(pa =>
-                    PartsWithIdentity.Contains(pa.PartDefinition.Name));
+                    PartsWithIdentity
+                        .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => s.Trim())
+                        .Contains(pa.PartDefinition.Name));
         }
         private void AddIdentityToType(string typeName) {
             _contentDefinitionManager

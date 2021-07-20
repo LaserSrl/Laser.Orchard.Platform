@@ -113,6 +113,7 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductOfTypeCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponApplicabilityCriterion.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductWithTermCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DateCouponApplicabilityCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
+    <Compile Include="Filters\SelectTermsForm.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
@@ -236,9 +238,12 @@
   <ItemGroup>
     <Content Include="Assets.json" />
     <Content Include="Assets\Styles.less" />
-    <Content Include="Recipes\BaseProduct.recipe.xml" />
+    <Content Include="Recipes\BaseProduct.recipe.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Recipes\SetupHierarchyTerritoryVatConfiguration.recipe.xml" />
     <Content Include="Recipes\DefaultShippingMethods.recipe.xml" />
+    <Content Include="Recipes\SetupEcommerceTerritoriesVATShipping.recipe.xml" />
     <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
     <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />

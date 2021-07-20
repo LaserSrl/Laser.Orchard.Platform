@@ -9,13 +9,21 @@
     <Description>Set up the ContentType ProdottoDefault.</Description>
     <IsSetupRecipe>false</IsSetupRecipe>
   </Recipe>
-  <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, Laser.Orchard.ShareLink, Nwazet.Commerce, Orchard.Projections, Orchard.Taxonomies, Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions" />
+  <Feature enable="Laser.Orchard.NwazetIntegration, Laser.Orchard.SEO, 
+           Laser.Orchard.ShareLink, Nwazet.Commerce, 
+           Orchard.Projections, Orchard.Taxonomies, 
+           Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
+           Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
+           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions" />
   <ContentDefinition>
     <Types>
-      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" ContentTypeLayoutSettings.Placeable="False" 
-                    DisplayName="Prodotto base" TypeIndexing.Indexes="AdminSearch:latest">
-        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.UseCulturePattern="True" 
-                       AutorouteSettings.AutomaticAdjustmentOnEdit="False"
+      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
+                       ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" 
+                       ContentTypeLayoutSettings.Placeable="False" DisplayName="Prodotto base"
+                       TypeIndexing.Indexes="AdminSearch:latest,,Search"
+                       ContentTypeSettings.Placement.Editor="[{&quot;ShapeType&quot;:&quot;Parts_Common_SummaryInfoFor_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;0&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Title_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;1&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Autoroute_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;2&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Laser_Orchard_InsertStuff_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;3&quot;,&quot;Differentiator&quot;:&quot;HideTechnicalTabs&quot;},{&quot;ShapeType&quot;:&quot;Parts_Localization_ContentTranslations_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;4&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;5&quot;,&quot;Differentiator&quot;:&quot;QuickDetail&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;6&quot;,&quot;Differentiator&quot;:&quot;Descrizione&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;7&quot;,&quot;Differentiator&quot;:&quot;CategoriaPrincipale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;8&quot;,&quot;Differentiator&quot;:&quot;CategoriaPrincipale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;9&quot;,&quot;Differentiator&quot;:&quot;CategoriaSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;10&quot;,&quot;Differentiator&quot;:&quot;CategoriaSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;11&quot;,&quot;Differentiator&quot;:&quot;CategoriaAddizionale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;12&quot;,&quot;Differentiator&quot;:&quot;CategoriaAddizionale&quot;},{&quot;ShapeType&quot;:&quot;Fields_MediaLibraryPicker_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;13&quot;,&quot;Differentiator&quot;:&quot;ProductImage&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;14&quot;,&quot;Differentiator&quot;:&quot;Label&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;15&quot;,&quot;Differentiator&quot;:&quot;LabelSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_Enumeration_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;16&quot;,&quot;Differentiator&quot;:&quot;Popolarita&quot;},{&quot;ShapeType&quot;:&quot;Fields_Numeric_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;17&quot;,&quot;Differentiator&quot;:&quot;Creator&quot;},{&quot;ShapeType&quot;:&quot;Parts_Common_Container_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;18&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Numeric_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;19&quot;,&quot;Differentiator&quot;:&quot;LastModifier&quot;},{&quot;ShapeType&quot;:&quot;Parts_Common_Owner_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;20&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_ContentPicker_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;21%Extra&quot;,&quot;Differentiator&quot;:&quot;RelatedProducts&quot;},{&quot;ShapeType&quot;:&quot;Fields_ContentPickerLocalization_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;22%Extra&quot;,&quot;Differentiator&quot;:&quot;RelatedProducts&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;23%Extra&quot;,&quot;Differentiator&quot;:&quot;Keywords&quot;},{&quot;ShapeType&quot;:&quot;Part_Product_SKUEdit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;24#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Part_Product_InventoryBySKUEdit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;25#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Accessibility_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;26#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;27#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ProductPriceWithVAT_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;28#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ProductVatConfiguration_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;29#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Inventory_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;30#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Inventory_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;31#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_SEO_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;32#SEO&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ShareLink&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;33#SEO&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Shipping_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;34#TechnicalFields&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Hidden_String_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;35#TechnicalFields&quot;,&quot;Differentiator&quot;:&quot;CalculatedKeywords&quot;}]">
+        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" 
+                       AutorouteSettings.UseCulturePattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False"
                        AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" 
                        AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]"/>
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
@@ -44,6 +52,15 @@
                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </ProdottoDefault>
+      <Catalogo ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Catalogo">
+        <AdminMenuPart AdminMenuPartTypeSettings.DefaultPosition="5" />
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/mia-projection&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <LocalizationPart />
+        <MenuPart />
+        <ProjectionPart />
+        <TitlePart />
+      </Catalogo>
       <Query DisplayName="Query">
         <CommonPart />
         <IdentityPart />
@@ -55,6 +72,13 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart />
         <LocalizationPart />
+        <ProjectionPart ContentPartSettings.Attachable="True" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" 
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" 
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False" 
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" 
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
         <TaxonomyExtensionPart />
         <TaxonomyFilterPart />
         <TaxonomyPart />
@@ -64,6 +88,12 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaAddizionaleTerm>
@@ -72,6 +102,12 @@
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaPrincipaleTerm>
@@ -80,6 +116,12 @@
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaSecondariaTerm>
@@ -104,6 +146,7 @@
         <CategoriaSecondaria.TaxonomyField DisplayName="Categoria Secondaria" TaxonomyFieldSettings.Taxonomy="Categoria Secondaria" TaxonomyFieldSettings.LeavesOnly="False" 
                                TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
                                TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" />
+        <HideTechnicalTabs.InsertStuffField DisplayName="HideTechnicalTabs" InsertStuffFieldSettings.RawHtml="&lt;script type=&quot;text/javascript&quot;&gt;&#xD;&#xA;  //$('a[href=&quot;#tab-master-fields&quot;').parent('li').hide()&#xD;&#xA;  $('a[href=&quot;#tab-technical-fields&quot;').parent('li').hide()&#xD;&#xA;&lt;/script&gt;" InsertStuffFieldSettings.OnFooter="true" />
       </ProdottoDefault>
       <ProductDefaultPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="ContentFields for the base product" ContentPartLayoutSettings.Placeable="False">
         <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False" 
@@ -176,6 +219,16 @@
     </Parts>
   </ContentDefinition>
   <Content>
+    <Catalogo Id="/alias=it\/catalogo" Status="Published">
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <AdminMenuPart AdminMenuPosition="5.1" OnAdminMenu="false" />
+      <AutoroutePart Alias="it/catalogo" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/User.UserName=admin" CreatedUtc="2021-07-16T13:13:31.2303512Z" PublishedUtc="2021-07-16T13:13:31.8628787Z" ModifiedUtc="2021-07-16T13:13:31.815074Z" />
+      <LocalizationPart Culture="it-IT" />
+      <ProjectionPart Items="12" ItemsPerPage="0" Offset="0" PagerSuffix="" MaxItems="120" DisplayPager="true" Query="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371" LayoutIndex="0" />
+      <TitlePart Title="Catalogo completo" />
+    </Catalogo>
     <Query Id="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371" Status="Published">
       <BooleanField.OneShotQuery Value="false" />
       <BooleanField.UserQuery Value="false" />
@@ -247,39 +300,11 @@
       </QueryPart>
       <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
     </Query>
-    <Taxonomy Id="/alias=en\/additional-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/additional-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:45:09.0081263Z" ModifiedUtc="2021-02-26T15:45:08.9745751Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-addizionale" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
-      <TitlePart Title="Additional Category" />
-    </Taxonomy>
-    <Taxonomy Id="/alias=en\/main-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/main-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:43:10.0484318Z" ModifiedUtc="2021-02-26T15:43:10.0200633Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-principale" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
-      <TitlePart Title="Main Category" />
-    </Taxonomy>
-    <Taxonomy Id="/alias=en\/secondary-category" Status="Published">
-      <NumericField.Creator Value="2" />
-      <NumericField.LastModifier Value="2" />
-      <AutoroutePart Alias="en/secondary-category" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
-      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:44:38.1068856Z" ModifiedUtc="2021-02-26T15:44:38.0600153Z" />
-      <LocalizationPart MasterContentItem="/alias=it\/categoria-secondaria" Culture="en-US" />
-      <TaxonomyExtensionPart OrderBy="Default" />
-      <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
-      <TitlePart Title="Secondary Category" />
-    </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-addizionale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-addizionale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:44:48.5729531Z" ModifiedUtc="2021-02-26T15:44:48.5555373Z" />
       <LocalizationPart Culture="it-IT" />
@@ -288,8 +313,10 @@
       <TitlePart Title="Categoria Addizionale" />
     </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-principale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-principale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:42:32.8663488Z" ModifiedUtc="2021-02-26T15:42:32.8302326Z" />
       <LocalizationPart Culture="it-IT" />
@@ -298,8 +325,10 @@
       <TitlePart Title="Categoria Principale" />
     </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-secondaria" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-secondaria" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:43:18.8265254Z" ModifiedUtc="2021-02-26T15:43:18.8089412Z" />
       <LocalizationPart Culture="it-IT" />
@@ -308,4 +337,9 @@
       <TitlePart Title="Categoria Secondaria" />
     </Taxonomy>
   </Content>
+  <Settings>
+    <CheckoutPolicySettingsPart PolicyTextReferences="{False},{False},{/alias=it\/policy\/condizioni-di-acquisto},{/alias=it\/policy\/privacy-policy}" />
+    <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
+    <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
+  </Settings>
 </Orchard>
