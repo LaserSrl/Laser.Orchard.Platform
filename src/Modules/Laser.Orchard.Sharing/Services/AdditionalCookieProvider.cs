@@ -11,9 +11,7 @@ namespace Laser.Orchard.Sharing.Services {
         }
 
         public string DefaultMarketingCookies { get; set; }
-
-        private IEnumerable<string> _technicalCookies;
-
+        
         public IEnumerable<string> GetTechnicalCookies() {
             return new List<string>();
         }

@@ -184,8 +184,11 @@
                 // removed all cookie that not in savedCookies list
                 var allCookie = $.cookie();
                 for (var cookie in allCookie) {
+                    // if the cookie is not in the list it will be deleted
                     if (!savedCookies.includes(cookie)) {
-                        $.removeCookie(cookie, { path: '/' });
+                        if (!$.removeCookie(cookie, { path: '/', domain: window.DefaultCookieDomain })) {
+                            $.removeCookie(cookie, { path: '/' });
+                        }
                     }
                 }
 
