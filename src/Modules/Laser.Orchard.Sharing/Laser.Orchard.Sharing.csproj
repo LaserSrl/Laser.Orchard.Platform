@@ -112,6 +112,7 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="MissingSettingsBanner.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\AdditionalCookieProvider.cs" />
     <Compile Include="Services\CookieGDPR.cs" />
     <Compile Include="Settings\ShareBarMode.cs" />
     <Compile Include="Models\ShareBarPart.cs" />
