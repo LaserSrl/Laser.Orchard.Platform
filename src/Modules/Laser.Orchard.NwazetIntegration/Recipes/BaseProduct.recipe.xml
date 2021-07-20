@@ -301,8 +301,10 @@
       <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
     </Query>
     <Taxonomy Id="/alias=it\/categoria-addizionale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-addizionale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:44:48.5729531Z" ModifiedUtc="2021-02-26T15:44:48.5555373Z" />
       <LocalizationPart Culture="it-IT" />
@@ -311,8 +313,10 @@
       <TitlePart Title="Categoria Addizionale" />
     </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-principale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-principale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:42:32.8663488Z" ModifiedUtc="2021-02-26T15:42:32.8302326Z" />
       <LocalizationPart Culture="it-IT" />
@@ -321,8 +325,10 @@
       <TitlePart Title="Categoria Principale" />
     </Taxonomy>
     <Taxonomy Id="/alias=it\/categoria-secondaria" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
       <AutoroutePart Alias="it/categoria-secondaria" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
       <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:43:18.8265254Z" ModifiedUtc="2021-02-26T15:43:18.8089412Z" />
       <LocalizationPart Culture="it-IT" />
