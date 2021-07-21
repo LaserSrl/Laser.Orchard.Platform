@@ -342,4 +342,10 @@
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
   </Settings>
+	<!-- step to remove the default content type "Product" from the recipe -->
+	<RemoveContentDefinition>
+	  <Types>
+		<Product></Product>
+	  </Types>
+  </RemoveContentDefinition>
 </Orchard>
