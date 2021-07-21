@@ -115,14 +115,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
-            var httpContext = _workContextAccessor.GetContext().HttpContext;
-
-            var valueToReplace = "www.";
-            var domain = (!httpContext.Request.IsLocal ? httpContext.Request.Url.Host : "");
-            if (domain.Substring(0, 4) == valueToReplace) {
-                domain = domain.Substring(4, domain.Length - 4);
-            }
-
+            var domain = "auto";
             var script = new StringBuilder();
 
             script.AppendLine("<!-- Google Tag Manager -->");

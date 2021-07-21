@@ -181,13 +181,42 @@
                     aux1 = aux1 + "0";
                 }
 
-                // removed all cookie that not in savedCookies list
-                var allCookie = $.cookie();
-                for (var cookie in allCookie) {
-                    // if the cookie is not in the list it will be deleted
-                    if (!savedCookies.includes(cookie)) {
-                        if (!$.removeCookie(cookie, { path: '/', domain: window.DefaultCookieDomain })) {
-                            $.removeCookie(cookie, { path: '/' });
+                // if unchecked checkbox removed cookie not in selected category
+                if (aux1 !== "111"){
+                    // removed all cookie that not in savedCookies list
+                    var allCookie = $.cookie();
+                    for (var cookie in allCookie) {
+                        // if the cookie is not in the list it will be deleted
+                        if (!savedCookies.includes(cookie)) {
+                            var defaultCookie = window.DefaultCookieDomain;
+                            var genericDeleted = true;
+                            // try remove complete cookieDomain
+                            if ($.removeCookie(cookie, { path: '/', domain: defaultCookie })) {
+                                genericDeleted = false;
+                            }
+                            // try remove another domain
+                            defaultCookie = "." + defaultCookie;
+                            var partCookieDomain = defaultCookie.split('.');
+                            for (var i = 0; i < partCookieDomain.length; i++) {
+                                if (i !== 0) {
+                                    // remove another part of domain
+                                    defaultCookie = defaultCookie.replace('.' + partCookieDomain[i], '');
+                                }
+                                // excludes .com
+                                if (i === partCookieDomain.length - 2) {
+                                    break;
+                                }
+
+                                if ($.removeCookie(cookie, { path: '/', domain: defaultCookie })) {
+                                    genericDeleted = false;
+                                    break;
+                                }
+                            }
+                            // if you failed to delete it with any domain
+                            // generic deletion
+                            if (genericDeleted) {
+                                $.removeCookie(cookie, { path: '/' });
+                            }
                         }
                     }
                 }
