@@ -10,6 +10,7 @@ namespace Contrib.Reviews.Handlers
         public ReviewsPartHandler() {
             OnInitializing<ReviewsPart>((context, part) => {
                 part.ShowStars = part.Settings.GetModel<ReviewTypePartSettings>().ShowStars;
+                part.ShowReviews = part.Settings.GetModel<ReviewTypePartSettings>().ShowReviews;
             });
         }
     }

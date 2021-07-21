@@ -3,3 +3,8 @@
         @Html.EditorFor(m => m.ShowStars)
         <label class="forcheckbox" for="@Html.FieldIdFor( m => m.ShowStars)">@T("Enable star rating")</label>
 </fieldset>
+
+<fieldset>
+    @Html.EditorFor(m => m.ShowReviews)
+    <label class="forcheckbox" for="@Html.FieldIdFor( m => m.ShowReviews)">@T("Enable review comments")</label>
+</fieldset>

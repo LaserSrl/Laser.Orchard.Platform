@@ -115,6 +115,14 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
+            var httpContext = _workContextAccessor.GetContext().HttpContext;
+
+            var valueToReplace = "www.";
+            var domain = (!httpContext.Request.IsLocal ? httpContext.Request.Url.Host : "");
+            if (domain.Substring(0, 4) == valueToReplace) {
+                domain = domain.Substring(4, domain.Length - 4);
+            }
+
             var script = new StringBuilder();
 
             script.AppendLine("<!-- Google Tag Manager -->");
@@ -132,6 +140,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 + allowedTypes.Contains(CookieType.Statistical).ToString().ToLowerInvariant() + "'});");
             script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
                 + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
+            // set the default value of cookie domain
+            script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+               + domain  + "'});");
             // script that handles changes in the settings for cookie consent
             script.AppendLine("$(document)");
             script.AppendLine("	.on('cookieConsent.reset', function(e) {");
