@@ -52,7 +52,7 @@
                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </ProdottoDefault>
-      <Catalogo ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Catalogo">
+      <Catalogo ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes="AdminSearch:latest,,Search" ContentTypeLayoutSettings.Placeable="False" DisplayName="Catalogo">
         <AdminMenuPart AdminMenuPartTypeSettings.DefaultPosition="5" />
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/mia-projection&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
@@ -342,4 +342,10 @@
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
   </Settings>
+	<!-- step to remove the default content type "Product" from the recipe -->
+	<RemoveContentDefinition>
+	  <Types>
+		<Product></Product>
+	  </Types>
+  </RemoveContentDefinition>
 </Orchard>
