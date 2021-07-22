@@ -43,11 +43,13 @@
         var marketingCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetMarketingCookies()));
 
         var valueToReplace = "www.";
-        var host = (!WorkContext.HttpContext.Request.IsLocal ?
-                    "." + WorkContext.HttpContext.Request.Url.Host :
-                    "");
-        if(host.Substring(0,4) == valueToReplace) {
-            host = host.Substring(4,host.Length-4);
+        var host = "";
+
+        if (!WorkContext.HttpContext.Request.IsLocal) {
+            host = WorkContext.HttpContext.Request.Url.Host;
+            if (host.Substring(0, 4) == valueToReplace) {
+                host = host.Substring(4, host.Length - 4);
+            }
         }
 
         <script type="text/javascript">
