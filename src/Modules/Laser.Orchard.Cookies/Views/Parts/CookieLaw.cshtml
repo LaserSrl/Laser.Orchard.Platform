@@ -120,6 +120,10 @@
                     cookiesettings.cookiePoweredBy = "@siteName";
                     cookiesettings.cookiePoweredByIcon = "@iconUrl";
 
+                    if (cookiesettings.cookieResetButton && cookiesettings.cookieResetButtonText == '') {
+                        cookiesettings.cookieResetButtonText = "@T("Reset Cookie")"
+                    }
+
                     $.cookieCuttr(cookiesettings);
                 });
             </script>
