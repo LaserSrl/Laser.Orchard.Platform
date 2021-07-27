@@ -15,5 +15,6 @@ namespace Contrib.Voting.Services {
         void ChangeVote(VoteRecord vote, double value);
 
         ResultRecord GetResult(int contentItemId, string function, string dimension = null);
+        string MaskUserName(string name);
     }
 }

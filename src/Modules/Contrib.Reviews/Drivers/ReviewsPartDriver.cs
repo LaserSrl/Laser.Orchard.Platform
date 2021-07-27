@@ -96,7 +96,7 @@ namespace Contrib.Reviews.Drivers {
                     Comment = r.Comment,
                     CreatedUtc = r.CreatedUtc,
                     Rating = new Rating {CurrentVotingResult = currentVotingResult, UserRating = v.Value},
-                    UserName = v.Username,
+                    UserName = _votingService.MaskUserName(v.Username),
                     IsCurrentUsersReview = currentUser != null ? v.Username == currentUser.UserName : false
                 };
             part.Reviews.AddRange(reviews.OrderByDescending(r => r.IsCurrentUsersReview).ThenByDescending(r => r.CreatedUtc));
