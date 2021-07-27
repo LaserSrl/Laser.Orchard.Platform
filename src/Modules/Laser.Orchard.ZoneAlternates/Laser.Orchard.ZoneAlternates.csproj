@@ -98,15 +98,18 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drivers\ContentAlternatePartDriver.cs" />
     <Compile Include="EditorShapeTableProvider.cs" />
+    <Compile Include="Handlers\ContentAlternatePartSettingsEvents.cs" />
     <Compile Include="HasPartsPlacementMatchProvider.cs" />
+    <Compile Include="Migrations\DataMigration.cs" />
+    <Compile Include="Models\ContentAlternatePart.cs" />
+    <Compile Include="Models\ContentAlternatePartSettings.cs" />
     <Compile Include="TermAndProjectionAlternates.cs" />
     <Compile Include="ZoneAlternatesFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
@@ -132,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\ContentAlternatePartSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
