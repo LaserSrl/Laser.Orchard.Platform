@@ -83,6 +83,19 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             }
         }
 
+        private string HostDomain() {
+            var valueToReplace = "www.";
+            var host = "";
+
+            if (!_workContextAccessor.GetContext().HttpContext.Request.IsLocal) {
+                host = _workContextAccessor.GetContext().HttpContext.Request.Url.Host;
+                if (host.Substring(0, 4) == valueToReplace) {
+                    host = host.Substring(4, host.Length - 4);
+                }
+            }
+            return host;
+        }
+
         private string GoogleAnalyticsScript(IList<CookieType> allowedTypes) {
             StringBuilder script = new StringBuilder(800);
             script.AppendLine("<!-- Google Analytics -->");
@@ -92,7 +105,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {");
             if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
-                script.AppendLine("'cookieDomain': 'auto',");
+                script.AppendLine("'cookieDomain': '"+HostDomain()+"',");
             } else {
                 script.AppendLine("'cookieDomain': '" + SettingsPart.DomainName + "',");
             }
@@ -115,7 +128,6 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
-            var domain = "auto";
             var script = new StringBuilder();
 
             script.AppendLine("<!-- Google Tag Manager -->");
@@ -134,8 +146,14 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
                 + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
             // set the default value of cookie domain
-            script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
-               + domain  + "'});");
+            if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + HostDomain() + "'});");
+            }
+            else {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + SettingsPart.DomainName + "'});");
+            }
             // script that handles changes in the settings for cookie consent
             script.AppendLine("$(document)");
             script.AppendLine("	.on('cookieConsent.reset', function(e) {");

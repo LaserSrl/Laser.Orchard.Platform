@@ -91,6 +91,9 @@
                 //reset cookies
                 $('a.cc-cookie-reset').click(function (f) {
                     f.preventDefault();
+                    // resets all cookies except those saved in the list as technical cookies
+                    ResetCookies(window.TechnicalCookies);
+
                     // fire an event to notify we are resetting cookie consent
                     $(document).trigger("cookieConsent.reset");
                     $.cookie("cc_cookie_accept", null, {
@@ -114,9 +117,9 @@
                 manageCookieResetButton(options);
             } else {
                 // add message to just after opening body tag
-                var htmlFooterText = 'GDPR Cookies';
+                var htmlFooterText = '';
                 if (cookieExpandMessage != "") {
-                    htmlFooterText = '<a class="cc-expand">' + cookieExpandMessage + '</a> | ' + htmlFooterText;
+                    htmlFooterText = '<a class="cc-expand">' + cookieExpandMessage + '</a> ';
                 }
                 var iconPoweredBy = '|';
                 var htmlBanner = '<div class="cc-cookies" style="background-color:black;box-shadow:#121212 2px 2px 14px 2px"><div class="cc-cookie-box" style="width:90%;max-width:670px;margin:0px auto;width:auto;padding:0px;"><h3>' + cookieTitle + "</h3>" + cookieMessage + '<div style="position:relative"><div id="ccPoweredBy" style="height:34px"><div style="position:absolute;bottom:0px;margin-bottom:6px"><p id="ccPoweredBy">' + htmlFooterText + ' ' + iconPoweredBy + ' ' + cookiePoweredBy + '</p></div></div><div style="position:absolute;right:0;bottom:0">' + cookieAccept + '</div></div></div></div>';
@@ -182,43 +185,8 @@
                 }
 
                 // if unchecked checkbox removed cookie not in selected category
-                if (aux1 !== "111"){
-                    // removed all cookie that not in savedCookies list
-                    var allCookie = $.cookie();
-                    for (var cookie in allCookie) {
-                        // if the cookie is not in the list it will be deleted
-                        if (!savedCookies.includes(cookie)) {
-                            var defaultCookie = window.DefaultCookieDomain;
-                            var genericDeleted = true;
-                            // try remove complete cookieDomain
-                            if ($.removeCookie(cookie, { path: '/', domain: defaultCookie })) {
-                                genericDeleted = false;
-                            }
-                            // try remove another domain
-                            defaultCookie = "." + defaultCookie;
-                            var partCookieDomain = defaultCookie.split('.');
-                            for (var i = 0; i < partCookieDomain.length; i++) {
-                                if (i !== 0) {
-                                    // remove another part of domain
-                                    defaultCookie = defaultCookie.replace('.' + partCookieDomain[i], '');
-                                }
-                                // excludes .com
-                                if (i === partCookieDomain.length - 2) {
-                                    break;
-                                }
-
-                                if ($.removeCookie(cookie, { path: '/', domain: defaultCookie })) {
-                                    genericDeleted = false;
-                                    break;
-                                }
-                            }
-                            // if you failed to delete it with any domain
-                            // generic deletion
-                            if (genericDeleted) {
-                                $.removeCookie(cookie, { path: '/' });
-                            }
-                        }
-                    }
+                if (aux1 !== "111") {
+                    ResetCookies(savedCookies);
                 }
 
                 $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
@@ -233,6 +201,53 @@
                     manageCookieResetButton(options);
                 });
             });
+
+            function ResetCookies(savedCookies) {
+                // removed all cookie that not in savedCookies list
+                var allCookie = $.cookie();
+                for (var cookie in allCookie) {
+                    // if the cookie is not in the list it will be deleted
+                    if (!savedCookies.includes(cookie)) {
+                        var defaultDomain = window.DefaultCookieDomain;
+                        var genericDeleted = true;
+                        // try remove complete defaultDomain
+                        if ($.removeCookie(cookie, { path: '/', domain: defaultDomain })) {
+                            genericDeleted = false;
+                        }
+                        if (defaultDomain !== '') {
+                            // try remove www. default cookie domain
+                            var tryDomain = "www." + defaultDomain;
+                            if ($.removeCookie(cookie, { path: '/', domain: tryDomain })) {
+                                genericDeleted = false;
+                            }
+                            // try remove another domain
+                            defaultDomain = "." + defaultDomain;
+                        }
+                        var partCookieDomain = defaultDomain.split('.');
+                        for (var i = 0; i < partCookieDomain.length; i++) {
+                            if (i !== 0) {
+                                // remove another part of domain
+                                defaultDomain = defaultDomain.replace('.' + partCookieDomain[i], '');
+                            }
+                            // excludes .com
+                            if (i === partCookieDomain.length - 2) {
+                                break;
+                            }
+
+                            if ($.removeCookie(cookie, { path: '/', domain: defaultDomain })) {
+                                genericDeleted = false;
+                                break;
+                            }
+                        }
+                        // if you failed to delete it with any domain
+                        // generic deletion
+                        if (genericDeleted) {
+                            $.removeCookie(cookie, { path: '/' });
+                        }
+                    }
+                }
+            }
+
             $('.cc-expand').click(function () {
                 $('.cc-cookie-box form').slideToggle('slow');
             });
