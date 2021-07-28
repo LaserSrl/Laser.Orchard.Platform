@@ -114,28 +114,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                 .Select(x => new CultureEntry { Id = x.Id, Culture = x.Culture }).ToList();
             });
         }
-
-        /// <summary>
-        /// Masks a string to avoid its view.
-        /// E.g.: andrea@test.com becomes and*****com.
-        /// </summary>
-        /// <param name="strToMask"></param>
-        /// <param name="percentage">Percentage of the string to mask.</param>
-        /// <returns></returns>
-        public string MaskString(string strToMask, decimal percentage = 70) {
-            string first, last;
-
-            if (strToMask.Length > 10) {
-                first = strToMask.Substring(0, (int)((strToMask.Length - (strToMask.Length * (percentage / 100))) / 2));
-                last = strToMask.Substring(strToMask.Length - (int)((strToMask.Length - (strToMask.Length * (percentage / 100))) / 2));
-            } else {
-                first = strToMask.Substring(0, 1);
-                last = strToMask.Substring(strToMask.Length - 1);
-            }
-            var maskedString = first + "*****" + last;
-
-            return maskedString;
-        }
     }
 
     public class CultureEntry {
