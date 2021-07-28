@@ -25,6 +25,7 @@ namespace Contrib.Reviews.Settings {
             var model = new ReviewTypePartSettings();
             updateModel.TryUpdateModel(model, "ReviewTypePartSettings", null, null);
             builder.WithSetting("ReviewTypePartSettings.ShowStars", model.ShowStars.ToString());
+            builder.WithSetting("ReviewTypePartSettings.ShowReviews", model.ShowReviews.ToString());
 
             yield return DefinitionTemplate(model);
         }
