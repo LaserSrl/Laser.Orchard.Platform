@@ -26,8 +26,8 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IRepository<CultureRecord> _cultureRecord;
         private readonly ISignals _signals;
 
-        public CommonsServices(IOrchardServices orchardServices, 
-            IClock clock, 
+        public CommonsServices(IOrchardServices orchardServices,
+            IClock clock,
             IEncryptionService encryptionService,
             ICacheManager cacheManager,
             IRepository<CultureRecord> cultureRecord,
@@ -45,7 +45,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             if (userAgent.Contains("iphone") || userAgent.Contains("ipod") || userAgent.Contains("ipad")) {
                 return DevicesBrands.Apple;
             } else if (userAgent.Contains("windows")) {
-                return  DevicesBrands.Windows;
+                return DevicesBrands.Windows;
             } else if (userAgent.Contains("android")) {
                 return DevicesBrands.Google;
             } else {
@@ -115,6 +115,27 @@ namespace Laser.Orchard.StartupConfig.Services {
             });
         }
 
+        /// <summary>
+        /// Masks a string to avoid its view.
+        /// E.g.: andrea@test.com becomes and*****com.
+        /// </summary>
+        /// <param name="strToMask"></param>
+        /// <param name="percentage">Percentage of the string to mask.</param>
+        /// <returns></returns>
+        public string MaskString(string strToMask, decimal percentage = 70) {
+            string first, last;
+
+            if (strToMask.Length > 10) {
+                first = strToMask.Substring(0, (int)((strToMask.Length - (strToMask.Length * (percentage / 100))) / 2));
+                last = strToMask.Substring(strToMask.Length - (int)((strToMask.Length - (strToMask.Length * (percentage / 100))) / 2));
+            } else {
+                first = strToMask.Substring(0, 1);
+                last = strToMask.Substring(strToMask.Length - 1);
+            }
+            var maskedString = first + "*****" + last;
+
+            return maskedString;
+        }
     }
 
     public class CultureEntry {

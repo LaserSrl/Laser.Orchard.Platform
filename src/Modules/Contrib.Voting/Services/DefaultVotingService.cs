@@ -112,20 +112,5 @@ namespace Contrib.Voting.Services {
         public static string GetCacheKey(int contentItemId, string function, string dimension) {
             return String.Concat("vote_", contentItemId, "_", dimension ?? "");
         }
-
-        public string MaskUserName(string name) {
-            string first, last;
-
-            if (name.Length > 10) {
-                first = name.Substring(0, (int)((name.Length - (name.Length * 0.70)) / 2));
-                last = name.Substring(name.Length - (int)((name.Length - (name.Length * 0.70)) / 2));
-            } else {
-                first = name.Substring(0, 1);
-                last = name.Substring(name.Length - 1);
-            }
-            var maskedName = first + "*****" + last;
-
-            return maskedName;
-        }
     }
 }

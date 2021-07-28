@@ -14,5 +14,6 @@ namespace Laser.Orchard.StartupConfig.Services {
         bool DecryptNonce(string nonce, out string parametri);
         UrlHelper GetUrlHelper();
         IList<CultureEntry> ListCultures();
+        string MaskString(string strToMask, decimal percentage = 70);
     }
 }

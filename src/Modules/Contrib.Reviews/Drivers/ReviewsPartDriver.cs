@@ -11,6 +11,7 @@ using Orchard.Security;
 using Orchard.ContentManagement.Handlers;
 using System.Reflection;
 using System;
+using Laser.Orchard.StartupConfig.Services;
 
 namespace Contrib.Reviews.Drivers {
     
@@ -18,11 +19,13 @@ namespace Contrib.Reviews.Drivers {
         private readonly IOrchardServices _orchardServices;
         private readonly IVotingService _votingService;
         private readonly IRepository<ReviewRecord> _reviewRepository;
+        private readonly ICommonsServices _commonsServices;
 
-        public ReviewsPartDriver(IOrchardServices orchardServices, IVotingService votingService, IRepository<ReviewRecord> reviewRepository) {
+        public ReviewsPartDriver(IOrchardServices orchardServices, IVotingService votingService, IRepository<ReviewRecord> reviewRepository, ICommonsServices commonsServices) {
             _orchardServices = orchardServices;
             _votingService = votingService;
             _reviewRepository = reviewRepository;
+            _commonsServices = commonsServices;
         }
 
         protected override DriverResult Display(ReviewsPart part, string displayType, dynamic shapeHelper) {
@@ -96,7 +99,7 @@ namespace Contrib.Reviews.Drivers {
                     Comment = r.Comment,
                     CreatedUtc = r.CreatedUtc,
                     Rating = new Rating {CurrentVotingResult = currentVotingResult, UserRating = v.Value},
-                    UserName = _votingService.MaskUserName(v.Username),
+                    UserName = _commonsServices.MaskString(v.Username),
                     IsCurrentUsersReview = currentUser != null ? v.Username == currentUser.UserName : false
                 };
             part.Reviews.AddRange(reviews.OrderByDescending(r => r.IsCurrentUsersReview).ThenByDescending(r => r.CreatedUtc));
