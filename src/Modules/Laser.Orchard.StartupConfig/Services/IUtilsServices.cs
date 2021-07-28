@@ -26,6 +26,8 @@ using Newtonsoft.Json.Linq;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using System.Collections;
 using Orchard.Localization.Services;
+using Orchard.FileSystems.Media;
+using Orchard.Tokens;
 
 namespace Laser.Orchard.StartupConfig.Services {
 
@@ -97,13 +99,15 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly ITaxonomyService _taxonomyService;
         private readonly IOrchardServices _orchardServices;
         private readonly ILocalizationService _localizationServices;
+        private readonly ITokenizer _tokenizer;
 
-        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices) {
+        public UtilsServices(IModuleService moduleService, ShellSettings settings, IRoleService roleService, ITaxonomyService taxonomyService, IOrchardServices orchardServices, ILocalizationService localizationServices, ITokenizer tokenizer) {
             _moduleService = moduleService;
             _roleService = roleService;
             _taxonomyService = taxonomyService;
             _orchardServices = orchardServices;
             _localizationServices = localizationServices;
+            _tokenizer = tokenizer;
             var mediaPath = HostingEnvironment.IsHosted
                                 ? HostingEnvironment.MapPath("~/Media/") ?? ""
                                 : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Media");
@@ -386,6 +390,29 @@ namespace Laser.Orchard.StartupConfig.Services {
                         }
                         RegistraValore(fieldObj, "Value", second.Url);
                         RegistraValore(fieldObj, "Text", second.Text);
+                    } else if (tipofield == "SecureFileField") {
+                        // Using value as dynamic because value is a dynamic ExpandoObject.
+                        // The RegistraValore routine throws an exception otherwise (Object must implement IConvertible).
+                        // I need to check if the ExpandoObject (inheriting IDictionary) contains the property I'm looking for.
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Url")) 
+                            RegistraValore(fieldObj, "Url", (value as dynamic).Url);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("AlternateText"))
+                            RegistraValore(fieldObj, "AlternateText", (value as dynamic).AlternateText);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Class"))
+                            RegistraValore(fieldObj, "Class", (value as dynamic).Class);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Style"))
+                            RegistraValore(fieldObj, "Style", (value as dynamic).Style);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Alignment"))
+                            RegistraValore(fieldObj, "Alignment", (value as dynamic).Alignment);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Width"))
+                            RegistraValore(fieldObj, "Width", (value as dynamic).Width);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Height"))
+                            RegistraValore(fieldObj, "Height", (value as dynamic).Height);
+                        if (((IDictionary<string, object>)((dynamic)value)).ContainsKey("Upload"))
+                            RegistraValore(fieldObj, "Upload", (value as dynamic).Height);
+                        if ((((IDictionary<string, object>)((dynamic)value)).ContainsKey("Base64File")) &&
+                                (((IDictionary<string, object>)((dynamic)value)).ContainsKey("FileName")))
+                            RegistraFile(fieldObj, (value as dynamic).Base64File, (value as dynamic).FileName);
                     } else {
                         RegistraValore(fieldObj, "Value", value);
                     }
@@ -397,6 +424,50 @@ namespace Laser.Orchard.StartupConfig.Services {
                 }
             }
         }
+
+        private void RegistraFile(object obj, string fileContent, string fileName) {
+            var settings = ((ContentField)obj).PartFieldDefinition.Settings;
+            string secureDirectory = settings["SecureFileFieldSettings.SecureDirectoryName"];
+            string generateFileName = settings["SecureFileFieldSettings.GenerateFileName"];
+            string blobAccount = string.Empty;
+            if (settings.ContainsKey("SecureFileFieldSettings.SecureBlobAccountName"))                
+                blobAccount = settings["SecureFileFieldSettings.SecureBlobAccountName"];
+            bool guidFileName = false;
+            bool.TryParse(generateFileName, out guidFileName);
+            if (guidFileName) {
+                var extension = Path.GetExtension(fileName);
+                fileName = Guid.NewGuid().ToString("n") + extension;
+            }
+            RegistraValore(obj, "Url", fileName);
+            DateTime upload = DateTime.UtcNow;
+            RegistraValore(obj, "Upload", upload);
+            if (!string.IsNullOrEmpty(blobAccount)) {
+                string secureKey = settings["SecureFileFieldSettings.SecureSharedKey"];
+                string endpoint = settings["SecureFileFieldSettings.SecureBlobEndpoint"];
+                //provider = new SecureAzureBlobStorageProvider(blobAccount, secureKey, endpoint, true, url); 
+            } else {
+                // Test implementation for Scontrino Content Creation.
+                // Folder generation based on settings.
+                string customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
+                string subfolder = string.Empty;
+                if (!string.IsNullOrWhiteSpace(customSubfolder)) {
+                    subfolder = _tokenizer.Replace(customSubfolder, new Dictionary<string, object> { { "Content", obj } });
+                }
+                if (!string.IsNullOrWhiteSpace(subfolder)) {
+                    secureDirectory = Path.Combine(secureDirectory, subfolder);
+                    if (!Directory.Exists(secureDirectory))
+                        Directory.CreateDirectory(secureDirectory);
+                }
+
+                // Now I save the Subfolder property of the field, as I need this information to read the secure file.
+                RegistraValore(obj, "Subfolder", subfolder);
+
+                byte[] bytes = Convert.FromBase64String(fileContent);
+                string filePath = Path.Combine(secureDirectory, fileName);
+                File.WriteAllBytes(filePath, bytes);
+            }
+        }
+
         private void RegistraValoreEnumerator(object obj, string key, object value) {
             ListMode listmode = ((dynamic)obj).PartFieldDefinition.Settings.GetModel<EnumerationFieldSettings>().ListMode;
             if (listmode != ListMode.Listbox && listmode != ListMode.Checkbox) {
