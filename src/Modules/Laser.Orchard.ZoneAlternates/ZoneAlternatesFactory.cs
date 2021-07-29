@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Laser.Orchard.ZoneAlternates.Models;
@@ -99,7 +100,11 @@ namespace Laser.Orchard.ZoneAlternates {
                         displayedContext.ShapeMetadata.Alternates.Add(shapeName);
                     }
                 }
-                if (displayedContext.Shape?.ContentItem is ContentItem) {
+
+                // Adds Alternates defined with the ContentAlternatePart
+                // these alternates can be applied to Shape of type Widget or Content only
+                var allowedTypes = new List<string> { "Content", "Widget" };
+                if (displayedContext.Shape?.ContentItem is ContentItem && allowedTypes.Contains(displayedContext.ShapeMetadata.Type, StringComparer.InvariantCultureIgnoreCase)) {
                     ContentItem contentItem = displayedContext.Shape.ContentItem;
 
                     ContentAlternatePart contentAlternatePart = contentItem.As<ContentAlternatePart>();
