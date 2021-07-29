@@ -130,6 +130,7 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Filters\SelectTermsForm.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
+    <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,6 +227,7 @@
     <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
+    <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
@@ -418,6 +423,7 @@
     <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
     <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Order.CheckoutPolicies.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\FacebookShopSiteSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
