@@ -152,7 +152,7 @@
         <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False" 
                                            TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
                                            TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" FieldIndexing.Included="True" />
-        <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Textarea" />
+        <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Html"  />
         <Label.TextField DisplayName="Label" TextFieldSettings.Required="False" FieldIndexing.Included="True"
                          TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine."/>
         <Popolarita.EnumerationField DisplayName="Popolarità" 

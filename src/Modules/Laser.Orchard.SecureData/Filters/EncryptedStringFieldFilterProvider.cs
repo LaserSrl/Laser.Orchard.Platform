@@ -104,13 +104,11 @@ namespace Laser.Orchard.SecureData.Filters {
         }
 
         public LocalizedString DisplayFilter(FilterContext context) {
-            string description = "Value of the field is equal to '{0}'.";
-
-            if (context.State.ShowAllIfNoValue.Value == "on") {
-                description += " If '{0}' is empty, returns all results.";
+            if (context.State.ShowAllIfNoValue == "on") {
+                return T("Value of the field is equal to '{0}'. If '{0}' is empty, returns all results.", Convert.ToString(context.State.Value));
+            } else {
+                return T("Value of the field is equal to '{0}'.", Convert.ToString(context.State.Value));
             }
-
-            return T(description, Convert.ToString(context.State.Value));
         }
     }
 }

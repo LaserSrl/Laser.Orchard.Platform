@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Laser.Orchard.ZoneAlternates.Models;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
@@ -96,6 +98,27 @@ namespace Laser.Orchard.ZoneAlternates {
                     // Widget-[ContentTypeName]-[ZoneName].cshtml: "Widget-RecentBlogPosts-myZoneName.cshtml"
                     if (!displayedContext.ShapeMetadata.Alternates.Contains(shapeName)) {
                         displayedContext.ShapeMetadata.Alternates.Add(shapeName);
+                    }
+                }
+
+                // Adds Alternates defined with the ContentAlternatePart
+                // these alternates can be applied to Shape of type Widget or Content only
+                var allowedTypes = new List<string> { "Content", "Widget" };
+                if (displayedContext.Shape?.ContentItem is ContentItem && allowedTypes.Contains(displayedContext.ShapeMetadata.Type, StringComparer.InvariantCultureIgnoreCase)) {
+                    ContentItem contentItem = displayedContext.Shape.ContentItem;
+
+                    ContentAlternatePart contentAlternatePart = contentItem.As<ContentAlternatePart>();
+                    if (contentAlternatePart != null) {
+                        var settings = contentAlternatePart.Settings.GetModel<ContentAlternatePartSettings>();
+                        foreach (var alternate in settings.GetAlternates()) {
+                            if (!displayedContext.ShapeMetadata.Alternates.Contains(alternate)) {
+                                displayedContext.ShapeMetadata.Alternates.Add(alternate);
+                                if (contentItem.As<WidgetPart>() != null) {
+                                    var zoneName = contentItem.As<WidgetPart>().Zone;
+                                    displayedContext.ShapeMetadata.Alternates.Add(alternate + "__" + zoneName);
+                                }
+                            }
+                        }
                     }
                 }
             });
