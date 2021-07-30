@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement;
+﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
@@ -14,11 +15,6 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { this.Store(x => x.DefaultJsonForProductUpdate, value); }
         }
 
-        public string UserName {
-            get { return this.Retrieve(x => x.UserName); }
-            set { this.Store(x => x.UserName, value); }
-        }
-
         public string BusinessId {
             get { return this.Retrieve(x => x.BusinessId); }
             set { this.Store(x => x.BusinessId, value); }
@@ -27,6 +23,25 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public string CatalogId {
             get { return this.Retrieve(x => x.CatalogId); }
             set { this.Store(x => x.CatalogId, value); }
+        }
+
+        public string AppId {
+            get { return this.Retrieve(x => x.AppId); }
+            set { this.Store(x => x.AppId, value); }
+        }
+
+        public string AppSecret {
+            get { return this.Retrieve(x => x.AppSecret); }
+            set { this.Store(x => x.AppSecret, value); }
+        }
+
+        public void Save(FacebookShopSiteSettingsViewModel viewModel) {
+            ApiBaseUrl = viewModel.ApiBaseUrl;
+            DefaultJsonForProductUpdate = viewModel.DefaultJsonForProductUpdate;
+            BusinessId = viewModel.BusinessId;
+            CatalogId = viewModel.CatalogId;
+            AppId = viewModel.AppId;
+            AppSecret = viewModel.AppSecret;
         }
     }
 }

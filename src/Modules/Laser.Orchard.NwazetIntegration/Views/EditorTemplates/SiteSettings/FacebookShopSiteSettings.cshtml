@@ -1,6 +1,6 @@
-﻿@using Laser.Orchard.NwazetIntegration.Models
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels
 
-@model FacebookShopSiteSettingsPart
+@model FacebookShopSiteSettingsViewModel
 
 <fieldset>
     <div>
@@ -19,13 +19,6 @@
 </fieldset>
 <fieldset>
     <div>
-        <label for="@Html.FieldIdFor(m=>m.UserName)">@T("Facebook account name")</label>
-        @Html.TextBoxFor(m=>m.UserName, new { @class="text medium" })
-        <span class="hint">@T("Facebook account user name, needs the rights to manage the business")</span>
-    </div>
-</fieldset>
-<fieldset>
-    <div>
         <label for="@Html.FieldIdFor(m=>m.BusinessId)">@T("Facebook business id")</label>
         @Html.TextBoxFor(m => m.BusinessId, new { @class = "text medium" })
         <span class="hint">@T("Id of the Facebook business")</span>
@@ -36,5 +29,19 @@
         <label for="@Html.FieldIdFor(m=>m.CatalogId)">@T("Facebook catalog id")</label>
         @Html.TextBoxFor(m => m.CatalogId, new { @class = "text medium" })
         <span class="hint">@T("Id of the catalog on Facebook business")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.AppId)">@T("Facebook app id")</label>
+        @Html.TextBoxFor(m => m.AppId, new { @class = "text medium" })
+        <span class="hint">@T("Id of the app on Facebook business")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.AppSecret)">@T("Secret code of the Facebook app")</label>
+        @Html.TextBoxFor(m => m.AppSecret, new { @class = "text medium" })
+        <span class="hint">@T("Secret code of the app on Facebook business")</span>
     </div>
 </fieldset>

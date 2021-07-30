@@ -198,6 +198,8 @@
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopService.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopServiceContext.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Services\ICheckoutExtensionProvider.cs" />
     <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\ICheckoutPoliciesService.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -423,7 +426,7 @@
     <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
     <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Order.CheckoutPolicies.cshtml" />
-    <Content Include="Views\EditorTemplates\Parts\FacebookShopSiteSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

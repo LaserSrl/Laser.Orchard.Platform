@@ -10,7 +10,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         public FacebookShopSiteSettingsPartHandler() {
             T = NullLocalizer.Instance;
             Filters.Add(new ActivatingFilter<FacebookShopSiteSettingsPart>("Site"));
-            Filters.Add(new TemplateFilterForPart<FacebookShopSiteSettingsPart>("FacebookShopSiteSettings", "Parts/FacebookShopSiteSettings", "FacebookShop"));
+            //Filters.Add(new TemplateFilterForPart<FacebookShopSiteSettingsPart>("FacebookShopSiteSettings", "Parts/FacebookShopSiteSettings", "FacebookShop"));
         }
 
         public Localizer T { get; set; }

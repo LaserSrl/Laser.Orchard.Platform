@@ -9,6 +9,7 @@
   <Place SiteSettings_CheckoutPolicySettings="Content:4.2" />
   <Place SiteSettings_AddressConfiguration="Content:4.5" />
   <Place SiteSettings_AddressConfiguration_Details="Content:1" />
+  <Place SiteSettings_FacebookShop="Content:1" />
   <Place Parts_TerritoryHierarchy_IsCountriesHierarchy="Content:2.3"/>
   <Place Parts_TerritoryHierarchy_IsCountriesHierarchyLocalization="Content:2.3"/>
   <Place Parts_TerritoryPart_IsSelectedCountry="Content:2.1"/>

@@ -9,8 +9,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public string DefaultJsonForProductUpdate { get; set; }
 
-        public string UserName { get; set; }
         public string BusinessId { get; set; }
         public string CatalogId { get; set; }
+        public string AppId { get; set; }
+        public string AppSecret { get; set; }
     }
 }
