@@ -48,11 +48,36 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         }
 
         public string GenerateAccessToken(FacebookShopServiceContext context) {
-            return "EAAV0C0gchqcBACLwPhZC28TcidhU31whL9X1rUuDNRsWeofh15mUcHSPvPcw4njk2cafq0UGXSdlPxXCgcYDtLb58chLt0vPEkMPpsEP7Nf56fOWIGea9J2EL3NEjetBcxSmwjESIA8XHMI6vkG9Dp2BcKjZBZBQ6VAa67J1B486QRb196732lyEdaEwfEZASZAi6CDoyX2gzxe9eQQfyG7dsNYeRt5pUirs14ZBls3Y3MNtlZAwOJW";
+            // Access code generation has the following steps:
+            // 1. Authorize the client: https://graph.facebook.com/v11.0/oauth/authorize?client_id=1534966686844583&scope=business_management,catalog_management&redirect_uri=https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite
+            // 2. The previous call redirects to: https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite?code=AQCe-_0L4pQGdvCVWApdknt03o2WttfmaTKkpUL7CJZjOeXEXUm62D6rkVzGN7fLRJqn7eYAHQ5cn_c7gfOzJDE2DXJPxjyWbphMrW1_WwSCFS6i3SWuZABo7xV8-NNAyBCdKF85ZydTV7A9UdecM6Iydkelxs0WzUX3IxI49A9ViZv78octsZCBRjHo5z0w9OaXDQGY56okJ8NuFvtCYkeDuKTu37Su7p2Jp7ONRGRGFii0hKAIADtFGw98DtVvBHQ33EebAau5TT1cPoBl1IHaiT2oUwQAsNaaUDBMo8KX0IPFPLd_bvEceMpx8stXIp9vIQek32yiNFRXQ06pt6Qo#_=_
+            // We need to save the parameter "code" from the previous query string (for this, we need a proper Controller).
+            // 3. At this point, with the code, we can generate the access_token:
+            // https://graph.facebook.com/v11.0/oauth/access_token?client_id=1534966686844583&scope=business_management,catalog_management&redirect_uri=https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite&code=AQAdwntGxdiyn2ixmKjhARWQqmsVtiGHx8vSM5VxOeJwYhTPB17kU1ZTRx-qQ81daYlcxGaNO8hRnEa56nRrQztmZ1YViHvIQoatfLJS3b_gk9uYMu8lieBXxzIm5Q72z0VCrSeJ1K0AArzF19PzRPksNx1xO9Mt_ZgSwLapZrf4cz8yLV82OShxSpeZH_SknR5YvXAgNrF9-26sJ63cfNmm6A4XpzwO60jS3yrp0VGNCGf1Bt9T1keRi5F5Mo1nfM9Eopxih01fXh6nlq2iKytnxIZJ6vapg0iK8NhD_WL2r3c8sPuk52gpVv3HH3bQkq17JFYetOrvHWoTiCFDRmRr%23_=_&client_secret=cebbdd99828772a89f9cf4ce93754cbf#_=_
+            // Response of the previous call is in the following format:
+            //{
+            //  "access_token": "EAAV0C0gchqcBADm8ZBOgHI3hGAaa90ApypIxjHBPVHIQt6m0Dw4U16HJdQvZCS6agaTJTRdOMGlAtNlrIn255ZCvZB8Nna2BmiH85zvXAdvwf7nZC9k4yPfafyXGUUW1LbMQ8136NOZClFJN1ovV4dQbWJ6mvlMt9NuRnGQNspu8FEJves6QXG",
+            //  "token_type": "bearer",
+            //  "expires_in": 5181913 // 60 days
+            //}
+
+            string scope = "business_management,catalog_management";
+
+            string redirect_uri = "https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite";
+            string url = string.Format(
+                    "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}&scope={2}",
+                    context.AppId, redirect_uri, scope);
+
+            // SysAdmin token
+            var token = "EAAV0C0gchqcBACIPzNDNpfW3vykrZBUz2ksjN1umYH6St9AGKvrbXuD9ouF7dCzPruUVtaT8T3eY5ZCz4K12tT0HKcxEFtV2rFtExSMUE1ACf5ANzOrqy0juCJE70fADVQ4T7H9zhrjh9WhBVvZBjXEGG68PFbYC1351WSRQr4hkjcMF5hG";
+
+            return token;
+
+            //return "EAAV0C0gchqcBACLwPhZC28TcidhU31whL9X1rUuDNRsWeofh15mUcHSPvPcw4njk2cafq0UGXSdlPxXCgcYDtLb58chLt0vPEkMPpsEP7Nf56fOWIGea9J2EL3NEjetBcxSmwjESIA8XHMI6vkG9Dp2BcKjZBZBQ6VAa67J1B486QRb196732lyEdaEwfEZASZAi6CDoyX2gzxe9eQQfyG7dsNYeRt5pUirs14ZBls3Y3MNtlZAwOJW";
 
             // Commented because app access token doesn't have enough permissions.
             //string grant_type = "client_credentials";
-            //string url= string.Format(context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? "" : "/") + 
+            //string url = string.Format(context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? "" : "/") + 
             //    "oauth/access_token?client_id={0}&client_secret={1}&grant_type={2}&redirect_uri={3}",
             //        context.AppId, context.AppSecret, grant_type, "");
 
