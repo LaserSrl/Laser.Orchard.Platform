@@ -42,6 +42,20 @@
     -moz-transition: background 0.25s ease-in;
 }
 
+.cc-cookie-checks a.cc-cookie-accept-selected {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    background: #00bee9;
+    padding: 0.5em 0.75em;
+    border-radius: 0px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.25);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.35);
+    -o-transition: background 0.5s ease-in;
+    -webkit-transition: background 0.25s ease-in;
+    -moz-transition: background 0.25s ease-in;
+}
+
 .cc-cookies.cc-discreet {
     width: auto;
     padding: 0.5em 1em;

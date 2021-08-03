@@ -37,6 +37,7 @@
                 cookieDisable: '',
                 cookieExpires: 365,
                 cookieAcceptButtonText: "ACCEPT COOKIES",
+                cookieAcceptSelectedButtonText: "ACCEPT SELECTED",
                 cookieResetButtonText: "RESET COOKIES FOR THIS WEBSITE",
                 cookieWhatAreLinkText: "What are cookies?",
                 cookiePolicyPage: false,
@@ -55,6 +56,7 @@
             var cookieMessage = options.cookieMessage;
             var cookieExpires = options.cookieExpires;
             var cookieAcceptButtonText = options.cookieAcceptButtonText;
+            var cookieAcceptSelectedButtonText = options.cookieAcceptSelectedButtonText;
             var cookiePolicyPage = options.cookiePolicyPage;
             var cookieExpectedValue = options.cookieExpectedValue;
             var cookieAccepted = options.cookieAccepted;
@@ -113,6 +115,7 @@
             };
             // layout of cookie accept button
             var cookieAccept = ' <a href="#accept" class="cc-cookie-accept">' + cookieAcceptButtonText + '</a> ';
+            var cookieAcceptSelected = ' <a href="#accept-selected" class="cc-cookie-accept-selected">' + cookieAcceptSelectedButtonText + '</a> ';
             if ($cookieAccepted) {
                 manageCookieResetButton(options);
             } else {
@@ -137,6 +140,7 @@
                 } else { // bottom
                     $('body').append(htmlBanner);
                 }
+                $('.cc-cookie-checks').append(cookieAcceptSelected);
             }
             // do not cover policy page
             if (cookiePolicyPage) {
@@ -149,57 +153,13 @@
                 $('div.cc-cookies').css("bottom", "0");
             }
             // setting the cookies
-            $('.cc-cookie-accept').click(function (e) {
-                var savedCookies = [];
-                // technical always selected
-                savedCookies = savedCookies.concat(window.TechnicalCookies);
-
+            $('.cc-cookie-accept-selected').click(function (e) {
                 e.preventDefault();
-
-                var acceptedOptions = {
-                    preferences: false,
-                    statistical: false,
-                    marketing: false
-                };
-                var aux1 = "";
-                if ($("#chkPreferences").prop("checked")) {
-                    aux1 = aux1 + "1";
-                    acceptedOptions.preferences = true;
-                    savedCookies = savedCookies.concat(window.PreferencesCookies);
-                } else {
-                    aux1 = aux1 + "0";
-                }
-                if ($("#chkStatistical").prop("checked")) {
-                    aux1 = aux1 + "1";
-                    acceptedOptions.statistical = true;
-                    savedCookies = savedCookies.concat(window.StatisticalCookies);
-                } else {
-                    aux1 = aux1 + "0";
-                }
-                if ($("#chkMarketing").prop("checked")) {
-                    aux1 = aux1 + "1";
-                    acceptedOptions.marketing = true;
-                    savedCookies = savedCookies.concat(window.MarketingCookies);
-                } else {
-                    aux1 = aux1 + "0";
-                }
-
-                // if unchecked checkbox removed cookie not in selected category
-                if (aux1 !== "111") {
-                    ResetCookies(savedCookies);
-                }
-
-                $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
-                    expires: cookieExpires,
-                    path: '/'
-                });
-                $(".cc-cookies").fadeOut(function () {
-                    // reload page to activate cookies
-                    //location.reload();
-                    // fire an event to notify of the accepted options
-                    $(document).trigger("cookieConsent.accept", acceptedOptions);
-                    manageCookieResetButton(options);
-                });
+                AcceptCookies(false);
+            });
+            $('.cc-cookie-accept').click(function (e) {
+                e.preventDefault();
+                AcceptCookies(true);
             });
 
             function ResetCookies(savedCookies) {
@@ -248,6 +208,64 @@
                 }
             }
 
+            function AcceptCookies(acceptAll) {
+                var savedCookies = [];
+                // technical always selected
+                savedCookies = savedCookies.concat(window.TechnicalCookies);
+
+
+                var acceptedOptions = {
+                    preferences: false,
+                    statistical: false,
+                    marketing: false
+                };
+                var aux1 = "";
+                if (acceptAll) {
+                    aux1 = aux1 + "1"; //Preferences
+                    aux1 = aux1 + "1"; //Statistical
+                    aux1 = aux1 + "1"; //Marketing
+                }
+                else {
+                    if ($("#chkPreferences").prop("checked")) {
+                        aux1 = aux1 + "1";
+                        acceptedOptions.preferences = true;
+                        savedCookies = savedCookies.concat(window.PreferencesCookies);
+                    } else {
+                        aux1 = aux1 + "0";
+                    }
+                    if ($("#chkStatistical").prop("checked")) {
+                        aux1 = aux1 + "1";
+                        acceptedOptions.statistical = true;
+                        savedCookies = savedCookies.concat(window.StatisticalCookies);
+                    } else {
+                        aux1 = aux1 + "0";
+                    }
+                    if ($("#chkMarketing").prop("checked")) {
+                        aux1 = aux1 + "1";
+                        acceptedOptions.marketing = true;
+                        savedCookies = savedCookies.concat(window.MarketingCookies);
+                    } else {
+                        aux1 = aux1 + "0";
+                    }
+                }
+
+                // if unchecked checkbox removed cookie not in selected category
+                if (aux1 !== "111") {
+                    ResetCookies(savedCookies);
+                }
+
+                $.cookie("cc_cookie_accept", cookieExpectedValue + aux1, {
+                    expires: cookieExpires,
+                    path: '/'
+                });
+                $(".cc-cookies").fadeOut(function () {
+                    // reload page to activate cookies
+                    //location.reload();
+                    // fire an event to notify of the accepted options
+                    $(document).trigger("cookieConsent.accept", acceptedOptions);
+                    manageCookieResetButton(options);
+                });
+            }
             $('.cc-expand').click(function () {
                 $('.cc-cookie-box form').slideToggle('slow');
             });
