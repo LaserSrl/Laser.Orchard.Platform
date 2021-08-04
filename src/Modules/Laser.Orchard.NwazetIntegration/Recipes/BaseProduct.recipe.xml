@@ -74,7 +74,6 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart />
         <LocalizationPart />
-        <ProjectionPart ContentPartSettings.Attachable="True" />
         <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" 
                  SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
                  SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" 
