@@ -184,12 +184,12 @@
                     ExpandChoices();
                 }
             }
-            function ResetCookies(savedCookies) {
-                // removed all cookie that not in savedCookies list
+            function ResetCookies(cookiesToKeep) {
+                // removes all cookies that are not in cookiesToKeep list
                 var allCookie = $.cookie();
                 for (var cookie in allCookie) {
                     // if the cookie is not in the list it will be deleted
-                    if (!savedCookies.includes(cookie)) {
+                    if (!cookiesToKeep.includes(cookie)) {
                         var defaultDomain = window.DefaultCookieDomain;
                         var genericDeleted = true;
                         // try remove complete defaultDomain
