@@ -52,7 +52,7 @@ namespace Laser.Orchard.Cookies.Services {
                             checkedDisabled = (settings.defaultValueMarketing) ? "checked" : "";
                             break;
                     }
-                    result += "<label for=\"chk" + cType.ToString() + "\" style=\"margin-right:0.5em;\"><input type=\"checkbox\" id=\"chk" + cType.ToString() + "\" value=\"1\" " + checkedDisabled + " style=\"margin-right:0.5em;\"/>" + T(cType.ToString()) + "</label>";
+                    result += "<label for=\"chk" + cType.ToString() + "\"><input type=\"checkbox\" id=\"chk" + cType.ToString() + "\" value=\"1\" " + checkedDisabled + "/>" + T(cType.ToString()) + "</label>";
                 }
             }
             return result;

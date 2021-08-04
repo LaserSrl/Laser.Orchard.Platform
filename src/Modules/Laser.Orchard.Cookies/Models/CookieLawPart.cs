@@ -9,6 +9,7 @@ namespace Laser.Orchard.Cookies.Models {
         public string cookiePolicyPageMessage { get { return this.Retrieve(x => x.cookiePolicyPageMessage, "More infos"); } set { this.Store(x => x.cookiePolicyPageMessage, value); } }
         public string cookieErrorMessage { get { return this.Retrieve(x => x.cookieErrorMessage); } set { this.Store(x => x.cookieErrorMessage, value); } }
         public string cookieAcceptButtonText { get { return this.Retrieve(x => x.cookieAcceptButtonText, "OK"); } set { this.Store(x => x.cookieAcceptButtonText, value); } }
+        public string cookieAcceptSelectedButtonText { get { return this.Retrieve(x => x.cookieAcceptSelectedButtonText, "Accept selected"); } set { this.Store(x => x.cookieAcceptSelectedButtonText, value); } }
         public string cookieResetButtonText { get { return this.Retrieve(x => x.cookieResetButtonText, "GDPR Cookie"); } set { this.Store(x => x.cookieResetButtonText, value); } }
         public string cookieWhatAreLinkText { get { return this.Retrieve(x => x.cookieWhatAreLinkText); } set { this.Store(x => x.cookieWhatAreLinkText, value); } }
         public string cookiePolicyLink { get { return this.Retrieve(x => x.cookiePolicyLink); } set { this.Store(x => x.cookiePolicyLink, value); } }
