@@ -243,8 +243,14 @@
                 var aux1 = "";
                 if (acceptAll) {
                     aux1 = aux1 + "1"; //Preferences
+                    acceptedOptions.preferences = true;
+                    savedCookies = savedCookies.concat(window.PreferencesCookies);
                     aux1 = aux1 + "1"; //Statistical
+                    acceptedOptions.statistical = true;
+                    savedCookies = savedCookies.concat(window.StatisticalCookies);
                     aux1 = aux1 + "1"; //Marketing
+                    acceptedOptions.marketing = true;
+                    savedCookies = savedCookies.concat(window.MarketingCookies);
                 }
                 else {
                     if ($("#chkPreferences").prop("checked")) {
