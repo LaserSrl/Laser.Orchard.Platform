@@ -1,10 +1,11 @@
 ﻿using Laser.Orchard.Cookies.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.UI.Notify;
 
 namespace Laser.Orchard.Cookies.Drivers {
+    [OrchardFeature("Laser.Orchard.HubSpot")]
     public class HubSpotSettingsPartDriver : ContentPartDriver<HubSpotSettingsPart> {
 
         private const string templateName = "Parts/HubSpotSettings";
