@@ -25,14 +25,19 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { this.Store(x => x.CatalogId, value); }
         }
 
-        public string AppId {
-            get { return this.Retrieve(x => x.AppId); }
-            set { this.Store(x => x.AppId, value); }
-        }
+        //public string AppId {
+        //    get { return this.Retrieve(x => x.AppId); }
+        //    set { this.Store(x => x.AppId, value); }
+        //}
 
-        public string AppSecret {
-            get { return this.Retrieve(x => x.AppSecret); }
-            set { this.Store(x => x.AppSecret, value); }
+        //public string AppSecret {
+        //    get { return this.Retrieve(x => x.AppSecret); }
+        //    set { this.Store(x => x.AppSecret, value); }
+        //}
+
+        public string AccessToken {
+            get { return this.Retrieve(x => x.AccessToken); }
+            set { this.Store(x => x.AccessToken, value); }
         }
 
         public void Save(FacebookShopSiteSettingsViewModel viewModel) {
@@ -40,8 +45,9 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             DefaultJsonForProductUpdate = viewModel.DefaultJsonForProductUpdate;
             BusinessId = viewModel.BusinessId;
             CatalogId = viewModel.CatalogId;
-            AppId = viewModel.AppId;
-            AppSecret = viewModel.AppSecret;
+            //AppId = viewModel.AppId;
+            //AppSecret = viewModel.AppSecret;
+            AccessToken = viewModel.AccessToken;
         }
     }
 }

@@ -48,6 +48,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         }
 
         public string GenerateAccessToken(FacebookShopServiceContext context) {
+            // System user token should be saved in FacebookShopSiteSettingsPart.
+            // It should have the required permissions to manage the catalog syncronization.
+            return context.AccessToken;            
+            
+            // Everything else is commented in case it's needed in the future.
             // Access code generation has the following steps:
             // 1. Authorize the client: https://graph.facebook.com/v11.0/oauth/authorize?client_id=1534966686844583&scope=business_management,catalog_management&redirect_uri=https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite
             // 2. The previous call redirects to: https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite?code=AQCe-_0L4pQGdvCVWApdknt03o2WttfmaTKkpUL7CJZjOeXEXUm62D6rkVzGN7fLRJqn7eYAHQ5cn_c7gfOzJDE2DXJPxjyWbphMrW1_WwSCFS6i3SWuZABo7xV8-NNAyBCdKF85ZydTV7A9UdecM6Iydkelxs0WzUX3IxI49A9ViZv78octsZCBRjHo5z0w9OaXDQGY56okJ8NuFvtCYkeDuKTu37Su7p2Jp7ONRGRGFii0hKAIADtFGw98DtVvBHQ33EebAau5TT1cPoBl1IHaiT2oUwQAsNaaUDBMo8KX0IPFPLd_bvEceMpx8stXIp9vIQek32yiNFRXQ06pt6Qo#_=_
@@ -61,17 +66,17 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             //  "expires_in": 5181913 // 60 days
             //}
 
-            string scope = "business_management,catalog_management";
+            //string scope = "business_management,catalog_management";
 
-            string redirect_uri = "https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite";
-            string url = string.Format(
-                    "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}&scope={2}",
-                    context.AppId, redirect_uri, scope);
+            //string redirect_uri = "https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite";
+            //string url = string.Format(
+            //        "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri={1}&scope={2}",
+            //        context.AppId, redirect_uri, scope);
 
-            // SysAdmin token
-            var token = "EAAV0C0gchqcBACIPzNDNpfW3vykrZBUz2ksjN1umYH6St9AGKvrbXuD9ouF7dCzPruUVtaT8T3eY5ZCz4K12tT0HKcxEFtV2rFtExSMUE1ACf5ANzOrqy0juCJE70fADVQ4T7H9zhrjh9WhBVvZBjXEGG68PFbYC1351WSRQr4hkjcMF5hG";
+            //// SysAdmin token
+            //var token = "EAAV0C0gchqcBALZAxI0y2rfzvR1v7AxXYxZA6hb2XRPIURuJGGRP5rAYCdlXJEPQkNJG5WWdwf7e3A7rLLQTBM6GucBX4aazKZAZALFCbM93BN1tdValDcnGBJRQ4kcZBQil9zv4e82pKQ7yuRMOX9MH3OnZB4GTgr0ag8bVCKgsLqcT3RHUtl";
 
-            return token;
+            //return token;
 
             //return "EAAV0C0gchqcBACLwPhZC28TcidhU31whL9X1rUuDNRsWeofh15mUcHSPvPcw4njk2cafq0UGXSdlPxXCgcYDtLb58chLt0vPEkMPpsEP7Nf56fOWIGea9J2EL3NEjetBcxSmwjESIA8XHMI6vkG9Dp2BcKjZBZBQ6VAa67J1B486QRb196732lyEdaEwfEZASZAi6CDoyX2gzxe9eQQfyG7dsNYeRt5pUirs14ZBls3Y3MNtlZAwOJW";
 

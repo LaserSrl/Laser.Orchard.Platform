@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
+    [OrchardFeature("Laser.Orchard.FacebookShop")]
     public class FacebookShopSiteSettingsViewModel {
         public string ApiBaseUrl { get; set; }
 
@@ -11,7 +9,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         public string BusinessId { get; set; }
         public string CatalogId { get; set; }
-        public string AppId { get; set; }
-        public string AppSecret { get; set; }
+        //public string AppId { get; set; }
+        //public string AppSecret { get; set; }
+        public string AccessToken { get; set; }
     }
 }

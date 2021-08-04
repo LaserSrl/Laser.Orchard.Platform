@@ -56,8 +56,9 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 DefaultJsonForProductUpdate = part.DefaultJsonForProductUpdate,
                 BusinessId = part.BusinessId,
                 CatalogId = part.CatalogId,
-                AppId = part.AppId,
-                AppSecret = part.AppSecret
+                //AppId = part.AppId,
+                //AppSecret = part.AppSecret,
+                AccessToken = part.AccessToken
             };
         }
 
@@ -67,25 +68,40 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.AppId)) {
-                updater.AddModelError(Prefix, T("App Id is required."));
-                return false;
-            }
+            //if (string.IsNullOrWhiteSpace(viewModel.AppId)) {
+            //    updater.AddModelError(Prefix, T("App Id is required."));
+            //    return false;
+            //}
 
-            if (string.IsNullOrWhiteSpace(viewModel.AppSecret)) {
-                updater.AddModelError(Prefix, T("App Secret is required."));
-                return false;
-            }
+            //if (string.IsNullOrWhiteSpace(viewModel.AppSecret)) {
+            //    updater.AddModelError(Prefix, T("App Secret is required."));
+            //    return false;
+            //}
 
             var serviceContext = FacebookShopServiceContext.From(viewModel);
             
-            if (string.IsNullOrWhiteSpace(viewModel.BusinessId) || !_facebookShopService.CheckBusiness(serviceContext)) {
+            if (string.IsNullOrWhiteSpace(viewModel.BusinessId)) {
                 updater.AddModelError(Prefix, T("Invalid business id."));
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(viewModel.CatalogId) || !_facebookShopService.CheckCatalog(serviceContext)) {
+            if (string.IsNullOrWhiteSpace(viewModel.CatalogId)) {
                 updater.AddModelError(Prefix, T("Invalid catalog id."));
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(viewModel.AccessToken)) {
+                updater.AddModelError(Prefix, T("Invalid access token."));
+                return false;
+            }
+
+            if (!_facebookShopService.CheckBusiness(serviceContext)) {
+                updater.AddModelError(Prefix, T("Business check failed. Check you're using the right business id and a valid access token."));
+                return false;
+            }
+
+            if (!_facebookShopService.CheckCatalog(serviceContext)) {
+                updater.AddModelError(Prefix, T("Catalog check failed. Check you're using the right catalog id and a valid access token."));
                 return false;
             }
 
