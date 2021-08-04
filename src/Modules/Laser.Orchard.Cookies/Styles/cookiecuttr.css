@@ -46,11 +46,13 @@
     -webkit-transition: background 0.25s ease-in;
     -moz-transition: background 0.25s ease-in;
 }
+
 .cc-cookie-accept-selected {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
+
 .cc-cookie-checks .cc-cookie-accept-selected a {
     display: inline-block;
     color: #fff;
@@ -103,6 +105,10 @@
     margin: 0 auto;
     padding: 10px;
 }
+
+    .cc-cookie-frame .cc-cookie-box {
+        padding: 10px;
+    }
 
 .cc-cookie-box {
     background-color: black;
