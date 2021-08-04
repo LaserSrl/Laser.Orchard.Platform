@@ -14,7 +14,9 @@
            Orchard.Projections, Orchard.Taxonomies, 
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
            Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
-           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions" />
+           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions,
+           Nwazet.CurrencyProviderBySiteSetting
+           " />
   <ContentDefinition>
     <Types>
       <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
@@ -341,6 +343,7 @@
   <Settings>
     <CheckoutPolicySettingsPart PolicyTextReferences="{False},{False},{/alias=it\/policy\/condizioni-di-acquisto},{/alias=it\/policy\/privacy-policy}" />
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
+    <ECommerceCurrencySiteSettingsPart CurrencyCode="EUR" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
   </Settings>
 	<!-- step to remove the default content type "Product" from the recipe -->
