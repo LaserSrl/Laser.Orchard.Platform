@@ -1,12 +1,35 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.PartSettings;
+using Newtonsoft.Json.Linq;
+using Nwazet.Commerce.Models;
+using Orchard;
+using Orchard.ContentManagement;
+using Orchard.Core.Common.Models;
 using Orchard.Environment.Extensions;
+using Orchard.Localization;
+using Orchard.Tokens;
 using System;
 using System.IO;
 using System.Net;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
     [OrchardFeature("Laser.Orchard.FacebookShop")]
     public class FacebookShopService : IFacebookShopService {
+        IWorkContextAccessor _workContext;
+        ITokenizer _tokenizer;
+
+        public FacebookShopService(
+            IWorkContextAccessor workContext,
+            ITokenizer tokenizer) {
+            _workContext = workContext;
+            _tokenizer = tokenizer;
+
+            T = NullLocalizer.Instance;
+        }
+
+        public Localizer T { get; set; }
+
         public bool CheckBusiness(FacebookShopServiceContext context) {
             string url = context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? context.BusinessId : "/" + context.BusinessId);
 
@@ -50,8 +73,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         public string GenerateAccessToken(FacebookShopServiceContext context) {
             // System user token should be saved in FacebookShopSiteSettingsPart.
             // It should have the required permissions to manage the catalog syncronization.
-            return context.AccessToken;            
-            
+            return context.AccessToken;
+
             // Everything else is commented in case it's needed in the future.
             // Access code generation has the following steps:
             // 1. Authorize the client: https://graph.facebook.com/v11.0/oauth/authorize?client_id=1534966686844583&scope=business_management,catalog_management&redirect_uri=https://win2016dev.westeurope.cloudapp.azure.com/OrchardPiovanelliA/TestLite
@@ -101,6 +124,159 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             //}
 
             //return access_token;
+        }
+
+        public FacebookServiceJsonContext SyncProduct(ContentItem product) {
+            try {
+                var productPart = product.As<ProductPart>();
+                var facebookPart = product.As<FacebookShopProductPart>();
+
+                if (productPart != null && facebookPart != null && facebookPart.SynchronizeFacebookShop) {
+                    var jsonTemplate = facebookPart.Settings.GetModel<FacebookShopProductPartSettings>().JsonForProductUpdate;
+                    var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+                    if (string.IsNullOrWhiteSpace(jsonTemplate)) {
+                        // Fallback to FacebookShopSiteSettingsPart
+                        jsonTemplate = fsssp.DefaultJsonForProductUpdate;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(jsonTemplate)) {
+                        // jsonTemplate typically begins with a double '{' and ends with a double '}' (to make tokens work).
+                        // For this reason, before deserialization, I need to replace tokens and replace double parenthesis.
+                        string jsonBody = _tokenizer.Replace(jsonTemplate, product);
+                        jsonBody = jsonBody.Replace("{{", "{").Replace("}}", "}");
+
+                        var jsonContext = FacebookServiceJsonContext.From(jsonBody);
+
+                        CheckCompliance(jsonContext, product);
+
+                        if (jsonContext != null && jsonContext.Valid) {
+
+                        } else {
+                            // I need to tell it was impossible to synchronize the product on Facebook Shop.
+                            return new FacebookServiceJsonContext() {
+                                Message = T("Facebook shop synchronization failed."),
+                                Valid = false
+                            };
+                        }
+                    }
+                }
+            } catch {
+                // I need to tell it was impossible to synchronize the product on Facebook Shop.
+                return new FacebookServiceJsonContext() {
+                    Message = T("Facebook shop synchronization failed."),
+                    Valid = false
+                };
+            }
+
+            return new FacebookServiceJsonContext() {
+                Message = T("Facebook shop synchronization failed."),
+                Valid = false
+            };
+        }
+
+        /// <summary>
+        /// This routine checks the compliance of this class with Facebook Shop standards, verifying that default fields are compiled.
+        /// It eventually looks for defaults for fields that have been left empty.
+        /// </summary>
+        private FacebookServiceJsonContext CheckCompliance(FacebookServiceJsonContext context, ContentItem product) {
+            if (string.IsNullOrWhiteSpace(context.Method)) {
+                context.Method = FacebookServiceJsonContext.METHOD;
+            }
+
+            if (string.IsNullOrWhiteSpace(context.RetailerId)) {
+                context.RetailerId = product.As<ProductPart>().Sku;
+            }
+
+            if (context.ProductData == null) {
+                context.ProductData = new FacebookServiceJsonContextData();
+            }
+
+            CheckCompliance(context.ProductData, product);
+
+            if (context.ProductData == null || !context.ProductData.Valid) {
+                if (context.ProductData != null && context.ProductData.Message != null) {
+                    context.Message = context.ProductData.Message;
+                } else {
+                    context.Message = T("Invalid data");
+                }
+                context.Valid = false;
+            }
+
+            return context;
+        }
+
+        private FacebookServiceJsonContextData CheckCompliance(FacebookServiceJsonContextData context, ContentItem product) {
+            if (string.IsNullOrWhiteSpace(context.Name)) {
+                context.Name = product.ContentManager.GetItemMetadata(product).DisplayText;
+            }
+
+            if (string.IsNullOrWhiteSpace(context.Description)) {
+                var bodyPart = product.As<BodyPart>();
+                if (bodyPart == null) {
+                    context.Message = T("Invalid product description (body part not found)");
+                    context.Valid = false;
+                    return context;
+                } else {
+                    context.Description = bodyPart.Text;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(context.Availability)) {
+                context.Availability = "in stock";
+            }
+
+            if (string.IsNullOrWhiteSpace(context.Condition)) {
+                context.Condition = "new";
+            }
+
+            // The price in the product section of Facebook Shop json is the number of cents.
+            // E.g.: if the price is 9.99, we need to write 999 in the json.
+            bool getDefaultPrice = false;
+            decimal decPrice = 0;
+
+            if (string.IsNullOrWhiteSpace(context.Price)) {
+                getDefaultPrice = true;
+            } else if (decimal.TryParse(context.Price, out decPrice)) {
+                context.Price = ((int)(decPrice * 100)).ToString();
+            } else {
+                getDefaultPrice = true;
+            }
+
+            if (getDefaultPrice) {
+                decimal price = product.As<ProductPart>().ProductPriceService.GetPrice(product.As<ProductPart>());
+
+                int cents = (int)(price * 100);
+                context.Price = cents.ToString();
+            }
+            // End of price analysis.
+
+            if (string.IsNullOrWhiteSpace(context.Currency)) {
+                context.Currency = "EUR";
+            }
+
+            if (string.IsNullOrWhiteSpace(context.Url)) {
+                // Url is empty, I need to create it from scratch.
+                UrlHelper urlHelper = new UrlHelper(_workContext.GetContext().HttpContext.Request.RequestContext);
+                context.Url = urlHelper.RouteUrl(product.ContentManager.GetItemMetadata(product).DisplayRouteValues);
+            }
+
+            if (!context.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) && !context.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
+                // Url isn't a complete url (it doesn't start with http:// or https://).
+
+            }
+
+            if (string.IsNullOrWhiteSpace(context.ImageUrl)) {
+                context.Message = T("Invalid image url");
+                context.Valid = false;
+                return context;
+            }
+
+            if (string.IsNullOrWhiteSpace(context.Brand)) {
+                // TODO: what's the default brand of a product?
+                context.Brand = string.Empty;
+            }
+
+            return context;
         }
     }
 }
