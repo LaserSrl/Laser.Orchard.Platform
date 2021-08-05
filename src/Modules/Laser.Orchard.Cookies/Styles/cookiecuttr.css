@@ -128,11 +128,6 @@
         font-weight: 700;
     }
 
-    .cc-cookie-box p a {
-        font-weight: 700;
-        line-height: 15px;
-    }
-
     .cc-cookie-box p {
         text-align: justify;
         margin-bottom: 10px;
@@ -193,15 +188,20 @@ a.cc-cookie-accept {
 }
 
 a.cc-expand {
-    text-decoration: none;
-    font-weight: normal !important;
-    cursor: pointer;
+    display: inline-block;
     color: #fff;
+    text-decoration: none;
+    background: #00bee9;
+    padding: 0.5em 0.75em;
+    border-radius: 0px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.25);
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.35);
+    -o-transition: background 0.5s ease-in;
+    -webkit-transition: background 0.25s ease-in;
+    -moz-transition: background 0.25s ease-in;
+    cursor: pointer;
 }
 
-    a.cc-expand:hover {
-        text-decoration: underline !important;
-    }
 
 .cc-powered-by-box {
     position: relative;
