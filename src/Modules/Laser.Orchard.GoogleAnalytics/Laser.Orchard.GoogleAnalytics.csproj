@@ -59,6 +59,7 @@
     <Compile Include="Models\GoogleAnalyticsSettingsPartRecord.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AdditionalCookieProvider.cs" />
     <Compile Include="Services\CookieGDPR.cs" />
     <Compile Include="Services\MissingSettingsBanner.cs" />
     <Compile Include="ViewModels\GASettingsVM.cs" />
