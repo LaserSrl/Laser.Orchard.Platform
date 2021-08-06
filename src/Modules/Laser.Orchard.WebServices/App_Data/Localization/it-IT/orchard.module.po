@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,14 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/CustomRestApiSettingsAdmin/Index.cshtml"
+msgid "Save"
+msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/CustomRestApiSettingsAdmin/Index.cshtml"
+msgid "Settings"
+msgstr "Impostazioni"
 
 msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServiceSettings.cshtml"
 msgid "default is false"
@@ -20,11 +28,47 @@ msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServ
 msgid "WebServices Settings"
 msgstr "Impostazioni dei WebService"
 
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/SiteSettings/CustomRestApiSiteSettingsPart.cshtml"
+msgid "Custom REST API"
+msgstr "REST API Custom"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/SiteSettings/CustomRestApiSiteSettingsPart.cshtml"
+msgid "JSON representing the configuration for custom REST API endpoints. This is an array of objects. Each one has a Name property (required) and a Verbs property. The latter is an array of strings representing the accepted verbs for the entrypoint. For example, [{\"Name\": \"foo\", \"Verbs\":[\"get\"]},{{\"Name\": \"bar\", \"Verbs\":[\"post\"]}] will enable calling ~/api/rest/foo in GET and ~/api/rest/bar in POST."
+msgstr "JSON che rappresenta la configurazione per gli endpoints di REST API custom. Questo è un array di oggetti. Ciascuno ha una proprietà \"Name\" (obbligatoria) ed una proprietà \"Verbs\". \"Verbs\" è un array di stringhe che rappresenta i verbi accettati per l'entrypoint. Per esempio [{\"Name\": \"foo\", \"Verbs\":[\"get\"]},{{\"Name\": \"bar\", \"Verbs\":[\"post\"]}] permetterà di chiamare ~/api/rest/foo in GET e ~/api/rest/bar in POST."
+
 msgctxt "~/Modules/Laser.Orchard.WebServices/Views/Parts/StoreRedirect.cshtml"
 msgid "REDIRECT PAGE FOR MOBILE DEVICES"
 msgstr "PAGINA DI REDIREZIONE PER DISPOSITIVI MOBILI"
 
+msgctxt "Laser.Orchard.WebServices.Controllers.CustomRestApiSettingsAdminController"
+msgid "Not authorized to manage custom REST API settings"
+msgstr "Non autorizzato a gestire le impostazioni per le REST API custom"
+
+msgctxt "Laser.Orchard.WebServices.Controllers.CustomRestApiSettingsAdminController"
+msgid "REST API settings updated"
+msgstr "Impostazioni per le REST API aggiornate"
+
 msgctxt "Laser.Orchard.WebServices.Controllers.TermsController"
 msgid "Missing Icon field in Term Part."
 msgstr "Campo Icona assente per il termine."
+
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
+msgid "Action Name is duplicate: {0}"
+msgstr "Il nome della action è duplicato: {0}"
+
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
+msgid "Action Name is required."
+msgstr "Il nome della Action è obbligatorio."
+
+msgctxt "Laser.Orchard.WebServices.Drivers.CustomRestApiSiteSettingsPartDriver"
+msgid "Failed to parse the json."
+msgstr "Impossibile interpretare il json."
+
+msgctxt "Laser.Orchard.WebServices.Navigation.CustomRestApiSettingsAdminMenu"
+msgid "Custom REST API"
+msgstr "REST API Custom"
+
+msgctxt "Laser.Orchard.WebServices.Navigation.CustomRestApiSettingsAdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
 

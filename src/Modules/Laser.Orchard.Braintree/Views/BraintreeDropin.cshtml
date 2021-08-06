@@ -1,0 +1,252 @@
+﻿@using Laser.Orchard.Braintree.ViewModels
+@using Laser.Orchard.Braintree.Models;
+@using Laser.Orchard.Braintree.Services;
+@using Orchard.ContentManagement;
+@{ 
+    Script.Require("jQuery").AtFoot();
+    Script.Include("https://js.braintreegateway.com/web/dropin/1.27.0/js/dropin.min.js").AtFoot();
+
+    var _braintreePosService = WorkContext.Resolve<IBraintreePosService>();
+    var settings = _braintreePosService.GetSettings();
+
+    var viewModel = (PaymentVM)Model.ViewModel;
+    @* TODO: Parametrize more of this *@
+    var warningSelector = (string)Model.WarningSelector;
+    if (string.IsNullOrWhiteSpace(warningSelector)) {
+        warningSelector = "#div-warning";
+    }
+
+    var paymentErrorMessage = T("Payment method was rejected by the payment providers.");
+
+    var paymentFormSelector = (string)Model.PaymentFormSelector;
+    if (string.IsNullOrWhiteSpace(paymentFormSelector)) {
+        paymentFormSelector = "#payment-form";
+    }
+
+    var payBtnId = "pay-button";
+    var formId = "checkout";
+    var nonceinputId = "nonce";
+
+    // if we have no googlepay merchantId, we don't even try to set it up
+    var gpMerchantId = settings.GooglePayMerchantId;
+    var apDisplayName = settings.ApplePayDisplayName;
+    var apLabel = settings.ApplePayLabel;
+    // "additional" payment methods. Them bein enabled here means we'll try to add
+    // them as an option in the dropin. They will not render or be available unless 
+    // they are also configured in the Braintree dashboard. For example, here we may
+    // try to setup Paypal, but if the merchant hasn't associated their account in
+    // the Braintree dashboard, nothing will show.
+    var enablePaypal = true;
+    var enableGooglePay = !string.IsNullOrWhiteSpace(gpMerchantId);
+    var enableApplePay = !string.IsNullOrWhiteSpace(apDisplayName) && !string.IsNullOrWhiteSpace(apLabel);
+}
+
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        var dropin;
+        var payBtn = document.getElementById('@payBtnId');
+        var form = document.getElementById('@formId');
+        var nonceinput = document.getElementById('@nonceinputId');
+        var threeDSEnabled = false;
+        var _clientToken = "";
+
+        function paymentMethodCallback(err, payload) {
+            if (err) {
+                console.log('tokenization error:');
+                console.log(err);
+                dropin.clearSelectedPaymentMethod();
+                enablePayNow();
+	            $("@warningSelector").css("display", "");
+	            $("@warningSelector").text("@paymentErrorMessage");
+
+                return;
+            }
+
+            if (threeDSEnabled) {
+                if (payload.liabilityShifted || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
+                    console.log('verification success:', payload);
+                    // prevent the user from clicking around and messing things up by
+                    // changing the payment info
+                    $('.braintree-toggle').css("display", "none");
+                    // send nonce and verification data to your server
+                    $(nonceinput).val(payload.nonce);
+                    form.submit();
+                } else {
+                    // Decide if you will force the user to enter a different payment method
+                    // if liability was not shifted
+                    dropin.clearSelectedPaymentMethod();
+                    enablePayNow();
+	                $("@warningSelector").css("display", "");
+	                $("@warningSelector").text("@paymentErrorMessage");
+                }
+            } else {
+                if (payload.nonce) {
+                    console.log('verification success:', payload);
+                    // prevent the user from clicking around and messing things up by
+                    // changing the payment info
+                    $('.braintree-toggle').css("display", "none");
+                    // send nonce and verification data to your server
+                    $(nonceinput).val(payload.nonce);
+                    form.submit();
+                } else {
+                    dropin.clearSelectedPaymentMethod();
+                    enablePayNow();
+	                $("@warningSelector").css("display", "");
+	                $("@warningSelector").text("@T("Payment method was rejected by the payment providers.")");
+                }
+            }
+        }
+
+        function actuallyPay() {
+            payBtn.setAttribute('disabled', 'disabled');
+            payBtn.innerText = '@T("Processing...")';
+            $("@warningSelector").css("display", "none");
+            if (threeDSEnabled) {
+                dropin.requestPaymentMethod({
+                    threeDSecure: {
+                        amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)'
+                    }
+                }, paymentMethodCallback);
+            } else {
+                dropin.requestPaymentMethod(paymentMethodCallback);
+            }
+        }
+        function do_nothing() { }
+        function run_once(func) {
+            return function () {
+                var f = func;
+                func = do_nothing;
+                return f.apply(this, arguments);
+            };
+        }
+        var paymentFunction = run_once(actuallyPay);
+        
+        function setupForm() {
+            enablePayNow();
+
+            //events
+            dropin.on('paymentMethodRequestable', function (event) {
+                console.log(event.type); // The type of Payment Method, e.g 'CreditCard', 'PayPalAccount'.
+                console.log(event.paymentMethodIsSelected); // true if a customer has selected a payment method when paymentMethodRequestable fires
+
+                if (event.paymentMethodIsSelected) {
+                    paymentFunction();
+                }
+            });
+            
+            payBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                paymentFunction();
+            });
+        }
+        function enablePayNow() {
+	        $("@warningSelector").css("display", "none");
+            payBtn.innerText = '@T("Pay Now")';
+            payBtn.removeAttribute('disabled');
+            paymentFunction = run_once(actuallyPay);
+        }
+        function setupDropin() {
+            // wipe the container
+            $('@paymentFormSelector').empty();
+            // try to set the dropin up to use 3DSecure
+            var baseDropinOptions = {
+                authorization: _clientToken,
+                container: '@paymentFormSelector',
+                locale: '@WorkContext.CurrentCulture.Replace("-", "_")'
+            };
+            
+            @if (enablePaypal) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        paypal: {
+                            flow: 'checkout',
+                            amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
+                            currency: '@viewModel.Record.Currency'
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableGooglePay) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        googlePay: {
+                            merchantId: '@gpMerchantId',
+                            transactionInfo: {
+                                totalPriceStatus: 'FINAL',
+                                totalPrice: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)',
+                                currencyCode: '@viewModel.Record.Currency'
+                            }
+                        }
+                    }
+                );
+                </text>
+            }
+            @if (enableApplePay) {
+                <text>
+                baseDropinOptions = $.extend(
+                    baseDropinOptions,
+                    {
+                        applePay: {
+                            displayName: '@apDisplayName',
+                            paymentRequest: {
+                                total: {
+                                    label: '@apLabel',
+                                    amount: '@viewModel.Record.Amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)'
+                                }
+                            }
+                        }
+                    }
+                );
+                </text>
+            }
+            braintree.dropin.create(
+                $.extend({}, baseDropinOptions, { threeDSecure: true }),
+                function (err, instance) {
+                    if (err) {
+                        threeDSEnabled = false;
+                        console.log(err.message);
+                        // error in creating the dropin is likely due to 3DS not being configured by the merchant
+                        // try to go without 3ds2
+                        $('@paymentFormSelector').empty();
+                        braintree.dropin.create(
+                            baseDropinOptions,
+                            function (err2, dropInstance) {
+                                console.log('created without 3dsecure');
+                                dropin = dropInstance;
+                                setupForm();
+                        });
+                    } else {
+                        threeDSEnabled = true;
+                        console.log('created with 3dsecure');
+                        dropin = instance;
+                        setupForm();
+                    }
+                });
+        }
+	    function letUserPay(data, textStatus, jqXHR) {
+            var clientToken = data;
+            _clientToken = clientToken;
+            setupDropin();
+        }
+	    function showError(jqXHR, textStatus) {
+		    alert("Error: " + textStatus);
+        }
+
+	    $(document).ready(function() {
+		    $.ajax({
+			    type: "GET",
+			    url: "@Html.Raw(viewModel.TenantBaseUrl)/Laser.Orchard.Braintree/Braintree/GetToken",
+			    data: "",
+			    dataType: "text",
+			    success: letUserPay,
+			    error: showError
+		    });
+	    });
+    </script>
+}

@@ -9,4 +9,4 @@ Features:
     Laser.Orchard.Events:
         Description: Add events and display them in calendar or list form. Creatable as a page or a widget.
 		Category: Content
-		Dependencies: Laser.Orchard.StartupConfig, Orchard.Projections, Orchard.Resources, Common
+		Dependencies: Laser.Orchard.jQueryPlugins, Laser.Orchard.StartupConfig, Orchard.Projections, Orchard.Resources, Common

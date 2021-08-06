@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -9,16 +9,36 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Automatically regenerate when editing content"
+msgstr "Rigenera automaticamente il valore campo ad ogni aggiornamento del contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Background bulk update"
+msgstr "Aggiornamento massivo in background"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Check to enable token replacement in the field contents."
 msgstr "Seleziona per abilitare nel campo la sostituzione dei token."
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Default value"
+msgstr "Valore di default"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Default value."
 msgstr "Valore iniziale"
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "Enter a default value for the field."
+msgstr "Inserire il valore di default del campo."
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Selecting a value different than None will start a background update of these hidden fields."
 msgstr "Selezionando un valore diverso da Nessuno verrà avviato un aggiornamento in background dei campi nascosti"
+
+msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
+msgid "This option will cause the field to automatically be regenerated with the default value when you edit existing content and save it again, otherwise it will always keep the old value."
+msgstr "Questa opzione consente di rigenerare automaticamente il valore del campo ad ogni salvataggio. Nel caso in cui l'opzione sia deselezionata, sarà assegnato un valore al campo solo se vuoto."
 
 msgctxt "~/Modules/Laser.Orchard.HiddenFields/Views/DefinitionTemplates/HiddenStringFieldSettingsEventsViewModel.cshtml"
 msgid "Tokenized"
@@ -155,6 +175,22 @@ msgstr "Campo di {0}"
 msgctxt "Laser.Orchard.HiddenFields.Projections.HiddenStringFieldFilter"
 msgid "Field {0} {1} \"{2}\""
 msgstr "Campo (Field) {0} {1} \"{2}\""
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "Edit all {0} hidden string fields"
+msgstr "Modifica tutti gli hidden string nascosti {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "Edit own {0} hidden string fields"
+msgstr "Modifica tutti i tuoi hidden string nascosti {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "See all {0} hidden string fields"
+msgstr "Vedi tutti gli hidden string {0}"
+
+msgctxt "Laser.Orchard.HiddenFields.Services.HiddenFieldService"
+msgid "See own {0} hidden string fields"
+msgstr "Vedi tutti i tuoi hidden string {0}"
 
 msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
 msgid "All fields"

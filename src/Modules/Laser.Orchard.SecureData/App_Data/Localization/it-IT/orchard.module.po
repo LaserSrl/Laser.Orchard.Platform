@@ -1,0 +1,238 @@
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Always show decrypted value to authorized users."
+msgstr "Mostra sempre il valore decodificato agli utenti autorizzati."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Check if the confirm field is shown and required."
+msgstr "Seleziona la casella se il campo di conferma è visualizzato e obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Check if the field is required."
+msgstr "Seleziona la casella se il campo di conferma è obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "ConfirmRequired"
+msgstr "Conferma obbligatoria"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Declaring what pattern should be used for validating a field’s value, in the form of a regular expression. (optional)"
+msgstr "Pattern utilizzato per la validazione del valore del campo, in forma di espressione regolare. (opzionale)"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Help text"
+msgstr "Suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "IsVisible"
+msgstr "Visibile"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Pattern"
+msgstr "Pattern"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "Required"
+msgstr "Obbligatorio"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
+msgid "The help text is written under the field when the user is entering a value."
+msgstr "Il suggerimento è scritto al di sotto del campo quando l'utente sta digitando il valore."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Check if the confirm field is shown and required."
+msgstr "Seleziona la casella se il campo di conferma è visualizzato e obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Check if the field is required."
+msgstr "Seleziona la casella se il campo di conferma è obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "ConfirmRequired"
+msgstr "Conferma obbligatoria"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Declaring what pattern should be used for validating a field’s value, in the form of a regular expression. (optional)"
+msgstr "Pattern utilizzato per la validazione del valore del campo, in forma di espressione regolare. (opzionale)"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Help text"
+msgstr "Suggerimento"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Pattern"
+msgstr "Pattern"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "Required"
+msgstr "Obbligatorio"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
+msgid "The help text is written under the field when the user is entering a value."
+msgstr "Il suggerimento è scritto al di sotto del campo quando l'utente sta digitando il valore."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "Confirm {0}"
+msgstr "Conferma {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "Pattern: {0}"
+msgstr "Pattern: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "Save value even if it's empty."
+msgstr "Salva il valore anche se è vuoto."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "SaveIfEmpty"
+msgstr "Salva se vuoto"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "There already is a value saved in the field."
+msgstr "C'è già un valore salvato nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
+msgid "There is no value saved in the field."
+msgstr "Non c'è alcun valore salvato nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "Confirm {0}"
+msgstr "Conferma {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "Pattern: {0}"
+msgstr "Pattern: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "Reset Value, Salt and HashAlgorithm for current HashedStringField."
+msgstr "Reimposta valore, salt e algoritmo di hash per il campo hash corrente."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "ResetField"
+msgstr "Reimposta il campo"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "Save value even if it's empty. An empty value must be compliant with pattern."
+msgstr "Salva il valore anche se è vuoto. Un valore vuoto deve comunque rispettare il pattern."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "SaveIfEmpty"
+msgstr "Salva se vuoto"
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "There already is a value saved in the field."
+msgstr "C'è già un valore salvato nel campo."
+
+msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/HashedStringField.Edit.cshtml"
+msgid "There is no value saved in the field."
+msgstr "Non c'è alcun valore salvato nel campo."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.EncryptedStringFieldDriver"
+msgid "The field {0} is mandatory."
+msgstr "Il campo {0} è obbligatorio."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.EncryptedStringFieldDriver"
+msgid "The value of the field {0} is not valid."
+msgstr "Il valore di {0} non è valido."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.EncryptedStringFieldDriver"
+msgid "The value of the field {0} must match the Confirm value."
+msgstr "Il valore di {0} deve corrispondere al suo campo di conferma."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.EncryptedStringFieldDriver"
+msgid "The value of the field."
+msgstr "Il valore del campo."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.EncryptedStringFieldDriver"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "HashAlgorithm"
+msgstr "Algoritmo di hash"
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "Salt"
+msgstr "Salt"
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The algorithm the field value is hashed with."
+msgstr "L'algoritmo con il quale è generato l'hash del valore."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The field {0} is mandatory."
+msgstr "Il campo {0} è obbligatorio."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The salt used to hash the field value."
+msgstr "Il salt utilizzato per generare l'hash del valore."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The value of the field {0} is not valid."
+msgstr "Il valore di {0} non è valido."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The value of the field {0} must match the Confirm value."
+msgstr "Il valore di {0} deve corrispondere al suo campo di conferma."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "The value of the field."
+msgstr "Il valore del campo."
+
+msgctxt "Laser.Orchard.SecureData.Drivers.HashedStringFieldDriver"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.SecureData.Fields.SecureStringFieldForm"
+msgid "Return all elements if no filter is provided."
+msgstr "Ritorna tutti gli elementi se nessun filtro è indicato."
+
+msgctxt "Laser.Orchard.SecureData.Fields.SecureStringFieldForm"
+msgid "Return all elements if Value is empty."
+msgstr "Ritorna tutti gli elementi se il valore è vuoto."
+
+msgctxt "Laser.Orchard.SecureData.Fields.SecureStringFieldForm"
+msgid "Secure value of the field."
+msgstr "Valore sicuro del campo."
+
+msgctxt "Laser.Orchard.SecureData.Fields.SecureStringFieldForm"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "{0} Content Fields"
+msgstr "{0} Campi di contenuto"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Content Fields for {0}"
+msgstr "Campi di contenuto per {0}"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Value for {0}"
+msgstr "Valore di {0}"
+
+msgctxt "Laser.Orchard.SecureData.Services.SecureFieldService"
+msgid "Manage all {0} encrypted string fields"
+msgstr "Gestione di tutti i campi crittografati {0}"
+
+msgctxt "Laser.Orchard.SecureData.Services.SecureFieldService"
+msgid "Manage all {0} hashed string fields"
+msgstr "Gestione di tutti i campi hash {0}"
+
+msgctxt "Laser.Orchard.SecureData.Services.SecureFieldService"
+msgid "Manage own {0} encrypted string fields"
+msgstr "Gestione di tutti i campi crittografati {0} di proprietà dell'utente"
+
+msgctxt "Laser.Orchard.SecureData.Services.SecureFieldService"
+msgid "Manage own {0} hashed string fields"
+msgstr "Gestione di tutti i campi hash {0} di proprietà dell'utente"
+

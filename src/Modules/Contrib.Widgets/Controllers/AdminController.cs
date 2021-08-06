@@ -46,8 +46,8 @@ namespace Contrib.Widgets.Controllers {
                 return new HttpUnauthorizedResult();
 
             _contentManager.Create(contentItem, VersionOptions.Draft);
-
             var model = _contentManager.UpdateEditor(contentItem, this);
+
             if (!ModelState.IsValid) {
                 _services.TransactionManager.Cancel();
                 return View(model);

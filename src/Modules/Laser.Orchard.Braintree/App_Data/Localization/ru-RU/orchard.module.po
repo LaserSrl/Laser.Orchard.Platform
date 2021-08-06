@@ -1,0 +1,22 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Pay Now"
+msgstr "Заплатить сейчас"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Payment method was rejected by the payment providers."
+msgstr "Способ оплаты был отклонен поставщиком платежей."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Processing..."
+msgstr "Обработка..."
+

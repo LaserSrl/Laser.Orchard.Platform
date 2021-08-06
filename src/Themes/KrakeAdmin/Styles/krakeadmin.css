@@ -17,7 +17,6 @@ html {
     background: #e5e6e6;
 }
 
-
 #header {
     background: transparent none repeat scroll 0 0;
     height: 70px !important;
@@ -428,6 +427,10 @@ button.link:hover {
         border-radius: 5px 5px 0px 0px;
     }
 
+.localmenu-content-picker li {
+    padding-bottom: 0.4em;
+}
+
 .ui-widget-header {
     background: #f0f0ee !important;
 }
@@ -583,6 +586,23 @@ legend {
 .mce-container button {
     min-width: 30px;
 }
+
+.mce-wordcount {
+    right: 110px !important;
+}
+
+.mce-branding {
+    position: absolute !important;
+    top: 3px !important;
+    right: 0 !important;
+    padding: 8px !important;
+    font-size: 0.7em !important;
+}
+
+    .mce-branding a {
+        font-size: 1em !important;
+        cursor: pointer !important;
+    }
 
 #activity-toolbar > div label {
     min-width: 22px !important;
@@ -1225,6 +1245,10 @@ fieldset {
     padding-bottom: 10px;
 }
 
+fieldset small {
+    font-size: 0.8em;
+}
+
 .add,
 .button.grey,
 #btn-CalendarEvent_Gallery_Field_Ids.button,
@@ -1326,6 +1350,10 @@ fieldset {
     display: inline-block;
     white-space: nowrap;
     text-align: left;
+}
+
+#orchard-content-picker .page-size-options > div:first-child {
+    display: block;
 }
 
     .page-size-options select {
@@ -1455,6 +1483,9 @@ fieldset {
     color: #253849;
 }
 
+.widgets-listed li li, #widgets-layer-visibility li {
+    padding: 5px 5px 5px 25px;
+}
 #widgets-available li a {
     border: 1px solid #eaeaea;
     display: block;
@@ -1476,8 +1507,29 @@ fieldset {
     padding: 5px;
 }
 
-.layout-widgets-placement ul.widgets li h3 {
+
+#main .layout-widgets-placement ul.widgets li h3 {
     float: left;
+    margin: 0 0.25em 0 0;
+}
+
+    #main .layout-widgets-placement ul.widgets li h3:before {
+        font-family: FontAwesome;
+        content: "\f047";
+        margin-left: -15px;
+        color: #999;
+    }
+
+.widgets .layout-widgets-placement .zones-container .zones ol li ul.widgets li {
+    position: relative;
+    background: #f3f4f5;
+    margin: 10px 0;
+    padding: 5px 5px 5px 25px;
+    color: #333;
+}
+
+.layout-toolbox-items section {
+    padding: 0;
 }
 
 .zone-local-navigation a {
@@ -1534,6 +1586,7 @@ div#widgets-layer-visibility {
     max-block-size: fit-content;
     max-width: 40%;
     vertical-align: middle;
+    margin: 0 0.25em 0 0;
 }
 
 #main li.widgets-other-layer h3 {
@@ -1541,6 +1594,7 @@ div#widgets-layer-visibility {
     max-block-size: fit-content;
     max-width: 40%;
     vertical-align: middle;
+    margin: 0 0.25em 0 0;
 }
 
 @media screen and (max-width: 1400px) {
@@ -1577,12 +1631,8 @@ li .widgets-other-layer form {
 }
 
 .widgets-this-layer .widgets-actions {
-    right: unset;
-    top: unset;
-    float: right;
     right: 5px;
     max-width: 35%;
-    top: 0px;
 }
 
 .widgets-listed .widgets-zone-widgets .widgets-other-layer div.contentType {
@@ -1593,12 +1643,8 @@ li .widgets-other-layer form {
 }
 
 .widgets-other-layer .widgets-actions {
-    right: unset;
-    top: unset;
-    float: right;
     right: 5px;
     max-width: 35%;
-    top: 0px;
 }
 /*--------------------------*/
 
@@ -2621,12 +2667,11 @@ hr {
     font-weight: 400;
 }
 
-.text-medium,
-strong {
+.text-medium {
     font-weight: 500;
 }
 
-.text-bold {
+.text-bold, strong {
     font-weight: 700;
 }
 
@@ -3230,13 +3275,6 @@ a.text-success:hover {
     }
 }
 
-@media (max-width: 768px) {
-    #base {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
 #header {
     position: absolute;
     left: 0;
@@ -3369,18 +3407,36 @@ a.text-success:hover {
     }
 
     .header-nav .header-nav-brand {
-        display: inline-table;
+        display: inline-block;
         padding: 0;
         height: 64px;
+        position: fixed;
+        width:70%;
+    }
+
+    @media (min-width: 1000px) and (max-width: 1400px) {
+        .header-nav .header-nav-brand {
+            width: 60%;
+        }
+    }
+
+    @media (max-width: 999px) {
+        .header-nav .header-nav-brand {
+            width: 55%;
+        }
     }
 
         .header-nav .header-nav-brand .brand-holder {
-            display: table-cell;
+            display: block;
             padding-left: 33px;
-            padding-top: 15px;
+            padding-top: 30px;
             vertical-align: middle;
+            overflow: hidden;
+            height: 54px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
+        
         .header-nav .header-nav-brand a {
             text-decoration: none;
         }
@@ -3759,24 +3815,21 @@ body:not(.menubar-first) .menubar-fixed-panel {
 }
 
 @media (max-width: 768px) {
-    #menubar {
-        width: 240px;
-        z-index: 113;
-        -webkit-transform: translate(-250px, 0);
-        -ms-transform: translate(-250px, 0);
-        -o-transform: translate(-250px, 0);
-        transform: translate(-250px, 0);
-        -webkit-transition: -webkit-transform 0.5s ease-in;
-        -moz-transition: -moz-transform 0.5s ease-in;
-        -o-transition: -o-transform 0.5s ease-in;
-        transition: transform 0.5s ease-in;
-    }
-
     .menubar-visible #menubar {
         -webkit-transform: translate(0, 0);
         -ms-transform: translate(0, 0);
         -o-transform: translate(0, 0);
         transform: translate(0, 0);
+        -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+        transition: transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
+    }
+    #menubar {
+        -webkit-transform: translate(0.1px,0);
+        -ms-transform: translate(0.1px,0);
+        -o-transform: translate(0.1px,0);
+        transform: translate(0.1px,0);
         -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -moz-transition: -moz-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
         -o-transition: -o-transform 0.5s cubic-bezier(0.15, 0.99, 0.18, 1.01);
@@ -5193,7 +5246,7 @@ textarea.autosize {
         opacity: 0.5;
     }
 
-    .form-group .form-control:focus {
+    .form-group .form-control:not(.text):focus {
         border-color: rgba(12, 12, 12, 0.12);
     }
 
@@ -5931,6 +5984,13 @@ span.help-block {
     .btn-default-dark.btn-icon-toggle {
         color: #20252b;
     }
+
+/* Styles to override some parameter for the password eye, used in EncryptedStringField view */
+.btn-default.reveal, .btn-default.reveal:hover {
+    color: #444 !important;
+    min-width: 0px;
+    background-color: #FFFFFF;
+}
 
 .open .dropdown-toggle.btn-default-dark.btn-flat,
 .open .dropdown-toggle.btn-default-dark.btn-icon-toggle {
@@ -11061,6 +11121,8 @@ sub.badge {
     text-align: right;
     font-size: 12px;
     opacity: 0.6;
+}
+.thumbnail .overlay {
     height: 40px;
 }
 
@@ -11495,6 +11557,10 @@ input#adminfilter {
 }
 
 /*content picker field*/
+.content-picker-tab {
+    border-top: 3px solid #de625e !important;
+}
+
 .content-picker-tab #searchText {
     margin-top: 10px;
     margin-left: 10px;
@@ -11676,4 +11742,76 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     text-transform: none;
     font-size: 0.9em;
     line-height: 1.6em;
+}
+
+
+@media (min-width: 1200px) and (max-width: 1320px) {
+    .custom-width-info-box {
+        width:100%!important;
+    }
+}
+
+
+/* Google Maps Styles */
+.gm-style button, .gm-style a.button {
+    color: rgb(0, 0, 0) !important;
+}
+
+/* Red text for validation error hints. */
+.field-validation-error {
+    color: #dd4b39; /* This is the same red used for validation errors in the header of the page. */
+}
+
+.text-white{
+    color:white !important;
+}
+
+.width-80{
+    width:80% !important;
+}
+
+.float-right{
+    float:right;
+}
+
+.margin-left-5{
+    margin-left:5px;
+}
+
+.display-content{
+    display:contents!important;
+}
+
+table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text {
+    min-width: unset;
+}
+
+
+.table-bundle-autocomplete {
+    border-spacing: 3px;
+    max-width: 90%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.row-bundle-autocomplete {
+    border: 1px solid #e5e6e6;
+    margin-left:15px;
+}
+
+.quantity-bundle-autocomplete {
+    width: 70px !important;
+    height: 30px !important;
+}
+
+.bundle-autocomplete-d-none{
+   display:none;
+}
+
+.center-align-bundle-autocomplete {
+    text-align: center;
+}
+
+.text-through {
+    text-decoration: line-through;
 }

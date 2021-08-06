@@ -1,0 +1,217 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using System.Globalization;
+@model ProductPriceEditorViewModel
+@if (Model != null && Model.ShowShape) {
+    var hintText = string.IsNullOrWhiteSpace(Model.DefaultTerritoryName)
+        ? T("Base prices are computed using VAT __RATE__% from the selected category.").Text
+        : T("Base prices are computed using VAT __RATE__% from the selected category and for the selected default region ({0}).", Model.DefaultTerritoryName).Text;
+
+    var beforeVatText = T("Before VAT: __PRICE__");
+
+    var initialRate = Model.VatRates[Model.DefaultVatConfigurationId];
+    if (Model.SelectedVatConfigurationId > 0) {
+        initialRate = Model.VatRates[Model.SelectedVatConfigurationId];
+    }
+
+    var guidBase = Guid.NewGuid().ToString();
+    var regularFieldsetGuid = "rf" + guidBase;
+    var regularTaxableGuid = "rt" + guidBase;
+    //var regularTaxedGuid = "rv" + guidBase;
+    var discountFieldsetGuid = "df" + guidBase;
+    var discountTaxableGuid = "dt" + guidBase;
+    //var discountTaxedGuid = "dv" + guidBase;
+    var hintGuid = "hint" + guidBase;
+
+    //var currentCulture = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
+    var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator;
+
+
+    <fieldset>
+        <label class="form-text text-muted">
+            @T("Edit the prices after tax.")
+        </label>
+        <fieldset id="@regularFieldsetGuid">
+            <div class="form-group">
+                <label>@T("Regular price (after VAT)")</label>
+                @Html.HiddenFor(m => m.BasePrice)
+
+                @Html.TextBoxFor(m => m.BaseTaxedPrice, new { @class = "form-control text small" })
+
+                <small class="form-text text-muted" id="@regularTaxableGuid">
+
+                </small>
+            </div>
+        </fieldset>
+        @if (Model.HasDiscount) {
+            <fieldset id="@discountFieldsetGuid">
+                <div class="form-group">
+                    <label>@T("Discounted Price (after VAT)")</label>
+
+                    @Html.HiddenFor(m => m.DiscountPrice, new { @Value = (Model.DiscountPrice >= 0.0m ? Model.DiscountPrice.ToString() : "") })
+
+                    @Html.TextBoxFor(m => m.DiscountTaxedPrice, new { @class = "form-control text small", @Value = (Model.DiscountPrice >= 0.0m ? Model.DiscountTaxedPrice.ToString() : "") })
+
+                    <small class="form-text text-muted" id="@discountTaxableGuid">
+
+                    </small>
+                </div>
+            </fieldset>
+        }
+        <small class="form-text text-muted" id="@hintGuid">
+
+        </small>
+
+        @Html.HiddenFor(m => m.SelectedVatConfigurationId)
+
+    </fieldset>
+
+    using (Script.Foot()) {
+
+        <script type="text/javascript">
+            var hintBaseText = "@Html.Raw(hintText)";
+            var priceBaseText = "@beforeVatText";
+            var rates = {};
+
+            @foreach(var config in Model.VatRates) {
+                <text>rates[@config.Key] = @config.Value.ToString(CultureInfo.InvariantCulture);</text>
+            }
+
+            // initial values
+            var rate = @initialRate.ToString(CultureInfo.InvariantCulture);
+            // dropdown where we select the vat configuration
+            var vatConfigDropDown = $('#@Model.VATDropDownId');
+            // "original" price element
+            var originalPrice = $('#@Model.OriginalPriceId');
+            // element to update the information on the selected VAT rate
+            var hintElement = $('#@hintGuid');
+            // regular price inputs
+            var regularBasePrice = $('#@regularTaxableGuid');
+            var regularTaxedPrice = $('#@Model.BaseTaxedPriceId');
+
+			// default vat id
+            $('#@Model.SelectedVatConfigurationIdHidden').val(vatConfigDropDown.val());
+
+            // hide original prices and their labels
+            originalPrice.hide();
+            $('[for="@Model.OriginalPriceId"]').hide()
+
+            @if (Model.HasDiscount) {
+                <text>
+                // "original" discount element
+                var discountPrice = $('#@Model.DiscountPriceId');
+                // discount price inputs
+                var discountBasePrice = $('#@discountTaxableGuid');
+                var discountTaxedPrice = $('#@Model.DiscountTaxedPriceId');
+
+                discountPrice.hide();
+                $('[for="@Model.DiscountPriceId"]').hide()
+                </text>
+            }
+
+            function UpdateHint() {
+                var hintText = hintBaseText.replace('__RATE__', rate*100.0);
+                // Set hint text
+                hintElement.text(hintText);
+            }
+
+            function TestIsFloat(value) {
+                var v = value.toString().replace('@decimalSeparator', '.');
+                return !isNaN(v - parseFloat(v));
+            }
+
+            function ComputTaxable(value) {
+                return value / (1.0 + rate);
+                // Total price is taxable + vat
+                // t = p + v => p = t - v
+                // vat is taxable * rate
+                // v = p * r => p = v / r
+                // => t = v + v / r = v * (1 + 1 / r)
+                // => v = t / (1 + 1 / r)
+                // Then we get the actual vat by rounding at the second
+                // decimal, and finally compute p as t-v
+                //var vat = value / (1.0 + (1.0 / rate));
+                //return (value - (Math.round(vat*100.0)/100.0)).toFixed(2);
+            }
+
+            function UpdateRegularPrices() {
+                // regular prices
+                var tPrice = regularTaxedPrice.val();
+                if (TestIsFloat(tPrice)) {
+
+                    var value = ComputTaxable(parseFloat(tPrice.replace('@decimalSeparator', '.')));
+                    var v = value.toString().replace('.', '@decimalSeparator');
+                    regularBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                    originalPrice.val(v);
+
+                    $('#@Model.BasePriceIdVM').val(v);
+                }
+            }
+
+            @if (Model.HasDiscount) {
+                <text>
+                function UpdateDiscountedPrices() {
+                    // discounted prices
+                    var tPrice = discountTaxedPrice.val();
+                    if (TestIsFloat(tPrice)) {
+                        var value = ComputTaxable(parseFloat(tPrice.replace('@decimalSeparator', '.')));
+                        if (value < 0) {
+                            discountBasePrice.text('');
+                            discountPrice.val('');
+                        } else {
+                            var v = value.toString().replace('.', '@decimalSeparator');
+                            discountBasePrice.text(priceBaseText.replace('__PRICE__', v));
+                            discountPrice.val(v);
+                        }
+                    } else {
+                        discountBasePrice.text('');
+                        discountPrice.val('');
+                    }
+
+                    $('#@Model.DiscountPriceIdVM').val(discountPrice.val());
+                }
+                </text>
+            }
+
+            function UpdateBasePrices() {
+                // regular prices
+                UpdateRegularPrices();
+                @if (Model.HasDiscount) {
+                    <text>
+                    // discounted prices
+                    UpdateDiscountedPrices()
+                    </text>
+                }
+            }
+
+            vatConfigDropDown.on('change', function () {
+                // currently selected vat config
+                rate = rates[$(this).val()];
+                // recompute prices before tax
+                UpdateBasePrices()
+                // re update hint text
+                UpdateHint();
+
+				// selected vat id
+                $('#@Model.SelectedVatConfigurationIdHidden').val($(this).val());
+            });
+            regularTaxedPrice.on('change', function () {
+                // recompute prices before tax
+                UpdateRegularPrices();
+            });
+            @if (Model.HasDiscount) {
+                <text>
+                discountTaxedPrice.on('change', function () {
+                    // recompute prices before tax
+                    UpdateDiscountedPrices();
+                });
+                </text>
+            }
+
+            regularBasePrice.text(priceBaseText.replace('__PRICE__', '@Model.BasePrice'));
+            @if(Model.HasDiscount && Model.DiscountPrice >= 0) {
+                <text>discountBasePrice.text(priceBaseText.replace('__PRICE__', '@Model.DiscountPrice'));</text>
+            }
+            UpdateHint();
+        </script>
+    }
+}

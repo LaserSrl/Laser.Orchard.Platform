@@ -52,16 +52,61 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             try {
                 return _cacheManager.Get(
                     "Laser.Orchard.OpenAuthentication.Providers",
+                    true, //prevent concurrent calls to this
                     ctx => {
                         ctx.Monitor(_signals.When("Laser.Orchard.OpenAuthentication.Providers.Changed"));
                         var configuration = _repository.Table.ToList()
-                        .Select(x => {
-                            var cfg = new ProviderConfigurationViewModel();
-                            x.ToViewModel(cfg);
-                            cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
-                            return cfg;
-                        });
-                        return configuration.ToList();
+                            .Select(x => {
+                                var cfg = new ProviderConfigurationViewModel();
+                                x.ToViewModel(cfg);
+                                // https://stackoverflow.com/a/6064422/2669614
+                                // Basically, by doing a "subquery" here, we were trying to execute a query while iterating
+                                // over the results of another. This causes an exception:
+                                // System.InvalidOperationException: A Command è già associato un DataReader aperto, che deve essere chiuso.
+                                //cfg.Attributes = GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName);
+                                return cfg;
+                            });
+                        //foreach (var cfg in configuration) {
+                        //    // so we moved the "subquery" here.
+                        //    // This could be further optimized, because as is we are doing a query for each
+                        //    // provider, rather than a single one for all of them.
+                        //    cfg.Attributes.AddRange(GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName));
+                            
+                        //}
+                        // A different solution would be to join everything in a single query, like below
+                        // but nhibernate does not implement GroupJoin
+                        //var myConfigQuery = _repository.Table
+                        //    .GroupJoin(
+                        //        _repositoryAttributes.Table,
+                        //        pcr => pcr.Id,
+                        //        par => par.ProviderId,
+                        //        (pcr, pars) => new {
+                        //            ProviderConfigurationRecord = pcr,
+                        //            ProviderAttributeRecords = pars
+                        //        })
+                        //    .ToList();
+                        //var myConfig = myConfigQuery
+                        //    .Select(obj => {
+                        //        var cfg = new ProviderConfigurationViewModel();
+                        //        obj.ProviderConfigurationRecord.ToViewModel(cfg);
+                        //        var client = _authenticationClients
+                        //            .FirstOrDefault(x => x.ProviderName == obj.ProviderConfigurationRecord.ProviderName);
+                        //        if (client != null && client.GetAttributeKeys().Any()) {
+                        //            foreach (var item in client.GetAttributeKeys()) {
+                        //                var origValue = obj.ProviderAttributeRecords
+                        //                    .FirstOrDefault(x => x.AttributeKey == item.Key);
+                        //                cfg.Attributes.Add(new ProviderAttributeViewModel() {
+                        //                    AttributeKey = item.Key,
+                        //                    AttributeValue = origValue != null ? origValue.AttributeValue : "",
+                        //                    AttributeDescription = item.Value
+                        //                });
+                        //            }
+                        //        }
+                        //        return cfg;
+                        //    }); 
+                        return configuration
+                            .Select(cfg => new ProviderConfigurationViewModel(cfg, GetProviderConfigurationAttributes(cfg.Id, cfg.ProviderName)))
+                            .ToList();
                     });
             }
             catch (Exception ex) {

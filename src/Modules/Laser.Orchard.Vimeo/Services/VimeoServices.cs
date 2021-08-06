@@ -1317,7 +1317,6 @@ namespace Laser.Orchard.Vimeo.Services {
             try {
                 ServicePointManager.ServerCertificateValidationCallback = (a, b, c, d) => true; // new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
                 ServicePointManager.Expect100Continue = true;
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | SecurityProtocolType.Ssl3;
                 using (HttpWebResponse resp = wr.GetResponse() as HttpWebResponse) {
                     //if we end up here, something went really wrong
                     //schedule the next verification for never

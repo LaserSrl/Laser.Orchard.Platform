@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -27,6 +27,10 @@ msgstr "Valuta un'espressione"
 msgctxt "Laser.Orchard.RazorScripting.Activities.RazorDecisionActivity"
 msgid "Misc"
 msgstr "Varie"
+
+msgctxt "Laser.Orchard.RazorScripting.Forms.DecisionFormsValidator"
+msgid "You must provide a Script"
+msgstr "È necessario fornire uno Script"
 
 msgctxt "Laser.Orchard.RazorScripting.Forms.RazorDecisionForms"
 msgid "A comma-separated list of possible outcomes."

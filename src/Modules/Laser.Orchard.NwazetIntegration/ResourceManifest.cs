@@ -11,12 +11,12 @@ namespace Laser.Orchard.NwazetIntegration {
 
             manifest
                 .DefineScript("NwazetIntegration.Addresses")
-                .SetUrl("ship.min.js", "ship.js")
+                .SetUrl("ship.min.js?v=1.4", "ship.js?v=1.4")
                 .SetDependencies("jQuery");
 
             manifest
                 .DefineScript("NwazetIntegration.AddressConfiguration")
-                .SetUrl("address-configuration.min.js", "address-configuration.js")
+                .SetUrl("address-configuration.min.js?v=1.4", "address-configuration.js?v=1.4")
                 .SetDependencies("jQuery");
 
             manifest
@@ -28,8 +28,18 @@ namespace Laser.Orchard.NwazetIntegration {
             // register the information should be configured with a DOM Ready trigger.
             manifest
                 .DefineScript("NwazetIntegration.TagManager")
-                .SetUrl("ecommerce-tag-manager.min.js", "ecommerce-tag-manager.js")
+                .SetUrl("ecommerce-tag-manager.min.js?v=1.0", "ecommerce-tag-manager.js?v=1.0")
                 .SetDependencies("jQuery");
+
+            // These scripts are used for autocomplete in the selection of territories
+            manifest
+                .DefineScript("NwazetIntegration.tagit.js")
+                .SetUrl("tagit.min.js", "tagit.js")
+                .SetDependencies("jQueryUI");
+            manifest
+                .DefineScript("NwazetIntegration.TerritoriesAutoComplete")
+                .SetUrl("territories-autocomplete.min.js", "territories-autocomplete.js")
+                .SetDependencies("NwazetIntegration.tagit.js");
         }
     }
 }

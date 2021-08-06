@@ -16,5 +16,5 @@ namespace Laser.Orchard.Mobile.Models {
         public virtual string RegistrationUrlPrefix { get; set; }
         public virtual string RegistrationMachineName { get; set; }
     }
-    public enum TipoDispositivo { Android, Apple, WindowsMobile }
+    public enum TipoDispositivo { Android, Apple, AppleFCM, WindowsMobile }
 }

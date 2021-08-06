@@ -87,9 +87,11 @@ namespace Laser.Orchard.Cookies.Drivers {
             element.SetAttributeValue("cookiePolicyPageMessage", part.cookiePolicyPageMessage);
             element.SetAttributeValue("cookieErrorMessage", part.cookieErrorMessage);
             element.SetAttributeValue("cookieAcceptButtonText", part.cookieAcceptButtonText);
+            element.SetAttributeValue("cookieAcceptSelectedButtonText", part.cookieAcceptSelectedButtonText);
             element.SetAttributeValue("cookieResetButtonText", part.cookieResetButtonText);
             element.SetAttributeValue("cookieWhatAreLinkText", part.cookieWhatAreLinkText);
             element.SetAttributeValue("cookiePolicyLink", part.cookiePolicyLink);
+            element.SetAttributeValue("cookieTitle", part.cookieTitle);
             element.SetAttributeValue("cookieMessage", part.cookieMessage);
             element.SetAttributeValue("cookieWhatAreTheyLink", part.cookieWhatAreTheyLink);
         }
@@ -104,9 +106,11 @@ namespace Laser.Orchard.Cookies.Drivers {
             part.cookiePolicyPageMessage = GetAttribute<string>(context, partName, "cookiePolicyPageMessage");
             part.cookieErrorMessage = GetAttribute<string>(context, partName, "cookieErrorMessage");
             part.cookieAcceptButtonText = GetAttribute<string>(context, partName, "cookieAcceptButtonText");
+            part.cookieAcceptSelectedButtonText = GetAttribute<string>(context, partName, "cookieAcceptSelectedButtonText");
             part.cookieResetButtonText = GetAttribute<string>(context, partName, "cookieResetButtonText");
             part.cookieWhatAreLinkText = GetAttribute<string>(context, partName, "cookieWhatAreLinkText");
             part.cookiePolicyLink = GetAttribute<string>(context, partName, "cookiePolicyLink");
+            part.cookieTitle = GetAttribute<string>(context, partName, "cookieTitle");
             part.cookieMessage = GetAttribute<string>(context, partName, "cookieMessage");
             part.cookieWhatAreTheyLink = GetAttribute<string>(context, partName, "cookieWhatAreTheyLink");
         }
@@ -124,6 +128,7 @@ namespace Laser.Orchard.Cookies.Drivers {
             clonePart.cookiePolicyPageMessage = originalPart.cookiePolicyPageMessage;
             clonePart.cookieErrorMessage = originalPart.cookieErrorMessage;
             clonePart.cookieAcceptButtonText = originalPart.cookieAcceptButtonText;
+            clonePart.cookieAcceptSelectedButtonText = originalPart.cookieAcceptSelectedButtonText;
             clonePart.cookieResetButtonText = originalPart.cookieResetButtonText;
             clonePart.cookieWhatAreLinkText = originalPart.cookieWhatAreLinkText;
             clonePart.cookiePolicyLink = originalPart.cookiePolicyLink;

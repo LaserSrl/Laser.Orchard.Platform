@@ -14,7 +14,7 @@ namespace KrakeAdmin {
             var manifest = builder.Add();
 
             manifest.DefineStyle(BaseAdmin).SetUrl("baseadmin.min.css?v1.0", "baseadmin.css?v1.0");
-            manifest.DefineStyle(KrakeAdmin).SetUrl("krakeadmin.min.css?v2.0", "krakeadmin.css?v2.0");
+            manifest.DefineStyle(KrakeAdmin).SetUrl("krakeadmin.min.css?v2.5", "krakeadmin.css?v2.5");
             manifest.DefineStyle(KrakeNavigation).SetUrl("krake-navicon.min.css?v1.4", "krake-navicon.css?v1.4");
             //manifest.DefineStyle(Bootstrap).SetUrl("bootstrap.css", "bootstrap.css");
             manifest.DefineStyle(Site).SetUrl("site.css", "site.css");

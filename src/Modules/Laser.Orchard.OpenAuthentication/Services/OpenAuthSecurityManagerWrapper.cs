@@ -101,7 +101,8 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             if (string.IsNullOrEmpty(ProviderName)) {
                 return AuthenticationResult.Failed;
             }
-            return SecurityManager(ProviderName).VerifyAuthentication(returnUrl);
+            var manager = SecurityManager(ProviderName);
+            return manager.VerifyAuthentication(returnUrl);
         }
 
 

@@ -14,18 +14,21 @@ namespace Laser.Orchard.Braintree.Services {
     public class DefaultBraintreeService : IBraintreeService {
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
+        private readonly IBraintreePosService _posService;
 
         public DefaultBraintreeService(
             IOrchardServices orchardServices,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            IBraintreePosService posService) {
 
             _orchardServices = orchardServices;
             _contentManager = contentManager;
+            _posService = posService;
         }
 
         public string GetClientToken() {
             var gateway = GetGateway();
-            var clientToken = gateway.ClientToken.generate();
+            var clientToken = gateway.ClientToken.Generate();
             return clientToken;
         }
 
@@ -33,8 +36,7 @@ namespace Laser.Orchard.Braintree.Services {
             string paymentMethodNonce,
             decimal amount,
             Dictionary<string, string> customFields) {
-            var config = _orchardServices.WorkContext
-                .CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             string merchant = config?.MerchantAccountId;
             TransactionResult result = new TransactionResult();
             var request = new Bt.TransactionRequest {
@@ -77,12 +79,12 @@ namespace Laser.Orchard.Braintree.Services {
                         tran.BillingAddress.CountryName);
                 }
                 result.CurrencyIsoCode = tran.CurrencyIsoCode;
-                if (tran.Customer != null) {
+                if (tran.CustomerDetails != null) {
                     result.Customer = string.Format("{0} {1}, {2}, ({3})",
-                        tran.Customer.FirstName,
-                        tran.Customer.LastName,
-                        tran.Customer.Company,
-                        tran.Customer.Email);
+                        tran.CustomerDetails.FirstName,
+                        tran.CustomerDetails.LastName,
+                        tran.CustomerDetails.Company,
+                        tran.CustomerDetails.Email);
                 }
                 result.MerchantAccountId = tran.MerchantAccountId;
                 result.OrderId = tran.OrderId;
@@ -98,8 +100,7 @@ namespace Laser.Orchard.Braintree.Services {
         }
 
         public TransactionResult Pay(PaymentContext context) {
-            var config = _orchardServices.WorkContext
-                .CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             string merchant = config?.MerchantAccountId;
             TransactionResult result = new TransactionResult();
             var request = new Bt.TransactionRequest {
@@ -143,12 +144,12 @@ namespace Laser.Orchard.Braintree.Services {
                         tran.BillingAddress.CountryName);
                 }
                 result.CurrencyIsoCode = tran.CurrencyIsoCode;
-                if (tran.Customer != null) {
+                if (tran.CustomerDetails != null) {
                     result.Customer = string.Format("{0} {1}, {2}, ({3})",
-                        tran.Customer.FirstName,
-                        tran.Customer.LastName,
-                        tran.Customer.Company,
-                        tran.Customer.Email);
+                        tran.CustomerDetails.FirstName,
+                        tran.CustomerDetails.LastName,
+                        tran.CustomerDetails.Company,
+                        tran.CustomerDetails.Email);
                 }
                 result.MerchantAccountId = tran.MerchantAccountId;
                 result.OrderId = tran.OrderId;
@@ -164,7 +165,7 @@ namespace Laser.Orchard.Braintree.Services {
         }
 
         private Bt.BraintreeGateway GetGateway() {
-            var config = _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+            var config = _posService.GetSettings();
             var env = (config.ProductionEnvironment) ? Bt.Environment.PRODUCTION : Bt.Environment.SANDBOX;
 
             return new Bt.BraintreeGateway {

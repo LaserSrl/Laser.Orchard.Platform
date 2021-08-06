@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -34,7 +34,7 @@ msgstr "Impostazione legge sui cookies"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "Default value for Marketing cookies acceptance"
-msgstr "Valore di default per l'accettazione dei cookie di Marketing"
+msgstr "Imposta di default l'accettazione dei cookie di Marketing"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "Default value for Preferences cookies acceptance"

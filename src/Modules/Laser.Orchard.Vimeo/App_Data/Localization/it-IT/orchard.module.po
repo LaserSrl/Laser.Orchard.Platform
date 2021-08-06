@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -161,6 +161,10 @@ msgid "Vimeo"
 msgstr "Vimeo"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
+msgid "Vimeo video has been published."
+msgstr "Il video è stato pubblicato su Vimeo."
+
+msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoPublishedActivity"
 msgid "Vimeo video has been published."
 msgstr "Il video è stato pubblicato su Vimeo."
 

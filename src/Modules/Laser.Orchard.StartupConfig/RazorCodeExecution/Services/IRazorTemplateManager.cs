@@ -106,7 +106,14 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                     if (string.IsNullOrEmpty(defFileName))
                         defFileName = key;
                     defFileName = System.IO.Path.GetTempPath() + defFileName + ".cshtml";
-                    code = "@{System.Diagnostics.Debugger.Break();}" + code;
+                    // add a breakpoint so we can debug the templates
+                    code = 
+                        "@{"
+                        +   "if (System.Diagnostics.Debugger.IsAttached) {"
+                        +     "System.Diagnostics.Debugger.Break();"
+                        +   "}"
+                        + "}" 
+                        + code;
                     File.WriteAllText(defFileName, code);
 
                     RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(code, defFileName));
@@ -132,10 +139,17 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                     DateTime d = System.IO.File.GetLastWriteTime(localFilePath);
                     key += d.ToShortDateString() + d.ToLongTimeString();
                 }
+
+                string myfile2 = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\common.cshtml";
+                if (File.Exists(myfile2)) {
+                    // add the date of common.cshtml to the key, to update the file even if only the common has changed and not just the file
+                    DateTime d2 = System.IO.File.GetLastWriteTime(myfile2);
+                    key += d2.ToShortDateString() + d2.ToLongTimeString();
+                }
+
                 string codeTemplate = "";
                 if (!RazorEngineServiceStatic.IsTemplateCached(key, null)) {
                     if (System.IO.File.Exists(localFilePath)) {
-                        string myfile2 = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\common.cshtml";
                         codeTemplate = File.ReadAllText(myfile2) + File.ReadAllText(localFilePath);
                         if (!string.IsNullOrEmpty(codeTemplate)) {
                             RazorEngineServiceStatic.AddTemplate(key, new LoadedTemplateSource(codeTemplate, localFilePath));

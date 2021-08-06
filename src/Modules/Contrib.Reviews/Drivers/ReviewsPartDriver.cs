@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Contrib.Reviews.Models;
+﻿using Contrib.Reviews.Models;
 using Contrib.Voting.Models;
 using Contrib.Voting.Services;
-
+using Laser.Orchard.StartupConfig.Extensions;
 using Orchard;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Security;
-using Orchard.ContentManagement.Handlers;
-using System.Reflection;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Contrib.Reviews.Drivers {
-    
+
     public class ReviewsPartDriver : ContentPartDriver<ReviewsPart> {
         private readonly IOrchardServices _orchardServices;
         private readonly IVotingService _votingService;
@@ -26,34 +24,41 @@ namespace Contrib.Reviews.Drivers {
         }
 
         protected override DriverResult Display(ReviewsPart part, string displayType, dynamic shapeHelper) {
-            if (!part.ShowStars)
+            if (!part.ShowStars && !part.ShowReviews)
                 return null;
 
             ReviewsPart reviewsPart = BuildStars(part, displayType);
 
-            return Combined(
-                ContentShape(
-                    "Parts_Stars",
-                        () => shapeHelper.Parts_Stars(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Stars_Details",
-                        () => shapeHelper.Parts_Stars_Details(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Stars_Details_ReadOnly",
-                        () => shapeHelper.Parts_Stars_Details_ReadOnly(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Stars_SummaryAdmin",
-                        () => shapeHelper.Parts_Stars_SummaryAdmin(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Stars_AverageOnly",
-                        () => shapeHelper.Parts_Stars_AverageOnly(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Stars_NoAverage",
-                        () => shapeHelper.Parts_Stars_NoAverage(ContentPart: reviewsPart)),
-                ContentShape(
-                    "Parts_Reviews",
-                        () => shapeHelper.Parts_Reviews(ContentPart: reviewsPart))
-                );
+            var driverResults = new List<DriverResult>();
+
+            if (part.ShowStars) {
+                driverResults.AddRange(new []{ ContentShape(
+                                     "Parts_Stars",
+                                         () => shapeHelper.Parts_Stars(ContentPart: reviewsPart)),
+                                ContentShape(
+                                    "Parts_Stars_Details",
+                                        () => shapeHelper.Parts_Stars_Details(ContentPart: reviewsPart)),
+                                ContentShape(
+                                    "Parts_Stars_Details_ReadOnly",
+                                        () => shapeHelper.Parts_Stars_Details_ReadOnly(ContentPart: reviewsPart)),
+                                ContentShape(
+                                    "Parts_Stars_SummaryAdmin",
+                                        () => shapeHelper.Parts_Stars_SummaryAdmin(ContentPart: reviewsPart)),
+                                ContentShape(
+                                    "Parts_Stars_AverageOnly",
+                                        () => shapeHelper.Parts_Stars_AverageOnly(ContentPart: reviewsPart)),
+                                ContentShape(
+                                    "Parts_Stars_NoAverage",
+                                        () => shapeHelper.Parts_Stars_NoAverage(ContentPart: reviewsPart))});
+            }
+
+            //if (part.ShowReviews) {
+                driverResults.Add(ContentShape(
+                        "Parts_Reviews",
+                            () => shapeHelper.Parts_Reviews(ContentPart: reviewsPart)));
+            //}
+
+            return Combined(driverResults.ToArray());
         }
 
         private ReviewsPart BuildStars(ReviewsPart part, string displayType) {
@@ -89,7 +94,7 @@ namespace Contrib.Reviews.Drivers {
                     Comment = r.Comment,
                     CreatedUtc = r.CreatedUtc,
                     Rating = new Rating {CurrentVotingResult = currentVotingResult, UserRating = v.Value},
-                    UserName = v.Username,
+                    UserName = v.Username.ToMaskedString(),
                     IsCurrentUsersReview = currentUser != null ? v.Username == currentUser.UserName : false
                 };
             part.Reviews.AddRange(reviews.OrderByDescending(r => r.IsCurrentUsersReview).ThenByDescending(r => r.CreatedUtc));

@@ -186,7 +186,7 @@
         .on("click", ".minicart .update-button", function () {
             return cartContainerLoad($(this).closest("form"));
         })
-        .on("submit", "form.addtocart", function(e) {
+        .on("submit", "[data-form-role='addtocart'][data-call-type='ajax']", function (e) {
             $(this).trigger("nwazet.addtocart");
             e.preventDefault();
             var addForm = $(this),

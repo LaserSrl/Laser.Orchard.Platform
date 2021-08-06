@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using System;
@@ -19,9 +20,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
         public AddressConfigurationSiteSettingsPartViewModel(
             AddressConfigurationSiteSettingsPart part,
+            ITerritoryPartRecordService _territoryPartRecordService,
             IAddressConfigurationSettingsService addressConfigurationSettingsService = null) : this() {
 
             _contentManager = part.ContentItem.ContentManager;
+
 
             ShippingCountriesHierarchyId = part.ShippingCountriesHierarchyId;
             CountriesHierarchy = part.ShippingCountriesHierarchyId == 0
@@ -33,12 +36,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 SelectedCountries = addressConfigurationSettingsService.SelectedCountryIds;
                 SelectedProvinces = addressConfigurationSettingsService.SelectedProvinceIds;
                 SelectedCities = addressConfigurationSettingsService.SelectedCityIds;
-                InitializeTerritories();
+                InitializeTerritories(_territoryPartRecordService);
             }
         }
 
         private IContentManager _contentManager;
-        private IAddressConfigurationSettingsService _addressConfigurationSettingsService;
 
         #region base configuration
         public int ShippingCountriesHierarchyId { get; set; }
@@ -56,6 +58,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             return result;
         }
         #endregion
+
 
         #region details configuration
 
@@ -80,14 +83,14 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         ///// </summary>
         //public IDictionary<int, string> TerritoryISOCode { get; set; }
 
-        public void InitializeTerritories() {
+        public void InitializeTerritories(ITerritoryPartRecordService _territoryPartRecordService) {
             TopLevel = CountriesHierarchy.TopLevel
                 // Create the top level and recursively create the whole hierarchy
                 .Select(ci => {
                     var tp = ci.As<TerritoryPart>();
                     return tp != null
                         ? new AddressConfigurationTerritoryViewModel(
-                            tp, SelectedCountries, SelectedProvinces, SelectedCities)
+                            tp, SelectedCountries, SelectedProvinces, SelectedCities,_territoryPartRecordService)
                         : null;
                 })
                 // remove nulls (sanity check)
@@ -95,7 +98,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             // Initialize the dictionaries we'll use to edit the configuration
             TerritoryTypeMap = new Dictionary<int, TerritoryAdministrativeType>();
 
-            foreach (var territory in CountriesHierarchy.Record.Territories) {
+            foreach (var territory in _territoryPartRecordService.GetHierarchyTerritories(CountriesHierarchy)) {
                 var tType = TerritoryAdministrativeType.None;
                 var internalId = territory.TerritoryInternalRecord.Id;
                 if (SelectedCountries.Contains(internalId)) {

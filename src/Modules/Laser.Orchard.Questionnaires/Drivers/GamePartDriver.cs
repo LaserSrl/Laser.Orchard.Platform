@@ -37,10 +37,12 @@ namespace Laser.Orchard.Questionnaires.Drivers {
             var viewModel = new GamePartVM();
 
             DateTime? tmpGameDate = _dateLocalization.ReadDateLocalized(part.GameDate);
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<GamePart, GamePartVM>().ForMember(dest => dest.GameDate, opt => opt.Ignore());
             });
-            Mapper.Map<GamePart, GamePartVM>(part, viewModel);
+
+            var mapper = mapperConfiguration.CreateMapper();
+            mapper.Map<GamePart, GamePartVM>(part, viewModel);
             viewModel.GameDate = _dateLocalization.WriteDateLocalized(tmpGameDate,true);
             return ContentShape("Parts_GamePart_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/GamePart_Edit", Model: viewModel, Prefix: Prefix));
         }
@@ -48,11 +50,14 @@ namespace Laser.Orchard.Questionnaires.Drivers {
         protected override DriverResult Editor(GamePart part, IUpdateModel updater, dynamic shapeHelper) {
             var viewModel = new GamePartVM();
             if (updater.TryUpdateModel(viewModel, Prefix, null, null)) {
-                Mapper.Initialize(cfg => {
+                var mapperConfiguration = new MapperConfiguration(cfg => {
                     cfg.CreateMap<GamePartVM, GamePart>()
-                    .ForMember(dest => dest.GameDate, opt => opt.Ignore());
+                        .ForMember(dest => dest.GameDate, opt => opt.Ignore());
                 });
-                Mapper.Map<GamePartVM, GamePart>(viewModel, part);
+
+                var mapper = mapperConfiguration.CreateMapper();
+
+                mapper.Map<GamePartVM, GamePart>(viewModel, part);
                 if (!String.IsNullOrWhiteSpace(viewModel.GameDate)) {
                     part.GameDate = _dateLocalization.StringToDatetime(viewModel.GameDate, "") ?? DateTime.Now;
                 }

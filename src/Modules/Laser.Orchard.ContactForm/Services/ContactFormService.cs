@@ -155,8 +155,18 @@ namespace Laser.Orchard.ContactForm.Services {
                                 var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
 
                                 string mailSubject = "";
-                                if (useStaticSubject && !String.IsNullOrWhiteSpace(template.Subject)) mailSubject = template.Subject;
-                                else mailSubject = subject;
+                                if (useStaticSubject) /*Contatct form has been set to use a static message (in the front-end form the subject field is not displayed)*/{
+                                    if (String.IsNullOrWhiteSpace(subject) /*the ContactForm subject is empty*/
+                                    && !String.IsNullOrWhiteSpace(template.Subject)) /*the template subject is not empty*/ {
+                                        mailSubject = template.Subject;
+                                    }
+                                    else {
+                                        mailSubject = subject; //subject is set via the back-end part
+                                    }
+                                }
+                                else {
+                                    mailSubject = subject; //subject is set via the front-end textbox
+                                }
 
                                 MediaPart mediaData = new MediaPart();
                                 if (mediaid != -1) {

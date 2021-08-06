@@ -26,23 +26,23 @@
 @{using (Html.BeginForm("sendcontactemail", "contactform", new { area = "Laser.Orchard.ContactForm" }, FormMethod.Post, new { @class = "contact-form" })) {
         <ul>
             <li @Html.Raw(displayName)>
-                <label for="Name">@T("Name")</label>
+                <label for="Name-@uniqueId">@T("Name")</label>
                 <input id="Name-@uniqueId" class="text" name="Name" type="text" placeholder="@T("Your Name")" value="@name" />
             </li>
             <li class="emailForm">
-                <label for="Email">@T("Email")</label>
+                <label for="Email-@uniqueId">@T("Email")</label>
                 <input id="Email-@uniqueId" class="text medium" name="Email" type="text" placeholder="@T("Email Address")" value="@email" />
             </li>
             <li>
-                <label for="ConfirmEmail">@T("Confirm Email")</label>
+                <label for="ConfirmEmail-@uniqueId">@T("Confirm Email")</label>
                 <input id="ConfirmEmail-@uniqueId" class="text medium" name="ConfirmEmail" type="text" placeholder="@T("Confirm Email Address")" value="@confirmEmail" />
             </li>
             <li @Html.Raw(displaySubject)>
-                <label for="Subject">@T("Subject")</label>
+                <label for="Subject-@uniqueId">@T("Subject")</label>
                 <input id="Subject-@uniqueId" class="text medium" name="Subject" type="text" placeholder="@T("Subject")" value="@subject" />
             </li>
             <li>
-                <label for="Message">@T("Message")</label>
+                <label for="Message-@uniqueId">@T("Message")</label>
                 <textarea id="Message-@uniqueId" class="text" name="Message" placeholder="@T("Comments or Inquiry")" cols="50" rows="10">@message</textarea>
             </li>
         </ul>

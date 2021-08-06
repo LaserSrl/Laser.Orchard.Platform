@@ -3,6 +3,7 @@
 @using Orchard.ContentManagement
 @using Orchard.Utility.Extensions
 @using Laser.Orchard.OpenAuthentication
+@using Laser.Orchard.StartupConfig.Extensions;
 @{
     var userCanRegister = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().UsersCanRegister;
     var enableLostPassword = WorkContext.CurrentSite.As<Orchard.Users.Models.RegistrationSettingsPart>().EnableLostPassword;
@@ -48,17 +49,18 @@
                 </div>
                 <div class="form-group">
                     <label class="checkbox" for="remember-me">
-                        @Html.CheckBox("rememberMe", new { id = "remember-me" }) @T("Remember Me")</label>
+                        @Html.CheckBox("rememberMe", new { id = "remember-me" }) @T("Remember Me")
+                    </label>
                 </div>
                 <div class="form-group">
                     <button class="btn" type="submit">@T("Sign In")</button>
                 </div>
                 <div class="form-group">
-                    @if (userCanRegister) { <p><a href="@Url.Register(userName, externalLoginData)">@T("Register")</a> @T(" if you don't have an account.") </p>}
-                    @if (enableLostPassword) { <p>
-                        <text> </text>
-                        @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword")
-                    </p>}
+                    @if (userCanRegister) {<p><a href="@Url.Register(userName, externalLoginData)">@T("Register")</a> @T(" if you don't have an account.") </p>}
+                    @if (enableLostPassword) {<p>
+                            <text> </text>
+                            @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword")
+                        </p>}
                 </div>
             }
         </div>
@@ -67,20 +69,20 @@
 </div>
 @if (clientsData.Any()) {
     using (Html.BeginFormAntiForgeryPost(Url.OpenAuthLogOn(returnUrl))) {
-<div class="row">
-    <div class="col-sm-6 col-sm-offset-3 social-login">
-        <h3>@T("...or login with:")</h3>
-        <div class="social-login-buttons">
-            @foreach (OrchardAuthenticationClientData clientData in clientsData) {
-                    <button class="btn btn-link-2" type="submit" name="providerName" value="@clientData.ProviderName" title="@T("Log in using your {0} account", clientData.DisplayName)"><i class="fa fa-@clientData.ProviderName.ToLowerInvariant()"></i>@clientData.DisplayName</button>
-                
-                @*
-             <a class="btn btn-link-2" href="#">
-                <i class="fa fa-@clientData.ProviderName.ToLowerInvariant()"></i>Facebook
-            </a>*@
-            }
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 social-login">
+                <h3>@T("...or login with:")</h3>
+                <div class="social-login-buttons">
+                    @foreach (OrchardAuthenticationClientData clientData in clientsData) {
+                        <button class="btn btn-link-2" type="submit" name="providerName" value="@clientData.ProviderName" title="@T("Log in using your {0} account", clientData.DisplayName)"><i class="fa fa-@clientData.ProviderName.ToLowerInvariant()"></i>@clientData.DisplayName</button>
+
+                        @*
+                             <a class="btn btn-link-2" href="#">
+                                <i class="fa fa-@clientData.ProviderName.ToLowerInvariant()"></i>Facebook
+                            </a>*@
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     }
 }

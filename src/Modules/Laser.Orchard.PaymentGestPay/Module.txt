@@ -9,3 +9,4 @@ Features:
     Laser.Orchard.PaymentGestPay:
         Description: Enables payments using GestPay as a provider
 		Dependencies: Laser.Orchard.PaymentGateway
+		Category: Payments

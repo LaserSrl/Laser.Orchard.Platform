@@ -1,0 +1,33 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model CheckoutViewModel
+@{
+
+    var title = Layout.Title = T("Checkout: Shipping Option");
+}
+<h1>@title</h1>
+<div class="ship-errors checkout-errors"></div>
+@Html.ValidationSummary()
+<div class="cart-summary">
+    @Display.CheckoutCartSummary(ViewModel: Model)
+</div>
+<div class="address-summary">
+    @Display.AddressSummaryForm(ViewModel: Model)
+</div>
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Shipping"), FormMethod.Post, new { @id = "shipping-form" })) {
+    @*serialized address data*@
+    @Html.HiddenFor(m => m.SerializedAddresses)
+    @Html.HiddenFor(m => m.BillAtSameShippingAddress)
+    @*Available shipping options*@
+    if (Model.AvailableShippingOptions != null && Model.AvailableShippingOptions.Any()) {
+        @Display.ShippingOptions(
+            ShippingOptions: Model.AvailableShippingOptions,
+            Country: Model.ShippingAddressVM.Country,
+            ZipCode: Model.ShippingAddressVM.PostalCode,
+            CurrencyProvider: Model.CurrencyProvider)
+    }
+    else {
+        @T("No shipping option available for the selected address. Go <a herf=\"{0}\">back to configure a different one</a>.",
+            Url.Action("Index", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }))
+    }
+}

@@ -7,22 +7,24 @@
     Script.Require("jQuery").AtHead();
 }
 @*@using (Script.Head()) {
-    <script type="text/javascript">
-        //<![CDATA[
-        $(document).ready(function () {
-            $("#comment").bind('keypress', function (event) {
-                var regex = new RegExp("^[a-zA-Z0-9]+$");
-                var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
-                if (!regex.test(key)) {
-                    event.preventDefault();
-                    return false;
-                }
+        <script type="text/javascript">
+            //<![CDATA[
+            $(document).ready(function () {
+                $("#comment").bind('keypress', function (event) {
+                    var regex = new RegExp("^[a-zA-Z0-9]+$");
+                    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+                    if (!regex.test(key)) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
             });
-        });
-        //]]>
-        </script>
-}*@
-<h4 class="reviews-heading" id="reviews-heading">Reviews</h4>
+            //]]>
+            </script>
+    }*@
+@if (Model.ContentPart.ShowReviews) {
+    <h4 class="reviews-heading" id="reviews-heading">@T("User Reviews")</h4>
+}
 <div class="reviews-content">
     @if (!Model.ContentPart.UserHasReviewed) {
         string reviewLinkText = "Write a review!";
@@ -34,74 +36,78 @@
         }
 
         string showReviewUri = "#";
-        if (!Request.IsAuthenticated)
-        {
+        if (!Request.IsAuthenticated) {
             showReviewUri = Url.Action("LogOn", "Account", new { area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl });
         }
         <header>
-        @if (ContentExtensions.IsPublished(Model.ContentPart.ContentItem))
-        {
-
-            <div id="createReviewLinkDiv"><span id="createReviewLinkSpan">@noReviewsYetText<a id="showReviewFormLink" href="@showReviewUri">@reviewLinkText</a></span></div>
-            <div id="reviewFormDiv" style="display: none">
-                <span class="my-rating">My Rating:</span> @Display.Parts_Stars_NoAverage(ContentPart: Model.ContentPart)
-                <span class="my-review">My Review:</span>
-                    @using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post))
-                {
-                    @Html.TextArea("comment", (TempData["Comment"] ?? "").ToString(), new { maxLength = 1200, rows = 4 })
-                    @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
-                    @Html.Hidden("ReturnUrl", Context.Request.RawUrl)
-                    <p class="review-character-limit"><span id="commentCharactersLeft"></span> @T("character(s) remaining")</p>
-                    <input id="createReviewButton" type="submit" value="Submit Review" />
-                    <a id="cancelCreateReviewLink" href="#">Cancel</a>
+            @if (ContentExtensions.IsPublished(Model.ContentPart.ContentItem)) {
+                if (Model.ContentPart.ShowReviews) {
+                    <div id="createReviewLinkDiv"><span id="createReviewLinkSpan">@noReviewsYetText<a id="showReviewFormLink" href="@showReviewUri">@reviewLinkText</a></span></div>
                 }
-            </div>
-        } else if (!reviewsExist) {
-            <div id="createReviewLinkDiv"><span id="createReviewLinkSpan">@T("There are no reviews for this item.")</span></div>
-        }
+                <div id="reviewFormDiv" style="display: none">
+                    @if (Model.ContentPart.ShowStars) {
+                        <span class="my-rating">My Rating:</span> @Display.Parts_Stars_NoAverage(ContentPart: Model.ContentPart)
+                    }
+                    @if (Model.ContentPart.ShowReviews) {
+                    <span class="my-review">My Review:</span>
+                        @using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post)) {
+                            @Html.TextArea("comment", (TempData["Comment"] ?? "").ToString(), new { maxLength = 1200, rows = 4 })
+                            @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
+                            @Html.Hidden("ReturnUrl", Context.Request.RawUrl)
+                            <p class="review-character-limit"><span id="commentCharactersLeft"></span> @T("character(s) remaining")</p>
+                            <input id="createReviewButton" type="submit" value="Submit Review" />
+                            <a id="cancelCreateReviewLink" href="#">Cancel</a>
+                        }
+                    }
+                </div>
+            } else if (!reviewsExist && Model.ContentPart.ShowReviews) {
+                <div id="createReviewLinkDiv"><span id="createReviewLinkSpan">@T("There are no reviews for this item.")</span></div>
+            }
         </header>
     }
-    <ul id="reviewsList">
-        @foreach (var review in Model.ContentPart.Reviews)
-        {
-            double userRating = review.Rating.UserRating;
-            var userResultClass = string.Format("stars-value-{0}", userRating);
-            string liClass = review.IsCurrentUsersReview ? "mine" : "";
-            <li class="@liClass">
-                <div class="stars-rating">
-                    <div class="stars-current-result @userResultClass">
-                        <span class="star-1 a-star">@(review.Rating.UserRating > 0 ? T("*").ToString() : T("-").ToString())</span>
-                        <span class="star-2 a-star">@(review.Rating.UserRating > 1 ? T("*").ToString() : T("-").ToString())</span>
-                        <span class="star-3 a-star">@(review.Rating.UserRating > 2 ? T("*").ToString() : T("-").ToString())</span>
-                        <span class="star-4 a-star">@(review.Rating.UserRating > 3 ? T("*").ToString() : T("-").ToString())</span>
-                        <span class="star-5 a-star">@(review.Rating.UserRating > 4 ? T("*").ToString() : T("-").ToString())</span>
-                    </div>
-                </div>
-                <div>
-                    <span class="review-username">@review.UserName</span><span class="review-timestamp">@review.CreatedUtc</span>
-                    <p class="review-comment">@review.Comment
-                    @if (review.IsCurrentUsersReview) {
-                        <a href="#" id="deleteReviewLink" data-review-id="@review.Id">Delete</a>
+    @if (Model.ContentPart.ShowReviews) {
+        <ul id="reviewsList">
+            @foreach (var review in Model.ContentPart.Reviews) {
+                double userRating = review.Rating.UserRating;
+                var userResultClass = string.Format("stars-value-{0}", userRating);
+                string liClass = review.IsCurrentUsersReview ? "mine" : "";
+                <li class="@liClass">
+                    @if (Model.ContentPart.ShowStars) {
+                        <div class="stars-rating">
+                            <div class="stars-current-result @userResultClass">
+                                <span class="star-1 a-star">@(review.Rating.UserRating > 0 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-2 a-star">@(review.Rating.UserRating > 1 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-3 a-star">@(review.Rating.UserRating > 2 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-4 a-star">@(review.Rating.UserRating > 3 ? T("*").ToString() : T("-").ToString())</span>
+                                <span class="star-5 a-star">@(review.Rating.UserRating > 4 ? T("*").ToString() : T("-").ToString())</span>
+                            </div>
+                        </div>
                     }
-                    </p>
-                </div>
-            </li>
-        }
-    </ul>
-    <div><a id="showAllReviewsLink" href="#" style="display: none">Show All</a></div>
+                    <div>
+                        <span class="review-username">@review.UserName</span><span class="review-timestamp">@review.CreatedUtc</span>
+                        <p class="review-comment">
+                            @review.Comment
+                            @if (review.IsCurrentUsersReview) {
+                                <a href="#" id="deleteReviewLink" data-review-id="@review.Id">Delete</a>
+                            }
+                        </p>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div><a id="showAllReviewsLink" href="#" style="display: none">Show All</a></div>
+    }
 </div>
 <div id="deleteReviewConfirmationDialogDiv" title="Confirm Deletion" style="display:none">
     <p>@T("Are you sure you wish to delete your review? Your Rating will also be deleted.")</p>
-    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post, new { id = "deleteReviewForm" }))
-    {
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Delete", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post, new { id = "deleteReviewForm" })) {
         <input type="hidden" id="reviewId" name="reviewId" />
         <input type="hidden" id="returnUrl" name="returnUrl" value="@Context.Request.RawUrl" />
         <input type="submit" value="Yes" />
         <input type="button" value="No" id="cancelDeleteReviewButton" />
     }
 </div>
-@using (Script.Foot())
-{
+@using (Script.Foot()) {
     <script type="text/javascript">
     //<![CDATA[
         (function () {

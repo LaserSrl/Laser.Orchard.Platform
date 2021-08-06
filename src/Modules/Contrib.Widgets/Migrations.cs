@@ -1,18 +1,25 @@
 ﻿using Contrib.Widgets.Models;
+using Contrib.Widgets.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 using Orchard.Widgets.Models;
+using Orchard.Widgets.Services;
+using System.Linq;
 
 namespace Contrib.Widgets {
     [OrchardFeature("Contrib.Widgets")]
     public class Migrations : DataMigrationImpl {
         private readonly IContentManager _contentManager;
+        private readonly IWidgetManager _widgetManager;
 
-        public Migrations(IContentManager contentManager) {
+        public Migrations(
+            IContentManager contentManager, 
+            IWidgetManager widgetManager) {
             _contentManager = contentManager;
+            _widgetManager = widgetManager;
         }
 
         public int Create() {
@@ -80,6 +87,13 @@ namespace Contrib.Widgets {
             }
 
             return 4;
+        }
+
+        public int UpdateFrom4() {
+            // Used this method because it was the operation I needed.
+            // Create the ContentWidgets layer if it doesn't already exist
+            _widgetManager.GetContentLayer();
+            return 5;
         }
     }
 }

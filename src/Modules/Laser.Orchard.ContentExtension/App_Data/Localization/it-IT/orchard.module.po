@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -277,6 +277,10 @@ msgid "ContentType not exist"
 msgstr "Il tipo di contenuto non esiste"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ContentItemController"
+msgid "No content with this Id"
+msgstr "Contenuto inesistente"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
 msgid "No content with this Id"
 msgstr "Contenuto inesistente"
 

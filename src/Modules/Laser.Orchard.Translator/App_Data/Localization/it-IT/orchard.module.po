@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -13,12 +13,20 @@ msgid "Comma separated list of modules that must be translated."
 msgstr "Elenco separato da virgola dei moduli da tradurre."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of tenants that have custom translations."
+msgstr "Elenco separato da virgola dei tenants che hanno traduzioni custom."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Comma separated list of themes that must be translated."
 msgstr "Elenco separato da virgola dei temi da tradurre."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Modules to Translate"
 msgstr "Moduli da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Tenants to Translate"
+msgstr "Tenants da tradurre"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Themes to Translate"
@@ -31,6 +39,10 @@ msgstr "Impostazioni Traduttore"
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
 msgid "Back"
 msgstr "Indietro"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
+msgid "Create new"
+msgstr "Crea nuovo"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/Index.cshtml"
 msgid "Settings"
@@ -77,8 +89,20 @@ msgid "WARNING: this setting is applied to all languages."
 msgstr "ATTENZIONE: questa impostazione verrà applicata a tutte le lingue."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Abilita modifica"
+msgstr "Abilita modifica"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Click to use this translation"
 msgstr "Clicca per usare questa traduzione"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Container Name"
+msgstr "Nome Contenitore"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Container Type"
+msgstr "Tipo Contenitore"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Context"
@@ -89,8 +113,24 @@ msgid "Delete"
 msgstr "Elimina"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Information"
+msgstr "Informazioni"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Language"
+msgstr "Lingua"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Message ID"
+msgstr "ID messaggio"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
+msgid "Save as New"
+msgstr "Salva come nuovo"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/Translator/TranslatorForm.cshtml"
 msgid "Suggestions"
@@ -149,6 +189,10 @@ msgid "Please select a module or a theme."
 msgstr "Si prega di selezionare un modulo o un tema."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
+msgid "Please select a module, a theme or a tenant."
+msgstr "Seleziona un modulo, tema o tenant."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/TranslatorTree/Index.cshtml"
 msgid "Show Details"
 msgstr "Visualizza Dettagli"
 
@@ -185,6 +229,10 @@ msgid "An error occurred while saving the translation. Please reload the page an
 msgstr "Si è verificato un errore durante il salvataggio della traduzione. Si prega di ricaricare la pagina e riprovare."
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
+msgid "The translation has been deleted."
+msgstr "La traduzione è stata cancellata."
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorController"
 msgid "Unable to delete the translation."
 msgstr "Impossibile eliminare la traduzione."
 
@@ -197,8 +245,16 @@ msgid "N/D"
 msgstr "N/D"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Tenants"
+msgstr "Tenants"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Themes"
 msgstr "Temi"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Undefined"
+msgstr "Non definito"
 
 msgctxt "Laser.Orchard.Translator.Handlers.TranslatorSettingsHandler"
 msgid "Translator"

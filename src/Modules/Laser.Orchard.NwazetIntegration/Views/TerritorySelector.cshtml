@@ -1,0 +1,56 @@
+﻿@using Laser.Orchard.NwazetIntegration.Services;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Newtonsoft.Json;
+@{ 
+    var addressConfigurationSettingsService =
+        WorkContext.Resolve<IAddressConfigurationSettingsService>();
+
+    var hierarchy = addressConfigurationSettingsService.ShippingCountriesHierarchy;
+
+    if (hierarchy != null) {
+        Style.Require("jQueryUI_Orchard");
+        Script.Require("NWazetIntegration.TerritoriesAutoComplete");
+    }
+
+    var serializedTerritories = Model.Value ?? "[]";
+    serializedTerritories = serializedTerritories
+                    .Replace("{{", "{")
+                    .Replace("}}", "}");
+
+    var namePrefix = Model.Name ?? Html.FieldNameFor(m => m);
+    namePrefix = (string.IsNullOrWhiteSpace(namePrefix) ? "" : namePrefix + ".");
+    var idPrefix = Model.Id ?? Html.FieldIdFor(m => m);
+    idPrefix = (string.IsNullOrWhiteSpace(idPrefix) ? "" : idPrefix + "_");
+}
+
+<fieldset class="territories-wrapper"
+          data-name-prefix="@namePrefix"
+          data-id-prefix="@idPrefix"
+          data-model-name="@Model.Name"
+          data-model-id="@Model.Id"
+          data-prevent-tokenization="true">
+    <legend>@T("Select the territories this shipping is valid for.")</legend>
+    @if (hierarchy != null) {
+        <div class="territories-editor text text-medium"
+             data-autocomplete-url="@Url.HttpRouteUrl("",
+                new { area = "Laser.Orchard.NwazetIntegration",
+                    controller = "TerritoriesApi" })"
+             data-hierarchy-id="@hierarchy.Id"
+             data-selected-territories="@serializedTerritories">
+            <ul></ul>
+            <div class="hint">
+                @T("Enter multiple territory names. Hit <i>tab</i>, <i>enter</i> or <i>,</i> to add multiple terms.")
+            </div>
+        </div>
+        <input type="hidden"
+               name="@Model.Name"
+               id="@Model.Id"
+               value="@(serializedTerritories
+                    .Replace("{","{{")
+                    .Replace("}","}}"))" />
+    } else {
+        <div>
+            @T("No countries' hierarchy was configured.")
+        </div>
+    }
+</fieldset>

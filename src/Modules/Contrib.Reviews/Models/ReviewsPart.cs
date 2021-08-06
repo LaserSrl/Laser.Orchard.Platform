@@ -10,6 +10,7 @@ namespace Contrib.Reviews.Models {
         }
 
         public bool ShowStars { get; set; }
+        public bool ShowReviews { get; set; }
         public Rating Rating { get; set; }
         public List<Review> Reviews { get; set; }
         public bool UserHasReviewed { get; set; }

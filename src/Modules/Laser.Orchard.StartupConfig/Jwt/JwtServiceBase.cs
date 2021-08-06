@@ -3,7 +3,7 @@ using Orchard.Localization;
 using Orchard.Logging;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -121,11 +121,6 @@ namespace Laser.Orchard.StartupConfig.Jwt
                 if (authHeader.Key != null)
                 {
                     WebApiClient.DefaultRequestHeaders.Add(authHeader.Key, authHeader.Value);
-                }
-                // specify to use TLS 1.2 as default connection if needed
-                if (url.ToLowerInvariant().StartsWith("https:"))
-                {
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
                 }
                 // call web api
                 Task<HttpResponseMessage> t = null;

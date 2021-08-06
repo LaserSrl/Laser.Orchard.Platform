@@ -2,10 +2,9 @@
 @using Orchard.Projections.Models
 
 @{
-    Style.Include("./Calendar/fullcalendar.css");
+    Style.Require("FullCalendar");
     Script.Require("jQuery");
-    Script.Include("./Calendar/moment.min.js");
-    Script.Include("./Calendar/fullcalendar.min.js");
+    Script.Require("FullCalendar");
 
     using (Script.Foot()) {
         <script type="text/javascript">

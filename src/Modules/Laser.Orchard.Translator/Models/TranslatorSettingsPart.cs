@@ -15,5 +15,10 @@ namespace Laser.Orchard.Translator.Models
             get { return this.Retrieve(x => x.ThemesToTranslate); }
             set { this.Store(x => x.ThemesToTranslate, value); }
         }
+
+        public string TenantsToTranslate {
+            get { return this.Retrieve(x => x.TenantsToTranslate); }
+            set { this.Store(x => x.TenantsToTranslate, value); }
+        }
     }
 }

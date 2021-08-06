@@ -25,10 +25,16 @@
         <span class="hint">@T("Check to enable token replacement in the field contents.")</span>
     </div>
     <div>
-        @Html.TextBoxFor(m => m.Settings.TemplateString, new { @class = "text large tokenized", @id = "tbTemplateString_"+guid, @onkeypress = "checkFilled();", @onchange = "checkFilled();" })
-        <span class="hint">@T("Default value.")</span>
+        @Html.LabelFor(m => m.Settings.TemplateString, T("Default value"))
+        @Html.TextBoxFor(m => m.Settings.TemplateString, new { @class = "text large tokenized", @id = "tbTemplateString_" + guid, @onkeypress = "checkFilled();", @onchange = "checkFilled();" })
+        <span class="hint">@T("Enter a default value for the field.")</span>
     </div>
     <div>
+        @Html.CheckBoxFor(m=>m.Settings.AutomaticAdjustmentOnEdit, new { @class = "check-box" }) <label for="@Html.FieldIdFor(m=>m.Settings.AutomaticAdjustmentOnEdit)" class="forcheckbox">@T("Automatically regenerate when editing content")</label>
+        <span class="hint">@T("This option will cause the field to automatically be regenerated with the default value when you edit existing content and save it again, otherwise it will always keep the old value.")</span>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ProcessVariantString, T("Background bulk update"))
         @Html.DropDownListFor(m => m.ProcessVariantString, Model.ProcessVariants)
         <span class="hint">@T("Selecting a value different than None will start a background update of these hidden fields.")</span>
     </div>

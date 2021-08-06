@@ -7,6 +7,7 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Mvc.Extensions;
+using Orchard.OutputCache.Services;
 using Orchard.Security;
 
 namespace Contrib.Reviews.Controllers {
@@ -16,12 +17,18 @@ namespace Contrib.Reviews.Controllers {
         private readonly IVotingService _votingService;
         private readonly IRepository<ReviewRecord> _reviewRecordRepository;
 
-        public RateController(IOrchardServices orchardServices, IContentManager contentManager, IVotingService votingService,
-            IRepository<ReviewRecord> reviewRecordRepository) {
+        private readonly ICacheService _cacheService;
+
+        public RateController(IOrchardServices orchardServices, 
+            IContentManager contentManager, 
+            IVotingService votingService,
+            IRepository<ReviewRecord> reviewRecordRepository,
+            ICacheService cacheService) {
             _orchardServices = orchardServices;
             _reviewRecordRepository = reviewRecordRepository;
             _contentManager = contentManager;
             _votingService = votingService;
+            _cacheService = cacheService;
         }
 
         [HttpPost]
@@ -55,6 +62,9 @@ namespace Contrib.Reviews.Controllers {
             else {
                 _votingService.Vote(content, currentUser.UserName, HttpContext.Request.UserHostAddress, rating);
             }
+
+            // I need to evict the content item from the cache because in case of authenticated caching, the review list doesn't get to be refreshed.
+            _cacheService.RemoveByTag(content.Id.ToString());
         }
 
         private void ClearRating(VoteRecord currentVote) {
@@ -62,6 +72,8 @@ namespace Contrib.Reviews.Controllers {
                 _votingService.RemoveVote(currentVote);
                 foreach (var reviewRecord in _reviewRecordRepository.Fetch(rr => rr.VoteRecordId == currentVote.Id)) {
                     _reviewRecordRepository.Delete(reviewRecord);
+                    // I need to evict the content item from the cache because in case of authenticated caching, the review list doesn't get to be refreshed.
+                    _cacheService.RemoveByTag(currentVote.ContentItemRecord.Id.ToString());
                 }
             }
         }

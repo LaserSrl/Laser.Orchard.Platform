@@ -295,10 +295,13 @@ namespace Laser.Orchard.ContentExtension.Drivers {
                     })
                 });
             var partvm = new DynamicProjectionPartVM();
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<DynamicProjectionPart, DynamicProjectionPartVM>();
             });
-            Mapper.Map<DynamicProjectionPart, DynamicProjectionPartVM>(part, partvm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<DynamicProjectionPart, DynamicProjectionPartVM>(part, partvm);
             var newmodel = new DynamicProjectionVM {
                 Projection = model,
                 Part = partvm,
@@ -327,16 +330,16 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             else {
                 newmodel.Part.AdminMenuPosition = "";
             }
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<DynamicProjectionPartVM, DynamicProjectionPart>();
             });
-            Mapper.Map<DynamicProjectionPartVM, DynamicProjectionPart>(newmodel.Part, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<DynamicProjectionPartVM, DynamicProjectionPart>(newmodel.Part, part);
             //           part.FormFile = newmodel.FormFile;
             // projection
             var model = newmodel.Projection;
-
-
-
 
             part.Record.DisplayPager = model.DisplayPager;
             part.Record.Items = model.Items;
@@ -353,9 +356,6 @@ namespace Laser.Orchard.ContentExtension.Drivers {
             if (!String.IsNullOrWhiteSpace(part.Record.PagerSuffix) && !String.Equals(part.Record.PagerSuffix.ToSafeName(), part.Record.PagerSuffix, StringComparison.OrdinalIgnoreCase)) {
                 updater.AddModelError("PagerSuffix", T("Suffix should not contain special characters."));
             }
-
-            //
-
 
             return Editor(part, shapeHelper);
         }

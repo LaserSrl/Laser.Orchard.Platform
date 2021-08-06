@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -139,6 +139,10 @@ msgstr "Api Key fornita da google"
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
 msgid "Google Api Key"
 msgstr "Apy Key di google"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
+msgid "Keep the map's culture/language consistent with the current culture"
+msgstr "Mantieni la lingua della mappa allineata con la lingua corrente"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/MapsSiteSettings.cshtml"
 msgid "Maps"

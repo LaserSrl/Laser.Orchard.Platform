@@ -36,6 +36,10 @@
         <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'OK' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieAcceptButtonText, new { @class = "text medium" })
     </div>
+    <div>
+        <label for="CookieSettings_cookieAcceptButtonText">@T("Change 'Accept selected' button text")</label>
+        @Html.TextBoxFor(m => m.CookieLaw.cookieAcceptSelectedButtonText, new { @class = "text medium" })
+    </div>
     <div @(settings.showCookieResetButton ? "" : "style=display:none")>
         <label for="CookieSettings_cookieResetButtonText">@T("Change 'GDPR Cookies' button text")</label>
         @Html.TextBoxFor(m => m.CookieLaw.cookieResetButtonText, new { @class = "text medium" })

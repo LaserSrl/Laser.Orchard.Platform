@@ -26,8 +26,8 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IRepository<CultureRecord> _cultureRecord;
         private readonly ISignals _signals;
 
-        public CommonsServices(IOrchardServices orchardServices, 
-            IClock clock, 
+        public CommonsServices(IOrchardServices orchardServices,
+            IClock clock,
             IEncryptionService encryptionService,
             ICacheManager cacheManager,
             IRepository<CultureRecord> cultureRecord,
@@ -45,7 +45,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             if (userAgent.Contains("iphone") || userAgent.Contains("ipod") || userAgent.Contains("ipad")) {
                 return DevicesBrands.Apple;
             } else if (userAgent.Contains("windows")) {
-                return  DevicesBrands.Windows;
+                return DevicesBrands.Windows;
             } else if (userAgent.Contains("android")) {
                 return DevicesBrands.Google;
             } else {
@@ -114,7 +114,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                 .Select(x => new CultureEntry { Id = x.Id, Culture = x.Culture }).ToList();
             });
         }
-
     }
 
     public class CultureEntry {

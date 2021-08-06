@@ -1,0 +1,28 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model CheckoutSettingsPartViewModel
+<div class="form-group">
+    <div class="checkbox-inline">
+        <label>
+            @Html.CheckBoxFor(m => m.CheckoutRequiresAuthentication)
+            @T("Require users to be authenticated to start a checkout.")
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="checkbox-inline">
+        <label>
+            @Html.CheckBoxFor(m => m.PhoneIsRequired)
+            @T("A phone number is required for checkout.")
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="checkbox-inline">
+        <label>
+            @Html.CheckBoxFor(m => m.ShippingIsRequired)
+            @T("A shipping address is required for checkout.")
+        </label>
+    </div>
+</div>

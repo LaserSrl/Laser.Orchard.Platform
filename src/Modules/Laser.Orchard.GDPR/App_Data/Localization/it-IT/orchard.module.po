@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -231,6 +231,22 @@ msgstr "Cerca:"
 msgctxt "~/Modules/Laser.Orchard.GDPR/Views/Parts/GDPRPart.AdminToolbarLink.cshtml"
 msgid " | "
 msgstr "|"
+
+msgctxt "Laser.Orchard.GDPR.Activities.AnonymizationProcessTask"
+msgid "Anonymize the selected ContentItems"
+msgstr "Anonimizza i Contenuti selezionati."
+
+msgctxt "Laser.Orchard.GDPR.Activities.ContentAnonymizedActivity"
+msgid "Content is Anonymized. The GDPRContentContext token contains further information."
+msgstr "Contenuto anonimizzato. Il token GDPRContentContext contiene informazioni addizionali."
+
+msgctxt "Laser.Orchard.GDPR.Activities.ContentErasedActivity"
+msgid "Content is Erased. The GDPRContentContext token contains further information."
+msgstr "Contenuto cancellato. Il token GDPRContentContext contiene informazioni addizionali."
+
+msgctxt "Laser.Orchard.GDPR.Activities.ErasureProcessTask"
+msgid "Erase the selected ContentItems"
+msgstr "Cancella i Contentuti selezionati"
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
 msgid "Content is Anonymized. The GDPRContentContext token contains further information."

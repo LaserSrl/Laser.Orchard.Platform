@@ -1,0 +1,27 @@
+﻿@{
+    /*
+        Call this as:
+            @Display.MessagePage(
+                MainMessage: string,         //The main message shown in the page
+                SubMessage: string,          //The detail message shown in the page
+                ButtonLink: string,            //The url of the back button
+                ButtonText: string    //The message of the back button
+            )
+    */
+
+    var buttonText = (Model.ButtonText != null) ? Model.ButtonText.ToString() : T("Main Site").ToString();
+}
+
+<div class="fullscreen accounts-page">
+    <div class="d-flex align-items-center text-center particle-content col-padding-low">
+        <div class="container">
+            <div class="row">
+                <div class=" col-md-12">
+                    <h1 class="text-uppercase">@Model.MainMessage</h1>
+                    @if (Model.SubMessage != null) {<p class="lead">@Model.SubMessage</p>}
+                    @if (Model.ButtonLink != null) {<a href='@Model.ButtonLink' class='btn btn-lg btn-outline-dark'>@buttonText</a>}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,24 @@
-﻿@using (Html.BeginFormAntiForgeryPost(Url.Action("Index", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" }))) {
+﻿@{ 
+
+    var formId = "form" + Guid.NewGuid().ToString()
+        // get the first part of the guid
+        .Split(new char[] { '-' })[0];
+
+    
+    var additionalFormShapes = (IEnumerable<dynamic>)Model.AdditionalFormShapes;
+}
+
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("CheckoutStart", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }),
+    FormMethod.Post, new { @id = formId, @class="checkout-start"  })) {
+
+    
+    if (additionalFormShapes != null) {
+        foreach(var shape in additionalFormShapes) {
+            @Display(shape)
+        }
+    }
+
+
     <button type="submit" id="payButton" style="padding: 10px 10px">@T("Checkout")</button>
 }

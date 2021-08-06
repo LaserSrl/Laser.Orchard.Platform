@@ -1,0 +1,34 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@{
+    /*This shape displays the selected shipping option in checkout pages.
+     * The form here is used so that when we hit the link to reset the selected
+     * shipping option we can post some information to the actions.*/
+    var viewModel = (CheckoutViewModel)Model.ViewModel;
+}
+@if (viewModel.SelectedShippingOption != null) {
+    <fieldset class="shipping-option shipping-option-summary">
+        <legend>@T("Shipping")</legend>
+        <div>
+            @T("{1} {0}", Html.Raw(viewModel.SelectedShippingOption.Description), viewModel.SelectedShippingOption.ShippingCompany):
+            <span class="shipping-price">@viewModel.CurrencyProvider.GetPriceString(viewModel.SelectedShippingOption.Price)</span>
+        </div>
+    </fieldset>
+}
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Shipping", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "shipping-summary" })) {
+
+    <input type="hidden" name="Email" value="@viewModel.Email" />
+
+    @* Serialized shipping method *@
+    @Html.Hidden("ShippingOption", viewModel.ShippingOption)
+
+    <div class="reset-shipping">
+        <button type="submit"
+                name="ResetShipping"
+                value="true"
+                style=""
+                class="reset-button reset-shipping-button">
+            @T("Click here to change the selected shipping option.")
+        </button>
+    </div>
+}

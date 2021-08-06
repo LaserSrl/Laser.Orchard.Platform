@@ -1,0 +1,126 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Orchard.MediaLibrary.Fields;
+@using Orchard.ContentManagement;
+@using Nwazet.Commerce.Models;
+@using Nwazet.Commerce.Services;
+@using Nwazet.Commerce.Extensions;
+@{
+    var viewModel = (CheckoutViewModel)Model.ViewModel;
+    var _contentManager = WorkContext.Resolve<IContentManager>();
+    var _attributeExtensionProviders = WorkContext.Resolve<IEnumerable<IProductAttributeExtensionProvider>>();
+}
+<fieldset class="cart-summary-checkout">
+    <legend>@T("Your cart")</legend>
+    @* Display a line per product in the cart, with
+        name, thumbnail, unit price, quantity, total price *@
+    @foreach (var pq in viewModel.GetProductQuantities()) {
+        var productMediaPart = (pq.Product
+            .ContentItem
+            .Parts
+            .SelectMany(pa => pa.Fields.Where(fi => fi is MediaLibraryPickerField && fi.Name == "ProductImage"))
+            .FirstOrDefault() as MediaLibraryPickerField)
+            .MediaParts
+            .FirstOrDefault();
+
+        var unitPrice = viewModel.GetDiscountedPrice(pq);
+        var unitPriceOriginal = viewModel.GetOriginalPrice(pq);
+        string originalUnitPrice = "";
+        if (unitPrice != unitPriceOriginal && unitPriceOriginal != 0.0m) {
+            originalUnitPrice = string.Format("<strike>{0}</strike> ",
+                viewModel.CurrencyProvider.GetPriceString(unitPriceOriginal));
+        }
+
+        var linePriceAdjustment = viewModel.GetLinePriceAdjustement(pq);
+        var linePrice = pq.Quantity * unitPrice + linePriceAdjustment;
+        
+        var itemDisplayText = _contentManager.GetItemMetadata(pq.Product).DisplayText;
+        var productAttributes = (IDictionary<int, ProductAttributeValueExtended>)pq.AttributeIdsToValues;
+        if (productAttributes != null && productAttributes.Any()) {
+            var additionalText = 
+                AttributeNameUtilities.AttributesDisplayText(productAttributes, (IContent)pq.Product, _attributeExtensionProviders);
+            if (!string.IsNullOrWhiteSpace(additionalText)) {
+                itemDisplayText += " (" +
+                    additionalText.Trim()
+                    + ")";
+            }
+        }
+
+        <div class="product product-line row">
+            <div class="product-info">
+                <a href="@Url.ItemDisplayUrl(pq.Product)">
+                    @if (productMediaPart != null) {
+                        <div>
+                            @Display.ImageTag(MediaPart: productMediaPart,
+                                Width: 200, Height: 200,
+                                htmlAttributes: new Dictionary<string, object>() { { "class", "img-responsive product-image" } })
+                        </div>
+                    }
+                    <div class="product-name">
+                        <span class="product-title">@itemDisplayText</span>
+                    </div>
+                </a>
+            </div>
+            <div class="product-info line-info">
+                <div class="product-unit-price">
+                    <div class="product-info-label">@T("Unit price")</div>
+                    <div class="product-info-value">
+                        @(originalUnitPrice + viewModel.CurrencyProvider.GetPriceString(unitPrice))
+                    </div>
+                </div>
+                <div class="product-quantity">
+                    <div class="product-info-label">@T("Quantity")</div>
+                    <div class="product-info-value">@pq.Quantity</div>
+                </div>
+                <div class="product-line-price">
+                    <div class="product-info-label">@T("Line price")</div>
+                    <div class="product-info-value">
+                        @viewModel.CurrencyProvider.GetPriceString(linePrice)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @foreach (var alteration in viewModel.ShoppingCart.PriceAlterationAmounts) {
+        <div class="product product-line row">
+            <div class="product-info">
+                <div class="product-name">
+                    @if (!string.IsNullOrWhiteSpace(alteration.RemovalAction)) {
+                        using (Html.BeginFormAntiForgeryPost(
+                            alteration.RemovalAction)) {
+                            
+                            <span class="product-title">@alteration.Label</span>
+                            <input type="hidden"
+                                name="coupon.Code"
+                                value="@alteration.Key">
+                            <button class="btn"
+                                type="submit"
+                                formaction="@alteration.RemovalAction"
+                                title="@T("Remove")"
+                                ><i class="fa fa-times"></i></button>
+                        }
+                    } else {
+                        <span class="product-title">@alteration.Label</span>
+                    }
+                </div>
+            </div>
+            <div class="product-info line-info">
+                <div class="product-unit-price">@* TODO: check this view *@
+                </div>
+                <div class="product-quantity">
+                </div>
+                <div class="product-line-price">
+                    <div class="product-info-label">@T("Value")</div>
+                    <div class="product-info-value">
+                        @viewModel.CurrencyProvider.GetPriceString(alteration.Amount)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @* Display cart "totals" (excluding shipping) *@
+
+    <div>
+        <a href="@Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce"})">@T("Back to cart")</a>
+    </div>
+</fieldset>
+

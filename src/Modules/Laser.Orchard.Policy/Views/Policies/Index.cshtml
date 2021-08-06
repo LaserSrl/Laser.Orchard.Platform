@@ -7,49 +7,57 @@
         var acceptTypePolicy = Model.Policies[i].PolicyText.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
                             || Model.Policies[i].PolicyText.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
                             || Model.Policies[i].PolicyText.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
-    <h3>@(((dynamic)Model.Policies[i].PolicyText.ContentItem).TitlePart.Title)</h3>
-    <div>@Html.Raw(((dynamic)Model.Policies[i].PolicyText.ContentItem).BodyPart.Text)</div>
-        if (Model.Policies[i].AnswerId > 0) {
-    <div>
-        @if (Model.Policies[i].Accepted) { 
-            <i class="fa fa-check-circle" style="color: green"></i>
-        } else {
-            <i class="fa fa-exclamation-triangle" style="color: red"></i>
-        }
-        @if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
-            @T(Model.Policies[i].Accepted ? "Accepted policy on {0}" : "Not accepted policy on {0}", Model.Policies[i].AnswerDate)
-        } else {
-            @T(Model.Policies[i].Accepted ? "Read policy on {0}" : "Unread policy on {0}", Model.Policies[i].AnswerDate)
-        }
-    </div>
-        if (Model.Policies[i].PolicyText.UserHaveToAccept && Model.Policies[i].Accepted) {
-    @Html.HiddenFor(model => model.Policies[i].AnswerId)
-    @Html.HiddenFor(model => model.Policies[i].Accepted)
-        } else if (!Model.Policies[i].Accepted || Model.EditMode) {
-    @Html.HiddenFor(model => model.Policies[i].AnswerId)
-            if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
-    @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
-    @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
-            } else {
-    @Html.EditorFor(model => model.Policies[i].Accepted) @T("I have read the regulation.")
-            }
-        } else {
-    @Html.HiddenFor(model => model.Policies[i].AnswerId)
-    @Html.HiddenFor(model => model.Policies[i].Accepted)
+        <div class="policy-item">
+            <h3>@(((dynamic)Model.Policies[i].PolicyText.ContentItem).TitlePart.Title)</h3>
+            <div class="policy-item-body">@Html.Raw(((dynamic)Model.Policies[i].PolicyText.ContentItem).BodyPart.Text)</div>
+            @if (Model.Policies[i].AnswerId > 0) {
+                <div class="policy-item-answers">
+                    @if (Model.Policies[i].Accepted) {
+                        <i class="fa fa-check-circle" style="color: green"></i>
+                    }
+                    else {
+                        <i class="fa fa-exclamation-triangle" style="color: red"></i>
+                    }
+                    @if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                        @T(Model.Policies[i].Accepted ? "Accepted policy on {0}" : "Not accepted policy on {0}", Model.Policies[i].AnswerDate)
+                    }
+                    else {
+                        @T(Model.Policies[i].Accepted ? "Read policy on {0}" : "Unread policy on {0}", Model.Policies[i].AnswerDate)
+                    }
+                </div>
+                if (Model.Policies[i].PolicyText.UserHaveToAccept && Model.Policies[i].Accepted) {
+                    @Html.HiddenFor(model => model.Policies[i].AnswerId)
+                    @Html.HiddenFor(model => model.Policies[i].Accepted)
+                }
+                else if (!Model.Policies[i].Accepted || Model.EditMode) {
+                    @Html.HiddenFor(model => model.Policies[i].AnswerId)
+                    if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                        @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
+                        @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
+                    }
+                    else {
+                        @Html.EditorFor(model => model.Policies[i].Accepted) @T("I have read the regulation.")
+                    }
+                }
+                else {
+                    @Html.HiddenFor(model => model.Policies[i].AnswerId)
+                    @Html.HiddenFor(model => model.Policies[i].Accepted)
 
-        }
-        } else {
-            if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
-    @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
-    @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
-            } else {
-    @Html.EditorFor(model => model.Policies[i].Accepted) @T("I have read the regulation.")
+                }
             }
-        }
-    @Html.HiddenFor(model => model.Policies[i].OldAccepted)
-    @Html.HiddenFor(model => model.Policies[i].PolicyTextId)
-    @Html.HiddenFor(model => model.Policies[i].AnswerDate)
-    <hr />
+            else {
+                if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                    @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
+                    @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
+                }
+                else {
+                    @Html.EditorFor(model => model.Policies[i].Accepted) @T("I have read the regulation.")
+                }
+            }
+            @Html.HiddenFor(model => model.Policies[i].OldAccepted)
+            @Html.HiddenFor(model => model.Policies[i].PolicyTextId)
+            @Html.HiddenFor(model => model.Policies[i].AnswerDate)
+        </div>
     }
     <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
 }

@@ -1,0 +1,69 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model CheckoutViewModel
+@{
+
+    var title = Layout.Title = Model.ShippingAddressVM != null
+        ? T("Checkout: Shipping & Billing Addresses")
+        : T("Checkout: Billing Address");
+    Script.Require("NwazetIntegration.Addresses");
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            var requiredFormat = "@T("{0} is required.")",
+                required = "@T("Required information")";
+        </script>
+    }
+}
+<h1>@title</h1>
+<div class="ship-errors checkout-errors"></div>
+@Html.ValidationSummary()
+<div class="cart-summary">
+    @Display.CheckoutCartSummary(ViewModel: Model)
+</div>
+
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
+
+    if (Model.ShippingAddressVM != null) {
+        <fieldset class="shipping-address">
+            <legend>@T("Shipping Address")</legend>
+            @Display.AddressForm(
+                Prefix: "shippingAddressVM",
+                Address: Model.ShippingAddressVM,
+                IncludeCountry: true,
+                ListAddress:Model.ListAvailableShippingAddress)
+        </fieldset>
+
+        <fieldset class="toggle-billing">
+            <input id="toggle-billing-address" type="checkbox" />
+            <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
+        </fieldset>
+    }
+    <fieldset class="billing-address">
+        <legend>@T("Billing Address")</legend>
+        @Display.AddressForm(
+            Prefix: "billingAddressVM",
+            Address: Model.BillingAddressVM,
+            IncludeCountry: true,
+            ListAddress: Model.ListAvailableBillingAddress)
+    </fieldset>
+
+    <label for="@Html.Id("Email")">@T("e-mail")</label>
+    <input id="@Html.Id("Email")" type="text" name="@Html.Name("Email")" value="@Model.Email" class="input-large required" />
+    <div class="hint">@T("Please provide an e-mail address for us to use in order to give you updates on your order.")</div>
+
+    <label for="@Html.Id("PhonePrefix")">@T("International Phone Prefix")</label>
+    <input id="@Html.Id("PhonePrefix")" type="text" name="@Html.Name("PhonePrefix")" value="@Model.PhonePrefix" class="input-large" />
+    <div class="hint"> @T("Please provide an international phone prefix, For example +39 for Italy")</div>
+    <label for="@Html.Id("Phone")">@T("Phone")</label>
+    <input id="@Html.Id("Phone")" type="text" name="@Html.Name("Phone")" value="@Model.Phone" class="input-large" />
+    <div class="hint">@T("Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries.")</div>
+
+    <label for="@Html.Id("specialInstructions")">@T("Special Instructions")</label>
+    @Html.TextAreaFor(m => m.SpecialInstructions, new { rows = "6", cols = "80", @class="input-xxlarge"})
+
+    <div>
+        <a href="@Url.Action("Index", "ShoppingCart", new { area = "Nwazet.Commerce"})">@T("Back to cart")</a>
+        @*<button type="submit" id="cartButton" name="Submit" value="cart" style="padding: 10px 10px">@T("Back to cart")</button>*@
+        <button type="submit" name="Submit" value="save" style="padding: 10px 10px">@T("Next")</button>
+    </div>
+}

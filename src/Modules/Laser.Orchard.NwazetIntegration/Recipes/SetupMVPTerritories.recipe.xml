@@ -1,0 +1,1016 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Exported from Orchard-->
+<Orchard>
+  <Recipe>
+    <Name>SetupMVPTerritories</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the hierarchy of territories for countries, with a group of EU member countries.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Territories, Laser.Orchard.NwazetIntegration" />
+  <Command>
+territories import "Albania"
+territories import "Algeria"
+territories import "Andorra"
+territories import "Arabia Saudita"
+territories import "Argentina"
+territories import "Armenia"
+territories import "Australia"
+territories import "Austria"
+territories import "Bahrain"
+territories import "Belgio"
+territories import "Bielorussia"
+territories import "Bolivia"
+territories import "Bosnia-Erzegovina"
+territories import "Brasile"
+territories import "Brunei"
+territories import "Bulgaria"
+territories import "Canada"
+territories import "Canarie"
+territories import "Cile"
+territories import "Cina"
+territories import "Cipro"
+territories import "Città del Vaticano"
+territories import "Colombia"
+territories import "Corea del Sud"
+territories import "Costa Rica"
+territories import "Croazia"
+territories import "Danimarca"
+territories import "dominica"
+territories import "Ecuador"
+territories import "Emirati Arabi Uniti"
+territories import "Estonia"
+territories import "Filippine"
+territories import "Finlandia"
+territories import "Francia (esclusi territori oltreoceano)"
+territories import "Georgia"
+territories import "Germania"
+territories import "Giappone"
+territories import "Gibilterra"
+territories import "Giordania"
+territories import "Grecia"
+territories import "Grenada"
+territories import "Groenlandia"
+territories import "Guadalupa"
+territories import "Guernsey"
+territories import "Guyana"
+territories import "Hong Kong"
+territories import "India"
+territories import "Indonesia"
+territories import "Irlanda"
+territories import "Islanda"
+territories import "Isole Cook"
+territories import "Isole Faroe"
+territories import "Isole Vergini (britanniche )"
+territories import "Isole Vergini (Stati Uniti )"
+territories import "Israele"
+territories import "Italia"
+territories import "Jersey"
+territories import "Kazakhstan"
+territories import "Kenya"
+territories import "Kuwait"
+territories import "Lettonia"
+territories import "Libano"
+territories import "Liechtenstein"
+territories import "Lituania"
+territories import "Lussemburgo"
+territories import "Macao"
+territories import "Macedonia"
+territories import "Maldive"
+territories import "Malesia"
+territories import "Malta"
+territories import "Marocco"
+territories import "Martinica"
+territories import "Messico"
+territories import "Moldova"
+territories import "Monaco"
+territories import "Mongolia"
+territories import "Montenegro"
+territories import "Nigeria"
+territories import "Norvegia"
+territories import "nuova Caledonia"
+territories import "nuova Zelanda"
+territories import "Oman"
+territories import "Paesi Bassi (esclusi territori oltreoceano)"
+territories import "Pakistan"
+territories import "Perù"
+territories import "Polinesia Francese"
+territories import "Polonia"
+territories import "Portogallo"
+territories import "Puerto Rico"
+territories import "Qatar"
+territories import "Regno Unito (escluse isole minori: Man, Jersey, Guernsey)"
+territories import "Repubblica Ceca"
+territories import "Repubblica Dominicana"
+territories import "Romania"
+territories import "Russia"
+territories import "saint Barthelemy"
+territories import "saint Martin (parte francese)"
+territories import "Samoa Americane"
+territories import "San Marino"
+territories import "Senegal"
+territories import "Serbia"
+territories import "Singapore"
+territories import "Sint Maarten (parte olandese)"
+territories import "Slovacchia"
+territories import "Slovenia"
+territories import "Spagna (escluso Canarie)"
+territories import "Sri Lanka"
+territories import "Stati Uniti"
+territories import "Sudafrica"
+territories import "Svezia"
+territories import "Svizzera"
+territories import "Taiwan"
+territories import "Thailandia"
+territories import "Turchia"
+territories import "Ucraina"
+territories import "Uganda"
+territories import "Ungheria"
+territories import "Vietnam"
+territories import "Unione Europea"
+territories import "Extra UE"
+</Command>
+  <ContentDefinition>
+    <Types>
+      <TerritoryHierarchy DisplayName="Territory Hierarchy">
+        <IdentityPart />
+        <TerritoryHierarchyPart TerritoryHierarchyPartSettings.TerritoryType="Territory" />
+        <TitlePart />
+      </TerritoryHierarchy>
+    </Types>
+    <Parts>
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <TerritoryHierarchyPart ContentPartSettings.Attachable="True" />
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  <ContentDefinition>
+    <Types>
+      <Territory DisplayName="Territory">
+        <IdentityPart />
+        <TerritoryPart />
+        <TitlePart />
+      </Territory>
+    </Types>
+    <Parts>
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <TerritoryPart ContentPartSettings.Attachable="True" />
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  <Content>
+    <TerritoryHierarchy Id="/Identifier=mondohierarchy" Status="Published">
+      <IdentityPart Identifier="mondohierarchy" />
+      <TerritoryHierarchyPart TerritoryType="Territory" />
+      <TitlePart Title="Mondo" />
+    </TerritoryHierarchy>
+  </Content>
+  <Content>
+    <Territory Id="/Identifier=mondohierarchyExtra UE" Status="Published">
+      <IdentityPart Identifier="mondohierarchyExtra UE" />
+      <TerritoryAddressTypePart Shipping="False" Billing="False" TerritoryInternalRecordId="Extra UE" />
+      <TerritoryAdministrativeTypePart AdministrativeType="None" TerritoryInternalRecordId="Extra UE" />
+      <TerritoryPart HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Extra UE" />
+      <TitlePart Title="Stati Extra UE" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyUnione Europea" Status="Published">
+      <IdentityPart Identifier="mondohierarchyUnione Europea" />
+      <TerritoryAddressTypePart Shipping="False" Billing="False" TerritoryInternalRecordId="Unione Europea" />
+      <TerritoryAdministrativeTypePart AdministrativeType="None" TerritoryInternalRecordId="Unione Europea" />
+      <TerritoryPart HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Unione Europea" />
+      <TitlePart Title="Unione Europea" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyAlbania" Status="Published">
+      <IdentityPart Identifier="mondohierarchyAlbania" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Albania" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Albania" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Albania" />
+      <TitlePart Title="Albania" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyAlgeria" Status="Published">
+      <IdentityPart Identifier="mondohierarchyAlgeria" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Algeria" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Algeria" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Algeria" />
+      <TitlePart Title="Algeria" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyAndorra" Status="Published">
+      <IdentityPart Identifier="mondohierarchyAndorra" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Andorra" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Andorra" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Andorra" />
+      <TitlePart Title="Andorra" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyArabia Saudita" Status="Published">
+      <IdentityPart Identifier="mondohierarchyArabia Saudita" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Arabia Saudita" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Arabia Saudita" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Arabia Saudita" />
+      <TitlePart Title="Arabia Saudita" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyArgentina" Status="Published">
+      <IdentityPart Identifier="mondohierarchyArgentina" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Argentina" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Argentina" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Argentina" />
+      <TitlePart Title="Argentina" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyArmenia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyArmenia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Armenia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Armenia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Armenia" />
+      <TitlePart Title="Armenia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyAustralia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyAustralia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Australia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Australia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Australia" />
+      <TitlePart Title="Australia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBahrain" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBahrain" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Bahrain" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Bahrain" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Bahrain" />
+      <TitlePart Title="Bahrain" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBielorussia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBielorussia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Bielorussia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Bielorussia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Bielorussia" />
+      <TitlePart Title="Bielorussia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBolivia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBolivia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Bolivia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Bolivia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Bolivia" />
+      <TitlePart Title="Bolivia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBosnia-Erzegovina" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBosnia-Erzegovina" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Bosnia-Erzegovina" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Bosnia-Erzegovina" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Bosnia-Erzegovina" />
+      <TitlePart Title="Bosnia-Erzegovina" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBrasile" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBrasile" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Brasile" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Brasile" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Brasile" />
+      <TitlePart Title="Brasile" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBrunei" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBrunei" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Brunei" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Brunei" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Brunei" />
+      <TitlePart Title="Brunei" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCanada" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCanada" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Canada" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Canada" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Canada" />
+      <TitlePart Title="Canada" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCanarie" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCanarie" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Canarie" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Canarie" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Canarie" />
+      <TitlePart Title="Canarie" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCile" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCile" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Cile" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Cile" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Cile" />
+      <TitlePart Title="Cile" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCina" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCina" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Cina" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Cina" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Cina" />
+      <TitlePart Title="Cina" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCittà del Vaticano" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCittà del Vaticano" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Città del Vaticano" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Città del Vaticano" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Città del Vaticano" />
+      <TitlePart Title="Città del Vaticano" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyColombia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyColombia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Colombia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Colombia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Colombia" />
+      <TitlePart Title="Colombia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCorea del Sud" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCorea del Sud" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Corea del Sud" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Corea del Sud" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Corea del Sud" />
+      <TitlePart Title="Corea del Sud" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCosta Rica" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCosta Rica" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Costa Rica" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Costa Rica" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Costa Rica" />
+      <TitlePart Title="Costa Rica" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchydominica" Status="Published">
+      <IdentityPart Identifier="mondohierarchydominica" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="dominica" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="dominica" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="dominica" />
+      <TitlePart Title="dominica" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyEcuador" Status="Published">
+      <IdentityPart Identifier="mondohierarchyEcuador" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Ecuador" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Ecuador" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Ecuador" />
+      <TitlePart Title="Ecuador" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyEmirati Arabi Uniti" Status="Published">
+      <IdentityPart Identifier="mondohierarchyEmirati Arabi Uniti" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Emirati Arabi Uniti" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Emirati Arabi Uniti" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Emirati Arabi Uniti" />
+      <TitlePart Title="Emirati Arabi Uniti" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyFilippine" Status="Published">
+      <IdentityPart Identifier="mondohierarchyFilippine" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Filippine" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Filippine" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Filippine" />
+      <TitlePart Title="Filippine" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGeorgia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGeorgia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Georgia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Georgia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Georgia" />
+      <TitlePart Title="Georgia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGiappone" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGiappone" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Giappone" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Giappone" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Giappone" />
+      <TitlePart Title="Giappone" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGibilterra" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGibilterra" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Gibilterra" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Gibilterra" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Gibilterra" />
+      <TitlePart Title="Gibilterra" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGiordania" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGiordania" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Giordania" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Giordania" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Giordania" />
+      <TitlePart Title="Giordania" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGrenada" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGrenada" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Grenada" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Grenada" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Grenada" />
+      <TitlePart Title="Grenada" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGroenlandia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGroenlandia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Groenlandia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Groenlandia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Groenlandia" />
+      <TitlePart Title="Groenlandia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGuadalupa" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGuadalupa" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Guadalupa" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Guadalupa" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Guadalupa" />
+      <TitlePart Title="Guadalupa" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGuernsey" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGuernsey" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Guernsey" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Guernsey" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Guernsey" />
+      <TitlePart Title="Guernsey" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGuyana" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGuyana" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Guyana" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Guyana" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Guyana" />
+      <TitlePart Title="Guyana" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyHong Kong" Status="Published">
+      <IdentityPart Identifier="mondohierarchyHong Kong" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Hong Kong" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Hong Kong" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Hong Kong" />
+      <TitlePart Title="Hong Kong" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIndia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIndia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="India" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="India" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="India" />
+      <TitlePart Title="India" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIndonesia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIndonesia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Indonesia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Indonesia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Indonesia" />
+      <TitlePart Title="Indonesia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIslanda" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIslanda" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Islanda" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Islanda" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Islanda" />
+      <TitlePart Title="Islanda" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIsole Cook" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIsole Cook" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Isole Cook" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Isole Cook" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Isole Cook" />
+      <TitlePart Title="Isole Cook" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIsole Faroe" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIsole Faroe" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Isole Faroe" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Isole Faroe" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Isole Faroe" />
+      <TitlePart Title="Isole Faroe" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIsole Vergini (britanniche )" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIsole Vergini (britanniche )" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Isole Vergini (britanniche )" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Isole Vergini (britanniche )" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Isole Vergini (britanniche )" />
+      <TitlePart Title="Isole Vergini (britanniche )" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIsole Vergini (Stati Uniti )" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIsole Vergini (Stati Uniti )" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Isole Vergini (Stati Uniti )" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Isole Vergini (Stati Uniti )" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Isole Vergini (Stati Uniti )" />
+      <TitlePart Title="Isole Vergini (Stati Uniti )" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIsraele" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIsraele" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Israele" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Israele" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Israele" />
+      <TitlePart Title="Israele" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyJersey" Status="Published">
+      <IdentityPart Identifier="mondohierarchyJersey" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Jersey" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Jersey" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Jersey" />
+      <TitlePart Title="Jersey" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyKazakhstan" Status="Published">
+      <IdentityPart Identifier="mondohierarchyKazakhstan" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Kazakhstan" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Kazakhstan" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Kazakhstan" />
+      <TitlePart Title="Kazakhstan" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyKenya" Status="Published">
+      <IdentityPart Identifier="mondohierarchyKenya" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Kenya" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Kenya" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Kenya" />
+      <TitlePart Title="Kenya" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyKuwait" Status="Published">
+      <IdentityPart Identifier="mondohierarchyKuwait" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Kuwait" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Kuwait" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Kuwait" />
+      <TitlePart Title="Kuwait" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyLibano" Status="Published">
+      <IdentityPart Identifier="mondohierarchyLibano" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Libano" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Libano" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Libano" />
+      <TitlePart Title="Libano" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyLiechtenstein" Status="Published">
+      <IdentityPart Identifier="mondohierarchyLiechtenstein" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Liechtenstein" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Liechtenstein" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Liechtenstein" />
+      <TitlePart Title="Liechtenstein" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMacao" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMacao" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Macao" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Macao" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Macao" />
+      <TitlePart Title="Macao" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMacedonia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMacedonia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Macedonia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Macedonia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Macedonia" />
+      <TitlePart Title="Macedonia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMaldive" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMaldive" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Maldive" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Maldive" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Maldive" />
+      <TitlePart Title="Maldive" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMalesia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMalesia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Malesia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Malesia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Malesia" />
+      <TitlePart Title="Malesia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMarocco" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMarocco" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Marocco" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Marocco" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Marocco" />
+      <TitlePart Title="Marocco" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMartinica" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMartinica" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Martinica" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Martinica" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Martinica" />
+      <TitlePart Title="Martinica" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMessico" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMessico" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Messico" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Messico" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Messico" />
+      <TitlePart Title="Messico" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMoldova" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMoldova" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Moldova" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Moldova" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Moldova" />
+      <TitlePart Title="Moldova" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMonaco" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMonaco" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Monaco" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Monaco" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Monaco" />
+      <TitlePart Title="Monaco" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMongolia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMongolia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Mongolia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Mongolia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Mongolia" />
+      <TitlePart Title="Mongolia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMontenegro" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMontenegro" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Montenegro" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Montenegro" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Montenegro" />
+      <TitlePart Title="Montenegro" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyNigeria" Status="Published">
+      <IdentityPart Identifier="mondohierarchyNigeria" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Nigeria" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Nigeria" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Nigeria" />
+      <TitlePart Title="Nigeria" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyNorvegia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyNorvegia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Norvegia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Norvegia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Norvegia" />
+      <TitlePart Title="Norvegia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchynuova Caledonia" Status="Published">
+      <IdentityPart Identifier="mondohierarchynuova Caledonia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="nuova Caledonia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="nuova Caledonia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="nuova Caledonia" />
+      <TitlePart Title="nuova Caledonia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchynuova Zelanda" Status="Published">
+      <IdentityPart Identifier="mondohierarchynuova Zelanda" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="nuova Zelanda" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="nuova Zelanda" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="nuova Zelanda" />
+      <TitlePart Title="nuova Zelanda" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyOman" Status="Published">
+      <IdentityPart Identifier="mondohierarchyOman" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Oman" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Oman" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Oman" />
+      <TitlePart Title="Oman" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPakistan" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPakistan" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Pakistan" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Pakistan" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Pakistan" />
+      <TitlePart Title="Pakistan" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPerù" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPerù" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Perù" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Perù" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Perù" />
+      <TitlePart Title="Perù" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPolinesia Francese" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPolinesia Francese" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Polinesia Francese" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Polinesia Francese" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Polinesia Francese" />
+      <TitlePart Title="Polinesia Francese" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPuerto Rico" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPuerto Rico" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Puerto Rico" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Puerto Rico" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Puerto Rico" />
+      <TitlePart Title="Puerto Rico" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyQatar" Status="Published">
+      <IdentityPart Identifier="mondohierarchyQatar" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Qatar" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Qatar" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Qatar" />
+      <TitlePart Title="Qatar" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyRegno Unito (escluse isole minori: Man, Jersey, Guernsey)" Status="Published">
+      <IdentityPart Identifier="mondohierarchyRegno Unito (escluse isole minori: Man, Jersey, Guernsey)" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Regno Unito (escluse isole minori: Man, Jersey, Guernsey)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Regno Unito (escluse isole minori: Man, Jersey, Guernsey)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Regno Unito (escluse isole minori: Man, Jersey, Guernsey)" />
+      <TitlePart Title="Regno Unito (escluse isole minori: Man, Jersey, Guernsey)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyRepubblica Dominicana" Status="Published">
+      <IdentityPart Identifier="mondohierarchyRepubblica Dominicana" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Repubblica Dominicana" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Repubblica Dominicana" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Repubblica Dominicana" />
+      <TitlePart Title="Repubblica Dominicana" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyRussia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyRussia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Russia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Russia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Russia" />
+      <TitlePart Title="Russia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchysaint Barthelemy" Status="Published">
+      <IdentityPart Identifier="mondohierarchysaint Barthelemy" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="saint Barthelemy" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="saint Barthelemy" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="saint Barthelemy" />
+      <TitlePart Title="saint Barthelemy" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchysaint Martin (parte francese)" Status="Published">
+      <IdentityPart Identifier="mondohierarchysaint Martin (parte francese)" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="saint Martin (parte francese)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="saint Martin (parte francese)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="saint Martin (parte francese)" />
+      <TitlePart Title="saint Martin (parte francese)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySamoa Americane" Status="Published">
+      <IdentityPart Identifier="mondohierarchySamoa Americane" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Samoa Americane" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Samoa Americane" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Samoa Americane" />
+      <TitlePart Title="Samoa Americane" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySan Marino" Status="Published">
+      <IdentityPart Identifier="mondohierarchySan Marino" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="San Marino" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="San Marino" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="San Marino" />
+      <TitlePart Title="San Marino" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySenegal" Status="Published">
+      <IdentityPart Identifier="mondohierarchySenegal" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Senegal" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Senegal" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Senegal" />
+      <TitlePart Title="Senegal" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySerbia" Status="Published">
+      <IdentityPart Identifier="mondohierarchySerbia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Serbia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Serbia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Serbia" />
+      <TitlePart Title="Serbia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySingapore" Status="Published">
+      <IdentityPart Identifier="mondohierarchySingapore" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Singapore" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Singapore" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Singapore" />
+      <TitlePart Title="Singapore" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySint Maarten (parte olandese)" Status="Published">
+      <IdentityPart Identifier="mondohierarchySint Maarten (parte olandese)" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Sint Maarten (parte olandese)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Sint Maarten (parte olandese)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Sint Maarten (parte olandese)" />
+      <TitlePart Title="Sint Maarten (parte olandese)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySri Lanka" Status="Published">
+      <IdentityPart Identifier="mondohierarchySri Lanka" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Sri Lanka" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Sri Lanka" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Sri Lanka" />
+      <TitlePart Title="Sri Lanka" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyStati Uniti" Status="Published">
+      <IdentityPart Identifier="mondohierarchyStati Uniti" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Stati Uniti" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Stati Uniti" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Stati Uniti" />
+      <TitlePart Title="Stati Uniti" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySudafrica" Status="Published">
+      <IdentityPart Identifier="mondohierarchySudafrica" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Sudafrica" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Sudafrica" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Sudafrica" />
+      <TitlePart Title="Sudafrica" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySvizzera" Status="Published">
+      <IdentityPart Identifier="mondohierarchySvizzera" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Svizzera" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Svizzera" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Svizzera" />
+      <TitlePart Title="Svizzera" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyTaiwan" Status="Published">
+      <IdentityPart Identifier="mondohierarchyTaiwan" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Taiwan" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Taiwan" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Taiwan" />
+      <TitlePart Title="Taiwan" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyThailandia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyThailandia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Thailandia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Thailandia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Thailandia" />
+      <TitlePart Title="Thailandia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyTurchia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyTurchia" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Turchia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Turchia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Turchia" />
+      <TitlePart Title="Turchia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyUcraina" Status="Published">
+      <IdentityPart Identifier="mondohierarchyUcraina" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Ucraina" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Ucraina" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Ucraina" />
+      <TitlePart Title="Ucraina" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyUganda" Status="Published">
+      <IdentityPart Identifier="mondohierarchyUganda" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Uganda" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Uganda" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Uganda" />
+      <TitlePart Title="Uganda" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyVietnam" Status="Published">
+      <IdentityPart Identifier="mondohierarchyVietnam" />
+      <TerritoryAddressTypePart Shipping="False" Billing="True" TerritoryInternalRecordId="Vietnam" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Vietnam" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyExtra UE" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Vietnam" />
+      <TitlePart Title="Vietnam" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyAustria" Status="Published">
+      <IdentityPart Identifier="mondohierarchyAustria" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Austria" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Austria" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Austria" />
+      <TitlePart Title="Austria" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBelgio" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBelgio" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Belgio" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Belgio" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Belgio" />
+      <TitlePart Title="Belgio" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyBulgaria" Status="Published">
+      <IdentityPart Identifier="mondohierarchyBulgaria" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Bulgaria" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Bulgaria" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Bulgaria" />
+      <TitlePart Title="Bulgaria" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCipro" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCipro" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Cipro" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Cipro" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Cipro" />
+      <TitlePart Title="Cipro" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyCroazia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyCroazia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Croazia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Croazia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Croazia" />
+      <TitlePart Title="Croazia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyRepubblica Ceca" Status="Published">
+      <IdentityPart Identifier="mondohierarchyRepubblica Ceca" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Repubblica Ceca" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Repubblica Ceca" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Repubblica Ceca" />
+      <TitlePart Title="Repubblica Ceca" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyDanimarca" Status="Published">
+      <IdentityPart Identifier="mondohierarchyDanimarca" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Danimarca" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Danimarca" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Danimarca" />
+      <TitlePart Title="Danimarca" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyEstonia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyEstonia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Estonia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Estonia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Estonia" />
+      <TitlePart Title="Estonia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyFinlandia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyFinlandia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Finlandia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Finlandia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Finlandia" />
+      <TitlePart Title="Finlandia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyFrancia (esclusi territori oltreoceano)" Status="Published">
+      <IdentityPart Identifier="mondohierarchyFrancia (esclusi territori oltreoceano)" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Francia (esclusi territori oltreoceano)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Francia (esclusi territori oltreoceano)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Francia (esclusi territori oltreoceano)" />
+      <TitlePart Title="Francia (esclusi territori oltreoceano)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGermania" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGermania" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Germania" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Germania" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Germania" />
+      <TitlePart Title="Germania" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyGrecia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyGrecia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Grecia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Grecia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Grecia" />
+      <TitlePart Title="Grecia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyUngheria" Status="Published">
+      <IdentityPart Identifier="mondohierarchyUngheria" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Ungheria" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Ungheria" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Ungheria" />
+      <TitlePart Title="Ungheria" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyIrlanda" Status="Published">
+      <IdentityPart Identifier="mondohierarchyIrlanda" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Irlanda" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Irlanda" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Irlanda" />
+      <TitlePart Title="Irlanda" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyItalia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyItalia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Italia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Italia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Italia" />
+      <TitlePart Title="Italia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyLettonia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyLettonia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Lettonia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Lettonia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Lettonia" />
+      <TitlePart Title="Lettonia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyLituania" Status="Published">
+      <IdentityPart Identifier="mondohierarchyLituania" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Lituania" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Lituania" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Lituania" />
+      <TitlePart Title="Lituania" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyLussemburgo" Status="Published">
+      <IdentityPart Identifier="mondohierarchyLussemburgo" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Lussemburgo" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Lussemburgo" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Lussemburgo" />
+      <TitlePart Title="Lussemburgo" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyMalta" Status="Published">
+      <IdentityPart Identifier="mondohierarchyMalta" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Malta" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Malta" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Malta" />
+      <TitlePart Title="Malta" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPaesi Bassi (esclusi territori oltreoceano)" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPaesi Bassi (esclusi territori oltreoceano)" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Paesi Bassi (esclusi territori oltreoceano)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Paesi Bassi (esclusi territori oltreoceano)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Paesi Bassi (esclusi territori oltreoceano)" />
+      <TitlePart Title="Paesi Bassi (esclusi territori oltreoceano)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPolonia" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPolonia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Polonia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Polonia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Polonia" />
+      <TitlePart Title="Polonia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyPortogallo" Status="Published">
+      <IdentityPart Identifier="mondohierarchyPortogallo" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Portogallo" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Portogallo" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Portogallo" />
+      <TitlePart Title="Portogallo" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchyRomania" Status="Published">
+      <IdentityPart Identifier="mondohierarchyRomania" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Romania" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Romania" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Romania" />
+      <TitlePart Title="Romania" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySlovacchia" Status="Published">
+      <IdentityPart Identifier="mondohierarchySlovacchia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Slovacchia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Slovacchia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Slovacchia" />
+      <TitlePart Title="Slovacchia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySlovenia" Status="Published">
+      <IdentityPart Identifier="mondohierarchySlovenia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Slovenia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Slovenia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Slovenia" />
+      <TitlePart Title="Slovenia" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySpagna (escluso Canarie)" Status="Published">
+      <IdentityPart Identifier="mondohierarchySpagna (escluso Canarie)" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Spagna (escluso Canarie)" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Spagna (escluso Canarie)" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Spagna (escluso Canarie)" />
+      <TitlePart Title="Spagna (escluso Canarie)" />
+    </Territory>
+    <Territory Id="/Identifier=mondohierarchySvezia" Status="Published">
+      <IdentityPart Identifier="mondohierarchySvezia" />
+      <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Svezia" />
+      <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Svezia" />
+      <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Svezia" />
+      <TitlePart Title="Svezia" />
+    </Territory>
+  </Content>
+  <Command>
+    territories calculatefullpath
+  </Command>
+</Orchard>

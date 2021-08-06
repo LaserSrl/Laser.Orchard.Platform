@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -131,6 +131,14 @@ msgstr "Invia una e-mail ad uno specifico utente usando un modello."
 msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
 msgid "Sent"
 msgstr "Inviata"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailFormsValidator"
+msgid "You must provide an e-mail address"
+msgstr "E' necessario fornire un indirizzo e-mail"
+
+msgctxt "Laser.Orchard.TemplateManagement.Activities.MailFormsValidator"
+msgid "You must select at least one recipient"
+msgstr "E' necessario selezionare almeno un destinatario"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "A default template to format your email message."

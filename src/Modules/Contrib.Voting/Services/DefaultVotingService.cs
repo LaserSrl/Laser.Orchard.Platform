@@ -51,13 +51,13 @@ namespace Contrib.Voting.Services {
             foreach (var function in _functions) {
                 _calculator.Calculate(new DeleteCalculus { Dimension = vote.Dimension, ContentId = vote.ContentItemRecord.Id, Vote = vote.Value, FunctionName = function.Name });
             }
-            
+
             _voteRepository.Delete(vote);
             _eventHandler.VoteRemoved(vote);
         }
 
         public void RemoveVote(IEnumerable<VoteRecord> votes) {
-            foreach(var vote in votes)
+            foreach (var vote in votes)
                 _voteRepository.Delete(vote);
         }
 
@@ -74,8 +74,8 @@ namespace Contrib.Voting.Services {
 
             _voteRepository.Create(vote);
 
-            foreach(var function in _functions) {
-                _calculator.Calculate(new CreateCalculus { Dimension = dimension, ContentId = contentItem.Id, FunctionName = function.Name, Vote = value});
+            foreach (var function in _functions) {
+                _calculator.Calculate(new CreateCalculus { Dimension = dimension, ContentId = contentItem.Id, FunctionName = function.Name, Vote = value });
             }
 
             _eventHandler.Voted(vote);
@@ -98,14 +98,14 @@ namespace Contrib.Voting.Services {
             var key = GetCacheKey(contentItemId, function, dimension);
 
             return _cacheManager.Get(key, ctx => {
-                
+
                 // invalidated when a result is recreated on the same contentItem/function/dimension
                 ctx.Monitor(_signals.When(key));
-                return _resultRepository.Get( r => 
-                    r.Dimension == dimension
-                    && r.ContentItemRecord.Id == contentItemId
-                    && r.FunctionName == function);
-                }
+                return _resultRepository.Get(r =>
+                   r.Dimension == dimension
+                   && r.ContentItemRecord.Id == contentItemId
+                   && r.FunctionName == function);
+            }
             );
         }
 

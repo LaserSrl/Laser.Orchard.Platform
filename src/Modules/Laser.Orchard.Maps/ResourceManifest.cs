@@ -18,23 +18,25 @@ namespace Laser.Orchard.Maps {
             if (!string.IsNullOrWhiteSpace(mapsSettings.GoogleApiKey)) {
                 apiKey = mapsSettings.GoogleApiKey;
             }
+            bool keepCultureConsistent = mapsSettings.KeepCultureConsistentWithContext;
+            string languageQueryStringForGoogleMaps = (keepCultureConsistent ? "&language=" + _orchardServices.WorkContext.CurrentCulture : "");
             var manifest = builder.Add();
             manifest.DefineScript("LaserOrchardMaps")
                 .SetUrl("maps.js");
             // Google Maps
             //Scripts
             manifest.DefineScript("GoogleMapsAPI")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey );
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps);
             manifest.DefineScript("GoogleMapsAPI_callback")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey+"&callback=InitializeMap").AddAttribute("async","async").AddAttribute("defer","defer");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap").AddAttribute("async", "async").AddAttribute("defer", "defer");
             manifest.DefineScript("GoogleMapsAPIMarkerSpiderfier_callback")
                  .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js?spiderfier_callback=InitializeMap").AddAttribute("async", "async").AddAttribute("defer", "defer");
 
             manifest.DefineScript("GoogleMapsPlacesLib")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + "&libraries=places");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places");
 
             manifest.DefineScript("GoogleMapsGeometryLib")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + "&libraries=geometry");
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=geometry");
 
             manifest.DefineScript("MarkerClusterer")
                 .SetUrl("MarkerClusterer.js");
