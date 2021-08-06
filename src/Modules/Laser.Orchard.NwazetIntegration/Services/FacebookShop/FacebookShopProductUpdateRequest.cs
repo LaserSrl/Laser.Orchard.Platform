@@ -17,7 +17,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
     /// These classes parse the json template of the body and set its parameters before sending it to the create / update product api.
     /// </summary>
     [OrchardFeature("Laser.Orchard.FacebookShop")]
-    public class FacebookServiceJsonContext {
+    public class FacebookShopProductUpdateRequest : IFacebookShopRequest {
         // Default values.
         public static string METHOD = "UPDATE";
         [JsonIgnore]
@@ -32,14 +32,14 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         [JsonProperty("data")]
         public FacebookServiceJsonContextData ProductData { get; set; }
 
-        public static FacebookServiceJsonContext From(string jsonBody) {
-            var context = JsonConvert.DeserializeObject<FacebookServiceJsonContext>(jsonBody);
+        public static FacebookShopProductUpdateRequest From(string jsonBody) {
+            var context = JsonConvert.DeserializeObject<FacebookShopProductUpdateRequest>(jsonBody);
             context.Valid = true;
+            if (context.ProductData == null) {
+                context.ProductData = new FacebookServiceJsonContextData();
+            }
+            context.ProductData.Valid = true;
             return context;
-        }
-
-        public string ToJson() {
-            return JsonConvert.SerializeObject(this);
         }
     }
 

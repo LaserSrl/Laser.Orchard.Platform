@@ -205,9 +205,11 @@
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
-    <Compile Include="Services\FacebookShop\FacebookServiceJsonContext.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopService.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopServiceContext.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopRequest.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />

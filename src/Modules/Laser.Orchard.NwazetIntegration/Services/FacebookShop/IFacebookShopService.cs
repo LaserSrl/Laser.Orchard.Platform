@@ -6,6 +6,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         bool CheckBusiness(FacebookShopServiceContext context);
         bool CheckCatalog(FacebookShopServiceContext context);
         string GenerateAccessToken(FacebookShopServiceContext context);
-        FacebookServiceJsonContext SyncProduct(ContentItem product);
+        FacebookShopProductUpdateRequest SyncProduct(ContentItem product);
+        FacebookShopProductUpdateRequest PostProduct(FacebookShopProductUpdateRequest context);
     }
 }

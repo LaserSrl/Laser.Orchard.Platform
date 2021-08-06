@@ -11,6 +11,7 @@ using Orchard.Tokens;
 using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
@@ -44,14 +45,14 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                         return true;
                     }
                 }
-            } catch (Exception ex) {
+            } catch {
                 return false;
             }
             return false;
         }
 
         public bool CheckCatalog(FacebookShopServiceContext context) {
-            string url = context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? context.CatalogId : "/" + context.BusinessId);
+            string url = context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? context.CatalogId : "/" + context.CatalogId);
 
             url = string.Format(url + "?access_token={0}", GenerateAccessToken(context));
 
@@ -64,7 +65,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                         return true;
                     }
                 }
-            } catch (Exception ex) {
+            } catch {
                 return false;
             }
             return false;
@@ -126,7 +127,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             //return access_token;
         }
 
-        public FacebookServiceJsonContext SyncProduct(ContentItem product) {
+        public FacebookShopProductUpdateRequest SyncProduct(ContentItem product) {
             try {
                 var productPart = product.As<ProductPart>();
                 var facebookPart = product.As<FacebookShopProductPart>();
@@ -145,15 +146,15 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                         string jsonBody = _tokenizer.Replace(jsonTemplate, product);
                         jsonBody = jsonBody.Replace("{{", "{").Replace("}}", "}");
 
-                        var jsonContext = FacebookServiceJsonContext.From(jsonBody);
+                        var jsonContext = FacebookShopProductUpdateRequest.From(jsonBody);
 
                         CheckCompliance(jsonContext, product);
 
                         if (jsonContext != null && jsonContext.Valid) {
-
+                            return PostProduct(jsonContext);
                         } else {
                             // I need to tell it was impossible to synchronize the product on Facebook Shop.
-                            return new FacebookServiceJsonContext() {
+                            return new FacebookShopProductUpdateRequest() {
                                 Message = T("Facebook shop synchronization failed."),
                                 Valid = false
                             };
@@ -162,25 +163,79 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                 }
             } catch {
                 // I need to tell it was impossible to synchronize the product on Facebook Shop.
-                return new FacebookServiceJsonContext() {
+                return new FacebookShopProductUpdateRequest() {
                     Message = T("Facebook shop synchronization failed."),
                     Valid = false
                 };
             }
 
-            return new FacebookServiceJsonContext() {
+            return new FacebookShopProductUpdateRequest() {
                 Message = T("Facebook shop synchronization failed."),
                 Valid = false
             };
+        }
+
+        private string EncapsulateUpdateProductJson(string jsonStr) {
+            return "{\"requests\":[" + jsonStr + "]}";
+        }
+
+        public FacebookShopProductUpdateRequest PostProduct(FacebookShopProductUpdateRequest context) {
+            FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
+            requestContainer.Requests.Add(context);
+                        
+            // Facebook Shop Site Settings: I need url, catalog id and access token.
+            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
+                ApiBaseUrl = fsssp.ApiBaseUrl,
+                BusinessId = fsssp.BusinessId,
+                CatalogId = fsssp.CatalogId,
+                AccessToken = fsssp.AccessToken
+            };
+            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
+
+            var jsonBody = requestContainer.ToJson();
+
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            try {
+                byte[] bodyData = Encoding.UTF8.GetBytes(jsonBody);
+                request.Method = WebRequestMethods.Http.Post;
+                request.ContentType = "application/json";
+
+                using (Stream reqStream = request.GetRequestStream()) {
+                    reqStream.Write(bodyData, 0, bodyData.Length);
+                }
+
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
+                    if (response.StatusCode == HttpStatusCode.OK) {
+                        using (var reader = new StreamReader(response.GetResponseStream())) {
+                            string respJson = reader.ReadToEnd();
+                            var json = JObject.Parse(respJson);
+
+                            // If I'm here, product should be on Facebook Shop.
+                            context.Valid = true;
+                            return context;
+                        }
+                    } else {
+                        context.Valid = false;
+                        context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+                    }
+                }
+            } catch {
+                context.Valid = false;
+                context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+            }
+
+            return context;
         }
 
         /// <summary>
         /// This routine checks the compliance of this class with Facebook Shop standards, verifying that default fields are compiled.
         /// It eventually looks for defaults for fields that have been left empty.
         /// </summary>
-        private FacebookServiceJsonContext CheckCompliance(FacebookServiceJsonContext context, ContentItem product) {
+        private FacebookShopProductUpdateRequest CheckCompliance(FacebookShopProductUpdateRequest context, ContentItem product) {
             if (string.IsNullOrWhiteSpace(context.Method)) {
-                context.Method = FacebookServiceJsonContext.METHOD;
+                context.Method = FacebookShopProductUpdateRequest.METHOD;
             }
 
             if (string.IsNullOrWhiteSpace(context.RetailerId)) {
@@ -188,7 +243,9 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             }
 
             if (context.ProductData == null) {
-                context.ProductData = new FacebookServiceJsonContextData();
+                context.ProductData = new FacebookServiceJsonContextData() {
+                    Valid = true
+                };
             }
 
             CheckCompliance(context.ProductData, product);
@@ -259,14 +316,15 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                 UrlHelper urlHelper = new UrlHelper(_workContext.GetContext().HttpContext.Request.RequestContext);
                 // www.mysite.com/route-to-contentitem
                 // WARNING: if you're on localhost/apppool/tenant..., this doesn't work because it duplicates the app pool.
-                // BaseUrl is something like http://localhost/apppool
+                // BaseUrl is something like http://localhost/apppool/
                 // RouteUrl is something like /apppool/route-to-contentitem
                 context.Url = _workContext.GetContext().CurrentSite.BaseUrl + urlHelper.RouteUrl(product.ContentManager.GetItemMetadata(product).DisplayRouteValues);
             }
 
             if (!context.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) && !context.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
                 // Url isn't a complete url (it doesn't start with http:// or https://).
-
+                // I need to add the BaseUrl.
+                context.Url = _workContext.GetContext().CurrentSite.BaseUrl + context.Url;
             }
 
             if (string.IsNullOrWhiteSpace(context.ImageUrl)) {
@@ -277,7 +335,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
 
             if (string.IsNullOrWhiteSpace(context.Brand)) {
                 // TODO: what's the default brand of a product?
-                context.Brand = string.Empty;
+                context.Brand = _workContext.GetContext().CurrentSite.SiteName;
             }
 
             return context;
