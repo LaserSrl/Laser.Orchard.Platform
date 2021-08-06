@@ -6,6 +6,8 @@
     // before the DOMLoadedEvent
     Script.Require("CookieCuttr");
 
+    var _defaultCookieProvider = WorkContext.Resolve<ICookieService>();
+
     var settings = Model.CookieSettings;
     var part = Model.CookieLawPart;
     var siteName = Model.siteName;
@@ -17,14 +19,14 @@
     var cookieBannerPosition = "overlay";
     switch ((CookieBannerPosition)settings.cookiePosition) {
         case CookieBannerPosition.Top:
-            cookieBannerPosition = "top";
-            break;
+        cookieBannerPosition = "top";
+        break;
         case CookieBannerPosition.Bottom:
-            cookieBannerPosition = "bottom";
-            break;
+        cookieBannerPosition = "bottom";
+        break;
         default: // Overlay
-            cookieBannerPosition = "overlay";
-            break;
+        cookieBannerPosition = "overlay";
+        break;
     }
 
     var gdprScriptService = Model.GDPRScriptservice;
@@ -34,57 +36,97 @@
         foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
             <text>@Html.Raw(cookie.GetHeadScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
         }
+
+        var technicalCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetTechnicalCookies()));
+        var preferencesCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetPreferencesCookies()));
+        var statisticalCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetStatisticalCookies()));
+        var marketingCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetMarketingCookies()));
+
+        var valueToReplace = "www.";
+        var host = "";
+
+        if (!WorkContext.HttpContext.Request.IsLocal) {
+            host = WorkContext.HttpContext.Request.Url.Host;
+            if (host.Substring(0, 4) == valueToReplace) {
+                host = host.Substring(4, host.Length - 4);
+            }
+        }
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+            // read list cookie and assign at general var
+            // list of TechnicalCookies
+            window.TechnicalCookies = window.TechnicalCookies || [];
+            window.TechnicalCookies = window.TechnicalCookies.concat(@technicalCookies);
+            // list of PreferencesCookies
+            window.PreferencesCookies = window.PreferencesCookies || [];
+            window.PreferencesCookies = window.PreferencesCookies.concat(@preferencesCookies);
+            // list of StatisticalCookies
+            window.StatisticalCookies = window.StatisticalCookies || [];
+            window.StatisticalCookies = window.StatisticalCookies.concat(@statisticalCookies);
+            // list of MarketingCookies
+            window.MarketingCookies = window.MarketingCookies || [];
+            window.MarketingCookies = window.MarketingCookies.concat(@marketingCookies);
+
+            window.DefaultCookieDomain = '@host';
+        });
+        </script>
     }
 
     using (Script.Foot()) {
         if (settings.DisableCookieGDPRManagement == false) {
             <script type="text/javascript">
-$(document).ready(function() {
-    var cookiesettings = { };
-    cookiesettings.cookieTitle = '@part.cookieTitle';
-    if (@(part.cookieMessage.Length) > 0)
-        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>").Replace("'", "&apos;"))';
-    cookiesettings.cookiePolicyLink = '@Html.Raw(part.cookiePolicyLink.Replace("'", "\\'"))';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + "<p id=\"ccPolicyMsgLink\"><a href=\"" + cookiesettings.cookiePolicyLink + "\">@part.cookiePolicyPageMessage</a></p>";
-    // user options
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div style="display:inline-block;margin:auto;clear:both;width:100%"><div class="cc-cookie-checks">';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
-    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
-    // positioning
-    cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
-    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
-    // buttons
-    cookiesettings.cookieAcceptButton = true;
-    cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
-    cookiesettings.cookieResetButton = @cookieResetButton;
-    cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
-    cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
-    var getCookie = function (cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    };
-    cookiesettings.cookieAccepted = getCookie("cc_cookie_accept").startsWith(cookiesettings.cookieExpectedValue);
-    if (@isPolicyPage) {
-        cookiesettings.cookiePolicyPage = true;
-    }
-    // footer
-    cookiesettings.cookieExpandMessage = "@T("Change your choice")";
-    cookiesettings.cookiePoweredBy = "@siteName";
-    cookiesettings.cookiePoweredByIcon = "@iconUrl";
+                $(document).ready(function () {
+                    var cookiesettings = { };
+                    cookiesettings.cookieTitle = '@part.cookieTitle';
+                    if (@(part.cookieMessage.Length) > 0)
+                        cookiesettings.cookieMessage = '@Html.Raw(part.cookieMessage.Replace(System.Environment.NewLine, "<br/>").Replace("'", "&apos;"))';
+                    cookiesettings.cookiePolicyLink = '@Html.Raw(part.cookiePolicyLink.Replace("'", "\\'"))';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + "<p id=\"ccPolicyMsgLink\"><a href=\"" + cookiesettings.cookiePolicyLink + "\">@part.cookiePolicyPageMessage</a></p>";
+                    // user options
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '<form><div class="cc-cookie-checks-box"><div class="cc-cookie-checks">';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '@Html.Raw(gdprScriptService.GetBannerChoices())';
+                    cookiesettings.cookieMessage = cookiesettings.cookieMessage + '</div></div></form>';
+                    // positioning
+                    cookiesettings.cookieDiscreetReset = @cookieDiscreetReset;
+                    cookiesettings.cookieBannerPosition = "@cookieBannerPosition";
+                    // buttons
+                    cookiesettings.cookieAcceptButton = true;
+                    cookiesettings.cookieAcceptButtonText = '@part.cookieAcceptButtonText';
+                    cookiesettings.cookieAcceptSelectedButtonText = '@part.cookieAcceptSelectedButtonText';
+                    cookiesettings.cookieResetButton = @cookieResetButton;
+                    cookiesettings.cookieResetButtonText = '@part.cookieResetButtonText';
+                    cookiesettings.cookieExpectedValue = "@Html.Raw(gdprScriptService.GetCurrentCookiePrefix())";
+                    var getCookie = function (cname) {
+                        var name = cname + "=";
+                        var decodedCookie = decodeURIComponent(document.cookie);
+                        var ca = decodedCookie.split(';');
+                        for (var i = 0; i < ca.length; i++) {
+                            var c = ca[i];
+                            while (c.charAt(0) == ' ') {
+                                c = c.substring(1);
+                            }
+                            if (c.indexOf(name) == 0) {
+                                return c.substring(name.length, c.length);
+                            }
+                        }
+                        return "";
+                    };
+                    cookiesettings.cookieAccepted = getCookie("cc_cookie_accept").startsWith(cookiesettings.cookieExpectedValue);
+                    if (@isPolicyPage) {
+                        cookiesettings.cookiePolicyPage = true;
+                    }
+                    // footer
+                    cookiesettings.cookieExpandMessage = "@T("Change your choice")";
+                    cookiesettings.cookiePoweredBy = "@siteName";
+                    cookiesettings.cookiePoweredByIcon = "@iconUrl";
 
-    $.cookieCuttr(cookiesettings);
-});
+                    if (cookiesettings.cookieResetButton && cookiesettings.cookieResetButtonText == '') {
+                        cookiesettings.cookieResetButtonText = "@T("Cookies")"
+                    }
+
+                    $.cookieCuttr(cookiesettings);
+                });
             </script>
         }
 
