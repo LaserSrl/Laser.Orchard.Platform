@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Contrib.Reviews.Models;
+﻿using Contrib.Reviews.Models;
 using Contrib.Voting.Models;
 using Contrib.Voting.Services;
-
+using Laser.Orchard.StartupConfig.Extensions;
 using Orchard;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Security;
-using Orchard.ContentManagement.Handlers;
-using System.Reflection;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Contrib.Reviews.Drivers {
-    
+
     public class ReviewsPartDriver : ContentPartDriver<ReviewsPart> {
         private readonly IOrchardServices _orchardServices;
         private readonly IVotingService _votingService;
@@ -96,7 +94,7 @@ namespace Contrib.Reviews.Drivers {
                     Comment = r.Comment,
                     CreatedUtc = r.CreatedUtc,
                     Rating = new Rating {CurrentVotingResult = currentVotingResult, UserRating = v.Value},
-                    UserName = v.Username,
+                    UserName = v.Username.ToMaskedString(),
                     IsCurrentUsersReview = currentUser != null ? v.Username == currentUser.UserName : false
                 };
             part.Reviews.AddRange(reviews.OrderByDescending(r => r.IsCurrentUsersReview).ThenByDescending(r => r.CreatedUtc));
