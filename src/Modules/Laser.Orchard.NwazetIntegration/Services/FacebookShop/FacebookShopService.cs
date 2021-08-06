@@ -257,7 +257,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             if (string.IsNullOrWhiteSpace(context.Url)) {
                 // Url is empty, I need to create it from scratch.
                 UrlHelper urlHelper = new UrlHelper(_workContext.GetContext().HttpContext.Request.RequestContext);
-                context.Url = urlHelper.RouteUrl(product.ContentManager.GetItemMetadata(product).DisplayRouteValues);
+                // www.mysite.com/route-to-contentitem
+                // WARNING: if you're on localhost/apppool/tenant..., this doesn't work because it duplicates the app pool.
+                // BaseUrl is something like http://localhost/apppool
+                // RouteUrl is something like /apppool/route-to-contentitem
+                context.Url = _workContext.GetContext().CurrentSite.BaseUrl + urlHelper.RouteUrl(product.ContentManager.GetItemMetadata(product).DisplayRouteValues);
             }
 
             if (!context.Url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase) && !context.Url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
