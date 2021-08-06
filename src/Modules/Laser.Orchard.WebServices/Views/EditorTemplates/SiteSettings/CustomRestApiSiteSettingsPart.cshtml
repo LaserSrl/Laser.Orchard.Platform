@@ -1,0 +1,9 @@
+﻿@using Laser.Orchard.WebServices.ViewModels;
+@model CustomRestApiSiteSettingsPartViewModel
+<fieldset class="CustomRestApiSiteSettingsPart">
+    <legend>@T("Custom REST API")</legend>
+    @Html.TextAreaFor(m => m.ConfigurationJson)
+    <span class="hint">
+        @T("JSON representing the configuration for custom REST API endpoints. This is an array of objects. Each one has a Name property (required) and a Verbs property. The latter is an array of strings representing the accepted verbs for the entrypoint. For example, [{\"Name\": \"foo\", \"Verbs\":[\"get\"]},{{\"Name\": \"bar\", \"Verbs\":[\"post\"]}] will enable calling ~/api/rest/foo in GET and ~/api/rest/bar in POST.")
+    </span>
+</fieldset>

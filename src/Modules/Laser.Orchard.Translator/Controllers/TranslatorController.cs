@@ -22,14 +22,15 @@ namespace Laser.Orchard.Translator.Controllers {
         public ActionResult Index(string language, string folderName, string folderType) {
             TranslationDetailViewModel translationDetailVM = new TranslationDetailViewModel();
 
-            var messages = _translatorServices.GetTranslations().Where(m => m.Language == language
-                                                                         && m.ContainerName == folderName
-                                                                         && m.ContainerType == folderType)
-                                                                .Select(x => new StringSummaryViewModel {
-                                                                    id = x.Id,
-                                                                    message = x.Message,
-                                                                    localized = !string.IsNullOrWhiteSpace(x.TranslatedMessage)
-                                                                });
+            var messages = _translatorServices.GetTranslations()
+                .Where(m => m.Language == language
+                    && (m.ContainerName == folderName || folderType == "U")
+                    && m.ContainerType == folderType)
+                .Select(x => new StringSummaryViewModel {
+                    id = x.Id,
+                    message = x.Message,
+                    localized = !string.IsNullOrWhiteSpace(x.TranslatedMessage)
+                });
 
             translationDetailVM.containerName = folderName;
             translationDetailVM.containerType = folderType;
@@ -39,20 +40,34 @@ namespace Laser.Orchard.Translator.Controllers {
             return View(translationDetailVM);
         }
 
-        public ActionResult TranslatorForm(int id) {
+        public ActionResult TranslatorForm(int id, string containerName = "", string containerType = "", string language = "") {
             TranslationRecord messageRecord = _translatorServices.GetTranslations().Where(m => m.Id == id).FirstOrDefault();
             if (messageRecord != null) {
                 ViewBag.SuggestedTranslations = _translatorServices.GetSuggestedTranslations(messageRecord.Message, messageRecord.Language);
-                return View(messageRecord);
+                var viewModel = new TranslationRecordViewModel(messageRecord) {
+                    CultureList = _translatorServices.GetCultureList()
+                };
+                return View(viewModel);
             } else {
-                return View(new TranslationRecord());
+                var model = new TranslationRecord {
+                    ContainerName = containerName,
+                    ContainerType = containerType,
+                    Language = language
+                };
+
+                var viewModel = new TranslationRecordViewModel(model) {
+                    CultureList = _translatorServices.GetCultureList()
+                };
+
+                return View(viewModel);
             }
         }
 
         public ActionResult TranslatorFolderSettings(string language, string folderName, string folderType) {
-            TranslationFolderSettingsRecord settings = _translatorServices.GetTranslationFoldersSettings().Where(m => m.ContainerName == folderName
-                                                                                                              && m.ContainerType == folderType
-                                                                                                              /*&& m.Language == language*/).FirstOrDefault();
+            TranslationFolderSettingsRecord settings = _translatorServices.GetTranslationFoldersSettings()
+                .Where(m => m.ContainerName == folderName
+                    && m.ContainerType == folderType /*&& m.Language == language*/)
+                .FirstOrDefault();
 
             if (settings == null) {
                 settings = new TranslationFolderSettingsRecord();
@@ -67,18 +82,43 @@ namespace Laser.Orchard.Translator.Controllers {
         [HttpPost]
         [ActionName("TranslatorForm")]
         [FormValueRequired("saveTranslation")]
-        public ActionResult SaveTranslation(TranslationRecord translation) {
-            bool success = _translatorServices.TryAddOrUpdateTranslation(translation);
+        public ActionResult SaveTranslation(TranslationRecordViewModel translationVM) {
+            TranslationRecord translation = translationVM.ToTranslationRecord();
+            // I need to check if parent page needs to be refreshed.
+            // If I'm creating a new record, I have to refresh parent page.
+            // I also need to refresh parent page if I changed the ContainerType of my record.
+            // I also need to refresh parent page if I changed the Language of my record.
+            bool refreshParent = (translationVM.Id == 0 || !translation.ContainerType.Equals(translationVM.ContainerType, System.StringComparison.InvariantCulture) || !translationVM.OriginalLanguage.Equals(translationVM.Language, System.StringComparison.InvariantCulture));
+            
+            // If I'm saving a new translation, I must not overwrite an existing matching translation.
+            bool success = _translatorServices.TryAddOrUpdateTranslation(translation, translation.Id == 0 ? false : true);
             ViewBag.SuggestedTranslations = _translatorServices.GetSuggestedTranslations(translation.Message, translation.Language);
 
             if (!success) {
                 ModelState.AddModelError("SaveTranslationError", T("An error occurred while saving the translation. Please reload the page and retry.").ToString());
+                ViewBag.RefreshParent = false;
+                ViewBag.SaveSuccess = false;
+            } else if (refreshParent) {
+                ViewBag.RefreshParent = true;
                 ViewBag.SaveSuccess = false;
             } else {
+                ViewBag.RefreshParent = false;
                 ViewBag.SaveSuccess = true;
             }
 
-            return View(translation);
+            translationVM.CultureList = _translatorServices.GetCultureList();
+
+            return View(translationVM);
+        }
+
+        [HttpPost]
+        [ActionName("TranslatorForm")]
+        [FormValueRequired("saveNewTranslation")]
+        public ActionResult SaveNewTranslation(TranslationRecordViewModel translationVM) {
+            // I set Id to zero to force the fact this must be a new translation.
+            translationVM.Id = 0;
+
+            return SaveTranslation(translationVM);
         }
 
         [HttpPost]
@@ -91,11 +131,14 @@ namespace Laser.Orchard.Translator.Controllers {
 
             if (!success) {
                 ModelState.AddModelError("DeleteTranslationError", T("Unable to delete the translation.").ToString());
-                ViewBag.DeleteSuccess = false;
-                return View(messageRecord);
+                ViewBag.RefreshParent = false;
+                var viewModel = new TranslationRecordViewModel(messageRecord) {
+                    CultureList = _translatorServices.GetCultureList()
+                };
+                return View(viewModel);
             } else {
-                ViewBag.DeleteSuccess = true;
-                return View(new TranslationRecord { Id = 0 });
+                ViewBag.RefreshParent = true;
+                return Content(T("The translation has been deleted.").Text);
             }
         }
 
@@ -113,5 +156,7 @@ namespace Laser.Orchard.Translator.Controllers {
 
             return View(translationSettings);
         }
+
+
     }
 }

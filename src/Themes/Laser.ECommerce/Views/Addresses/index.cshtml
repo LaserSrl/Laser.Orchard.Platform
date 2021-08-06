@@ -1,6 +1,8 @@
 ﻿@model Laser.Orchard.NwazetIntegration.ViewModels.AddressesVM
 @using System.Web.Mvc;
 @{
+    // TODO: update this theme to use the correct checkout flow, then delete this file
+
     var title = Layout.Title = T("Checkout: Shipping & Billing Addresses");
     Script.Require("jQuery");
     Script.Include("ship.js");
@@ -39,7 +41,7 @@
 
             <input id="@Html.Id("PhonePrefix")" type="text" name="@Html.Name("PhonePrefix")" value="@Model.PhonePrefix" class="input-large" placeholder="@T("International Phone Prefix")" />
 
-            <div class="hint"> @T("Please provide an international phone prefix, For example 0039 for Italy")</div>
+            <div class="hint"> @T("Please provide an international phone prefix, For example +39 for Italy")</div>
             <input id="@Html.Id("Phone")" type="text" name="@Html.Name("Phone")" value="@Model.Phone" class="input-large" placeholder="@T("Phone")" />
 
             <div class="hint">@T("Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries.")</div>

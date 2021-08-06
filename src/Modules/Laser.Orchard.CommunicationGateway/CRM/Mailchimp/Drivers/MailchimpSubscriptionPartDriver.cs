@@ -1,22 +1,23 @@
-﻿using Laser.Orchard.CommunicationGateway.Mailchimp.Models;
-using Laser.Orchard.CommunicationGateway.Mailchimp.Services;
-using Laser.Orchard.CommunicationGateway.Mailchimp.ViewModels;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Orchard.Environment.Extensions;
 using Orchard.Users.Models;
+using System.Linq;
+using Orchard.Tokens;
 
-namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
+namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartDriver : ContentPartDriver<MailchimpSubscriptionPart> {
         private readonly IMailchimpApiService _service;
+        private readonly ITokenizer _tokenizer;
 
-        public MailchimpSubscriptionPartDriver(IMailchimpApiService service) {
+
+        public MailchimpSubscriptionPartDriver(IMailchimpApiService service, ITokenizer tokenizer) {
             _service = service;
+            _tokenizer = tokenizer;
         }
         protected override string Prefix => "MailchimpSubscription";
 
@@ -29,24 +30,25 @@ namespace Laser.Orchard.CommunicationGateway.Mailchimp.Drivers {
         protected override DriverResult Editor(MailchimpSubscriptionPart part, IUpdateModel updater, dynamic shapeHelper) {
             var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
             SelectableAudience selectableAudience ;
-            if (string.IsNullOrWhiteSpace(settings.AudienceId)) {
+            var audienceId = _tokenizer.Replace(settings.AudienceId, new { Content = part.ContentItem });
+            if (string.IsNullOrWhiteSpace(audienceId)) {
                 selectableAudience = new SelectableAudience();
             }
             else {
                 var subscription = part.Subscription;
-                if (subscription.Audience == null || settings.AudienceId != subscription.Audience.Identifier) {
-                    var audience = _service.Audience(settings.AudienceId);
+                if (subscription.Audience == null || audienceId != subscription.Audience?.Identifier) {
+                    var audience = _service.Audience(audienceId);
                     selectableAudience = new SelectableAudience {
-                        Audience = new Audience { Identifier = settings.AudienceId, Name = audience.Name },
+                        Audience = new Audience { Identifier = audienceId, Name = audience.Name },
                         Selected = !part.Is<UserPart>(),
-                        RequiredPolicies = settings.PolicyTextReferences
+                        RequiredPolicies = settings.PolicyTextReferencesToArray()
                     };
                 }
                 else {
                     selectableAudience = new SelectableAudience {
                         Audience = subscription.Audience,
                         Selected = subscription.Subscribed,
-                        RequiredPolicies = settings.PolicyTextReferences
+                        RequiredPolicies = settings.PolicyTextReferencesToArray()
                     };
                 }
                 if (updater != null) {

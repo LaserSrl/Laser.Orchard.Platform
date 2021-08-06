@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Orchard>
+  <Recipe>
+    <Name>SetupItalianVAT</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up VAT categories for an Italian Ecommerce.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <Feature enable="Nwazet.AdvancedVAT" />
+  <ContentDefinition>
+    <Types>
+      <VATConfiguration DisplayName="VAT Category Configuration" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes="" ContentTypeLayoutSettings.Placeable="False">
+        <IdentityPart />
+        <VatConfigurationPart />
+      </VATConfiguration>
+    </Types>
+    <Parts>
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <VatConfigurationPart />
+    </Parts>
+  </ContentDefinition>
+  <Content>
+    <VATConfiguration Id="/Identifier=01b5289178f24aa788da8a0baa279bc2" Status="Published">
+      <IdentityPart Identifier="01b5289178f24aa788da8a0baa279bc2" />
+      <VatConfigurationPart Priority="0" TaxProductCategory="Aliquota IVA ridotta" DefaultRate="0" />
+    </VATConfiguration>
+    <VATConfiguration Id="/Identifier=228caffa3de04bc080f23e63367c1182" Status="Published">
+      <IdentityPart Identifier="228caffa3de04bc080f23e63367c1182" />
+      <VatConfigurationPart Priority="0" TaxProductCategory="Aliquota IVA ordinaria" DefaultRate="0" />
+    </VATConfiguration>
+    <VATConfiguration Id="/Identifier=ff97b7ebf6644f03b1a0592d687020b9" Status="Published">
+      <IdentityPart Identifier="ff97b7ebf6644f03b1a0592d687020b9" />
+      <VatConfigurationPart Priority="0" TaxProductCategory="Aliquota IVA minima" DefaultRate="0" />
+    </VATConfiguration>
+    <VATConfiguration Id="/Identifier=8faed3b2666141c49cb4fd5613c7104c" Status="Published">
+      <IdentityPart Identifier="8faed3b2666141c49cb4fd5613c7104c" />
+      <VatConfigurationPart Priority="0" TaxProductCategory="Aliquota IVA Esente" DefaultRate="0" />
+    </VATConfiguration>
+  </Content>
+</Orchard>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Newtonsoft.Json.Linq;
@@ -70,43 +71,28 @@ namespace Laser.Orchard.Policy.Filters {
 
         public void KeyGenerated(StringBuilder key) {
 
-            SetPendingPolicies();
+            var policyPart = CurrentContent()?.As<PolicyPart>();
+            if (policyPart != null) {
+                // get the ids of pending policies
+                var pending = _policyServices.GetPendingPolicyIds(policyPart);
+                if (pending!= null && pending.Any()) {
+                    key.Append("pendingitempolicies=" + 
+                        String.Join("_", pending) + ";");
+                }
+            }
 
-            if (pendingPolicies != null && pendingPolicies.Count() > 0)
-                key.Append("pendingitempolicies=" + String.Join("_", pendingPolicies.Select(s => s.Id)) + ";");
+            //SetPendingPolicies();
+
+            //if (pendingPolicies != null && pendingPolicies.Count() > 0)
+            //    key.Append("pendingitempolicies=" + String.Join("_", pendingPolicies.Select(s => s.Id)) + ";");
         }
 
         private void SetPendingPolicies() {
             if (pendingPolicies != null)
                 return;
-            var routeData = HttpContext.Current.Request.RequestContext.RouteData;
-            string areaName = (routeData.Values["area"] ?? string.Empty).ToString();
-            string controllerName = (routeData.Values["controller"] ?? string.Empty).ToString();
-            string actionName = (routeData.Values["action"] ?? string.Empty).ToString();
-            string alias;
-            IContent content;
 
-            if (areaName.Equals("Laser.Orchard.WebServices", StringComparison.InvariantCultureIgnoreCase) &&
-                controllerName.Equals("WebApi", StringComparison.InvariantCultureIgnoreCase) &&
-                actionName.Equals("display", StringComparison.InvariantCultureIgnoreCase)) {
-                // For our webapi, we determine the content through its alias
-                alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
-                content = _commonServices.GetContentByAlias(alias);
-            }
-            else if (areaName.Equals("Laser.Orchard.Policy", StringComparison.InvariantCultureIgnoreCase) &&
-                      controllerName.Equals("Policies", StringComparison.InvariantCultureIgnoreCase) &&
-                      actionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
-                // since we also cache the page where we ask to accept the policies,
-                // and that's on a specific controller, we do need to figure out the content item
-                // we are preventing the used to see
-                alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
-                content = _commonServices.GetContentByAlias(alias);
-            }
-            else {
-                // this is the "normal" case, in which we are accessing a contentitem
-                // directly on its display view
-                content = _currenContent.CurrentContentItem;
-            }
+            IContent content = CurrentContent();
+
             //_maxLevel = maxLevel;
             if (content != null) {
                 // content would be null if rather than on a content item we are trying
@@ -120,6 +106,36 @@ namespace Laser.Orchard.Policy.Filters {
                     pendingPolicies = new List<IContent>();
                 }
             }
+        }
+
+        private IContent CurrentContent() {
+            var routeData = HttpContext.Current.Request.RequestContext.RouteData;
+            string areaName = (routeData.Values["area"] ?? string.Empty).ToString();
+            string controllerName = (routeData.Values["controller"] ?? string.Empty).ToString();
+            string actionName = (routeData.Values["action"] ?? string.Empty).ToString();
+            string alias;
+            IContent content = null;
+
+            if (areaName.Equals("Laser.Orchard.WebServices", StringComparison.InvariantCultureIgnoreCase) &&
+                controllerName.Equals("WebApi", StringComparison.InvariantCultureIgnoreCase) &&
+                actionName.Equals("display", StringComparison.InvariantCultureIgnoreCase)) {
+                // For our webapi, we determine the content through its alias
+                alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
+                content = _commonServices.GetContentByAlias(alias);
+            } else if (areaName.Equals("Laser.Orchard.Policy", StringComparison.InvariantCultureIgnoreCase) &&
+                        controllerName.Equals("Policies", StringComparison.InvariantCultureIgnoreCase) &&
+                        actionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
+                // since we also cache the page where we ask to accept the policies,
+                // and that's on a specific controller, we do need to figure out the content item
+                // we are preventing the used to see
+                alias = (HttpContext.Current.Request.Params["alias"] ?? string.Empty).ToString();
+                content = _commonServices.GetContentByAlias(alias);
+            } else {
+                // this is the "normal" case, in which we are accessing a contentitem
+                // directly on its display view
+                content = _currenContent.CurrentContentItem;
+            }
+            return content;
         }
 
     }

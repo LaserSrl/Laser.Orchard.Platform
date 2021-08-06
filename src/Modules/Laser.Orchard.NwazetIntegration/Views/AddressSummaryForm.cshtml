@@ -1,0 +1,136 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@{
+    /*This shape displays the selected address in checkout pages. The form here is used so that when
+     we hit the link to reset the selected address we can post some information to the actions.*/
+    var viewModel = (CheckoutViewModel)Model.ViewModel;
+}
+@helper DrawAddress(AddressEditViewModel address) {
+<div class="address-summary-info">
+    @* LINE 1: Hon. Name Surname*@
+    @if (!string.IsNullOrWhiteSpace(address.Honorific + address.FirstName + address.LastName)) {
+        <div class="row address-row">
+            @if (!string.IsNullOrWhiteSpace(address.Honorific)) {
+                <div class="address-summary-honorific">
+                    @address.Honorific
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(address.FirstName)) {
+                <div class="address-summary-firstname">
+                    @address.FirstName
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(address.LastName)) {
+                <div class="address-summary-lastname">
+                    @address.LastName
+                </div>
+            }
+        </div>
+    }
+    @* LINE 2: company *@
+    @if (!string.IsNullOrWhiteSpace(address.Company)) {
+        <div class="row address-row">
+            <div class="address-summary-company">
+                @address.Company
+            </div>
+        </div>
+    }
+    @* LINE 3: Address Line 1*@
+    <div class="row address-row">
+        @if (!string.IsNullOrWhiteSpace(address.Address1)) {
+            <div class="address-summary-address">
+                @address.Address1
+            </div>
+        }
+    </div>
+    @* LINE 4: Address Line 2*@
+    <div class="row address-row">
+        @if (!string.IsNullOrWhiteSpace(address.Address2)) {
+            <div class="address-summary-address">
+                @address.Address2
+            </div>
+        }
+    </div>
+    @* LINE 5: City ZIP Provice*@
+    @if (!string.IsNullOrWhiteSpace(address.City + address.PostalCode + address.Province)) {
+        <div class="row address-row">
+            @if (!string.IsNullOrWhiteSpace(address.City)) {
+                <div class="address-summary-city">
+                    @address.City
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(address.PostalCode)) {
+                <div class="address-summary-province">
+                    @address.PostalCode
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(address.Province)) {
+                <div class="address-summary-province">
+                    @address.Province
+                </div>
+            }
+        </div>
+    }
+    @* LINE 6: Country *@
+    @if (!string.IsNullOrWhiteSpace(address.Country)) {
+        <div class="row address-row">
+            <div class="address-summary-country">
+                @address.Country
+            </div>
+        </div>
+    }
+</div>
+}
+@if (viewModel.ShippingAddressVM != null) {
+    <fieldset class="address-summary shipping-address">
+        <legend>@T("Shipping to:")</legend>
+        @DrawAddress(viewModel.ShippingAddressVM)
+    </fieldset>
+}
+@if (viewModel.BillingAddressVM != null) {
+    <fieldset class="address-summary billing-address">
+        <legend>@T("Billing to:")</legend>
+        @DrawAddress(viewModel.BillingAddressVM)
+    </fieldset>
+}
+    <fieldset class="address-summary additional-address-infos">
+        @if (!string.IsNullOrWhiteSpace(viewModel.Email)) {
+            <div class="additional-address-info">
+                <div class="additional-address-info-title">@T("Email address")</div>
+                <div class="additional-address-info-value">@viewModel.Email</div>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(viewModel.Phone)) {
+            <div class="additional-address-info">
+                <div class="additional-address-info-title">@T("Phone number")</div>
+                <div class="additional-address-info-value">
+                    @(string.IsNullOrWhiteSpace(viewModel.PhonePrefix)
+                                ? viewModel.Phone
+                                : (viewModel.PhonePrefix + viewModel.Phone))
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(viewModel.SpecialInstructions)) {
+            <div class="additional-address-info">
+                <div class="additional-address-info-title">@T("Special instructions")</div>
+                <div class="additional-address-info-value">@viewModel.SpecialInstructions</div>
+            </div>
+        }
+    </fieldset>
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Index", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "address-summary" })) {
+
+    @*serialized address data*@
+    @Html.Hidden("SerializedAddresses", viewModel.SerializedAddresses)
+    @Html.Hidden("BillAtSameShippingAddress", viewModel.BillAtSameShippingAddress)
+    @* We aren't also putting in this form the shipping options, even when they exist,
+        because when we go and reset the address those should automatically reset as well*@
+    <div class="reset-addresses">
+        <button type="submit"
+                name="ResetAddresses"
+                value="true"
+                style=""
+                class="reset-button reset-addresses-button">
+            @T("Click here to change the selected addresses.")
+        </button>
+    </div>
+}

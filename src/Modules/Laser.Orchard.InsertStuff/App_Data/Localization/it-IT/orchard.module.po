@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -10,7 +10,7 @@
 
 msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
 msgid "List of scripts in module's Scripts folder to include on the edit page (separated by returns, full filename). jquery.validate.min.js is auto-included."
-msgstr "La lista degli script, appartenenti alla cartella Scripts dei moduli, da includere nell'edit della pagina (separati dai return, intero nome del file). jquary.validate.min.js è già incluso."
+msgstr "La lista degli script, appartenenti alla cartella Scripts dei moduli, da includere nell'edit della pagina (separati dai return, intero nome del file). jquery.validate.min.js è già incluso."
 
 msgctxt "~/Modules/Laser.Orchard.InsertStuff/Views/DefinitionTemplates/InsertStuffFieldSettings.cshtml"
 msgid "List of stylesheets in module's Styles folder to include on the edit page (separated by returns, full filename)"

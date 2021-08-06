@@ -1,0 +1,6 @@
+﻿<Placement>
+  <Place Fields_EncryptedString_Edit="Content:2"/>
+  <Place Fields_EncryptedString_Unauthorized_Edit="Content:2"/>
+  <Place Fields_HashedString_Edit="Content:3" />
+  <Place Fields_HashedString_Unauthorized_Edit="Content:3" />
+</Placement>

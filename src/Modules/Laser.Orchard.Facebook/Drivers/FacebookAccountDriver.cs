@@ -37,10 +37,13 @@ namespace Laser.Orchard.Facebook.Drivers {
 
         protected override DriverResult Editor(FacebookAccountPart part, dynamic shapeHelper) {
             FacebookAccountVM vm = new FacebookAccountVM();
-            Mapper.Initialize(cfg => {
-               cfg.CreateMap<FacebookAccountPart, FacebookAccountVM>();
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<FacebookAccountPart, FacebookAccountVM>();
             });
-            Mapper.Map(part, vm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map(part, vm);
 
             return ContentShape("Parts_FacebookAccount",
                                 () => shapeHelper.EditorTemplate(TemplateName: "Parts/FacebookAccount",
@@ -51,10 +54,13 @@ namespace Laser.Orchard.Facebook.Drivers {
         protected override DriverResult Editor(FacebookAccountPart part, IUpdateModel updater, dynamic shapeHelper) {
             FacebookAccountVM vm = new FacebookAccountVM();
             updater.TryUpdateModel(vm, Prefix, null, null);
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<FacebookAccountVM, FacebookAccountPart>();
             });
-            Mapper.Map(vm, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map(vm, part);
             return Editor(part, shapeHelper);
         }
 

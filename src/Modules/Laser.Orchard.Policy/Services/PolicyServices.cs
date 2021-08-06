@@ -54,6 +54,9 @@ namespace Laser.Orchard.Policy.Services {
         IEnumerable<UserPolicyAnswersRecord> GetPolicyAnswersForContent(int contentId);
         bool? HasPendingPolicies(ContentItem contentItem);
         IList<IContent> PendingPolicies(ContentItem contentItem);
+
+        // we can use this to rpevent caching the contentitems when we only need their ids
+        IEnumerable<int> GetPendingPolicyIds(PolicyPart part);
     }
 
     public class PolicyServices : IPolicyServices {
@@ -110,6 +113,31 @@ namespace Laser.Orchard.Policy.Services {
                         .UserPolicyAnswers
                         .Where(w => w.PolicyTextInfoPartRecord.Id.Equals(s.Id))
                         .SingleOrDefault();
+                    // there may be a more recent answer in the call context, for example 
+                    // when in this same request the user just gave one. This wouldn't be
+                    // reflected in the User's ContentItem yet.
+                    // get answers from context:
+                    IList<PolicyForUserViewModel> contextAnswers = GetVolatileAnswers();
+                    var fromContext = contextAnswers != null
+                        ? contextAnswers
+                            .Where(w => w.PolicyTextId.Equals(s.Id))
+                            .SingleOrDefault()
+                        : (PolicyForUserViewModel)null;
+                    if (answer == null 
+                        || (fromContext != null 
+                            // we compare by rounding to the second, because dates from the db 
+                            // seem to be rounded like that
+                            && RoundToSecond(fromContext.AnswerDate) > answer.AnswerDate)) {
+                        return new PolicyForUserViewModel {
+                            PolicyText = s,
+                            PolicyTextId = s.Id,
+                            AnswerId = fromContext != null ? fromContext.AnswerId : 0,
+                            AnswerDate = fromContext != null ? fromContext.AnswerDate : DateTime.MinValue,
+                            OldAccepted = fromContext != null ? fromContext.Accepted : false,
+                            Accepted = fromContext != null ? fromContext.Accepted : false,
+                            UserId = fromContext != null ? fromContext.UserId : null
+                        };
+                    }
                     return new PolicyForUserViewModel {
                         PolicyText = s,
                         PolicyTextId = s.Id,
@@ -122,11 +150,13 @@ namespace Laser.Orchard.Policy.Services {
                 }).ToList();
             }
             else { // non loggato
-                // since we are getting the possible answers from the call's context, we
-                // cannot be storing the results of this next step in a cache.
-                IList<PolicyForUserViewModel> answers = GetCookieOrVolatileAnswers();
+                   // since we are getting the possible answers from the call's context, we
+                   // cannot be storing the results of this next step in a cache.
+
+                // get answers from  cookies or context:
+                IList<PolicyForUserViewModel> cookieAnswers = GetCookieOrVolatileAnswers();
                 model = policies.Select(s => {
-                    var answer = answers
+                    var answer = cookieAnswers
                         .Where(w => w.PolicyTextId.Equals(s.Id))
                         .SingleOrDefault();
                     return new PolicyForUserViewModel {
@@ -199,6 +229,10 @@ namespace Laser.Orchard.Policy.Services {
                         record.PolicyTextInfoPartRecord = policyText;
                         if (shouldCreateRecord) {
                             _userPolicyAnswersRepository.Create(record);
+                            // if we create a new record for the answer, update the
+                            // corresponding viewmodel accordingly, so that they remain aligned
+                            viewModel.AnswerId = record.Id;
+                            viewModel.AnswerDate = record.AnswerDate;
                             _policyEventHandler.PolicyChanged(new PolicyEventViewModel {
                                 policyType = record.PolicyTextInfoPartRecord.PolicyType,
                                 accepted = record.Accepted,
@@ -249,7 +283,7 @@ namespace Laser.Orchard.Policy.Services {
         }
 
         public IList<PolicyForUserViewModel> GetCookieOrVolatileAnswers() {
-            var viewModelCollection = _controllerContextAccessor.Context != null ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
+            var viewModelCollection = GetVolatileAnswers();
             IList<PolicyForUserViewModel> answers;
             try {
                 if (viewModelCollection == null) {
@@ -265,51 +299,107 @@ namespace Laser.Orchard.Policy.Services {
             return answers;
         }
 
+        private IList<PolicyForUserViewModel> GetVolatileAnswers() {
+            var viewModelCollection = _controllerContextAccessor.Context != null
+                ? _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers : null;
+            return (IList<PolicyForUserViewModel>)viewModelCollection;
+        }
+
         public void CreateAndAttachPolicyCookie(IList<PolicyForUserViewModel> viewModelCollection, bool writeMode) {
+
+            // does this method do anything if writeMode == false?
+
+            // Suppose for example that the existing policies are A, B, C, D.
+            // A and B are mandatory.
+            // A, C and D were already accepted.
+            // viewModelCollection contains new answers for A (accepted), B (accepted) and C (refused).
 
             var newCollection = new List<PolicyForUserViewModel>();
 
-            //Controllo se esistono già delle policy answers nel cookie
+            // Controllo se esistono già delle policy answers nel cookie
             IList<PolicyForUserViewModel> previousPolicyAnswers = GetCookieAnswers();
+            // previousPolicyAnswers contains A, B and C
             if (previousPolicyAnswers.Count > 0) {
                 foreach (PolicyForUserViewModel policyAnswer in previousPolicyAnswers) {
-                    var upToDateAnswer = viewModelCollection.Where(x => x.PolicyTextId == policyAnswer.PolicyTextId).SingleOrDefault();
+                    // "Nuova" risposta per una policy per cui c'è già una risposta?
+                    var upToDateAnswer = viewModelCollection
+                        .Where(x => x.PolicyTextId == policyAnswer.PolicyTextId)
+                        .SingleOrDefault();
                     if (upToDateAnswer == null) {
-                        newCollection.Add(policyAnswer); // Se la risposta nel cookie non ha un corrispettivo nel json la aggiungo sempre al nuovo cookie
-                    }
-                    else if (upToDateAnswer.Accepted == policyAnswer.Accepted) {
-                        newCollection.Add(policyAnswer); // Se si ripete con lo stesso esito riporto quella vecchia in modo da mantenere la data di accettazione
-                        viewModelCollection.Remove(upToDateAnswer);
+                        // This is the case for policy D
+                        // Se la risposta nel cookie non ha un corrispettivo nel json la 
+                        // aggiungo sempre al nuovo cookie
+                        newCollection.Add(policyAnswer);
+                    }  else if (upToDateAnswer.Accepted == policyAnswer.Accepted) {
+                        // This is the case for policy A
+                        // Se si ripete con lo stesso esito riporto quella vecchia in 
+                        // modo da mantenere la data di accettazione
+                        newCollection.Add(policyAnswer); 
+                    } else {
+                        // The "new" answer is different than the "old" answer for the
+                        // same policy. i.e. we had accepted, and now we refused; or we 
+                        // had not accepted, and now we have.
+                        // This is the case for policy C
                     }
                 }
             }
+            // newCollection here contains the answers for A and D.
+            // viewModelCollection contains answers for: 
+            // - A (hasn't changed) 
+            // - B (new)
+            // - C (has changed)
+
+            // Qui newCollection contiene tutte le risposte "vecchie" che non stavamo
+            // provando ad aggiornare, definite come:
+            // - Risposta "vecchia" per la cui policy non c'è una nuova risposta
+            // oppure
+            // - Risposta "vecchia" per la cui policy c'è una nuova risposta con lo stesso
+            //   valore (accetta/rifiuta di nuovo)
 
             if (writeMode) {
                 // When in write mode it stores values into a cookie
-                newCollection.AddRange(viewModelCollection.Select(x => {
+
+                var newAnswers = viewModelCollection
+                    .Where(pvm => !newCollection.Any(old => old.PolicyTextId == pvm.PolicyTextId));
+                // newAnswers contains B and C
+
+                // Add the "new" answers to newCollection. As a result, newCollection
+                // now contains all answers (past and present).
+                newCollection.AddRange(newAnswers.Select(x => {
                     x.AnswerDate = DateTime.UtcNow;
                     //x.PolicyText = null; // annullo la parte per evitare circolarità nella serializzazione
                     return x;
                 }));
 
                 string myObjectJson = new JavaScriptSerializer().Serialize(newCollection.Where(w => {
+                    // We would like to avoid fetching the ContentItem for the policy
+                    // through the IContentManager, but the policy's ContentItem we may
+                    // have in the view model w here may be stale/detached
                     var policyText = _contentManager.Get<PolicyTextInfoPart>(w.PolicyTextId);
-                    if (policyText == null) return false;
-                    else {
+                    if (policyText == null) {
+                        return false;
+                    } else {
                         var policyTextRecord = policyText.Record;
-                        return (policyTextRecord.UserHaveToAccept && w.Accepted) || !policyTextRecord.UserHaveToAccept;
+                        // We will "save" the state for accepted mandatory policies and for
+                        // optional policies (regardless of them being accepted).
+                        return (policyTextRecord.UserHaveToAccept && w.Accepted) 
+                            || !policyTextRecord.UserHaveToAccept;
                     }
                 }));
 
                 var cookie = new HttpCookie("PoliciesAnswers", Convert.ToBase64String(Encoding.UTF8.GetBytes(myObjectJson))) { // cookie salvato in base64
                     Expires = DateTime.Now.AddMonths(6)
                 };
-                if (_controllerContextAccessor.Context != null)
-                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = viewModelCollection;
+                // Since the cookie's value is in Base64, if we were to read from it we would
+                // need to decypher it. To minimize doing that, we store the answers also in
+                // the Controller ViewBag, so that within a request we can read from it directly.
+                if (_controllerContextAccessor.Context != null) {
+                    _controllerContextAccessor.Context.Controller.ViewBag.PoliciesAnswers = newCollection;
+                }
+                // Update or add the cookie
                 if (_workContext.GetContext().HttpContext.Response.Cookies["PoliciesAnswers"] != null) {
                     _workContext.GetContext().HttpContext.Response.Cookies.Set(cookie);
-                }
-                else {
+                } else {
                     _workContext.GetContext().HttpContext.Response.Cookies.Add(cookie);
                 }
             }
@@ -385,7 +475,7 @@ namespace Laser.Orchard.Policy.Services {
                     ? "NoID"
                     : string.Join("_", ids.Select(i => i.ToString())));
             // cache the query results
-            return _cacheManager.Get(cacheKey, true, ctx => {
+            var results = _cacheManager.Get(cacheKey, true, ctx => {
                 ctx.Monitor(_signals.When("PolicyTextInfoPart_EvictAll"));
                 if (ids != null) {
                     query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
@@ -408,8 +498,69 @@ namespace Laser.Orchard.Policy.Services {
 
                 return query.List<PolicyTextInfoPart>();
             });
+            // reinflate those results by updating their contentManager. This prevents
+            // lazyfields and such from breaking and throwing exceptions.
+            foreach (var ptip in results) {
+                ptip.ContentItem.ContentManager = _contentManager;
+            }
+            return results;
+        }
+
+        public IEnumerable<int> GetPolicyIds(string culture = null, int[] ids = null) {
+            var siteLanguage = _workContext.GetContext().CurrentSite.SiteCulture;
+
+            // figure out the culture Id we should use in the query
+            int currentLanguageId;
+            IContentQuery<PolicyTextInfoPart> query;
+            CultureRecord cultureRecord = null;
+            if (!string.IsNullOrWhiteSpace(culture)) {
+                cultureRecord = GetCultureByName(culture);
+            }
+            if (cultureRecord == null) {
+                //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
+                cultureRecord = GetCultureByName(_workContext.GetContext().CurrentCulture);
+            }
+            if (cultureRecord == null) {
+                cultureRecord = GetCultureByName(_cultureManager.GetSiteCulture());
+            }
+            currentLanguageId = cultureRecord.Id;
+
+            // cacheKey = KeyBase_List_of_Ids
+            var cacheKey = string.Join("_",
+                "policyIds",
+                KeyBase,
+                currentLanguageId.ToString(),
+                ids == null
+                    ? "NoID"
+                    : string.Join("_", ids.Select(i => i.ToString())));
+            // cache the query results
+            return _cacheManager.Get(cacheKey, true, ctx => {
+                ctx.Monitor(_signals.When("PolicyTextInfoPart_EvictAll"));
+                if (ids != null) {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .Where(x => ids.Contains(x.Id))
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                } else {
+                    query = _contentManager.Query<PolicyTextInfoPart, PolicyTextInfoPartRecord>()
+                        .OrderByDescending(o => o.Priority)
+                        .Join<LocalizationPartRecord>()
+                        .Where(w =>
+                            w.CultureId == currentLanguageId
+                            || (w.CultureId == 0 && (siteLanguage.Equals(culture) || culture == null)))
+                        .ForVersion(VersionOptions.Published);
+                }
+
+                return query.List<PolicyTextInfoPart>().Select(ptip => ptip.Id);
+            });
 
         }
+
+
         public IEnumerable<PolicyTextInfoPart> GetAllPublishedPolicyTexts() {
             var qry = _contentManager.Query<PolicyTextInfoPart>(new string[] { "PolicyText" });
             return qry.List();
@@ -632,6 +783,54 @@ namespace Laser.Orchard.Policy.Services {
             return GetPendingPolicies(contentItem)
                 .Select(s => (IContent)s.ContentItem)
                 .ToList();
+        }
+        public IEnumerable<int> GetPendingPolicyIds(PolicyPart part) {
+            RealPolicyInclusionSetter(part);
+            if (!IsPolicyIncluded(part)) return null;
+
+            var loggedUser = _workContext.GetContext().CurrentUser;
+            // get the name of a culture to pass to find policies
+            string cultureName = null;
+            if (part.As<LocalizationPart>() != null
+                && part.As<LocalizationPart>().Culture != null
+                && part.As<LocalizationPart>().Culture.Id > 0) {
+
+                cultureName = part.As<LocalizationPart>().Culture.Culture;
+            } else {
+                //Nel caso di contenuto senza Localizationpart prendo la CurrentCulture
+                cultureName = _workContext.GetContext().CurrentCulture;
+            }
+            var policyIds = GetPolicyIds(cultureName);
+            // figure out which policies the user has not answered
+            var answeredIds = loggedUser != null
+                ? loggedUser
+                    .As<UserPolicyPart>().UserPolicyAnswers.Select(s => s.PolicyTextInfoPartRecord.Id)
+                : GetCookieOrVolatileAnswers()
+                    .Select(s => s.PolicyTextId);
+            var items = policyIds.Where(p => !answeredIds.Contains(p));
+            var settings = part.Settings.GetModel<PolicyPartSettings>();
+            if (!settings.PolicyTextReferences.Contains("{All}")) {
+                string[] filterComplexIds = GetPoliciesForContent(part);
+                if (filterComplexIds != null) {
+                    if (filterComplexIds.Length == 1) {
+                        filterComplexIds = filterComplexIds[0]
+                            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                    var filterIds = filterComplexIds.Select(s => {
+                        int id = 0;
+                        int.TryParse(s.Replace("{", "").Replace("}", ""), out id);
+                        return id;
+                    }).ToArray();
+
+                    items = items.Where(p => filterIds.Contains(p));
+                }
+            }
+
+            return items;
+        }
+
+        private static DateTime RoundToSecond(DateTime dt) {
+            return new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
         }
     }
 }

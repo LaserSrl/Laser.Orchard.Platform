@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -65,8 +65,24 @@ msgid "Province"
 msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Province, starting with a letter."
+msgstr "Provincia, deve iniziare con una lettera."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Select a city from the list."
 msgstr "Seleziona una città dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Select a valid country from the list."
@@ -149,8 +165,8 @@ msgid "Please provide an e-mail address for us to use in order to give you updat
 msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
-msgid "Please provide an international phone prefix, For example 0039 for Italy"
-msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Index.cshtml"
 msgid "Required information"
@@ -237,8 +253,28 @@ msgid "Postal or ZIP code"
 msgstr "Codice postale o ZIP"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Province, starting with a letter."
+msgstr "Provincia, deve iniziare con una lettera."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Remove inserted data"
 msgstr "Rimuovi i dati inseriti"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
+msgid "Select your Country from the list."
+msgstr "Seleziona il tuo Paese dall'elenco."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
@@ -263,6 +299,166 @@ msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "You may leave this blank for the United States."
 msgstr "Lasciare vuoto per gli Stati Uniti d'America."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Billing to:"
+msgstr "Fatturazione a:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Click here to change the selected addresses."
+msgstr "Clicca qui per cambiare gli indirizzi selezionati."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Email address"
+msgstr "Indirizzo Email"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Phone number"
+msgstr "Numero di telefono"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Shipping to:"
+msgstr "Spedizione a:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Special instructions"
+msgstr "Istruzioni speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "{0} is required."
+msgstr "{0} è obbligatorio."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Back to cart"
+msgstr "Torna al carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Bill me at the shipping address."
+msgstr "Fatturazione all'indirizzo di spedizione."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Billing Address"
+msgstr "Indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Checkout: Billing Address"
+msgstr "Checkout: indirizzo di fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Checkout: Shipping & Billing Addresses"
+msgstr "Checkout: indirizzi di spedizione e fatturazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "e-mail"
+msgstr "e-mail"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "International Phone Prefix"
+msgstr "Prefisso internazionale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Next"
+msgstr "Successivo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Phone"
+msgstr "Telefono"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Please provide a phone number where we can reach you in case we need additional information. This is also required when shipping to some countries."
+msgstr "Per favore, inserite un numero telefonico a cui vi si possa raggiungere nel caso servano informazioni addizionali. Questo è necessario per la spedizione verso alcuni stati."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Please provide an e-mail address for us to use in order to give you updates on your order."
+msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Required information"
+msgstr "Informazioni richieste"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Special Instructions"
+msgstr "Istruzioni Speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Checkout: Review Order"
+msgstr "Checkout: revisionare l'ordine"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Order summary"
+msgstr "Riepilogo ordine"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Pay using:"
+msgstr "Paga con"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Products"
+msgstr "Prodotti"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Shipping"
+msgstr "Spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Take a moment to review your order before moving to payments."
+msgstr "Prenditi un momento per rivedere il tuo ordine prima di passare ai pagamenti."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
+msgid "Total"
+msgstr "Totale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Shipping.cshtml"
+msgid "Checkout: Shipping Option"
+msgstr "Checkout: opzione di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Shipping.cshtml"
+msgid "No shipping option available for the selected address. Go <a herf=\"{0}\">back to configure a different one</a>."
+msgstr "Nessuna opzione di spedizione disponibile per l'indirizzo selezionato. Torna <a herf=\"{0}\"> indietro per configurarne uno diverso </a>."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Back to cart"
+msgstr "Torna al carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Line price"
+msgstr "Prezzo di linea"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Quantity"
+msgstr "Quantità"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Remove"
+msgstr "Elimina"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Unit price"
+msgstr "Prezzo Unitario"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
+msgid "Your cart"
+msgstr "Il tuo carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
+msgid "(optional) I have read and agree to {0}"
+msgstr "(opzionale) Ho letto e accetto {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
+msgid "I have read and agree to {0}"
+msgstr "Ho letto e accetto {0}"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Any content will be inserted into the fields, both as text and as a token will be sent as it is to Google Tag Manager (also with html tags or special characters)"
@@ -311,6 +507,18 @@ msgstr "La variante del prodotto"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Variant"
 msgstr "Variante"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/ProductVatConfigurationPartInputPriceSettingsVM.cshtml"
+msgid "Controls whether users will be allowed to input the final price (i.e. the price including VAT), rather than the taxable amount."
+msgstr "Controlla se agli utenti sarà consentito inserire il prezzo finale (ovvero il prezzo comprensivo di IVA), anziché l'imponibile."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/ProductVatConfigurationPartInputPriceSettingsVM.cshtml"
+msgid "Input final price"
+msgstr "Inserisci prezzo finale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/ProductVatConfigurationPartInputPriceSettingsVM.cshtml"
+msgid "Input final price."
+msgstr "Inserisci prezzo finale."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Address"
@@ -377,8 +585,20 @@ msgid "Province or state"
 msgstr "Provincia o Stato"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Select a city from the list."
 msgstr "Seleziona una città dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Select a valid country from the list."
@@ -403,6 +623,30 @@ msgstr "Indirizzo di fatturazione"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
 msgid "Shipping Address"
 msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "<a href=\"{0}\">{1}</a>"
+msgstr "<a href=\"{0}\">{1}</a>"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "mandatory"
+msgstr "obbligatoria"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "optional"
+msgstr "opzionale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "Policies"
+msgstr "Informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "User accepted the {0} policy \"{1}\" on {2}"
+msgstr "L'utente ha accettato l'informativa {0} \"{1}\" il {2}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
+msgid "User rejected the {0} policy \"{1}\" on {2}"
+msgstr "L'utente ha rifiutato l'informativa {0} \"{1}\" il {2}"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Amount"
@@ -444,6 +688,30 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/O
 msgid "Transacion ID"
 msgstr "ID Transazione"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Base prices are computed using VAT __RATE__% from the selected category and for the selected default region ({0})."
+msgstr "I prezzi di base vengono calcolati utilizzando l'IVA __RATE__% dalla categoria selezionata e per la regione predefinita selezionata ({0})."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Base prices are computed using VAT __RATE__% from the selected category."
+msgstr "I prezzi di base vengono calcolati utilizzando l'IVA __RATE__% dalla categoria selezionata."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Before VAT: __PRICE__"
+msgstr "Prima dell'IVA: __PRICE__"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Discounted Price (after VAT)"
+msgstr "Prezzo scontato (IVA inclusa)"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Edit the prices after tax."
+msgstr "Modifica i prezzi al netto dell'iva."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
+msgid "Regular price (after VAT)"
+msgstr "Prezzo normale (IVA inclusa)"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AddressType.cshtml"
 msgid "Enable this territory for billing address configuration."
 msgstr "Abilita questo territorio per la configurazione dell'indirizzo di fatturazione"
@@ -455,6 +723,14 @@ msgstr "Abilita questo territorio per la configurazione dell'indirizzo di spediz
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AdministrativeType.cshtml"
 msgid "Administrative Type for this territory"
 msgstr "Tipo Amministrativo per questo territorio"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AdministrativeType.cshtml"
+msgid "Contains cities"
+msgstr "Contiene città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.AdministrativeType.cshtml"
+msgid "Contains provinces"
+msgstr "Contiene province"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryHierarchyIsCountriesHierarchy.cshtml"
 msgid "This hierarchy is selected to be the reference for valid countries."
@@ -526,7 +802,39 @@ msgstr "Non definito"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetailsMissing.cshtml"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
-msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. È necessario configurarne una accedendo alle <a href=\"{0}\">impostazioni</a>."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "All Policies"
+msgstr "Tutte le informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "No Policies"
+msgstr "Nessuna Informativa"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Policies required for checkout"
+msgstr "Informative richieste per il checkout"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Select policies"
+msgstr "Seleziona le informative"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutPolicySettings.cshtml"
+msgid "Users who don't accept the selected policies will not be allowed to checkout."
+msgstr "Gli utenti che non accettino le informative non potranno effettuare il checkout."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
+msgid "A phone number is required for checkout."
+msgstr "È richiesto un numero di telefono per l'acquisto."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
+msgid "A shipping address is required for checkout."
+msgstr "E' richiesto un indirizzo di spedizione per il checkout."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/CheckoutSettings.cshtml"
+msgid "Require users to be authenticated to start a checkout."
+msgstr "Richiedi agli utenti di essere autenticati per avviare un acquisto."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
 msgid "{0} &times; {1}"
@@ -539,6 +847,394 @@ msgstr "Torna al carrello"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
 msgid "Checkout"
 msgstr "Checkout"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/ShippingSummaryForm.cshtml"
+msgid "{1} {0}"
+msgstr "{1} {0}"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/ShippingSummaryForm.cshtml"
+msgid "Click here to change the selected shipping option."
+msgstr "Fai clic qui per modificare l'opzione di spedizione selezionata."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/ShippingSummaryForm.cshtml"
+msgid "Shipping"
+msgstr "Spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/TerritorySelector.cshtml"
+msgid "Enter multiple territory names. Hit <i>tab</i>, <i>enter</i> or <i>,</i> to add multiple terms."
+msgstr "Immettere più nomi di territorio. Premi <i> tab </i>, <i> invio </i> o <i>,</i> per aggiungere più termini."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/TerritorySelector.cshtml"
+msgid "No countries' hierarchy was configured."
+msgstr "Non è stata configurata la gerarchia degli stati."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/TerritorySelector.cshtml"
+msgid "Select the territories this shipping is valid for."
+msgstr "Seleziona i territori per i quali è valida questa spedizione."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
+msgid "A user is attempting to add to cart a product with attributes."
+msgstr "Un utente sta cercando di aggiungere al carrello un prodotto con attributi."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
+msgid "Commerce"
+msgstr "E-Commerce"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
+msgid "A user is attempting to advance in checkout."
+msgstr "Un utente sta cerando di procedere al checkout."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
+msgid "Done"
+msgstr "Fatto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
+msgid "Events"
+msgstr "Eventi"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Coupon code {0} is not valid"
+msgstr "Il codice coupon {0} non è valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Criteria on the request cookies"
+msgstr "Criteri sui cookies della request"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Http Request"
+msgstr "Richiesta HTTP (HTTP Request)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
+msgid "Test request cookies"
+msgstr "Verifica i cookies della request"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Coupon code {0} is not valid"
+msgstr "Il codice coupon {0} non è valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Criteria on the request header"
+msgstr "Criteri per determinate intestazioni delle richiesta (Request Headers)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Http Request"
+msgstr "Richiesta HTTP (HTTP Request)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Request header"
+msgstr "Intestazione delle richiesta (Request Header)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
+msgid "Test request header"
+msgstr "Testa l'intestazione delle richiesta (Request Header)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Cart contains products of type {0}"
+msgstr "Il carrello contiene prodotti di tipo {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Cart doesn't have Products of given type"
+msgstr "Il carrello non ha prodotti di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Cart has Products of given type"
+msgstr "Il carrello contiene prodotti di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Coupon {0} is only available if cart contains products of type {1}."
+msgstr "Il coupon {0} è disponibile solo se nel carrello è presente un elemento di tipo {1}."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Coupon {0} is only available if cart doesn't contain products of type {1}."
+msgstr "Il coupon {0} è disponibile solo se nel carrello non è presente un elemento di tipo {1}."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
+msgid "Criteria for cart containing product ContentType."
+msgstr "Criteri per carrello contenente determinati tipi di contenuto."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Cart line is a product of type {0}"
+msgstr "L'elemento nel carrello è di tipo {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Cart line is not a product of type {0}"
+msgstr "L'elemento nel carrello non è di tipo {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Coupon {0} is not valid for {1}."
+msgstr "Il coupon {0} non è valido per {1}."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Coupon {0} is not valid for any product in your cart."
+msgstr "Il coupon {0} non è valido per alcun elemento del carrello."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Line Criteria on product ContentType"
+msgstr "Criteri di riga su determinati tipi di contenuto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Line product is not of a given type"
+msgstr "L'elemento nel carrello non è di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponLineCriteria"
+msgid "Line product is of a given type"
+msgstr "L'elemento nel carrello è di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
+msgid "Cart contains products of type {0}"
+msgstr "Il carrello contiene prodotti di tipo {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
+msgid "Cart doesn't contain products of type {0}"
+msgstr "Il carrello non contiene prodotti di tipo {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
+msgid "Cart doesn't have Products of given type"
+msgstr "Il carrello non ha prodotti di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
+msgid "Cart has Products of given type"
+msgstr "Il carrello contiene prodotti di un determinato tipo"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of of the given category or one of its children."
+msgstr "L'elemento nel carrello appartiene alla categoria data o uno dei suoi figli."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of of the given category."
+msgstr "L'elemento nel carrello appartiene alla categoria data."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of of the given category or one of its children."
+msgstr "L'elemento nel carrello non appartiene alla categoria data o uno dei suoi figli."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of of the given category."
+msgstr "L'elemento nel carrello non appartiene alla categoria data."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Coupon {0} is not valid for {1}."
+msgstr "Il coupon {0} non è valido per {1}."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Coupon {0} is not valid for any product in your cart."
+msgstr "Il coupon {0} non è valido per alcun elemento del carrello."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line Criteria on product TaxonomyFields"
+msgstr "Criteri di riga sui TaxonomyFields del prodotto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line product is in the given category (if any was selected)"
+msgstr "L'elemento nel carrello appartiene alla determinata categoria (se almeno una è stata selezionata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Line product is not in the given category (if any was selected)"
+msgstr "L'elemento nel carrello non appartiene alla determinata categoria (se almeno una è stata selezionata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Enter the name of the cookie."
+msgstr "Inserisci il nome del cookie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Enter the value for the cookie."
+msgstr "Inserisci il valore del cookie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Insert a value for the Name of the cookie to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per il nome del cookie da verificare (può essere un token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request doesn't have Cookie"
+msgstr "La request non ha il Cookie"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request doesn't have cookie '{0}'"
+msgstr "La request non ha il cookie '{0}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with any value)"
+msgstr "La request ha il Cookie (con qualunque valore)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with different value)"
+msgstr "La request ha il Cookie (con un valore diverso)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has Cookie (with specific value)"
+msgstr "La request ha il Cookie (con un valore specifico)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with any value"
+msgstr "La request ha il cookie '{0}' con qualunque valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with value '{1}'"
+msgstr "La request ha il cookie '{0}' con valore '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Request has cookie '{0}' with value different than '{1}'"
+msgstr "La request ha il cookie '{0}' con valore diverso da '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueForm"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CookieValueFormValidator"
+msgid "Insert a value for the Name of the cookie to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per il nome del cookie da verificare (può essere un token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is after {1} {2}"
+msgstr "{0} è dopo a {1} {2}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is before {1} {2}"
+msgstr "{0} è prima di {1} {2}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "{0} is between {1} {2} and {3} {4}"
+msgstr "{0} è compreso tra {1} {2} e {3} {4}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Criterion on the date validity of the coupon."
+msgstr "Criterio di validità sulla data del coupon."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Current date"
+msgstr "La data corrente"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Invalid operator"
+msgstr "Operatore non valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DateCouponApplicabilityCriteria"
+msgid "Range of dates the coupon can be used in"
+msgstr "Date tra le quali il coupon può essere utilizzato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination in territories"
+msgstr "Destinazione nei territori"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination in territories Criterion"
+msgstr "Criterio sulla Destinazione nei territori"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination is in a group of territories (perhaps as a child)."
+msgstr "La destinazione è in un gruppo di territori (forse come un figlio)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination is not in a group of territories (perhaps as a child)."
+msgstr "La destinazione non è in un gruppo di territori (forse come un figlio)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination not in territories"
+msgstr "Destinazione non nei territori"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Destination not in territories Criterion"
+msgstr "Criterio sulla destinazione non nei territori"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Enter the name of the header."
+msgstr "Inserisci la chiave dell'intestazione (Header Key/Name)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Enter the value for the header."
+msgstr "Inserisci il valore dell'intestazione (Header Value)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Insert a value for the Name of the header to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per la chiave dell'intestazione (Header Key/Name) da testare (sono consentiti valori con Token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request doesn't have Header"
+msgstr "La richiesta (Request) non contiene l'intestazione (Header)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request doesn't have header '{0}'"
+msgstr "La richiesta (Request) non contiene l'intestazione (Header) '{0}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has Header (with any value)"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) a prescindere dal valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has Header (with different value)"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) con valore (Value) diverso da"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has Header (with specific value)"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) con un determinato valore (Value)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has header '{0}' with any value"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) '{0}' a prescindere dal valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has header '{0}' with value '{1}'"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) '{0}' con valore '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Request has header '{0}' with value different than '{1}'"
+msgstr "La richiesta (Request) contiene l'intestazione (Header) '{0}' con valore diverso da '{1}'"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
+msgid "Value"
+msgstr "Valore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueFormValidator"
+msgid "Insert a value for the Name of the header to test (it is allowed to be a token)."
+msgstr "Inserisci un valore per la chiave dell'intestazione (Header Key/Name) da testare (sono consentiti valori con Token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
+msgid "Any"
+msgstr "Qualsiasi"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
+msgid "Content types"
+msgstr "Tipi di Contenuto"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
+msgid "Select some content types."
+msgstr "Selezionare i tipi di contenuto"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "(Administrative type: {0})"
@@ -600,6 +1296,18 @@ msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressesController"
 msgid "There are no products in the cart. Go back to the catalog and add products."
 msgstr "Non ci sono prodotti nel carrello. Torna al catalogo e aggiungi prodotti."
 
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
+msgid "E-mail is invalid."
+msgstr "L'e-mail non è valida."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
+msgid "Impossible to start payment with the selected provider. Please try again."
+msgstr "Impossibile avviare il pagamento con il fornitore selezionato. Per favore riprova."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
+msgid "Select a shipment to proceed with your order"
+msgstr "Seleziona una spedizione per procedere con il tuo ordine"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.AddressOrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
@@ -644,9 +1352,57 @@ msgctxt "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationService"
 msgid "Select a country"
 msgstr "Seleziona uno stato"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.EmptyCartCheckoutCondition"
+msgid "Your Shopping Cart is empty. You have nothing to checkout."
+msgstr "Il tuo carrello è vuoto. Non hai niente da pagare."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.MinimumOrderQuantityCheckoutCondition"
+msgid "{0} (minimum {1})"
+msgstr "{0} (minimo {1})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.MinimumOrderQuantityCheckoutCondition"
+msgid "The following products may only be ordered in larger quantities: {0}. <a href=\"{1}\">Please review your cart.</a>"
+msgstr "I seguenti prodotti possono essere ordinati solo in quantità maggiori: {0}. <a href=\"{1}\"> Controlla il tuo carrello. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.OrderQuantityCheckoutCondition"
+msgid "{0} (maximum {1})"
+msgstr "{0} (massimo {1})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.OrderQuantityCheckoutCondition"
+msgid "{0} (minimum {1})"
+msgstr "{0} (minimo {1})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.OrderQuantityCheckoutCondition"
+msgid "The following products may only be ordered in larger quantities: {0}. <a href=\"{1}\">Please review your cart.</a>"
+msgstr "I seguenti prodotti possono essere ordinati solo in quantità maggiori: {0}. <a href=\"{1}\"> Controlla il tuo carrello. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.OrderQuantityCheckoutCondition"
+msgid "The following products may only be ordered in smaller quantities: {0}. <a href=\"{1}\">Please review your cart.</a>"
+msgstr "I seguenti prodotti possono essere ordinati solo in quantità minori: {0}. <a href=\"{1}\"> Controlla il tuo carrello. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.ProductOutOfStockCheckoutCondition"
+msgid "There isn't enough stock to complete your order for the following products: {0}. <a href=\"{1}\">Please review your cart.</a>"
+msgstr "Lo stock non è sufficiente per completare l'ordine per i seguenti prodotti: {0}. <a href=\"{1}\"> Controlla il tuo carrello. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.ProductsRequireAuthenticationCheckoutCondition"
+msgid "Some products in your cart require you to be authenticated. <a href=\"{0}\">Please log on to complete your order.</a>"
+msgstr "Alcuni prodotti nel tuo carrello richiedono che tu sia autenticato. <a href=\"{0}\">Effettua login per completare l'ordine.</a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.UserAcceptedPoliciesCheckoutCondition"
+msgid "You need to accept our terms and conditions in order to checkout."
+msgstr "È necessario accettare i termini e le condizioni prima di effettuare un acquisto."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutConditions.UserAuthenticatedCheckoutCondition"
+msgid "<a href=\"{0}\">Please log on to complete your order.</a>"
+msgstr "<a href=\"{0}\"> Accedi per completare l'ordine. </a>"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutPoliciesService"
+msgid "Please agree to the terms and conditions before making a purchase."
+msgstr "È necessario accettare i termini e le condizioni prima di effettuare un acquisto."
+
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."
-msgstr "La gerarchia di nessuno stato è stata configurata. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. È necessario configurarne una accedendo alle <a href=\"{0}\">impostazioni</a>."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No valid countries were configured. Have an administrator configure one <a href=\"{0}\">here</a>."
@@ -663,4 +1419,24 @@ msgstr "Pagamento Riuscito"
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PosServiceIntegration"
 msgid "Payment made with {0}"
 msgstr "Pagamento fatto tramite {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Format for phone prefix is the + sign followed by digits."
+msgstr "Il formato per il prefisso telefonico è il segno + seguito da cifre."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Phone number is required."
+msgstr "Il numero di telefono è obbligatorio."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Phone number may contain only digits."
+msgstr "Il numero di telefono può contenere solo cifre."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Phone number prefix is required."
+msgstr "Il prefisso del numero di telefono è obbligatorio."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Postal or ZIP code may contain only characters or digits."
+msgstr "Il codice postale o CAP può contenere solo lettere o numeri."
 

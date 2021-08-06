@@ -20,6 +20,8 @@ namespace Laser.Orchard.StartupConfig.Handlers {
 
             Filters.Add(StorageFilter.For(repository));
 
+            OnCreated<FavoriteCulturePart>((context, part) => CreateCulture(part));
+
             OnUpdated<FavoriteCulturePart>((context, part) => UpdateCulture(part));
 
             OnLoaded<FavoriteCulturePart>((context, part) => LoadCulture(part));
@@ -38,6 +40,20 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                 var culture = _commonService.ListCultures().SingleOrDefault(x => x.Culture == _orchardService.WorkContext.CurrentCulture);
                 part.Culture = culture != null ? culture.Culture : "";
                 part.Culture_Id = culture != null ? culture.Id: 0;
+            }
+            else {
+                var culture = _commonService.ListCultures().SingleOrDefault(x => x.Culture == part.Culture);
+                part.Culture = culture != null ? culture.Culture : "";
+                part.Culture_Id = culture != null ? culture.Id : 0;
+            }
+        }
+
+        private void CreateCulture(FavoriteCulturePart part) {
+            var lang = _orchardService.WorkContext.CurrentCulture;
+            if (!string.IsNullOrWhiteSpace(lang)) {
+                var culture = _commonService.ListCultures().SingleOrDefault(x => x.Culture == lang);
+                part.Culture = culture != null ? culture.Culture : "";
+                part.Culture_Id = culture != null ? culture.Id : 0;
             }
         }
     }

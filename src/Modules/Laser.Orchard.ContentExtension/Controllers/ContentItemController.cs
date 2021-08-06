@@ -227,7 +227,9 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         foreach (string val in elencovalori) {
                             ElementDetail tvm = new ElementDetail();
                             tvm.Value = val;
-                            tvm.Name = _localizedStringManager.GetLocalizedString("UserEnumeratore", val, Language);
+                            tvm.Name = _localizedStringManager
+                                .GetLocalizedString(new string[] { "UserEnumeratore" }, val, Language)
+                                .Format;
                             ele.Add(tvm);
                         }
                         ResponseElement re = new ResponseElement();
@@ -487,17 +489,27 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             NewOrModifiedContent.As<LocalizationPart>().MasterContentItem = NewOrModifiedContent;
                         }
                         validateMessage = ValidateMessage(NewOrModifiedContent, "");
-                        if (string.IsNullOrEmpty(validateMessage) == false) {
+                        if (!string.IsNullOrEmpty(validateMessage)) {
                             rsp = _utilsServices.GetResponse(ResponseType.None, validateMessage);
                         }
-                        if (NewOrModifiedContent.As<AutoroutePart>() != null) {
-                            dynamic data = new ExpandoObject();
-                            data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
-                            data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
-                            data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
-                            rsp.Data = data;
+                        // Have a validation actually return a response saying there
+                        // was a validation error
+                        validateMessage = ValidateMessage(NewOrModifiedContent, "Validation");
+                        if (!string.IsNullOrEmpty(validateMessage)) {
+                            rsp = _utilsServices.GetResponse(ResponseType.Validation, validateMessage);
+                            // TODO: define better resolution actions depending
+                            // error details?
+                            rsp.ResolutionAction = ResolutionAction.AddParameter;
                         }
-                    } catch (Exception ex) {
+                        dynamic data = new ExpandoObject();
+                        data.Id = (Int32)(((dynamic)NewOrModifiedContent).Id);
+                        data.ContentType = ((dynamic)NewOrModifiedContent).ContentType;
+                        if (NewOrModifiedContent.As<AutoroutePart>() != null) {
+                            data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
+                        }
+                        rsp.Data = data;
+                    }
+                    catch (Exception ex) {
                         rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
                     }
                 }

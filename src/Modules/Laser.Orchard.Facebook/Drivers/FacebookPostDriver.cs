@@ -68,10 +68,13 @@ namespace Laser.Orchard.Facebook.Drivers {
 
             var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
             FacebookPostVM vm = new FacebookPostVM();
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<FacebookPostPart, FacebookPostVM>();
             });
-            Mapper.Map(part, vm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map(part, vm);
             if (string.IsNullOrEmpty(vm.FacebookType.ToString()))
                 vm.FacebookType = FacebookType.Post;
             FacebookPostPartSettingVM setting = part.Settings.GetModel<FacebookPostPartSettingVM>();
@@ -124,10 +127,13 @@ namespace Laser.Orchard.Facebook.Drivers {
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
             FacebookPostVM vm = new FacebookPostVM();
             updater.TryUpdateModel(vm, Prefix, null, null);
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<FacebookPostVM, FacebookPostPart>();
             });
-            Mapper.Map(vm, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map(vm, part);
             if (_orchardServices.WorkContext.HttpContext.Request.Form["FacebookType"] != null && _orchardServices.WorkContext.HttpContext.Request.Form["FacebookType"] == "1")
                 part.FacebookType = FacebookType.Post;
             else

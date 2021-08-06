@@ -28,6 +28,7 @@ namespace Laser.Orchard.PaymentGestPay.Controllers {
         }
 
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult RedirectToGestPayPage(int Id = 0, string guid = "") {
             try {
                 if (Id > 0) {

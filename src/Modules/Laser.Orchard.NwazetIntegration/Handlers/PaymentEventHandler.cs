@@ -53,7 +53,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                         {"Order", order},
                         {"CheckoutError", payment.Error}
                     });
-                order.LogActivity(Constants.PaymentFailed, payment.Error);
+                order.LogActivity(Constants.PaymentFailed, payment.Error, "System");
                 //order.LogActivity(OrderPart.Error, string.Format("Transaction failed (payment id: {0}).", payment.Id));
             }
         }
@@ -70,12 +70,13 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 // update charge
                 order.UpdateCharge(
                     new PaymentGatewayCharge("Payment Gateway", payment.Guid));
-                order.LogActivity(OrderPart.Event, string.Format("Payed on POS {0}.", payment.PosName));
+                order.LogActivity(OrderPart.Event, string.Format("Payed on POS {0}.", payment.PosName), "System");
                 // svuota il carrello
+                var cartContext = new CartFinalizedContext() { Order = order };
                 foreach (var handler in _cartLifeCycleEventHandlers) {
-                    handler.Finalized();
+                    handler.Finalized(cartContext);
                 }
-                _shoppingCart.Clear();
+                _shoppingCart.ClearAll();
                 // raise order and payment events
                 _contentManager.Publish(order.ContentItem);
                 TriggerEvents(order);

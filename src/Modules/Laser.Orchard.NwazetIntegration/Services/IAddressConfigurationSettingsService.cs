@@ -47,9 +47,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         int[] SelectedCityIds { get; }
         /// <summary>
+        /// The Ids of all territories selected to be used as Cities that contain the 
+        /// string in their title.
+        /// </summary>
+        /// <param name="nameQuery"></param>
+        /// <returns></returns>
+        int[] SelectedCityIdsByName(string nameQuery);
+        /// <summary>
         /// The records corresponding to all selected Cities.
         /// </summary>
-        IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords { get; }
+        //IEnumerable<TerritoryInternalRecord> SelectedCityTerritoryRecords { get; }
         ///// <summary>
         ///// All the configured Country ISO codes, with the Id corresponding to the
         ///// TerritoryInternalRecord for that country.

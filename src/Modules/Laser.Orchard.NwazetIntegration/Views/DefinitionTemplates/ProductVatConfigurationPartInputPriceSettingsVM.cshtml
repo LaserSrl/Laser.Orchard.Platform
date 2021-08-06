@@ -1,0 +1,15 @@
+﻿@model Laser.Orchard.NwazetIntegration.ViewModels.ProductVatConfigurationPartInputPriceSettingsVM
+
+<fieldset>
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.InputFinalPrice)" class="forcheckbox" title="@T("Input final price")">
+                @Html.EditorFor(m => m.InputFinalPrice)
+                @T("Input final price.")
+            </label>
+        </div>
+        <span class="hint">
+            @T("Controls whether users will be allowed to input the final price (i.e. the price including VAT), rather than the taxable amount.")
+        </span>
+    </div>
+</fieldset>

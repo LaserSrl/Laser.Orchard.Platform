@@ -1,0 +1,46 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Orchard.ContentManagement;
+@using Orchard.Localization;
+@model CheckoutPoliciesOrderViewModel
+    @{ 
+        var contentManager = WorkContext.Resolve<IContentManager>();
+    }
+<div class="order-editor">
+    <fieldset class="checkout-policies">
+        <legend>
+            @T("Policies")
+        </legend>
+        @foreach (var pvm in Model.Policies) {
+            var ci = contentManager.Get(pvm.PolicyTextInfoPartId, VersionOptions.Number(pvm.PolicyTextInfoPartVersionNumber));
+            var cssClass = "checkout-policy";
+            LocalizedString mandatory;
+            LocalizedString message;
+            var policyLink = T("<a href=\"{0}\">{1}</a>",
+                Url.ItemDisplayUrl(ci) + "?version=" + pvm.PolicyTextInfoPartVersionNumber,
+                contentManager.GetItemMetadata(ci).DisplayText);
+            if (pvm.Mandatory) {
+                cssClass += " checkout-policy-mandatory";
+                mandatory = T("mandatory");
+            } else {
+                cssClass += " checkout-policy-optional";
+                mandatory = T("optional");
+            }
+            if (pvm.Accepted) {
+                cssClass += " checkout-policy-accepted";
+                message = T("User accepted the {0} policy \"{1}\" on {2}", 
+                    mandatory,
+                    policyLink,
+                    pvm.AnswerDateUTC.ToLocalTime());
+            } else {
+                cssClass += " checkout-policy-rejected";
+                message = T("User rejected the {0} policy \"{1}\" on {2}", 
+                    mandatory,
+                    policyLink,
+                    pvm.AnswerDateUTC.ToLocalTime());
+            }
+            <div class="@cssClass">
+                @message
+            </div>
+        }
+    </fieldset>
+</div>

@@ -84,10 +84,13 @@ namespace Laser.Orchard.Mobile.Drivers {
                     {
                         viewModel.ToPush = true;
                     }
-                    Mapper.Initialize(cfg => {
+
+                    var mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<MobilePushVM, MobilePushPart>();
                     });
-                    Mapper.Map<MobilePushVM, MobilePushPart>(viewModel, part);
+                    IMapper _mapper = mapperConfiguration.CreateMapper();
+
+                    _mapper.Map<MobilePushVM, MobilePushPart>(viewModel, part);
 
                 } else
                     updater.AddModelError("Cannotupdate", T("Cannot Update!"));
@@ -143,6 +146,8 @@ namespace Laser.Orchard.Mobile.Drivers {
             var _list = new List<SelectListItem>();
             if(string.IsNullOrWhiteSpace(pushSettings.AndroidApiKey) == false) {
                 _list.Add(new SelectListItem() { Value = TipoDispositivo.Android.ToString(), Text = TipoDispositivo.Android.ToString() });
+                _list.Add(new SelectListItem() { Value = TipoDispositivo.AppleFCM.ToString(), Text = TipoDispositivo.AppleFCM.ToString() });
+
             }
             if (string.IsNullOrWhiteSpace(pushSettings.ApplePathCertificateFile) == false) {
                 _list.Add(new SelectListItem() { Value = TipoDispositivo.Apple.ToString(), Text = TipoDispositivo.Apple.ToString() });

@@ -1,18 +1,11 @@
-﻿using System.Linq;
-using Orchard.ContentManagement.Drivers;
-using Laser.Orchard.CulturePicker.Models;
-using Orchard.Localization.Services;
-using Laser.Orchard.CulturePicker.Services;
-using Orchard.Environment.Configuration;
-using System;
-using System.Web;
+﻿using Laser.Orchard.CulturePicker.Models;
 using Orchard;
-using Orchard.Environment.Extensions;
 using Orchard.ContentManagement;
-using Orchard.Localization.Models;
-using NHibernate.Criterion;
-using Orchard.Data;
+using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Data;
+using Orchard.Environment.Extensions;
+using Orchard.Localization.Services;
 
 namespace Laser.Orchard.CulturePicker.Drivers {
     [OrchardFeature("Laser.Orchard.CulturePicker.TranslateMenuItems")]

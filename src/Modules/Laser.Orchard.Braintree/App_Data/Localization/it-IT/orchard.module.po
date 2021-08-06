@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -7,6 +7,26 @@
 # > msgctxt  "{ contesto del messaggio }"
 # > msgid "{ identificativo del messaggio }"
 # > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "ApplePay Display Name"
+msgstr ""Display Name" per Apple Pay"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "ApplePay Display Name."
+msgstr ""Display Name" per Apple Pay."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "ApplePay Label"
+msgstr "Etichetta per Apple Pay"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "ApplePay Label."
+msgstr "Etichetta per Apple Pay."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "ApplePay Settings"
+msgstr "Impostazioni di Apple Pay"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Automatic Payment"
@@ -25,6 +45,26 @@ msgid "Currency code bound to the merchant ID in Braintree configuration."
 msgstr "Codice valuta associato all'ID del negoziante nella configurazione di Braintree."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Currency Code."
+msgstr "Codice Valuta."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "GooglePay Merchant ID"
+msgstr "Merchant ID per Google Pay"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "GooglePay Merchant ID."
+msgstr "Merchant ID per Google Pay."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "GooglePay Settings"
+msgstr "Impostazioni di Google Pay"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "If ApplePay is not enabled in your Braintree dashboard, leave this empty."
+msgstr "Se Apple Pay non è abilitata nella tua dashboard di Braintree, lascia vuoto questo campo."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "If checked, it means this is a production environment."
 msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
 
@@ -33,16 +73,36 @@ msgid "If checked, the payment starts automatically."
 msgstr "Se selezionato, il pagamento inizia automaticamente."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "If GooglePay is not enabled in your Braintree dashboard, leave this empty."
+msgstr "Se Google Pay non è abilitata nella tua dashboard di Braintree, lascia vuoto questo campo."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Merchant Account"
 msgstr "Account Negoziante"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Merchant Account ID"
+msgstr "ID dell'Account Merchant"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Merchant Account ID."
+msgstr "ID dell'Account Merchant."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Merchant ID"
 msgstr "ID del negoziante (Merchant ID)"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Merchant ID."
+msgstr "ID del Merchant."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Private Key"
 msgstr "Chiave privata"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Private Key."
+msgstr "Chiave privata."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Production Environment"
@@ -53,8 +113,20 @@ msgid "Public Key"
 msgstr "Chiave pubblica"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "Public Key."
+msgstr "Chiave Pubblica."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The display name used for ApplePay. This is required if you wish to enable ApplePay as a payment provider."
+msgstr "Il "Display Name" usato per Apple Pay. Questo campo è obbligatorio se vuoi abilitare Apple Pay per accettare pagamenti."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The label used for each transaction with ApplePay. This is required if you wish to enable ApplePay as a payment provider."
+msgstr "L'etichetta usata per ogni transazione con Apple Pay. Questo campo è obbligatorio se vuoi abilitare Apple Pay per accettare pagamenti."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "The Merchant Account ID identifying the specific merchant. Leave empty to use the default Merchant for the account."
@@ -63,6 +135,10 @@ msgstr "L'ID dello specifico Account Negoziante. Lasciare questo campo vuoto per
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "The Merchant ID assigned by Braintree during merchant registration."
 msgstr "L'ID del negoziante (Merchant ID) assegnato da Braintree durante la registrazione."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
+msgid "The Merchant ID provided by Google for your Google Pay account. This is required to enable GooglePay as a payment method on production environments. If this is empty, users will not be shown the option to use GooglePay. In test/sandobox environments, any non-empty value is valid."
+msgstr "Il "Merchant ID" dato da Google per il tuo account Google Pay. Questo campo è obbligatorio se vuoi abilitare Google Pay per accettare pagamenti in ambiente di produzione. Se questo campo è vuoto, agli utenti non verrà proposto di usare Google Pay. In ambiente di test/sandbox, qualunque valore non vuoto è valido."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "The Private Key assigned by Braintree during merchant registration."
@@ -87,6 +163,18 @@ msgstr "Paga adesso"
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
 msgid "Pay with Braintree and PayPal"
 msgstr "Paga con Braintree e PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Pay Now"
+msgstr "Paga Ora"
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Payment method was rejected by the payment providers."
+msgstr "Il metodo di pagamento è stato respinto dai providers."
+
+msgctxt "~/Modules/Laser.Orchard.Braintree/Views/BraintreeDropin.cshtml"
+msgid "Processing..."
+msgstr "In corso..."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/EditorTemplates/Parts/BraintreeSiteSettings.cshtml"
 msgid "Braintree PayPal Settings"

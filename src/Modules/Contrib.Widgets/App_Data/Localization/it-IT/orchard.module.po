@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -55,6 +55,10 @@ msgstr "Provare a sostituire gli elementi selezionati con la loro versione in li
 msgctxt "~/Modules/Contrib.Widgets/Views/DefinitionTemplates/WidgetsContainerSettingsViewModel.cshtml"
 msgid "Use hierarchical association"
 msgstr "Utilizzare l'associazione gerarchica"
+
+msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
+msgid " | "
+msgstr "|"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "-- Choose a culture to copy widgets from its version --"

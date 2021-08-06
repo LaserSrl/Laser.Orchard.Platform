@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -84,6 +84,10 @@ msgctxt "~/Themes/KrakeDefaultTheme/Views/EditorTemplates/Parts/UserRegistration
 msgid "Read carefully the following policies"
 msgstr "Leggi attentamente queste informative"
 
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Elements/Image.cshtml"
+msgid "Image not found"
+msgstr "Immagine non trovata"
+
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Layout.cshtml"
 msgid "I Agree"
 msgstr "Sono d'accordo"
@@ -127,6 +131,10 @@ msgstr "Ricordami"
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Sign In"
 msgstr "Accedi"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/MessagePage.cshtml"
+msgid "Main Site"
+msgstr "Sito Principale"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid " if you don't have an account."
@@ -252,6 +260,58 @@ msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Username"
 msgstr "Nome utente"
 
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/AccessDenied.cshtml"
+msgid "Access Denied"
+msgstr "Accesso negato"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/AccessDenied.cshtml"
+msgid "You do not have permission to complete your request."
+msgstr "Non hai i permessi per completare la richiesta."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Challenge Email"
+msgstr "Email di verifica"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Go back"
+msgstr "Torna indietro"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Please retry using the link you received via email. If the problem persists contact the website administrators."
+msgstr "Riprova usando il link che hai ricevuto via email. Se il problema persiste, contatta gli amministratori del sito."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
+msgid "Your email address could not be validated"
+msgstr "Il tuo indirizzo email non può essere convalidato"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "An email has been sent to you. Please click on the link it contains to validate your email address."
+msgstr "Ti è stata inviata un'email. Clicca sul link che ti è stato inviato per convalidare la tua email."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "Challenge Email Sent"
+msgstr "Inviata email di verifica"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
+msgid "Go back"
+msgstr "Torna indietro"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Challenge Email"
+msgstr "Email di verifica"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Your email address has been validated."
+msgstr "Il tuo indirizzo email è stato confermato."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
+msgid "Your email address has been validated. You will receive an email when your user is approved."
+msgstr "Il tuo indirizzo email è stato validato. Riceverai un'email quando l'utente verrà approvato."
+
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "{0} and must contain at least {1}"
 msgstr "{0} e deve contenere almeno {1}"
@@ -308,6 +368,38 @@ msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.c
 msgid "Use the form below to change your password."
 msgstr "Utilizza il modulo sottostante per cambiare la tua password."
 
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Please, login using your new password."
+msgstr "Accedi usando la nuova password."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Sign in"
+msgstr "Accedi"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
+msgid "Your password has been changed successfully!"
+msgstr "La tua password è stata cambiata con successo!"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "Go back"
+msgstr "Torna indietro"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "User Registration Pending"
+msgstr "Registrazione utente in fase di approvazione"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
+msgid "Your user account has been created but has to be approved before it can be used."
+msgstr "Il tuo account è stato creato ma deve essere approvato prima di essere disponibile."
+
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
 msgid "Lost Password"
 msgstr "Password dimenticata"
@@ -355,6 +447,62 @@ msgstr "Benvenuto,"
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.Title_Summary.cshtml"
 msgid "View Content"
 msgstr "Visualizza contenuto"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "After changing the password you will be required to login anew."
+msgstr "Dopo aver cambiato la password ti verrà richiesto di effettuare nuovamente il login."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Change Password"
+msgstr "Cambia password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Confirm new password"
+msgstr "Conferma nuova password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Current password"
+msgstr "Password corrente"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "New password"
+msgstr "Nuova Password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Password change was unsuccessful. Please correct the errors and try again."
+msgstr "La modifica della password è fallita. Correggere gli errori e provare di nuovo."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Utilizza il modulo sottostante per cambiare la tua password."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "{0} and must contain at least {1}"

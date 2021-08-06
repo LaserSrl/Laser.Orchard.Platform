@@ -12,19 +12,19 @@ namespace Laser.Orchard.Cookies.Models
         public bool showCookieResetButton { get { return this.Retrieve(x => x.showCookieResetButton); } set { this.Store(x => x.showCookieResetButton, value); } }
         public bool defaultValuePreferences {
             get {
-                return this.Retrieve(x => x.defaultValuePreferences, true);
+                return this.Retrieve(x => x.defaultValuePreferences, false);
             }
             set { this.Store(x => x.defaultValuePreferences, value); }
         }
         public bool defaultValueStatistical {
             get {
-                return this.Retrieve(x => x.defaultValueStatistical, true);
+                return this.Retrieve(x => x.defaultValueStatistical, false);
             }
             set { this.Store(x => x.defaultValueStatistical, value); }
         }
         public bool defaultValueMarketing {
             get {
-                return this.Retrieve(x => x.defaultValueMarketing, true);
+                return this.Retrieve(x => x.defaultValueMarketing, false);
             }
             set { this.Store(x => x.defaultValueMarketing, value); }
         }

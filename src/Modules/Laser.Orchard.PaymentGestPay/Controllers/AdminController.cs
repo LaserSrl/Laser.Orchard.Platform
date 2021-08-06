@@ -3,6 +3,7 @@ using Laser.Orchard.PaymentGestPay.Models;
 using Laser.Orchard.PaymentGestPay.Services;
 using Laser.Orchard.PaymentGestPay.ViewModels;
 using Orchard;
+using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Localization;
 using Orchard.UI.Notify;
@@ -46,8 +47,10 @@ namespace Laser.Orchard.PaymentGestPay.Controllers {
     public class AdminController : PosAdminBaseController {
         private IGestPayAdminServices _gestPayAdminServices;
 
-        public AdminController(IOrchardServices orchardServices, IGestPayAdminServices gestPayAdminServices) : 
-            base(orchardServices) {
+        public AdminController(IOrchardServices orchardServices, 
+            IGestPayAdminServices gestPayAdminServices,
+            ISignals signals) : 
+            base(orchardServices, signals) {
 
             _gestPayAdminServices = gestPayAdminServices;
         }

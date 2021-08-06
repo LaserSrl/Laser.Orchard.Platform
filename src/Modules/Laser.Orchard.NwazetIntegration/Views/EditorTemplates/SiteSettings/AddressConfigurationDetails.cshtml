@@ -1,5 +1,6 @@
 ﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Laser.Orchard.NwazetIntegration;
+@using Nwazet.Commerce.Services;
 @model AddressConfigurationSiteSettingsPartViewModel
 @functions{
     int index = -1;
@@ -8,6 +9,8 @@
     Dictionary<TerritoryAdministrativeType, string> administrativeTypeNames;
 }
 @{
+    ITerritoryPartRecordService _territoryPartRecordService = WorkContext.Resolve<ITerritoryPartRecordService>();
+
     Style.Include("admin-style.css", "admin-style.min.css").AtHead();
 
     var hierarchy = Model.CountriesHierarchy;
@@ -64,7 +67,7 @@ index++;
 </div>
     
     }
-@if (hierarchy != null && hierarchy.Record.Territories.Any()) {
+@if (hierarchy != null && _territoryPartRecordService.GetHierarchyTerritoriesCount(hierarchy) >0) {
     // Initially only show the top level?
     // Each territory may be marked as Country, Province or City 
     <div class="territories-list">
@@ -138,13 +141,23 @@ index++;
                     .fail(function () { })
                     .always(function () {
                         $('.territory-children-counts').on('click', function () {
-                            _handleClick(this);
+                            if ($(this).parent().parent().find('>.children-list').length) {
+                                // it exists
+                                $(this).parent().parent().find('>.children-list').remove();
+                            } else {
+                                _handleClick(this);
+                            }
                             //$(this).parent().parent().find('>.children-list').toggle();
                         });
                     });
             };
             $('.territory-children-counts').on('click', function () {
-                _handleClick(this);
+                if($(this).parent().parent().find('>.children-list').length) {
+                    // it exists
+                    $(this).parent().parent().find('>.children-list').remove();
+                } else {
+                    _handleClick(this);
+                }
                 //$(this).parent().parent().find('>.children-list').toggle();
             });
         });

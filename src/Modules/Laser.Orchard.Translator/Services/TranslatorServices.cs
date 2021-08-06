@@ -16,7 +16,7 @@ namespace Laser.Orchard.Translator.Services {
         IQueryable<TranslationRecord> GetTranslations();
         IQueryable<TranslationFolderSettingsRecord> GetTranslationFoldersSettings();
         IList<string> GetSuggestedTranslations(string message, string language);
-        bool TryAddOrUpdateTranslation(TranslationRecord translation);
+        bool TryAddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true);
         bool TryAddOrUpdateTranslationFolderSettings(TranslationFolderSettingsRecord translation);
         void EnableFolderTranslation(string folderName, ElementToTranslate folderType);
         bool DeleteTranslation(TranslationRecord record);
@@ -57,11 +57,12 @@ namespace Laser.Orchard.Translator.Services {
             return _translationFoldersSettingsRecordRepository.Table;
         }
 
-        public bool TryAddOrUpdateTranslation(TranslationRecord translation) {
+        public bool TryAddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true) {
             try {
-                AddOrUpdateTranslation(translation);
+                AddOrUpdateTranslation(translation, forceUpdate);
                 return true;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Log.Error(ex, "TranslatorServices.TryAddOrUpdateTranslation error.");
                 return false;
             }
@@ -71,12 +72,21 @@ namespace Laser.Orchard.Translator.Services {
             try {
                 AddOrUpdateTranslationFolderSettings(translation);
                 return true;
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 return false;
             }
         }
 
-        private void AddOrUpdateTranslation(TranslationRecord translation) {
+        private void AddOrUpdateTranslation(TranslationRecord translation, bool forceUpdate = true) {
+            //Validate the translations
+            if (string.IsNullOrWhiteSpace(translation.ContainerName) ||
+                string.IsNullOrWhiteSpace(translation.ContainerType) ||
+                string.IsNullOrWhiteSpace(translation.Language) ||
+                                string.IsNullOrWhiteSpace(translation.Message)) {
+                throw new ArgumentNullException();
+            }
+
             List<TranslationRecord> existingTranslations = new List<TranslationRecord>();
             bool searchById = translation.Id != 0;
 
@@ -85,7 +95,8 @@ namespace Laser.Orchard.Translator.Services {
 
             if (searchById) {
                 existingTranslations = GetTranslations().Where(t => t.Id == translation.Id).ToList();
-            } else {
+            }
+            else {
                 existingTranslations = GetTranslations().Where(t => t.Language == translation.Language
                                                                     && t.ContainerName == translation.ContainerName
                                                                     && t.ContainerType == translation.ContainerType
@@ -94,34 +105,38 @@ namespace Laser.Orchard.Translator.Services {
             }
 
             var updateRecord = false;
-            if (existingTranslations.Any())
-            {
+            TranslationRecord existingTranslation = new TranslationRecord();
+            if (existingTranslations.Any()) {
                 // nel caso in cui dall'api controller viene richiesto l'inserimento o l'aggiornamento
                 // faccio un ulteriore verifica maiuscole/minuscole del message
-                foreach (var item in existingTranslations)
-                {
-                    if (translation.Message.Equals(item.Message, StringComparison.InvariantCulture))
-                    {
-                        updateRecord = true;
+                foreach (var item in existingTranslations) {
+                    if (translation.Message.Equals(item.Message, StringComparison.InvariantCulture) ||
+                        searchById) {
+                        if (forceUpdate || string.IsNullOrWhiteSpace(item.TranslatedMessage)) {
+                            existingTranslation = item;
+                            updateRecord = true;
+                        }
                         break;
                     }
                 }
             }
 
-            if (updateRecord)
-            {
-                TranslationRecord existingTranslation = existingTranslations.FirstOrDefault();
-
+            if (updateRecord && existingTranslation.Id > 0) {
                 existingTranslation.Context = translation.Context;
                 existingTranslation.TranslatedMessage = translation.TranslatedMessage;
                 existingTranslation.Message = translation.Message;  // #GM 2015-09-22
 
+                existingTranslation.ContainerName = translation.ContainerName;
+                existingTranslation.ContainerType = translation.ContainerType;
+
                 _translationRecordRepository.Update(existingTranslation);
                 _translationRecordRepository.Flush();
-            } else {
+            }
+            else {
                 if (searchById) {
                     throw new Exception(T("The requested translation does not exists.").ToString());
-                } else {
+                }
+                else {
                     _translationRecordRepository.Create(translation);
                     _translationRecordRepository.Flush();
                 }
@@ -142,7 +157,8 @@ namespace Laser.Orchard.Translator.Services {
                 existingFolderSettings.OutputPath = translationSettings.OutputPath;
                 _translationFoldersSettingsRecordRepository.Update(existingFolderSettings);
                 _translationFoldersSettingsRecordRepository.Flush();
-            } else {
+            }
+            else {
                 _translationFoldersSettingsRecordRepository.Create(translationSettings);
                 _translationFoldersSettingsRecordRepository.Flush();
             }
@@ -152,7 +168,8 @@ namespace Laser.Orchard.Translator.Services {
             try {
                 _translationRecordRepository.Delete(record);
                 return true;
-            } catch (Exception) {
+            }
+            catch (Exception) {
                 return false;
             }
         }
@@ -166,36 +183,49 @@ namespace Laser.Orchard.Translator.Services {
             }
         }
 
-        public void EnableFolderTranslation(string folderName, ElementToTranslate folderType)
-        {
+        /// <summary>
+        /// Add the folder for which translations where requested to the corresponding list
+        /// </summary>
+        /// <param name="folderName"></param>
+        /// <param name="folderType"></param>
+        public void EnableFolderTranslation(string folderName, ElementToTranslate folderType) {
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
             // missing settings
             translatorSettings.ModulesToTranslate = translatorSettings.ModulesToTranslate ?? "";
             translatorSettings.ThemesToTranslate = translatorSettings.ThemesToTranslate ?? "";
+            translatorSettings.TenantsToTranslate = translatorSettings.TenantsToTranslate ?? "";
 
             List<string> enabledFolders = new List<string>();
-            if (folderType == ElementToTranslate.Module)
-                enabledFolders = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
-            else if (folderType == ElementToTranslate.Theme)
-                enabledFolders = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+            switch (folderType) {
+                case ElementToTranslate.Module:
+                    enabledFolders = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.ModulesToTranslate))
+                            translatorSettings.ModulesToTranslate += ",";
 
-            if (!enabledFolders.Contains(folderName))
-            {
-                if (folderType == ElementToTranslate.Module)
-                {
-                    if (!String.IsNullOrWhiteSpace(translatorSettings.ModulesToTranslate))
-                        translatorSettings.ModulesToTranslate += ",";
+                        translatorSettings.ModulesToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.Theme:
+                    enabledFolders = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.ThemesToTranslate))
+                            translatorSettings.ThemesToTranslate += ",";
 
-                    translatorSettings.ModulesToTranslate += folderName;
-                }
-                else if (folderType == ElementToTranslate.Theme)
-                {
-                    if (!String.IsNullOrWhiteSpace(translatorSettings.ThemesToTranslate))
-                        translatorSettings.ThemesToTranslate += ",";
+                        translatorSettings.ThemesToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.Tenant:
+                    enabledFolders = translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.TenantsToTranslate))
+                            translatorSettings.TenantsToTranslate += ",";
 
-                    translatorSettings.ThemesToTranslate += folderName;
-                }
+                        translatorSettings.TenantsToTranslate += folderName;
+                    }
+                    break;
             }
+
         }
 
         public IList<string> GetSuggestedTranslations(string message, string language) {

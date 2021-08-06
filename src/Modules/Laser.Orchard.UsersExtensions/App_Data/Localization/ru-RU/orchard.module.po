@@ -1,0 +1,18 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "Laser.Orchard.UsersExtensions.Drivers.UserRegistrationPolicyPartDriver"
+msgid "User has to accept policies!"
+msgstr "Пользователь должен принять политику!"
+
+msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
+msgid "User has to accept policies!"
+msgstr "Пользователь должен принять политику!"
+

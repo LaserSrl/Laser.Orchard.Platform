@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -887,6 +887,10 @@ msgstr "Operazione fallita: questionario già compilato"
 msgctxt "Laser.Orchard.Questionnaires.Services.to"
 msgid "Operation Fail: Questionnaire already filled"
 msgstr "Operazione fallita: questionario già compilato"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionAttribute"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"
 
 msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
 msgid "Please, accept our terms and conditions!"

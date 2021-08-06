@@ -44,10 +44,13 @@ namespace Laser.Orchard.ShareLink.Drivers {
             var urlHelper = new UrlHelper(_orchardServices.WorkContext.HttpContext.Request.RequestContext);
 
             ShareLinkVM vm = new ShareLinkVM();
-            Mapper.Initialize(cfg => {
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ShareLinkPart, ShareLinkVM>();
             });
-            Mapper.Map<ShareLinkPart, ShareLinkVM>(part, vm);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map<ShareLinkPart, ShareLinkVM>(part, vm);
             var moduleSetting = _orchardServices.WorkContext.CurrentSite.As<ShareLinkModuleSettingPart>();
             var partSetting = part.Settings.GetModel<ShareLinkPartSettingVM>();
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
@@ -100,14 +103,13 @@ namespace Laser.Orchard.ShareLink.Drivers {
         protected override DriverResult Editor(ShareLinkPart part, IUpdateModel updater, dynamic shapeHelper) {
             ShareLinkVM vm = new ShareLinkVM();
             updater.TryUpdateModel(vm, Prefix, null, null);
-            Mapper.Initialize(cfg => {
-                cfg.CreateMap<ShareLinkVM, ShareLinkPart>()
-                .ForSourceMember(src => src.ShowSharedImage, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedLink, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedText, opt => opt.Ignore())
-                .ForSourceMember(src => src.ShowSharedBody, opt => opt.Ignore());
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<ShareLinkVM, ShareLinkPart>();
             });
-            Mapper.Map(vm, part);
+            IMapper _mapper = mapperConfiguration.CreateMapper();
+
+            _mapper.Map(vm, part);
 
             if (vm.SharedImage != null) {
                 part.SharedIdImage = vm.SharedImage.Replace("{", "").Replace("}", "");

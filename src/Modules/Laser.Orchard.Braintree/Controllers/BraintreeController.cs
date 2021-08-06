@@ -22,12 +22,16 @@ using System.Web.Mvc;
 namespace Laser.Orchard.Braintree.Controllers {
     public class BraintreeController : Controller {
         private readonly IOrchardServices _orchardServices;
-        private readonly BraintreePosService _posService;
+        private readonly IBraintreePosService _posService;
         private readonly IBraintreeService _braintreeService;
 
-        public BraintreeController(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IBraintreeService braintreeService) {
+        public BraintreeController(
+            IOrchardServices orchardServices, 
+            IBraintreeService braintreeService,
+            IBraintreePosService posService) {
+
             _orchardServices = orchardServices;
-            _posService = new BraintreePosService(orchardServices, repository, paymentEventHandler);
+            _posService = posService;
             _braintreeService = braintreeService;
 
             Logger = NullLogger.Instance;
@@ -44,6 +48,7 @@ namespace Laser.Orchard.Braintree.Controllers {
         /// <param name="pid">Payment ID</param>
         /// <returns></returns>
         [Themed]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Index(int pid = 0, string guid = "") {
             PaymentRecord payment;
             if (pid > 0) {
@@ -52,7 +57,7 @@ namespace Laser.Orchard.Braintree.Controllers {
                 payment = _posService.GetPaymentInfo(guid);
             }
             pid = payment.Id;
-            var settings = _orchardServices.WorkContext.CurrentSite.As<BraintreeSiteSettingsPart>();
+            var settings = _posService.GetSettings();
             if (settings.CurrencyCode != payment.Currency) {
                 //throw new Exception(string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode));
                 string error = string.Format("Invalid currency code. Valid currency is {0}.", settings.CurrencyCode);
@@ -61,7 +66,8 @@ namespace Laser.Orchard.Braintree.Controllers {
             }
             PaymentVM model = new PaymentVM();
             model.Record = payment;
-            model.TenantBaseUrl = Url.Action("Index").Replace("/Laser.Orchard.Braintree/Braintree", "");
+            // changed the path to a route, so I also change the replace
+            model.TenantBaseUrl = Url.Action("Index").Replace("/payment/braintree", "");
             return View("Index", model);
         }
 
@@ -159,19 +165,7 @@ namespace Laser.Orchard.Braintree.Controllers {
             var outcome = FinalizePayment(nonce, sPid);
             return Redirect(_posService.GetPaymentInfoUrl(outcome.Pid));
         }
-
-        public class MobilePay {
-            public string payment_method_nonce { get; set; }
-            public string pid { get; set; }
-        }
-
-        private class PaymentResult {
-            public int Pid { get; set; }
-            public bool Success { get; set; }
-            public string Error { get; set; }
-            public string TransactionId { get; set; }
-        }
-
+        
         private Dictionary<string, string> GetBraintreeError() {
             // error code Braintree, message error
             return new Dictionary<string, string> {
@@ -275,6 +269,18 @@ namespace Laser.Orchard.Braintree.Controllers {
                 {"2100",T("Your PayPal permissions are not set up to allow channel initiated billing transactions. Contact PayPal's Support team for information on how to enable this. Once resolved, you can attempt to process the transaction again.").Text},
                 {"3000",T("Processor Network Unavailable – Try Again").Text}
               };
+        }
+
+        public class MobilePay {
+            public string payment_method_nonce { get; set; }
+            public string pid { get; set; }
+        }
+
+        private class PaymentResult {
+            public int Pid { get; set; }
+            public bool Success { get; set; }
+            public string Error { get; set; }
+            public string TransactionId { get; set; }
         }
     }
 }

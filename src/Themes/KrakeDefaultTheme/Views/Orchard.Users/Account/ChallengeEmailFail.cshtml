@@ -1,0 +1,15 @@
+﻿@{
+    Layout.Title = Html.TitleForPage(T("Challenge Email").ToString());
+}
+
+<div class="fullscreen accounts-page">
+    <div class="d-flex align-items-center">
+        @Display.ResultBox(
+            AlternativeIconClass: "fa fa-times fa-4x text-danger",
+            MainMessage: T("Your email address could not be validated"),
+            SubMessage: T("Please retry using the link you received via email. If the problem persists contact the website administrators."),
+            ButtonLink: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? Url.Content(Request.QueryString["ReturnUrl"]) : null,
+            ButtonText: Url.IsLocalUrl(Request.QueryString["ReturnUrl"]) ? T("Go back") : null
+       )
+    </div>
+</div>

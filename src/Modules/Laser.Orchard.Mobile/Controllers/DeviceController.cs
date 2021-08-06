@@ -34,7 +34,10 @@ namespace Laser.Orchard.Mobile.Controllers {
             devicetostore.DataModifica = DateTime.Now;
             switch (myDevice.Device) {
                 case "Apple":
-                    devicetostore.Device = TipoDispositivo.Apple;
+                    if (myDevice.Token.Length > 100)
+                        devicetostore.Device = TipoDispositivo.AppleFCM;
+                    else
+                        devicetostore.Device = TipoDispositivo.Apple;
                     break;
                 case "Android":
                     devicetostore.Device = TipoDispositivo.Android;
@@ -61,12 +64,14 @@ namespace Laser.Orchard.Mobile.Controllers {
                     // message.Content = new StringContent( "OK");
                     //  throw new HttpResponseException(
                     return message;
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     HttpResponseMessage message = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                     message.Content = new StringContent(ex.Message);
                     throw new HttpResponseException(message);
                 }
-            } else {
+            }
+            else {
                 HttpResponseMessage message = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                 message.Content = new StringContent("No Device type or UUID specified.");
                 throw new HttpResponseException(message);
@@ -100,7 +105,10 @@ namespace Laser.Orchard.Mobile.Controllers {
             devicetostore.DataModifica = DateTime.Now;
             switch (myDevice.Device) {
                 case "Apple":
-                    devicetostore.Device = TipoDispositivo.Apple;
+                    if (myDevice.Token.Length > 100)
+                        devicetostore.Device = TipoDispositivo.AppleFCM;
+                    else
+                        devicetostore.Device = TipoDispositivo.Apple;
                     break;
                 case "Android":
                     devicetostore.Device = TipoDispositivo.Android;
@@ -121,12 +129,14 @@ namespace Laser.Orchard.Mobile.Controllers {
                     devicetostore.Token = myDevice.Token;
                     devicetostore.UUIdentifier = myDevice.UUID;
                     _pushNotificationService.StorePushNotification(devicetostore);
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     HttpResponseMessage message = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                     message.Content = new StringContent(ex.Message);
                     throw new HttpResponseException(message);
                 }
-            } else {
+            }
+            else {
                 HttpResponseMessage message = new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
                 message.Content = new StringContent("No Device type or UUID specified.");
                 throw new HttpResponseException(message);

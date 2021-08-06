@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -67,6 +67,54 @@ msgstr "Modifica"
 msgctxt "~/Themes/KrakeAdmin/Views/Content.SummaryAdmin.cshtml"
 msgid "More info"
 msgstr "Mostra più informazioni"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "  |  "
+msgstr "|"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Archive"
+msgstr "Archivia"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Delete"
+msgstr "Elimina"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Not Published"
+msgstr "Non pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Offline"
+msgstr "Offline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Online"
+msgstr "Online"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Published"
+msgstr "Pubblicato"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "The page is currently offline"
+msgstr "La pagina è attualmente offline"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "The page is currently online"
+msgstr "La pagina è attualmente online"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "Unarchive"
+msgstr "Disarchivia"
+
+msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
+msgid "View order"
+msgstr "Visualizza ordine"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
 msgid "Add"

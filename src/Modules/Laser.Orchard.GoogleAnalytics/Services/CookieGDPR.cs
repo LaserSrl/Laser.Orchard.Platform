@@ -1,13 +1,14 @@
-﻿using Laser.Orchard.Cookies.Services;
-using System.Collections.Generic;
-using System.Web;
-using Laser.Orchard.Cookies;
-using System.Text;
-using Orchard;
-using Orchard.ContentManagement;
-using OUI = Orchard.UI;
+﻿using Laser.Orchard.Cookies;
+using Laser.Orchard.Cookies.Services;
 using Laser.Orchard.GoogleAnalytics.Models;
+using Laser.Orchard.GoogleAnalytics.ViewModels;
+using Orchard;
 using Orchard.Caching;
+using Orchard.ContentManagement;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
+using OUI = Orchard.UI;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
     public interface IGoogleAnalyticsCookie : ICookieGDPR {
@@ -64,21 +65,35 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             if (SettingsPart.UseTagManager) {
                 return GoogleTagManagerScript(allowedTypes);
             }
+
             // analytics.js deployment
             return GoogleAnalyticsScript(allowedTypes);
         }
 
-        private GoogleAnalyticsSettingsPart SettingsPart {
+        private GASettingsVM SettingsPart {
             get {
                 return _cacheManager.Get(Constants.SiteSettingsCacheKey, true, ctx => {
                     // check whether we should invalidate the cache
                     ctx.Monitor(_signals.When(Constants.SiteSettingsEvictSignal));
-                    return _workContextAccessor
+                    return new GASettingsVM(_workContextAccessor
                         .GetContext()
                         .CurrentSite
-                        .As<GoogleAnalyticsSettingsPart>();
+                        .As<GoogleAnalyticsSettingsPart>());
                 });
             }
+        }
+
+        private string HostDomain() {
+            var valueToReplace = "www.";
+            var host = "";
+
+            if (!_workContextAccessor.GetContext().HttpContext.Request.IsLocal) {
+                host = _workContextAccessor.GetContext().HttpContext.Request.Url.Host;
+                if (host.Substring(0, 4) == valueToReplace) {
+                    host = host.Substring(4, host.Length - 4);
+                }
+            }
+            return host;
         }
 
         private string GoogleAnalyticsScript(IList<CookieType> allowedTypes) {
@@ -87,15 +102,25 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("<script async src='//www.google-analytics.com/analytics.js'></script>");
             script.AppendLine("<script>");
             script.AppendLine("window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;");
+
+            script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {");
             if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
-                script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', 'auto');");
+                script.AppendLine("'cookieDomain': '"+HostDomain()+"',");
             } else {
-                script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {'cookieDomain': '" + SettingsPart.DomainName + "'});");
+                script.AppendLine("'cookieDomain': '" + SettingsPart.DomainName + "',");
             }
+            if (!allowedTypes.Contains(CookieType.Statistical)) {
+                script.AppendLine("'storage': 'none',");
+                script.AppendLine("storeGac: false,");
+            }
+            script.AppendLine("});");
+
             if (SettingsPart.AnonymizeIp || allowedTypes.Contains(CookieType.Statistical) == false) {
                 script.AppendLine("ga('set', 'anonymizeIp', true);");
             }
-            script.AppendLine("ga('send', 'pageview');");
+			if (allowedTypes.Contains(CookieType.Statistical)) {
+				script.AppendLine("ga('send', 'pageview');");
+            }
             script.AppendLine("</script>");
             script.AppendLine("<!-- End Google Analytics -->");
             // Register Google's new, recommended asynchronous universal analytics script to the header
@@ -120,6 +145,15 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 + allowedTypes.Contains(CookieType.Statistical).ToString().ToLowerInvariant() + "'});");
             script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
                 + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
+            // set the default value of cookie domain
+            if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + HostDomain() + "'});");
+            }
+            else {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + SettingsPart.DomainName + "'});");
+            }
             // script that handles changes in the settings for cookie consent
             script.AppendLine("$(document)");
             script.AppendLine("	.on('cookieConsent.reset', function(e) {");
@@ -139,6 +173,31 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("		});");
             script.AppendLine("	});");
             // done handlers for changes in cookie consent
+            // tag manager consent settings
+            script.AppendLine("window.dataLayer.push(");
+            script.AppendLine("    'consent', 'default', {");
+            script.AppendLine("        'ad_storage': 'denied',");
+            script.AppendLine("        'functionality_storage': 'denied',");
+            script.AppendLine("        'security_storage': 'granted',");
+            script.AppendLine("        'personalization_storage': 'denied',");
+            script.AppendLine("        'analytics_storage': 'denied'");
+            script.AppendLine("	    });");
+            if (allowedTypes.Contains(CookieType.Statistical) 
+                || allowedTypes.Contains(CookieType.Marketing)
+                || allowedTypes.Contains(CookieType.Preferences)) {
+                script.AppendLine("window.dataLayer.push('consent', 'update', {");
+                if (allowedTypes.Contains(CookieType.Marketing)) {
+                    script.AppendLine("    'ad_storage': 'granted',");
+                }
+                if (allowedTypes.Contains(CookieType.Preferences)) {
+                    script.AppendLine("    'personalization_storage': 'granted',");
+                }
+                if (allowedTypes.Contains(CookieType.Statistical)) {
+                    script.AppendLine("    'analytics_storage': 'granted'");
+                }
+                script.AppendLine("	});");
+            }
+            // done tag manager consent settings
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
             script.AppendLine("new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],");

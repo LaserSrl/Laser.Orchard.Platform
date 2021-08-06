@@ -1,0 +1,78 @@
+﻿@using Laser.Orchard.Policy.ViewModels;
+@functions {
+    string prefix;
+}
+@{ 
+    // this shape should be inside the form that will be posted 
+    // to actually start the checkout process
+
+    var allCheckoutPolicies = (IEnumerable<PolicyForUserViewModel>)Model.AllCheckoutPolicies;
+    prefix = (string)Model.Prefix;
+
+    var requiredPolicies = allCheckoutPolicies
+        .Where(pvm => pvm.PolicyText.UserHaveToAccept);
+    var requiredPoliciesToAccept = requiredPolicies
+        .Where(pvm => !pvm.Accepted);
+    var optionalPolicies = allCheckoutPolicies
+        .Where(pvm => !pvm.PolicyText.UserHaveToAccept);
+    var optionalPoliciesToAccept = optionalPolicies
+        .Where(pvm => !pvm.Accepted);
+}
+@helper DrawSinglePolicy(PolicyForUserViewModel policy) { 
+var inputName = string.Join(".", prefix, policy.PolicyText.Id, "Accepted");
+var inputId = string.Join("_", prefix, policy.PolicyText.Id, "Accepted");
+
+if (policy.Accepted) {
+    <input type="hidden"
+            name="@inputName"
+            value="true"/>
+} else {
+    /* do what Html.CheckboxFor would do */
+    <div class="checkout-policy">
+        <input type="checkbox" value="true"
+               name="@inputName" 
+               id="@inputId"/>
+        <input type="hidden" value="false"
+               name="@inputName" />
+        @if(policy.PolicyText.UserHaveToAccept) {
+            <label class="checkout-policy-label checkout-policy-mandatory required" for="@inputId">
+                @T("I have read and agree to {0}", Html.ItemDisplayLink(policy.PolicyText))
+            </label>
+        } else {
+            <label class="checkout-policy-label checkout-policy-optional" for="@inputId">
+                @T("(optional) I have read and agree to {0}", Html.ItemDisplayLink(policy.PolicyText))
+            </label>
+        }
+        @Html.ValidationMessage(inputName,
+            htmlAttributes: new { @class="field-validation-error" },
+            tag: "div")
+    </div>
+}
+}
+@if (requiredPoliciesToAccept.Any() || optionalPoliciesToAccept.Any()) {
+    <div class="checkout-policies">
+        @if (requiredPoliciesToAccept.Any()) {
+            <div class="checkout-policies checkout-policies-mandatory">
+                @foreach (var policy in requiredPolicies) {
+                    @DrawSinglePolicy(policy)
+                }
+            </div>
+        } else {
+            foreach (var policy in requiredPolicies) {
+                @DrawSinglePolicy(policy)
+            }
+        }
+
+        @if (optionalPoliciesToAccept.Any()) {
+            <div class="checkout-policies checkout-policies-optional">
+                @foreach (var policy in optionalPolicies) {
+                    @DrawSinglePolicy(policy)
+                }
+            </div>
+        } else {
+            foreach (var policy in optionalPolicies) {
+                @DrawSinglePolicy(policy)
+            }
+        }
+    </div>
+}

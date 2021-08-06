@@ -1,0 +1,35 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model CheckoutPolicySettingsPartEditViewModel
+
+<fieldset>
+    <legend>
+        @T("Policies required for checkout")
+    </legend>
+    <span class="hint">
+        @T("Users who don't accept the selected policies will not be allowed to checkout.")
+    </span>
+
+    <div class="form-group">
+        <label>@T("Select policies")</label>
+        <select multiple class="form-control"
+                name="@Html.NameFor(m => m.PolicyTextReferences)",
+                id="@Html.FieldIdFor(m => m.PolicyTextReferences)">
+            <option value="@CheckoutPolicySettingsPart.NoPolicyOption" 
+                    @(Model.PolicyTextReferences.Contains(CheckoutPolicySettingsPart.NoPolicyOption) 
+                        || Model.PolicyTextReferences.Length == 0 
+                        ? "selected=\"selected\"" : "")>@T("No Policies")</option>
+            <option value="@CheckoutPolicySettingsPart.AllPoliciesOption" 
+                    @(Model.PolicyTextReferences.Contains(CheckoutPolicySettingsPart.AllPoliciesOption) 
+                        ? "selected=\"selected\"" : "")>@T("All Policies")</option>
+            @foreach(var policy in Model.PolicyTitles) {
+                <option value="{@policy.ContentItem.Id}"
+                        @(Model.PolicyTextReferences.Contains("{" + policy.ContentItem.Id + "}") 
+                            ? "selected=\"selected\"" : "")>
+                    @policy.Title
+                </option>
+            }
+        </select>
+    </div>
+
+</fieldset>

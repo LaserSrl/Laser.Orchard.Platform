@@ -65,6 +65,20 @@ namespace Laser.Orchard.Translator.Controllers
                     children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Themes"), ElementToTranslate.Theme),
                     data = new Dictionary<string, string>() { { "type", "T" } }
                 });
+
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-A",
+                    text = T("Tenants").ToString(),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Tenant"), ElementToTranslate.Tenant),
+                    data = new Dictionary<string, string>() { { "type", "A" } }
+                });
+
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-U",
+                    text = T("Undefined").ToString(),
+                    //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Undefined"), ElementToTranslate.Undefined),
+                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", GetCompletionPercent(language, string.Empty, "U").ToString() + " etichette" } }
+                });
             }
 
             return Json(tree, JsonRequestBehavior.AllowGet);
@@ -75,10 +89,27 @@ namespace Laser.Orchard.Translator.Controllers
             var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
 
             List<string> elementsToTranslate = new List<string>();
-            if (elementType == ElementToTranslate.Module)
-                elementsToTranslate = translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList();
-            else if (elementType == ElementToTranslate.Theme)
-                elementsToTranslate = translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList();
+            var folderType = "";
+            switch (elementType) {
+                case ElementToTranslate.Module:
+                    elementsToTranslate = translatorSettings.ModulesToTranslate != null
+                        ? translatorSettings.ModulesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
+                    folderType = "M";
+                    break;
+                case ElementToTranslate.Theme:
+                    elementsToTranslate = translatorSettings.ThemesToTranslate != null
+                        ? translatorSettings.ThemesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
+                    folderType = "T";
+                    break;
+                case ElementToTranslate.Tenant:
+                    elementsToTranslate = translatorSettings.TenantsToTranslate != null
+                        ? translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
+                    folderType = "A";
+                    break;
+            }
 
             // rimossa questa verifica in quanto se non presente la cartella su server (cosa possibile in quanto potrei voler tradurre un tema o un modulo non ancora deployato) non presenta il nodo da tradurre
             //var list = new List<string>(Directory.GetDirectories(parentFolder));
@@ -92,12 +123,6 @@ namespace Laser.Orchard.Translator.Controllers
             foreach (var item in list)
             {
                 Dictionary<string, string> additionalData = new Dictionary<string, string>();
-                string folderType = "";
-
-                if (elementType == ElementToTranslate.Module)
-                    folderType = "M";
-                else if (elementType == ElementToTranslate.Theme)
-                    folderType = "T";
 
                 int percent = GetCompletionPercent(language, item, folderType);
                 if (percent < 0)
@@ -122,17 +147,24 @@ namespace Laser.Orchard.Translator.Controllers
 
             return treeList;
         }
-
+        
         private int GetCompletionPercent(string language, string containerName, string containerType)
         {
-            var translationCount = _translatorServices.GetTranslations().Where(t => t.Language == language
-                                                                                 && t.ContainerName == containerName
-                                                                                 && t.ContainerType == containerType)
-                                                                        .AsParallel()
-                                                                        .GroupBy(t => !String.IsNullOrWhiteSpace(t.TranslatedMessage))
-                                                                        .Select(t => new { translated = t.Key, count = t.Count() });
+            // When I'm looking for completion percentage of Undefined container type translation records are not grouped by container name, so I need to exclude it from the filters.
+            var translationCount = _translatorServices.GetTranslations()
+                .Where(t => t.Language == language
+                    && (t.ContainerType == "U" || (t.ContainerType != "U" && t.ContainerName == containerName))
+                    && t.ContainerType == containerType)
+                .AsParallel()
+                .GroupBy(t => !String.IsNullOrWhiteSpace(t.TranslatedMessage))
+                .Select(t => new { translated = t.Key, count = t.Count() });
 
             var countDictionary = translationCount.ToDictionary(g => g.translated, g => g.count);
+
+            // If containter type is Undefined returns the number of messages.
+            if (containerType == "U") {
+                return (countDictionary.ContainsKey(true) ? countDictionary[true] : 0) + (countDictionary.ContainsKey(false) ? countDictionary[false] : 0);
+            }
 
             if (!countDictionary.ContainsKey(true))
                 return !countDictionary.ContainsKey(false) ? -1 : 0;

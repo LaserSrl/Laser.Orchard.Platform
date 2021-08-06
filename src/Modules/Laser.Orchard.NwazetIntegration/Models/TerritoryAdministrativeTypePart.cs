@@ -12,5 +12,15 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return Retrieve(r => r.AdministrativeType); }
             set { Store(r => r.AdministrativeType, value); }
         }
+
+        public virtual bool HasCities {
+            get { return Retrieve(r => r.HasCities); }
+            set { Store(r => r.HasCities, value); }
+        }
+        public virtual bool HasProvinces {
+            get { return Retrieve(r => r.HasProvinces); }
+            set { Store(r => r.HasProvinces, value); }
+        }
+
     }
 }

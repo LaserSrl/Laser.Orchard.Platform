@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2020 Laser s.r.l.
+# Copyright (c) 2021 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -53,8 +53,8 @@ msgid "Please provide an e-mail address for us to use in order to give you updat
 msgstr "Per favore, inserite un indirizzo e-mail da usare per inviarvi aggiornamenti sul vostro ordine."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
-msgid "Please provide an international phone prefix, For example 0039 for Italy"
-msgstr "Per favore inserire un prefisso internazionale, ad esempio 0039 per l'Italia"
+msgid "Please provide an international phone prefix, For example +39 for Italy"
+msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Addresses/index.cshtml"
 msgid "Required information"
@@ -119,6 +119,26 @@ msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codic
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "Postal or ZIP code"
 msgstr "Codice postale o ZIP"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Province, starting with a letter."
+msgstr "Provincia, deve iniziare con una lettera."
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno Stato"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
+msgid "Select your Country from the list."
+msgstr "Seleziona il tuo Paese dall'elenco."
 
 msgctxt "~/Themes/Laser.ECommerce/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
@@ -452,6 +472,10 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.csht
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
 
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.AddToCartFromWishList.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
+
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/Product.RemoveFromWishList.cshtml"
 msgid "Remove"
 msgstr "Rimuovi"
@@ -528,9 +552,17 @@ msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
 
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
+
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
 msgid "Add to cart"
 msgstr "Aggiungi al carrello"
+
+msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddButton.Detail.cshtml"
+msgid "Adding"
+msgstr "In aggiunta"
 
 msgctxt "~/Themes/Laser.ECommerce/Views/Parts/ProductPart.AddToWishListButton.cshtml"
 msgid "Add to WishList"

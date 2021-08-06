@@ -15,7 +15,6 @@ using Orchard.Mvc.Extensions;
 namespace Orchard.Tokens.Providers {
     public class ContentDateModified : ITokenProvider {
         private readonly IContentManager _contentManager;
-        private readonly UrlHelper _urlHelper;
 
         public ContentDateModified(IContentManager contentManager) {
             _contentManager = contentManager;

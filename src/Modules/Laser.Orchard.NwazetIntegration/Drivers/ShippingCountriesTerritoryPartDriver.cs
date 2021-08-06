@@ -32,8 +32,9 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 var hierarchyOk = hId.HasValue && localizations.Any()
                     && localizations.Select(thp => thp.Id).Contains(hId.Value);
                 if (hierarchyOk) {
-                    if (_addressConfigurationSettingsService.SelectedTerritoryRecords
-                        .Any(tir => part.IsSameAs(tir))) {
+                    if (part.Record.TerritoryInternalRecord != null &&
+                        _addressConfigurationSettingsService.SelectedTerritoryIds.Contains(part.Record.TerritoryInternalRecord.Id)) { 
+                        //.SelectedTerritoryRecords.Any(tir => part.IsSameAs(tir))) {
                         // the territory is selected
                         return ContentShape("Parts_TerritoryPart_IsSelectedCountry",
                             () => shapeHelper.EditorTemplate(

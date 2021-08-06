@@ -43,7 +43,7 @@ namespace Laser.Orchard.Events.Drivers {
             DateTime? localDateRepeatEnd = _dataLocalization.ReadDateLocalized(part.RepeatEndDate);
             ActivityViewModel activityVM = new ActivityViewModel();
 
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ActivityPart, ActivityViewModel>()
                     .ForMember(dest => dest.DateStart, opt => opt.Ignore())
                     .ForMember(dest => dest.DateEnd, opt => opt.Ignore())
@@ -60,8 +60,9 @@ namespace Laser.Orchard.Events.Drivers {
                     .ForMember(dest => dest.RepeatByDayNumber, opt => opt.Ignore())
                     .ForMember(dest => dest.Settings, opt => opt.Ignore());
             });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
 
-            Mapper.Map(part, activityVM);
+            _mapper.Map(part, activityVM);
 
             activityVM.DateStart = _dataLocalization.WriteDateLocalized(localDateTimeStart);
             activityVM.DateEnd = _dataLocalization.WriteDateLocalized(localDateTimeEnd);
@@ -115,23 +116,7 @@ namespace Laser.Orchard.Events.Drivers {
             CultureInfo culture = CultureInfo.GetCultureInfo(_orchardServices.WorkContext.CurrentCulture);
             activityVM.DateFormat = culture.DateTimeFormat.ShortDatePattern;
 
-            //Mapper.CreateMap<ActivityPart, ActivityViewModel>()
-            //    .ForMember(dest => dest.DateStart, opt => opt.Ignore())
-            //    .ForMember(dest => dest.DateEnd, opt => opt.Ignore())
-            //    .ForMember(dest => dest.TimeStart, opt => opt.Ignore())
-            //    .ForMember(dest => dest.TimeEnd, opt => opt.Ignore())
-            //    .ForMember(dest => dest.RepeatEndDate, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Monday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Tuesday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Wednesday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Thursday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Friday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Saturday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Sunday, opt => opt.Ignore())
-            //    .ForMember(dest => dest.RepeatByDayNumber, opt => opt.Ignore())
-            //    .ForMember(dest => dest.Settings, opt => opt.Ignore());
-            //Automapper has changed its static API since v4.2
-            Mapper.Initialize(cfg => {
+            var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ActivityPart, ActivityViewModel>()
                     .ForMember(dest => dest.DateStart, opt => opt.Ignore())
                     .ForMember(dest => dest.DateEnd, opt => opt.Ignore())
@@ -148,8 +133,9 @@ namespace Laser.Orchard.Events.Drivers {
                     .ForMember(dest => dest.RepeatByDayNumber, opt => opt.Ignore())
                     .ForMember(dest => dest.Settings, opt => opt.Ignore());
             });
+            IMapper _mapper = mapperConfiguration.CreateMapper();
 
-            Mapper.Map(part, activityVM);
+            _mapper.Map(part, activityVM);
 
             activityVM.DateStart = _dataLocalization.WriteDateLocalized(localDateTimeStart);
             activityVM.DateEnd = _dataLocalization.WriteDateLocalized(localDateTimeEnd);
@@ -204,14 +190,8 @@ namespace Laser.Orchard.Events.Drivers {
                 if (partSettings.DateTimeType == DateTimeTypes.FromToOnSameDate) {
                         activityVM.DateEnd = activityVM.DateStart;
                 }
-                
-                //Mapper.CreateMap<ActivityViewModel, ActivityPart>()
-                //    .ForMember(dest => dest.DateTimeStart, opt => opt.Ignore())
-                //    .ForMember(dest => dest.DateTimeEnd, opt => opt.Ignore())
-                //    .ForMember(dest => dest.RepeatEndDate, opt => opt.Ignore())
-                //    .ForMember(dest => dest.RepeatDetails, opt => opt.Ignore());
-                //Automapper has changed its static API since v4.2
-                Mapper.Initialize(cfg => {
+
+                var mapperConfiguration = new MapperConfiguration(cfg => {
                     cfg.CreateMap<ActivityViewModel, ActivityPart>()
                     .ForMember(dest => dest.DateTimeStart, opt => opt.Ignore())
                     .ForMember(dest => dest.DateTimeEnd, opt => opt.Ignore())
@@ -220,8 +200,9 @@ namespace Laser.Orchard.Events.Drivers {
                     //ContentPart has a Settings property, that would clash with the Settings property from ActivityViewModel
                     .ForMember(dest => dest.Settings, opt => opt.Ignore());
                 });
+                IMapper _mapper = mapperConfiguration.CreateMapper();
 
-                Mapper.Map(activityVM, part);
+                _mapper.Map(activityVM, part);
 
                 if (!partSettings.UseRecurrences) part.Repeat = false;
 

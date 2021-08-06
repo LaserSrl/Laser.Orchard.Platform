@@ -1,0 +1,58 @@
+﻿# Orchard resource strings - ru-RU
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Account creation was unsuccessful. Please correct the errors and try again"
+msgstr "Создание учетной записи не удалось. Пожалуйста, исправьте ошибки и попробуйте еще раз"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Create a New Account"
+msgstr "Создать новую учетную запись"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Create your Account"
+msgstr "Создать учетную запись"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Email"
+msgstr "Адрес электронной почты"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Enter your Password"
+msgstr "Введите свой пароль"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one number"
+msgstr "одну цифру"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "one uppercase letter"
+msgstr "одну заглавную букву"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Register"
+msgstr "Регистрация"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Repeat your Password"
+msgstr "Повторно введите свой пароль"
+
+msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "The new password and confirmation password do not match."
+msgstr "Новый пароль и пароль подтверждения не совпадают."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "User with that username and/or email already exists."
+msgstr "Пользователь с таким именем пользователя и / или электронной почтой уже существует."
+

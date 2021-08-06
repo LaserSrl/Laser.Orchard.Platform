@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.Tokens {
     public class ParameterToken : ITokenProvider {
-
+        //_cultureInfo = new Lazy<CultureInfo>(() => CultureInfo.GetCultureInfo(_workContextAccessor.GetContext().CurrentCulture));
         public Localizer T { get; set; }
 
         public void Describe(DescribeContext context) {
@@ -16,17 +16,19 @@ namespace Laser.Orchard.StartupConfig.Tokens {
 
         public void Evaluate(EvaluateContext context) {
             //If you want to Chain TextTokens you have to use the (PartName-PropertyName).SomeOtherTextToken
+            //(09-07-19)Fix for dates content parameter format - add chain of type Date
             context.For<IContent>("Content")
                 .Token(FilterTokenParam, //t.StartsWith("Parameter:", StringComparison.OrdinalIgnoreCase) ? t.Substring("Parameter:".Length) : null,
                     (fullToken, data) => { return FindProperty(fullToken, data, context); })
-                .Chain(FilterChainParam, "Text", (token, data) => { return FindProperty(token, data, context); });
+                .Chain(FilterChainParam, "Text", (token, data) => { return FindProperty(token, data, context); })
+                .Chain(FilterChainParam, "Date", (token, data) => { return FindProperty(token, data, context); });
         }
 
-        private string FindProperty(string fullToken, IContent data, EvaluateContext context) {
+        private object FindProperty(string fullToken, IContent data, EvaluateContext context) {
             string[] names = fullToken.Split('-');
             ContentItem content = data.ContentItem;
 
-            if(names.Length < 2) {
+            if (names.Length < 2) {
                 return "";
             }
 
@@ -36,10 +38,10 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 foreach (var part in content.Parts) {
                     string partType = part.GetType().ToString().Split('.').Last();
                     if (partType.Equals(partName, StringComparison.InvariantCultureIgnoreCase)) {
-                        return part.GetType().GetProperty(propName).GetValue(part, null).ToString();
+                        return part.GetType().GetProperty(propName).GetValue(part, null);
                     }
                 }
-            }catch {
+            } catch {
                 return "parameter error";
             }
             return "parameter not found";
@@ -75,7 +77,7 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 return null;
             }
             tokenPrefix = token.Substring(0, token.IndexOf(":"));
-            if (!tokenPrefix.Equals("Parameter", StringComparison.InvariantCultureIgnoreCase)){
+            if (!tokenPrefix.Equals("Parameter", StringComparison.InvariantCultureIgnoreCase)) {
                 return null;
             }
 
