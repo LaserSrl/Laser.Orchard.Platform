@@ -17,14 +17,17 @@ using System.Web.Mvc;
 namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
     [OrchardFeature("Laser.Orchard.FacebookShop")]
     public class FacebookShopService : IFacebookShopService {
-        IWorkContextAccessor _workContext;
-        ITokenizer _tokenizer;
+        private readonly IWorkContextAccessor _workContext;
+        private readonly ITokenizer _tokenizer;
+        private readonly IContentManager _contentManager;
 
         public FacebookShopService(
             IWorkContextAccessor workContext,
-            ITokenizer tokenizer) {
+            ITokenizer tokenizer,
+            IContentManager contentManager) {
             _workContext = workContext;
             _tokenizer = tokenizer;
+            _contentManager = contentManager;
 
             T = NullLocalizer.Instance;
         }
@@ -74,6 +77,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         public string GenerateAccessToken(FacebookShopServiceContext context) {
             // System user token should be saved in FacebookShopSiteSettingsPart.
             // It should have the required permissions to manage the catalog syncronization.
+            // This key has no expiration.
             return context.AccessToken;
 
             // Everything else is commented in case it's needed in the future.
@@ -151,7 +155,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                         CheckCompliance(jsonContext, product);
 
                         if (jsonContext != null && jsonContext.Valid) {
-                            return PostProduct(jsonContext);
+                            return SyncProduct(jsonContext);
                         } else {
                             // I need to tell it was impossible to synchronize the product on Facebook Shop.
                             return new FacebookShopProductUpdateRequest() {
@@ -258,7 +262,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             return context;
         }
 
-        public FacebookShopProductUpdateRequest PostProduct(FacebookShopProductUpdateRequest context) {
+        public FacebookShopProductUpdateRequest SyncProduct(FacebookShopProductUpdateRequest context) {
             FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
             requestContainer.Requests.Add(context);
             
@@ -305,6 +309,86 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             }
 
             return context;
+        }
+
+        public void SyncProducts() {
+            // Facebook Shop Site Settings: I need url, catalog id and access token.
+            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
+                ApiBaseUrl = fsssp.ApiBaseUrl,
+                BusinessId = fsssp.BusinessId,
+                CatalogId = fsssp.CatalogId,
+                AccessToken = fsssp.AccessToken
+            };
+            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
+
+            // Query on published products, to send them all in a single request to Facebook api.
+            int step = 20;
+            var query = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published);
+
+            for (int count = 0; count<query.Count(); count+=step) {
+                var facebookParts = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published)
+                    .Slice(count, step);
+
+                FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
+
+                foreach (var facebookPart in facebookParts) {
+                    var productPart = facebookPart.As<ProductPart>();
+                    if (productPart != null) {
+                        var jsonTemplate = facebookPart.Settings.GetModel<FacebookShopProductPartSettings>().JsonForProductUpdate;
+                        if (string.IsNullOrWhiteSpace(jsonTemplate)) {
+                            // Fallback to FacebookShopSiteSettingsPart
+                            jsonTemplate = fsssp.DefaultJsonForProductUpdate;
+                        }
+
+                        // jsonTemplate typically begins with a double '{' and ends with a double '}' (to make tokens work).
+                        // For this reason, before deserialization, I need to replace tokens and replace double parenthesis.
+                        string productJson = _tokenizer.Replace(jsonTemplate, facebookPart.ContentItem);
+                        productJson = productJson.Replace("{{", "{").Replace("}}", "}");
+
+                        var jsonContext = FacebookShopProductUpdateRequest.From(productJson);
+
+                        CheckCompliance(jsonContext, facebookPart.ContentItem);
+
+                        if (jsonContext != null && jsonContext.Valid) {
+                            requestContainer.Requests.Add(jsonContext);
+                        }
+                    }
+                }
+
+                // I can now send the request to Facebook api.
+                // This call contains every valid product in the slice from the query.
+                var jsonBody = requestContainer.ToJson();
+
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                try {
+                    byte[] bodyData = Encoding.UTF8.GetBytes(jsonBody);
+                    request.Method = WebRequestMethods.Http.Post;
+                    request.ContentType = "application/json";
+
+                    using (Stream reqStream = request.GetRequestStream()) {
+                        reqStream.Write(bodyData, 0, bodyData.Length);
+                    }
+
+                    using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
+                        if (response.StatusCode == HttpStatusCode.OK) {
+                            using (var reader = new StreamReader(response.GetResponseStream())) {
+                                string respJson = reader.ReadToEnd();
+                                var json = JObject.Parse(respJson);
+
+                                // If I'm here, product should be on Facebook Shop.
+                            }
+                        } else {
+                            //context.Valid = false;
+                            //context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+                        }
+                    }
+                } catch {
+                    //context.Valid = false;
+                    //context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+                }
+            }
         }
 
         /// <summary>

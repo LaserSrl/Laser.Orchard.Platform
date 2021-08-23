@@ -126,6 +126,7 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CouponApiController.cs" />
+    <Compile Include="Controllers\FacebookShopController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
