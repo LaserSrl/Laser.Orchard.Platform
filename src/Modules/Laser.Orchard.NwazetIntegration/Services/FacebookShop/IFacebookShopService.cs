@@ -8,5 +8,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         string GenerateAccessToken(FacebookShopServiceContext context);
         FacebookShopProductUpdateRequest SyncProduct(ContentItem product);
         FacebookShopProductUpdateRequest PostProduct(FacebookShopProductUpdateRequest context);
+        FacebookShopProductDeleteRequest RemoveProduct(ContentItem product);
     }
 }

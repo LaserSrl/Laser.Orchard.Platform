@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services.FacebookShop;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
@@ -24,12 +25,34 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             T = NullLocalizer.Instance;
 
             OnPublished<FacebookShopProductPart>((context, part) => AfterPublish(context));
+
+            OnUnpublished<FacebookShopProductPart>((context, part) => AfterUnpublish(context));
+
+            OnRemoved<FacebookShopProductPart>((context, part) => AfterRemove(context));
         }
 
         public Localizer T { get; set; }
 
         protected void AfterPublish(PublishContentContext context) {
             var result = _facebookShopService.SyncProduct(context.ContentItem);
+
+            if (result != null && result.Valid) {
+
+            } else {
+                _notifier.Warning(result.Message);
+            }
+        }
+
+        protected void AfterUnpublish(PublishContentContext context) {
+            RemoveProduct(context.ContentItem);
+        }
+
+        protected void AfterRemove(RemoveContentContext context) {
+            RemoveProduct(context.ContentItem);
+        }
+
+        private void RemoveProduct(ContentItem product) {
+            var result = _facebookShopService.RemoveProduct(product);
 
             if (result != null && result.Valid) {
 

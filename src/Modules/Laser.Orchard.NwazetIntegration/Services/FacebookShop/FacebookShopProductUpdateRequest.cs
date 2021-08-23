@@ -1,16 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Nwazet.Commerce.Models;
-using Orchard.ContentManagement;
-using Orchard.Core.Common.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.MediaLibrary.Fields;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Razor.Tokenizer;
 
 namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
     /// <summary>

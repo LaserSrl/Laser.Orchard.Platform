@@ -205,6 +205,7 @@
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopService.cs" />

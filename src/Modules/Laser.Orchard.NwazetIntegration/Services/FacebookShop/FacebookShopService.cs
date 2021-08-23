@@ -179,10 +179,89 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             return "{\"requests\":[" + jsonStr + "]}";
         }
 
+        public FacebookShopProductDeleteRequest RemoveProduct(ContentItem product) {
+            try {
+                var productPart = product.As<ProductPart>();
+                var facebookPart = product.As<FacebookShopProductPart>();
+
+                if (productPart != null && facebookPart != null && facebookPart.SynchronizeFacebookShop) {
+                    // I need to assign RetailerId parameter to my context.
+                    var context = new FacebookShopProductDeleteRequest() {
+                        Method = FacebookShopProductDeleteRequest.METHOD,
+                        Valid = true,
+                        RetailerId = productPart.Sku
+                    };
+
+                    return RemoveProduct(context);
+                }
+            } catch {
+                // I need to tell it was impossible to synchronize the product on Facebook Shop.
+                return new FacebookShopProductDeleteRequest() {
+                    Message = T("Facebook shop synchronization failed (product has not been removed from Facebook catalog)."),
+                    Valid = false
+                };
+            }
+
+            return new FacebookShopProductDeleteRequest() {
+                Message = T("Facebook shop synchronization failed (product has not been removed from Facebook catalog)."),
+                Valid = false
+            };
+        }
+
+        public FacebookShopProductDeleteRequest RemoveProduct(FacebookShopProductDeleteRequest context) {
+            FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
+            requestContainer.Requests.Add(context);
+
+            // Facebook Shop Site Settings: I need url, catalog id and access token.
+            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
+                ApiBaseUrl = fsssp.ApiBaseUrl,
+                BusinessId = fsssp.BusinessId,
+                CatalogId = fsssp.CatalogId,
+                AccessToken = fsssp.AccessToken
+            };
+            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
+
+            var jsonBody = requestContainer.ToJson();
+
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+
+            try {
+                byte[] bodyData = Encoding.UTF8.GetBytes(jsonBody);
+                request.Method = WebRequestMethods.Http.Post;
+                request.ContentType = "application/json";
+
+                using (Stream reqStream = request.GetRequestStream()) {
+                    reqStream.Write(bodyData, 0, bodyData.Length);
+                }
+
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
+                    if (response.StatusCode == HttpStatusCode.OK) {
+                        using (var reader = new StreamReader(response.GetResponseStream())) {
+                            string respJson = reader.ReadToEnd();
+                            var json = JObject.Parse(respJson);
+
+                            // If I'm here, call should be ok.
+                            context.Valid = true;
+                        }
+                    } else {
+                        context.Valid = false;
+                        context.Message = T("Invalid Facebook api response. Product has not been removed from Facebook catalog.");
+                    }
+                }
+            } catch {
+                context.Valid = false;
+                context.Message = T("Invalid Facebook api response. Product has not been removed from Facebook catalog.");
+            }
+
+            return context;
+        }
+
         public FacebookShopProductUpdateRequest PostProduct(FacebookShopProductUpdateRequest context) {
             FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
             requestContainer.Requests.Add(context);
-                        
+            
             // Facebook Shop Site Settings: I need url, catalog id and access token.
             var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
             string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
@@ -214,7 +293,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
 
                             // If I'm here, product should be on Facebook Shop.
                             context.Valid = true;
-                            return context;
                         }
                     } else {
                         context.Valid = false;
