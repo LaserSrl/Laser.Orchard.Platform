@@ -12,5 +12,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         //public string AppId { get; set; }
         //public string AppSecret { get; set; }
         public string AccessToken { get; set; }
+        public bool SynchronizeProducts { get; set; }
     }
 }

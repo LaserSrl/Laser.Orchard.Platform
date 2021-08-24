@@ -126,7 +126,6 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CouponApiController.cs" />
-    <Compile Include="Controllers\FacebookShopController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
@@ -191,6 +190,7 @@
     <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
+    <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />

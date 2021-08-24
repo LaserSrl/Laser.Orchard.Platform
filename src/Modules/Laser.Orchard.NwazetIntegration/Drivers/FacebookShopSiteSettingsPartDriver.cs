@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Security;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.Services.FacebookShop;
 using Laser.Orchard.NwazetIntegration.ViewModels;
@@ -38,6 +39,9 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (updater.TryUpdateModel(viewModel, Prefix, null, null)) {
                 if (Validate(viewModel, part, updater)) {
                     part.Save(viewModel);
+                    if (viewModel.SynchronizeProducts && _authorizer.Authorize(FacebookShopSynchronizationPermission.FacebookShopSynchronization)) {
+                        _facebookShopService.SyncProducts();
+                    }
                 } else {
                     return ContentShape("SiteSettings_FacebookShop", 
                         () => shapeHelper.EditorTemplate(

@@ -2,11 +2,13 @@
 using Laser.Orchard.NwazetIntegration.PartSettings;
 using Newtonsoft.Json.Linq;
 using Nwazet.Commerce.Models;
+using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Logging;
 using Orchard.Tokens;
 using System;
 using System.IO;
@@ -20,19 +22,25 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         private readonly IWorkContextAccessor _workContext;
         private readonly ITokenizer _tokenizer;
         private readonly IContentManager _contentManager;
+        private readonly ICurrencyProvider _currencyProvider;
+        private FacebookShopSiteSettingsPart _fsssp;
 
         public FacebookShopService(
             IWorkContextAccessor workContext,
             ITokenizer tokenizer,
-            IContentManager contentManager) {
+            IContentManager contentManager,
+            ICurrencyProvider currencyProvider) {
             _workContext = workContext;
             _tokenizer = tokenizer;
             _contentManager = contentManager;
+            _currencyProvider = currencyProvider;
 
+            Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
+        public ILogger Logger { get; set; }
 
         public bool CheckBusiness(FacebookShopServiceContext context) {
             string url = context.ApiBaseUrl + (context.ApiBaseUrl.EndsWith("/") ? context.BusinessId : "/" + context.BusinessId);
@@ -131,17 +139,17 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             //return access_token;
         }
 
-        public FacebookShopProductUpdateRequest SyncProduct(ContentItem product) {
+        public FacebookShopRequestContainer SyncProduct(ContentItem product) {
+            var productPart = product.As<ProductPart>();
             try {
-                var productPart = product.As<ProductPart>();
                 var facebookPart = product.As<FacebookShopProductPart>();
 
                 if (productPart != null && facebookPart != null && facebookPart.SynchronizeFacebookShop) {
                     var jsonTemplate = facebookPart.Settings.GetModel<FacebookShopProductPartSettings>().JsonForProductUpdate;
-                    var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+                    _fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
                     if (string.IsNullOrWhiteSpace(jsonTemplate)) {
                         // Fallback to FacebookShopSiteSettingsPart
-                        jsonTemplate = fsssp.DefaultJsonForProductUpdate;
+                        jsonTemplate = _fsssp.DefaultJsonForProductUpdate;
                     }
 
                     if (!string.IsNullOrWhiteSpace(jsonTemplate)) {
@@ -156,38 +164,34 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
 
                         if (jsonContext != null && jsonContext.Valid) {
                             return SyncProduct(jsonContext);
-                        } else {
+                        } else if (jsonContext != null) {
                             // I need to tell it was impossible to synchronize the product on Facebook Shop.
-                            return new FacebookShopProductUpdateRequest() {
-                                Message = T("Facebook shop synchronization failed."),
-                                Valid = false
-                            };
+                            Logger.Debug(T("Product {0} can't be synchronized on Facebook catalog.", productPart.Sku).Text);
+                            Logger.Debug(jsonContext.Message.Text);
                         }
-                    }
+                    } 
                 }
-            } catch {
+            } catch (Exception ex) {
                 // I need to tell it was impossible to synchronize the product on Facebook Shop.
-                return new FacebookShopProductUpdateRequest() {
-                    Message = T("Facebook shop synchronization failed."),
-                    Valid = false
-                };
+                if (productPart != null) {
+                    Logger.Debug(ex, T("Product {0} can't be synchronized on Facebook catalog.", productPart.Sku).Text);
+                } else {
+                    Logger.Debug(ex, T("Product part or Facebook part are not valid.").Text);
+                }
+                return null;
             }
 
-            return new FacebookShopProductUpdateRequest() {
-                Message = T("Facebook shop synchronization failed."),
-                Valid = false
-            };
+            return null;
         }
 
         private string EncapsulateUpdateProductJson(string jsonStr) {
             return "{\"requests\":[" + jsonStr + "]}";
         }
 
-        public FacebookShopProductDeleteRequest RemoveProduct(ContentItem product) {
+        public FacebookShopRequestContainer RemoveProduct(ContentItem product) {
+            var productPart = product.As<ProductPart>();
+            var facebookPart = product.As<FacebookShopProductPart>();
             try {
-                var productPart = product.As<ProductPart>();
-                var facebookPart = product.As<FacebookShopProductPart>();
-
                 if (productPart != null && facebookPart != null && facebookPart.SynchronizeFacebookShop) {
                     // I need to assign RetailerId parameter to my context.
                     var context = new FacebookShopProductDeleteRequest() {
@@ -198,168 +202,136 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
 
                     return RemoveProduct(context);
                 }
-            } catch {
+            } catch (Exception ex) {
                 // I need to tell it was impossible to synchronize the product on Facebook Shop.
-                return new FacebookShopProductDeleteRequest() {
-                    Message = T("Facebook shop synchronization failed (product has not been removed from Facebook catalog)."),
-                    Valid = false
-                };
+                if (productPart != null) {
+                    Logger.Debug(ex, T("Product {0} can't be removed from Facebook catalog.", productPart.Sku).Text);
+                } else {
+                    Logger.Debug(ex, T("Product part or Facebook part are not valid.").Text);
+                }
+                return null;
             }
 
-            return new FacebookShopProductDeleteRequest() {
-                Message = T("Facebook shop synchronization failed (product has not been removed from Facebook catalog)."),
-                Valid = false
-            };
+            return null;
         }
 
-        public FacebookShopProductDeleteRequest RemoveProduct(FacebookShopProductDeleteRequest context) {
+        public FacebookShopRequestContainer RemoveProduct(FacebookShopProductDeleteRequest context) {
             FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
             requestContainer.Requests.Add(context);
 
             // Facebook Shop Site Settings: I need url, catalog id and access token.
-            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
-            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            _fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
             FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
-                ApiBaseUrl = fsssp.ApiBaseUrl,
-                BusinessId = fsssp.BusinessId,
-                CatalogId = fsssp.CatalogId,
-                AccessToken = fsssp.AccessToken
+                ApiBaseUrl = _fsssp.ApiBaseUrl,
+                BusinessId = _fsssp.BusinessId,
+                CatalogId = _fsssp.CatalogId,
+                AccessToken = _fsssp.AccessToken
             };
-            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
+           
+            FacebookShopProductBatch(requestContainer);
 
-            var jsonBody = requestContainer.ToJson();
-
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-
-            try {
-                byte[] bodyData = Encoding.UTF8.GetBytes(jsonBody);
-                request.Method = WebRequestMethods.Http.Post;
-                request.ContentType = "application/json";
-
-                using (Stream reqStream = request.GetRequestStream()) {
-                    reqStream.Write(bodyData, 0, bodyData.Length);
-                }
-
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
-                    if (response.StatusCode == HttpStatusCode.OK) {
-                        using (var reader = new StreamReader(response.GetResponseStream())) {
-                            string respJson = reader.ReadToEnd();
-                            var json = JObject.Parse(respJson);
-
-                            // If I'm here, call should be ok.
-                            context.Valid = true;
-                        }
-                    } else {
-                        context.Valid = false;
-                        context.Message = T("Invalid Facebook api response. Product has not been removed from Facebook catalog.");
-                    }
-                }
-            } catch {
-                context.Valid = false;
-                context.Message = T("Invalid Facebook api response. Product has not been removed from Facebook catalog.");
-            }
-
-            return context;
+            return requestContainer;
         }
 
-        public FacebookShopProductUpdateRequest SyncProduct(FacebookShopProductUpdateRequest context) {
+        public FacebookShopRequestContainer SyncProduct(FacebookShopProductUpdateRequest context) {
             FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
             requestContainer.Requests.Add(context);
             
             // Facebook Shop Site Settings: I need url, catalog id and access token.
-            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
-            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            _fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
             FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
-                ApiBaseUrl = fsssp.ApiBaseUrl,
-                BusinessId = fsssp.BusinessId,
-                CatalogId = fsssp.CatalogId,
-                AccessToken = fsssp.AccessToken
+                ApiBaseUrl = _fsssp.ApiBaseUrl,
+                BusinessId = _fsssp.BusinessId,
+                CatalogId = _fsssp.CatalogId,
+                AccessToken = _fsssp.AccessToken
             };
-            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
 
-            var jsonBody = requestContainer.ToJson();
-
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            try {
-                byte[] bodyData = Encoding.UTF8.GetBytes(jsonBody);
-                request.Method = WebRequestMethods.Http.Post;
-                request.ContentType = "application/json";
-
-                using (Stream reqStream = request.GetRequestStream()) {
-                    reqStream.Write(bodyData, 0, bodyData.Length);
-                }
-
-                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
-                    if (response.StatusCode == HttpStatusCode.OK) {
-                        using (var reader = new StreamReader(response.GetResponseStream())) {
-                            string respJson = reader.ReadToEnd();
-                            var json = JObject.Parse(respJson);
-
-                            // If I'm here, product should be on Facebook Shop.
-                            context.Valid = true;
-                        }
-                    } else {
-                        context.Valid = false;
-                        context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
-                    }
-                }
-            } catch {
-                context.Valid = false;
-                context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
-            }
-
-            return context;
+            FacebookShopProductBatch(requestContainer);
+            
+            return requestContainer;
         }
 
         public void SyncProducts() {
             // Facebook Shop Site Settings: I need url, catalog id and access token.
-            var fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
-            string url = fsssp.ApiBaseUrl + (fsssp.ApiBaseUrl.EndsWith("/") ? fsssp.CatalogId : "/" + fsssp.CatalogId);
+            _fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
             FacebookShopServiceContext ctx = new FacebookShopServiceContext() {
-                ApiBaseUrl = fsssp.ApiBaseUrl,
-                BusinessId = fsssp.BusinessId,
-                CatalogId = fsssp.CatalogId,
-                AccessToken = fsssp.AccessToken
+                ApiBaseUrl = _fsssp.ApiBaseUrl,
+                BusinessId = _fsssp.BusinessId,
+                CatalogId = _fsssp.CatalogId,
+                AccessToken = _fsssp.AccessToken
             };
-            url = string.Format(url + "/batch?access_token={0}", GenerateAccessToken(ctx));
 
             // Query on published products, to send them all in a single request to Facebook api.
+            // Every call to Facebook api sends the update of 20 products.
             int step = 20;
+            // I look for the FacebookShopPart because I may have some products I don't need to synchronize on Facebook Shop.
             var query = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published);
 
-            for (int count = 0; count<query.Count(); count+=step) {
+            for (int count = 0; count < query.Count(); count += step) {
                 var facebookParts = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published)
                     .Slice(count, step);
 
                 FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
 
                 foreach (var facebookPart in facebookParts) {
-                    var productPart = facebookPart.As<ProductPart>();
-                    if (productPart != null) {
-                        var jsonTemplate = facebookPart.Settings.GetModel<FacebookShopProductPartSettings>().JsonForProductUpdate;
-                        if (string.IsNullOrWhiteSpace(jsonTemplate)) {
-                            // Fallback to FacebookShopSiteSettingsPart
-                            jsonTemplate = fsssp.DefaultJsonForProductUpdate;
-                        }
+                    var jsonContext = GetJsonContext(facebookPart.ContentItem);
 
-                        // jsonTemplate typically begins with a double '{' and ends with a double '}' (to make tokens work).
-                        // For this reason, before deserialization, I need to replace tokens and replace double parenthesis.
-                        string productJson = _tokenizer.Replace(jsonTemplate, facebookPart.ContentItem);
-                        productJson = productJson.Replace("{{", "{").Replace("}}", "}");
-
-                        var jsonContext = FacebookShopProductUpdateRequest.From(productJson);
-
-                        CheckCompliance(jsonContext, facebookPart.ContentItem);
-
-                        if (jsonContext != null && jsonContext.Valid) {
-                            requestContainer.Requests.Add(jsonContext);
-                        }
+                    if (jsonContext != null && jsonContext.Valid) {
+                        requestContainer.Requests.Add(jsonContext);
+                    } else if (jsonContext != null) {
+                        Logger.Debug(jsonContext.Message.Text);
                     }
                 }
 
                 // I can now send the request to Facebook api.
                 // This call contains every valid product in the slice from the query.
-                var jsonBody = requestContainer.ToJson();
+                FacebookShopProductBatch(requestContainer);
+            }
+        }
+
+        private IFacebookShopRequest GetJsonContext(ContentItem product) {
+            var facebookPart = product.As<FacebookShopProductPart>();
+            var productPart = product.As<ProductPart>();
+            // Content Item must be a product with the FacebookShopProductPart.
+            if (productPart != null && facebookPart != null) {
+                var jsonTemplate = facebookPart.Settings.GetModel<FacebookShopProductPartSettings>().JsonForProductUpdate;
+                if (string.IsNullOrWhiteSpace(jsonTemplate)) {
+                    // Fallback to FacebookShopSiteSettingsPart
+                    jsonTemplate = _fsssp.DefaultJsonForProductUpdate;
+                }
+
+                // jsonTemplate typically begins with a double '{' and ends with a double '}' (to make tokens work).
+                // For this reason, before deserialization, I need to replace tokens and replace double parenthesis.
+                string productJson = _tokenizer.Replace(jsonTemplate, facebookPart.ContentItem);
+                productJson = productJson.Replace("{{", "{").Replace("}}", "}");
+
+                var jsonContext = FacebookShopProductUpdateRequest.From(productJson);
+
+                CheckCompliance(jsonContext, facebookPart.ContentItem);
+
+                if (jsonContext != null && !jsonContext.Valid) {
+                    Logger.Debug(jsonContext.Message.Text);
+                }
+
+                return jsonContext;
+            } else {
+                Logger.Debug(T("Invalid Product part or Facebook part.").Text);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Calls Facebook Api batch endpoint.
+        /// </summary>
+        /// <param name="container"></param>
+        private void FacebookShopProductBatch(FacebookShopRequestContainer container) {
+            if (container.Requests.Count == 0) {
+                Logger.Debug(T("No product in request container.").Text);
+            } else {
+                var jsonBody = container.ToJson();
+                string url = _fsssp.ApiBaseUrl + (_fsssp.ApiBaseUrl.EndsWith("/") ? _fsssp.CatalogId : "/" + _fsssp.CatalogId);
+                url = string.Format(url + "/batch?access_token={0}", _fsssp.AccessToken);
 
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
                 try {
@@ -377,16 +349,19 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                                 string respJson = reader.ReadToEnd();
                                 var json = JObject.Parse(respJson);
 
-                                // If I'm here, product should be on Facebook Shop.
+                                // If I'm here, product/s should be on Facebook Shop.
+                                if (container.Requests.Count == 1) {
+                                    Logger.Debug(T("Product {0} synchronized on Facebook Shop.", container.Requests[0].RetailerId).Text);
+                                } else {
+                                    Logger.Debug(T("{0} products synchronized on Facebook Shop.", container.Requests.Count.ToString()).Text);
+                                }
                             }
                         } else {
-                            //context.Valid = false;
-                            //context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+                            Logger.Debug(T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.").Text);
                         }
                     }
-                } catch {
-                    //context.Valid = false;
-                    //context.Message = T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.");
+                } catch (Exception ex) {
+                    Logger.Debug(ex, T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.").Text);
                 }
             }
         }
@@ -440,8 +415,18 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                 }
             }
 
+            var productPart = product.As<ProductPart>();
+
             if (string.IsNullOrWhiteSpace(context.Availability)) {
-                context.Availability = "in stock";
+                // I need to consider inventory and minimum order quantity.
+                // If product is digital and I don't need to consider inventory, product is always in stock.
+                if (productPart.IsDigital && !productPart.ConsiderInventory) {
+                    context.Availability = "in stock";
+                } else if (productPart.Inventory > 0 && productPart.Inventory >= productPart.MinimumOrderQuantity) {
+                    context.Availability = "in stock";
+                } else {
+                    context.Availability = "out of stock";
+                }
             }
 
             if (string.IsNullOrWhiteSpace(context.Condition)) {
@@ -462,7 +447,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             }
 
             if (getDefaultPrice) {
-                decimal price = product.As<ProductPart>().ProductPriceService.GetPrice(product.As<ProductPart>());
+                decimal price = productPart.ProductPriceService.GetPrice(productPart);
 
                 int cents = (int)(price * 100);
                 context.Price = cents.ToString();
@@ -470,7 +455,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             // End of price analysis.
 
             if (string.IsNullOrWhiteSpace(context.Currency)) {
-                context.Currency = "EUR";
+                context.Currency = _currencyProvider.CurrencyCode;
             }
 
             if (string.IsNullOrWhiteSpace(context.Url)) {

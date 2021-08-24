@@ -1,4 +1,5 @@
-﻿@using Laser.Orchard.NwazetIntegration.ViewModels
+﻿@using Laser.Orchard.NwazetIntegration.Security
+@using Laser.Orchard.NwazetIntegration.ViewModels
 
 @model FacebookShopSiteSettingsViewModel
 @{
@@ -55,8 +56,11 @@
         <span class="hint">@T("This is the access token of the System User of the Facebook business")</span>
     </div>
 </fieldset>
-<fieldset>
-    <div>
-        @Html.ActionLink(T("Synchronize all published content on Facebook Shop"), "SyncProducts", new { area = "Laser.Orchard.NwazetIntegration", controller = "FacebookShop", redirectUrl = redirectUrl }, new { onclick = "javascript:return confirm('" + confirmMessage + "');" })
-    </div>
-</fieldset>
+@if (AuthorizedFor(FacebookShopSynchronizationPermission.FacebookShopSynchronization)) {
+    <fieldset>
+        <div>
+            @Html.CheckBoxFor(m => m.SynchronizeProducts)
+            <label for="@Html.FieldIdFor(m => m.SynchronizeProducts)" class="forcheckbox">@T("Synchronize all published content on Facebook Shop when saving.")</label>
+        </div>
+    </fieldset>
+}
