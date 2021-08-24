@@ -32,13 +32,6 @@ namespace Laser.Orchard.StartupConfig.RazorBase.Services {
         public string CalculateFallbackTenantCodePosition(string postTenantFolder, string codeFileNameWithExtension) {
             var uriDir = String.Format(URIFORMAT, _shellSettings.Name, postTenantFolder);
             var uriFile = String.Format("{0}/{1}", uriDir, codeFileNameWithExtension);
-            var envVariablesSettingsPart = _orchardServices.WorkContext.CurrentSite.As<EnvironmentVariablesSettingsPart>();
-            var fallbackTenants = new string[] { };
-            if(envVariablesSettingsPart != null) {
-                if(string.IsNullOrWhiteSpace(envVariablesSettingsPart.FallbackTenants) == false) {
-                    fallbackTenants = envVariablesSettingsPart.FallbackTenants.Split(';');
-                }
-            }
             var localDir = HostingEnvironment.MapPath(uriDir);
             string localFile;
             var razorFileFound = false;
@@ -46,6 +39,13 @@ namespace Laser.Orchard.StartupConfig.RazorBase.Services {
                 System.IO.Directory.CreateDirectory(localDir);
             localFile = HostingEnvironment.MapPath(uriFile);
             if (!System.IO.File.Exists(localFile)) {
+                var envVariablesSettingsPart = _orchardServices.WorkContext.CurrentSite.As<EnvironmentVariablesSettingsPart>();
+                var fallbackTenants = new string[] { };
+                if (envVariablesSettingsPart != null) {
+                    if (string.IsNullOrWhiteSpace(envVariablesSettingsPart.FallbackTenants) == false) {
+                        fallbackTenants = envVariablesSettingsPart.FallbackTenants.Split(';');
+                    }
+                }
                 foreach (var tenant in fallbackTenants) {
                     uriFile = String.Format("{0}/{1}", String.Format(URIFORMAT, tenant, postTenantFolder), codeFileNameWithExtension);
                     localFile = HostingEnvironment.MapPath(uriFile);
