@@ -268,7 +268,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             var query = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published);
 
             for (int count = 0; count < query.Count(); count += step) {
-                var facebookParts = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published)
+                var facebookParts = _contentManager.Query<FacebookShopProductPart, FacebookShopProductPartRecord>(VersionOptions.Published)
+                    .Where(fp => fp.SynchronizeFacebookShop == true)
                     .Slice(count, step);
 
                 FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
