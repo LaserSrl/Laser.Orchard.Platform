@@ -33,11 +33,11 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         Name: "Terms",
                         Title: T("Term identifiers"),
                         Classes: new[] { "text medium tokenized" },
-                        Description: T("If no valid term is provided, all content items will be included in the results. If some terms have been selected, the term identifiers will be added without being duplicated.")),
+                        Description: T("If no valid term is provided, all content items will be included in the results. If some terms below have been selected, the term identifiers will be added without being duplicated.")),
                     _TermIds: Shape.SelectList(
                             Id: "termids", Name: "TermIds",
                             Title: T("Terms"),
-                            Description: T("Select some terms. If term identifiers have been added, the selected terms will be added without being duplicated."),
+                            Description: T("Select some terms. If term identifiers have been added above, the selected terms will be added without being duplicated."),
                             Size: 10,
                             Multiple: true
                             ),

@@ -82,63 +82,71 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                 // If there is no configured term, this delegate will not affect the
                 // applicability for the coupon in any way.
                 // get from state the comma separated list of term ids
+                List<int> allTermIds = new List<int>();
                 var termsString = (string)context.State.Terms;
                 if (!string.IsNullOrWhiteSpace(termsString)) {
+                    allTermIds = termsString
+                     .Split(new char[] { ',' })
+                     .Select(int.Parse)
+                     .ToList();
+                }
+                string selectedMultipleTerms = Convert.ToString(context.State.TermIds);
+                if (!string.IsNullOrEmpty(selectedMultipleTerms)) {
+                    allTermIds = allTermIds.Union(selectedMultipleTerms
+                        .Split(new[] { ',' })
+                        .Select(Int32.Parse)
+                        .ToList()).ToList();
+                }
 
+                if (allTermIds.Any()) {
                     var product = context.ApplicabilityContext
                         .CartLine
                         ?.Product;
                     var termsPart = product.As<TermsPart>();
+                    bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
+                    var terms = allTermIds
+                        .SelectMany(id => GetTerms(id, includeChildren))
+                        .Distinct();
+                    // check again, in case the ids do not match any term
+                    if (terms.Any()) {
+                        var result = false;
+                        // if no term is selected in the product, we already know this will be false
+                        if (termsPart != null) {
+                            var selectedTerms = termsPart.TermParts.Select(tcip => tcip.TermPart);
+                            if (selectedTerms.Any()) {
+                                int op = Convert.ToInt32(context.State.Operator);
 
-                    var termIds = termsString
-                        .Split(new char[] { ',' })
-                        .Select(int.Parse);
-                    if (termIds.Any()) {
-                        bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
-                        var terms = termIds
-                            .SelectMany(id => GetTerms(id, includeChildren))
-                            .Distinct();
-                        // check again, in case the ids do not match any term
-                        if (terms.Any()) {
-                            var result = false;
-                            // if no term is selected in the product, we already know this will be false
-                            if (termsPart != null) {
-                                var selectedTerms = termsPart.TermParts.Select(tcip => tcip.TermPart);
-                                if (selectedTerms.Any()) {
-                                    int op = Convert.ToInt32(context.State.Operator);
-
-                                    switch (op) {
-                                        case 0:
-                                        // is one of
-                                        result = terms.Any(t => selectedTerms.Contains(t));
-                                        break;
-                                        case 1:
-                                        // is all of
-                                        result = terms.All(t => selectedTerms.Contains(t));
-                                        break;
-                                    }
+                                switch (op) {
+                                    case 0:
+                                    // is one of
+                                    result = terms.Any(t => selectedTerms.Contains(t));
+                                    break;
+                                    case 1:
+                                    // is all of
+                                    result = terms.All(t => selectedTerms.Contains(t));
+                                    break;
                                 }
                             }
-
-                            result = outerCriterion(result);
-
-                            if (!result) {
-                                var productName = "";
-                                var contentManager = product?.ContentItem?.ContentManager;
-                                if (contentManager != null) {
-                                    productName = contentManager.GetItemMetadata(product).DisplayText;
-                                }
-                                if (!string.IsNullOrWhiteSpace(productName)) {
-                                    context.ApplicabilityContext.Message =
-                                        T("Coupon {0} is not valid for {1}.",
-                                            context.CouponRecord.Code,
-                                            productName);
-                                }
-                            }
-
-                            context.ApplicabilityContext.IsApplicable = result;
-                            context.IsApplicable = result;
                         }
+
+                        result = outerCriterion(result);
+
+                        if (!result) {
+                            var productName = "";
+                            var contentManager = product?.ContentItem?.ContentManager;
+                            if (contentManager != null) {
+                                productName = contentManager.GetItemMetadata(product).DisplayText;
+                            }
+                            if (!string.IsNullOrWhiteSpace(productName)) {
+                                context.ApplicabilityContext.Message =
+                                    T("Coupon {0} is not valid for {1}.",
+                                        context.CouponRecord.Code,
+                                        productName);
+                            }
+                        }
+
+                        context.ApplicabilityContext.IsApplicable = result;
+                        context.IsApplicable = result;
                     }
                 }
             }
