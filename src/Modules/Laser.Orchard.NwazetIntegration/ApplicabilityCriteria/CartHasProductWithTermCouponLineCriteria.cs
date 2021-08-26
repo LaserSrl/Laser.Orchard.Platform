@@ -98,6 +98,13 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         .ToList()).ToList();
                 }
 
+                // check the list of ids for taxonomies
+                // if there are, select all term ids
+                allTermIds = allTermIds.Union(allTermIds
+                    .Where(x => _taxonomyService.GetTaxonomy(x) != null)
+                    .SelectMany(t => _taxonomyService.GetTerms(t).Select(term => term.Id))
+                    .ToList()).ToList();
+
                 if (allTermIds.Any()) {
                     var product = context.ApplicabilityContext
                         .CartLine
