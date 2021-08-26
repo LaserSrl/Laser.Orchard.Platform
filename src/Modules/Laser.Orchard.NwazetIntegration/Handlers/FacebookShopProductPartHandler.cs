@@ -21,8 +21,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             IFacebookShopService facebookShopService,
             INotifier notifier,
             IAuthorizer authorizer) {
-
             Filters.Add(StorageFilter.For(repository));
+
             _facebookShopService = facebookShopService;
             _notifier = notifier;
             _authorizer = authorizer;
@@ -30,9 +30,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             T = NullLocalizer.Instance;
 
             OnPublished<FacebookShopProductPart>((context, part) => AfterPublish(context));
-
             OnUnpublished<FacebookShopProductPart>((context, part) => AfterUnpublish(context));
-
             OnRemoved<FacebookShopProductPart>((context, part) => AfterRemove(context));
         }
 
