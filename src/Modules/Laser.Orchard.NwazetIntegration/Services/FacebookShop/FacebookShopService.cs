@@ -264,11 +264,13 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             // Query on published products, to send them all in a single request to Facebook api.
             // Every call to Facebook api sends the update of 20 products.
             int step = 20;
-            // I look for the FacebookShopPart because I may have some products I don't need to synchronize on Facebook Shop.
-            var query = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published);
+            var query = _contentManager.Query<FacebookShopProductPart, FacebookShopProductPartRecord>(VersionOptions.Published)
+                .Where(fp => fp.SynchronizeFacebookShop == true);
 
             for (int count = 0; count < query.Count(); count += step) {
-                var facebookParts = _contentManager.Query<FacebookShopProductPart>(VersionOptions.Published)
+                // I look for the FacebookShopPart because I may have some products I don't need to synchronize on Facebook Shop.
+                var facebookParts = _contentManager.Query<FacebookShopProductPart, FacebookShopProductPartRecord>(VersionOptions.Published)
+                    .Where(fp => fp.SynchronizeFacebookShop == true)
                     .Slice(count, step);
 
                 FacebookShopRequestContainer requestContainer = new FacebookShopRequestContainer();
