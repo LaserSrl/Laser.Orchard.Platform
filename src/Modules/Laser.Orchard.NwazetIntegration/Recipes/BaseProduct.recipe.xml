@@ -14,7 +14,9 @@
            Orchard.Projections, Orchard.Taxonomies, 
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
            Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
-           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions" />
+           Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions,
+           Nwazet.CurrencyProviderBySiteSetting
+           " />
   <ContentDefinition>
     <Types>
       <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
@@ -72,7 +74,6 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart />
         <LocalizationPart />
-        <ProjectionPart ContentPartSettings.Attachable="True" />
         <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" 
                  SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
                  SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" 
@@ -88,6 +89,7 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
                  SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
                  SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
@@ -152,7 +154,7 @@
         <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False" 
                                            TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
                                            TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" FieldIndexing.Included="True" />
-        <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Textarea" />
+        <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Html"  />
         <Label.TextField DisplayName="Label" TextFieldSettings.Required="False" FieldIndexing.Included="True"
                          TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine."/>
         <Popolarita.EnumerationField DisplayName="Popolarità" 
@@ -340,6 +342,7 @@
   <Settings>
     <CheckoutPolicySettingsPart PolicyTextReferences="{False},{False},{/alias=it\/policy\/condizioni-di-acquisto},{/alias=it\/policy\/privacy-policy}" />
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />
+    <ECommerceCurrencySiteSettingsPart CurrencyCode="EUR" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
   </Settings>
 	<!-- step to remove the default content type "Product" from the recipe -->
