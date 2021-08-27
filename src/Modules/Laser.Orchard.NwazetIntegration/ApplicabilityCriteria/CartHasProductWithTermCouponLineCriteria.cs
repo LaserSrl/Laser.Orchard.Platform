@@ -1,4 +1,4 @@
-﻿using Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections;
+﻿using Laser.Orchard.NwazetIntegration.Filter;
 using Nwazet.Commerce.Descriptors.CouponApplicability;
 using Nwazet.Commerce.Services.Couponing;
 using Orchard;
@@ -45,7 +45,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => DisplayTrueLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    SelectTermsForm.FormName)
+                    SelectTermsFormForLines.FormName)
                // Product in line MUST not have selected term
                .Element("Line product is not in category",
                     T("Line product is not in the given category (if any was selected)"),
@@ -54,7 +54,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => DisplayFalseLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    SelectTermsForm.FormName);
+                    SelectTermsFormForLines.FormName);
         }
 
         public LocalizedString DisplayFalseLabel(CouponContext ctx) {
@@ -97,6 +97,13 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         .Select(Int32.Parse)
                         .ToList()).ToList();
                 }
+
+                // check the list of ids for taxonomies
+                // if there are, select all term ids
+                allTermIds = allTermIds.Union(allTermIds
+                    .Where(x => _taxonomyService.GetTaxonomy(x) != null)
+                    .SelectMany(t => _taxonomyService.GetTerms(t).Select(term => term.Id))
+                    .ToList()).ToList();
 
                 if (allTermIds.Any()) {
                     var product = context.ApplicabilityContext
