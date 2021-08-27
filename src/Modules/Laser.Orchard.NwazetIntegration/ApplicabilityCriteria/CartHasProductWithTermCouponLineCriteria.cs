@@ -1,4 +1,4 @@
-﻿using Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections;
+﻿using Laser.Orchard.NwazetIntegration.Filter;
 using Nwazet.Commerce.Descriptors.CouponApplicability;
 using Nwazet.Commerce.Services.Couponing;
 using Orchard;
@@ -45,7 +45,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => DisplayTrueLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    SelectTermsForm.FormName)
+                    SelectTermsFormForLines.FormName)
                // Product in line MUST not have selected term
                .Element("Line product is not in category",
                     T("Line product is not in the given category (if any was selected)"),
@@ -54,7 +54,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     (ctx) => DisplayFalseLabel(ctx),
                     (ctx) => T("Coupon {0} is not valid for any product in your cart.", ctx.Coupon.Code),
                     isAvailableForConfiguration, isAvailableForProcessing,
-                    SelectTermsForm.FormName);
+                    SelectTermsFormForLines.FormName);
         }
 
         public LocalizedString DisplayFalseLabel(CouponContext ctx) {
