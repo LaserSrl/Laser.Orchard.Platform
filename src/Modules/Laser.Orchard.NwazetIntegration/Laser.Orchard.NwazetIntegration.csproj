@@ -147,6 +147,7 @@
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Filters\SelectTermsForm.cs" />
+    <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
