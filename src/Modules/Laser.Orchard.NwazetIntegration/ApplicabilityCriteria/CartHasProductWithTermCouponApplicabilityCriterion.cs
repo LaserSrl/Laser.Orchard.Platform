@@ -74,25 +74,25 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
             switch (opCart) {
                 case SelectTermsOperator.AllProducts:
-                    if (includeChildren) {
-                        return T("Each lines are a products of the given category or one of its children.");
-                    }
-                    return T("Each lines are a products of the given category.");
+                if (includeChildren) {
+                    return T("Each lines are a products of the given category or one of its children.");
+                }
+                return T("Each lines are a products of the given category.");
                 case SelectTermsOperator.OneProduct:
-                    if (includeChildren) {
-                        return T("At least one lines are a products of the given category or one of its children.");
-                    }
-                    return T("At least one lines are a products of the given category.");
+                if (includeChildren) {
+                    return T("At least one lines are a products of the given category or one of its children.");
+                }
+                return T("At least one lines are a products of the given category.");
                 case SelectTermsOperator.InsideCart:
-                    if (includeChildren) {
-                        return T("Among products, there must be the given category or one of its children.");
-                    }
-                    return T("Among products, there must be the given category.");
+                if (includeChildren) {
+                    return T("Among products, there must be the given category or one of its children.");
+                }
+                return T("Among products, there must be the given category.");
                 default:
-                    if (includeChildren) {
-                        return T("Cart lines are a products of the given category or one of its children.");
-                    }
-                    return T("Cart lines are a products of the given category.");
+                if (includeChildren) {
+                    return T("Cart lines are a products of the given category or one of its children.");
+                }
+                return T("Cart lines are a products of the given category.");
             }
         }
 
@@ -105,68 +105,85 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                 // If there is no configured term, this delegate will not affect the
                 // applicability for the coupon in any way.
                 // get from state the comma separated list of term ids
+                List<int> allTermIds = new List<int>();
                 var termsString = (string)context.State.Terms;
                 if (!string.IsNullOrWhiteSpace(termsString)) {
-                    var termIds = termsString
+                    allTermIds = termsString
                      .Split(new char[] { ',' })
-                     .Select(int.Parse);
-                    if (termIds.Any()) {
-                        bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
-                        var terms = termIds
-                            .SelectMany(id => GetTerms(id, includeChildren))
-                            .Distinct();
-                        // check again, in case the ids do not match any term
-                        if (terms.Any()) {
-                            var result = false;
+                     .Select(int.Parse)
+                     .ToList();
+                }
+                string selectedMultipleTerms = Convert.ToString(context.State.TermIds);
+                if (!string.IsNullOrEmpty(selectedMultipleTerms)) {
+                    allTermIds = allTermIds.Union(selectedMultipleTerms
+                        .Split(new[] { ',' })
+                        .Select(Int32.Parse)
+                        .ToList()).ToList();
+                }
 
-                            // get product in shopping cart
-                            var products = context
-                              .ApplicabilityContext
-                              .ShoppingCart
-                              .GetProducts();
+                // check the list of ids for taxonomies
+                // if there are, select all term ids
+                allTermIds = allTermIds.Union(allTermIds
+                    .Where(x => _taxonomyService.GetTaxonomy(x) != null)
+                    .SelectMany(t => _taxonomyService.GetTerms(t).Select(term => term.Id))
+                    .ToList()).ToList();
 
-                            // "is one of" or "is all of"
-                            int op = Convert.ToInt32(context.State.Operator);
+                if (allTermIds.Any()) {
+                    bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
+                    var terms = allTermIds
+                        .SelectMany(id => GetTerms(id, includeChildren))
+                        .Distinct();
+                    // check again, in case the ids do not match any term
+                    if (terms.Any()) {
+                        var result = false;
 
-                            var opCart = (SelectTermsOperator)Enum.Parse(typeof(SelectTermsOperator), Convert.ToString(context.State.OperatorCart));
+                        // get product in shopping cart
+                        var products = context
+                          .ApplicabilityContext
+                          .ShoppingCart
+                          .GetProducts();
 
-                            List<ShoppingCartQuantityProduct> checkedProductsList = new List<ShoppingCartQuantityProduct>();
-                            switch (opCart) {
-                                case SelectTermsOperator.AllProducts:
-                                    checkedProductsList = GetProductByTerm(terms, products, op);
-                                    if (products.Count() == checkedProductsList.Count()) {
-                                        result = true;
-                                    }
-                                break;
-                                case SelectTermsOperator.OneProduct:
-                                    checkedProductsList = GetProductByTerm(terms, products, op);
-                                    result = checkedProductsList.Any();
-                                break;
-                                case SelectTermsOperator.InsideCart:
-                                    var termsPart = products
-                                         .Where(p => p.Product.As<TermsPart>() != null)
-                                         .SelectMany(p => p.Product.As<TermsPart>().TermParts);
+                        // "is one of" or "is all of"
+                        int op = Convert.ToInt32(context.State.Operator);
 
-                                    // if no term is selected in the product, we already know this will be false
-                                    if (termsPart.Any()) {
-                                        var selectedTerms = termsPart.Select(p => p.TermPart);
+                        var opCart = (SelectTermsOperator)Enum.Parse(typeof(SelectTermsOperator), Convert.ToString(context.State.OperatorCart));
 
-                                        switch (op) {
-                                            case 0: // is one of
-                                                result = terms.Any(t => selectedTerms.Contains(t));
-                                            break;
-                                            case 1: // is all of
-                                                result = terms.All(t => selectedTerms.Contains(t));
-                                            break;
-                                        }
-                                    }
-                                break;
+                        List<ShoppingCartQuantityProduct> checkedProductsList = new List<ShoppingCartQuantityProduct>();
+                        switch (opCart) {
+                            case SelectTermsOperator.AllProducts:
+                            checkedProductsList = GetProductByTerm(terms, products, op);
+                            if (products.Count() == checkedProductsList.Count()) {
+                                result = true;
                             }
-                            result = outerCriterion(result);
+                            break;
+                            case SelectTermsOperator.OneProduct:
+                            checkedProductsList = GetProductByTerm(terms, products, op);
+                            result = checkedProductsList.Any();
+                            break;
+                            case SelectTermsOperator.InsideCart:
+                            var termsPart = products
+                                 .Where(p => p.Product.As<TermsPart>() != null)
+                                 .SelectMany(p => p.Product.As<TermsPart>().TermParts);
 
-                            context.ApplicabilityContext.IsApplicable = result;
-                            context.IsApplicable = result;
+                            // if no term is selected in the product, we already know this will be false
+                            if (termsPart.Any()) {
+                                var selectedTerms = termsPart.Select(p => p.TermPart);
+
+                                switch (op) {
+                                    case 0: // is one of
+                                    result = terms.Any(t => selectedTerms.Contains(t));
+                                    break;
+                                    case 1: // is all of
+                                    result = terms.All(t => selectedTerms.Contains(t));
+                                    break;
+                                }
+                            }
+                            break;
                         }
+                        result = outerCriterion(result);
+
+                        context.ApplicabilityContext.IsApplicable = result;
+                        context.IsApplicable = result;
                     }
                 }
             }
@@ -185,8 +202,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         }
 
         private List<ShoppingCartQuantityProduct> GetProductByTerm(
-                IEnumerable<TermPart> terms, 
-                IEnumerable<ShoppingCartQuantityProduct> products, 
+                IEnumerable<TermPart> terms,
+                IEnumerable<ShoppingCartQuantityProduct> products,
                 int op) {
 
             var productsList = new List<ShoppingCartQuantityProduct>();
@@ -198,12 +215,12 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         if (terms.Any(t => selectedTerms.Contains(t))) {
                             productsList.Add(p);
                         }
-                    break;
+                        break;
                         case 1: // is all of
                         if (terms.All(t => selectedTerms.Contains(t))) {
                             productsList.Add(p);
                         }
-                    break;
+                        break;
                     }
                 }
             }

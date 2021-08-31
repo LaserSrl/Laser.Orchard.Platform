@@ -5,14 +5,15 @@ using Orchard.Localization;
 using Orchard.Taxonomies.Helpers;
 using Orchard.Taxonomies.Services;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.NwazetIntegration.Filters {
-    public class SelectTermsForm : IFormProvider {
+namespace Laser.Orchard.NwazetIntegration.Filter {
+    public class SelectTermsFormForLines : IFormProvider {
         private readonly ITaxonomyService _taxonomyService;
         protected dynamic Shape { get; set; }
 
-        public SelectTermsForm(
+        public SelectTermsFormForLines(
             IShapeFactory shapeFactory,
             ITaxonomyService taxonomyService) {
             _taxonomyService = taxonomyService;
@@ -22,12 +23,12 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         public Localizer T { get; set; }
-        public const string FormName = "SelectTermsFormCart";
+        public const string FormName = "SelectTermsFormForLines";
 
         public void Describe(DescribeContext context) {
             Func<IShapeFactory, object> form = shape => {
                 var f = Shape.Form(
-                    Id: "SelectTermsForm",
+                    Id: "SelectTermsFormForLines",
                     _TermIds: Shape.SelectList(
                             Id: "termids", Name: "TermIds",
                             Title: T("Terms"),
@@ -40,7 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         Name: "Terms",
                         Title: T("Term identifiers"),
                         Classes: new[] { "text medium tokenized" },
-                        Description: T("Enter token or id of term. If no valid term is provided, all content items will be included in the results. If some terms above have been selected, the term identifiers will be added without being duplicated.")),                   
+                        Description: T("Enter token or id of term. If no valid term is provided, all content items will be included in the results. If some terms above have been selected, the term identifiers will be added without being duplicated.")),
                     _Exclusion: Shape.FieldSet(
                         _OperatorOneOf: Shape.Radio(
                             Id: "operator-is-one-of", Name: "Operator",
@@ -51,38 +52,16 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             Title: T("Is associated to all the specified terms"), Value: "1"
                             )
                         ),
-                    _FieldIncludeChildren: Shape.FieldSet(
-                        Id: "fieldset-include-children",
-                        _IncludeChildren: Shape.Checkbox(
-                            Id: "IncludeChildren", Name: "IncludeChildren",
-                            Title: T("Automatically include children terms in filtering"),
-                            Value: "true"
-                        )
-                    ),
-                    _OperatorCart: Shape.SelectList(
-                            Id: "operator", Name: "OperatorCart",
-                            Title: T("Operator"),
-                            Size: 1,
-                            Multiple: false
-                        )
-                        .Add(new SelectListItem {
-                            Value = Convert.ToString(SelectTermsOperator.AllProducts),
-                            Text = T("Each product in the cart should have the selected condition").Text
-                        })
-                        .Add(new SelectListItem {
-                            Value = Convert.ToString(SelectTermsOperator.OneProduct),
-                            Text = T("At least one product in the cart should have the selected condition").Text
-                        })
-                        .Add(new SelectListItem {
-                            Value = Convert.ToString(SelectTermsOperator.InsideCart),
-                            Text = T("Among all the products in the cart, the selected condition must occur").Text
-                        })
-                    );
+                    _IncludeChildren: Shape.Checkbox(
+                        Id: "IncludeChildren", Name: "IncludeChildren",
+                        Title: T("Automatically include children terms in filtering"),
+                        Value: "true"
+                    ));
 
                 foreach (var taxonomy in _taxonomyService.GetTaxonomies()) {
                     var optionGroup = new SelectListGroup() { Name = taxonomy.Name };
                     f._TermIds.Add(optionGroup);
-                    f._TermIds.Add(new SelectListItem { Value = taxonomy.Id.ToString(), Text = T("(All terms of {0})",taxonomy.Name).Text, Group=optionGroup });
+                    f._TermIds.Add(new SelectListItem { Value = taxonomy.Id.ToString(), Text = T("(All terms of {0})", taxonomy.Name).Text, Group = optionGroup });
                     foreach (var term in _taxonomyService.GetTerms(taxonomy.Id)) {
                         var gap = new string('-', term.GetLevels());
 
@@ -90,7 +69,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                             gap += " ";
                         }
 
-                        f._TermIds.Add(new SelectListItem { Value = term.Id.ToString(), Text = gap + term.Name, Group= optionGroup });
+                        f._TermIds.Add(new SelectListItem { Value = term.Id.ToString(), Text = gap + term.Name, Group = optionGroup });
                     }
                 }
 
@@ -100,10 +79,4 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             context.Form(FormName, form);
         }
     }
-}
-
-public enum SelectTermsOperator {
-    AllProducts,
-    OneProduct,
-    InsideCart
 }
