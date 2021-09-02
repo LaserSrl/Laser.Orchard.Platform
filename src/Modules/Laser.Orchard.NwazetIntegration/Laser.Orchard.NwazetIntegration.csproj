@@ -119,6 +119,7 @@
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
     <Compile Include="ApplicabilityCriteria\CookieValueForm.cs" />
+    <Compile Include="ApplicabilityCriteria\DiscountProductCouponNonApplicabilityCriterion.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
