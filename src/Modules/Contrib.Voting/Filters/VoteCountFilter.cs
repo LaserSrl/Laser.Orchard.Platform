@@ -1,18 +1,9 @@
 ﻿using Contrib.Voting.Models;
-using Nwazet.Commerce.Filters;
-using Nwazet.Commerce.Services;
-using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Localization;
 using Orchard.Projections.Descriptors.Filter;
 using Orchard.Projections.FilterEditors.Forms;
-using Orchard.Projections.Services;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
 
 namespace Contrib.Voting.Filters {
     public class VoteCountFilter : VoteFilterBase {
