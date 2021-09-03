@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
     /// <summary>
@@ -30,6 +31,24 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             }
             context.ProductData.Valid = true;
             return context;
+        }
+
+        /// <summary>
+        /// Decodes every string to avoid html encoded characters (&quot;, &amp;, &egrave, ...).
+        /// </summary>
+        public void HtmlDecode() {
+            ProductData.Name = HttpUtility.HtmlDecode(ProductData.Name);
+            // I need to do a double decode, because tinyMCE already encodes something, which is encoded again by tokenizer.
+            // Example:
+            // TextBox on backoffice:
+            //      La classica pizza "margherita", per forno o forno microonde. Il prodotto é surgelato. Caratteri speciali: è é à ò ì ù & €
+            // Text posted, after TinyMCE processing but before tokenizer management:
+            //      <p>La classica pizza "margherita", per forno o forno microonde. Il prodotto &eacute; surgelato. Caratteri speciali: &egrave; &eacute; &agrave; &ograve; &igrave; &ugrave; &amp; &euro;</p>
+            // Text result after tokenizer.Replace parsing:
+            //      La classica pizza &quot;margherita&quot;, per forno o forno microonde. Il prodotto &amp;eacute; surgelato. Caratteri speciali: &amp;egrave; &amp;eacute; &amp;agrave; &amp;ograve; &amp;igrave; &amp;ugrave; &amp;amp; &amp;euro;
+            //ProductData.Description = HttpUtility.HtmlDecode(HttpUtility.HtmlDecode(ProductData.Description));
+            ProductData.Description = HttpUtility.HtmlDecode(ProductData.Description);
+            ProductData.Brand = HttpUtility.HtmlDecode(ProductData.Brand);
         }
     }
 
