@@ -123,6 +123,10 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                             // I need to tell it was impossible to synchronize the product on Facebook Shop.
                             Logger.Debug(T("Product {0} can't be synchronized on Facebook catalog.", productPart.Sku).Text);
                             Logger.Debug(jsonContext.Message.Text);
+
+                            var returnValue = new FacebookShopRequestContainer();
+                            returnValue.Requests.Add(jsonContext);
+                            return returnValue;
                         }
                     }
                 }
