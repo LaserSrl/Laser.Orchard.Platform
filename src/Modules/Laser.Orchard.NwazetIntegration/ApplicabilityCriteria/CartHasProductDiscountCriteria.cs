@@ -3,34 +3,28 @@ using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services.Couponing;
 using Orchard;
 using Orchard.Caching;
-using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Nwazet.Commerce.ApplicabilityCriteria.Couponing {
-    [OrchardFeature("Nwazet.Couponing")]
-    public class DiscountProductCouponNonApplicabilityCriterion
+namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
+    public class CartHasProductDiscountCriteria
          : BaseCouponCriterionProvider, ICouponApplicabilityCriterionProvider {
-        public DiscountProductCouponNonApplicabilityCriterion(
+        public CartHasProductDiscountCriteria(
           IWorkContextAccessor workContextAccessor,
           ICacheManager cacheManager,
           ISignals signals)
           : base(workContextAccessor, cacheManager, signals) {
 
         }
-        public override string ProviderName => "DiscountProductCouponNonApplicabilityCriterion";
-        public override LocalizedString ProviderDisplayName => T("Discount product coupon non-applicability criterion");
+        public override string ProviderName => "CartHasProductDiscountCriteria";
+        public override LocalizedString ProviderDisplayName => T("Criteria on products not discounted.");
         public void Describe(DescribeCouponApplicabilityContext describe) {
             var isAvailableForConfiguration = IsAvailableForConfiguration();
             var isAvailableForProcessing = IsAvailableForProcessing();
             describe
                 .For("Cart", T("Cart products"), T("Cart products"))
-                .Element("Discount product coupon non-applicability criterion",
-                    T("Discount product coupon non-applicability criterion"),
+                .Element("Lines products shuld not be discounted",
+                    T("Lines products should not be discounted"),
                     T("If there is a discounted product in the cart, the coupon cannot be applied."),
                     (ctx) => ApplyCriteria(ctx),
                     (ctx) => ApplyCriteria(ctx),
@@ -39,8 +33,6 @@ namespace Nwazet.Commerce.ApplicabilityCriteria.Couponing {
                     null);
         }
         public void ApplyCriteria(CouponApplicabilityCriterionContext context) {
-            // Use outerCriterion to negate the test, so we can easily do
-            // true/false
             var result = false;
             if (context.IsApplicable) {
                 // get product in shopping cart
@@ -49,6 +41,7 @@ namespace Nwazet.Commerce.ApplicabilityCriteria.Couponing {
                   .ShoppingCart
                   .GetProducts();
 
+                // to apply the coupon, no products in the cart must be discounted 
                 result = !products.Any(p => HasDiscount(p.Product));
 
                 context.ApplicabilityContext.IsApplicable = result;
@@ -56,6 +49,7 @@ namespace Nwazet.Commerce.ApplicabilityCriteria.Couponing {
             }
         }
 
+        // check if products are discounted
         public bool HasDiscount(ProductPart part) {
             var discountPrice = part.ProductPriceService.GetDiscountPrice(part);
             var fullPrice = part.ProductPriceService.GetPrice(part);
