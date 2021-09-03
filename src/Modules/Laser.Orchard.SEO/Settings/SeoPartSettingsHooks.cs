@@ -30,6 +30,11 @@ namespace Laser.Orchard.SEO.Settings {
             if (builder.Name == "SeoPart") {
                 var model = new SeoPartSettings();
                 updateModel.TryUpdateModel(model, "SeoPartSettings", null, null);
+
+                if(model.Templates == null) {
+                    model.Templates = getMicrodataTemplate();
+                }
+
                 builder.WithSetting("SeoPartSettings.RobotsNoIndex", model.RobotsNoIndex.ToString());
                 builder.WithSetting("SeoPartSettings.RobotsNoFollow", model.RobotsNoFollow.ToString());
                 builder.WithSetting("SeoPartSettings.RobotsNoSnippet", model.RobotsNoSnippet.ToString());
