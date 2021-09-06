@@ -15,12 +15,22 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         [JsonProperty("requests")]
         public List<IFacebookShopRequest> Requests { get; set; }
 
+        public FacebookShopRequestContainer() {
+            Requests = new List<IFacebookShopRequest>();
+        }
+
         public string ToJson() {
+            HtmlDecode();
             return JsonConvert.SerializeObject(this);
         }
 
-        public FacebookShopRequestContainer() {
-            Requests = new List<IFacebookShopRequest>();
+        /// <summary>
+        /// Decodes every string to avoid html encoded characters (&quot;, &amp;, &egrave, ...).
+        /// </summary>
+        private void HtmlDecode() {
+            foreach (var r in Requests) {
+                r.HtmlDecode();
+            }
         }
     }
 }

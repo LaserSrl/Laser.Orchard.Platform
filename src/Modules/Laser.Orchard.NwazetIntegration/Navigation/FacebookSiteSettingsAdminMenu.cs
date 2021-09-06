@@ -1,4 +1,5 @@
-﻿using Orchard.Environment.Extensions;
+﻿using Laser.Orchard.NwazetIntegration.Security;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
 
@@ -16,8 +17,11 @@ namespace Laser.Orchard.NwazetIntegration.Navigation {
         public Localizer T { get; set; }
 
         public void GetNavigation(NavigationBuilder builder) {
+
             builder.Add(T("Settings"), menu => menu
-                .Add(T("Facebook Shop"), "2.1"));
+                .Add(T("Facebook Shop"), "2.1", submenu => {
+                    submenu.Permission(FacebookShopSynchronizationPermission.FacebookShopSynchronization);
+                }));
         }
     }
 }

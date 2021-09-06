@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.NwazetIntegration.Models;
+﻿using Laser.Orchard.NwazetIntegration.Handlers;
+using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.PartSettings;
 using Newtonsoft.Json.Linq;
 using Nwazet.Commerce.Models;
@@ -9,6 +10,7 @@ using Orchard.Core.Common.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
+using Orchard.Tasks.Scheduling;
 using Orchard.Tokens;
 using System;
 using System.IO;
@@ -23,17 +25,20 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         private readonly ITokenizer _tokenizer;
         private readonly IContentManager _contentManager;
         private readonly ICurrencyProvider _currencyProvider;
+        private readonly IScheduledTaskManager _taskManager;
         private FacebookShopSiteSettingsPart _fsssp;
 
         public FacebookShopService(
             IWorkContextAccessor workContext,
             ITokenizer tokenizer,
             IContentManager contentManager,
-            ICurrencyProvider currencyProvider) {
+            ICurrencyProvider currencyProvider,
+            IScheduledTaskManager taskManager) {
             _workContext = workContext;
             _tokenizer = tokenizer;
             _contentManager = contentManager;
             _currencyProvider = currencyProvider;
+            _taskManager = taskManager;
 
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
@@ -82,6 +87,13 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             return false;
         }
 
+        /// <summary>
+        /// Creates a scheduled task to synchronize products on Facebook Shop.
+        /// </summary>
+        public void ScheduleProductSynchronization() {
+            _taskManager.CreateTask(FacebookShopProductSynchronizationTaskHandler.TASK_NAME, DateTime.UtcNow.AddMinutes(1), null);
+        }
+
         public FacebookShopRequestContainer SyncProduct(ContentItem product) {
             var productPart = product.As<ProductPart>();
             try {
@@ -111,8 +123,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                             // I need to tell it was impossible to synchronize the product on Facebook Shop.
                             Logger.Debug(T("Product {0} can't be synchronized on Facebook catalog.", productPart.Sku).Text);
                             Logger.Debug(jsonContext.Message.Text);
+
+                            var returnValue = new FacebookShopRequestContainer();
+                            returnValue.Requests.Add(jsonContext);
+                            return returnValue;
                         }
-                    } 
+                    }
                 }
             } catch (Exception ex) {
                 // I need to tell it was impossible to synchronize the product on Facebook Shop.

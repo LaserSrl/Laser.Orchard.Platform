@@ -14,19 +14,16 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class FacebookShopProductPartHandler : ContentHandler {
         private readonly IFacebookShopService _facebookShopService;
         private readonly INotifier _notifier;
-        private readonly IAuthorizer _authorizer;
 
         public FacebookShopProductPartHandler(
             IRepository<FacebookShopProductPartRecord> repository,
             IFacebookShopService facebookShopService,
-            INotifier notifier,
-            IAuthorizer authorizer) {
+            INotifier notifier) {
             Filters.Add(StorageFilter.For(repository));
 
             _facebookShopService = facebookShopService;
             _notifier = notifier;
-            _authorizer = authorizer;
-
+            
             T = NullLocalizer.Instance;
 
             OnPublished<FacebookShopProductPart>((context, part) => AfterPublish(context));
@@ -38,14 +35,12 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
 
         protected void AfterPublish(PublishContentContext context) {
             if (context.ContentItem.As<FacebookShopProductPart>().SynchronizeFacebookShop) {
-                if (_authorizer.Authorize(FacebookShopSynchronizationPermission.FacebookShopSynchronization)) {
-                    var result = _facebookShopService.SyncProduct(context.ContentItem);
+                var result = _facebookShopService.SyncProduct(context.ContentItem);
 
-                    if (result == null || result.Requests.Count == 0) {
-                        _notifier.Warning(T("Invalid Facebook api response. Product is not synchronised on Facebook catalog."));
-                    } else if (!result.Requests[0].Valid) {
-                        _notifier.Warning(result.Requests[0].Message);
-                    }
+                if (result == null || result.Requests.Count == 0) {
+                    _notifier.Warning(T("Invalid Facebook api response. Product is not synchronised on Facebook catalog."));
+                } else if (!result.Requests[0].Valid) {
+                    _notifier.Warning(result.Requests[0].Message);
                 }
             }
         }
@@ -60,14 +55,12 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
 
         private void RemoveProduct(ContentItem product) {
             if (product.As<FacebookShopProductPart>().SynchronizeFacebookShop) {
-                if (_authorizer.Authorize(FacebookShopSynchronizationPermission.FacebookShopSynchronization)) {
-                    var result = _facebookShopService.RemoveProduct(product);
+                var result = _facebookShopService.RemoveProduct(product);
 
-                    if (result == null || result.Requests.Count == 0) {
-                        _notifier.Warning(T("Invalid Facebook api response. Product has not been removed from Facebook catalog."));
-                    } else if (!result.Requests[0].Valid) {
-                        _notifier.Warning(result.Requests[0].Message);
-                    }
+                if (result == null || result.Requests.Count == 0) {
+                    _notifier.Warning(T("Invalid Facebook api response. Product has not been removed from Facebook catalog."));
+                } else if (!result.Requests[0].Valid) {
+                    _notifier.Warning(result.Requests[0].Message);
                 }
             }
         }

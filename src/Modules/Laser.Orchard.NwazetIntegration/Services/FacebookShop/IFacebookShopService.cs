@@ -9,5 +9,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         FacebookShopRequestContainer SyncProduct(FacebookShopProductUpdateRequest context);
         FacebookShopRequestContainer RemoveProduct(ContentItem product);
         void SyncProducts();
+        void ScheduleProductSynchronization();
     }
 }

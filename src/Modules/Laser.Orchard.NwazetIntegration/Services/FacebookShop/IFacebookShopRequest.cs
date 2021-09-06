@@ -9,5 +9,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         LocalizedString Message { get; set; }
         [JsonProperty("retailer_id")]
         string RetailerId { get; set; }
+        void HtmlDecode();
     }
 }

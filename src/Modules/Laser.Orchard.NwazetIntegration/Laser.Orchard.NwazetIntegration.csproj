@@ -151,6 +151,7 @@
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
     <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />

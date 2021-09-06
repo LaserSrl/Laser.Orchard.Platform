@@ -15,5 +15,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         public string Method { get; set; }
         [JsonProperty("retailer_id")]
         public string RetailerId { get; set; }
+
+        /// <summary>
+        /// Decodes every string to avoid html encoded characters (&quot;, &amp;, &egrave, ...).
+        /// </summary>
+        public void HtmlDecode() {
+            // In the case of FacebookShopProductDeleteRequest, I don't need to do anything.
+        }
     }
 }
