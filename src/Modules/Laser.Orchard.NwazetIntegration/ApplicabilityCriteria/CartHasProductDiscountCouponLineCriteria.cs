@@ -22,7 +22,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
         public override string ProviderName => "CartHasProductDiscountCouponLineCriteria";
 
-        public override LocalizedString ProviderDisplayName => T("Line Criteria on product not discounted");
+        public override LocalizedString ProviderDisplayName => T("Line criteria is applicable only on products that are not discounted.");
 
         public void Describe(DescribeCouponLineApplicabilityContext describe) {
             var isAvailableForConfiguration = IsAvailableForConfiguration();

@@ -17,18 +17,18 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
 
         }
         public override string ProviderName => "CartHasProductDiscountCriteria";
-        public override LocalizedString ProviderDisplayName => T("Criteria on products not discounted.");
+        public override LocalizedString ProviderDisplayName => T("Coupon is applicable only if there is no discounted product in the cart.");
         public void Describe(DescribeCouponApplicabilityContext describe) {
             var isAvailableForConfiguration = IsAvailableForConfiguration();
             var isAvailableForProcessing = IsAvailableForProcessing();
             describe
                 .For("Cart", T("Cart products"), T("Cart products"))
                 .Element("Lines products shuld not be discounted",
-                    T("Lines products should not be discounted"),
+                    T("Lines products should are not be discounted"),
                     T("If there is a discounted product in the cart, the coupon cannot be applied."),
                     (ctx) => ApplyCriteria(ctx),
                     (ctx) => ApplyCriteria(ctx),
-                    (ctx) => T("Discount product coupon non-applicability criterion"),
+                    (ctx) => T("Coupon is applicable only if there is no discounted product in the cart."),
                     isAvailableForConfiguration, isAvailableForProcessing,
                     null);
         }
