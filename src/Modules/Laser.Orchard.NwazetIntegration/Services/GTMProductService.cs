@@ -49,7 +49,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             var product = part.As<ProductPart>();
             if (product == null) {
-                throw new ArgumentNullException("part.A<ProductPart>()");
+                throw new ArgumentNullException("part.As<ProductPart>()");
             }
             var partSetting = part.Settings.GetModel<GTMProductSettingVM>();
 
@@ -111,13 +111,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 // if a field like the bodypart with a lot of text is added, 
                 // it is better to cut the string in order not to give problems to the page
                 // the maximum length of the field is 255 characters, for the moment it's okay
-                var maxLenght = 255;
+                var maxLength = 255;
                 var str = HttpUtility.HtmlDecode(_tokenizer.Replace(value, tokens));
-                if (str.Length <= maxLenght) {
+                if (str.Length <= maxLength) {
                     return str;
                 }
                 else {
-                    return str.Substring(0, maxLenght);
+                    return str.Substring(0, maxLength);
                 }
             }
             return string.Empty;

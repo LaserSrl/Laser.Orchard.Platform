@@ -57,5 +57,10 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
             get { return this.Retrieve(r => r.UseTagManager); }
             set { this.Store(r => r.UseTagManager, value); }
         }
+
+        public bool UseGA4 {
+            get { return this.Retrieve(r => r.UseGA4); }
+            set { this.Store(r => r.UseGA4, value); }
+        }
     }
 }

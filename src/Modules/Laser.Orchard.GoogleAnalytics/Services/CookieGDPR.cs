@@ -197,6 +197,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 }
                 script.AppendLine("	});");
             }
+
             // done tag manager consent settings
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");

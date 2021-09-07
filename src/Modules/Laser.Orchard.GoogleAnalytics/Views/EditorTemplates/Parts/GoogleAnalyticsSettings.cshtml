@@ -65,5 +65,12 @@
         </div>
     </div>
 
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.UseGA4)" class="forcheckbox">
+            @Html.EditorFor(m => m.UseGA4, new { title = @T("Use GA4 management").Text })
+            @T("Use GA4 management")
+        </label>
+    </div>
+
 
 </fieldset>
