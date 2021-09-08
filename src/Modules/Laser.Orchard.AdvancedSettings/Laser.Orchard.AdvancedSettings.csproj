@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\AdvancedSettingsPartDriver.cs" />
+    <Compile Include="Drivers\ThemeSkinsPartDriver.cs" />
     <Compile Include="Handlers\AdvancedSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AdvancedSettingsPartRecord.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Services\IThemeSkinsService.cs" />
     <Compile Include="Services\ThemeSkinsService.cs" />
     <Compile Include="ViewModels\AdvancedSettingsEdit.cs" />
+    <Compile Include="ViewModels\ThemeSkinsPartEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Styles\Styles.css" />
