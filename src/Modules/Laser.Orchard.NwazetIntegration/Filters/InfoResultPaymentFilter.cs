@@ -55,6 +55,9 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         && model.Record.Success) {
                         // We only have to inject GTM stuff if Statistical cookies are allowed
                         if (_GTMProductService.ShoulAddEcommerceTags()) {
+                            // Check if I'm using GA4
+                            var useGA4 = _GTMProductService.UseGA4();
+
                             // select the contentitemid which is the id of the order
                             var orderId = model.Record.ContentItemId;
                             // select order
@@ -73,13 +76,18 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                        VersionOptions.Published,
                                        QueryHints.Empty)
                                     .ToList();
-                                // initialize list of GTMProductVM
-                                var productList = new List<GTMProductVM>();
+                                // initialize list of GTMProductVM (now using interface IGAProductVM to manage GA4ProductVM too)
+                                var productList = new List<IGAProductVM>();
                                 foreach (var p in products) {
                                     // populate list of GTMProductVM 
                                     var part = p.As<GTMProductPart>();
                                     _GTMProductService.FillPart(part);
-                                    var vm = new GTMProductVM(part);
+                                    IGAProductVM vm;
+                                    if (useGA4) {
+                                        vm = new GA4ProductVM(part);
+                                    } else {
+                                        vm = new GTMProductVM(part);
+                                    }
                                     var checkoutItem = checkoutItems
                                         .Where(c => c.ProductId == p.Id)
                                         .FirstOrDefault();

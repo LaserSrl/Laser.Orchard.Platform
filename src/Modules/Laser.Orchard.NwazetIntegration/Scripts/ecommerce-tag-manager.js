@@ -120,21 +120,23 @@ $(function () {
             }
             // raise the events for addition/removal from cart
             if (addedToCart.length) {
-                window.dataLayer.push({
-                    'event': 'addToCart',
-                    'ecommerce': {
-                        'add': {
-                            'products': addedToCart
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'add_to_cart',
+                        ecommerce: {
+                            items: addedToCart
                         }
-                    }
-                });
-                // TEST
-                window.dataLayer.push({
-                    event: 'add_to_cart',
-                    ecommerce: {
-                        items: addedToCart
-                    }
-                });
+                    });
+                } else {
+                    window.dataLayer.push({
+                        'event': 'addToCart',
+                        'ecommerce': {
+                            'add': {
+                                'products': addedToCart
+                            }
+                        }
+                    });
+                }
             }
             if (removedFromCart.length) {
                 window.dataLayer.push({
@@ -187,30 +189,24 @@ $(function () {
             }
             var quantity = context.movedQuantity;
             productAdded.quantity = quantity;
-            window.dataLayer.push({
-                'event': 'addToCart',
-                'ecommerce': {
-                    'add': {
-                        'products': [productAdded]
-                    }
-                }
-            });
 
-            // TEST
-            window.dataLayer.push({
-                event: 'add_to_cart',
-                ecommerce: {
-                    items: [
-                        {
-                            item_id: '123',
-                            item_name: 'pippo',
-                            price: '1',
-                            index: 1,
-                            quantity: 1
+            if (window.useGA4) {
+                window.dataLayer.push({
+                    event: 'add_to_cart',
+                    ecommerce: {
+                        items: [productAdded]
+                    }
+                });
+            } else {
+                window.dataLayer.push({
+                    'event': 'addToCart',
+                    'ecommerce': {
+                        'add': {
+                            'products': [productAdded]
                         }
-                    ]
-                }
-            });
+                    }
+                });
+            }
         })
     // RemoveFromCart1: use the event from shoppingcart.js
         .on("nwazet.removefromcart", "form.addtocart", function (e) {
@@ -268,12 +264,6 @@ $(function () {
             addRemoveAllCartChanges(e.target);
             // post on a form 
             //console.log('cartupdated inside');
-        })
-        .on("submit", ".shoppingcart form", function (e) {
-            // in $(this) we have the form
-            addRemoveAllCartChanges(e.target);
-            // post on a form 
-            //console.log('cartupdated outside');
         })
         .on("submit", "form .shopping-cart-container", function (e) {
             // in $(this) we may not have the form

@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.Cookies;
 using Laser.Orchard.Cookies.Services;
+using Laser.Orchard.GoogleAnalytics.Models;
 using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json;
@@ -19,17 +20,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly ITokenizer _tokenizer;
         private readonly IProductPriceService _productPriceService;
         private readonly IGDPRScript _gdprScriptService;
+        private readonly IWorkContextAccessor _workContextAccessor;
+        private GoogleAnalyticsSettingsPart _gaSettings;
 
         public GTMProductService(
             IOrchardServices orchardServicies,
             ITokenizer tokenizer,
             IProductPriceService productPriceService,
-            IGDPRScript gdprScriptService) {
+            IGDPRScript gdprScriptService,
+            IWorkContextAccessor workContextAccessor) {
 
             _orchardServices = orchardServicies;
             _tokenizer = tokenizer;
             _productPriceService = productPriceService;
             _gdprScriptService = gdprScriptService;
+            _workContextAccessor = workContextAccessor;
         }
 
         private IEnumerable<CookieType> _acceptedCookies;
@@ -38,6 +43,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 _acceptedCookies = _gdprScriptService.GetAcceptedCookieTypes();
             }
             return _acceptedCookies.Contains(CookieType.Statistical);
+        }
+
+        public bool UseGA4() {
+            if (_gaSettings == null) {
+                _gaSettings = _workContextAccessor.GetContext().CurrentSite.As<GoogleAnalyticsSettingsPart>();
+            }
+
+            if (_gaSettings == null) {
+                return false;
+            }
+
+            return _gaSettings.UseGA4;
         }
 
         public void FillPart(GTMProductPart part) {
@@ -80,10 +97,14 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
 
             FillPart(part);
-            return GetJsonString(new GTMProductVM(part));
+            if (UseGA4()) {
+                return GetJsonString(new GA4ProductVM(part));
+            } else {
+                return GetJsonString(new GTMProductVM(part));
+            }
         }
 
-        public string GetJsonString(GTMProductVM vm) {
+        public string GetJsonString(IGAProductVM vm) {
             if (vm == null) {
                 return string.Empty;
             }

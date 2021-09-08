@@ -4,7 +4,13 @@
 
     var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
     if (_GTMProductService.ShoulAddEcommerceTags()) {
-        var gtmProductVM = (GTMProductVM)Model.GTMProductVM;
+        IGAProductVM gtmProductVM;
+        if (_GTMProductService.UseGA4()) {
+            gtmProductVM = (GA4ProductVM)Model.GA4ProductVM;
+        } else {
+            gtmProductVM = (GTMProductVM)Model.GTMProductVM;
+        }
+
         var arrayName =
             string.IsNullOrWhiteSpace(Model.DisplayType)
             || ((string)Model.DisplayType).Equals("detail", StringComparison.InvariantCultureIgnoreCase)

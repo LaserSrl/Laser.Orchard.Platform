@@ -47,6 +47,8 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         public Action CheckoutStep(ActionExecutedContext filterContext) {
+            // Flag to check if I'm using GA4.
+            var useGA4 = _GTMProductService.UseGA4();
 
             // new checkout controller
             if (filterContext.Controller is CheckoutController) {
@@ -113,10 +115,15 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                 var quantity = (int)sci.Quantity;
                                 var part = product.As<GTMProductPart>();
                                 _GTMProductService.FillPart(part);
-                                var vm = new GTMProductVM(part);
+                                IGAProductVM vm;
+                                if (useGA4) {
+                                    vm = new GA4ProductVM(part);
+                                } else {
+                                    vm = new GTMProductVM(part);
+                                }
                                 vm.Quantity = quantity;
                                 return vm;
-                            }) ?? new List<GTMProductVM>();
+                            }) ?? new List<IGAProductVM>();
 
                         object actionField = null;
                         if (model.ShippingOption != null) {
@@ -191,7 +198,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         private Func<ActionExecutedContext, Action> AddShape(
-            object actionField, IEnumerable<GTMProductVM> products = null) {
+            object actionField, IEnumerable<IGAProductVM> products = null) {
 
             return ctx => delegate () {
                 _workContextAccessor
@@ -203,7 +210,10 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             };
         }
 
-        private IEnumerable<GTMProductVM> GetProducts(CheckoutViewModel checkoutVM) {
+        private IEnumerable<IGAProductVM> GetProducts(CheckoutViewModel checkoutVM) {
+            // Check if I'm using GA4
+            var useGA4 = _GTMProductService.UseGA4();
+
             var shopItems = checkoutVM.GetProductQuantities();
             return shopItems
                 ?.Select(sci => {
@@ -211,10 +221,15 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                     var quantity = sci.Quantity;
                     var part = product.As<GTMProductPart>();
                     _GTMProductService.FillPart(part);
-                    var vm = new GTMProductVM(part);
+                    IGAProductVM vm;
+                    if (useGA4) {
+                        vm = new GA4ProductVM(part);
+                    } else {
+                        vm = new GTMProductVM(part);
+                    }
                     vm.Quantity = quantity;
                     return vm;
-                }) ?? new List<GTMProductVM>();
+                }) ?? new List<IGAProductVM>();
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {

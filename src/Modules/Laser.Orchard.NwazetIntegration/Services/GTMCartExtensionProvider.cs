@@ -31,11 +31,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 var productQuantities = _shoppingCart
                     .GetProducts();
 
+                var useGA4 = _GTMProductService.UseGA4();
+
                 var gtmObjs = productQuantities
                     .Select(pq => {
                         var part = pq.Product.As<GTMProductPart>();
                         _GTMProductService.FillPart(part);
-                        var vm = new GTMProductVM(part);
+                        IGAProductVM vm;
+                        if (useGA4) {
+                            vm = new GA4ProductVM(part);
+                        } else {
+                            vm = new GTMProductVM(part);
+                        }
                         vm.Quantity = pq.Quantity;
                         return vm;
                     });
