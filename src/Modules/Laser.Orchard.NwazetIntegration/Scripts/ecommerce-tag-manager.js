@@ -132,15 +132,7 @@ $(function () {
                 window.dataLayer.push({
                     event: 'add_to_cart',
                     ecommerce: {
-                        items: [
-                            {
-                                item_id: '123',
-                                item_name: 'pippo',
-                                price: '1',
-                                index: 1,
-                                quantity: 1
-                            }
-                        ]
+                        items: addedToCart
                     }
                 });
             }
