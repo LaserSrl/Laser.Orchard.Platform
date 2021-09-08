@@ -93,9 +93,12 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AdvancedSettingsPartRecord.cs" />
     <Compile Include="Models\AdvancedSettingsPart.cs" />
+    <Compile Include="Models\ThemeSkinsPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AdvancedSettingsService.cs" />
     <Compile Include="Services\IAdvancedSettingsService.cs" />
+    <Compile Include="Services\IThemeSkinsService.cs" />
+    <Compile Include="Services\ThemeSkinsService.cs" />
     <Compile Include="ViewModels\AdvancedSettingsEdit.cs" />
   </ItemGroup>
   <ItemGroup>
