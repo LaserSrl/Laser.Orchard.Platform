@@ -6,9 +6,9 @@
     if (_GTMProductService.ShoulAddEcommerceTags()) {
         IGAProductVM gtmProductVM;
         if (_GTMProductService.UseGA4()) {
-            gtmProductVM = (GA4ProductVM)Model.GA4ProductVM;
+            gtmProductVM = (GA4ProductVM)Model.ProductVM;
         } else {
-            gtmProductVM = (GTMProductVM)Model.GTMProductVM;
+            gtmProductVM = (GTMProductVM)Model.ProductVM;
         }
 
         var arrayName =

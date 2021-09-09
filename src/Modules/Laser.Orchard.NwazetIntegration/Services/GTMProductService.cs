@@ -124,6 +124,14 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return output;
         }
 
+        public IGAProductVM GetViewModel(GTMProductPart part) {
+            if (UseGA4()) {
+                return new GA4ProductVM(part);
+            } else {
+                return new GTMProductVM(part);
+            }
+        }
+
         #region private methods to handle tokenized fields
         // anything inserted into these tokens is thrown on the screen
         // even if there is html code

@@ -37,12 +37,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     .Select(pq => {
                         var part = pq.Product.As<GTMProductPart>();
                         _GTMProductService.FillPart(part);
-                        IGAProductVM vm;
-                        if (useGA4) {
-                            vm = new GA4ProductVM(part);
-                        } else {
-                            vm = new GTMProductVM(part);
-                        }
+                        var vm = _GTMProductService.GetViewModel(part);
                         vm.Quantity = pq.Quantity;
                         return vm;
                     });

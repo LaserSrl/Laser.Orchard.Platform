@@ -60,7 +60,11 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         var model = result.Model as CheckoutViewModel;
                         if (model != null) {
                             // this is probably always true
-                            return AddShape(new { step = 1 }, GetProducts(model))(filterContext);
+                            if (useGA4) {
+                                return GA4AddShape("begin_checkout", GetProducts(model))(filterContext);
+                            } else {
+                                return AddShape(new { step = 1 }, GetProducts(model))(filterContext);
+                            }
                         }
                     }
                 } else if (filterContext.ActionDescriptor
@@ -115,12 +119,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                 var quantity = (int)sci.Quantity;
                                 var part = product.As<GTMProductPart>();
                                 _GTMProductService.FillPart(part);
-                                IGAProductVM vm;
-                                if (useGA4) {
-                                    vm = new GA4ProductVM(part);
-                                } else {
-                                    vm = new GTMProductVM(part);
-                                }
+                                var vm = _GTMProductService.GetViewModel(part);
                                 vm.Quantity = quantity;
                                 return vm;
                             }) ?? new List<IGAProductVM>();
@@ -210,6 +209,22 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             };
         }
 
+        private Func<ActionExecutedContext, Action> GA4AddShape(
+            string eventName,
+            IEnumerable<IGAProductVM> products = null,
+            object additionalParams = null) {
+
+            return ctx => delegate () {
+                _workContextAccessor
+                    .GetContext(ctx)
+                    .Layout.Zones.Head
+                    .Add(_shapeFactory.GA4CheckoutStep(
+                         GTMProducts: products,
+                         EventName: eventName,
+                         AdditionalParams: additionalParams));
+            };
+        }
+
         private IEnumerable<IGAProductVM> GetProducts(CheckoutViewModel checkoutVM) {
             // Check if I'm using GA4
             var useGA4 = _GTMProductService.UseGA4();
@@ -221,12 +236,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                     var quantity = sci.Quantity;
                     var part = product.As<GTMProductPart>();
                     _GTMProductService.FillPart(part);
-                    IGAProductVM vm;
-                    if (useGA4) {
-                        vm = new GA4ProductVM(part);
-                    } else {
-                        vm = new GTMProductVM(part);
-                    }
+                    var vm = _GTMProductService.GetViewModel(part);
                     vm.Quantity = quantity;
                     return vm;
                 }) ?? new List<IGAProductVM>();

@@ -20,6 +20,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         bool ShoulAddEcommerceTags();
         bool UseGA4();
+        IGAProductVM GetViewModel(GTMProductPart part);
     }
 
 }

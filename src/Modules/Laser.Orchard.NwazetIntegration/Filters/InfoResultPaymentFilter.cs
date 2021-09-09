@@ -82,12 +82,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                     // populate list of GTMProductVM 
                                     var part = p.As<GTMProductPart>();
                                     _GTMProductService.FillPart(part);
-                                    IGAProductVM vm;
-                                    if (useGA4) {
-                                        vm = new GA4ProductVM(part);
-                                    } else {
-                                        vm = new GTMProductVM(part);
-                                    }
+                                    var vm = _GTMProductService.GetViewModel(part);
                                     var checkoutItem = checkoutItems
                                         .Where(c => c.ProductId == p.Id)
                                         .FirstOrDefault();

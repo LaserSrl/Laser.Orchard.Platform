@@ -15,6 +15,19 @@ window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout
 window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
 window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
 
+// Object used to track checkout with GA4
+window.GA4Data = $.extend(true, {}, window.GA4Data);
+window.GA4Data.event = window.GA4Data.event || '';
+window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+// Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+window.GA4Data.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+window.GA4Data.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+window.GA4Data.ecommerce.value = window.GA4Data.ecommerce.value || '';
+window.GA4Data.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -33,6 +46,19 @@ $(function () {
     window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout);
     window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
     window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
+
+    window.GA4Data = $.extend(true, {}, window.GA4Data);
+    window.GA4Data.event = window.GA4Data.event || '';
+    window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+    window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+    // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+    window.GA4Data.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+    window.GA4Data.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+    window.GA4Data.ecommerce.value = window.GA4Data.ecommerce.value || '';
+    window.GA4Data.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+    window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+    window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+    window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be
@@ -59,6 +85,28 @@ $(function () {
         // cases it may be allowed to be empty
         ecommerceObject.checkout = window.ecommerceData.checkout;
     }
+
+
+    var GA4Object = {};
+    if (!$.isEmptyObject(window.GA4Data)
+        && window.GA4Data.event != ''
+        && !$.isEmptyObject(window.GA4Data.ecommerce)
+        && window.GA4Data.ecommerce.items.length) {
+        GA4Object.event = window.GA4Data.event;
+        GA4Object.ecommerce = window.GA4Data.ecommerce;
+
+        // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+        if (GA4Object.event == 'purchase') {
+            GA4Object.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+            GA4Object.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || '';
+            GA4Object.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+            GA4Object.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+        }
+    }
+
     // make sure dataLayer has been initialized
     window.dataLayer = window.dataLayer || [];
     // if there is anything to be sent immediately, push it
@@ -66,6 +114,10 @@ $(function () {
         window.dataLayer.push({
             'ecommerce': ecommerceObject
         });
+    }
+
+    if (!$.isEmptyObject(GA4Object)) {
+        window.dataLayer.push(GA4Object);
     }
 
     var productInArray = function (array, partId) {
@@ -139,14 +191,23 @@ $(function () {
                 }
             }
             if (removedFromCart.length) {
-                window.dataLayer.push({
-                    'event': 'removeFromCart',
-                    'ecommerce': {
-                        'remove': {
-                            'products': removedFromCart
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'remove_from_cart',
+                        ecommerce: {
+                            items: removedFromCart
                         }
-                    }
-                });
+                    });
+                } else {
+                    window.dataLayer.push({
+                        'event': 'removeFromCart',
+                        'ecommerce': {
+                            'remove': {
+                                'products': removedFromCart
+                            }
+                        }
+                    });
+                }
             }
         }
     }
@@ -208,7 +269,7 @@ $(function () {
                 });
             }
         })
-    // RemoveFromCart1: use the event from shoppingcart.js
+        // RemoveFromCart1: use the event from shoppingcart.js
         .on("nwazet.removefromcart", "form.addtocart", function (e) {
             // $(this) is the element that was clicked to trigger the event
             // (generally an anchor tag)
@@ -223,20 +284,29 @@ $(function () {
             }
             // send a removed from cart event to tag manager
             if (productRemoved.quantity > 0) {
-                // this check will allow us to avoid sending duplicate events
-                window.dataLayer.push({
-                    'event': 'removeFromCart',
-                    'ecommerce': {
-                        'remove': {
-                            'products': [productRemoved]
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'remove_from_cart',
+                        ecommerce: {
+                            items: [productRemoved]
                         }
-                    }
-                });
+                    });
+                } else {
+                    // this check will allow us to avoid sending duplicate events
+                    window.dataLayer.push({
+                        'event': 'removeFromCart',
+                        'ecommerce': {
+                            'remove': {
+                                'products': [productRemoved]
+                            }
+                        }
+                    });
+                }
                 productRemoved.quantity = 0;
             }
             console.log('removefromcart');
         })
-    // CartUpdated
+        // CartUpdated
         .on("change", ".shoppingcart .quantity", function (e) {
             // $(this) is the input whose value for quantity changed
             // id of the product whose quantity changed
@@ -287,15 +357,40 @@ $(function () {
                 // this is a strange error condition that should not happen naturally
                 return;
             }
-            // generate a product click event
-            window.dataLayer.push({
-                'event': 'productClick',
-                'ecommerce': {
-                    'click': {
-                        'products': [productClicked]
+            if (window.useGA4) {
+                window.dataLayer.push({
+                    event: 'select_item',
+                    ecommerce: {
+                        items: [productClicked]
                     }
-                }
-            });
+                });
+            } else {
+                // generate a product click event
+                window.dataLayer.push({
+                    'event': 'productClick',
+                    'ecommerce': {
+                        'click': {
+                            'products': [productClicked]
+                        }
+                    }
+                });
+            }
         })
+        //.on("submit", "form.checkout-start", function (e) {
+        //    dataLayer.push({
+        //        event: "begin_checkout",
+        //        ecommerce: {
+        //            items: window.ecommerceData.cart.products
+        //        }
+        //    })
+        //})
+        //.on("click", "form.checkout-start #payButton", function (e) {
+        //    dataLayer.push({
+        //        event: "begin_checkout",
+        //        ecommerce: {
+        //            items: window.ecommerceData.cart.products
+        //        }
+        //    })
+        //})
 });
 
