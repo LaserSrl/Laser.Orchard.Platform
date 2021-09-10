@@ -202,6 +202,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     if (model.ShippingRequired) {
                         model.ShippingAddressVM = new AddressEditViewModel(model
                             .ListAvailableShippingAddress
+                            .Where(ar => ar.CountryId > 0) // make sure the address is configured for a country that matches a territory
                             // pick the one used/updated most recently
                             .OrderByDescending(a => a.TimeStampUTC)
                             .First());
@@ -209,7 +210,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // redirect to next step
                     // Put the model we validated in TempData so it can be reused in the next action.
                     TempData["CheckoutViewModel"] = model;
-                    if (model.ShippingRequired) {
+                    if (model.ShippingRequired && model.ShippingAddressVM != null) {
                         // Set values into the ShoppingCart storage
                         var country = _addressConfigurationService
                             ?.GetCountry(model.ShippingAddressVM.CountryId);
