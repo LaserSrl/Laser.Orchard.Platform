@@ -329,13 +329,18 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             else {
                 query = query.Join<TitlePartRecord>()
                     .OrderBy(x => x.Title);
-
             }
             if (context.MaxResultItems.HasValue) {
-                list = query.ForPart<TerritoryPart>().Slice(0, context.MaxResultItems.Value);
+                list = query
+                    .ForPart<TerritoryPart>()
+                    .Join<TerritoryPartRecord>()
+                    .Slice(0, context.MaxResultItems.Value);
             }
             else {
-                list = query.ForPart<TerritoryPart>().List();
+                list = query
+                    .ForPart<TerritoryPart>()
+                    .Join<TerritoryPartRecord>()
+                    .List();
             }
             return list;
 
@@ -371,10 +376,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 .OrderBy(x => x.Title);
 
             if (context.MaxResultItems.HasValue) {
-                list = query.ForPart<TerritoryPart>().Slice(0, context.MaxResultItems.Value);
+                list = query
+                    .ForPart<TerritoryPart>()
+                    .Join<TerritoryPartRecord>()
+                    .Slice(0, context.MaxResultItems.Value);
             }
             else {
-                list = query.ForPart<TerritoryPart>().List();
+                list = query
+                    .ForPart<TerritoryPart>()
+                    .Join<TerritoryPartRecord>()
+                    .List();
             }
             return list;
 
