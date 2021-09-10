@@ -13,38 +13,11 @@
         .Select(p => _GTMProductService.GetJsonString(p))
         .Where(s => !string.IsNullOrWhiteSpace(s));
 
-    string transaction_id = string.Empty;
-    string affiliation = string.Empty;
-    string value = string.Empty;
-    string tax = string.Empty;
-    string shipping = string.Empty;
-    string currency = string.Empty;
-    string coupon = string.Empty;
-
-    if (eventName.Equals("purchase", StringComparison.InvariantCultureIgnoreCase)
-        && Model.AdditionalParams != null) {
-        // purchase event requires the following parameters
-        transaction_id = (string)Model.AdditionalParams.transaction_id ?? string.Empty;
-        affiliation = (string)Model.AdditionalParams.affiliation ?? string.Empty;
-        value = (string)Model.AdditionalParams.value ?? string.Empty;
-        tax = (string)Model.AdditionalParams.tax ?? string.Empty;
-        shipping = (string)Model.AdditionalParams.shipping ?? string.Empty;
-        currency = (string)Model.AdditionalParams.currency ?? string.Empty;
-        coupon = (string)Model.AdditionalParams.coupon ?? string.Empty;
-    }
-
     using (Script.Head()) {
         <script type="text/javascript">
             window.GA4Data = $.extend(true, {}, window.GA4Data);
             window.GA4Data.event = '@Html.Raw(eventName)';
             window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
-            window.GA4Data.transaction_id = '@Html.Raw(transaction_id)';
-            window.GA4Data.affiliation = '@Html.Raw(affiliation)';
-            window.GA4Data.value = '@Html.Raw(value)';
-            window.GA4Data.tax = '@Html.Raw(tax)';
-            window.GA4Data.shipping = '@Html.Raw(shipping)';
-            window.GA4Data.currency = '@Html.Raw(currency)';
-            window.GA4Data.coupon = '@Html.Raw(coupon)';
 
             @if (gtmProductsStrings.Any()) {
                 var productString = string.Join(",", gtmProductsStrings);

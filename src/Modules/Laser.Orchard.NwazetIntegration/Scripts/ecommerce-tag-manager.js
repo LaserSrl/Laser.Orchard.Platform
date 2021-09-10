@@ -347,6 +347,12 @@ $(function () {
             // post on a form 
             //console.log('cartupdated outside');
         })
+        .on("submit", ".shoppingcart form", function (e) {
+            // in $(this) we may not have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated outside');
+        })
         .on("click", "[data-product-id]", function (e) {
             // use this to track product clicks
             var prodId = $(this).attr('data-product-id');
@@ -376,21 +382,5 @@ $(function () {
                 });
             }
         })
-        //.on("submit", "form.checkout-start", function (e) {
-        //    dataLayer.push({
-        //        event: "begin_checkout",
-        //        ecommerce: {
-        //            items: window.ecommerceData.cart.products
-        //        }
-        //    })
-        //})
-        //.on("click", "form.checkout-start #payButton", function (e) {
-        //    dataLayer.push({
-        //        event: "begin_checkout",
-        //        ecommerce: {
-        //            items: window.ecommerceData.cart.products
-        //        }
-        //    })
-        //})
 });
 

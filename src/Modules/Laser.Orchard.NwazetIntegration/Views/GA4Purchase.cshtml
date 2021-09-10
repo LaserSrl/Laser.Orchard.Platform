@@ -1,0 +1,36 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration.Services;
+@{
+    var ga4Purchase = (GA4PurchaseVM)Model.GA4PurchaseVM;
+
+    var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
+    Script.Require("NwazetIntegration.TagManager").AtHead();
+
+    var gtmProductsStrings = ga4Purchase
+    .ProductList
+    .Select(p => _GTMProductService.GetJsonString(p))
+    .Where(s => !string.IsNullOrWhiteSpace(s));
+
+    using (Script.Head()) {
+        <script type="text/javascript">
+            window.GA4Data = $.extend(true, {}, window.GA4Data);
+            window.GA4Data.event = 'purchase';
+            window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+            window.GA4Data.ecommerce.transaction_id = '@Html.Raw(ga4Purchase.ActionField.TransactionId)';
+            window.GA4Data.ecommerce.affiliation = '@Html.Raw(ga4Purchase.ActionField.Affiliation)';
+            window.GA4Data.ecommerce.value = '@Html.Raw(ga4Purchase.ActionField.Value)';
+            window.GA4Data.ecommerce.tax = '@Html.Raw(ga4Purchase.ActionField.Tax)';
+            window.GA4Data.ecommerce.shipping = '@Html.Raw(ga4Purchase.ActionField.Shipping)';
+            window.GA4Data.ecommerce.currency = '@Html.Raw(ga4Purchase.ActionField.Currency)';
+            window.GA4Data.ecommerce.coupon = '@Html.Raw(ga4Purchase.ActionField.Coupon)';
+
+            @if (gtmProductsStrings.Any()) {
+                var productString = string.Join(",", gtmProductsStrings);
+                <text>
+                    window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+                    window.GA4Data.ecommerce.items.push(@Html.Raw(productString));
+                </text>
+            }
+        </script>
+    }
+}

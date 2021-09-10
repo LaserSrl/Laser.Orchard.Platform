@@ -16,6 +16,13 @@
         </span>
     </div>
 
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.UseGA4)" class="forcheckbox">
+            @Html.EditorFor(m => m.UseGA4, new { title = @T("Use GA4 management (requires Tag Manager)").Text })
+            @T("Use GA4 management (requires Tag Manager)")
+        </label>
+    </div>
+
     <div class="form-group">
         <label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Analytics Tracking Key (UA-XXXXXXX-X) or Tag Manager Container ID (GTM-YYYYYYY)")</label>
         @Html.TextBoxFor(m => m.GoogleAnalyticsKey,
@@ -64,13 +71,4 @@
             </div>
         </div>
     </div>
-
-    <div class="checkbox">
-        <label for="@Html.FieldIdFor(m => m.UseGA4)" class="forcheckbox">
-            @Html.EditorFor(m => m.UseGA4, new { title = @T("Use GA4 management").Text })
-            @T("Use GA4 management")
-        </label>
-    </div>
-
-
 </fieldset>

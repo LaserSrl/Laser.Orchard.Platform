@@ -54,7 +54,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 return false;
             }
 
-            return _gaSettings.UseGA4;
+            // GA4 requires Tag Manager.
+            return (_gaSettings.UseTagManager && _gaSettings.UseGA4);
         }
 
         public void FillPart(GTMProductPart part) {
