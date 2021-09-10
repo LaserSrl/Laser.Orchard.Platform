@@ -353,9 +353,9 @@ $(function () {
             // post on a form 
             //console.log('cartupdated outside');
         })
-        .on("click", "[data-product-id]", function (e) {
+        .on("click", "[data-analytics-product-id]", function (e) {
             // use this to track product clicks
-            var prodId = $(this).attr('data-product-id');
+            var prodId = $(this).attr('data-analytics-product-id');
             // if we did the page right, this product is among the impressions
             var productClicked = productInArray(window.ecommerceData.impressions, prodId);
             if ($.isEmptyObject(productClicked)) {
