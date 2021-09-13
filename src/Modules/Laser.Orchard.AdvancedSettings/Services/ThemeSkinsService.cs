@@ -61,7 +61,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         }
 
         // From the name of the settings CI, get the name of the skin/stylesheet
-        public string GetSelectedSkin(string settingsName) {
+        protected string GetSelectedSkin(string settingsName) {
             var settingsCI = _advancedSettingsService.GetCachedSetting(settingsName);
             if (settingsCI != null) {
                 var skinPart = settingsCI.As<ThemeSkinsPart>();
@@ -82,13 +82,8 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             }
             var filePath = Path.Combine(GetSkinsPath(), filename).Replace(Path.DirectorySeparatorChar, '/');
             if(!_virtualPathProvider.FileExists(filePath)) {
-                // File not found for the "current" minification, so use the other one
-                if (minified) {
-                    filename = skinName + ".css";
-                } else {
-                    filename += ".min.css";
-                }
-                filePath = Path.Combine(GetSkinsPath(), filename).Replace(Path.DirectorySeparatorChar, '/');
+                // File not found
+                return null;
             }
             return filePath;
         }
@@ -96,7 +91,14 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         public void IncludeSkin(ResourceRegister Style, ResourceRegister Script, string settingsName) {
             var skinName = GetSelectedSkin(settingsName);
             if (!string.IsNullOrWhiteSpace(skinName)) {
-                Style.Include(GetStyleSheet(skinName), GetStyleSheet(skinName, true)).AtHead();
+                var debugPath = GetStyleSheet(skinName);
+                var resourcePath = GetStyleSheet(skinName, true);
+                if (string.IsNullOrWhiteSpace(resourcePath)) {
+                    resourcePath = debugPath;
+                }
+                if (!string.IsNullOrWhiteSpace(resourcePath)) {
+                    Style.Include(debugPath, resourcePath).AtHead();
+                }
                 // TODO: manage having also scripts
             }
         }
