@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 
 namespace Laser.Orchard.AdvancedSettings.Services {
     public interface IThemeSkinsService : IDependency {
+        IEnumerable<string> GetSkinNames();
     }
 }

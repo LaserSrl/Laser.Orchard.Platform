@@ -91,6 +91,7 @@
     <Compile Include="Drivers\AdvancedSettingsPartDriver.cs" />
     <Compile Include="Drivers\ThemeSkinsPartDriver.cs" />
     <Compile Include="Handlers\AdvancedSettingsPartHandler.cs" />
+    <Compile Include="ThemeSkinsMigrations.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AdvancedSettingsPartRecord.cs" />
     <Compile Include="Models\AdvancedSettingsPart.cs" />
@@ -138,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\AdvancedSettings.Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\ThemeSkinsPart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

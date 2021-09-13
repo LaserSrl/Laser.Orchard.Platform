@@ -7,6 +7,7 @@ using System.Web;
 namespace Laser.Orchard.AdvancedSettings.ViewModels {
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
     public class ThemeSkinsPartEditViewModel {
-        public string SkinName { get; set; }
+        public string SelectedSkinName { get; set; }
+        public IEnumerable<string> AvailableSkinNames { get; set; }
     }
 }

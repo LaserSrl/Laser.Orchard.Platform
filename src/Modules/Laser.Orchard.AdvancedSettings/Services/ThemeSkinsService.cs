@@ -28,7 +28,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         // css files to be used as skins. In the future we'll be able to get
         // also files with the same name and different extensions to implement
         // additiona sub features, like displaying a preview or a description.
-        protected IEnumerable<string> GetSkinNames() {
+        public IEnumerable<string> GetSkinNames() {
             // get current theme
             var theme = _workContextAccessor.GetContext().CurrentTheme;
             // find the Styles/Skins folder for the theme
