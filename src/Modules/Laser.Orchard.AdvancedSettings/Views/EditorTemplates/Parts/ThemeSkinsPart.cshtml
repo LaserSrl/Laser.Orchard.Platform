@@ -1,1 +1,10 @@
-﻿PIPPO
+﻿@using Laser.Orchard.AdvancedSettings.ViewModels;
+@model ThemeSkinsPartEditViewModel
+
+<fieldset>
+    <label for="@Html.FieldIdFor(m => m.SelectedSkinName)">
+        @T("Theme Customization")
+    </label>
+    @Html.DropDownListFor(m => m.SelectedSkinName, Model.Options)
+    <span class="hint">@T("Select a customization for the frontend theme.")</span>
+</fieldset>

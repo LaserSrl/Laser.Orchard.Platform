@@ -6,10 +6,9 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.AdvancedSettings.Drivers {
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
@@ -23,8 +22,7 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
 
             T = NullLocalizer.Instance;
         }
-
-
+        
         public Localizer T { get; set; }
 
         protected override string Prefix {
@@ -35,8 +33,8 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
             return ContentShape("Parts_ThemeSkinsPart_Edit",
                 () => {
                     var vm = new ThemeSkinsPartEditViewModel();
-                    vm.AvailableSkinNames = _themeSkinsService.GetSkinNames();
                     vm.SelectedSkinName = part.SkinName;
+                    PopulateVMOptions(part, vm);
                     return shapeHelper.EditorTemplate(
                          TemplateName: "Parts/ThemeSkinsPart",
                          Model: vm,
@@ -45,7 +43,18 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
         }
 
         protected override DriverResult Editor(ThemeSkinsPart part, IUpdateModel updater, dynamic shapeHelper) {
-            return null; //base.Editor(part, updater, shapeHelper);
+            var vm = new ThemeSkinsPartEditViewModel();
+            if (updater.TryUpdateModel(vm, Prefix, null, null)) {
+                part.SkinName = vm.SelectedSkinName;
+            }
+            return ContentShape("Parts_ThemeSkinsPart_Edit",
+                () => {
+                    PopulateVMOptions(part, vm);
+                    return shapeHelper.EditorTemplate(
+                         TemplateName: "Parts/ThemeSkinsPart",
+                         Model: vm,
+                         Prefix: Prefix);
+                });
         }
 
         protected override void Importing(ThemeSkinsPart part, ImportContentContext context) {
@@ -58,6 +67,25 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
 
         protected override void Exporting(ThemeSkinsPart part, ExportContentContext context) {
             context.Element(part.PartDefinition.Name).SetAttributeValue("SkinName", part.SkinName);
+        }
+
+        private void PopulateVMOptions(ThemeSkinsPart part, ThemeSkinsPartEditViewModel vm) {
+            vm.AvailableSkinNames = _themeSkinsService.GetSkinNames();
+            var options = new List<SelectListItem>();
+            options.Add(new SelectListItem {
+                Text = T("Default").Text,
+                Value = string.Empty,
+                Selected = string.IsNullOrWhiteSpace(part.SkinName)
+            });
+            if (vm.AvailableSkinNames != null) {
+                options.AddRange(vm.AvailableSkinNames
+                    .Select(x => new SelectListItem {
+                        Text = x,
+                        Value = x,
+                        Selected = string.Equals(x, part.SkinName)
+                    }));
+            }
+            vm.Options = options;
         }
     }
 }
