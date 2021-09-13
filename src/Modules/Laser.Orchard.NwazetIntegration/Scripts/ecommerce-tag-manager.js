@@ -120,6 +120,26 @@ $(function () {
         window.dataLayer.push(GA4Object);
     }
 
+    // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
+    // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+    if (window.ecommerceData.detail.products.length) {
+        var GA4_view_item = {};
+        GA4_view_item.event = "view_item";
+        GA4_view_item.ecommerce = {};
+        GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+        window.dataLayer.push(GA4_view_item);
+    }
+
+    // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
+    // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+    if (window.ecommerceData.impressions.length) {
+        var GA4_view_item_list = {};
+        GA4_view_item_list.event = "view_item_list";
+        GA4_view_item_list.ecommerce = {};
+        GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+        window.dataLayer.push(GA4_view_item_list);
+    }
+
     var productInArray = function (array, partId) {
         var product = {};
         for (var i = 0; i < array.length; i++) {
