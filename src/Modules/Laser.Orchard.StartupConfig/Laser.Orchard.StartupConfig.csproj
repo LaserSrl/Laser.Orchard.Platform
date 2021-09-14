@@ -411,6 +411,8 @@
     <Compile Include="AppleEnvironment\Routes\Routes.cs" />
     <Compile Include="AppleEnvironment\Services\MerchantDomainAssociationService.cs" />
     <Compile Include="AppleEnvironment\ViewModels\MerchantDomainAssociationViewModel.cs" />
+    <Compile Include="CacheByRole\Filters\CacheByRoleFilter.cs" />
+    <Compile Include="CacheByRole\Handlers\CacheByRoleHandler.cs" />
     <Compile Include="ColorPicker\ColorPickerField.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
