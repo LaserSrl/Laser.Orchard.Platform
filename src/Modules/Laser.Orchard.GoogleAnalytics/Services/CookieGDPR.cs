@@ -197,6 +197,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 }
                 script.AppendLine("	});");
             }
+
             // done tag manager consent settings
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
@@ -204,6 +205,13 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=");
             script.AppendLine("'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);");
             script.AppendLine("})(window,document,'script','dataLayer','" + SettingsPart.GoogleAnalyticsKey + "');</script>");
+
+            // I need to check from the settings if I'm using GA4.
+            var gaSettings = _workContextAccessor.GetContext().CurrentSite.As<GoogleAnalyticsSettingsPart>();
+            script.AppendLine("<script>");
+            script.AppendLine("window.useGA4 = " + (gaSettings.UseGA4 ? "1" : "0") + ";");
+            script.AppendLine("</script>");
+                       
             script.AppendLine("<!-- End Google Tag Manager -->");
 
             return script.ToString();

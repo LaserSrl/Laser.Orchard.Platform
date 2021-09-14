@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
     public class GTMPurchaseVM {
         public GTMActionField ActionField { get; set; }
-        public List<GTMProductVM> ProductList { get; set; }
+        public List<IGAProductVM> ProductList { get; set; }
     }
 
 

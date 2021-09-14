@@ -6,8 +6,8 @@
     Script.Require("NwazetIntegration.TagManager").AtHead();
 
     var gtmProducts = (IEnumerable<IGAProductVM>)Model.GTMProducts;
-   
-    var gtmActionField = (string)Model.ActionFieldJSON ?? string.Empty;
+
+    var eventName = (string)Model.EventName ?? string.Empty;
 
     var gtmProductsStrings = gtmProducts
         .Select(p => _GTMProductService.GetJsonString(p))
@@ -15,16 +15,15 @@
 
     using (Script.Head()) {
         <script type="text/javascript">
-            window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout);
-            window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
-            window.ecommerceData.checkout.actionField = $.extend(true, @Html.Raw(gtmActionField), window.ecommerceData.checkout.actionField);
+            window.GA4Data = $.extend(true, {}, window.GA4Data);
+            window.GA4Data.event = '@Html.Raw(eventName)';
+            window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+
             @if (gtmProductsStrings.Any()) {
                 var productString = string.Join(",", gtmProductsStrings);
                 <text>
-                    window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
-                    window.ecommerceData.checkout.products.push(
-                        @Html.Raw(productString)
-                    );
+                    window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+                    window.GA4Data.ecommerce.items.push(@Html.Raw(productString));
                 </text>
             }
         </script>
