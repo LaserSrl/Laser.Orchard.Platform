@@ -26,10 +26,10 @@ namespace Laser.Orchard.StartupConfig.CacheByRole.Filters {
                 if (roles.Any()) {
                     // append roles in alphabetical order
                     key.Append("UserRoles=" + 
-                        String.Join(";",roles.OrderBy(r => r)));
+                        String.Join("|",roles.OrderBy(r => r))+";");
                 }
                 else {
-                    key.Append("UserRoles=empty-role");
+                    key.Append("UserRoles=empty-role;");
                 }
             }
         }
