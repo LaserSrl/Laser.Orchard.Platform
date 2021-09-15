@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Mvc.Filters;
-using System.Web.Mvc;
+﻿using Laser.Orchard.NwazetIntegration.Controllers;
+using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+using Laser.Orchard.PaymentGateway.Controllers;
+using Laser.Orchard.PaymentGateway.ViewModels;
+using Newtonsoft.Json;
 using Nwazet.Commerce.Controllers;
 using Nwazet.Commerce.Models;
-using Laser.Orchard.NwazetIntegration.Controllers;
-using Laser.Orchard.PaymentGateway.Controllers;
-using Orchard.DisplayManagement;
 using Orchard;
-using Orchard.Mvc;
-using Laser.Orchard.NwazetIntegration.Models;
 using Orchard.ContentManagement;
-using Laser.Orchard.NwazetIntegration.ViewModels;
-using Laser.Orchard.NwazetIntegration.Services;
-using Newtonsoft.Json;
-using Laser.Orchard.PaymentGateway.ViewModels;
-using Laser.Orchard.Cookies.Services;
-using Laser.Orchard.Cookies;
+using Orchard.DisplayManagement;
+using Orchard.Mvc;
+using Orchard.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Filters {
     public class CheckoutStepsFilter : FilterProvider, IActionFilter {
@@ -43,7 +40,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) {
-            
+
             if (_GTMProductService.ShoulAddEcommerceTags()) {
                 if (_GTMProductService.UseGA4()) {
                     GA4CheckoutStep(filterContext)();
@@ -65,65 +62,24 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                 return GA4AddShape("begin_checkout", GetProducts(model))(filterContext);
                             }
                         }
+                    } else if (filterContext.ActionDescriptor.ActionName.Equals("Review", StringComparison.InvariantCultureIgnoreCase)) {
+                        var result = filterContext.Result as ViewResult;
+                        if (result != null) {
+                            var model = result.Model as CheckoutViewModel;
+                            if (model != null) {
+                                if (model.SelectedShippingOption != null) {
+                                    return GA4AddShippingShape("add_shipping_info", new GA4ShippingInfoVM {
+                                        ProductList = GetProducts(model),
+                                        ShippingTier = model.SelectedShippingOption.ToString(),
+                                        Value = model.GetShoppingTotal(),
+                                        Coupon = "",
+                                        Currency = model.CurrencyProvider.CurrencyCode
+                                    })(filterContext);
+                                }
+                            }
+                        } 
                     }
-                } 
-                //else if (filterContext.Controller is PaymentController &&
-                //        filterContext.ActionDescriptor.ActionName.Equals("Info")) {
-                //    var viewResult = filterContext.Result as ViewResult;
-                //    if (viewResult != null) {
-                //        var model = viewResult.Model as PaymentVM;
-                //        if (model != null
-                //            && model.Record != null
-                //            && model.Record.Success) {
-                //            // select the contentitemid which is the id of the order
-                //            var orderId = model.Record.ContentItemId;
-                //            // select order
-                //            var order = _contentManager.Get<OrderPart>(orderId);
-                //            // verify if existing record
-                //            var existing = _addedMeauringPurchaseRepository
-                //                .Fetch(mp => mp.OrderPartRecord == order.Record
-                //                    && mp.AddedScript == true);
-
-                //        }
-                //    }
-
-
-
-                //    var selectedPos = _posServices
-                //            .FirstOrDefault(ps => ps.GetPosActionControllerType() == filterContext.Controller.GetType()
-                //                && filterContext.ActionDescriptor
-                //                    .ActionName.Equals(ps.GetPosActionName(), StringComparison.InvariantCultureIgnoreCase));
-                //    if (selectedPos != null) {
-                //        if (filterContext.Controller.TempData.ContainsKey("CheckoutViewModel")) {
-                //            var paymentModel = (dynamic)filterContext.Controller.ViewData.Model;
-
-                //            if (paymentModel != null) {
-                //                return GA4AddShape("purchase", null, new {
-                //                    transaction_id = paymentModel.Record.TransactionId,
-                //                    affiliation = "",
-                //                    value = paymentModel.Record.Amount,
-                //                    tax = "",
-                //                    shipping = "",
-                //                    currency = paymentModel.Record.Currency,
-                //                    coupon = ""
-                //                })(filterContext);
-                //            }
-
-                //            //var model = (CheckoutViewModel)filterContext.Controller.TempData["CheckoutViewModel"];
-                //            //if (model != null) {
-                //            //    return GA4AddShape("purchase", GetProducts(model), new {
-                //            //        transaction_id = "",
-                //            //        affiliation = "",
-                //            //        value = model.GetShopppingTotal(),
-                //            //        tax = model.ShoppingCart.Taxes().Amount,
-                //            //        shipping = model.SelectedShippingOption.Price,
-                //            //        currency = model.CurrencyProvider.CurrencyCode,
-                //            //        coupon = ""
-                //            //    })(filterContext);
-                //            //}
-                //        }
-                //    }
-                //}
+                }
             }
             // do nothing if this is not a checkout step
             return delegate () { };
@@ -163,7 +119,8 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         if (model != null) {
                             // this is probably always true
                             if (model.SelectedShippingOption != null) {
-                                return AddShape(new { step = 3,
+                                return AddShape(new {
+                                    step = 3,
                                     option = model.SelectedShippingOption.ToString()
                                 }, GetProducts(model))(filterContext);
                             } else {
@@ -269,7 +226,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             }
 
             // do nothing if this is not a checkout step
-            return delegate() { };
+            return delegate () { };
         }
 
         private Func<ActionExecutedContext, Action> AddShape(
@@ -285,6 +242,19 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             };
         }
 
+        private Func<ActionExecutedContext, Action> GA4AddShippingShape(
+            string eventName,
+            GA4ShippingInfoVM shippingInfoVM) {
+            return ctx => delegate () {
+                _workContextAccessor
+                    .GetContext(ctx)
+                    .Layout.Zones.Head
+                    .Add(_shapeFactory.GA4ShippingInfo(
+                         EventName: eventName,
+                         ShippingInfoVM: shippingInfoVM));
+            };
+        }
+
         private Func<ActionExecutedContext, Action> GA4AddShape(
             string eventName,
             IEnumerable<IGAProductVM> products = null,
@@ -297,7 +267,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                     .Add(_shapeFactory.GA4CheckoutStep(
                          GTMProducts: products,
                          EventName: eventName,
-                         AdditionalParams: additionalParams));
+                         AdditionalParams: JsonConvert.SerializeObject(additionalParams)));
             };
         }
 

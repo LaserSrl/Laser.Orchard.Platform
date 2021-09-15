@@ -28,6 +28,8 @@ window.GA4Data.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
 window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
 window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
 window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+window.GA4Data.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+window.GA4Data.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -59,6 +61,8 @@ $(function () {
     window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
     window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
     window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+    window.GA4Data.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+    window.GA4Data.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be
@@ -104,6 +108,16 @@ $(function () {
             GA4Object.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
             GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
             GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+        } else if (GA4Object.event == 'add_shipping_info') {
+            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+            GA4Object.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+        } else if (GA4Object.event == 'add_payment_info') {
+            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+            GA4Object.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
         }
     }
 
@@ -398,6 +412,30 @@ $(function () {
                         'click': {
                             'products': [productClicked]
                         }
+                    }
+                });
+            }
+        })
+        .on("submit", "#review-form", function (e) {
+            var formData = $(this)
+                // serialize to an array of oblects like {name: '', value:''}
+                .serializeArray()
+                // reduce the array to an object with the named properties
+                .reduce(function (o, v) {
+                    o[v.name] = v.value;
+                    return o;
+                }, {});
+
+            var posService = $("[name=SelectedPosService]", $(this)).val();
+            if (posService) {
+                window.dataLayer.push({
+                    event: 'add_payment_info',
+                    currency: window.GA4Data.ecommerce.currency,
+                    value: window.GA4Data.ecommerce.value,
+                    coupon: window.GA4Data.ecommerce.coupon,
+                    payment_type: posService,
+                    ecommerce: {
+                        items: window.GA4Data.ecommerce.items || []
                     }
                 });
             }

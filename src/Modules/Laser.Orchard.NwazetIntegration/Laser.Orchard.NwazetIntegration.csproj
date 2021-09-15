@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\GA4ProductVM.cs" />
     <Compile Include="ViewModels\GA4PurchaseVM.cs" />
+    <Compile Include="ViewModels\GA4ShippingInfoVM.cs" />
     <Compile Include="ViewModels\IGAProductVM.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
@@ -453,6 +454,7 @@
     <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
     <Content Include="Views\GA4CheckoutStep.cshtml" />
     <Content Include="Views\GA4Purchase.cshtml" />
+    <Content Include="Views\GA4ShippingInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
