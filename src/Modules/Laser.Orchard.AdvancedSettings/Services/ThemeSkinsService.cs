@@ -54,9 +54,9 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             // get current frontend theme
             var theme = _siteThemeService.GetSiteTheme();
             // find the Styles/Skins folder for the theme
-            var basePath = Path.Combine(theme.Location, theme.Id).Replace(Path.DirectorySeparatorChar, '/');
-            var stylesPath = Path.Combine(basePath, "Styles").Replace(Path.DirectorySeparatorChar, '/');
-            var skinsPath = Path.Combine(stylesPath, "Skins").Replace(Path.DirectorySeparatorChar, '/');
+            var basePath = PathCombine(theme.Location, theme.Id);
+            var stylesPath = PathCombine(basePath, "Styles");
+            var skinsPath = PathCombine(stylesPath, "Skins");
             return skinsPath;
         }
 
@@ -80,7 +80,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             } else {
                 filename += ".css";
             }
-            var filePath = Path.Combine(GetSkinsPath(), filename).Replace(Path.DirectorySeparatorChar, '/');
+            var filePath = PathCombine(GetSkinsPath(), filename);
             if(!_virtualPathProvider.FileExists(filePath)) {
                 // File not found
                 return null;
@@ -101,6 +101,11 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                 }
                 // TODO: manage having also scripts
             }
+        }
+
+        // shortcut to methods
+        private static string PathCombine(string path1, string path2) {
+            return Path.Combine(path1, path2).Replace(Path.DirectorySeparatorChar, '/');
         }
     }
 }
