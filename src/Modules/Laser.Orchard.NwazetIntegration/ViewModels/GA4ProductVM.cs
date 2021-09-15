@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using System.ComponentModel;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
-    public class GTMProductVM : IGAProductVM {
-        public GTMProductVM() { }
-        public GTMProductVM(
+    public class GA4ProductVM : IGAProductVM {
+        public GA4ProductVM() { }
+        public GA4ProductVM(
             GTMProductPart part) {
             PartId = part.Id;
             Id = part.ProductId;
@@ -18,18 +18,18 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         }
         [JsonProperty("partId")]
         public int PartId { get; set; }
-        [JsonProperty("id")]
+        [JsonProperty("item_id")]
         public string Id { get; set; }
-        [JsonProperty("name")]
+        [JsonProperty("item_name")]
         public string Name { get; set; }
         [DefaultValue("")]
-        [JsonProperty("brand", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("item_brand", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Brand { get; set; }
         [DefaultValue("")]
-        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("item_category", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Category { get; set; }
         [DefaultValue("")]
-        [JsonProperty("variant", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("item_variant", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Variant { get; set; }
         [JsonProperty("price")]
         [JsonConverter(typeof(PriceFormatConverter))]
@@ -42,7 +42,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         [JsonProperty("position", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public int Position { get; set; }
         [DefaultValue("")]
-        [JsonProperty("list", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("item_list_name", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ListName { get; set; }
     }
 }

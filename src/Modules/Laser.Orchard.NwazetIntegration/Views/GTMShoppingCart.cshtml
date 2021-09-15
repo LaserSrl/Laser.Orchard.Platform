@@ -3,7 +3,7 @@
 @{
     var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
     if (_GTMProductService.ShoulAddEcommerceTags()) {
-        var gtmProducts = (IEnumerable<GTMProductVM>)Model.GTMProducts;
+        var gtmProducts = (IEnumerable<IGAProductVM>)Model.GTMProducts;
 
         Script.Require("NwazetIntegration.TagManager").AtHead();
 

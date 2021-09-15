@@ -248,6 +248,9 @@
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
     <Compile Include="ViewModels\FacebookShopProductPartViewModel.cs" />
     <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
+    <Compile Include="ViewModels\GA4ProductVM.cs" />
+    <Compile Include="ViewModels\GA4PurchaseVM.cs" />
+    <Compile Include="ViewModels\IGAProductVM.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
@@ -354,6 +357,10 @@
       <Project>{bdb0cd8d-7c6c-46f0-a041-6b2e1e0f9c9e}</Project>
       <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.GoogleAnalytics\Laser.Orchard.GoogleAnalytics.csproj">
+      <Project>{8df6ed57-53f6-44e8-9bcd-40c2150a5a43}</Project>
+      <Name>Laser.Orchard.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
@@ -446,6 +453,8 @@
     <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\FacebookShopProductPartSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
+    <Content Include="Views\GA4CheckoutStep.cshtml" />
+    <Content Include="Views\GA4Purchase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
