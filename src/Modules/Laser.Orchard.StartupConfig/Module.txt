@@ -96,3 +96,8 @@ Features:
 		Name: ApplePay Domain Association
         Description: Enable the merchant domains verification.
 		Category: Payments
+	Laser.Orchard.StartupConfig.CacheByRole
+		Name: Laser Cache By Role
+		Description: Adds the user role in the cache key
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig, Orchard.OutputCache, Orchard.Caching
