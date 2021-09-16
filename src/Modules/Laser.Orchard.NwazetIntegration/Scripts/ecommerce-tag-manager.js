@@ -394,8 +394,11 @@ $(function () {
             var productClicked = productInArray(window.ecommerceData.impressions, prodId);
             if ($.isEmptyObject(productClicked)) {
                 // not found:
-                // this is a strange error condition that should not happen naturally
-                return;
+                // if I'm in the shopping cart, I need to search the product in the right array.
+                productClicked = productInArray(window.ecommerceData.cart.products, prodId);
+                if ($.isEmptyObject(productClicked)) {
+                    return;
+                }
             }
             if (window.useGA4) {
                 window.dataLayer.push({
@@ -426,6 +429,10 @@ $(function () {
                     return o;
                 }, {});
 
+            // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
+            // For this reason, I only need to check if a valid pos service has been selected.
+            // Other info required by GA4 event are read from the global GA4Data object.
+            // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the actual submit button clicked.
             var posService = $("[name=SelectedPosService]", $(this)).val();
             if (posService) {
                 window.dataLayer.push({
@@ -441,4 +448,3 @@ $(function () {
             }
         })
 });
-
