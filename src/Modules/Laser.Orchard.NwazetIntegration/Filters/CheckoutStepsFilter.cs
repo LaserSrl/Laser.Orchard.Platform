@@ -42,6 +42,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         public void OnActionExecuted(ActionExecutedContext filterContext) {
 
             if (_GTMProductService.ShoulAddEcommerceTags()) {
+                // Different handler for GA4.
                 if (_GTMProductService.UseGA4()) {
                     GA4CheckoutStep(filterContext)();
                 } else {
@@ -58,7 +59,6 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         if (result != null) {
                             var model = result.Model as CheckoutViewModel;
                             if (model != null) {
-                                // this is probably always true
                                 return GA4AddShape("begin_checkout", GetProducts(model))(filterContext);
                             }
                         }
@@ -67,6 +67,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         if (result != null) {
                             var model = result.Model as CheckoutViewModel;
                             if (model != null) {
+                                // If I've got a valid SelectedShippingOption, I'm in the right place for add_shipping_info GA4 event.
                                 if (model.SelectedShippingOption != null) {
                                     return GA4AddShippingShape("add_shipping_info", new GA4ShippingInfoVM {
                                         ProductList = GetProducts(model),
