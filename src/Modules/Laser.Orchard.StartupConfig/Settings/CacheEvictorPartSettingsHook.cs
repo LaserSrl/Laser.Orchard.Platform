@@ -8,6 +8,7 @@ using Orchard.ContentManagement.ViewModels;
 using Orchard.ContentTypes.Events;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Taxonomies.Services;
 using Orchard.UI.Notify;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,21 @@ namespace Laser.Orchard.StartupConfig.Settings {
     public class CacheEvictorPartSettingsHook : ContentDefinitionEditorEventsBase, IContentDefinitionEventHandler {
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;
+        private readonly ITaxonomyService _taxonomyService;
+
         public IOrchardServices Services { get; private set; }
 
 
         public CacheEvictorPartSettingsHook(
             IContentManager contentManager,
             IContentDefinitionManager contentDefinitionManager,
-            IOrchardServices services) {
+            IOrchardServices services,
+            ITaxonomyService taxonomyService) {
 
             Services = services;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
+            _taxonomyService = taxonomyService;
 
             T = NullLocalizer.Instance;
         }
@@ -37,12 +42,18 @@ namespace Laser.Orchard.StartupConfig.Settings {
         public override IEnumerable<TemplateViewModel> TypePartEditor(ContentTypePartDefinition definition) {
             if (definition.PartDefinition.Name != "CacheEvictorPart") yield break;
             var model = definition.Settings.GetModel<CacheEvictorPartSettings>();
+            model.TaxonomiesPart = _taxonomyService.GetTaxonomies();
+            if (!string.IsNullOrWhiteSpace(model.FilterTermsRecordId)) {
+                model.FilterTermsId = model.FilterTermsRecordId.Split(';').Select(int.Parse).ToList();
+            }
             yield return DefinitionTemplate(model);
         }
 
         public override IEnumerable<TemplateViewModel> TypePartEditorUpdate(ContentTypePartDefinitionBuilder builder, IUpdateModel updateModel) {
             if (builder.Name != "CacheEvictorPart") yield break;
             var model = new CacheEvictorPartSettings();
+            model.TaxonomiesPart = _taxonomyService.GetTaxonomies();
+
             updateModel.TryUpdateModel(model, "CacheEvictorPartSettings", null, null);
 
             // validate the inserted id
@@ -52,19 +63,7 @@ namespace Laser.Orchard.StartupConfig.Settings {
                 foreach (var item in model.EvictItem.Split(';')) {
                     if (!string.IsNullOrWhiteSpace(item)) {
                         if (int.TryParse(item, out id)) {
-                            var content = _contentManager.Get(id);
-                            if (content != null) {
-                                var identity = _contentManager.GetItemMetadata(content).Identity;
-                                if (identity != null) {
-                                    identityItems += identity.ToString() + ";";
-                                }
-                                else {
-                                    Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", item));
-                                }
-                            }
-                            else {
-                                Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", item));
-                            }
+                            identityItems += GetIdentityPart(id) + ";";
                         }
                         else {
                             Services.Notifier.Error(T("CacheEvictorPart - {0} is not an id", item));
@@ -75,9 +74,39 @@ namespace Laser.Orchard.StartupConfig.Settings {
                 model.IdentityEvictItem = identityItems;
             }
 
+            // manage terms
+            model.FilterTermsRecordId = string.Join(";", model.FilterTermsId);
+            string identityTerms = string.Empty;
+            foreach (var termId in model.FilterTermsId) {
+                identityTerms += GetIdentityPart(termId) + ";";
+            }
+            model.IdentityFilterTerms = identityTerms;
+
+
             // loads each settings field
             builder.WithSetting("CacheEvictorPartSettings.EvictItem", model.EvictItem);
             builder.WithSetting("CacheEvictorPartSettings.IdentityEvictItem", model.IdentityEvictItem);
+
+            builder.WithSetting("CacheEvictorPartSettings.FilterTermsRecordId", model.FilterTermsRecordId);
+            builder.WithSetting("CacheEvictorPartSettings.IdentityFilterTerms", model.IdentityFilterTerms);
+            builder.WithSetting("CacheEvictorPartSettings.IncludeChildren", model.IncludeChildren.ToString());
+        }
+
+        private string GetIdentityPart(int id) {
+            var content = _contentManager.Get(id);
+            if (content != null) {
+                var identity = _contentManager.GetItemMetadata(content).Identity;
+                if (identity != null) {
+                   return identity.ToString();
+                }
+                else {
+                    Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", id.ToString()));
+                }
+            }
+            else {
+                Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", id.ToString()));
+            }
+            return string.Empty;
         }
 
 
