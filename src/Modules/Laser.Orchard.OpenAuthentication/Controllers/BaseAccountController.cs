@@ -140,7 +140,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             string loginData = _orchardOpenAuthWebSecurity.SerializeProviderUserId(result.Provider,
                                                                                        result.ProviderUserId);
 
-            ViewBag.ProviderDisplayName = _orchardOpenAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+            ViewBag.ProviderDisplayName = GetProviderFriendlyName(result.Provider);
             ViewBag.ReturnUrl = returnUrl;
 
             // the LogOn Helper here is not doing any validaiton on the stuff it's putting in query string, so it 
@@ -284,7 +284,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             return this.RedirectLocal(returnUrl, Url.LogOn(returnUrl));
         }
         private ActionResult WebSignInSuccessful(string provider, string returnUrl) {
-            return WebSignInSuccessful(T("You have been logged using your {0} account.", provider), returnUrl);
+            return WebSignInSuccessful(T("You have been logged using your {0} account.", GetProviderFriendlyName(provider)), returnUrl);
         }
         private ActionResult WebSignInSuccessful(LocalizedString message, string returnUrl) {
             _notifier.Information(message);
@@ -325,7 +325,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
 
             return _utilsServices
                 .ConvertToJsonResult(_utilsServices
-                    .GetUserResponse(T("Your {0} account has been attached to your local account.", result.Provider).Text,
+                    .GetUserResponse(T("Your {0} account has been attached to your local account.", GetProviderFriendlyName(result.Provider)).Text,
                     _identityProviders));
         }
         private void UserMergeAndSignIn(
@@ -335,7 +335,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             _orchardOpenAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId,
                                                               masterUser, result.ExtraData);
 
-            _notifier.Information(T("Your {0} account has been attached to your local account.", result.Provider));
+            _notifier.Information(T("Your {0} account has been attached to your local account.", GetProviderFriendlyName(result.Provider)));
 
             // Handle LoggedIn Event
             var authenticatedUser = _authenticationService.GetAuthenticatedUser();
@@ -353,7 +353,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
                 (ar, us) => {
                     _userEventHandler.LoggedIn(us);
                     return WebSignInSuccessful(
-                        T("You have been logged in using your {0} account. We have created a local account for you with the name '{1}'", ar.Provider, us.UserName),
+                        T("You have been logged in using your {0} account. We have created a local account for you with the name '{1}'", GetProviderFriendlyName(ar.Provider), us.UserName),
                         returnUrl);
                 },
                 (ar, us) => AuthenticationFailed(returnUrl),
@@ -375,7 +375,7 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
                         return _utilsServices.ConvertToJsonResult(
                             _utilsServices.GetUserResponse(
                                 T("You have been logged in using your {0} account. We have created a local account for you with the name '{1}'",
-                                    ar.Provider, us.UserName).Text,
+                                    GetProviderFriendlyName(ar.Provider), us.UserName).Text,
                                 _identityProviders));
                     }
                 },
@@ -414,6 +414,12 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
             }
             // if newUser == null, just go ahead and return the "Login Failed" Response
             return failDelegate(result, newUser);
+        }
+
+        private string GetProviderFriendlyName(string provider) {
+            var friendlyName = _orchardOpenAuthWebSecurity.GetOAuthClientData(provider).DisplayName;
+            if (string.IsNullOrWhiteSpace(friendlyName)) friendlyName = provider;// If the DisplayName is missing we use the ProviderName as fallback
+            return friendlyName;
         }
     }
 
