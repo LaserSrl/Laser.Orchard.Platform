@@ -116,7 +116,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             AddressConfigurationSiteSettingsPart part) {
             return new AddressConfigurationSiteSettingsPartViewModel(part,_territoryPartRecordService) {
                 AllHierarchies = _contentManager
-                    .Query<TerritoryHierarchyPart>(VersionOptions.Published)
+                    .Query<TerritoryHierarchyPart, TerritoryHierarchyPartRecord>(VersionOptions.Published)
                     .List()
             };
         }

@@ -17,9 +17,10 @@ namespace Laser.Orchard.StartupConfig.Tokens {
         }
 
         public void Evaluate(EvaluateContext context) {
+            // Adding html converted chars to regex (< is &lt; and > is &gt;)
             context.For<String>("Text", () => "")
-                .Token("StripHtml", i => Regex.Replace(i, "<.*?>", String.Empty))
-                .Chain("StripHtml", "Text", i => Regex.Replace(i, "<.*?>", String.Empty))
+                .Token("StripHtml", i => Regex.Replace(i, "(<|&lt;).*?(>|&gt;)", string.Empty))
+                .Chain("StripHtml", "Text", i => Regex.Replace(i, "(<|&lt;).*?(>|&gt;)", string.Empty))
                 ;
         }
     }

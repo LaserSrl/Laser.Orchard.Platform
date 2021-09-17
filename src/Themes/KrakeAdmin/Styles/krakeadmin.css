@@ -11815,3 +11815,18 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 .text-through {
     text-decoration: line-through;
 }
+
+/* Projection Part */
+.row-settings-projection-part {
+    display: flex;
+    margin: 0;
+}
+
+.col-settings-projection-part {
+    width: 50%;
+    float: left;
+}
+
+.lock-editing-projection-part-field {
+    padding-top: 20px;
+}
