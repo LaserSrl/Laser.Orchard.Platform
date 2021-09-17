@@ -417,7 +417,6 @@ namespace Laser.Orchard.OpenAuthentication.Controllers {
         }
 
         private string GetProviderFriendlyName(string provider) {
-            Logger.Debug(provider);
             var friendlyName = _orchardOpenAuthWebSecurity.GetOAuthClientData(provider)?.DisplayName;
             if (string.IsNullOrWhiteSpace(friendlyName)) friendlyName = provider;// If the DisplayName is missing we use the ProviderName as fallback
             return friendlyName;
