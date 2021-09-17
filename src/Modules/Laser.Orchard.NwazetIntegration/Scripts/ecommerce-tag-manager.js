@@ -419,21 +419,12 @@ $(function () {
                 });
             }
         })
-        .on("submit", "#review-form", function (e) {
-            var formData = $(this)
-                // serialize to an array of oblects like {name: '', value:''}
-                .serializeArray()
-                // reduce the array to an object with the named properties
-                .reduce(function (o, v) {
-                    o[v.name] = v.value;
-                    return o;
-                }, {});
-
+        .on("submit", 'form[data-analytics-form="review"]', function (e) {
             // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
             // For this reason, I only need to check if a valid pos service has been selected.
             // Other info required by GA4 event are read from the global GA4Data object.
-            // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the actual submit button clicked.
-            var posService = $("[name=SelectedPosService]", $(this)).val();
+            // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
+            var posService = e.originalEvent.submitter.value;
             if (posService) {
                 window.dataLayer.push({
                     event: 'add_payment_info',
