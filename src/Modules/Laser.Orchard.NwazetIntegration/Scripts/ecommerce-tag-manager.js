@@ -92,32 +92,34 @@ $(function () {
 
 
     var GA4Object = {};
-    if (!$.isEmptyObject(window.GA4Data)
-        && window.GA4Data.event != ''
-        && !$.isEmptyObject(window.GA4Data.ecommerce)
-        && window.GA4Data.ecommerce.items.length) {
-        GA4Object.event = window.GA4Data.event;
-        GA4Object.ecommerce = window.GA4Data.ecommerce;
+    if (window.useGA4) {
+        if (!$.isEmptyObject(window.GA4Data)
+            && window.GA4Data.event != ''
+            && !$.isEmptyObject(window.GA4Data.ecommerce)
+            && window.GA4Data.ecommerce.items.length) {
+            GA4Object.event = window.GA4Data.event;
+            GA4Object.ecommerce = window.GA4Data.ecommerce;
 
-        // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
-        if (GA4Object.event == 'purchase') {
-            GA4Object.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
-            GA4Object.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
-            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || '';
-            GA4Object.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
-            GA4Object.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
-            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
-            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
-        } else if (GA4Object.event == 'add_shipping_info') {
-            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
-            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
-            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
-            GA4Object.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
-        } else if (GA4Object.event == 'add_payment_info') {
-            GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
-            GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
-            GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
-            GA4Object.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
+            // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+            if (GA4Object.event == 'purchase') {
+                GA4Object.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+                GA4Object.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || '';
+                GA4Object.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+                GA4Object.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+            } else if (GA4Object.event == 'add_shipping_info') {
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+                GA4Object.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+            } else if (GA4Object.event == 'add_payment_info') {
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+                GA4Object.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
+            }
         }
     }
 
@@ -130,28 +132,30 @@ $(function () {
         });
     }
 
-    if (!$.isEmptyObject(GA4Object)) {
-        window.dataLayer.push(GA4Object);
-    }
+    if (window.useGA4) {
+        if (!$.isEmptyObject(GA4Object)) {
+            window.dataLayer.push(GA4Object);
+        }
 
-    // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
-    // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
-    if (window.ecommerceData.detail.products.length) {
-        var GA4_view_item = {};
-        GA4_view_item.event = "view_item";
-        GA4_view_item.ecommerce = {};
-        GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
-        window.dataLayer.push(GA4_view_item);
-    }
+        // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
+        // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+        if (window.ecommerceData.detail.products.length) {
+            var GA4_view_item = {};
+            GA4_view_item.event = "view_item";
+            GA4_view_item.ecommerce = {};
+            GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+            window.dataLayer.push(GA4_view_item);
+        }
 
-    // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
-    // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
-    if (window.ecommerceData.impressions.length) {
-        var GA4_view_item_list = {};
-        GA4_view_item_list.event = "view_item_list";
-        GA4_view_item_list.ecommerce = {};
-        GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
-        window.dataLayer.push(GA4_view_item_list);
+        // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
+        // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+        if (window.ecommerceData.impressions.length) {
+            var GA4_view_item_list = {};
+            GA4_view_item_list.event = "view_item_list";
+            GA4_view_item_list.ecommerce = {};
+            GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+            window.dataLayer.push(GA4_view_item_list);
+        }
     }
 
     var productInArray = function (array, partId) {
@@ -420,22 +424,24 @@ $(function () {
             }
         })
         .on("submit", 'form[data-analytics-form="review"]', function (e) {
-            // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
-            // For this reason, I only need to check if a valid pos service has been selected.
-            // Other info required by GA4 event are read from the global GA4Data object.
-            // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
-            var posService = e.originalEvent.submitter.value;
-            if (posService) {
-                window.dataLayer.push({
-                    event: 'add_payment_info',
-                    currency: window.GA4Data.ecommerce.currency,
-                    value: window.GA4Data.ecommerce.value,
-                    coupon: window.GA4Data.ecommerce.coupon,
-                    payment_type: posService,
-                    ecommerce: {
-                        items: window.GA4Data.ecommerce.items || []
-                    }
-                });
+            if (window.useGA4) {
+                // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
+                // For this reason, I only need to check if a valid pos service has been selected.
+                // Other info required by GA4 event are read from the global GA4Data object.
+                // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
+                var posService = e.originalEvent.submitter.value;
+                if (posService) {
+                    window.dataLayer.push({
+                        event: 'add_payment_info',
+                        currency: window.GA4Data.ecommerce.currency,
+                        value: window.GA4Data.ecommerce.value,
+                        coupon: window.GA4Data.ecommerce.coupon,
+                        payment_type: posService,
+                        ecommerce: {
+                            items: window.GA4Data.ecommerce.items || []
+                        }
+                    });
+                }
             }
         })
 });
