@@ -30,6 +30,12 @@ namespace Laser.Orchard.OpenAuthentication.ViewModels {
             this.Attributes.AddRange(attributes);
         }
         public int Id { get; set; }
+
+        /// <summary>
+        /// This property shows/hides the login button within the LogOn page/shape. It does not mean that the provider is enabled or not.
+        /// If IsEnabled == 1 a specific button will be shown in the LogOn page/shape otherwise not.
+        /// If IsEnabled == 0 External Logons are still permitted; to completely disable the provider simply remove it from OpenAuthentication settings url: /Admin/OpenAuthentication
+        /// </summary>
         public int IsEnabled { get; set; }
         public string DisplayName { get; set; }
         public string ProviderName { get; set; }

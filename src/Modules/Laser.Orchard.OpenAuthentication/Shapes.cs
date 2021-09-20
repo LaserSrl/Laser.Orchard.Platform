@@ -27,7 +27,7 @@ namespace Laser.Orchard.OpenAuthentication {
                    .OnDisplaying(displaying => {
                        var clientsData = _openAuthAuthenticationClients
                 .Select(client => _orchardOpenAuthClientProvider.GetClientData(client.ProviderName))
-                .Where(x => x != null)
+                .Where(x => x != null && x.IsWebSiteLoginEnabled)
                 .ToList();
                         var shape = displaying.Shape;
                         var metadata = displaying.ShapeMetadata;
@@ -41,7 +41,7 @@ namespace Laser.Orchard.OpenAuthentication {
                    .OnDisplaying(displaying => {
                        var clientsData = _openAuthAuthenticationClients
                            .Select(client => _orchardOpenAuthClientProvider.GetClientData(client.ProviderName))
-                           .Where(x => x != null)
+                           .Where(x => x != null && x.IsWebSiteLoginEnabled)
                            .ToList();
 
                        var shape = displaying.Shape;
