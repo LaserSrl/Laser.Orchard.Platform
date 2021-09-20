@@ -121,6 +121,11 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             var manifest = GetSkinsManifest();
             if (manifest != null && skinPart != null) {
                 var selectedSkin = manifest.Skins.FirstOrDefault(tsd => tsd.Name.Equals(skinPart.SkinName));
+                // there may be a Default skin configured in the manifest, to be used
+                // when there is nothing selected in the skinPart
+                if (selectedSkin == null && string.IsNullOrWhiteSpace(skinPart.SkinName)) {
+                    selectedSkin = manifest.Skins.FirstOrDefault(tsd => tsd.Name.Equals("Default", StringComparison.OrdinalIgnoreCase));
+                }
                 if (selectedSkin != null) {
                     // add css files to head of page
                     if (selectedSkin.StyleSheets != null) {
