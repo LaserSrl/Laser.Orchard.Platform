@@ -1,15 +1,20 @@
-﻿using Orchard;
+﻿using Laser.Orchard.AdvancedSettings.ViewModels;
+using Orchard;
 using Orchard.UI.Resources;
 using System.Collections.Generic;
 
 namespace Laser.Orchard.AdvancedSettings.Services {
     public interface IThemeSkinsService : IDependency {
         /// <summary>
-        /// Read the /Styles/Skins folders for the current theme. Find the
-        /// css files to be used as skins.
+        /// Read the name of the customizations configured for the theme.
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> GetSkinNames();
+        /// <summary>
+        /// Read the variables that may be customized for the theme.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ThemeCssVariable> GetSkinVariables();
         /// <summary>
         /// Include the selected skin's resources in the registers.
         /// </summary>
