@@ -19,7 +19,7 @@
     </div>
 }
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Review"), FormMethod.Post, new { @id = "review-form" })) {
+    Url.Action("Review"), FormMethod.Post, new { @id = "review-form", data_analytics_form = "review" })) {
     @*serialized order data*@
     @Html.HiddenFor(m => m.SerializedAddresses)
     @Html.HiddenFor(m => m.BillAtSameShippingAddress)
