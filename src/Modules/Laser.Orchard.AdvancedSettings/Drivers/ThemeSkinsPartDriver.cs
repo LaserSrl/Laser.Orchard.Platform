@@ -67,10 +67,13 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
                 return;
             }
             part.SkinName = context.Attribute(part.PartDefinition.Name, "SkinName");
+            part.SerializedVariables = context.Attribute(part.PartDefinition.Name, "SerializedVariables");
         }
 
         protected override void Exporting(ThemeSkinsPart part, ExportContentContext context) {
-            context.Element(part.PartDefinition.Name).SetAttributeValue("SkinName", part.SkinName);
+            var partElement = context.Element(part.PartDefinition.Name);
+            partElement.SetAttributeValue("SkinName", part.SkinName);
+            partElement.SetAttributeValue("SerializedVariables", part.SerializedVariables);
         }
 
         private void PopulateVMOptions(ThemeSkinsPartEditViewModel vm) {
