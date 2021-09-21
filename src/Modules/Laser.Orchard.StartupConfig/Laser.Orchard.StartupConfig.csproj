@@ -415,6 +415,7 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="Rules\HttpCookieCondition.cs" />
