@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.AdvancedSettings.Models;
 using Laser.Orchard.AdvancedSettings.ViewModels;
 using Newtonsoft.Json;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.VirtualPath;
@@ -19,21 +20,24 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         private readonly ISiteThemeService _siteThemeService;
         private readonly IAdvancedSettingsService _advancedSettingsService;
         private readonly IResourceManager _resourceManager;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public ThemeSkinsService(
             IVirtualPathProvider virtualPathProvider,
             ISiteThemeService siteThemeService,
             IAdvancedSettingsService advancedSettingsService,
-            IResourceManager resourceManager) {
+            IResourceManager resourceManager,
+            IWorkContextAccessor workContextAccessor) {
             
             _virtualPathProvider = virtualPathProvider;
             _siteThemeService = siteThemeService;
             _advancedSettingsService = advancedSettingsService;
             _resourceManager = resourceManager;
+            _workContextAccessor = workContextAccessor;
         }
         
         private SkinsManifest _skinsManifest;
-        public SkinsManifest GetSkinsManifest() {
+        protected SkinsManifest GetSkinsManifest() {
             if (_skinsManifest == null) {
                 _skinsManifest = new SkinsManifest();
                 var themePath = GetThemePath();
@@ -50,7 +54,23 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             return _skinsManifest;
         }
         
+        protected ThemeSkinsSettingsPart GetSettings() {
+            return _workContextAccessor.GetContext()
+                .CurrentSite.As<ThemeSkinsSettingsPart>();
+        }
+
         public IEnumerable<string> GetSkinNames() {
+            Func<string, bool> predicate = s => true;
+            var settings = GetSettings();
+            if (settings != null) {
+                if (!settings.AvailableSkinNames.Contains(ThemeSkinsSettingsPart.AllSkinsValue)) {
+                    predicate = s => settings.AvailableSkinNames.Contains(s);
+                }
+            }
+            return GetAllSkinNames().Where(predicate);
+        }
+
+        public IEnumerable<string> GetAllSkinNames() {
             var manifest = GetSkinsManifest();
             return manifest.Skins.Select(s => s.Name);
         }
@@ -59,7 +79,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             var manifest = GetSkinsManifest();
             return manifest.Variables;
         }
-
+                
         protected string GetThemePath() {
             // get current frontend theme
             var theme = _siteThemeService.GetSiteTheme();
@@ -119,8 +139,11 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         public void IncludeSkin(ResourceRegister Style, ResourceRegister Script, string settingsName) {
             var skinPart = GetConfigurationPart(settingsName);
             var manifest = GetSkinsManifest();
+            var allowedSkinNames = GetSkinNames();
             if (manifest != null && skinPart != null) {
-                var selectedSkin = manifest.Skins.FirstOrDefault(tsd => tsd.Name.Equals(skinPart.SkinName));
+                var selectedSkin = manifest.Skins
+                    .FirstOrDefault(tsd => allowedSkinNames.Contains(tsd.Name) 
+                        && tsd.Name.Equals(skinPart.SkinName));
                 // there may be a Default skin configured in the manifest, to be used
                 // when there is nothing selected in the skinPart
                 if (selectedSkin == null && string.IsNullOrWhiteSpace(skinPart.SkinName)) {
