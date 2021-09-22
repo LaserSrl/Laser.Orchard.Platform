@@ -10,6 +10,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Taxonomies.Services;
 using Orchard.UI.Notify;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,7 +45,9 @@ namespace Laser.Orchard.StartupConfig.Settings {
             var model = definition.Settings.GetModel<CacheEvictorPartSettings>();
             model.TaxonomiesPart = _taxonomyService.GetTaxonomies();
             if (!string.IsNullOrWhiteSpace(model.FilterTermsRecordId)) {
-                model.FilterTermsId = model.FilterTermsRecordId.Split(';').Select(int.Parse).ToList();
+                model.FilterTermsId = model.FilterTermsRecordId
+                    .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(Int32.Parse).ToList();
             }
             yield return DefinitionTemplate(model);
         }
@@ -144,19 +147,32 @@ namespace Laser.Orchard.StartupConfig.Settings {
                 .Where(p=>p.PartDefinition.Name== "CacheEvictorPart")
                 .FirstOrDefault();
             if (part != null) {
+                string listEvictIds = string.Empty;
+                string listFilterTerms = string.Empty;
+
                 if (!string.IsNullOrEmpty(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem)) {
-                    string listIds = string.Empty;
                     foreach (var item in part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem.Split(';')) {
                         var ciIdentity = _contentManager.ResolveIdentity(new ContentIdentity(item));
                         if (ciIdentity != null) {
-                            listIds += ciIdentity.Id.ToString() + ";";
+                            listEvictIds += ciIdentity.Id.ToString() + ";";
                         }
                     }
-                    _contentDefinitionManager.AlterTypeDefinition(context.ContentTypeDefinition.Name, cfg => cfg
-                       .WithPart(part.PartDefinition.Name,
-                            pb=>pb.WithSetting("CacheEvictorPartSettings.EvictItem", listIds))
-                    );
                 }
+                if (!string.IsNullOrEmpty(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityFilterTerms)) {
+                    foreach (var item in part.Settings.GetModel<CacheEvictorPartSettings>().IdentityFilterTerms.Split(';')) {
+                        var ciIdentity = _contentManager.ResolveIdentity(new ContentIdentity(item));
+                        if (ciIdentity != null) {
+                            listFilterTerms += ciIdentity.Id.ToString() + ";";
+                        }
+                    }
+                }
+
+                _contentDefinitionManager.AlterTypeDefinition(context.ContentTypeDefinition.Name, cfg => cfg
+                    .WithPart(part.PartDefinition.Name,
+                        pb => pb
+                            .WithSetting("CacheEvictorPartSettings.EvictItem", listEvictIds)
+                            .WithSetting("CacheEvictorPartSettings.FilterTermsRecordId", listFilterTerms))
+                );
             }
         }
 

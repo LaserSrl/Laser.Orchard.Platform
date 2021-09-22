@@ -5,6 +5,7 @@ using Orchard.Environment.Extensions;
 using Orchard.OutputCache.Services;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -43,7 +44,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                         // second part: term evict
                         // start with the selected ids
                         var allTermIds = filterTermsRecordId
-                            .Split(';')
+                            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(int.Parse)
                             .ToList();
 
@@ -76,14 +77,19 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                             .Select(c => c.TermPart);
 
                         // and if present take the fathers to avoid them
+                        // if parent ids are present in the list of selected terms in the settings, cache evict
                         foreach (var term in termParts) {
-                            _cacheService.RemoveByTag(term.Id.ToString());
-
-                            foreach (var parent in _taxonomyService.GetParents(term)) {
-                                // if parent ids are present in the list of selected terms in the settings, cache evict
-                                if (allIds.Contains(parent.Id)) {
-                                    _cacheService.RemoveByTag(parent.Id.ToString());
-                                }
+                            // check whether the end of the content item is present 
+                            if (allIds.Contains(term.Id)) {
+                                _cacheService.RemoveByTag(term.Id.ToString());
+                            }
+                            // checking if the taxonomy id is present
+                            if (allIds.Contains(term.TaxonomyId)) {
+                                _cacheService.RemoveByTag(term.Id.ToString());
+                            }
+                            // checking if the term hierarchy is present
+                            foreach (var parent in _taxonomyService.GetParents(term).Where(p => allIds.Contains(p.Id))) {
+                                _cacheService.RemoveByTag(parent.Id.ToString());
                             }
                         }
                     }
