@@ -50,7 +50,7 @@
                     }
                     @if (Model.ContentPart.ShowReviews) {
                     <span class="my-review">My Review:</span>
-                        @using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post)) {
+                        using (Html.BeginFormAntiForgeryPost(Url.Action("Create", "Review", new { area = "Contrib.Reviews" }), FormMethod.Post)) {
                             @Html.TextArea("comment", (TempData["Comment"] ?? "").ToString(), new { maxLength = 1200, rows = 4 })
                             @Html.Hidden("contentId", (int)Model.ContentPart.ContentItem.Id)
                             @Html.Hidden("ReturnUrl", Context.Request.RawUrl)
