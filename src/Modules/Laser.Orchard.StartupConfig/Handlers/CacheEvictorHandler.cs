@@ -23,8 +23,26 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             _cacheService = cacheService;
             _taxonomyService = taxonomyService;
 
+            IEnumerable<int> previousTermIds = new List<int>();
+            IEnumerable<int> previousTaxonomyIds = new List<int>();
+
+            OnUpdating<CacheEvictorPart>((context, part) => {
+                if (part != null && part.Settings.GetModel<CacheEvictorPartSettings>().EvictTerms) {
+                    // saves the terms before saving
+                    var termsPart = part.ContentItem
+                        .As<TermsPart>();
+
+                    if (termsPart != null) {
+                        previousTaxonomyIds = termsPart.Terms.Select(t => t.TermRecord.TaxonomyId).ToList();
+                        previousTermIds = termsPart.Terms.Select(t => t.TermRecord.Id).ToList();
+                    }
+                }
+            });
+
             OnPublished<CacheEvictorPart>((context, part) => {
                 if (part != null) {
+                    HashSet<int> evictIds = new HashSet<int>();
+
                     // first part: evicting manually added ids
                     var evictItem = part.Settings.GetModel<CacheEvictorPartSettings>().EvictItem;
                     if (evictItem != null) {
@@ -32,81 +50,53 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                             .Split(';')
                             // check only number
                             .Where(e => int.TryParse(e, out int num))
+                            .Select(Int32.Parse)
                             .ToList();
 
-                        foreach (var item in evictItems) {
-                            _cacheService.RemoveByTag(item);
-                        }
+                        evictIds.UnionWith(evictItems);
                     }
-
-                    var filterTermsRecordId = part.Settings.GetModel<CacheEvictorPartSettings>().FilterTermsRecordId;
-                    if (filterTermsRecordId != null) {
-                        // second part: term evict
-                        // start with the selected ids
-                        var allTermIds = filterTermsRecordId
-                            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(int.Parse)
-                            .ToList();
-
-                        // create a single list with all the ids to be evicted
-                        // used the hashset because it manages duplicate ids by itself
-                        HashSet<int> allIds = new HashSet<int>();
-                        allIds.UnionWith(allTermIds);
-                        if (allTermIds.Any()) {
-                            // for all ids that are terms
-                            // depending on the setting get or don't get the children 
-                            allIds.UnionWith(allTermIds
-                                .Where(id => _taxonomyService.GetTaxonomy(id) == null)
-                                .SelectMany(id => GetTerms(id, part.Settings.GetModel<CacheEvictorPartSettings>().IncludeChildren))
-                                .Select(t => t.Id));
-                            // if a taxonomy is selected get all its children
-                            allIds.UnionWith(allTermIds
-                               .Where(x => _taxonomyService.GetTaxonomy(x) != null)
-                               .SelectMany(t => _taxonomyService.GetTerms(t))
-                               .Select(term => term.Id));
-                        }
-
-                        // starting with the created list
-                        // check the terms in my content
+                    // second part: terms
+                    if (part.Settings.GetModel<CacheEvictorPartSettings>().EvictTerms) {
+                        // check the actually terms in my content.
                         var termsPart = part.ContentItem
                             .As<TermsPart>();
 
-                        var termParts = termsPart == null ? new List<TermPart>() :
-                            termsPart
-                            .TermParts
-                            .Select(c => c.TermPart);
+                        var taxonomyIds = termsPart.TermParts.Select(t => t.TermPart.TaxonomyId);
+                        // add taxonomy ids of the previous taxonomy
+                        evictIds.UnionWith(previousTaxonomyIds);
+                        // add taxonomy ids of the terms
+                        evictIds.UnionWith(taxonomyIds);
 
-                        // and if present take the fathers to avoid them
-                        // if parent ids are present in the list of selected terms in the settings, cache evict
-                        foreach (var term in termParts) {
-                            // check whether the end of the content item is present 
-                            if (allIds.Contains(term.Id)) {
-                                _cacheService.RemoveByTag(term.Id.ToString());
-                            }
-                            // checking if the taxonomy id is present
-                            if (allIds.Contains(term.TaxonomyId)) {
-                                _cacheService.RemoveByTag(term.Id.ToString());
-                            }
-                            // checking if the term hierarchy is present
-                            foreach (var parent in _taxonomyService.GetParents(term).Where(p => allIds.Contains(p.Id))) {
-                                _cacheService.RemoveByTag(parent.Id.ToString());
-                            }
+                        var terms = termsPart.TermParts.Select(c => c.TermPart);
+                        // check if id of the term is present
+                        foreach (var idTerm in previousTermIds.Except(terms.Select(t => t.Id))) {
+                            // if previous id not is present in the list of actual
+                            // finds term part for parents search 
+                            evictIds.UnionWith(GetTermsToEvict(_taxonomyService.GetTerm(idTerm)));
                         }
+                        // add term ids of the terms
+                        foreach (var term in terms) {
+                            evictIds.UnionWith(GetTermsToEvict(term));
+                        }
+                    }
+
+                    // evict ids
+                    foreach (var id in evictIds) {
+                        _cacheService.RemoveByTag(id.ToString());
                     }
                 }
             });
         }
 
-        private IEnumerable<TermPart> GetTerms(int termId, bool andChildren) {
-            var term = _taxonomyService.GetTerm(termId);
-            if (term == null) {
-                return Enumerable.Empty<TermPart>();
+        private List<int> GetTermsToEvict(TermPart termPart) {
+            List<int> termIds = new List<int>();
+            // evict term
+            termIds.Add(termPart.Id);
+            // evict parents
+            foreach (var parent in _taxonomyService.GetParents(termPart)) {
+                termIds.Add(parent.Id);
             }
-            var ts = new List<TermPart>() { term };
-            if (andChildren) {
-                ts.AddRange(_taxonomyService.GetChildren(term));
-            }
-            return ts;
+            return termIds;
         }
     }
 }
