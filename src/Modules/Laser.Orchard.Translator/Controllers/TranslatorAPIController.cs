@@ -22,7 +22,8 @@ namespace Laser.Orchard.Translator.Controllers {
             Log = NullLogger.Instance;
         }
 
-        private readonly string[] _validContainerTypes = new string[] { "A", "M", "T", "U" };
+        private readonly string[] _validContainerTypes = new string[] { "A", "M", "T", "U", "W", "X", "Y", "Z" };
+
         [System.Web.Mvc.HttpPost, ActionName("AddRecords")]
         public bool AddRecords([FromBody] List<TranslationRecord> records) {
             try {
@@ -87,6 +88,18 @@ namespace Laser.Orchard.Translator.Controllers {
                             break;
                         case "U":
                             folderType = ElementToTranslate.Undefined;
+                            break;
+                        case "W":
+                            folderType = ElementToTranslate.OrchardModule;
+                            break;
+                        case "X":
+                            folderType = ElementToTranslate.OrchardTheme;
+                            break;
+                        case "Y":
+                            folderType = ElementToTranslate.OrchardCore;
+                            break;
+                        case "Z":
+                            folderType = ElementToTranslate.OrchardFramework;
                             break;
                     }
                     _translatorServices.EnableFolderTranslation(folder.ContainerName, folderType);
