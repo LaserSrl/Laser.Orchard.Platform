@@ -1,45 +1,17 @@
-﻿@using Orchard.Taxonomies.Models;
-@using Orchard.Taxonomies.Services;
-@using Orchard.Taxonomies.Helpers;
-
-
-@model Laser.Orchard.StartupConfig.Models.CacheEvictorPartSettings
-
-@{
-    ITaxonomyService _taxonomyService = WorkContext.Resolve<ITaxonomyService>();
-}
+﻿@model Laser.Orchard.StartupConfig.Models.CacheEvictorPartSettings
 
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.EvictItem)">@T("Evict Item")</label>
-    <div>
+    <div class="evict-item">
         @Html.TextAreaFor(m => m.EvictItem, new { @class = "text medium", rows = "4" })
         <span class="hint">@T("Insert Ids separated by a ; e.g. 5;10;15")</span>
     </div>
 </fieldset>
 <fieldset>
-    <div class="taxonomies-terms">
-        @Html.LabelFor(m => m.FilterTermsId, T("Filter Terms"))
-        <select id="@Html.FieldIdFor(m => m.FilterTermsId)" multiple="multiple" size="10" name="@Html.FieldNameFor(m => m.FilterTermsId)">
-            @foreach (TaxonomyPart taxonomy in Model.TaxonomiesPart) {
-                <optgroup label="@taxonomy.Name">
-                    @Html.SelectOption(taxonomy.Id, Model.FilterTermsId.Contains(taxonomy.Id), T("(All terms of {0})", taxonomy.Name).Text)
-
-                    @foreach (TermPart term in _taxonomyService.GetTerms(taxonomy.Id)) {
-                        var gap = new string('-', term.GetLevels());
-
-                        if (gap.Length > 0) {
-                            gap += " ";
-                        }
-                        @Html.SelectOption(term.Id, Model.FilterTermsId.Contains(term.Id), gap + term.Name)
-                    }
-                </optgroup>
-            }
-        </select>
-        <span class="hint">@T("Select some terms.")</span>
-    </div>
-    <div class="include-children">
-        @Html.CheckBoxFor(m => m.IncludeChildren)
-        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.IncludeChildren)">@T("Automatically include children terms in filtering")</label>
+    <div class="evict-terms">
+        @Html.CheckBoxFor(m => m.EvictTerms)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EvictTerms)">@T("Evict Terms")</label>
+        <span class="hint">@T("If checked evicts any term that belongs to the content, its parent and its taxonomy.")</span>
     </div>
 
 </fieldset>
