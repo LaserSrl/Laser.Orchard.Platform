@@ -6,10 +6,15 @@ using System.Collections.Generic;
 namespace Laser.Orchard.AdvancedSettings.Services {
     public interface IThemeSkinsService : IDependency {
         /// <summary>
-        /// Read the name of the customizations configured for the theme.
+        /// Read the name of the customizations configured for the theme for the current tenant.
         /// </summary>
         /// <returns></returns>
         IEnumerable<string> GetSkinNames();
+        /// <summary>
+        /// Read the name of the customizations configured for the theme.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<string> GetAllSkinNames();
         /// <summary>
         /// Read the variables that may be customized for the theme.
         /// </summary>
