@@ -1,10 +1,6 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Aspects;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.AdvancedSettings.Models {
     public class AdvancedSettingsPart : ContentPart<AdvancedSettingsPartRecord>, ITitleAspect {

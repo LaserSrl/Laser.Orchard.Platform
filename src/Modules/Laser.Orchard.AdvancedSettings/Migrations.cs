@@ -2,10 +2,6 @@
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Data.Migration.Schema;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.AdvancedSettings {
     public class Migrations : DataMigrationImpl {

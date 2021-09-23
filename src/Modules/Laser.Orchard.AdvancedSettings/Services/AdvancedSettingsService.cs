@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Laser.Orchard.AdvancedSettings.Models;
+﻿using Laser.Orchard.AdvancedSettings.Models;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.MediaLibrary.Fields;
+using System;
+using System.Linq;
 
 namespace Laser.Orchard.AdvancedSettings.Services {
     public class AdvancedSettingsService : IAdvancedSettingsService {
