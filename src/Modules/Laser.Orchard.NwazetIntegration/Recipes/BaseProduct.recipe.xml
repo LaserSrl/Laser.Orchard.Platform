@@ -15,7 +15,7 @@
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
            Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
            Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions,
-           Nwazet.CurrencyProviderBySiteSetting
+           Nwazet.CurrencyProviderBySiteSetting,Laser.Orchard.StartupConfig.CacheEvictorPart
            " />
   <ContentDefinition>
     <Types>
@@ -28,6 +28,7 @@
                        AutorouteSettings.UseCulturePattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False"
                        AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" 
                        AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]"/>
+        <CacheEvictorPart CacheEvictorPartSettings.EvictTerms="True" />
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
         <GTMProductPart GTMProductSettingVM.Id="Sku" GTMProductSettingVM.Name="{Content.DisplayText}" 
                         GTMProductSettingVM.Brand="" 
@@ -130,6 +131,7 @@
     </Types>
     <Parts>
       <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+      <CacheEvictorPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Used for any content. Specify the id of the reference content(s) to cache evict." />
       <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True">
         <Creator.NumericField DisplayName="Id of user Creator" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
         <LastModifier.NumericField DisplayName="Id of last user that have modified the content item" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
