@@ -73,6 +73,35 @@ namespace Laser.Orchard.Translator.Controllers
                     data = new Dictionary<string, string>() { { "type", "A" } }
                 });
 
+                // Orchard modules
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-W",
+                    text = T("Orchard modules").ToString(),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard modules"), ElementToTranslate.OrchardModule),
+                    data = new Dictionary<string, string>() { { "type", "W" } }
+                });
+                // Orchard themes
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-X",
+                    text = T("Orchard themes").ToString(),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard themes"), ElementToTranslate.OrchardTheme),
+                    data = new Dictionary<string, string>() { { "type", "X" } }
+                });
+                // Orchard core
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-Y",
+                    text = T("Orchard.Core").ToString(),
+                    //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard core"), ElementToTranslate.OrchardCore),
+                    data = new Dictionary<string, string>() { { "type", "Y" }, { "percent", GetCompletionPercent(language, "Orchard.Core", "Y").ToString() + "%" } }
+                });
+                // Orchard framework
+                tree.Add(new TranslationTreeNodeViewModel {
+                    id = "translatortree-parent-Z",
+                    text = T("Orchard.Framework").ToString(),
+                    //children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard framework"), ElementToTranslate.OrchardFramework),
+                    data = new Dictionary<string, string>() { { "type", "Z" }, { "percent", GetCompletionPercent(language, "Orchard.Framework", "Z").ToString() + "%" } }
+                });
+
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-U",
                     text = T("Undefined").ToString(),
@@ -108,6 +137,18 @@ namespace Laser.Orchard.Translator.Controllers
                         ? translatorSettings.TenantsToTranslate.Replace(" ", "").Split(',').ToList()
                         : new List<string>();
                     folderType = "A";
+                    break;
+                case ElementToTranslate.OrchardModule:
+                    elementsToTranslate = translatorSettings.OrchardModulesToTranslate != null
+                        ? translatorSettings.OrchardModulesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
+                    folderType = "W";
+                    break;
+                case ElementToTranslate.OrchardTheme:
+                    elementsToTranslate = translatorSettings.OrchardThemesToTranslate != null
+                        ? translatorSettings.OrchardThemesToTranslate.Replace(" ", "").Split(',').ToList()
+                        : new List<string>();
+                    folderType = "X";
                     break;
             }
 

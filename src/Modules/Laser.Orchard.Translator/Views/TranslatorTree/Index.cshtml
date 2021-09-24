@@ -136,7 +136,10 @@
             $('#showDetailsForm').submit(function () {
                 var selectedNodes = $('#folderTree').jstree().get_selected(true);
 
-                if ((selectedNodes.length == 0 || selectedNodes[0].parents.length < 2) && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-U'))
+                if ((selectedNodes.length == 0 || selectedNodes[0].parents.length < 2)
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-U')  // Undefined
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-Y')  // Orchard Core
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-Z')) // Orchard Framework
                 {
                     alert("@T("Please select a module, a theme or a tenant.")");
                     return false;

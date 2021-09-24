@@ -47,12 +47,12 @@ namespace Laser.Orchard.Translator.Controllers {
 
         public ActionResult ExportTranslations() {
             using (ZipFile zip = new ZipFile()) {
-                var filename = "ExportTranslations_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".zip";
+                var zipFileName = "ExportTranslations_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".zip";
 
                 Response.Clear();
                 Response.BufferOutput = false;
                 Response.ContentType = "application/zip";
-                Response.AppendHeader("content-disposition", "attachment; filename=" + filename);
+                Response.AppendHeader("content-disposition", "attachment; filename=" + zipFileName);
                 var settings = _translatorServices.GetTranslationFoldersSettings();
                 var deprecatedFolders = settings.Where(m => m.Deprecated)
                     .Select(s => new { s.ContainerName, s.ContainerType/*, s.Language*/ });
@@ -67,8 +67,8 @@ namespace Laser.Orchard.Translator.Controllers {
 
                 foreach (var folder in foldersToExport) {
                     if (!deprecatedFolders
-                        .Where(item => /*item.Language == folder.Language &&*/ 
-                            item.ContainerName == folder.ContainerName 
+                        .Where(item => /*item.Language == folder.Language &&*/
+                            item.ContainerName == folder.ContainerName
                             && item.ContainerType == folder.ContainerType).Any()) {
 
                         var settingsForFolder = settings
@@ -105,10 +105,10 @@ namespace Laser.Orchard.Translator.Controllers {
                         string parentFolder = "";
                         string fileName = "";
                         string outputPath = "Sources";
-                        var localizationFolderBase = Path.Combine("App_Data","Localization");
+                        var localizationFolderBase = Path.Combine("App_Data", "Localization");
                         switch (folder.ContainerType) {
                             case "M":
-                                parentFolder = Path.Combine("Deploy","Modules");
+                                parentFolder = Path.Combine("Deploy", "Modules");
                                 fileName = "orchard.module.po";
                                 break;
                             case "T":
@@ -116,38 +116,72 @@ namespace Laser.Orchard.Translator.Controllers {
                                 fileName = "orchard.theme.po";
                                 break;
                             case "A":
-                                parentFolder = Path.Combine("Deploy","App_Data","Sites");
+                                parentFolder = Path.Combine("Deploy", "App_Data", "Sites");
                                 fileName = "orchard.po";
                                 localizationFolderBase = "Localization";
+                                break;
+                            case "W":   // Orchard modules
+                                parentFolder = Path.Combine("Deploy", "Modules");
+                                fileName = "orchard.module.po";
+                                break;
+                            case "X":   // Orchard themes
+                                parentFolder = Path.Combine("Deploy", "Themes");
+                                fileName = "orchard.theme.po";
+                                break;
+                            case "Y":   // Orchard core
+                                parentFolder = Path.Combine("Deploy", "Core");
+                                fileName = "orchard.core.po";
+                                break;
+                            case "Z":   // Orchard framework
+                                parentFolder = "Deploy";
+                                fileName = "orchard.root.po";
                                 break;
                         }
 
                         if (settingsForFolder != null && !string.IsNullOrWhiteSpace(settingsForFolder.OutputPath)) {
                             outputPath = Path.Combine(
-                                outputPath, 
-                                settingsForFolder.OutputPath.StartsWith("/") 
-                                    ? settingsForFolder.OutputPath.Substring(1) 
+                                outputPath,
+                                settingsForFolder.OutputPath.StartsWith("/")
+                                    ? settingsForFolder.OutputPath.Substring(1)
                                     : settingsForFolder.OutputPath);
                         }
                         if (!String.IsNullOrWhiteSpace(fileName) && !String.IsNullOrWhiteSpace(parentFolder)) {
                             StreamReader streamReader = new StreamReader(stream, Encoding.UTF8);
                             var finalContent = streamReader.ReadToEnd();
-                            zip.AddEntry(
-                                Path.Combine(
-                                    parentFolder,
-                                    folder.ContainerName,
-                                    localizationFolderBase,
-                                    folder.Language,
-                                    fileName),
-                                finalContent, Encoding.UTF8);
-                            zip.AddEntry(
-                                Path.Combine(
-                                    outputPath,
-                                    folder.ContainerName,
-                                    localizationFolderBase,
-                                    folder.Language,
-                                    fileName), 
-                                finalContent, Encoding.UTF8);
+                            // Special cases for Orchard Core and Orchard Framework containers: they don't require the ContainerName subfolder.
+                            if (folder.ContainerType == "Y" || folder.ContainerType == "Z") {
+                                zip.AddEntry(
+                                    Path.Combine(
+                                        parentFolder,
+                                        localizationFolderBase,
+                                        folder.Language,
+                                        fileName),
+                                    finalContent, Encoding.UTF8);
+                                zip.AddEntry(
+                                    Path.Combine(
+                                        outputPath,
+                                        localizationFolderBase,
+                                        folder.Language,
+                                        fileName),
+                                    finalContent, Encoding.UTF8);
+                            } else {
+                                zip.AddEntry(
+                                    Path.Combine(
+                                        parentFolder,
+                                        folder.ContainerName,
+                                        localizationFolderBase,
+                                        folder.Language,
+                                        fileName),
+                                    finalContent, Encoding.UTF8);
+                                zip.AddEntry(
+                                    Path.Combine(
+                                        outputPath,
+                                        folder.ContainerName,
+                                        localizationFolderBase,
+                                        folder.Language,
+                                        fileName),
+                                    finalContent, Encoding.UTF8);
+                            }
 
                             streamReader.Dispose();
                         }
@@ -182,17 +216,17 @@ namespace Laser.Orchard.Translator.Controllers {
                     containerType = "T";
                     break;
                 case ElementToTranslate.Tenant:
-                    // TODO: verify that the import feature for translations
-                    // works and figure out what should happen for alternates
-                    // that are specific for tenants
-                    //parentFolder = "Themes";
-                    //fileName = "orchard.po";
-                    //containerType = "A";
-                    //break;
+                // TODO: verify that the import feature for translations
+                // works and figure out what should happen for alternates
+                // that are specific for tenants
+                //parentFolder = "Themes";
+                //fileName = "orchard.po";
+                //containerType = "A";
+                //break;
                 default:
                     return;
             }
-            
+
 
             foreach (var folder in foldersToImport) {
                 var path = Path.Combine(_utilsServices.TenantPath, parentFolder, folder, "App_Data", "Localization");
