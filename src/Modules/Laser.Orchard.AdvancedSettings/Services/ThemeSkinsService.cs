@@ -63,7 +63,9 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             Func<string, bool> predicate = s => true;
             var settings = GetSettings();
             if (settings != null) {
-                if (!settings.AvailableSkinNames.Contains(ThemeSkinsSettingsPart.AllSkinsValue)) {
+                if (settings.AvailableSkinNames == null
+                    || settings.AvailableSkinNames.Length == 0
+                    || !settings.AvailableSkinNames.Contains(ThemeSkinsSettingsPart.AllSkinsValue)) {
                     predicate = s => settings.AvailableSkinNames.Contains(s);
                 }
             }
