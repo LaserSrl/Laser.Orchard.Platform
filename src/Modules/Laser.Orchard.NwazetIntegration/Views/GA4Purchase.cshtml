@@ -18,9 +18,9 @@
             window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
             window.GA4Data.ecommerce.transaction_id = '@Html.Raw(ga4Purchase.ActionField.TransactionId)';
             window.GA4Data.ecommerce.affiliation = '@Html.Raw(ga4Purchase.ActionField.Affiliation)';
-            window.GA4Data.ecommerce.value = '@Html.Raw(ga4Purchase.ActionField.Value)';
-            window.GA4Data.ecommerce.tax = '@Html.Raw(ga4Purchase.ActionField.Tax)';
-            window.GA4Data.ecommerce.shipping = '@Html.Raw(ga4Purchase.ActionField.Shipping)';
+            window.GA4Data.ecommerce.value = @Html.Raw(ga4Purchase.ActionField.Value);
+            window.GA4Data.ecommerce.tax = @Html.Raw(ga4Purchase.ActionField.Tax);
+            window.GA4Data.ecommerce.shipping = @Html.Raw(ga4Purchase.ActionField.Shipping);
             window.GA4Data.ecommerce.currency = '@Html.Raw(ga4Purchase.ActionField.Currency)';
             window.GA4Data.ecommerce.coupon = '@Html.Raw(ga4Purchase.ActionField.Coupon)';
 
