@@ -31,6 +31,18 @@
     var undefinedGroup = new SelectListGroup() {
         Name = "Undefined"
     };
+    var orchardModulesGroup = new SelectListGroup() {
+        Name = "Orchard modules"
+    };
+    var orchardThemesGroup = new SelectListGroup() {
+        Name = "Orchard themes"
+    };
+    var orchardCoreGroup = new SelectListGroup() {
+        Name = "Orchard core"
+    };
+    var orchardFrameworkGroup = new SelectListGroup() {
+        Name = "Orchard framework"
+    };
 
     if (Model.ContainerType == "U") {
         containers.Add(new SelectListItem() {
@@ -67,6 +79,38 @@
             Selected = Model.ContainerType == "A" && Model.ContainerName.Equals(s)
         }));
     }
+
+    if (settings.OrchardModulesToTranslate != null) {
+        containers.AddRange(settings.OrchardModulesToTranslate.Replace(" ", "").Split(',').Select(s => new SelectListItem() {
+            Text = s,
+            Value = "W" + s,
+            Group = orchardModulesGroup,
+            Selected = Model.ContainerType == "W" && Model.ContainerName.Equals(s)
+        }));
+    }
+
+    if (settings.OrchardThemesToTranslate != null) {
+        containers.AddRange(settings.OrchardThemesToTranslate.Replace(" ", "").Split(',').Select(s => new SelectListItem() {
+            Text = s,
+            Value = "X" + s,
+            Group = orchardThemesGroup,
+            Selected = Model.ContainerType == "X" && Model.ContainerName.Equals(s)
+        }));
+    }
+
+    containers.Add(new SelectListItem() {
+        Text = Model.ContainerName,
+        Value = "Y" + Model.ContainerName,
+        Group = orchardCoreGroup,
+        Selected = true
+    });
+
+    containers.Add(new SelectListItem() {
+        Text = Model.ContainerName,
+        Value = "Z" + Model.ContainerName,
+        Group = orchardFrameworkGroup,
+        Selected = true
+    });
 }
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

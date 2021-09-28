@@ -63,11 +63,6 @@
 <fieldset style="margin-top:10px; @Html.Raw(displayAdvancedButtons)">
     <legend style="padding-bottom: 5px;">@T("Advanced Operations")</legend>
 
-    @{using (Html.BeginForm("ImportTranslations", "ImportExport", new { area = "Laser.Orchard.Translator" }, FormMethod.Post, new { id = "importForm", style = "display:inline;" })) {
-            @Html.AntiForgeryTokenOrchard()
-            <input id="importTranslations" class="button" type="submit" value="@T("Import Translations")" />
-        }
-    }
     <a class="button" href="@Url.Action("ExportTranslations", "ImportExport")">@T("Export Translations")</a>
 </fieldset>
 
@@ -136,7 +131,10 @@
             $('#showDetailsForm').submit(function () {
                 var selectedNodes = $('#folderTree').jstree().get_selected(true);
 
-                if ((selectedNodes.length == 0 || selectedNodes[0].parents.length < 2) && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-U'))
+                if ((selectedNodes.length == 0 || selectedNodes[0].parents.length < 2)
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-U')  // Undefined
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-Y')  // Orchard Core
+                    && !(selectedNodes.length > 0 && selectedNodes[0].id == 'translatortree-parent-Z')) // Orchard Framework
                 {
                     alert("@T("Please select a module, a theme or a tenant.")");
                     return false;
@@ -148,8 +146,6 @@
                     return false;
                 }
             });
-
-            $('#importForm').submit(function () { return confirm("@T("This operation will replace all current translations with the translations currently contained in the .po files. Do You want to continue?")"); });
 
             $('#folderTree').on('dblclick','.jstree-anchor', function (e) {
                 $('#showDetailsForm').submit();
