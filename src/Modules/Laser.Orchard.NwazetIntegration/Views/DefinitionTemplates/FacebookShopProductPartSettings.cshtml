@@ -1,0 +1,11 @@
+﻿@using Laser.Orchard.NwazetIntegration.PartSettings
+
+@model  FacebookShopProductPartSettings
+
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.JsonForProductUpdate)">@T("Default json")</label>
+        @Html.TextAreaFor(m => m.JsonForProductUpdate, new { @class = "text medium tokenized", rows = "20" })
+        <span class="hint">@T("This is the json body for product creation / update on Facebook shop.")</span>
+    </div>
+</fieldset>

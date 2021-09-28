@@ -8,7 +8,9 @@ using Orchard.ContentManagement.ViewModels;
 using Orchard.ContentTypes.Events;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Taxonomies.Services;
 using Orchard.UI.Notify;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,17 +19,21 @@ namespace Laser.Orchard.StartupConfig.Settings {
     public class CacheEvictorPartSettingsHook : ContentDefinitionEditorEventsBase, IContentDefinitionEventHandler {
         private readonly IContentManager _contentManager;
         private readonly IContentDefinitionManager _contentDefinitionManager;
+        private readonly ITaxonomyService _taxonomyService;
+
         public IOrchardServices Services { get; private set; }
 
 
         public CacheEvictorPartSettingsHook(
             IContentManager contentManager,
             IContentDefinitionManager contentDefinitionManager,
-            IOrchardServices services) {
+            IOrchardServices services,
+            ITaxonomyService taxonomyService) {
 
             Services = services;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
+            _taxonomyService = taxonomyService;
 
             T = NullLocalizer.Instance;
         }
@@ -52,19 +58,7 @@ namespace Laser.Orchard.StartupConfig.Settings {
                 foreach (var item in model.EvictItem.Split(';')) {
                     if (!string.IsNullOrWhiteSpace(item)) {
                         if (int.TryParse(item, out id)) {
-                            var content = _contentManager.Get(id);
-                            if (content != null) {
-                                var identity = _contentManager.GetItemMetadata(content).Identity;
-                                if (identity != null) {
-                                    identityItems += identity.ToString() + ";";
-                                }
-                                else {
-                                    Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", item));
-                                }
-                            }
-                            else {
-                                Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", item));
-                            }
+                            identityItems += GetIdentityPart(id) + ";";
                         }
                         else {
                             Services.Notifier.Error(T("CacheEvictorPart - {0} is not an id", item));
@@ -78,6 +72,25 @@ namespace Laser.Orchard.StartupConfig.Settings {
             // loads each settings field
             builder.WithSetting("CacheEvictorPartSettings.EvictItem", model.EvictItem);
             builder.WithSetting("CacheEvictorPartSettings.IdentityEvictItem", model.IdentityEvictItem);
+
+            builder.WithSetting("CacheEvictorPartSettings.EvictTerms", model.EvictTerms.ToString());
+        }
+
+        private string GetIdentityPart(int id) {
+            var content = _contentManager.Get(id);
+            if (content != null) {
+                var identity = _contentManager.GetItemMetadata(content).Identity;
+                if (identity != null) {
+                    return identity.ToString();
+                }
+                else {
+                    Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", id.ToString()));
+                }
+            }
+            else {
+                Services.Notifier.Error(T("CacheEvictorPart - The loaded id {0} does not exist", id.ToString()));
+            }
+            return string.Empty;
         }
 
 
@@ -112,21 +125,21 @@ namespace Laser.Orchard.StartupConfig.Settings {
         public void ContentTypeImported(ContentTypeImportedContext context) {
             var part = context.ContentTypeDefinition.Parts
                 .ToList()
-                .Where(p=>p.PartDefinition.Name== "CacheEvictorPart")
+                .Where(p => p.PartDefinition.Name == "CacheEvictorPart")
                 .FirstOrDefault();
             if (part != null) {
                 if (!string.IsNullOrEmpty(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem)) {
-                    string listIds = string.Empty;
+                    string listEvictIds = string.Empty;
                     foreach (var item in part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem.Split(';')) {
                         var ciIdentity = _contentManager.ResolveIdentity(new ContentIdentity(item));
                         if (ciIdentity != null) {
-                            listIds += ciIdentity.Id.ToString() + ";";
+                            listEvictIds += ciIdentity.Id.ToString() + ";";
                         }
                     }
                     _contentDefinitionManager.AlterTypeDefinition(context.ContentTypeDefinition.Name, cfg => cfg
-                       .WithPart(part.PartDefinition.Name,
-                            pb=>pb.WithSetting("CacheEvictorPartSettings.EvictItem", listIds))
-                    );
+                      .WithPart(part.PartDefinition.Name,
+                          pb => pb
+                              .WithSetting("CacheEvictorPartSettings.EvictItem", listEvictIds)));
                 }
             }
         }

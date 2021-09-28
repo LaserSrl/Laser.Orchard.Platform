@@ -1,0 +1,11 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels
+
+@model FacebookShopProductPartViewModel
+
+<fieldset>
+    <div>
+        @Html.CheckBoxFor(m => m.SynchronizeFacebookShop)
+        <label for="@Html.FieldIdFor(m=>m.SynchronizeFacebookShop)" class="forcheckbox">@T("Synchronize with Facebook Shop")</label>
+        <span class="hint">@T("Keep the product synchronized with Facebook Shop every time the product is published.")</span>
+    </div>
+</fieldset>

@@ -81,7 +81,7 @@ Features:
 		Name: Laser CacheEvictor Part
 		Description: Part for cache evict
 		Category: Content
-		Dependencies: Laser.Orchard.StartupConfig
+		Dependencies: Laser.Orchard.StartupConfig, Orchard.OutputCache, Orchard.Taxonomies
 	Laser.Orchard.BearerTokenAuthentication
 		Name: Bearer Token Authentication for Orchard
 		Description: Enables using Bearer Tokens to authenticate users
@@ -96,3 +96,8 @@ Features:
 		Name: ApplePay Domain Association
         Description: Enable the merchant domains verification.
 		Category: Payments
+	Laser.Orchard.StartupConfig.ControlWrapper
+		Name: Laser Orchard Control Wrapper
+		Description: Manage wrapper for content and widget
+		Category: Content
+		Dependencies: Laser.Orchard.StartupConfig, Orchard.Widgets.ControlWrapper, Contents.ControlWrapper

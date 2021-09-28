@@ -119,6 +119,8 @@
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\DestinationTerritoryForm.cs" />
     <Compile Include="ApplicabilityCriteria\CookieValueForm.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCouponLineCriteria.cs" />
+    <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Constants.cs" />
@@ -130,6 +132,8 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
+    <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
@@ -145,8 +149,12 @@
     <Compile Include="Filters\InfoResultPaymentFilter.cs" />
     <Compile Include="Filters\OrderFrontEndVATFilter.cs" />
     <Compile Include="Filters\SelectTermsForm.cs" />
+    <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
+    <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
+    <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\GTMProductHandler.cs" />
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
@@ -154,12 +162,16 @@
     <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
     <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Migration\MigrationsFacebookShop.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopProductPart.cs" />
+    <Compile Include="Models\FacebookShopProductPartRecord.cs" />
+    <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
     <Compile Include="Models\GTMProductPart.cs" />
     <Compile Include="Models\GTMProductPartRecord.cs" />
     <Compile Include="Models\NwazetContactPart.cs" />
@@ -172,6 +184,9 @@
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
+    <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
+    <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
+    <Compile Include="PartSettings\FacebookShopProductPartSettings.cs" />
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
     <Compile Include="PartSettings\ProductVatConfigurationPartInputPriceEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -179,6 +194,7 @@
     <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
+    <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
@@ -194,6 +210,12 @@
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopService.cs" />
+    <Compile Include="Services\FacebookShop\FacebookShopServiceContext.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopRequest.cs" />
     <Compile Include="Services\IAddressConfigurationService.cs" />
     <Compile Include="Services\GTMCartExtensionProvider.cs" />
     <Compile Include="Services\GTMMeasuringPurchaseService.cs" />
@@ -202,6 +224,7 @@
     <Compile Include="Services\ICheckoutExtensionProvider.cs" />
     <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\ICheckoutPoliciesService.cs" />
+    <Compile Include="Services\FacebookShop\IFacebookShopService.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
@@ -223,6 +246,12 @@
     <Compile Include="ViewModels\CheckoutSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
+    <Compile Include="ViewModels\FacebookShopProductPartViewModel.cs" />
+    <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
+    <Compile Include="ViewModels\GA4ProductVM.cs" />
+    <Compile Include="ViewModels\GA4PurchaseVM.cs" />
+    <Compile Include="ViewModels\GA4ShippingInfoVM.cs" />
+    <Compile Include="ViewModels\IGAProductVM.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
@@ -329,6 +358,10 @@
       <Project>{bdb0cd8d-7c6c-46f0-a041-6b2e1e0f9c9e}</Project>
       <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.GoogleAnalytics\Laser.Orchard.GoogleAnalytics.csproj">
+      <Project>{8df6ed57-53f6-44e8-9bcd-40c2150a5a43}</Project>
+      <Name>Laser.Orchard.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
@@ -418,6 +451,12 @@
     <Content Include="Views\EditorTemplates\SiteSettings\CheckoutPolicySettings.cshtml" />
     <Content Include="Views\CheckoutPoliciesCheckoutStartShape.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Order.CheckoutPolicies.cshtml" />
+    <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
+    <Content Include="Views\DefinitionTemplates\FacebookShopProductPartSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
+    <Content Include="Views\GA4CheckoutStep.cshtml" />
+    <Content Include="Views\GA4Purchase.cshtml" />
+    <Content Include="Views\GA4ShippingInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

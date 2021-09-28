@@ -148,10 +148,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Nwazet.Commerce\Nwazet.Commerce.csproj">
-      <Project>{909acc2c-d672-4752-b75b-6822e05fe0e3}</Project>
-      <Name>Nwazet.Commerce</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>

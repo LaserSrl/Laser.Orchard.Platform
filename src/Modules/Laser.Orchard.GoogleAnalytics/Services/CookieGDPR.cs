@@ -83,6 +83,19 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             }
         }
 
+        private string HostDomain() {
+            var valueToReplace = "www.";
+            var host = "";
+
+            if (!_workContextAccessor.GetContext().HttpContext.Request.IsLocal) {
+                host = _workContextAccessor.GetContext().HttpContext.Request.Url.Host;
+                if (host.Substring(0, 4) == valueToReplace) {
+                    host = host.Substring(4, host.Length - 4);
+                }
+            }
+            return host;
+        }
+
         private string GoogleAnalyticsScript(IList<CookieType> allowedTypes) {
             StringBuilder script = new StringBuilder(800);
             script.AppendLine("<!-- Google Analytics -->");
@@ -92,7 +105,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             script.AppendLine("ga('create', '" + SettingsPart.GoogleAnalyticsKey + "', {");
             if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
-                script.AppendLine("'cookieDomain': 'auto',");
+                script.AppendLine("'cookieDomain': '"+HostDomain()+"',");
             } else {
                 script.AppendLine("'cookieDomain': '" + SettingsPart.DomainName + "',");
             }
@@ -115,7 +128,6 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
-            var domain = "auto";
             var script = new StringBuilder();
 
             script.AppendLine("<!-- Google Tag Manager -->");
@@ -134,8 +146,14 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
                 + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
             // set the default value of cookie domain
-            script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
-               + domain  + "'});");
+            if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + HostDomain() + "'});");
+            }
+            else {
+                script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                    + SettingsPart.DomainName + "'});");
+            }
             // script that handles changes in the settings for cookie consent
             script.AppendLine("$(document)");
             script.AppendLine("	.on('cookieConsent.reset', function(e) {");
@@ -179,6 +197,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 }
                 script.AppendLine("	});");
             }
+
             // done tag manager consent settings
             script.AppendLine("</script>");
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
@@ -186,6 +205,13 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=");
             script.AppendLine("'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);");
             script.AppendLine("})(window,document,'script','dataLayer','" + SettingsPart.GoogleAnalyticsKey + "');</script>");
+
+            // I need to check from the settings if I'm using GA4.
+            var gaSettings = _workContextAccessor.GetContext().CurrentSite.As<GoogleAnalyticsSettingsPart>();
+            script.AppendLine("<script>");
+            script.AppendLine("window.useGA4 = " + (gaSettings.UseGA4 ? "1" : "0") + ";");
+            script.AppendLine("</script>");
+                       
             script.AppendLine("<!-- End Google Tag Manager -->");
 
             return script.ToString();

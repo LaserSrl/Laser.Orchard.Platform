@@ -1,7 +1,4 @@
 ﻿using Contrib.Voting.Models;
-using Nwazet.Commerce.Filters;
-using Nwazet.Commerce.Services;
-using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Environment;
@@ -14,9 +11,6 @@ using Orchard.UI.Resources;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Contrib.Voting.Filters {

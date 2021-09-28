@@ -1,0 +1,49 @@
+﻿@using Laser.Orchard.NwazetIntegration.Security
+@using Laser.Orchard.NwazetIntegration.ViewModels
+
+@model FacebookShopSiteSettingsViewModel
+
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.ApiBaseUrl)">@T("Api base url")</label>
+        @Html.TextBoxFor(m => m.ApiBaseUrl, new { @class = "text medium" })
+        <span class="hint">@T("Base url for api calls to Facebook Graph services")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.DefaultJsonForProductUpdate)">@T("Default json")</label>
+        @Html.TextAreaFor(m => m.DefaultJsonForProductUpdate, new { @class = "text medium tokenized", rows = "20" })
+        <span class="hint">@T("This is the json body for product creation / update on Facebook shop.")</span>
+        <span class="hint">@T("This value will be used when no specific json is set in the FacebookProductPart of the product content definition.")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.BusinessId)">@T("Facebook business id")</label>
+        @Html.TextBoxFor(m => m.BusinessId, new { @class = "text medium" })
+        <span class="hint">@T("Id of the Facebook business")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.CatalogId)">@T("Facebook catalog id")</label>
+        @Html.TextBoxFor(m => m.CatalogId, new { @class = "text medium" })
+        <span class="hint">@T("Id of the catalog on Facebook business")</span>
+    </div>
+</fieldset>
+<fieldset>
+    <div>
+        <label for="@Html.FieldIdFor(m=>m.AccessToken)">@T("Access Token for the Facebook Shop")</label>
+        @Html.TextBoxFor(m => m.AccessToken, new { @class = "text medium" })
+        <span class="hint">@T("This is the access token of the System User of the Facebook business")</span>
+    </div>
+</fieldset>
+@if (AuthorizedFor(FacebookShopSynchronizationPermission.FacebookShopSynchronization)) {
+    <fieldset>
+        <div>
+            @Html.CheckBoxFor(m => m.SynchronizeProducts)
+            <label for="@Html.FieldIdFor(m => m.SynchronizeProducts)" class="forcheckbox">@T("Synchronize all published content on Facebook Shop when saving.")</label>
+        </div>
+    </fieldset>
+}

@@ -1,3 +1,5 @@
 ﻿<Placement>
   <Place Parts_AdvancedSettings_Edit="Content:before.5" />
+  <Place Parts_ThemeSkinsPart_Edit="Content:1" />
+  <Place Settings_ThemeSkinsSettingsPart_Edit="Content:1" />
 </Placement>

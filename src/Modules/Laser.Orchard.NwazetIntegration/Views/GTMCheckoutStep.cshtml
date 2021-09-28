@@ -5,8 +5,8 @@
     var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
     Script.Require("NwazetIntegration.TagManager").AtHead();
 
-    var gtmProducts = (IEnumerable<GTMProductVM>)Model.GTMProducts
-        ?? new List<GTMProductVM>();
+    var gtmProducts = (IEnumerable<IGAProductVM>)Model.GTMProducts ?? new List<IGAProductVM>();
+   
     var gtmActionField = (string)Model.ActionFieldJSON ?? string.Empty;
 
     var gtmProductsStrings = gtmProducts

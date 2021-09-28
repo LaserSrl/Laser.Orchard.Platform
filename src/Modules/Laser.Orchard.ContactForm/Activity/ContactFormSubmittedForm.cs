@@ -43,8 +43,8 @@ namespace Laser.Orchard.ContactForm.Activity {
                          );
 
                      f._Contents.Add(new SelectListItem { Value = "", Text = T("Any").Text });
-                     var listOfContactForms = _contentManager.Query()
-                        .ForPart<ContactFormPart>()
+                     var listOfContactForms = _contentManager.Query<ContactFormPart, ContactFormRecord>()
+                        //.ForPart<ContactFormPart>()
                         .Join<TitlePartRecord>()
                         .Join<IdentityPartRecord>().List()
                             .Select(x => {
@@ -57,8 +57,8 @@ namespace Laser.Orchard.ContactForm.Activity {
                                     Text = x.As<TitlePart>().Title + " - " + x.ContentItem.ContentType
                                 };
                             }).Where(x => x.Value != "").ToList(); // Create a list of contact form items
-                     listOfContactForms.AddRange(_contentManager.Query()
-                         .ForPart<ContactFormPart>()
+                     listOfContactForms.AddRange(_contentManager.Query<ContactFormPart, ContactFormRecord>()
+                         //.ForPart<ContactFormPart>()
                          .Join<WidgetPartRecord>()
                          .Join<IdentityPartRecord>().List()
                                 .Select(x => {
