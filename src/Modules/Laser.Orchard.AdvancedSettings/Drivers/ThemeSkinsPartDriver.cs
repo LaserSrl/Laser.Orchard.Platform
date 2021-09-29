@@ -34,7 +34,8 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
                 () => {
                     var vm = new ThemeSkinsPartEditViewModel();
                     vm.SelectedSkinName = part.SkinName;
-                    PopulateVMOptions(part, vm);
+                    PopulateVMOptions( vm);
+                    PopulateVMVariables(part, vm);
                     return shapeHelper.EditorTemplate(
                          TemplateName: "Parts/ThemeSkinsPart",
                          Model: vm,
@@ -45,11 +46,13 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
         protected override DriverResult Editor(ThemeSkinsPart part, IUpdateModel updater, dynamic shapeHelper) {
             var vm = new ThemeSkinsPartEditViewModel();
             if (updater.TryUpdateModel(vm, Prefix, null, null)) {
+                // TODO validate variables in the vm
                 part.SkinName = vm.SelectedSkinName;
+                part.Variables = vm.Variables;
             }
             return ContentShape("Parts_ThemeSkinsPart_Edit",
                 () => {
-                    PopulateVMOptions(part, vm);
+                    PopulateVMOptions(vm);
                     return shapeHelper.EditorTemplate(
                          TemplateName: "Parts/ThemeSkinsPart",
                          Model: vm,
@@ -69,23 +72,34 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
             context.Element(part.PartDefinition.Name).SetAttributeValue("SkinName", part.SkinName);
         }
 
-        private void PopulateVMOptions(ThemeSkinsPart part, ThemeSkinsPartEditViewModel vm) {
+        private void PopulateVMOptions(ThemeSkinsPartEditViewModel vm) {
             vm.AvailableSkinNames = _themeSkinsService.GetSkinNames();
             var options = new List<SelectListItem>();
             options.Add(new SelectListItem {
                 Text = T("Default").Text,
                 Value = string.Empty,
-                Selected = string.IsNullOrWhiteSpace(part.SkinName)
+                Selected = string.IsNullOrWhiteSpace(vm.SelectedSkinName)
             });
             if (vm.AvailableSkinNames != null) {
                 options.AddRange(vm.AvailableSkinNames
                     .Select(x => new SelectListItem {
                         Text = x,
                         Value = x,
-                        Selected = string.Equals(x, part.SkinName)
+                        Selected = string.Equals(x, vm.SelectedSkinName)
                     }));
             }
             vm.Options = options;
+        }
+
+        private void PopulateVMVariables(ThemeSkinsPart part, ThemeSkinsPartEditViewModel vm) {
+            var variables = _themeSkinsService.GetSkinVariables();
+            foreach (var savedVariable in part.Variables) {
+                var fromTheme = variables.FirstOrDefault(v => v.Name.Equals(savedVariable.Name));
+                if (fromTheme != null) {
+                    fromTheme.Value = savedVariable.Value;
+                }
+            }
+            vm.Variables = variables.ToArray();
         }
     }
 }
