@@ -21,7 +21,7 @@ namespace Laser.Orchard.Translator.Controllers {
             Log = NullLogger.Instance;
         }
 
-        private readonly string[] _validContainerTypes = new string[] { "A", "M", "T", "U" };
+        private readonly string[] _validContainerTypes = new string[] { "A", "M", "T", "U", "W", "X", "Y", "Z" };
         [System.Web.Mvc.HttpPost, ActionName("AddTranslatedRecords")]
         public string AddTranslatedRecords([FromBody] List<TranslationRecord> records) {
             var result = new StringBuilder();
