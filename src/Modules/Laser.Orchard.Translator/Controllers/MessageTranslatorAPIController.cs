@@ -97,6 +97,18 @@ namespace Laser.Orchard.Translator.Controllers {
                         case "U":
                             folderType = ElementToTranslate.Undefined;
                             break;
+                        case "W":
+                            folderType = ElementToTranslate.OrchardModule;
+                            break;
+                        case "X":
+                            folderType = ElementToTranslate.OrchardTheme;
+                            break;
+                        case "Y":
+                            folderType = ElementToTranslate.OrchardCore;
+                            break;
+                        case "Z":
+                            folderType = ElementToTranslate.OrchardFramework;
+                            break;
                     }
                     _translatorServices.EnableFolderTranslation(folder.ContainerName, folderType);
 
