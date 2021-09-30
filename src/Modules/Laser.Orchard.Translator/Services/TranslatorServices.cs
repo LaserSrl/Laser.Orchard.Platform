@@ -186,6 +186,11 @@ namespace Laser.Orchard.Translator.Services {
         /// <summary>
         /// Add the folder for which translations where requested to the corresponding list
         /// </summary>
+        /// <remarks>
+        /// In case all translations for a folder are completed, the program never executes this routine.
+        /// For this reason, in exceptional cases (which are data anomalies), 
+        /// the folder isn't added to TranslatorSettings and will not be visible in the TranslatorTree.
+        /// </remarks>
         /// <param name="folderName"></param>
         /// <param name="folderType"></param>
         public void EnableFolderTranslation(string folderName, ElementToTranslate folderType) {
@@ -194,6 +199,8 @@ namespace Laser.Orchard.Translator.Services {
             translatorSettings.ModulesToTranslate = translatorSettings.ModulesToTranslate ?? "";
             translatorSettings.ThemesToTranslate = translatorSettings.ThemesToTranslate ?? "";
             translatorSettings.TenantsToTranslate = translatorSettings.TenantsToTranslate ?? "";
+            translatorSettings.OrchardModulesToTranslate = translatorSettings.OrchardModulesToTranslate ?? "";
+            translatorSettings.OrchardThemesToTranslate = translatorSettings.OrchardThemesToTranslate ?? "";
 
             List<string> enabledFolders = new List<string>();
             switch (folderType) {
@@ -222,6 +229,24 @@ namespace Laser.Orchard.Translator.Services {
                             translatorSettings.TenantsToTranslate += ",";
 
                         translatorSettings.TenantsToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.OrchardModule:
+                    enabledFolders = translatorSettings.OrchardModulesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.OrchardModulesToTranslate))
+                            translatorSettings.OrchardModulesToTranslate += ",";
+
+                        translatorSettings.OrchardModulesToTranslate += folderName;
+                    }
+                    break;
+                case ElementToTranslate.OrchardTheme:
+                    enabledFolders = translatorSettings.OrchardThemesToTranslate.Replace(" ", "").Split(',').ToList();
+                    if (!enabledFolders.Contains(folderName)) {
+                        if (!String.IsNullOrWhiteSpace(translatorSettings.OrchardThemesToTranslate))
+                            translatorSettings.OrchardThemesToTranslate += ",";
+
+                        translatorSettings.OrchardThemesToTranslate += folderName;
                     }
                     break;
             }
