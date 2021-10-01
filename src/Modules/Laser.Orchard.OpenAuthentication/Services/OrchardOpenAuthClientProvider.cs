@@ -61,7 +61,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             // Do we have a configuration?
             var clientConfiguration = _providerConfigurationService.Get(providerName);
 
-            if (clientConfiguration == null || clientConfiguration.IsEnabled!=1)
+            if (clientConfiguration == null)
                 return null;
 
             // Is this a known internal client
@@ -72,7 +72,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                 clientBuilder.Build(clientConfiguration) : CreateOpenIdClient(clientConfiguration);
 
             if (client != null)
-                return new OrchardAuthenticationClientData(client, clientConfiguration.DisplayName, new Dictionary<string, object>());
+                return new OrchardAuthenticationClientData(client, clientConfiguration.DisplayName, Convert.ToBoolean(clientConfiguration.IsEnabled), new Dictionary<string, object>());
             else
                 return null;
         }

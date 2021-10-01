@@ -13,7 +13,7 @@ Features:
     Laser.Orchard.Favicon:
         Name: Laser Favicon
         Description: Aggiunge la gestione della favicon alle impostazioni del sito.
-        Dependencies: Orchard.Media, Settings
+        Dependencies: Settings
         Category: SEO
 	Laser.Orchard.KeywordHelper:
 		Name: Laser Keyword Helper

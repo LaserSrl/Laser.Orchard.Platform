@@ -2,9 +2,41 @@
 @model ThemeSkinsPartEditViewModel
 
 <fieldset>
-    <label for="@Html.FieldIdFor(m => m.SelectedSkinName)">
-        @T("Theme Customization")
-    </label>
-    @Html.DropDownListFor(m => m.SelectedSkinName, Model.Options)
-    <span class="hint">@T("Select a customization for the frontend theme.")</span>
+    <legend>@T("Theme Customization")</legend>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedSkinName, T("Theme variant").Text, new { @for = Html.FieldIdFor(m => m.SelectedSkinName) })
+        @Html.DropDownListFor(
+            m => m.SelectedSkinName,
+            Model.Options,
+            new {
+                @class = "form-control",
+                id = Html.FieldIdFor(m => m.SelectedSkinName),
+                aria_describedby = "SelectedSkinNameHelp"
+            })
+        <small id="SelectedSkinNameHelp" class="form-text text-muted hint">
+            @T("Select a customization for the frontend theme.")
+        </small>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@T("Theme Variables")</legend>
+    <div class="form-group" aria-describedby="ThemeVariableValuesHelp">
+        @if (Model.Variables.Any()) {
+            for (int i = 0; i < Model.Variables.Length; i++) {
+                <div class="form-group">
+                    @Html.HiddenFor(m => m.Variables[i].Name)
+                    @Html.HiddenFor(m => m.Variables[i].DisplayName)
+                    @Html.HiddenFor(m => m.Variables[i].VariableType)
+                    @Html.LabelFor(m => m.Variables[i].Value, 
+                       Model.Variables[i].DisplayName, 
+                       new { @for = Html.FieldIdFor(m => m.Variables[i].Value) })
+                    @Html.TextBoxFor(m => m.Variables[i].Value,
+                        new { @class="form-control text" })
+                </div>
+            }
+        }
+        <small id="ThemeVariableValuesHelp" class="form-text text-muted hint">
+            @T("Set values to further personalize your theme. Leave a value empty to use its default from the customization you've chosen.")
+        </small>
+    </div>
 </fieldset>
