@@ -10,7 +10,7 @@ namespace Laser.Orchard.StartupConfig.Security {
     [OrchardFeature("Laser.Orchard.StartupConfig.ControlWrapper")]
     public class ControlWrapperPermission : IPermissionProvider {
         public static readonly Permission WidgetControlWrapper = new Permission { Description = "Widget Control Wrapper in front-end", Name = "WidgetControlWrapper" };
-        public static readonly Permission ContentControlWrapper = new Permission { Description = "Content Control Wrapper in front-end", Name = "EditContentWrapper" };
+        public static readonly Permission ContentControlWrapper = new Permission { Description = "Content Control Wrapper in front-end", Name = "ContentControlWrapper" };
 
         public Feature Feature { get; set; }
 
