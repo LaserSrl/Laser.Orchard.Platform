@@ -1,0 +1,22 @@
+﻿@using Orchard.ContentManagement;
+@using Orchard.Widgets;
+@using Laser.Orchard.StartupConfig.Security
+@{
+    var contentItem = (ContentItem)Model.ContentItem;
+    if (AuthorizedFor(ControlWrapperPermission.WidgetControlWrapper)) {
+        if (AuthorizedFor(Permissions.ManageWidgets, contentItem)) {
+            <div class="widget-control">
+                <div class="manage-actions">
+                    @Html.ItemEditLinkWithReturnUrl(T("Edit").Text, contentItem)
+                </div>
+                @Display(Model.Child)
+            </div>
+        }
+        else {
+            @Display(Model.Child)
+        }
+    }
+    else {
+        @Display(Model.Child)
+    }
+}

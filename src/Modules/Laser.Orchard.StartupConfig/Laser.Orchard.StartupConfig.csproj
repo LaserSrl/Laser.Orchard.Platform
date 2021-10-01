@@ -189,6 +189,7 @@
     <Content Include="Views\EditorTemplates\Parts\AllowCrossOriginSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\FrontendEditorConfigurationSettings.cshtml" />
     <Content Include="Views\DateTimeEditorForm.cshtml" />
+    <Content Include="Views\Content.ControlWrapper.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -476,6 +477,7 @@
     <Compile Include="Models\EnsureAsFrontEndInvisiblePart.cs" />
     <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
     <Compile Include="Security\BearerTokenIdentity.cs" />
+    <Compile Include="Security\ControlWrapperPermission.cs" />
     <Compile Include="Security\IBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\BaseBearerTokenDataProvider.cs" />
     <Compile Include="Security\Providers\IApiCredentialsValidationProvider.cs" />
@@ -749,6 +751,7 @@
     <Content Include="Views\EditorTemplates\Parts\ContentPickerCreateItem.EditExtension.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
+    <Content Include="Views\Widget.ControlWrapper.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
