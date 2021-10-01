@@ -6,6 +6,7 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -34,7 +35,7 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
                 () => {
                     var vm = new ThemeSkinsPartEditViewModel();
                     vm.SelectedSkinName = part.SkinName;
-                    PopulateVMOptions( vm);
+                    PopulateVMOptions(vm);
                     PopulateVMVariables(part, vm);
                     return shapeHelper.EditorTemplate(
                          TemplateName: "Parts/ThemeSkinsPart",
@@ -66,22 +67,40 @@ namespace Laser.Orchard.AdvancedSettings.Drivers {
                 return;
             }
             part.SkinName = context.Attribute(part.PartDefinition.Name, "SkinName");
+            part.SerializedVariables = context.Attribute(part.PartDefinition.Name, "SerializedVariables");
         }
 
         protected override void Exporting(ThemeSkinsPart part, ExportContentContext context) {
-            context.Element(part.PartDefinition.Name).SetAttributeValue("SkinName", part.SkinName);
+            var partElement = context.Element(part.PartDefinition.Name);
+            partElement.SetAttributeValue("SkinName", part.SkinName);
+            partElement.SetAttributeValue("SerializedVariables", part.SerializedVariables);
         }
 
         private void PopulateVMOptions(ThemeSkinsPartEditViewModel vm) {
             vm.AvailableSkinNames = _themeSkinsService.GetSkinNames();
             var options = new List<SelectListItem>();
-            options.Add(new SelectListItem {
-                Text = T("Default").Text,
-                Value = string.Empty,
-                Selected = string.IsNullOrWhiteSpace(vm.SelectedSkinName)
-            });
+            // the manifest may have a skin named Default, that would then be the one
+            // that should be used when nothing is selected.
+            var exclude = new List<string>();
+            var defaultSkin = vm.AvailableSkinNames.FirstOrDefault(s => s.Equals("default", StringComparison.OrdinalIgnoreCase));
+            if (!string.IsNullOrWhiteSpace(defaultSkin)) {
+                options.Add(new SelectListItem {
+                    Text = defaultSkin,
+                    Value = defaultSkin,
+                    Selected = string.IsNullOrWhiteSpace(vm.SelectedSkinName) 
+                        || defaultSkin.Equals(vm.SelectedSkinName, StringComparison.OrdinalIgnoreCase)
+                });
+                exclude.Add(defaultSkin);
+            } else {
+                options.Add(new SelectListItem {
+                    Text = T("Default").Text,
+                    Value = string.Empty,
+                    Selected = string.IsNullOrWhiteSpace(vm.SelectedSkinName)
+                });
+            }
             if (vm.AvailableSkinNames != null) {
                 options.AddRange(vm.AvailableSkinNames
+                    .Except(exclude)
                     .Select(x => new SelectListItem {
                         Text = x,
                         Value = x,
