@@ -19,6 +19,8 @@ namespace Laser.Orchard.Translator.Controllers {
         private readonly IOrchardServices _orchardServices;
         private readonly ITranslatorServices _translatorServices;
         private readonly IUtilsServices _utilsServices;
+        private TranslatorSettingsPart _translatorSettings;
+        private IEnumerable<TranslationFolderSettingsRecord> _translationFolderSettingsRecords;
 
         public Localizer T { get; set; }
 
@@ -58,7 +60,12 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-M",
                     text = T("Modules").ToString(),
-                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Modules"), ElementToTranslate.Module, messagesToTranslate.Where(m => m.ContainerType=="M").ToList()),
+                    children = CreateListForTree(language, 
+                        Path.Combine(_utilsServices.TenantPath, "Modules"), 
+                        ElementToTranslate.Module, 
+                        messagesToTranslate
+                            .Where(m => m.ContainerType == "M")
+                            .ToDictionary(cm => cm.ContainerName)),
                     data = new Dictionary<string, string>() { { "type", "M" } }
                 });
 
@@ -66,7 +73,11 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-T",
                     text = T("Themes").ToString(),
-                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Themes"), ElementToTranslate.Theme, messagesToTranslate.Where(m => m.ContainerType == "T").ToList()),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Themes"), 
+                        ElementToTranslate.Theme, 
+                        messagesToTranslate
+                            .Where(m => m.ContainerType == "T")
+                            .ToDictionary(cm => cm.ContainerName)),
                     data = new Dictionary<string, string>() { { "type", "T" } }
                 });
 
@@ -74,7 +85,11 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-A",
                     text = T("Tenants").ToString(),
-                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Tenant"), ElementToTranslate.Tenant, messagesToTranslate.Where(m => m.ContainerType == "A").ToList()),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Tenant"),
+                        ElementToTranslate.Tenant, 
+                        messagesToTranslate
+                            .Where(m => m.ContainerType == "A")
+                            .ToDictionary(cm => cm.ContainerName)),
                     data = new Dictionary<string, string>() { { "type", "A" } }
                 });
 
@@ -82,7 +97,11 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-W",
                     text = T("Orchard modules").ToString(),
-                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard modules"), ElementToTranslate.OrchardModule, messagesToTranslate.Where(m => m.ContainerType == "W").ToList()),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard modules"), 
+                        ElementToTranslate.OrchardModule,
+                        messagesToTranslate
+                            .Where(m => m.ContainerType == "W")
+                            .ToDictionary(cm => cm.ContainerName)),
                     data = new Dictionary<string, string>() { { "type", "W" } }
                 });
 
@@ -90,7 +109,11 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-X",
                     text = T("Orchard themes").ToString(),
-                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard themes"), ElementToTranslate.OrchardTheme, messagesToTranslate.Where(m => m.ContainerType == "X").ToList()),
+                    children = CreateListForTree(language, Path.Combine(_utilsServices.TenantPath, "Orchard themes"), 
+                        ElementToTranslate.OrchardTheme, 
+                        messagesToTranslate
+                            .Where(m => m.ContainerType == "X")
+                            .ToDictionary(cm => cm.ContainerName)),
                     data = new Dictionary<string, string>() { { "type", "X" } }
                 });
 
@@ -102,7 +125,7 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-Y",
                     text = T("Orchard.Core").ToString(),
-                    data = new Dictionary<string, string>() { { "type", "Y" }, { "percent", T("{0} labels", labels.ToString()).Text } }
+                    data = new Dictionary<string, string>() { { "type", "Y" }, { "percent", T("{0} labels to translate", labels.ToString()).Text } }
                 });
 
                 // Orchard framework
@@ -113,7 +136,7 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-Z",
                     text = T("Orchard.Framework").ToString(),
-                    data = new Dictionary<string, string>() { { "type", "Z" }, { "percent", T("{0} labels", labels.ToString()).Text } }
+                    data = new Dictionary<string, string>() { { "type", "Z" }, { "percent", T("{0} labels to translate", labels.ToString()).Text } }
                 });
 
                 // Undefined
@@ -124,7 +147,7 @@ namespace Laser.Orchard.Translator.Controllers {
                 tree.Add(new TranslationTreeNodeViewModel {
                     id = "translatortree-parent-U",
                     text = T("Undefined").ToString(),
-                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", T("{0} labels", labels.ToString()).Text } }
+                    data = new Dictionary<string, string>() { { "type", "U" }, { "percent", T("{0} labels to translate", labels.ToString()).Text } }
                 });
             }
 
@@ -140,8 +163,20 @@ namespace Laser.Orchard.Translator.Controllers {
             return result;
         }
 
-        private List<TranslationTreeNodeViewModel> CreateListForTree(string language, string parentFolder, ElementToTranslate elementType, List<ContainerMessage> messages) {
-            var translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
+        /// <summary>
+        /// Get translator settings if they've not read from database yet.
+        /// </summary>
+        /// <returns></returns>
+        private TranslatorSettingsPart GetSettings() {
+            if (_translatorSettings == null) {
+                _translatorSettings = _orchardServices.WorkContext.CurrentSite.As<TranslatorSettingsPart>();
+            }
+
+            return _translatorSettings;
+        }
+
+        private List<TranslationTreeNodeViewModel> CreateListForTree(string language, string parentFolder, ElementToTranslate elementType, IDictionary<string, ContainerMessage> messages) {
+            var translatorSettings = GetSettings();
 
             List<string> elementsToTranslate = new List<string>();
             var folderType = "";
@@ -184,25 +219,19 @@ namespace Laser.Orchard.Translator.Controllers {
             //list = list.Where(dir => elementsToTranslate.Any(x => x == dir)).ToList();
             //list.Sort((x, y) => string.Compare(x, y));
 
-            var list = elementsToTranslate.Where(x => !String.IsNullOrWhiteSpace(x)).ToList();
-            list.Sort((x, y) => string.Compare(x, y));
+            var list = elementsToTranslate.Where(x => !String.IsNullOrWhiteSpace(x)).OrderBy(x => x);
+            
             List<TranslationTreeNodeViewModel> treeList = new List<TranslationTreeNodeViewModel>();
             foreach (var item in list) {
                 Dictionary<string, string> additionalData = new Dictionary<string, string>();
 
                 int labels = 0;
-                if (messages.Any(m => m.ContainerName == item)) {
-                    labels = messages.FirstOrDefault(m => m.ContainerName == item).Count;
+                if (messages.ContainsKey(item)) {
+                    labels = messages[item].Count;
                 }
 
-                if (labels < 0) {
-                    additionalData.Add("to_translate", "false");
-                    additionalData.Add("percent", T("{0} labels", 0).Text);
-                } else {
-                    additionalData.Add("percent", T("{0} labels", labels).Text);
-                    additionalData.Add("to_translate", "true");
-                }
-
+                additionalData.Add("percent", T("{0} labels to translate", labels).Text);
+                additionalData.Add("to_translate", "true");
                 additionalData.Add("type", folderType);
 
                 string deprecatedType = "";
@@ -215,8 +244,18 @@ namespace Laser.Orchard.Translator.Controllers {
             return treeList;
         }
         
+        private IEnumerable<TranslationFolderSettingsRecord> GetFolderSettings() {
+            if (_translationFolderSettingsRecords == null) {
+                _translationFolderSettingsRecords = _translatorServices.GetTranslationFoldersSettings().ToList();
+            }
+
+            return _translationFolderSettingsRecords;
+        }
+
         private bool IsDeprecated(string containerName, string containerType) {
-            var folderSettings = _translatorServices.GetTranslationFoldersSettings().Where(t => t.ContainerName == containerName && t.ContainerType == containerType).FirstOrDefault();
+            //return false;
+
+            var folderSettings = GetFolderSettings().FirstOrDefault(t => t.ContainerName == containerName && t.ContainerType == containerType);
 
             return folderSettings == null ? false : folderSettings.Deprecated;
         }
