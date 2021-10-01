@@ -2,8 +2,16 @@
 
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.EvictItem)">@T("Evict Item")</label>
-    <div>
+    <div class="evict-item">
         @Html.TextAreaFor(m => m.EvictItem, new { @class = "text medium", rows = "4" })
         <span class="hint">@T("Insert Ids separated by a ; e.g. 5;10;15")</span>
     </div>
+</fieldset>
+<fieldset>
+    <div class="evict-terms">
+        @Html.CheckBoxFor(m => m.EvictTerms)
+        <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EvictTerms)">@T("Evict Terms")</label>
+        <span class="hint">@T("If checked evicts any term that belongs to the content, its parent and its taxonomy.")</span>
+    </div>
+
 </fieldset>
