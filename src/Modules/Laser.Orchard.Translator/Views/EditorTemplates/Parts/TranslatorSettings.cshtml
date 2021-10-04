@@ -17,4 +17,14 @@
         @Html.TextAreaFor(m => m.TenantsToTranslate)
         <span class="hint">@T("Comma separated list of tenants that have custom translations.")</span>
     </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.OrchardModulesToTranslate)">@T("Orchard Modules to Translate")</label>
+        @Html.TextAreaFor(m => m.OrchardModulesToTranslate)
+        <span class="hint">@T("Comma separated list of Orchard modules that have custom translations.")</span>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.OrchardThemesToTranslate)">@T("Orchard Themes to Translate")</label>
+        @Html.TextAreaFor(m => m.OrchardThemesToTranslate)
+        <span class="hint">@T("Comma separated list of Orchard themes that have custom translations.")</span>
+    </div>
 </fieldset>

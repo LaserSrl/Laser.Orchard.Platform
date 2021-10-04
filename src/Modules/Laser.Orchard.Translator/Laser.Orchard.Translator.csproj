@@ -125,6 +125,7 @@
     <Compile Include="Enum.cs" />
     <Compile Include="Handlers\TranslatorSettingsHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ContainerMessage.cs" />
     <Compile Include="Models\TranslationFolderSettingsRecord.cs" />
     <Compile Include="Models\TranslationRecord.cs" />
     <Compile Include="Models\TranslatorSettingsPart.cs" />
