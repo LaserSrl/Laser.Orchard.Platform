@@ -23,8 +23,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             var isAvailableForProcessing = IsAvailableForProcessing();
             describe
                 .For("Cart", T("Cart products"), T("Cart products"))
-                .Element("Lines products shuld not be discounted",
-                    T("Lines products should are not be discounted"),
+                .Element("Line products shuld not be discounted",
+                    T("Line products should not be discounted"),
                     T("If there is a discounted product in the cart, the coupon cannot be applied."),
                     (ctx) => ApplyCriteria(ctx),
                     (ctx) => ApplyCriteria(ctx),

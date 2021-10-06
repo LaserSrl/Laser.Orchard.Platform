@@ -1,0 +1,34 @@
+﻿@using Laser.Orchard.AdvancedSettings.Models
+@using Laser.Orchard.AdvancedSettings.Services
+@model ThemeSkinsSettingsPart
+@{ 
+    var _themeSkinsService = WorkContext.Resolve<IThemeSkinsService>();
+    var allSkinNames = _themeSkinsService.GetAllSkinNames();
+}
+<fieldset>
+    <legened>@T("Theme Customization")</legened>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AvailableSkinNames, 
+            T("Theme variant").Text, 
+            new { @for = Html.FieldIdFor(m => m.AvailableSkinNames) })
+        <select multiple="multiple"
+                name="@Html.FieldNameFor(m => m.AvailableSkinNames)"
+                id="@Html.FieldIdFor(m => m.AvailableSkinNames)"
+                class="form-control"
+                aria-describedby="AvailableSkinNamesHelp">
+            <option value="@ThemeSkinsSettingsPart.AllSkinsValue"
+                    @(Model.AvailableSkinNames.Contains(ThemeSkinsSettingsPart.AllSkinsValue) || Model.AvailableSkinNames.Length == 0 ? "selected=\"selected\"" : "")>
+                @T("All skins")
+            </option>
+            @foreach(var skinName in allSkinNames) {
+                <option value="@skinName",
+                        @(Model.AvailableSkinNames.Contains(skinName)? "selected=\"selected\"" : "")>
+                    @skinName
+                </option>
+            }
+        </select>
+        <small id="AvailableSkinNamesHelp"  class="form-text text-muted hint">
+            @T("Select the frontend theme customizations that will be available in this tenant.")
+        </small>
+    </div>
+</fieldset>

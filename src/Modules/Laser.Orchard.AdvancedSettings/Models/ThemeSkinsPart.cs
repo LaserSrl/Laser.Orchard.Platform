@@ -23,10 +23,11 @@ namespace Laser.Orchard.AdvancedSettings.Models {
 
         public ThemeCssVariable[] Variables {
             get {
-                return JsonConvert.DeserializeObject<ThemeCssVariable[]>(SerializedVariables);
+                return JsonConvert.DeserializeObject<ThemeCssVariable[]>(SerializedVariables ?? "")
+                    ?? Enumerable.Empty<ThemeCssVariable>().ToArray();
             }
             set {
-                SerializedVariables = JsonConvert.SerializeObject(value);
+                SerializedVariables = JsonConvert.SerializeObject(value ?? Enumerable.Empty<ThemeCssVariable>().ToArray());
             }
         }
     }
