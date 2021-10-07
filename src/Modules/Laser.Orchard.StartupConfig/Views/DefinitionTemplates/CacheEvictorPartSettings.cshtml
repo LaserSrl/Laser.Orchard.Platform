@@ -1,5 +1,9 @@
-﻿@model Laser.Orchard.StartupConfig.Models.CacheEvictorPartSettings
+﻿@using Laser.Orchard.StartupConfig.Models;
 
+@model Laser.Orchard.StartupConfig.Models.CacheEvictorPartSettings
+<fieldset>
+    <span class="hint">@T("Whatever choice is used, it will add the required ids into a single list to be evicted")</span>
+</fieldset>
 <fieldset>
     <label for="@Html.FieldIdFor(m => m.EvictItem)">@T("Evict Item")</label>
     <div class="evict-item">
@@ -13,5 +17,21 @@
         <label class="forcheckbox" for="@Html.FieldIdFor(m => m.EvictTerms)">@T("Evict Terms")</label>
         <span class="hint">@T("If checked evicts any term that belongs to the content, its parent and its taxonomy.")</span>
     </div>
+</fieldset>
+<fieldset>
+    @Html.LabelFor(m => m.FilterQueryRecordId, T("Evict Projection Query"))
+    <div class="evict-projection">
+        <select id="@Html.FieldIdFor(m => m.FilterQueryRecordsId)" multiple="multiple" size="10" name="@Html.FieldNameFor(m => m.FilterQueryRecordsId)">
+            @{
+                var noQuery = Model.QueryRecordEntries.Where(q => q.Id == -1).FirstOrDefault();
+                var noQuerySelected = !Model.FilterQueryRecordsId.Any() || Model.FilterQueryRecordsId.Contains(noQuery.Id.ToString());
+            }
+            @Html.SelectOption(noQuery.Id, noQuerySelected, noQuery.Name);
 
+            @foreach (QueryRecordEntry queryRecord in Model.QueryRecordEntries.Where(q => q.Id != -1).OrderBy(x => x.Name)) {
+                @Html.SelectOption(queryRecord.Id, Model.FilterQueryRecordsId.Contains(queryRecord.Id.ToString()), queryRecord.Name);
+            }
+        </select>
+        <span class="hint">@T("Evict of projection for selected queries")</span>
+    </div>
 </fieldset>
