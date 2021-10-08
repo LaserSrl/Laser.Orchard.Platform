@@ -1,8 +1,10 @@
 ﻿using Laser.Orchard.StartupConfig.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.OutputCache.Services;
+using Orchard.Projections.Models;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using System;
@@ -15,13 +17,15 @@ namespace Laser.Orchard.StartupConfig.Handlers {
     public class CacheEvictorHandler : ContentHandler {
         private readonly ICacheService _cacheService;
         private readonly ITaxonomyService _taxonomyService;
-
+        private readonly IRepository<ProjectionPartRecord> _projecRepository;
 
         public CacheEvictorHandler(
             ICacheService cacheService,
-            ITaxonomyService taxonomyService) {
+            ITaxonomyService taxonomyService,
+            IRepository<ProjectionPartRecord> projecRepository) {
             _cacheService = cacheService;
             _taxonomyService = taxonomyService;
+            _projecRepository = projecRepository;
 
             IEnumerable<int> previousTermIds = new List<int>();
             IEnumerable<int> previousTaxonomyIds = new List<int>();
@@ -43,7 +47,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                 if (part != null) {
                     HashSet<int> evictIds = new HashSet<int>();
 
-                    // first part: evicting manually added ids
+                    #region first part: evicting manually added ids
                     var evictItem = part.Settings.GetModel<CacheEvictorPartSettings>().EvictItem;
                     if (evictItem != null) {
                         var evictItems = evictItem
@@ -55,7 +59,9 @@ namespace Laser.Orchard.StartupConfig.Handlers {
 
                         evictIds.UnionWith(evictItems);
                     }
-                    // second part: terms
+                    #endregion
+
+                    #region second part: terms
                     if (part.Settings.GetModel<CacheEvictorPartSettings>().EvictTerms) {
                         // check the actually terms in my content.
                         var termsPart = part.ContentItem
@@ -79,6 +85,20 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                             evictIds.UnionWith(GetTermsToEvict(term));
                         }
                     }
+                    #endregion
+
+                    #region third part: projection
+                    var filterQueryRecordId = part.Settings.GetModel<CacheEvictorPartSettings>().FilterQueryRecordId;
+                    var filterQueryRecordsId = filterQueryRecordId.Split(';');
+                    // If -1 "no query" is selected in the ids, the ids will not be selected.
+                    if (!string.IsNullOrWhiteSpace(filterQueryRecordId) && !filterQueryRecordsId.Any(q => q == "-1")) {
+                        var projectionsId = _projecRepository.Table
+                           .Where(p => filterQueryRecordsId.Contains(p.QueryPartRecord.Id.ToString()))
+                           .Select(p => p.Id)
+                           .ToList();
+                        evictIds.UnionWith(projectionsId);
+                    }
+                    #endregion
 
                     // evict ids
                     foreach (var id in evictIds) {
