@@ -57,5 +57,11 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
             get { return this.Retrieve(r => r.UseTagManager); }
             set { this.Store(r => r.UseTagManager, value); }
         }
+
+        // cookie level
+        public CookieLevels CookieLevel {
+            get { return EnumExtension<CookieLevels>.ParseEnum(this.Retrieve(x => x.CookieLevel)); }
+            set { this.Store(x => x.CookieLevel, value.ToString()); }
+        }
     }
 }

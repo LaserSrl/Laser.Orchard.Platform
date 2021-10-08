@@ -13,6 +13,7 @@ namespace Laser.Orchard.GoogleAnalytics.ViewModels {
             TrackOnFrontEnd = part?.TrackOnFrontEnd ?? false;
             DomainName = part?.DomainName ?? string.Empty;
             AnonymizeIp = part?.AnonymizeIp ?? false;
+            CookieLevel = part?.CookieLevel ?? CookieLevels.Statistical;
         }
 
         public string GoogleAnalyticsKey { get; set; }
@@ -21,5 +22,6 @@ namespace Laser.Orchard.GoogleAnalytics.ViewModels {
         public bool TrackOnFrontEnd { get; set; }
         public string DomainName { get; set; }
         public bool AnonymizeIp { get; set; }
+        public CookieLevels CookieLevel { get; set; }
     }
 }
