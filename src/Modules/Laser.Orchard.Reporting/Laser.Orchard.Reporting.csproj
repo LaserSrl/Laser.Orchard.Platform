@@ -182,6 +182,7 @@
     <Compile Include="Models\AggregateMethods.cs" />
     <Compile Include="Models\ChartTypes.cs" />
     <Compile Include="Models\ColorsSettings.cs" />
+    <Compile Include="Models\ColumnParser.cs" />
     <Compile Include="Models\DataReportViewerPart.cs" />
     <Compile Include="Models\GenericItem.cs" />
     <Compile Include="Models\ReportRecord.cs" />
