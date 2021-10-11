@@ -64,10 +64,17 @@ namespace Laser.Orchard.Reporting.Models {
             if (Value == null) {
                 return "null";
             }
+            return InnerParse()
+                .Replace("\n", "\\r\\n")
+                .Replace(Environment.NewLine, "\\r\\n")
+                .Replace("\"", "\\\"");
+        }
+
+        private string InnerParse() {
             var text = Options.FirstOrDefault()?.ToString();
             switch (ColumnType) {
                 case ColumnType.AHREF:
-                    return string.Format(@"<a href='{0}'>{1}</a>",
+                    return string.Format(@"<a href='{0}' target='blank'>{1}</a>",
                             Value.ToString(),
                             string.IsNullOrWhiteSpace(text) ? Alias : text)
                         .Replace("\n", "\\r\\n")
