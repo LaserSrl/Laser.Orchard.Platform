@@ -236,19 +236,21 @@ namespace Laser.Orchard.Reporting.Services {
             }
 
             if (multiColumnTable) {
+                var columnOps = columnTitles
+                    .Select(ct => new ColumnParser(ct));
                 returnValue.Add("0", new AggregationResult {
                     AggregationValue = 0,
                     Label = "",
                     GroupingField = "",
-                    Other = columnTitles
+                    Other = columnOps.Select(co => co.Alias).ToArray()
                 });
                 int rownum = 0;
                 foreach (var record in result) {
                     var row = new List<object>();
                     var ht = record as Hashtable;
-                    foreach(var alias in columnTitles) {
-                        if (ht.ContainsKey(alias)) {
-                            row.Add(ht[alias]);
+                    foreach (var recordOp in columnOps) {
+                        if (ht.ContainsKey(recordOp.Alias)) {
+                            recordOp.Action(row, ht[recordOp.Alias]);
                         } else {
                             row.Add(null);
                         }
