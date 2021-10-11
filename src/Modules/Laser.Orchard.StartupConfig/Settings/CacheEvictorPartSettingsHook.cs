@@ -6,8 +6,10 @@ using Orchard.ContentManagement.MetaData.Builders;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.ViewModels;
 using Orchard.ContentTypes.Events;
+using Orchard.Core.Title.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Projections.Models;
 using Orchard.Taxonomies.Services;
 using Orchard.UI.Notify;
 using System;
@@ -43,30 +45,61 @@ namespace Laser.Orchard.StartupConfig.Settings {
         public override IEnumerable<TemplateViewModel> TypePartEditor(ContentTypePartDefinition definition) {
             if (definition.PartDefinition.Name != "CacheEvictorPart") yield break;
             var model = definition.Settings.GetModel<CacheEvictorPartSettings>();
+            // get all query
+            model.QueryRecordEntries = GetQueriesRecordEntry();
+            // managing the ids of selected queries
+            if(!string.IsNullOrWhiteSpace(model.FilterQueryRecordId)) {
+                var selectedIds = model.FilterQueryRecordId.Split(';');
+                model.FilterQueryRecordsId = selectedIds;
+            }
             yield return DefinitionTemplate(model);
         }
 
         public override IEnumerable<TemplateViewModel> TypePartEditorUpdate(ContentTypePartDefinitionBuilder builder, IUpdateModel updateModel) {
             if (builder.Name != "CacheEvictorPart") yield break;
             var model = new CacheEvictorPartSettings();
+            model.QueryRecordEntries = GetQueriesRecordEntry();
+
             updateModel.TryUpdateModel(model, "CacheEvictorPartSettings", null, null);
 
-            // validate the inserted id
+            // get identity part of the ids for import/export
+            var identityItems = string.Empty;
             if (!string.IsNullOrEmpty(model.EvictItem)) {
-                int id;
-                string identityItems = string.Empty;
-                foreach (var item in model.EvictItem.Split(';')) {
-                    if (!string.IsNullOrWhiteSpace(item)) {
-                        if (int.TryParse(item, out id)) {
-                            identityItems += GetIdentityPart(id) + ";";
-                        }
-                        else {
-                            Services.Notifier.Error(T("CacheEvictorPart - {0} is not an id", item));
+                var ids = model.EvictItem.Split(';');
+                // get identitypart
+                if (ids.Any()) {
+                    int id;
+                    foreach (var itemId in ids) {
+                        if (!string.IsNullOrWhiteSpace(itemId)) {
+                            if (int.TryParse(itemId, out id)) {
+                                identityItems += GetIdentityPart(id) + ";";
+                            } else {
+                                Services.Notifier.Error(T("CacheEvictorPart - {0} is not an id", itemId));
+                            }
                         }
                     }
                 }
-                // if the validation was successful check the property the identity list
-                model.IdentityEvictItem = identityItems;
+            }
+            model.IdentityEvictItem = identityItems;
+
+
+            // managing the ids of selected queries
+            model.FilterQueryRecordId = string.Join(";", model.FilterQueryRecordsId);
+            if (!string.IsNullOrWhiteSpace(model.FilterQueryRecordId)) {
+                // get identitypart
+                string identityQueryItems = string.Empty;
+
+                if (model.FilterQueryRecordsId.Any()) {
+                    foreach (var itemId in model.FilterQueryRecordsId) {
+                        if (itemId == "-1") {
+                            identityQueryItems += itemId+";";
+                        } else {
+                            identityQueryItems += GetIdentityPart(int.Parse(itemId)) + ";";
+                        }
+                    }
+                }
+
+                model.IdentityFilterQueryRecord = identityQueryItems;
             }
 
             // loads each settings field
@@ -74,6 +107,9 @@ namespace Laser.Orchard.StartupConfig.Settings {
             builder.WithSetting("CacheEvictorPartSettings.IdentityEvictItem", model.IdentityEvictItem);
 
             builder.WithSetting("CacheEvictorPartSettings.EvictTerms", model.EvictTerms.ToString());
+
+            builder.WithSetting("CacheEvictorPartSettings.FilterQueryRecordId", model.FilterQueryRecordId);
+            builder.WithSetting("CacheEvictorPartSettings.IdentityFilterQueryRecord", model.IdentityFilterQueryRecord);
         }
 
         private string GetIdentityPart(int id) {
@@ -93,6 +129,21 @@ namespace Laser.Orchard.StartupConfig.Settings {
             return string.Empty;
         }
 
+        private IEnumerable<QueryRecordEntry> GetQueriesRecordEntry() {
+            // populating the list of queries and layouts
+            List<QueryRecordEntry> records = new List<QueryRecordEntry>();
+            records.Add(new QueryRecordEntry {
+                Id = -1,
+                Name = T("No query").Text
+            });
+
+            records.AddRange(Services.ContentManager.Query<QueryPart, QueryPartRecord>().Join<TitlePartRecord>().OrderBy(x => x.Title).List()
+                .Select(x => new QueryRecordEntry {
+                    Id = x.Id,
+                    Name = x.Name
+                }));
+            return records;
+        }
 
         #region Implementation interface
         public void ContentFieldAttached(ContentFieldAttachedContext context) {
@@ -128,19 +179,14 @@ namespace Laser.Orchard.StartupConfig.Settings {
                 .Where(p => p.PartDefinition.Name == "CacheEvictorPart")
                 .FirstOrDefault();
             if (part != null) {
-                if (!string.IsNullOrEmpty(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem)) {
-                    string listEvictIds = string.Empty;
-                    foreach (var item in part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem.Split(';')) {
-                        var ciIdentity = _contentManager.ResolveIdentity(new ContentIdentity(item));
-                        if (ciIdentity != null) {
-                            listEvictIds += ciIdentity.Id.ToString() + ";";
-                        }
-                    }
-                    _contentDefinitionManager.AlterTypeDefinition(context.ContentTypeDefinition.Name, cfg => cfg
+
+                var listEvictIds = GetIds(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityEvictItem,true);
+                var listEvictQueryIds = GetIds(part.Settings.GetModel<CacheEvictorPartSettings>().IdentityFilterQueryRecord,false);
+                _contentDefinitionManager.AlterTypeDefinition(context.ContentTypeDefinition.Name, cfg => cfg
                       .WithPart(part.PartDefinition.Name,
                           pb => pb
-                              .WithSetting("CacheEvictorPartSettings.EvictItem", listEvictIds)));
-                }
+                              .WithSetting("CacheEvictorPartSettings.EvictItem", listEvictIds)
+                              .WithSetting("CacheEvictorPartSettings.FilterQueryRecordId", listEvictQueryIds)));
             }
         }
 
@@ -150,5 +196,24 @@ namespace Laser.Orchard.StartupConfig.Settings {
         public void ContentTypeRemoved(ContentTypeRemovedContext context) {
         }
         #endregion
+
+        private string GetIds(string identityParts, bool isFreeText) {
+            string listEvictIds = string.Empty;
+
+            if (!string.IsNullOrEmpty(identityParts)) {
+                foreach (var item in identityParts.Split(';')) {
+                    // -1 identifies no selected query
+                    if (!isFreeText && item == "-1") {
+                        listEvictIds += "-1;";
+                    }
+                    var ciIdentity = _contentManager.ResolveIdentity(new ContentIdentity(item));
+                    if (ciIdentity != null) {
+                        listEvictIds += ciIdentity.Id.ToString() + ";";
+                    }
+                }
+            }
+
+            return listEvictIds;
+        }
     }
 }
