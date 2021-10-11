@@ -1,0 +1,31 @@
+﻿@using Laser.Orchard.Cookies;
+
+@model Laser.Orchard.NwazetIntegration.Models.EcommerceAnalyticsSettingsPart
+
+<fieldset>
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="form-group">
+                <label>@T("Ecommerce Analitics Cookie Level")</label>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.EcommerceCookieLevel, CookieType.Technical.ToString(), new { id = "TechnicalEcommerceCookieLevel" })
+                    <label for="TechnicalEcommerceCookieLevel" class="forcheckbox">@T("Technical")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.EcommerceCookieLevel, CookieType.Statistical.ToString(), new { id = "StatisticalEcommerceCookieLevel" })
+                    <label for="StatisticalEcommerceCookieLevel" class="forcheckbox"> @T("Statistical")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.EcommerceCookieLevel, CookieType.Marketing.ToString(), new { id = "MarketingEcommerceCookieLevel" })
+                    <label for="MarketingEcommerceCookieLevel" class="forcheckbox">@T("Marketing")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.EcommerceCookieLevel, CookieType.Preferences.ToString(), new { id = "PreferencesEcommerceCookieLevel" })
+                    <label for="PreferencesEcommerceCookieLevel" class="forcheckbox">@T("Preferences")</label>
+                </div>
+
+                <span class="hint">@T("Choose the level of cookies of Ecommerce Analitics.")</span>
+            </div>
+        </div>
+    </div>
+</fieldset>
