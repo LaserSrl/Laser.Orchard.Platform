@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.Cookies.Providers;
+﻿using Laser.Orchard.Cookies;
+using Laser.Orchard.Cookies.Providers;
 using Laser.Orchard.GoogleAnalytics.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -27,7 +28,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
         public IEnumerable<string> GetTechnicalCookies() {
             if (googleAnalyticsSettings != null &&
-                googleAnalyticsSettings.CookieLevel == CookieLevels.Technical &&
+                googleAnalyticsSettings.CookieLevel == CookieType.Technical &&
                 _technicalCookies == null) {
                 _technicalCookies = GetCookieDefault();
             } else {
@@ -40,7 +41,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
         public IEnumerable<string> GetPreferencesCookies() {
             if (googleAnalyticsSettings != null &&
-                 googleAnalyticsSettings.CookieLevel == CookieLevels.Preferences &&
+                 googleAnalyticsSettings.CookieLevel == CookieType.Preferences &&
                  _preferencesCookies == null) {
                 _preferencesCookies = GetCookieDefault();
             } else {
@@ -53,7 +54,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
         public IEnumerable<string> GetStatisticalCookies() {
             if (googleAnalyticsSettings != null && 
-                googleAnalyticsSettings.CookieLevel == CookieLevels.Statistical && 
+                googleAnalyticsSettings.CookieLevel == CookieType.Statistical && 
                 _statisticalCookies == null) {
                  _statisticalCookies = GetCookieDefault();
             } else {
@@ -66,7 +67,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
         public IEnumerable<string> GetMarketingCookies() {
             if (googleAnalyticsSettings != null &&
-                googleAnalyticsSettings.CookieLevel == CookieLevels.Marketing &&
+                googleAnalyticsSettings.CookieLevel == CookieType.Marketing &&
                 _marketingCookies == null) {
                 _marketingCookies = GetCookieDefault();
             } else {

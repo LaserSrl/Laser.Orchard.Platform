@@ -37,7 +37,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (_acceptedCookies == null || !_acceptedCookies.Any()) {
                 _acceptedCookies = _gdprScriptService.GetAcceptedCookieTypes();
             }
-            return _acceptedCookies.Contains(CookieType.Statistical);
+            var ecommerceCookieLevel = _orchardServices.WorkContext.CurrentSite.As<EcommerceAnalyticsSettingsPart>()?.EcommerceCookieLevel ?? CookieType.Statistical;
+            return _acceptedCookies.Contains(ecommerceCookieLevel);
         }
 
         public void FillPart(GTMProductPart part) {

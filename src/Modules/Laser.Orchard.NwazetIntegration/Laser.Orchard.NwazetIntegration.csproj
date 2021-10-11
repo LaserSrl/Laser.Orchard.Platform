@@ -132,6 +132,7 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
     <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
     <Compile Include="Models\FacebookShopProductPartRecord.cs" />
     <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
@@ -446,6 +449,7 @@
     <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\FacebookShopProductPartSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

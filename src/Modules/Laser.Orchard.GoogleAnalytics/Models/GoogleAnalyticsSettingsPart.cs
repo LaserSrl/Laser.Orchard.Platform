@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Laser.Orchard.Cookies;
 using Orchard.ContentManagement;
 
 namespace Laser.Orchard.GoogleAnalytics.Models {
@@ -59,8 +60,8 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         }
 
         // cookie level
-        public CookieLevels CookieLevel {
-            get { return EnumExtension<CookieLevels>.ParseEnum(this.Retrieve(x => x.CookieLevel)); }
+        public CookieType CookieLevel {
+            get { return EnumExtension<CookieType>.ParseEnum(this.Retrieve(x => x.CookieLevel)); }
             set { this.Store(x => x.CookieLevel, value.ToString()); }
         }
     }
