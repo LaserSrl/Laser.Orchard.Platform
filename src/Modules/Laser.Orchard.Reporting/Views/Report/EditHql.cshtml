@@ -26,7 +26,7 @@
         <fieldset>
             <label for="ColumnAliases">@T("Column Aliases")</label>
             <input id="ColumnAliases" name="ColumnAliases" value="@Model.ColumnAliases" type="text"class="text large" />
-            <span class="hint">@T("Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query. For details <a href=\"https:\\\\www.github.com\">click here.</a>")</span>
+            <span class="hint">@T("Specify the column names to be shown in the report, separated by a comma. The report will then show, for each data row, only values corresponding to these columns, in the order given. If this is empty, the report will compute the column aliases based on the query. For details <a href=\"https://github.com/LaserSrl/Laser.Orchard.Platform/tree/master/src/Modules/Laser.Orchard.Reporting\">click here.</a>")</span>
             @Html.ValidationMessageFor(c => c.ColumnAliases)
         </fieldset>
         <fieldset class="save-button">

@@ -1,6 +1,6 @@
 ﻿## Special Syntax of ColumnAliases
 
-ColumnAliases support some specific functions to parse values for the columns.
+ColumnAliases support some specific metalanguage functions to parse special values for the columns.
 
 Where these have parameters, they are separated by a semicolon ';'.
 
