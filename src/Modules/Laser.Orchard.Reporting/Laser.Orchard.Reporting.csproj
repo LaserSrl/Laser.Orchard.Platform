@@ -101,6 +101,7 @@
     </Content>
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

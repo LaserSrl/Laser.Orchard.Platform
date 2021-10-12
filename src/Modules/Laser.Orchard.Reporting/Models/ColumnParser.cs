@@ -64,28 +64,26 @@ namespace Laser.Orchard.Reporting.Models {
             if (Value == null) {
                 return "null";
             }
+            return InnerParse()
+                .Replace("\n", "\\r\\n")
+                .Replace(Environment.NewLine, "\\r\\n")
+                .Replace("\"", "\\\"");
+        }
+
+        private string InnerParse() {
             var text = Options.FirstOrDefault()?.ToString();
             switch (ColumnType) {
                 case ColumnType.AHREF:
-                    return string.Format(@"<a href='{0}'>{1}</a>",
+                    return string.Format(@"<a href='{0}' target='blank'>{1}</a>",
                             Value.ToString(),
-                            string.IsNullOrWhiteSpace(text) ? Alias : text)
-                        .Replace("\n", "\\r\\n")
-                        .Replace(Environment.NewLine, "\\r\\n")
-                        .Replace("\"", "\\\"");
+                            string.IsNullOrWhiteSpace(text) ? Alias : text);
                 case ColumnType.IMGSRC:
                     return string.Format(@"<img src='{0}' title={1} />",
                             Value.ToString(),
-                            string.IsNullOrWhiteSpace(text) ? Alias : text)
-                        .Replace("\n", "\\r\\n")
-                        .Replace(Environment.NewLine, "\\r\\n")
-                        .Replace("\"", "\\\"");
+                            string.IsNullOrWhiteSpace(text) ? Alias : text);
                 case ColumnType.None:
                 default:
-                    return Value.ToString()
-                        .Replace("\n", "\\r\\n")
-                        .Replace(Environment.NewLine, "\\r\\n")
-                        .Replace("\"", "\\\"");
+                    return Value.ToString();
             }
         }
     }
