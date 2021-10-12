@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Laser.Orchard.Cookies;
 using Orchard.ContentManagement;
 
 namespace Laser.Orchard.GoogleAnalytics.Models {
@@ -61,6 +62,12 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         public bool UseGA4 {
             get { return this.Retrieve(r => r.UseGA4); }
             set { this.Store(r => r.UseGA4, value); }
+        }
+
+        // cookie level
+        public CookieType CookieLevel {
+            get { return EnumExtension<CookieType>.ParseEnum(this.Retrieve(x => x.CookieLevel)); }
+            set { this.Store(x => x.CookieLevel, value.ToString()); }
         }
     }
 }

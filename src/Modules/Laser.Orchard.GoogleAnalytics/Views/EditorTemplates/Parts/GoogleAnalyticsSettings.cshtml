@@ -1,6 +1,6 @@
 ﻿@model Laser.Orchard.GoogleAnalytics.Models.GoogleAnalyticsSettingsPart
 @using Laser.Orchard.GoogleAnalytics.Models;
-
+@using Laser.Orchard.Cookies;
 <fieldset>
     <a name="googleanalitycssetting"></a>
     <legend>@T("Google Analytics")</legend>
@@ -68,6 +68,32 @@
             <div>
                 @Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>
                 @*<label for="@Html.FieldIdFor(m => m.UseAsyncTracking)" class="forcheckbox">@T("Use Async Tracking")</label>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="form-group">
+                <label>@T("Google Analitics Cookie Level")</label>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.CookieLevel, CookieType.Technical.ToString(), new { id = "TechnicalCookieLevel" })
+                    <label for="TechnicalCookieLevel" class="forcheckbox">@T("Technical")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.CookieLevel, CookieType.Statistical.ToString(), new { id = "StatisticalCookieLevel" })
+                    <label for="StatisticalCookieLevel" class="forcheckbox"> @T("Statistical")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.CookieLevel, CookieType.Marketing.ToString(), new { id = "MarketingCookieLevel" })
+                    <label for="MarketingCookieLevel" class="forcheckbox">@T("Marketing")</label>
+                </div>
+                <div class="cookie-level">
+                    @Html.RadioButtonFor(m => m.CookieLevel, CookieType.Preferences.ToString(), new { id = "PreferencesCookieLevel" })
+                    <label for="PreferencesCookieLevel" class="forcheckbox">@T("Preferences")</label>
+                </div>
+
+                <span class="hint">@T("Choose the level of cookies of Google Analitics.")</span>
             </div>
         </div>
     </div>

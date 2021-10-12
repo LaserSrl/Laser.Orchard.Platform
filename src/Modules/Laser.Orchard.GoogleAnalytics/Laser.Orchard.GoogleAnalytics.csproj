@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Drivers\GoogleAnalyticsSettingsPartDriver.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="Filters\GoogleAnalyticsFilter.cs" />
     <Compile Include="Handlers\GoogleAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
