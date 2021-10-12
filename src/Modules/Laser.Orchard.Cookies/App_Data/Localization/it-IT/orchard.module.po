@@ -73,6 +73,10 @@ msgid "The position of the Cookie Banner."
 msgstr "La posizione del banner dei cookie."
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
+msgid "Change 'Accept selected' button text"
+msgstr "Cambia il testo del pulsante 'Consenti selezionati'"
+
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts/CookieLawWidgetSettings.cshtml"
 msgid "Change 'GDPR Cookies' button text"
 msgstr "Testo del pulsante 'GDPR Cookie'"
 
@@ -128,6 +132,14 @@ msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
 msgid "Change your choice"
 msgstr "Cambia la tua scelta"
 
+msgctxt "~/Modules/Laser.Orchard.Cookies/Views/Parts/CookieLaw.cshtml"
+msgid "Cookies"
+msgstr "Cookies"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "Accept selected"
+msgstr "Consenti selezionati"
+
 msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
 msgid "GDPR Cookie"
 msgstr "GDPR Cookie"
@@ -139,6 +151,10 @@ msgstr "Maggiori informazioni"
 msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
 msgid "OK"
 msgstr "OK"
+
+msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
+msgid "Reset Cookies"
+msgstr "Reimposta Cookies"
 
 msgctxt "Laser.Orchard.Cookies.Handlers.CookieLawPartHandler"
 msgid "This website uses cookies"

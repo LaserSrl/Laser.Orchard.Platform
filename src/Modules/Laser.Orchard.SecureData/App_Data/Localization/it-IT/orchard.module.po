@@ -213,12 +213,36 @@ msgid "{0} Content Fields"
 msgstr "{0} Campi di contenuto"
 
 msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Api Secret"
+msgstr "Api Secret"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Api Secret Test"
+msgstr "Api Secret di Test"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Client Secret"
+msgstr "Client Secret"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
 msgid "Content Fields for {0}"
 msgstr "Campi di contenuto per {0}"
 
 msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
 msgid "Value for {0}"
 msgstr "Valore di {0}"
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Value of the field is equal to '{0}'."
+msgstr "Il valore del campo è uguale a '{0}'."
+
+msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
+msgid "Value of the field is equal to '{0}'. If '{0}' is empty, returns all results."
+msgstr "Il valore del campo è uguale a '{0}'. Se '{0}' è vuoto, restituisce tutti i risultati."
 
 msgctxt "Laser.Orchard.SecureData.Services.SecureFieldService"
 msgid "Manage all {0} encrypted string fields"
