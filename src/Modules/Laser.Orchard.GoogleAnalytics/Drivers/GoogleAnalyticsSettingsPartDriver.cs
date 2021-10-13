@@ -5,6 +5,9 @@ using Laser.Orchard.GoogleAnalytics.Models;
 using System;
 using Orchard.UI.Notify;
 using System.Web.Mvc;
+using Orchard.ContentManagement.Handlers;
+using Laser.Orchard.GoogleAnalytics;
+using Laser.Orchard.Cookies;
 
 namespace GoogleAnalytics.Drivers {
     public class GoogleAnalyticsSettingsPartDriver : ContentPartDriver<GoogleAnalyticsSettingsPart> {
@@ -40,6 +43,20 @@ namespace GoogleAnalytics.Drivers {
                 _notifier.Add(NotifyType.Error, T("Error on updating Google Analytics settings"));
             }
             return Editor(part, shapeHelper);
+        }
+
+        // managed import export of the cookie level property because it is an enum and is not dynamically imported or exported
+        protected override void Exporting(GoogleAnalyticsSettingsPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("CookieLevel", part.CookieLevel.ToString());
+        }
+
+        protected override void Importing(GoogleAnalyticsSettingsPart part, ImportContentContext context) {
+            // Don't do anything if the tag is not specified.
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
+            }
+
+            part.CookieLevel = EnumExtension<CookieType>.ParseEnum(context.Attribute(part.PartDefinition.Name, "CookieLevel"));
         }
     }
 }
