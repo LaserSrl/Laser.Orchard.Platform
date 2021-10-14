@@ -13,6 +13,10 @@ msgid "When you clear your rating, if you've left a review it will also be delet
 msgstr "Quando cancelli il tuo voto, se hai lasciato una recensione verrà anch'essa cancellata. Vuoi procedere comunque?"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/DefinitionTemplates/ReviewTypePartSettings.cshtml"
+msgid "Enable review comments"
+msgstr "Abilita commenti alle recensioni"
+
+msgctxt "~/Modules/Contrib.Reviews/Views/DefinitionTemplates/ReviewTypePartSettings.cshtml"
 msgid "Enable star rating"
 msgstr "Abilita il voto tramite stellette"
 
@@ -219,6 +223,10 @@ msgstr "Nessun commento."
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts_Reviews.cshtml"
 msgid "There are no reviews for this item."
 msgstr "Non ci sono recensioni per questo elemento:"
+
+msgctxt "~/Modules/Contrib.Reviews/Views/Parts_Reviews.cshtml"
+msgid "User Reviews"
+msgstr "Recensioni degli utenti"
 
 msgctxt "Contrib.Reviews.Controllers.ReviewController"
 msgid "In order to submit a review, you must also submit a rating."
