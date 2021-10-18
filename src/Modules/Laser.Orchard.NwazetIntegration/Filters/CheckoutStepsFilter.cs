@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Mvc.Filters;
-using System.Web.Mvc;
+﻿using Laser.Orchard.NwazetIntegration.Controllers;
+using Laser.Orchard.NwazetIntegration.Models;
+using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+using Laser.Orchard.PaymentGateway.Controllers;
+using Laser.Orchard.PaymentGateway.ViewModels;
+using Newtonsoft.Json;
 using Nwazet.Commerce.Controllers;
 using Nwazet.Commerce.Models;
-using Laser.Orchard.NwazetIntegration.Controllers;
-using Laser.Orchard.PaymentGateway.Controllers;
-using Orchard.DisplayManagement;
 using Orchard;
-using Orchard.Mvc;
-using Laser.Orchard.NwazetIntegration.Models;
 using Orchard.ContentManagement;
-using Laser.Orchard.NwazetIntegration.ViewModels;
-using Laser.Orchard.NwazetIntegration.Services;
-using Newtonsoft.Json;
-using Laser.Orchard.PaymentGateway.ViewModels;
-using Laser.Orchard.Cookies.Services;
-using Laser.Orchard.Cookies;
+using Orchard.DisplayManagement;
+using Orchard.Mvc;
+using Orchard.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Filters {
     public class CheckoutStepsFilter : FilterProvider, IActionFilter {
@@ -26,28 +23,70 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         private readonly dynamic _shapeFactory;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IGTMProductService _GTMProductService;
+        private readonly IContentManager _contentManager;
 
         public CheckoutStepsFilter(
             IEnumerable<IPosService> posServices,
             IShapeFactory shapeFactory,
             IWorkContextAccessor workContextAccessor,
-            IGTMProductService GTMProductService) {
+            IGTMProductService GTMProductService,
+            IContentManager contentManager) {
 
             _posServices = posServices;
             _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
             _GTMProductService = GTMProductService;
+            _contentManager = contentManager;
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext) {
-            
+
             if (_GTMProductService.ShoulAddEcommerceTags()) {
-                CheckoutStep(filterContext)();
+                // Different handler for GA4.
+                if (_GTMProductService.UseGA4()) {
+                    GA4CheckoutStep(filterContext)();
+                } else {
+                    CheckoutStep(filterContext)();
+                }
             }
         }
 
-        public Action CheckoutStep(ActionExecutedContext filterContext) {
+        public Action GA4CheckoutStep(ActionExecutedContext filterContext) {
+            if (_GTMProductService.ShoulAddEcommerceTags()) {
+                if (filterContext.Controller is CheckoutController) {
+                    if (filterContext.ActionDescriptor.ActionName.Equals("Index", StringComparison.InvariantCultureIgnoreCase)) {
+                        var result = filterContext.Result as ViewResult;
+                        if (result != null) {
+                            var model = result.Model as CheckoutViewModel;
+                            if (model != null) {
+                                return GA4AddShape("begin_checkout", GetProducts(model))(filterContext);
+                            }
+                        }
+                    } else if (filterContext.ActionDescriptor.ActionName.Equals("Review", StringComparison.InvariantCultureIgnoreCase)) {
+                        var result = filterContext.Result as ViewResult;
+                        if (result != null) {
+                            var model = result.Model as CheckoutViewModel;
+                            if (model != null) {
+                                // If I've got a valid SelectedShippingOption, I'm in the right place for add_shipping_info GA4 event.
+                                if (model.SelectedShippingOption != null) {
+                                    return GA4AddShippingShape("add_shipping_info", new GA4ShippingInfoVM {
+                                        ProductList = GetProducts(model),
+                                        ShippingTier = model.SelectedShippingOption.ToString(),
+                                        Value = model.GetShoppingTotal(),
+                                        Coupon = "",
+                                        Currency = model.CurrencyProvider.CurrencyCode
+                                    })(filterContext);
+                                }
+                            }
+                        } 
+                    }
+                }
+            }
+            // do nothing if this is not a checkout step
+            return delegate () { };
+        }
 
+        public Action CheckoutStep(ActionExecutedContext filterContext) {
             // new checkout controller
             if (filterContext.Controller is CheckoutController) {
                 if (filterContext.ActionDescriptor
@@ -81,7 +120,8 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         if (model != null) {
                             // this is probably always true
                             if (model.SelectedShippingOption != null) {
-                                return AddShape(new { step = 3,
+                                return AddShape(new {
+                                    step = 3,
                                     option = model.SelectedShippingOption.ToString()
                                 }, GetProducts(model))(filterContext);
                             } else {
@@ -113,10 +153,10 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                 var quantity = (int)sci.Quantity;
                                 var part = product.As<GTMProductPart>();
                                 _GTMProductService.FillPart(part);
-                                var vm = new GTMProductVM(part);
+                                var vm = _GTMProductService.GetViewModel(part);
                                 vm.Quantity = quantity;
                                 return vm;
-                            }) ?? new List<GTMProductVM>();
+                            }) ?? new List<IGAProductVM>();
 
                         object actionField = null;
                         if (model.ShippingOption != null) {
@@ -187,11 +227,11 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             }
 
             // do nothing if this is not a checkout step
-            return delegate() { };
+            return delegate () { };
         }
 
         private Func<ActionExecutedContext, Action> AddShape(
-            object actionField, IEnumerable<GTMProductVM> products = null) {
+            object actionField, IEnumerable<IGAProductVM> products = null) {
 
             return ctx => delegate () {
                 _workContextAccessor
@@ -203,7 +243,36 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
             };
         }
 
-        private IEnumerable<GTMProductVM> GetProducts(CheckoutViewModel checkoutVM) {
+        private Func<ActionExecutedContext, Action> GA4AddShippingShape(
+            string eventName,
+            GA4ShippingInfoVM shippingInfoVM) {
+            return ctx => delegate () {
+                _workContextAccessor
+                    .GetContext(ctx)
+                    .Layout.Zones.Head
+                    .Add(_shapeFactory.GA4ShippingInfo(
+                         EventName: eventName,
+                         ShippingInfoVM: shippingInfoVM));
+            };
+        }
+
+        private Func<ActionExecutedContext, Action> GA4AddShape(
+            string eventName,
+            IEnumerable<IGAProductVM> products = null,
+            object additionalParams = null) {
+
+            return ctx => delegate () {
+                _workContextAccessor
+                    .GetContext(ctx)
+                    .Layout.Zones.Head
+                    .Add(_shapeFactory.GA4CheckoutStep(
+                         GTMProducts: products,
+                         EventName: eventName,
+                         AdditionalParams: JsonConvert.SerializeObject(additionalParams)));
+            };
+        }
+
+        private IEnumerable<IGAProductVM> GetProducts(CheckoutViewModel checkoutVM) {
             var shopItems = checkoutVM.GetProductQuantities();
             return shopItems
                 ?.Select(sci => {
@@ -211,10 +280,10 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                     var quantity = sci.Quantity;
                     var part = product.As<GTMProductPart>();
                     _GTMProductService.FillPart(part);
-                    var vm = new GTMProductVM(part);
+                    var vm = _GTMProductService.GetViewModel(part);
                     vm.Quantity = quantity;
                     return vm;
-                }) ?? new List<GTMProductVM>();
+                }) ?? new List<IGAProductVM>();
         }
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {

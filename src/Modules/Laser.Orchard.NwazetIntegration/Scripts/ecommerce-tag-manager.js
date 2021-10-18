@@ -15,6 +15,21 @@ window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout
 window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
 window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
 
+// Object used to track checkout with GA4
+window.GA4Data = $.extend(true, {}, window.GA4Data);
+window.GA4Data.event = window.GA4Data.event || '';
+window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+// Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+window.GA4Data.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+window.GA4Data.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+window.GA4Data.ecommerce.value = window.GA4Data.ecommerce.value || '';
+window.GA4Data.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+window.GA4Data.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+window.GA4Data.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
 
 $(function () {
     // This function will be executed before the DOM Ready event
@@ -33,6 +48,21 @@ $(function () {
     window.ecommerceData.checkout = $.extend(true, {}, window.ecommerceData.checkout);
     window.ecommerceData.checkout.actionField = $.extend(true, {}, window.ecommerceData.checkout.actionField);
     window.ecommerceData.checkout.products = window.ecommerceData.checkout.products || [];
+
+    window.GA4Data = $.extend(true, {}, window.GA4Data);
+    window.GA4Data.event = window.GA4Data.event || '';
+    window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+    window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+    // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+    window.GA4Data.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+    window.GA4Data.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+    window.GA4Data.ecommerce.value = window.GA4Data.ecommerce.value || '';
+    window.GA4Data.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+    window.GA4Data.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+    window.GA4Data.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+    window.GA4Data.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+    window.GA4Data.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+    window.GA4Data.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
 
     // put it all together and push it into the dataLayer
     // for Google Tag Manager. This dataLayer message should be
@@ -59,6 +89,40 @@ $(function () {
         // cases it may be allowed to be empty
         ecommerceObject.checkout = window.ecommerceData.checkout;
     }
+
+
+    var GA4Object = {};
+    if (window.useGA4) {
+        if (!$.isEmptyObject(window.GA4Data)
+            && window.GA4Data.event != ''
+            && !$.isEmptyObject(window.GA4Data.ecommerce)
+            && window.GA4Data.ecommerce.items.length) {
+            GA4Object.event = window.GA4Data.event;
+            GA4Object.ecommerce = window.GA4Data.ecommerce;
+
+            // Additional params of ecommerce (e.g. "purchase" event requires / accepts more parameters)
+            if (GA4Object.event == 'purchase') {
+                GA4Object.ecommerce.transaction_id = window.GA4Data.ecommerce.transaction_id || '';
+                GA4Object.ecommerce.affiliation = window.GA4Data.ecommerce.affiliation || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || '';
+                GA4Object.ecommerce.tax = window.GA4Data.ecommerce.tax || '';
+                GA4Object.ecommerce.shipping = window.GA4Data.ecommerce.shipping || '';
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+            } else if (GA4Object.event == 'add_shipping_info') {
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+                GA4Object.ecommerce.shipping_tier = window.GA4Data.ecommerce.shipping_tier || '';
+            } else if (GA4Object.event == 'add_payment_info') {
+                GA4Object.ecommerce.currency = window.GA4Data.ecommerce.currency || '';
+                GA4Object.ecommerce.value = window.GA4Data.ecommerce.value || 0;
+                GA4Object.ecommerce.coupon = window.GA4Data.ecommerce.coupon || '';
+                GA4Object.ecommerce.payment_type = window.GA4Data.ecommerce.payment_type || '';
+            }
+        }
+    }
+
     // make sure dataLayer has been initialized
     window.dataLayer = window.dataLayer || [];
     // if there is anything to be sent immediately, push it
@@ -66,6 +130,32 @@ $(function () {
         window.dataLayer.push({
             'ecommerce': ecommerceObject
         });
+    }
+
+    if (window.useGA4) {
+        if (!$.isEmptyObject(GA4Object)) {
+            window.dataLayer.push(GA4Object);
+        }
+
+        // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
+        // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+        if (window.ecommerceData.detail.products.length) {
+            var GA4_view_item = {};
+            GA4_view_item.event = "view_item";
+            GA4_view_item.ecommerce = {};
+            GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+            window.dataLayer.push(GA4_view_item);
+        }
+
+        // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
+        // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
+        if (window.ecommerceData.impressions.length) {
+            var GA4_view_item_list = {};
+            GA4_view_item_list.event = "view_item_list";
+            GA4_view_item_list.ecommerce = {};
+            GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+            window.dataLayer.push(GA4_view_item_list);
+        }
     }
 
     var productInArray = function (array, partId) {
@@ -120,24 +210,42 @@ $(function () {
             }
             // raise the events for addition/removal from cart
             if (addedToCart.length) {
-                window.dataLayer.push({
-                    'event': 'addToCart',
-                    'ecommerce': {
-                        'add': {
-                            'products': addedToCart
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'add_to_cart',
+                        ecommerce: {
+                            items: addedToCart
                         }
-                    }
-                });
+                    });
+                } else {
+                    window.dataLayer.push({
+                        'event': 'addToCart',
+                        'ecommerce': {
+                            'add': {
+                                'products': addedToCart
+                            }
+                        }
+                    });
+                }
             }
             if (removedFromCart.length) {
-                window.dataLayer.push({
-                    'event': 'removeFromCart',
-                    'ecommerce': {
-                        'remove': {
-                            'products': removedFromCart
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'remove_from_cart',
+                        ecommerce: {
+                            items: removedFromCart
                         }
-                    }
-                });
+                    });
+                } else {
+                    window.dataLayer.push({
+                        'event': 'removeFromCart',
+                        'ecommerce': {
+                            'remove': {
+                                'products': removedFromCart
+                            }
+                        }
+                    });
+                }
             }
         }
     }
@@ -180,16 +288,26 @@ $(function () {
             }
             var quantity = context.movedQuantity;
             productAdded.quantity = quantity;
-            window.dataLayer.push({
-                'event': 'addToCart',
-                'ecommerce': {
-                    'add': {
-                        'products': [productAdded]
+
+            if (window.useGA4) {
+                window.dataLayer.push({
+                    event: 'add_to_cart',
+                    ecommerce: {
+                        items: [productAdded]
                     }
-                }
-            });
+                });
+            } else {
+                window.dataLayer.push({
+                    'event': 'addToCart',
+                    'ecommerce': {
+                        'add': {
+                            'products': [productAdded]
+                        }
+                    }
+                });
+            }
         })
-    // RemoveFromCart1: use the event from shoppingcart.js
+        // RemoveFromCart1: use the event from shoppingcart.js
         .on("nwazet.removefromcart", "form.addtocart", function (e) {
             // $(this) is the element that was clicked to trigger the event
             // (generally an anchor tag)
@@ -204,20 +322,29 @@ $(function () {
             }
             // send a removed from cart event to tag manager
             if (productRemoved.quantity > 0) {
-                // this check will allow us to avoid sending duplicate events
-                window.dataLayer.push({
-                    'event': 'removeFromCart',
-                    'ecommerce': {
-                        'remove': {
-                            'products': [productRemoved]
+                if (window.useGA4) {
+                    window.dataLayer.push({
+                        event: 'remove_from_cart',
+                        ecommerce: {
+                            items: [productRemoved]
                         }
-                    }
-                });
+                    });
+                } else {
+                    // this check will allow us to avoid sending duplicate events
+                    window.dataLayer.push({
+                        'event': 'removeFromCart',
+                        'ecommerce': {
+                            'remove': {
+                                'products': [productRemoved]
+                            }
+                        }
+                    });
+                }
                 productRemoved.quantity = 0;
             }
             console.log('removefromcart');
         })
-    // CartUpdated
+        // CartUpdated
         .on("change", ".shoppingcart .quantity", function (e) {
             // $(this) is the input whose value for quantity changed
             // id of the product whose quantity changed
@@ -246,12 +373,6 @@ $(function () {
             // post on a form 
             //console.log('cartupdated inside');
         })
-        .on("submit", ".shoppingcart form", function (e) {
-            // in $(this) we have the form
-            addRemoveAllCartChanges(e.target);
-            // post on a form 
-            //console.log('cartupdated outside');
-        })
         .on("submit", "form .shopping-cart-container", function (e) {
             // in $(this) we may not have the form
             addRemoveAllCartChanges(e.target);
@@ -264,25 +385,63 @@ $(function () {
             // post on a form 
             //console.log('cartupdated outside');
         })
-        .on("click", "[data-product-id]", function (e) {
+        .on("submit", ".shoppingcart form", function (e) {
+            // in $(this) we may not have the form
+            addRemoveAllCartChanges(e.target);
+            // post on a form 
+            //console.log('cartupdated outside');
+        })
+        .on("click", "[data-analytics-product-id]", function (e) {
             // use this to track product clicks
-            var prodId = $(this).attr('data-product-id');
+            var prodId = $(this).attr('data-analytics-product-id');
             // if we did the page right, this product is among the impressions
             var productClicked = productInArray(window.ecommerceData.impressions, prodId);
             if ($.isEmptyObject(productClicked)) {
                 // not found:
-                // this is a strange error condition that should not happen naturally
-                return;
-            }
-            // generate a product click event
-            window.dataLayer.push({
-                'event': 'productClick',
-                'ecommerce': {
-                    'click': {
-                        'products': [productClicked]
-                    }
+                // if I'm in the shopping cart, I need to search the product in the right array.
+                productClicked = productInArray(window.ecommerceData.cart.products, prodId);
+                if ($.isEmptyObject(productClicked)) {
+                    return;
                 }
-            });
+            }
+            if (window.useGA4) {
+                window.dataLayer.push({
+                    event: 'select_item',
+                    ecommerce: {
+                        items: [productClicked]
+                    }
+                });
+            } else {
+                // generate a product click event
+                window.dataLayer.push({
+                    'event': 'productClick',
+                    'ecommerce': {
+                        'click': {
+                            'products': [productClicked]
+                        }
+                    }
+                });
+            }
+        })
+        .on("submit", 'form[data-analytics-form="review"]', function (e) {
+            if (window.useGA4) {
+                // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
+                // For this reason, I only need to check if a valid pos service has been selected.
+                // Other info required by GA4 event are read from the global GA4Data object.
+                // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
+                var posService = e.originalEvent.submitter.value;
+                if (posService) {
+                    window.dataLayer.push({
+                        event: 'add_payment_info',
+                        currency: window.GA4Data.ecommerce.currency,
+                        value: window.GA4Data.ecommerce.value,
+                        coupon: window.GA4Data.ecommerce.coupon,
+                        payment_type: posService,
+                        ecommerce: {
+                            items: window.GA4Data.ecommerce.items || []
+                        }
+                    });
+                }
+            }
         })
 });
-
