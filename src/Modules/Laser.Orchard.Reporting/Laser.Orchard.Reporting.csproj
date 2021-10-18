@@ -101,6 +101,7 @@
     </Content>
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="readme.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -182,6 +183,7 @@
     <Compile Include="Models\AggregateMethods.cs" />
     <Compile Include="Models\ChartTypes.cs" />
     <Compile Include="Models\ColorsSettings.cs" />
+    <Compile Include="Models\ColumnParser.cs" />
     <Compile Include="Models\DataReportViewerPart.cs" />
     <Compile Include="Models\GenericItem.cs" />
     <Compile Include="Models\ReportRecord.cs" />
