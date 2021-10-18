@@ -44,6 +44,11 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
         public virtual bool UseGA4 { get; set; }
 
         /// <summary>
+        /// setting of the cookie level
+        /// </summary>
+        public virtual string CookieLevel { get; set; }
+
+        /// <summary>
 		/// Initializes a new instance of the <see cref="GoogleAnalyticsSettingsPartRecord"/> class. Sets the default value
         /// of <see cref="P:UseAsyncTracking"/> to <c>true</c>, <see cref="P:TrackOnAdmin"/> to <c>false</c>, <see cref="P:TrackOnFrontEnd"/> to <c>false</c>, <see cref="P:AnonymizeIp"/> to <c>true</c> and <see cref="P:UserGA4"/> to <c>false</c>.
 		/// </summary>
