@@ -77,7 +77,7 @@ var WidgetsContainer;
             });
         }
 
-        $("span.expando-glyph-container").each(function () {
+        $("span.expando-glyph-container","#widgetsPlacement").each(function () {
             $(this).click(function () {
                 if (localStorage.getItem("widget-container-state") === "close" ||
                     localStorage.getItem("widget-container-state") === null) {

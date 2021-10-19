@@ -42,7 +42,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 if (localStorage.getItem("widget-container-state") === "open") {
-                    $(".expando-widget-container").show();
+                    $(".expando-widget-container","#widgetsPlacement").show();
                     $(".expando-glyph-container","#widgetsPlacement").removeClass("closed").addClass("open");
                 }
             });
