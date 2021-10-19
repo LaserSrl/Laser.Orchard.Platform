@@ -93,4 +93,5 @@
 }
 #widgetsPlacement .span-widget-container {
   left: 20px;
+  opacity: 1;
 }
