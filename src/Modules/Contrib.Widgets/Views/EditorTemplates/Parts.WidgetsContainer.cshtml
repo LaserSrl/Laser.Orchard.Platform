@@ -37,6 +37,18 @@
     var inCreateRoute = Url.RouteUrl(ViewContext.RouteData.Values) == Url.RouteUrl(createRouteValues);
 
 }
+@{
+    using (Script.Foot()) {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                if (localStorage.getItem("widget-container-state") === "open") {
+                    $(".expando-widget-container").show();
+                    $(".expando-glyph-container","#widgetsPlacement").removeClass("closed").addClass("open");
+                }
+            });
+        </script>
+    }
+}
 
 <fieldset id="widgetsPlacement">
     <input type="hidden" name="returnUrl" />
@@ -52,13 +64,13 @@
         </select>
     }
 
-    <legend>@T("Widgets")</legend>
+    <legend><span class="text-bold span-widget-container">@T("Widgets")</span></legend>
 
     @* Used for the filter *@
     <input type="hidden" id="ContribWidget.ClickedZone" name="ContribWidget.ClickedZone" />
     <input type="hidden" id="ContribWidget.HostIdSaved" name="ContribWidget.HostIdSaved" value="@contentItem.Id" />
 
-    <div class="expando">
+    <div class="expando expando-widget-container">
         <div class="widgets group">
             <div class="layout-widgets-placement">
                 <div class="zones-container">
@@ -82,11 +94,12 @@
                                                     onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">
                                                 @T("Add")
                                             </button>
-                                        }
-                                        else {
-                                            <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
-                                               onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
-                                        }
+                                        } else {
+
+                                            /**/
+                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
+                           onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
+                    }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
@@ -153,8 +166,7 @@
                                                                         @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                         @T(" | ")
                                                                     }
-                                                                }
-                                                                else {
+                                                                } else {
                                                                     if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
                                                                         @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                         @T(" | ")
