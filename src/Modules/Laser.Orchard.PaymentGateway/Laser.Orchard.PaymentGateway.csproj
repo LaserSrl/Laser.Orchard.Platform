@@ -220,7 +220,7 @@
     <Content Include="Views\AdditionalShapeManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\CustomPosSettings.cshtml" />
+    <Content Include="Views\CustomPosSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
