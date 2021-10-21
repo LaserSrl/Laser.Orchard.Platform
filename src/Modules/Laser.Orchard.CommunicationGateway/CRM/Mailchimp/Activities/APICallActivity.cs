@@ -1,6 +1,9 @@
-﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
+﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
 using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Newtonsoft.Json.Linq;
+using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Workflows.Models;
@@ -17,7 +20,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
 
         public Localizer T { get; set; }
 
-        public APICallActivity(IMailchimpService service, IMailchimpApiService apiService) {
+        public APICallActivity(
+            IMailchimpService service, 
+            IMailchimpApiService apiService) {
             _service = service;
             _apiservice = apiService;
             T = NullLocalizer.Instance;
@@ -41,7 +46,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             };
             Enum.TryParse<HttpVerbs>(model.HttpVerb.ToString(), true, out verb);
             JObject payload = JObject.Parse("{" + model.Payload + "}");
-            var done = _apiservice.TryApiCall(verb, model.Url, payload, ref result);
+
+            var done = _apiservice.TryApiCall(verb, _service.TryReplaceTokenInUrl(model.Url, payload), payload, ref result);
             if (done) {
                 messageout = T("Succeeded");
             }
