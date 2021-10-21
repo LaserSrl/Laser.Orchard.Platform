@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Activities\PaymentEventActivity.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomPosAdminController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentGatewayAPIController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
@@ -122,6 +123,11 @@
     <Compile Include="Drivers\PayButtonPartDriver.cs" />
     <Compile Include="Handlers\PaymentGatewaySiteSettingsPartHandler.cs" />
     <Compile Include="IPaymentEventHandler.cs" />
+    <Compile Include="Models\AdditionalPartial.cs" />
+    <Compile Include="Models\AdditionalShapeBase.cs" />
+    <Compile Include="Models\AdditionalShapeContext.cs" />
+    <Compile Include="Models\CustomPosSettings.cs" />
+    <Compile Include="Models\CustomPosSiteSettingsPart.cs" />
     <Compile Include="Models\PayButton.cs" />
     <Compile Include="Models\PayButtonPartSettings.cs" />
     <Compile Include="Models\PaymentGatewaySiteSettingsPart.cs" />
@@ -132,6 +138,7 @@
     <Compile Include="PaymentMigrations.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
+    <Compile Include="Services\CustomPosService.cs" />
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\IPosService.cs" />
     <Compile Include="Services\PaymentService.cs" />
@@ -205,6 +212,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Bonifico.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdditionalShapeManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\CustomPosSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

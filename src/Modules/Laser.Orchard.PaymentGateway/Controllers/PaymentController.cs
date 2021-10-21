@@ -12,9 +12,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Orchard.Logging;
+using Orchard.DisplayManagement;
 
 namespace Laser.Orchard.PaymentGateway.Controllers {
     public class PaymentController : Controller {
+        /// <summary>
+        /// Added this class to create HtmlHelper.
+        /// </summary>
+        private class ViewDataContainer : IViewDataContainer {
+            public ViewDataDictionary ViewData { get; set; }
+        }
         /// <summary>
         /// This class is a default implementation of the pos services, used as basically a placeholder when calling some methods, since abstract classes
         /// cannot be directly instantiated.
@@ -55,6 +62,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         private readonly IEnumerable<IPosService> _posServices;
         private readonly PosServiceEmpty _posServiceEmpty;
         private readonly IPaymentService _paymentService;
+        private readonly IShapeFactory _shapeFactory;
         public Localizer T { get; set; }
         public ILogger Logger { get; set; }
 
@@ -62,12 +70,14 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             IRepository<PaymentRecord> repository, 
             IOrchardServices orchardServices, 
             IEnumerable<IPosService> posServices, 
-            IPaymentService paymentService) {
+            IPaymentService paymentService,
+            IShapeFactory shapeFactory) {
 
             _repository = repository;
             _orchardServices = orchardServices;
             _paymentService = paymentService;
             _posServices = posServices;
+            _shapeFactory = shapeFactory;
             _posServiceEmpty = new PosServiceEmpty(orchardServices, repository, null);
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
@@ -139,9 +149,22 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             if (unauthorized) {
                 return new HttpUnauthorizedResult();
             }
+
             var model = new PaymentVM();
             model.Record = payment;
             model.PaymentNonce = _paymentService.CreatePaymentNonce(payment);
+            
+            var shapeContext = new AdditionalShapeContext(){
+                PaymentViewModel = model,
+                ShapeFactory = _shapeFactory
+            };
+
+            var testShape = new AdditionalPartial();
+            testShape.ShapeFile = "Bonifico";
+
+            model.AdditionalShapes.Add(testShape);
+            model.ShapeContext = shapeContext;
+
             return View("Info", model);
         }
 

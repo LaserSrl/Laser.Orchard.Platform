@@ -11,9 +11,13 @@ namespace Laser.Orchard.PaymentGateway.ViewModels {
         public PaymentRecord Record { get; set; }
         public ContentItem ContentItem { get; set; }
         public string PaymentNonce { get; set; }
+        public List<AdditionalShapeBase> AdditionalShapes { get; set; }
+        public AdditionalShapeContext ShapeContext { get; set; }
+
         public PaymentVM() {
             PosList = new List<IPosService>();
             Record = new PaymentRecord();
+            AdditionalShapes = new List<AdditionalShapeBase>();
         }
     }
 }
