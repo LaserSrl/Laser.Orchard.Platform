@@ -1,0 +1,30 @@
+﻿@using Laser.Orchard.Commons.Helpers
+
+@model Laser.Orchard.PaymentGateway.Models.CustomPosSettings
+
+@{
+    MvcHtmlString posBlock = Html.UniqueClientId("CustomPos");
+    var appId = "cp_" + posBlock;
+}
+
+<div class="j_custompos" id="@appId">
+    <fieldset>
+        @Html.HiddenFor(m => m.Id)
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
+            @Html.TextBoxFor(m => m.Name)
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.Order)">@T("Order:")</label>
+            @Html.TextBoxFor(m => m.Order)
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.ShapeName)">@T("Shape Name:")</label>
+            @Html.TextBoxFor(m => m.ShapeName)
+        </div>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.OrderMessage)">@T("Order Message:")</label>
+            @Html.TextBoxFor(m => m.OrderMessage)
+        </div>
+    </fieldset>
+</div>

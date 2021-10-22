@@ -116,11 +116,13 @@
     <Compile Include="Activities\PaymentEventActivity.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomPosAdminController.cs" />
+    <Compile Include="Controllers\CustomPosController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentGatewayAPIController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PosAdminBaseController.cs" />
     <Compile Include="Drivers\PayButtonPartDriver.cs" />
+    <Compile Include="Handlers\CustomPosSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\PaymentGatewaySiteSettingsPartHandler.cs" />
     <Compile Include="IPaymentEventHandler.cs" />
     <Compile Include="Models\AdditionalPartial.cs" />
@@ -220,7 +222,10 @@
     <Content Include="Views\AdditionalShapeManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\CustomPosSettings.cshtml" />
+    <Content Include="Views\CustomPosAdminSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\CustomPosSettings.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

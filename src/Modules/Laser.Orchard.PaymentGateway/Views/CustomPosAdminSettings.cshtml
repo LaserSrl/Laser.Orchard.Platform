@@ -1,0 +1,41 @@
+﻿@using Laser.Orchard.PaymentGateway.Models
+@using Laser.Orchard.Commons.Helpers
+
+@model Laser.Orchard.PaymentGateway.Models.CustomPosSiteSettingsPart
+
+@{
+    var emptyPos = new CustomPosSettings();
+    emptyPos.Name = "#NEW POS";
+    emptyPos.Order = 0;
+    emptyPos.ShapeName = "";
+    emptyPos.OrderMessage = "";
+
+    Script.Require("jQUery_NestedModels").AtHead();
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <legend>@T("Custom Pos Settings")</legend>
+
+    <div id="allCustomPos">
+        @Html.EditorFor(m => m.CustomPos)
+    </div>
+
+    <div id="addButton">
+        @Html.LinkToAddNestedForm(m => m.CustomPos, "<i class=\"fa fa-plus\" style=\"color: green\"></i> " + T(" Add new custom pos").Text, "#allCustomPos", ".j_custompos")
+    </div>
+
+    <button class="primaryAction" type="submit">@T("Save All")</button>
+}
+
+@using (Script.Foot()) {
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnAddCustomPos").click(function () {
+                $("#cps-new").show();
+                return false;
+            })
+        });
+
+    </script>
+}
