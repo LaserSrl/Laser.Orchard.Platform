@@ -21,7 +21,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
         private readonly IWorkContextAccessor _workContext;
         private readonly ITransactionManager _transaction;
         private readonly INotifier _notifier;
-        private string _subscriptionId;
         private bool _serverUpdated = false;
         private bool _modelIsValid = true;
 
@@ -41,16 +40,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             _transaction = transaction;
             _notifier = notifier;
             T = NullLocalizer.Instance;
-            _subscriptionId = "(undefined)";
-
-            OnUpdating<MailchimpSubscriptionPart>((context, part) => {
-                if (part.Subscription == null || part.Subscription.Audience == null) {
-                    _subscriptionId = "(undefined)";
-                }
-                else {
-                    _subscriptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
-                }
-            });
 
             OnUpdated<MailchimpSubscriptionPart>((context, part) => {
                 if (!_serverUpdated && _modelIsValid) {
@@ -94,9 +83,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             if (!part.IsPublished()) {
                 return false;
             }
-            // check if subscriptions have changed during the publish process:
+            // check if subscriptions is different from orchard to mailchimp
             // if changed it fires an update over Mailchimp servers
-            if (_subscriptionId != (part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)")) {
+            if (part.Subscription.Subscribed != _apiService.IsUserRegister(part)) {
                 var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
                 if (!_apiService.TryUpdateSubscription(part)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {

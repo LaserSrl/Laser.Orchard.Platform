@@ -10,6 +10,7 @@ using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
@@ -27,6 +28,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             _apiservice = apiService;
             T = NullLocalizer.Instance;
         }
+        public Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler { get; set; }
         public override LocalizedString Category {
             get { return T("Mailchimp"); }
         }
@@ -47,7 +49,16 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             Enum.TryParse<HttpVerbs>(model.HttpVerb.ToString(), true, out verb);
             JObject payload = JObject.Parse("{" + model.Payload + "}");
 
-            var done = _apiservice.TryApiCall(verb, _service.TryReplaceTokenInUrl(model.Url, payload), payload, ref result);
+            // assigned correct handler error
+            if (verb == HttpVerbs.Delete) {
+                errorHandler = _apiservice.ErrorHandlerDelete;
+            } else if (verb == HttpVerbs.Get) {
+                errorHandler = _apiservice.ErrorHandlerGet;
+            } else {
+                errorHandler = _apiservice.ErrorHandlerDefault;
+            }
+
+            var done = _apiservice.TryApiCall(verb, _service.TryReplaceTokenInUrl(model.Url, payload), payload, errorHandler, ref result);
             if (done) {
                 messageout = T("Succeeded");
             }

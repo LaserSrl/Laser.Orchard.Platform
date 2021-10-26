@@ -7,16 +7,20 @@ using Orchard.Environment.Extensions;
 using Orchard.Users.Models;
 using System.Linq;
 using Orchard.Tokens;
+using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpSubscriptionPartDriver : ContentPartDriver<MailchimpSubscriptionPart> {
-        private readonly IMailchimpApiService _service;
+        private readonly IMailchimpApiService _apiService;
         private readonly ITokenizer _tokenizer;
 
 
-        public MailchimpSubscriptionPartDriver(IMailchimpApiService service, ITokenizer tokenizer) {
-            _service = service;
+        public MailchimpSubscriptionPartDriver(
+            IMailchimpApiService apiService,
+            ITokenizer tokenizer) {
+            _apiService = apiService;
             _tokenizer = tokenizer;
         }
         protected override string Prefix => "MailchimpSubscription";
@@ -37,7 +41,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
             else {
                 var subscription = part.Subscription;
                 if (subscription.Audience == null || audienceId != subscription.Audience?.Identifier) {
-                    var audience = _service.Audience(audienceId);
+                    var audience = _apiService.Audience(audienceId);
                     selectableAudience = new SelectableAudience {
                         Audience = new Audience { Identifier = audienceId, Name = audience.Name },
                         Selected = !part.Is<UserPart>(),
@@ -47,7 +51,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
                 else {
                     selectableAudience = new SelectableAudience {
                         Audience = subscription.Audience,
-                        Selected = subscription.Subscribed,
+                        // check if registered on mailchimp
+                        Selected = _apiService.IsUserRegister(part), // subscription.Subscribed,
                         RequiredPolicies = settings.PolicyTextReferencesToArray()
                     };
                 }

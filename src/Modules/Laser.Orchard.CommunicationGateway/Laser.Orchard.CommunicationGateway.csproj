@@ -153,6 +153,7 @@
     <Compile Include="Drivers\EmailContactPartDriver.cs" />
     <Compile Include="Drivers\QueryFilterDriver.cs" />
     <Compile Include="Drivers\SmsContactPartDriver.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Events\ICommunicationEventHandler.cs" />
     <Compile Include="Features\CommunicationFeature.cs" />
     <Compile Include="Features\ContactGDPRKeyFeaturesProvider.cs" />
