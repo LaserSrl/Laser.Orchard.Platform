@@ -11,7 +11,9 @@ using Orchard.Logging;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Orchard.Users.Models;
+using Orchard.Workflows.Services;
 using System;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
@@ -21,6 +23,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
         private readonly IWorkContextAccessor _workContext;
         private readonly ITransactionManager _transaction;
         private readonly INotifier _notifier;
+        private readonly IWorkflowManager _workflowManager;
         private bool _serverUpdated = false;
         private bool _modelIsValid = true;
 
@@ -33,12 +36,14 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             IContentManager contentManager,
             IWorkContextAccessor workContext,
             ITransactionManager transaction,
-            INotifier notifier) {
+            INotifier notifier,
+            IWorkflowManager workflowManager) {
             _apiService = apiService;
             _service = service;
             _workContext = workContext;
             _transaction = transaction;
             _notifier = notifier;
+            _workContext = workContext;
             T = NullLocalizer.Instance;
 
             OnUpdated<MailchimpSubscriptionPart>((context, part) => {
@@ -106,6 +111,11 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                 }
             }
             else {
+                _workflowManager.TriggerEvent("SavedUserOnMailchimp",
+                   part,
+                   () => new Dictionary<string, object> {
+                        {"syncronized", true}
+                    });
                 return false;
             }
 

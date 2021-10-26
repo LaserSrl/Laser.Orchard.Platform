@@ -18,14 +18,17 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
     public class APICallActivity : Task {
         private readonly IMailchimpService _service;
         private readonly IMailchimpApiService _apiservice;
+        private readonly IWorkflowManager _workflowManager;
 
         public Localizer T { get; set; }
 
         public APICallActivity(
             IMailchimpService service, 
-            IMailchimpApiService apiService) {
+            IMailchimpApiService apiService,
+            IWorkflowManager workflowManager) {
             _service = service;
             _apiservice = apiService;
+            _workflowManager = workflowManager;
             T = NullLocalizer.Instance;
         }
         public Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler { get; set; }
@@ -59,6 +62,14 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             }
 
             var done = _apiservice.TryApiCall(verb, _service.TryReplaceTokenInUrl(model.Url, payload), payload, errorHandler, ref result);
+            // this trigger is only valid for the member's put
+            if (verb == HttpVerbs.Put && model.RequestType.ToLower() == RequestTypes.Member.ToString().ToLower()) {
+                _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
+                  null,
+                  () => new Dictionary<string, object> {
+                        {"syncronized", done}
+                  });
+            }
             if (done) {
                 messageout = T("Succeeded");
             }

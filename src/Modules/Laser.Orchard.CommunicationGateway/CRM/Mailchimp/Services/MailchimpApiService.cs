@@ -10,6 +10,7 @@ using Orchard.Logging;
 using Orchard.Security;
 using Orchard.Tokens;
 using Orchard.Users.Models;
+using Orchard.Workflows.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,14 +31,16 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         private readonly IEncryptionService _encryptionService;
         private readonly IPolicyServices _policyServices;
         private readonly IMailchimpService _mailchimpService;
-
+        private readonly IWorkflowManager _workflowManager;
+        
         public MailchimpApiService(
             ShellSettings shellSettings,
             IOrchardServices orchardServices,
             IEncryptionService encryptionService,
             ITokenizer tokenizer,
             IPolicyServices policyServices,
-            IMailchimpService mailchimpService) {
+            IMailchimpService mailchimpService,
+            IWorkflowManager workflowManager) {
 
             _tokenizer = tokenizer;
             _shellSettings = shellSettings;
@@ -45,7 +48,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             _encryptionService = encryptionService;
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
-
+            _workflowManager = workflowManager;
+            
             Logger = NullLogger.Instance;
 
             errorHandler = ErrorHandlerDefault;
@@ -96,10 +100,20 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 // register member
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 JObject body = JObject.Parse(putPayload ?? "{}");
-                syncronized = TryApiCall(HttpVerbs.Put, CalculateUrlByType(RequestTypes.Member, urlTokens), body, errorHandler, ref result);      
+                syncronized = TryApiCall(HttpVerbs.Put, CalculateUrlByType(RequestTypes.Member, urlTokens), body, errorHandler, ref result);
+                _workflowManager.TriggerEvent("UserRegistrationOnMailchimp",
+                    part,
+                    () => new Dictionary<string, object> {
+                        {"syncronized", syncronized}
+                    });
             } else {
                 // deleted member
                 syncronized = TryApiCall(HttpVerbs.Delete, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ErrorHandlerDelete, ref result);
+                _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
+                    part,
+                    () => new Dictionary<string, object> {
+                        {"syncronized", syncronized}
+                    });
             }
             return syncronized;
         }

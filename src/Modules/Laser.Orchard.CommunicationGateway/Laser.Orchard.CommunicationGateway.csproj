@@ -123,6 +123,9 @@
     <Compile Include="Controllers\ContactsAdminController.cs" />
     <Compile Include="Controllers\DeliveryReportController.cs" />
     <Compile Include="CRM\Mailchimp\Activities\APICallActivity.cs" />
+    <Compile Include="CRM\Mailchimp\Activities\DeletedUserOnMailchimp.cs" />
+    <Compile Include="CRM\Mailchimp\Activities\SavedUserOnMailchimp.cs" />
+    <Compile Include="CRM\Mailchimp\Activities\UserRegistrationOnMailchimp.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSiteSettingsDriver.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSubscriptionPartDriver.cs" />
     <Compile Include="CRM\Mailchimp\Forms\APICallForm.cs" />
