@@ -63,6 +63,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         private readonly PosServiceEmpty _posServiceEmpty;
         private readonly IPaymentService _paymentService;
         private readonly IShapeFactory _shapeFactory;
+        private readonly IWorkContextAccessor _workContextAccessor;
         public Localizer T { get; set; }
         public ILogger Logger { get; set; }
 
@@ -71,13 +72,15 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             IOrchardServices orchardServices, 
             IEnumerable<IPosService> posServices, 
             IPaymentService paymentService,
-            IShapeFactory shapeFactory) {
+            IShapeFactory shapeFactory,
+            IWorkContextAccessor workContextAccessor) {
 
             _repository = repository;
             _orchardServices = orchardServices;
             _paymentService = paymentService;
             _posServices = posServices;
             _shapeFactory = shapeFactory;
+            _workContextAccessor = workContextAccessor;
             _posServiceEmpty = new PosServiceEmpty(orchardServices, repository, null);
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
@@ -153,16 +156,27 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             var model = new PaymentVM();
             model.Record = payment;
             model.PaymentNonce = _paymentService.CreatePaymentNonce(payment);
-            
+
             var shapeContext = new AdditionalShapeContext(){
                 PaymentViewModel = model,
                 ShapeFactory = _shapeFactory
             };
 
-            var testShape = new AdditionalPartial();
-            testShape.ShapeFile = "Bonifico";
+            if (payment.PosName.StartsWith("CustomPos_")) {
+                var customPosName = payment.PosName.Substring("CustomPos_".Length);
 
-            model.AdditionalShapes.Add(testShape);
+                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
+                var currentCustomPos = customPosSiteSettings.CustomPos
+                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+
+                if (currentCustomPos != null) {
+                    var testShape = new AdditionalPartial();
+                    testShape.ShapeFile = currentCustomPos.ShapeName;
+
+                    model.AdditionalShapes.Add(testShape);
+                }
+            }
+
             model.ShapeContext = shapeContext;
 
             return View("Info", model);

@@ -67,7 +67,12 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 || string.IsNullOrWhiteSpace(values.Currency)) {
                 throw new Exception("Parameters missing. Required parameters: Amount, Currency.");
             }
-            values.PosName = GetPosName();
+
+            // For custom pos, I already wrote the right PosName
+            if (!values.PosName.StartsWith("CustomPos_")) {
+                values.PosName = GetPosName();
+            }
+            
             if (string.IsNullOrWhiteSpace(values.PosUrl)) {
                 string posUrl = GetPosActionUrl(values.Id);
                 values.PosUrl = posUrl;
@@ -166,7 +171,10 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 paymentToSave.Error = error;
                 paymentToSave.Info = info;
                 paymentToSave.TransactionId = transactionId;
-                paymentToSave.PosName = GetPosName(); // forza la valorizzazione del PosName
+                // For custom pos payments, I already wrote the right PosName
+                if (!paymentToSave.PosName.StartsWith("CustomPos_")) {
+                    paymentToSave.PosName = GetPosName(); // forza la valorizzazione del PosName
+                }
                 paymentToSave.PosUrl = GetPosActionUrl(paymentId);
                 paymentToSave.PaymentTransactionComplete = true; //flag the transaction as complete
                 SavePaymentInfo(paymentToSave);

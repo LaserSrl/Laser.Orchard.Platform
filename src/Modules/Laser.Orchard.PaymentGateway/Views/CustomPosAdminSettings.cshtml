@@ -4,12 +4,6 @@
 @model Laser.Orchard.PaymentGateway.Models.CustomPosSiteSettingsPart
 
 @{
-    var emptyPos = new CustomPosSettings();
-    emptyPos.Name = "#NEW POS";
-    emptyPos.Order = 0;
-    emptyPos.ShapeName = "";
-    emptyPos.OrderMessage = "";
-
     Script.Require("jQUery_NestedModels").AtHead();
 }
 

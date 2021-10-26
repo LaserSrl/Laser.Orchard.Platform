@@ -4,12 +4,11 @@
 
 @{
     MvcHtmlString posBlock = Html.UniqueClientId("CustomPos");
-    var appId = "cp_" + posBlock;
+    var divId = "cp_" + posBlock;
 }
 
-<div class="j_custompos" id="@appId">
+<div class="j_custompos" id="@divId">
     <fieldset>
-        @Html.HiddenFor(m => m.Id)
         <div>
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
             @Html.TextBoxFor(m => m.Name)

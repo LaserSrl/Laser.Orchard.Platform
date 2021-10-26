@@ -9,7 +9,7 @@ namespace Laser.Orchard.PaymentGateway.Models {
                 if (string.IsNullOrWhiteSpace(this.CustomPosSerialized)) {
                     return new List<CustomPosSettings>();
                 } else {
-                    return (List<CustomPosSettings>)JsonConvert.DeserializeObject(this.CustomPosSerialized);
+                    return JsonConvert.DeserializeObject<List<CustomPosSettings>>(this.CustomPosSerialized);
                 }
             }
             set { this.CustomPosSerialized = JsonConvert.SerializeObject(value); }

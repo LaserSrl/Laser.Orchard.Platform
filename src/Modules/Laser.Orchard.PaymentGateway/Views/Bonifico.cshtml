@@ -1,10 +1,15 @@
-﻿@using Orchard.ContentManagement
+﻿@*@using Orchard.Core.Common.Fields;*@
 
-@{ 
-    var _contentManager = WorkContext.Resolve<IContentManager>();
-    //var _advancedSettingsService = WorkContext.Resolve<IAdvancedSettingsService>();
+@{
+//var _advancedSettingsService = WorkContext.Resolve<IAdvancedSettingsService>();
+//var settingsCI = _advancedSettingsService.GetCachedSetting("Impostazioni Pagamenti");
+//var ibanField = settingsCI.ContentItem.Fields
+//    .FirstOrDefault(f => f.FieldDefinition.Name
+//        .Equals("IBAN", StringComparison.InvariantCultureIgnoreCase)) as TextField;
 
+//var iban = ibanField.Value;
 }
 
 
 <p>QUESTO è UN BONIFICO</p>
+@*<p>Iban: @iban</p>*@
