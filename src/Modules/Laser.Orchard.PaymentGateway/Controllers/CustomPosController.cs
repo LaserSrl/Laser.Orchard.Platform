@@ -2,12 +2,14 @@
 using Laser.Orchard.PaymentGateway.Services;
 using Laser.Orchard.PaymentGateway.ViewModels;
 using Orchard;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Themes;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.PaymentGateway.Controllers {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosController : Controller {
         private readonly IOrchardServices _orchardServices;
         private readonly CustomPosService _posService;
@@ -35,7 +37,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             pid = payment.Id;
 
             // I check the payment as completed.
-            _posService.EndPayment(pid, true, "", "");
+            _posService.EndPayment(pid, true, "", "", payment.Guid);
 
             PaymentVM model = new PaymentVM();
             model.Record = payment;

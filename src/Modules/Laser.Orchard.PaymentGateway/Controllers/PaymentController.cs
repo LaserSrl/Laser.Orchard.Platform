@@ -175,6 +175,8 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
 
                     model.AdditionalShapes.Add(testShape);
                 }
+
+                payment.PosName = customPosName;
             }
 
             model.ShapeContext = shapeContext;

@@ -2,9 +2,10 @@
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using System.Web.Mvc;
+using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.PaymentGateway.Controllers {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosAdminController : PosAdminBaseController {
         protected override string SettingsShape => "CustomPosAdminSettings";
 

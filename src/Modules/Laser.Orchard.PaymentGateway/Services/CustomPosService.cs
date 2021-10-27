@@ -4,8 +4,10 @@ using System.Web.Mvc;
 using Laser.Orchard.PaymentGateway.Models;
 using Orchard;
 using Orchard.Data;
+using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.PaymentGateway.Services {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosService : PosServiceBase {
         public CustomPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler) : base(orchardServices, repository, paymentEventHandler) {
         }
