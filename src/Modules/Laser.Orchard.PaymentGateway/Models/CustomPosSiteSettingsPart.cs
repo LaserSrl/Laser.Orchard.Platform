@@ -16,6 +16,7 @@ namespace Laser.Orchard.PaymentGateway.Models {
                 }
             }
             set { this.CustomPosSerialized = JsonConvert.SerializeObject(value
+                .Where(cps => !cps.Delete)
                 .OrderBy(cps => cps.Order).ToList()); }
         }
 

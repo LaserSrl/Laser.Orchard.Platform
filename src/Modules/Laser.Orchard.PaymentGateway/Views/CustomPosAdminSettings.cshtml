@@ -18,18 +18,5 @@
         @Html.LinkToAddNestedForm(m => m.CustomPos, "<i class=\"fa fa-plus\" style=\"color: green\"></i> " + T(" Add new custom pos").Text, "#allCustomPos", ".j_custompos")
     </div>
 
-    <button class="primaryAction" type="submit">@T("Save All")</button>
-}
-
-@using (Script.Foot()) {
-
-    <script type="text/javascript">
-        $(function () {
-            $("#btnAddCustomPos").click(function () {
-                $("#cps-new").show();
-                return false;
-            })
-        });
-
-    </script>
+    <button class="primaryAction" name="submit.SaveCustomPos" type="submit">@T("Save All")</button>
 }

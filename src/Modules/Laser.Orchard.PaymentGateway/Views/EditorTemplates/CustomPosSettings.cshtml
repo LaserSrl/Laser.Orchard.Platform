@@ -8,6 +8,7 @@
 }
 
 <div class="j_custompos" id="@divId">
+    @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete", @id = "delete_" + @divId })
     <fieldset>
         <div>
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
@@ -24,6 +25,9 @@
         <div>
             <label for="@Html.FieldIdFor(m => m.OrderMessage)">@T("Order Message:")</label>
             @Html.TextBoxFor(m => m.OrderMessage)
+        </div>
+        <div>
+            @Html.LinkToRemoveNestedForm("<i class=\"fa fa-times\" style=\"color: red\"></i> " + T(" Remove this custom pos").ToString(), ".j_custompos", "input.ph-mark-for-delete")
         </div>
     </fieldset>
 </div>

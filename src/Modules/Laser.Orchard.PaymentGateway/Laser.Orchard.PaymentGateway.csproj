@@ -207,6 +207,10 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.AdvancedSettings\Laser.Orchard.AdvancedSettings.csproj">
+      <Project>{edff325b-701d-41f4-a76e-03cf48feaf15}</Project>
+      <Name>Laser.Orchard.AdvancedSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
       <Name>Laser.Orchard.StartupConfig</Name>

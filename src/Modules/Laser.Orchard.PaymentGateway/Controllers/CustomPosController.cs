@@ -5,7 +5,9 @@ using Orchard;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
+using Orchard.Mvc;
 using Orchard.Themes;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.PaymentGateway.Controllers {
