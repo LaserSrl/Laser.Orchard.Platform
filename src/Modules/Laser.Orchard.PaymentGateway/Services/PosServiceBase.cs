@@ -3,6 +3,7 @@ using Laser.Orchard.StartupConfig.ViewModels;
 using Newtonsoft.Json;
 using Orchard;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using Orchard.Localization;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,23 @@ using System.Web.Mvc;
 namespace Laser.Orchard.PaymentGateway.Services {
     public abstract class PosServiceBase : IPosService {
         protected readonly IOrchardServices _orchardServices;
-        private readonly IRepository<PaymentRecord> _repository;
-        private readonly IPaymentEventHandler _paymentEventHandler;
+        protected readonly IRepository<PaymentRecord> _repository;
+        protected readonly IPaymentEventHandler _paymentEventHandler;
+        protected readonly dynamic _shapeFactory;
+
+        public PosServiceBase(
+            IOrchardServices orchardServices,
+            IRepository<PaymentRecord> repository,
+            IPaymentEventHandler paymentEventHandler,
+            IShapeFactory shapeFactory) {
+
+            _orchardServices = orchardServices;
+            _repository = repository;
+            _paymentEventHandler = paymentEventHandler;
+            _shapeFactory = shapeFactory;
+
+            T = NullLocalizer.Instance;
+        }
 
         public Localizer T { get; set; }
 
@@ -49,13 +65,16 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return GetPosUrl(GetPaymentInfo(paymentGuid).Id);
         }
 
-        public PosServiceBase(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler) {
-            _orchardServices = orchardServices;
-            _repository = repository;
-            _paymentEventHandler = paymentEventHandler;
-
-            T = NullLocalizer.Instance;
+        /// <summary>
+        /// Gets the name of the partial for the payment button
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<dynamic> GetPaymentButtons() {
+            return new[]{_shapeFactory.PosPayButton(
+                PosName: GetPosName()
+                )};
         }
+
         /// <summary>
         /// Create the db entry corresponding to the payment we are starting.
         /// </summary>
@@ -297,7 +316,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
             }
             return values.Id;
         }
-        private string GetValidString(string text, int maxLength) {
+        protected string GetValidString(string text, int maxLength) {
             string result = text;
             if ((result != null) && (result.Length > maxLength)) {
                 result = result.Substring(0, maxLength);

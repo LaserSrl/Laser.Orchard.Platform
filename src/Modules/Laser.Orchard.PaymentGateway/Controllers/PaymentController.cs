@@ -27,8 +27,8 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         /// cannot be directly instantiated.
         /// </summary>
         private class PosServiceEmpty : PosServiceBase {
-            public PosServiceEmpty(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler)
-                : base(orchardServices, repository, paymentEventHandler) {
+            public PosServiceEmpty(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IShapeFactory shapeFactory)
+                : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
             }
             public override string GetPosName() {
                 return "";
@@ -81,7 +81,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             _posServices = posServices;
             _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
-            _posServiceEmpty = new PosServiceEmpty(orchardServices, repository, null);
+            _posServiceEmpty = new PosServiceEmpty(orchardServices, repository, null, _shapeFactory);
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
         }

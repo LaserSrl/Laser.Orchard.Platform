@@ -138,6 +138,9 @@
     <Compile Include="PaymentEventHandler.cs" />
     <Compile Include="PaymentGatewayRoutes.cs" />
     <Compile Include="PaymentMigrations.cs" />
+    <Compile Include="Providers\BankTransferPosProvider.cs" />
+    <Compile Include="Providers\DefaultCustomPosProvider.cs" />
+    <Compile Include="Providers\ICustomPosProvider.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
     <Compile Include="Services\CustomPosService.cs" />
@@ -230,6 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\CustomPosSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PosPayButton.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PosPayButton_Bonifico.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,19 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Laser.Orchard.PaymentGateway.Models;
+﻿using Laser.Orchard.PaymentGateway.Models;
+using Laser.Orchard.PaymentGateway.Providers;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.PaymentGateway.Services {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosService : PosServiceBase {
-        public CustomPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler) : base(orchardServices, repository, paymentEventHandler) {
+        private readonly IList<ICustomPosProvider> _customPosProviders;
+
+        public CustomPosService(IOrchardServices orchardServices,
+            IRepository<PaymentRecord> repository,
+            IPaymentEventHandler paymentEventHandler,
+            IShapeFactory shapeFactory,
+            IList<ICustomPosProvider> customPosProviders) : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
+            _customPosProviders = customPosProviders;
         }
 
         public override Type GetPosActionControllerType() {
@@ -46,6 +54,35 @@ namespace Laser.Orchard.PaymentGateway.Services {
 
         public override string GetSettingsControllerName() {
             return "CustomPosAdmin";
+        }
+
+        public override IEnumerable<dynamic> GetPaymentButtons() {
+            var btns = new List<dynamic>();
+
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CustomPosSiteSettingsPart>();
+            if (settings != null) {
+                var customPos = settings.CustomPos;
+
+                btns.AddRange(customPos.Select(
+                    cp => _shapeFactory.Create("PosPayButton_" + cp.ShapeName,
+                        Arguments.From(new {
+                            CustomPos = cp,
+                            PosService = this
+                            // TODO: ADD PROPERTY "POSNAME" FOR AN EASIER FALLBACK TO THE DEFAULT BUTTON
+                        }
+                    ))));
+            }
+
+            return btns;
+        }
+
+        public SelectList GetCustomPosProviders() {
+            var instances = _customPosProviders;
+            List<SelectListItem> lSelectList = new List<SelectListItem>();
+            foreach (var instance in instances.OrderByDescending(p => p.GetDisplayName())) {
+                lSelectList.Insert(0, new SelectListItem() { Value = instance.TechnicalName, Text = instance.GetDisplayName() });
+            }
+            return new SelectList((IEnumerable<SelectListItem>)lSelectList, "Value", "Text");
         }
     }
 }

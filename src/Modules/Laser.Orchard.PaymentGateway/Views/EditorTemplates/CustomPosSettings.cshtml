@@ -1,8 +1,11 @@
 ﻿@using Laser.Orchard.Commons.Helpers
+@using Laser.Orchard.PaymentGateway.Services
 
 @model Laser.Orchard.PaymentGateway.Models.CustomPosSettings
 
 @{
+    var _posService = WorkContext.Resolve<CustomPosService>();
+
     MvcHtmlString posBlock = Html.UniqueClientId("CustomPos");
     var divId = "cp_" + posBlock;
 }
@@ -10,6 +13,10 @@
 <div class="j_custompos" id="@divId">
     @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete", @id = "delete_" + @divId })
     <fieldset>
+        <div>
+            <label for="@Html.FieldIdFor(m => m.ProviderName)">@T("Pos Provider Name:")</label>
+            @Html.DropDownListFor(m => m.ProviderName, _posService.GetCustomPosProviders())
+        </div>
         <div>
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
             @Html.TextBoxFor(m => m.Name)
