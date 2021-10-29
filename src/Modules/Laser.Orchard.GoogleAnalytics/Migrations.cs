@@ -45,5 +45,17 @@ namespace Laser.Orchard.GoogleAnalytics {
                 table => table.AddColumn<bool>("UseTagManager", c => c.NotNull().WithDefault(false)));
             return 4;
         }
+
+        public int UpdateFrom4() {
+            SchemaBuilder.AlterTable("GoogleAnalyticsSettingsPartRecord",
+                table => table.AddColumn<bool>("UseGA4", c => c.NotNull().WithDefault(false)));
+            return 5;
+        }
+
+        public int UpdateFrom5() {
+            SchemaBuilder.AlterTable("GoogleAnalyticsSettingsPartRecord",
+                table => table.AddColumn<string>("CookieLevel"));
+            return 6;
+        }
     }
 }

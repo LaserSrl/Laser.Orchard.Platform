@@ -40,9 +40,9 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
         protected override DriverResult Display(GTMProductPart part, string displayType, dynamic shapeHelper) {
             return ContentShape("Parts_Product_TagManager", shape => {
                 _GTMProductService.FillPart(part);
-                var gtmProductVM = new GTMProductVM(part);
+                var gtmProductVM = _GTMProductService.GetViewModel(part);
                 return shapeHelper.Parts_Product_TagManager(
-                    GTMProductVM: gtmProductVM,
+                    ProductVM: gtmProductVM,
                     DisplayType: displayType);
             });
         }

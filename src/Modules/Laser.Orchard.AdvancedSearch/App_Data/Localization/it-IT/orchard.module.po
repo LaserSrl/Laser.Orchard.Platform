@@ -349,6 +349,42 @@ msgid "Your content has been saved."
 msgstr "Il contenuto è stato salvato."
 
 msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Authenticated Projection"
+msgstr "Proiezione Autenticata"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
 msgid "Content"
 msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Custom Template"
+msgstr "Modello Personalizzato"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Data Report Dashboard"
+msgstr "Pannello di Reportistica Dati"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Data Report Viewer"
+msgstr "Visualizzatore Report Dati"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Form"
+msgstr "Form"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Info Page"
+msgstr "Pagina Informativa"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Page"
+msgstr "Pagina"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Policy Text"
+msgstr "Testo informativa"
+
+msgctxt "Laser.Orchard.AdvancedSearch.Navigation.ContentAdminMenu"
+msgid "Projection"
+msgstr "Proiezione"
 

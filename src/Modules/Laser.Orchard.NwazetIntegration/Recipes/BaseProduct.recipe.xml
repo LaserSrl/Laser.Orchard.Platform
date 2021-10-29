@@ -15,7 +15,7 @@
            Orchard.Localization, Orchard.Taxonomies.LocalizationExtensions,
            Nwazet.InventoryBySKU, Laser.Orchard.HiddenFields,
            Laser.Orchard.InsertStuff, Laser.Orchard.StartupConfig.TaxonomiesExtensions,
-           Nwazet.CurrencyProviderBySiteSetting
+           Nwazet.CurrencyProviderBySiteSetting,Laser.Orchard.StartupConfig.CacheEvictorPart
            " />
   <ContentDefinition>
     <Types>
@@ -130,6 +130,7 @@
     </Types>
     <Parts>
       <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+      <CacheEvictorPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Used for any content. Specify the id of the reference content(s) to cache evict." />
       <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True">
         <Creator.NumericField DisplayName="Id of user Creator" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
         <LastModifier.NumericField DisplayName="Id of last user that have modified the content item" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" />
@@ -339,6 +340,16 @@
       <TitlePart Title="Categoria Secondaria" />
     </Taxonomy>
   </Content>
+  <!-- cache allocation step evictor part outside the initial content definition 
+    why we need the query content to be executed before populating the evictor part cache
+    so that we have the identity queries referenced -->
+  <ContentDefinition>
+    <Types>
+      <ProdottoDefault>
+        <CacheEvictorPart CacheEvictorPartSettings.IdentityEvictItem="" CacheEvictorPartSettings.EvictTerms="True" CacheEvictorPartSettings.FilterQueryRecordId="14;15" CacheEvictorPartSettings.IdentityFilterQueryRecord="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371;/Identifier=1a0b7903917f403e84e37b9b02c88348;" />
+      </ProdottoDefault>
+    </Types>
+  </ContentDefinition>
   <Settings>
     <CheckoutPolicySettingsPart PolicyTextReferences="{False},{False},{/alias=it\/policy\/condizioni-di-acquisto},{/alias=it\/policy\/privacy-policy}" />
     <CheckoutSettingsPart CheckoutRequiresAuthentication="false" PhoneIsRequired="true" ShippingIsRequired="false" />

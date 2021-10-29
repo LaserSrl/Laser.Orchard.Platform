@@ -15,10 +15,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// to get the shapes in place.</remarks>
         void FillPart(GTMProductPart part);
         string GetJsonString(GTMProductPart part);
-        string GetJsonString(GTMProductVM vm);
+        string GetJsonString(IGAProductVM vm);
         string GetJsonString(GTMActionField af);
 
         bool ShoulAddEcommerceTags();
+        bool UseGA4();
+        IGAProductVM GetViewModel(GTMProductPart part);
     }
 
 }

@@ -1,11 +1,10 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services.JsonConverters;
 using Newtonsoft.Json;
-using System;
 using System.ComponentModel;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
-    public class GTMProductVM {
+    public class GTMProductVM : IGAProductVM {
         public GTMProductVM() { }
         public GTMProductVM(
             GTMProductPart part) {

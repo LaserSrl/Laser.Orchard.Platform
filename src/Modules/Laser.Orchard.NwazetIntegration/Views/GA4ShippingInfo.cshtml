@@ -1,0 +1,44 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Laser.Orchard.NwazetIntegration.Services;
+@using System.Globalization;
+@{
+    var _GTMProductService = WorkContext.Resolve<IGTMProductService>();
+    Script.Require("NwazetIntegration.TagManager").AtHead();
+
+    var eventName = (string)Model.EventName ?? string.Empty;
+
+    var shippingInfoVM = (GA4ShippingInfoVM)Model.ShippingInfoVM;
+
+    var products = shippingInfoVM.ProductList;
+
+    var gtmProductsStrings = products
+            .Select(p => _GTMProductService.GetJsonString(p))
+            .Where(s => !string.IsNullOrWhiteSpace(s));
+
+    using (Script.Head()) {
+        <script type="text/javascript">
+            window.GA4Data = $.extend(true, {}, window.GA4Data);
+            window.GA4Data.event = '@Html.Raw(eventName)';
+
+            window.GA4Data.ecommerce = $.extend(true, {}, window.GA4Data.ecommerce);
+
+            @if (eventName.Equals("add_shipping_info", StringComparison.InvariantCultureIgnoreCase) && shippingInfoVM != null) {
+                <text>
+                    window.GA4Data.ecommerce.currency = '@Html.Raw(shippingInfoVM.Currency)';
+                    window.GA4Data.ecommerce.value = @Html.Raw(shippingInfoVM.Value.ToString(CultureInfo.InvariantCulture));
+                    window.GA4Data.ecommerce.coupon = '@Html.Raw(shippingInfoVM.Coupon)';
+                    window.GA4Data.ecommerce.shipping_tier = '@Html.Raw(shippingInfoVM.ShippingTier)';
+                </text>
+            }
+
+
+            @if (gtmProductsStrings.Any()) {
+                var productString = string.Join(",", gtmProductsStrings);
+                <text>
+                    window.GA4Data.ecommerce.items = window.GA4Data.ecommerce.items || [];
+                    window.GA4Data.ecommerce.items.push(@Html.Raw(productString));
+                </text>
+            }
+        </script>
+    }
+}

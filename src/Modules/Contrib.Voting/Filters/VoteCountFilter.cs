@@ -44,7 +44,7 @@ namespace Contrib.Voting.Filters {
             switch (op) {
                 case NumericOperator.Between:
                     if (showNotReviewed) {
-                        return T("Review count rating is between {0} and {1}", min, max);
+                        return T("Review count is between {0} and {1}", min, max);
                     }
                     return T("Review count is between {0} and {1}. Items with no votes will not be displayed.", min, max);
 

@@ -132,6 +132,7 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
     <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
     <Compile Include="Models\FacebookShopProductPartRecord.cs" />
     <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
@@ -248,6 +251,10 @@
     <Compile Include="ViewModels\ConfigurationRequestViewModel.cs" />
     <Compile Include="ViewModels\FacebookShopProductPartViewModel.cs" />
     <Compile Include="ViewModels\FacebookShopSiteSettingsViewModel.cs" />
+    <Compile Include="ViewModels\GA4ProductVM.cs" />
+    <Compile Include="ViewModels\GA4PurchaseVM.cs" />
+    <Compile Include="ViewModels\GA4ShippingInfoVM.cs" />
+    <Compile Include="ViewModels\IGAProductVM.cs" />
     <Compile Include="ViewModels\OrderAddressEditorViewModel.cs" />
     <Compile Include="ViewModels\GTMProductSettingVM.cs" />
     <Compile Include="ViewModels\GTMProductVM.cs" />
@@ -354,6 +361,10 @@
       <Project>{bdb0cd8d-7c6c-46f0-a041-6b2e1e0f9c9e}</Project>
       <Name>Laser.Orchard.Cookies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.GoogleAnalytics\Laser.Orchard.GoogleAnalytics.csproj">
+      <Project>{8df6ed57-53f6-44e8-9bcd-40c2150a5a43}</Project>
+      <Name>Laser.Orchard.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>
       <Name>Laser.Orchard.PaymentGateway</Name>
@@ -446,6 +457,10 @@
     <Content Include="Views\EditorTemplates\SiteSettings\FacebookShopSiteSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\FacebookShopProductPartSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\FacebookShopProductPartEditor.cshtml" />
+    <Content Include="Views\GA4CheckoutStep.cshtml" />
+    <Content Include="Views\GA4Purchase.cshtml" />
+    <Content Include="Views\GA4ShippingInfo.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

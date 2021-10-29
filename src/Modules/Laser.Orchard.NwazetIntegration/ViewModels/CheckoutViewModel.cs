@@ -66,7 +66,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 ShoppingCart?.ZipCode);
         }
         
-        public decimal GetShopppingTotal() {
+        public decimal GetShoppingTotal() {
             return ShoppingCart.Total(
                 ShoppingCart.Subtotal(),
                 ShoppingCart.Taxes());

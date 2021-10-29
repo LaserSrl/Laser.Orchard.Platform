@@ -42,8 +42,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                .For("Cart", T("Cart products"), T("Cart products"))
                // Product MUST have selected term
                .Element("Cart has Products in the category",
-                    T("Lines products are in the given category (if any was selected)"),
-                    T("Lines products are in the given category (if any was selected)"),
+                    T("Line products are in the given category (if any was selected)"),
+                    T("Line products are in the given category (if any was selected)"),
                     (ctx) => ApplyCriterion(ctx, (b) => b),
                     (ctx) => ApplyCriterion(ctx, (b) => b),
                     (ctx) => DisplayTrueLabel(ctx),
@@ -51,8 +51,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     SelectTermsForm.FormName)
                // Product MUST not have selected term
                .Element("Cart has not Products in the category",
-                    T("Lines products are not in the given category (if any was selected)"),
-                    T("Lines products are not in the given category (if any was selected))"),
+                    T("Line products are not in the given category (if any was selected)"),
+                    T("Line products are not in the given category (if any was selected)"),
                     (ctx) => ApplyCriterion(ctx, (b) => !b),
                     (ctx) => ApplyCriterion(ctx, (b) => !b),
                     (ctx) => DisplayFalseLabel(ctx),
@@ -62,9 +62,9 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         public LocalizedString DisplayFalseLabel(CouponContext ctx) {
             bool.TryParse(ctx.State.IncludeChildren?.Value, out bool includeChildren);
             if (includeChildren) {
-                return T("Cart lines are not a products of the given category or one of its children.");
+                return T("Cart lines are not products of the given category or one of its children.");
             }
-            return T("Cart lines are not a products of the given category.");
+            return T("Cart lines are not products of the given category.");
         }
 
         public LocalizedString DisplayTrueLabel(CouponContext ctx) {
@@ -75,14 +75,14 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
             switch (opCart) {
                 case SelectTermsOperator.AllProducts:
                 if (includeChildren) {
-                    return T("Each lines are a products of the given category or one of its children.");
+                    return T("Each line is a product of the given category or one of its children.");
                 }
-                return T("Each lines are a products of the given category.");
+                return T("Each line is a product of the given category.");
                 case SelectTermsOperator.OneProduct:
                 if (includeChildren) {
-                    return T("At least one lines are a products of the given category or one of its children.");
+                    return T("At least one line is a product of the given category or one of its children.");
                 }
-                return T("At least one lines are a products of the given category.");
+                return T("At least one line is a product of the given category.");
                 case SelectTermsOperator.InsideCart:
                 if (includeChildren) {
                     return T("Among products, there must be the given category or one of its children.");
@@ -90,9 +90,9 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                 return T("Among products, there must be the given category.");
                 default:
                 if (includeChildren) {
-                    return T("Cart lines are a products of the given category or one of its children.");
+                    return T("Cart lines are products of the given category or one of its children.");
                 }
-                return T("Cart lines are a products of the given category.");
+                return T("Cart lines are products of the given category.");
             }
         }
 
