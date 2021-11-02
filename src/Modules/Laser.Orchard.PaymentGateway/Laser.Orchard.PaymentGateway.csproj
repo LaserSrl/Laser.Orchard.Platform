@@ -139,6 +139,7 @@
     <Compile Include="PaymentGatewayRoutes.cs" />
     <Compile Include="PaymentMigrations.cs" />
     <Compile Include="Providers\BankTransferPosProvider.cs" />
+    <Compile Include="Providers\CashOnDeliveryProvider.cs" />
     <Compile Include="Providers\DefaultCustomPosProvider.cs" />
     <Compile Include="Providers\ICustomPosProvider.cs" />
     <Compile Include="Routes.cs" />
@@ -223,7 +224,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Bonifico.cshtml" />
+    <Content Include="Views\BankTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\AdditionalShapeManager.cshtml" />
@@ -238,7 +239,10 @@
     <Content Include="Views\PosPayButton.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\PosPayButton_Bonifico.cshtml" />
+    <Content Include="Views\PosPayButton_BankTransfer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefaultCustomPos.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

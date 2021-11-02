@@ -15,7 +15,7 @@
     <fieldset>
         <div>
             <label for="@Html.FieldIdFor(m => m.ProviderName)">@T("Pos Provider Name:")</label>
-            @Html.DropDownListFor(m => m.ProviderName, _posService.GetCustomPosProviders())
+            @Html.DropDownListFor(m => m.ProviderName, _posService.GetCustomPosProviders(Model.ProviderName))
         </div>
         <div>
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>

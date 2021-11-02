@@ -13,6 +13,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Orchard.Logging;
 using Orchard.DisplayManagement;
+using Laser.Orchard.PaymentGateway.Providers;
 
 namespace Laser.Orchard.PaymentGateway.Controllers {
     public class PaymentController : Controller {
@@ -64,6 +65,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         private readonly IPaymentService _paymentService;
         private readonly IShapeFactory _shapeFactory;
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IList<ICustomPosProvider> _customPosProviders;
         public Localizer T { get; set; }
         public ILogger Logger { get; set; }
 
@@ -73,7 +75,8 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             IEnumerable<IPosService> posServices, 
             IPaymentService paymentService,
             IShapeFactory shapeFactory,
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor,
+            IList<ICustomPosProvider> customPosProviders) {
 
             _repository = repository;
             _orchardServices = orchardServices;
@@ -81,6 +84,8 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             _posServices = posServices;
             _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
+            _customPosProviders = customPosProviders;
+
             _posServiceEmpty = new PosServiceEmpty(orchardServices, repository, null, _shapeFactory);
             T = NullLocalizer.Instance;
             Logger = NullLogger.Instance;
@@ -164,16 +169,21 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
 
             if (payment.PosName.StartsWith("CustomPos_")) {
                 var customPosName = payment.PosName.Substring("CustomPos_".Length);
-
+                
                 var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
                 var currentCustomPos = customPosSiteSettings.CustomPos
                     .FirstOrDefault(cps => cps.Name.Equals(customPosName));
 
                 if (currentCustomPos != null) {
-                    var testShape = new AdditionalPartial();
-                    testShape.ShapeFile = currentCustomPos.ShapeName;
+                    // I have my custom pos object, now I need to check for the provider.
+                    var customPosProvider = _customPosProviders.FirstOrDefault(cpp => cpp.TechnicalName
+                        .Equals(currentCustomPos.ProviderName, StringComparison.InvariantCultureIgnoreCase));
 
-                    model.AdditionalShapes.Add(testShape);
+                    if (customPosProvider != null) {
+                        var testShape = new AdditionalPartial();
+                        testShape.ShapeFile = customPosProvider.GetInfoShapeName();
+                        model.AdditionalShapes.Add(testShape);                        
+                    }
                 }
 
                 payment.PosName = customPosName;

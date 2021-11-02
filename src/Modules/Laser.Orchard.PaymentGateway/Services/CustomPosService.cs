@@ -64,11 +64,12 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 var customPos = settings.CustomPos;
 
                 btns.AddRange(customPos.Select(
-                    cp => _shapeFactory.Create("PosPayButton_" + cp.ShapeName,
+                    cp => _shapeFactory.Create("PosPayButton_" + _customPosProviders
+                        .FirstOrDefault(cpp => cpp.TechnicalName.Equals(cp.ProviderName, StringComparison.InvariantCultureIgnoreCase)).GetButtonShapeName(),
                         Arguments.From(new {
                             CustomPos = cp,
-                            PosService = this
-                            // TODO: ADD PROPERTY "POSNAME" FOR AN EASIER FALLBACK TO THE DEFAULT BUTTON
+                            PosService = this,
+                            PosName = cp.Name
                         }
                     ))));
             }
@@ -76,13 +77,13 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return btns;
         }
 
-        public SelectList GetCustomPosProviders() {
+        public SelectList GetCustomPosProviders(string selectedProvider) {
             var instances = _customPosProviders;
             List<SelectListItem> lSelectList = new List<SelectListItem>();
             foreach (var instance in instances.OrderByDescending(p => p.GetDisplayName())) {
                 lSelectList.Insert(0, new SelectListItem() { Value = instance.TechnicalName, Text = instance.GetDisplayName() });
             }
-            return new SelectList((IEnumerable<SelectListItem>)lSelectList, "Value", "Text");
+            return new SelectList((IEnumerable<SelectListItem>)lSelectList, "Value", "Text", selectedProvider);
         }
     }
 }

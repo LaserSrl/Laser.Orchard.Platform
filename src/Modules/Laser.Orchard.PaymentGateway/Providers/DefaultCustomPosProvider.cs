@@ -17,7 +17,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         }
 
         public virtual string GetButtonShapeName() {
-            return "PosPayButton";
+            return "";
         }
 
         public virtual string GetDisplayName() {

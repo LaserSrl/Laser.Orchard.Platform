@@ -1,0 +1,17 @@
+﻿@using Laser.Orchard.AdvancedSettings.Services;
+@using Orchard.Core.Common.Fields;
+
+@{
+    var _advancedSettingsService = WorkContext.Resolve<IAdvancedSettingsService>();
+    var settingsCI = _advancedSettingsService.GetCachedSetting("Impostazioni Pagamenti");
+    var ibanField = settingsCI.ContentItem.Parts
+        .SelectMany(p => p.Fields)
+        .FirstOrDefault(f => f.Name
+            .Equals("IBAN", StringComparison.InvariantCultureIgnoreCase)) as TextField;
+
+    var iban = ibanField.Value;
+}
+
+<p>@T("Bank Transfer payment")</p>
+<p>@T("You need to send the money at the following account number: {0}", iban)</p>
+<p>@T("Your goods will be shipped as soon as we get the confirmation from the bank.")</p>
