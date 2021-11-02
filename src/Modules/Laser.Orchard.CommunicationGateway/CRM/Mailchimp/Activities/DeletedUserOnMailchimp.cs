@@ -34,8 +34,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
 
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
             LocalizedString messageout = null;
-            bool syncronized = workflowContext.Tokens["syncronized"] == null ? false : (bool)workflowContext.Tokens["syncronized"];
-            workflowContext.SetState("syncronized", syncronized);
+            bool syncronized = workflowContext.Tokens["Syncronized"] == null ? false : (bool)workflowContext.Tokens["Syncronized"];
+            workflowContext.SetState("Syncronized", syncronized);
             if (syncronized) {
                 messageout = T("Succeeded");
             } else {

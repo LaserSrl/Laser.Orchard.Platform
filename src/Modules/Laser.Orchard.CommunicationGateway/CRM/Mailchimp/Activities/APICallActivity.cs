@@ -67,7 +67,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
                 _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
                   null,
                   () => new Dictionary<string, object> {
-                        {"syncronized", done}
+                        {"Syncronized", done}
                   });
             }
             if (done) {

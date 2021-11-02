@@ -104,7 +104,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 _workflowManager.TriggerEvent("UserRegistrationOnMailchimp",
                     part,
                     () => new Dictionary<string, object> {
-                        {"syncronized", syncronized}
+                        {"Syncronized", syncronized}
                     });
             } else {
                 // deleted member
@@ -112,7 +112,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
                     part,
                     () => new Dictionary<string, object> {
-                        {"syncronized", syncronized}
+                        {"Syncronized", syncronized}
                     });
             }
             return syncronized;

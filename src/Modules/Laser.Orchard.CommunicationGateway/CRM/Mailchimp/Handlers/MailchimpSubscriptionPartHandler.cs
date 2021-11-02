@@ -114,7 +114,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                 _workflowManager.TriggerEvent("SavedUserOnMailchimp",
                    part,
                    () => new Dictionary<string, object> {
-                        {"syncronized", true}
+                        {"Syncronized", true}
                     });
                 return false;
             }
