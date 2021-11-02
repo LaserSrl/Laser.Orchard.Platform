@@ -1,4 +1,5 @@
-﻿using Orchard.Localization;
+﻿using Orchard.Environment.Extensions;
+using Orchard.Localization;
 using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
 using System;
@@ -7,17 +8,25 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
-    public class DeletedUserOnMailchimp : Event {
-        public DeletedUserOnMailchimp() {
+    [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
+    public class UserUpdatedOnMailchimp : Event {
+        // 3 different events created for the user
+        //  - created
+        //  - updated
+        //  - deleted
+        // based on the value of Syncronized I execute the return of success failure
+        // the incoming call information and the user's email are there
+        // I've separated them out for possible different reasoning for each one.
+        public UserUpdatedOnMailchimp() {
             T = NullLocalizer.Instance;
         }
         public Localizer T { get; set; }
         public override string Name {
-            get { return "UserDeletedOnMailchimp"; }
+            get { return "UserUpdatedOnMailchimp"; }
         }
 
         public override LocalizedString Description {
-            get { return T("User deleted on Mailchimp."); }
+            get { return T("User saved on Mailchimp."); }
         }
 
         public override bool CanStartWorkflow {
@@ -36,6 +45,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             LocalizedString messageout = null;
             bool syncronized = workflowContext.Tokens["Syncronized"] == null ? false : (bool)workflowContext.Tokens["Syncronized"];
             workflowContext.SetState("Syncronized", syncronized);
+            workflowContext.SetState("APICallEdit", workflowContext.Tokens["APICallEdit"]);
+            workflowContext.SetState("Email", workflowContext.Tokens["Email"]);
             if (syncronized) {
                 messageout = T("Succeeded");
             } else {

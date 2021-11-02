@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
 using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
-
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
@@ -92,7 +91,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             // if changed it fires an update over Mailchimp servers
             if (part.Subscription.Subscribed != _apiService.IsUserRegister(part)) {
                 var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
-                if (!_apiService.TryUpdateSubscription(part)) {
+                if (!_apiService.TryUpdateSubscription(part,false)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
                         _notifier.Error(T("Oops! We have experienced a problem during your email subscription. Please, retry later."));
                     }
@@ -111,11 +110,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                 }
             }
             else {
-                _workflowManager.TriggerEvent("SavedUserOnMailchimp",
-                   part,
-                   () => new Dictionary<string, object> {
-                        {"Syncronized", true}
-                    });
                 return false;
             }
 

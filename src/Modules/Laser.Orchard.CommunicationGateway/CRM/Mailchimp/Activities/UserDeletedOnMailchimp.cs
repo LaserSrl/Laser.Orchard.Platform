@@ -1,5 +1,4 @@
-﻿using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
+﻿using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Workflows.Models;
 using Orchard.Workflows.Services;
@@ -10,17 +9,24 @@ using System.Web;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
-    public class UserRegistrationOnMailchimp : Event {
-        public UserRegistrationOnMailchimp() {
+    public class UserDeletedOnMailchimp : Event {
+        // 3 different events created for the user
+        //  - created
+        //  - updated
+        //  - deleted
+        // based on the value of Syncronized I execute the return of success failure
+        // the incoming call information and the user's email are there
+        // I've separated them out for possible different reasoning for each one.
+        public UserDeletedOnMailchimp() {
             T = NullLocalizer.Instance;
         }
         public Localizer T { get; set; }
         public override string Name {
-            get { return "UserRegistrationOnMailchimp"; }
+            get { return "UserDeletedOnMailchimp"; }
         }
 
         public override LocalizedString Description {
-            get { return T("User registration on Mailchimp."); }
+            get { return T("User deleted on Mailchimp."); }
         }
 
         public override bool CanStartWorkflow {
@@ -37,8 +43,10 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
 
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
             LocalizedString messageout = null;
-            bool syncronized = workflowContext.Tokens["syncronized"] == null ? false : (bool)workflowContext.Tokens["syncronized"];
-            workflowContext.SetState("syncronized", syncronized);
+            bool syncronized = workflowContext.Tokens["Syncronized"] == null ? false : (bool)workflowContext.Tokens["Syncronized"];
+            workflowContext.SetState("Syncronized", syncronized);
+            workflowContext.SetState("APICallEdit", workflowContext.Tokens["APICallEdit"]);
+            workflowContext.SetState("Email", workflowContext.Tokens["Email"]);
             if (syncronized) {
                 messageout = T("Succeeded");
             } else {

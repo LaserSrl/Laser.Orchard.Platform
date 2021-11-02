@@ -61,13 +61,27 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
                 errorHandler = _apiservice.ErrorHandlerDefault;
             }
 
-            var done = _apiservice.TryApiCall(verb, _service.TryReplaceTokenInUrl(model.Url, payload), payload, errorHandler, ref result);
-            // this trigger is only valid for the member's put
+            var urlApiCall = _service.TryReplaceTokenInUrl(model.Url, payload);
+            // updated model with replaced parameters at the url
+            model.Url = urlApiCall;
+            var done = _apiservice.TryApiCall(verb, urlApiCall, payload, errorHandler, ref result);
+            // this trigger is only valid for the member's put and delete
             if (verb == HttpVerbs.Put && model.RequestType.ToLower() == RequestTypes.Member.ToString().ToLower()) {
-                _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
+                _workflowManager.TriggerEvent("UserCreatedOnMailchimp",
                   null,
                   () => new Dictionary<string, object> {
-                        {"Syncronized", done}
+                        {"Syncronized", done},
+                        {"APICallEdit", model},
+                        {"Email",payload["email_address"] == null ? "" : payload["email_address"].ToString()}
+                  });
+            }
+            else if (verb == HttpVerbs.Delete && model.RequestType.ToLower() == RequestTypes.Member.ToString().ToLower()) {
+                _workflowManager.TriggerEvent("UserDeletedOnMailchimp",
+                  null,
+                  () => new Dictionary<string, object> {
+                        {"Syncronized", done},
+                        {"APICallEdit", model},
+                        {"Email",payload["email_address"] == null ? "" : payload["email_address"].ToString()}
                   });
             }
             if (done) {

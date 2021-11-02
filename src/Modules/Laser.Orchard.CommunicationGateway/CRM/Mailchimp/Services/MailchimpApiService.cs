@@ -82,7 +82,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return audiences;
         }
 
-        public bool TryUpdateSubscription(MailchimpSubscriptionPart part) {
+        public bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool UserIsCreated) {
             var sub = part.Subscription;
             if (sub.Audience == null || string.IsNullOrWhiteSpace(sub.Audience.Identifier)) return false;
 
@@ -96,23 +96,53 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 { "{member-id}",_mailchimpService.ComputeSubscriberHash(memberEmail) }
             };
             string result = "";
+            var urlApiCall = CalculateUrlByType(RequestTypes.Member, urlTokens);
             if (sub.Subscribed) {
                 // register member
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 JObject body = JObject.Parse(putPayload ?? "{}");
-                syncronized = TryApiCall(HttpVerbs.Put, CalculateUrlByType(RequestTypes.Member, urlTokens), body, errorHandler, ref result);
-                _workflowManager.TriggerEvent("UserRegistrationOnMailchimp",
-                    part,
-                    () => new Dictionary<string, object> {
-                        {"Syncronized", syncronized}
-                    });
+                syncronized = TryApiCall(HttpVerbs.Put, urlApiCall, body, errorHandler, ref result);
+                if (UserIsCreated) {
+                    _workflowManager.TriggerEvent("UserCreatedOnMailchimp",
+                        part,
+                        () => new Dictionary<string, object> {
+                            {"Syncronized", syncronized},
+                            {"APICallEdit", new APICallEdit {
+                                Url = urlApiCall,
+                                RequestType = RequestTypes.Member.ToString(),
+                                HttpVerb = HttpVerbs.Put.ToString(),
+                                Payload = putPayload
+                            }},
+                            {"Email",part.As<UserPart>().Email}
+                        });
+                } else {
+                    _workflowManager.TriggerEvent("UserUpdatedOnMailchimp",
+                        part,
+                        () => new Dictionary<string, object> {
+                            {"Syncronized", syncronized},
+                            {"APICallEdit", new APICallEdit {
+                                Url = urlApiCall,
+                                RequestType = RequestTypes.Member.ToString(),
+                                HttpVerb = HttpVerbs.Put.ToString(),
+                                Payload = putPayload
+                            }},
+                            {"Email",part.As<UserPart>().Email}
+                        });
+                }
             } else {
                 // deleted member
-                syncronized = TryApiCall(HttpVerbs.Delete, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ErrorHandlerDelete, ref result);
-                _workflowManager.TriggerEvent("DeletedUserOnMailchimp",
+                syncronized = TryApiCall(HttpVerbs.Delete, urlApiCall, null, ErrorHandlerDelete, ref result);
+                _workflowManager.TriggerEvent("UserDeletedOnMailchimp",
                     part,
                     () => new Dictionary<string, object> {
-                        {"Syncronized", syncronized}
+                        {"Syncronized", syncronized},
+                        {"APICallEdit", new APICallEdit {
+                            Url = urlApiCall,
+                            RequestType = RequestTypes.Member.ToString(),
+                            HttpVerb = HttpVerbs.Delete.ToString(),
+                            Payload = putPayload
+                        }},
+                        {"Email",part.As<UserPart>().Email}
                     });
             }
             return syncronized;
