@@ -14,24 +14,19 @@
     @Html.HiddenFor(m => m.Delete, new { @class = "ph-mark-for-delete", @id = "delete_" + @divId })
     <fieldset>
         <div>
-            <label for="@Html.FieldIdFor(m => m.ProviderName)">@T("Pos Provider Name:")</label>
+            <label for="@Html.FieldIdFor(m => m.ProviderName)">@T("Pos Provider:")</label>
             @Html.DropDownListFor(m => m.ProviderName, _posService.GetCustomPosProviders(Model.ProviderName))
+            <span class="hint">@T("The CustomPosProvider to use for action execution and shape generation")</span>
         </div>
         <div>
             <label for="@Html.FieldIdFor(m => m.Name)">@T("Pos Name:")</label>
-            @Html.TextBoxFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "text small" })
+            <span class="hint">@T("The name of the custom payment method")</span>
         </div>
         <div>
             <label for="@Html.FieldIdFor(m => m.Order)">@T("Order:")</label>
-            @Html.TextBoxFor(m => m.Order)
-        </div>
-        <div>
-            <label for="@Html.FieldIdFor(m => m.ShapeName)">@T("Shape Name:")</label>
-            @Html.TextBoxFor(m => m.ShapeName)
-        </div>
-        <div>
-            <label for="@Html.FieldIdFor(m => m.OrderMessage)">@T("Order Message:")</label>
-            @Html.TextBoxFor(m => m.OrderMessage)
+            @Html.TextBoxFor(m => m.Order, new { @class = "text small" })
+            <span class="hint">@T("The order in which payment buttons will be rendered during the checkout step")</span>
         </div>
         <div>
             @Html.LinkToRemoveNestedForm("<i class=\"fa fa-times\" style=\"color: red\"></i> " + T(" Remove this custom pos").ToString(), ".j_custompos", "input.ph-mark-for-delete")

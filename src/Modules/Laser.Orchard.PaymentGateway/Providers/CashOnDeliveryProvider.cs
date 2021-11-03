@@ -17,7 +17,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         }
 
         public override string GetInfoShapeName() {
-            return base.GetInfoShapeName();
+            return "CashOnDelivery";
         }
     }
 }

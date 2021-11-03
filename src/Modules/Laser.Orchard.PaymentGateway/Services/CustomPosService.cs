@@ -64,8 +64,8 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 var customPos = settings.CustomPos;
 
                 btns.AddRange(customPos.Select(
-                    cp => _shapeFactory.Create("PosPayButton_" + _customPosProviders
-                        .FirstOrDefault(cpp => cpp.TechnicalName.Equals(cp.ProviderName, StringComparison.InvariantCultureIgnoreCase)).GetButtonShapeName(),
+                    cp => _shapeFactory.Create(JoinValidStrings("_", "PosPayButton", _customPosProviders
+                        .FirstOrDefault(cpp => cpp.TechnicalName.Equals(cp.ProviderName, StringComparison.InvariantCultureIgnoreCase))?.GetButtonShapeName()),
                         Arguments.From(new {
                             CustomPos = cp,
                             PosService = this,
@@ -84,6 +84,28 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 lSelectList.Insert(0, new SelectListItem() { Value = instance.TechnicalName, Text = instance.GetDisplayName() });
             }
             return new SelectList((IEnumerable<SelectListItem>)lSelectList, "Value", "Text", selectedProvider);
+        }
+
+        /// <summary>
+        /// This function works like the standard string.Join but, if one of the parameter is a empty string, it's not added to the result.
+        /// </summary>
+        /// <param name="separator"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        protected string JoinValidStrings(string separator, params string[] value) {
+            string result = string.Empty;
+
+            foreach (string s in value) {
+                if (!string.IsNullOrWhiteSpace(s)) {
+                    result += "_" + s;
+                }
+            }
+
+            if (result.StartsWith("_")) {
+                result = result.Substring(1);
+            }
+
+            return result;
         }
     }
 }
