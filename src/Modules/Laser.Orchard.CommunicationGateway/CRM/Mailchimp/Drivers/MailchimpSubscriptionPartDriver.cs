@@ -52,7 +52,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Drivers {
                     selectableAudience = new SelectableAudience {
                         Audience = subscription.Audience,
                         // check if registered on mailchimp
-                        Selected = _apiService.IsUserRegister(part), // subscription.Subscribed,
+                        Selected = _apiService.IsUserRegistered(part), // subscription.Subscribed,
                         RequiredPolicies = settings.PolicyTextReferencesToArray()
                     };
                 }

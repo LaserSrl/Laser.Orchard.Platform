@@ -12,12 +12,10 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         string GetBaseUrl();
         List<Audience> Audiences();
         Audience Audience(string id);
-        bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool UserIsCreate);
-        bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> ErrorHandler, ref string result);
-        bool ErrorHandlerDefault(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response);
-        bool ErrorHandlerDelete(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response);
-        bool ErrorHandlerGet(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response);
+        bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool isUserCreation = false);
+        bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, ref string result);
+
         List<RequestTypeInfo> GetRequestTypes();
-        bool IsUserRegister(MailchimpSubscriptionPart part);
+        bool IsUserRegistered(MailchimpSubscriptionPart part);
     }
 }

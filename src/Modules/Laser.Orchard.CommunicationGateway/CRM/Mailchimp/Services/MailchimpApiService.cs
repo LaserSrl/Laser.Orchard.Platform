@@ -52,11 +52,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             
             Logger = NullLogger.Instance;
 
-            errorHandler = ErrorHandlerDefault;
         }
 
-        // func used for error handling based on the verb
-        public Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler { get; set; }
 
         public ILogger Logger { get; set; }
 
@@ -67,7 +64,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 { "{list-id}", id}
             };
             string result = "";
-            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.List, urlTokens), null, errorHandler, ref result)) {
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.List, urlTokens), null, ErrorHandlerDefault, ref result)) {
                 audience = ToAudience(JObject.Parse(result));
             }
             return audience;
@@ -76,13 +73,13 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         public List<Audience> Audiences() {
             List<Audience> audiences = new List<Audience>();
             string result = "";
-            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Lists, null), null, errorHandler, ref result)) {
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Lists, null), null, ErrorHandlerDefault, ref result)) {
                 audiences = ToAudiences(JObject.Parse(result));
             }
             return audiences;
         }
 
-        public bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool UserIsCreated) {
+        public bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool isUserCreation = false) {
             var sub = part.Subscription;
             if (sub.Audience == null || string.IsNullOrWhiteSpace(sub.Audience.Identifier)) return false;
 
@@ -101,8 +98,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 // register member
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 JObject body = JObject.Parse(putPayload ?? "{}");
-                syncronized = TryApiCall(HttpVerbs.Put, urlApiCall, body, errorHandler, ref result);
-                if (UserIsCreated) {
+                syncronized = TryApiCall(HttpVerbs.Put, urlApiCall, body, ErrorHandlerDefault, ref result);
+                if (isUserCreation) {
                     _workflowManager.TriggerEvent("UserCreatedOnMailchimp",
                         part,
                         () => new Dictionary<string, object> {
@@ -148,8 +145,21 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return syncronized;
         }
 
+        public bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, ref string result) {
+            // assigned correct handler error
+            Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler;
+            if (httpVerb == HttpVerbs.Delete) {
+                errorHandler = ErrorHandlerDelete;
+            } else if (httpVerb == HttpVerbs.Get) {
+                errorHandler = ErrorHandlerGetMember;
+            } else {
+                errorHandler = ErrorHandlerDefault;
+            }
 
-        public bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> ErrorHandler, ref string result) {
+            return TryApiCall(httpVerb, url, bodyRequest, errorHandler, ref result);
+        }
+
+        private bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> ErrorHandler, ref string result) {
             var requestUrl = GetBaseUrl() + url;
             using (var httpClient = new HttpClient()) {
                 SetHeader(httpClient);
@@ -226,7 +236,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             }
         }
 
-        public bool ErrorHandlerGet(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+        public bool ErrorHandlerGetMember(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
             if (!response.IsSuccessStatusCode) {
                 LogError(httpVerb, requestUrl, bodyRequest, response);
                 return false;
@@ -316,13 +326,13 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             return requestUrl;
         }
 
-        public bool IsUserRegister(MailchimpSubscriptionPart part) {
+        public bool IsUserRegistered(MailchimpSubscriptionPart part) {
             string result = "";
             var urlTokens = new Dictionary<string, string> {
-                        { "{list-id}",part.Subscription.Audience.Identifier},
-                        { "{member-id}",_mailchimpService.ComputeSubscriberHash(part.ContentItem.As<UserPart>() != null ? part.ContentItem.As<UserPart>().Email : "") }
+                        { "{list-id}", part.Subscription.Audience.Identifier},
+                        { "{member-id}", _mailchimpService.ComputeSubscriberHash(part.ContentItem.As<UserPart>() != null ? part.ContentItem.As<UserPart>().Email : "") }
                     };
-            return TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ErrorHandlerGet, ref result);
+            return TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ErrorHandlerGetMember, ref result);
         }
     }
 }

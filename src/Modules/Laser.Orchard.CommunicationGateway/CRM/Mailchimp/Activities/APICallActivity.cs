@@ -31,7 +31,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             _workflowManager = workflowManager;
             T = NullLocalizer.Instance;
         }
-        public Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler { get; set; }
+
         public override LocalizedString Category {
             get { return T("Mailchimp"); }
         }
@@ -52,19 +52,12 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities {
             Enum.TryParse<HttpVerbs>(model.HttpVerb.ToString(), true, out verb);
             JObject payload = JObject.Parse("{" + model.Payload + "}");
 
-            // assigned correct handler error
-            if (verb == HttpVerbs.Delete) {
-                errorHandler = _apiservice.ErrorHandlerDelete;
-            } else if (verb == HttpVerbs.Get) {
-                errorHandler = _apiservice.ErrorHandlerGet;
-            } else {
-                errorHandler = _apiservice.ErrorHandlerDefault;
-            }
-
+            // In case in the url we kept the "default" fake tokens {list-id} and {member-id}
+            // we can try to replace them by checking the site settings and the payload
             var urlApiCall = _service.TryReplaceTokenInUrl(model.Url, payload);
             // updated model with replaced parameters at the url
             model.Url = urlApiCall;
-            var done = _apiservice.TryApiCall(verb, urlApiCall, payload, errorHandler, ref result);
+            var done = _apiservice.TryApiCall(verb, urlApiCall, payload, ref result);
             // this trigger is only valid for the member's put and delete
             if (verb == HttpVerbs.Put && model.RequestType.ToLower() == RequestTypes.Member.ToString().ToLower()) {
                 _workflowManager.TriggerEvent("UserCreatedOnMailchimp",

@@ -89,9 +89,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             }
             // check if subscriptions is different from orchard to mailchimp
             // if changed it fires an update over Mailchimp servers
-            if (part.Subscription.Subscribed != _apiService.IsUserRegister(part)) {
+            if (part.Subscription.Subscribed != _apiService.IsUserRegistered(part) || part.As<UserPart>() == null) {
                 var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
-                if (!_apiService.TryUpdateSubscription(part,false)) {
+                if (!_apiService.TryUpdateSubscription(part)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
                         _notifier.Error(T("Oops! We have experienced a problem during your email subscription. Please, retry later."));
                     }
