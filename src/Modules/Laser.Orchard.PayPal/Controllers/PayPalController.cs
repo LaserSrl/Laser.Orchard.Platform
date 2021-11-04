@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Logging;
 using Orchard.Themes;
@@ -21,14 +22,15 @@ namespace Laser.Orchard.PayPal.Controllers {
         private readonly IOrchardServices _orchardServices;
         private readonly PayPalPosService _posService;
         private readonly IPayPalService _PayPalService;
-
+        
         public PayPalController(
             IOrchardServices orchardServices, 
             IRepository<PaymentRecord> repository, 
             IPaymentEventHandler paymentEventHandler,
-            IPayPalService PayPalService) {
+            IPayPalService PayPalService,
+            IShapeFactory shapeFactory) {
             _orchardServices = orchardServices;
-            _posService = new PayPalPosService(orchardServices, repository, paymentEventHandler);
+            _posService = new PayPalPosService(orchardServices, repository, paymentEventHandler, shapeFactory);
             _PayPalService = PayPalService;
 
             Logger = NullLogger.Instance;

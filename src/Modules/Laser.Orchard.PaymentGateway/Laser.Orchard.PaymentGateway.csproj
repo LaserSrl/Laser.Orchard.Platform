@@ -115,13 +115,21 @@
   <ItemGroup>
     <Compile Include="Activities\PaymentEventActivity.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomPosAdminController.cs" />
+    <Compile Include="Controllers\CustomPosController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PaymentGatewayAPIController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PosAdminBaseController.cs" />
     <Compile Include="Drivers\PayButtonPartDriver.cs" />
+    <Compile Include="Handlers\CustomPosSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\PaymentGatewaySiteSettingsPartHandler.cs" />
     <Compile Include="IPaymentEventHandler.cs" />
+    <Compile Include="Models\AdditionalPartial.cs" />
+    <Compile Include="Models\AdditionalShapeBase.cs" />
+    <Compile Include="Models\AdditionalShapeContext.cs" />
+    <Compile Include="Models\CustomPosSettings.cs" />
+    <Compile Include="Models\CustomPosSiteSettingsPart.cs" />
     <Compile Include="Models\PayButton.cs" />
     <Compile Include="Models\PayButtonPartSettings.cs" />
     <Compile Include="Models\PaymentGatewaySiteSettingsPart.cs" />
@@ -130,8 +138,13 @@
     <Compile Include="PaymentEventHandler.cs" />
     <Compile Include="PaymentGatewayRoutes.cs" />
     <Compile Include="PaymentMigrations.cs" />
+    <Compile Include="Providers\BankTransferPosProvider.cs" />
+    <Compile Include="Providers\CashOnDeliveryProvider.cs" />
+    <Compile Include="Providers\DefaultCustomPosProvider.cs" />
+    <Compile Include="Providers\ICustomPosProvider.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Security\Permissions.cs" />
+    <Compile Include="Services\CustomPosService.cs" />
     <Compile Include="Services\IPaymentService.cs" />
     <Compile Include="Services\IPosService.cs" />
     <Compile Include="Services\PaymentService.cs" />
@@ -198,6 +211,10 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.AdvancedSettings\Laser.Orchard.AdvancedSettings.csproj">
+      <Project>{edff325b-701d-41f4-a76e-03cf48feaf15}</Project>
+      <Name>Laser.Orchard.AdvancedSettings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.StartupConfig\Laser.Orchard.StartupConfig.csproj">
       <Project>{17db396a-e8ce-4317-b558-8a5c17206518}</Project>
       <Name>Laser.Orchard.StartupConfig</Name>
@@ -205,6 +222,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\BankTransfer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AdditionalShapeManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CustomPosAdminSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\CustomPosSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PosPayButton.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PosPayButton_BankTransfer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefaultCustomPos.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CashOnDelivery.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

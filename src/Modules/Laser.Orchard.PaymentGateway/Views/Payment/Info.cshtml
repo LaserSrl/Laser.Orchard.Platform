@@ -7,6 +7,13 @@
 @T("Date"): @Model.Record.UpdateDate.ToString("yyyy-MM-dd HH:mm")<br />
 
 @if(Model.Record.Success) {
+
+    if (Model.ShapeContext != null) {
+        foreach (var s in Model.AdditionalShapes) {
+            s.DisplayShape(Model.ShapeContext);
+        }
+    }
+
     <text>@T("Outcome"): @T("Succeeded")<br />
     @T("Transacion ID"): @Model.Record.TransactionId<br /></text>
 } else {
