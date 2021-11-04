@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Orchard.ContentManagement;
 using Orchard.Workflows.Services;
 using Laser.Orchard.NwazetIntegration.Models;
+using System.Linq;
+using System;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class PaymentEventHandler : IPaymentEventHandler {
@@ -17,6 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         private readonly IContentManager _contentManager;
         private readonly IWorkflowManager _workflowManager;
         private readonly IUpdateStatusService _updateStatusService;
+        private readonly IEnumerable<IPosService> _posServices;
 
         public PaymentEventHandler(
             IOrderService orderService, 
@@ -26,7 +29,8 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             IEnumerable<ICartLifeCycleEventHandler> cartLifeCycleEventHandlers,
             IContentManager contentManager,
             IWorkflowManager workflowManager,
-            IUpdateStatusService updateStatusService) {
+            IUpdateStatusService updateStatusService,
+            IEnumerable<IPosService> posServices) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -36,6 +40,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             _contentManager = contentManager;
             _workflowManager = workflowManager;
             _updateStatusService = updateStatusService;
+            _posServices = posServices;
         }
         public void OnError(int paymentId, int contentItemId) {
             var payment = _paymentService.GetPayment(paymentId);
@@ -62,9 +67,21 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             var payment = _paymentService.GetPayment(paymentId);
             if (payment != null) {
                 var order = _contentManager.Get<OrderPart>(payment.ContentItemId, VersionOptions.Latest); // _orderService.Get(payment.ContentItemId);
-                // aggiorna l'odine in base al pagamento effettuato
+                // aggiorna l'ordine in base al pagamento effettuato
                 //order.Status = OrderPart.Pending;
-                order.Status = Constants.PaymentSucceeded;
+                // I need to get the order status from the right pos service.
+                var posName = payment.PosName;
+                if (posName.StartsWith("CustomPos_")) {
+                    posName = "Custom Pos";
+                }
+                var pos = _posServices
+                    .FirstOrDefault(ps => ps.GetPosName()
+                        .Equals(posName, StringComparison.InvariantCultureIgnoreCase));
+                if (pos != null) {
+                    order.Status = pos.GetOrderStatus(payment);
+                } else {
+                    order.Status = Constants.PaymentSucceeded;
+                }
                 order.AmountPaid = payment.Amount;
                 order.CurrencyCode = payment.Currency;
                 // update charge

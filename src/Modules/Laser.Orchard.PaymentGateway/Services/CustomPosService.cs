@@ -15,13 +15,16 @@ namespace Laser.Orchard.PaymentGateway.Services {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosService : PosServiceBase {
         private readonly IList<ICustomPosProvider> _customPosProviders;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public CustomPosService(IOrchardServices orchardServices,
             IRepository<PaymentRecord> repository,
             IPaymentEventHandler paymentEventHandler,
             IShapeFactory shapeFactory,
-            IList<ICustomPosProvider> customPosProviders) : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
+            IList<ICustomPosProvider> customPosProviders,
+            IWorkContextAccessor workContextAccessor) : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
             _customPosProviders = customPosProviders;
+            _workContextAccessor = workContextAccessor;
         }
 
         public override Type GetPosActionControllerType() {
@@ -75,6 +78,28 @@ namespace Laser.Orchard.PaymentGateway.Services {
             }
 
             return btns;
+        }
+
+        public override string GetOrderStatus(PaymentRecord payment) {
+            if (payment.PosName.StartsWith("CustomPos_")) {
+                var customPosName = payment.PosName.Substring("CustomPos_".Length);
+
+                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
+                var currentCustomPos = customPosSiteSettings.CustomPos
+                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+
+                if (currentCustomPos!=null) {
+                    // I have my custom pos object, now I need to check for the provider.
+                    var customPosProvider = _customPosProviders.FirstOrDefault(cpp => cpp.TechnicalName
+                        .Equals(currentCustomPos.ProviderName, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (customPosProvider != null) {
+                        return customPosProvider.GetOrderStatus();
+                    }
+                }
+            }
+
+            return base.GetOrderStatus(payment);
         }
 
         public SelectList GetCustomPosProviders(string selectedProvider) {

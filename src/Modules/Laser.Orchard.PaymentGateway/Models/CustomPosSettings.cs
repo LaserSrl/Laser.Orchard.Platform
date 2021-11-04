@@ -1,4 +1,7 @@
-﻿namespace Laser.Orchard.PaymentGateway.Models {
+﻿using Orchard.Environment.Extensions;
+
+namespace Laser.Orchard.PaymentGateway.Models {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosSettings {
         public string ProviderName { get; set; }
         public string Name { get; set; }

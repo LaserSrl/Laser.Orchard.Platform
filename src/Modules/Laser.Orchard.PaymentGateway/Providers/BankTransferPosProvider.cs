@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class BankTransferPosProvider : DefaultCustomPosProvider {
 
         public override string TechnicalName => "BankTransfer";
@@ -18,6 +16,10 @@ namespace Laser.Orchard.PaymentGateway.Providers {
 
         public override string GetInfoShapeName() {
             return "BankTransfer";
+        }
+
+        public override string GetOrderStatus() {
+            return "Payment Pending";
         }
     }
 }

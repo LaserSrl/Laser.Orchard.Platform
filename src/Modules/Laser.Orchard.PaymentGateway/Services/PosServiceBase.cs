@@ -1,5 +1,4 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
-using Laser.Orchard.StartupConfig.ViewModels;
 using Newtonsoft.Json;
 using Orchard;
 using Orchard.Data;
@@ -73,6 +72,10 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return new[]{_shapeFactory.PosPayButton(
                 PosName: GetPosName()
                 )};
+        }
+
+        public virtual string GetOrderStatus(PaymentRecord payment) {
+            return "Payment Succeeded";
         }
 
         /// <summary>

@@ -85,5 +85,6 @@ public interface IPosService : IDependency {
     /// <returns></returns>
     List<string> GetAllValidCurrencies();
     IEnumerable<dynamic> GetPaymentButtons();
+    string GetOrderStatus(PaymentRecord payment);
     #endregion
 }
