@@ -21,10 +21,5 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         /// Name of the partial to display as the payment button during the checkout phase.
         /// </summary>
         string GetButtonShapeName();
-        /// <summary>
-        /// String representing the order status to set after the e-commerce payment procedure.
-        /// </summary>
-        /// <returns></returns>
-        string GetOrderStatus();
     }
 }

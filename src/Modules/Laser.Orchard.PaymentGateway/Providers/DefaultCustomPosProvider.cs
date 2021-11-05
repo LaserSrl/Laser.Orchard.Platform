@@ -25,9 +25,5 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         public virtual string GetInfoShapeName() {
             return "DefaultCustomPos";
         }
-
-        public virtual string GetOrderStatus() {
-            return "Payment Succeeded";
-        }
     }
 }

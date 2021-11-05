@@ -8,6 +8,7 @@ using Orchard.Workflows.Services;
 using Laser.Orchard.NwazetIntegration.Models;
 using System.Linq;
 using System;
+using Laser.Orchard.NwazetIntegration.Services.Pos;
 
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     public class PaymentEventHandler : IPaymentEventHandler {
@@ -19,7 +20,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         private readonly IContentManager _contentManager;
         private readonly IWorkflowManager _workflowManager;
         private readonly IUpdateStatusService _updateStatusService;
-        private readonly IEnumerable<IPosService> _posServices;
+        private readonly IEnumerable<IPosIntegrationService> _posIntegrationServices;
 
         public PaymentEventHandler(
             IOrderService orderService, 
@@ -30,7 +31,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             IContentManager contentManager,
             IWorkflowManager workflowManager,
             IUpdateStatusService updateStatusService,
-            IEnumerable<IPosService> posServices) {
+            IEnumerable<IPosIntegrationService> posServices) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -40,7 +41,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             _contentManager = contentManager;
             _workflowManager = workflowManager;
             _updateStatusService = updateStatusService;
-            _posServices = posServices;
+            _posIntegrationServices = posServices;
         }
         public void OnError(int paymentId, int contentItemId) {
             var payment = _paymentService.GetPayment(paymentId);
@@ -70,15 +71,10 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 // aggiorna l'ordine in base al pagamento effettuato
                 //order.Status = OrderPart.Pending;
                 // I need to get the order status from the right pos service.
-                var posName = payment.PosName;
-                if (posName.StartsWith("CustomPos_")) {
-                    posName = "Custom Pos";
-                }
-                var pos = _posServices
-                    .FirstOrDefault(ps => ps.GetPosName()
-                        .Equals(posName, StringComparison.InvariantCultureIgnoreCase));
+                var pos = _posIntegrationServices
+                    .FirstOrDefault(ps => ps.CheckPos(payment));
                 if (pos != null) {
-                    order.Status = pos.GetOrderStatus(payment);
+                    order.Status = pos.GetPaymentSuccessOrderStatus().StatusName;
                 } else {
                     order.Status = Constants.PaymentSucceeded;
                 }

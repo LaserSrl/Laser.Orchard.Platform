@@ -17,9 +17,5 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         public override string GetInfoShapeName() {
             return "CashOnDelivery";
         }
-
-        public override string GetOrderStatus() {
-            return "Payment Pending";
-        }
     }
 }

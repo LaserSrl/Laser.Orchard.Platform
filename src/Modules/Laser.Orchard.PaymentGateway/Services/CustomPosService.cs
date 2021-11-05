@@ -80,28 +80,6 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return btns;
         }
 
-        public override string GetOrderStatus(PaymentRecord payment) {
-            if (payment.PosName.StartsWith("CustomPos_")) {
-                var customPosName = payment.PosName.Substring("CustomPos_".Length);
-
-                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
-                var currentCustomPos = customPosSiteSettings.CustomPos
-                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
-
-                if (currentCustomPos!=null) {
-                    // I have my custom pos object, now I need to check for the provider.
-                    var customPosProvider = _customPosProviders.FirstOrDefault(cpp => cpp.TechnicalName
-                        .Equals(currentCustomPos.ProviderName, StringComparison.InvariantCultureIgnoreCase));
-
-                    if (customPosProvider != null) {
-                        return customPosProvider.GetOrderStatus();
-                    }
-                }
-            }
-
-            return base.GetOrderStatus(payment);
-        }
-
         public SelectList GetCustomPosProviders(string selectedProvider) {
             var instances = _customPosProviders;
             List<SelectListItem> lSelectList = new List<SelectListItem>();

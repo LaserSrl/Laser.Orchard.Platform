@@ -74,10 +74,6 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 )};
         }
 
-        public virtual string GetOrderStatus(PaymentRecord payment) {
-            return "Payment Succeeded";
-        }
-
         /// <summary>
         /// Create the db entry corresponding to the payment we are starting.
         /// </summary>
