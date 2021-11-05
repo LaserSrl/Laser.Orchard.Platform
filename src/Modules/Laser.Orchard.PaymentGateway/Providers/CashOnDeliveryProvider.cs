@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CashOnDeliveryProvider : DefaultCustomPosProvider {
 
         public override string TechnicalName => "CashOnDelivery";
 
         public override string GetButtonShapeName() {
-            return base.GetButtonShapeName();
+            return "CashOnDelivery";
         }
 
         public override string GetDisplayName() {

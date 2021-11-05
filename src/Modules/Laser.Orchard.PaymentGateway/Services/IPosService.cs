@@ -84,6 +84,10 @@ public interface IPosService : IDependency {
     /// </summary>
     /// <returns></returns>
     List<string> GetAllValidCurrencies();
+    /// <summary>
+    /// Gets the list of the shapes to render payment buttons.
+    /// </summary>
+    /// <returns></returns>
     IEnumerable<dynamic> GetPaymentButtons();
     #endregion
 }

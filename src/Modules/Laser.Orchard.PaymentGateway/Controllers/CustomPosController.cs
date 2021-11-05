@@ -44,7 +44,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
             PaymentVM model = new PaymentVM();
             model.Record = payment;
 
-            return RedirectToAction("Info", "Payment", new { paymentId = payment.Id });
+            return RedirectToAction("Info", "Payment", new { paymentId = payment.Id, guid = payment.Guid });
         }
     }
 }

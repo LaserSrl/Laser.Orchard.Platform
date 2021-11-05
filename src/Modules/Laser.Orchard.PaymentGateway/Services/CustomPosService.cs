@@ -15,13 +15,16 @@ namespace Laser.Orchard.PaymentGateway.Services {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CustomPosService : PosServiceBase {
         private readonly IList<ICustomPosProvider> _customPosProviders;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public CustomPosService(IOrchardServices orchardServices,
             IRepository<PaymentRecord> repository,
             IPaymentEventHandler paymentEventHandler,
             IShapeFactory shapeFactory,
-            IList<ICustomPosProvider> customPosProviders) : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
+            IList<ICustomPosProvider> customPosProviders,
+            IWorkContextAccessor workContextAccessor) : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
             _customPosProviders = customPosProviders;
+            _workContextAccessor = workContextAccessor;
         }
 
         public override Type GetPosActionControllerType() {

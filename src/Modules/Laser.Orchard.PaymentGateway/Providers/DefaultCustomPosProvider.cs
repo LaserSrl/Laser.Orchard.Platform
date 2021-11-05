@@ -1,10 +1,8 @@
-﻿using Orchard.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Orchard.Environment.Extensions;
+using Orchard.Localization;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
+    [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public abstract class DefaultCustomPosProvider : ICustomPosProvider {
         public Localizer T { get; set; }
 

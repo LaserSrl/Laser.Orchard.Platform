@@ -1,5 +1,4 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
-using Laser.Orchard.StartupConfig.ViewModels;
 using Newtonsoft.Json;
 using Orchard;
 using Orchard.Data;
