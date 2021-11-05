@@ -110,7 +110,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                                 HttpVerb = HttpVerbs.Put.ToString(),
                                 Payload = putPayload
                             }},
-                            {"Email",part.As<UserPart>().Email}
+                            {"Email",part.As<UserPart>()== null ? body["email_address"].ToString() :  part.As<UserPart>().Email}
                         });
                 } else {
                     _workflowManager.TriggerEvent("UserUpdatedOnMailchimp",
@@ -123,7 +123,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                                 HttpVerb = HttpVerbs.Put.ToString(),
                                 Payload = putPayload
                             }},
-                            {"Email",part.As<UserPart>().Email}
+                            {"Email",part.As<UserPart>()== null ? body["email_address"].ToString() :  part.As<UserPart>().Email}
                         });
                 }
             } else {
