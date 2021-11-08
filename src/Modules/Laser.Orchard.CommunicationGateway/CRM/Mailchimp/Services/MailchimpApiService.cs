@@ -127,20 +127,25 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                         });
                 }
             } else {
-                // deleted member
-                syncronized = TryApiCall(HttpVerbs.Delete, urlApiCall, null, ErrorHandlerDelete, ref result);
-                _workflowManager.TriggerEvent("UserDeletedOnMailchimp",
-                    part,
-                    () => new Dictionary<string, object> {
-                        {"Syncronized", syncronized},
-                        {"APICallEdit", new APICallEdit {
-                            Url = urlApiCall,
-                            RequestType = RequestTypes.Member.ToString(),
-                            HttpVerb = HttpVerbs.Delete.ToString(),
-                            Payload = putPayload
-                        }},
-                        {"Email",part.As<UserPart>().Email}
-                    });
+                // delete the member only if they are being edited
+                if (!isUserCreation) {
+                    syncronized = TryApiCall(HttpVerbs.Delete, urlApiCall, null, ErrorHandlerDelete, ref result);
+                    _workflowManager.TriggerEvent("UserDeletedOnMailchimp",
+                        part,
+                        () => new Dictionary<string, object> {
+                            {"Syncronized", syncronized},
+                            {"APICallEdit", new APICallEdit {
+                                Url = urlApiCall,
+                                RequestType = RequestTypes.Member.ToString(),
+                                HttpVerb = HttpVerbs.Delete.ToString(),
+                                Payload = putPayload
+                            }},
+                            {"Email",part.As<UserPart>().Email}
+                        });
+                } else {
+                    // return operation successfully executed for the next step
+                    syncronized = true;
+                }
             }
             return syncronized;
         }
