@@ -3,15 +3,19 @@ using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.ViewModels;
 using Laser.Orchard.Policy.Services;
 using Newtonsoft.Json.Linq;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Security;
 using Orchard.Tokens;
+using Orchard.Users.Models;
+using Orchard.Workflows.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,14 +31,16 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         private readonly IEncryptionService _encryptionService;
         private readonly IPolicyServices _policyServices;
         private readonly IMailchimpService _mailchimpService;
-
+        private readonly IWorkflowManager _workflowManager;
+        
         public MailchimpApiService(
             ShellSettings shellSettings,
             IOrchardServices orchardServices,
             IEncryptionService encryptionService,
             ITokenizer tokenizer,
             IPolicyServices policyServices,
-            IMailchimpService mailchimpService) {
+            IMailchimpService mailchimpService,
+            IWorkflowManager workflowManager) {
 
             _tokenizer = tokenizer;
             _shellSettings = shellSettings;
@@ -42,9 +48,12 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             _encryptionService = encryptionService;
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
-
+            _workflowManager = workflowManager;
+            
             Logger = NullLogger.Instance;
+
         }
+
 
         public ILogger Logger { get; set; }
 
@@ -55,7 +64,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 { "{list-id}", id}
             };
             string result = "";
-            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.List, urlTokens), null, ref result)) {
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.List, urlTokens), null, ErrorHandlerDefault, ref result)) {
                 audience = ToAudience(JObject.Parse(result));
             }
             return audience;
@@ -64,13 +73,13 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         public List<Audience> Audiences() {
             List<Audience> audiences = new List<Audience>();
             string result = "";
-            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Lists, null), null, ref result)) {
+            if (TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Lists, null), null, ErrorHandlerDefault, ref result)) {
                 audiences = ToAudiences(JObject.Parse(result));
             }
             return audiences;
         }
 
-        public bool TryUpdateSubscription(MailchimpSubscriptionPart part) {
+        public bool TryUpdateSubscription(MailchimpSubscriptionPart part, bool isUserCreation = false) {
             var sub = part.Subscription;
             if (sub.Audience == null || string.IsNullOrWhiteSpace(sub.Audience.Identifier)) return false;
 
@@ -84,62 +93,164 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 { "{member-id}",_mailchimpService.ComputeSubscriberHash(memberEmail) }
             };
             string result = "";
+            var urlApiCall = CalculateUrlByType(RequestTypes.Member, urlTokens);
             if (sub.Subscribed) {
+                // register member
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 JObject body = JObject.Parse(putPayload ?? "{}");
-                syncronized = TryApiCall(HttpVerbs.Put, CalculateUrlByType(RequestTypes.Member, urlTokens), body, ref result);
+                syncronized = TryApiCall(HttpVerbs.Put, urlApiCall, body, ErrorHandlerDefault, ref result);
+                if (isUserCreation) {
+                    _workflowManager.TriggerEvent("UserCreatedOnMailchimp",
+                        part,
+                        () => new Dictionary<string, object> {
+                            {"Syncronized", syncronized},
+                            {"APICallEdit", new APICallEdit {
+                                Url = urlApiCall,
+                                RequestType = RequestTypes.Member.ToString(),
+                                HttpVerb = HttpVerbs.Put.ToString(),
+                                Payload = putPayload
+                            }},
+                            {"Email",part.As<UserPart>()== null ? body["email_address"].ToString() :  part.As<UserPart>().Email}
+                        });
+                } else {
+                    _workflowManager.TriggerEvent("UserUpdatedOnMailchimp",
+                        part,
+                        () => new Dictionary<string, object> {
+                            {"Syncronized", syncronized},
+                            {"APICallEdit", new APICallEdit {
+                                Url = urlApiCall,
+                                RequestType = RequestTypes.Member.ToString(),
+                                HttpVerb = HttpVerbs.Put.ToString(),
+                                Payload = putPayload
+                            }},
+                            {"Email",part.As<UserPart>()== null ? body["email_address"].ToString() :  part.As<UserPart>().Email}
+                        });
+                }
+            } else {
+                // deleted member
+                syncronized = TryApiCall(HttpVerbs.Delete, urlApiCall, null, ErrorHandlerDelete, ref result);
+                _workflowManager.TriggerEvent("UserDeletedOnMailchimp",
+                    part,
+                    () => new Dictionary<string, object> {
+                        {"Syncronized", syncronized},
+                        {"APICallEdit", new APICallEdit {
+                            Url = urlApiCall,
+                            RequestType = RequestTypes.Member.ToString(),
+                            HttpVerb = HttpVerbs.Delete.ToString(),
+                            Payload = putPayload
+                        }},
+                        {"Email",part.As<UserPart>().Email}
+                    });
             }
-            else {
-                syncronized = TryApiCall(HttpVerbs.Delete, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ref result);
-            }
-
             return syncronized;
         }
 
-
         public bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, ref string result) {
+            // assigned correct handler error
+            Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> errorHandler;
+            if (httpVerb == HttpVerbs.Delete) {
+                errorHandler = ErrorHandlerDelete;
+            } else if (httpVerb == HttpVerbs.Get) {
+                errorHandler = ErrorHandlerGetMember;
+            } else {
+                errorHandler = ErrorHandlerDefault;
+            }
+
+            return TryApiCall(httpVerb, url, bodyRequest, errorHandler, ref result);
+        }
+
+        private bool TryApiCall(HttpVerbs httpVerb, string url, JObject bodyRequest, Func<HttpVerbs, string, JObject, HttpResponseMessage, bool> ErrorHandler, ref string result) {
             var requestUrl = GetBaseUrl() + url;
-            var syncronized = false;
             using (var httpClient = new HttpClient()) {
                 SetHeader(httpClient);
                 HttpResponseMessage response;
                 if (httpVerb == HttpVerbs.Put) {
                     response = httpClient.PutAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
-                }
-                else if (httpVerb == HttpVerbs.Post) {
+                } else if (httpVerb == HttpVerbs.Post) {
                     response = httpClient.PostAsJsonAsync(new Uri(requestUrl), bodyRequest).Result;
-                }
-                else if (httpVerb == HttpVerbs.Delete) {
+                } else if (httpVerb == HttpVerbs.Delete) {
                     response = httpClient.DeleteAsync(new Uri(requestUrl)).Result;
-                }
-                else if (httpVerb == HttpVerbs.Get) {
+                } else if (httpVerb == HttpVerbs.Get) {
                     response = httpClient.GetAsync(new Uri(requestUrl), HttpCompletionOption.ResponseContentRead).Result;
-                }
-                else {
+                } else {
                     throw new Exception("Http verb not supported.");
                 }
                 result = response.Content.ReadAsStringAsync().Result;
-                if (!response.IsSuccessStatusCode) {
-                    syncronized = false;
-                    string errorMessage = "Mailchimp: Error while pushing data to mailchimp.\r\n" +
-                                            "VERB: {0}\r\n" +
-                                            "URL: {1}\r\n" +
-                                            "Payload:\r\n{2}\r\n\r\n" +
-                                            "Mailchimp Response:\r\n{3}\r\n";
 
-                    Logger.Error(errorMessage, httpVerb,
-                                                requestUrl,
-                                                bodyRequest,
-                                                response.ReasonPhrase + "\r\n" + result);
-                }
-                else {
-                    syncronized = true;
-                }
 
-                return syncronized;
+                return ErrorHandler(httpVerb, requestUrl, bodyRequest, response);
             }
 
         }
+
+        #region Delegate to handle errors
+        public bool ErrorHandlerDefault(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+            if (!response.IsSuccessStatusCode) {
+                LogError(httpVerb, requestUrl, bodyRequest, response);
+                return false;
+            } else {
+                return true;
+            }
+        }
+        private void LogError(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+            string errorMessage = "Mailchimp: Error while pushing data to mailchimp.\r\n" +
+                                      "VERB: {0}\r\n" +
+                                      "URL: {1}\r\n" +
+                                      "Payload:\r\n{2}\r\n\r\n" +
+                                      "Mailchimp Response:\r\n{3}\r\n";
+
+            Logger.Error(errorMessage, httpVerb,
+                                        requestUrl,
+                                        bodyRequest,
+                                        response.ReasonPhrase + "\r\n" + response.Content.ReadAsStringAsync().Result);
+        }
+
+        private void LogDebug(string Message,HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+            string errorMessage = Message + "\r\n" +
+                                      "VERB: {0}\r\n" +
+                                      "URL: {1}\r\n" +
+                                      "Payload:\r\n{2}\r\n\r\n" +
+                                      "Mailchimp Response:\r\n{3}\r\n";
+
+            Logger.Debug(errorMessage, httpVerb,
+                                        requestUrl,
+                                        bodyRequest,
+                                        response.ReasonPhrase + "\r\n" + response.Content.ReadAsStringAsync().Result);
+        }
+
+        public bool ErrorHandlerDelete(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+            if (!response.IsSuccessStatusCode) {
+                if (response.StatusCode == HttpStatusCode.NotFound) {
+                    // mail deleted not found in mailchimp
+                    LogDebug("Mailchimp: The user's email was not found.", httpVerb, requestUrl, bodyRequest, response);
+                    return true;
+                } else if (response.StatusCode == HttpStatusCode.MethodNotAllowed) {
+                    // mail is in the archive of mailchimp
+                    LogDebug("Mailchimp: The user has an archived status.", httpVerb, requestUrl, bodyRequest, response);
+                    return true;
+                }
+                LogError(httpVerb, requestUrl, bodyRequest, response);
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        public bool ErrorHandlerGetMember(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
+            if (!response.IsSuccessStatusCode) {
+                LogError(httpVerb, requestUrl, bodyRequest, response);
+                return false;
+            } else {
+                var resultJson = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+                if(resultJson["status"] != null && resultJson["status"].ToString().ToLower() == StatusResponse.Archived.ToString().ToLower()) {                 
+                    LogDebug("Mailchimp: The user has an archived status.", httpVerb, requestUrl, bodyRequest, response);
+                    return false;
+                }
+                return true;
+            }
+        }
+        #endregion 
 
         public List<RequestTypeInfo> GetRequestTypes() {
             return new List<RequestTypeInfo> {
@@ -206,14 +317,22 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             var requestUrl = "";
             try {
                 requestUrl += GetRequestTypes().First(x => x.Type == urlType).UrlTemplate;
-            }
-            catch {
+            } catch {
                 throw new Exception("Request Type missing.");
             }
             foreach (var token in urlTokens) {
                 requestUrl = requestUrl.Replace(token.Key, token.Value);
             }
             return requestUrl;
+        }
+
+        public bool IsUserRegistered(MailchimpSubscriptionPart part) {
+            string result = "";
+            var urlTokens = new Dictionary<string, string> {
+                        { "{list-id}", part.Subscription.Audience.Identifier},
+                        { "{member-id}", _mailchimpService.ComputeSubscriberHash(part.ContentItem.As<UserPart>() != null ? part.ContentItem.As<UserPart>().Email : "") }
+                    };
+            return TryApiCall(HttpVerbs.Get, CalculateUrlByType(RequestTypes.Member, urlTokens), null, ErrorHandlerGetMember, ref result);
         }
     }
 }
