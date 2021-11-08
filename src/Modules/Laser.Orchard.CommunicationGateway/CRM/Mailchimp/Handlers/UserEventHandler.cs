@@ -61,9 +61,13 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                     }
                 }
                 else {
-                    if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
-                        _notifier.Information(T("Nice to meet you! Your subscription has been accepted."));
+                    // The message should only be displayed if the checkbox has been selected
+                    if (part.Subscription.Subscribed) {
+                        if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
+                            _notifier.Information(T("Nice to meet you! Your subscription has been accepted."));
+                        }
                     }
+
                 }
             }
         }
