@@ -108,7 +108,10 @@ namespace Laser.Orchard.TemplateManagement.Activities {
             ContentItem content = null;
             if (workflowContext.Content != null) {
                 contentVersion = workflowContext.Content.ContentItem.Version;
-                content = _orchardServices.ContentManager.GetAllVersions(workflowContext.Content.Id).Single(w => w.Version == contentVersion); // devo ricalcolare il content altrimenti MediaParts (e forse tutti i lazy fields!) è null!
+                content = _orchardServices.ContentManager
+                    .GetAllVersions(workflowContext.Content.Id)
+                    .FirstOrDefault(w => w.Version == contentVersion); // devo ricalcolare il content altrimenti MediaParts (e forse tutti i lazy fields!) è null!
+                content = content ?? workflowContext.Content.ContentItem;
             }
             dynamic contentModel = new {
                 ContentItem = content,

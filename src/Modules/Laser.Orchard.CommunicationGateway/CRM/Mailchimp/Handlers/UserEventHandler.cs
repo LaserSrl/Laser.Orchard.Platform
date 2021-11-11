@@ -55,15 +55,19 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
                     _notifier.Add(NotifyType.Warning, T("Wait... it seems you have not accepted all our required policies. Your account has been verified, but your email have not been subscribed. Please, retry after having accepted our policies."));
                     return;
                 }
-                if (!_apiService.TryUpdateSubscription(part)) {
+                if (!_apiService.TryUpdateSubscription(part,true)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
                         _notifier.Error(T("Oops! We are currently experienced a problem during your email subscription. Please, retry later."));
                     }
                 }
                 else {
-                    if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
-                        _notifier.Information(T("Nice to meet you! Your subscription has been accepted."));
+                    // The message should only be displayed if the checkbox has been selected
+                    if (part.Subscription.Subscribed) {
+                        if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {
+                            _notifier.Information(T("Nice to meet you! Your subscription has been accepted."));
+                        }
                     }
+
                 }
             }
         }

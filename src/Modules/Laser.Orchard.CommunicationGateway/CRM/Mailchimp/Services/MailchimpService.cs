@@ -2,6 +2,7 @@
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Services;
+using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
@@ -117,6 +118,26 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                 answers = answers.Union(currentAnswers).ToList(); //Merge new answers
             }
             return answers;
+        }
+
+        public string TryReplaceTokenInUrl(string url, JObject payload) {
+            // verified if id token is present in url
+            if (url.Contains("{list-id}")) {
+                var mailChimpSetting = _orchardServices.WorkContext.CurrentSite.As<MailchimpSiteSettings>();
+                if(mailChimpSetting != null && !string.IsNullOrWhiteSpace(mailChimpSetting.DefaultAudience)) {
+                    // replaced token
+                    url = url.Replace("{list-id}", mailChimpSetting.DefaultAudience);
+                }
+            }
+
+            if (url.Contains("{member-id}")) {
+                var mail = payload["email_address"];
+                if (mail != null && !string.IsNullOrWhiteSpace(mail.ToString())) {
+                    // replaced token
+                    url = url.Replace("{member-id}", ComputeSubscriberHash(mail.ToString()));
+                }
+            }
+            return url;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
+using Newtonsoft.Json.Linq;
 using Orchard;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
@@ -7,6 +8,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         string CryptApiKey(string apikey);
         string ComputeSubscriberHash(string input);
         void CheckAcceptedPolicy(MailchimpSubscriptionPart part);
+        string TryReplaceTokenInUrl(string url, JObject payload);
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -52,7 +53,11 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 .Token("TenantTopLevel", 
                     T("Top Level for Tenant"),
                     T("A string intended to be used to start URLs. It resolves to either \"/\" if no prefix is set or \"/prefix/\" if there is a prefix for the tenant. If there is an application path that is correctly prepended."), "Text")
+                
                 ;
+       
+            context.For("CurrentCulture", T("Current Culture"), T("The current culture"))
+              .Token("Culture", T("Culture"), T("The current culture"), "Culture");
         }
 
         public void Evaluate(EvaluateContext context) {
@@ -101,6 +106,10 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                     }
                 }
             }
+
+            context.For<CultureInfo>("CurrentCulture", CultureInfo.GetCultureInfo(_workContextAccessor.GetContext().CurrentCulture))
+                .Token("Culture", cultureInfo => cultureInfo)
+                .Chain("Culture", "Culture", cultureInfo => cultureInfo);
         }
         // same as Orchard.Core.Settings.Tokens.SettingsTokens
         private static ContentField LookupField(IContent content, string fieldName) {
