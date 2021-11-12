@@ -96,3 +96,7 @@ Features:
 		Description: Manage wrapper for content and widget
 		Category: Content
 		Dependencies: Laser.Orchard.StartupConfig, Orchard.Widgets.ControlWrapper, Contents.ControlWrapper
+    Laser.Orchard.ShortCodes:
+        Name: Orchard Short Codes
+        Description: Evaluates Short Codes in a body.
+        Category: Content
