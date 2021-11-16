@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
 using Orchard;
+using Orchard.Environment.Extensions;
 using Orchard.Mvc.Filters;
 using Orchard.UI.Admin;
 using Orchard.UI.Resources;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Filters {
+    [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
     public class MailchimpFilter : FilterProvider, IActionFilter, IResultFilter {
         private readonly IResourceManager _resourceManager;
         private readonly IWorkContextAccessor _workContext;
