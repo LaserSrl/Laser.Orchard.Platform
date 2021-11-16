@@ -17,5 +17,6 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
 
         List<RequestTypeInfo> GetRequestTypes();
         bool IsUserRegistered(MailchimpSubscriptionPart part);
+        bool IsNewSubscription { get; }
     }
 }

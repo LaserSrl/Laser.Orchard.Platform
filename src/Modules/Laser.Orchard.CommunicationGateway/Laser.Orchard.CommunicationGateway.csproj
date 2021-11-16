@@ -128,6 +128,7 @@
     <Compile Include="CRM\Mailchimp\Activities\UserCreatedOnMailchimp.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSiteSettingsDriver.cs" />
     <Compile Include="CRM\Mailchimp\Drivers\MailchimpSubscriptionPartDriver.cs" />
+    <Compile Include="CRM\Mailchimp\Filters\MailchimpFilter.cs" />
     <Compile Include="CRM\Mailchimp\Forms\APICallForm.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSiteSettingsHandler.cs" />
     <Compile Include="CRM\Mailchimp\Handlers\MailchimpSubscriptionPartHandler.cs" />
