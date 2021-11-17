@@ -32,7 +32,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
         private readonly IPolicyServices _policyServices;
         private readonly IMailchimpService _mailchimpService;
         private readonly IWorkflowManager _workflowManager;
-        
+        private readonly IWorkContextAccessor _workContextAccessor;
+
         public MailchimpApiService(
             ShellSettings shellSettings,
             IOrchardServices orchardServices,
@@ -40,7 +41,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             ITokenizer tokenizer,
             IPolicyServices policyServices,
             IMailchimpService mailchimpService,
-            IWorkflowManager workflowManager) {
+            IWorkflowManager workflowManager,
+            IWorkContextAccessor workContextAccessor) {
 
             _tokenizer = tokenizer;
             _shellSettings = shellSettings;
@@ -49,13 +51,17 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
             _policyServices = policyServices;
             _mailchimpService = mailchimpService;
             _workflowManager = workflowManager;
+            _workContextAccessor = workContextAccessor;
             
             Logger = NullLogger.Instance;
-
         }
 
 
         public ILogger Logger { get; set; }
+
+        public bool IsNewSubscription {
+            get;
+            private set; }
 
         public Audience Audience(string id) {
             Audience audience = new Audience();
@@ -126,6 +132,8 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
                             {"Email",part.As<UserPart>()== null ? body["email_address"].ToString() :  part.As<UserPart>().Email}
                         });
                 }
+                IsNewSubscription = syncronized;
+                _workContextAccessor.GetContext().HttpContext.Items["newsletterSubscription"] = syncronized;
             } else {
                 // delete the member only if they are being edited
                 if (!isUserCreation) {
