@@ -538,12 +538,14 @@
     <Compile Include="Settings\IdentityPartOnEveryTypeDefinitionHooks.cs" />
     <Compile Include="ShapeTableProviders\TenantShapeBindingStrategy.cs" />
     <Compile Include="ShortCodes\Abstractions\IShortCodeProvider.cs" />
+    <Compile Include="ShortCodes\Controllers\ContentShortCodeAdminController.cs" />
     <Compile Include="ShortCodes\DescribeContext.cs" />
     <Compile Include="ShortCodes\Descriptor.cs" />
+    <Compile Include="ShortCodes\Drivers\ShortCodeForBodyPartDriver.cs" />
     <Compile Include="ShortCodes\EvaluateContext.cs" />
     <Compile Include="ShortCodes\Filters\ShortCodesFilter.cs" />
     <Compile Include="ShortCodes\Providers\ContentShortCodeProvider.cs" />
-    <Compile Include="ShortCodes\Providers\EmptyShortCodeProvider.cs" />
+    <Compile Include="ShortCodes\ViewModels\ShortCodesEditor.cs" />
     <Compile Include="TaxonomiesExtensions\Drivers\TaxonomyExtensionPartDriver.cs" />
     <Compile Include="Controllers\UsersGroupsSettingsController.cs" />
     <Compile Include="Drivers\UsersGroupsDriver.cs" />
@@ -760,6 +762,8 @@
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
     <Content Include="Views\Widget.ControlWrapper.cshtml" />
+    <Content Include="Views\EditorTemplates\ShortCodes\Parts\ShortCodes_Edit.cshtml" />
+    <Content Include="Views\ShortCodes_ContentPicker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -771,7 +775,6 @@
   <ItemGroup>
     <Folder Include="ContentPickerContentCreation\Models\" />
     <Folder Include="ContentPickerContentCreation\Style\" />
-    <Folder Include="ShortCodes\Contextes\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

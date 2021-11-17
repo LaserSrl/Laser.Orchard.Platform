@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Orchard.DisplayManagement;
+using Orchard.Localization;
+using System.Web.Routing;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
@@ -17,11 +19,17 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
         public ContentShortCodeProvider(IContentManager contentManager, IShapeDisplay shapeDisplay) {
             _contentManager = contentManager;
             _shapeDisplay = shapeDisplay;
-            _descriptor = new Descriptor {
-                Signature = "content"
-            };
+            T = NullLocalizer.Instance;
+            _descriptor = new Descriptor("ContentPicker",
+                "content",
+                T("Content"),
+                T("Adds a content as part of the text"),
+                "[content id={0}]",
+                "fa  fa-file-text",
+                new Descriptor.EditorPage { ActionName = "Index", ControllerName = "ContentShortCodeAdmin", RouteValues = new RouteValueDictionary(new { area = "Laser.Orchard.StartupConfig" }) });
         }
 
+        public Localizer T { get; set; }
         public Descriptor Describe() {
             return _descriptor;
         }

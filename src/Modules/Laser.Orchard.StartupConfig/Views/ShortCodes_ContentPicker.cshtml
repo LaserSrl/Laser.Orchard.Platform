@@ -1,0 +1,75 @@
+﻿@{
+    // these need to be in the head because MediaBrowser.js defines a callback that the thumbnail images call when they load,
+    // which could happen as soon as they render.
+    Style.Require("jQueryUI_Orchard").AtHead();
+    Script.Require("jQueryUI_Tabs").AtHead();
+
+    SetMeta("IE=edge,chrome=1", httpEquiv: "X-UA-Compatible");
+    Style.Include("~/themes/theadmin/styles/site.css");
+    Style.Include("~/themes/theadmin/styles/ie.css").UseCondition("gte IE 9").SetAttribute("media", "screen, projection");
+    Style.Include("~/themes/theadmin/styles/ie8.css").UseCondition("IE 8").SetAttribute("media", "screen, projection");
+    Style.Include("~/themes/theadmin/styles/ie7.css").UseCondition("lte IE 7").SetAttribute("media", "screen, projection");
+
+    Script.Include("~/Modules/Orchard.ContentPicker/Scripts/ContentPicker.js");
+    Style.Include("~/Modules/Orchard.ContentPicker/Styles/ContentPicker.css");
+
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@T("Select Content Item")</title>
+    @Display.Metas()
+    @Display.HeadScripts()
+    @Display.HeadLinks()
+    @Display.StyleSheetLinks()
+</head>
+<body id="orchard-content-picker">
+
+    <script type="text/javascript">
+        $.extend({
+            contentPicker: {}
+        });
+
+        $.contentPicker.cannotPerformMsg="@T("Cannot perform requested operation")";
+        $.contentPicker.accessDeniedMsg="@T("Authentication timed-out: please log-on again")";
+        $.contentPicker.logonUrl="@Url.Action("LogOn", new { Controller = "Account", Area = "Orchard.Users" })";
+    </script>
+
+    @Display.ContentPickerNavigation()
+
+    <div class="content-picker-tab">
+        @Display(Model.Tab)
+    </div>
+
+    @using (Script.Foot()) {
+        <script type="text/javascript">
+            //<![CDATA[
+            $(".select").on("click", function () {
+                try {
+                    var container = $(this).closest("[data-id]");
+                    var result = {
+                        id: container.data("id"),
+                        displayText: container.data("display-text"),
+                        editLink: container.data("edit-link"),
+                        editUrl: container.data("edit-url"),
+                        adminUrl: container.data("admin-url"),
+                        displayLink: container.data("display-link"),
+                        published: container.data("published"),
+                    };
+                    if (parent.$.colorbox) {
+                        parent.$.colorbox.selectedData = "[content id=" + result.id + "]";
+                        parent.$.colorbox.close();
+                    }
+                } catch (ex) {
+                    alert($.contentPicker.cannotPerformMsg);
+                    alert(ex);
+                }
+                window.close();
+            });
+//]]>
+        </script>
+    }
+
+    @Display.FootScripts()
+</body>
+</html>
