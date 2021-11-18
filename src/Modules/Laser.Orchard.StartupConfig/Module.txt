@@ -99,4 +99,5 @@ Features:
     Laser.Orchard.ShortCodes:
         Name: Orchard Short Codes
         Description: Evaluates Short Codes in a body.
-        Category: Content
+        Dependencies: Contents, Navigation
+		Category: Content

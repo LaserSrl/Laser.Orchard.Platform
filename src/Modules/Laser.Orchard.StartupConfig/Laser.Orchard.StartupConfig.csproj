@@ -190,6 +190,7 @@
     <Content Include="Views\DefinitionTemplates\FrontendEditorConfigurationSettings.cshtml" />
     <Content Include="Views\DateTimeEditorForm.cshtml" />
     <Content Include="Views\Content.ControlWrapper.cshtml" />
+    <Content Include="Views\DefinitionTemplates\ShortCodes\ContentShortCodeSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -545,6 +546,8 @@
     <Compile Include="ShortCodes\EvaluateContext.cs" />
     <Compile Include="ShortCodes\Filters\ShortCodesFilter.cs" />
     <Compile Include="ShortCodes\Providers\ContentShortCodeProvider.cs" />
+    <Compile Include="ShortCodes\Settings\ContentShortCodeSettingsHooks.cs" />
+    <Compile Include="ShortCodes\Settings\Models\ContentShortCodeSettings.cs" />
     <Compile Include="ShortCodes\ViewModels\ShortCodesEditor.cs" />
     <Compile Include="TaxonomiesExtensions\Drivers\TaxonomyExtensionPartDriver.cs" />
     <Compile Include="Controllers\UsersGroupsSettingsController.cs" />

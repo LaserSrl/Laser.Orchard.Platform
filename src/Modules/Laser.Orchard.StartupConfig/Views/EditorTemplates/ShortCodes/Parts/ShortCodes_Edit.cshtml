@@ -10,14 +10,16 @@
         provider.Editor.RouteValues.Add("type", Model.ContentType);
         if (Model.Part != null) {
             provider.Editor.RouteValues.Add("part", Model.Part.PartDefinition.Name);
+            provider.Editor.RouteValues.Add("hostId", Model.Part.Id);
         }
         if (Model.Field != null) {
             provider.Editor.RouteValues.Add("field", Model.Field.FieldDefinition.Name);
         }
+
         <a id="@Model.ElementId-@provider.Name"
+           href="@Html.Raw(Url.Action(provider.Editor.ActionName,provider.Editor.ControllerName, provider.Editor.RouteValues))"
            data-type="shortcode-button"
            data-shortcode-format="@provider.ShortCodeFormat"
-           data-add-url="@HttpUtility.JavaScriptStringEncode(Url.Action(provider.Editor.ActionName,provider.Editor.ControllerName, provider.Editor.RouteValues))"
            data-flavor="@Model.ElementFlavor"
            data-element-id="@Model.ElementId"
            class="btn btn-app shortcode shortcode-@provider.Name">
@@ -30,10 +32,11 @@
 @using (Script.Foot()) {
     <script type="text/javascript">
         $('*[data-type="shortcode-button"]').click(function (e) {
+            e.preventDefault();
             var shortcode = $(this);
             var flavor = shortcode.data("flavor");
             var shortcodeFormat = shortcode.data("shortcode-format");
-            var addUrl = shortcode.data("add-url");
+            var addUrl = shortcode.attr('href');
             var elementId = shortcode.data("element-id");
             if (addUrl != null) {
                 $.colorbox({

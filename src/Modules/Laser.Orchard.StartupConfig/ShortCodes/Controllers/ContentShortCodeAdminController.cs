@@ -12,17 +12,19 @@ using Orchard.Localization;
 using Orchard.Localization.Services;
 using Orchard.Mvc;
 using Orchard.Settings;
-using Orchard.Themes;
 using Orchard.UI.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Orchard.Themes;
+using Orchard.UI.Notify;
+using Laser.Orchard.StartupConfig.ShortCodes.Settings.Models;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
-    public class ContentShortCodeAdminController : Controller, IUpdateModel {
+    public class ContentShortCodeAdminController : Controller {
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly ISiteService _siteService;
         private readonly ICultureManager _cultureManager;
@@ -39,14 +41,40 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
             _siteService = siteService;
             _cultureManager = cultureManager;
             _cultureFilter = cultureFilter;
+            T = NullLocalizer.Instance;
         }
+        public Localizer T { get; set; }
 
         public IOrchardServices Services { get; private set; }
+
         [Themed(false)]
-        public ActionResult Index(ListContentsViewModel model, PagerParameters pagerParameters, string part, string field, string type) {
+        public ActionResult Index(ListContentsViewModel model, PagerParameters pagerParameters, string part, string field, string type, int hostId) {
             // TODO: Check Permission
+            if (hostId > 0 && !Services.Authorizer.Authorize(Permissions.EditContent, Services.ContentManager.Get(hostId))) {
+                Services.Notifier.Add(NotifyType.Error, T("Cannot add shortcode."));
+                return new HttpUnauthorizedResult();
+            }
             // TODO: if the picker is loaded for a specific field, apply custom settings
+            ContentShortCodeSettings settings;
             var types = "";
+            if (!string.IsNullOrWhiteSpace(part) && string.IsNullOrWhiteSpace(field)) {
+                ContentTypePartDefinition defintion = _contentDefinitionManager.GetTypeDefinition(type).Parts.FirstOrDefault(x => x.PartDefinition.Name == part);
+                if (defintion != null) {
+                    settings = defintion.Settings.GetModel<ContentShortCodeSettings>();
+                    types = settings.DisplayedContentTypes;
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(part) && !string.IsNullOrWhiteSpace(field)) {
+                ContentPartFieldDefinition defintion = _contentDefinitionManager.GetTypeDefinition(type)
+                    .Parts.Where(x => x.PartDefinition.Name == part)
+                    .SelectMany(x => x.PartDefinition.Fields)
+                    .FirstOrDefault(x => x.Name == field);
+
+                settings = defintion.Settings.GetModel<ContentShortCodeSettings>();
+                types = settings.DisplayedContentTypes;
+            }
+
+
 
             IEnumerable<ContentTypeDefinition> contentTypes;
 
@@ -123,17 +151,6 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
             return new ShapeResult(this, Services.New.ShortCodes_ContentPicker().Tab(tab));
         }
 
-        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) {
-            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
-        }
-
-        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage) {
-            ModelState.AddModelError(key, errorMessage.ToString());
-        }
-
-        public void AddModelError(string key, LocalizedString errorMessage) {
-            ModelState.AddModelError(key, errorMessage.ToString());
-        }
         private IEnumerable<ContentTypeDefinition> GetListableTypes(bool andContainable) {
             return _contentDefinitionManager.ListTypeDefinitions().Where(ctd => ctd.Settings.GetModel<ContentTypeSettings>().Listable && (!andContainable || ctd.Parts.Any(p => p.PartDefinition.Name == "ContainablePart")));
         }

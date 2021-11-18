@@ -17,7 +17,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes {
                    string buttonIconClass="",
                    EditorPage editor = null
             ) {
-            Name = Name;
+            Name = name;
             ButtonText = buttonText;
             Description = description;
             Signature = signature;
