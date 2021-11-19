@@ -1,0 +1,14 @@
+﻿@model Laser.Orchard.StartupConfig.ShortCodes.Settings.Models.ContentShortCodeSettings
+
+<fieldset>
+    <h5>@T("Shortcodes settings")</h5>
+    <div>
+        @Html.CheckBoxFor(m => m.Enabled)
+        <label for="@Html.FieldIdFor(m => m.Enabled)" class="forcheckbox">@T("Enabled")</label>
+    </div>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.DisplayedContentTypes)">@T("Content Types and Parts")</label>
+        @Html.TextBoxFor(m => m.DisplayedContentTypes)
+        <span class="hint">@T("A comma separated value of all the content types or content parts to display.")</span>
+    </div>
+</fieldset>

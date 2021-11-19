@@ -1,0 +1,52 @@
+﻿@{
+    // these need to be in the head because MediaBrowser.js defines a callback that the thumbnail images call when they load,
+    // which could happen as soon as they render.
+    Style.Require("jQueryUI_Orchard").AtHead();
+    Script.Require("jQueryUI_Tabs").AtHead();
+    Script.Include("~/Modules/Orchard.ContentPicker/Scripts/ContentPicker.js").AtHead();
+    Style.Include("~/Modules/Orchard.ContentPicker/Styles/ContentPicker.css").AtHead();
+
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $.extend({
+            contentPicker: {}
+        });
+
+        $.contentPicker.cannotPerformMsg="@T("Cannot perform requested operation")";
+        $.contentPicker.accessDeniedMsg="@T("Authentication timed-out: please log-on again")";
+        $.contentPicker.logonUrl="@Url.Action("LogOn", new { Controller = "Account", Area = "Orchard.Users" })";
+    </script>
+}
+<div class="content-picker-tab">
+    @Display(Model.Tab)
+</div>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        //<![CDATA[
+        $(".select").on("click", function () {
+            try {
+                var container = $(this).closest("[data-id]");
+                var result = {
+                    id: container.data("id"),
+                    displayText: container.data("display-text"),
+                    editLink: container.data("edit-link"),
+                    editUrl: container.data("edit-url"),
+                    adminUrl: container.data("admin-url"),
+                    displayLink: container.data("display-link"),
+                    published: container.data("published"),
+                };
+                if (parent.$.colorbox) {
+                    parent.$.colorbox.selectedData = "[content id=" + result.id + "]";
+                    parent.$.colorbox.close();
+                }
+            } catch (ex) {
+                alert($.contentPicker.cannotPerformMsg);
+                alert(ex);
+            }
+            window.close();
+        });
+        //]]>
+    </script>
+}
