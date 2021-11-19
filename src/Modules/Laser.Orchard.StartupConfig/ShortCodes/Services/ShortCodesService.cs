@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Services {
-    public class ShortCodesServices : IShortCodesServices {
+    public class ShortCodesService : IShortCodesService {
         private readonly IEnumerable<IShortCodeProvider> _providers;
         private readonly DescribeContext _emptyContext;
-        public ShortCodesServices(IEnumerable<IShortCodeProvider> providers) {
+        public ShortCodesService(IEnumerable<IShortCodeProvider> providers) {
             _providers = providers;
             _emptyContext = new DescribeContext();
         }

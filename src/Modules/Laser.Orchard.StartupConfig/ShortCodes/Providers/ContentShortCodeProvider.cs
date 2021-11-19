@@ -12,6 +12,7 @@ using System.Web.Routing;
 using Laser.Orchard.StartupConfig.ShortCodes.Settings.Models;
 using Orchard.ContentManagement.MetaData.Models;
 using Orchard.ContentManagement.MetaData;
+using Orchard;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
@@ -20,7 +21,8 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
         private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IShapeDisplay _shapeDisplay;
         private Descriptor _descriptor;
-        public ContentShortCodeProvider(IContentManager contentManager, IContentDefinitionManager contentDefinitionManager, IShapeDisplay shapeDisplay) {
+        public ContentShortCodeProvider(IOrchardServices orchardServices, IContentManager contentManager, IContentDefinitionManager contentDefinitionManager, IShapeDisplay shapeDisplay) {
+            OrchardServices = orchardServices;
             _contentManager = contentManager;
             _contentDefinitionManager = contentDefinitionManager;
             _shapeDisplay = shapeDisplay;
@@ -36,6 +38,8 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
         }
 
         public Localizer T { get; set; }
+        public IOrchardServices OrchardServices { get; }
+
         public Descriptor Describe(DescribeContext context) {
             if (!string.IsNullOrWhiteSpace(context.Host.ContentType) && context.Host.Part != null) {
                 ContentShortCodeSettings settings;
@@ -63,9 +67,8 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
                 var content = _contentManager.Get(contentId);
                 if (content != null) {
                     var shape = _contentManager.BuildDisplay(content);
-                    //TODO: Manage Alternates of children shapes too
-                    //TODO: _ContentShortCode alternates should be more specific (placed at the end of the list)
-                    result = _shapeDisplay.Display(shape.ShortCoded());
+                    shape.ShortCoded = true;
+                    result = _shapeDisplay.Display(shape);
                 }
             }
             return result;

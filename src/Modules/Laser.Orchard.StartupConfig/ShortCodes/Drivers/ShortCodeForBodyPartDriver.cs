@@ -13,9 +13,9 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Drivers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ShortCodeForBodyPartDriver : ContentPartDriver<BodyPart> {
         private const string TEMPLATE_NAME = "ShortCodes/Parts/ShortCodes_Edit";
-        private readonly IShortCodesServices _shortcodesServices;
+        private readonly IShortCodesService _shortcodesServices;
 
-        public ShortCodeForBodyPartDriver(IShortCodesServices shortcodesServices) {
+        public ShortCodeForBodyPartDriver(IShortCodesService shortcodesServices) {
             _shortcodesServices = shortcodesServices;
         }
 

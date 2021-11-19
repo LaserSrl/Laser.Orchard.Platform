@@ -12,9 +12,9 @@ using Orchard.Environment.Extensions;
 namespace Laser.Orchard.StartupConfig.ShortCodes.Filters {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ShortCodesFilter : IHtmlFilter {
-        private readonly IShortCodesServices _shortcodesServices;
+        private readonly IShortCodesService _shortcodesServices;
 
-        public ShortCodesFilter(IShortCodesServices shortcodesServices) {
+        public ShortCodesFilter(IShortCodesService shortcodesServices) {
             Logger = NullLogger.Instance;
             _shortcodesServices = shortcodesServices;
         }

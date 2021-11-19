@@ -547,8 +547,8 @@
     <Compile Include="ShortCodes\Abstractions\EvaluateContext.cs" />
     <Compile Include="ShortCodes\Filters\ShortCodesFilter.cs" />
     <Compile Include="ShortCodes\Providers\ContentShortCodeProvider.cs" />
-    <Compile Include="ShortCodes\Abstractions\IShortCodesServices.cs" />
-    <Compile Include="ShortCodes\Services\ShortCodesServices.cs" />
+    <Compile Include="ShortCodes\Abstractions\IShortCodesService.cs" />
+    <Compile Include="ShortCodes\Services\ShortCodesService.cs" />
     <Compile Include="ShortCodes\Settings\ContentShortCodeSettingsHooks.cs" />
     <Compile Include="ShortCodes\Settings\Models\ContentShortCodeSettings.cs" />
     <Compile Include="ShortCodes\ViewModels\ShortCodesEditor.cs" />
