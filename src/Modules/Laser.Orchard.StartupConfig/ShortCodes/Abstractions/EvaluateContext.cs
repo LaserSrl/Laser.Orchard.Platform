@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Laser.Orchard.StartupConfig.ShortCodes {
+namespace Laser.Orchard.StartupConfig.ShortCodes.Abstractions {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class EvaluateContext {
         public string SourceText { get; set; }

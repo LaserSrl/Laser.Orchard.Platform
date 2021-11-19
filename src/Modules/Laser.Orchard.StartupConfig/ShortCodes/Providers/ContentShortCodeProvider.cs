@@ -9,15 +9,20 @@ using System.Web;
 using Orchard.DisplayManagement;
 using Orchard.Localization;
 using System.Web.Routing;
+using Laser.Orchard.StartupConfig.ShortCodes.Settings.Models;
+using Orchard.ContentManagement.MetaData.Models;
+using Orchard.ContentManagement.MetaData;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ContentShortCodeProvider : IShortCodeProvider {
         private readonly IContentManager _contentManager;
+        private readonly IContentDefinitionManager _contentDefinitionManager;
         private readonly IShapeDisplay _shapeDisplay;
         private Descriptor _descriptor;
-        public ContentShortCodeProvider(IContentManager contentManager, IShapeDisplay shapeDisplay) {
+        public ContentShortCodeProvider(IContentManager contentManager, IContentDefinitionManager contentDefinitionManager, IShapeDisplay shapeDisplay) {
             _contentManager = contentManager;
+            _contentDefinitionManager = contentDefinitionManager;
             _shapeDisplay = shapeDisplay;
             T = NullLocalizer.Instance;
             _descriptor = new Descriptor("ContentPicker",
@@ -25,12 +30,21 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
                 T("Content"),
                 T("Adds a content as part of the text"),
                 "[content id={0}]",
-                "fa  fa-file-text",
+                true,
+                "fa fa-file-text",
                 new Descriptor.EditorPage { ActionName = "Index", ControllerName = "ContentShortCodeAdmin", RouteValues = new RouteValueDictionary(new { area = "Laser.Orchard.StartupConfig" }) });
         }
 
         public Localizer T { get; set; }
-        public Descriptor Describe() {
+        public Descriptor Describe(DescribeContext context) {
+            if (!string.IsNullOrWhiteSpace(context.Host.ContentType) && context.Host.Part != null) {
+                ContentShortCodeSettings settings;
+                ContentTypePartDefinition defintion = _contentDefinitionManager.GetTypeDefinition(context.Host.ContentType).Parts.FirstOrDefault(x => x.PartDefinition.Name == context.Host.Part.PartDefinition.Name);
+                if (defintion != null) {
+                    settings = defintion.Settings.GetModel<ContentShortCodeSettings>();
+                    _descriptor.Enabled = settings.Enabled;
+                }
+            }
             return _descriptor;
         }
 
@@ -51,8 +65,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
                     var shape = _contentManager.BuildDisplay(content);
                     //TODO: Manage Alternates of children shapes too
                     //TODO: _ContentShortCode alternates should be more specific (placed at the end of the list)
-                    shape.Metadata.Alternates.Add(content.ContentType + "_ContentShortCode");
-                    result = _shapeDisplay.Display(shape);
+                    result = _shapeDisplay.Display(shape.ShortCoded());
                 }
             }
             return result;

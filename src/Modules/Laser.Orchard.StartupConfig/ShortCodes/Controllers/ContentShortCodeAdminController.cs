@@ -21,11 +21,14 @@ using System.Web.Mvc;
 using Orchard.Themes;
 using Orchard.UI.Notify;
 using Laser.Orchard.StartupConfig.ShortCodes.Settings.Models;
+using System.Web.Routing;
+using Orchard.UI.Admin;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ContentShortCodeAdminController : Controller {
         private readonly IContentDefinitionManager _contentDefinitionManager;
+        private readonly INavigationManager _navigationManager;
         private readonly ISiteService _siteService;
         private readonly ICultureManager _cultureManager;
         private readonly ICultureFilter _cultureFilter;
@@ -33,11 +36,13 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
         public ContentShortCodeAdminController(
                         IOrchardServices orchardServices,
                         IContentDefinitionManager contentDefinitionManager,
+                        INavigationManager navigationManager,
                         ISiteService siteService,
                         ICultureManager cultureManager,
                         ICultureFilter cultureFilter) {
             Services = orchardServices;
             _contentDefinitionManager = contentDefinitionManager;
+            _navigationManager = navigationManager;
             _siteService = siteService;
             _cultureManager = cultureManager;
             _cultureFilter = cultureFilter;
@@ -47,14 +52,44 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Controllers {
 
         public IOrchardServices Services { get; private set; }
 
-        [Themed(false)]
+        [Admin]
         public ActionResult Index(ListContentsViewModel model, PagerParameters pagerParameters, string part, string field, string type, int hostId) {
-            // TODO: Check Permission
+            // Check Permissions to Edit the content hosting shortcodes
             if (hostId > 0 && !Services.Authorizer.Authorize(Permissions.EditContent, Services.ContentManager.Get(hostId))) {
                 Services.Notifier.Add(NotifyType.Error, T("Cannot add shortcode."));
                 return new HttpUnauthorizedResult();
             }
-            // TODO: if the picker is loaded for a specific field, apply custom settings
+
+            var menuItems = _navigationManager.BuildMenu("content-picker").ToList();
+            var contentPickerMenuItem = menuItems.FirstOrDefault();
+            if (contentPickerMenuItem == null) {
+                return HttpNotFound();
+            }
+
+            if (contentPickerMenuItem.Items.All(x => x.Text.TextHint != "Recent Content")) {
+                // the default tab should not be displayed, redirect to the next one
+                var root = menuItems.FirstOrDefault();
+                if (root == null) {
+                    return HttpNotFound();
+                }
+
+                var firstChild = root.Items.First();
+                if (firstChild == null) {
+                    return HttpNotFound();
+                }
+
+                var routeData = new RouteValueDictionary(firstChild.RouteValues);
+                var queryString = Request.QueryString;
+                foreach (var key in queryString.AllKeys) {
+                    if (!String.IsNullOrEmpty(key)) {
+                        routeData[key] = queryString[key];
+                    }
+                }
+
+                return RedirectToRoute(routeData);
+            }
+
+            // Filters the contents by ContentType or filters at least "Listable" content types
             ContentShortCodeSettings settings;
             var types = "";
             if (!string.IsNullOrWhiteSpace(part) && string.IsNullOrWhiteSpace(field)) {

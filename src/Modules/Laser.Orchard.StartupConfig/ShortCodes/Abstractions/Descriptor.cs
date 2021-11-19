@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Routing;
 
-namespace Laser.Orchard.StartupConfig.ShortCodes {
+namespace Laser.Orchard.StartupConfig.ShortCodes.Abstractions {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class Descriptor {
         public Descriptor(string name,
@@ -14,7 +14,8 @@ namespace Laser.Orchard.StartupConfig.ShortCodes {
                    LocalizedString buttonText,
                    LocalizedString description,
                    string shortCodeFormat,
-                   string buttonIconClass="",
+                   bool enabled = true,
+                   string buttonIconClass ="",
                    EditorPage editor = null
             ) {
             Name = name;
@@ -24,14 +25,16 @@ namespace Laser.Orchard.StartupConfig.ShortCodes {
             ShortCodeFormat = shortCodeFormat;
             ButtonIconClass = buttonIconClass;
             Editor = editor;
+            Enabled = enabled;
         }
-        public string Name { get; }
-        public string Signature { get; }
-        public LocalizedString ButtonText { get; }
-        public string ButtonIconClass { get; }
-        public LocalizedString Description { get; }
-        public EditorPage Editor { get; }
-        public string ShortCodeFormat { get;  }
+        public string Name { get; set; }
+        public string Signature { get; set; }
+        public LocalizedString ButtonText { get; set; }
+        public string ButtonIconClass { get; set; }
+        public bool Enabled { get; set; }
+        public LocalizedString Description { get; set; }
+        public EditorPage Editor { get; set; }
+        public string ShortCodeFormat { get; set; }
 
         public class EditorPage {
             public string ActionName { get; set; }

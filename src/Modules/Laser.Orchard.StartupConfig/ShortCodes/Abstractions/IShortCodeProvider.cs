@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Abstractions {
     public interface IShortCodeProvider : IDependency {
-        Descriptor Describe();
+        Descriptor Describe(DescribeContext context);
         void Evaluate(EvaluateContext context);
     }
 }

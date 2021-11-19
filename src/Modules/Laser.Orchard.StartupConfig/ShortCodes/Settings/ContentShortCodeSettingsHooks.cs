@@ -14,7 +14,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Settings {
                 yield break;
 
             var model = definition.Settings.GetModel<ContentShortCodeSettings>();
-            yield return DefinitionTemplate(model, "ShortCodes/ContentShortCodeSettings", definition.PartDefinition.Name + "ContentShortCodeSettings");
+            yield return DefinitionTemplate(model, "ShortCodes/ContentShortCodeSettings", "ContentShortCodeSettings");
         }
 
         public override IEnumerable<TemplateViewModel> TypePartEditorUpdate(ContentTypePartDefinitionBuilder builder, IUpdateModel updateModel) {
@@ -22,8 +22,10 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Settings {
                 yield break;
 
             var model = new ContentShortCodeSettings();
-            updateModel.TryUpdateModel(model, builder.Name + "ContentShortCodeSettings", null, null);
+            updateModel.TryUpdateModel(model, "ContentShortCodeSettings", null, null);
             builder.WithSetting("ContentShortCodeSettings.DisplayedContentTypes", model.DisplayedContentTypes);
+            builder.WithSetting("ContentShortCodeSettings.Enabled", model.Enabled.ToString());
+
             yield return DefinitionTemplate(model);
         }
     }

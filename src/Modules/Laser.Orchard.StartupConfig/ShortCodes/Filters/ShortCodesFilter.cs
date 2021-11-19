@@ -12,19 +12,19 @@ using Orchard.Environment.Extensions;
 namespace Laser.Orchard.StartupConfig.ShortCodes.Filters {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ShortCodesFilter : IHtmlFilter {
-        private readonly IEnumerable<IShortCodeProvider> _providers;
+        private readonly IShortCodesServices _shortcodesServices;
 
-        public ShortCodesFilter(IEnumerable<IShortCodeProvider> providers) {
-            _providers = providers;
+        public ShortCodesFilter(IShortCodesServices shortcodesServices) {
             Logger = NullLogger.Instance;
+            _shortcodesServices = shortcodesServices;
         }
         public ILogger Logger;
         public string ProcessContent(string text, string flavor) {
             var context = new EvaluateContext {
                 SourceText = text
             };
-            _providers.Invoke(x => {
-                if (context.SourceText.IndexOf("[" + x.Describe().Signature.Trim()+" ") > -1) {
+            _shortcodesServices.GetEnabledProviders(new DescribeContext()).Invoke(x => {
+                if (context.SourceText.IndexOf("[" + x.Describe(new DescribeContext()).Signature.Trim() + " ") > -1) {
                     x.Evaluate(context);
                 }
             }, Logger);
