@@ -31,6 +31,14 @@
 }
 @using (Script.Foot()) {
     <script type="text/javascript">
+
+        function setTextToCurrentPos(element, text) {
+            var curPos = element.prop("selectionStart");
+            let x = element.val();
+            element.val(
+                x.slice(0, curPos) + text + x.slice(curPos));
+        }
+
         $('*[data-type="shortcode-button"]').click(function (e) {
             e.preventDefault();
             var shortcode = $(this);
@@ -45,6 +53,7 @@
                     reposition: true,
                     width: "100%",
                     height: "100%",
+                    closeButton: true,
                     onLoad: function () { // hide the scrollbars from the main window
                         $('html, body').css('overflow', 'hidden');
                         $('#cboxClose').remove();
@@ -60,12 +69,11 @@
                         //TODO: Add Insert Logic
                         if (flavor == "Html") {
                             if (tinymce.editors[elementId]) {
-
                                 tinymce.editors[elementId].execCommand('mceInsertContent', false, selectedData)
                             }
                         }
                         else {
-                            alert(shortcodeFormat);
+                            setTextToCurrentPos($('#' + elementId), selectedData);
                         }
 
                         shortcode.trigger("closed");
