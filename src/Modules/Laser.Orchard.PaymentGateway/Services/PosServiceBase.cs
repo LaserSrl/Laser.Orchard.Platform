@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Orchard;
 using Orchard.Data;
 using Orchard.Localization;
+using Orchard.Logging;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -19,6 +20,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
         private readonly IPaymentEventHandler _paymentEventHandler;
 
         public Localizer T { get; set; }
+        public ILogger Logger { get; set; }
 
         public abstract string GetPosName();
         /// <summary>
@@ -55,6 +57,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
             _paymentEventHandler = paymentEventHandler;
 
             T = NullLocalizer.Instance;
+            Logger = NullLogger.Instance;
         }
         /// <summary>
         /// Create the db entry corresponding to the payment we are starting.
@@ -160,6 +163,12 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 //if (newError) {
                 //    _paymentEventHandler.OnError(paymentToSave.Id, paymentToSave.ContentItemId);
                 //}
+                Logger.Error(T("Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\"",
+                    paymentId, 
+                    success, 
+                    string.IsNullOrWhiteSpace(error) ? string.Empty : error,
+                    string.IsNullOrWhiteSpace(info) ? string.Empty : info,
+                    string.IsNullOrWhiteSpace(transactionId) ? string.Empty : transactionId).Text);
             } else {
                 //paymentToSave = payment;
                 paymentToSave.Success = success;
