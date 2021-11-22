@@ -14,7 +14,6 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Abstractions {
                    LocalizedString buttonText,
                    LocalizedString description,
                    string shortCodeFormat,
-                   bool enabled = true,
                    string buttonIconClass ="",
                    EditorPage editor = null
             ) {
@@ -25,13 +24,11 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Abstractions {
             ShortCodeFormat = shortCodeFormat;
             ButtonIconClass = buttonIconClass;
             Editor = editor;
-            Enabled = enabled;
         }
         public string Name { get; set; }
         public string Signature { get; set; }
         public LocalizedString ButtonText { get; set; }
         public string ButtonIconClass { get; set; }
-        public bool Enabled { get; set; }
         public LocalizedString Description { get; set; }
         public EditorPage Editor { get; set; }
         public string ShortCodeFormat { get; set; }

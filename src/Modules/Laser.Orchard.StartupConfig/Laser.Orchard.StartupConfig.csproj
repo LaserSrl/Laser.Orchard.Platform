@@ -191,6 +191,7 @@
     <Content Include="Views\DateTimeEditorForm.cshtml" />
     <Content Include="Views\Content.ControlWrapper.cshtml" />
     <Content Include="Views\DefinitionTemplates\ShortCodes\ContentShortCodeSettings.cshtml" />
+    <Content Include="Views\DefinitionTemplates\ShortCodes\ShortCodesSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -545,12 +546,16 @@
     <Compile Include="ShortCodes\Abstractions\Descriptor.cs" />
     <Compile Include="ShortCodes\Drivers\ShortCodeForBodyPartDriver.cs" />
     <Compile Include="ShortCodes\Abstractions\EvaluateContext.cs" />
+    <Compile Include="ShortCodes\Drivers\ShortCodeForTextFieldDriver.cs" />
     <Compile Include="ShortCodes\Filters\ShortCodesFilter.cs" />
     <Compile Include="ShortCodes\Providers\ContentShortCodeProvider.cs" />
     <Compile Include="ShortCodes\Abstractions\IShortCodesService.cs" />
     <Compile Include="ShortCodes\Services\ShortCodesService.cs" />
+    <Compile Include="ShortCodes\Settings\ShortCodesSettingsHooks.cs" />
     <Compile Include="ShortCodes\Settings\ContentShortCodeSettingsHooks.cs" />
     <Compile Include="ShortCodes\Settings\Models\ContentShortCodeSettings.cs" />
+    <Compile Include="ShortCodes\Settings\Models\ShortCodesSettings.cs" />
+    <Compile Include="ShortCodes\Settings\ViewModels\ShortCodesSettingsViewModel.cs" />
     <Compile Include="ShortCodes\ViewModels\ShortCodesEditor.cs" />
     <Compile Include="TaxonomiesExtensions\Drivers\TaxonomyExtensionPartDriver.cs" />
     <Compile Include="Controllers\UsersGroupsSettingsController.cs" />
@@ -768,7 +773,7 @@
     <Content Include="Views\EditorTemplates\Parts\TinyMceSiteSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\ApiCredentialsPartUnauthorized.cshtml" />
     <Content Include="Views\Widget.ControlWrapper.cshtml" />
-    <Content Include="Views\EditorTemplates\ShortCodes\Parts\ShortCodes_Edit.cshtml" />
+    <Content Include="Views\EditorTemplates\ShortCodes\ShortCodes_Edit.cshtml" />
     <Content Include="Views\ShortCodes_ContentPicker.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

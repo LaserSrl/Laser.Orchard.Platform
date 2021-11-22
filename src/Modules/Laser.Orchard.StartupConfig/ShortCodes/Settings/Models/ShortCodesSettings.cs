@@ -6,8 +6,7 @@ using System.Web;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Settings.Models {
     [OrchardFeature("Laser.Orchard.ShortCodes")]
-    public class ContentShortCodeSettings {
-        public string DisplayedContentTypes { get; set; }
+    public class ShortCodesSettings {
+        public string EnabledShortCodes { get; set; }
     }
 }
-
