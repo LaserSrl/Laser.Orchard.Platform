@@ -32,7 +32,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Drivers {
             var viewModel = new ShortCodes.ViewModels.ShortCodesEditor {
                 ContentType = part.ContentItem.ContentType,
                 Part = part,
-                ElementId = "Body_Text",
+                ElementName = "Body.Text",
                 ElementFlavor = part.Settings.GetModel<BodyTypePartSettings>().Flavor,
                 Descriptors = _shortcodesServices
                                     .GetEnabledProviders(shortCodeContext)
