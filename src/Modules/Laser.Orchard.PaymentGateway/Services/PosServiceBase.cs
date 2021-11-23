@@ -4,6 +4,7 @@ using Orchard;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Localization;
+using Orchard.Logging;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -31,9 +32,11 @@ namespace Laser.Orchard.PaymentGateway.Services {
             _shapeFactory = shapeFactory;
 
             T = NullLocalizer.Instance;
+            Logger = NullLogger.Instance;
         }
 
         public Localizer T { get; set; }
+        public ILogger Logger { get; set; }
 
         public abstract string GetPosName();
         /// <summary>
@@ -183,6 +186,12 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 //if (newError) {
                 //    _paymentEventHandler.OnError(paymentToSave.Id, paymentToSave.ContentItemId);
                 //}
+                Logger.Error(T("Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\"",
+                    paymentId, 
+                    success, 
+                    string.IsNullOrWhiteSpace(error) ? string.Empty : error,
+                    string.IsNullOrWhiteSpace(info) ? string.Empty : info,
+                    string.IsNullOrWhiteSpace(transactionId) ? string.Empty : transactionId).Text);
             } else {
                 //paymentToSave = payment;
                 paymentToSave.Success = success;
