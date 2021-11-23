@@ -13,7 +13,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.ViewModels {
         public string ContentType { get; set; }
         public ContentPart Part { get; set; }
         public ContentField Field { get; set; }
-        public string ElementId { get; set; }
+        public string ElementName { get; set; }
         public string ElementFlavor { get; set; }
         public IEnumerable<Descriptor> Descriptors { get; set; }
     }

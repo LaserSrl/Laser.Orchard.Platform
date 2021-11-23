@@ -25,28 +25,57 @@
 @using (Script.Foot()) {
     <script type="text/javascript">
         //<![CDATA[
-        $(".select").on("click", function () {
-            try {
-                var container = $(this).closest("[data-id]");
-                var result = {
-                    id: container.data("id"),
-                    displayText: container.data("display-text"),
-                    editLink: container.data("edit-link"),
-                    editUrl: container.data("edit-url"),
-                    adminUrl: container.data("admin-url"),
-                    displayLink: container.data("display-link"),
-                    published: container.data("published"),
-                };
+        $(document).ready(function () {
+
+            //Replace Add Selected default button (ContentPicker one) because not suitable for colorbox.
+            var addSelectedButton = $('.button.addSelected').clone();
+            addSelectedButton.removeClass('addSelected').addClass('addSelectedContents');
+            $('.button.addSelected').after(addSelectedButton)
+            $('.button.addSelected').remove();
+
+
+            $('.button.addSelectedContents').on('click', function () {
+                var itemsToAdd = "";
+                for (var i = 0; i < sessionStorage.length; i++) {
+                    var key = sessionStorage.key(i);
+                    // only add the item if the key is an integer: other scripts may be
+                    // adding stuff to sessionStorage
+                    if (!isNaN(key - parseInt(key))) {
+                        var data = window.sessionStorage.getItem(sessionStorage.key(i));
+                        itemsToAdd += "[content id=" + JSON.parse(data).id + "]";
+                    }
+                }
+                window.sessionStorage.clear();
                 if (parent.$.colorbox) {
-                    parent.$.colorbox.selectedData = "[content id=" + result.id + "]";
+
+                    parent.$.colorbox.selectedData = itemsToAdd;
                     parent.$.colorbox.close();
                 }
-            } catch (ex) {
-                alert($.contentPicker.cannotPerformMsg);
-                alert(ex);
-            }
-            window.close();
+            });
+
+            $(".select").on("click", function () {
+                try {
+                    var container = $(this).closest("[data-id]");
+                    var result = {
+                        id: container.data("id"),
+                        displayText: container.data("display-text"),
+                        editLink: container.data("edit-link"),
+                        editUrl: container.data("edit-url"),
+                        adminUrl: container.data("admin-url"),
+                        displayLink: container.data("display-link"),
+                        published: container.data("published"),
+                    };
+                    if (parent.$.colorbox) {
+                        parent.$.colorbox.selectedData = "[content id=" + result.id + "]";
+                        parent.$.colorbox.close();
+                    }
+                } catch (ex) {
+                    alert($.contentPicker.cannotPerformMsg);
+                    alert(ex);
+                }
+                window.close();
+            });
         });
-        //]]>
+                        //]]>
     </script>
 }

@@ -32,7 +32,6 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
                 T("Content"),
                 T("Adds a content as part of the text"),
                 "[content id={0}]",
-                true,
                 "fa fa-file-text",
                 new Descriptor.EditorPage { ActionName = "Index", ControllerName = "ContentShortCodeAdmin", RouteValues = new RouteValueDictionary(new { area = "Laser.Orchard.StartupConfig" }) });
         }
@@ -41,14 +40,6 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Providers {
         public IOrchardServices OrchardServices { get; }
 
         public Descriptor Describe(DescribeContext context) {
-            if (!string.IsNullOrWhiteSpace(context.Host.ContentType) && context.Host.Part != null) {
-                ContentShortCodeSettings settings;
-                ContentTypePartDefinition defintion = _contentDefinitionManager.GetTypeDefinition(context.Host.ContentType).Parts.FirstOrDefault(x => x.PartDefinition.Name == context.Host.Part.PartDefinition.Name);
-                if (defintion != null) {
-                    settings = defintion.Settings.GetModel<ContentShortCodeSettings>();
-                    _descriptor.Enabled = settings.Enabled;
-                }
-            }
             return _descriptor;
         }
 
