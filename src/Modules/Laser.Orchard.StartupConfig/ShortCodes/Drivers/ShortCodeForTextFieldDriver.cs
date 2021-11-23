@@ -4,6 +4,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Core.Common.Fields;
 using Orchard.Core.Common.Settings;
+using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Services;
 using System;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.StartupConfig.ShortCodes.Drivers {
+    [OrchardFeature("Laser.Orchard.ShortCodes")]
     public class ShortCodeForTextFieldDriver : ContentFieldDriver<TextField> {
         private readonly IEnumerable<IHtmlFilter> _htmlFilters;
         private const string TEMPLATE_NAME = "ShortCodes/ShortCodes_Edit";
