@@ -107,8 +107,10 @@ namespace Laser.Orchard.SEO.Controllers {
         }
 
         private ActionResult Validate(RedirectRule redirect, Func<RedirectRule, RedirectRule> doOnSuccess) {
-            redirect.SourceUrl = redirect.SourceUrl.TrimEnd('/');
-            redirect.DestinationUrl = redirect.DestinationUrl.TrimEnd('/');
+            if (redirect.SourceUrl != "*/" && redirect.DestinationUrl != "*") {
+                redirect.SourceUrl = redirect.SourceUrl.TrimEnd('/');
+                redirect.DestinationUrl = redirect.DestinationUrl.TrimEnd('/');
+            }
             if (redirect.SourceUrl == redirect.DestinationUrl) {
                 ModelState.AddModelError("SourceUrl", T("Source url is equal to Destination url").Text);
                 _orchardServices.TransactionManager.Cancel();
