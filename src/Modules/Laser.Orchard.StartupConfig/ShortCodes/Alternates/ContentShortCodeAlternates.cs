@@ -13,7 +13,7 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Alternates {
 
             context.ShapeMetadata
             .OnDisplaying((displayedContext) => {
-                if (displayedContext.Shape.ShortCoded ?? false)
+                if (displayedContext.Shape.ShortCoded != null && displayedContext.Shape.ShortCoded is bool && displayedContext.Shape.ShortCoded) {
                     //Adds alternates for Children
                     foreach (var child in displayedContext.Shape.Content.Items) {
                         var childAlternates = new List<string>(new[] { (string)child.Metadata.Type + "__Shortcoded" });
@@ -26,16 +26,16 @@ namespace Laser.Orchard.StartupConfig.ShortCodes.Alternates {
                             child.Metadata.Alternates.AddRange(childAlternates);
                         }
                     }
-                var alternates = new List<string>(new[] { (string)displayedContext.Shape.Metadata.Type + "__Shortcoded" });
-                foreach (var alternate in ((IList<string>)displayedContext.Shape.Metadata.Alternates).Distinct()) {
-                    if (alternate.IndexOf("__Shortcoded") < 0) {
-                        alternates.Add(alternate + "__Shortcoded");
+                    var alternates = new List<string>(new[] { (string)displayedContext.Shape.Metadata.Type + "__Shortcoded" });
+                    foreach (var alternate in ((IList<string>)displayedContext.Shape.Metadata.Alternates).Distinct()) {
+                        if (alternate.IndexOf("__Shortcoded") < 0) {
+                            alternates.Add(alternate + "__Shortcoded");
+                        }
+                    }
+                    if (alternates.Count() > 0) {
+                        displayedContext.Shape.Metadata.Alternates.AddRange(alternates);
                     }
                 }
-                if (alternates.Count() > 0) {
-                    displayedContext.Shape.Metadata.Alternates.AddRange(alternates);
-                }
-
             });
         }
 
