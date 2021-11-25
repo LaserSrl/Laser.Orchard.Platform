@@ -22,7 +22,7 @@ msgstr "Seleziona un elemento dalla lista di pagine"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
 msgid "Caption"
-msgstr "Etichetta"
+msgstr "Didascalia"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
 msgid "Description"
@@ -54,7 +54,7 @@ msgstr "Foto del profilo facebook"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
 msgid "Link"
-msgstr "Link"
+msgstr "Collegamento"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/DefinitionTemplates/FacebookPostPartSettingVM.cshtml"
 msgid "Message"
@@ -110,7 +110,7 @@ msgstr "Approvato"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "Caption"
-msgstr "Etichetta"
+msgstr "Didascalia"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "Description"
@@ -126,7 +126,7 @@ msgstr "Inserisci un account Facebook"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "Link"
-msgstr "Link"
+msgstr "Collegamento"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "Message"
@@ -162,7 +162,7 @@ msgstr "Posta alla prossima pubblicaizone"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "ShareLink"
-msgstr "Link to share"
+msgstr "Link di condivisione"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/EditorTemplates/Parts/FacebookPost.cshtml"
 msgid "This Facebook message has been already posted. You will be able to edit and save it, but it will not be posted anymore on next publish."
@@ -182,7 +182,7 @@ msgstr "Aggiungi un Account Facebook"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Facebook/Views/FacebookAccount/index.cshtml"
 msgid "Delete"

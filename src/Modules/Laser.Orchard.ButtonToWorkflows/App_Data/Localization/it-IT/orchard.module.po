@@ -38,7 +38,7 @@ msgstr "Descrizione"
 
 msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
 msgid "Message on button click"
-msgstr "Messaggio per il clic del pulsante"
+msgstr "Messaggio al click del pulsante"
 
 msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/DynamicButtonToWorkflowsEdit.cshtml"
 msgid "Remove"
@@ -78,7 +78,7 @@ msgstr "Descrizione"
 
 msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/ButtonToWorkflowsSettings_Edit.cshtml"
 msgid "Message on button click"
-msgstr "Messaggio alla pressione del pulsante"
+msgstr "Messaggio al click del pulsante"
 
 msgctxt "~/Modules/Laser.Orchard.ButtonToWorkflows/Views/EditorTemplates/Parts/DynamicButtonToWorkflowsSettings.cshtml"
 msgid "Add Button"
@@ -102,7 +102,7 @@ msgstr "Pulsante Personalizzato"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
 msgid "Any"
@@ -114,7 +114,7 @@ msgstr "Tipi di Contenuto"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.ButtonToWorkflowsForm"
 msgid "Select some content types."
-msgstr "Selezionare i tipi di contenuto"
+msgstr "Scegli almeno un tipo di contenuto."
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.CustomButton2"
 msgid "Custom Button"
@@ -130,7 +130,7 @@ msgstr "Evento del Contenuto"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsEvent"
 msgid "Dynamic button is clicked."
@@ -154,7 +154,7 @@ msgstr "Seleziona un bottone dinamico"
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Activity.DynamicButtonToWorkflowsForm"
 msgid "Select some content types."
-msgstr "Selezionare i tipi di contenuto"
+msgstr "Scegli almeno un tipo di contenuto."
 
 msgctxt "Laser.Orchard.ButtonToWorkflows.Drivers.ButtonToWorkflowsDriver"
 msgid "Error Saving Content Item"

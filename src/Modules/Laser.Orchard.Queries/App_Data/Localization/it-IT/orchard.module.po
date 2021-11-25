@@ -14,7 +14,7 @@ msgstr "Lista a discesa per le query hql"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "Caption"
-msgstr "Etichetta"
+msgstr "Didascalia"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/DefinitionTemplates/QueryUserFilterExtensionPartSettingVM.cshtml"
 msgid "nothing (default) = no filter"
@@ -54,7 +54,7 @@ msgstr "Nome"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Add.cshtml"
 msgid "There are no currently available filters"
-msgstr "Nessun filtro disponibile"
+msgstr "Non ci sono filtri attualmente disponibili"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
 msgid "Description"
@@ -70,7 +70,7 @@ msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/Filter/Edit.cshtml"
 msgid "You may optionally give a description to this filter, to be used in the dashboard screens."
-msgstr "Puoi opzionalmente, per questo filtro, fornire una descrizione che sarà visualizzata nelle schermate del Pannello Amministrativo."
+msgstr "È possibile fornire una descrizione del filtro da usare nelle schermate del pannello amministrativo."
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/Edit.cshtml"
 msgid "Edit HQL Query"
@@ -78,15 +78,15 @@ msgstr "Modifica Query HQL"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "a moment ago"
-msgstr "poco fa"
+msgstr "qualche istante fa"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "By"
-msgstr "di"
+msgstr "Realizzato da"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/MyQueryAdmin/index.cshtml"
 msgid "Create New HQL Query"
@@ -162,15 +162,15 @@ msgstr "Titolo:"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "+ Add a new Filter"
-msgstr "+ Aggiungi nuovo Filtro"
+msgstr "+ Aggiungi un nuovo Filtro"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "+ Add a new Layout"
-msgstr "+ Aggiungi nuovo Layout"
+msgstr "+ Aggiungi un nuovo Schema"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "+ Add a new Sort Criteria"
-msgstr "+ Aggiungi nuovo criterio di ordinamento"
+msgstr "+ Aggiungi un nuovo criterio di ordinamento"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Add a new Group"
@@ -178,7 +178,7 @@ msgstr "Aggiungi un nuovo Gruppo"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Add a new Layout"
-msgstr "Aggiungi un nuovo Layout"
+msgstr "Aggiungi un nuovo Schema"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Close"
@@ -214,11 +214,11 @@ msgstr "Filtri"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Layouts"
-msgstr "Layouts"
+msgstr "Schemi"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Or"
-msgstr "O"
+msgstr "Oppure"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Edit.cshtml"
 msgid "Preview"
@@ -234,7 +234,7 @@ msgstr "Su"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Preview.cshtml"
 msgid "Manage Queries"
-msgstr "Gestisci Ricerche"
+msgstr "Gestione Ricerche"
 
 msgctxt "~/Modules/Laser.Orchard.Queries/Views/UserQueryAdmin/Preview.cshtml"
 msgid "The query returned no results"
@@ -250,11 +250,11 @@ msgstr "Ricerca salvata"
 
 msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
 msgid "Not authorized to edit queries"
-msgstr "Non autorizzato a modificare le Ricerche"
+msgstr "Non sei autorizzato a modificare le ricerche"
 
 msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
 msgid "Not authorized to manage queries"
-msgstr "Non autorizzato a gestire le Ricerche"
+msgstr "Non sei autorizzato a gestire le ricerche"
 
 msgctxt "Laser.Orchard.Queries.Controllers.UserQueryAdminController"
 msgid "Query {0} deleted"
@@ -270,7 +270,7 @@ msgstr "Filtro eliminato"
 
 msgctxt "Laser.Orchard.Queries.FilterController"
 msgid "Not authorized to manage queries"
-msgstr "Non autorizzato a gestire le Ricerche"
+msgstr "Non sei autorizzato a gestire le ricerche"
 
 msgctxt "Laser.Orchard.Queries.Forms.ParametrizedHQLForm"
 msgid "Enter the HQL query. You may use parameters with the following syntax: ( :paramN ). N is the line number (0-based) for the parameter configuration above. The parentheses and whitespace around :paramN are mandatory. The query should return the Ids of the selected ContentItems."

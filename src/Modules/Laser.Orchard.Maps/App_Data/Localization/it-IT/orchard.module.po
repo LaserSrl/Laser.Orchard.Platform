@@ -10,7 +10,7 @@
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/AmiImport/Pois.cshtml"
 msgid "New POIs"
@@ -110,11 +110,11 @@ msgstr "Latitudine"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Location Address"
-msgstr "Informazioni sull'indirizzo"
+msgstr "Indirizzo della località"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Location Info"
-msgstr "Informazioni"
+msgstr "Informazioni sulla località"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Longitude"
@@ -190,7 +190,7 @@ msgstr "Longitudine"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/OsmMap.cshtml"
 msgid "Map Fields"
-msgstr "Campi della mappa"
+msgstr "Definizione della Mappa"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/GoogleMapForProjections.cshtml"
 msgid "more"
@@ -198,7 +198,7 @@ msgstr "leggi tutto"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/osmImport/Parkings.cshtml"
 msgid "new Parkings"

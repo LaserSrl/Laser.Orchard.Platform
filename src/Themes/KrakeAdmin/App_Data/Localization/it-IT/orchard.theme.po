@@ -102,7 +102,7 @@ msgstr "Pubblicato"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
 msgid "The page is currently offline"
-msgstr "La pagina è attualmente offline"
+msgstr "Al momento la pagina è offline"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Content-Order.SummaryAdmin.cshtml"
 msgid "The page is currently online"
@@ -134,7 +134,7 @@ msgstr "Rimuovi"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Contents/admin/ivreaterritorio_cpf_manifestazione_ruolo.cshtml"
 msgid "You need to save your changes."
-msgstr "Devi salvare i cambiamenti."
+msgstr "È necessario salvare le modifiche."
 
 msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
 msgid "Add"
@@ -154,7 +154,7 @@ msgstr "Rimuovi"
 
 msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerPreview.cshtml"
 msgid "You need to save your changes."
-msgstr "Devi salvare i cambiamenti."
+msgstr "È necessario salvare le modifiche."
 
 msgctxt "~/Themes/KrakeAdmin/Views/CustomPickerSummaryAdmin.cshtml"
 msgid "Select"
@@ -310,7 +310,7 @@ msgstr "Cyborg"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
 msgid "Default"
-msgstr "Default"
+msgstr "Predefinito"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Laser.Bootstrap/Admin/OptionsIndex.cshtml"
 msgid "Flatly"
@@ -430,7 +430,7 @@ msgstr "Mostra:"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Pager.cshtml"
 msgid "Showing items {0} - {1} of {2}"
-msgstr "Elementi {0} - {1} di {2}"
+msgstr "Elementi {0} - {1} su {2}"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts.Contents.Clone.SummaryAdmin.cshtml"
 msgid "Clone"
@@ -498,7 +498,7 @@ msgstr "La pagina ha una bozza"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
 msgid "The page is currently offline"
-msgstr "La pagina è attualmente offline"
+msgstr "Al momento la pagina è offline"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts/Common.Metadata.SummaryAdmin.cshtml"
 msgid "The page is currently online"
@@ -506,11 +506,11 @@ msgstr "La pagina è attualmente online"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts/PublishLater.Metadata.SummaryAdmin.cshtml"
 msgid "Scheduled"
-msgstr "Pianificato"
+msgstr "Programmato"
 
 msgctxt "~/Themes/KrakeAdmin/Views/Parts/PublishLater.Metadata.SummaryAdmin.cshtml"
 msgid "The page is scheduled for publishing"
-msgstr "La pagina è schedulata per la pubblicazione"
+msgstr "La pubblicazione della pagina è stata programmata"
 
 msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
 msgid "Add Selected"
@@ -526,11 +526,11 @@ msgstr "Applica"
 
 msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
 msgid "Culture"
-msgstr "Cultura"
+msgstr "Lingua"
 
 msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
 msgid "Manage {0} Content"
-msgstr "Gestire Contenuto {0}"
+msgstr "Gestione Contenuto {0}"
 
 msgctxt "~/Themes/KrakeAdmin/Views/RecentContentTab.cshtml"
 msgid "Ordered by"
@@ -566,7 +566,7 @@ msgstr "Il tuo sito"
 
 msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeAdmin/Views/User.cshtml"
 msgid "Logout"

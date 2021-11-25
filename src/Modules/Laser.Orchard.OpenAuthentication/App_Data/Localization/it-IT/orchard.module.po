@@ -38,7 +38,7 @@ msgstr "Secret"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "Technical Name"
-msgstr "Technical Name"
+msgstr "Nome Tecnico"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/CreateProvider.cshtml"
 msgid "The name that will be used internally."
@@ -90,7 +90,7 @@ msgstr "Secret"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "Technical Name"
-msgstr "Technical Name"
+msgstr "Nome Tecnico"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Edit.cshtml"
 msgid "The name that will be used internally."
@@ -198,15 +198,15 @@ msgstr "Utente"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Users can create new accounts on the site"
-msgstr "Gli utenti possono creare nuovi accounts sul sito."
+msgstr "Gli utenti possono creare nuovi account sul sito"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Users must be approved before they can log in"
-msgstr "Gli utenti devono essere approvati prima di potersi autenticare"
+msgstr "Gli utenti devono essere approvati prima di poter accedere"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "Users must verify their email address"
-msgstr "Gli utenti devono verificare il loro indirizzo email."
+msgstr "Gli utenti dovranno verificare il loro indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/Admin/Index.cshtml"
 msgid "When checked, if the user who is authenticating does not have an account then a local account will be created and a username will be created based on claims."
@@ -218,7 +218,7 @@ msgstr "Selezionando questa opzione, il sistema proverà a fondere nuovi utenti 
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid " if you don't have an account."
-msgstr "se non hai un account."
+msgstr " se non hai un'utenza."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Account Information"
@@ -234,7 +234,7 @@ msgstr "Accedi con il tuo account {0}"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Login was unsuccessful. Please correct the errors and try again."
-msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+msgstr "Accesso non effettuato. Correggi gli errori e riprova."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Login with another service"
@@ -242,7 +242,7 @@ msgstr "Accedi con un altro servizio"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Password"
@@ -250,15 +250,15 @@ msgstr "Password"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Please enter your username and password."
-msgstr "Inserire utente e password."
+msgstr "Inserire il nome utente e la password."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthLogOn.cshtml"
 msgid "Sign In"
@@ -278,7 +278,7 @@ msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Account Information"
@@ -290,7 +290,7 @@ msgstr "Conferma password:"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Create a New Account"
-msgstr "Creare un nuovo Account"
+msgstr "Crea una nuova utenza"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Email:"
@@ -318,7 +318,7 @@ msgstr "una lettera maiuscola"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Password:"
-msgstr "Password"
+msgstr "Password:"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Passwords are required to be a minimum of {0} characters in length"
@@ -330,7 +330,7 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "The password can't be empty"
@@ -342,7 +342,7 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Use the form below to create a new account."
-msgstr "Usare il modulo sottostante per creare un nuovo account."
+msgstr "Usa il modulo sottostante per creare una nuova utenza."
 
 msgctxt "~/Modules/Laser.Orchard.OpenAuthentication/Views/OpenAuthRegister.cshtml"
 msgid "Username:"
@@ -358,7 +358,7 @@ msgstr "UserProviderRecord aggiornato."
 
 msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
 msgid "Done"
-msgstr "Done"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.OpenAuthentication.Activities.OpenAuthUserActivity"
 msgid "Events"

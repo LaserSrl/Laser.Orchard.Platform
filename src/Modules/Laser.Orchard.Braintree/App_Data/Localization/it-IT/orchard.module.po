@@ -66,7 +66,7 @@ msgstr "Se Apple Pay non è abilitata nella tua dashboard di Braintree, lascia v
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "If checked, it means this is a production environment."
-msgstr "Se selezionato indica che si tratta di un ambiente di produzione."
+msgstr "Se selezionato, imposta l'ambiente come ambiente di produzione."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Admin/Index.cshtml"
 msgid "If checked, the payment starts automatically."
@@ -158,7 +158,7 @@ msgstr "Caricamento in corso..."
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
 msgid "Pay now"
-msgstr "Paga adesso"
+msgstr "Paga ora"
 
 msgctxt "~/Modules/Laser.Orchard.Braintree/Views/Braintree/Index.cshtml"
 msgid "Pay with Braintree and PayPal"

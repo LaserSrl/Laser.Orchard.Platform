@@ -26,11 +26,11 @@ msgstr "Lista Comunicati"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "a moment ago"
-msgstr "poco fa"
+msgstr "qualche istante fa"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "By"
-msgstr "di"
+msgstr "Realizzato da"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "Campaign"
@@ -42,7 +42,7 @@ msgstr "Lista della campagne"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "Create New Advertising"
@@ -94,7 +94,7 @@ msgstr "Pubblicato"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "Scheduled"
-msgstr "Pianificato"
+msgstr "Programmato"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/AdvertisingAdmin/index.cshtml"
 msgid "Search"
@@ -122,11 +122,11 @@ msgstr "Modifica Campagna"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/CampaignAdmin/index.cshtml"
 msgid "a moment ago"
-msgstr "poco fa"
+msgstr "qualche istante fa"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/CampaignAdmin/index.cshtml"
 msgid "By"
-msgstr "di"
+msgstr "Realizzato da"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/CampaignAdmin/index.cshtml"
 msgid "Campaign"
@@ -142,7 +142,7 @@ msgstr "La campagna è aperta"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/CampaignAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/CampaignAdmin/index.cshtml"
 msgid "Create New Campaign"
@@ -254,7 +254,7 @@ msgstr "Nessun dato trovato."
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "a moment ago"
-msgstr "poco fa"
+msgstr "qualche istante fa"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "Authorizations:"
@@ -262,11 +262,11 @@ msgstr "Autorizzazioni:"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "By"
-msgstr "di"
+msgstr "Realizzato da"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "Close"
@@ -314,7 +314,7 @@ msgstr "Ore fa"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "Import"
-msgstr "Import"
+msgstr "Importa"
 
 msgctxt "~/Modules/Laser.Orchard.CommunicationGateway/Views/ContactsAdmin/index.cshtml"
 msgid "Last modified"
@@ -642,7 +642,7 @@ msgstr "La validità della campagna è terminata. Nessuna modifica possibile."
 
 msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
 msgid "Couldn't create content"
-msgstr "Non è stato possibile creare il contenuto"
+msgstr "Impossibile creare il contenuto"
 
 msgctxt "Laser.Orchard.CommunicationGateway.Controllers.AdvertisingExternalController"
 msgid "Create Advertising Id: {0} - Title: {1}"
@@ -722,7 +722,7 @@ msgstr "Chiamata ad una API Mailchimp"
 
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.APICallActivity"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.APICallActivity"
 msgid "Mailchimp"
@@ -750,7 +750,7 @@ msgstr "La tua iscrizione è stata rimossa."
 
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers.MailchimpSubscriptionPartHandler"
 msgid "You have to accept all required policies in order to subscribe to the newsletter."
-msgstr "Per potersi iscrivere alla newsletter è necessario accettare tutte le policies obbligatorie."
+msgstr "Per potersi iscrivere alla newsletter è necessario accettare tutte le policy obbligatorie."
 
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers.UserEventHandler"
 msgid "Nice to meet you! Your subscription has been accepted."
@@ -842,7 +842,7 @@ msgstr "Oops! C'è stato un problema durante la registrazione della tua email. P
 
 msgctxt "Laser.Orchard.CommunicationGateway.Mailchimp.Handlers.MailchimpSubscriptionPartHandler"
 msgid "You have to accept all required policies in order to subscribe to the newsletter."
-msgstr "Devi accettare tutte le policies obbligatorie per registrati alla newsletter."
+msgstr "Per potersi iscrivere alla newsletter è necessario accettare tutte le policy obbligatorie."
 
 msgctxt "Laser.Orchard.CommunicationGateway.Navigation.AdminMenu"
 msgid "Campaign"
