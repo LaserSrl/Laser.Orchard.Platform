@@ -102,7 +102,7 @@ msgstr "Powered by Krake"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid " if you don't have an account."
-msgstr "se non hai un account"
+msgstr " se non hai un'utenza."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Account Information"
@@ -114,11 +114,11 @@ msgstr "Inserisci nome utente e password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Login was unsuccessful. Please correct the errors and try again."
-msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+msgstr "Accesso non effettuato. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Register"
@@ -126,7 +126,7 @@ msgstr "Registrati"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
 msgid "Sign In"
@@ -138,7 +138,7 @@ msgstr "Sito Principale"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid " if you don't have an account."
-msgstr "se non hai un account."
+msgstr " se non hai un'utenza."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "...or login with:"
@@ -158,11 +158,11 @@ msgstr "Accedi con"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "Login was unsuccessful. Please correct the errors and try again."
-msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+msgstr "Accesso non effettuato. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "Register"
@@ -170,7 +170,7 @@ msgstr "Registrati"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
 msgid "Sign In"
@@ -186,7 +186,7 @@ msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Account informations"
@@ -194,11 +194,11 @@ msgstr "Informazioni Account"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Confirm password"
-msgstr "Conferma password"
+msgstr "Conferma la password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Create a New Account"
-msgstr "Creare un nuovo Account"
+msgstr "Crea una nuova utenza"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Email"
@@ -242,7 +242,7 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "The password can't be empty"
@@ -254,7 +254,7 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Use the form below to create a new account."
-msgstr "Usare il modulo sottostante per creare un nuovo account."
+msgstr "Usa il modulo sottostante per creare una nuova utenza."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthRegister.cshtml"
 msgid "Username"
@@ -266,11 +266,11 @@ msgstr "Accesso negato"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/AccessDenied.cshtml"
 msgid "You do not have permission to complete your request."
-msgstr "Non hai i permessi per completare la richiesta."
+msgstr "Non hai i permessi per completare la tua richiesta."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
 msgid "Challenge Email"
-msgstr "Email di verifica"
+msgstr "Email di conferma"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailFail.cshtml"
 msgid "Go back"
@@ -290,7 +290,7 @@ msgstr "Ti è stata inviata un'email. Clicca sul link che ti è stato inviato pe
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
 msgid "Challenge Email Sent"
-msgstr "Inviata email di verifica"
+msgstr "Email di conferma inviata"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSent.cshtml"
 msgid "Go back"
@@ -298,7 +298,7 @@ msgstr "Torna indietro"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
 msgid "Challenge Email"
-msgstr "Email di verifica"
+msgstr "Email di conferma"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
 msgid "Sign in"
@@ -306,7 +306,7 @@ msgstr "Accedi"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
 msgid "Your email address has been validated."
-msgstr "Il tuo indirizzo email è stato confermato."
+msgstr "Il tuo indirizzo di email é stato verificato."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSuccess.cshtml"
 msgid "Your email address has been validated. You will receive an email when your user is approved."
@@ -318,11 +318,11 @@ msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Confirm Password"
-msgstr "Conferma password"
+msgstr "Conferma la password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Current Password"
@@ -366,11 +366,11 @@ msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "Use the form below to change your password."
-msgstr "Utilizza il modulo sottostante per cambiare la tua password."
+msgstr "Usa il modulo sottostante per cambiare la tua password."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePasswordSuccess.cshtml"
 msgid "Please, login using your new password."
@@ -386,7 +386,7 @@ msgstr "La tua password è stata cambiata con successo!"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/LostPassword.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
 msgid "Go back"
@@ -398,7 +398,7 @@ msgstr "Registrazione utente in fase di approvazione"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RegistrationPending.cshtml"
 msgid "Your user account has been created but has to be approved before it can be used."
-msgstr "Il tuo account è stato creato ma deve essere approvato prima di essere disponibile."
+msgstr "La tua utenza è stata creata, ma deve essere approvata prima che tu la possa usare."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
 msgid "Lost Password"
@@ -406,7 +406,7 @@ msgstr "Password dimenticata"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
 msgid "Please enter your username or email address. You will receive a link to create a new password via email."
-msgstr "Inserisci il tuo Username o il tuo indirizzo email. Riceverai una e-mail con un link per creare una nuova password."
+msgstr "Inserisci il tuo nome utente o il tuo indirizzo email. Riceverai una email con il link per creare una nuova password."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
 msgid "Send Request"
@@ -426,7 +426,7 @@ msgstr "Esci"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Parts.MenuWidget-Navigation.cshtml"
 msgid "Dashboard"
@@ -458,7 +458,7 @@ msgstr "Dopo aver cambiato la password ti verrà richiesto di effettuare nuovame
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
 msgid "Change Password"
-msgstr "Cambia password"
+msgstr "Modifica password"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
 msgid "Confirm new password"
@@ -502,7 +502,7 @@ msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/PasswordChangeForm.cshtml"
 msgid "Use the form below to change your password."
-msgstr "Utilizza il modulo sottostante per cambiare la tua password."
+msgstr "Usa il modulo sottostante per cambiare la tua password."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "{0} and must contain at least {1}"
@@ -510,7 +510,7 @@ msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Account Information"
@@ -518,7 +518,7 @@ msgstr "Informazioni Account"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Create a New Account"
-msgstr "Creare un nuovo Account"
+msgstr "Crea una nuova utenza"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "one lowercase letter"
@@ -546,7 +546,7 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "The password can't be empty"
@@ -554,7 +554,7 @@ msgstr "La password non può essere vuota"
 
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Register.cshtml"
 msgid "Use the form below to create a new account."
-msgstr "Utilizzare il modulo seguente per creare un nuovo account."
+msgstr "Usa il modulo sottostante per creare una nuova utenza."
 
 msgctxt "KrakeDefaultTheme.Settings.AdminMenu"
 msgid "Krake default theme options"

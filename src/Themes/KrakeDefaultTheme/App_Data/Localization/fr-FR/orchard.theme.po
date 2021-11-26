@@ -1,0 +1,18 @@
+﻿# Orchard resource strings - fr-FR
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/LogOn.cshtml"
+msgid " if you don't have an account."
+msgstr " si vous n'avez pas de compte."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/OpenAuthLogOn.cshtml"
+msgid " if you don't have an account."
+msgstr " si vous n'avez pas de compte."
+

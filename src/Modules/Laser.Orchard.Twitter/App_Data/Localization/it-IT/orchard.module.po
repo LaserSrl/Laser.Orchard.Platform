@@ -146,7 +146,7 @@ msgstr "Aggiungi un account Twitter"
 
 msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Twitter/Views/TwitterAccount/index.cshtml"
 msgid "Delete"

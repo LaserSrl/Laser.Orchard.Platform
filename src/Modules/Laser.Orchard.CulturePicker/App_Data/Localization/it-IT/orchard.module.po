@@ -66,7 +66,7 @@ msgstr "Lingua"
 
 msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
 msgid "check your input!"
-msgstr "verificare i valori inseriti!"
+msgstr "verifica i valori inseriti!"
 
 msgctxt "Laser.Orchard.CulturePicker.Controllers.AdminController"
 msgid "Culture Picker settings updated."
@@ -94,7 +94,7 @@ msgstr "Per la lingua corrente o quella di default"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureFilter"
 msgid "Localization"
-msgstr "Localizzazione"
+msgstr "Traduzione"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureFilter"
 msgid "Localized content items for current or default culture"
@@ -106,7 +106,7 @@ msgstr "Per la lingua corrente (includi non tradotti in default)"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedFilter"
 msgid "Localization"
-msgstr "Localizzazione"
+msgstr "Traduzione"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.CurrentCultureWithUntranslatedFilter"
 msgid "Localized content items for current culture (untranslated included in default culture)"
@@ -118,7 +118,7 @@ msgstr "Per la cultura selezionata (o una qualsiasi)"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
 msgid "Localization"
-msgstr "Localizzazione"
+msgstr "Traduzione"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.OptionalCultureFilterProvider"
 msgid "Localized content items for a given culture (or any culture if none provided)."
@@ -130,7 +130,7 @@ msgstr "Cultura selezionata oppure ogni cultura"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.SelectCultureForm"
 msgid "Culture"
-msgstr "Cultura"
+msgstr "Lingua"
 
 msgctxt "Laser.Orchard.CulturePicker.Projections.SelectCultureForm"
 msgid "Insert the desired culture name, in the usual form (e.g. it-IT). If the value does not match any configured culture, all content items will be included in the results. You may use tokens, but be careful as it's possible to accidentally set the culture of the WorkContext, for example with the 'lang' querystring parameter."

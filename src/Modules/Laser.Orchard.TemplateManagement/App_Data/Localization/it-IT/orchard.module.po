@@ -46,7 +46,7 @@ msgstr "Selezionare l'opzione se si vuole usare il presente modello come layout 
 
 msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
 msgid "Layout"
-msgstr "Layout"
+msgstr "Schema"
 
 msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
 msgid "Optionally select another template to use as the layout / masterpage template"
@@ -114,7 +114,7 @@ msgstr "Seleziona un modello"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
 msgid "Error on template, mail not sent"
-msgstr "Errore nel template, mail non inviata"
+msgstr "Errore nel modello, email non inviata"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.MailActivity"
 msgid "Messaging"
@@ -246,7 +246,7 @@ msgstr "Inserire una lista di indirizzi email da mettere in copia (CC), separati
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Specify a comma-separated list of e-mail recipients."
-msgstr "Specificare una lista di email di destinatari separata da virgola"
+msgstr "Specificare un elenco delimitato da virgole di destinatari di posta elettronica."
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "Specify a template ID to format your email message. Leave blank to use the default template."
@@ -266,11 +266,11 @@ msgstr "Modello"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "The current user when this action executes."
-msgstr "L'utente loggato quando viene eseguita questa azione."
+msgstr "L'utente corrente quando questa azione viene eseguita."
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "The owner of the content item in context, such as a blog post's author."
-msgstr "Il proprietario del contenuto corrente, come ad esempio l'autore di un post sul blog.,"
+msgstr "Il proprietario dell'elemento di contenuto nel contesto, ad esempio l'autore di un post del blog."
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.TemplatedEmailEditForm"
 msgid "The site administrator."
@@ -294,7 +294,7 @@ msgstr "Evento del Contenuto"
 
 msgctxt "Laser.Orchard.TemplateManagement.Activities.WebTrackingEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.TemplateManagement.Handlers.SiteSettingsPartHandler"
 msgid "Template"
@@ -302,7 +302,7 @@ msgstr "Modello"
 
 msgctxt "Laser.Orchard.TemplateManagement.Services.TemplateService"
 msgid "Error on template, mail not sent"
-msgstr "Errore ne template, email non inviata"
+msgstr "Errore nel modello, email non inviata"
 
 msgctxt "Laser.Orchard.TemplateManagement.Services.TemplateService"
 msgid "Sent "

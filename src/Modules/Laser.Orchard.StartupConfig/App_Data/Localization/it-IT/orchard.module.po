@@ -20,13 +20,37 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Commands/Execute.cshtml"
 msgid "Command line"
 msgstr "Linea di Comando"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Content.ControlWrapper.cshtml"
+msgid "Edit"
+msgstr "Modifica"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
 msgid "Evict Item"
 msgstr "Elimina Elemento"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Evict of projection for selected queries"
+msgstr "Rimozione dalla cache delle projection per le query selezionate"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Evict Projection Query"
+msgstr "Rimozione dalla cache della query della projection"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Evict Terms"
+msgstr "Rimozione dalla cache dei termini"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "If checked evicts any term that belongs to the content, its parent and its taxonomy."
+msgstr "Se selezionato, rimuove dalla cache i termini che appartengono al contenuto, i loro padri e la loro tassonomia"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
 msgid "Insert Ids separated by a ; e.g. 5;10;15"
 msgstr "Inserisci gli Id separati da ; (punto e virgola). Ad esempio 5;10;15"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorPartSettings.cshtml"
+msgid "Whatever choice is used, it will add the required ids into a single list to be evicted"
+msgstr "Qualunque sia la scelta, gli id richiesti verranno aggiunti ad una singola lista di rimozione dalla cache"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/CacheEvictorSettings.cshtml"
 msgid "Evict Item"
@@ -42,7 +66,7 @@ msgstr "Per aiuto consultare {0}"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "Help Text"
-msgstr "Testo di aiuto"
+msgstr "Testo della guida"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ColorPickerFieldSettings.cshtml"
 msgid "Insert options as json object, starting and ending with brackets."
@@ -82,7 +106,7 @@ msgstr "Abilita creazione contenuti"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text"
-msgstr "Testo da mostrare"
+msgstr "Testo da visualizzare"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/DisplayTextPartSettings.cshtml"
 msgid "Display Text to show in back-end lists."
@@ -90,7 +114,7 @@ msgstr "Testo dal mostrare nelle liste di back-end."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/FrontendEditorConfigurationSettings.cshtml"
 msgid "Allow edit on front end"
-msgstr "Permetti la modifica dal front end"
+msgstr "Permetti la modifica sul front-end"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/FrontendEditorConfigurationSettings.cshtml"
 msgid "Check to allow editing the contents of this part/field from the front-end, e.g. in a CustomForm."
@@ -144,13 +168,37 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/PerItem
 msgid "New Cache Key"
 msgstr "Nuova chiave di cache"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ContentShortCodeSettings.cshtml"
+msgid "A comma separated value of all the content types or content parts to display."
+msgstr "Un elenco separato da virgole di tutti i tipi di contenuto o di parti di contenuto da visualizzare."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ContentShortCodeSettings.cshtml"
+msgid "Content Shortcodes settings"
+msgstr "Impostazioni degli Shortcode di contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ContentShortCodeSettings.cshtml"
+msgid "Content Types and Parts"
+msgstr "Parti e Tipi di Contenuto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ShortCodesSettings.cshtml"
+msgid "Choose enabled shortcodes within the above list."
+msgstr "Seleziona gli shortcode abilitati dalla lista in alto"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ShortCodesSettings.cshtml"
+msgid "Enabled shortcodes"
+msgstr "Shortcode abilitati"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/ShortCodes/ShortCodesSettings.cshtml"
+msgid "Shortcodes settings"
+msgstr "Impostazioni shortcode"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/UserGroupSettings.cshtml"
 msgid "If checked, the part will be mandatory."
 msgstr "Se selezionato, la parte sarà obbligatoria."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/DefinitionTemplates/UserGroupSettings.cshtml"
 msgid "Required"
-msgstr "Richiesto"
+msgstr "Obbligatorio"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Api Secret Key"
@@ -250,7 +298,7 @@ msgstr "Stato"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Unpublish on"
-msgstr "Spubblica il"
+msgstr "Annulla pubblicazione attiva"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "View"
@@ -338,7 +386,7 @@ msgstr "Salva l'Utente per gestire le credenziali API."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Cannot perform requested operation"
-msgstr "Impossibile eseguire l'operazione richiesta"
+msgstr "Impossibile portare a termine l'operazione richiesta"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Not Published"
@@ -488,6 +536,10 @@ msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/Users
 msgid "Select User Group"
 msgstr "Selezionare Gruppo Utente"
 
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ShortCodes/ShortCodes_Edit.cshtml"
+msgid "Insert Short Codes"
+msgstr "Inserisci short code"
+
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FileDownloader/Index.cshtml"
 msgid "Are you sure?"
 msgstr "Confermi?"
@@ -514,11 +566,11 @@ msgstr "Il processo del file è in corso. Aggiorna la pagina tra qualche secondo
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FrontEndClientStorage/Index.cshtml"
 msgid "Click here, Drop files or Paste images"
-msgstr "Clicca qui, Trascina i file oppure Copia le immagini"
+msgstr "Clicca qui, trascina i file e rilasciali qui o incolla immagini"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/FrontEndClientStorage/Index.cshtml"
 msgid "Loading thumbnail..."
-msgstr "Aggiornamento anteprima..."
+msgstr "Caricamento anteprima..."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
 msgid " | "
@@ -534,7 +586,7 @@ msgstr "Indirizzi"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/MaintenanceAdmin/index.cshtml"
 msgid "Delete"
@@ -598,11 +650,19 @@ msgstr "Salva"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Parts/ContentPickerConnector.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Parts/ContentPickerConnector.cshtml"
 msgid "Parents"
 msgstr "Genitori"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/ShortCodes_ContentPicker.cshtml"
+msgid "Authentication timed-out: please log-on again"
+msgstr "Autenticazione scaduta: rieseguire il login"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/ShortCodes_ContentPicker.cshtml"
+msgid "Cannot perform requested operation"
+msgstr "Impossibile portare a termine l'operazione richiesta"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
 msgid "Delete"
@@ -626,11 +686,15 @@ msgstr "Separa i nomi dei gruppi con || per inserimenti massivi (ad esempio \"Gr
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
 msgid "Update settings"
-msgstr "Aggiornamento impostazioni"
+msgstr "Aggiorna le impostazioni"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/UsersGroupsSettings/Settings.cshtml"
 msgid "User Groups Settings"
 msgstr "Impostazioni Gruppi Utente"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/Widget.ControlWrapper.cshtml"
+msgid "Edit"
+msgstr "Modifica"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.RequestInspectorActivity"
 msgid "Depending on the type of inspection, generates the appropriate output."
@@ -674,7 +738,7 @@ msgstr "Errore"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.TaxonomySetValuesActivity"
 msgid "Success"
-msgstr "Esito positivo"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.TaxonomySetValuesActivity"
 msgid "Taxonomy"
@@ -766,7 +830,7 @@ msgstr "Utente"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseActivity"
 msgid "Utils"
@@ -802,7 +866,7 @@ msgstr "Risposta"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "Success"
-msgstr "Successo"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WebApiResponseEditForm"
 msgid "The data object of the response, the data must be in Json format es: {{\"ErrorType\":\"TicketError\"}}. "
@@ -830,7 +894,7 @@ msgstr "Errore"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WorkflowChangeOwnerActivity"
 msgid "Success"
-msgstr "Esito positivo"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WorkflowChangeOwnerForm"
 msgid "all users"
@@ -850,7 +914,7 @@ msgstr "Selezionare il nuovo Proprietario del Contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.WorkflowChangeOwnerForm"
 msgid "Set Owner of content picker element"
-msgstr "Impostare il Proprietario del picker del contenuto"
+msgstr "Impostare il Proprietario dell'elemento di selezione del contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Controllers.MerchantDomainAssociationAdminController"
 msgid "Cannot manage Apple Merchant Domain Association file"
@@ -894,7 +958,7 @@ msgstr "Non autorizzato a usare la web console"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
 msgid "Cannot replace {0} with {1}"
-msgstr "Impossibile sostituire {0} con {1}"
+msgstr "Non è possibile sostituire {0} con {1}"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
 msgid "Cannot select media"
@@ -902,15 +966,15 @@ msgstr "Impossibile selezionare il contenuto multimediale"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
 msgid "Couldn't delete media items"
-msgstr "Non è stato possibile eliminare i contenuti multimediali"
+msgstr "Non è stato possibile eliminare i files multimediali"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndClientStorageController"
 msgid "This file is not allowed: {0}"
-msgstr "Questo tipo di file non è consentito: {0}"
+msgstr "Questo file non è consentito: {0}"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "Couldn't publish content"
-msgstr "Non è stato possibile pubblicare il contenuto"
+msgstr "Impossibile pubblicare il contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "Couldn't remove content"
@@ -918,31 +982,31 @@ msgstr "Non è stato possibile eliminare il contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "Couldn't unpublish content"
-msgstr "Non è stato possibile annullare la pubblicazione del contenuto"
+msgstr "Impossibile annullare la pubblicazione del contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That {0} has been published."
-msgstr "Il {0} è stato pubblicato."
+msgstr "Questo {0} è stato pubblicato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That {0} has been removed."
-msgstr "Il {0} è stato rimosso."
+msgstr "Questo {0} è stato eliminato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That {0} has been unpublished."
-msgstr "Il {0} è stato spubblicato."
+msgstr "La pubblicazione di questo {0} è stato annullata."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That content has been published."
-msgstr "Il contenuto è stato pubblicato."
+msgstr "Questo contenuto è stato pubblicato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That content has been removed."
-msgstr "Il contenuto è stato rimosso."
+msgstr "Questo contenuto è stato eliminato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.FrontEndContentController"
 msgid "That content has been unpublished."
-msgstr "La pubblicazione del contenuto è stata annullata."
+msgstr "La pubblicazione di questo contenuto è stata annullata."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "Couldn't remove content"
@@ -950,23 +1014,23 @@ msgstr "Non è stato possibile eliminare il contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "Couldn't unpublish content"
-msgstr "Non è stato possibile annullare la pubblicazione del contenuto"
+msgstr "Impossibile annullare la pubblicazione del contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "That {0} has been removed."
-msgstr "Il {0} è stato rimosso."
+msgstr "Questo {0} è stato eliminato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "That {0} has been unpublished."
-msgstr "Questo {0} è stato spubblicato."
+msgstr "La pubblicazione di questo {0} è stato annullata."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "That content has been removed."
-msgstr "Il contenuto è stato rimosso."
+msgstr "Questo contenuto è stato eliminato."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.MaintenanceAdminController"
 msgid "That content has been unpublished."
-msgstr "La pubblicazione del contenuto è stata annullata."
+msgstr "La pubblicazione di questo contenuto è stata annullata."
 
 msgctxt "Laser.Orchard.StartupConfig.Controllers.UsersGroupsSettingsController"
 msgid "check your input!"
@@ -1002,7 +1066,7 @@ msgstr "Cultura {0} del sito rimossa correttamente"
 
 msgctxt "Laser.Orchard.StartupConfig.CultureCommands.CultureCommandsExtension"
 msgid "Supplied culture name {0} is not valid."
-msgstr "La cultura {0} specificata non è valida."
+msgstr "Il nome di lingua fornito, {0}, non è valido."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.MaintenancePartDriver"
 msgid "Error on update google analytics"
@@ -1010,7 +1074,7 @@ msgstr "Errore durante l'aggiornamento di Google Analytics"
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
 msgid "The {0} term has been created."
-msgstr "Il termine {0} e' stato creato."
+msgstr "Il termine {0} è stato creato."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
 msgid "The checked terms have been moved to the translated taxonomy, but some of them didn't have an adequate localization and were removed."
@@ -1022,7 +1086,7 @@ msgstr "I termini selezionati sono stati spostati nella tassonomia tradotta."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
 msgid "The field {0} is mandatory."
-msgstr "Il campo {0} e' obbligatorio."
+msgstr "Il campo {0} è obbligatorio."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TaxonomyFieldExtensionDriver"
 msgid "You're not allowed to create new terms for this taxonomy"
@@ -1030,15 +1094,15 @@ msgstr "Non sei autorizzato a creare nuovi termini per questa tassonomia"
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
 msgid "A localization of the parent term in the specified language does not exist. Please create it first."
-msgstr "Una localizzazione del termine padre nel linguaggio specificato non esiste. E' necessario creare prima tale localizzazione."
+msgstr "Una traduzione del termine padre nel linguaggio specificato non esiste. È necessario creare prima tale traduzione."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
 msgid "The parent term is not localized. Please localize it first."
-msgstr "Il termine padre non e' localizzato. E' necessario localizzare prima tale termine."
+msgstr "Il termine padre non è tradotto. È necessario tradurre prima tale termine."
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
 msgid "The term {0} already exists at this level"
-msgstr "Il termine {0} esiste gia' in questo livello"
+msgstr "Il termine {0} esiste già in questo livello"
 
 msgctxt "Laser.Orchard.StartupConfig.Drivers.TermPartExtensionDriver"
 msgid "The term {0} already exists at this level in the destination taxonomy ({1})"
@@ -1090,11 +1154,11 @@ msgstr "E' possibile creare nuovi termini solo per la lingua principale ({0}). I
 
 msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
 msgid "The parent taxonomy has been changed to its localized version associated to the culture {0}."
-msgstr "La tassonomia padre e' stata cambiata con la sua versione localizzata associata alla cultura {0}."
+msgstr "La tassonomia padre è stata cambiata con la sua versione tradotta associata alla cultura {0}."
 
 msgctxt "Laser.Orchard.StartupConfig.Handlers.TermPartLocalizationHandler"
 msgid "The parent term has been changed to its localized version associated to the culture {0}."
-msgstr "Il termine padre e' stato cambiato con la sua versione localizzata associata alla cultura {0}."
+msgstr "Il termine padre è stato cambiato con la sua versione tradotta associata alla cultura {0}."
 
 msgctxt "Laser.Orchard.StartupConfig.Handlers.UsersGroupsSettingsHandler"
 msgid "UserGroups"
@@ -1138,7 +1202,7 @@ msgstr "Generali"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
 msgid "General sort criteria"
-msgstr "Criteri di ordinamento generali"
+msgstr "Criteri di ordinamento generale"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.ConfigurableSortCriterionProvider"
 msgid "Impossible to find a field definition with name {0} within the part {1}."
@@ -1310,7 +1374,7 @@ msgstr "Cultura Preferenziale"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.FavoriteCultureFilter"
 msgid "Localization"
-msgstr "Localizzazione"
+msgstr "Traduzione"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.FavoriteCultureFilter"
 msgid "Search for Content Items associated with a favorite culture."
@@ -1410,7 +1474,7 @@ msgstr "NON termina con"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.OwnerStringForm"
 msgid "Does not start with"
-msgstr "NON inizia con"
+msgstr "Non inizia con"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.OwnerStringForm"
 msgid "Ends with"
@@ -1426,7 +1490,7 @@ msgstr "È uguale a"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.OwnerStringForm"
 msgid "Is not equal to"
-msgstr "NON è uguale"
+msgstr "Non è uguale a"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.OwnerStringForm"
 msgid "Operator"
@@ -1462,11 +1526,11 @@ msgstr "Includi automaticamente i termini figli nel filtro"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
 msgid "Is associated to all the specified terms"
-msgstr "E' associato a tutti i termini specificati"
+msgstr "É associato a tutti i termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
 msgid "Is associated to one of the specified terms"
-msgstr "E' associato a uno dei termini specificati"
+msgstr "É associato a uno dei termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
 msgid "Source Token"
@@ -1490,7 +1554,7 @@ msgstr "Id dell'Utente Autenticato"
 
 msgctxt "Laser.Orchard.StartupConfig.Providers.ContentUserToken"
 msgid "Content Items"
-msgstr "Contenuti"
+msgstr "Elementi di Contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.Providers.ContentUserToken"
 msgid "Gets the Authenticated User Email"
@@ -1526,7 +1590,7 @@ msgstr "Scripting"
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
 msgid "A comma-separated list of possible outcomes."
-msgstr "Una lista separata da virgole dei possibili risultati in uscita."
+msgstr "Un elenco separato da virgole dei possibili risultati."
 
 msgctxt "Laser.Orchard.StartupConfig.RazorCodeExecution.Forms.RazorExecuteForm"
 msgid "Possible Outcomes."
@@ -1608,9 +1672,25 @@ msgctxt "Laser.Orchard.StartupConfig.Settings.CacheEvictorPartSettingsHook"
 msgid "CacheEvictorPart - The loaded id {0} does not exist"
 msgstr "CacheEvictorPart - L'id {0} caricato non esiste"
 
+msgctxt "Laser.Orchard.StartupConfig.Settings.CacheEvictorPartSettingsHook"
+msgid "No query"
+msgstr "Nessuna query"
+
 msgctxt "Laser.Orchard.StartupConfig.Settings.IdentityPartOnEveryTypeContentDefinitionEventHandler"
 msgid "The content type must have a form of identity. IdentityPart was added."
 msgstr "Il tipo deve avere una Identity. È stata aggiunta IdentityPart"
+
+msgctxt "Laser.Orchard.StartupConfig.ShortCodes.Controllers.ContentShortCodeAdminController"
+msgid "Cannot add shortcode."
+msgstr "Impossibile aggiungere lo shortcode"
+
+msgctxt "Laser.Orchard.StartupConfig.ShortCodes.Providers.ContentShortCodeProvider"
+msgid "Adds a content as part of the text"
+msgstr "Aggiunge un contenuto come parte del testo"
+
+msgctxt "Laser.Orchard.StartupConfig.ShortCodes.Providers.ContentShortCodeProvider"
+msgid "Content"
+msgstr "Contenuto"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.OptionalTermsFilterProvider"
 msgid "ContentItems with the given terms, or any ContentItem if no term si provided to the query."
@@ -1634,11 +1714,11 @@ msgstr "Includi automaticamente i termini figli nel filtro"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
 msgid "Is associated to all the specified terms"
-msgstr "E' associato a tutti i termini specificati"
+msgstr "É associato a tutti i termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
 msgid "Is associated to one of the specified terms"
-msgstr "E' associato a uno dei termini specificati"
+msgstr "É associato a uno dei termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.SelectTermsForm"
 msgid "Terms"
@@ -1658,7 +1738,7 @@ msgstr "Catalogati con i termini specificati tramite token"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "Has terms (tokenized)"
-msgstr "Ha termini (tokenized)"
+msgstr "Ha termini (con token)"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenFilter"
 msgid "None of the ids \"{0}\" is a term."
@@ -1674,15 +1754,15 @@ msgstr "Includi automaticamente i termini figli nel filtro"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "Is associated to all the specified terms"
-msgstr "E' associato a tutti i termini specificati"
+msgstr "É associato a tutti i termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "Is associated to one of the specified terms"
-msgstr "E' associato a uno dei termini specificati"
+msgstr "É associato a uno dei termini specificati"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "Source Token"
-msgstr "Sorgente del Token"
+msgstr "Token Sorgente"
 
 msgctxt "Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections.TaxonomyTokenForm"
 msgid "The token used as a source for term identifiers"
@@ -1702,7 +1782,7 @@ msgstr "Add:Days|Months|Years ad una data"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.AdditionalDateTokens"
 msgid "Current date/time tokens"
-msgstr "Token data/ora corrente"
+msgstr "Token di data e ora corrente"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.AdditionalDateTokens"
 msgid "Date/time"
@@ -1766,7 +1846,7 @@ msgstr "Prefisso dell'Url richiesto"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Site Settings"
-msgstr "Impostazioni del Sito"
+msgstr "Impostazioni Sito"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "The URL Prefix configured in the tenant's settings."
@@ -1774,7 +1854,7 @@ msgstr "Il prefisso Url configurato nelle impostazioni del tenant."
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Tokens for Site Settings"
-msgstr "Token per le impostazioni del Sito"
+msgstr "Tokens per le Impostazioni del Sito"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Top Level for Tenant"
@@ -1794,11 +1874,11 @@ msgstr "Testo"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.StripHtmlToken"
 msgid "Tokens for text strings"
-msgstr "Tokens per stringhe di testo"
+msgstr "Token per le stringhe di testo"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.TaxonomyTokens"
 msgid "Taxonomy Field"
-msgstr "Campo della Tassonomia"
+msgstr "Campo di tassonomia"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.TaxonomyTokens"
 msgid "Terms"
@@ -1810,7 +1890,7 @@ msgstr "Gli id dei termini associati al campo."
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.TaxonomyTokens"
 msgid "Tokens for Taxonomy Fields"
-msgstr "Token per campi Tassonomia"
+msgstr "Token per i campi di Tassonomia"
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Handlers.ProtectionSettingsHandler"
 msgid "Web Api"
@@ -1862,7 +1942,7 @@ msgstr "Contenuto data modificata"
 
 msgctxt "Orchard.Tokens.Providers.ContentDateModified"
 msgid "Content Items"
-msgstr "Contenuti"
+msgstr "Elementi di Contenuto"
 
 msgctxt "Orchard.Tokens.Providers.ContentDateModified"
 msgid "Date the content was created."

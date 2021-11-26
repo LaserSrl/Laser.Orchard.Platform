@@ -122,7 +122,7 @@ msgstr "Voto:"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts.Stars.Details.cshtml"
 msgid "Ratings"
-msgstr "Voti"
+msgstr "Valutazioni"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts.Stars.Details.cshtml"
 msgid "Save"
@@ -170,7 +170,7 @@ msgstr "Dai la tua opinione"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts.Stars.NoAverage.cshtml"
 msgid "Rate:"
-msgstr "Vota:"
+msgstr "Voto:"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts.Stars.NoAverage.cshtml"
 msgid "Save"
@@ -190,7 +190,7 @@ msgstr "."
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts.Stars.SummaryAdmin.cshtml"
 msgid "Rating:"
-msgstr "Voto:"
+msgstr "Valutazione:"
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts_Reviews.cshtml"
 msgid "-"
@@ -222,7 +222,7 @@ msgstr "Nessun commento."
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts_Reviews.cshtml"
 msgid "There are no reviews for this item."
-msgstr "Non ci sono recensioni per questo elemento:"
+msgstr "Non ci sono recensioni per questo elemento."
 
 msgctxt "~/Modules/Contrib.Reviews/Views/Parts_Reviews.cshtml"
 msgid "User Reviews"
