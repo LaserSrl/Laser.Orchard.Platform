@@ -282,7 +282,7 @@ msgstr "Orchard.Framework"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Tenants"
-msgstr "Tenants"
+msgstr "Tenant"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Themes"

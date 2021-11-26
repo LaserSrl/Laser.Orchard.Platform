@@ -130,7 +130,7 @@ msgstr "Imposta aggiunta punti fedeltà"
 
 msgctxt "Laser.Orchard.FidelityGateway.Activities.AddPointsActivity"
 msgid "Success"
-msgstr "Successo"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
 msgid "Error"
@@ -146,7 +146,7 @@ msgstr "Imposta assegnazione premi fedeltà"
 
 msgctxt "Laser.Orchard.FidelityGateway.Activities.RedeemRewardActivity"
 msgid "Success"
-msgstr "Successo"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.FidelityGateway.Handlers.FidelitySettingsHandler"
 msgid "FidelityGateway"

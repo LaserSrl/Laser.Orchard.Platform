@@ -18,7 +18,7 @@ msgstr "Codice gioco"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
 msgid "Device"
-msgstr "Tipo di dispositivo"
+msgstr "Dispositivo"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
 msgid "Identifier"
@@ -30,7 +30,7 @@ msgstr "Classifica."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
 msgid "name"
-msgstr "Nome"
+msgstr "nome"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetList.cshtml"
 msgid "point"
@@ -58,7 +58,7 @@ msgstr "Codice gioco"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
 msgid "Device"
-msgstr "Tipo di dispositivo"
+msgstr "Dispositivo"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
 msgid "Game Rankings for {0}"
@@ -78,7 +78,7 @@ msgstr "Classifica."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
 msgid "name"
-msgstr "Nome"
+msgstr "nome"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/GetListSingleGame.cshtml"
 msgid "point"
@@ -98,7 +98,7 @@ msgstr "Di {0}"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/AdminRanking/Index.cshtml"
 msgid "Index of games"
@@ -398,7 +398,7 @@ msgstr "È stato raggiunto il numero massimo di immagini caricabile. Provare a r
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Must accept terms and conditions"
-msgstr "E' necessario accettare i termini e le condizioni"
+msgstr "È necessario accettare i termini e le condizioni"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Question"
@@ -418,11 +418,11 @@ msgstr "Rimuovi"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Remove the image?"
-msgstr "Vuoi rimuovere l\\\\'immagine?"
+msgstr "Vuoi rimuovere l\\'immagine?"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Terms and conditions text"
-msgstr "Testo dei termini e delle condizioni"
+msgstr "Testo Termini e condizioni"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/Parts/Questionnaire_Edit.cshtml"
 msgid "Use recaptcha"
@@ -502,11 +502,11 @@ msgstr "Condizione"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Must accept terms and conditions"
-msgstr "Obbligartoria accettazione dei termini e condizioni"
+msgstr "È necessario accettare i termini e le condizioni"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Properties"
-msgstr "Propriet&agrave"
+msgstr "Proprietà"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Question text"
@@ -514,7 +514,7 @@ msgstr "Testo della domanda"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Question type"
-msgstr "Tipologia domanda"
+msgstr "Tipo domanda"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Remove"
@@ -526,7 +526,7 @@ msgstr "Vuoi rimuovere l\\'immagine?"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Required"
-msgstr "Richiesto"
+msgstr "Obbligatorio"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/EditorTemplates/QuestionEditModel.cshtml"
 msgid "Section"
@@ -574,7 +574,7 @@ msgstr "Inoltra questionario"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit.cshtml"
 msgid "Thank you for submitting your feedback."
-msgstr "Grazie di averci fornito il tuo parere!"
+msgstr "Grazie per averci inviato la tua opinione."
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/Parts/Questionnaire_FrontEnd_Edit_Unauthorized.cshtml"
 msgid "create an account"
@@ -598,7 +598,7 @@ msgstr "Risposte"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Clear"
-msgstr "Annulla"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Completeness"
@@ -618,7 +618,7 @@ msgstr "Esporta"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Filter"
-msgstr "Filtra"
+msgstr "Filtro"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Detail.cshtml"
 msgid "Filter options"
@@ -674,7 +674,7 @@ msgstr "Di {0}"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "Clear"
-msgstr "Annulla"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Questionnaires/Views/QuestionnaireStats/Index.cshtml"
 msgid "Language: {0}"
@@ -714,7 +714,7 @@ msgstr "Statistiche del questionario"
 
 msgctxt "Laser.Orchard.Questionnaires.Activities.GameRankingSubmittedgEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.Questionnaires.Activities.GameRankingSubmittedgEvent"
 msgid "Questionnaire"
@@ -726,7 +726,7 @@ msgstr "Questionario - Inviata Classifica del Gioco)."
 
 msgctxt "Laser.Orchard.Questionnaires.Activities.QuestionnaireSubmittedEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.Questionnaires.Activities.QuestionnaireSubmittedEvent"
 msgid "Questionnaire"

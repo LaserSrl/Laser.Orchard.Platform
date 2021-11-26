@@ -38,7 +38,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "First Name"
@@ -94,7 +94,7 @@ msgstr "Indirizzo di spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Title"
@@ -186,7 +186,7 @@ msgstr "Aggiungi Indirizzo"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Billing Addresses"
-msgstr "Indirizzo di Fatturazione"
+msgstr "Indirizzi di Fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Delete"
@@ -218,7 +218,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country: {0}"
@@ -278,7 +278,7 @@ msgstr "Seleziona il tuo Paese dall'elenco."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Stored Billing Address"
@@ -310,7 +310,7 @@ msgstr "Clicca qui per cambiare gli indirizzi selezionati."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Email address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Phone number"
@@ -354,7 +354,7 @@ msgstr "e-mail"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "International Phone Prefix"
-msgstr "Prefisso internazionale"
+msgstr "Prefisso telefonico internazionale"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Next"
@@ -550,7 +550,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "First Name"
@@ -678,7 +678,7 @@ msgstr "Errore"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Outcome"
@@ -802,7 +802,7 @@ msgstr "Stati: {0}"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Province"
@@ -946,7 +946,7 @@ msgstr "E-Commerce"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "A user is attempting to advance in checkout."
@@ -954,7 +954,7 @@ msgstr "Un utente sta cerando di procedere al checkout."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Events"
@@ -970,7 +970,7 @@ msgstr "Criteri sui cookies della request"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Test request cookies"
@@ -986,7 +986,7 @@ msgstr "Criteri per determinate intestazioni delle richiesta (Request Headers)"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Request header"
@@ -1406,7 +1406,7 @@ msgstr "Tipi di Contenuto"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
 msgid "Select some content types."
-msgstr "Selezionare i tipi di contenuto"
+msgstr "Scegli almeno un tipo di contenuto."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "(Administrative type: {0})"
@@ -1422,7 +1422,7 @@ msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Not authorized to manage address configuration settings"
@@ -1518,7 +1518,7 @@ msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Province"

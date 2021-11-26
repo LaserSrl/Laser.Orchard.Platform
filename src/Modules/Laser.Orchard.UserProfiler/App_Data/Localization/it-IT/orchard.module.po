@@ -30,7 +30,7 @@ msgstr "Nessuno"
 
 msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
 msgid "Or"
-msgstr "O"
+msgstr "Oppure"
 
 msgctxt "Laser.Orchard.UserProfiler.Projections.UserTrackingFilterForm"
 msgid "Tag"

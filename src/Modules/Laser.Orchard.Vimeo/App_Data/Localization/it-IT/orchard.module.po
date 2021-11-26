@@ -154,7 +154,7 @@ msgstr "Token di accesso autorizzato"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.Vimeo.Activities.VimeoVideoActivity"
 msgid "Vimeo"

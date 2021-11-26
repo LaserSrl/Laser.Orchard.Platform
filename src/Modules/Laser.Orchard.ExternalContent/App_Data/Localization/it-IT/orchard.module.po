@@ -74,7 +74,7 @@ msgstr "Genera su L For Mobile"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "HTTP Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "If checked cache will be stored also in filesystem (in folder/App_Data/cache)."
@@ -122,7 +122,7 @@ msgstr "Chiave privata."
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Required"
-msgstr "Richiesto"
+msgstr "Obbligatorio"
 
 msgctxt "~/Modules/Laser.Orchard.ExternalContent/Views/DefinitionTemplates/FieldExternalSetting.cshtml"
 msgid "Scheduled Minute"

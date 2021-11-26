@@ -14,7 +14,7 @@ msgstr "{0} e deve contenere almeno {1}"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Account Information"
@@ -26,7 +26,7 @@ msgstr "Conferma password:"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Create a New Account"
-msgstr "Creare un nuovo Account"
+msgstr "Crea una nuova utenza"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Email:"
@@ -62,7 +62,7 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "The password can't be empty"
@@ -70,7 +70,7 @@ msgstr "La password non può essere vuota"
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Use the form below to create a new account."
-msgstr "Utilizzare il modulo seguente per creare un nuovo account."
+msgstr "Usa il modulo sottostante per creare una nuova utenza."
 
 msgctxt "~/Modules/itWORKS.ExtendedRegistration/Views/Register.cshtml"
 msgid "Username:"
@@ -94,7 +94,7 @@ msgstr "L'indirizzo e-mail inserito non è valdo. Per favore verifica il valore 
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "The new password and confirmation password do not match."
-msgstr "La nuova password e la conferma password non sono uguali."
+msgstr "La nuova password e la password di verifica non corrispondono."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "The password provided is invalid. Please enter a valid password value."
@@ -118,7 +118,7 @@ msgstr "Il nome utente inserito non è valido. Per favore verifica il valore e r
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "User with that username and/or email already exists."
-msgstr "Esiste già un utente con il nome e/o l'email indicata."
+msgstr "Esiste già un utente con questo nome utente o indirizzo email."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "Username already exists. Please enter a different user name."
@@ -126,17 +126,17 @@ msgstr "Il nome utente è già in uso. Per favore scegli un nome utente diverso.
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "You must specify a password of {0} or more characters."
-msgstr "E' necessario specificare una password di {0} o più caratteri."
+msgstr "È necessario specificare una password di {0} o più caratteri."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "You must specify a username."
-msgstr "E' necessario specificare un nome utente."
+msgstr "È necessario specificare un nome utente."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "You must specify a valid email address."
-msgstr "E' necessario specificare un indirizzo email valido."
+msgstr "È necessario specificare un indirizzo email valido."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "You must specify an email address."
-msgstr "E' necessario specificare un indirizzo email."
+msgstr "È necessario specificare un indirizzo email."
 
