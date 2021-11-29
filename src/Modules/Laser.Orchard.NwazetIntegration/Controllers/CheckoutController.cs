@@ -16,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
@@ -199,7 +198,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // pick the one used/updated most recently
                         .OrderByDescending(a => a.TimeStampUTC)
                         .First());
-                    if (model.ShippingRequired) {
+                    // If Shipping is Required and we have a configured ShippingAddress:
+                    if (model.ShippingRequired && model.ListAvailableShippingAddress.Any(ar => ar.CountryId > 0)) {
                         model.ShippingAddressVM = new AddressEditViewModel(model
                             .ListAvailableShippingAddress
                             .Where(ar => ar.CountryId > 0) // make sure the address is configured for a country that matches a territory
@@ -737,8 +737,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             vm.ShippingAddressVM.Province == vm.BillingAddressVM.Province
           ) {
                 vm.BillAtSameShippingAddress = true;
-            }
-            else {
+            } else {
                 vm.BillAtSameShippingAddress = false;
             }
         }

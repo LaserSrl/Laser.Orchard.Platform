@@ -45,6 +45,7 @@ namespace Laser.Orchard.SEO.Filters {
 
             var urlPrefix = _shellSettings.RequestUrlPrefix;
             var applicationPath = filterContext.HttpContext.Request.ApplicationPath;
+            var urlPath = filterContext.HttpContext.Request.Path;
             var strippedSegments = url.Segments.Select(s => s.Trim('/')).ToList();
             //to generate the path we want to use, remove from the segments the ApplicationPath and UrlPrefix
             //remove only the first of each, because there may be segments with the same "value"
@@ -69,11 +70,18 @@ namespace Laser.Orchard.SEO.Filters {
 
             // specific condition for the not found page
             // error handled in case the secure socket filter checks the existence of the page
-            if (filterContext.RouteData.Values["area"]!=null && filterContext.RouteData.Values["area"].ToString().Equals("Common") &&
+            if (filterContext.RouteData.Values["area"] != null && filterContext.RouteData.Values["area"].ToString().Equals("Common") &&
                filterContext.ActionDescriptor.ActionName.Equals("NotFound") &&
                filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Error")) {
                 if (!string.IsNullOrEmpty(filterContext.HttpContext.Request.QueryString["path"])) {
                     pathQs = filterContext.HttpContext.Request.QueryString["path"].ToString();
+                }
+                else if (urlPath.EndsWith("/")) {
+                    var specialRule = _redirectService.GetCachedRedirects().FirstOrDefault(x => x.SourceUrl == "*/" && x.DestinationUrl == "*");
+                    if (specialRule != null) {
+                        filterContext.Result = new RedirectResult(urlPath.TrimEnd('/') + url.Query, specialRule.IsPermanent);
+                        return;
+                    }
                 }
             }
 

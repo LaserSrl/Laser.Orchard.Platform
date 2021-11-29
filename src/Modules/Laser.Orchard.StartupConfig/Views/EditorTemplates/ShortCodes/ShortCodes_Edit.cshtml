@@ -1,0 +1,94 @@
+﻿@model Laser.Orchard.StartupConfig.ShortCodes.ViewModels.ShortCodesEditor
+@{
+    Style.Require("jQueryColorBox").AtHead();
+    Script.Require("jQueryColorBox").AtFoot();
+    var additionalUrlParameters = "";
+    <div id="shortcode-@Model.Part-@Model.Field-container"
+         data-type="shortcode-container"
+         data-element-name="@Model.ElementName">
+        <label>@T("Insert Short Codes")</label>
+        @foreach (var provider in Model.Descriptors) {
+            var routeValues = new RouteValueDictionary(provider.Editor.RouteValues);
+            routeValues.Add("type", Model.ContentType);
+            if (Model.Part != null) {
+                routeValues.Add("part", Model.Part.PartDefinition.Name);
+                routeValues.Add("hostId", Model.Part.Id);
+            }
+            if (Model.Field != null) {
+                routeValues.Add("field", Model.Field.Name);
+            }
+
+            <a id="@Model.ElementName.Replace(".","_")-@provider.Name"
+               href="@Html.Raw(Url.Action(provider.Editor.ActionName,provider.Editor.ControllerName, routeValues))"
+               data-type="shortcode-button"
+               data-shortcode-format="@provider.ShortCodeFormat"
+               data-flavor="@Model.ElementFlavor"
+               data-element-name="@Model.ElementName"
+               class="btn btn-app shortcode shortcode-@provider.Name">
+                <i class="@provider.ButtonIconClass"></i>
+                @provider.ButtonText
+            </a>
+        }
+    </div>
+}
+@using (Script.Foot()) {
+    <script type="text/javascript">
+
+        function setTextToCurrentPos(element, text) {
+            var curPos = element.prop("selectionStart");
+            let x = element.val();
+            element.val(
+                x.slice(0, curPos) + text + x.slice(curPos));
+        }
+
+        $('*[data-type="shortcode-button"]').click(function (e) {
+            e.preventDefault();
+            var shortcode = $(this);
+            var flavor = shortcode.data("flavor");
+            var shortcodeFormat = shortcode.data("shortcode-format");
+            var addUrl = shortcode.attr('href');
+            var elementName = shortcode.data("element-name");
+            if (addUrl != null) {
+                $.colorbox({
+                    href: addUrl,
+                    iframe: true,
+                    reposition: true,
+                    width: "100%",
+                    height: "100%",
+                    closeButton: true,
+                    onLoad: function () { // hide the scrollbars from the main window
+                        $('html, body').css('overflow', 'hidden');
+                        $('#cboxClose').remove();
+                        shortcode.trigger("opened");
+                    },
+                    onClosed: function () {
+                        $('html, body').css('overflow', '');
+                        var selectedData = $.colorbox.selectedData;
+                        if (selectedData == null) { // Dialog cancelled, do nothing
+                            shortcode.trigger("closed");
+                            return;
+                        }
+                        if (flavor == "Html") {
+                            if (tinymce.editors[elementName.replace(/\./g, "_")]) {
+                                tinymce.editors[elementName.replace(/\./g, "_")].execCommand('mceInsertContent', false, selectedData)
+                            }
+                        }
+                        else {
+                            setTextToCurrentPos($("*[name='" + elementName + "']"), selectedData);
+                        }
+
+                        shortcode.trigger("closed");
+                    }
+                });
+            }
+        });
+        $('*[data-type="shortcode-container"]').each(function () {
+            var shortcodeContainer = $(this);
+            var elementName = shortcodeContainer.data("element-name");
+            var destinationContainer = $("*[name='" + elementName + "']").parent();
+            shortcodeContainer.prependTo(destinationContainer);
+        });
+    </script>
+}
+
+

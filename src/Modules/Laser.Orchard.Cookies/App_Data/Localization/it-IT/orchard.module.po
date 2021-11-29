@@ -54,11 +54,11 @@ msgstr "Impostazioni GDPR"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "If the user accepts the cookies, it will display a reset cookies line."
-msgstr "Se l'utente accetta i cookie, visualizza una linea per pulire i cookie."
+msgstr "Se l'utente accetta i cookies, sarà visualizzata la barra per pulire i cookies"
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "It will show a small reset link instead of a full liner."
-msgstr "Visualizza un link Pulisci piccolo invece di uno grande."
+msgstr "Verrà visualizzato un piccolo link per la pulizia dei cookie al posto della linea intera."
 
 msgctxt "~/Modules/Laser.Orchard.Cookies/Views/EditorTemplates/Parts.Cookie.Settings.cshtml"
 msgid "Make the reset button discreet?"

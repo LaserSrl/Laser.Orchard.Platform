@@ -26,11 +26,11 @@ msgstr "Conferma obbligatoria"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "Declaring what pattern should be used for validating a field’s value, in the form of a regular expression. (optional)"
-msgstr "Pattern utilizzato per la validazione del valore del campo, in forma di espressione regolare. (opzionale)"
+msgstr "Modello da utilizzare per convalidare il valore del campo, in forma di espressione regolare. (Opzionale)"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "Help text"
-msgstr "Suggerimento"
+msgstr "Testo della guida"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "IsVisible"
@@ -38,7 +38,7 @@ msgstr "Visibile"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "Modello"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "Required"
@@ -46,7 +46,7 @@ msgstr "Obbligatorio"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/EncryptedStringFieldSettings.cshtml"
 msgid "The help text is written under the field when the user is entering a value."
-msgstr "Il suggerimento è scritto al di sotto del campo quando l'utente sta digitando il valore."
+msgstr "Il testo della guida è scritto sotto il campo quando l'utente inserisce un valore."
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "Check if the confirm field is shown and required."
@@ -62,15 +62,15 @@ msgstr "Conferma obbligatoria"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "Declaring what pattern should be used for validating a field’s value, in the form of a regular expression. (optional)"
-msgstr "Pattern utilizzato per la validazione del valore del campo, in forma di espressione regolare. (opzionale)"
+msgstr "Modello da utilizzare per convalidare il valore del campo, in forma di espressione regolare. (Opzionale)"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "Help text"
-msgstr "Suggerimento"
+msgstr "Testo della guida"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "Modello"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "Required"
@@ -78,7 +78,7 @@ msgstr "Obbligatorio"
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/DefinitionTemplates/HashedStringFieldSettings.cshtml"
 msgid "The help text is written under the field when the user is entering a value."
-msgstr "Il suggerimento è scritto al di sotto del campo quando l'utente sta digitando il valore."
+msgstr "Il testo della guida è scritto sotto il campo quando l'utente inserisce un valore."
 
 msgctxt "~/Modules/Laser.Orchard.SecureData/Views/EditorTemplates/Fields/EncryptedStringField.Edit.cshtml"
 msgid "Confirm {0}"
@@ -210,7 +210,7 @@ msgstr "Valore"
 
 msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
 msgid "{0} Content Fields"
-msgstr "{0} Campi di contenuto"
+msgstr "Campi del contenuto {0}"
 
 msgctxt "Laser.Orchard.SecureData.Filters.EncryptedStringFieldFilterProvider"
 msgid "Api Secret"

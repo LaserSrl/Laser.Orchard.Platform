@@ -10,7 +10,7 @@
 
 msgctxt "~/Themes/Proton/Views/Content-BlogPost.cshtml"
 msgid "by"
-msgstr "di"
+msgstr "Realizzato da"
 
 msgctxt "~/Themes/Proton/Views/Content-BlogPost.Summary.cshtml"
 msgid "READ MORE"
@@ -46,7 +46,7 @@ msgstr "INFO"
 
 msgctxt "~/Themes/Proton/Views/Message.cshtml"
 msgid "SUCCESS"
-msgstr "SUCCESSO"
+msgstr "COMPLETATO"
 
 msgctxt "~/Themes/Proton/Views/Message.cshtml"
 msgid "WARNING"
@@ -82,7 +82,7 @@ msgstr "Conferma E-mail"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Confirm Email Address"
-msgstr "Conferma Indirizzo Email"
+msgstr "Conferma il tuo indirizzo email"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "E-Mail"
@@ -90,7 +90,7 @@ msgstr "E-mail"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Email Address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "GET IN TOUCH"
@@ -102,7 +102,7 @@ msgstr "Messaggio"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Name"
-msgstr "NOME"
+msgstr "Nome"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Send Us A Message"
@@ -110,7 +110,7 @@ msgstr "Invia messaggio"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Upload file"
-msgstr "Upload file"
+msgstr "Carica file"
 
 msgctxt "~/Themes/Proton/Views/Parts.ContactForm-PaginaContatto.cshtml"
 msgid "Your Name"

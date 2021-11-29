@@ -162,7 +162,7 @@ msgstr "Email"
 
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
 msgid "Email Address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Confirm.cshtml"
 msgid "Email Confirmation"
@@ -194,7 +194,7 @@ msgstr "Rimozione Email a uso commerciale"
 
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.EmailSuccess.cshtml"
 msgid "Your Email address has been removed! Thank you!"
-msgstr "Il tuo indirizzo email ha completato la rimozione! Grazie!"
+msgstr "La tua email è stata rimossa! Grazie!"
 
 msgctxt "~/Modules/Laser.Orchard.MailCommunication/Views/Unsubscribe.Error.cshtml"
 msgid "Email unsubscribe"
