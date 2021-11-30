@@ -4,6 +4,7 @@ using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Permissions;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Data;
 using Orchard.Localization;
@@ -16,18 +17,46 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         private readonly IOrchardServices _orchardServices;
         private readonly IPaymentService _paymentService;
+        private readonly IWorkContextAccessor _workContextAccessor;
+
+        private string PaymentInfoPrefix => "OrderPaymentInfo";
 
         public OrderPartDriver(
             IOrchardServices orchardServices,
-            IPaymentService paymentService)
+            IPaymentService paymentService,
+            IWorkContextAccessor workContextAccessor)
         {
             _orchardServices = orchardServices;
             _paymentService = paymentService;
+            _workContextAccessor = workContextAccessor;
 
             T = NullLocalizer.Instance;
         }
 
         public Localizer T { get; set; }
+
+        protected override DriverResult Editor(OrderPart order, IUpdateModel updater, dynamic shapeHelper) {
+            if (!_orchardServices.Authorizer.Authorize(OrderPermissions.ManageOrders, null, T("Cannot manage orders")))
+                return null;
+
+            if (updater!=null) {
+                var viewModel = new PaymentInfoViewModel();
+                updater.TryUpdateModel(viewModel, PaymentInfoPrefix, null, null);
+
+                // I need to edit payment transaction id if changed.
+                var payment = _paymentService.GetPaymentByGuid(order.Charge?.TransactionId);
+                var transactionId = viewModel.TransactionId;
+                if (transactionId != null) {
+                    if (!payment.TransactionId.Equals(transactionId, StringComparison.InvariantCultureIgnoreCase)) {
+                        var eventText = T("Transaction id changed from {0} to {1}", payment.TransactionId, transactionId);
+                        payment.TransactionId = transactionId;
+                        order.LogActivity(OrderPart.Event, eventText.Text, _orchardServices.WorkContext.CurrentUser?.UserName ?? "System");
+                    }
+                }
+            }
+
+            return Editor(order, shapeHelper);
+        }
 
         //GET
         protected override DriverResult Editor(OrderPart order, dynamic shapeHelper)
@@ -54,11 +83,12 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                         UpdateDate = payment.UpdateDate,
                         Success = payment.Success,
                         Error = payment.Error,
-                        TransationId = payment.TransactionId,
+                        TransactionId = payment.TransactionId,
                     };
                     return shapeHelper.EditorTemplate(
                         TemplateName: "Parts/Order.PaymentInfo",
-                        Model: model);
+                        Model: model,
+                        Prefix: PaymentInfoPrefix);
                 }));
 
             // Checkout policies
