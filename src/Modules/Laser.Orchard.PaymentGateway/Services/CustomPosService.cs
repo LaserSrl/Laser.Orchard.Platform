@@ -80,6 +80,24 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return btns;
         }
 
+        public override string GetChargeAdminUrl(PaymentRecord payment) {
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CustomPosSiteSettingsPart>();
+            if (settings != null) {
+                var customPos = settings.CustomPos;
+
+                var pos = customPos.FirstOrDefault(cp => cp.Name.Equals(payment.PosName, StringComparison.InvariantCultureIgnoreCase));
+                if (pos != null) {
+                    return InnerChargeAdminUrl(payment);
+                }
+            }
+
+            return base.GetChargeAdminUrl(payment);
+        }
+
+        protected override string InnerChargeAdminUrl(PaymentRecord payment) {
+            return base.InnerChargeAdminUrl(payment);
+        }
+
         public SelectList GetCustomPosProviders(string selectedProvider) {
             var instances = _customPosProviders;
             List<SelectListItem> lSelectList = new List<SelectListItem>();
