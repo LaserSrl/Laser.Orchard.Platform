@@ -22,7 +22,7 @@ msgstr "Telefono per recupero password"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/EditorTemplates/Parts/UserPwdRecoveryPart_Edit.cshtml"
 msgid "Phone number"
-msgstr "Telefono"
+msgstr "Numero di telefono"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/LastUserReportHome.cshtml"
 msgid "REPORTAGE"
@@ -58,7 +58,7 @@ msgstr "Apri il sotto menu di {0}"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid " if you don't have an account."
-msgstr "se non hai un account."
+msgstr " se non hai un'utenza."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "...or login with:"
@@ -74,11 +74,11 @@ msgstr "Accedi a Auto & moto d'epoca."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Login was unsuccessful. Please correct the errors and try again."
-msgstr "La login non è riuscita. Correggere gli errori e riprovare."
+msgstr "Accesso non effettuato. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Lost your Password?"
-msgstr "Hai dimenticato la tua password?"
+msgstr "Hai perso la tua Password?"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Password"
@@ -86,7 +86,7 @@ msgstr "Password"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Please enter your username and password."
-msgstr "Inserire utente e password."
+msgstr "Inserire il nome utente e la password."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Register"
@@ -94,7 +94,7 @@ msgstr "Registrati"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Remember Me"
-msgstr "Ricordami"
+msgstr "Ricorda le mie credenziali di accesso"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthLogOn.cshtml"
 msgid "Sign In"
@@ -110,11 +110,11 @@ msgstr "Nome utente"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Account creation was unsuccessful. Please correct the errors and try again."
-msgstr "La creazione dell'account non è riuscita. Correggere gli errori e riprovare."
+msgstr "Creazione utenza fallita. Correggi gli errori e riprova."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Confirm password"
-msgstr "Conferma password"
+msgstr "Conferma la password"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Confirm password:"
@@ -122,7 +122,7 @@ msgstr "Conferma password:"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Create a New Account"
-msgstr "Creare un nuovo Account"
+msgstr "Crea una nuova utenza"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Email"
@@ -146,7 +146,7 @@ msgstr "Le password devono essere lunghe almeno {0} caratteri."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Register"
-msgstr "Registra"
+msgstr "Registrati"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "This user account will be linked to <b>{0}</b> when you login."
@@ -154,7 +154,7 @@ msgstr "Questo account utente verrà collegato a <b>{0}</b> quando effettui l'ac
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Use the form below to create a new account."
-msgstr "Usare il modulo sottostante per creare un nuovo account."
+msgstr "Usa il modulo sottostante per creare una nuova utenza."
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/OpenAuthRegister.cshtml"
 msgid "Username"

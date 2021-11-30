@@ -24,9 +24,6 @@ using System.Xml;
 namespace Laser.Orchard.PaymentGestPay.Services {
     public class PosServiceGestPay : PosServiceBase, IGestPayAdminServices, IGestPayTransactionServices {
 
-
-        public ILogger Logger { get; set; }
-
         public PosServiceGestPay(
             IOrchardServices orchardServices,
             IRepository<PaymentRecord> repository,

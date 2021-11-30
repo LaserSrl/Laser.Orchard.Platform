@@ -78,7 +78,7 @@ msgstr "(Schema predefinito)"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Action"
-msgstr "Action"
+msgstr "Azione"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Area"
@@ -142,11 +142,11 @@ msgstr "Elementi da visualizzare"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Maximum items"
-msgstr "Massimo numero di oggetti"
+msgstr "Numero massimo di elementi"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Maximum number of items which can be queried at once. Use 0 for unlimited. This is only used as a failsafe when the number of items comes from a user-provided source such as the query string."
-msgstr "Il numero massimo di oggetti che si possano ricercare. Inserire 0 per non imporre un limite. Questo parametro è utilizzato con sicurezza nel caso in cui il numero di oggetti sia dato dall'utente."
+msgstr "Numero massimo di elementi che possono essere interrogati in una volta. Inserisci 0 per non porre limiti. Questo è usato solo come valore limite di sicurezza quando il numero di elementi è fornito dall'utente e proviene, ad esempio, dalla stringa di query."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Menu text"
@@ -178,7 +178,7 @@ msgstr "Restituisce il risultato di una query Hql"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Shape"
-msgstr "Shape"
+msgstr "Forma"
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "Show on admin menu"
@@ -214,11 +214,11 @@ msgstr "L'icona usata per il menu link."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The number of items to display. Enter 0 for no limit. When using pagination, this is the number of items per page."
-msgstr "Il numero di oggetti da visualizzare. Inserire 0 per non imporre un limite. Quando si usa la paginazione, questo è il numero di oggetti per pagina."
+msgstr "Il numero di elementi da visualizzare. Immettere 0 per non porre limiti. Quando si utilizza la paginazione, questo rappresenta il numero di elementi per pagina."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The number of items to skip (e.g., if 2 is entered, the first 2 items won't be diplayed)."
-msgstr "Il numero di oggetti da saltare (e.g. se si inserisce 2, i primi 2 oggetti non saranno visualizzati)."
+msgstr "Il numero di elementi da ignorare (es: se inserisci 2, i primi 2 elementi non saranno visualizzati)."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The position in the menu."
@@ -242,7 +242,7 @@ msgstr "Il testo della voce del menu di amministrazione."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "The text that should appear in the menu."
-msgstr "Il testo che dovrebbe apparire nel menu."
+msgstr "Il testo che deve apparire nel menu."
 
 msgctxt "~/Modules/Laser.Orchard.ContentExtension/Views/EditorTemplates/Parts.Navigation.DynamicProjection.Edit.cshtml"
 msgid "There are not forms set. Create the first by adding a cshtml file in the /App_Data/Sites/{tenant}/Code folder"
@@ -258,7 +258,7 @@ msgstr "Digitare il nome di un tipo di contenuto. Lasciare vuoto nel caso in cui
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "check your input!"
-msgstr "verificare i valori inseriti!"
+msgstr "verifica i valori inseriti!"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.AdminController"
 msgid "ContentType Permission settings updated."
@@ -298,7 +298,7 @@ msgstr "L'estensione del file non è tra quelle autorizzate o non è contenuta n
 
 msgctxt "Laser.Orchard.ContentExtension.Drivers.ViewDataContainer"
 msgid "Suffix should not contain special characters."
-msgstr "Il suffisso non può contenere caratteri speciali."
+msgstr "Il suffisso non deve contenere caratteri speciali."
 
 msgctxt "Laser.Orchard.ContentExtension.Drivers.ViewDataContainer"
 msgid "The AdminMenuText field is required"

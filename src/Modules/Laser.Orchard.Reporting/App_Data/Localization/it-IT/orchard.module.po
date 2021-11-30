@@ -174,7 +174,7 @@ msgstr "Nuova Dashboard"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
 msgid "Download"
-msgstr "Download"
+msgstr "Scarica"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/Display.cshtml"
 msgid "Execute report"
@@ -298,7 +298,7 @@ msgstr "Elimina"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
 msgid "Download"
-msgstr "Download"
+msgstr "Scarica"
 
 msgctxt "~/Modules/Laser.Orchard.Reporting/Views/Report/ShowDashboard.cshtml"
 msgid "Filters"
@@ -458,11 +458,11 @@ msgstr "{0} ({1})"
 
 msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
 msgid "{0} Content Fields"
-msgstr "{0} Campi di contenuto"
+msgstr "Campi del contenuto {0}"
 
 msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
 msgid "Content Fields for {0}"
-msgstr "Campo di {0}"
+msgstr "Campi di contenuto per {0}"
 
 msgctxt "Laser.Orchard.Reporting.Providers.FieldGroupByParameterProvider"
 msgid "group the result by '{0}' values"
@@ -486,7 +486,7 @@ msgstr "{0} compreso fra {1}-{2}"
 
 msgctxt "Laser.Orchard.Reporting.Services.FieldAggregateQueryService"
 msgid "Select an option"
-msgstr "Selezionare una opzione"
+msgstr "Seleziona un'opzione"
 
 msgctxt "Laser.Orchard.Reporting.Services.ReportManager"
 msgid "[No Title]"

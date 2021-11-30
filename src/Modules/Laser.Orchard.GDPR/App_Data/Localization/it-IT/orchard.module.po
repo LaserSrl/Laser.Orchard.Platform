@@ -258,11 +258,11 @@ msgstr "Contenuto cancellato. Il token GDPRContentContext contiene informazioni 
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
 msgid "Content Items"
-msgstr "Contenuti"
+msgstr "Elementi di Contenuto"
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRContentActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
 msgid "Anonymize the selected ContentItems"
@@ -270,7 +270,7 @@ msgstr "Anonimizza i Contenuti selezionati."
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
 msgid "Content Items"
-msgstr "Contenuti"
+msgstr "Elementi di Contenuto"
 
 msgctxt "Laser.Orchard.GDPR.Activities.GDPRProcessTask"
 msgid "Erase the selected ContentItems"

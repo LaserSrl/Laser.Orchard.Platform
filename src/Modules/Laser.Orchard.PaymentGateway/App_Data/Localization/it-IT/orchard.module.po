@@ -58,7 +58,7 @@ msgstr "Errore"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Payment/Info.cshtml"
 msgid "Outcome"
@@ -110,7 +110,7 @@ msgstr "Data"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/All.cshtml"
 msgid "No data found."
@@ -166,7 +166,7 @@ msgstr "Data"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PaymentInfo/Index.cshtml"
 msgid "No data found."
@@ -210,7 +210,7 @@ msgstr "C'è stato un errore nell'inizializzazione del pagamento. È consigliato
 
 msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
 msgid "Manage payment result"

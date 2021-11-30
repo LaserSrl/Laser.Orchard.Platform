@@ -22,7 +22,7 @@ msgstr "L'URL Personalizzato è una serie di parametri da aggiungere alla query 
 
 msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
 msgid "Action"
-msgstr "Action"
+msgstr "Azione"
 
 msgctxt "~/Modules/Laser.Orchard.AdminToolbarExtensions/Views/EditorTemplates/SummaryAdminToolbarLabel.cshtml"
 msgid "Area"

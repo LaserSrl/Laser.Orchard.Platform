@@ -226,7 +226,7 @@ msgstr "È compreso"
 
 msgctxt "Contrib.Voting.Filters.VoteFilterForm"
 msgid "Is equal to"
-msgstr "Uguale a"
+msgstr "È uguale a"
 
 msgctxt "Contrib.Voting.Filters.VoteFilterForm"
 msgid "Is greater than"
@@ -250,7 +250,7 @@ msgstr "Non è compreso"
 
 msgctxt "Contrib.Voting.Filters.VoteFilterForm"
 msgid "Is not equal to"
-msgstr "NON è uguale"
+msgstr "Non è uguale a"
 
 msgctxt "Contrib.Voting.Filters.VoteFilterForm"
 msgid "Max"

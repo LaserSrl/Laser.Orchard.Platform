@@ -286,7 +286,7 @@ msgstr "La data di inizio o quella di fine non sono valide."
 
 msgctxt "Laser.Orchard.Events.Drivers.CalendarPartDriver"
 msgid "Suffix should not contain special characters."
-msgstr "Il suffisso non può contenere caratteri speciali."
+msgstr "Il suffisso non deve contenere caratteri speciali."
 
 msgctxt "Laser.Orchard.Events.Projections.ActivityEndDateSortCriterionProvider"
 msgid "Activity Part Record"

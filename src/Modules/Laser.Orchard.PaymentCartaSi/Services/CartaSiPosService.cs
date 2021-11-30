@@ -21,8 +21,6 @@ using System.Web.Mvc;
 namespace Laser.Orchard.PaymentCartaSi.Services {
     public class CartaSiPosService : PosServiceBase, ICartaSiTransactionService {
 
-        public ILogger Logger { get; set; }
-
         public CartaSiPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IShapeFactory shapeFactory) :
             base(orchardServices, repository, paymentEventHandler, shapeFactory) {
 

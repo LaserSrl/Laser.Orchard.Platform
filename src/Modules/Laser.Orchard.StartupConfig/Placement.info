@@ -77,4 +77,7 @@
 
   <!-- Settings to remove the X-Frame-Options header -->
   <Place Parts_AllowCrossOriginSettings_Edit="Content:12" />
+
+  <!-- ShortCodes -->
+  <Place Parts_ShortCodes_Edit="Content:before"/>
 </Placement>
