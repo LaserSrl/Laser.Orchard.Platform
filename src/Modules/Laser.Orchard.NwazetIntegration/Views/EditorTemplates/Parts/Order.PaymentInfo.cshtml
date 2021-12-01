@@ -49,6 +49,7 @@
                     <tr>
                         <td width="20%">@T("Transaction ID")</td>
                         <td>
+                            @Html.HiddenFor(m => m.EditTransactionId)
                             <span id="transactionIdSpan">@Model.TransactionId</span>
                             @if (canEditTransactionId) {
                                 @Html.TextBoxFor(m => m.TransactionId, new { style = "display: none; width: 250px;" })
@@ -81,6 +82,7 @@
                 e.preventDefault();
                 $('#transactionIdSpan').hide();
                 $('#enable-edit').hide();
+                $("#@Html.FieldIdFor(m => m.EditTransactionId)").val(true);
                 $("#@Html.FieldIdFor(m => m.TransactionId)").show();
             });
         });

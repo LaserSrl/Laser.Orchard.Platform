@@ -10,5 +10,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public bool Success { get; set; }
         public string Error { get; set; }
         public string TransactionId { get; set; }
+        public bool EditTransactionId { get; set; }
     }
 }

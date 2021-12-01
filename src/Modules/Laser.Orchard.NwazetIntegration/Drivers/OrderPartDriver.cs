@@ -39,18 +39,20 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (!_orchardServices.Authorizer.Authorize(OrderPermissions.ManageOrders, null, T("Cannot manage orders")))
                 return null;
 
-            if (updater!=null) {
+            if (updater != null) {
                 var viewModel = new PaymentInfoViewModel();
                 updater.TryUpdateModel(viewModel, PaymentInfoPrefix, null, null);
 
-                // I need to edit payment transaction id if changed.
-                var payment = _paymentService.GetPaymentByGuid(order.Charge?.TransactionId);
-                var transactionId = viewModel.TransactionId;
-                if (transactionId != null) {
-                    if (!payment.TransactionId.Equals(transactionId, StringComparison.InvariantCultureIgnoreCase)) {
-                        var eventText = T("Transaction id changed from {0} to {1}", payment.TransactionId, transactionId);
-                        payment.TransactionId = transactionId;
-                        order.LogActivity(OrderPart.Event, eventText.Text, _orchardServices.WorkContext.CurrentUser?.UserName ?? "System");
+                if (viewModel.EditTransactionId) {
+                    // I need to edit payment transaction id if changed.
+                    var transactionId = viewModel.TransactionId;
+                    if (transactionId != null) {
+                        var payment = _paymentService.GetPaymentByGuid(order.Charge?.TransactionId);
+                        if (!payment.TransactionId.Equals(transactionId, StringComparison.InvariantCultureIgnoreCase)) {
+                            var eventText = T("Transaction id changed from {0} to {1}", payment.TransactionId, transactionId);
+                            payment.TransactionId = transactionId;
+                            order.LogActivity(OrderPart.Event, eventText.Text, _orchardServices.WorkContext.CurrentUser?.UserName ?? "System");
+                        }
                     }
                 }
             }
@@ -84,6 +86,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                         Success = payment.Success,
                         Error = payment.Error,
                         TransactionId = payment.TransactionId,
+                        EditTransactionId = false
                     };
                     return shapeHelper.EditorTemplate(
                         TemplateName: "Parts/Order.PaymentInfo",
