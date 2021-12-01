@@ -118,11 +118,11 @@ namespace Laser.Orchard.PaymentGateway.Services {
 
             foreach (string s in value) {
                 if (!string.IsNullOrWhiteSpace(s)) {
-                    result += "_" + s;
+                    result += separator + s;
                 }
             }
 
-            if (result.StartsWith("_")) {
+            if (result.StartsWith(separator)) {
                 result = result.Substring(1);
             }
 
