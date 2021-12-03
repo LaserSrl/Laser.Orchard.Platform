@@ -423,7 +423,7 @@
     <Compile Include="AuditTrail\Features\AuditTrailFeatureEventHandler.cs" />
     <Compile Include="AuditTrail\Handlers\AuditTrailOutputSettingsPartHandler.cs" />
     <Compile Include="AuditTrail\Models\AuditTrailOutputSettingsPart.cs" />
-    <Compile Include="AuditTrail\Providers\EventViewerAuditTrailProvider.cs" />
+    <Compile Include="AuditTrail\Providers\ChannelsAuditTrailProvider.cs" />
     <Compile Include="AuditTrail\ViewModels\AuditTrailOutputSettingsPartViewModel.cs" />
     <Compile Include="ColorPicker\ColorPickerField.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />

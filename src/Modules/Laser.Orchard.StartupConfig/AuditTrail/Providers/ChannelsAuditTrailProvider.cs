@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.AuditTrail.Models;
+using Microsoft.Owin.Logging;
 using Orchard;
 using Orchard.AuditTrail.Models;
 using Orchard.AuditTrail.Services;
@@ -6,6 +7,7 @@ using Orchard.AuditTrail.Services.Models;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
+using Orchard.Logging;
 using Orchard.Roles.Models;
 using Orchard.Settings;
 using System;
@@ -19,13 +21,13 @@ using System.Web;
 
 namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
     [OrchardFeature("Laser.Orchard.AuditTrail")]
-    public class EventViewerAuditTrailProvider : AuditTrailEventHandlerBase {
+    public class ChannelsAuditTrailProvider : AuditTrailEventHandlerBase {
 
         private readonly IEventDataSerializer _serializer;
         private readonly ISiteService _siteService;
         private readonly IWorkContextAccessor _workContextAccessor;
         
-        public EventViewerAuditTrailProvider(
+        public ChannelsAuditTrailProvider(
             IEventDataSerializer serializer,
             ISiteService siteService,
             IWorkContextAccessor workContextAccessor) {
@@ -33,9 +35,10 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
             _serializer = serializer;
             _siteService = siteService;
             _workContextAccessor = workContextAccessor;
-
+            
             var settingsPart = GetOutputSettingsPart();
 
+            // System Event logs:
             _sourceName = settingsPart.EventViewerSourceName;
             if (string.IsNullOrWhiteSpace(_sourceName)) {
                 // Test the settings to see whether we should use the tenant name
@@ -45,62 +48,79 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
                 // >> New-EventLog -Source {sourceName} -LogName Application
                 _sourceName = "Application";
             }
-
             // https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.eventlog?view=netframework-4.8
             // Make sure the EventLog source exists.
-            _isSourceEnabled = settingsPart.IsEventViewerEnabled && EventLog.SourceExists(_sourceName);
-        }
+            _isEventLogEnabled = settingsPart.IsEventViewerEnabled && EventLog.SourceExists(_sourceName);
 
+            // File system logs:
+            // Besides being enabled here, the priority for the logger should be set
+            // to accept 
+            _isFileSystemLogEnabled = settingsPart.IsFileSystemEnabled;
+        }
+        
         private string _sourceName;
-        private bool _isSourceEnabled;
+        private bool _isEventLogEnabled;
+        private bool _isFileSystemLogEnabled;
 
         public override void Create(AuditTrailCreateContext context) {
-            if (_isSourceEnabled) {
+            if (_isEventLogEnabled || _isFileSystemLogEnabled) {
                 // prep log string
-                var eventMessageBuilder = new StringBuilder();
-                eventMessageBuilder.AppendLine(
-                    $"Event: {context.Event}");
-                eventMessageBuilder.AppendLine(
-                    $"Category: {context.EventDescriptor.CategoryDescriptor.Category}");
-                if (context.User != null) {
-                    eventMessageBuilder.AppendLine(
-                        $"UserName: {context.User.UserName}");
-                    var userRoles = context.User.As<IUserRoles>()?.Roles.ToList();
-                    if (userRoles != null) {
-                        eventMessageBuilder.AppendLine(
-                            $"UserRoles: {string.Join(", ", userRoles)}");
+                var message = ComputeMessage(context);
+
+                if (_isEventLogEnabled) {
+                    using (EventLog eventLog = new EventLog("Application")) {
+                        eventLog.Source = _sourceName;
+
+                        eventLog.WriteEntry(
+                            message, // Event Message
+                            EventLogEntryType.Information//, // Event Type
+                            //4738, // Event ID
+                            //1 // Event Category
+                            );
                     }
                 }
-                eventMessageBuilder.AppendLine(
-                    $"Description: {context.EventDescriptor.Description.Text}");
-                var clientAddress = GetClientAddress();
-                if (!string.IsNullOrWhiteSpace(clientAddress)) {
-                    eventMessageBuilder.AppendLine(
-                            $"ClientAddress: {clientAddress}");
-                }
-                var userAgent = GetUserAgent();
-                if (!string.IsNullOrWhiteSpace(userAgent)) {
-                    eventMessageBuilder.AppendLine(
-                            $"UserAgent:");
-                    eventMessageBuilder.AppendLine(
-                            $"{userAgent}");
-                }
-                eventMessageBuilder.AppendLine(
-                        $"EventData:");
-                eventMessageBuilder.AppendLine(
-                        $"{_serializer.Serialize(context.EventData)}");
-
-                using (EventLog eventLog = new EventLog("Application")) {
-                    eventLog.Source = _sourceName;
-
-                    eventLog.WriteEntry(
-                        eventMessageBuilder.ToString(), // Event Message
-                        EventLogEntryType.Information//, // Event Type
-                        //4738, // Event ID
-                        //1 // Event Category
-                        );
+                if (_isFileSystemLogEnabled) {
+                    // The Logger object is declared in a superclass
+                    Logger.Information("##AUDIT TRAIL##" + Environment.NewLine + message);
                 }
             }
+        }
+
+        private string ComputeMessage(AuditTrailCreateContext context) {
+            var eventMessageBuilder = new StringBuilder();
+            eventMessageBuilder.AppendLine(
+                $"Event: {context.Event}");
+            eventMessageBuilder.AppendLine(
+                $"Category: {context.EventDescriptor.CategoryDescriptor.Category}");
+            if (context.User != null) {
+                eventMessageBuilder.AppendLine(
+                    $"UserName: {context.User.UserName}");
+                var userRoles = context.User.As<IUserRoles>()?.Roles.ToList();
+                if (userRoles != null) {
+                    eventMessageBuilder.AppendLine(
+                        $"UserRoles: {string.Join(", ", userRoles)}");
+                }
+            }
+            eventMessageBuilder.AppendLine(
+                $"Description: {context.EventDescriptor.Description.Text}");
+            var clientAddress = GetClientAddress();
+            if (!string.IsNullOrWhiteSpace(clientAddress)) {
+                eventMessageBuilder.AppendLine(
+                        $"ClientAddress: {clientAddress}");
+            }
+            var userAgent = GetUserAgent();
+            if (!string.IsNullOrWhiteSpace(userAgent)) {
+                eventMessageBuilder.AppendLine(
+                        $"UserAgent:");
+                eventMessageBuilder.AppendLine(
+                        $"{userAgent}");
+            }
+            eventMessageBuilder.AppendLine(
+                    $"EventData:");
+            eventMessageBuilder.AppendLine(
+                    $"{_serializer.Serialize(context.EventData)}");
+
+            return eventMessageBuilder.ToString();
         }
 
         private HttpRequestBase _httpRequest;
