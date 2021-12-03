@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Diagnostics;
+using Orchard.Environment.Configuration;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -31,10 +32,15 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
     }
 
     public class RazorTemplateManager : IRazorTemplateManager {
+        private readonly IOrchardServices _orchardServices;
+        private readonly ShellSettings _shellSettings;
 
-        public RazorTemplateManager() {
+        public RazorTemplateManager(ShellSettings shellSettings, IOrchardServices orchardServices) {
             listCached = new List<string>();
             listOldCached = new List<string>();
+
+            _orchardServices = orchardServices;
+            _shellSettings = shellSettings;
         }
 
         private List<string> listCached;
@@ -66,11 +72,40 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard.Caching");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
+            
 
             _razorEngine = RazorEngineService.Create(config);
+            
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
 
+            GetTemplates();
+
+            //RazorEngineServiceStatic.AddTemplate("PIPPO", new LoadedTemplateSource("PIPPO", null));
+            //RazorEngineServiceStatic.Compile("PIPPO", null);
+            //listCached.Add("PIPPO");
+        }
+
+        public void GetTemplates() {
+            // I look in the site folder to check if there's any template to compile.
+            // Folder should look like "Site/Templates"
+            var uriDir = string.Format("~/App_Data/Sites/{0}/{1}", _shellSettings.Name, "Templates");
+            var localDir = HostingEnvironment.MapPath(uriDir);
+            if (Directory.Exists(localDir)) {
+                foreach (string fileName in Directory.EnumerateFiles(localDir, "*.cshtml")) {
+                    // I need the file name without extension.
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                    if (!RazorEngineServiceStatic.IsTemplateCached(fileNameWithoutExtension, null)) {
+                        try {
+                            RazorEngineServiceStatic.AddTemplate(fileNameWithoutExtension, File.ReadAllText(Path.Combine(localDir, fileName)));
+                            RazorEngineServiceStatic.Compile(fileNameWithoutExtension);
+                            listCached.Add(fileNameWithoutExtension);
+                        } catch {
+
+                        }
+                    }
+                }
+            }
         }
 
         private IRazorEngineService _razorEngine;
@@ -234,4 +269,18 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
         }
     }
+
+    //public class MyTemplateManager : ITemplateManager {
+    //    public void AddDynamic(ITemplateKey key, ITemplateSource source) {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public ITemplateKey GetKey(string name, ResolveType resolveType, ITemplateKey context) {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    public ITemplateSource Resolve(ITemplateKey key) {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }
