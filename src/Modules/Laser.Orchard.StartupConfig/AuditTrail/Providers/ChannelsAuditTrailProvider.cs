@@ -1,4 +1,6 @@
-﻿using Laser.Orchard.StartupConfig.AuditTrail.Models;
+﻿using Laser.Orchard.StartupConfig.AuditTrail.Extensions;
+using Laser.Orchard.StartupConfig.AuditTrail.Models;
+using log4net.Appender;
 using Microsoft.Owin.Logging;
 using Orchard;
 using Orchard.AuditTrail.Models;
@@ -14,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -26,7 +29,9 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
         private readonly IEventDataSerializer _serializer;
         private readonly ISiteService _siteService;
         private readonly IWorkContextAccessor _workContextAccessor;
-        
+
+        private static string _logMatchString = "##AUDIT TRAIL##";
+
         public ChannelsAuditTrailProvider(
             IEventDataSerializer serializer,
             ISiteService siteService,
@@ -53,14 +58,25 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
             _isEventLogEnabled = settingsPart.IsEventViewerEnabled && EventLog.SourceExists(_sourceName);
 
             // File system logs:
-            // Besides being enabled here, the priority for the logger should be set
-            // to accept 
+            // Besides being enabled here from the setting, we should ensure that
+            // there is the correctly configured logger and appender. We are using 
+            // a "custom" logger rather than those injected normally because we need
+            // have a file specific for the tenant. This in turn requires a specific
+            // unique appender for each tenant, which would be hard to do from the
+            // xml configuration files.
             _isFileSystemLogEnabled = settingsPart.IsFileSystemEnabled;
+            if (_isFileSystemLogEnabled) {
+                // Ensure the logger for audit trail exists.
+                EnsureLogger();
+                // Ensure the logger for audit trail is associated with the correct appender.
+                EnsureAppender();
+            }
         }
         
         private string _sourceName;
         private bool _isEventLogEnabled;
         private bool _isFileSystemLogEnabled;
+        private log4net.ILog _logger;
 
         public override void Create(AuditTrailCreateContext context) {
             if (_isEventLogEnabled || _isFileSystemLogEnabled) {
@@ -80,12 +96,12 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
                     }
                 }
                 if (_isFileSystemLogEnabled) {
-                    // The Logger object is declared in a superclass
-                    Logger.Information("##AUDIT TRAIL##" + Environment.NewLine + message);
+                    _logger.Info(_logMatchString + Environment.NewLine + message);
                 }
             }
         }
 
+        #region Stuff for the message
         private string ComputeMessage(AuditTrailCreateContext context) {
             var eventMessageBuilder = new StringBuilder();
             eventMessageBuilder.AppendLine(
@@ -133,20 +149,7 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
             }
             return _httpRequest;
         }
-        private AuditTrailSettingsPart _auditTrailSettings;
-        private AuditTrailSettingsPart GetAuditTrailSettings() {
-            if (_auditTrailSettings == null) {
-                _auditTrailSettings = _siteService.GetSiteSettings().As<AuditTrailSettingsPart>();
-            }
-            return _auditTrailSettings;
-        }
-        private AuditTrailOutputSettingsPart _auditTrailOutputSettingsPart;
-        private AuditTrailOutputSettingsPart GetOutputSettingsPart() {
-            if (_auditTrailOutputSettingsPart == null) {
-                _auditTrailOutputSettingsPart = _siteService.GetSiteSettings().As<AuditTrailOutputSettingsPart>();
-            }
-            return _auditTrailOutputSettingsPart;
-        }
+
         private string GetClientAddress() {
 
             var settings = GetAuditTrailSettings();
@@ -158,9 +161,109 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Providers {
 
             return $"Host: {request.UserHostName} IP: {request.UserHostAddress} Port: {request.ServerVariables["REMOTE_PORT"]}";
         }
+
         private string GetUserAgent() {
             var request = GetHttpRequest();
             return request.UserAgent;
         }
+        #endregion
+
+        #region stuff for log4net
+        private log4net.ILog EnsureLogger() {
+            // LogManager.GetLogger will create a new logger if it doesn't find
+            // one, so it always returns something. For this reason, we always have
+            // to do the settings below.
+            _logger = log4net.LogManager.GetLogger(GetLoggerName());
+            var logger = (log4net.Repository.Hierarchy.Logger)_logger.Logger;
+            // This enables the INFO log level. This matches the fact that we'll
+            // call _logger.Info(string).
+            logger.Level = logger.Hierarchy.LevelMap["INFO"];
+            // Prevent stuff added to this logger from bubbling up to parent loggers.
+            // This way, the audit trail information will not appear in orchard's
+            // default debug log.
+            logger.Additivity = false;
+            return _logger;
+        }
+
+        private IAppender EnsureAppender() {
+            var logger = (log4net.Repository.Hierarchy.Logger)_logger.Logger;
+            var appender = logger.GetAppender(GetAppenderName());
+            if (appender == null) {
+                appender = CreateSiteAppender();
+                logger.AddAppender(appender);
+            }
+            return appender;
+        }
+
+        private IAppender CreateSiteAppender() {
+            OrchardFileAppender appender = new OrchardFileAppender();
+            appender.Name = GetAppenderName();
+            appender.File = GetAppenderFileName();
+            appender.AppendToFile = true;
+            // Allow extended character sets
+            appender.Encoding = Encoding.UTF8;
+            // Immediately flush on error to avoid data loss
+            appender.ImmediateFlush = true;
+            // Filename will also depend on date
+            appender.StaticLogFileName = false;
+            appender.RollingStyle = RollingFileAppender.RollingMode.Date;
+            appender.DatePattern = $"{LaserAuditTrailHelper.GetAppenderDatePattern()}'.{LaserAuditTrailHelper.GetAppenderFileExtension()}'";
+            // Prevent Orchard from displaying locking debug messages
+            appender.LockingModel = new FileAppender.MinimalLock();
+            // Filters
+            var stringMatchFilter = new log4net.Filter.StringMatchFilter();
+            stringMatchFilter.StringToMatch = _logMatchString;
+            appender.AddFilter(stringMatchFilter);
+            appender.AddFilter(new log4net.Filter.DenyAllFilter());
+            // Log Layout
+            var layout = new log4net.Layout.PatternLayout(
+                @"%date %logger - %P{Tenant} - %level% [ExecutionId=%P{ExecutionId}]%newline[%P{Url}]%newline%message%newline "
+                );
+            layout.ActivateOptions();
+            appender.Layout = layout;
+            appender.ActivateOptions();
+            return appender;
+        }
+
+        private string GetLoggerName() {
+            return LaserAuditTrailHelper.GetLoggerName(GetSiteSettings().SiteName);
+        }
+
+        private string GetAppenderName() {
+            return LaserAuditTrailHelper.GetAppenderName(GetSiteSettings().SiteName);
+        }
+
+        private string GetAppenderFileName() {
+            return Path.Combine(
+                LaserAuditTrailHelper.GetAppenderFilePath(),
+                LaserAuditTrailHelper.GetAppenderFileName(GetSiteSettings().SiteName));
+        }
+        #endregion
+
+        #region Settings memorization
+        private ISite _siteSettings;
+        private ISite GetSiteSettings() {
+            if (_siteSettings == null) {
+                _siteSettings = _siteService.GetSiteSettings();
+            }
+            return _siteSettings;
+        }
+
+        private AuditTrailSettingsPart _auditTrailSettings;
+        private AuditTrailSettingsPart GetAuditTrailSettings() {
+            if (_auditTrailSettings == null) {
+                _auditTrailSettings = GetSiteSettings().As<AuditTrailSettingsPart>();
+            }
+            return _auditTrailSettings;
+        }
+
+        private AuditTrailOutputSettingsPart _auditTrailOutputSettingsPart;
+        private AuditTrailOutputSettingsPart GetOutputSettingsPart() {
+            if (_auditTrailOutputSettingsPart == null) {
+                _auditTrailOutputSettingsPart = GetSiteSettings().As<AuditTrailOutputSettingsPart>();
+            }
+            return _auditTrailOutputSettingsPart;
+        }
+        #endregion
     }
 }
