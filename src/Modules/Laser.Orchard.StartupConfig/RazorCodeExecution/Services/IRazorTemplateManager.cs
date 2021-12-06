@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Diagnostics;
 using Orchard.Environment.Configuration;
+using Laser.Orchard.StartupConfig.Providers;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -72,18 +73,15 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard.Caching");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
-            
 
+            config.TemplateManager = new CustomTemplateManager(_shellSettings, _orchardServices.ContentManager);
+            
             _razorEngine = RazorEngineService.Create(config);
             
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
 
-            GetTemplates();
-
-            //RazorEngineServiceStatic.AddTemplate("PIPPO", new LoadedTemplateSource("PIPPO", null));
-            //RazorEngineServiceStatic.Compile("PIPPO", null);
-            //listCached.Add("PIPPO");
+            //GetTemplates();
         }
 
         public void GetTemplates() {
@@ -269,18 +267,4 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
         }
     }
-
-    //public class MyTemplateManager : ITemplateManager {
-    //    public void AddDynamic(ITemplateKey key, ITemplateSource source) {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public ITemplateKey GetKey(string name, ResolveType resolveType, ITemplateKey context) {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public ITemplateSource Resolve(ITemplateKey key) {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }
