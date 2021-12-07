@@ -73,8 +73,8 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard.Caching");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
-
-            config.TemplateManager = new CustomTemplateManager(_shellSettings, _orchardServices.ContentManager);
+            
+            config.TemplateManager = new CustomTemplateManager(_shellSettings, _orchardServices, new DelegateTemplateManager());
             
             _razorEngine = RazorEngineService.Create(config);
             
