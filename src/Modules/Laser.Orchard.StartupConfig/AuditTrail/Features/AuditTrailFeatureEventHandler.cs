@@ -4,10 +4,6 @@ using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.AuditTrail.Features {
     [OrchardFeature("Laser.Orchard.AuditTrail")]

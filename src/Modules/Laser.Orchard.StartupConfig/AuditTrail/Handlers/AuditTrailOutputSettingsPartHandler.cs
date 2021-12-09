@@ -3,10 +3,6 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.AuditTrail.Handlers {
     [OrchardFeature("Laser.Orchard.AuditTrail")]

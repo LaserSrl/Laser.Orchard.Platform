@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.StartupConfig.AuditTrail.Extensions;
 using Orchard;
+using Orchard.AuditTrail.Helpers;
 using Orchard.AuditTrail.Models;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
@@ -9,10 +10,8 @@ using Orchard.Services;
 using Orchard.Settings;
 using Orchard.Tasks;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.StartupConfig.AuditTrail.Services {
     [OrchardFeature("Laser.Orchard.AuditTrail")]
@@ -47,7 +46,17 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Services {
                     var myLogs = _appDataFolder
                         .ListFiles(logFilePath)
                         .Where(fn => fn.StartsWith(fileNameBeginning));
-                    // TODO: get the logs older than the specific timespan and delete them
+                    // get the logs older than the specific timespan and delete them
+                    // Retention timespan: anything older will be deleted
+                    var retentionPeriod = TimeSpan.FromDays(GetAuditTrailSettings().RetentionPeriod);
+                    var dateThreshold = (_clock.UtcNow.EndOfDay() - retentionPeriod);
+                    foreach (var fileName in myLogs) {
+                        var lastWriteTime = _appDataFolder.GetFileLastWriteTimeUtc(fileName);
+                        if (lastWriteTime <= dateThreshold) {
+                            // file is older than the limit for retention. Delete it.
+                            _appDataFolder.DeleteFile(fileName);
+                        }
+                    }
                 }
             } catch (Exception ex) {
                 Logger.Error(ex, "Error during sweep for TrailLogTrimmingBackgroundTask.");
@@ -57,7 +66,7 @@ namespace Laser.Orchard.StartupConfig.AuditTrail.Services {
         }
         
         private bool GetIsTimeToTrim() {
-            return true;
+            // LastRunUtc is updated by the "default" Trimming task for Audit Trail
             var lastRun = GetAuditTrailSettings().LastRunUtc ?? DateTime.MinValue;
             var now = _clock.UtcNow;
             var interval = TimeSpan.FromHours(GetAuditTrailSettings().MinimumRunInterval);

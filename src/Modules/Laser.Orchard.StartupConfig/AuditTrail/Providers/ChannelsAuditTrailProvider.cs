@@ -1,24 +1,19 @@
 ﻿using Laser.Orchard.StartupConfig.AuditTrail.Extensions;
 using Laser.Orchard.StartupConfig.AuditTrail.Models;
 using log4net.Appender;
-using Microsoft.Owin.Logging;
 using Orchard;
 using Orchard.AuditTrail.Models;
 using Orchard.AuditTrail.Services;
 using Orchard.AuditTrail.Services.Models;
 using Orchard.ContentManagement;
-using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Roles.Models;
 using Orchard.Settings;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 
