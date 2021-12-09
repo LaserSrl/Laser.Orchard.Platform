@@ -421,7 +421,9 @@
     <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
-    <Compile Include="Providers\CustomTemplateManager.cs" />
+    <Compile Include="Providers\CustomRazorCachingProvider.cs" />
+    <Compile Include="Providers\CustomRazorTemplateManager.cs" />
+    <Compile Include="Providers\ICustomRazorTemplateResolver.cs" />
     <Compile Include="Rules\HttpCookieCondition.cs" />
     <Compile Include="Rules\HttpHeaderCondition.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />

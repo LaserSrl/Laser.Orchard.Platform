@@ -74,8 +74,9 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
             
-            config.TemplateManager = new CustomTemplateManager(_shellSettings, _orchardServices, new DelegateTemplateManager());
-            
+            config.TemplateManager = new CustomRazorTemplateManager(_shellSettings, _orchardServices);
+            //config.CachingProvider = new CustomRazorCachingProvider();
+
             _razorEngine = RazorEngineService.Create(config);
             
             listOldCached.AddRange(listCached);
@@ -84,27 +85,31 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             //GetTemplates();
         }
 
-        public void GetTemplates() {
-            // I look in the site folder to check if there's any template to compile.
-            // Folder should look like "Site/Templates"
-            var uriDir = string.Format("~/App_Data/Sites/{0}/{1}", _shellSettings.Name, "Templates");
-            var localDir = HostingEnvironment.MapPath(uriDir);
-            if (Directory.Exists(localDir)) {
-                foreach (string fileName in Directory.EnumerateFiles(localDir, "*.cshtml")) {
-                    // I need the file name without extension.
-                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                    if (!RazorEngineServiceStatic.IsTemplateCached(fileNameWithoutExtension, null)) {
-                        try {
-                            RazorEngineServiceStatic.AddTemplate(fileNameWithoutExtension, File.ReadAllText(Path.Combine(localDir, fileName)));
-                            RazorEngineServiceStatic.Compile(fileNameWithoutExtension);
-                            listCached.Add(fileNameWithoutExtension);
-                        } catch {
+        ///// <summary>
+        ///// This routine compiles every template in the "Templates" folder for the current tenant.
+        ///// Commented because not used anymore after the implementation of the CustomTemplateManager.
+        ///// </summary>
+        //public void GetTemplates() {
+        //    // I look in the site folder to check if there's any template to compile.
+        //    // Folder should look like "Site/Templates"
+        //    var uriDir = string.Format("~/App_Data/Sites/{0}/{1}", _shellSettings.Name, "Templates");
+        //    var localDir = HostingEnvironment.MapPath(uriDir);
+        //    if (Directory.Exists(localDir)) {
+        //        foreach (string fileName in Directory.EnumerateFiles(localDir, "*.cshtml")) {
+        //            // I need the file name without extension.
+        //            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+        //            if (!RazorEngineServiceStatic.IsTemplateCached(fileNameWithoutExtension, null)) {
+        //                try {
+        //                    RazorEngineServiceStatic.AddTemplate(fileNameWithoutExtension, File.ReadAllText(Path.Combine(localDir, fileName)));
+        //                    RazorEngineServiceStatic.Compile(fileNameWithoutExtension);
+        //                    listCached.Add(fileNameWithoutExtension);
+        //                } catch {
 
-                        }
-                    }
-                }
-            }
-        }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         private IRazorEngineService _razorEngine;
 
