@@ -1,8 +1,12 @@
-﻿using Orchard.Environment.Extensions;
+﻿using Orchard;
+using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class CashOnDeliveryProvider : DefaultCustomPosProvider {
+        public CashOnDeliveryProvider(IWorkContextAccessor workContextAccessor) : base(workContextAccessor) {
+
+        }
 
         public override string TechnicalName => "CashOnDelivery";
 

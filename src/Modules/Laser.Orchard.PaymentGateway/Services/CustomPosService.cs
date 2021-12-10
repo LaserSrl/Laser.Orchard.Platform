@@ -72,7 +72,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
                         Arguments.From(new {
                             CustomPos = cp,
                             PosService = this,
-                            PosName = cp.Name
+                            PosName = "CustomPos_" + cp.Name
                         }
                     ))));
             }

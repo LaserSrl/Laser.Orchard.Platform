@@ -1,7 +1,7 @@
 ﻿@model Laser.Orchard.PaymentGateway.ViewModels.PaymentVM
 
 <h2>@T("Payment details")</h2>
-@T("POS"): @Model.Record.PosName<br />
+@T("POS"): @Model.PosName<br />
 @T("Reason"): @Model.Record.Reason<br />
 @T("Amount"): @Model.Record.Amount.ToString("0.00") @Model.Record.Currency<br />
 @T("Date"): @Model.Record.UpdateDate.ToString("yyyy-MM-dd HH:mm")<br />

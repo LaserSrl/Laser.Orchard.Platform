@@ -421,9 +421,11 @@
     <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
-    <Compile Include="Providers\CustomRazorCachingProvider.cs" />
-    <Compile Include="Providers\CustomRazorTemplateManager.cs" />
-    <Compile Include="Providers\ICustomRazorTemplateResolver.cs" />
+    <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
+    <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
+    <Compile Include="RazorCodeExecution\Services\CustomRazorFileResolver.cs" />
+    <Compile Include="RazorCodeExecution\Services\CustomRazorTemplateManager.cs" />
+    <Compile Include="RazorCodeExecution\Services\ICustomRazorTemplateResolver.cs" />
     <Compile Include="Rules\HttpCookieCondition.cs" />
     <Compile Include="Rules\HttpHeaderCondition.cs" />
     <Compile Include="ContentPickerContentCreation\Drivers\ContentPickerFieldCreateItemDriver.cs" />

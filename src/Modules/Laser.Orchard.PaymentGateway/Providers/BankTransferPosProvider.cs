@@ -1,8 +1,16 @@
-﻿using Orchard.Environment.Extensions;
+﻿using Laser.Orchard.PaymentGateway.Models;
+using Orchard;
+using Orchard.ContentManagement;
+using Orchard.Environment.Extensions;
+using System;
+using System.Linq;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
     public class BankTransferPosProvider : DefaultCustomPosProvider {
+        public BankTransferPosProvider(IWorkContextAccessor workContextAccessor) : base(workContextAccessor) {
+            
+        }
 
         public override string TechnicalName => "BankTransfer";
 

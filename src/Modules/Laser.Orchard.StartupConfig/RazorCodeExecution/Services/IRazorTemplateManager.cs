@@ -36,7 +36,9 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
         private readonly IOrchardServices _orchardServices;
         private readonly ShellSettings _shellSettings;
 
-        public RazorTemplateManager(ShellSettings shellSettings, IOrchardServices orchardServices) {
+        public RazorTemplateManager(ShellSettings shellSettings, 
+            IOrchardServices orchardServices,
+            IEnumerable<ICustomRazorTemplateResolver> razorTemplateResolvers) {
             listCached = new List<string>();
             listOldCached = new List<string>();
 
@@ -81,35 +83,7 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
-
-            //GetTemplates();
         }
-
-        ///// <summary>
-        ///// This routine compiles every template in the "Templates" folder for the current tenant.
-        ///// Commented because not used anymore after the implementation of the CustomTemplateManager.
-        ///// </summary>
-        //public void GetTemplates() {
-        //    // I look in the site folder to check if there's any template to compile.
-        //    // Folder should look like "Site/Templates"
-        //    var uriDir = string.Format("~/App_Data/Sites/{0}/{1}", _shellSettings.Name, "Templates");
-        //    var localDir = HostingEnvironment.MapPath(uriDir);
-        //    if (Directory.Exists(localDir)) {
-        //        foreach (string fileName in Directory.EnumerateFiles(localDir, "*.cshtml")) {
-        //            // I need the file name without extension.
-        //            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-        //            if (!RazorEngineServiceStatic.IsTemplateCached(fileNameWithoutExtension, null)) {
-        //                try {
-        //                    RazorEngineServiceStatic.AddTemplate(fileNameWithoutExtension, File.ReadAllText(Path.Combine(localDir, fileName)));
-        //                    RazorEngineServiceStatic.Compile(fileNameWithoutExtension);
-        //                    listCached.Add(fileNameWithoutExtension);
-        //                } catch {
-
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
 
         private IRazorEngineService _razorEngine;
 
