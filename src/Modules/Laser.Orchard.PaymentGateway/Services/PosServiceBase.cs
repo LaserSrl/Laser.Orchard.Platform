@@ -39,6 +39,18 @@ namespace Laser.Orchard.PaymentGateway.Services {
         public ILogger Logger { get; set; }
 
         public abstract string GetPosName();
+
+        public virtual string GetPosName(PaymentRecord payment) {
+            return GetPosName();
+        }
+
+        public virtual string GetPosServiceName(string name) {
+            if (name != null && name.Equals(GetPosName(), StringComparison.InvariantCultureIgnoreCase)) {
+                return name;
+            }
+            return null;
+        }
+
         /// <summary>
         /// Restituisce il nome del controller utilizzato per la gestione dei settings del POS che deve ereditare da PosAdminBaseController.
         /// Il nome non deve avere il suffisso "Controller" (es. "Admin", non "AdminController").
@@ -89,11 +101,8 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 throw new Exception("Parameters missing. Required parameters: Amount, Currency.");
             }
 
-            // For custom pos, I already wrote the right PosName
-            if (!values.PosName.StartsWith("CustomPos_")) {
-                values.PosName = GetPosName();
-            }
-            
+            values.PosName = GetPosName(values);
+
             if (string.IsNullOrWhiteSpace(values.PosUrl)) {
                 string posUrl = GetPosActionUrl(values.Id);
                 values.PosUrl = posUrl;
@@ -104,16 +113,14 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 values.UserId = user.Id;
             }
 
-            if(newPaymentGuid == null) {
+            if (newPaymentGuid == null) {
                 values.Guid = Guid.NewGuid().ToString();
-            }
-            else {
+            } else {
                 var checkGuid = _repository.Fetch(x => x.Guid == newPaymentGuid);
-                if(checkGuid != null && checkGuid.Count() > 0) {
+                if (checkGuid != null && checkGuid.Count() > 0) {
                     // se il guid esiste già solleva un'eccezione
                     throw new Exception(string.Format("PaymentGateway.PosServiceBase: Guid already exists ({0}).", newPaymentGuid));
-                }
-                else {
+                } else {
                     values.Guid = newPaymentGuid;
                 }
             }
@@ -187,8 +194,8 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 //    _paymentEventHandler.OnError(paymentToSave.Id, paymentToSave.ContentItemId);
                 //}
                 Logger.Error(T("Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\"",
-                    paymentId, 
-                    success, 
+                    paymentId,
+                    success,
                     string.IsNullOrWhiteSpace(error) ? string.Empty : error,
                     string.IsNullOrWhiteSpace(info) ? string.Empty : info,
                     string.IsNullOrWhiteSpace(transactionId) ? string.Empty : transactionId).Text);
@@ -242,7 +249,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
                         expDic[k] = pRecord.GetProperty(k);
                     }
                 }
-                
+
                 List<string> qsFragments = new List<string>();
                 qsFragments.Add(string.Format("Success={0}", success.ToString()));
                 qsFragments.Add(string.Format("Message={0}", HttpUtility.UrlEncode(message)));
@@ -339,8 +346,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
         }
 
         public virtual string GetChargeAdminUrl(PaymentRecord payment) {
-            if (payment.PosName == GetPosName())
-            {
+            if (payment.PosName == GetPosName()) {
                 return InnerChargeAdminUrl(payment);
             }
             return null;

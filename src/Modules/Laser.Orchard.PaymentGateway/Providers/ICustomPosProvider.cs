@@ -19,6 +19,11 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         /// </summary>
         string GetInfoShapeName();
         /// <summary>
+        /// Name of the pos service used, for example in CheckoutController.
+        /// </summary>
+        /// <returns></returns>
+        string GetPosServiceName(string posServiceName);
+        /// <summary>
         /// Name of the partial to display into the info page, after the complete checkout procedure.
         /// </summary>
         /// <param name="payment"></param>

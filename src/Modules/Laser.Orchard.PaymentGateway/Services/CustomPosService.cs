@@ -51,6 +51,20 @@ namespace Laser.Orchard.PaymentGateway.Services {
             return "Custom Pos";
         }
 
+        public override string GetPosName(PaymentRecord payment) {
+            if (payment.PosName.StartsWith("CustomPos_")) {
+                return payment.PosName;
+            }
+            return base.GetPosName(payment);
+        }
+
+        public override string GetPosServiceName(string name) {
+            if (name.StartsWith("CustomPos_")) {
+                return "Custom Pos";
+            }
+            return base.GetPosServiceName(name);
+        }
+
         public override string GetPosUrl(int paymentId) {
             return string.Empty;
         }

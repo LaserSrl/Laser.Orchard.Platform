@@ -33,6 +33,20 @@ namespace Laser.Orchard.PaymentGateway.Providers {
             return "DefaultCustomPos";
         }
 
+        public virtual string GetPosServiceName(string posServiceName) {
+            if (posServiceName.StartsWith("CustomPos_")) {
+                posServiceName = posServiceName.Substring("CustomPos_".Length);
+            }
+
+            var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
+            var posFound = customPosSiteSettings.CustomPos
+                .Any(cps => cps.Name.Equals(posServiceName));
+            if (posFound) {
+                return "Custom Pos";
+            }
+            return string.Empty;
+        }
+
         public virtual string GetInfoShapeName(PaymentRecord payment) {
             var customPosName = payment.PosName;
             if (customPosName.StartsWith("CustomPos_")) {
