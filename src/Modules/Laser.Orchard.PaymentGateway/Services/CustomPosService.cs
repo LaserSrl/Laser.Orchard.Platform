@@ -52,16 +52,31 @@ namespace Laser.Orchard.PaymentGateway.Services {
         }
 
         public override string GetPosName(PaymentRecord payment) {
-            if (payment.PosName.StartsWith("CustomPos_")) {
-                return payment.PosName;
+            var customPosName = payment.PosName;
+            if (customPosName.StartsWith("CustomPos_")) {
+                customPosName = customPosName.Substring("CustomPos_".Length);
+            }
+            var settings = _orchardServices.WorkContext.CurrentSite.As<CustomPosSiteSettingsPart>();
+            if (settings != null) {
+                var customPos = settings.CustomPos;
+                var currentCustomPos = settings.CustomPos
+                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+                if (currentCustomPos != null) {
+                    // If I find a custom pos with this name, I can return payment.PosName, which is something like "CustomPos_xxx".
+                    return payment.PosName;
+                }
             }
             return base.GetPosName(payment);
         }
 
         public override string GetPosServiceName(string name) {
-            if (name.StartsWith("CustomPos_")) {
-                return "Custom Pos";
+            var serviceName = _customPosProviders
+                .Select(cpp => cpp.GetPosServiceName(name))
+                .FirstOrDefault(s => !string.IsNullOrWhiteSpace(s));
+            if (serviceName != null) {
+                return serviceName;
             }
+
             return base.GetPosServiceName(name);
         }
 

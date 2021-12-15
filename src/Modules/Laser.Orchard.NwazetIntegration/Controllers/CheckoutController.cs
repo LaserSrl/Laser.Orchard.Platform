@@ -546,8 +546,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             // get the pos by name
             var selectedService = _posServices
-                .FirstOrDefault(ps => ps.GetPosServiceName(model.SelectedPosService)
-                    .Equals(model.SelectedPosService, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(ps => 
+                    !string.IsNullOrWhiteSpace(ps.GetPosServiceName(model.SelectedPosService)));
             if (selectedService == null) {
                 // data got corrupted?
                 _notifier.Error(T("Impossible to start payment with the selected provider. Please try again."));
