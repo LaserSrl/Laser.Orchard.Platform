@@ -41,6 +41,7 @@ namespace Laser.Orchard.TemplateManagement.Drivers {
                     part.Text = viewModel.Text;
                     part.Layout = viewModel.LayoutIdSelected != null ? _contentManager.Get<TemplatePart>(viewModel.LayoutIdSelected.Value) : null;
                     part.IsLayout = viewModel.IsLayout;
+                    part.TemplateCode = viewModel.TemplateCode;
                 }
             }
             else {
@@ -49,6 +50,7 @@ namespace Laser.Orchard.TemplateManagement.Drivers {
                 viewModel.Text = part.Text;
                 viewModel.LayoutIdSelected = part.Record.LayoutIdSelected;
                 viewModel.IsLayout = part.IsLayout;
+                viewModel.TemplateCode = part.TemplateCode;
             }
 
             return ContentShape("Parts_Template_Edit", () => shapeHelper.EditorTemplate(TemplateName: "Parts/Template", Model: viewModel, Prefix: Prefix));
@@ -66,6 +68,7 @@ namespace Laser.Orchard.TemplateManagement.Drivers {
                     part.Layout = layout.As<TemplatePart>();
                 }
             });
+            context.ImportAttribute(part.PartDefinition.Name, "TemplateCode", x => part.TemplateCode = x);
         }
 
         protected override void Exporting(TemplatePart part, ExportContentContext context) {
@@ -76,6 +79,8 @@ namespace Laser.Orchard.TemplateManagement.Drivers {
 
             if(part.Layout != null)
                 context.Element(part.PartDefinition.Name).SetAttributeValue("Layout", context.ContentManager.GetItemMetadata(part.Layout).Identity.ToString());
+
+            context.Element(part.PartDefinition.Name).SetAttributeValue("TemplateCode", part.TemplateCode);
         }
 
         protected override void Cloning(TemplatePart originalPart, TemplatePart clonePart, CloneContentContext context) {
@@ -84,6 +89,7 @@ namespace Laser.Orchard.TemplateManagement.Drivers {
             clonePart.Text = originalPart.Text;
             clonePart.IsLayout = originalPart.IsLayout;
             clonePart.Layout = originalPart.Layout;
+            clonePart.TemplateCode = originalPart.TemplateCode;
         }
     }
 }

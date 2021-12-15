@@ -1,6 +1,24 @@
-﻿@using System.Globalization
+﻿@using Laser.Orchard.PaymentGateway.Models
+@using Laser.Orchard.PaymentGateway.Providers
+@using Orchard.ContentManagement
+@using System.Globalization
 
 @model Laser.Orchard.NwazetIntegration.ViewModels.PaymentInfoViewModel
+
+@{
+    // I need to check if my payment comes from a Custom Pos, in order to show the button to edit payment transaction id
+    var canEditTransactionId = false;
+    IList<ICustomPosProvider> customProviders;
+    WorkContext.TryResolve<IList<ICustomPosProvider>>(out customProviders);
+    if (customProviders != null) {
+        var settings = WorkContext.CurrentSite.As<CustomPosSiteSettingsPart>();
+        if (settings != null) {
+            var customPos = settings.CustomPos;
+            var pos = customPos.FirstOrDefault(cp => cp.Name.Equals(Model.PosName, StringComparison.InvariantCultureIgnoreCase));
+            canEditTransactionId = (pos != null);
+        }
+    }
+}
 
 <div class="order-editor">
     <fieldset class="payment-info">
@@ -8,38 +26,46 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-                    <td>@T("POS")</td>
+                    <td width="20%">@T("POS")</td>
                     <td><span>@Model.PosName</span></td>
                 </tr>
                 <tr>
-                    <td>@T("Reason")</td>
+                    <td width="20%">@T("Reason")</td>
                     <td><span>@Model.Reason</span></td>
                 </tr>
                 <tr>
-                    <td>@T("Amount")</td>
+                    <td width="20%">@T("Amount")</td>
                     <td><span>@string.Format("{0} {1}", Model.Amount.ToString("0.00", CultureInfo.InvariantCulture), Model.Currency)</span></td>
                 </tr>
                 <tr>
-                    <td>@T("Date")</td>
+                    <td width="20%">@T("Date")</td>
                     <td><span>@Model.UpdateDate.ToString("yyyy-MM-dd HH:mm")</span></td>
                 </tr>
                 @if (Model.Success) {
                     <tr>
-                        <td>@T("Outcome")</td>
+                        <td width="20%">@T("Outcome")</td>
                         <td><span>@T("Succeeded")</span></td>
                     </tr>
                     <tr>
-                        <td>@T("Transacion ID")</td>
-                        <td><span>@Model.TransationId</span></td>
+                        <td width="20%">@T("Transaction ID")</td>
+                        <td>
+                            @Html.HiddenFor(m => m.EditTransactionId)
+                            <span id="transactionIdSpan">@Model.TransactionId</span>
+                            @if (canEditTransactionId) {
+                                @Html.TextBoxFor(m => m.TransactionId, new { style = "display: none; width: 250px;" })
+                                <button id="enable-edit" name="enableEdit" class="edit-button link">
+                                    @T("Edit")
+                                </button> 
+                            }
+                        </td>
                     </tr>
-                }
-                else {
+                } else {
                     <tr>
-                        <td>@T("Outcome")</td>
+                        <td width="20%">@T("Outcome")</td>
                         <td><span>@T("Failed")</span></td>
                     </tr>
                     <tr>
-                        <td>@T("Error")</td>
+                        <td width="20%">@T("Error")</td>
                         <td><span>@Model.Error</span></td>
                     </tr>
                 }
@@ -47,3 +73,19 @@
         </table>
     </fieldset>
 </div>
+
+@using (Script.Foot()) {
+    if (canEditTransactionId) {
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('#enable-edit').click(function (e) {
+                e.preventDefault();
+                $('#transactionIdSpan').hide();
+                $('#enable-edit').hide();
+                $("#@Html.FieldIdFor(m => m.EditTransactionId)").val(true);
+                $("#@Html.FieldIdFor(m => m.TransactionId)").show();
+            });
+        });
+        </script>
+    }
+}

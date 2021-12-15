@@ -39,6 +39,11 @@ namespace Laser.Orchard.TemplateManagement.Models {
         public string DefaultParserIdSelected {
             get { return Settings.GetModel<TemplatePartSettings>().DefaultParserIdSelected; }
         }
+
+        public string TemplateCode {
+            get { return this.Retrieve(r => r.TemplateCode); }
+            set { this.Store(r => r.TemplateCode, value); }
+        }
     }
 
     public class TemplatePartRecord : ContentPartRecord {
@@ -49,5 +54,6 @@ namespace Laser.Orchard.TemplateManagement.Models {
         public virtual string Text { get; set; }
         public virtual int? LayoutIdSelected { get; set; }
         public virtual bool IsLayout { get; set; }
+        public virtual string TemplateCode { get; set; }
     }
 }
