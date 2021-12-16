@@ -7,9 +7,11 @@ using Nwazet.Commerce.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
+using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Logging;
+using Orchard.Services;
 using Orchard.Tasks.Scheduling;
 using Orchard.Tokens;
 using System;
@@ -27,18 +29,24 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IScheduledTaskManager _taskManager;
         private FacebookShopSiteSettingsPart _fsssp;
+        private readonly IClock _clock;
+        private readonly IRepository<FacebookShopHandleRecord> _handles;
 
         public FacebookShopService(
             IWorkContextAccessor workContext,
             ITokenizer tokenizer,
             IContentManager contentManager,
             ICurrencyProvider currencyProvider,
-            IScheduledTaskManager taskManager) {
+            IScheduledTaskManager taskManager,
+            IClock clock,
+            IRepository<FacebookShopHandleRecord> handles) {
             _workContext = workContext;
             _tokenizer = tokenizer;
             _contentManager = contentManager;
             _currencyProvider = currencyProvider;
             _taskManager = taskManager;
+            _clock = clock;
+            _handles = handles;
 
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
@@ -91,7 +99,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         /// Creates a scheduled task to synchronize products on Facebook Shop.
         /// </summary>
         public void ScheduleProductSynchronization() {
-            _taskManager.CreateTask(FacebookShopProductSynchronizationTaskHandler.TASK_NAME, DateTime.UtcNow.AddMinutes(1), null);
+            _taskManager.CreateTask(FacebookShopProductSynchronizationTaskHandler.SYNCPRODUCTS_TASK, _clock.UtcNow.AddMinutes(1), null);
         }
 
         public FacebookShopRequestContainer SyncProduct(ContentItem product) {
@@ -275,11 +283,80 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                                 string respJson = reader.ReadToEnd();
                                 var json = JObject.Parse(respJson);
 
+                                // Facebook handles are managed after a while (we can't read errors immediately after the product batch call).
+                                // For this reason, I need to schedule the CheckFacebookHandles call.
+                                // First I need to create a FacebookShopHandleRecord.
+                                if (json["handles"] != null) {
+                                    var handleId = CreateFacebookShopHandleRecord(json["handles"].First.ToString(), jsonBody);
+                                    _taskManager.CreateTask(FacebookShopProductSynchronizationTaskHandler.CHECKHANDLE_TASK + "_" + handleId.ToString(), _clock.UtcNow.AddMinutes(1), null);
+                                }
+
                                 // If I'm here, product/s should be on Facebook Shop.
                                 if (container.Requests.Count == 1) {
                                     Logger.Debug(T("Product {0} synchronized on Facebook Shop.", container.Requests[0].RetailerId).Text);
                                 } else {
                                     Logger.Debug(T("{0} products synchronized on Facebook Shop.", container.Requests.Count.ToString()).Text);
+                                }
+                            }
+                        } else {
+                            Logger.Debug(T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.").Text);
+                        }
+                    }
+                } catch (Exception ex) {
+                    Logger.Debug(ex, T("Invalid Facebook api response. Product is not synchronized on Facebook Shop.").Text);
+                }
+            }
+        }
+
+        private int CreateFacebookShopHandleRecord(string handle, string requestJson) {
+            var rec = new FacebookShopHandleRecord() {
+                RequestJson = requestJson,
+                Handle = handle,
+                Processed = false
+            };
+            _handles.Create(rec);
+            return rec.Id;
+        }
+
+        public void CheckFacebookHandles(string handle, string containerJson) {
+            if (!string.IsNullOrWhiteSpace(handle)) {
+                _fsssp = _workContext.GetContext().CurrentSite.As<FacebookShopSiteSettingsPart>();
+                string url = _fsssp.ApiBaseUrl + (_fsssp.ApiBaseUrl.EndsWith("/") ? _fsssp.CatalogId : "/" + _fsssp.CatalogId);
+                url = string.Format(url + "/check_batch_request_status?handle={0}&access_token={1}", handle, _fsssp.AccessToken);
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                try {
+                    request.Method = WebRequestMethods.Http.Get;
+
+                    using (HttpWebResponse response = request.GetResponse() as HttpWebResponse) {
+                        if (response.StatusCode == HttpStatusCode.OK) {
+                            using (var reader = new StreamReader(response.GetResponseStream())) {
+                                string respJson = reader.ReadToEnd();
+                                var handlesJson = JObject.Parse(respJson);
+                                var errors = handlesJson["data"].First["errors"];
+                                if (errors != null) {
+                                    var error = errors.First;
+                                    if (error != null) {
+                                        // Quoted for the moment, it can be useful in the future if we want to have more structured intel on Facebook handles.
+                                        //var line = error["line"];
+                                        //var productSku = error["id"];
+                                        //var message = error["message"];
+
+                                        var errorLog = T("Error when checking Facebook Shop handle").Text;
+                                        errorLog += Environment.NewLine + containerJson;
+                                        errorLog += Environment.NewLine + handlesJson.ToString();
+                                        Logger.Error(errorLog);
+
+                                        // Quoted for the moment, it can be useful in the future if we want to have more structured intel on Facebook handles.
+                                        //while (error != null) {
+                                        //    error = error.Next;
+
+                                        //    if (error != null) {
+                                        //        line = error["line"];
+                                        //        productSku = error["id"];
+                                        //        message = error["message"];
+                                        //    }
+                                        //}
+                                    }
                                 }
                             }
                         } else {
@@ -357,6 +434,14 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             return context;
         }
 
+        private bool IsAllUpper(string str) {
+            for (int i = 0; i < str.Length; i++) {
+                if (Char.IsLetter(str[i]) && !Char.IsUpper(str[i]))
+                    return false;
+            }
+            return true;
+        }
+
         private FacebookServiceJsonContextData CheckCompliance(FacebookServiceJsonContextData context, ContentItem product) {
             if (string.IsNullOrWhiteSpace(context.Name)) {
                 context.Name = product.ContentManager.GetItemMetadata(product).DisplayText;
@@ -371,6 +456,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                 } else {
                     context.Description = bodyPart.Text;
                 }
+            }
+
+            if (IsAllUpper(context.Description)) {
+                context.Message = T("Invalid product description (description must not be all upper case)");
+                context.Valid = false;
+                return context;
             }
 
             var productPart = product.As<ProductPart>();
