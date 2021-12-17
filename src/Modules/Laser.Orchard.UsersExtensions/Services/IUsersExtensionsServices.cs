@@ -277,37 +277,36 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
             errors = new List<string>();
 
-            IDictionary<string, LocalizedString> validationErrors;
+            var context = new AccountValidationContext {
+                UserName = userName,
+                Email = email,
+                Password = password
+            };
 
-            var validate = _accountValidationService.ValidateUserName(userName, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
+            _accountValidationService.ValidateUserName(context);
+            _accountValidationService.ValidateEmail(context);
+            // Don't do the other validations if we already know we failed
+            if (!context.ValidationSuccessful) {
+                foreach (var error in context.ValidationErrors) {
                     errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
                 }
-            }
-
-            validate &= _accountValidationService.ValidateEmail(email, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
-                    errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
-                }
-            }
-
-            if (!validate)
                 return false;
+            }
 
             if (!_userService.VerifyUserUnicity(userName, email)) {
                 errors.Add(T("User with that username and/or email already exists.").Text);
+                context.ValidationSuccessful &= false;
             }
 
-            if (!_accountValidationService.ValidatePassword(password, out validationErrors)) {
-                foreach (var error in validationErrors) {
+            if (!_accountValidationService.ValidatePassword(context)) {
+                foreach (var error in context.ValidationErrors) {
                     errors.Add(string.Format("{0}: {1}", error.Key, error.Value.Text));
                 }
             }
 
             if (!String.Equals(password, confirmPassword, StringComparison.Ordinal)) {
                 errors.Add(T("The new password and confirmation password do not match.").Text);
+                context.ValidationSuccessful &= false;
             }
             return errors.Count == 0;
         }
