@@ -295,7 +295,6 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
             if (!_userService.VerifyUserUnicity(userName, email)) {
                 errors.Add(T("User with that username and/or email already exists.").Text);
-                context.ValidationSuccessful &= false;
             }
 
             if (!_accountValidationService.ValidatePassword(context)) {
@@ -306,7 +305,6 @@ namespace Laser.Orchard.UsersExtensions.Services {
 
             if (!String.Equals(password, confirmPassword, StringComparison.Ordinal)) {
                 errors.Add(T("The new password and confirmation password do not match.").Text);
-                context.ValidationSuccessful &= false;
             }
             return errors.Count == 0;
         }
