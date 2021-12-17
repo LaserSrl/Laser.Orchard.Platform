@@ -245,7 +245,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
                     if (jsonContext != null && jsonContext.Valid) {
                         requestContainer.Requests.Add(jsonContext);
                     } else if (jsonContext != null) {
-                        Logger.Debug(jsonContext.Message.Text);
+                        Logger.Error(T("Product {0} can't be synchronized on Facebook catalog.", jsonContext.RetailerId).Text);
+                        Logger.Error(jsonContext.Message.Text);
                     }
                 }
 
