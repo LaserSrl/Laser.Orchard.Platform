@@ -94,7 +94,8 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                     creatingContext.EmailAddress,
                     @T("Auto Registered User").Text,
                     _passwordGeneratorService.Generate() /* Noone can guess this */,
-                    true
+                    true, 
+                    false
                     ));
 
                 // _membershipService.CreateUser may fail and return null
