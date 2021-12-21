@@ -1,6 +1,5 @@
-﻿using System;
-using Orchard.ContentManagement.MetaData;
-using Orchard.Data.Migration;
+﻿using Orchard.Data.Migration;
+using System;
 
 namespace Laser.Orchard.NwazetIntegration {
     public class Migrations : DataMigrationImpl {
