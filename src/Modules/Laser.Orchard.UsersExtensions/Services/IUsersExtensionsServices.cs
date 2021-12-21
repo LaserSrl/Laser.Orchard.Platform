@@ -142,7 +142,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                         userRegistrationParams.Email,
                         userRegistrationParams.PasswordQuestion,
                         userRegistrationParams.PasswordAnswer,
-                        (RegistrationSettings.UsersAreModerated == false) && (RegistrationSettings.UsersMustValidateEmail == false)
+                        (RegistrationSettings.UsersAreModerated == false) && (RegistrationSettings.UsersMustValidateEmail == false),
+                        false
                         ));
                     // _membershipService.CreateUser may return null and tell nothing about why it failed to create the user
                     // if the Creating user event handlers set the flag to cancel user creation.
