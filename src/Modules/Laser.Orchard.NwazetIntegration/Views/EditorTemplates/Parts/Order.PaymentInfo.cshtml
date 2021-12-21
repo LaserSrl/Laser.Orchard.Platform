@@ -9,13 +9,17 @@
     // I need to check if my payment comes from a Custom Pos, in order to show the button to edit payment transaction id
     var canEditTransactionId = false;
     IList<ICustomPosProvider> customProviders;
+    IPaymentService paymentService = WorkContext.Resolve<IPaymentService>();
+    PaymentRecord record = paymentService.GetPaymentByTransactionId(Model.TransactionId);
+    var posName = Model.PosName;
     WorkContext.TryResolve<IList<ICustomPosProvider>>(out customProviders);
-    if (customProviders != null) {
-        var settings = WorkContext.CurrentSite.As<CustomPosSiteSettingsPart>();
-        if (settings != null) {
-            var customPos = settings.CustomPos;
-            var pos = customPos.FirstOrDefault(cp => cp.Name.Equals(Model.PosName, StringComparison.InvariantCultureIgnoreCase));
-            canEditTransactionId = (pos != null);
+    if (customProviders != null && record != null) {
+        var pos = customProviders
+            .Select(cp => cp.GetPosName(record))
+            .FirstOrDefault(s => !string.IsNullOrWhiteSpace(s));
+        if (pos != null) {
+            posName = pos;
+            canEditTransactionId = true;
         }
     }
 }
@@ -27,7 +31,7 @@
             <tbody>
                 <tr>
                     <td width="20%">@T("POS")</td>
-                    <td><span>@Model.PosName</span></td>
+                    <td><span>@posName</span></td>
                 </tr>
                 <tr>
                     <td width="20%">@T("Reason")</td>

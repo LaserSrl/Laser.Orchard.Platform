@@ -4,6 +4,7 @@ using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
@@ -77,6 +78,10 @@ namespace Laser.Orchard.PaymentGateway.Providers {
             }
 
             return string.Empty;
+        }
+        
+        public virtual IEnumerable<dynamic> GetAdditionalFrontEndMetadataShapes(PaymentRecord payment) {
+            return Enumerable.Empty<dynamic>();
         }
     }
 }
