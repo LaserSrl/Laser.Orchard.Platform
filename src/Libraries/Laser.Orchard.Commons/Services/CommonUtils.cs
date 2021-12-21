@@ -1,14 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace Laser.Orchard.Commons.Services {
     public class CommonUtils {
         public string NormalizeFileName(string fileName, string defaultFileName, char replacementChar = '_') {
             var normalizedFileName = defaultFileName;
             var tempFileName = fileName.Clone().ToString();
+            // if the input character is one of the invalid characters
+            if (Path.GetInvalidFileNameChars().Contains(replacementChar)) {
+                // replaced it with the default one
+                replacementChar = '_';
+            }
             foreach (var badChar in Path.GetInvalidFileNameChars()) {
-                tempFileName.Replace(badChar, replacementChar);
+                tempFileName = tempFileName.Replace(badChar, replacementChar);
             }
             if (string.IsNullOrWhiteSpace(tempFileName.Trim()) == false) {
                 normalizedFileName = tempFileName;

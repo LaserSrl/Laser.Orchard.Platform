@@ -10,8 +10,18 @@
             .Equals("IBAN", StringComparison.InvariantCultureIgnoreCase)) as TextField;
 
     var iban = ibanField.Value;
+
+    var emailField = settingsCI.ContentItem.Parts
+        .SelectMany(p => p.Fields)
+        .FirstOrDefault(f => f.Name
+            .Equals("BankTransferEmail", StringComparison.InvariantCultureIgnoreCase)) as TextField;
+
+    var email = emailField.Value;
+
+    var reason = Model.ShapeContext.PaymentViewModel.Record.Reason;
 }
 
 <p>@T("Bank Transfer payment")</p>
 <p>@T("You need to send the money at the following account number: {0}", iban)</p>
-<p>@T("Your goods will be shipped as soon as we get the confirmation from the bank.")</p>
+<p>@T("Payment reason: {0}", reason)</p>
+<p>@T("Please send the transfer code via email at <a href='mailto:{0}'>{0}</a> in order to confirm your payment.", email)</p>

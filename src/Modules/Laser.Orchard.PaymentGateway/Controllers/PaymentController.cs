@@ -167,27 +167,26 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 ShapeFactory = _shapeFactory
             };
 
-            if (payment.PosName.StartsWith("CustomPos_")) {
-                var customPosName = payment.PosName.Substring("CustomPos_".Length);
-                
-                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
-                var currentCustomPos = customPosSiteSettings.CustomPos
-                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+            model.AdditionalShapes
+                .AddRange(_customPosProviders
+                    .Select(pp =>
+                        pp.GetInfoShapeName(payment))
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(s => new AdditionalPartial() {
+                        ShapeFile = s
+                    })
+                );
 
-                if (currentCustomPos != null) {
-                    // I have my custom pos object, now I need to check for the provider.
-                    var customPosProvider = _customPosProviders.FirstOrDefault(cpp => cpp.TechnicalName
-                        .Equals(currentCustomPos.ProviderName, StringComparison.InvariantCultureIgnoreCase));
+            var customPosName = payment.PosName;
 
-                    if (customPosProvider != null) {
-                        var testShape = new AdditionalPartial();
-                        testShape.ShapeFile = customPosProvider.GetInfoShapeName();
-                        model.AdditionalShapes.Add(testShape);                        
-                    }
-                }
-
-                payment.PosName = customPosName;
+            var name = _customPosProviders
+                .Select(pp => pp.GetPosName(payment))
+                .FirstOrDefault(s => !string.IsNullOrWhiteSpace(s));
+            if (!string.IsNullOrWhiteSpace(name)) {
+                customPosName = name;
             }
+
+            model.PosName = customPosName;
 
             model.ShapeContext = shapeContext;
 

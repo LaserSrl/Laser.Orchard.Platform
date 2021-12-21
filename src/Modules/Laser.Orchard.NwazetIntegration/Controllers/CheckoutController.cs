@@ -2,6 +2,7 @@
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
+using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
@@ -544,14 +545,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return RedirectToAction("Review");
             }
             // get the pos by name
-            // If a custom payment gateway is selected, I'm not finding it into the _posServices as it is, but I need to look for "Custom Pos".
-            var selectedPosService = model.SelectedPosService;
-            if (selectedPosService.StartsWith("CustomPos_")) {
-                selectedPosService = "Custom Pos";
-            }
             var selectedService = _posServices
-                .FirstOrDefault(ps => ps.GetPosName()
-                    .Equals(selectedPosService, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(ps => 
+                    !string.IsNullOrWhiteSpace(ps.GetPosServiceName(model.SelectedPosService)));
             if (selectedService == null) {
                 // data got corrupted?
                 _notifier.Error(T("Impossible to start payment with the selected provider. Please try again."));
