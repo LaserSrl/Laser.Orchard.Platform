@@ -1,8 +1,10 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
+using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Services;
 using Orchard;
-using Orchard.ContentManagement;
+using Orchard.Core.Common.Fields;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Services.Pos {
@@ -13,23 +15,22 @@ namespace Laser.Orchard.NwazetIntegration.Services.Pos {
         private static readonly string providerTechnicalName = "BankTransfer";
 
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IList<ICustomPosProvider> _customPosProviders;
 
-        public BankTransferIntegrationService(IWorkContextAccessor workContextAccessor) {
+        public BankTransferIntegrationService(IWorkContextAccessor workContextAccessor,
+            IList<ICustomPosProvider> customPosProviders) {
             _workContextAccessor = workContextAccessor;
+            _customPosProviders = customPosProviders;
         }
 
         public override bool CheckPos(PaymentRecord payment) {
-            if (payment.PosName.StartsWith("CustomPos_")) {
-                var customPosName = payment.PosName.Substring("CustomPos_".Length);
-
-                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
-                var currentCustomPos = customPosSiteSettings.CustomPos
-                    .FirstOrDefault(cps => cps.Name.Equals(customPosName)
-                        && cps.ProviderName.Equals(providerTechnicalName, StringComparison.InvariantCultureIgnoreCase));
-
-                return (currentCustomPos != null);
+            if (_customPosProviders != null) {
+                var posProvider = _customPosProviders
+                    .FirstOrDefault(cpp => cpp.TechnicalName.Equals(providerTechnicalName, StringComparison.InvariantCultureIgnoreCase));
+                if (posProvider != null) {
+                    return !string.IsNullOrWhiteSpace(posProvider.GetPosName(payment));
+                }
             }
-
             return base.CheckPos(payment);
         }
 

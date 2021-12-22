@@ -4,6 +4,7 @@ using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
@@ -64,19 +65,25 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         }
 
         public virtual string GetPosName(PaymentRecord payment) {
-            var customPosName = payment.PosName;
-            if (customPosName.StartsWith("CustomPos_")) {
-                customPosName = customPosName.Substring("CustomPos_".Length);
-            }
+            if (payment != null) {
+                var customPosName = payment.PosName;
+                if (customPosName.StartsWith("CustomPos_")) {
+                    customPosName = customPosName.Substring("CustomPos_".Length);
+                }
 
-            var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
-            var currentCustomPos = customPosSiteSettings.CustomPos
-                .FirstOrDefault(cps => cps.Name.Equals(customPosName));
-            if (currentCustomPos != null && currentCustomPos.ProviderName.Equals(TechnicalName, StringComparison.InvariantCultureIgnoreCase)) {
-                return customPosName;
+                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
+                var currentCustomPos = customPosSiteSettings.CustomPos
+                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+                if (currentCustomPos != null && currentCustomPos.ProviderName.Equals(TechnicalName, StringComparison.InvariantCultureIgnoreCase)) {
+                    return customPosName;
+                }
             }
 
             return string.Empty;
+        }
+        
+        public virtual IEnumerable<dynamic> GetAdditionalFrontEndMetadataShapes(PaymentRecord payment) {
+            return Enumerable.Empty<dynamic>();
         }
     }
 }
