@@ -61,6 +61,9 @@
     <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.IdentityModel.JsonWebTokens.5.2.4\lib\net451\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
@@ -192,6 +195,7 @@
     <Content Include="Views\Content.ControlWrapper.cshtml" />
     <Content Include="Views\DefinitionTemplates\ShortCodes\ContentShortCodeSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\ShortCodes\ShortCodesSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\AuditTrailOutputSettings.cshtml" />
     <None Include="Views\EditorTemplates\Parts\OwnedFolder_Edit.cshtml" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerCreation.js" />
     <Content Include="Scripts\contentPickerCreation\ContentPickerThemeHiding.js" />
@@ -293,6 +297,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Markdown\Markdown.csproj">
       <Project>{3158c928-888c-4a84-8bc1-4a8257489538}</Project>
       <Name>Markdown</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.AuditTrail\Orchard.AuditTrail.csproj">
+      <Project>{3dd574cd-9c5d-4a45-85e1-ebba64c22b5f}</Project>
+      <Name>Orchard.AuditTrail</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Autoroute\Orchard.Autoroute.csproj">
       <Project>{66fccd76-2761-47e3-8d11-b45d0001ddaa}</Project>
@@ -414,6 +422,14 @@
     <Compile Include="AppleEnvironment\Routes\Routes.cs" />
     <Compile Include="AppleEnvironment\Services\MerchantDomainAssociationService.cs" />
     <Compile Include="AppleEnvironment\ViewModels\MerchantDomainAssociationViewModel.cs" />
+    <Compile Include="AuditTrail\Drivers\AuditTrailOutputSettingsPartDriver.cs" />
+    <Compile Include="AuditTrail\Extensions\LaserAuditTrailHelper.cs" />
+    <Compile Include="AuditTrail\Features\AuditTrailFeatureEventHandler.cs" />
+    <Compile Include="AuditTrail\Handlers\AuditTrailOutputSettingsPartHandler.cs" />
+    <Compile Include="AuditTrail\Models\AuditTrailOutputSettingsPart.cs" />
+    <Compile Include="AuditTrail\Providers\ChannelsAuditTrailProvider.cs" />
+    <Compile Include="AuditTrail\Services\TrailLogTrimmingBackgroundTask.cs" />
+    <Compile Include="AuditTrail\ViewModels\AuditTrailOutputSettingsPartViewModel.cs" />
     <Compile Include="ColorPicker\ColorPickerField.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />

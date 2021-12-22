@@ -85,4 +85,7 @@
 
   <!-- ShortCodes -->
   <Place Parts_ShortCodes_Edit="Content:before"/>
+  
+  <!-- AuditTrail -->
+  <Place Parts_AuditTrailOutputSettings_Edit="Content:1"/>
 </Placement>

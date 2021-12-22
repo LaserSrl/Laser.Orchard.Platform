@@ -106,3 +106,8 @@ Features:
         Description: Evaluates Short Codes in a body.
         Dependencies: Contents, Navigation
 		Category: Content
+	Laser.Orchard.AuditTrail:
+		Name: Laser Audit Trail
+		Description: Adds Audit information to the Windows Event Viewer and a filesystem log.
+		Dependencies: Orchard.AuditTrail, Orchard.AuditTrail.Users, Orchard.AuditTrail.Roles, Orchard.AuditTrail.Trimming
+		Category: Security
