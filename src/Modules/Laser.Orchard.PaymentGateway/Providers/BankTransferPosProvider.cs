@@ -59,7 +59,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
 
                     var reason = payment.Reason;
 
-                    yield return _shapeFactory.BankTransferOrderAdditionalFrontEndShape(
+                    return _shapeFactory.BankTransferOrderAdditionalFrontEndData(
                         Iban: iban,
                         Email: email,
                         Reason: reason
@@ -67,7 +67,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                 }
             }
 
-            yield return base.GetAdditionalFrontEndMetadataShapes(payment);
+            return base.GetAdditionalFrontEndMetadataShapes(payment);
         }
     }
 }

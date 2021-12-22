@@ -26,10 +26,15 @@ namespace Laser.Orchard.NwazetIntegration.Services.Pos {
             var transactionId = orderPart.Charge?.TransactionId;
             if (transactionId != null) {
                 PaymentRecord payment = _paymentService.GetPaymentByTransactionId(transactionId);
-                yield return _customPosProviders
-                    .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment));
+                if (payment != null) {
+                    var metaShapes = _customPosProviders
+                        .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment));
+                    foreach (var shape in metaShapes) {
+                        yield return shape;
+                    }
+                }                
             }
-            yield return base.GetAdditionalOrderMetadataShapes(orderPart);
+            //yield return base.GetAdditionalOrderMetadataShapes(orderPart);
         }
     }
 }

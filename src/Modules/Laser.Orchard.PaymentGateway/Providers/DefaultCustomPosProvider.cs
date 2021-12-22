@@ -65,16 +65,18 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         }
 
         public virtual string GetPosName(PaymentRecord payment) {
-            var customPosName = payment.PosName;
-            if (customPosName.StartsWith("CustomPos_")) {
-                customPosName = customPosName.Substring("CustomPos_".Length);
-            }
+            if (payment != null) {
+                var customPosName = payment.PosName;
+                if (customPosName.StartsWith("CustomPos_")) {
+                    customPosName = customPosName.Substring("CustomPos_".Length);
+                }
 
-            var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
-            var currentCustomPos = customPosSiteSettings.CustomPos
-                .FirstOrDefault(cps => cps.Name.Equals(customPosName));
-            if (currentCustomPos != null && currentCustomPos.ProviderName.Equals(TechnicalName, StringComparison.InvariantCultureIgnoreCase)) {
-                return customPosName;
+                var customPosSiteSettings = _workContextAccessor.GetContext().CurrentSite.As<CustomPosSiteSettingsPart>();
+                var currentCustomPos = customPosSiteSettings.CustomPos
+                    .FirstOrDefault(cps => cps.Name.Equals(customPosName));
+                if (currentCustomPos != null && currentCustomPos.ProviderName.Equals(TechnicalName, StringComparison.InvariantCultureIgnoreCase)) {
+                    return customPosName;
+                }
             }
 
             return string.Empty;
