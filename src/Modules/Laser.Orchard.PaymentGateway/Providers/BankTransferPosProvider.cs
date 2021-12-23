@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.AdvancedSettings.Services;
 using Laser.Orchard.PaymentGateway.Models;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Core.Common.Fields;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
@@ -13,12 +14,15 @@ namespace Laser.Orchard.PaymentGateway.Providers {
     public class BankTransferPosProvider : DefaultCustomPosProvider {
         private readonly IAdvancedSettingsService _advancedSettings;
         private readonly dynamic _shapeFactory;
+        private readonly IContentManager _contentManager;
 
         public BankTransferPosProvider(IWorkContextAccessor workContextAccessor,
             IAdvancedSettingsService advancedSettingsService,
-            IShapeFactory shapeFactory) : base(workContextAccessor) {
+            IShapeFactory shapeFactory,
+            IContentManager contentManager) : base(workContextAccessor) {
             _advancedSettings = advancedSettingsService;
             _shapeFactory = shapeFactory;
+            _contentManager = contentManager;
         }
 
         public override string TechnicalName => "BankTransfer";
@@ -58,11 +62,17 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                     }
 
                     var reason = payment.Reason;
+                    var status = string.Empty;
+                    var order = _contentManager.Get(payment.ContentItemId);
+                    if (order != null) {
+                        status = ((dynamic)order).OrderPart.Status ?? string.Empty;
+                    }
 
                     return _shapeFactory.BankTransferOrderAdditionalFrontEndData(
                         Iban: iban,
                         Email: email,
-                        Reason: reason
+                        Reason: reason,
+                        Status: status
                     );
                 }
             }
