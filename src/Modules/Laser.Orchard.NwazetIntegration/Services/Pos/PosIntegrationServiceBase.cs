@@ -1,5 +1,7 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Laser.Orchard.NwazetIntegration.Services.Pos {
     public abstract class PosIntegrationServiceBase : IPosIntegrationService {

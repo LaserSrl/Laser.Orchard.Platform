@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.PaymentGateway.Models;
 using Orchard;
 using Orchard.Localization;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.PaymentGateway.Providers {
     public interface ICustomPosProvider : IDependency {
@@ -39,5 +40,11 @@ namespace Laser.Orchard.PaymentGateway.Providers {
         /// <param name="payment"></param>
         /// <returns>Returns an empty string if the pos isn't found between CustomPostProviders.</returns>
         string GetPosName(PaymentRecord payment);
+        /// <summary>
+        /// Returns shapes to show in a front-end view based on the payment.
+        /// </summary>
+        /// <param name="payment"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetAdditionalFrontEndMetadataShapes(PaymentRecord payment);
     }
 }
