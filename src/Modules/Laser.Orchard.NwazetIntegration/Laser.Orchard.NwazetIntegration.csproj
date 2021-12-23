@@ -172,6 +172,7 @@
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
     <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopHandleRecord.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
     <Compile Include="Models\FacebookShopProductPartRecord.cs" />
     <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
