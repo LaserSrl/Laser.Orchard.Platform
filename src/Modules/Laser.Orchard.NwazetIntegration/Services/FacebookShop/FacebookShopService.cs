@@ -512,18 +512,20 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             if (string.IsNullOrWhiteSpace(context.SalePrice)) {
                 getDefaultPrice = true;
             } else if (decimal.TryParse(context.SalePrice, out decSalePrice)) {
-                if (decSalePrice < decPrice) {
-                    context.SalePrice = ((int)(decPrice * 100)).ToString();
-                }
+                context.SalePrice = ((int)(decSalePrice * 100)).ToString();
             } else {
                 getDefaultPrice = true;
             }
             if (getDefaultPrice) {
                 decSalePrice = productPart.ProductPriceService.GetDiscountPrice(productPart);
-                if (decSalePrice < decPrice) {
-                    int cents = (int)(decSalePrice * 100);
-                    context.SalePrice = cents.ToString();
-                }
+                int cents = (int)(decSalePrice * 100);
+                context.SalePrice = cents.ToString();
+            }
+
+            // If sale price is greater than price, there is no sale.
+            // Sale price = 0 to tell Facebook there is no sale on current product.
+            if (decSalePrice < 0 || decSalePrice >= decPrice) {
+                context.SalePrice = "0";
             }
             // End of sale price analysis.
 
