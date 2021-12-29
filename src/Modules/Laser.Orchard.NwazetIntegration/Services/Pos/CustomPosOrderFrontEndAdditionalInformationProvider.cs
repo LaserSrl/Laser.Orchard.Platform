@@ -2,7 +2,9 @@
 using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
+using Orchard;
 using Orchard.DisplayManagement;
+using Orchard.UI.Admin;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,28 +15,31 @@ namespace Laser.Orchard.NwazetIntegration.Services.Pos {
         private readonly IPaymentService _paymentService;
         private readonly IList<ICustomPosProvider> _customPosProviders;
         private readonly dynamic _shapeFactory;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
         public CustomPosOrderFrontEndAdditionalInformationProvider(IPaymentService paymentService,
             IList<ICustomPosProvider> customPosProviders,
-            IShapeFactory shapeFactory) {
+            IShapeFactory shapeFactory,
+            IWorkContextAccessor workContextAccessor) {
             _paymentService = paymentService;
             _customPosProviders = customPosProviders;
             _shapeFactory = shapeFactory;
+            _workContextAccessor = workContextAccessor;
         }
 
         public override IEnumerable<dynamic> GetAdditionalOrderMetadataShapes(OrderPart orderPart) {
-            var transactionId = orderPart.Charge?.TransactionId;
-            if (transactionId != null) {
-                PaymentRecord payment = _paymentService.GetPaymentByTransactionId(transactionId);
-                if (payment != null) {
-                    var metaShapes = _customPosProviders
-                        .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment));
-                    foreach (var shape in metaShapes) {
-                        yield return shape;
+                var transactionId = orderPart.Charge?.TransactionId;
+                if (transactionId != null) {
+                    PaymentRecord payment = _paymentService.GetPaymentByTransactionId(transactionId);
+                    if (payment != null) {
+                        var metaShapes = _customPosProviders
+                            .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment));
+                        foreach (var shape in metaShapes) {
+                            yield return shape;
+                        }
                     }
-                }                
+                }
             }
-            //yield return base.GetAdditionalOrderMetadataShapes(orderPart);
         }
     }
 }
