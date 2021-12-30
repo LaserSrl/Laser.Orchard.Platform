@@ -28,14 +28,20 @@ namespace Laser.Orchard.NwazetIntegration.Services.Pos {
         }
 
         public override IEnumerable<dynamic> GetAdditionalOrderMetadataShapes(OrderPart orderPart) {
+            // I need to avoid showing these shapes if I'm in the backoffice.
+            if (!AdminFilter.IsApplied(_workContextAccessor.GetContext().HttpContext.Request.RequestContext)) {
                 var transactionId = orderPart.Charge?.TransactionId;
                 if (transactionId != null) {
                     PaymentRecord payment = _paymentService.GetPaymentByTransactionId(transactionId);
                     if (payment != null) {
                         var metaShapes = _customPosProviders
-                            .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment));
-                        foreach (var shape in metaShapes) {
-                            yield return shape;
+                            .Select(cpp => cpp.GetAdditionalFrontEndMetadataShapes(payment))
+                            .ToList();
+                        // metaShapes variable is a list of lists.
+                        foreach (var l in metaShapes) {
+                            foreach (var shape in l.ToList()) {
+                                yield return shape;
+                            }
                         }
                     }
                 }

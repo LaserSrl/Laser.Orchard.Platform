@@ -68,7 +68,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                         status = ((dynamic)order).OrderPart.Status ?? string.Empty;
                     }
 
-                    return _shapeFactory.BankTransferOrderAdditionalFrontEndData(
+                    yield return _shapeFactory.BankTransferOrderAdditionalFrontEndData(
                         Iban: iban,
                         Email: email,
                         Reason: reason,
@@ -77,7 +77,7 @@ namespace Laser.Orchard.PaymentGateway.Providers {
                 }
             }
 
-            return base.GetAdditionalFrontEndMetadataShapes(payment);
+            yield break;
         }
     }
 }
