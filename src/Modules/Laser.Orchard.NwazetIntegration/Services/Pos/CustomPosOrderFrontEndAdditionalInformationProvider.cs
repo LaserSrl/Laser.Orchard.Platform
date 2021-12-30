@@ -3,7 +3,6 @@ using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
-using Orchard.DisplayManagement;
 using Orchard.UI.Admin;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +13,13 @@ namespace Laser.Orchard.NwazetIntegration.Services.Pos {
 
         private readonly IPaymentService _paymentService;
         private readonly IList<ICustomPosProvider> _customPosProviders;
-        private readonly dynamic _shapeFactory;
         private readonly IWorkContextAccessor _workContextAccessor;
 
         public CustomPosOrderFrontEndAdditionalInformationProvider(IPaymentService paymentService,
             IList<ICustomPosProvider> customPosProviders,
-            IShapeFactory shapeFactory,
             IWorkContextAccessor workContextAccessor) {
             _paymentService = paymentService;
             _customPosProviders = customPosProviders;
-            _shapeFactory = shapeFactory;
             _workContextAccessor = workContextAccessor;
         }
 
