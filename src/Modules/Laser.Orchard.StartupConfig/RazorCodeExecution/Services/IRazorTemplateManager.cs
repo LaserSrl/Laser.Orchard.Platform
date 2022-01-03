@@ -73,6 +73,7 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard");
             config.Namespaces.Add("Orchard.ContentManagement");
             config.Namespaces.Add("Orchard.Caching");
+            config.Namespaces.Add("Orchard.Localization");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
             
