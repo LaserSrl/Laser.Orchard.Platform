@@ -48,7 +48,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-cog"></i></span>
 
-                <div class="info-box-content">
+                <div class="info-box-content row">
                     @if (createdUtc.HasValue) {
                         <span class="info-box-text col-sm-4">@T("Created on")</span>
                         <span class="info-box-number col-sm-8">@createdUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
@@ -73,7 +73,7 @@
         <div class="col-md-12 col-lg-6 col-12 custom-width-info-box">
             <div class="info-box">
                 <span class="info-box-icon bg-@statusBackgroundColor"><i class="@statusIconClass"></i></span>
-                <div class="info-box-content">
+                <div class="info-box-content row">
                     <span class="info-box-text col-sm-4">@T("Status")</span>
                     <span class="info-box-number col-sm-4"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
                     <span class="col-sm-4">
