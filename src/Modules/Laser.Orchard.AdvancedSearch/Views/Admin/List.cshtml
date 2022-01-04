@@ -225,8 +225,8 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <label class="col-sm-4 align-right gray-label">@T("Content creation:")</label>
+                    <div class="col-sm-6 row">
+                        <label class="col-sm-4 col-form-label align-right gray-label">@T("Content creation:")</label>
                         @{
                             if (!String.IsNullOrWhiteSpace((string)Model.Options.SelectedFilter)) {
                                 var dummyContent = _orchardServices.ContentManager.New(Model.Options.SelectedFilter);
@@ -239,9 +239,9 @@
                             }
                         }
                     </div>
-                    <div class="col-sm-6">
-                        <label class="col-sm-3 align-right gray-label">@T("Builk actions:")</label>
-                        <div class="col-sm-9">
+                    <div class="col-sm-6 row">
+                        <label class="col-sm-4 col-form-label align-right gray-label">@T("Builk actions:")</label>
+                        <div class="col-sm-8">
                             <select id="publishActions" name="Options.BulkAction">
                                 @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.None, T("Choose action...").ToString())
                                 @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.PublishNow, T("Publish Now").ToString())
