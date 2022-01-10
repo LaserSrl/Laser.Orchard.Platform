@@ -1,4 +1,5 @@
 ﻿using Orchard.Mvc;
+using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Workflows.Services;
@@ -32,6 +33,11 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             var content = user.ContentItem;
             _workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Action", "Disabled" } });
 
+        }
+
+        public void ChangingPassword(IUser user, string password) {
+            var content = user.ContentItem;
+            _workflowManager.TriggerEvent("OnUserEvent", content, () => new Dictionary<string, object> { { "Content", content }, { "Password", password }, { "Action", "ChangingPassword" } });
         }
 
         public void ChangedPassword(global::Orchard.Security.IUser user) {

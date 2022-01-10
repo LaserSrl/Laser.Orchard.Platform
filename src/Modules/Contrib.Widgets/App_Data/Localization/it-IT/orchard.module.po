@@ -94,7 +94,7 @@ msgstr "Rimuovi"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Scheduled"
-msgstr "Pianificato"
+msgstr "Programmato"
 
 msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.cshtml"
 msgid "Scheduled Archive"
@@ -114,7 +114,7 @@ msgstr "Widget"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Couldn't create content"
-msgstr "Non è stato possibile creare il contenuto"
+msgstr "Impossibile creare il contenuto"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Creating widget failed: {0}"
@@ -134,7 +134,7 @@ msgstr "Non autorizzato alla gestione dei widget"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Removing Widget failed: {0}"
-msgstr "Eliminazione del widget fallita: {0}"
+msgstr "Rimozione del widget non riuscita: {0}"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Widget not found: {0}"
@@ -142,7 +142,7 @@ msgstr "Widget non trovato: {0}"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Widget was successfully deleted"
-msgstr "Il widget è stato eliminato con successo"
+msgstr "Widget eliminato con successo"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been added."
@@ -150,7 +150,7 @@ msgstr "Il tuo {0} è stato aggiunto."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been created."
-msgstr "Il {0} è stato creato."
+msgstr "Il tuo {0} è stato creato."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been saved."
@@ -158,5 +158,5 @@ msgstr "Il tuo {0} è stato salvato."
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your content has been created."
-msgstr "Il contenuto è stato creato."
+msgstr "Il tuo contenuto è stato creato."
 

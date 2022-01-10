@@ -34,9 +34,8 @@
     <span class="hint">@T("Relative Url to which redirect. Do not start with '~/'")</span>
 </div>
 <div>
-    @Html.LabelFor(x => x.IsPermanent)
     @Html.CheckBoxFor(x => x.IsPermanent)
+    @Html.LabelFor(x => x.IsPermanent, new { @class = "forcheckbox" })
     @Html.ValidationMessageFor(x => x.IsPermanent)
     <span class="hint">@T("Redirect should be permanent 301")</span>
 </div>
-

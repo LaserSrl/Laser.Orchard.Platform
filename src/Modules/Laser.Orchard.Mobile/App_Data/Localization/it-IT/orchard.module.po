@@ -654,7 +654,7 @@ msgstr "Telefono per recupero password"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/UserPwdRecoveryPart_Edit.cshtml"
 msgid "Phone number"
-msgstr "Telefono"
+msgstr "Numero di telefono"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/EditorTemplates/Parts/Users.LastDeviceUserDataProviderSettings.cshtml"
 msgid "Mobile authentication"
@@ -774,7 +774,7 @@ msgstr "Assegna alla Macchina Corrente"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Clear Search"
@@ -838,7 +838,7 @@ msgstr "Cerca:"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "Show All"
-msgstr "Visualizza Tutto"
+msgstr "Mostra tutti"
 
 msgctxt "~/Modules/Laser.Orchard.Mobile/Views/PushNotification/Index.cshtml"
 msgid "To allow push notification to devices registered on multiple servers, please add the following line to the Settings.txt file (values separated by space):<br/>PushRegistrationAllowedMachineNames: server1 server2 server3"
@@ -1062,7 +1062,7 @@ msgstr "Notifica inviata:"
 
 msgctxt "Laser.Orchard.Mobile.Services.PushNotificationService"
 msgid "Sent: "
-msgstr "Inviato"
+msgstr "Inviato:"
 
 msgctxt "Laser.Orchard.Mobile.Services.PushNotificationService"
 msgid "Sent: message payload exceed the limit"
@@ -1086,7 +1086,7 @@ msgstr "Il campo Prefisso del numero di cellulare per il test è obbligatorio."
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "A template to format your email message."
-msgstr "Un template per impaginare il messaggio di email."
+msgstr "Un modello per formattare il tuo messaggio di email."
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "All"
@@ -1186,7 +1186,7 @@ msgstr "Sviluppo"
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "Template"
-msgstr "Template"
+msgstr "Modello"
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "User Email list"
@@ -1194,7 +1194,7 @@ msgstr "Elenco Email Utente"
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "User ID"
-msgstr "ID User"
+msgstr "ID Utente"
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushEditForm"
 msgid "User ID list"
@@ -1234,5 +1234,5 @@ msgstr "Invia Push."
 
 msgctxt "Laser.Orchard.Mobile.WorkFlows.PushTask"
 msgid "Sent"
-msgstr "Invia"
+msgstr "Inviato"
 

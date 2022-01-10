@@ -38,7 +38,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "First Name"
@@ -94,7 +94,7 @@ msgstr "Indirizzo di spedizione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Title"
@@ -186,7 +186,7 @@ msgstr "Aggiungi Indirizzo"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Billing Addresses"
-msgstr "Indirizzo di Fatturazione"
+msgstr "Indirizzi di Fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/MyAddresses.cshtml"
 msgid "Delete"
@@ -218,7 +218,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Country: {0}"
@@ -278,7 +278,7 @@ msgstr "Seleziona il tuo Paese dall'elenco."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "State, province, prefecture, republic or region"
-msgstr "Stato, provincia, prefettura, repubblica o regione"
+msgstr "Provincia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressForm.cshtml"
 msgid "Stored Billing Address"
@@ -310,7 +310,7 @@ msgstr "Clicca qui per cambiare gli indirizzi selezionati."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Email address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Phone number"
@@ -354,7 +354,7 @@ msgstr "e-mail"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "International Phone Prefix"
-msgstr "Prefisso internazionale"
+msgstr "Prefisso telefonico internazionale"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Next"
@@ -460,6 +460,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckou
 msgid "I have read and agree to {0}"
 msgstr "Ho letto e accetto {0}"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
+msgid "Default json"
+msgstr "Json predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
+msgid "This is the json body for product creation / update on Facebook shop."
+msgstr "Questo è il corpo del json per la creazione o l'aggiornamento dei prodotti sul negozio di Facebook."
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/GTMProductSettingVM.cshtml"
 msgid "Any content will be inserted into the fields, both as text and as a token will be sent as it is to Google Tag Manager (also with html tags or special characters)"
 msgstr "Qualsiasi contenuto verrà inserito nei campi, sia come testo che come token verrà inviato così com'è a Google Tag Manager (anche con tag html o caratteri speciali)"
@@ -542,7 +550,7 @@ msgstr "Azienda"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/AddressEditViewModel.cshtml"
 msgid "First Name"
@@ -616,6 +624,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Address
 msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
 msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/FacebookShopProductPartEditor.cshtml"
+msgid "Keep the product synchronized with Facebook Shop every time the product is published."
+msgstr "Mantieni il prodotto sincronizzato nel negozio di Facebook ogni volta che viene pubblicato."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/FacebookShopProductPartEditor.cshtml"
+msgid "Synchronize with Facebook Shop"
+msgstr "Sincronizza sul negozio di Facebook"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
 msgid "Billing Address"
 msgstr "Indirizzo di fatturazione"
@@ -662,7 +678,7 @@ msgstr "Errore"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Failed"
-msgstr "Fallito"
+msgstr "Operazione fallita"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Outcome"
@@ -786,7 +802,7 @@ msgstr "Stati: {0}"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfigurationDetails.cshtml"
 msgid "Province"
@@ -836,6 +852,54 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSet
 msgid "Require users to be authenticated to start a checkout."
 msgstr "Richiedi agli utenti di essere autenticati per avviare un acquisto."
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Access Token for the Facebook Shop"
+msgstr "Token di Accesso al negozio di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Api base url"
+msgstr "Base URL per le API"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Base url for api calls to Facebook Graph services"
+msgstr "Url base per le chiamate ai servizi delle api di Facebook Graph"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Default json"
+msgstr "Json predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Facebook business id"
+msgstr "Id del business di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Facebook catalog id"
+msgstr "Id del catalogo di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Id of the catalog on Facebook business"
+msgstr "Id del catalogo sul business di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Id of the Facebook business"
+msgstr "Id del business di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "Synchronize all published content on Facebook Shop when saving."
+msgstr "Sincronizza tutti i contenuti pubblicati sul negozio di Facebook al salvataggio."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "This is the access token of the System User of the Facebook business"
+msgstr "Questo è il token di accesso dell'utente di sistema del business di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "This is the json body for product creation / update on Facebook shop."
+msgstr "Questo è il corpo del json per la creazione o l'aggiornamento dei prodotti sul negozio di Facebook."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "This value will be used when no specific json is set in the FacebookProductPart of the product content definition."
+msgstr "Questo valore viene utilizzato quando non è indicato un json specifico nella FacebookProductPart nella definizione di contenuto del prodotto."
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
 msgid "{0} &times; {1}"
 msgstr "{0} &times; {1}"
@@ -882,7 +946,7 @@ msgstr "E-Commerce"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateAttributesActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "A user is attempting to advance in checkout."
@@ -890,7 +954,7 @@ msgstr "Un utente sta cerando di procedere al checkout."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Activities.ValidateCheckoutActivity"
 msgid "Events"
@@ -906,7 +970,7 @@ msgstr "Criteri sui cookies della request"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificCookieCouponCriteria"
 msgid "Test request cookies"
@@ -922,7 +986,7 @@ msgstr "Criteri per determinate intestazioni delle richiesta (Request Headers)"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Http Request"
-msgstr "Richiesta HTTP (HTTP Request)"
+msgstr "Richiesta http"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Request header"
@@ -931,6 +995,42 @@ msgstr "Intestazione delle richiesta (Request Header)"
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CallHasSpecificHeaderCouponCriteria"
 msgid "Test request header"
 msgstr "Testa l'intestazione delle richiesta (Request Header)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCouponLineCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCouponLineCriteria"
+msgid "Coupon {0} is not valid for any product in your cart."
+msgstr "Il coupon {0} non è valido per alcun elemento del carrello."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCouponLineCriteria"
+msgid "Line criteria is applicable only on products that are not discounted."
+msgstr "Il criterio di linea è applicabili solo a prodotti non scontati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCouponLineCriteria"
+msgid "Line product should not be discounted"
+msgstr "Il prodotto nella riga non deve essere scontato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCouponLineCriteria"
+msgid "Line product should not be discounted."
+msgstr "Il prodotto nella riga non deve essere scontato."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCriteria"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCriteria"
+msgid "Coupon is applicable only if there is no discounted product in the cart."
+msgstr "Il coupon è applicabile solo se non ci sono prodotti scontati nel carrello."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCriteria"
+msgid "If there is a discounted product in the cart, the coupon cannot be applied."
+msgstr "Se è presente un prodotto scontato nel carrello, il coupon non può essere applicato."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductDiscountCriteria"
+msgid "Line products should not be discounted"
+msgstr "I prodotti nella riga non devono essere scontati"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfTypeCouponCriteria"
 msgid "Cart contains products of type {0}"
@@ -1012,6 +1112,62 @@ msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductOfT
 msgid "Cart products"
 msgstr "Prodotti del carrello"
 
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Among products, there must be the given category or one of its children."
+msgstr "Tra i prodotti deve essere presente la categoria indicata o una delle sue sottocategorie"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Among products, there must be the given category."
+msgstr "Tra tutti i prodotti deve essere presente la categoria indicata"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "At least one line is a product of the given category or one of its children."
+msgstr "Almeno una riga è un prodotto della categoria indicata o una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "At least one lines are a products of the given category."
+msgstr "Almeno una riga è un prodotto della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are a products of the given category or one of its children."
+msgstr "Le righe del carrello sono prodotti della categoria indicata o una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are a products of the given category."
+msgstr "Le righe del carrello sono prodotti della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are not products of the given category or one of its children."
+msgstr "Le righe del carrello non sono prodotti della categoria indicata o una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart lines are not products of the given category."
+msgstr "Le righe del carrello non sono prodotti della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Cart products"
+msgstr "Prodotti del carrello"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Criteria on product TaxonomyFields."
+msgstr "Criterio sulle tassonomie del prodotto."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Each line is a product of the given category or one of its children."
+msgstr "Ciascuna delle righe è un prodotto della categoria indicata o una sua sottocategoria."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Each line is a product of the given category."
+msgstr "Ciascuna delle righe è un prodotto della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Line products are in the given category (if any was selected)"
+msgstr "I prodotti nella riga sono nella categoria indicata (se una è stata selezionata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponApplicabilityCriterion"
+msgid "Line products are not in the given category (if any was selected)"
+msgstr "I prodotti della riga non sono nella categoria indicata (se una è stata selezionata)"
+
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
 msgid "Cart line is a product of of the given category or one of its children."
 msgstr "L'elemento nel carrello appartiene alla categoria data o uno dei suoi figli."
@@ -1021,12 +1177,28 @@ msgid "Cart line is a product of of the given category."
 msgstr "L'elemento nel carrello appartiene alla categoria data."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of the given category or one of its children."
+msgstr "La riga del carrello è un prodotto della categoria indicata o una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is a product of the given category."
+msgstr "La riga del carrello è un prodotto della categoria indicata."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
 msgid "Cart line is not a product of of the given category or one of its children."
 msgstr "L'elemento nel carrello non appartiene alla categoria data o uno dei suoi figli."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
 msgid "Cart line is not a product of of the given category."
 msgstr "L'elemento nel carrello non appartiene alla categoria data."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of the given category or one of its children."
+msgstr "La riga del carrello non è un prodotto della categoria indicata o di una delle sue sottocategorie."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
+msgid "Cart line is not a product of the given category."
+msgstr "La riga del carrello non è un prodotto della categoria indicata."
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.CartHasProductWithTermCouponLineCriteria"
 msgid "Cart products"
@@ -1234,7 +1406,7 @@ msgstr "Tipi di Contenuto"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
 msgid "Select some content types."
-msgstr "Selezionare i tipi di contenuto"
+msgstr "Scegli almeno un tipo di contenuto."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "(Administrative type: {0})"
@@ -1250,7 +1422,7 @@ msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Controllers.AddressConfigurationAdminController"
 msgid "Not authorized to manage address configuration settings"
@@ -1312,6 +1484,30 @@ msgctxt "Laser.Orchard.NwazetIntegration.Drivers.AddressOrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Api base url is required."
+msgstr "É necessario indicare l'url base delle api"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Business check failed. Check you're using the right business id and a valid access token."
+msgstr "Verifica del Business fallita. Verifica di utilizzare l'id del business corretto ed un token di accesso valido."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Catalog check failed. Check you're using the right catalog id and a valid access token."
+msgstr "Verifica del catalogo fallita. Verifica di usare l'id del catalogo corretto e un token di accesso valido."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Invalid access token."
+msgstr "Token di accesso non valido."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Invalid business id."
+msgstr "Id del business non valido."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.FacebookShopSiteSettingsPartDriver"
+msgid "Invalid catalog id."
+msgstr "Id del catalogo non valido."
+
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
@@ -1322,7 +1518,7 @@ msgstr "Città"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Country"
-msgstr "Stato"
+msgstr "Nazione"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Province"
@@ -1331,6 +1527,98 @@ msgstr "Provincia"
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "Undefined"
 msgstr "Non definito"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "(All terms of {0})"
+msgstr "(Tutti i termini di {0})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Automatically include children terms in filtering"
+msgstr "Includi automaticamente i termini figli nel filtro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Enter token or id of term. If no valid term is provided, all content items will be included in the results. If some terms above have been selected, the term identifiers will be added without being duplicated."
+msgstr "Inserisci un token o l'id del termine. Se nessun termine valido è indicato, tutti i contenuti saranno inclusi nei risultati. Se qualcuno dei termini in alto è stato selezionato, gli identificativi dei termini saranno aggiunti senza essere duplicati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Is associated to all the specified terms"
+msgstr "É associato a tutti i termini specificati"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Is associated to one of the specified terms"
+msgstr "É associato a uno dei termini specificati"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Select some terms. If term identifiers have been added below, the selected terms will be added without being duplicated."
+msgstr "Seleziona uno o più termini. Se gli identificatori dei termini sono già presenti in basso, i termini selezionati saranno aggiunti senza essere duplicati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Term identifiers"
+msgstr "Identificatori dei termini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filter.SelectTermsFormForLines"
+msgid "Terms"
+msgstr "Termini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "(All terms of {0})"
+msgstr "(Tutti i termini di {0})"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Among all the products in the cart, the selected condition must occur"
+msgstr "Per tutti i prodotti nel carrello, le condizioni selezionate devono essere valide"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "At least one product in the cart should have the selected condition"
+msgstr "Almeno un prodotto nel carrello deve rispettare la condizione selezionata"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Automatically include children terms in filtering"
+msgstr "Includi automaticamente i termini figli nel filtro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Each product in the cart should have the selected condition"
+msgstr "Ciascuno dei prodotti nel carrello deve rispettare il criterio selezionato"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Enter token or id of term. If no valid term is provided, all content items will be included in the results. If some terms above have been selected, the term identifiers will be added without being duplicated."
+msgstr "Inserisci un token o l'id del termine. Se nessun termine valido è indicato, tutti i contenuti saranno inclusi nei risultati. Se qualcuno dei termini in alto è stato selezionato, gli identificativi dei termini saranno aggiunti senza essere duplicati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Is associated to all the specified terms"
+msgstr "É associato a tutti i termini specificati"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Is associated to one of the specified terms"
+msgstr "É associato a uno dei termini specificati"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Select some terms. If term identifiers have been added below, the selected terms will be added without being duplicated."
+msgstr "Seleziona uno o più termini. Se gli identificatori dei termini sono già presenti in basso, i termini selezionati saranno aggiunti senza essere duplicati."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Term identifiers"
+msgstr "Identificatori dei termini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Filters.SelectTermsForm"
+msgid "Terms"
+msgstr "Termini"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Handlers.FacebookShopProductPartHandler"
+msgid "Invalid Facebook api response. Product has not been removed from Facebook catalog."
+msgstr "Risposta non valida dalle api di Facebook. Il prodotto non è stato rimosso dal catalogo di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Handlers.FacebookShopProductPartHandler"
+msgid "Invalid Facebook api response. Product is not synchronised on Facebook catalog."
+msgstr "Risposta non valida dalle api di Facebook. Il prodotto non è stato sincronizzato sul catalogo di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Handlers.FacebookShopSiteSettingsPartHandler"
+msgid "Facebook Shop"
+msgstr "Negozio di Facebook"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
 msgid "Address Configuration"
@@ -1345,6 +1633,14 @@ msgid "E-Commerce"
 msgstr "E-Commerce"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Navigation.AddressSettingsAdminMenu"
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.FacebookSiteSettingsAdminMenu"
+msgid "Facebook Shop"
+msgstr "Negozio di Facebook"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.FacebookSiteSettingsAdminMenu"
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -1407,6 +1703,50 @@ msgstr "Non è ancora presente una configurazione per la gerarchia degli Stati. 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No valid countries were configured. Have an administrator configure one <a href=\"{0}\">here</a>."
 msgstr "Nessuno stato valido è stato configurato. Chiedi a un amministratore di configurare una <a href=\"{0}\">qui</a>."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "{0} products synchronized on Facebook Shop."
+msgstr "{0} prodotti sincronizzati sul negozio di Facebook"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid data"
+msgstr "Dati non validi"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid Facebook api response. Product is not synchronized on Facebook Shop."
+msgstr "Risposta non valida dalle api di Facebook. Il prodotto non è stato sincronizzato sul catalogo di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid image url"
+msgstr "Indirizzo dell'immagine non valido"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid product description (body part not found)"
+msgstr "Descrizione del prodotto non valida (parte corpo non trovata)"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Invalid Product part or Facebook part."
+msgstr "Parte prodotto o parte Facebook non valide."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "No products in request container."
+msgstr "Non ci sono prodotti nel contenitore della richiesta."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Product {0} can't be removed from Facebook catalog."
+msgstr "Il prodotto {0} non può essere rimosso dal catalogo di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Product {0} can't be synchronized on Facebook catalog."
+msgstr "Il prodotto {0} non può essere sincronizzato sul catalogo di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Product {0} synchronized on Facebook Shop."
+msgstr "Il prodotto {0} è stato sincronizzato sul negozio di Facebook."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
+msgid "Product part or Facebook part are not valid."
+msgstr "Parte prodotto o parte Facebook non valide."
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
 msgid "Payment Failed"

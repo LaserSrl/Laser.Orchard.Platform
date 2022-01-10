@@ -38,7 +38,7 @@ msgstr "Elimina automaticamente al termine"
 
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "Content Item Id"
-msgstr "Id del contenuto"
+msgstr "ID contenuto"
 
 msgctxt "~/Modules/Laser.Orchard.TaskScheduler/Views/EditorTemplates/ScheduledTaskViewModel.cshtml"
 msgid "Execution type."

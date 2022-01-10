@@ -1,0 +1,10 @@
+﻿@model Laser.Orchard.StartupConfig.ShortCodes.Settings.ViewModels.ShortCodesSettingsViewModel
+
+<fieldset>
+    <h5>@T("Shortcodes settings")</h5>
+    <div>
+        <label for="@Html.FieldIdFor(m => m.EnabledShortCodes)">@T("Enabled shortcodes")</label>
+        @Html.ListBoxFor(m => m.EnabledShortCodes, Model.DefinedShortCodes.Select(x => new SelectListItem { Text = x }))
+        <span class="hint">@T("Choose enabled shortcodes within the above list.")</span>
+    </div>
+</fieldset>

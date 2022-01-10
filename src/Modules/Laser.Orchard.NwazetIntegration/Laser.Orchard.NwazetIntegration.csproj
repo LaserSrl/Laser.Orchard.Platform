@@ -132,6 +132,7 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
     <Compile Include="Handlers\FacebookShopSiteSettingsPartHandler.cs" />
@@ -169,6 +171,8 @@
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
+    <Compile Include="Models\FacebookShopHandleRecord.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
     <Compile Include="Models\FacebookShopProductPartRecord.cs" />
     <Compile Include="Models\FacebookShopSiteSettingsPart.cs" />
@@ -235,6 +239,11 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\Pos\BankTransferIntegrationService.cs" />
+    <Compile Include="Services\Pos\CashOnDeliveryIntegrationService.cs" />
+    <Compile Include="Services\Pos\CustomPosOrderFrontEndAdditionalInformationProvider.cs" />
+    <Compile Include="Services\Pos\IPosIntegrationService.cs" />
+    <Compile Include="Services\Pos\PosIntegrationServiceBase.cs" />
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="Services\WorkflowActtributesValidation.cs" />
@@ -457,6 +466,7 @@
     <Content Include="Views\GA4CheckoutStep.cshtml" />
     <Content Include="Views\GA4Purchase.cshtml" />
     <Content Include="Views\GA4ShippingInfo.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

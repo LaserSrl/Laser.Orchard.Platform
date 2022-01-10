@@ -1,0 +1,122 @@
+﻿# Orchard resource strings - it-IT
+# Copyright (c) 2021 Laser s.r.l.
+
+
+# > #: msgctxt { contesto del messaggio - Originale }
+# > #| msgid { identificativo del messaggio - Originale }
+# > msgctxt  "{ contesto del messaggio }"
+# > msgid "{ identificativo del messaggio }"
+# > msgstr "{ messaggio }"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Admin/OptionsIndex.cshtml"
+msgid "Default"
+msgstr "Predefinito"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Document.cshtml"
+msgid "or"
+msgstr "Oppure"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/EditorTemplates/Parts.Comment.cshtml"
+msgid "Name"
+msgstr "Nome"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/LogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai perso la tua Password?"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/LogOn.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/LogOn.cshtml"
+msgid "Remember me"
+msgstr "Ricorda le mie credenziali di accesso"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/LogOn.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthLogOn.cshtml"
+msgid "Lost your Password?"
+msgstr "Hai perso la tua Password?"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthLogOn.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthLogOn.cshtml"
+msgid "Remember me"
+msgstr "Ricorda le mie credenziali di accesso"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthLogOn.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthRegister.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/OpenAuthRegister.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Change Password"
+msgstr "Modifica password"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Confirm Password"
+msgstr "Conferma la password"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/ChangePassword.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Usa il modulo sottostante per cambiare la tua password."
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Change Password"
+msgstr "Modifica password"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Confirm Password"
+msgstr "Conferma la password"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/LostPassword.cshtml"
+msgid "Use the form below to change your password."
+msgstr "Usa il modulo sottostante per cambiare la tua password."
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Orchard.Users/Account/RequestLostPassword.cshtml"
+msgid "Please enter your username or email address. You will receive a link to create a new password via email."
+msgstr "Inserisci il tuo nome utente o il tuo indirizzo email. Riceverai una email con il link per creare una nuova password."
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Parts/CommentForm.cshtml"
+msgid "Comments have been disabled for this content."
+msgstr "I commenti sono stati disabilitati per questo elemento."
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Parts/CommentForm.cshtml"
+msgid "You must {0} to comment."
+msgstr "Devi {0} per commentare."
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Register.cshtml"
+msgid "Register"
+msgstr "Registrati"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/Register.cshtml"
+msgid "Username"
+msgstr "Nome utente"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/User.cshtml"
+msgid "Change Password"
+msgstr "Modifica password"
+
+msgctxt "~/Themes/Laser.Bootstrap/Views/User.cshtml"
+msgid "Dashboard"
+msgstr "Pannello di controllo"
+

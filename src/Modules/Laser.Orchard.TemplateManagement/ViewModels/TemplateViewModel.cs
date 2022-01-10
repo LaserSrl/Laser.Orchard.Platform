@@ -17,5 +17,6 @@ namespace Laser.Orchard.TemplateManagement.ViewModels {
         public bool IsLayout { get; set; }
         public IList<TemplatePart> Layouts { get; set; }
         public IParserEngine ExpectedParser { get; set; }
+        public string TemplateCode { get; set; }
     }
 }

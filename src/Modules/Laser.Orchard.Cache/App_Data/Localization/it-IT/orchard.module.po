@@ -42,7 +42,7 @@ msgstr "Parte dell'url"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/Edit.cshtml"
 msgid "User Tokens"
-msgstr "Token dello User"
+msgstr "Token utente"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Active Log for Authenticated Cache"
@@ -54,7 +54,7 @@ msgstr "Cache"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Clear"
-msgstr "Pulisci"
+msgstr "Azzera"
 
 msgctxt "~/Modules/Laser.Orchard.Cache/Views/CacheUrlAdmin/index.cshtml"
 msgid "Create New CacheUrl"

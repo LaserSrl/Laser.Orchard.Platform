@@ -52,3 +52,223 @@ msgctxt "~/Modules/Contrib.Voting/Views/Parts.VoteWidget.List.cshtml"
 msgid "There are no voted contents."
 msgstr "Non ci sono contenuti votati."
 
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating"
+msgstr "Valutazione media"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average Rating"
+msgstr "Valutazione Media"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating for the contents."
+msgstr "Valutazione media per i contenuti."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is between {0} and {1}"
+msgstr "La valutazione media è tra {0} e {1}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is between {0} and {1}. Items with no votes will not be displayed."
+msgstr "La valutazione media è tra {0} e {1}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is equals to {0}"
+msgstr "La valutazione media è {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is equals to {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media è {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is greater than {0}"
+msgstr "La valutazione media è superiore a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is greater than {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media è superiore a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is greater than or equal to {0}"
+msgstr "La valutazione media è uguale o superiore a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is greater than or equal to {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media è uguale o superiore a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is less than {0}"
+msgstr "La valutazione media è inferiore a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is less than {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media è inferiore a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is less than or equal to {0}"
+msgstr "La valutazione media è uguale o inferiore a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is less than or equal to {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media è uguale o inferiore a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is not between {0} and {1}"
+msgstr "La valutazione media non è tra {0} e {1}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is not between {0} and {1}. Items with no votes will not be displayed."
+msgstr "La valutazione media non è tra {0} e {1}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is not equal to {0}"
+msgstr "La valutazione media non è {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating is not equal to {0}. Items with no votes will not be displayed."
+msgstr "La valutazione media non è {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Average rating. Items with no votes will not be displayed."
+msgstr "Valutazione media. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteAverageFilter"
+msgid "Reviews"
+msgstr "Recensioni"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Number of reviews for the contents."
+msgstr "Numero di recensioni per i contenuti."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count"
+msgstr "Conteggio recensioni"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is between {0} and {1}"
+msgstr "Il numero di recensioni è tra {0} e {1}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is between {0} and {1}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è tra {0} e {1}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is equals to {0}"
+msgstr "Il numero di recensioni è {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is equals to {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is greater than {0}"
+msgstr "Il numero di recensioni è maggiore di {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is greater than {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è maggiore di {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is greater than or equal to {0}"
+msgstr "Il numero di recensioni è maggiore o uguale a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is greater than or equal to {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è maggiore o uguale a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is less than {0}"
+msgstr "Il numero di recensioni è minore di {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is less than {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è minore di {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is less than or equal to {0}"
+msgstr "Il numero di recensioni è minore o uguale a {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is less than or equal to {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni è minore o uguale a {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is not between {0} and {1}"
+msgstr "Il numero di recensioni non è compreso tra {0} e {1}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is not between {0} and {1}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni non è compreso tra {0} e {1}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is not equal to {0}"
+msgstr "Il numero di recensioni non è {0}"
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count is not equal to {0}. Items with no votes will not be displayed."
+msgstr "Il numero di recensioni non è {0}. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Review count. Items with no votes will not be displayed."
+msgstr "Numero di recensioni. Gli elementi senza voti non saranno visualizzati."
+
+msgctxt "Contrib.Voting.Filters.VoteCountFilter"
+msgid "Reviews"
+msgstr "Recensioni"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterBase"
+msgid "Votes / reviews filter"
+msgstr "Filtro per voti / recensioni"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is between"
+msgstr "È compreso"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is equal to"
+msgstr "È uguale a"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is greater than"
+msgstr "È maggiore di"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is greater than or equal to"
+msgstr "È maggiore o uguale a"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is less than"
+msgstr "È minore di"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is less than or equal to"
+msgstr "È minore o uguale a"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is not between"
+msgstr "Non è compreso"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Is not equal to"
+msgstr "Non è uguale a"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Max"
+msgstr "Max"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Min"
+msgstr "Min"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Operator"
+msgstr "Operatore"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Show not reviewed"
+msgstr "Visualizza elementi senza recensioni"
+
+msgctxt "Contrib.Voting.Filters.VoteFilterForm"
+msgid "Value"
+msgstr "Valore"
+

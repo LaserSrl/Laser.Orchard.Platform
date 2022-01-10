@@ -130,7 +130,7 @@ namespace Laser.Orchard.Translator.Controllers {
 
                 // Orchard framework
                 labels = 0;
-                if (messagesToTranslate.Any(m => m.ContainerType == "Y" && m.ContainerName == "Orchard.Core")) {
+                if (messagesToTranslate.Any(m => m.ContainerType == "Z" && m.ContainerName == "Orchard.Framework")) {
                     labels = messagesToTranslate.FirstOrDefault(m => m.ContainerType == "Z" && m.ContainerName == "Orchard.Framework").Count;
                 }
                 tree.Add(new TranslationTreeNodeViewModel {

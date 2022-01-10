@@ -102,7 +102,7 @@ msgstr "&#62;"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Create.cshtml"
 msgid "Create Newsletter"
-msgstr "Crea nuova Newsletter"
+msgstr "Crea Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Create.cshtml"
 msgid "New Newsletter"
@@ -138,7 +138,7 @@ msgstr "Applica"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Choose action..."
-msgstr "Scegliere l'azione..."
+msgstr "Scegli un'azione..."
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Create Newsletter"
@@ -162,9 +162,7 @@ msgstr "Nuova Edizione"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Properties"
-msgstr "Proprietà
-
-msgctxt"
+msgstr "Proprietà"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterAdmin/Index.cshtml"
 msgid "Subscribers"
@@ -224,7 +222,7 @@ msgstr "Applica"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterEditionAdmin/Index.cshtml"
 msgid "Choose action..."
-msgstr "Scegliere l'azione..."
+msgstr "Scegli un'azione..."
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/NewsletterEditionAdmin/Index.cshtml"
 msgid "Create New Edition"
@@ -284,7 +282,7 @@ msgstr "Email"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Parts/SubscriberRegistration.cshtml"
 msgid "Email Address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Parts/SubscriberRegistration.cshtml"
 msgid "Email Confirmation"
@@ -328,7 +326,7 @@ msgstr "Applica"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/SubscribersAdmin/Index.cshtml"
 msgid "Choose action..."
-msgstr "Scegliere l'azione..."
+msgstr "Scegli un'azione..."
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/SubscribersAdmin/Index.cshtml"
 msgid "Confirmation on {0}"
@@ -384,7 +382,7 @@ msgstr "Egregio"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.ConfirmationEmailSent.cshtml"
 msgid "Newsletter subscription"
-msgstr "Sottoscrizione newsletter"
+msgstr "Iscrizione Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.ConfirmedEmail.cshtml"
 msgid "Email confirmation"
@@ -400,7 +398,7 @@ msgstr "Egregio"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.SubscribeError.cshtml"
 msgid "Newsletter subscription"
-msgstr "Sottoscrizione newsletter"
+msgstr "Iscrizione Newsletter"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.SubscribeError.cshtml"
 msgid "Something went worng. Please retry."
@@ -420,7 +418,7 @@ msgstr "Email"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.Unsubscribe.cshtml"
 msgid "Email Address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.Unsubscribe.cshtml"
 msgid "Email Confirmation"
@@ -448,7 +446,7 @@ msgstr "La tua email è stata rimossa! Grazie!"
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.UnsubscribeEmailSent.cshtml"
 msgid "a confirmation email was sent to your email address.<br/>Please confirm your unsubscription by clicking on link in your email."
-msgstr "una email di conferma è stata inviata al tuo indirizzo di posta elettronica.<br/>Conferma l'annullamento della sottoscrizione cliccando sul link presente nel testo dell'email."
+msgstr "Una email di conferma è stata inviata al tuo indirizzo di posta elettronica.<br/>Conferma l'annullamento della ricezione cliccando sul link presente nel testo dell'email."
 
 msgctxt "~/Modules/Laser.Orchard.NewsLetters/Views/Subscription.UnsubscribeEmailSent.cshtml"
 msgid "Newsletter unsubscription"

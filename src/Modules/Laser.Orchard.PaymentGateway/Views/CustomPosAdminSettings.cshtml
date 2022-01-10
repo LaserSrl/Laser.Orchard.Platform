@@ -1,0 +1,22 @@
+﻿@using Laser.Orchard.PaymentGateway.Models
+@using Laser.Orchard.Commons.Helpers
+
+@model Laser.Orchard.PaymentGateway.Models.CustomPosSiteSettingsPart
+
+@{
+    Script.Require("jQUery_NestedModels").AtHead();
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <legend>@T("Custom Pos Settings")</legend>
+
+    <div id="allCustomPos">
+        @Html.EditorFor(m => m.CustomPos)
+    </div>
+
+    <div id="addButton">
+        @Html.LinkToAddNestedForm(m => m.CustomPos, "<i class=\"fa fa-plus\" style=\"color: green\"></i> " + T(" Add new custom pos").Text, "#allCustomPos", ".j_custompos")
+    </div>
+
+    <button class="primaryAction" name="submit.SaveCustomPos" type="submit">@T("Save All")</button>
+}

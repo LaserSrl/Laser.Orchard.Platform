@@ -136,6 +136,54 @@ msgctxt "Laser.Orchard.PaymentGestPay.Services.///"
 msgid "Validation problems on the response received: {0}"
 msgstr "Problemi di validazione sui dati della risposta ricevuta: {0}"
 
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "EndPayment caused exception: {0}.\npId: {1}\nerror:{2}"
+msgstr "EndPayment ha causato una eccezione: {0}. \npId: {1}\nerrore:{2}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Failed to create a transaction object based on the PaymentRecord"
+msgstr "Creazione della transazione sulla base del PaymentRecord fallita"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Failed to get the transaction Id back from GestPay."
+msgstr "Tentativo di ricevere l'ID della transazione da GestPay fallito."
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Failed to get the transaction Id back from GestPay. Error {0}: {1}"
+msgstr "Tentativo di ricevere l'ID della transazione da GestPay fallito. Errore {0}: {1}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Failed to identify transaction from GestPay's response. Additional error: {0}"
+msgstr "Impossibile identificare la transazione dalla risposta di GestPay. Errore addizionale: {0}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "GestPay sent transaction information, but the Shop Login was wrong ({0})"
+msgstr "GestPay ha inviato informazioni su una transazione, ma il codice negozio era errato ({0})"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Remote service replied with an error. Error {0}: {1}"
+msgstr "Il servizio remoto ha inviato un messaggio di errore. Errore {0}: {1}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Request to GestPay service failed: {0}"
+msgstr "La richiesta al servizio GestPay è fallita: {0}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "The amount from the GestPay server ({0}) does not match the amount in our records ({1})."
+msgstr "L'importo registrato sui server GestPay ({0}) non corrisponde all'importo nei nostri record ({1})."
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Transaction information not valid: {0}"
+msgstr "Informazioni sulla transazione non valide: {0}"
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Transaction object cannot be null."
+msgstr "L'oggetto che rappresenta la transazione non può essere null."
+
+msgctxt "Laser.Orchard.PaymentGestPay.Services.public"
+msgid "Validation problems on the response received: {0}"
+msgstr "Problemi di validazione sui dati della risposta ricevuta: {0}"
+
 msgctxt "Laser.Orchard.PaymentGestPay.Services.to"
 msgid "EndPayment caused exception: {0}.\npId: {1}\nsuccess: false\nerror:{2}"
 msgstr "EndPayment ha causato una eccezione: {0}. \npId: {1}\n success: false\nerrore:{2}"

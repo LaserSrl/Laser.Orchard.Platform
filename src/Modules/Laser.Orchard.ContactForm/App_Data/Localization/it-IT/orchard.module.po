@@ -186,7 +186,7 @@ msgstr "Conferma Email"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Confirm Email Address"
-msgstr "Conferma Indirizzo Email"
+msgstr "Conferma il tuo indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Email"
@@ -194,7 +194,7 @@ msgstr "Email"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Email Address"
-msgstr "Indirizzo Email"
+msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Message"
@@ -210,7 +210,7 @@ msgstr "Le politiche di privacy devono essere accettate."
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Send"
-msgstr "Inoltra"
+msgstr "Invia"
 
 msgctxt "~/Modules/Laser.Orchard.ContactForm/Views/Parts/ContactForm.cshtml"
 msgid "Subject"
@@ -230,7 +230,7 @@ msgstr "È stato compilato e inviato un form di contatto"
 
 msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedEvent"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormSubmittedEvent"
 msgid "Marketing"
@@ -250,7 +250,7 @@ msgstr "Selezionare un form di contatto. Se il form di contatto non è presente 
 
 msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormValidating"
 msgid "Done"
-msgstr "Fatto"
+msgstr "Completato"
 
 msgctxt "Laser.Orchard.ContactForm.Activity.ContactFormValidating"
 msgid "Marketing"

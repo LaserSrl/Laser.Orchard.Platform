@@ -2,6 +2,7 @@
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
+using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;
@@ -16,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
@@ -199,7 +199,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // pick the one used/updated most recently
                         .OrderByDescending(a => a.TimeStampUTC)
                         .First());
-                    if (model.ShippingRequired) {
+                    // If Shipping is Required and we have a configured ShippingAddress:
+                    if (model.ShippingRequired && model.ListAvailableShippingAddress.Any(ar => ar.CountryId > 0)) {
                         model.ShippingAddressVM = new AddressEditViewModel(model
                             .ListAvailableShippingAddress
                             .Where(ar => ar.CountryId > 0) // make sure the address is configured for a country that matches a territory
@@ -545,8 +546,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             // get the pos by name
             var selectedService = _posServices
-                .FirstOrDefault(ps => ps.GetPosName()
-                    .Equals(model.SelectedPosService, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(ps => 
+                    !string.IsNullOrWhiteSpace(ps.GetPosServiceName(model.SelectedPosService)));
             if (selectedService == null) {
                 // data got corrupted?
                 _notifier.Error(T("Impossible to start payment with the selected provider. Please try again."));
@@ -597,7 +598,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 Reason = reason,
                 Amount = order.Total,
                 Currency = order.CurrencyCode,
-                ContentItemId = order.Id
+                ContentItemId = order.Id,
+                PosName = model.SelectedPosService
             };
             // 4.1. Invoke the StartPayment method for the selected IPosService.
             payment = selectedService.StartPayment(payment, paymentGuid);
@@ -737,8 +739,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             vm.ShippingAddressVM.Province == vm.BillingAddressVM.Province
           ) {
                 vm.BillAtSameShippingAddress = true;
-            }
-            else {
+            } else {
                 vm.BillAtSameShippingAddress = false;
             }
         }

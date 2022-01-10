@@ -22,7 +22,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/zAgroPlus/Views/Fields.ContentPicker-AsideSecond-ProdottiEccellenze.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/zAgroPlus/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
 msgid "more"
@@ -30,7 +30,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/zAgroPlus/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/zAgroPlus/Views/Layout.cshtml"
 msgid "Designed by"
@@ -42,7 +42,7 @@ msgstr "Più soluzioni @@ laser-group.com | laser-group.com"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.CardsForm.cshtml"
 msgid "Clear"
-msgstr "Cancella"
+msgstr "Azzera"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.CardsForm.cshtml"
 msgid "Message"
@@ -62,7 +62,7 @@ msgstr "Invia"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.CardsForm.cshtml"
 msgid "Send From"
-msgstr "Inviato da"
+msgstr "Mittente"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.CardsForm.cshtml"
 msgid "Send postcard"
@@ -126,7 +126,7 @@ msgstr "Conferma Email"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Confirm Email Address"
-msgstr "Conferma Indirizzo Email"
+msgstr "Conferma il tuo indirizzo email"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Coordinates"
@@ -182,7 +182,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/zAgroPlus/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
 msgid "Producers"

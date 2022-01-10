@@ -14,7 +14,7 @@ msgstr "Azione"
 
 msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
 msgid "Clicked"
-msgstr "Selezionato"
+msgstr "Cliccato"
 
 msgctxt "~/Modules/Laser.Orchard.UserReactions/Views/Admin/ListSummaryReactionByUsers.cshtml"
 msgid "Creation date"
@@ -138,7 +138,7 @@ msgstr "Un attività in background si sta occupando di aggiornare i totali per i
 
 msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
 msgid "check your input!"
-msgstr "verificare i valori inseriti!"
+msgstr "verifica i valori inseriti!"
 
 msgctxt "Laser.Orchard.UserReactions.Controllers.AdminController"
 msgid "Settings update failed: {0}"
@@ -214,7 +214,7 @@ msgstr "Compreso tra"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
 msgid "Is equal to"
-msgstr "Uguale a"
+msgstr "È uguale a"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
 msgid "Is greater than"
@@ -234,7 +234,7 @@ msgstr "È minore o uguale a"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
 msgid "Is not equal to"
-msgstr "NON è uguale"
+msgstr "Non è uguale a"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterForm"
 msgid "List of available reactions"
@@ -286,7 +286,7 @@ msgstr "Il campo {0} deve contenere un valore valido."
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
 msgid "The field {0} should contain a valid number"
-msgstr "Il campo {0} deve contenere un numero"
+msgstr "Il campo {0} deve contenere un numero valido"
 
 msgctxt "Laser.Orchard.UserReactions.Projections.UserReactionsQueryFilterFormValidation"
 msgid "Value"

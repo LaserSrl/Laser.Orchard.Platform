@@ -282,11 +282,11 @@ msgstr "Indirizzo email troppo lungo."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "The new password and confirmation password do not match."
-msgstr "La nuova password e la conferma password non sono uguali."
+msgstr "La nuova password e la password di verifica non corrispondono."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "The username or e-mail or password provided is incorrect."
-msgstr "Il Nome Utente, la mail o la password forniti non sono corretti."
+msgstr "Il nome utente, la email o la password fornite non sono corrette."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "The username you provided is too long."
@@ -306,21 +306,21 @@ msgstr "Registrazione utente fallita."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "User with that username and/or email already exists."
-msgstr "Esiste già un utente con il nome e/o l'email indicata."
+msgstr "Esiste già un utente con questo nome utente o indirizzo email."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "You must specify a password of {0} or more characters."
-msgstr "E' necessario specificare una password di {0} o più caratteri."
+msgstr "È necessario specificare una password di {0} o più caratteri."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "You must specify a username."
-msgstr "E' necessario specificare un nome utente."
+msgstr "È necessario specificare un nome utente."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "You must specify a valid email address."
-msgstr "E' necessario specificare un indirizzo email valido."
+msgstr "È necessario specificare un indirizzo email valido."
 
 msgctxt "Laser.Orchard.UsersExtensions.Services.UsersExtensionsServices"
 msgid "You must specify an email address."
-msgstr "Devi specificare un indirizzo email."
+msgstr "È necessario specificare un indirizzo email."
 

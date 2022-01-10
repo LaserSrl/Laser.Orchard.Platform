@@ -10,6 +10,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 using System.Diagnostics;
+using Orchard.Environment.Configuration;
+using Laser.Orchard.StartupConfig.Providers;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -31,10 +33,17 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
     }
 
     public class RazorTemplateManager : IRazorTemplateManager {
+        private readonly IOrchardServices _orchardServices;
+        private readonly ShellSettings _shellSettings;
 
-        public RazorTemplateManager() {
+        public RazorTemplateManager(ShellSettings shellSettings, 
+            IOrchardServices orchardServices,
+            IEnumerable<ICustomRazorTemplateResolver> razorTemplateResolvers) {
             listCached = new List<string>();
             listOldCached = new List<string>();
+
+            _orchardServices = orchardServices;
+            _shellSettings = shellSettings;
         }
 
         private List<string> listCached;
@@ -66,11 +75,14 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard.Caching");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
+            
+            config.TemplateManager = new CustomRazorTemplateManager(_shellSettings, _orchardServices);
+            //config.CachingProvider = new CustomRazorCachingProvider();
 
             _razorEngine = RazorEngineService.Create(config);
+            
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
-
         }
 
         private IRazorEngineService _razorEngine;

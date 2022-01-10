@@ -22,7 +22,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-ProdottiEccellenze.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
 msgid "more"
@@ -30,7 +30,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.ContentPicker-AsideSecond-Ricette.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Fields.Link-WebCams-URLWebCam.cshtml"
 msgid "slm"
@@ -50,7 +50,7 @@ msgstr ">"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Pager.cshtml"
 msgid "Showing items {0} - {1} of {2}"
-msgstr "Elementi {0} - {1} di {2}"
+msgstr "Elementi {0} - {1} su {2}"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.Blogs.BlogArchives.cshtml"
 msgid "None found"
@@ -82,7 +82,7 @@ msgstr "Conferma Email"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Confirm Email Address"
-msgstr "Conferma Indirizzo Email"
+msgstr "Conferma il tuo indirizzo email"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Coordinates"
@@ -118,7 +118,7 @@ msgstr "Nome"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Send"
-msgstr "Inoltra"
+msgstr "Invia"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContactForm-Suggerimento.cshtml"
 msgid "Subject"
@@ -138,7 +138,7 @@ msgstr "di più"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
 msgid "No content items."
-msgstr "Nessun contenuto."
+msgstr "Nessun elemento di contenuto."
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts.ContentPickerConnector-AsideSecond.cshtml"
 msgid "Producers"
@@ -178,7 +178,7 @@ msgstr "Invia questa cartolina"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
 msgid "Send To"
-msgstr "Destinatario"
+msgstr "Invia a"
 
 msgctxt "~/Themes/ResponsiveBaseTheme/Views/Parts_CardsForm.cshtml"
 msgid "Valid Email Address"

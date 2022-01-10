@@ -322,6 +322,7 @@
     <Compile Include="Handlers\SiteSettingsPartHandler.cs" />
     <Compile Include="Models\CustomTemplatePickerPart.cs" />
     <Compile Include="Routes\WebTrackingRoutes.cs" />
+    <Compile Include="Services\CustomRazorTemplateResolver.cs" />
     <Compile Include="Services\IParserEngine.cs" />
     <Compile Include="Parsers\ParserEngineBase.cs" />
     <Compile Include="Settings\TemplatePartSettings.cs" />

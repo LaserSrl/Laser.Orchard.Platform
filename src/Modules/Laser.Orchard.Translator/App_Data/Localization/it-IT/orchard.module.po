@@ -13,6 +13,14 @@ msgid "Comma separated list of modules that must be translated."
 msgstr "Elenco separato da virgola dei moduli da tradurre."
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of Orchard modules that have custom translations."
+msgstr "Elenco separato da virgola dei moduli Orchard che hanno traduzioni personalizzate."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Comma separated list of Orchard themes that have custom translations."
+msgstr "Elenco separato da virgola dei temi Orchard che hanno traduzioni personalizzate."
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Comma separated list of tenants that have custom translations."
 msgstr "Elenco separato da virgola dei tenants che hanno traduzioni custom."
 
@@ -23,6 +31,14 @@ msgstr "Elenco separato da virgola dei temi da tradurre."
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Modules to Translate"
 msgstr "Moduli da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Orchard Modules to Translate"
+msgstr "Moduli Orchard da Tradurre"
+
+msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
+msgid "Orchard Themes to Translate"
+msgstr "Temi Orchard da Tradurre"
 
 msgctxt "~/Modules/Laser.Orchard.Translator/Views/EditorTemplates/Parts/TranslatorSettings.cshtml"
 msgid "Tenants to Translate"
@@ -237,6 +253,10 @@ msgid "Unable to delete the translation."
 msgstr "Impossibile eliminare la traduzione."
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "{0} labels to translate"
+msgstr "{0} etichette da tradurre"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Modules"
 msgstr "Moduli"
 
@@ -245,8 +265,24 @@ msgid "N/D"
 msgstr "N/D"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Orchard modules"
+msgstr "Moduli Orchard"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Orchard themes"
+msgstr "Temi Orchard"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Orchard.Core"
+msgstr "Orchard.Core"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
+msgid "Orchard.Framework"
+msgstr "Orchard.Framework"
+
+msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Tenants"
-msgstr "Tenants"
+msgstr "Tenant"
 
 msgctxt "Laser.Orchard.Translator.Controllers.TranslatorTreeController"
 msgid "Themes"

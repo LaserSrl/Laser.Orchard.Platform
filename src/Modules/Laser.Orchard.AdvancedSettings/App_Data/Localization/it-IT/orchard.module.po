@@ -20,7 +20,51 @@ msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/Ad
 msgid "You must provide a unique techincal name for the setting."
 msgstr "È necessario fornire un nome tecnico univoco per questa configurazione."
 
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/ThemeSkinsPart.cshtml"
+msgid "Select a customization for the frontend theme."
+msgstr "Seleziona una personalizzazione per il tema di frontend"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/ThemeSkinsPart.cshtml"
+msgid "Set values to further personalize your theme. Leave a value empty to use its default from the customization you've chosen."
+msgstr "Seleziona i valori per personalizzare ulteriormente il tema. Lascia un valore vuoto per utilizzare il valore predefinito della personalizzazione selezionata."
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/ThemeSkinsPart.cshtml"
+msgid "Theme Customization"
+msgstr "Personalizzazione del tema"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/ThemeSkinsPart.cshtml"
+msgid "Theme Variables"
+msgstr "Variabili del Tema"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Parts/ThemeSkinsPart.cshtml"
+msgid "Theme variant"
+msgstr "Varianti del tema"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Settings/ThemeSkinsSettings.cshtml"
+msgid "All skins"
+msgstr "Tutte le skin"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Settings/ThemeSkinsSettings.cshtml"
+msgid "Select the frontend theme customizations that will be available in this tenant."
+msgstr "Seleziona le personalizzazioni per il tema di frontend che saranno disponibili in questo tenant."
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Settings/ThemeSkinsSettings.cshtml"
+msgid "Theme Customization"
+msgstr "Personalizzazione del tema"
+
+msgctxt "~/Modules/Laser.Orchard.AdvancedSettings/Views/EditorTemplates/Settings/ThemeSkinsSettings.cshtml"
+msgid "Theme variant"
+msgstr "Varianti del tema"
+
 msgctxt "Laser.Orchard.AdvancedSettings.Drivers.AdvancedSettingsPartDriver"
 msgid "A setting with the same Name already exists."
 msgstr "Esiste già una configurazione con lo stesso Nome."
+
+msgctxt "Laser.Orchard.AdvancedSettings.Drivers.ThemeSkinsPartDriver"
+msgid "Default"
+msgstr "Predefinito"
+
+msgctxt "Laser.Orchard.AdvancedSettings.Handlers.ThemeSkinsSettingsPartHandler"
+msgid "ThemeSkins"
+msgstr "Skin del Tema"
 
