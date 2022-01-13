@@ -1109,7 +1109,7 @@ input[type="number"]:focus {
     line-height: 126px;
 }
 
-    .dashboard-box .dasboard-box-icon .img-responsive {
+    .dashboard-box .dasboard-box-icon .img-fluid {
         display: inline;
     }
 
