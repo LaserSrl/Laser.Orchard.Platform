@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Models;
 using Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services;
-
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
@@ -11,7 +10,9 @@ using Orchard.Logging;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Orchard.Users.Models;
+using Orchard.Workflows.Services;
 using System;
+using System.Collections.Generic;
 
 namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
     [OrchardFeature("Laser.Orchard.CommunicationGateway.Mailchimp")]
@@ -21,7 +22,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
         private readonly IWorkContextAccessor _workContext;
         private readonly ITransactionManager _transaction;
         private readonly INotifier _notifier;
-        private string _subscriptionId;
+        private readonly IWorkflowManager _workflowManager;
         private bool _serverUpdated = false;
         private bool _modelIsValid = true;
 
@@ -34,23 +35,15 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             IContentManager contentManager,
             IWorkContextAccessor workContext,
             ITransactionManager transaction,
-            INotifier notifier) {
+            INotifier notifier,
+            IWorkflowManager workflowManager) {
             _apiService = apiService;
             _service = service;
             _workContext = workContext;
             _transaction = transaction;
             _notifier = notifier;
+            _workContext = workContext;
             T = NullLocalizer.Instance;
-            _subscriptionId = "(undefined)";
-
-            OnUpdating<MailchimpSubscriptionPart>((context, part) => {
-                if (part.Subscription == null || part.Subscription.Audience == null) {
-                    _subscriptionId = "(undefined)";
-                }
-                else {
-                    _subscriptionId = part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)";
-                }
-            });
 
             OnUpdated<MailchimpSubscriptionPart>((context, part) => {
                 if (!_serverUpdated && _modelIsValid) {
@@ -94,9 +87,9 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
             if (!part.IsPublished()) {
                 return false;
             }
-            // check if subscriptions have changed during the publish process:
+            // check if subscriptions is different from orchard to mailchimp
             // if changed it fires an update over Mailchimp servers
-            if (_subscriptionId != (part.Subscription.Subscribed ? part.Subscription.Audience.Identifier : "(undefined)")) {
+            if (part.Subscription.Subscribed != _apiService.IsUserRegistered(part) || part.As<UserPart>() == null) {
                 var settings = part.Settings.GetModel<MailchimpSubscriptionPartSettings>();
                 if (!_apiService.TryUpdateSubscription(part)) {
                     if (settings.NotifySubscriptionResult || AdminFilter.IsApplied(_workContext.GetContext().HttpContext.Request.RequestContext)) {

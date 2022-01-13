@@ -20,5 +20,15 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
             );
             return 1;
         }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.CreateTable("FacebookShopHandleRecord", table => table
+                .Column<int>("Id", col => col.PrimaryKey().Identity())
+                .Column<string>("RequestJson", col => col.Unlimited())
+                .Column<string>("Handle")
+                .Column<bool>("Processed"));
+
+            return 2;
+        }
     }
 }
