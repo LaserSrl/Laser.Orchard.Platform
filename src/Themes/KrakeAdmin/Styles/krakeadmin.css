@@ -11831,6 +11831,12 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
     padding-top: 20px;
 }
 
+/* form inputs */
 label.form-check-label input.form-check-input {
     margin: 0.2em 0 0 -1.85em;
+}
+
+/* Workflows */
+.connection-label {
+    font-size: 0.75em;
 }
