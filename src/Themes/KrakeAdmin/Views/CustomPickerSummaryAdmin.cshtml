@@ -39,7 +39,7 @@ foreach (var item in Model.ContentItems.Items) {
                                     @foreach (var url in allUrls) {
                                         <div class="col-xs-3">
                                             <div class="thumb-image">
-                                                <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: url)" src="@Display.ResizeMediaUrl(Width: 175, Height: 175, Mode: "resize", Alignment: "middlecenter", Path: url)" data-imagezoom="true" class="img-responsive" />
+                                                <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: url)" src="@Display.ResizeMediaUrl(Width: 175, Height: 175, Mode: "resize", Alignment: "middlecenter", Path: url)" data-imagezoom="true" class="img-fluid" />
                                             </div>
                                         </div>
                                     }
