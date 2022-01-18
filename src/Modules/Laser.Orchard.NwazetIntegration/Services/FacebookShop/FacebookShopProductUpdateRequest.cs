@@ -69,6 +69,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
         public string Condition { get; set; }
         [JsonProperty("price")]
         public string Price { get; set; }
+        [JsonProperty("sale_price", NullValueHandling = NullValueHandling.Ignore)]
+        public string SalePrice { get; set; }
         [JsonProperty("currency")]
         public string Currency { get; set; }
         [JsonProperty("url")]
