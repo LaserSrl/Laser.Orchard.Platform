@@ -13,6 +13,10 @@ html {
     background: transparent !important;
 }
 
+body {
+    font-size: 14px;
+}
+
 #layout-content {
     background: #e5e6e6;
 }
