@@ -148,6 +148,10 @@
     <Content Include="Scripts\datetime-editor-filter.min.js">
       <DependentUpon>datetime-editor-filter.js</DependentUpon>
     </Content>
+    <Content Include="Styles\tinymce-enhancement.css" />
+    <Content Include="Styles\tinymce-enhancement.min.css">
+      <DependentUpon>tinymce-enhancement.css</DependentUpon>
+    </Content>
     <Content Include="Views\MerchantDomainAssociationAdmin\Index.cshtml" />
     <None Include="Assets\laser-base.scss" />
     <Content Include="Recipes\TinyMCEToolbarExtension.recipe.xml" />
@@ -166,6 +170,7 @@
     </Content>
     <Content Include="Views\EditorTemplates\Parts.Common.SummaryInfoFor_Edit.cshtml" />
     <Content Include="Assets\_colors.scss" />
+    <Content Include="Assets\tinymce-enhancement.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
