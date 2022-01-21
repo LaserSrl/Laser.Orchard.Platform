@@ -8,5 +8,15 @@
     "options": {
       "sourceMap": true
     }
+  },
+  {
+    "outputFile": "Styles/tinymce-enhancement.css",
+    "inputFile": "Assets/tinymce-enhancement.scss",
+    "minify": {
+      "enabled": true
+    },
+    "options": {
+      "sourceMap": true
+    }
   }
 ]
