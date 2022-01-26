@@ -79,7 +79,6 @@ namespace Laser.Orchard.StartupConfig {
                       AddPersonalizedAlternates(displayedContext, contentItem);
 
                       // Now I add an additional set of alternates based on a specific prefix I set in the ShapeMetadata.
-                      // The new alternates are going to be in a specific "prefix" folder.
                       AddAdditionalAlternateKeyAlternates(displayedContext);
                   } else {
                       // this adds alternates for other shapes in the page, that don't belong
@@ -103,6 +102,7 @@ namespace Laser.Orchard.StartupConfig {
                 Action<string> AddAlternate = (s) => AddAlternateName(context.ShapeMetadata.Alternates, s);
 
                 foreach (var s in currentAlternates) {
+                    // The new alternates are going to have a name like prefix-alternatename.
                     var newAlternate = prefix + "__" + s;
                     AddAlternate(newAlternate);
                 }
