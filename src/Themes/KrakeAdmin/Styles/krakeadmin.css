@@ -104,10 +104,6 @@ button, .button, a.button {
     min-width: auto !important;
 }
 
-
-fieldset.save-button {
-}
-
 .save-button button,
 .primaryAction {
     min-width: 110px;
