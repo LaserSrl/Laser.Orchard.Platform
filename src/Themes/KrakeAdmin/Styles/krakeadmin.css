@@ -108,10 +108,6 @@ button, .button, a.button {
     min-width: auto !important;
 }
 
-
-fieldset.save-button {
-}
-
 .save-button button,
 .primaryAction {
     min-width: 110px;
@@ -11843,4 +11839,26 @@ label.form-check-label input.form-check-input {
 /* Workflows */
 .connection-label {
     font-size: 0.75em;
+}
+
+/* Backoffice links for actions on contents */
+.action-links {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.action-links > .action-link + .action-link::before {
+    content: "|";
+    margin: 0 2px 0 6px;
+}
+
+/* buttons in Editor views (save, publish...) are often contained in their own fieldsets 
+    with classes like save-button and so on
+*/
+.edit-item-sidebar.group fieldset[class$=-button]:not(:first-child) {
+    float: left;
+    clear: none;
+    margin: 0 12px 0 0;
+    padding: 0 12px;
 }
