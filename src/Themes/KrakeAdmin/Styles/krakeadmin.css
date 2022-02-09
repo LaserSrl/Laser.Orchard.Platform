@@ -11830,3 +11830,25 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 .lock-editing-projection-part-field {
     padding-top: 20px;
 }
+
+/* Backoffice links for actions on contents */
+.action-links {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.action-links > .action-link + .action-link::before {
+    content: "|";
+    margin: 0 2px 0 6px;
+}
+
+/* buttons in Editor views (save, publish...) are often contained in their own fieldsets 
+    with classes like save-button and so on
+*/
+.edit-item-sidebar.group fieldset[class$=-button]:not(:first-child) {
+    float: left;
+    clear: none;
+    margin: 0 12px 0 0;
+    padding: 0 12px;
+}
