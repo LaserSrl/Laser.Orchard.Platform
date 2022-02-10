@@ -13,6 +13,10 @@ html {
     background: transparent !important;
 }
 
+body {
+    font-size: 14px;
+}
+
 #layout-content {
     background: #e5e6e6;
 }
@@ -102,10 +106,6 @@ button, .button, a.button {
 #cboxNext,
 #cboxCurrent {
     min-width: auto !important;
-}
-
-
-fieldset.save-button {
 }
 
 .save-button button,
@@ -1109,7 +1109,7 @@ input[type="number"]:focus {
     line-height: 126px;
 }
 
-    .dashboard-box .dasboard-box-icon .img-responsive {
+    .dashboard-box .dasboard-box-icon .img-fluid {
         display: inline;
     }
 
@@ -11829,4 +11829,36 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 
 .lock-editing-projection-part-field {
     padding-top: 20px;
+}
+
+/* form inputs */
+label.form-check-label input.form-check-input {
+    margin: 0.2em 0 0 -1.85em;
+}
+
+/* Workflows */
+.connection-label {
+    font-size: 0.75em;
+}
+
+/* Backoffice links for actions on contents */
+.action-links {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.action-links > .action-link + .action-link::before {
+    content: "|";
+    margin: 0 2px 0 6px;
+}
+
+/* buttons in Editor views (save, publish...) are often contained in their own fieldsets 
+    with classes like save-button and so on
+*/
+.edit-item-sidebar.group fieldset[class$=-button]:not(:first-child) {
+    float: left;
+    clear: none;
+    margin: 0 12px 0 0;
+    padding: 0 12px;
 }
