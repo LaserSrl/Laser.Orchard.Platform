@@ -497,12 +497,37 @@ namespace Laser.Orchard.NwazetIntegration.Services.FacebookShop {
             }
 
             if (getDefaultPrice) {
-                decimal price = productPart.ProductPriceService.GetPrice(productPart);
+                decPrice = productPart.ProductPriceService.GetPrice(productPart);
 
-                int cents = (int)(price * 100);
+                int cents = (int)(decPrice * 100);
                 context.Price = cents.ToString();
             }
             // End of price analysis.
+
+            // Sale price.
+            // Same formatting logic of price is applied.
+            getDefaultPrice = false;
+            decimal decSalePrice = 0;
+            context.SalePrice = null;
+            if (string.IsNullOrWhiteSpace(context.SalePrice)) {
+                getDefaultPrice = true;
+            } else if (decimal.TryParse(context.SalePrice, out decSalePrice)) {
+                context.SalePrice = ((int)(decSalePrice * 100)).ToString();
+            } else {
+                getDefaultPrice = true;
+            }
+            if (getDefaultPrice) {
+                decSalePrice = productPart.ProductPriceService.GetDiscountPrice(productPart);
+                int cents = (int)(decSalePrice * 100);
+                context.SalePrice = cents.ToString();
+            }
+
+            // If sale price is greater than price, there is no sale.
+            // Sale price = 0 to tell Facebook there is no sale on current product.
+            if (decSalePrice < 0 || decSalePrice >= decPrice) {
+                context.SalePrice = "0";
+            }
+            // End of sale price analysis.
 
             if (string.IsNullOrWhiteSpace(context.Currency)) {
                 context.Currency = _currencyProvider.CurrencyCode;
