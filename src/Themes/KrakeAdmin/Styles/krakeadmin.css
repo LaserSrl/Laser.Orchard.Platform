@@ -313,6 +313,7 @@ fieldset.publish-button {
 
 select:not(.selector):not(.ui-datepicker-month):not(.ui-datepicker-year):not(.calendars-month-year) {
     min-width: 300px;
+	height: auto; 
 }
 
 .bulk-actions > #filterResults, #filterCultures {
@@ -3459,11 +3460,10 @@ a.text-success:hover {
     }
 
         .header-nav-profile .dropdown > a:after {
-            content: "\f107";
             position: absolute;
             margin-right: .3em;
             right: 10px;
-            top: 22px;
+            top: 29px;
             font-family: FontAwesome;
             font-weight: normal;
             font-style: normal;
