@@ -57,10 +57,17 @@ namespace Laser.Orchard.StartupConfig.Services {
             } else {
                 var signalKey = $"CurrentContentAccessor_{contentId.Value}";
                 var cacheKey = $"{KeyBase}_{signalKey}";
-                return _cacheManager.Get(cacheKey, true, ctx => {
+                var ci = _cacheManager.Get(cacheKey, true, ctx => {
                     ctx.Monitor(_signals.When(signalKey));
                     return _contentManager.Get(contentId.Value);
                 });
+
+                // rehydrate ContentManager to prevent expired lifetime scopes
+                if (ci != null) {
+                    ci.ContentManager = _contentManager;
+                }
+
+                return ci;
             }
         }
 
