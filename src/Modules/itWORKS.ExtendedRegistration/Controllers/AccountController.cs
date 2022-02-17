@@ -10,6 +10,7 @@ using Orchard.Mvc;
 using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.Themes;
+using Orchard.UI.Notify;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
@@ -124,7 +125,7 @@ namespace itWORKS.ExtendedRegistration.Controllers {
             if (ValidateRegistration(userName, email, password, confirmPassword)) {
                 // Attempt to register the user
                 // No need to report this to IUserEventHandler because _membershipService does that for us
-                var user = _membershipService.CreateUser(new CreateUserParams(userName, password, email, null, null, false));
+                var user = _membershipService.CreateUser(new CreateUserParams(userName, password, email, null, null, false, false));
 
                 if (user != null) {
                     if (!_frontEndProfileService.UserHasNoProfilePart(user)) {
@@ -170,46 +171,65 @@ namespace itWORKS.ExtendedRegistration.Controllers {
 
         private bool ValidateRegistration(string userName, string email, string password, string confirmPassword) {
 
-            IDictionary<string, LocalizedString> validationErrors;
+            var context = new AccountValidationContext {
+                UserName = userName,
+                Email = email,
+                Password = password
+            };
 
-            var validate = _accountValidationService.ValidateUserName(userName, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
+            _accountValidationService.ValidateUserName(context);
+            _accountValidationService.ValidateEmail(context);
+            // Don't do the other validations if we already know we failed
+            if (!context.ValidationSuccessful) {
+                foreach (var error in context.ValidationErrors) {
                     ModelState.AddModelError(error.Key, error.Value);
                 }
-            }
-
-            validate &= _accountValidationService.ValidateEmail(email, out validationErrors);
-            if (!validate) {
-                foreach (var error in validationErrors) {
-                    ModelState.AddModelError(error.Key, error.Value);
-                }
-            }
-
-            if (!validate)
                 return false;
+            }
 
             if (!_userService.VerifyUserUnicity(userName, email)) {
-                ModelState.AddModelError("userExists", T("User with that username and/or email already exists."));
+                // Not a new registration, but perhaps we already have that user and they
+                // haven't validated their email address. This doesn't care whether there
+                // were other issues with the registration attempt that caused its validation
+                // to fail: if the user exists and still has to confirm their email, we show
+                // a link to the action from which the challenge email is sent again.
+                var membershipSettings = _membershipService.GetSettings();
+                if (membershipSettings.UsersMustValidateEmail) {
+                    var user = _userService.GetUserByNameOrEmail(email);
+                    if (user == null) {
+                        user = _userService.GetUserByNameOrEmail(userName);
+                    }
+                    if (user != null && user.EmailStatus == UserStatus.Pending) {
+                        // We can't have links in the "text" of a ModelState Error. We are using a notifier
+                        // to provide the user with an option to ask for a new challenge email.
+                        _orchardServices.Notifier.Warning(
+                            T("User with that username and/or email already exists. Follow <a href=\"{0}\">this link</a> if you want to receive a new email to validate your address.",
+                                Url.Action(
+                                    actionName: "RequestChallengeEmail", 
+                                    controllerName: "Account",
+                                    routeValues: new { area = "Orchard.Users", email = email })));
+                        // In creating the link above we use the email that was written in the form
+                        // rather than the actual user's email address to prevent exploiting this
+                        // for information discovery.
+                    }
+                }
+                // We should add the error to the ModelState anyway.
+                context.ValidationErrors.Add("userExists", T("User with that username and/or email already exists."));
             }
 
-            ValidatePassword(password);
+            _accountValidationService.ValidatePassword(context);
 
             if (!String.Equals(password, confirmPassword, StringComparison.Ordinal)) {
-                ModelState.AddModelError("_FORM", T("The new password and confirmation password do not match."));
+                context.ValidationErrors.Add("_FORM", T("The new password and confirmation password do not match."));
             }
-            return ModelState.IsValid;
-        }
 
-        private void ValidatePassword(string password) {
-            IDictionary<string, LocalizedString> validationErrors;
-
-            if (!_accountValidationService.ValidatePassword(password, out validationErrors)) {
-                foreach (var error in validationErrors) {
+            if (!context.ValidationSuccessful) {
+                foreach (var error in context.ValidationErrors) {
                     ModelState.AddModelError(error.Key, error.Value);
                 }
             }
 
+            return ModelState.IsValid;
         }
 
         private string ErrorCodeToString(MembershipCreateStatus createStatus) {

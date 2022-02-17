@@ -75,6 +75,8 @@ namespace Laser.Orchard.Fidelity.Handlers
         {
         }
 
+        public void ChangingPassword(IUser user, string password) { }
+
         public void ChangedPassword(IUser user)
         {
         }
