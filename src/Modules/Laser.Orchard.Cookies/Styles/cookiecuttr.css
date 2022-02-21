@@ -94,6 +94,7 @@
         width: auto;
         display: inline-block;
         margin-left: 10px;
+        z-index:99999;
     }
 
 .cc-cookie-frame {
