@@ -441,7 +441,9 @@
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
     <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
+    <Compile Include="Projections\UseOtherQueriesFilterProvider.cs" />
     <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
     <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
     <Compile Include="RazorCodeExecution\Services\CustomRazorFileResolver.cs" />
@@ -493,7 +495,6 @@
     <Compile Include="Models\FrontendEditConfigurationPart.cs" />
     <Compile Include="Permission\ApiCredentialsPermissions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProvider.cs" />
-    <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\SortCriterionConfiguration.cs" />
     <Compile Include="Routes\BearerTokenRoutes.cs" />
     <Compile Include="Routes\MaintenanceRoutes.cs" />
