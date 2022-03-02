@@ -2,14 +2,13 @@
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
 using Laser.Orchard.PaymentGestPay.Controllers;
-using Laser.Orchard.PaymentGestPay.CryptDecryptProd;
-using Laser.Orchard.PaymentGestPay.CryptDecryptTest;
 using Laser.Orchard.PaymentGestPay.Extensions;
 using Laser.Orchard.PaymentGestPay.Models;
 using Laser.Orchard.PaymentGestPay.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Logging;
 using System;
@@ -18,12 +17,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
 using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Xml;
 
 namespace Laser.Orchard.PaymentGestPay.Services {
@@ -32,8 +27,9 @@ namespace Laser.Orchard.PaymentGestPay.Services {
         public PosServiceGestPay(
             IOrchardServices orchardServices,
             IRepository<PaymentRecord> repository,
-            IPaymentEventHandler paymentEventHandler) :
-            base(orchardServices, repository, paymentEventHandler) {
+            IPaymentEventHandler paymentEventHandler,
+            IShapeFactory shapeFactory) :
+            base(orchardServices, repository, paymentEventHandler, shapeFactory) {
 
             Logger = NullLogger.Instance;
 

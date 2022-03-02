@@ -8,7 +8,6 @@ using Orchard.Environment.Extensions;
 using Orchard.Workflows.Models;
 using System.Linq;
 using System.Web.Helpers;
-using System.Web.Script.Serialization;
 
 namespace Laser.Orchard.TemplateManagement {
     [OrchardFeature("Laser.Orchard.TemplateManagement")]
@@ -107,8 +106,8 @@ namespace Laser.Orchard.TemplateManagement {
 
         public int UpdateFrom4() {
             SchemaBuilder.CreateTable("CustomTemplatePickerPartRecord", table => table
-.ContentPartRecord()
-.Column<int>("TemplateIdSelected", c => c.Nullable()));
+                .ContentPartRecord()
+                .Column<int>("TemplateIdSelected", c => c.Nullable()));
 
             ContentDefinitionManager.AlterPartDefinition("CustomTemplatePickerPart", part => part.Attachable(false));
             return 5;
@@ -148,6 +147,11 @@ namespace Laser.Orchard.TemplateManagement {
             }
 
             return 9;
+        }
+        public int UpdateFrom9() {
+            SchemaBuilder.AlterTable("TemplatePartRecord", t => t.AddColumn<string>("TemplateCode",
+                col => col.WithLength(50)));
+            return 10;
         }
     }
 }
