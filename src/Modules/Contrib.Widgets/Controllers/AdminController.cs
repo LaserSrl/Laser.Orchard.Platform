@@ -13,6 +13,7 @@ using Orchard.UI.Notify;
 using Orchard.Widgets.Models;
 using Orchard.Widgets.Services;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -52,6 +53,10 @@ namespace Contrib.Widgets.Controllers {
                 _services.TransactionManager.Cancel();
                 return View(model);
             }
+            // Up until here this is replicating the behaviour of the Contents AdminController.
+            // However here we take a different approach and we don't publish, because we know that 
+            // the contentItem isn't "finished", since we got here not by hittng "Save" or "Publish",
+            // but by attempting to add a widget.
 
             _services.Notifier.Information(string.IsNullOrWhiteSpace(contentItem.TypeDefinition.DisplayName)
                 ? T("Your content has been created.")
@@ -61,17 +66,23 @@ namespace Contrib.Widgets.Controllers {
         }
 
         public ActionResult ListWidgets(int hostId, string zone) {
-            var widgetTypes = _widgetsService.GetWidgetTypeNames().OrderBy(x => x).ToList();
+            IEnumerable<string> widgetTypes = _widgetsService.GetWidgetTypeNames().OrderBy(x => x);
 
             var widgetsContainerPart = _contentManager.Get(hostId, VersionOptions.Latest).As<WidgetsContainerPart>();
             var settings = widgetsContainerPart.Settings.GetModel<WidgetsContainerSettings>();
             if (!settings.UseHierarchicalAssociation) {
                 if (!string.IsNullOrWhiteSpace(settings.AllowedWidgets))
-                    widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x)).ToList();
+                    widgetTypes = widgetTypes.Where(x => settings.AllowedWidgets.Split(',').Contains(x));
             } else {
                 var allowedWidgetsForZone = settings.HierarchicalAssociation.Where(x => x.ZoneName == zone).SelectMany(z=>z.Widgets.Select(w=>w.WidgetType));
-                widgetTypes = widgetTypes.Where(x => allowedWidgetsForZone.Contains(x)|| allowedWidgetsForZone.Contains("All")).ToList();
+                widgetTypes = widgetTypes.Where(x => allowedWidgetsForZone.Contains(x)|| allowedWidgetsForZone.Contains("All"));
             }
+            // filter widgetTypes by permission
+            widgetTypes = widgetTypes
+                .Where(wt => _services.Authorizer.Authorize(
+                    Orchard.Core.Contents.Permissions.CreateContent,
+                    _contentManager.New(wt)));
+
             var viewModel = _services.New.ViewModel()
                 .WidgetTypes(widgetTypes)
                 .HostId(hostId)
