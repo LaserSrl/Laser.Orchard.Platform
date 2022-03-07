@@ -99,6 +99,12 @@ namespace Contrib.Widgets.Controllers {
             if (widgetPart == null)
                 return HttpNotFound();
 
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.CreateContent, 
+                widgetPart, 
+                T("Cannot create widget")))
+                return new HttpUnauthorizedResult();
+
             try {
                 var widgetPosition = _widgetManager.GetWidgets(hostId).Count(widget => widget.Zone == widgetPart.Zone) + 1;
                 widgetPart.Position = widgetPosition.ToString(CultureInfo.InvariantCulture);
@@ -127,6 +133,12 @@ namespace Contrib.Widgets.Controllers {
         [HttpPost, ActionName("AddWidget")]
         [Orchard.Mvc.FormValueRequired("submit.Publish")]
         public ActionResult AddWidgetPublishPOST(string widgetType, int hostId) {
+
+            var dummyContent = _contentManager.New(widgetType);
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.PublishContent, dummyContent, T("Couldn't create and publish widget")))
+                return new HttpUnauthorizedResult();
+
             return AddWidgetPost(widgetType, hostId, contentItem => _services.ContentManager.Publish(contentItem));
         }
 
@@ -136,12 +148,24 @@ namespace Contrib.Widgets.Controllers {
             if (!IsAuthorizedToManageWidgets())
                 return new HttpUnauthorizedResult();
 
+            // Check that the user has permission to create the widget before doing anything
+            var dummyWidget = _services.ContentManager.New<WidgetPart>(widgetType);
+            if (dummyWidget == null)
+                return HttpNotFound();
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.EditContent,
+                dummyWidget,
+                T("Cannot create widget")))
+                return new HttpUnauthorizedResult();
+
             var layer = _widgetsService.GetLayers().First();
             var widgetPart = _widgetsService.CreateWidget(layer.Id, widgetType, "", "", "");
-            if (widgetPart == null)
+            if (widgetPart == null) {
                 return HttpNotFound();
-            else if(!widgetPart.ContentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable &&  !widgetPart.ContentItem.Has<IPublishingControlAspect>())
+            } else if (!widgetPart.ContentItem.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable
+                  && !widgetPart.ContentItem.Has<IPublishingControlAspect>()) {
                 _contentManager.Publish(widgetPart.ContentItem);
+            }
 
             var contentItem = _services.ContentManager.Get(hostId, VersionOptions.Latest);
 
@@ -181,6 +205,9 @@ namespace Contrib.Widgets.Controllers {
                 _services.Notifier.Error(T("Widget not found: {0}", id));
                 return Redirect(returnUrl);
             }
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.EditContent, widgetPart, T("Cannot edit widget")))
+                return new HttpUnauthorizedResult();
             try {
                 var model = _services.ContentManager.BuildEditor(widgetPart).HostId(hostId);
                 return View(model);
@@ -194,6 +221,15 @@ namespace Contrib.Widgets.Controllers {
         [HttpPost, ActionName("EditWidget")]
         [Orchard.Mvc.FormValueRequired("submit.Publish")]
         public ActionResult EditWidgetPublishPOST( int hostId, int id) {
+            var content = _contentManager.Get(id, VersionOptions.Latest);
+
+            if (content == null)
+                return HttpNotFound();
+
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.PublishContent, content, T("Couldn't publish widget")))
+                return new HttpUnauthorizedResult();
+
             return EditWidgetPost(hostId, id, contentItem => {
                 _services.ContentManager.Publish(contentItem);
             });
@@ -221,6 +257,10 @@ namespace Contrib.Widgets.Controllers {
 
             if (widgetPart == null)
                 return HttpNotFound();
+
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.EditContent, widgetPart, T("Cannot edit widget")))
+                return new HttpUnauthorizedResult();
 
             try {
                 var model = _services.ContentManager.UpdateEditor(widgetPart, this).HostId(hostId);
@@ -260,6 +300,9 @@ namespace Contrib.Widgets.Controllers {
 
             if (widgetPart == null)
                 return HttpNotFound();
+            if (!_services.Authorizer.Authorize(
+                Orchard.Core.Contents.Permissions.DeleteContent, widgetPart, T("You do not have permission to delete the widget.")))
+                return new HttpUnauthorizedResult();
 
             try {
                 _widgetsService.DeleteWidget(widgetPart.Id);
