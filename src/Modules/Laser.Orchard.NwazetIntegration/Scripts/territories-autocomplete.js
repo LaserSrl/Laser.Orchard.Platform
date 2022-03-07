@@ -21,8 +21,9 @@
         });
 
         if (checked) {
+            var obj = { label: tag.label, value: tag.value };
             // add to list
-            arr.push(tag);
+            arr.push(obj);
         } else {
             // remove from list
         }
