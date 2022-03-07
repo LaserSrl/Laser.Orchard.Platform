@@ -19,6 +19,7 @@ using Orchard.Widgets.Services;
 using Contrib.Widgets.Settings;
 using Orchard.Security;
 using Orchard.Localization;
+using Orchard.UI.Notify;
 
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
@@ -32,6 +33,7 @@ namespace Contrib.Widgets.Drivers {
         private readonly ILocalizationService _localizationService;
         private readonly ICultureManager _cultureManager;
         private readonly IAuthorizer _authorizer;
+        private readonly INotifier _notifier;
 
         public WidgetsContainerPartDriver(
             ISiteThemeService siteThemeService, 
@@ -43,7 +45,8 @@ namespace Contrib.Widgets.Drivers {
             IContentManager contentManager, 
             ILocalizationService localizationService, 
             ICultureManager cultureManager,
-            IAuthorizer authorizer) {
+            IAuthorizer authorizer,
+            INotifier notifier) {
 
             _siteThemeService = siteThemeService;
             _widgetsService = widgetsService;
@@ -55,6 +58,7 @@ namespace Contrib.Widgets.Drivers {
             _localizationService = localizationService;
             _cultureManager = cultureManager;
             _authorizer = authorizer;
+            _notifier = notifier;
 
             T = NullLocalizer.Instance;
         }
@@ -170,8 +174,22 @@ namespace Contrib.Widgets.Drivers {
 
             var widgetIds = JsonConvert.DeserializeObject<int[]>(viewModel.RemovedWidgets);
 
+            var unableToDeleteSome = false;
             foreach (var widgetId in widgetIds) {
-                _widgetsService.DeleteWidget(widgetId);
+                // make sure that the user is allowed to delete the widget.
+                // Doing this check here handles cases where the UI is not aligned with the 
+                // configuration, because the latter changed but the former hasn't updated
+                // yet.
+                var currentWidget = _widgetsService.GetWidget(widgetId);
+                if(_authorizer.Authorize(
+                    Orchard.Core.Contents.Permissions.DeleteContent, currentWidget)) {
+                    _widgetsService.DeleteWidget(widgetId);
+                } else {
+                    unableToDeleteSome = true;
+                }
+            }
+            if (unableToDeleteSome) {
+                _notifier.Warning(T("You don't have the permissions to remove some of the widgets you attempted to delete."));
             }
         }
 

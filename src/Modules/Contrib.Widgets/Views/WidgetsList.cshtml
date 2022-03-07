@@ -1,5 +1,10 @@
-﻿<ul id="available-widgets">
+﻿
+@if (Model.WidgetTypes.Any()) {
+<ul id="available-widgets">
     @foreach (var widgetType in Model.WidgetTypes) {
         <li><a href="@Url.Action("AddWidget", "Admin", new { area = "Contrib.Widgets", contentId = Model.ContentId, widgetType, zone = Model.Zone })">@widgetType</a></li>
     }
 </ul>
+} else {
+    @T("You are not allowed to add any widget here.")
+}
