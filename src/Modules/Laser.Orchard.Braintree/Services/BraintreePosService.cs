@@ -7,6 +7,7 @@ using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,14 +20,15 @@ namespace Laser.Orchard.Braintree.Services {
     public class BraintreePosService : PosServiceBase, IBraintreePosService {
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
-
+        
         public BraintreePosService(
             IOrchardServices orchardServices, 
             IRepository<PaymentRecord> repository, 
             IPaymentEventHandler paymentEventHandler,
             ICacheManager cacheManager,
-            ISignals signals)
-            : base(orchardServices, repository, paymentEventHandler) {
+            ISignals signals,
+            IShapeFactory shapeFactory)
+            : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
 
             _cacheManager = cacheManager;
             _signals = signals;

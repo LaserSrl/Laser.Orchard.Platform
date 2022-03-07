@@ -7,24 +7,22 @@ using Laser.Orchard.PaymentGateway.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using Orchard.Localization;
 using Orchard.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.PaymentCartaSi.Services {
     public class CartaSiPosService : PosServiceBase, ICartaSiTransactionService {
 
-        public CartaSiPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler) :
-            base(orchardServices, repository, paymentEventHandler) {
+        public CartaSiPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IShapeFactory shapeFactory) :
+            base(orchardServices, repository, paymentEventHandler, shapeFactory) {
 
             Logger = NullLogger.Instance;
         }

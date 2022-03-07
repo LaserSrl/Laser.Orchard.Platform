@@ -443,6 +443,11 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
+    <Compile Include="RazorBase\Models\KeyNameResolveContext.cs" />
+    <Compile Include="RazorBase\Models\TemplateSourceResolveContext.cs" />
+    <Compile Include="RazorCodeExecution\Services\CustomRazorFileResolver.cs" />
+    <Compile Include="RazorCodeExecution\Services\CustomRazorTemplateManager.cs" />
+    <Compile Include="RazorCodeExecution\Services\ICustomRazorTemplateResolver.cs" />
     <Compile Include="Projections\UseOtherQueriesFilterProvider.cs" />
     <Compile Include="Rules\HttpCookieCondition.cs" />
     <Compile Include="Rules\HttpHeaderCondition.cs" />

@@ -30,6 +30,7 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
         protected abstract ContentPart GetSettingsPart();
 
         protected virtual string CacheKey => "";
+        protected virtual string SettingsShape => "";
 
         public PosAdminBaseController(
             IOrchardServices orchardServices,
@@ -44,7 +45,11 @@ namespace Laser.Orchard.PaymentGateway.Controllers {
                 return new HttpUnauthorizedResult();
             }
             var settings = GetSettingsPart();
-            return View(settings);
+            if (string.IsNullOrEmpty(SettingsShape)) {
+                return View(settings);
+            } else {
+                return View(SettingsShape, settings);
+            }
         }
         [HttpPost, ActionName("Index")]
         public ActionResult IndexPost() {

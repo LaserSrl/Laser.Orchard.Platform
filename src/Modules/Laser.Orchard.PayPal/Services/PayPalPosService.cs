@@ -4,16 +4,15 @@ using Laser.Orchard.PaymentGateway.Services;
 using Laser.Orchard.PayPal.Controllers;
 using Orchard;
 using Orchard.Data;
+using Orchard.DisplayManagement;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.PayPal.Services {
     public class PayPalPosService : PosServiceBase {
-        public PayPalPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler)
-           : base(orchardServices, repository, paymentEventHandler) {
+        public PayPalPosService(IOrchardServices orchardServices, IRepository<PaymentRecord> repository, IPaymentEventHandler paymentEventHandler, IShapeFactory shapeFactory)
+           : base(orchardServices, repository, paymentEventHandler, shapeFactory) {
         }
 
         public override string GetPosName() {
