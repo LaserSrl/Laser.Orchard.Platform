@@ -21,12 +21,20 @@
         });
 
         if (checked) {
+            //var obj = { label: tag.label, value: tag.value };
             // add to list
+            //arr.push(obj);
             arr.push(tag);
         } else {
             // remove from list
         }
-        var outString = JSON.stringify(arr);
+        var outString = JSON.stringify(arr, function (key, value) {
+            // 'element' causes a circular reference and stringify function to break.
+            if (key == 'element') {
+                return undefined;
+            }
+            return value;
+        });
         if (preventTokens) {
             outString = outString
                 .replace(/{/g, "{{")
