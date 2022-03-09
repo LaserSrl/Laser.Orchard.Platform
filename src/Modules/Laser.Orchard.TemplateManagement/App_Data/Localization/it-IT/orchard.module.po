@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -61,6 +61,10 @@ msgid "Subject"
 msgstr "Oggetto"
 
 msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "Template Code"
+msgstr "Codice Template"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
 msgid "Template. (Expected parser: {0})"
 msgstr "Modello. (Analizzatore sintattico previsto: {0})"
 
@@ -83,6 +87,10 @@ msgstr "Il titolo del messaggio"
 msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
 msgid "This is a Layout"
 msgstr "Questo è un Livello"
+
+msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
+msgid "This is the code used to run the template when you need to nest it into another template via include helper. Example: @Include('Abc') will run the custom template with Template Code 'Abc' inside another template"
+msgstr "Questo è il codice utilizzato per eseguire il template quando viene incluso in un altro template attraverso un helper. Esempio: @Include('Abc') eseguirà il template personalizzato con il codice template 'Abc' all'interno di un altro template."
 
 msgctxt "~/Modules/Laser.Orchard.TemplateManagement/Views/EditorTemplates/Parts/Template.cshtml"
 msgid "Title"

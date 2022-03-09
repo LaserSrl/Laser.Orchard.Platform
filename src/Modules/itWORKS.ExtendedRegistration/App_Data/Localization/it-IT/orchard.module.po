@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -119,6 +119,10 @@ msgstr "Il nome utente inserito non è valido. Per favore verifica il valore e r
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "User with that username and/or email already exists."
 msgstr "Esiste già un utente con questo nome utente o indirizzo email."
+
+msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
+msgid "User with that username and/or email already exists. Follow <a href=\"{0}\">this link</a> if you want to receive a new email to validate your address."
+msgstr "Un utente con quello username e/o email esiste già. Segui <a href=\"{0}\">questo link</a> se vuoi ricevere una nuova email per confermare il tuo indirizzo."
 
 msgctxt "itWORKS.ExtendedRegistration.Controllers.AccountController"
 msgid "Username already exists. Please enter a different user name."
