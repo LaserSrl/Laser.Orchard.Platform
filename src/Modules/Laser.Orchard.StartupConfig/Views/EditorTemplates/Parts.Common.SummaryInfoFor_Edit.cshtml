@@ -1,9 +1,10 @@
 ﻿@model Orchard.Core.Common.Models.CommonPart
 @using System.Globalization;
 @using Orchard.ContentManagement;
-@using Orchard.Core.Common.Models;
+@using Orchard;
 @using Orchard.Core.Contents;
 @using Orchard.Autoroute.Models;
+@using Orchard.Widgets.Models;
 
 @{
     Script.Require("Bootstrap").AtHead();
@@ -11,6 +12,7 @@
     Style.Require("FontAwesome").AtHead();
     Style.Require("LaserBase").AtHead();
 
+    var orchardServices = WorkContext.Resolve<IOrchardServices>();
 
     var cultureInfo = CultureInfo.GetCultureInfo(WorkContext.CurrentCulture);
     DateTime? createdUtc = Model == null ? null : Model.CreatedUtc;
@@ -20,6 +22,30 @@
     var contentItem = Model.ContentItem == null ? null : (ContentItem)Model.ContentItem;
 
     var autoroutePart = contentItem.As<AutoroutePart>();
+
+    IContent container = null;
+
+    // If I have the widgetExPart, I have a Host.
+    var widgetExPart = ((dynamic)contentItem).WidgetExPart;
+    if (widgetExPart != null) {
+        container = widgetExPart.Host;
+    }
+
+    // If I am not in a widgetEx, then I have to look for the Container.
+    if (container == null) {
+        container = Model.Container;
+    }
+
+    // If my Container is a Layer, I don't want to link to its edit page.
+    var layer = container.As<LayerPart>();
+    if (layer != null) {
+        container = null;
+    }
+
+    // I need to check the user has the permission to edit the container.
+    if (container != null && !orchardServices.Authorizer.Authorize(Permissions.EditContent, container)) {
+        container = null;
+    }
 }
 @{
     // Defaults
@@ -153,6 +179,12 @@
                             }
                         }
                     </span>
+                    @if (container != null) {
+                        <br />
+                        <span class="info-box-text col-sm-4">@T("This content is an element inside a container.")</span>
+                        <span class="info-box-text col-sm-4"><a href="@Url.ItemEditUrl(container)">@T("Edit container")</a></span>
+                        <span class="col-sm-4"></span>
+                    }
                 </div>
                 <!-- /.info-box-content -->
             </div>

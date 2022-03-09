@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -17,12 +17,20 @@ msgid "Async Tracking is Enabled"
 msgstr "Async Tracking è abilitato"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Choose the level of cookies of Google Analitics."
+msgstr "Seleziona il livello dei cookies di Google Analytics."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Domain name override"
 msgstr "Sostituzione del nome dominio"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Domain name..."
 msgstr "Nome del dominio..."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Google Analitics Cookie Level"
+msgstr "Livello di Cookie di Google Analytics"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Google Analytics"
@@ -53,8 +61,24 @@ msgid "Mark this to use Google Tag Manager rather than analytics.js."
 msgstr "Seleziona per utilizzare Google Tag Manager anziché analytics.js"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Marketing"
+msgstr "Marketing"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Override Domain Name (optional)"
 msgstr "Sovrascrivere il Nome di Dominio (opzionale)"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Preferences"
+msgstr "Preferenze"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Statistical"
+msgstr "Statistici"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Technical"
+msgstr "Tecnici"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "The following settings only apply to analytics.js and are ignored by Google Tag Manager"
@@ -75,6 +99,10 @@ msgstr "Tracciare l'IP ma renderlo anonimo (opzionale)"
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Use Async Tracking"
 msgstr "Usare Async Tracking"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Use GA4 management (requires Tag Manager)"
+msgstr "Utilizza la gestione GA4 (richiede Tag Manager)"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Use Google Tag Manager"
