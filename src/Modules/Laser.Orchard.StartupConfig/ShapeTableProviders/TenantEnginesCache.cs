@@ -28,11 +28,11 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
         }
 
         public new IViewEngine BindShallowEngines(string themeName, Func<IViewEngine> factory) {
-            return _shallow.GetOrAdd($"{_shellSettings.Name} themeName", key => factory());
+            return _shallow.GetOrAdd($"{themeName} {_shellSettings.Name}", key => factory());
         }
 
         public new IViewEngine BindDeepEngines(string themeName, Func<IViewEngine> factory) {
-            return _deep.GetOrAdd($"{_shellSettings.Name} themeName", key => factory());
+            return _deep.GetOrAdd($"{themeName} {_shellSettings.Name}", key => factory());
         }
 
 
