@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Orchard.DisplayManagement.Implementation;
+using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.Navigation
 {
@@ -15,21 +16,30 @@ namespace Laser.Orchard.StartupConfig.Navigation
 						displayedContext.Shape.Menu.Zone = zoneName;
 						break;
 					case "Menu":
-						AddAlternates(alternates, "Menu");
-						break;
+                        InsertAlternate(alternates, "Menu");
+                        break;
 					case "MenuItem":
-						AddAlternates(alternates, "MenuItem");
-						break;
+                        InsertAlternate(alternates, "MenuItem");
+                        break;
 					case "MenuItemLink":
-						AddAlternates(alternates, "MenuItemLink");
+                        InsertAlternate(alternates, "MenuItemLink");
 						break;
 				}
 			});
 		}
 
-		private static void AddAlternates(IList<String> alternateCollection, String shapeName) {
-			alternateCollection.Add(shapeName);
-			//alternateCollection.Add(shapeName + "__" + contentTypeName + "__" + zoneName);
-		}
-	}
+        /// <summary>
+        /// Adds the alternate inside the alternates list before any specific alternate, based on ShapeName.
+        /// </summary>
+        /// <param name="alternateCollection"></param>
+        /// <param name="ShapeName"></param>
+        private static void InsertAlternate(IList<string> alternateCollection, string ShapeName) {
+            var index = 0;
+            var firstShape = alternateCollection.FirstOrDefault(a => a.StartsWith(ShapeName));
+            if (firstShape != null && alternateCollection.IndexOf(firstShape) > 0) {
+                index = alternateCollection.IndexOf(firstShape);
+            }
+            alternateCollection.Insert(index, ShapeName);
+        }
+    }
 }
