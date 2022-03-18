@@ -2,8 +2,8 @@
 /*Krake*/
 @font-face {
   font-family: 'krake';
-  src: url("../Assets/fonts/HANDGOTB.eot");
-  src: local("☺"), url("../Assets/fonts/HANDGOTB.woff") format("woff"), url("../Assets/fonts/HANDGOTB.ttf") format("truetype"), url("../Assets/fonts/HANDGOTB.svg") format("svg");
+  src: url("fonts/HANDGOTB.eot");
+  src: local("☺"), url("fonts/HANDGOTB.woff") format("woff"), url("fonts/HANDGOTB.ttf") format("truetype"), url("fonts/HANDGOTB.svg") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -324,7 +324,7 @@ button.link:hover {
 
 #search-box {
   overflow: hidden;
-  background: url(../Assets/Images/search-icon.png) no-repeat right #fff;
+  background: url(images/search-icon.png) no-repeat right #fff;
   -moz-appearance: none;
   min-width: 230px; }
 
@@ -528,7 +528,7 @@ input.tokenized {
   padding-right: 30px; }
 
 .tokenized-popup {
-  background: transparent url("../Assets/images/list-arrow.png") no-repeat scroll 0 0;
+  background: transparent url("images/list-arrow.png") no-repeat scroll 0 0;
   cursor: pointer;
   height: 28px;
   margin-top: 1px;
@@ -572,7 +572,7 @@ input[type=number]::-webkit-inner-spin-button {
   position: relative; }
 
 input[type=number]:hover::-webkit-inner-spin-button {
-  background: #eee url("../Assets/images/arrow-number.png") no-repeat 50% 50%;
+  background: #eee url("images/arrow-number.png") no-repeat 50% 50%;
   width: 14px;
   height: 14px;
   padding: 4px;
@@ -946,7 +946,7 @@ input[type="number"]:focus {
 
 /**** zone header ****/
 .krake-logo {
-  background: transparent url("../Assets/images/krake-orizontal.png") no-repeat scroll 0 0 !important;
+  background: transparent url("images/krake-orizontal.png") no-repeat scroll 0 0 !important;
   display: block !important;
   height: 60px !important;
   margin: auto !important;
@@ -1258,10 +1258,10 @@ fieldset small {
   padding: 10px; }
 
 .switch-for-switchable.summary-switched .detail-view {
-  background: transparent url("../Assets/Images/detail-view.png") no-repeat scroll left top; }
+  background: transparent url("images/detail-view.png") no-repeat scroll left top; }
 
 .switch-for-switchable.detail-switched .summary-view {
-  background: transparent url("../Assets/Images/summary-view-on.png") no-repeat scroll left top; }
+  background: transparent url("images/summary-view-on.png") no-repeat scroll left top; }
 
 /* Add padding to button because if not comment in widget layer the buttons overwrite other objects */
 .switch-for-switchable .switch-button-group {
