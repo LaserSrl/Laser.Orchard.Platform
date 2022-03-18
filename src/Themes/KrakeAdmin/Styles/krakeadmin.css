@@ -11848,3 +11848,16 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
     margin: 0 12px 0 0;
     padding: 0 12px;
 }
+
+/* Tiny MCE full screen fix */
+#layout-main div.mce-fullscreen {
+    width: auto;
+    right: 0;
+    top: 54px; /* #header height, which is 70px, but with a margin-top of -16px */
+    left: 64px; /* #menu-bar width */
+}
+@media (min-width: 1200px) {
+    #layout-main div.mce-fullscreen {
+        left: 240px; /* #menu-bar width */
+    }
+}
