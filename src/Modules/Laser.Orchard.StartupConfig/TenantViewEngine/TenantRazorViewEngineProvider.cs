@@ -4,11 +4,12 @@ using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Mvc.ViewEngines;
 using Orchard.Mvc.ViewEngines.Razor;
+using Orchard.Mvc.ViewEngines.ThemeAwareness;
 using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
+namespace Laser.Orchard.StartupConfig.TenantViewEngine {
     [OrchardSuppressDependency("Orchard.Mvc.ViewEngines.Razor.RazorViewEngineProvider")]
     public class TenantRazorViewEngineProvider : 
         RazorViewEngineProvider, IViewEngineProvider, IShapeTemplateViewEngine {
@@ -64,6 +65,10 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
             areaPartialViewLocationFormats.AddRange((IEnumerable<string>)baseEngine.AreaPartialViewLocationFormats);
             // replace the paths in the base engine
             baseEngine.AreaPartialViewLocationFormats = areaPartialViewLocationFormats.ToArray();
+
+            // change the cache location for the views, otherwise the view engine will still mess things up
+            // down the line
+            baseEngine.ViewLocationCache = new ThemeViewLocationCache(alternatesPath);
 
             return (RazorViewEngine)baseEngine;
         }

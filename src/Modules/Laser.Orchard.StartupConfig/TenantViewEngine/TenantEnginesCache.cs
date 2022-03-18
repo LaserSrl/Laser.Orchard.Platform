@@ -5,7 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
+namespace Laser.Orchard.StartupConfig.TenantViewEngine {
     [OrchardSuppressDependency("Orchard.Mvc.ViewEngines.ThemeAwareness.ConfiguredEnginesCache")]
     public class TenantEnginesCache : 
         ConfiguredEnginesCache, IConfiguredEnginesCache {
