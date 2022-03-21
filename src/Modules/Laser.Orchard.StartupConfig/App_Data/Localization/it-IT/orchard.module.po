@@ -257,6 +257,10 @@ msgid "Draft"
 msgstr "Bozza"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Edit container"
+msgstr "Modifica contenitore"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Has Draft"
 msgstr "In bozza"
 
@@ -295,6 +299,10 @@ msgstr "Pubblicato il"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Status"
 msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "This content is an element inside a container."
+msgstr "Questo contenuto è un elemento all'interno di un contenitore."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Unpublish on"
@@ -1579,6 +1587,38 @@ msgstr "Token Sorgente"
 msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
 msgid "The token used as a source for term identifiers"
 msgstr "Il token usato come sorgente degli ID dei termini"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Allows using a different Orchard Query to filter content results."
+msgstr "Permette di utilizzare una Query Orchard diversa per filtrare i risultati."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Filter content items based off another query."
+msgstr "Filtra i contenuti in base a un'altra query."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Filter content items based off the query: {0}."
+msgstr "Filtra i contenuti in base alla query: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Orchard Query"
+msgstr "Orchard Query"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Prevent recursive execution of filter with Id {0}."
+msgstr "Prevenire l'esecuzione ricorsiva del filtro con Id {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProviderForm"
+msgid "Content Queries"
+msgstr "Content Queries"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProviderForm"
+msgid "Select a content query."
+msgstr "Selezionare una query."
 
 msgctxt "Laser.Orchard.StartupConfig.Providers.ContentUserToken"
 msgid "Authenticated User"

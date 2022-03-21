@@ -112,9 +112,29 @@ msgctxt "~/Modules/Contrib.Widgets/Views/EditorTemplates/Parts.WidgetsContainer.
 msgid "Widgets"
 msgstr "Widget"
 
+msgctxt "~/Modules/Contrib.Widgets/Views/WidgetsList.cshtml"
+msgid "You are not allowed to add any widget here."
+msgstr "Non sei autorizzato ad aggiungere alcun widget qui."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Cannot create widget"
+msgstr "Impossibile creare il widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Cannot edit widget"
+msgstr "Impossibile modificare il widget"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Couldn't create and publish widget"
+msgstr "Non è possibile creare e pubblicare il widget"
+
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Couldn't create content"
 msgstr "Impossibile creare il contenuto"
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "Couldn't publish widget"
+msgstr "Impossibile pubblicare il widget"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Creating widget failed: {0}"
@@ -145,6 +165,10 @@ msgid "Widget was successfully deleted"
 msgstr "Widget eliminato con successo"
 
 msgctxt "Contrib.Widgets.Controllers.AdminController"
+msgid "You do not have permission to delete the widget."
+msgstr "Non hai il permesso per eliminare il widget."
+
+msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your {0} has been added."
 msgstr "Il tuo {0} è stato aggiunto."
 
@@ -159,4 +183,8 @@ msgstr "Il tuo {0} è stato salvato."
 msgctxt "Contrib.Widgets.Controllers.AdminController"
 msgid "Your content has been created."
 msgstr "Il tuo contenuto è stato creato."
+
+msgctxt "Contrib.Widgets.Drivers.WidgetsContainerPartDriver"
+msgid "You don't have the permissions to remove some of the widgets you attempted to delete."
+msgstr "Non hai il permesso per rimuovere alcuni dei widget che hai cercato di eliminare."
 
