@@ -108,6 +108,7 @@
     <Compile Include="Services\IFrontEndProfileService.cs" />
     <Compile Include="Services\ProfileFrontEndPlacementStrategy.cs" />
     <Compile Include="Services\ProfilePartDefaultSettingsProvider.cs" />
+    <Compile Include="Services\ViewProfileUserManagementActionsProvider.cs" />
     <Compile Include="Settings\FrontEndContentDefinitionEventHandler.cs" />
     <Compile Include="Settings\ProfileFrontEndEditorEvents.cs" />
     <Compile Include="Settings\ProfileFrontEndSettings.cs" />
@@ -149,6 +150,10 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentTypes\Orchard.ContentTypes.csproj">
       <Project>{0e7646e8-fe8f-43c1-8799-d97860925ec4}</Project>
       <Name>Orchard.ContentTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
+      <Name>Orchard.Users</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
