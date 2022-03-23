@@ -5,16 +5,14 @@ using Orchard.Logging;
 using Orchard.Mvc.ViewEngines;
 using Orchard.Mvc.ViewEngines.Razor;
 using Orchard.Mvc.ViewEngines.ThemeAwareness;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
+namespace Laser.Orchard.StartupConfig.TenantViewEngine {
     [OrchardSuppressDependency("Orchard.Mvc.ViewEngines.Razor.RazorViewEngineProvider")]
-    public class TenantRazorViewEngineProvider : RazorViewEngineProvider, IViewEngineProvider, IShapeTemplateViewEngine {
+    public class TenantRazorViewEngineProvider : 
+        RazorViewEngineProvider, IViewEngineProvider, IShapeTemplateViewEngine {
 
         // This class should make it so we can make tenant level alternates for 
         // the shapes used for controller actions, same as we are doing for the
@@ -68,8 +66,14 @@ namespace Laser.Orchard.StartupConfig.ShapeTableProviders {
             // replace the paths in the base engine
             baseEngine.AreaPartialViewLocationFormats = areaPartialViewLocationFormats.ToArray();
 
+            // change the cache location for the views, otherwise the view engine will still mess things up
+            // down the line
+            baseEngine.ViewLocationCache = new ThemeViewLocationCache(alternatesPath);
+
             return (RazorViewEngine)baseEngine;
         }
 
     }
+
+    
 }

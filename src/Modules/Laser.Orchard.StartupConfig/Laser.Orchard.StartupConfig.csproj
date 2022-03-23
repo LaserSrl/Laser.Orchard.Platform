@@ -571,7 +571,8 @@
     <Compile Include="Settings\JsonDataTablePartSettingsHooks.cs" />
     <Compile Include="Settings\IdentityPartOnEveryTypeDefinitionHooks.cs" />
     <Compile Include="Settings\PerItemCachePartSettingsEvents.cs" />
-    <Compile Include="ShapeTableProviders\TenantRazorViewEngineProvider.cs" />
+    <Compile Include="TenantViewEngine\TenantEnginesCache.cs" />
+    <Compile Include="TenantViewEngine\TenantRazorViewEngineProvider.cs" />
     <Compile Include="ShapeTableProviders\TenantShapeBindingStrategy.cs" />
     <Compile Include="ShortCodes\Abstractions\DescribeContext.cs" />
     <Compile Include="ShortCodes\Abstractions\IShortCodeProvider.cs" />
