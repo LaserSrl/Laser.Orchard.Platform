@@ -164,6 +164,7 @@
     <Compile Include="ViewModels\SeoPartViewModel.cs" />
     <Content Include="packages.config" />
     <Content Include="Views\EditorTemplates\Parts\SeoSiteSettings.cshtml" />
+    <Content Include="Views\CanonicalUrlScript.cshtml" />
     <None Include="Views\TitleScript.cshtml" />
   </ItemGroup>
   <ItemGroup>
