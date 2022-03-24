@@ -11,7 +11,7 @@ using Orchard.Environment.Extensions;
 
 namespace Laser.Orchard.StartupConfig.MediaExtensions.UserFolder.Drivers {
 
-    [OrchardFeature("Laser.Orchard.StartupConfig.TaxonomiesExtensions")]
+    [OrchardFeature("Laser.Orchard.StartupConfig.MediaExtensions")]
     public class OwnedFolderPartDriver : ContentPartCloningDriver<OwnedFolderPart> {
 
         protected override string Prefix { get { return "OwnedFolder"; } }
