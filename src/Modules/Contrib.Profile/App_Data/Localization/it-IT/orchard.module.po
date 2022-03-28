@@ -36,3 +36,7 @@ msgctxt "Contrib.Profile.Controllers.HomeController"
 msgid "Your profile has been saved."
 msgstr "Il tuo profilo è stato salvato."
 
+msgctxt "Contrib.Profile.Services.ViewProfileUserManagementActionsProvider"
+msgid "Profile"
+msgstr "Profilo"
+
