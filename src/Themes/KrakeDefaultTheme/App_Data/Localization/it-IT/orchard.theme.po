@@ -312,6 +312,66 @@ msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChallengeEmailSu
 msgid "Your email address has been validated. You will receive an email when your user is approved."
 msgstr "Il tuo indirizzo email è stato validato. Riceverai un'email quando l'utente verrà approvato."
 
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "{0} and must contain at least {1}"
+msgstr "{0} e deve contenere almeno {1}"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Change Expired Password"
+msgstr "Cambia la Password Scaduta"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Change Password"
+msgstr "Modifica password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Confirm New Password"
+msgstr "Conferma nuova password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Enter your current password"
+msgstr "Inserisci la tua password attuale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Enter your new Password"
+msgstr "Inserisci la tua nuova password"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "one lowercase letter"
+msgstr "una lettera minuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "one number"
+msgstr "un numero"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "one special character"
+msgstr "un carattere speciale"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "one uppercase letter"
+msgstr "una lettera maiuscola"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Password change was unsuccessful. Please correct the errors and try again."
+msgstr "La modifica della password è fallita. Correggere gli errori e provare di nuovo."
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Passwords are required to be a minimum of {0} characters in length"
+msgstr "La password deve essere lunga almeno {0} caratteri"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "The password can't be empty"
+msgstr "La password non può essere vuota"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Username: {0}"
+msgstr "Nome utente: {0}"
+
+msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangeExpiredPassword.cshtml"
+msgid "Your password has expired. Use the form below to change your password."
+msgstr "La tua password è scaduta. Usa il form sottostante per cambiare la password."
+
 msgctxt "~/Themes/KrakeDefaultTheme/Views/Orchard.Users/Account/ChangePassword.cshtml"
 msgid "{0} and must contain at least {1}"
 msgstr "{0} e deve contenere almeno {1}"
