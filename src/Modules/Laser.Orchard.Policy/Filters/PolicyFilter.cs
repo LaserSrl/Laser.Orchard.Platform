@@ -2,6 +2,8 @@
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Newtonsoft.Json.Linq;
+using Orchard;
+using Orchard.Autoroute.Models;
 using Orchard.ContentManagement;
 using Orchard.Logging;
 using Orchard.Mvc.Filters;
@@ -12,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Laser.Orchard.Policy.Filters {
 
@@ -20,16 +23,24 @@ namespace Laser.Orchard.Policy.Filters {
         private readonly IContentSerializationServices _contentSerializationServices;
         private readonly ICurrentContentAccessor _currenContent;
         private readonly IPolicyServices _policyServices;
+        private readonly IContentManager _contentManager;
+        private readonly IWorkContextAccessor _workContextAccessor;
+
         private IList<IContent> pendingPolicies;
 
         public PolicyFilter(ICommonsServices commonServices,
             IContentSerializationServices contentSerializationServices,
             ICurrentContentAccessor currenContent,
-            IPolicyServices policyServices) {
+            IPolicyServices policyServices,
+            IContentManager contentManager,
+            IWorkContextAccessor workContextAccessor) {
+
             _commonServices = commonServices;
             _contentSerializationServices = contentSerializationServices;
             _currenContent = currenContent;
             _policyServices = policyServices;
+            _contentManager = contentManager;
+            _workContextAccessor = workContextAccessor;
         }
 
         public ILogger Logger;
@@ -56,6 +67,50 @@ namespace Laser.Orchard.Policy.Filters {
                     //_contentSerializationServices.NormalizeSingleProperty(json);
                     filterContext.Result = new ContentResult { Content = json.ToString(Newtonsoft.Json.Formatting.None), ContentType = "application/json" };
                     //return GetJson(content, page, pageSize);
+                }
+            } else if (areaName.Equals("Orchard.CustomForms", StringComparison.InvariantCultureIgnoreCase) &&
+                controllerName.Equals("Item", StringComparison.InvariantCultureIgnoreCase) &&
+                actionName.Equals("Create", StringComparison.InvariantCultureIgnoreCase)) {
+                // When we are trying to "protect" access to a CustomForm, we need to do it through a filter
+                // because displaying it goes through its own controller rather than the Display Action.
+                // Get the content correspnding to the CustomForm
+                int contentId;
+                if (int.TryParse(routeData.Values["id"]?.ToString(), out contentId)) {
+                    var content = _contentManager.Get(contentId);
+                    if (content != null) {
+                        var policyPart = content.As<PolicyPart>();
+                        if (policyPart != null 
+                            && (_policyServices.HasPendingPolicies(content) ?? false)) {
+                            // Replicates the logic we have in PolicyPartDriver to redirect the user
+                            // to the action to accept the required policies
+                            var language = _workContextAccessor.GetContext().CurrentCulture;
+
+                            var associatedPolicies = _policyServices.GetPoliciesForContent(policyPart);
+                            var encodedAssociatedPolicies = "";
+                            if (associatedPolicies != null)
+                                encodedAssociatedPolicies = Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Join(",", associatedPolicies)));
+                            else
+                                encodedAssociatedPolicies = Convert.ToBase64String(Encoding.UTF8.GetBytes(""));
+
+                            var cookie = HttpContext.Current.Request.Cookies["PoliciesAnswers"];
+                            if (cookie != null && cookie.Value != null) {
+                                HttpContext.Current.Response.Cookies.Add(HttpContext.Current.Request.Cookies["PoliciesAnswers"]);
+                            }
+                            var rvd = new RouteValueDictionary();
+                            rvd["area"] = "Laser.Orchard.Policy";
+                            rvd["controller"] = "Policies";
+                            rvd["action"] = "Index";
+                            rvd["lang"] = language;
+                            rvd["policies"] = encodedAssociatedPolicies;
+                            rvd["returnUrl"] = HttpContext.Current.Request.RawUrl;
+                            var autoroutePart = policyPart.As<AutoroutePart>();
+                            if (autoroutePart != null && !string.IsNullOrWhiteSpace(autoroutePart.DisplayAlias)) {
+                                rvd["alias"] = autoroutePart.DisplayAlias;
+                            }
+
+                            filterContext.Result = new RedirectToRouteResult(rvd);
+                        }
+                    }
                 }
             }
         }
