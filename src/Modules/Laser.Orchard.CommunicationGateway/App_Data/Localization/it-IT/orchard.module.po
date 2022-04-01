@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -731,6 +731,54 @@ msgstr "Mailchimp"
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.APICallActivity"
 msgid "Succeeded"
 msgstr "Riuscito"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserCreatedOnMailchimp"
+msgid "Failed"
+msgstr "Operazione fallita"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserCreatedOnMailchimp"
+msgid "Mailchimp"
+msgstr "Mailchimp"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserCreatedOnMailchimp"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserCreatedOnMailchimp"
+msgid "User registration on Mailchimp."
+msgstr "Registrazione utente su Mailchimp."
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserDeletedOnMailchimp"
+msgid "Failed"
+msgstr "Operazione fallita"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserDeletedOnMailchimp"
+msgid "Mailchimp"
+msgstr "Mailchimp"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserDeletedOnMailchimp"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserDeletedOnMailchimp"
+msgid "User deleted on Mailchimp."
+msgstr "Utente eliminato su Mailchimp."
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserUpdatedOnMailchimp"
+msgid "Failed"
+msgstr "Operazione fallita"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserUpdatedOnMailchimp"
+msgid "Mailchimp"
+msgstr "Mailchimp"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserUpdatedOnMailchimp"
+msgid "Succeeded"
+msgstr "Riuscito"
+
+msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Activities.UserUpdatedOnMailchimp"
+msgid "User saved on Mailchimp."
+msgstr "Utente salvato su Mailchimp."
 
 msgctxt "Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers.MailchimpSiteSettingsHandler"
 msgid "Mailchimp"

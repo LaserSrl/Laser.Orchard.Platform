@@ -26,6 +26,12 @@
         @Html.ValidationMessageFor(m => m.Subject)
         <span class="hint">@T("The subject to use when sending a message")</span>
     </div>
+    <div class="editor-field">
+        @Html.LabelFor(m => m.TemplateCode, T("Template Code"))
+        @Html.TextBoxFor(m => m.TemplateCode, new { @class = "text" })
+        @Html.ValidationMessageFor(m => m.TemplateCode)
+        <span class="hint">@T("This is the code used to run the template when you need to nest it into another template via include helper. Example: @Include('Abc') will run the custom template with Template Code 'Abc' inside another template")</span>
+    </div>
     @if (Model.Layouts.Any()) {
         <div class="editor-field layout-selector-wrapper">
             @Html.LabelFor(m => m.LayoutIdSelected, T("Layout"))
@@ -38,11 +44,11 @@
             <div class="editor-field">
                 @Html.LabelFor(m => m.Text, T("Template. (Expected parser: {0})", Model.ExpectedParser.DisplayText))
                 <div class="codemirror">
-                    @Html.TextAreaFor(m => m.Text, new { @class = "template-editor"})
+                    @Html.TextAreaFor(m => m.Text, new { @class = "template-editor" })
                 </div>
                 @Html.ValidationMessageFor(m => m.Text)
                 <span class="hint">@T("The template")</span>
-            </div>		
+            </div>
         </div>
         <div class="span6">
             <div class="editor-field">
@@ -55,7 +61,7 @@
         </div>
     </div>
     <div class="editor-field">
-        <input type="checkbox" name="@Html.FieldNameFor(m => m.IsLayout)" id="@Html.FieldIdFor(m => m.IsLayout)" value="True" @if(Model.IsLayout){<text>checked="checked"</text>} />
+        <input type="checkbox" name="@Html.FieldNameFor(m => m.IsLayout)" id="@Html.FieldIdFor(m => m.IsLayout)" value="True" @if (Model.IsLayout) { <text> checked="checked" </text> } />
         <label for="@Html.FieldIdFor(m => m.IsLayout)" class="forcheckbox">@T("This is a Layout")</label>
         <span class="hint">@T("Check this option to use it as the layout (a.k.a. Master Page) for other templates.")</span>
     </div>

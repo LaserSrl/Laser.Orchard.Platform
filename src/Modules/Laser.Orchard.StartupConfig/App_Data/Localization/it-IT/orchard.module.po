@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -257,6 +257,10 @@ msgid "Draft"
 msgstr "Bozza"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "Edit container"
+msgstr "Modifica contenitore"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Has Draft"
 msgstr "In bozza"
 
@@ -295,6 +299,10 @@ msgstr "Pubblicato il"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Status"
 msgstr "Stato"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
+msgid "This content is an element inside a container."
+msgstr "Questo contenuto è un elemento all'interno di un contenitore."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts.Common.SummaryInfoFor_Edit.cshtml"
 msgid "Unpublish on"
@@ -383,6 +391,38 @@ msgstr "Credenziali API"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ApiCredentialsPartNew.cshtml"
 msgid "Save the User to manage API Credentials."
 msgstr "Salva l'Utente per gestire le credenziali API."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "Enable audit trail logging as log files"
+msgstr "Abilita i log di Audit Trail su file di log"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "Enable audit trail logging as system events"
+msgstr "Abilita i log di Audit Trail come eventi di sistema"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "Enable logging as system events"
+msgstr "Abilita log come eventi di sistema"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "Enable logging in the File System (using Log4Net)"
+msgstr "Abilita log su File System (utilizzando Log4Net)"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "Source used for system events"
+msgstr "Sorgente utilizzata per eventi di sistema"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "This is a Source for the \"Application\" stream of Windows System Events. A source by this name must be configured by a system's administrator."
+msgstr "Questa è una sorgente per il log \"Application\" degli eventi di sistema di Windows. La sorgente con il nome indicato deve essere configurata da un amministratore di sistema."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "When enabled, audit trail will add system events."
+msgstr "Se abilitato, Audit Trail aggiungerà eventi di sistema."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AuditTrailOutputSettings.cshtml"
+msgid "When enabled, audit trail will add to a log file."
+msgstr "Se abilitato, Audit Trail aggiungerà un file di log."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/ContentPickerCreateItem.EditExtension.cshtml"
 msgid "Cannot perform requested operation"
@@ -777,6 +817,10 @@ msgid "ChangedPassword"
 msgstr "PasswordModificata"
 
 msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
+msgid "ChangingPassword"
+msgstr "Modifica Password"
+
+msgctxt "Laser.Orchard.StartupConfig.Activities.UserEventActivity"
 msgid "ConfirmedEmail"
 msgstr "EmailConfermata"
 
@@ -931,6 +975,10 @@ msgstr "File per la "Merchant Domain Association" di Apple Pay"
 msgctxt "Laser.Orchard.StartupConfig.AppleEnvironment.Navigation.MerchantDomainAssociationNavigation"
 msgid "Settings"
 msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.StartupConfig.AuditTrail.Handlers.AuditTrailOutputSettingsPartHandler"
+msgid "Audit Trail"
+msgstr "Audit Trail"
 
 msgctxt "Laser.Orchard.StartupConfig.ColorPicker.ColorPickerFieldDriver"
 msgid "The Hex value string associated with the color (eg. #ff0000)."
@@ -1540,6 +1588,38 @@ msgctxt "Laser.Orchard.StartupConfig.Projections.TaxonomyTokenForm"
 msgid "The token used as a source for term identifiers"
 msgstr "Il token usato come sorgente degli ID dei termini"
 
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Allows using a different Orchard Query to filter content results."
+msgstr "Permette di utilizzare una Query Orchard diversa per filtrare i risultati."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Filter content items based off another query."
+msgstr "Filtra i contenuti in base a un'altra query."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Filter content items based off the query: {0}."
+msgstr "Filtra i contenuti in base alla query: {0}"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Orchard Query"
+msgstr "Orchard Query"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProvider"
+msgid "Prevent recursive execution of filter with Id {0}."
+msgstr "Prevenire l'esecuzione ricorsiva del filtro con Id {0}."
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProviderForm"
+msgid "Content Queries"
+msgstr "Content Queries"
+
+msgctxt "Laser.Orchard.StartupConfig.Projections.UseOtherQueriesFilterProviderForm"
+msgid "Select a content query."
+msgstr "Selezionare una query."
+
 msgctxt "Laser.Orchard.StartupConfig.Providers.ContentUserToken"
 msgid "Authenticated User"
 msgstr "Utente Autenticato"
@@ -1841,12 +1921,24 @@ msgid "A string intended to be used to start URLs. It resolves to either \"/\" i
 msgstr "Una stringa il cui scopo è essere usata all'inizio di URLs. Risulta in \"/\" se non è impostato nessun prefisso, o \"/prefisso/\" se c'è un prefisso configurato per il tenanto. Se è necessario inserire il path dell'applicazione, esso viene preposto correttamente."
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Culture"
+msgstr "Cultura"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Current Culture"
+msgstr "Cultura corrente"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Request Url Prefix"
 msgstr "Prefisso dell'Url richiesto"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Site Settings"
 msgstr "Impostazioni Sito"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "The current culture"
+msgstr "La cultura attuale"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "The URL Prefix configured in the tenant's settings."

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using Laser.Orchard.Policy.Models;
+﻿using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
 using Laser.Orchard.StartupConfig.Services;
 using Newtonsoft.Json.Linq;
@@ -12,6 +6,12 @@ using Orchard.ContentManagement;
 using Orchard.Logging;
 using Orchard.Mvc.Filters;
 using Orchard.OutputCache;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.Policy.Filters {
 
@@ -76,16 +76,34 @@ namespace Laser.Orchard.Policy.Filters {
                 // get the ids of pending policies
                 var pending = _policyServices.GetPendingPolicyIds(policyPart);
                 if (pending!= null && pending.Any()) {
-                    key.Append("pendingitempolicies=" + 
-                        String.Join("_", pending) + ";");
+                    key.Append(
+                        "policy-not-accepted;pendingitempolicies=" 
+                        + string.Join("_", pending) + ";");
+                } else {
+                    key.Append("policy-accepted;");
                 }
             }
-
-            //SetPendingPolicies();
-
-            //if (pendingPolicies != null && pendingPolicies.Count() > 0)
-            //    key.Append("pendingitempolicies=" + String.Join("_", pendingPolicies.Select(s => s.Id)) + ";");
         }
+        /*
+         This Key generated used to be in the PolicyPartDriver. It is reproduced here because
+         its logic was replicating what is already done here. However it was adding some potentially
+         useful bits to the cachekey, so those are moved here.
+         
+         public void KeyGenerated(StringBuilder key) {
+            var part = _currentContentAccessor.CurrentContentItem.As<PolicyPart>();
+            if (part == null) return;
+
+            if (_policyServices.HasPendingPolicies(part.ContentItem) ?? false) {
+                _additionalCacheKey = "policy-not-accepted;";
+                _additionalCacheKey += "pendingitempolicies=" + String.Join("_", _policyServices.PendingPolicies(part.ContentItem).Select(s => s.Id)) + ";";
+            }
+            else {
+                _additionalCacheKey = "policy-accepted;";
+            }
+
+            key.Append(_additionalCacheKey);
+        }
+             */
 
         private void SetPendingPolicies() {
             if (pendingPolicies != null)

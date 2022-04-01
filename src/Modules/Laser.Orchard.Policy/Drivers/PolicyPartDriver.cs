@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.Policy.Models;
 using Laser.Orchard.Policy.Services;
-using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.Autoroute.Models;
 using Orchard.ContentManagement;
@@ -8,37 +7,29 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 using Orchard.Mvc;
-using Orchard.OutputCache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Laser.Orchard.Policy.Drivers
-{
-    public class PolicyPartDriver : ContentPartCloningDriver<PolicyPart>, ICachingEventHandler {
+namespace Laser.Orchard.Policy.Drivers {
+    public class PolicyPartDriver : ContentPartCloningDriver<PolicyPart> {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IWorkContextAccessor _workContextAccessor;
-        private readonly IControllerContextAccessor _controllerContextAccessor;
         private readonly IContentManager _contentManager;
         private readonly IPolicyServices _policyServices;
-        private readonly ICurrentContentAccessor _currentContentAccessor;
-
-        private string _additionalCacheKey;
 
         public PolicyPartDriver(IHttpContextAccessor httpContextAccessor,
                                 IWorkContextAccessor workContextAccessor,
-                                IControllerContextAccessor controllerContextAccessor,
                                 IContentManager contentManager,
-                                ICurrentContentAccessor currentContentAccessor,
                                 IPolicyServices policyServices) {
+
             _httpContextAccessor = httpContextAccessor;
             _workContextAccessor = workContextAccessor;
-            _controllerContextAccessor = controllerContextAccessor;
             _contentManager = contentManager;
             _policyServices = policyServices;
-            _currentContentAccessor = currentContentAccessor;
+
             T = NullLocalizer.Instance;
         }
         public Localizer T { get; set; }
@@ -159,25 +150,6 @@ namespace Laser.Orchard.Policy.Drivers
             part.PolicyTextReferencesCsv = String.Join(",", policyTextReferencesList.ToArray());
         }
         #endregion
-
-        /// <summary>
-        /// Called by OutputCache after the default cache key has been defined.
-        /// </summary>
-        /// <param name="key">Default cache key such as defined in Orchard.OutputCache.</param>
-        public void KeyGenerated(StringBuilder key) {
-            var part = _currentContentAccessor.CurrentContentItem.As<PolicyPart>();
-            if (part == null) return;
-
-            if (_policyServices.HasPendingPolicies(part.ContentItem) ?? false) {
-                _additionalCacheKey = "policy-not-accepted;";
-                _additionalCacheKey += "pendingitempolicies=" + String.Join("_", _policyServices.PendingPolicies(part.ContentItem).Select(s => s.Id)) + ";";
-            }
-            else {
-                _additionalCacheKey = "policy-accepted;";
-            }
-
-            key.Append(_additionalCacheKey);
-        }
 
         protected override void Cloning(PolicyPart originalPart, PolicyPart clonePart, CloneContentContext context) {
             clonePart.IncludePendingPolicy = originalPart.IncludePendingPolicy;

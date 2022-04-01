@@ -16,6 +16,19 @@ public interface IPosService : IDependency {
     /// <returns>A <type>string</type> with the name of the payment gateway.</returns>
     string GetPosName();
     /// <summary>
+    /// Implemented in the services of each payment gateway, to extract the name of the specific payment gateway provider, 
+    /// provided the reference payment record.
+    /// </summary>
+    /// <param name="payment"></param>
+    /// <returns></returns>
+    string GetPosName(PaymentRecord payment);
+    /// <summary>
+    /// Returns the name of the pos services, provided the pos name from, for example, a CheckOutViewModel.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    string GetPosServiceName(string name);
+    /// <summary>
     /// This method is used (e.g. in web clients) to get the url of an action that will start the payment using a specific
     /// payment gateway. 
     /// </summary>
@@ -84,5 +97,10 @@ public interface IPosService : IDependency {
     /// </summary>
     /// <returns></returns>
     List<string> GetAllValidCurrencies();
+    /// <summary>
+    /// Gets the list of the shapes to render payment buttons.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerable<dynamic> GetPaymentButtons();
     #endregion
 }

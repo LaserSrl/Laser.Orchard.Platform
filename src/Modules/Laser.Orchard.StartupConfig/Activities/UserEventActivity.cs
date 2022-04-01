@@ -46,6 +46,7 @@ namespace Laser.Orchard.StartupConfig.Activities {
                 T("AccessDenied"),
                 T("Approved"),
                 T("Disabled"),
+                T("ChangingPassword"),
                 T("ChangedPassword"),
                 T("ConfirmedEmail"),
                 T("LoggedIn"),

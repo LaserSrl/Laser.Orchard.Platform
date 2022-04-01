@@ -3,6 +3,7 @@
   <Place Parts_SEO_Edit="Content:1"/>
   <Place Parts_KeywordHelper_Edit="Content:1.1"/>
   <Place Parts_Favicon_FaviconSettings="Content:5"/>
+  <Place Parts_SeoSiteSettings_Edit="Content:6"/>
   <Match DisplayType="Detail">
     <Place Parts_SEO="Content:5"/>
     <Place Parts_Keywordhelper="-"/>

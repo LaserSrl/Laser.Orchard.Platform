@@ -1,0 +1,6 @@
+﻿/* Classes to manage proper visuals in TinyMCE editor */
+.mce-visualblocks {
+    div:not([data-mce-bogus]) {
+        margin: 0 !important;
+    }
+}

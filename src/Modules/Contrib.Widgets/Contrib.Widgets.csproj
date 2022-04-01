@@ -143,6 +143,7 @@
     <Compile Include="Models\WidgetExPart.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Security\WidgetExSecurityEventHandler.cs" />
     <Compile Include="Services\IWidgetManager.cs" />
     <Compile Include="Services\ILayerManager.cs" />
     <Compile Include="Services\WidgetContainerPartDumperService.cs" />
