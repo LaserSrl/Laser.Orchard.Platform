@@ -41,9 +41,12 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                             _draftFieldIndexService.Set(fieldIndexPart,
                                 "CommonPart", "LastModifier",
                                 null, currentUserId, typeof(decimal));
-                            _draftFieldIndexService.Set(fieldIndexPart,
-                                "CommonPart", "Creator",
-                                null, currentUserId, typeof(decimal));
+                            if (_draftFieldIndexService.Get<decimal>(fieldIndexPart,
+                                    "CommonPart", "Creator", null) == default(decimal)) {
+                                _draftFieldIndexService.Set(fieldIndexPart,
+                                    "CommonPart", "Creator",
+                                    null, currentUserId, typeof(decimal));
+                            }
                         }
                     }
                 }
