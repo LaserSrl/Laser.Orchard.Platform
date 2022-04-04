@@ -226,7 +226,7 @@
     <Content Include="Views\Fields_MediaLibraryPicker.cshtml" />
     <Content Include="Views\Layout.cshtml" />
     <Content Include="Views\LogOn.cshtml" />
-    <Content Include="Views\Menu.cshtml" />
+    <Content Include="Views\SimpleMenu.cshtml" />
     <Content Include="Views\SimpleMenuItem.cshtml" />
     <Content Include="Views\SimpleMenuItemLink.cshtml" />
     <Content Include="Views\SimpleMenuItemLinkdd.cshtml" />

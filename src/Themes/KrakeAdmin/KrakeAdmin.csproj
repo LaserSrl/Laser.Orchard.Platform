@@ -236,7 +236,7 @@
     <Content Include="Views\ErrorPage.cshtml" />
     <Content Include="Views\Header.cshtml" />
     <Content Include="Views\LocalMenu.cshtml" />
-    <Content Include="Views\Menu.cshtml" />
+    <Content Include="Views\SimpleMenu.cshtml" />
     <Content Include="Views\MenuORI.cshtml" />
     <Content Include="Views\Title.cshtml" />
     <Content Include="Views\User.cshtml" />
