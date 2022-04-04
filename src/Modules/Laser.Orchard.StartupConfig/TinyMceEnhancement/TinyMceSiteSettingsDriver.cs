@@ -20,6 +20,7 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
         }
         protected override DriverResult Editor(TinyMceSiteSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
             part.DefaultInitScript = _tinyMceEnhancementService.GetDefaultInitScript();
+            part.FrontendDefaultInitScript = _tinyMceEnhancementService.GetFrontendDefaultInitScript();
             return ContentShape("Parts_TinyMceSiteSettings_Edit", () => {
                 if (updater != null) {
                     updater.TryUpdateModel(part, Prefix, null, null);
