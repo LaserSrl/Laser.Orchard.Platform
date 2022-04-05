@@ -226,10 +226,10 @@
     <Content Include="Views\Fields_MediaLibraryPicker.cshtml" />
     <Content Include="Views\Layout.cshtml" />
     <Content Include="Views\LogOn.cshtml" />
-    <Content Include="Views\Menu.cshtml" />
-    <Content Include="Views\MenuItem.cshtml" />
-    <Content Include="Views\MenuItemLink.cshtml" />
-    <Content Include="Views\MenuItemLinkdd.cshtml" />
+    <Content Include="Views\SimpleMenu.cshtml" />
+    <Content Include="Views\SimpleMenuItem.cshtml" />
+    <Content Include="Views\SimpleMenuItemLink.cshtml" />
+    <Content Include="Views\SimpleMenuItemLinkdd.cshtml" />
     <Content Include="Views\Message.cshtml" />
     <Content Include="Views\OpenAuthLogOn.cshtml" />
     <Content Include="Views\OpenAuthRegister.cshtml" />

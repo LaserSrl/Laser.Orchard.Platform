@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Styles/krakeadmin.css",
+    "inputFile": "Assets/krakeadmin.scss"
+  },
+  {
+    "outputFile": "Styles/baseadmin.css",
+    "inputFile": "Assets/baseadmin.scss"
+  }
+]

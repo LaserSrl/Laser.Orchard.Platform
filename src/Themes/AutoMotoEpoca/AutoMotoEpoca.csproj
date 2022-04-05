@@ -121,7 +121,7 @@
     <Content Include="Views\Parts.MenuWidget-Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MenuItemLink.cshtml" />
+    <Content Include="Views\SimpleMenuItemLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts.Blogs.RecentBlogPosts-BeforeMain.cshtml" />
