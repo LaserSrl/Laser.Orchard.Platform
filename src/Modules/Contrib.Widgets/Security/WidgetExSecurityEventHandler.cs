@@ -24,8 +24,10 @@ namespace Contrib.Widgets.Security {
             // use the permission to ManageWidgetContainer 
 
             // If we haven't yet granted the user permission to do whatever they are trying to, and
-            // we are testing for one of the "manage" permissions from Orchard.Core.Contents:
-            if (!context.Granted && IsCoreManagePermission(context.Permission)) {
+            // we are testing for one of the "manage" permissions from Orchard.Core.Contents
+            // (with safety checks to ensure we are checking on a content item):
+            if (!context.Granted && IsCoreManagePermission(context.Permission)
+                && context.Content != null && context.Content.ContentItem != null) {
                 // We are only going to worry about widgets that aren't securable, because
                 // those we assume will have been configured properly. If they haven't, we have
                 // other levers to handle that precisely anyway.
