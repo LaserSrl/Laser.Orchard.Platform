@@ -549,6 +549,10 @@ msgid "Taxonomy Settings"
 msgstr "Impostazioni della Tassonomia"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista di plugin addizionali per l'esecuzione di TinyMce a front end. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
 msgstr "Lista di plugin addizionali. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
 
@@ -557,12 +561,28 @@ msgid "Additional Plugins"
 msgstr "Plugin Addizionali"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Content of the init method for TinyMce when it is executed at front end"
+msgstr "Contenuto del metodo init per TinyMce quando viene eseguito a front end."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "Content of the init method for TinyMce."
 msgstr "Contenuto del metodo init per TinyMce."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Frontend Additional Plugins"
+msgstr "Plugin Addizionali per l'esecuzione di TinyMce a front end"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Frontend Init Script"
+msgstr "Script di Init per l'esecuzione di TinyMce a front end"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "Init Script"
 msgstr "Script di Init"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "Show/Hide default init script value"
+msgstr "Mostra/Nascondi il valore di default"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "Show/Hide default value"
