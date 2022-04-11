@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Fields;
+using Orchard.Core.Contents;
 using Orchard.Fields.Fields;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
@@ -222,8 +223,16 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             //// now add the fields to the json object....
             foreach (var contentField in part.Fields) {
-                var fieldObject = SerializeField(contentField, actualLevel, item);
-                partObject.Add(fieldObject);
+                // Checking ContentFieldSerializationSettings to see if the field needs to be serialized.
+                var serializeField = true;
+                if (contentField.PartFieldDefinition.Settings.ContainsKey("ContentFieldSerializationSettings.AllowSerialization")) {
+                    Boolean.TryParse(contentField.PartFieldDefinition.Settings["ContentFieldSerializationSettings.AllowSerialization"], out serializeField);
+                }
+
+                if (serializeField) {
+                    var fieldObject = SerializeField(contentField, actualLevel, item);
+                    partObject.Add(fieldObject);
+                }
             }
 
             try {
@@ -316,6 +325,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 return new JProperty(field.Name + field.FieldDefinition.Name, val);
             } else {
                 // TODO: serialize the field like it's a generic name-value field.
+                // This code is never executed because the routine is called for specific fields only.
                 return null;
             }
         }
@@ -364,6 +374,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             var fieldObject = new JObject();
 
             switch(field.FieldDefinition.Name.ToLowerInvariant()) {
+                // Treating these fields as simple values is how mobile apps worked as of now, so they're go on working this way for now.
                 case "numericfield":
                 case "textfield":
                 case "inputfield":

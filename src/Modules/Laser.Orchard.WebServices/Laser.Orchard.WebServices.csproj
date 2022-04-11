@@ -138,6 +138,8 @@
     <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\IWebApiService.cs" />
+    <Compile Include="Settings\ContentFieldSerializationSettings.cs" />
+    <Compile Include="Settings\ContentFieldSerializationSettingsEditorEvents.cs" />
     <Compile Include="ViewModels\CustomRestApiSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Eventi015VM.cs" />
   </ItemGroup>
@@ -215,7 +217,9 @@
     <Content Include="Views\EditorTemplates\Parts\WebServiceSettings.cshtml" />
     <Content Include="Views\CustomRestApiSettingsAdmin\Index.cshtml" />
     <Content Include="Views\EditorTemplates\SiteSettings\CustomRestApiSiteSettingsPart.cshtml" />
+    <Content Include="Views\DefinitionTemplates\ContentFieldSerializationSettings.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
