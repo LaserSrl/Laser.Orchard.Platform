@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.SEO.Models;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
 using Orchard.Mvc.Extensions;
@@ -15,11 +16,14 @@ namespace Laser.Orchard.SEO.Handlers {
         private readonly IOrchardServices _orchardServices;
         private readonly ITokenizer _tokenizer;
 
-        public SeoHandler(IOrchardServices orchardServices, IRepository<SeoVersionRecord> repository, ITokenizer tokenizer) {
+        public SeoHandler(
+            IOrchardServices orchardServices, 
+            IRepository<SeoVersionRecord> repository, 
+            ITokenizer tokenizer) {
 
             _orchardServices = orchardServices;
             _tokenizer = tokenizer;
-
+            
             Filters.Add(StorageFilter.For(repository));
 
             //we initialize a date that is valid for the database.
@@ -63,17 +67,23 @@ namespace Laser.Orchard.SEO.Handlers {
                             layout.Head.Add(context.New.TitleScript(Title: ((dynamic)part.ContentItem).TitlePart?.Title));
                         }
                     }
-                    if (!string.IsNullOrEmpty(part.CanonicalUrl)) {
+
+                    // Canonical URL
+                    var canonicalUrl = part.CanonicalUrl;
+                    if (string.IsNullOrWhiteSpace(canonicalUrl)) {
+                        // fallback: content type settings
+                        canonicalUrl = part.Settings.GetModel<SeoPartSettings>().CanonicalUrl;
+                    }
+                    if (string.IsNullOrWhiteSpace(canonicalUrl)) {
+                        // fallback: site settings
+                        canonicalUrl = _orchardServices.WorkContext.CurrentSite
+                            ?.As<SeoSiteSettingsPart>()?.CanonicalUrl;
+                    }
+                    if (!string.IsNullOrWhiteSpace(canonicalUrl)) {
                         var tokensDictionary = new Dictionary<string, object> { { "Content", (dynamic)part.ContentItem } };
-                        layout.Head.Add(context.New.CanonicalUrlScript(CanonicalUrl: _tokenizer.Replace(part.CanonicalUrl, tokensDictionary)));
+                        layout.Head.Add(context.New.CanonicalUrlScript(CanonicalUrl: _tokenizer.Replace(canonicalUrl, tokensDictionary)));
                     }
-                    else {
-                        if (!string.IsNullOrEmpty(part.Settings.GetModel<SeoPartSettings>().CanonicalUrl)) {
-                            var tokensDictionary = new Dictionary<string, object> { { "Content", (dynamic)part.ContentItem } };
-                            layout.Head.Add(context.New.CanonicalUrlScript(CanonicalUrl: _tokenizer.Replace(part.Settings.GetModel<SeoPartSettings>().CanonicalUrl, tokensDictionary)));
-                        }
-                    }
-                 
+                                     
                     //eval text box area
                     if (!string.IsNullOrEmpty(settings.JsonLd) && !part.HideDetailMicrodata) {
                         string script = scriptEval(settings, part);

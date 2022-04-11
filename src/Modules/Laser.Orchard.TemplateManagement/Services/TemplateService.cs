@@ -72,7 +72,7 @@ namespace Laser.Orchard.TemplateManagement.Services {
             ShellSettings shellSettings,
             IMediaLibraryService mediaLibraryService,
             ILocalizationService localizationService,
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor) : base() {
 
             _contentManager = services.ContentManager;
             _tagForCache = tagForCache;
@@ -251,7 +251,8 @@ namespace Laser.Orchard.TemplateManagement.Services {
                     MediaUrl = mediaUrl,
                     Domain = host,
                     PublicMediaPath = baseMediaPath,
-                }.ToExpando()
+                }.ToExpando(),
+                T = T
             };
             templatectx.Model = dynamicModel;
 

@@ -122,8 +122,10 @@
     <Compile Include="Drivers\FaviconSettingsPartDriver.cs" />
     <Compile Include="Drivers\KeywordHelperDriver.cs" />
     <Compile Include="Drivers\SeoDriver.cs" />
+    <Compile Include="Drivers\SeoSiteSettingsPartDriver.cs" />
     <Compile Include="Exceptions\RedirectRuleDuplicateException.cs" />
     <Compile Include="Filters\RedirectFilter.cs" />
+    <Compile Include="Handlers\SeoSiteSettingsHandler.cs" />
     <Compile Include="Migrations\FaviconMigrations.cs" />
     <Compile Include="Handlers\FaviconSettingsPartHandler.cs" />
     <Compile Include="Handlers\KeywordHelperHandler.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Models\RedirectRule.cs" />
     <Compile Include="Models\RobotsFileRecord.cs" />
     <Compile Include="Models\SeoPartSettings.cs" />
+    <Compile Include="Models\SeoSiteSettingsPart.cs" />
     <Compile Include="Navigation\AdminMenu.cs" />
     <Compile Include="Navigation\RedirectsMenu.cs" />
     <Compile Include="Permissions\Permissions.cs" />
@@ -160,6 +163,8 @@
     <Compile Include="ViewModels\RobotsFileViewModel.cs" />
     <Compile Include="ViewModels\SeoPartViewModel.cs" />
     <Content Include="packages.config" />
+    <Content Include="Views\EditorTemplates\Parts\SeoSiteSettings.cshtml" />
+    <Content Include="Views\CanonicalUrlScript.cshtml" />
     <None Include="Views\TitleScript.cshtml" />
   </ItemGroup>
   <ItemGroup>

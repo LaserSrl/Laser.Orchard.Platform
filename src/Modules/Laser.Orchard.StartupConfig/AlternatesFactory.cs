@@ -77,6 +77,9 @@ namespace Laser.Orchard.StartupConfig {
                       // url prefixes. 
                       // Using IdentityPart or AutoroutePart should allow us to get around that.
                       AddPersonalizedAlternates(displayedContext, contentItem);
+
+                      // Now I add an additional set of alternates based on a specific prefix I set in the ShapeMetadata.
+                      AddAdditionalAlternateKeyAlternates(displayedContext);
                   } else {
                       // this adds alternates for other shapes in the page, that don't belong
                       // directly to the "main" content being displayed. For example, the menu 
@@ -89,6 +92,23 @@ namespace Laser.Orchard.StartupConfig {
 
               });
         }
+
+        private void AddAdditionalAlternateKeyAlternates(ShapeDisplayingContext context) {
+            if (context.Shape.AdditionalAlternateKey != null) {
+                // TODO: prefix may be a list of prefixes
+                var prefix = context.Shape.AdditionalAlternateKey;
+                var currentAlternates = new List<string>();
+                currentAlternates.AddRange(context.ShapeMetadata.Alternates);
+                Action<string> AddAlternate = (s) => AddAlternateName(context.ShapeMetadata.Alternates, s);
+
+                foreach (var s in currentAlternates) {
+                    // The new alternates are going to have a name like prefix-alternatename.
+                    var newAlternate = prefix + "__" + s;
+                    AddAlternate(newAlternate);
+                }
+            }
+        }
+
         private void AddPersonalizedAlternates(ShapeDisplayingContext context, ContentItem contentItem, bool considerZone = true) {
 
             var personalized = new List<string>();
@@ -171,7 +191,7 @@ namespace Laser.Orchard.StartupConfig {
                 }
             }
         }
-        
+
         private static void AddAlternateName(IList<string> alternateNames, string name) {
             if (!alternateNames.Contains(name)) {
                 alternateNames.Add(name);

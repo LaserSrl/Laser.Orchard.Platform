@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -35,4 +35,8 @@ msgstr "Modifica il tuo profilo"
 msgctxt "Contrib.Profile.Controllers.HomeController"
 msgid "Your profile has been saved."
 msgstr "Il tuo profilo è stato salvato."
+
+msgctxt "Contrib.Profile.Services.ViewProfileUserManagementActionsProvider"
+msgid "Profile"
+msgstr "Profilo"
 

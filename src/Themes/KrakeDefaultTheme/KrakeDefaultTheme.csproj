@@ -274,7 +274,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MenuItem.cshtml" />
+    <Content Include="Views\SimpleMenuItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Elements\Column.cshtml" />
@@ -317,6 +317,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PasswordChangeForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Orchard.Users\Account\ChangeExpiredPassword.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

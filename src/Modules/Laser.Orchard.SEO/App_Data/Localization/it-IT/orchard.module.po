@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -323,6 +323,22 @@ msgstr "Titolo della pagina"
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SEO.cshtml"
 msgid "TitleOverrideDescription"
 msgstr "ATTENZIONE: lascia vuoto questo campo per usare il normale titolo del contenuto."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SeoSiteSettings.cshtml"
+msgid "Canonical Url"
+msgstr "Url Canonico"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SeoSiteSettings.cshtml"
+msgid "Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}"
+msgstr "Url Canonico es: {Site.BaseUrl}{Content.DisplayUrl}"
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SeoSiteSettings.cshtml"
+msgid "Canonical Url."
+msgstr "Url Canonico."
+
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/SeoSiteSettings.cshtml"
+msgid "SEO settings for all content"
+msgstr "Configurazione SEO per tutti i contenuti"
 
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/RedirectsAdmin/Add.cshtml"
 msgid "Add new Redirect rule"

@@ -51,6 +51,8 @@ namespace Laser.Orchard.Policy.Handlers {
         public void AccessDenied(IUser user) {
         }
 
+        public void ChangingPassword(IUser user, string password) { }
+
         public void ChangedPassword(IUser user) {
         }
 

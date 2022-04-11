@@ -74,6 +74,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Handlers {
 
         #region not used IUserEventHandler methods 
         public void AccessDenied(IUser user) { }
+        public void ChangingPassword(IUser user, string password) { }
         public void ChangedPassword(IUser user) { }
         public void Created(UserContext context) { }
         public void Creating(UserContext context) { }

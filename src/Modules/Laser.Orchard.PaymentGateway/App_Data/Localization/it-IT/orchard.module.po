@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -27,6 +27,66 @@ msgstr "Fare riferimento alle schede di ogni POS per le relative impostazioni."
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/Admin/Index.cshtml"
 msgid "Save"
 msgstr "Salva"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/BankTransfer.cshtml"
+msgid "Bank Transfer payment"
+msgstr "Pagamento tramite Bonifico Bancario"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/BankTransfer.cshtml"
+msgid "Payment reason: {0}"
+msgstr "Causale pagamento: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/BankTransfer.cshtml"
+msgid "Please send the transfer code via email at <a href='mailto:{0}'>{0}</a> in order to confirm your payment."
+msgstr "Per favore invia il codice del bonifico via email a <a href='mailto:{0}'>{0}</a> in modo da confermare il tuo pagamento."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/BankTransfer.cshtml"
+msgid "You need to send the money at the following account number: {0}"
+msgstr "Devi inviare il denaro al seguente iban: {0}"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/CashOnDelivery.cshtml"
+msgid "Your goods will be shipped and the courier will ask you to pay him the amount of your order."
+msgstr "Le tue merci saranno spedite e il corriere ti chiederà di pagare direttamente a lui l'ammontare del tuo ordine."
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/CustomPosAdminSettings.cshtml"
+msgid " Add new custom pos"
+msgstr "Aggiungi un nuovo metodo di pagamento personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/CustomPosAdminSettings.cshtml"
+msgid "Custom Pos Settings"
+msgstr "Configurazione metodi di pagamenti personalizzati"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/CustomPosAdminSettings.cshtml"
+msgid "Save All"
+msgstr "Salva Tutto"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid " Remove this custom pos"
+msgstr "Rimouvi il metodo di pagamento personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "Order:"
+msgstr "Ordine:"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "Pos Name:"
+msgstr "Nome metodo di pagamento:"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "Pos Provider:"
+msgstr "Provider metodo di pagamento:"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "The CustomPosProvider to use for action execution and shape generation"
+msgstr "Il CustomPosProvider da utilizzare per l'esecuzione della action e la generazione della shape"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "The name of the custom payment method"
+msgstr "Il nome del metodo di pagamento personalizzato"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/CustomPosSettings.cshtml"
+msgid "The order in which payment buttons will be rendered during the checkout step"
+msgstr "L'ordine nel quale i pulsanti di pagamento verranno visualizzati durante il checkout"
 
 msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/EditorTemplates/Parts/PayButtonEdit.cshtml"
 msgid "This item is payable"
@@ -208,6 +268,18 @@ msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosList.cshtml"
 msgid "There was an error initializing the payment. Please try again."
 msgstr "C'è stato un errore nell'inizializzazione del pagamento. È consigliato ritentare."
 
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton.cshtml"
+msgid "Pay now"
+msgstr "Paga ora"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton_BankTransfer.cshtml"
+msgid "Pay via Bank Transfer"
+msgstr "Paga tramite Bonifico Bancario"
+
+msgctxt "~/Modules/Laser.Orchard.PaymentGateway/Views/PosPayButton_CashOnDelivery.cshtml"
+msgid "Pay on Delivery"
+msgstr "Paga alla consegna"
+
 msgctxt "Laser.Orchard.PaymentGateway.Activities.PaymentEventActivity"
 msgid "Failed"
 msgstr "Operazione fallita"
@@ -267,4 +339,20 @@ msgstr "Gateway di Pagamento"
 msgctxt "Laser.Orchard.PaymentGateway.Navigation"
 msgid "Settings"
 msgstr "Impostazioni"
+
+msgctxt "Laser.Orchard.PaymentGateway.Providers.BankTransferPosProvider"
+msgid "Bank Transfer"
+msgstr "Bonifico bancario"
+
+msgctxt "Laser.Orchard.PaymentGateway.Providers.CashOnDeliveryProvider"
+msgid "Cash on Delivery"
+msgstr "Pagamento alla consegna"
+
+msgctxt "Laser.Orchard.PaymentGateway.Providers.DefaultCustomPosProvider"
+msgid "Default Custom Pos"
+msgstr "Metodo di pagamento personalizzato di default"
+
+msgctxt "Laser.Orchard.PaymentGateway.Services.PosServiceBase"
+msgid "Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
+msgstr "Errore PosServiceBase.EndPayment con i seguenti parametri: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
 

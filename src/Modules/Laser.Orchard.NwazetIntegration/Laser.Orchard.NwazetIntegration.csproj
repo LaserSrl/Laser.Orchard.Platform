@@ -240,6 +240,11 @@
     <Compile Include="Services\PaymentStatusProvider.cs" />
     <Compile Include="Services\IAddressConfigurationSettingsService.cs" />
     <Compile Include="Services\AddressConfigurationSettingsService.cs" />
+    <Compile Include="Services\Pos\BankTransferIntegrationService.cs" />
+    <Compile Include="Services\Pos\CashOnDeliveryIntegrationService.cs" />
+    <Compile Include="Services\Pos\CustomPosOrderFrontEndAdditionalInformationProvider.cs" />
+    <Compile Include="Services\Pos\IPosIntegrationService.cs" />
+    <Compile Include="Services\Pos\PosIntegrationServiceBase.cs" />
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="Services\WorkflowActtributesValidation.cs" />

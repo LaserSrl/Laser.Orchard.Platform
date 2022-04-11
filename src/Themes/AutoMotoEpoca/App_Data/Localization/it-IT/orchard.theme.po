@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2021 Laser s.r.l.
+# Copyright (c) 2022 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -183,6 +183,10 @@ msgstr "Continua a leggere"
 msgctxt "~/Themes/AutoMotoEpoca/Views/PhotogalleryHome.cshtml"
 msgid "PHOTOGALLERY"
 msgstr "PHOTOGALLERY"
+
+msgctxt "~/Themes/AutoMotoEpoca/Views/SimpleMenuItemLink.cshtml"
+msgid "Open submenu of {0}"
+msgstr "Apri il sotto menu di {0}"
 
 msgctxt "~/Themes/AutoMotoEpoca/Views/User.cshtml"
 msgid "Dashboard"

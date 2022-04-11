@@ -32,9 +32,10 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             IShapeDisplay shapeDisplay,
             ISiteService siteService,
             IOrchardServices orchardServices,
-            IUserProviderServices userProviderService
+            IUserProviderServices userProviderService,
+            IPasswordHistoryService passwordHistoryService
             )
-            : base(contentManager, membershipService, clock, messageService, shellSettings, encryptionService, shapeFactory, shapeDisplay, siteService) {
+            : base(contentManager, membershipService, clock, messageService, shellSettings, encryptionService, shapeFactory, shapeDisplay, siteService, passwordHistoryService) {
             _contentManager = contentManager;
             _orchardservices = orchardServices;
             _userProviderService = userProviderService;

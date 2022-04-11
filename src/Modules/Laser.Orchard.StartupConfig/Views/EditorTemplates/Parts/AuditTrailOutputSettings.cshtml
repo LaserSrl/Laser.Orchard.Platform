@@ -1,0 +1,32 @@
+﻿@model Laser.Orchard.StartupConfig.AuditTrail.ViewModels.AuditTrailOutputSettingsPartViewModel
+
+<section>
+    <h2>@T("Enable logging as system events")</h2>
+    <div>
+        @Html.CheckBoxFor(m => m.IsEventViewerEnabled)
+        @Html.LabelFor(m => m.IsEventViewerEnabled, 
+            T("Enable audit trail logging as system events").Text, 
+            new { @class = "forcheckbox" })
+        <span class="hint">
+            @T("When enabled, audit trail will add system events.")
+        </span>
+    </div>
+    <h2>@T("Source used for system events")</h2>
+    <div>
+        @Html.TextBoxFor(m => m.EventViewerSourceName,
+            new { @class="text medium" })
+        <span class="hint">
+            @T("This is a Source for the \"Application\" stream of Windows System Events. A source by this name must be configured by a system's administrator.")
+        </span>
+    </div>
+    <h2>@T("Enable logging in the File System (using Log4Net)")</h2>
+    <div>
+        @Html.CheckBoxFor(m => m.IsFileSystemEnabled)
+        @Html.LabelFor(m => m.IsFileSystemEnabled, 
+            T("Enable audit trail logging as log files").Text, 
+            new { @class = "forcheckbox" })
+        <span class="hint">
+            @T("When enabled, audit trail will add to a log file.")
+        </span>
+    </div>
+</section>
