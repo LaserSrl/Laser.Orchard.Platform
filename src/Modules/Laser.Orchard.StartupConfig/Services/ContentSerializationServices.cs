@@ -208,7 +208,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             var partObject = new JObject();
             foreach (var property in properties) {
                 // skippa la property "Id" se ha lo stesso valore del content item che contiene la part
-                if ((property.Name == "Id") && (part.Id == part.ContentItem.Id)) {
+                if (property.Name == "Id" && item != null && part.Id == item.Id) {
                     continue;
                 }
                 try {
@@ -444,6 +444,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                             var memberVal = val;
                             FormatValue(ref memberVal);
                             properties.Add(new JProperty(member.Name, memberVal));
+                            if (member.Name.Equals("id", StringComparison.OrdinalIgnoreCase)) {
+                                PopulateProcessedItems(item.GetType().Name, ((dynamic)item).Id);
+                            }
                         } else if (typeof(IEnumerable).IsInstanceOfType(val)) {
                             JArray arr = new JArray();
                             properties.Add(new JProperty(member.Name, arr));
@@ -536,7 +539,10 @@ namespace Laser.Orchard.StartupConfig.Services {
 
         private void PopulateProcessedItems(string key, dynamic id) {
             if (id != null) {
-                processedItems.Add(String.Format("{0}({1})", key, id.ToString()));
+                var keyId = string.Format("{0}({1})", key, id.ToString());
+                if (!processedItems.Contains(keyId)) {
+                    processedItems.Add(keyId);
+                }
             }
         }
 
