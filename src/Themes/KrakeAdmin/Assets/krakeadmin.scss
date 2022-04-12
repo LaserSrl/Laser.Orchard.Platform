@@ -11856,8 +11856,16 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 #layout-main div.mce-fullscreen {
     width: auto;
     right: 0;
-    top: 54px; /* #header height, which is 70px, but with a margin-top of -16px */
+    top: 64px; /* #header height, which is 70px, but with a margin-top of -6px (originally, margin-top is -16px. When mce-fullscreen is applied, margin-top is changed to -6px) */
     left: 64px; /* #menu-bar width */
+}
+
+body {
+    &.mce-fullscreen {
+        #header {
+            margin-top: -6px; /* Header gets shorter when mce-fullscreen is applied, so a smaller margin-top must be applied */
+        }
+    }
 }
 
 @media (min-width: 1200px) {
@@ -11865,3 +11873,4 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
         left: 240px; /* #menu-bar width */
     }
 }
+/* End of Tiny MCE full screen fix */
