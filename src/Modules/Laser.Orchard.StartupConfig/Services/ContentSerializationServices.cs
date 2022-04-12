@@ -393,11 +393,13 @@ namespace Laser.Orchard.StartupConfig.Services {
                 return new JProperty(item.GetType().Name, null);
             }
             try {
-                if (item.GetType().Name.EndsWith(_skipAlwaysPropertiesEndWith))
+                if (item.GetType().Name.EndsWith(_skipAlwaysPropertiesEndWith)) {
                     return new JProperty(item.GetType().Name, null);
+                }
                 if (((dynamic)item).Id != null) {
-                    if (processedItems.Contains(String.Format("{0}({1})", item.GetType().Name, ((dynamic)item).Id)))
+                    if (processedItems.Contains(String.Format("{0}({1})", item.GetType().Name, ((dynamic)item).Id))) {
                         return new JProperty(item.GetType().Name, null);
+                    }
                 }
             } catch {
             }
@@ -456,7 +458,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 }
                             }
                         } else {
-                                                        
                             aux = SerializeObject(propertyInfo.GetValue(item), actualLevel + 1, skipProperties);
                             properties.Add(aux);
                         }
@@ -534,8 +535,9 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
         private void PopulateProcessedItems(string key, dynamic id) {
-            if (id != null)
+            if (id != null) {
                 processedItems.Add(String.Format("{0}({1})", key, id.ToString()));
+            }
         }
 
         private JsonSerializer JsonSerializerInstance() {
