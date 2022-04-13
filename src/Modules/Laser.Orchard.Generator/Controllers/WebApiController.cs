@@ -29,7 +29,7 @@ namespace Laser.Orchard.Generator.Controllers {
             return _webApiServices.Terms(alias, maxLevel);
         }
 
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10) {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
             JObject json;
 
             IContent content;
@@ -48,7 +48,7 @@ namespace Laser.Orchard.Generator.Controllers {
                 #endregion
 
             } else {
-                return _webApiServices.Display(alias, page, pageSize, maxLevel);
+                return _webApiServices.Display(alias, page, pageSize, maxLevel, filter);
             }
         }
 

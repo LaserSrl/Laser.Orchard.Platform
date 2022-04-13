@@ -69,7 +69,7 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         [AlwaysAccessible]
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10) {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
             try {
                 JObject json;
 
@@ -116,7 +116,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
 
                 //_maxLevel = maxLevel;
-                json = _contentSerializationServices.GetJson(content, page, pageSize);
+                json = _contentSerializationServices.GetJson(content, page, pageSize, filter);
                 //_contentSerializationServices.NormalizeSingleProperty(json);
                 return Content(json.ToString(Newtonsoft.Json.Formatting.None), "application/json");
                 //return GetJson(content, page, pageSize);
