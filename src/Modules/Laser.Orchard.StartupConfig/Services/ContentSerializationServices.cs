@@ -230,6 +230,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             //// now add the fields to the json object....
             foreach (var contentField in part.Fields) {
                 // Checking ContentFieldSerializationSettings to see if the field needs to be serialized.
+                //var serializeField = _filter == null || _filter.Length == 0 || _filter.Contains(contentField.Name.ToLower());
                 var serializeField = true;
                 if (contentField.PartFieldDefinition.Settings.ContainsKey("ContentFieldSerializationSettings.AllowSerialization")) {
                     bool.TryParse(contentField.PartFieldDefinition.Settings["ContentFieldSerializationSettings.AllowSerialization"], out serializeField);
