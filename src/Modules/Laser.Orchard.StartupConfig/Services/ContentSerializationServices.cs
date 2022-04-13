@@ -191,7 +191,9 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             var partsObject = new JObject();
             var parts = item.Parts
-                .Where(cp => !cp.PartDefinition.Name.Contains("`") && !_skipPartNames.Contains(cp.PartDefinition.Name)
+                .Where(cp => !cp.PartDefinition.Name.Contains("`") 
+                    && !_skipPartNames.Contains(cp.PartDefinition.Name)
+                    && (_filter == null || _filter.Length == 0 || _filter.Contains(cp.PartDefinition.Name.ToLower()))
                 );
             foreach (var part in parts) {
                 jsonProps.Add(SerializePart(part, actualLevel + 1, item));
@@ -230,7 +232,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 // Checking ContentFieldSerializationSettings to see if the field needs to be serialized.
                 var serializeField = true;
                 if (contentField.PartFieldDefinition.Settings.ContainsKey("ContentFieldSerializationSettings.AllowSerialization")) {
-                    Boolean.TryParse(contentField.PartFieldDefinition.Settings["ContentFieldSerializationSettings.AllowSerialization"], out serializeField);
+                    bool.TryParse(contentField.PartFieldDefinition.Settings["ContentFieldSerializationSettings.AllowSerialization"], out serializeField);
                 }
 
                 if (serializeField) {
@@ -370,7 +372,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                 }
             }
 
-
             return new JProperty(field.Name + field.FieldDefinition.Name, fieldObject);
         }
 
@@ -442,7 +443,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                         .Union(item.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
                         .Where(m => !skipProperties.Contains(m.Name) 
                             && !_skipAlwaysProperties.Contains(m.Name) 
-                            && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith))
+                            && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith)
+                            && (_filter == null || _filter.Length == 0 || _filter.Contains(m.Name)))
                     ;
                     List<JProperty> properties = new List<JProperty>();
                     foreach (var member in members) {
