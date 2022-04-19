@@ -161,8 +161,7 @@
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
+    <Compile Include="Handlers\TerritoryPartExtensionsHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsFacebookShop.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
