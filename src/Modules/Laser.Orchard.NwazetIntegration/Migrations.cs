@@ -150,5 +150,14 @@ namespace Laser.Orchard.NwazetIntegration {
 
             return 8;
         }
+
+        public int UpdateFrom8() {
+            SchemaBuilder.CreateTable("TerritoryISO3166CodePartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("ISO3166Code")
+                .Column<int>("TerritoryInternalRecord_Id"));
+
+            return 9;
+        }
     }
 }

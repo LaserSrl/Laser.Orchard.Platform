@@ -144,6 +144,7 @@
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\TerritoryAddressTypePartDriver.cs" />
     <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
+    <Compile Include="Drivers\TerritoryISO3166CodePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
@@ -186,6 +187,8 @@
     <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePart.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
@@ -270,6 +273,7 @@
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryISO3166CodeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryTag.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -466,6 +470,7 @@
     <Content Include="Views\GA4Purchase.cshtml" />
     <Content Include="Views\GA4ShippingInfo.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

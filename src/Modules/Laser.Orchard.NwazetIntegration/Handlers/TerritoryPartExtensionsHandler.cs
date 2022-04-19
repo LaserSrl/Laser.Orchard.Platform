@@ -13,13 +13,15 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
         public TerritoryPartExtensionsHandler(
             IRepository<TerritoryAddressTypePartRecord> addressTypeRepository,
             IRepository<TerritoryAdministrativeTypePartRecord> adminTypeRepository,
+            IRepository<TerritoryISO3166CodePartRecord> isoCodeRepository,
             IContentDefinitionManager contentDefinitionManager) {
 
             _contentDefinitionManager = contentDefinitionManager;
 
             Filters.Add(StorageFilter.For(addressTypeRepository));
             Filters.Add(StorageFilter.For(adminTypeRepository));
-            
+            Filters.Add(StorageFilter.For(isoCodeRepository));
+
         }
 
         protected override void Activating(ActivatingContentContext context) {
@@ -29,6 +31,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 // Weld parts to "extend" functionality of Territories
                 context.Builder.Weld<TerritoryAdministrativeTypePart>();
                 context.Builder.Weld<TerritoryAddressTypePart>();
+                context.Builder.Weld<TerritoryISO3166CodePart>();
             }
         }
 
