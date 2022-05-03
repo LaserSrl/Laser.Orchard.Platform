@@ -11,6 +11,7 @@ namespace Laser.Orchard.NwazetIntegration.Routes {
             yield return (
                 new HttpRouteDescriptor {
                     // Aliases formed by Autoroute have Priority 80
+                    // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
                     Name = "DefaultApi",
                     Priority = 85,
                     RouteTemplate = "API/Coupon",

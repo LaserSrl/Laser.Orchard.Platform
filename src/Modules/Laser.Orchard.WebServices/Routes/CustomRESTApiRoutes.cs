@@ -12,7 +12,8 @@ namespace Laser.Orchard.WebServices.Routes {
             yield return (
                 new HttpRouteDescriptor {
                     // Aliases formed by Autoroute have Priority 80
-                    Name= "DefaultApi",
+                    // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
+                    Name = "DefaultCustomApi",
                     Priority = 85,
                     RouteTemplate = "API/REST/{customActionName}",
                     Defaults = new {
