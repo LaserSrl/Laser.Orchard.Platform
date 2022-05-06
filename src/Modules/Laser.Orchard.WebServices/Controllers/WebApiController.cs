@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
-using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Laser.Orchard.WebServices.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +16,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.WebServices.Controllers {
-    
+
     public class WebApiController : Controller, IWebApiService {
         private readonly IOrchardServices _orchardServices;
         private readonly IProjectionManager _projectionManager;
@@ -75,7 +74,7 @@ namespace Laser.Orchard.WebServices.Controllers {
 
                 if (alias == null) {
                     var result = new ContentResult { ContentType = "application/json" };
-                    result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
+                    result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
                     return result;
                 }
 
