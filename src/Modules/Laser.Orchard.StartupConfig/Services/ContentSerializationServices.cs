@@ -121,7 +121,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             //dynamic shape = _orchardServices.ContentManager.BuildDisplay(content); // Forse non serve nemmeno
             //var filteredContent = shape.ContentItem;
             var filteredContent = content;
-            _filter = filter.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            _filter = filter.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.EndsWith(".") ? x : x + ".").ToArray();
 
             json = new JObject(SerializeObject(filteredContent, 0, 0));
             dynamic part;
@@ -200,10 +200,15 @@ namespace Laser.Orchard.StartupConfig.Services {
                 new JProperty("Version", item.Version));
 
             var partsObject = new JObject();
+
             var parts = item.Parts
                 .Where(cp => !cp.PartDefinition.Name.Contains("`")
                     && !_skipPartNames.Contains(cp.PartDefinition.Name)
-                    && (_filter == null || _filter.Length == 0 || _filter.Contains(cp.PartDefinition.Name.ToLower()))
+                    && (_filter == null ||
+                        _filter.Length == 0 ||
+                        _filter.Contains(cp.ContentItem.ContentType + ".", StringComparer.InvariantCultureIgnoreCase)) /*All parts for a specific content (es: BlogPost.)*/||
+                        _filter.Contains(cp.ContentItem.ContentType + "." + cp.PartDefinition.Name + ".", StringComparer.InvariantCultureIgnoreCase) /*A specific part for all the contents (es: .TitlePart.)*/||
+                        _filter.Contains("." + cp.PartDefinition.Name + ".", StringComparer.InvariantCultureIgnoreCase) /*A Specific Part for a specific content (es: BlogPost.TitlePart.)*/
                 );
             foreach (var part in parts) {
                 jsonProps.Add(SerializePart(part, actualLevel + 1, item.Id, item));
@@ -387,12 +392,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (item.GetType().Name.EndsWith(_skipAlwaysPropertiesEndWith)) {
                     return new JProperty(item.GetType().Name, null);
                 }
-                // Commented to explore all objects
-                //if (((dynamic)item).Id != null) {
-                //    if (IsItemAlreadyProcessedAsParent(item.GetType().Name, ((dynamic)item).Id, parentContentId)) {
-                //        return new JProperty(item.GetType().Name, new JObject(new JProperty("Id", ((dynamic)item).Id)));
-                //    }
-                //}
             }
             catch {
             }
@@ -437,9 +436,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                         .Union(item.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
                         .Where(m => !skipProperties.Contains(m.Name)
                             && !_skipAlwaysProperties.Contains(m.Name)
-                            && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith)
-                            && (_filter == null || _filter.Length == 0 || _filter.Contains(m.Name)))
-                    ;
+                            && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith));
                     List<JProperty> properties = new List<JProperty>();
                     foreach (var member in members) {
                         var propertyInfo = item.GetType().GetProperty(member.Name);
