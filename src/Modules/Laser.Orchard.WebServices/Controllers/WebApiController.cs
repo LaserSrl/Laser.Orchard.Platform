@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
-using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Laser.Orchard.WebServices.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,7 +16,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.WebServices.Controllers {
-    
+
     public class WebApiController : Controller, IWebApiService {
         private readonly IOrchardServices _orchardServices;
         private readonly IProjectionManager _projectionManager;
@@ -69,13 +68,13 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         [AlwaysAccessible]
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10) {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
             try {
                 JObject json;
 
                 if (alias == null) {
                     var result = new ContentResult { ContentType = "application/json" };
-                    result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
+                    result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
                     return result;
                 }
 
@@ -116,7 +115,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
 
                 //_maxLevel = maxLevel;
-                json = _contentSerializationServices.GetJson(content, page, pageSize);
+                json = _contentSerializationServices.GetJson(content, page, pageSize, filter);
                 //_contentSerializationServices.NormalizeSingleProperty(json);
                 return Content(json.ToString(Newtonsoft.Json.Formatting.None), "application/json");
                 //return GetJson(content, page, pageSize);
