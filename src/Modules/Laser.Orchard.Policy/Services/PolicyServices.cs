@@ -666,7 +666,7 @@ namespace Laser.Orchard.Policy.Services {
             var resultArray = new JArray();
 
             foreach (var pendingPolicy in policies) {
-                resultArray.Add(new JObject(_contentSerializationServices.SerializeContentItem(pendingPolicy.ContentItem, 0)));
+                resultArray.Add(_contentSerializationServices.GetJson(pendingPolicy.ContentItem, 0));
             }
 
             json.Add("PendingPolicies", resultArray);
