@@ -206,10 +206,11 @@ namespace Laser.Orchard.StartupConfig.Services {
                     && !_skipPartNames.Contains(cp.PartDefinition.Name)
                     && (_filter == null ||
                         _filter.Length == 0 ||
+                        (cp!=null && cp.ContentItem != null && (
                         _filter.Contains(cp.ContentItem.ContentType + ".", StringComparer.InvariantCultureIgnoreCase)) /*All parts for a specific content (es: BlogPost.)*/||
                         _filter.Contains(cp.ContentItem.ContentType + "." + cp.PartDefinition.Name + ".", StringComparer.InvariantCultureIgnoreCase) /*A specific part for all the contents (es: .TitlePart.)*/||
                         _filter.Contains("." + cp.PartDefinition.Name + ".", StringComparer.InvariantCultureIgnoreCase) /*A Specific Part for a specific content (es: BlogPost.TitlePart.)*/
-                );
+                )));
             foreach (var part in parts) {
                 jsonProps.Add(SerializePart(part, actualLevel + 1, item.Id, item));
             }
