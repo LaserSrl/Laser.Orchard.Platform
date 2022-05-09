@@ -91,7 +91,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                     foreach (var resulted in terms) {
                         resultArray.Add(new JObject(SerializeObject(resulted.ContentItem, 0, content.Id)));
                     }
-                    json.Add("Terms", resultArray);
+                    JObject taxonomy = json.First.First as JObject; //The Taxonomy node
+                    taxonomy.Add("Terms", resultArray);
                     //NormalizeSingleProperty(json);
                     return json;
 
@@ -105,8 +106,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                         foreach (var resulted in contentToSerialize) {
                             resultArray.Add(new JObject(SerializeObject(resulted.ContentItem, 0, termPart.Id)));
                         }
-                        json.Add("SubTerms", resultArray);
-                        //NormalizeSingleProperty(json);
+                        JObject rootTerm = json.First.First as JObject; //The first term node
+                        rootTerm.Add("SubTerms", resultArray);
                         return json;
                     }
                 }
