@@ -61,7 +61,7 @@ namespace Laser.Orchard.Policy.Filters {
                     json = new JObject();
                     var resultArray = new JArray();
                     foreach (var pendingPolicy in pendingPolicies) {
-                        resultArray.Add(new JObject(_contentSerializationServices.SerializeContentItem((ContentItem)pendingPolicy, 0)));
+                        resultArray.Add(_contentSerializationServices.GetJson((ContentItem)pendingPolicy, 0));
                     }
                     json.Add("PendingPolicies", resultArray);
                     //_contentSerializationServices.NormalizeSingleProperty(json);
