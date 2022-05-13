@@ -105,6 +105,7 @@
     <Compile Include="FilterEditors\HiddenStringFieldFilterEditor.cs" />
     <Compile Include="Handlers\HiddenStringFieldAuthorizationEventHandler.cs" />
     <Compile Include="Handlers\HiddenStringFieldHandler.cs" />
+    <Compile Include="Handlers\HiddenStringFieldValueUpdateTaskHandler.cs" />
     <Compile Include="HiddenFieldsMigrations.cs" />
     <Compile Include="HiddenFieldsPermissions.cs" />
     <Compile Include="Projections\HiddenStringFieldFilter.cs" />

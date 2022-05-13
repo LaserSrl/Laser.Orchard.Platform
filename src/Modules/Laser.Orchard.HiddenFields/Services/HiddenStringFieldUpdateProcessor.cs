@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.HiddenFields.Fields;
 using Laser.Orchard.HiddenFields.Settings;
-using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
@@ -14,7 +13,6 @@ using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.HiddenFields.Services {
