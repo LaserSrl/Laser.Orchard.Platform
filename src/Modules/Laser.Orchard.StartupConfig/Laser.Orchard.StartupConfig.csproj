@@ -439,6 +439,16 @@
     <Compile Include="ColorPicker\ColorPickerFieldDriver.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldEditorEvents.cs" />
     <Compile Include="ColorPicker\ColorPickerFieldSettings.cs" />
+    <Compile Include="ContentSync\Activities\SyncContentActivity.cs" />
+    <Compile Include="ContentSync\Activities\SyncContentForm.cs" />
+    <Compile Include="ContentSync\Drivers\SyncPartDriver.cs" />
+    <Compile Include="ContentSync\Handlers\SyncPartHandler.cs" />
+    <Compile Include="ContentSync\Migrations.cs" />
+    <Compile Include="ContentSync\Models\SyncPart.cs" />
+    <Compile Include="ContentSync\Models\SyncPartRecord.cs" />
+    <Compile Include="ContentSync\Services\ISyncService.cs" />
+    <Compile Include="ContentSync\Services\SyncContext.cs" />
+    <Compile Include="ContentSync\Services\SyncService.cs" />
     <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
