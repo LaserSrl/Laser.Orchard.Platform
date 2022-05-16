@@ -50,7 +50,8 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection {
                     "Laser.Orchard.WebServices.Signal.Trigger",
                     "Laser.Orchard.Braintree.Paypal.GetClientToken",
                     "Laser.Orchard.Braintree.Paypal.Pay",
-                    "Laser.Orchard.WebServices.WebApi.Display"
+                    "Laser.Orchard.WebServices.WebApi.Display",
+                    "Laser.Orchard.WebServices.WebApi.Terms"
                 };
                 settings.ProtectedEntries = String.Join(",", defaultProtectedEntries);
             }
