@@ -69,7 +69,7 @@ namespace Laser.Orchard.HiddenFields.Settings {
 
                     if (model.ProcessVariant != HiddenStringFieldUpdateProcessVariant.None) {
                         // TODO: Check task isn't already scheduled.
-                        var completeFieldName = _contentTypeName + "_" + builder.PartName + "_" + builder.Name;
+                        var completeFieldName = _contentTypeName + "_" + builder.PartName + "_" + builder.Name + "_" + model.ProcessVariant.ToString();
                         _scheduledTaskManager.CreateTask(HiddenStringFieldValueUpdateTaskHandler.UPDATEVALUES_TASK + "_" + completeFieldName, _clock.UtcNow.AddMinutes(1), null);
                     }
 

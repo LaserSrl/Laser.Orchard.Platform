@@ -112,9 +112,7 @@
     <Compile Include="Security\HiddenFieldEditPermission.cs" />
     <Compile Include="Security\HiddenFieldSeePermission.cs" />
     <Compile Include="Services\HiddenFieldService.cs" />
-    <Compile Include="Services\HiddenStringFieldUpdateProcessor.cs" />
     <Compile Include="Services\IHiddenFieldService.cs" />
-    <Compile Include="Services\IHiddenStringFieldUpdateProcessor.cs" />
     <Compile Include="Settings\HiddenStringFieldSettings.cs" />
     <Compile Include="Settings\HiddenStringFieldsSettingsEvents.cs" />
     <Compile Include="ViewModels\HiddenStringFieldViewModels.cs" />
