@@ -119,6 +119,7 @@ namespace Laser.Orchard.WebServices.Controllers {
 
                 if (!_orchardServices.Authorizer.Authorize(Permissions.ViewContent, content)) {
                     Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    Response.SuppressFormsAuthenticationRedirect = true;
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
                 }
 
@@ -129,6 +130,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                 //return GetJson(content, page, pageSize);
             } catch (System.Security.SecurityException) {
                 Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                Response.SuppressFormsAuthenticationRedirect = true;
                 return Json(_utilsServices.GetResponse(ResponseType.InvalidUser), JsonRequestBehavior.AllowGet);
             } catch (Exception) {
                 return new HttpStatusCodeResult(500);
