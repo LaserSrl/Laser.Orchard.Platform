@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Logging;
+using Orchard.Security;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.Generator.Controllers {
@@ -25,10 +26,12 @@ namespace Laser.Orchard.Generator.Controllers {
 
         public ILogger Logger { get; set; }
 
+        [AlwaysAccessible]
         public ActionResult Terms(string alias, int maxLevel = 10) {
             return _webApiServices.Terms(alias, maxLevel);
         }
 
+        [AlwaysAccessible]
         public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
             JObject json;
 
