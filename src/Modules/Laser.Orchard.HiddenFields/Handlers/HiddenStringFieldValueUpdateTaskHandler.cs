@@ -22,9 +22,7 @@ namespace Laser.Orchard.HiddenFields.Handlers {
 
         private static int PAGE_SIZE = 20;
         public static string UPDATEVALUES_TASK = "HiddenStringFieldValueUpdate";
-        private IDictionary<HiddenStringFieldUpdateProcessVariant,
-            Func<ContentPartFieldDefinitionBuilder, Func<ContentPart, bool>>> _partsEnumerableFilters;
-
+      
         public ILogger Logger { get; set; }
 
         public HiddenStringFieldValueUpdateTaskHandler(
