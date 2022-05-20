@@ -109,6 +109,7 @@ namespace Laser.Orchard.StartupConfig.Controllers
                 return Json(false);
             }
         }
+        [OutputCache(Duration = 0, NoStore = true)]
         public ActionResult Index(string folderPath, string type, int? replaceId = null)
         {
 

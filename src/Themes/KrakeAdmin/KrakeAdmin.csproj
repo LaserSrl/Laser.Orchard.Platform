@@ -179,7 +179,13 @@
     </Content>
     <Content Include="Styles\iconic-font.min.css" />
     <Content Include="Styles\krakeadmin.css" />
+    <Content Include="Assets\krakeadmin.scss" />
+    <Content Include="Assets\baseadmin.scss" />
     <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Views\Card.cshtml" />
     <Content Include="Styles\krakeadmin.min.css">
@@ -236,7 +242,7 @@
     <Content Include="Views\ErrorPage.cshtml" />
     <Content Include="Views\Header.cshtml" />
     <Content Include="Views\LocalMenu.cshtml" />
-    <Content Include="Views\Menu.cshtml" />
+    <Content Include="Views\SimpleMenu.cshtml" />
     <Content Include="Views\MenuORI.cshtml" />
     <Content Include="Views\Title.cshtml" />
     <Content Include="Views\User.cshtml" />
@@ -369,5 +375,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
   </Target>
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
 </Project>

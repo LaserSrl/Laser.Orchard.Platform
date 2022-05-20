@@ -184,6 +184,10 @@ msgctxt "~/Themes/AutoMotoEpoca/Views/PhotogalleryHome.cshtml"
 msgid "PHOTOGALLERY"
 msgstr "PHOTOGALLERY"
 
+msgctxt "~/Themes/AutoMotoEpoca/Views/SimpleMenuItemLink.cshtml"
+msgid "Open submenu of {0}"
+msgstr "Apri il sotto menu di {0}"
+
 msgctxt "~/Themes/AutoMotoEpoca/Views/User.cshtml"
 msgid "Dashboard"
 msgstr "Pannello di controllo"
