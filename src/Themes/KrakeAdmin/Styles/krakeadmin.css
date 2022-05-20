@@ -2758,17 +2758,19 @@ a.text-success:hover {
   border-left: 1px solid transparent;
   border-right: 1px solid transparent; }
 
-.header-nav-profile .dropdown > a:after {
-  content: "\f107";
-  position: absolute;
-  margin-right: .3em;
-  right: 10px;
-  top: 22px;
-  font-family: FontAwesome;
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
-  -webkit-font-smoothing: antialiased; }
+    .header-nav-profile .dropdown > a:after {
+        content: "\f107";
+        position: absolute;
+        margin-right: .3em;
+        right: 10px;
+        top: 22px;
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        text-decoration: inherit;
+        -webkit-font-smoothing: antialiased;
+        border: 0;
+    }
 
 .header-nav-profile .dropdown > a .ink {
   background-color: rgba(83, 88, 88, 0.15); }
