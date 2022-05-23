@@ -3881,22 +3881,17 @@ select.input-group-lg > .input-group-addon {
   height: 45px;
   line-height: 45px; }
 
-textarea.input-group-lg > .input-group-content > .form-control,
+select[multiple], textarea.input-group-lg > .input-group-content > .form-control,
 textarea.input-group-lg > .input-group-addon,
 select[multiple].input-group-lg > .input-group-content > .form-control,
 select[multiple].input-group-lg > .input-group-addon {
-  height: auto; }
+    height: auto;
+}
 
 select.input-group-lg > .input-group-content > .form-control,
 select.input-group-lg > .input-group-addon {
   height: 45px;
   line-height: 45px; }
-
-textarea.input-group-lg > .input-group-content > .form-control,
-textarea.input-group-lg > .input-group-addon,
-select[multiple].input-group-lg > .input-group-content > .form-control,
-select[multiple].input-group-lg > .input-group-addon {
-  height: auto; }
 
 .floating-label .input-group-lg > .input-group-content > .form-control ~ label,
 .floating-label .input-group-lg > .input-group-addon ~ label {
