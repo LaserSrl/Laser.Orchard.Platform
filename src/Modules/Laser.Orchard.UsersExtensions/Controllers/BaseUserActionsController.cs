@@ -32,8 +32,6 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
     /// </summary>
     public abstract class BaseUserActionsController : Controller {
 
-        private readonly IOrchardServices _orchardServices;
-        private readonly IUtilsServices _utilsServices;
         private readonly IUsersExtensionsServices _usersExtensionsServices;
         private readonly IEnumerable<IIdentityProvider> _identityProviders;
         private readonly IUserService _userService;
@@ -43,18 +41,23 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IOrchardServices orchardServices,
             IUtilsServices utilsServices,
             IUsersExtensionsServices usersExtensionsServices,
-            IEnumerable<IIdentityProvider> identityProviders,          
+            IEnumerable<IIdentityProvider> identityProviders,
             IUserService userService,
-            IUserEventHandler userEventHandler) {
-
-            _orchardServices = orchardServices;
-            _utilsServices = utilsServices;
+            IUserEventHandler userEventHandler,
+            ICsrfTokenHelper csrfTokenHelper) {
+            OrchardServices = orchardServices;
+            UtilsServices = utilsServices;
             _usersExtensionsServices = usersExtensionsServices;
             _identityProviders = identityProviders;
             _userService = userService;
             _userEventHandler = userEventHandler;
-
+            CsrfTokenHelper = csrfTokenHelper;
             T = NullLocalizer.Instance;
+        }
+
+        protected BaseUserActionsController(IOrchardServices orchardServices, IUtilsServices utilsServices, IUsersExtensionsServices usersExtensionsServices, IEnumerable<IIdentityProvider> identityProviders, IUserService userService, IUserEventHandler userEventHandler) {
+            OrchardServices = orchardServices;
+            UtilsServices = utilsServices;
         }
 
         #region [http calls]
@@ -102,56 +105,62 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         #endregion [http calls]
 
         public Localizer T { get; set; }
+        public IOrchardServices OrchardServices { get; }
+        public IUtilsServices UtilsServices { get; }
+        public ICsrfTokenHelper CsrfTokenHelper { get; }
 
         protected ContentResult RegisterLogic(UserRegistration userRegistrationParams) {
             Response result;
             ResponseType responseType;
             // ensure users can request lost password
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
+            var registrationSettings = OrchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
             if (!registrationSettings.UsersCanRegister) {
-                result = _utilsServices.GetResponse(ResponseType.None, T("Users cannot register due to site settings.").Text);
-                return _utilsServices.ConvertToJsonResult(result);
+                result = UtilsServices.GetResponse(ResponseType.None, T("Users cannot register due to site settings.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
             }
             try {
                 _usersExtensionsServices.Register(userRegistrationParams);
                 List<string> roles = new List<string>();
                 var message = "";
-                var registeredServicesData = _utilsServices.GetUserIdentityProviders(_identityProviders);
+                var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
                 var json = registeredServicesData.ToString();
                 responseType = ResponseType.Success;
-                if (_orchardServices.WorkContext.CurrentUser == null && registrationSettings.UsersMustValidateEmail) {
+                if (OrchardServices.WorkContext.CurrentUser == null && registrationSettings.UsersMustValidateEmail) {
                     message = T("Thank you for registering. We sent you an e-mail with instructions to enable your account.").ToString();
                     responseType = ResponseType.ToConfirmEmail;
                 }
-                
-                result = _utilsServices.GetResponse(responseType, message, json);
-            } catch (Exception ex) {
-                result = _utilsServices.GetResponse(ResponseType.None, ex.Message);
+
+                result = UtilsServices.GetResponse(responseType, message, json);
             }
-            return _utilsServices.ConvertToJsonResult(result);
+            catch (Exception ex) {
+                result = UtilsServices.GetResponse(ResponseType.None, ex.Message);
+            }
+            return UtilsServices.ConvertToJsonResult(result);
         }
 
-        protected  ContentResult SignInLogic(UserLogin login) {
+        protected ContentResult SignInLogic(UserLogin login) {
             Response result;
             try {
                 _usersExtensionsServices.SignIn(login);
                 List<string> roles = new List<string>();
-                var registeredServicesData = _utilsServices.GetUserIdentityProviders(_identityProviders);
+                var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
                 var json = registeredServicesData.ToString();
-                result = _utilsServices.GetResponse(ResponseType.Success, "", json);
-            } catch (Exception ex) {
-                result = _utilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+                result = UtilsServices.GetResponse(ResponseType.Success, "", json);
             }
-            return _utilsServices.ConvertToJsonResult(result);
+            catch (Exception ex) {
+                result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+            }
+            return UtilsServices.ConvertToJsonResult(result);
         }
 
         protected JsonResult SignOutLogic() {
             Response result;
             try {
                 _usersExtensionsServices.SignOut();
-                result = _utilsServices.GetResponse(ResponseType.Success);
-            } catch (Exception ex) {
-                result = _utilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+                result = UtilsServices.GetResponse(ResponseType.Success);
+            }
+            catch (Exception ex) {
+                result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
             }
             return Json(result);
         }
@@ -254,20 +263,20 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         protected JsonResult RequestLostPasswordLogic(string username, LostPasswordUserOptions userOptions, string internationalPrefix = null) {
             // ensure users can request lost password
-            Response result = _utilsServices.GetResponse(ResponseType.None, T("Send email failed.").Text);
-            var registrationSettings = _orchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
+            Response result = UtilsServices.GetResponse(ResponseType.None, T("Send email failed.").Text);
+            var registrationSettings = OrchardServices.WorkContext.CurrentSite.As<RegistrationSettingsPart>();
             if (!registrationSettings.EnableLostPassword) {
-                result = _utilsServices.GetResponse(ResponseType.None, T("Users cannot recover lost password due to site settings.").Text);
+                result = UtilsServices.GetResponse(ResponseType.None, T("Users cannot recover lost password due to site settings.").Text);
 
                 return Json(result);
             }
 
             if (String.IsNullOrWhiteSpace(username)) {
-                result = _utilsServices.GetResponse(ResponseType.None, T("Invalid user.").Text);
+                result = UtilsServices.GetResponse(ResponseType.None, T("Invalid user.").Text);
                 return Json(result);
             }
 
-            var siteUrl = _orchardServices.WorkContext.CurrentSite.BaseUrl;
+            var siteUrl = OrchardServices.WorkContext.CurrentSite.BaseUrl;
             if (String.IsNullOrWhiteSpace(siteUrl)) {
                 siteUrl = HttpContext.Request.ToRootUrlString();
             }
@@ -275,16 +284,19 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             // test if user is user/email or phone number
             if (userOptions == LostPasswordUserOptions.Account) {
                 if (_userService.SendLostPasswordEmail(username, nonce => Url.MakeAbsolute(Url.Action("LostPassword", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl))) {
-                    result = _utilsServices.GetResponse(ResponseType.Success);
-                } else {
-                    result = _utilsServices.GetResponse(ResponseType.None, T("Send email failed.").Text);
+                    result = UtilsServices.GetResponse(ResponseType.Success);
                 }
-            } else {
+                else {
+                    result = UtilsServices.GetResponse(ResponseType.None, T("Send email failed.").Text);
+                }
+            }
+            else {
                 var sendSmsResult = _usersExtensionsServices.SendLostPasswordSms(internationalPrefix, username, nonce => Url.MakeAbsolute(Url.Action("LostPassword", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl));
 
                 if (sendSmsResult == "TRUE") {
-                    result = _utilsServices.GetResponse(ResponseType.Success);
-                } else {
+                    result = UtilsServices.GetResponse(ResponseType.Success);
+                }
+                else {
                     Dictionary<string, string> errors = new Dictionary<string, string>();
                     errors.Add("BODYEXCEEDED", T("Message rejected: too many characters. (160 max)").ToString()); //"messaggio rigettato per superamento lunghezza max di testo (160 caratteri)");
                     errors.Add("MISSINGPARAMETER_1", T("Missing recipient").ToString()); //"Destinatario mancante");
@@ -293,7 +305,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                     errors.Add("MISSINGPARAMETER_4", T("Missing text").ToString()); //"Testo mancante");
                     errors.Add("MISSINGPARAMETER_5", T("Priority missing or wrong").ToString()); //"Priorità mancante o errata");
                     errors.Add("FALSE", T("Generic error").ToString()); //"Errore generico");
-                    result = _utilsServices.GetResponse(ResponseType.None, T("Send SMS failed.").Text + errors[sendSmsResult].ToString());
+                    result = UtilsServices.GetResponse(ResponseType.None, T("Send SMS failed.").Text + errors[sendSmsResult].ToString());
                 }
             }
             return Json(result);
@@ -305,11 +317,11 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             if (user != null) {
                 _userEventHandler.ConfirmedEmail(user);
 
-                result = _utilsServices.GetResponse(ResponseType.Success, T("Email confirmed").Text);
+                result = UtilsServices.GetResponse(ResponseType.Success, T("Email confirmed").Text);
 
                 return Json(result);
             }
-            result = _utilsServices.GetResponse(ResponseType.None, T("Email not confirmed").Text);
+            result = UtilsServices.GetResponse(ResponseType.None, T("Email not confirmed").Text);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

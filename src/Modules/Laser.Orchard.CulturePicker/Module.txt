@@ -1,5 +1,5 @@
 Name: Laser Orchard Culture Picker
-AntiForgery: disabled
+AntiForgery: enabled
 Author: Laser srl
 Website: http://www.laser-group.com
 Version: 1.8
