@@ -20,4 +20,10 @@ namespace Laser.Orchard.HiddenFields.Services {
         Permission GetSeeAllPermission(ContentPart part, HiddenStringField field);
 
     }
+
+    public enum HiddenStringFieldUpdateProcessVariant {
+        None,
+        All,
+        Empty
+    }
 }
