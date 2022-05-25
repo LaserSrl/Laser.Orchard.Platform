@@ -2758,19 +2758,18 @@ a.text-success:hover {
   border-left: 1px solid transparent;
   border-right: 1px solid transparent; }
 
-    .header-nav-profile .dropdown > a:after {
-        content: "\f107";
-        position: absolute;
-        margin-right: .3em;
-        right: 10px;
-        top: 22px;
-        font-family: FontAwesome;
-        font-weight: normal;
-        font-style: normal;
-        text-decoration: inherit;
-        -webkit-font-smoothing: antialiased;
-        border: 0;
-    }
+.header-nav-profile .dropdown > a:after {
+  content: "\f107";
+  position: absolute;
+  margin-right: .3em;
+  right: 10px;
+  top: 22px;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  border: 0; }
 
 .header-nav-profile .dropdown > a .ink {
   background-color: rgba(83, 88, 88, 0.15); }
@@ -3881,12 +3880,12 @@ select.input-group-lg > .input-group-addon {
   height: 45px;
   line-height: 45px; }
 
-select[multiple], textarea.input-group-lg > .input-group-content > .form-control,
+select[multiple],
+textarea.input-group-lg > .input-group-content > .form-control,
 textarea.input-group-lg > .input-group-addon,
 select[multiple].input-group-lg > .input-group-content > .form-control,
 select[multiple].input-group-lg > .input-group-addon {
-    height: auto;
-}
+  height: auto; }
 
 select.input-group-lg > .input-group-content > .form-control,
 select.input-group-lg > .input-group-addon {
