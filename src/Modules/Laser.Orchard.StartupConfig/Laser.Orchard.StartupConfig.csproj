@@ -520,6 +520,7 @@
     <Compile Include="MediaExtensions\UserFolder\Models\OwnedFolderPart.cs" />
     <Compile Include="MediaExtensions\UserFolder\Providers\OwnedFolder.cs" />
     <Compile Include="Models\EnsureAsFrontEndInvisiblePart.cs" />
+    <Compile Include="Rules\TermsSelectedConditionProvider.cs" />
     <Compile Include="Security\BearerTokenAuthenticationTicket.cs" />
     <Compile Include="Security\BearerTokenIdentity.cs" />
     <Compile Include="Security\ControlWrapperPermission.cs" />

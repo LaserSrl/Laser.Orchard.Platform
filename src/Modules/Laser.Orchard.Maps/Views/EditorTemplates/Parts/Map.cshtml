@@ -68,6 +68,21 @@
                 return false;
             }
 
+            function resetcoords(map) {
+                $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(0);
+                $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(0);
+                $('#@Html.FieldIdFor(model => model.Map.LocationInfo)').val('');
+                $('#@Html.FieldIdFor(model => model.Map.LocationAddress)').val('');
+                map.setCenter({ lat: 0, lng: 0 });
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: map.getCenter()
+                });
+                return false;
+            }
+
             function initialize() {
                 var mapOptions = {
                     center: new google.maps.LatLng(@Model.Map.Latitude.ToString().Replace(",", "."), @Model.Map.Longitude.ToString().Replace(",", ".")),
@@ -191,6 +206,10 @@
                     infowindow.open(map, marker);
                 });
 
+                $("#reset_coords").click(function () {
+                    resetcoords(map);
+                });
+
 
             }
 
@@ -217,6 +236,7 @@
             @T("Type a Location"):
         <input type="text" id="maplocation" size="50" class="text-medium" />
         <a id="show_coords" href="#show_coords" onclick="javascript:showcoords();" class="button">@T("Show Coords")</a>
+        <a id="reset_coords" href="#" class="button">@T("Reset Coords")</a>
     </p>
     <div class="location-infos">
         <span class="location-info">
