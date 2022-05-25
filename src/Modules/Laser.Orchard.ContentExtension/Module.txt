@@ -1,5 +1,5 @@
 ﻿Name: Laser.Orchard.ContentExtension
-AntiForgery: disabled
+AntiForgery: enabled
 Author: Laser srl -Lorenzo Frediani 
 Website: http://www.laser-group.com
 Version: 1.0
