@@ -1,10 +1,12 @@
 ﻿using Laser.Orchard.Mobile.ViewModels;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
+using Orchard.Mvc.AntiForgery;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Services;
@@ -16,21 +18,24 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
     [OutputCache(NoStore = true, Duration = 0)]
     [RoutePrefix("AKUserActions")]
     public class AKUserActionsController : BaseUserActionsController {
-
         public AKUserActionsController(
             IOrchardServices orchardServices,
             IUsersExtensionsServices usersExtensionsServices,
             IUserService userService,
             IUtilsServices utilsServices,
             IUserEventHandler userEventHandler,
-            IEnumerable<IIdentityProvider> identityProviders) : base(
+            IEnumerable<IIdentityProvider> identityProviders,
+            ICsrfTokenHelper csrfTokenHelper
+) : base(
                  orchardServices,
                  utilsServices,
                  usersExtensionsServices,
                  identityProviders,
                  userService,
-                 userEventHandler
-                 ) { }
+                 userEventHandler,
+                 csrfTokenHelper
+                 ) {
+        }
 
 
         #region [https calls]
@@ -56,8 +61,16 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         [HttpPost]
         [WebApiKeyFilterForControllers(true)]
+        [ValidateAntiForgeryTokenOrchard(false)]
+        [Authorize]
         public JsonResult SignOutSsl() {
-            return SignOutLogic();
+            if (OrchardServices.WorkContext.CurrentUser == null // if the User is null the SignOutLogic do nothing and returns Success because the user is effectively not logged in
+                || CsrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
+                return SignOutLogic();
+            }
+            else {
+                return Json(UtilsServices.GetResponse(ResponseType.InvalidXSRF));
+            }
         }
 
         /// <summary>

@@ -4,8 +4,7 @@
     if (Model.ShowOnlyPertinentCultures && translatedCultures.Count(p => p.Equals(Model.UserCulture)) == 0) { translatedCultures.Insert(0, Model.UserCulture); }
     var availableCultures = (Model.ShowOnlyPertinentCultures) ? translatedCultures : Model.AvailableCultures;
     var availableCultureswithNames = new List<KeyValuePair<string, string>>(availableCultures.Count);
-    foreach (Laser.Orchard.CulturePicker.Models.ExtendedCultureRecord culture in availableCultures)
-    {
+    foreach (Laser.Orchard.CulturePicker.Models.ExtendedCultureRecord culture in availableCultures) {
         try {
             var cultureInfo = new CultureInfo(culture.CultureCode);
             var disaplyedName = String.IsNullOrEmpty(culture.DisplayName) ? cultureInfo.NativeName : culture.DisplayName;
@@ -17,13 +16,13 @@
     }
 }
 
-@using (Html.BeginForm("ChangeCulture", "UserCulture", new {Area = "Laser.Orchard.CulturePicker"})) {
+@using (Html.BeginForm("ChangeCulture", "UserCulture", new { Area = "Laser.Orchard.CulturePicker" })) {
+    @Html.AntiForgeryTokenOrchard()
     <div class="changeCulture">
-        @if (Model.ShowLabel)
-        {
-        <label for="CultureName">@T("Language")</label>
+        @if (Model.ShowLabel) {
+            <label for="CultureName">@T("Language")</label>
         }
-       @* @Html.DropDownList("CultureName", new SelectList(availableCultureswithNames, "Key", "Value", Model.UserCulture.CultureCode), new { onchange = "submit()" }) *@
+        @* @Html.DropDownList("CultureName", new SelectList(availableCultureswithNames, "Key", "Value", Model.UserCulture.CultureCode), new { onchange = "submit()" }) *@
         @Html.DropDownList("CultureName", new SelectList(availableCultureswithNames, "Key", "Value", Model.UserCulture == null ? WorkContext.CurrentCulture : Model.UserCulture.CultureCode), new { onchange = "submit()" })
     </div>
 }
