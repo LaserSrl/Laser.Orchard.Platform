@@ -24,18 +24,30 @@ namespace Laser.Orchard.UsersExtensions.Filters {
 
         IDictionary<string, Func<IEnumerable<PolicyTextInfoPart>, IPolicyServices, string>> ResponseDictionary;
 
+        public bool Skip { get; set; }
+
         public PolicyApiFilterAttribute() {
             ResponseDictionary = new Dictionary<string, Func<IEnumerable<PolicyTextInfoPart>, IPolicyServices, string>>() {
                 { "LMNV", (parts, service) => service.PoliciesLMNVSerialization(parts) }, //keys should be all caps
                 { "PUREJSON", (parts, service) => service.PoliciesPureJsonSerialization(parts) }
             };
+            Skip = false;
         }
 
         public override void OnActionExecuting(HttpActionContext actionContext) {
+            //var skipByAttributes = actionContext.ActionArguments.ContainsKey(Skip) && Skip
+            //if (actionContext.ActionArguments.ContainsKey(Skip)) {
+            //    var id = filterContext.ActionParameters[IdParamName] as Int32?;
+            //}
             var isAdminService = actionContext
                 .ActionDescriptor
                 .GetCustomAttributes<AdminServiceAttribute>(false)
                 .Any();
+            bool skipPolicyCheck = actionContext.ActionDescriptor.GetCustomAttributes<PolicyApiFilterAttribute>(false).Where(x => ((PolicyApiFilterAttribute)x).Skip).Any();
+
+            if (skipPolicyCheck || isAdminService) {
+                return;
+            }
 
             var _workContext = actionContext.ControllerContext.GetWorkContext();
             var _userExtensionServices = _workContext.Resolve<IUsersExtensionsServices>();
@@ -45,8 +57,7 @@ namespace Laser.Orchard.UsersExtensions.Filters {
 
             if (currentUser != null &&
                 _userExtensionServices != null &&
-                _policyService != null &&
-                !isAdminService) {
+                _policyService != null) {
 
                 var language = _workContext.CurrentCulture;
                 var neededPolicies = _userExtensionServices

@@ -3,6 +3,7 @@ using Laser.Orchard.Mobile.ViewModels;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
+using Laser.Orchard.UsersExtensions.Filters;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
@@ -18,6 +19,7 @@ using Orchard.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -155,12 +157,19 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         protected JsonResult SignOutLogic() {
             Response result;
-            try {
-                _usersExtensionsServices.SignOut();
-                result = UtilsServices.GetResponse(ResponseType.Success);
+            if (OrchardServices.WorkContext.CurrentUser == null // if the User is null the SignOutLogic do nothing and returns Success because the user is effectively not logged in
+                || CsrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
+                try {
+                    _usersExtensionsServices.SignOut();
+                    result = UtilsServices.GetResponse(ResponseType.Success);
+                }
+                catch (Exception ex) {
+                    result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+                }
             }
-            catch (Exception ex) {
-                result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+            else {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(UtilsServices.GetResponse(ResponseType.InvalidXSRF));
             }
             return Json(result);
         }

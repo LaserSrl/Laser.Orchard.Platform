@@ -3,6 +3,7 @@ using Laser.Orchard.StartupConfig.IdentityProvider;
 using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
+using Laser.Orchard.UsersExtensions.Filters;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
@@ -11,6 +12,7 @@ using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Services;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.UsersExtensions.Controllers {
@@ -62,15 +64,9 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         [HttpPost]
         [WebApiKeyFilterForControllers(true)]
         [ValidateAntiForgeryTokenOrchard(false)]
-        [Authorize]
+        [PolicyApiFilter(Skip = true)] //Skip Policy Check
         public JsonResult SignOutSsl() {
-            if (OrchardServices.WorkContext.CurrentUser == null // if the User is null the SignOutLogic do nothing and returns Success because the user is effectively not logged in
-                || CsrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
-                return SignOutLogic();
-            }
-            else {
-                return Json(UtilsServices.GetResponse(ResponseType.InvalidXSRF));
-            }
+            return SignOutLogic();
         }
 
         /// <summary>
