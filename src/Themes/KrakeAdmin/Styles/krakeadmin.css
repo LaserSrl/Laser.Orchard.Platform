@@ -9704,3 +9704,5 @@ body.mce-fullscreen #header {
     /* #menu-bar width */ } }
 
 /* End of Tiny MCE full screen fix */
+#stickyContainer.sticky-top {
+  top: 64px; }
