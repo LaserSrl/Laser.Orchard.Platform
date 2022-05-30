@@ -60,7 +60,8 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Activities {
                         Type = activityContext.GetState<string>("TargetType"),
                         EnsureCreating = activityContext.GetState<bool>("Creating"),
                         EnsurePublishing = activityContext.GetState<bool>("Publishing"),
-                        EnsureVersioning = activityContext.GetState<bool>("Versioning")
+                        EnsureVersioning = activityContext.GetState<bool>("Versioning"),
+                        ForceOwnerUpdate = activityContext.GetState<bool>("ForceOwnerUpdate")
                     }
                 };
                 _syncService.Synchronize(context);

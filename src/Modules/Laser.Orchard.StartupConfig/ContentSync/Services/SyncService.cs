@@ -1,22 +1,17 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Laser.Orchard.StartupConfig.ContentSync.Models;
-using Laser.Orchard.StartupConfig.Fields;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.ContentPicker.Fields;
+using Orchard.Core.Common.Models;
 using Orchard.Data;
-using Orchard.Fields.Fields;
 using Orchard.Logging;
-using Orchard.MediaLibrary.Fields;
-using Orchard.Taxonomies.Fields;
-using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
+using Orchard.Users.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.ContentSync.Services {
     public class SyncService : ISyncService {
@@ -64,8 +59,7 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
                 }
                 target = Services.ContentManager.New(context.Target.Type);
                 Services.ContentManager.Create(target, VersionOptions.Draft);
-            }
-            else {
+            } else {
                 var option = VersionOptions.Published;
                 if (context.Target.EnsureVersioning) {
                     option = VersionOptions.DraftRequired;
@@ -73,6 +67,22 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
                 target = Services.ContentManager.Get(targetId, option);
             }
             CopyParts(context.Source, target);
+
+            // If source is a User, update target owner.
+            if (context.Source.ContentType == "User") {
+                var cp = target.As<CommonPart>();
+                var up = context.Source.As<UserPart>();
+                if (cp != null && up != null && (cp.Owner == null || context.Target.ForceOwnerUpdate)) {
+                    cp.Owner = up;
+                }
+            } else if (context.Source.As<CommonPart>() == null) {
+                var cp = target.As<CommonPart>();
+                var up = Services.WorkContext.CurrentUser;
+                if (cp != null && up != null && (cp.Owner == null || context.Target.ForceOwnerUpdate)) {
+                    cp.Owner = up;
+                }
+            }
+
             target.As<SyncPart>().SyncronizedRef = context.Source.Id;
             if (context.Target.EnsurePublishing) {
                 Services.ContentManager.Publish(target);
@@ -80,7 +90,16 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
             context.Result = target;
         }
 
-
+        public ContentItem GetSynchronizedContent(string contentType, int sourceId) {
+            return Services.ContentManager
+                .Query<SyncPart, SyncPartRecord>()
+                .ForType(contentType)
+                .ForVersion(VersionOptions.Latest)
+                .Where<SyncPartRecord>(x => x.SyncronizedRef == sourceId)
+                .List<ContentItem>()
+                .SingleOrDefault();
+        }
+        
         private void CopyParts(ContentItem src, ContentItem dest) {
             var context = new CloneContentContext(src, dest);
             Handlers.Invoke(handler => handler.Cloning(context), Logger);

@@ -21,27 +21,33 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Activities {
 
             Func<IShapeFactory, dynamic> form =
               shape => {
-                  var f = _shapeFactory.Form(
-                      Id: "SyncContentForm",
-                      _Type: _shapeFactory.Textbox(
-                        Name: "TargetType",
-                        Title: T("Target Type")
-                      ),
-                       _Versioning: _shapeFactory.Checkbox(
-                        Name: "Versioning",
-                        Value: "True",
-                        Title: "Ensure new version"
-                    ),
-                       _Publishing: _shapeFactory.Checkbox(
-                        Name: "Publishing",
-                        Value: "True",
-                        Title: "Ensure publish"
-                    ),
-                       _Creating: _shapeFactory.Checkbox(
-                        Name: "Creating",
-                        Value: "True",
-                        Title: "Ensure creation"
-                    ));
+              var f = _shapeFactory.Form(
+                  Id: "SyncContentForm",
+                  _Type: _shapeFactory.Textbox(
+                    Name: "TargetType",
+                    Title: T("Target Type")
+                  ),
+                   _Versioning: _shapeFactory.Checkbox(
+                    Name: "Versioning",
+                    Value: "True",
+                    Title: "Ensure new version"
+                ),
+                   _Publishing: _shapeFactory.Checkbox(
+                    Name: "Publishing",
+                    Value: "True",
+                    Title: "Ensure publish"
+                ),
+                   _Creating: _shapeFactory.Checkbox(
+                    Name: "Creating",
+                    Value: "True",
+                    Title: "Ensure creation"
+                ),
+                   _ForceOwnerUpdate: _shapeFactory.CheckBox(
+                       Name: "ForceOwnerUpdate",
+                       Value: "True",
+                       Title: "Force owner update"
+                    )
+                );
                   return f;
               };
             context.Form("SyncContentForm", form);
