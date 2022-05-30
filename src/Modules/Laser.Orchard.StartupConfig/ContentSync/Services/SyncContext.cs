@@ -20,11 +20,13 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
             EnsureCreating = true;
             EnsurePublishing = true;
             EnsureVersioning = true;
+            ForceOwnerUpdate = true;
         }
 
         public string Type { get; set; }
         public bool EnsureCreating { get; set; }
         public bool EnsurePublishing { get; set; }
         public bool EnsureVersioning { get; set; }
+        public bool ForceOwnerUpdate { get; set; }
     }
 }
