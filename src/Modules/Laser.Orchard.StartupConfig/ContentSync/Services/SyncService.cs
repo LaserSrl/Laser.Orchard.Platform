@@ -72,7 +72,7 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
                 }
                 target = Services.ContentManager.Get(targetId, option);
             }
-            CopyParts(context.Source, target);
+            UpdateTarget(context.Source, target);
             target.As<SyncPart>().SyncronizedRef = context.Source.Id;
             if (context.Target.EnsurePublishing) {
                 Services.ContentManager.Publish(target);
@@ -81,10 +81,13 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
         }
 
 
-        private void CopyParts(ContentItem src, ContentItem dest) {
-            var context = new CloneContentContext(src, dest);
-            Handlers.Invoke(handler => handler.Cloning(context), Logger);
-            Handlers.Invoke(handler => handler.Cloned(context), Logger);
+        private void UpdateTarget(ContentItem src, ContentItem dest) {
+            var targetContext = new UpdateContentContext(dest);
+            var sourceContext = new CloneContentContext(src, dest);
+            Handlers.Invoke(handler => handler.Updating(targetContext), Logger);
+            Handlers.Invoke(handler => handler.Cloning(sourceContext), Logger);
+            Handlers.Invoke(handler => handler.Cloned(sourceContext), Logger);
+            Handlers.Invoke(handler => handler.Updated(targetContext), Logger);
         }
     }
 }

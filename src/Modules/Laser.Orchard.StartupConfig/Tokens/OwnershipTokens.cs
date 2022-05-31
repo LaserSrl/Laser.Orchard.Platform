@@ -12,10 +12,10 @@ using Orchard.ContentManagement.Aspects;
 using Orchard.Security;
 
 namespace Laser.Orchard.StartupConfig.Tokens {
-    public class OwnershipToken : ITokenProvider {
+    public class OwnershipTokens : ITokenProvider {
         private readonly IOrchardServices _orchardServices;
         public Localizer T { get; set; }
-        public OwnershipToken(IOrchardServices orchardServices) {
+        public OwnershipTokens(IOrchardServices orchardServices) {
             T = NullLocalizer.Instance;
             _orchardServices = orchardServices;
         }
@@ -28,8 +28,8 @@ namespace Laser.Orchard.StartupConfig.Tokens {
         public void Evaluate(EvaluateContext context) {
             context.For<IContent>("Content")
                    .Token("OwnerEmail", x => GetTheValue(x))
-                   .Token("Ownership", x => GetTheContentOwnerOrUser(x))
-                   .Chain("User", "User", x => GetTheContentOwnerOrUser(x));
+                   .Token("Ownership", x => "Ownership") // Ownership is just a placeholder string to Chain the Content
+                   .Chain("Ownership", "Content", x => GetTheContentOwnerOrUser(x)); // Chain the User or the Owner ContentItem
         }
         private string GetTheValue(IContent content) {
             if (content.As<CommonPart>() != null) {
