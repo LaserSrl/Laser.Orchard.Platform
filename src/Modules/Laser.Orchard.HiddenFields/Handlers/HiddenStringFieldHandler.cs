@@ -20,6 +20,8 @@ namespace Laser.Orchard.HiddenFields.Handlers {
 
             OnUpdated<ContentPart>(InitializeFieldValue);
             OnCreated<ContentPart>(InitializeFieldValue);
+            OnImported<ContentPart>(InitializeFieldValue); // fired after a target content is imported;
+                                                           // on the contrary OnCloned is fired when the source content is Cloned so we don't need to do nothing during that phase
         }
 
         private void InitializeFieldValue(ContentContextBase context, ContentPart part) {
