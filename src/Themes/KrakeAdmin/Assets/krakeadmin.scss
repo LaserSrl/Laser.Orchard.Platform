@@ -11874,3 +11874,9 @@ body {
     }
 }
 /* End of Tiny MCE full screen fix */
+
+#stickyContainer {
+    &.sticky-top {
+        top: 64px;
+    }
+}
