@@ -9708,3 +9708,8 @@ body.mce-fullscreen #header {
     /* #menu-bar width */ } }
 
 /* End of Tiny MCE full screen fix */
+/* Style for autocompletes based on tagit.js */
+.tagit li.tagit-choice {
+  cursor: pointer; }
+  .tagit li.tagit-choice > a.tagit-close:before {
+    content: "\00a0"; }
