@@ -21,6 +21,11 @@
     namePrefix = (string.IsNullOrWhiteSpace(namePrefix) ? "" : namePrefix + ".");
     var idPrefix = Model.Id ?? Html.FieldIdFor(m => m);
     idPrefix = (string.IsNullOrWhiteSpace(idPrefix) ? "" : idPrefix + "_");
+
+    var legend = Model.Legend ?? string.Empty;
+    if (string.IsNullOrWhiteSpace(legend?.ToString())) {
+        legend = @T("Select the territories this shipping is valid for.");
+    }
 }
 
 <fieldset class="territories-wrapper"
@@ -29,7 +34,7 @@
           data-model-name="@Model.Name"
           data-model-id="@Model.Id"
           data-prevent-tokenization="true">
-    <legend>@T("Select the territories this shipping is valid for.")</legend>
+    <legend>@legend</legend>
     @if (hierarchy != null) {
         <div class="territories-editor text text-medium"
              data-autocomplete-url="@Url.HttpRouteUrl("",
