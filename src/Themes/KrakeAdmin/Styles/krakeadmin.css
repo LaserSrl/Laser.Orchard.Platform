@@ -2768,7 +2768,8 @@ a.text-success:hover {
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
-  -webkit-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased;
+  border: 0; }
 
 .header-nav-profile .dropdown > a .ink {
   background-color: rgba(83, 88, 88, 0.15); }
@@ -3879,6 +3880,7 @@ select.input-group-lg > .input-group-addon {
   height: 45px;
   line-height: 45px; }
 
+select[multiple],
 textarea.input-group-lg > .input-group-content > .form-control,
 textarea.input-group-lg > .input-group-addon,
 select[multiple].input-group-lg > .input-group-content > .form-control,
@@ -3889,12 +3891,6 @@ select.input-group-lg > .input-group-content > .form-control,
 select.input-group-lg > .input-group-addon {
   height: 45px;
   line-height: 45px; }
-
-textarea.input-group-lg > .input-group-content > .form-control,
-textarea.input-group-lg > .input-group-addon,
-select[multiple].input-group-lg > .input-group-content > .form-control,
-select[multiple].input-group-lg > .input-group-addon {
-  height: auto; }
 
 .floating-label .input-group-lg > .input-group-content > .form-control ~ label,
 .floating-label .input-group-lg > .input-group-addon ~ label {
@@ -9706,6 +9702,10 @@ body.mce-fullscreen #header {
   #layout-main div.mce-fullscreen {
     left: 240px;
     /* #menu-bar width */ } }
+
+/* End of Tiny MCE full screen fix */
+#stickyContainer.sticky-top {
+  top: 64px; }
 
 /* End of Tiny MCE full screen fix */
 /* Style for autocompletes based on tagit.js */
