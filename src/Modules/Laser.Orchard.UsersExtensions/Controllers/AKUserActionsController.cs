@@ -1,14 +1,18 @@
 ﻿using Laser.Orchard.Mobile.ViewModels;
 using Laser.Orchard.StartupConfig.IdentityProvider;
 using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
+using Laser.Orchard.UsersExtensions.Filters;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
+using Orchard.Mvc.AntiForgery;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Services;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.UsersExtensions.Controllers {
@@ -16,21 +20,24 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
     [OutputCache(NoStore = true, Duration = 0)]
     [RoutePrefix("AKUserActions")]
     public class AKUserActionsController : BaseUserActionsController {
-
         public AKUserActionsController(
             IOrchardServices orchardServices,
             IUsersExtensionsServices usersExtensionsServices,
             IUserService userService,
             IUtilsServices utilsServices,
             IUserEventHandler userEventHandler,
-            IEnumerable<IIdentityProvider> identityProviders) : base(
+            IEnumerable<IIdentityProvider> identityProviders,
+            ICsrfTokenHelper csrfTokenHelper
+) : base(
                  orchardServices,
                  utilsServices,
                  usersExtensionsServices,
                  identityProviders,
                  userService,
-                 userEventHandler
-                 ) { }
+                 userEventHandler,
+                 csrfTokenHelper
+                 ) {
+        }
 
 
         #region [https calls]
@@ -56,6 +63,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         [HttpPost]
         [WebApiKeyFilterForControllers(true)]
+        [ValidateAntiForgeryTokenOrchard(false)]
+        [PolicyApiFilter(Skip = true)] //Skip Policy Check
         public JsonResult SignOutSsl() {
             return SignOutLogic();
         }

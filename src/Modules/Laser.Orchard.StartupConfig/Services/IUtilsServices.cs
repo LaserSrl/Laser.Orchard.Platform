@@ -448,10 +448,13 @@ namespace Laser.Orchard.StartupConfig.Services {
             } else {
                 // Test implementation for Scontrino Content Creation.
                 // Folder generation based on settings.
-                string customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
                 string subfolder = string.Empty;
-                if (!string.IsNullOrWhiteSpace(customSubfolder)) {
-                    subfolder = _tokenizer.Replace(customSubfolder, new Dictionary<string, object> { { "Content", obj } });
+                string customSubfolder = string.Empty;
+                if (settings.ContainsKey("SecureFileFieldSettings.CustomSubfolder")) {
+                    customSubfolder = settings["SecureFileFieldSettings.CustomSubfolder"];
+                    if (!string.IsNullOrWhiteSpace(customSubfolder)) {
+                        subfolder = _tokenizer.Replace(customSubfolder, new Dictionary<string, object> { { "Content", obj } });
+                    }
                 }
                 if (!string.IsNullOrWhiteSpace(subfolder)) {
                     secureDirectory = Path.Combine(secureDirectory, subfolder);

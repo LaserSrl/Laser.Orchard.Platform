@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using Orchard.Mvc.AntiForgery;
 
 namespace Laser.Orchard.ContentExtension.Controllers {
 
@@ -57,6 +58,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         }
 
         [HttpPost]
+        [ValidateAntiForgeryTokenOrchard(false)]
         public JsonResult PostFile(HttpPostedFileBase file, string contentType="") {
             var currentUser = _orchardServices.WorkContext.CurrentUser;
             if (currentUser == null) {

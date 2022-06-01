@@ -661,7 +661,7 @@
     <Compile Include="Tokens\AdditionalDateTokens.cs" />
     <Compile Include="Tokens\ContentDateModified.cs" />
     <Compile Include="Tokens\ColorPickerTokens.cs" />
-    <Compile Include="Tokens\OwnerEmailToken.cs" />
+    <Compile Include="Tokens\OwnershipTokens.cs" />
     <Compile Include="Tokens\ParameterToken.cs" />
     <Compile Include="Tokens\RazorCodeExecutionToken.cs" />
     <Compile Include="Tokens\ReplaceToken.cs" />
