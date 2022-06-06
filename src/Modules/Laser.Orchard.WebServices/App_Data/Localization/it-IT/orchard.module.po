@@ -16,6 +16,14 @@ msgctxt "~/Modules/Laser.Orchard.WebServices/Views/CustomRestApiSettingsAdmin/In
 msgid "Settings"
 msgstr "Impostazioni"
 
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/DefinitionTemplates/ContentFieldSerializationSettings.cshtml"
+msgid "Allow serialization"
+msgstr "Consenti serializzazione"
+
+msgctxt "~/Modules/Laser.Orchard.WebServices/Views/DefinitionTemplates/ContentFieldSerializationSettings.cshtml"
+msgid "Check to allow serialization of this content field and its properties."
+msgstr "Seleziona per consentire la serializzazione di questo campo e delle sue proprietà"
+
 msgctxt "~/Modules/Laser.Orchard.WebServices/Views/EditorTemplates/Parts/WebServiceSettings.cshtml"
 msgid "default is false"
 msgstr "il valore predefinito è falso"
