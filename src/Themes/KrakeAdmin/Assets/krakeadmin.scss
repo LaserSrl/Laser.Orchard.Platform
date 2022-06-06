@@ -1564,11 +1564,6 @@ fieldset small {
     background: rgba(0, 0, 0, 0) url("../Styles/images/summary-view-on.png") no-repeat scroll left top;
 }
 
-/* Add padding to button because if not comment in widget layer the buttons overwrite other objects */
-.switch-for-switchable .switch-button-group {
-    padding: 34px 0px 4px 0px;
-}
-
 div#widgets-layer-visibility {
     padding: 24px 0px 4px 0px;
 }
