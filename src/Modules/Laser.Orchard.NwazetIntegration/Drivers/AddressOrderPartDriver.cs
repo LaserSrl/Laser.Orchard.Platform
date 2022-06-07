@@ -138,6 +138,13 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
         private OrderAddressEditorViewModel CreateVM(AddressOrderPart part) {
             var orderPart = part.As<OrderPart>();
+            
+            // This workaround is implemented to avoid a exception when displaying backoffice placement for orders.
+            // The following vm creation, while mocking AddressOrderPart records, NREs were triggered trying to access ShippingAddress (which is null) properties.
+            if (orderPart.Id <= 0) {
+                return new OrderAddressEditorViewModel();
+            }
+
             return new OrderAddressEditorViewModel {
                 AddressOrderPart = part,
                 OrderPart = orderPart,
