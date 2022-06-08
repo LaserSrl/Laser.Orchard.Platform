@@ -57,7 +57,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             _localizationService = localizationService;
             _markdownFilter = new MarkdownFilter();
 
-            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord" };
+            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
             _skipAlwaysPropertiesEndWith = "Proxy";
             _skipFieldProperties = new string[] { "Storage", "Name", "DisplayName", "Setting" };
             _skipFieldTypes = new string[] { "FieldDefinition", "PartFieldDefinition" };
