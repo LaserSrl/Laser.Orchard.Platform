@@ -8,18 +8,20 @@ using Orchard.ContentManagement;
 using Orchard.Core.Contents;
 using Orchard.Environment.Configuration;
 using Orchard.Logging;
+using Orchard.OutputCache;
 using Orchard.Projections.Services;
 using Orchard.Security;
 using Orchard.Taxonomies.Services;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.WebServices.Controllers {
 
-    public class WebApiController : Controller, IWebApiService {
+    public class WebApiController : Controller, IWebApiService, ICachingEventHandler {
         private readonly IOrchardServices _orchardServices;
         private readonly IProjectionManager _projectionManager;
         private readonly ITaxonomyService _taxonomyService;
@@ -86,18 +88,22 @@ namespace Laser.Orchard.WebServices.Controllers {
                 }
 
                 IContent content;
+                var viewPermission = Permissions.ViewContent;
                 if (alias.ToLower() == "user+info" || alias.ToLower() == "user info") {
                     #region [ Richiesta dati di uno user ]
+                    viewPermission = Contrib.Profile.Permissions.ViewOwnProfile;
                     var currentUser = _authenticationService.GetAuthenticatedUser();
                     if (currentUser == null) {
                         //  return Content((Json(_utilsServices.GetResponse(ResponseType.InvalidUser))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
                         var result = new ContentResult { ContentType = "application/json" };
                         Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        Response.SuppressFormsAuthenticationRedirect = true;
                         result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidUser));
                         return result;
                     } else if (!_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
                         var result = new ContentResult { ContentType = "application/json" };
                         Response.StatusCode = (int)HttpStatusCode.Unauthorized; // TODO: verify this is the correct code
+                        Response.SuppressFormsAuthenticationRedirect = true;
                         result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidXSRF));
                         return result;
                         //   Content((Json(_utilsServices.GetResponse(ResponseType.InvalidXSRF))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
@@ -117,12 +123,14 @@ namespace Laser.Orchard.WebServices.Controllers {
                     return new HttpStatusCodeResult(404);
                 }
 
-                if (!_orchardServices.Authorizer.Authorize(Permissions.ViewContent, content)) {
+                if (!_orchardServices.Authorizer.Authorize(viewPermission, content)) {
                     Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     Response.SuppressFormsAuthenticationRedirect = true;
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
                 }
-
+                // BuildDisplay populates the TagCache properly with the Id of the content
+                // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
+                _orchardServices.ContentManager.BuildDisplay(content);
                 //_maxLevel = maxLevel;
                 json = _contentSerializationServices.GetJson(content, page, pageSize, filter);
                 //_contentSerializationServices.NormalizeSingleProperty(json);
@@ -144,6 +152,22 @@ namespace Laser.Orchard.WebServices.Controllers {
             return response;
         }
 
+        public void KeyGenerated(StringBuilder key) {
+            var values = _request.RequestContext.RouteData.Values;
+            if (values.ContainsKey("area") && values.ContainsKey("controller") && values.ContainsKey("action")) {
+                if (values["area"].ToString().ToLowerInvariant().Equals("laser.orchard.webservices") &&
+                    values["controller"].ToString().ToLowerInvariant().Equals("webapi") &&
+                    values["action"].ToString().ToLowerInvariant().Equals("display")) {
+                    var alias = _request.QueryString["alias"];
+                    if (alias.ToLower() == "user+info" || alias.ToLower() == "user info") {
+                        var currentUser = _authenticationService.GetAuthenticatedUser();
+                        if (currentUser != null) {
+                            key.Append("user:" + currentUser.Id + ";");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class EnumStringConverter : Newtonsoft.Json.Converters.StringEnumConverter {
