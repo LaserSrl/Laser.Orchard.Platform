@@ -1008,6 +1008,26 @@ msgctxt "Laser.Orchard.StartupConfig.ColorPicker.ColorPickerFieldDriver"
 msgid "Value"
 msgstr "Valore"
 
+msgctxt "Laser.Orchard.StartupConfig.ContentSync.Activities.SyncContentActivity"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.ContentSync.Activities.SyncContentActivity"
+msgid "Error"
+msgstr "Errore"
+
+msgctxt "Laser.Orchard.StartupConfig.ContentSync.Activities.SyncContentActivity"
+msgid "Success"
+msgstr "Completato"
+
+msgctxt "Laser.Orchard.StartupConfig.ContentSync.Activities.SyncContentActivity"
+msgid "Sync the content with another"
+msgstr "Sincronizza questo contenuto con un altro"
+
+msgctxt "Laser.Orchard.StartupConfig.ContentSync.Activities.SyncContentForm"
+msgid "Target Type"
+msgstr "Tipo di destinazione"
+
 msgctxt "Laser.Orchard.StartupConfig.Controllers.ApiCredentialsAdminController"
 msgid "New credentials have been generated."
 msgstr "Sono state generate nuove credenziali."

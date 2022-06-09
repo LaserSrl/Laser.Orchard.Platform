@@ -4,6 +4,7 @@ using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
+using Orchard.Mvc.AntiForgery;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Services;
@@ -52,6 +53,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         }
 
         [HttpPost]
+        [ValidateAntiForgeryTokenOrchard(false)]
         public JsonResult SignOutSsl() {
             return SignOutLogic();
         }

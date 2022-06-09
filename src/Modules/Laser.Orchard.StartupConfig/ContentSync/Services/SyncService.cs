@@ -1,22 +1,17 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Laser.Orchard.StartupConfig.ContentSync.Models;
-using Laser.Orchard.StartupConfig.Fields;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.ContentPicker.Fields;
+using Orchard.Core.Common.Models;
 using Orchard.Data;
-using Orchard.Fields.Fields;
 using Orchard.Logging;
-using Orchard.MediaLibrary.Fields;
-using Orchard.Taxonomies.Fields;
-using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
+using Orchard.Users.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Laser.Orchard.StartupConfig.ContentSync.Services {
     public class SyncService : ISyncService {
@@ -46,8 +41,61 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
         public IOrchardServices Services { get; }
 
         public void Synchronize(SyncContext context) {
+            context.Result = GetTargetContent(context);
+            
+            if (context.Result == null) return;
+            UpdateTarget(context);
+
+            if (context.Target.EnsurePublishing) {
+                Services.ContentManager.Publish(context.Result);
+            }
+        }
+
+        public ContentItem GetSynchronizedContent(string contentType, int sourceId) {
+            return Services.ContentManager
+                .Query<SyncPart, SyncPartRecord>()
+                .ForType(contentType)
+                .ForVersion(VersionOptions.Latest)
+                .Where<SyncPartRecord>(x => x.SyncronizedRef == sourceId)
+                .List<ContentItem>()
+                .SingleOrDefault();
+        }
+        
+        /// <summary>
+        /// Updates the target ContentItem firing the right Handlers
+        /// </summary>
+        /// <param name="context">The SyncContext object</param>
+        /// <param name="dest">The destination Content Item</param>
+        private void UpdateTarget(SyncContext context) {
+            var src = context.Source;
+            var dest = context.Result;
+            var targetContext = new UpdateContentContext(dest);
+            var sourceContext = new CloneContentContext(src, dest);
+            Handlers.Invoke(handler => handler.Updating(targetContext), Logger);
+            Handlers.Invoke(handler => handler.Cloning(sourceContext), Logger);
+            Handlers.Invoke(handler => handler.Cloned(sourceContext), Logger);
+            if (context.Source.ContentType == "User") {
+                var cp = dest.As<CommonPart>();
+                var up = context.Source.As<UserPart>();
+                if (cp != null && up != null && (cp.Owner == null || context.Target.ForceOwnerUpdate)) {
+                    cp.Owner = up;
+                }
+            } else if (context.Source.As<CommonPart>() == null) {
+                var cp = dest.As<CommonPart>();
+                var up = Services.WorkContext.CurrentUser;
+                if (cp != null && up != null && (cp.Owner == null || context.Target.ForceOwnerUpdate)) {
+                    cp.Owner = up;
+                }
+            }
+
+            dest.As<SyncPart>().SyncronizedRef = context.Source.Id;
+
+            Handlers.Invoke(handler => handler.Updated(targetContext), Logger);
+        }
+
+        private ContentItem GetTargetContent(SyncContext context) {
+
             var contentExists = false;
-            // var targetRecord = _syncRepository.Fetch(x => x.SyncronizedRef == context.Source.Id).Sin;
             ContentItem target;
             var targetId = Services.ContentManager
                 .Query<SyncPart, SyncPartRecord>()
@@ -60,7 +108,7 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
             contentExists = (targetId > 0);
             if (!contentExists) {
                 if (!context.Target.EnsureCreating) {
-                    return; //exit if the content should not be created
+                    return null; //exit if the content should not be created
                 }
                 target = Services.ContentManager.New(context.Target.Type);
                 Services.ContentManager.Create(target, VersionOptions.Draft);
@@ -72,19 +120,7 @@ namespace Laser.Orchard.StartupConfig.ContentSync.Services {
                 }
                 target = Services.ContentManager.Get(targetId, option);
             }
-            CopyParts(context.Source, target);
-            target.As<SyncPart>().SyncronizedRef = context.Source.Id;
-            if (context.Target.EnsurePublishing) {
-                Services.ContentManager.Publish(target);
-            }
-            context.Result = target;
-        }
-
-
-        private void CopyParts(ContentItem src, ContentItem dest) {
-            var context = new CloneContentContext(src, dest);
-            Handlers.Invoke(handler => handler.Cloning(context), Logger);
-            Handlers.Invoke(handler => handler.Cloned(context), Logger);
+            return target;
         }
     }
 }
