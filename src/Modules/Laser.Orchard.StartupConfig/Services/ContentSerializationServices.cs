@@ -119,8 +119,9 @@ namespace Laser.Orchard.StartupConfig.Services {
 
         public JObject GetJson(IContent content, int page = 1, int pageSize = 10, string filter = "") {
             JObject json;
-            //dynamic shape = _orchardServices.ContentManager.BuildDisplay(content); // Forse non serve nemmeno
-            //var filteredContent = shape.ContentItem;
+            // BuildDisplay populates the TagCache properly with the Id of the content
+            // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
+            _orchardServices.ContentManager.BuildDisplay(content);
             var filteredContent = content;
             _filter = filter.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.EndsWith(".") ? x : x + ".").ToArray();
 
@@ -140,6 +141,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                 var queryItems = _projectionManager.GetContentItems(queryId, (page - 1) * pageSize, pageSize);
                 var resultArray = new JArray();
                 foreach (var resulted in queryItems) {
+                    // BuildDisplay populates the TagCache properly with the Id of the content
+                    // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
+                    _orchardServices.ContentManager.BuildDisplay((ContentItem)resulted);
                     resultArray.Add(new JObject(SerializeObject((ContentItem)resulted, 1, part.Id)));
                 }
                 if ((json.Root.HasValues) && (json.Root.First.HasValues) && (json.Root.First.First.HasValues)) {

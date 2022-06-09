@@ -128,9 +128,6 @@ namespace Laser.Orchard.WebServices.Controllers {
                     Response.SuppressFormsAuthenticationRedirect = true;
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
                 }
-                // BuildDisplay populates the TagCache properly with the Id of the content
-                // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
-                _orchardServices.ContentManager.BuildDisplay(content);
                 //_maxLevel = maxLevel;
                 json = _contentSerializationServices.GetJson(content, page, pageSize, filter);
                 //_contentSerializationServices.NormalizeSingleProperty(json);
