@@ -24,9 +24,51 @@ namespace Laser.Orchard.NwazetIntegration {
                 .Column<string>("Province")
                 .Column<string>("PostalCode")
                 .Column<string>("Country")
+                .Column<int>("CountryId")
+                .Column<int>("CityId")
+                .Column<int>("ProvinceId")
                 );
 
-            return 1;
+            SchemaBuilder.CreateTable("AddressOrderPartRecord", table => table
+                 .ContentPartRecord()
+                 .Column<string>("ShippingCountryName")
+                 .Column<int>("ShippingCountryId")
+                 .Column<string>("ShippingCityName")
+                 .Column<int>("ShippingCityId")
+                 .Column<string>("ShippingProvinceName")
+                 .Column<int>("ShippingProvinceId")
+                 .Column<string>("BillingCountryName")
+                 .Column<int>("BillingCountryId")
+                 .Column<string>("BillingCityName")
+                 .Column<int>("BillingCityId")
+                 .Column<string>("BillingProvinceName")
+                 .Column<int>("BillingProvinceId")
+                 .Column<bool>("ShippingAddressIsOptional")
+                 );
+
+            SchemaBuilder.CreateTable("TerritoryAdministrativeTypePartRecord", table => table
+                .ContentPartRecord()
+                // TerritoryAdministrativeType enum stored as string
+                .Column<string>("AdministrativeType")
+                .Column<int>("TerritoryInternalRecord_Id")
+                .Column<bool>("HasCities")
+                .Column<bool>("HasProvinces")
+                );
+            SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
+                table => table.CreateIndex("IDX_AdministrativeType", "AdministrativeType"));
+            
+            SchemaBuilder.CreateTable("TerritoryAddressTypePartRecord", table => table
+                .ContentPartRecord()
+                .Column<bool>("Shipping")
+                .Column<bool>("Billing")
+                .Column<int>("TerritoryInternalRecord_Id"));
+            // indexes because we will search over those booleans
+            SchemaBuilder.AlterTable("TerritoryAddressTypePartRecord",
+                table => table.CreateIndex("IDX_Shipping", "Shipping"));
+            SchemaBuilder.AlterTable("TerritoryAddressTypePartRecord",
+                table => table.CreateIndex("IDX_Billing", "Billing"));
+
+            return 8;
         }
 
         public int UpdateFrom1() {
@@ -107,6 +149,15 @@ namespace Laser.Orchard.NwazetIntegration {
                 table => table.AddColumn<bool>("ShippingAddressIsOptional"));
 
             return 8;
+        }
+
+        public int UpdateFrom8() {
+            SchemaBuilder.CreateTable("TerritoryISO3166CodePartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("ISO3166Code")
+                .Column<int>("TerritoryInternalRecord_Id"));
+
+            return 9;
         }
     }
 }
