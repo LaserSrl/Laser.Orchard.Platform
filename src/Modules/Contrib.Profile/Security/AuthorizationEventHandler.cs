@@ -20,6 +20,8 @@ namespace Contrib.Profile.Security {
             if (context.Granted || context.Permission != Permissions.ViewProfiles || context.Content != context.User) {
                 return;
             }
+            context.Adjusted = true;
+            context.Permission = Permissions.ViewOwnProfile;
         }
     }
 }
