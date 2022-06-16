@@ -67,8 +67,10 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         .Skip(1)
                         .Select(s => {
                             int tmp = 0;
-                            int.TryParse(s, out tmp);
-                            return tmp;
+                            if (int.TryParse(s, out tmp)) {
+                                return tmp;
+                            }
+                            return 0;
                         })
                         .Where(i => i > 0);
 
@@ -144,8 +146,10 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         .Skip(1)
                         .Select(s => {
                             int tmp = 0;
-                            int.TryParse(s, out tmp);
-                            return tmp;
+                            if (int.TryParse(s, out tmp)) {
+                                return tmp;
+                            }
+                            return 0;
                         })
                         .Where(i => i > 0);
 

@@ -361,8 +361,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var rootPath = root.TerritoriesFullPath;
             var parentIds = rootPath.Split(new string[] { "\\" }, StringSplitOptions.RemoveEmptyEntries).Select(x => {
                 int id = 0;
-                int.TryParse(x, out id);
-                return id;
+                if (int.TryParse(x, out id)) {
+                    return id;
+                }
+                return 0;
             }).ToList();
             parentIds.ToList().Remove(root.Id);
             var queryHints = new QueryHints()
