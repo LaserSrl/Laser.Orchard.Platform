@@ -1,15 +1,15 @@
-using Orchard.Security;
-using Orchard.Core.Contents;
 using Orchard;
-using System;
 using Orchard.ContentManagement;
-using Orchard.Users.Models;
+using Orchard.Security;
+using System;
 
 namespace Contrib.Profile.Security {
     public class AuthorizationEventHandler : IAuthorizationServiceEventHandler {
         private readonly IWorkContextAccessor _workContextAccessor;
 
-        public AuthorizationEventHandler(IWorkContextAccessor workContextAccessor) {
+        public AuthorizationEventHandler(
+            IWorkContextAccessor workContextAccessor) {
+
             _workContextAccessor = workContextAccessor;
         }
 
@@ -17,40 +17,45 @@ namespace Contrib.Profile.Security {
         public void Complete(CheckAccessContext context) { }
 
         public void Adjust(CheckAccessContext context) {
-            var permission = Permissions.ViewOwnProfile;
-            if (context.Granted || context.User == null) {
+            // If the authorization is already granted, nothing to adjust here
+            if (context.Granted) {
                 return;
             }
-            if (context.Permission == Permissions.ViewProfiles) {
-                if (context.Content.As<UserPart>() != context.User) {
+            // If we are testing the ViewProfiles Permission, we may have to adjust for the Own permission
+            // as long as the content IS the user
+            if (context.Permission == Permissions.ViewProfiles && context.Content == context.User) {
+                context.Adjusted = true;
+                context.Permission = Permissions.ViewOwnProfile;
+                return;
+            }
+            // If we are testing the ViewContent Permission, check whether the test comes from the path of
+            // the SecureFileField controller, for a field that is hosted in a User
+            if (context.Permission == Orchard.Core.Contents.Permissions.ViewContent) {
+                var routeData = _workContextAccessor.GetContext()
+                    .HttpContext.Request.RequestContext.RouteData.Values;
+                if ("CloudConstruct".Equals(routeData["area"].ToString(), StringComparison.OrdinalIgnoreCase)
+                    && "SecureFileField".Equals(routeData["controller"].ToString(), StringComparison.OrdinalIgnoreCase)
+                    && "GetSecureFile".Equals(routeData["action"].ToString(), StringComparison.OrdinalIgnoreCase)
+                    ) {
+                    // The check for authorizations has been invoked in a call to the SecureFileField controller
+                    var userPart = context.Content.As<IUser>();
+                    if (userPart == null) {
+                        // We only adjust permissions when the content is a user
+                        return;
+                    }
+                    // If the user matches the current user, adjust to the Own permission, otherwise adjust to the
+                    // generic one
+                    if (userPart == context.User) {
+                        context.Permission = Permissions.ViewOwnProfile;
+                    } else {
+                        context.Permission = Permissions.ViewProfiles;
+                    }
+                    context.Adjusted = true;
                     return;
                 }
             }
-            // Testing the ViewContent Permission for a SecureFileField hosted in a User 
-            else if (context.Permission == Orchard.Core.Contents.Permissions.ViewContent) {
-                var routeData = _workContextAccessor.GetContext().HttpContext.Request.RequestContext.RouteData.Values;
+            // No other case to handle
 
-                //If the invoking controller/action is NOT SecureFileField/GetSecureFile, returns;
-                if (!string.Format("{0}/{1}/{2}", routeData["area"], routeData["controller"], routeData["action"]).ToString().Equals("CloudConstruct.SecureFileField/SecureFileField/GetSecureFile", StringComparison.InvariantCultureIgnoreCase)) {
-                    return;
-                }
-                //If the content is not a User;
-                else if (context.Content.As<UserPart>() == null) {
-                    return;
-                }
-                else {
-                    //If content is an user and does not match with the current User, we check the ViewProfiles instead of the ViewContent
-                    if (context.Content.As<UserPart>() != context.User) {
-                        permission = Permissions.ViewProfiles;
-                    }
-                    //Otherwise (content match with the current user) we check the ViewOwnProfile instead of ViewOwnContent
-                    else {
-                        permission = Permissions.ViewOwnProfile;
-                    }
-                }
-            }
-            context.Adjusted = true;
-            context.Permission = permission;
         }
     }
 }
