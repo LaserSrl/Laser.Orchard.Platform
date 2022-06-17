@@ -128,6 +128,7 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CouponApiController.cs" />
+    <Compile Include="Controllers\PickupPointsAdminController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\PickupPointPartDriver.cs" />
     <Compile Include="Drivers\ProductVatConfigurationPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
@@ -163,8 +165,10 @@
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\TerritoryPartExtensionsHandler.cs" />
+    <Compile Include="Handlers\PickupPointsContentHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsFacebookShop.cs" />
+    <Compile Include="Migration\PickupPointsMigrations.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
@@ -182,6 +186,8 @@
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\PickupPointPart.cs" />
+    <Compile Include="Models\PickupPointPartRecord.cs" />
     <Compile Include="Models\ProductVatConfigurationPartInputPriceSettings.cs" />
     <Compile Include="Models\TerritoryAddressTypePart.cs" />
     <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
@@ -201,6 +207,7 @@
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
     <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
+    <Compile Include="Security\PickupPointPermissions.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
@@ -269,6 +276,7 @@
     <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
     <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
