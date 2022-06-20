@@ -19,6 +19,7 @@
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
   <Place Parts_Order_PaymentInfo="Content:1.60"/>
   <Place Parts_Order_CheckoutPolicies="Content:1.61"/>
+  <Place Parts_PickupPointPart_Edit="Content:2" />
   <Place Parts_Product_TagManager="Content:1"/>
   <Place Parts_ProductPriceWithVAT_Edit="Content:3.5" />
   <Place Parts_FacebookShopProductPart="Content:1" />

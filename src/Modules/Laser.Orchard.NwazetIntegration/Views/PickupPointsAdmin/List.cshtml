@@ -1,0 +1,30 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models
+@using Laser.Orchard.NwazetIntegration.ViewModels
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    <div class="box form-horizontal">
+        <div class="box-header with-border">
+            <h3 class="box-title">@T("Pickup Points")</h3>
+        </div>
+        @* TODO: check permissions here as well *@
+        <div class="box-body">
+            <div class="row">
+                <div class="col-sm-3 control-label">
+                    <label class="align-right gray-label">@T("Create Pickup Point")</label>
+                </div>
+                @Html.ActionLink(T("Create"),
+                    "Create",
+                    "PickupPointsAdmin",
+                    new {
+                        Area = "Laser.Orchard.NwazetIntegration",
+                        ReturnUrl = Request.RawUrl
+                    },
+                    new { @class = "button primaryAction" })
+            </div>
+        </div>
+    </div>
+    <fieldset class="contentItems bulk-items">
+        @Display(Model.ContentItems)
+    </fieldset>
+    @Display(Model.Pager)
+}

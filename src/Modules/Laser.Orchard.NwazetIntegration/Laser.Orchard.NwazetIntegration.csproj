@@ -197,6 +197,7 @@
     <Compile Include="Models\TerritoryISO3166CodePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
+    <Compile Include="Navigation\PickupPointsAdminMenu.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartSettings.cs" />
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
+    <Compile Include="Routes\PickupPointsRoutes.cs" />
     <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
     <Compile Include="Security\PickupPointPermissions.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointPartEditViewModel.cs" />
     <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
     <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
@@ -479,6 +482,8 @@
     <Content Include="Views\GA4ShippingInfo.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
+    <Content Include="Views\PickupPointsAdmin\List.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PickupPoint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
