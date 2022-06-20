@@ -451,7 +451,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             // Validation 2: check EditContent Permissions
             if (!_authorizer.Authorize(CorePermissions.EditContent, NewOrModifiedContent)
                 // we also check permissions that may exist for this specific method
-                && !_contentExtensionService.HasPermission(tipoContent, Methods.Post)) {
+                && !_contentExtensionService.HasPermission(tipoContent, Methods.Post, NewOrModifiedContent)) {
                 // return an error
                 return _utilsServices.GetResponse(ResponseType.UnAuthorized);
             }
