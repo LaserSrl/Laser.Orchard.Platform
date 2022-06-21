@@ -278,6 +278,7 @@
     <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointAddressEditViewModel.cs" />
     <Compile Include="ViewModels\PickupPointPartEditViewModel.cs" />
     <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
     <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
