@@ -23,7 +23,7 @@ namespace Contrib.Profile.Security {
             }
             // If we are testing the ViewProfiles Permission, we may have to adjust for the Own permission
             // as long as the content IS the user
-            if (context.Permission == Permissions.ViewProfiles && context.Content == context.User) {
+            if (context.Permission == Permissions.ViewProfiles && context.User != null && context.Content != null && context.Content.As<IUser>()?.Id == context.User.Id) {
                 context.Adjusted = true;
                 context.Permission = Permissions.ViewOwnProfile;
                 return;
@@ -45,9 +45,10 @@ namespace Contrib.Profile.Security {
                     }
                     // If the user matches the current user, adjust to the Own permission, otherwise adjust to the
                     // generic one
-                    if (userPart == context.User) {
+                    if (userPart.Id == context.User.Id) {
                         context.Permission = Permissions.ViewOwnProfile;
-                    } else {
+                    }
+                    else {
                         context.Permission = Permissions.ViewProfiles;
                     }
                     context.Adjusted = true;
