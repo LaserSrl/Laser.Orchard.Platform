@@ -4,13 +4,16 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Contents.Controllers;
+using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
+using Orchard.UI.Notify;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,6 +30,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IAuthorizer _authorizer;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ISiteService _siteService;
+        private readonly ITransactionManager _transactionManager;
+        private readonly INotifier _notifier;
 
         dynamic Shape { get; set; }
 
@@ -38,7 +43,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IAuthorizer authorizer,
             IWorkContextAccessor workContextAccessor,
             ISiteService siteService,
-            IShapeFactory shapeFactory)
+            IShapeFactory shapeFactory,
+            ITransactionManager transactionManager,
+            INotifier notifier)
             : base(contentManager){
 
             _contentManager = contentManager;
@@ -46,6 +53,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _workContextAccessor = workContextAccessor;
             _siteService = siteService;
             Shape = shapeFactory;
+            _transactionManager = transactionManager;
+            _notifier = notifier;
 
             T = NullLocalizer.Instance;
         }
@@ -116,9 +125,31 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return View(model);
         }
         [HttpPost, ActionName("Create")]
-        public ActionResult CreatePOST() {
+        public ActionResult CreatePOST(string returnUrl) {
+            if (!_authorizer.Authorize(
+                PickupPointPermissions.MayConfigurePickupPoints,
+                null,
+                T("Cannot manage pickup points"))) {
+                return new HttpUnauthorizedResult();
+            }
+            var item = _contentManager
+                .New(PickupPointPart.DefaultContentTypeName);
+            _contentManager.Create(item, VersionOptions.Draft);
+            var model = _contentManager.UpdateEditor(item, this);
 
-            return null;
+            if (!ModelState.IsValid) {
+                _transactionManager.Cancel();
+                return View(model);
+            }
+
+            _contentManager.Publish(item);
+
+            _notifier.Information(string.IsNullOrWhiteSpace(item.TypeDefinition.DisplayName)
+                ? T("Your content has been created.")
+                : T("Your {0} has been created.", item.TypeDefinition.DisplayName));
+
+            return this.RedirectLocal(returnUrl, () =>
+                RedirectToAction("EditProduct", new RouteValueDictionary { { "Id", item.Id } }));
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Laser.Orchard.NwazetIntegration.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,6 +16,16 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         // a ContactRecord.
 
         public PickupPointAddressEditViewModel() { }
+        public PickupPointAddressEditViewModel(PickupPointPart part) {
+            Address1 = part.AddressLine1;
+            Address2 = part.AddressLine2;
+            City = part.CityName;
+            Province = part.ProvinceName;
+            Country = part.CountryName;
+            CountryId = part.CountryId;
+            ProvinceId = part.ProvinceId;
+            CityId = part.CityId;
+        }
 
         public List<string> Errors { get; set; }
         public List<string> Information { get; set; }

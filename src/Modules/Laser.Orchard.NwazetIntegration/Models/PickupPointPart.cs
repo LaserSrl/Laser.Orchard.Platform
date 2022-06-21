@@ -44,5 +44,14 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return Retrieve(r => r.CityId); }
             set { Store(r => r.CityId, value); }
         }
+
+        public string AddressLine1 {
+            get { return Retrieve(r => r.AddressLine1); }
+            set { Store(r => r.AddressLine1, value); }
+        }
+        public string AddressLine2 {
+            get { return Retrieve(r => r.AddressLine2); }
+            set { Store(r => r.AddressLine2, value); }
+        }
     }
 }

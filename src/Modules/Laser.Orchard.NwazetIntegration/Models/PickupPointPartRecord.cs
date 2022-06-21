@@ -18,5 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual string CityName { get; set; }
         public virtual int CityId { get; set; }
 
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+
     }
 }

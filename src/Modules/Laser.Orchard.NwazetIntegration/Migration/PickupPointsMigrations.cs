@@ -24,11 +24,27 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
             // ContentTypes
             ContentDefinitionManager.AlterTypeDefinition(PickupPointPart.DefaultContentTypeName, cfg => cfg
                 .WithPart("CommonPart")
-                .WithPart("Title")
                 .WithPart("IdentityPart")
                 .WithPart("PickupPointPart"));
 
             return 1;
+        }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("PickupPointPartRecord", table => table
+                .AddColumn<string>("AddressLine1")
+            );
+            SchemaBuilder.AlterTable("PickupPointPartRecord", table => table
+                .AddColumn<string>("AddressLine2")
+            );
+
+            return 2;
+        }
+        public int UpdateFrom2() {
+            ContentDefinitionManager.AlterTypeDefinition(PickupPointPart.DefaultContentTypeName, cfg => cfg
+                .WithPart("TitlePart"));
+
+            return 3;
         }
     }
 }

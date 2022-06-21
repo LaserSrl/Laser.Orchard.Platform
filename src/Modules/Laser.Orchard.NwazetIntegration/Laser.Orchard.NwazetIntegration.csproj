@@ -485,6 +485,8 @@
     <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
     <Content Include="Views\PickupPointsAdmin\List.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\PickupPoint.cshtml" />
+    <Content Include="Views\EditorTemplates\PickupPointAddressEditViewModel.cshtml" />
+    <Content Include="Views\PickupPointsAdmin\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

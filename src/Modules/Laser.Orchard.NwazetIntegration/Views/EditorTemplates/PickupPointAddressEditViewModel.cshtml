@@ -1,0 +1,173 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Orchard.Localization;
+@using System.Linq.Expressions;
+
+@model PickupPointAddressEditViewModel
+
+@{ 
+    Style.Require("Select2").AtHead();
+    Script.Require("Select2").AtFoot();
+    Script.Require("NwazetIntegration.AddressConfiguration").AtFoot();
+    Style.Require("NwazetIntegration.Admin");
+
+    string prefix = Html
+        .IdFor(m => m.CityId)
+        .ToString()
+        .Remove(Html.NameFor(m => m.CityId).ToString().Length - ("CityId".Length));
+
+    var guid = Guid.NewGuid().ToString();
+}
+@helper EditorForString(
+    Expression<Func<PickupPointAddressEditViewModel, string>> property,
+    LocalizedString label = null,
+    LocalizedString hint = null,
+    bool required = false,
+    LocalizedString placeholder = null,
+    string classes = "",
+    string divClass = "col-md-12 col-sm-12 col-xs-12") {
+    var titleAttribute = hint != null ? string.Format(@"title=""{0}""", hint.Text) : "";
+    <div class="address-input address-text-input @divClass" @Html.Raw(titleAttribute)>
+        <div class="row">
+            @if (label != null) {
+                if (required) {
+                    @Html.LabelFor(property, label.Text, new { @class = "required" })
+                }
+                else {
+                    @Html.LabelFor(property, label.Text, new { })
+                }
+            }
+            @if (hint != null) {
+                <div class="hint"></div>
+            }
+        </div>
+        @if (required) {
+            classes += " required";
+        }
+        <input id="@Html.FieldIdFor(property)"
+               class="@(classes)"
+               name="@Html.NameFor(property)" type="text"
+               value="@property.Compile()(Model)"
+               placeholder="@(placeholder != null ? placeholder.Text : "")" />
+    </div>
+}
+<fieldset class="address-editor" id="@guid">
+    <legend>@T("Pickup Point Address")</legend>
+    @* 1. Country *@
+    @*    This must be selected among the countries configured *@
+    <div class="row">
+        <div class="address-input address-text-input address-country col-md-12 col-sm-12 col-xs-12"
+             title="@T("Select a valid country from the list.")">
+            <div class="row">
+                @Html.LabelFor(m => m.CountryId, T("Country").Text, new { @class = "required" })
+                <div class="hint"></div>
+            </div>
+            @Html.DropDownListFor(m => m.CountryId,
+                Model.Countries)
+        </div>
+    </div>
+    <div class="row">
+        @* 2. City *@
+        <div class="address-input address-text-input address-city col-md-6 col-sm-6 col-xs-6"
+             title="@T("Select a city from the list.")">
+            @Html.HiddenFor(m => m.CityId)
+            <div class="row">
+                @Html.LabelFor(m => m.City, T("City").Text, new { @class = "required" })
+                <div class="hint"></div>
+            </div>
+            <select id="@Html.Id("CitySelectedId")"
+                    class="address-input"
+                    name="@Html.Name("CitySelectedId")"
+                    data-requiredfield="@Html.IdFor(m => m.CityId)">
+                <option selected="selected" value="@Model.CityId">@Model.City</option>
+            </select>
+            <input id="@Html.FieldIdFor(m => m.City)"
+                   class="required address-input text"
+                   name="@Html.NameFor(m => m.City)" type="text"
+                   value="@Model.City"
+                   placeholder="@T("City")" />
+        </div>
+        @* 3. Province and ZIP code *@
+        <div class="address-input address-text-input address-province col-md-3 col-sm-3 col-xs-3"
+             title="@T("Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States.")">
+            @Html.HiddenFor(m => m.ProvinceId)
+            <div class="row">
+                @Html.LabelFor(m => m.Province, T("Province").Text, new { @class = "required" })
+                <div class="hint"></div>
+            </div>
+            <select id="@Html.Id("ProvinceSelectedId")"
+                    class="address-input"
+                    name="@Html.Name("ProvinceSelectedId")"
+                    data-requiredfield="@Html.IdFor(m => m.ProvinceId)">
+                <option selected="selected" value="@Model.ProvinceId">@Model.Province</option>
+            </select>
+            <input id="@Html.FieldIdFor(m => m.Province)"
+                   class="required address-input text-small"
+                   name="@Html.NameFor(m => m.Province)" type="text"
+                   value="@Model.Province"
+                   placeholder="@T("Province or state")" />
+        </div>
+        @EditorForString(m => m.PostalCode,
+            label: T("Postal Code"),
+            hint: T("Postal or ZIP code"),
+            required: true,
+            placeholder: T("Postal or ZIP code"),
+            classes: "text-small required",
+            divClass: "col-md-3 col-sm-3 col-xs-3")
+
+    </div>
+    @* 4. Street *@
+    <div class="row">
+        @EditorForString(m => m.Address1,
+            label: T("Address"),
+               placeholder: T("Address"),
+               hint: T("Address"),
+               classes: "text-medium")
+    </div>
+    <div class="row">
+        @EditorForString(m => m.Address2,
+            label: T("Address (second line)"),
+            placeholder: T("Address"),
+            hint: T("Address"),
+            classes: "text-medium")
+    </div>
+</fieldset>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var addressOptions = {
+            guid: '@guid',
+            elementsPrefix: '@prefix',
+            isBillingAddress: false,
+            countries: {
+                administrativeInfoUrl: '@Url.Action("GetAdministrativeInfo", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @Model.CountryId,
+                select2Options: {
+                    placeholder: '@T("Select a country")',
+                    width: '100%'
+                }
+            },
+            cities: {
+                getUrl: '@Url.Action("citiesapi", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @Model.CityId,
+                select2Options: {
+                    placeholder: '@T("Select a city")',
+                    width: '100%',
+                    minimumInputLength: '2'
+                }
+            },
+            provinces: {
+                getUrl: '@Url.Action("provincesapi", "Addresses", new { area = "Laser.Orchard.NwazetIntegration" })',
+                selectedId: @Model.ProvinceId,
+                select2Options: {
+                    placeholder: '@T("Select a province")',
+                    width: '100%',
+                    minimumInputLength: '1'
+                }
+            }
+        };
+        buildAddressUI(addressOptions);
+    });
+    </script>
+}

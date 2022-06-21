@@ -2,4 +2,15 @@
 
 @model PickupPointPartEditViewModel
 
-@*TODO: editor for PickupPointPart is basically its address *@
+@* The editor for PickupPointPart is basically its address *@
+@{ 
+    Style.Require("Bootstrap");
+    Style.Require("FontAwesome");
+    Script.Require("Bootstrap");
+    Style.Require("NwazetIntegration.Admin");
+}
+<div class="col-md-12 advanced-addresses">
+    <div class="admin-address-editor">
+        @Html.EditorFor(m => m.AddressVM)
+    </div>
+</div>
