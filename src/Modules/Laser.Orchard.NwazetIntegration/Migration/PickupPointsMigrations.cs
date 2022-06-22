@@ -40,11 +40,20 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
 
             return 2;
         }
+
         public int UpdateFrom2() {
             ContentDefinitionManager.AlterTypeDefinition(PickupPointPart.DefaultContentTypeName, cfg => cfg
                 .WithPart("TitlePart"));
 
             return 3;
+        }
+
+        public int UpdateFrom3() {
+            SchemaBuilder.AlterTable("PickupPointPartRecord", table => table
+                .AddColumn<string>("PostalCode")
+            );
+
+            return 4;
         }
     }
 }

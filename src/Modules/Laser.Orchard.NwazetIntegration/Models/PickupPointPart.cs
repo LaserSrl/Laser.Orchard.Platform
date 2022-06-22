@@ -10,6 +10,7 @@ namespace Laser.Orchard.NwazetIntegration.Models {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointPart
         : ContentPart<PickupPointPartRecord>, ITerritoryAddressAspect {
+
         public const string DefaultContentTypeName = "PickupPoint";
 
         public IEnumerable<int> TerritoriesIds => 
@@ -52,6 +53,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public string AddressLine2 {
             get { return Retrieve(r => r.AddressLine2); }
             set { Store(r => r.AddressLine2, value); }
+        }
+        public string PostalCode {
+            get { return Retrieve(r => r.PostalCode); }
+            set { Store(r => r.PostalCode, value); }
         }
     }
 }

@@ -210,6 +210,7 @@
     <Compile Include="Routes\PickupPointsRoutes.cs" />
     <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
     <Compile Include="Security\PickupPointPermissions.cs" />
+    <Compile Include="Security\PickupPointsAuthorizationEventHandler.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
@@ -486,7 +487,7 @@
     <Content Include="Views\PickupPointsAdmin\List.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\PickupPoint.cshtml" />
     <Content Include="Views\EditorTemplates\PickupPointAddressEditViewModel.cshtml" />
-    <Content Include="Views\PickupPointsAdmin\Create.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PickupPoint.BackToList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

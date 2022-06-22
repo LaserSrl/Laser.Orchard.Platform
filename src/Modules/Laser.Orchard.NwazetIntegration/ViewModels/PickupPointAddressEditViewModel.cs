@@ -19,6 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public PickupPointAddressEditViewModel(PickupPointPart part) {
             Address1 = part.AddressLine1;
             Address2 = part.AddressLine2;
+            PostalCode = part.PostalCode;
             City = part.CityName;
             Province = part.ProvinceName;
             Country = part.CountryName;

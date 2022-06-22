@@ -41,12 +41,22 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             if (!Authorized(part)) {
                 return null;
             }
-            return ContentShape("Parts_PickupPointPart_Edit", () => {
+            var shapes = new List<DriverResult>();
+            // add a shape with a "return to list" button
+            shapes.Add(ContentShape("Parts_PickupPointPart_BackToList", () => {
+                return shapeHelper.EditorTemplate(
+                    TemplateName: "Parts/PickupPoint.BackToList",
+                    Prefix: Prefix);
+            }));
+            // add the actuall editor shape
+            shapes.Add(ContentShape("Parts_PickupPointPart_Edit", () => {
                 return shapeHelper.EditorTemplate(
                     TemplateName: "Parts/PickupPoint",
                     Model: CreateVM(part),
                     Prefix: Prefix);
-            });
+            }));
+
+            return Combined(shapes.ToArray());
         }
 
         protected override DriverResult Editor(PickupPointPart part, IUpdateModel updater, dynamic shapeHelper) {
@@ -66,10 +76,12 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 part.ProvinceName = updatedModel.AddressVM.Province;
                 part.CityId = updatedModel.AddressVM.CityId;
                 part.CityName = updatedModel.AddressVM.City;
+                part.PostalCode = updatedModel.AddressVM.PostalCode;
             }
 
             return Editor(part, shapeHelper);
         }
+        // TODO: the overrides for import/export/clone that will be required to correctly handle localization
 
         private bool ValidateVM(PickupPointAddressEditViewModel vm) {
             int id = -1;

@@ -20,6 +20,7 @@ namespace Laser.Orchard.NwazetIntegration.Models {
 
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
+        public string PostalCode { get; set; }
 
     }
 }

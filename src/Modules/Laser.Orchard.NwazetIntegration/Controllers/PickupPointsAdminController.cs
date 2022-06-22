@@ -20,12 +20,23 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
     [ValidateInput(false), Admin]
     public class PickupPointsAdminController
-        : ContentControllerBase, IUpdateModel {
+        : Controller /*ContentControllerBase, IUpdateModel*/ {
+
+        
+        // I define a few constants here so I can reference them univocally
+        // elsewhere in the feature.
+        public const string AreaName = "Laser.Orchard.NwazetIntegration";
+        public const string ControllerName = "PickupPointsAdmin";
+        /*public const string CreateActionName = "Create";
+        public const string EditActionName = "Edit";
+        */
+
         private readonly IContentManager _contentManager;
         private readonly IAuthorizer _authorizer;
         private readonly IWorkContextAccessor _workContextAccessor;
@@ -46,7 +57,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IShapeFactory shapeFactory,
             ITransactionManager transactionManager,
             INotifier notifier)
-            : base(contentManager){
+            /*: base(contentManager)*/{
 
             _contentManager = contentManager;
             _authorizer = authorizer;
@@ -106,7 +117,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return View((object)viewModel);
         }
         #endregion
-
+        /*
         #region Create
         [HttpGet]
         public ActionResult Create() {
@@ -149,7 +160,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 : T("Your {0} has been created.", item.TypeDefinition.DisplayName));
 
             return this.RedirectLocal(returnUrl, () =>
-                RedirectToAction("EditProduct", new RouteValueDictionary { { "Id", item.Id } }));
+                RedirectToAction("Edit", new RouteValueDictionary { { "Id", item.Id } }));
         }
 
         #endregion
@@ -175,5 +186,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
         }
         #endregion
+        */
     }
 }

@@ -1,6 +1,8 @@
 ﻿@using Laser.Orchard.NwazetIntegration.Models
 @using Laser.Orchard.NwazetIntegration.ViewModels
-
+@{ 
+    Layout.Title = T("Manage Pickup Points").Text;
+}
 @using (Html.BeginFormAntiForgeryPost()) {
     <div class="box form-horizontal">
         <div class="box-header with-border">
@@ -14,11 +16,10 @@
                 </div>
                 @Html.ActionLink(T("Create"),
                     "Create",
-                    "PickupPointsAdmin",
                     new {
-                        Area = "Laser.Orchard.NwazetIntegration",
-                        ReturnUrl = Request.RawUrl
-                    },
+                        Area = "Contents",
+                        Controller ="Admin",
+                        Id = (string)PickupPointPart.DefaultContentTypeName },
                     new { @class = "button primaryAction" })
             </div>
         </div>
