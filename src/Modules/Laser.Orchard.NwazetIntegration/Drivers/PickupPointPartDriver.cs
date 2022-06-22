@@ -2,8 +2,10 @@
 using Laser.Orchard.NwazetIntegration.Security;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Core.Title.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
@@ -16,16 +18,22 @@ using System.Web;
 namespace Laser.Orchard.NwazetIntegration.Drivers {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointPartDriver
-        : ContentPartDriver<PickupPointPart> {
+        : ContentPartCloningDriver<PickupPointPart> {
         private readonly IAuthorizer _authorizer;
         private readonly IAddressConfigurationService _addressConfigurationService;
+        private readonly IContentManager _contentManager;
+        private readonly ITerritoriesRepositoryService _territoriesRepositoryService;
 
         public PickupPointPartDriver(
             IAuthorizer authorizer,
-            IAddressConfigurationService addressConfigurationService) {
+            IAddressConfigurationService addressConfigurationService,
+            IContentManager contentManager,
+            ITerritoriesRepositoryService territoriesRepositoryService) {
 
             _authorizer = authorizer;
             _addressConfigurationService = addressConfigurationService;
+            _contentManager = contentManager;
+            _territoriesRepositoryService = territoriesRepositoryService;
 
             T = NullLocalizer.Instance;
         }
@@ -81,7 +89,78 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
 
             return Editor(part, shapeHelper);
         }
-        // TODO: the overrides for import/export/clone that will be required to correctly handle localization
+        
+        protected override void Exporting(PickupPointPart part, ExportContentContext context) {
+            var element = context.Element(part.PartDefinition.Name);
+            // Most properties can be exported as they are.
+            element.SetAttributeValue("CountryName", part.CountryName);
+            element.SetAttributeValue("ProvinceName", part.ProvinceName);
+            element.SetAttributeValue("CityName", part.CityName);
+            element.SetAttributeValue("AddressLine1", part.AddressLine1);
+            element.SetAttributeValue("AddressLine2", part.AddressLine2);
+            element.SetAttributeValue("PostalCode", part.PostalCode);
+            // For territories, we should be exporting identities. Note however that the
+            // Ids we are saving here are for the TerritoryInternalRecords, so we'll export
+            // their Name.
+            element.SetAttributeValue("CountryId-InternalName", GetInternalTerritoryName(part.CountryId));
+            element.SetAttributeValue("ProvinceId-InternalName", GetInternalTerritoryName(part.ProvinceId));
+            element.SetAttributeValue("CityId-InternalName", GetInternalTerritoryName(part.CityId));
+        }
+
+        private string GetInternalTerritoryName(int id) {
+            var record = _territoriesRepositoryService.GetTerritoryInternal(id);
+            if (record == null) {
+                return string.Empty;
+            }
+            return record.Name;
+        }
+
+        protected override void Importing(PickupPointPart part, ImportContentContext context) {
+            if (context.Data.Element(part.PartDefinition.Name) == null) {
+                return;
+            }
+            // Some properties are simply strings
+            context.ImportAttribute(part.PartDefinition.Name, "CountryName", s => part.CountryName = s);
+            context.ImportAttribute(part.PartDefinition.Name, "ProvinceName", s => part.ProvinceName = s);
+            context.ImportAttribute(part.PartDefinition.Name, "CityName", s => part.CityName = s);
+            context.ImportAttribute(part.PartDefinition.Name, "AddressLine1", s => part.AddressLine1 = s);
+            context.ImportAttribute(part.PartDefinition.Name, "AddressLine2", s => part.AddressLine2 = s);
+            context.ImportAttribute(part.PartDefinition.Name, "PostalCode", s => part.PostalCode = s);
+            // The identities of territories may be more complex
+            part.CountryId = AssignTerritoryId(context, 
+                context.Attribute(part.PartDefinition.Name, "CountryId-InternalName"));
+            part.ProvinceId = AssignTerritoryId(context,
+                context.Attribute(part.PartDefinition.Name, "ProvinceId-InternalName"));
+            part.CityId = AssignTerritoryId(context,
+                context.Attribute(part.PartDefinition.Name, "CityId-InternalName"));
+
+        }
+
+        private int AssignTerritoryId(ImportContentContext context, string territoryIdName) {
+            if (string.IsNullOrWhiteSpace(territoryIdName)) {
+                return 0;
+            } else {
+                var country = _territoriesRepositoryService.GetTerritoryInternal(territoryIdName);
+                if (country != null) {
+                    return country.Id;
+                } else {
+                    return 0;
+                }
+            }
+        }
+
+        protected override void Cloning(PickupPointPart originalPart, PickupPointPart clonePart, CloneContentContext context) {
+            // Cloning's easier because we don't have to worry too much about identities
+            clonePart.CountryName = originalPart.CountryName;
+            clonePart.CountryId = originalPart.CountryId;
+            clonePart.ProvinceName = originalPart.ProvinceName;
+            clonePart.ProvinceId = originalPart.ProvinceId;
+            clonePart.CityName = originalPart.CityName;
+            clonePart.CityId = originalPart.CityId;
+            clonePart.AddressLine1 = originalPart.AddressLine1;
+            clonePart.AddressLine2 = originalPart.AddressLine2;
+            clonePart.PostalCode = originalPart.PostalCode;
+        }
 
         private bool ValidateVM(PickupPointAddressEditViewModel vm) {
             int id = -1;
