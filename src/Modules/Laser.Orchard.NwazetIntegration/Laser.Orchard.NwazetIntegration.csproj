@@ -213,6 +213,7 @@
     <Compile Include="Security\PickupPointsAuthorizationEventHandler.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
+    <Compile Include="Services\BaseCheckoutExtensionProvider.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />
+    <Compile Include="Services\PickupPointsCheckoutExtensionProvider.cs" />
     <Compile Include="Services\PosServiceIntegration.cs" />
     <Compile Include="Services\IValidationProvider.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />
@@ -259,6 +261,7 @@
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="Services\WorkflowActtributesValidation.cs" />
+    <Compile Include="ViewModels\AdditionalIndexShippingAddressViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />

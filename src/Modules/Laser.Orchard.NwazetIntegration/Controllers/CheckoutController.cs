@@ -231,6 +231,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // and then payment.
             if (model.ShippingRequired) {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
+
+                model.AdditionalShippingAddressShapes =
+                    _checkoutExtensionProviders.SelectMany(ep => ep.AdditionalIndexShippingAddressShapes());
             }
             InjectServices(model);
             FinalizeVM(model);

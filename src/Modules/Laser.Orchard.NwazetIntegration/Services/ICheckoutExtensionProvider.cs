@@ -1,4 +1,5 @@
-﻿using Orchard;
+﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+using Orchard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// the checkout process.
         /// </summary>
         /// <param name="context"></param>
-        void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context);
+        void ProcessAdditionalCheckoutStartInformation(
+            CheckoutExtensionContext context);
+
+        // <summary>
+        /// Shapes meant to be injected in the shape for the form that
+        /// where the user selects their shipping address.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalIndexShippingAddressShapes();
+
+        /// <summary>
+        /// This will validate the values received when posting the addresses
+        /// during the checkout process
+        /// </summary>
+        /// <param name="context"></param>
+        void ProcessAdditionalIndexShippingAddressInformation(
+            CheckoutExtensionContext context);
     }
 }

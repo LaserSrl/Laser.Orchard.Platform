@@ -100,22 +100,28 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ListAvailableShippingAddress = vm.ListAvailableShippingAddress;
             ListAvailableBillingAddress = vm.ListAvailableBillingAddress;
         }
+
         public Address ShippingAddress { get; set; }
         public AddressEditViewModel ShippingAddressVM { get; set; }
         // used to carry over selected address from the form
         // property should not be changed cause its editor is manually generated in AddressForm.cshtml
         public int ShippingAddressVMListAddress { get; set; }
+
+        public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
+
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
         // used to carry over selected address from the form
         // property should not be changed cause its editor is manually generated in AddressForm.cshtml
         public int BillingAddressVMListAddress { get; set; }
+
         public string Email { get; set; }
         public string PhonePrefix { get; set; }
         public string Phone { get; set; }
         public string SpecialInstructions { get; set; }
         [JsonIgnore]
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
+
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
         private const string AddressEncryptionPurpose = "Serialize Address Information";
