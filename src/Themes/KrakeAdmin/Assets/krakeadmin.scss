@@ -11880,3 +11880,20 @@ body {
         top: 64px;
     }
 }
+/* End of Tiny MCE full screen fix */
+/* Style for autocompletes based on tagit.js */
+.tagit {
+    li {
+        &.tagit-choice {
+            cursor: pointer;
+
+            >a {
+                &.tagit-close {
+                    &:before {
+                        content: "\00a0"; // some whitespace before the 'x' to remove a tag
+                    }
+                }
+            }
+        }
+    }
+}
