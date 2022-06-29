@@ -44,6 +44,12 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             get { return "PickupPointPart"; }
         }
 
+        protected override DriverResult Display(PickupPointPart part, string displayType, dynamic shapeHelper) {
+
+            return ContentShape("Parts_PickupPoint_Summary",
+                () => shapeHelper.Parts_PickupPoint_Summary());
+        }
+
 
         protected override DriverResult Editor(PickupPointPart part, dynamic shapeHelper) {
             if (!Authorized(part)) {

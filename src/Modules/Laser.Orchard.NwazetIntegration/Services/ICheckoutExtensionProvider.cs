@@ -27,8 +27,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// Shapes meant to be injected in the shape for the form that
         /// where the user selects their shipping address.
         /// </summary>
+        /// <param name="cvm">The current CheckoutViewModel under process.</param>
         /// <returns></returns>
-        IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalIndexShippingAddressShapes();
+        IEnumerable<AdditionalIndexShippingAddressViewModel> 
+            AdditionalIndexShippingAddressShapes(CheckoutViewModel cvm);
 
         /// <summary>
         /// This will validate the values received when posting the addresses

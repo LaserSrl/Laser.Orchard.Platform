@@ -492,6 +492,7 @@
     <Content Include="Views\EditorTemplates\PickupPointAddressEditViewModel.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\PickupPoint.BackToList.cshtml" />
     <Content Include="Views\CheckoutPickupPointsIndexShape.cshtml" />
+    <Content Include="Views\Parts\PickupPoint_Summary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

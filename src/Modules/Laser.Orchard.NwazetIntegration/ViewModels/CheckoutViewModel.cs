@@ -20,6 +20,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
             AvailableShippingOptions = new List<ShippingOption>();
         }
+
         /// <summary>
         /// Used in CheckoutController actions to signal that we should shortcircuit
         /// where we can and move forward towards payment
@@ -74,6 +75,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         #endregion
 
         #region Addresses
+        // Information in this region is modified in the Index Actions CheckoutController
+
         public AddressesVM AsAddressesVM() {
             return new AddressesVM {
                 ShippingAddress = ShippingAddress,
@@ -107,6 +110,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         // property should not be changed cause its editor is manually generated in AddressForm.cshtml
         public int ShippingAddressVMListAddress { get; set; }
 
+        // These shapes allow using PickupPoints and such
         public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
 
         public Address BillingAddress { get; set; }

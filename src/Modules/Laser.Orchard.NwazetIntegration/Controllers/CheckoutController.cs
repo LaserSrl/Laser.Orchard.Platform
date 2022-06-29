@@ -233,7 +233,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
 
                 model.AdditionalShippingAddressShapes =
-                    _checkoutExtensionProviders.SelectMany(ep => ep.AdditionalIndexShippingAddressShapes());
+                    _checkoutExtensionProviders.SelectMany(ep => 
+                        ep.AdditionalIndexShippingAddressShapes(model));
             }
             InjectServices(model);
             FinalizeVM(model);

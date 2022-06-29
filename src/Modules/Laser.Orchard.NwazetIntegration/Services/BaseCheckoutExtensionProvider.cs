@@ -18,7 +18,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             yield break;
         }
 
-        public virtual IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalIndexShippingAddressShapes() {
+        public virtual IEnumerable<AdditionalIndexShippingAddressViewModel> 
+            AdditionalIndexShippingAddressShapes(CheckoutViewModel cvm) {
             yield break;
         }
 

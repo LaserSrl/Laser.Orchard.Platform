@@ -1,8 +1,9 @@
 ﻿<Placement>
   <Match DisplayType="Summary">
     <Match ContentType="Order">
-		<Place Parts_Order="Content:1;Alternate=PaymentGatewayOrder"/>
+		  <Place Parts_Order="Content:1;Alternate=PaymentGatewayOrder"/>
     </Match>
+    <Place Parts_PickupPoint_Summary="Content:2" />
   </Match>
   <Place Parts_NwazetContact="Content:5" />
   <Place SiteSettings_CheckoutSettings="Content:4.1" />
