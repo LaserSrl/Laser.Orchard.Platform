@@ -28,6 +28,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public override IEnumerable<AdditionalIndexShippingAddressViewModel> 
             AdditionalIndexShippingAddressShapes() {
+
+            // Collect all ContentItems that represent a PickupPoint
+            // Build a shape for each, in a specific "display" type, that will be
+            // shown to the user to allow selecting one.
             yield return new AdditionalIndexShippingAddressViewModel {
                 TabTitle = T("Pickup Points").Text,
                 TabId = "tab-pickup-points",
