@@ -23,20 +23,106 @@
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
 
-    if (Model.ShippingAddressVM != null) {
-        <fieldset class="shipping-address">
-            <legend>@T("Shipping Address")</legend>
-            @Display.AddressForm(
-                Prefix: "shippingAddressVM",
-                Address: Model.ShippingAddressVM,
-                IncludeCountry: true,
-                ListAddress:Model.ListAvailableShippingAddress)
-        </fieldset>
+    if (Model.ShippingRequired) {
+        if (Model.AdditionalShippingAddressShapes != null
+            && Model.AdditionalShippingAddressShapes.Any()) {
+                    @*
+                    When pickup points are enabled here we have a tabulated UI that allows user to
+                        select between their own addresses and one of the configured pickup points.
+                        Either way to configure the shipping "destination" should on principle be
+                        controlled by its own shapes.
+                        The first tab is always the one for the shipping address, same as if we didn't
+                        have the pickup points. The other tabs are injected dynamically.
+                    *@
+                    <nav>
+                      <div class="nav nav-tabs address-tab-headers" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" 
+                           id="nav-shipping-address" data-toggle="tab" 
+                           href="#nav-shipping" role="tab" 
+                           aria-controls="nav-shipping" aria-selected="true">
+                          <h2>@T("Shipping Address")</h2>
+                        </a>
+                          @foreach (var asas in Model.AdditionalShippingAddressShapes) {
+                            <a class="nav-item nav-link" 
+                               id="@asas.TabId" 
+                               data-toggle="tab" 
+                               href="#@asas.NavId" 
+                               role="tab" 
+                               aria-controls="@asas.NavId" 
+                               aria-selected="false"><h2>@asas.TabTitle</h2></a>
+                          }
+                        
+                      </div>
+                    </nav>
 
-        <fieldset class="toggle-billing">
-            <input id="toggle-billing-address" type="checkbox" />
-            <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
-        </fieldset>
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" 
+                           id="nav-shipping" 
+                           role="tabpanel" 
+                           aria-labelledby="nav-shipping-address">
+                          
+                            <fieldset class="shipping-address">
+                                
+                                @Display.AddressForm(
+                                    Prefix: "shippingAddressVM",
+                                    Address: Model.ShippingAddressVM,
+                                    IncludeCountry: true,
+                                    ListAddress:Model.ListAvailableShippingAddress)
+                            </fieldset>
+
+                            <fieldset class="toggle-billing">
+                                <input id="toggle-billing-address" type="checkbox" />
+                                <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
+                            </fieldset>
+                          @* additionally, when we are not on this tab, deselect the 
+                              BillAtSameShippingAddress flag *@
+                          @using (Script.Foot()) {
+                              <script type="text/javascript">
+                                  $('#nav-shipping-address')
+                                      .on('hidden.bs.tab', function (e) {
+
+                                          // unflag BillAtSameShippingAddress
+                                          var $hiddenTab = $(e.currentTarget); // this is the tab that is getting hidden
+                                          var hiddenPaneId = $hiddenTab.attr("href");
+                                          var $hiddenPane = $(hiddenPaneId);
+                                          var $checkBox = $hiddenPane.find('#toggle-billing-address');
+                                          // set the checked property to false
+                                          var oldValue = $checkBox.prop("checked");
+                                          $checkBox.prop("checked", false);
+                                          if (oldValue) {
+                                              // if the checkbox was checked, now it has changed,
+                                              // so trigger the events
+                                              $checkBox.trigger("change");
+                                          }
+                                      });
+                              </script>
+                          }
+                        </div>
+                         @foreach (var asas in Model.AdditionalShippingAddressShapes) {
+                              <div class="tab-pane fade" 
+                                   id="@asas.NavId" 
+                                   role="tabpanel" 
+                                   aria-labelledby="@asas.TabId">
+                                  @Display(asas.TabShape)
+                              </div>
+                         }
+                      
+                    </div>
+        } else {
+            <fieldset class="shipping-address">
+                <legend>@T("Shipping Address")</legend>
+                @Display.AddressForm(
+                    Prefix: "shippingAddressVM",
+                    Address: Model.ShippingAddressVM,
+                    IncludeCountry: true,
+                    ListAddress:Model.ListAvailableShippingAddress)
+            </fieldset>
+
+            <fieldset class="toggle-billing">
+                <input id="toggle-billing-address" type="checkbox" />
+                <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
+            </fieldset>
+        }
     }
     <fieldset class="billing-address">
         <legend>@T("Billing Address")</legend>

@@ -1,1 +1,8 @@
-﻿
+﻿@using Laser.Orchard.NwazetIntegration.Models
+@{ 
+    var part = (PickupPointPart)Model.ContentPart;
+}
+
+<div class="address-line">
+    @part.AddressText()
+</div>

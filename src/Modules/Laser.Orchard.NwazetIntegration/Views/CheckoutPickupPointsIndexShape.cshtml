@@ -12,40 +12,28 @@
         prefix, "SelectedPickupPoint");
 }
 @if(pickupPointParts.Any()) {
+    var first = true;
 
     <div class="pickup-point-input-groups">
         
         @foreach(var pickupPointPart in pickupPointParts) {
             var radioId = selectedPointInputId + "_" + pickupPointPart.Id;
             <div class="input-group d-flex justify-content-between align-items-center">
-                <div class="input-group-prepend flex-fill"
+                <label class="input-group-prepend flex-fill"
                      for="@radioId">
                     <div class="input-group-prepend pickup-point-card"
                          id="pickup-point-card-@pickupPointPart.Id">
                         @Display(BuildDisplay(pickupPointPart, "Summary"))
                     </div>
-                </div>
+                </label>
                 <input type="radio"
                        name="@selectedPointInputName" id="@radioId"
                        value="@pickupPointPart.Id"
                        aria-describedby="pickup-point-card-@pickupPointPart.Id"
+                       @if(first) {<text>checked</text>}
                        class=""/>
             </div>
-            @*<div>
-                <label>
-                    
-                    <input type="radio"
-                           name="@selectedPointInputName" id="selectedPointInputId"
-                           class="d-none"/>
-                    <div class="pickup-point-card">
-                        @Display(BuildDisplay(pickupPointPart, "Summary"))
-                    </div>
-                </label>
-            </div>*@
+            first = false;
         }
     </div>
 }
-
-<p>
-    Cavalier-Smith and his collaborators revised their classification in 2015. In this scheme they introduced two superkingdoms of Prokaryota and Eukaryota and seven kingdoms. Prokaryota have two kingdoms: Bacteria and Archaea. (This was based on the consensus in the Taxonomic Outline of Bacteria and Archaea, and the Catalogue of Life). The Eukaryota have five kingdoms: Protozoa, Chromista, Plantae, Fungi, and Animalia. In this classification a protist is any of the eukaryotic unicellular organisms.
-</p>
