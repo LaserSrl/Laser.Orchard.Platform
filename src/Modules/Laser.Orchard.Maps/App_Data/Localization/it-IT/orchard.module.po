@@ -125,6 +125,10 @@ msgid "Map Fields"
 msgstr "Definizione della Mappa"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Reset Coords"
+msgstr "Reimposta Coordinate"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Show Coords"
 msgstr "Mostra coordinate"
 
