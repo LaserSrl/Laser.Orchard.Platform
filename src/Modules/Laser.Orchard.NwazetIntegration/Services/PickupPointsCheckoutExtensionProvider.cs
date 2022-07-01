@@ -45,6 +45,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // shown to the user to allow selecting one. (this will be handled in the
             // injected Index shape)
             yield return new AdditionalIndexShippingAddressViewModel {
+                // we'll use this to identify the "selected" provider
+                UniqueProviderId = "PickupPointsCheckout",
                 TabTitle = T("Pickup Points").Text,
                 TabId = "tab-pickup-points",
                 NavId = "nav-pickup-points",

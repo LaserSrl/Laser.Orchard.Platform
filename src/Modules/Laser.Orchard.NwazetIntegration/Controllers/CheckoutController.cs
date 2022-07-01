@@ -658,6 +658,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
                 && ValidateVM(vm.BillingAddressVM);
             if (vm.ShippingRequired) {
+                // TODO: account for different ways shipping address may be "handled"
+                // (e.g. pickup points) by invoking providers.
+
                 validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
                     && ValidateVM(vm.ShippingAddressVM);
             }
