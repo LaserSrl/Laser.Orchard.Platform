@@ -19,6 +19,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ListAvailableBillingAddress = new List<AddressRecord>();
 
             AvailableShippingOptions = new List<ShippingOption>();
+
+            ProviderViewModels = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -111,6 +113,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public int ShippingAddressVMListAddress { get; set; }
 
         // These shapes allow using PickupPoints and such
+        public string SelectedShippingAddressProvider { get; set; }
+        // Each provider may need its own view model to manage what it's displaying. It's the provider's
+        // responsibility to cast and handle those objects responsibly.
+        public Dictionary<string, object> ProviderViewModels { get; set; }
         public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
 
         public Address BillingAddress { get; set; }

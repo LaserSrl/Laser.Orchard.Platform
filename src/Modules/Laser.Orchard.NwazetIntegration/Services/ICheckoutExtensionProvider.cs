@@ -23,7 +23,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         void ProcessAdditionalCheckoutStartInformation(
             CheckoutExtensionContext context);
 
-        // <summary>
+        /// <summary>
         /// Shapes meant to be injected in the shape for the form that
         /// where the user selects their shipping address.
         /// </summary>
@@ -33,11 +33,30 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             AdditionalIndexShippingAddressShapes(CheckoutViewModel cvm);
 
         /// <summary>
-        /// This will validate the values received when posting the addresses
-        /// during the checkout process
+        /// Used to filter and only select providers that should actually do stuff
+        /// during the index steps of checkout. This is used in the POST actions, 
+        /// when the User has already selected some stuff, because all providers
+        /// should contribute in giving the user options in the GET actions.
+        /// </summary>
+        /// <param name="providerId"></param>
+        /// <returns></returns>
+        bool IsSelectedProviderForIndex(string providerId);
+
+        /// <summary>
+        /// Handle validation of the information input by the user
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        bool ValidateAdditionalIndexShippingAddressInformation(
+            CheckoutViewModel cvm);
+
+        /// <summary>
+        /// This will handle the values received when posting the addresses
+        /// during the checkout process and extend the capabilities of the controller
+        /// actions.
         /// </summary>
         /// <param name="context"></param>
         void ProcessAdditionalIndexShippingAddressInformation(
-            CheckoutExtensionContext context);
+            CheckoutExtensionContext context, CheckoutViewModel cvm);
     }
 }

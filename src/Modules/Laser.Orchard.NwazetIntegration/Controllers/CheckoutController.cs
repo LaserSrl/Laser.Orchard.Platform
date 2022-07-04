@@ -274,9 +274,22 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
                 model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
             }
+            // Let extension providers inflate their own information correctly
+            foreach (var extensionProvider in _checkoutExtensionProviders) {
+                extensionProvider.ProcessAdditionalIndexShippingAddressInformation(
+                    // probably don't need a new context for each provider
+                    new CheckoutExtensionContext() {
+                        ValueProvider = ValueProvider,
+                        ModelState = ModelState
+                    },
+                    model
+                );
+            }
             // validate
             var validationSuccess = ValidateVM(model);
             if (!validationSuccess) {
+                // TODO: make sure anything the use might have selected on the forms of the
+                // extension providers is still selected as well.
                 // don't move on, but rather leave the user on this form
                 model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress, model.BillingAddressVM);
                 if (model.ShippingRequired) {
@@ -332,6 +345,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             TempData["CheckoutViewModel"] = model;
             if (IsShippingRequired()) {
                 // Set values into the ShoppingCart storage
+                // This information may come from "any" shipping destination, not just the shipping
+                // address anymore.
                 var country = _addressConfigurationService
                     ?.GetCountry(model.ShippingAddressVM.CountryId);
                 _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
@@ -658,11 +673,23 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
                 && ValidateVM(vm.BillingAddressVM);
             if (vm.ShippingRequired) {
-                // TODO: account for different ways shipping address may be "handled"
+                // account for different ways shipping address may be "handled"
                 // (e.g. pickup points) by invoking providers.
 
-                validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
-                    && ValidateVM(vm.ShippingAddressVM);
+                if (string.IsNullOrWhiteSpace(vm.SelectedShippingAddressProvider)
+                    || vm.SelectedShippingAddressProvider.Equals("default", StringComparison.InvariantCultureIgnoreCase)) {
+                    validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
+                        && ValidateVM(vm.ShippingAddressVM);
+                } else {
+                    // select the appropriate providers based on the value of
+                    // vm.SelectedShippingAddressProvider
+                    validationSuccess = _checkoutExtensionProviders
+                        .Where(cep => cep.IsSelectedProviderForIndex(vm.SelectedShippingAddressProvider))
+                        .Select(cep => cep.ValidateAdditionalIndexShippingAddressInformation(vm))
+                        .Aggregate(validationSuccess,
+                            (a, b) => a && b);
+                }
+
             }
             validationSuccess &= ValidateAddresses(vm);
             if (!validEmail) {

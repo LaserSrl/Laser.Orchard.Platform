@@ -6,10 +6,8 @@
     var prefix = (string)Model.Prefix;
 
     // Html Attributes for the radio button used to select the Pickup Point
-    var selectedPointInputName = string.Join(".",
-        prefix, "SelectedPickupPoint");
-    var selectedPointInputId = string.Join(".",
-        prefix, "SelectedPickupPoint");
+    var selectedPointInputName = (string)Model.SelectedPointInputName;
+    var selectedPointInputId = (string)Model.SelectedPointInputBaseId;
 }
 @if(pickupPointParts.Any()) {
     var first = true;
