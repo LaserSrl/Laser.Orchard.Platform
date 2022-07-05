@@ -33,7 +33,7 @@ namespace Contrib.Profile.Security {
             if (context.Permission == Orchard.Core.Contents.Permissions.ViewContent) {
                 var routeData = _workContextAccessor.GetContext()
                     .HttpContext.Request.RequestContext.RouteData.Values;
-                if ("CloudConstruct".Equals(routeData["area"].ToString(), StringComparison.OrdinalIgnoreCase)
+                if ("CloudConstruct.SecureFileField".Equals(routeData["area"].ToString(), StringComparison.OrdinalIgnoreCase)
                     && "SecureFileField".Equals(routeData["controller"].ToString(), StringComparison.OrdinalIgnoreCase)
                     && "GetSecureFile".Equals(routeData["action"].ToString(), StringComparison.OrdinalIgnoreCase)
                     ) {
