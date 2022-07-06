@@ -33,6 +33,14 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             return false;
         }
 
+        public virtual int ShippingCountryId(CheckoutViewModel cvm) {
+            return 0;
+        }
+
+        public virtual string ShippingPostalCode(CheckoutViewModel cvm) {
+            return null;
+        }
+
         public virtual bool ValidateAdditionalIndexShippingAddressInformation(
             CheckoutViewModel cvm) {
             return true;

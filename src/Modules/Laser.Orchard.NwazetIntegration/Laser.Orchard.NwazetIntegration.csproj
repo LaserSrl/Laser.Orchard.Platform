@@ -285,6 +285,7 @@
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\PickupPointAddressEditViewModel.cs" />
     <Compile Include="ViewModels\PickupPointPartEditViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointsCheckoutViewModel.cs" />
     <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
     <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />

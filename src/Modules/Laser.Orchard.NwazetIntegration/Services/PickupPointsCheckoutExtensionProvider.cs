@@ -46,6 +46,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var pPPoints = _contentManager
                 .Query<PickupPointPart>(VersionOptions.Published, PickupPointPart.DefaultContentTypeName)
                 .List();
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+
             // Build a shape for each, in a specific "display" type, that will be
             // shown to the user to allow selecting one. (this will be handled in the
             // injected Index shape)
@@ -57,6 +62,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 NavId = "nav-pickup-points",
                 TabShape = _shapeFactory.CheckoutPickupPointsIndexShape(
                     PickupPoints: pPPoints,
+                    ViewModel: viewModel,
                     ContentManager: _contentManager,
                     Prefix: Prefix,
                     SelectedPointInputName: SelectedPointInputName,
@@ -71,7 +77,21 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public override bool ValidateAdditionalIndexShippingAddressInformation(
             CheckoutViewModel cvm) {
-            return base.ValidateAdditionalIndexShippingAddressInformation(cvm);
+
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+
+            var part = viewModel.PickupPointPart;
+            // The information for the pickup point should be validated when it is
+            // created/updated. Here it's being used in front-end, so we assume it 
+            // to be valid.
+            var valid = part != null;
+            // There may be other validation steps involving interactions between
+            // selected points and other stuff.
+            // TODO: make this validation extensible
+
+            return valid;
         }
 
         public override void ProcessAdditionalIndexShippingAddressInformation(
@@ -88,13 +108,57 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // sumitted: otherwise there is no way to store that information and 
             // realize that kind of UX.
 
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+
             var fieldName = SelectedPointInputName;
             var valueResult = context.ValueProvider.GetValue(fieldName);
             // If we haven't received the value from the request, do nothing.
             if (valueResult != null) {
                 // the value is the Id if the ContentItem of the selected PickupPoint
+                var idString = valueResult.AttemptedValue;
+                var pickupPointId = 0;
+                if (int.TryParse(idString, out pickupPointId)) {
+
+                    var selectedPart = _contentManager
+                        .Get<PickupPointPart>(pickupPointId);
+                    if (selectedPart != null) {
+                        viewModel.SelectedPickupPointId = pickupPointId;
+                        viewModel.PickupPointPart = selectedPart;
+                    }
+                }
+            }
+
+            // update the CheckoutViewModel with the information for the provider
+            if (cvm.ProviderViewModels.ContainsKey(ProviderId)) {
+                cvm.ProviderViewModels[ProviderId] = viewModel;
+            } else {
+                cvm.ProviderViewModels.Add(ProviderId, viewModel);
             }
         }
 
+        public override int ShippingCountryId(CheckoutViewModel cvm) {
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+            if (viewModel.PickupPointPart != null) {
+                return viewModel.PickupPointPart.CountryId;
+            }
+            return base.ShippingCountryId(cvm);
+        }
+
+        public override string ShippingPostalCode(CheckoutViewModel cvm) {
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+            if (viewModel.PickupPointPart != null) {
+                return viewModel.PickupPointPart.PostalCode;
+            }
+            return base.ShippingPostalCode(cvm);
+        }
     }
 }

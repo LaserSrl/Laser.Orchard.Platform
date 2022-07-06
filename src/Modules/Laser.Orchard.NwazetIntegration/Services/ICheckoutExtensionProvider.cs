@@ -43,6 +43,24 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         bool IsSelectedProviderForIndex(string providerId);
 
         /// <summary>
+        /// Return the Id of the TerritoryPart for the Country of the Shipping destination
+        /// according to this provider. Default to 0 if this provider cannot tell. This 
+        /// method should on principle only be called for selected providers.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        int ShippingCountryId(CheckoutViewModel cvm);
+
+        /// <summary>
+        /// Return the Postal Code for the shipping destination accordin to this provider.
+        /// Default ot null if this provider cannot tell. This method should on principle
+        /// only be called for selected providers.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        string ShippingPostalCode(CheckoutViewModel cvm);
+
+        /// <summary>
         /// Handle validation of the information input by the user
         /// </summary>
         /// <param name="cvm"></param>

@@ -274,19 +274,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
                 model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
             }
-            // Let extension providers inflate their own information correctly
-            foreach (var extensionProvider in _checkoutExtensionProviders) {
-                extensionProvider.ProcessAdditionalIndexShippingAddressInformation(
-                    // probably don't need a new context for each provider
-                    new CheckoutExtensionContext() {
-                        ValueProvider = ValueProvider,
-                        ModelState = ModelState
-                    },
-                    model
-                );
-            }
+            
             // validate
-            var validationSuccess = ValidateVM(model);
+            var validationSuccess = UpdateAndValidateVM(model);
             if (!validationSuccess) {
                 // TODO: make sure anything the use might have selected on the forms of the
                 // extension providers is still selected as well.
@@ -347,10 +337,31 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // Set values into the ShoppingCart storage
                 // This information may come from "any" shipping destination, not just the shipping
                 // address anymore.
-                var country = _addressConfigurationService
-                    ?.GetCountry(model.ShippingAddressVM.CountryId);
-                _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
-                _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
+
+                if (string.IsNullOrWhiteSpace(model.SelectedShippingAddressProvider)
+                    || model.SelectedShippingAddressProvider
+                        .Equals("default", StringComparison.InvariantCultureIgnoreCase)) {
+                    // TODO: "default" should itself be refactored to a provider
+                    var country = _addressConfigurationService
+                        ?.GetCountry(model.ShippingAddressVM.CountryId);
+                    _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                    _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
+                } else {
+                    // select the appropriate providers based on the value of
+                    // model.SelectedShippingAddressProvider
+                    var selectedProviders = _checkoutExtensionProviders
+                        .Where(cep => cep.IsSelectedProviderForIndex(model.SelectedShippingAddressProvider));
+                    var countryId = selectedProviders
+                        .Select(cep => cep.ShippingCountryId(model))
+                        .FirstOrDefault();
+                    var country = _addressConfigurationService
+                        ?.GetCountry(countryId);
+                    _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                    _shoppingCart.ZipCode = selectedProviders
+                        .Select(cep => cep.ShippingPostalCode(model))
+                        .FirstOrDefault();
+                }
+                
                 return RedirectToAction("Shipping");
             }
             return RedirectToAction("Review");
@@ -381,6 +392,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ReinflateViewModelAddresses(model);
 
             model.ShippingRequired = IsShippingRequired();
+            // We might have ShippingRequired == true, but technically no "real" shipping address,
+            // because the destination was set through a specific provider, e.g. a pickup point.
             if (model.ShippingAddressVM != null) {
                 var productQuantities = _shoppingCart
                     .GetProducts()
@@ -665,19 +678,34 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             vm.ProductPriceService = _productPriceService;
         }
 
-        private bool ValidateVM(CheckoutViewModel vm) {
+        private bool UpdateAndValidateVM(CheckoutViewModel vm) {
             // validate Email
             var validEmail = !string.IsNullOrWhiteSpace(vm.Email)
                 && Regex.IsMatch(vm.Email, Constants.EmailPattern,
                     RegexOptions.IgnoreCase | RegexOptions.Compiled);
             var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
                 && ValidateVM(vm.BillingAddressVM);
+
+            // Let extension providers inflate their own information correctly
+            // (basically their "update" step)
+            foreach (var extensionProvider in _checkoutExtensionProviders) {
+                extensionProvider.ProcessAdditionalIndexShippingAddressInformation(
+                    // probably don't need a new context for each provider
+                    new CheckoutExtensionContext() {
+                        ValueProvider = ValueProvider,
+                        ModelState = ModelState
+                    },
+                    vm // they'll store stome stuff in their own objects in the vm
+                );
+            }
+
             if (vm.ShippingRequired) {
                 // account for different ways shipping address may be "handled"
                 // (e.g. pickup points) by invoking providers.
 
                 if (string.IsNullOrWhiteSpace(vm.SelectedShippingAddressProvider)
                     || vm.SelectedShippingAddressProvider.Equals("default", StringComparison.InvariantCultureIgnoreCase)) {
+                    // TODO: "default" should itself be refactored to a provider
                     validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
                         && ValidateVM(vm.ShippingAddressVM);
                 } else {
