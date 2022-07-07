@@ -9,14 +9,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Laser.Orchard.NwazetIntegration.Services {
+namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
-    public class PickupPointsCheckoutExtensionProvider : BaseCheckoutExtensionProvider {
+    public class PickupPointsCheckoutShippingAddressProvider 
+        : BaseCheckoutShippingAddressProvider {
 
         private readonly dynamic _shapeFactory;
         private readonly IContentManager _contentManager;
 
-        public PickupPointsCheckoutExtensionProvider(
+        public PickupPointsCheckoutShippingAddressProvider(
             IShapeFactory shapeFactory,
             IContentManager contentManager)
             : base() {
@@ -35,9 +36,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private const string SelectedPointInputName = Prefix + ".SelectedPickupPoint";
         private const string SelectedPointInputBaseId = Prefix + "_SelectedPickupPoint";
 
-
         public override IEnumerable<AdditionalIndexShippingAddressViewModel> 
-            AdditionalIndexShippingAddressShapes(CheckoutViewModel cvm) {
+            GetIndexShippingAddressShapes(CheckoutViewModel cvm) {
 
             // Collect all ContentItems that represent a PickupPoint. Info from the
             // current CheckoutViewModel may on principle be used to "filter" the
@@ -72,7 +72,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public override bool IsSelectedProviderForIndex(string providerId) {
-            return ProviderId.Equals(providerId, StringComparison.OrdinalIgnoreCase);
+            return ProviderId
+                .Equals(providerId, StringComparison.OrdinalIgnoreCase);
         }
 
         public override bool ValidateAdditionalIndexShippingAddressInformation(
@@ -96,6 +97,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         public override void ProcessAdditionalIndexShippingAddressInformation(
             CheckoutExtensionContext context, CheckoutViewModel cvm) {
+
             // if on post we find that the user was selecting a pickup point,
             // figure out which one, and store that information in a serialized
             // way that'll make it easy to carry between actions.
@@ -139,7 +141,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
         }
 
-        public override int ShippingCountryId(CheckoutViewModel cvm) {
+        public override int GetShippingCountryId(CheckoutViewModel cvm) {
             // get existing view model for pickup points (if any)
             var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
                 ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
@@ -147,10 +149,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (viewModel.PickupPointPart != null) {
                 return viewModel.PickupPointPart.CountryId;
             }
-            return base.ShippingCountryId(cvm);
+            return base.GetShippingCountryId(cvm);
         }
 
-        public override string ShippingPostalCode(CheckoutViewModel cvm) {
+        public override string GetShippingPostalCode(CheckoutViewModel cvm) {
             // get existing view model for pickup points (if any)
             var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
                 ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
@@ -158,7 +160,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (viewModel.PickupPointPart != null) {
                 return viewModel.PickupPointPart.PostalCode;
             }
-            return base.ShippingPostalCode(cvm);
+            return base.GetShippingPostalCode(cvm);
         }
     }
 }

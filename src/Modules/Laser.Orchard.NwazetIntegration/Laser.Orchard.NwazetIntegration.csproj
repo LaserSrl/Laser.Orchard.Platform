@@ -227,6 +227,8 @@
     <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\BaseCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\PickupPointsCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
@@ -243,12 +245,12 @@
     <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\ICheckoutPoliciesService.cs" />
     <Compile Include="Services\FacebookShop\IFacebookShopService.cs" />
+    <Compile Include="Services\ICheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />
-    <Compile Include="Services\PickupPointsCheckoutExtensionProvider.cs" />
     <Compile Include="Services\PosServiceIntegration.cs" />
     <Compile Include="Services\IValidationProvider.cs" />
     <Compile Include="Services\PaymentStatusProvider.cs" />

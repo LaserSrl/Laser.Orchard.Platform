@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+
+namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders {
+    public abstract class BaseCheckoutShippingAddressProvider
+        : ICheckoutShippingAddressProvider {
+
+        protected BaseCheckoutShippingAddressProvider() { }
+
+        public virtual IEnumerable<AdditionalIndexShippingAddressViewModel> 
+            GetIndexShippingAddressShapes(CheckoutViewModel cvm) {
+            yield break;
+        }
+
+        public virtual int GetShippingCountryId(CheckoutViewModel cvm) {
+            return 0;
+        }
+
+        public virtual string GetShippingPostalCode(CheckoutViewModel cvm) {
+            return null;
+        }
+
+        public virtual bool IsSelectedProviderForIndex(string providerId) {
+            return false;
+        }
+
+        public virtual void ProcessAdditionalIndexShippingAddressInformation(
+            CheckoutExtensionContext context, CheckoutViewModel cvm) { }
+
+        public virtual bool ValidateAdditionalIndexShippingAddressInformation(
+            CheckoutViewModel cvm) {
+            return true;
+        }
+    }
+}

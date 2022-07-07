@@ -22,32 +22,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         public virtual void ProcessAdditionalCheckoutStartInformation(
             CheckoutExtensionContext context) { }
         #endregion
-
-        #region Extensions for Index
-        public virtual IEnumerable<AdditionalIndexShippingAddressViewModel> 
-            AdditionalIndexShippingAddressShapes(CheckoutViewModel cvm) {
-            yield break;
-        }
-
-        public virtual bool IsSelectedProviderForIndex(string providerId) {
-            return false;
-        }
-
-        public virtual int ShippingCountryId(CheckoutViewModel cvm) {
-            return 0;
-        }
-
-        public virtual string ShippingPostalCode(CheckoutViewModel cvm) {
-            return null;
-        }
-
-        public virtual bool ValidateAdditionalIndexShippingAddressInformation(
-            CheckoutViewModel cvm) {
-            return true;
-        }
-
-        public virtual void ProcessAdditionalIndexShippingAddressInformation(
-            CheckoutExtensionContext context, CheckoutViewModel cvm) {}
-        #endregion
+        
     }
 }

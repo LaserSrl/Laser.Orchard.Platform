@@ -57,6 +57,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IProductPriceService _productPriceService;
         private readonly INotifier _notifier;
         private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
+        private readonly IEnumerable<ICheckoutShippingAddressProvider> _checkoutShippingAddressProviders;
 
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
@@ -72,7 +73,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ShellSettings shellSettings,
             IProductPriceService productPriceService,
             INotifier notifier,
-            IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders) {
+            IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders,
+            IEnumerable<ICheckoutShippingAddressProvider> checkoutShippingAddressProviders) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -88,6 +90,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _productPriceService = productPriceService;
             _notifier = notifier;
             _checkoutExtensionProviders = checkoutExtensionProviders;
+            _checkoutShippingAddressProviders = checkoutShippingAddressProviders;
 
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
@@ -233,8 +236,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
 
                 model.AdditionalShippingAddressShapes =
-                    _checkoutExtensionProviders.SelectMany(ep => 
-                        ep.AdditionalIndexShippingAddressShapes(model));
+                    _checkoutShippingAddressProviders.SelectMany(ep => 
+                        ep.GetIndexShippingAddressShapes(model));
             }
             InjectServices(model);
             FinalizeVM(model);
@@ -349,16 +352,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 } else {
                     // select the appropriate providers based on the value of
                     // model.SelectedShippingAddressProvider
-                    var selectedProviders = _checkoutExtensionProviders
+                    var selectedProviders = _checkoutShippingAddressProviders
                         .Where(cep => cep.IsSelectedProviderForIndex(model.SelectedShippingAddressProvider));
                     var countryId = selectedProviders
-                        .Select(cep => cep.ShippingCountryId(model))
+                        .Select(cep => cep.GetShippingCountryId(model))
                         .FirstOrDefault();
                     var country = _addressConfigurationService
                         ?.GetCountry(countryId);
                     _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
                     _shoppingCart.ZipCode = selectedProviders
-                        .Select(cep => cep.ShippingPostalCode(model))
+                        .Select(cep => cep.GetShippingPostalCode(model))
                         .FirstOrDefault();
                 }
                 
@@ -394,7 +397,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.ShippingRequired = IsShippingRequired();
             // We might have ShippingRequired == true, but technically no "real" shipping address,
             // because the destination was set through a specific provider, e.g. a pickup point.
-            if (model.ShippingAddressVM != null) {
+            if (model.ShippingRequired) {
                 var productQuantities = _shoppingCart
                     .GetProducts()
                     .Where(p => p.Quantity > 0)
@@ -688,7 +691,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             // Let extension providers inflate their own information correctly
             // (basically their "update" step)
-            foreach (var extensionProvider in _checkoutExtensionProviders) {
+            foreach (var extensionProvider in _checkoutShippingAddressProviders) {
                 extensionProvider.ProcessAdditionalIndexShippingAddressInformation(
                     // probably don't need a new context for each provider
                     new CheckoutExtensionContext() {
@@ -711,7 +714,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 } else {
                     // select the appropriate providers based on the value of
                     // vm.SelectedShippingAddressProvider
-                    validationSuccess = _checkoutExtensionProviders
+                    validationSuccess = _checkoutShippingAddressProviders
                         .Where(cep => cep.IsSelectedProviderForIndex(vm.SelectedShippingAddressProvider))
                         .Select(cep => cep.ValidateAdditionalIndexShippingAddressInformation(vm))
                         .Aggregate(validationSuccess,
