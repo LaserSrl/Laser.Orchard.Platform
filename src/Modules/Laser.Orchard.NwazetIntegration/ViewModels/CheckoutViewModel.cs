@@ -30,10 +30,16 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public bool UseDefaultAddress { get; set; }
         public bool UseDefaultShipping { get; set; }
         public bool BillAtSameShippingAddress { get; set; }
+
+        [JsonIgnore]
         public ICurrencyProvider CurrencyProvider;
 
         #region Cart
+
+        [JsonIgnore]
         public IShoppingCart ShoppingCart;
+
+        [JsonIgnore]
         public IProductPriceService ProductPriceService;
 
         public IEnumerable<ShoppingCartQuantityProduct> GetProductQuantities() {
@@ -90,7 +96,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 Phone = Phone,
                 SpecialInstructions = SpecialInstructions,
                 ListAvailableShippingAddress = ListAvailableShippingAddress,
-                ListAvailableBillingAddress = ListAvailableBillingAddress
+                ListAvailableBillingAddress = ListAvailableBillingAddress,
+                ProviderViewModels = ProviderViewModels
             };
         }
         public void SetAddressesVM(AddressesVM vm) {
@@ -104,6 +111,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             SpecialInstructions = vm.SpecialInstructions;
             ListAvailableShippingAddress = vm.ListAvailableShippingAddress;
             ListAvailableBillingAddress = vm.ListAvailableBillingAddress;
+
+            ProviderViewModels = vm.ProviderViewModels;
         }
 
         public Address ShippingAddress { get; set; }
@@ -113,16 +122,22 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public int ShippingAddressVMListAddress { get; set; }
 
         // These shapes allow using PickupPoints and such
-        public string SelectedShippingAddressProvider { get; set; }
+        public string SelectedShippingAddressProviderId { get; set; }
+
+        [JsonIgnore]
+        public ICheckoutShippingAddressProvider SelectedShippingAddressProvider { get; set; }
         // Each provider may need its own view model to manage what it's displaying. It's the provider's
         // responsibility to cast and handle those objects responsibly.
         public Dictionary<string, object> ProviderViewModels { get; set; }
+
+        [JsonIgnore]
         public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
 
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
         // used to carry over selected address from the form
         // property should not be changed cause its editor is manually generated in AddressForm.cshtml
+        [JsonIgnore]
         public int BillingAddressVMListAddress { get; set; }
 
         public string Email { get; set; }
@@ -134,7 +149,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
+
         private const string AddressEncryptionPurpose = "Serialize Address Information";
+
+        [JsonIgnore]
         public string SerializedAddresses { get; set; }
         public string EncodeAddresses() {
 
@@ -159,7 +177,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         #endregion
 
         #region Shipping
+        [JsonIgnore]
         public bool ShippingRequired { get; set; }
+        [JsonIgnore]
         public List<ShippingOption> AvailableShippingOptions { get; set; }
         /// <summary>
         /// This is ShippingOption.FormValue for the selected option, used to pull it
@@ -200,7 +220,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             };
             if (vm.ShippingAddressVM != null) {
                 if (vm.ShippingAddress == null) {
-                    vm.ShippingAddress = AddressFromVM(vm.ShippingAddressVM);
+                    vm.ShippingAddress = vm.ShippingAddressVM.MakeAddressFromVM();
                 }
                 // reinflate the names of country, province and city
                 vm.ShippingAddressVM.Country = inflateName(
@@ -212,7 +232,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             }
             if (vm.BillingAddressVM != null) {
                 if (vm.BillingAddress == null) {
-                    vm.BillingAddress = AddressFromVM(vm.BillingAddressVM);
+                    vm.BillingAddress = vm.BillingAddressVM.MakeAddressFromVM();
                 }
                 // reinflate the names of country, province and city
                 vm.BillingAddressVM.Country = inflateName(
@@ -223,24 +243,27 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
             }
         }
-
-        private static Address AddressFromVM(AddressEditViewModel vm) {
-            //FixUpdate(vm);
-            return new Address {
-                Honorific = vm.Honorific,
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
-                Company = vm.Company,
-                Address1 = vm.Address1,
-                Address2 = vm.Address2,
-                PostalCode = vm.PostalCode,
-                // advanced address stuff
-                // The string values here are the DisplayText properties of
-                // configured territories, or "custom" text entered by the user.
-                Country = vm.Country,
-                City = vm.City,
-                Province = vm.Province
-            };
+        
+        // TODO: use these methods to serialize/deserialize the entire viewmodel
+        // rather than just the addresses. This way we carry also the information 
+        // Selections at different steps.
+        public static string EncodeCheckoutObject(CheckoutViewModel cvm) {
+            return Convert.ToBase64String(
+                MachineKey.Protect(
+                    Encoding.UTF8.GetBytes(
+                        JsonConvert.SerializeObject(cvm)),
+                    AddressEncryptionPurpose
+                    ));
+        }
+        public static CheckoutViewModel DecodeCheckoutObject(string str) {
+            var bytes = Convert.FromBase64String(str);
+            var unprotected = MachineKey.Unprotect(bytes, AddressEncryptionPurpose);
+            if (unprotected != null) {
+                return
+                    JsonConvert.DeserializeObject<CheckoutViewModel>(
+                        Encoding.UTF8.GetString(unprotected));
+            }
+            return null;
         }
     }
 }

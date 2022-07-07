@@ -129,6 +129,7 @@
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CouponApiController.cs" />
+    <Compile Include="Controllers\ICheckoutController.cs" />
     <Compile Include="Controllers\PickupPointsAdminController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\BaseCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\DefaultCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\PickupPointsCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />

@@ -11,6 +11,7 @@ using Orchard.Core.Title.Models;
 using Orchard.Environment.Configuration;
 using Orchard.Localization;
 using Orchard.Mvc.Routes;
+using Orchard.Security;
 using Orchard.Themes;
 using Orchard.UI.Notify;
 using System;
@@ -21,7 +22,7 @@ using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
     [Themed] // actions are for the frontend, so themes should be applied
-    public class CheckoutController : Controller {
+    public class CheckoutController : Controller, ICheckoutController {
         /*
          This controller provides the actions that map to the ecommerce checkout steps.
          These steps are each in its own action.
@@ -119,6 +120,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult CheckoutStart(FormCollection formCollection) {
             var extensionContext = new CheckoutExtensionContext() {
+                CheckoutController = this,
                 ValueProvider = ValueProvider,
                 ModelState = ModelState,
                 FormCollection = formCollection
@@ -186,14 +188,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // also load the list of existing addresses for them
                 model.ListAvailableBillingAddress =
                     _nwazetCommunicationService.GetBillingByUser(user);
-                // we are only going to load the shipping addresses if shipping is required
-                if (model.ShippingRequired) {
-                    model.ListAvailableShippingAddress =
-                        _nwazetCommunicationService.GetShippingByUser(user);
-                }
             }
             // attempt to shortcircuit the actions
             if (model.UseDefaultAddress) {
+                // TODO: figure out a way for this to fall in line with the new address providers
                 // if the user has saved addresses, preselect the ones used most recently
                 if (model.ListAvailableBillingAddress.Any()
                     && (!model.ShippingRequired || (model.ShippingRequired && model.ListAvailableShippingAddress.Any()))) {
@@ -210,21 +208,22 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             // pick the one used/updated most recently
                             .OrderByDescending(a => a.TimeStampUTC)
                             .First());
-                    }
-                    // redirect to next step
-                    // Put the model we validated in TempData so it can be reused in the next action.
-                    TempData["CheckoutViewModel"] = model;
-                    if (model.ShippingRequired && model.ShippingAddressVM != null) {
+                        model.SelectedShippingAddressProviderId = "default"; // hard coded fall back value
+
+                        // TODO: check whether we actually need the next few lines:
                         // Set values into the ShoppingCart storage
                         var country = _addressConfigurationService
                             ?.GetCountry(model.ShippingAddressVM.CountryId);
                         _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
                         _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
                     }
+                    // redirect to next step
+                    // Put the model we validated in TempData so it can be reused in the next action.
+                    TempData["CheckoutViewModel"] = model;
                     // we redirect to this post action, where we do validation
                     return IndexPOST(model);
                 }
-
+                // end of shortcircuit for default address
             }
 
             model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress, model.BillingAddressVM);
@@ -233,8 +232,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // with the checkout: if no shipping is required, we can go straight to order review
             // and then payment.
             if (model.ShippingRequired) {
-                model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
-
                 model.AdditionalShippingAddressShapes =
                     _checkoutShippingAddressProviders.SelectMany(ep => 
                         ep.GetIndexShippingAddressShapes(model));
@@ -269,7 +266,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 TempData["CheckoutViewModel"] = model;
                 return RedirectToAction("Index");
             }
-            model.ShippingRequired = IsShippingRequired(); //we'll reuse this
+            model.ShippingRequired = IsShippingRequired(); // we'll reuse this
+            // memorize the selected shipping address provider for later steps
+            model.SelectedShippingAddressProvider = _checkoutShippingAddressProviders
+                .FirstOrDefault(sap => sap.IsSelectedProviderForIndex(model.SelectedShippingAddressProviderId));
             // Ensure address types are initialized correctly 
             model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
             model.BillingAddressVM.AddressRecord.AddressType = AddressRecordType.BillingAddress;
@@ -281,8 +281,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // validate
             var validationSuccess = UpdateAndValidateVM(model);
             if (!validationSuccess) {
-                // TODO: make sure anything the use might have selected on the forms of the
-                // extension providers is still selected as well.
                 // don't move on, but rather leave the user on this form
                 model.BillingAddressVM = CreateVM(AddressRecordType.BillingAddress, model.BillingAddressVM);
                 if (model.ShippingRequired) {
@@ -293,38 +291,19 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // also load the list of existing addresses for them
                     model.ListAvailableBillingAddress =
                         _nwazetCommunicationService.GetBillingByUser(user);
-                    // we are only going to load the shipping addresses if shipping is required
-                    if (model.ShippingRequired) {
-                        model.ListAvailableShippingAddress =
-                            _nwazetCommunicationService.GetShippingByUser(user);
-                    }
+                }
+                // make sure anything the user might have selected on the forms of the
+                // extension providers is still selected as well.
+                if (model.ShippingRequired) {
+                    model.AdditionalShippingAddressShapes =
+                        _checkoutShippingAddressProviders.SelectMany(ep =>
+                            ep.GetIndexShippingAddressShapes(model));
                 }
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
             // addresses they just configured.
-            if (user != null) {
-                if (model.BillingAddressVM != null && model.BillingAddressVM.AddressRecord != null) {
-                    var countryTP = _addressConfigurationService.GetCountry(model.BillingAddressVM.CountryId);
-                    model.BillingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
-
-                    if (model.BillingAddressVMListAddress > 0) {
-                        model.BillingAddressVM.AddressRecord.Id = model.BillingAddressVMListAddress;
-                    }
-                    _nwazetCommunicationService.AddAddress(model.BillingAddressVM.AddressRecord, user);
-                }
-                if (model.ShippingAddressVM != null && model.ShippingAddressVM.AddressRecord != null) {
-                    var countryTP = _addressConfigurationService.GetCountry(model.ShippingAddressVM.CountryId);
-                    model.ShippingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
-                    if (model.ShippingAddressVMListAddress > 0) {
-                        model.ShippingAddressVM.AddressRecord.Id = model.ShippingAddressVMListAddress;
-                    }
-                    _nwazetCommunicationService.AddAddress(model.ShippingAddressVM.AddressRecord, user);
-                }
-                if (!string.IsNullOrWhiteSpace(model.PhonePrefix) || !string.IsNullOrWhiteSpace(model.Phone)) {
-                    _nwazetCommunicationService.SetPhone(model.PhonePrefix, model.Phone, user);
-                }
-            }
+            StoreUserAddresses(user, model);
             // In case validation is successful, depending on whether shipping is required, we
             // should redirect to a different action/step. 
             // If shipping is required, we should redirect to an action that lets the user select 
@@ -340,33 +319,17 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // Set values into the ShoppingCart storage
                 // This information may come from "any" shipping destination, not just the shipping
                 // address anymore.
-
-                if (string.IsNullOrWhiteSpace(model.SelectedShippingAddressProvider)
-                    || model.SelectedShippingAddressProvider
-                        .Equals("default", StringComparison.InvariantCultureIgnoreCase)) {
-                    // TODO: "default" should itself be refactored to a provider
-                    var country = _addressConfigurationService
-                        ?.GetCountry(model.ShippingAddressVM.CountryId);
-                    _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
-                    _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
-                } else {
-                    // select the appropriate providers based on the value of
-                    // model.SelectedShippingAddressProvider
-                    var selectedProviders = _checkoutShippingAddressProviders
-                        .Where(cep => cep.IsSelectedProviderForIndex(model.SelectedShippingAddressProvider));
-                    var countryId = selectedProviders
-                        .Select(cep => cep.GetShippingCountryId(model))
-                        .FirstOrDefault();
-                    var country = _addressConfigurationService
-                        ?.GetCountry(countryId);
-                    _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
-                    _shoppingCart.ZipCode = selectedProviders
-                        .Select(cep => cep.GetShippingPostalCode(model))
-                        .FirstOrDefault();
-                }
+                var countryId = model.SelectedShippingAddressProvider
+                    .GetShippingCountryId(model);
+                var country = _addressConfigurationService
+                    ?.GetCountry(countryId);
+                _shoppingCart.Country = _contentManager.GetItemMetadata(country).DisplayText;
+                _shoppingCart.ZipCode = model.SelectedShippingAddressProvider
+                    .GetShippingPostalCode(model);
                 
                 return RedirectToAction("Shipping");
             }
+            // if shipping isn't required, skip that step entirely
             return RedirectToAction("Review");
         }
 
@@ -385,6 +348,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (TempData.ContainsKey("CheckoutViewModel")) {
                 model = (CheckoutViewModel)TempData["CheckoutViewModel"];
             }
+            // memorize the selected shipping address provider for later steps
+            model.SelectedShippingAddressProvider = _checkoutShippingAddressProviders
+                .FirstOrDefault(sap => sap.IsSelectedProviderForIndex(model.SelectedShippingAddressProviderId));
 
             // Check if the mail returned an error: "A shipment has not been selected"
             if (TempData.ContainsKey("ShippingError")) {
@@ -402,10 +368,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     .GetProducts()
                     .Where(p => p.Quantity > 0)
                     .ToList();
-                // Hack: based on the address coming in model.ShippingAddressVM, we can 
+                // Hack: based on the address coming in from providers, we can 
                 // compute the actual destinations to be used at this stage
+                var countryId = model.SelectedShippingAddressProvider
+                    .GetShippingCountryId(model);
                 var country = _addressConfigurationService
-                    ?.GetCountry(model.ShippingAddressVM.CountryId);
+                    ?.GetCountry(countryId);
                 var countryName = country
                     ?.Record?.TerritoryInternalRecord.Name;
                 // we should make sure that the country name is filled in for the shipping
@@ -413,6 +381,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (string.IsNullOrWhiteSpace(model.ShippingAddressVM.Country)) {
                     model.ShippingAddressVM.Country = _contentManager.GetItemMetadata(country).DisplayText;
                 }
+
                 // get all possible providers for shipping methods
                 var shippingMethods = _shippingMethodProviders
                     .SelectMany(p => p.GetShippingMethods())
@@ -441,7 +410,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                                 $"{model.ShippingAddressVM.CityId}",
                             _workContextAccessor));
                 // remove duplicate shipping options
-                model.AvailableShippingOptions = allShippingOptions.Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
+                model.AvailableShippingOptions = allShippingOptions
+                    .Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
                 // See whether we are trying to short circuit the checkout steps
                 if (model.UseDefaultShipping) {
                     // if there is no option selected, and there is only one possible option, we can skip
@@ -483,6 +453,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 }
                 return Redirect(RedirectUrl);
             }
+            // memorize the selected shipping address provider for later steps
+            model.SelectedShippingAddressProvider = _checkoutShippingAddressProviders
+                .FirstOrDefault(sap => sap.IsSelectedProviderForIndex(model.SelectedShippingAddressProviderId));
+
             // Addresses come from the form as encoded in a single thing, because at
             // this stage the user will have already selected them earlier.
             ReinflateViewModelAddresses(model);
@@ -659,15 +633,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             required = _shoppingCart.GetProducts().Any(pq => !pq.Product.IsDigital);
             return required;
         }
-        private AddressEditViewModel CreateVM() {
-            return AddressEditViewModel.CreateVM(_addressConfigurationService);
-        }
-        private AddressEditViewModel CreateVM(AddressRecordType addressRecordType) {
-            return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType);
-        }
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType, AddressEditViewModel vm) {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType, vm);
         }
+
         private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
             // addresses
             CheckoutViewModel.ReinflateViewModelAddresses(vm, _contentManager, _addressConfigurationService);
@@ -689,37 +658,32 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             var validationSuccess = TryUpdateModel(vm.BillingAddressVM)
                 && ValidateVM(vm.BillingAddressVM);
 
-            // Let extension providers inflate their own information correctly
-            // (basically their "update" step)
-            foreach (var extensionProvider in _checkoutShippingAddressProviders) {
-                extensionProvider.ProcessAdditionalIndexShippingAddressInformation(
-                    // probably don't need a new context for each provider
-                    new CheckoutExtensionContext() {
-                        ValueProvider = ValueProvider,
-                        ModelState = ModelState
-                    },
-                    vm // they'll store stome stuff in their own objects in the vm
-                );
-            }
-
+            
             if (vm.ShippingRequired) {
                 // account for different ways shipping address may be "handled"
                 // (e.g. pickup points) by invoking providers.
 
-                if (string.IsNullOrWhiteSpace(vm.SelectedShippingAddressProvider)
-                    || vm.SelectedShippingAddressProvider.Equals("default", StringComparison.InvariantCultureIgnoreCase)) {
-                    // TODO: "default" should itself be refactored to a provider
-                    validationSuccess &= TryUpdateModel(vm.ShippingAddressVM)
-                        && ValidateVM(vm.ShippingAddressVM);
-                } else {
-                    // select the appropriate providers based on the value of
-                    // vm.SelectedShippingAddressProvider
-                    validationSuccess = _checkoutShippingAddressProviders
-                        .Where(cep => cep.IsSelectedProviderForIndex(vm.SelectedShippingAddressProvider))
-                        .Select(cep => cep.ValidateAdditionalIndexShippingAddressInformation(vm))
-                        .Aggregate(validationSuccess,
-                            (a, b) => a && b);
-                }
+                // Let extension providers inflate their own information correctly
+                // (basically their "update" step)
+                validationSuccess &= vm.SelectedShippingAddressProvider
+                    .ProcessAdditionalIndexShippingAddressInformation(
+                        new CheckoutExtensionContext() {
+                            CheckoutController = this,
+                            ValueProvider = ValueProvider,
+                            ModelState = ModelState
+                        },
+                        vm);
+                // Since the provider may invoke stuff from this controller, eventually
+                // updating the ModelState, it's probably safer to rebuild a new
+                // context for each invocation.
+                validationSuccess &= vm.SelectedShippingAddressProvider
+                    .ValidateAdditionalIndexShippingAddressInformation(
+                        new CheckoutExtensionContext() {
+                            CheckoutController = this,
+                            ValueProvider = ValueProvider,
+                            ModelState = ModelState
+                        }, 
+                        vm);
 
             }
             validationSuccess &= ValidateAddresses(vm);
@@ -808,5 +772,36 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 vm.BillAtSameShippingAddress = false;
             }
         }
+
+        private void StoreUserAddresses(IUser user, CheckoutViewModel vm) {
+            if(user != null) {
+                if (vm.BillingAddressVM != null && vm.BillingAddressVM.AddressRecord != null) {
+                    var countryTP = _addressConfigurationService.GetCountry(vm.BillingAddressVM.CountryId);
+                    vm.BillingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
+
+                    if (vm.BillingAddressVMListAddress > 0) {
+                        vm.BillingAddressVM.AddressRecord.Id = vm.BillingAddressVMListAddress;
+                    }
+                    _nwazetCommunicationService.AddAddress(vm.BillingAddressVM.AddressRecord, user);
+                }
+                if (vm.ShippingAddressVM != null && vm.ShippingAddressVM.AddressRecord != null) {
+                    var countryTP = _addressConfigurationService.GetCountry(vm.ShippingAddressVM.CountryId);
+                    vm.ShippingAddressVM.Country = _contentManager.GetItemMetadata(countryTP).DisplayText;
+                    if (vm.ShippingAddressVMListAddress > 0) {
+                        vm.ShippingAddressVM.AddressRecord.Id = vm.ShippingAddressVMListAddress;
+                    }
+                    _nwazetCommunicationService.AddAddress(vm.ShippingAddressVM.AddressRecord, user);
+                }
+                if (!string.IsNullOrWhiteSpace(vm.PhonePrefix) || !string.IsNullOrWhiteSpace(vm.Phone)) {
+                    _nwazetCommunicationService.SetPhone(vm.PhonePrefix, vm.Phone, user);
+                }
+            }
+        }
+
+        #region ICheckoutController implementation
+        bool ICheckoutController.TryUpdateModel<TModel>(TModel model) {
+            return TryUpdateModel(model);
+        }
+        #endregion
     }
 }

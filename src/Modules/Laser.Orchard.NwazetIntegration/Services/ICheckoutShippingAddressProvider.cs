@@ -30,10 +30,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <summary>
         /// This will handle the values received when posting the addresses
         /// during the checkout process and extend the capabilities of the controller
-        /// actions.
+        /// actions. If the provider is the actively selected one, this step may also 
+        /// perform some initial validation and return the result from that. All other
+        /// providers should return true, else hey would cause validation to fail for
+        /// the checkout process.
         /// </summary>
         /// <param name="context"></param>
-        void ProcessAdditionalIndexShippingAddressInformation(
+        bool ProcessAdditionalIndexShippingAddressInformation(
             CheckoutExtensionContext context, CheckoutViewModel cvm);
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="cvm"></param>
         /// <returns></returns>
         bool ValidateAdditionalIndexShippingAddressInformation(
-            CheckoutViewModel cvm);
+            CheckoutExtensionContext context, CheckoutViewModel cvm);
 
         /// <summary>
         /// Return the Id of the TerritoryPart for the Country of the Shipping destination
@@ -52,6 +55,16 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="cvm"></param>
         /// <returns></returns>
         int GetShippingCountryId(CheckoutViewModel cvm);
+
+        /// <summary>
+        /// Return the DisplayName of the TerritoryPart for the Country of the Shipping 
+        /// destination according to this provider. Default to empty string if this 
+        /// provider cannot tell. This method should on principle only be called for 
+        /// selected providers.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        string GetShippingCountryName(CheckoutViewModel cvm);
 
         /// <summary>
         /// Return the Postal Code for the shipping destination accordin to this provider.

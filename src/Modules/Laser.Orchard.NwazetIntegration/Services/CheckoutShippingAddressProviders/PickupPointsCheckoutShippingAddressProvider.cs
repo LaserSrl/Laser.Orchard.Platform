@@ -16,14 +16,17 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
 
         private readonly dynamic _shapeFactory;
         private readonly IContentManager _contentManager;
+        private readonly IAddressConfigurationService _addressConfigurationService;
 
         public PickupPointsCheckoutShippingAddressProvider(
             IShapeFactory shapeFactory,
-            IContentManager contentManager)
+            IContentManager contentManager,
+            IAddressConfigurationService addressConfigurationService)
             : base() {
 
             _shapeFactory = shapeFactory;
             _contentManager = contentManager;
+            _addressConfigurationService = addressConfigurationService;
 
             T = NullLocalizer.Instance;
         }
@@ -77,7 +80,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         }
 
         public override bool ValidateAdditionalIndexShippingAddressInformation(
-            CheckoutViewModel cvm) {
+            CheckoutExtensionContext context, CheckoutViewModel cvm) {
 
             var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
                 ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
@@ -95,7 +98,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return valid;
         }
 
-        public override void ProcessAdditionalIndexShippingAddressInformation(
+        public override bool ProcessAdditionalIndexShippingAddressInformation(
             CheckoutExtensionContext context, CheckoutViewModel cvm) {
 
             // if on post we find that the user was selecting a pickup point,
@@ -118,6 +121,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             var fieldName = SelectedPointInputName;
             var valueResult = context.ValueProvider.GetValue(fieldName);
             // If we haven't received the value from the request, do nothing.
+            var partFound = false;
             if (valueResult != null) {
                 // the value is the Id if the ContentItem of the selected PickupPoint
                 var idString = valueResult.AttemptedValue;
@@ -129,6 +133,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
                     if (selectedPart != null) {
                         viewModel.SelectedPickupPointId = pickupPointId;
                         viewModel.PickupPointPart = selectedPart;
+                        partFound = true;
                     }
                 }
             }
@@ -138,6 +143,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
                 cvm.ProviderViewModels[ProviderId] = viewModel;
             } else {
                 cvm.ProviderViewModels.Add(ProviderId, viewModel);
+            }
+
+            if (IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)) {
+                return partFound;
+            } else {
+                return true;
             }
         }
 
@@ -150,6 +161,19 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
                 return viewModel.PickupPointPart.CountryId;
             }
             return base.GetShippingCountryId(cvm);
+        }
+
+        public override string GetShippingCountryName(CheckoutViewModel cvm) {
+            var countryId = GetShippingCountryId(cvm);
+            if (countryId > 0) {
+                var country = _addressConfigurationService
+                    ?.GetCountry(countryId);
+                if (country != null) {
+                    return _contentManager.GetItemMetadata(country).DisplayText;
+                }
+            }
+
+            return base.GetShippingCountryName(cvm);
         }
 
         public override string GetShippingPostalCode(CheckoutViewModel cvm) {

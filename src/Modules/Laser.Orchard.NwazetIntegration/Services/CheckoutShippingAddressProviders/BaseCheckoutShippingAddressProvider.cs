@@ -19,6 +19,10 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return 0;
         }
 
+        public virtual string GetShippingCountryName(CheckoutViewModel cvm) {
+            return string.Empty;
+        }
+
         public virtual string GetShippingPostalCode(CheckoutViewModel cvm) {
             return null;
         }
@@ -27,11 +31,13 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return false;
         }
 
-        public virtual void ProcessAdditionalIndexShippingAddressInformation(
-            CheckoutExtensionContext context, CheckoutViewModel cvm) { }
+        public virtual bool ProcessAdditionalIndexShippingAddressInformation(
+            CheckoutExtensionContext context, CheckoutViewModel cvm) {
+            return true;
+        }
 
         public virtual bool ValidateAdditionalIndexShippingAddressInformation(
-            CheckoutViewModel cvm) {
+            CheckoutExtensionContext context, CheckoutViewModel cvm) {
             return true;
         }
     }
