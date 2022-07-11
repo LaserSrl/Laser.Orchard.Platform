@@ -28,6 +28,10 @@ namespace Laser.Orchard.PayPal.Services {
                 try {
                     var url = "https://api.sandbox.paypal.com/v2/checkout/orders/" + oid;
 
+                    if (config.ProductionEnvironment) {
+                        url = "https://api.paypal.com/v2/checkout/orders/" + oid;
+                    }
+
                     HttpWebRequest request;
                     HttpWebResponse response;
 
