@@ -113,6 +113,40 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return base.GetShippingPostalCode(cvm);
         }
 
+        public override void ReinflateShippingAddress(ShippingAddressReinflationContext context) {
+            if (context.TargetCheckoutViewModel.ShippingAddressVM == null) {
+                context.TargetCheckoutViewModel.ShippingAddressVM = context.SourceCheckoutViewModel.ShippingAddressVM;
+            }
+            if (context.TargetCheckoutViewModel.ShippingAddressVM != null) {
+                if (context.TargetCheckoutViewModel.ShippingAddress == null) {
+                    context.TargetCheckoutViewModel.ShippingAddress = 
+                        context.TargetCheckoutViewModel.ShippingAddressVM.MakeAddressFromVM();
+                }
+
+                Func<string, int, string> inflateName = (str, id) => {
+                    if (string.IsNullOrWhiteSpace(str)) {
+                        var territory = _addressConfigurationService
+                            .SingleTerritory(id);
+                        if (territory != null) {
+                            return _contentManager
+                                .GetItemMetadata(territory).DisplayText;
+                        }
+                    }
+                    return str;
+                };
+                // reinflate the names of country, province and city
+                context.TargetCheckoutViewModel.ShippingAddressVM.Country = inflateName(
+                    context.TargetCheckoutViewModel.ShippingAddressVM.Country,
+                    context.TargetCheckoutViewModel.ShippingAddressVM.CountryId);
+                context.TargetCheckoutViewModel.ShippingAddressVM.Province = inflateName(
+                    context.TargetCheckoutViewModel.ShippingAddressVM.Province, 
+                    context.TargetCheckoutViewModel.ShippingAddressVM.ProvinceId);
+                context.TargetCheckoutViewModel.ShippingAddressVM.City = inflateName(
+                    context.TargetCheckoutViewModel.ShippingAddressVM.City, 
+                    context.TargetCheckoutViewModel.ShippingAddressVM.CityId);
+            }
+        }
+
         private bool ValidateVM(AddressEditViewModel vm) {
             int id = -1;
             if (vm.CityId > 0) {

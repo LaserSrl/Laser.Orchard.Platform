@@ -40,5 +40,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             CheckoutExtensionContext context, CheckoutViewModel cvm) {
             return true;
         }
+
+        public virtual void ReinflateShippingAddress(ShippingAddressReinflationContext context) { }
     }
 }

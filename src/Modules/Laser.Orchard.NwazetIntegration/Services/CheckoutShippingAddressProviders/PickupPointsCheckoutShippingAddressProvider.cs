@@ -186,5 +186,9 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             }
             return base.GetShippingPostalCode(cvm);
         }
+
+        public override void ReinflateShippingAddress(ShippingAddressReinflationContext context) {
+            // TODO
+        }
     }
 }

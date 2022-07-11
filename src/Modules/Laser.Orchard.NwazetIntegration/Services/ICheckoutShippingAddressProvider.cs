@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
+using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard;
 using System;
 using System.Collections.Generic;
@@ -74,5 +75,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="cvm"></param>
         /// <returns></returns>
         string GetShippingPostalCode(CheckoutViewModel cvm);
+
+        /// <summary>
+        /// Perform necessary operations to reinflate shipping addresses that
+        /// may be referenced from within the passed context. This method should on principle
+        /// only be called for selected providers.
+        /// </summary>
+        /// <param name="context"></param>
+        void ReinflateShippingAddress(ShippingAddressReinflationContext context);
     }
 }

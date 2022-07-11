@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
@@ -243,8 +244,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
             }
         }
-        
-        // TODO: use these methods to serialize/deserialize the entire viewmodel
+
+        [JsonIgnore]
+        public string State { get; set; }
+        // use these methods to serialize/deserialize the entire viewmodel
         // rather than just the addresses. This way we carry also the information 
         // Selections at different steps.
         public static string EncodeCheckoutObject(CheckoutViewModel cvm) {
@@ -259,11 +262,112 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             var bytes = Convert.FromBase64String(str);
             var unprotected = MachineKey.Unprotect(bytes, AddressEncryptionPurpose);
             if (unprotected != null) {
-                return
-                    JsonConvert.DeserializeObject<CheckoutViewModel>(
-                        Encoding.UTF8.GetString(unprotected));
+                try {
+                    return
+                        JsonConvert.DeserializeObject<CheckoutViewModel>(
+                            Encoding.UTF8.GetString(unprotected));
+                } catch {
+                    return null;
+                }
             }
             return null;
         }
+
+        public void ReiflateState(
+            IContentManager contentManager, 
+            IAddressConfigurationService addressConfigurationService,
+            IEnumerable<ICheckoutShippingAddressProvider> checkoutShippingAddressProviders) {
+
+            // decode what's coming from the form. At each step later we'll compare what we have
+            // in the current "this" object, with what we decoded, to see whether there's anything
+            // we should be taking from the form.
+            var tempVm = DecodeCheckoutObject(State) ??  new CheckoutViewModel();
+
+            // Try to ensure a a shipping address provider is selected
+            if (string.IsNullOrWhiteSpace(SelectedShippingAddressProviderId)) {
+                SelectedShippingAddressProviderId = tempVm.SelectedShippingAddressProviderId;
+            }
+            SelectedShippingAddressProvider = checkoutShippingAddressProviders
+                .FirstOrDefault(sap => 
+                    sap.IsSelectedProviderForIndex(SelectedShippingAddressProviderId));
+
+            #region Reinflate addresses
+            // Reinflate "default" addresses from previous state if the current object doesn't have
+            // them set already. If they are set already it likely means they've been set by the
+            // form or something like that, so we shouldn't overwrite them.
+
+            // Reinflate a territory name if it's not set yet
+            Func<string, int, string> inflateName = (str, id) => {
+                if (string.IsNullOrWhiteSpace(str)) {
+                    var territory = addressConfigurationService
+                        .SingleTerritory(id);
+                    if (territory != null) {
+                        return contentManager
+                            .GetItemMetadata(territory).DisplayText;
+                    }
+                }
+                return str;
+            };
+
+            // Billing address: this is handled here/by the controller directly
+            if (BillingAddressVM == null) {
+                BillingAddressVM = tempVm.BillingAddressVM;
+            }
+            if (BillingAddressVM != null) { // it may have never been set
+                if (BillingAddress == null) {
+                    BillingAddress = BillingAddressVM.MakeAddressFromVM();
+                }
+                // reinflate the names of country, province and city
+                BillingAddressVM.Country = inflateName(
+                    BillingAddressVM.Country, BillingAddressVM.CountryId);
+                BillingAddressVM.Province = inflateName(
+                    BillingAddressVM.Province, BillingAddressVM.ProvinceId);
+                BillingAddressVM.City = inflateName(
+                    BillingAddressVM.City, BillingAddressVM.CityId);
+            }
+
+            // Shipping address: each provider is responsible for its own way of representing 
+            // the information it needs for the shipping address, hence each provider will have
+            // to be able to handle its own way to reinflate the information from what's serialized.
+            if (SelectedShippingAddressProvider != null) {
+                SelectedShippingAddressProvider.ReinflateShippingAddress(
+                    new ShippingAddressReinflationContext {
+                        TargetCheckoutViewModel = this,
+                        SourceCheckoutViewModel = tempVm
+                    });
+            }
+            #endregion
+        }
+
+
+
+        /// <summary>
+        /// Final steps for the view model before sending it to a view
+        /// </summary>
+        public void FinalSetup() {
+
+            if (ShippingAddressVM != null && BillingAddressVM != null &&
+                ShippingAddressVM.CountryId == BillingAddressVM.CountryId &&
+                ShippingAddressVM.Country == BillingAddressVM.Country &&
+                ShippingAddressVM.CityId == BillingAddressVM.CityId &&
+                ShippingAddressVM.City == BillingAddressVM.City &&
+                ShippingAddressVM.Company == BillingAddressVM.Company &&
+                ShippingAddressVM.Address1 == BillingAddressVM.Address1 &&
+                ShippingAddressVM.Address2 == BillingAddressVM.Address2 &&
+                ShippingAddressVM.FirstName == BillingAddressVM.FirstName &&
+                ShippingAddressVM.LastName == BillingAddressVM.LastName &&
+                ShippingAddressVM.Honorific == BillingAddressVM.Honorific &&
+                ShippingAddressVM.PostalCode == BillingAddressVM.PostalCode &&
+                ShippingAddressVM.ProvinceId == BillingAddressVM.ProvinceId &&
+                ShippingAddressVM.Province == BillingAddressVM.Province
+            ) {
+                BillAtSameShippingAddress = true;
+            } else {
+                BillAtSameShippingAddress = false;
+            }
+
+            State = EncodeCheckoutObject(this);
+        }
+
     }
 }
