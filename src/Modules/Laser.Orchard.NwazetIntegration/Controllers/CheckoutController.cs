@@ -401,12 +401,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     .ToList();
                 // Test those providers with nwazet's default interface.
                 var allShippingOptions = ShippingService
-                    .GetShippingOptions(
-                        shippingMethods,
-                        productQuantities,
-                        countryName,
-                        model.ShippingPostalCode,
-                        _workContextAccessor).ToList();
+                    .GetShippingOptions(new ShippingOptionComputeContext {
+                        ProductQuantities = productQuantities,
+                        ShippingMethods = shippingMethods,
+                        Country = countryName,
+                        PostalCode = model.ShippingPostalCode,
+                        WorkContextAccessor = _workContextAccessor
+                    }).ToList();
                 // TODO: make this step work with the shipping address providers
                 if (model.ShippingAddressVM != null) {
                     // Those tests done like that cannot be very reliable with respect to
@@ -415,15 +416,16 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // that will let a shipping criterion parse out the territory Ids.
                     allShippingOptions
                         .AddRange(ShippingService
-                            .GetShippingOptions(
-                                shippingMethods,
-                                productQuantities,
-                                countryName,
-                                $"{model.ShippingAddressVM.PostalCode};" +
+                            .GetShippingOptions(new ShippingOptionComputeContext {
+                                ProductQuantities = productQuantities,
+                                ShippingMethods = shippingMethods,
+                                Country = countryName,
+                                PostalCode = $"{model.ShippingAddressVM.PostalCode};" +
                                     $"{model.ShippingAddressVM.CountryId};" +
                                     $"{model.ShippingAddressVM.ProvinceId};" +
                                     $"{model.ShippingAddressVM.CityId}",
-                                _workContextAccessor));
+                                WorkContextAccessor = _workContextAccessor
+                            }));
                 }
                 // remove duplicate shipping options
                 model.AvailableShippingOptions = allShippingOptions
