@@ -188,7 +188,51 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         }
 
         public override void ReinflateShippingAddress(ShippingAddressReinflationContext context) {
-            // TODO
+            // The goal is to have the information correctly populated in the target viewmodel.
+            // Part of it may already be there. At any point we may find that the information in
+            // the target viewmodel is wrong/broken: in that case we try to start over by copying
+            // the info from the source viewmodel.
+
+            // This is the object that will represent information for this provider in the end of
+            // this process, regardless of where the information is from.
+            var inflatedInfoObject = InflatePickupPointsVM(context.TargetCheckoutViewModel);
+            // Were we successfull?
+            if (inflatedInfoObject.PickupPointPart == null) {
+                // Try to inflate from source.
+                // Memorize the target Id to restore it in case we also fail to inflate from source
+                var targetId = inflatedInfoObject.SelectedPickupPointId;
+                inflatedInfoObject = InflatePickupPointsVM(context.SourceCheckoutViewModel);
+                if (inflatedInfoObject.PickupPointPart == null) {
+                    if (targetId > 0) {
+                        inflatedInfoObject.SelectedPickupPointId = targetId;
+                    }
+                }
+            }
+
+            // Finally, the target viewmodel will contain the up to date information from this provider
+            if (!context.TargetCheckoutViewModel.ProviderViewModels.ContainsKey(ProviderId)) {
+                context.TargetCheckoutViewModel.ProviderViewModels.Add(
+                    ProviderId, inflatedInfoObject);
+            } else {
+                context.TargetCheckoutViewModel.ProviderViewModels[ProviderId] = inflatedInfoObject;
+            }
+        }
+
+        private PickupPointsCheckoutViewModel InflatePickupPointsVM(CheckoutViewModel cvm) {
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+
+            if (viewModel.SelectedPickupPointId > 0) {
+                var part = _contentManager
+                    .Get<PickupPointPart>(viewModel.SelectedPickupPointId);
+                if (part != null) {
+                    viewModel.PickupPointPart = part;
+                }
+            }
+
+            return viewModel;
         }
     }
 }

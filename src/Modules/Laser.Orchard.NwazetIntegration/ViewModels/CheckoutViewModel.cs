@@ -22,6 +22,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             AvailableShippingOptions = new List<ShippingOption>();
 
             ProviderViewModels = new Dictionary<string, object>();
+
+            ShippingCountryDisplayName = "";
+            ShippingPostalCode = "";
         }
 
         /// <summary>
@@ -116,6 +119,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             ProviderViewModels = vm.ProviderViewModels;
         }
 
+
         public Address ShippingAddress { get; set; }
         public AddressEditViewModel ShippingAddressVM { get; set; }
         // used to carry over selected address from the form
@@ -134,6 +138,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         [JsonIgnore]
         public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
 
+
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }
         // used to carry over selected address from the form
@@ -145,14 +150,14 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string PhonePrefix { get; set; }
         public string Phone { get; set; }
         public string SpecialInstructions { get; set; }
+
         [JsonIgnore]
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
-
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
 
-        private const string AddressEncryptionPurpose = "Serialize Address Information";
 
+        private const string AddressEncryptionPurpose = "Serialize Address Information";
         [JsonIgnore]
         public string SerializedAddresses { get; set; }
         public string EncodeAddresses() {
@@ -182,6 +187,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public bool ShippingRequired { get; set; }
         [JsonIgnore]
         public List<ShippingOption> AvailableShippingOptions { get; set; }
+
         /// <summary>
         /// This is ShippingOption.FormValue for the selected option, used to pull it
         /// from the form. This is called "ShippingOption" for retrocompatibility and
@@ -190,6 +196,12 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string ShippingOption { get; set; }
         public ShippingOption SelectedShippingOption { get; set; }
         public bool ResetShipping { get; set; }
+
+        // A few properties that we use in views to simplify displaying stuff related
+        // to shipping information. These are computed when information is reinflated
+        // in the viewmodel.
+        public string ShippingCountryDisplayName { get; set; }
+        public string ShippingPostalCode { get; set; }
         #endregion
 
         #region Payments
@@ -247,6 +259,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
 
         [JsonIgnore]
         public string State { get; set; }
+
         // use these methods to serialize/deserialize the entire viewmodel
         // rather than just the addresses. This way we carry also the information 
         // Selections at different steps.
@@ -258,6 +271,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     AddressEncryptionPurpose
                     ));
         }
+
         public static CheckoutViewModel DecodeCheckoutObject(string str) {
             var bytes = Convert.FromBase64String(str);
             var unprotected = MachineKey.Unprotect(bytes, AddressEncryptionPurpose);
@@ -281,7 +295,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             // decode what's coming from the form. At each step later we'll compare what we have
             // in the current "this" object, with what we decoded, to see whether there's anything
             // we should be taking from the form.
-            var tempVm = DecodeCheckoutObject(State) ??  new CheckoutViewModel();
+            var tempVm = DecodeCheckoutObject(State ?? "") ??  new CheckoutViewModel();
 
             // Try to ensure a a shipping address provider is selected
             if (string.IsNullOrWhiteSpace(SelectedShippingAddressProviderId)) {
@@ -337,9 +351,17 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                     });
             }
             #endregion
+
+            if (SelectedShippingAddressProvider != null) {
+                var countryId = SelectedShippingAddressProvider
+                    .GetShippingCountryId(this);
+                var country = addressConfigurationService
+                    ?.GetCountry(countryId);
+                ShippingCountryDisplayName = contentManager.GetItemMetadata(country).DisplayText;
+                ShippingPostalCode = SelectedShippingAddressProvider
+                    .GetShippingPostalCode(this);
+            }
         }
-
-
 
         /// <summary>
         /// Final steps for the view model before sending it to a view

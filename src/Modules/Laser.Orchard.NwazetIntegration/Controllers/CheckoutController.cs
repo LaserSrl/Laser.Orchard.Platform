@@ -394,11 +394,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     ?.GetCountry(countryId);
                 var countryName = country
                     ?.Record?.TerritoryInternalRecord.Name;
-                // we should make sure that the country name is filled in for the shipping
-                // address view model, so we can display it.
-                if (string.IsNullOrWhiteSpace(model.ShippingAddressVM.Country)) {
-                    model.ShippingAddressVM.Country = _contentManager.GetItemMetadata(country).DisplayText;
-                }
 
                 // get all possible providers for shipping methods
                 var shippingMethods = _shippingMethodProviders
@@ -410,23 +405,26 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         shippingMethods,
                         productQuantities,
                         countryName,
-                        model.ShippingAddressVM.PostalCode,
+                        model.ShippingPostalCode,
                         _workContextAccessor).ToList();
-                // Those tests done like that cannot be very reliable with respect to
-                // territories' configuration, unless we configure a hierarchy of postal
-                // codes. Rather than do that, we are going to do an hack on the PostalCode
-                // that will let a shipping criterion parse out the territory Ids.
-                allShippingOptions
-                    .AddRange(ShippingService
-                        .GetShippingOptions(
-                            shippingMethods,
-                            productQuantities,
-                            countryName,
-                            $"{model.ShippingAddressVM.PostalCode};" +
-                                $"{model.ShippingAddressVM.CountryId};" +
-                                $"{model.ShippingAddressVM.ProvinceId};" +
-                                $"{model.ShippingAddressVM.CityId}",
-                            _workContextAccessor));
+                // TODO: make this step work with the shipping address providers
+                if (model.ShippingAddressVM != null) {
+                    // Those tests done like that cannot be very reliable with respect to
+                    // territories' configuration, unless we configure a hierarchy of postal
+                    // codes. Rather than do that, we are going to do an hack on the PostalCode
+                    // that will let a shipping criterion parse out the territory Ids.
+                    allShippingOptions
+                        .AddRange(ShippingService
+                            .GetShippingOptions(
+                                shippingMethods,
+                                productQuantities,
+                                countryName,
+                                $"{model.ShippingAddressVM.PostalCode};" +
+                                    $"{model.ShippingAddressVM.CountryId};" +
+                                    $"{model.ShippingAddressVM.ProvinceId};" +
+                                    $"{model.ShippingAddressVM.CityId}",
+                                _workContextAccessor));
+                }
                 // remove duplicate shipping options
                 model.AvailableShippingOptions = allShippingOptions
                     .Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
@@ -476,13 +474,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 }
                 return Redirect(RedirectUrl);
             }
-            // memorize the selected shipping address provider for later steps
-            model.SelectedShippingAddressProvider = _checkoutShippingAddressProviders
-                .FirstOrDefault(sap => sap.IsSelectedProviderForIndex(model.SelectedShippingAddressProviderId));
+            // Make sure the model isn't losing track of any information. This operation should in
+            // probably be agnostic on the step it's called in and simply make sure all information 
+            // in the viewmodel can be accessed without sideeffects by the rest of the system.
+            // This operation includes reinflating the addresses as stored by each provider.
+            model.ReiflateState(
+                _contentManager,
+                _addressConfigurationService,
+                _checkoutShippingAddressProviders);
 
-            // Addresses come from the form as encoded in a single thing, because at
-            // this stage the user will have already selected them earlier.
-            ReinflateViewModelAddresses(model);
             // check if the user is trying to reset the selected shipping option.
             if (model.ResetShipping || string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // Put the model we validated in TempData so it can be reused in the next action.
