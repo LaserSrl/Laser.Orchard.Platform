@@ -291,7 +291,7 @@ namespace Laser.Orchard.PrivateMedia.Services {
             var filenameWithExtension = Path.GetFileName(path) ?? "";
             var fileLocation = path.Substring(0, path.Length - filenameWithExtension.Length);
 
-            // If absolute path is longer than the maximum path lenght (260 characters), file cannot be saved.
+            // If absolute path is longer than the maximum path length (260 characters), file cannot be saved.
             var absolutePath = HttpContext.Current.Server.MapPath(path);
             if (absolutePath.Length > 260) {
                 var filenameWithoutExtension = Path.GetFileNameWithoutExtension(path);
