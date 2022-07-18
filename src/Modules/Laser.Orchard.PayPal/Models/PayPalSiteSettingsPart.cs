@@ -18,6 +18,10 @@ namespace Laser.Orchard.PayPal.Models {
             get { return this.Retrieve(x => x.CurrencyCode); }
             set { this.Store(x => x.CurrencyCode, value); }
         }
+        public bool ProductionEnvironment {
+            get { return this.Retrieve(x => x.ProductionEnvironment); }
+            set { this.Store(x => x.ProductionEnvironment, value); }
+        }
         // Customize funding
         public bool Card {
             get { return this.Retrieve(x => x.Card); }
