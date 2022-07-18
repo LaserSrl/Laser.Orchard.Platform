@@ -33,7 +33,23 @@ namespace Laser.Orchard.PrivateMedia.Services {
         private readonly ShellSettings _settings;
         private readonly IMediaPrivateFolder _mediaPrivateFolder;
         private readonly WorkContext _workContext;
-        //private string FolderPrivate = "Media/SaisTrasporti/Private".ToLowerInvariant();
+
+        public int MaxPathLength {
+            get; set;
+            // The public setter allows injecting this from Sites.MyTenant.Config or Sites.config, by using
+            // an AutoFac component:
+            /*
+             <component instance-scope="per-lifetime-scope"
+                type="Laser.Orchard.PrivateMedia.Services.PrivateMediaImageProfileManager, Laser.Orchard.PrivateMedia"
+                service="Orchard.MediaProcessing.Services.IImageProfileManager">
+                <properties>
+                    <property name="MaxPathLength" value="500" />
+                </properties>
+            </component>
+
+             */
+        }
+
         public PrivateMediaImageProfileManager(
             IStorageProvider storageProvider,
             IImageProcessingFileNameProvider fileNameProvider,
@@ -54,6 +70,8 @@ namespace Laser.Orchard.PrivateMedia.Services {
             _mediaPrivateFolder = mediaPrivateFolder;
             _workContext = workContext.GetContext();
             Logger = NullLogger.Instance;
+
+            MaxPathLength = 260;
         }
 
         public ILogger Logger { get; set; }
@@ -301,16 +319,16 @@ namespace Laser.Orchard.PrivateMedia.Services {
                     filenameWithExtension);
             var absolutePath = HttpContext.Current.Server.MapPath(storagePath);
             // If original file name isn't too long, it can be kept as is, which ideally is the standard behaviour.
-            if (absolutePath.Length > 260) {
+            if (absolutePath.Length > MaxPathLength) {
                 // If original file name is too long, use the hashed version of it.
                 storagePath = _storageProvider.Combine(
                     _storageProvider.Combine(profileName.GetHashCode().ToString("x").ToLowerInvariant(), fileLocation.GetHashCode().ToString("x").ToLowerInvariant()),
                         filenameWithoutExtension + extension);
                 filenameWithExtension = filenameWithoutExtension + extension;
                 absolutePath = HttpContext.Current.Server.MapPath(storagePath);
-                if (absolutePath.Length > 260) {
+                if (absolutePath.Length > MaxPathLength) {
                     // If hashed version is still too long, trim it.
-                    int excessChars = absolutePath.Length - 260;
+                    int excessChars = absolutePath.Length - MaxPathLength;
                     filenameWithExtension = filenameWithoutExtension.Substring(0, filenameWithoutExtension.Length - excessChars) + Path.GetExtension(storagePath);
                 }
             }
