@@ -2,7 +2,9 @@
 using Laser.Orchard.PaymentGateway.Models;
 using Laser.Orchard.PaymentGateway.Services;
 using Laser.Orchard.PayPal.Controllers;
+using Laser.Orchard.PayPal.Models;
 using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using System;
@@ -48,8 +50,13 @@ namespace Laser.Orchard.PayPal.Services {
         }
 
         protected override string InnerChargeAdminUrl(PaymentRecord payment) {
-            // temporarily put the activity section because PayPal does not return the transaction id
-            return "https://www.sandbox.paypal.com/myaccount/transactions";
+            var config = _orchardServices.WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
+
+            if (config.ProductionEnvironment) {
+                return "https://www.paypal.com/myaccount/transactions";
+            } else {
+                return "https://www.sandbox.paypal.com/myaccount/transactions";
+            }
         }
     }
 }
