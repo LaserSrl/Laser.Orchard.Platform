@@ -89,6 +89,20 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             }
             return base.GetShippingCountryId(cvm);
         }
+        public override int GetShippingProvinceId(CheckoutViewModel cvm) {
+            // TODO: see if we can refactor the viewmodel further
+            if (cvm.ShippingAddressVM != null) {
+                return cvm.ShippingAddressVM.ProvinceId;
+            }
+            return base.GetShippingProvinceId(cvm);
+        }
+        public override int GetShippingCityId(CheckoutViewModel cvm) {
+            // TODO: see if we can refactor the viewmodel further
+            if (cvm.ShippingAddressVM != null) {
+                return cvm.ShippingAddressVM.CityId;
+            }
+            return base.GetShippingCityId(cvm);
+        }
         public override string GetShippingCountryName(CheckoutViewModel cvm) {
             if (cvm.ShippingAddressVM != null
                 && !string.IsNullOrWhiteSpace(cvm.ShippingAddressVM.Country)) {

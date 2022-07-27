@@ -296,6 +296,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             // in the current "this" object, with what we decoded, to see whether there's anything
             // we should be taking from the form.
             var tempVm = DecodeCheckoutObject(State ?? "") ??  new CheckoutViewModel();
+            // reinflate the specific provider viewmodels
+            foreach (var provider in checkoutShippingAddressProviders) {
+                provider.ReinflateViewModel(tempVm);
+            }
 
             // Try to ensure a a shipping address provider is selected
             if (string.IsNullOrWhiteSpace(SelectedShippingAddressProviderId)) {

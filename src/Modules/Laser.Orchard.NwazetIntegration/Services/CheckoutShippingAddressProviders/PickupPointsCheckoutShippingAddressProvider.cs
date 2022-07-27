@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
@@ -163,6 +164,28 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return base.GetShippingCountryId(cvm);
         }
 
+        public override int GetShippingProvinceId(CheckoutViewModel cvm) {
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+            if (viewModel.PickupPointPart != null) {
+                return viewModel.PickupPointPart.ProvinceId;
+            }
+            return base.GetShippingProvinceId(cvm);
+        }
+
+        public override int GetShippingCityId(CheckoutViewModel cvm) {
+            // get existing view model for pickup points (if any)
+            var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                : new PickupPointsCheckoutViewModel();
+            if (viewModel.PickupPointPart != null) {
+                return viewModel.PickupPointPart.CityId;
+            }
+            return base.GetShippingCityId(cvm);
+        }
+
         public override string GetShippingCountryName(CheckoutViewModel cvm) {
             var countryId = GetShippingCountryId(cvm);
             if (countryId > 0) {
@@ -218,6 +241,17 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             }
         }
 
+        public override void ReinflateViewModel(CheckoutViewModel viewModel) {
+            if (viewModel.ProviderViewModels.ContainsKey(ProviderId)) {
+                var providerVm = viewModel.ProviderViewModels[ProviderId];
+                if (providerVm != null && providerVm is JObject) {
+                    // "cast" to an object of the right class
+                    viewModel.ProviderViewModels[ProviderId] = 
+                        (providerVm as JObject).ToObject<PickupPointsCheckoutViewModel>();
+                }
+            }
+        }
+
         private PickupPointsCheckoutViewModel InflatePickupPointsVM(CheckoutViewModel cvm) {
             // get existing view model for pickup points (if any)
             var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
@@ -234,5 +268,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
 
             return viewModel;
         }
+
+        
     }
 }

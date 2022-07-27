@@ -58,6 +58,24 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         int GetShippingCountryId(CheckoutViewModel cvm);
 
         /// <summary>
+        /// Return the Id of the TerritoryPart for the Country of the Shipping destination
+        /// according to this provider. Default to 0 if this provider cannot tell. This 
+        /// method should on principle only be called for selected providers.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        int GetShippingProvinceId(CheckoutViewModel cvm);
+
+        /// <summary>
+        /// Return the Id of the TerritoryPart for the Country of the Shipping destination
+        /// according to this provider. Default to 0 if this provider cannot tell. This 
+        /// method should on principle only be called for selected providers.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        int GetShippingCityId(CheckoutViewModel cvm);
+
+        /// <summary>
         /// Return the DisplayName of the TerritoryPart for the Country of the Shipping 
         /// destination according to this provider. Default to empty string if this 
         /// provider cannot tell. This method should on principle only be called for 
@@ -83,5 +101,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         /// <param name="context"></param>
         void ReinflateShippingAddress(ShippingAddressReinflationContext context);
+
+        /// <summary>
+        /// Perform some operations to reinflate the part of the checkout view model
+        /// thhe implementation of this interface is responsible for.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        void ReinflateViewModel(CheckoutViewModel viewModel);
     }
 }

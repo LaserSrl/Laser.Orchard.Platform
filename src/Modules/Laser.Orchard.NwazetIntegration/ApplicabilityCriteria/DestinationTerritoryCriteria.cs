@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json;
 using Nwazet.Commerce.Descriptors.ApplicabilityCriterion;
@@ -53,106 +54,28 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     DestinationTerritoryForm.FormName);
         }
 
-        public void ApplyCriteria(CriterionContext context) {
-            if (context.IsApplicable) {
-                // in the postalcode we pass, after the postal code, 
-                // a list of territory Ids separated by semicolon.
-                var zipSplit = (context
-                    .ApplicabilityContext
-                    .ZipCode ?? "")
-                    .Split(new char[] { ';' }, StringSplitOptions.None);
-                var applicable = false;
-                if (zipSplit.Any()) {
-                    var ids = zipSplit
-                        .Skip(1)
-                        .Select(s => {
-                            int tmp = 0;
-                            if (int.TryParse(s, out tmp)) {
-                                return tmp;
-                            }
-                            return 0;
-                        })
-                        .Where(i => i > 0);
-
-                    if (ids.Count() > 0) {
-                        // populates the list of the fathers of the territory only once
-                        // the dictionary contains the id of the territory and the list of all its fathers until the last
-                        if (hierarchyTerritoriesIds.Count() == 0) {
-                            List<int> listParents = new List<int>();
-                            var hierarchyId = _addressConfigurationSettingsService.ShippingCountriesHierarchy.Id;
-                            var territoryId = ids.ToList()[ids.Count() - 1];
-                            List<int> territoriesIds = new List<int>();
-                            territoriesIds.Add(territoryId);
-                            var parentId = _territoryPartRecordService.GetParentTerritoryId(territoryId, hierarchyId);
-                            // if the territory has no relatives the list will contain only its own id
-                            // otherwise it will call the method that populates its list
-                            if (parentId != 0) {
-                                listParents = _territoryPartRecordService.
-                                    GetListOfParentIds(parentId,
-                                            hierarchyId,
-                                            territoriesIds);
-                            }
-                            else {
-                                listParents = territoriesIds;
-                            }
-                            hierarchyTerritoriesIds.Add(territoryId, listParents);
-                        }
-
-                        // these ids are for the InternalTerritoryRecords
-                        // As soon as one of them is among the configured territories for
-                        // the criterion, or is a child of a configured territory, the
-                        // criterion is known to apply.
-                        if (hierarchyTerritoriesIds.Count() > 0) {
-                            foreach (var idsT in hierarchyTerritoriesIds.Values) {
-                                var destinationInternalRecords = idsT.Select(i =>
-                                    _territoriesRepositoryService.GetTerritoryInternal(i));
-                                var selectedTerritories = (List<TerritoryTag>)(JsonConvert
-                                    .DeserializeObject<List<TerritoryTag>>(
-                                        context.State["Territories"]?.ToString() ?? "[]"));
-                                if (destinationInternalRecords.Any(tir =>
-                                    selectedTerritories.Any(st =>
-                                        st.NameHash.Equals(tir.NameHash)))) {
-                                    // a territory we are sending stuff to is among those selected
-                                    applicable = true;
-                                }
-                            }
-                        }
-                        context.IsApplicable &= applicable;
-                    }
-                    else {
-                        context.IsApplicable = false;
-                    }
-                }
-               
-            }
-
-        }
-
         public void ApplyCriteria(CriterionContext context,
             // Use outerCriterion to negate the test, so we can easily do
             // contains / doesn't contain
             Func<bool, bool> outerCriterion) {
 
             if (context.IsApplicable) {
-                // in the postalcode we pass, after the postal code, 
-                // a list of territory Ids separated by semicolon.
-                var zipSplit = (context
-                    .ApplicabilityContext
-                    .ZipCode ?? "")
-                    .Split(new char[] { ';' }, StringSplitOptions.None);
-                var applicable = false;
-                if (zipSplit.Any()) {
-                    var ids = zipSplit
-                        .Skip(1)
-                        .Select(s => {
-                            int tmp = 0;
-                            if (int.TryParse(s, out tmp)) {
-                                return tmp;
-                            }
-                            return 0;
-                        })
-                        .Where(i => i > 0);
+                var shippingComputeContext = context.ApplicabilityContext.ShippingContext;
+                if (shippingComputeContext is ExtendedShippingOptionComputeContext) {
+                    var extendedShippingContext = shippingComputeContext as ExtendedShippingOptionComputeContext;
 
+                    
+
+                    var ids = new List<int>();
+                    if (extendedShippingContext.CountryId > 0) {
+                        ids.Add(extendedShippingContext.CountryId);
+                    }
+                    if (extendedShippingContext.ProvinceId > 0) {
+                        ids.Add(extendedShippingContext.ProvinceId);
+                    }
+                    if (extendedShippingContext.CityId > 0) {
+                        ids.Add(extendedShippingContext.CityId);
+                    }
                     // populates the list of the fathers of the territory only once
                     // the dictionary contains the id of the territory and the list of all its fathers until the last
                     if (ids.Count() > 0) {
@@ -170,13 +93,12 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                                     GetListOfParentIds(parentId,
                                             hierarchyId,
                                             territoriesIds);
-                            }
-                            else {
+                            } else {
                                 listParents = territoriesIds;
                             }
                             hierarchyTerritoriesIds.Add(territoryId, listParents);
                         }
-
+                        var applicable = false;
                         // these ids are for the InternalTerritoryRecords
                         // As soon as one of them is among the configured territories for
                         // the criterion, or is a child of a configured territory, the
@@ -197,8 +119,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                             }
                         }
                         context.IsApplicable &= outerCriterion(applicable);
-                    }
-                    else {
+                    } else {
                         // Added the else because the first time he enters to do this check
                         // it does not have the id list compiled and therefore does not do any checking
                         // IsApplicable does not have to do any reasoning other than denying that the check was successful

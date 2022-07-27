@@ -230,6 +230,7 @@
     <Compile Include="Services\CheckoutPoliciesService.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\BaseCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\DefaultCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\ExtendedShippingOptionComputeContext.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\PickupPointsCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\ShippingAddressReinflationContext.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />

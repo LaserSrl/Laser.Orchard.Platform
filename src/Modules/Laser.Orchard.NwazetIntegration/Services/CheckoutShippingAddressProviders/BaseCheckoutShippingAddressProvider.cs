@@ -19,6 +19,14 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             return 0;
         }
 
+        public virtual int GetShippingProvinceId(CheckoutViewModel cvm) {
+            return 0;
+        }
+
+        public virtual int GetShippingCityId(CheckoutViewModel cvm) {
+            return 0;
+        }
+
         public virtual string GetShippingCountryName(CheckoutViewModel cvm) {
             return string.Empty;
         }
@@ -42,5 +50,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         }
 
         public virtual void ReinflateShippingAddress(ShippingAddressReinflationContext context) { }
+
+        public virtual void ReinflateViewModel(CheckoutViewModel viewModel) { }
     }
 }
