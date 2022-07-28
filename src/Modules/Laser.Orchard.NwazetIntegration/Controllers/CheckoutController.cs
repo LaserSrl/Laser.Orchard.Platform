@@ -265,7 +265,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // removing from the total the shipment that will have to be reselected
                 _shoppingCart.ShippingOption = null;
 
-                ReinflateViewModelAddresses(model);
+                // Make sure the model isn't losing track of any information. This operation should in
+                // probably be agnostic on the step it's called in and simply make sure all information 
+                // in the viewmodel can be accessed without sideeffects by the rest of the system.
+                // This operation includes reinflating the addresses as stored by each provider.
+                model.ReiflateState(
+                    _contentManager,
+                    _addressConfigurationService,
+                    _checkoutShippingAddressProviders);
                 InjectServices(model);
                 model.FinalSetup();
                 // Put the model we validated in TempData so it can be reused in the next action.
@@ -374,10 +381,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 _contentManager, 
                 _addressConfigurationService, 
                 _checkoutShippingAddressProviders);
-            
-
-            // deserialize addresses
-            //ReinflateViewModelAddresses(model);
 
             model.ShippingRequired = IsShippingRequired();
             // We might have ShippingRequired == true, but technically no "real" shipping address,
@@ -400,35 +403,52 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 var shippingMethods = _shippingMethodProviders
                     .SelectMany(p => p.GetShippingMethods())
                     .ToList();
-                // Test those providers with nwazet's default interface.
+                //// Test those providers with nwazet's default interface.
+                //var allShippingOptions = ShippingService
+                //    .GetShippingOptions(new ShippingOptionComputeContext {
+                //        ProductQuantities = productQuantities,
+                //        ShippingMethods = shippingMethods,
+                //        Country = countryName,
+                //        PostalCode = model.ShippingPostalCode,
+                //        WorkContextAccessor = _workContextAccessor
+                //    }).ToList();
+                //// Those tests done like that cannot be very reliable with respect to
+                //// territories' configuration, unless we configure a hierarchy of postal
+                //// codes. Rather than do that, we are going to do an hack on the PostalCode
+                //// that will let a shipping criterion parse out the territory Ids.
+                //allShippingOptions
+                //    .AddRange(ShippingService
+                //        .GetShippingOptions(new ExtendedShippingOptionComputeContext {
+                //            ProductQuantities = productQuantities,
+                //            ShippingMethods = shippingMethods,
+                //            Country = countryName,
+                //            PostalCode = model.ShippingPostalCode,
+                //            WorkContextAccessor = _workContextAccessor,
+                //                // Ids of territories from the shipping address provider
+                //            CountryId = model.SelectedShippingAddressProvider
+                //                .GetShippingCountryId(model),
+                //            ProvinceId = model.SelectedShippingAddressProvider
+                //                .GetShippingProvinceId(model),
+                //            CityId = model.SelectedShippingAddressProvider
+                //                .GetShippingCityId(model)
+                //        }));
+
+                // Compute available shipping options
                 var allShippingOptions = ShippingService
-                    .GetShippingOptions(new ShippingOptionComputeContext {
+                    .GetShippingOptions(new ExtendedShippingOptionComputeContext {
                         ProductQuantities = productQuantities,
                         ShippingMethods = shippingMethods,
                         Country = countryName,
                         PostalCode = model.ShippingPostalCode,
-                        WorkContextAccessor = _workContextAccessor
-                    }).ToList();
-                // Those tests done like that cannot be very reliable with respect to
-                // territories' configuration, unless we configure a hierarchy of postal
-                // codes. Rather than do that, we are going to do an hack on the PostalCode
-                // that will let a shipping criterion parse out the territory Ids.
-                allShippingOptions
-                    .AddRange(ShippingService
-                        .GetShippingOptions(new ExtendedShippingOptionComputeContext {
-                            ProductQuantities = productQuantities,
-                            ShippingMethods = shippingMethods,
-                            Country = countryName,
-                            PostalCode = model.ShippingPostalCode,
-                            WorkContextAccessor = _workContextAccessor,
-                                // Ids of territories from the shipping address provider
-                            CountryId = model.SelectedShippingAddressProvider
+                        WorkContextAccessor = _workContextAccessor,
+                        // Ids of territories from the shipping address provider
+                        CountryId = model.SelectedShippingAddressProvider
                                 .GetShippingCountryId(model),
-                            ProvinceId = model.SelectedShippingAddressProvider
+                        ProvinceId = model.SelectedShippingAddressProvider
                                 .GetShippingProvinceId(model),
-                            CityId = model.SelectedShippingAddressProvider
+                        CityId = model.SelectedShippingAddressProvider
                                 .GetShippingCityId(model)
-                        }));
+                    }).ToList();
                 // remove duplicate shipping options
                 model.AvailableShippingOptions = allShippingOptions
                     .Distinct(new ShippingOption.ShippingOptionComparer()).ToList();
@@ -506,7 +526,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // the selected shipping option
             if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // TODO: they selected no shipping!
-                // redirect them somewhere
+                // redirect them somewhere_shoppingCart.ShippingOption = null;
+                InjectServices(model);
+                model.FinalSetup();
+                TempData["CheckoutViewModel"] = model;
+                // This is such a weird error that we aren't sure how to handle it properly, so start over
+                return RedirectToAction("Index");
             }
             var selectedOption = ShippingService.RebuildShippingOption(model.ShippingOption);
             _shoppingCart.ShippingOption = selectedOption;
@@ -545,8 +570,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 _contentManager,
                 _addressConfigurationService,
                 _checkoutShippingAddressProviders);
-            // decode stuff that may be encoded
-            //ReinflateViewModelAddresses(model);
+
             model.ShippingRequired = IsShippingRequired();
             if (model.ShippingRequired && model.SelectedShippingOption == null) {
                 if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
@@ -621,8 +645,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 TempData["CheckoutViewModel"] = model;
                 return RedirectToAction("Review");
             }
-            // Re-validate the entire model to be safe
-            //ReinflateViewModelAddresses(model);
+
             // later we'll need the country and postal code
             var countryId = model.SelectedShippingAddressProvider
                     .GetShippingCountryId(model);
@@ -652,7 +675,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // 1. Create the PayementGatewayCharge we'll use for events
             var paymentGuid = Guid.NewGuid().ToString();
             // 2. Create the Order ContentItem
-            // TODO: The address may come from rpvodires so it may be something else than the
+            // TODO: The address may come from providers so it may be something else than the
             // address for a user.
             var order = _checkoutHelperService.CreateOrder(model.AsAddressesVM(), paymentGuid, countryName, postalCode);
 

@@ -53,6 +53,16 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
                         AddressRecordType.ShippingAddress, 
                         cvm.ShippingAddressVM);
             }
+            // make sure the list of coutries is populated (it may not be if
+            // the VM has just been reinflated)
+            if (cvm.ShippingAddressVM.Countries == null) {
+                cvm.ShippingAddressVM.Countries = _addressConfigurationService
+                    .CountryOptions();
+                cvm.ShippingAddressVM.ShippingCountries = _addressConfigurationService
+                    .CountryOptions(
+                        AddressRecordType.ShippingAddress, 
+                        cvm.ShippingAddressVM.CountryId);
+            }
 
             // TODO: use the same logic for a custom shape rather than the
             // one from the index

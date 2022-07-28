@@ -63,9 +63,7 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                 var shippingComputeContext = context.ApplicabilityContext.ShippingContext;
                 if (shippingComputeContext is ExtendedShippingOptionComputeContext) {
                     var extendedShippingContext = shippingComputeContext as ExtendedShippingOptionComputeContext;
-
                     
-
                     var ids = new List<int>();
                     if (extendedShippingContext.CountryId > 0) {
                         ids.Add(extendedShippingContext.CountryId);
