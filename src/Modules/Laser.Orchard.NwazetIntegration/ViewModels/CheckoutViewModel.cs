@@ -205,6 +205,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         #endregion
 
         #region Payments
+        [JsonIgnore]
         public IEnumerable<IPosService> PosServices { get; set; }
         /// <summary>
         /// Will contian the name of the selected PosService when the user
@@ -287,7 +288,7 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             return null;
         }
 
-        public void ReiflateState(
+        public void ReinflateState(
             IContentManager contentManager, 
             IAddressConfigurationService addressConfigurationService,
             IEnumerable<ICheckoutShippingAddressProvider> checkoutShippingAddressProviders) {

@@ -238,7 +238,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (model.ShippingRequired) {
                 model.AdditionalShippingAddressShapes =
                     _checkoutShippingAddressProviders.SelectMany(ep => 
-                        ep.GetIndexShippingAddressShapes(model));
+                        ep.GetIndexShippingAddressShapes(model))
+                        .ToList();
             }
             InjectServices(model);
             model.FinalSetup();
@@ -269,7 +270,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // probably be agnostic on the step it's called in and simply make sure all information 
                 // in the viewmodel can be accessed without sideeffects by the rest of the system.
                 // This operation includes reinflating the addresses as stored by each provider.
-                model.ReiflateState(
+                model.ReinflateState(
                     _contentManager,
                     _addressConfigurationService,
                     _checkoutShippingAddressProviders);
@@ -302,7 +303,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (model.ShippingRequired) {
                     model.ShippingAddressVM = CreateVM(AddressRecordType.ShippingAddress, model.ShippingAddressVM);
                 }
-                InjectServices(model);
                 if (user != null) {
                     // also load the list of existing addresses for them
                     model.ListAvailableBillingAddress =
@@ -377,7 +377,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // probably be agnostic on the step it's called in and simply make sure all information 
             // in the viewmodel can be accessed without sideeffects by the rest of the system.
             // This operation includes reinflating the addresses as stored by each provider.
-            model.ReiflateState(
+            model.ReinflateState(
                 _contentManager, 
                 _addressConfigurationService, 
                 _checkoutShippingAddressProviders);
@@ -403,35 +403,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 var shippingMethods = _shippingMethodProviders
                     .SelectMany(p => p.GetShippingMethods())
                     .ToList();
-                //// Test those providers with nwazet's default interface.
-                //var allShippingOptions = ShippingService
-                //    .GetShippingOptions(new ShippingOptionComputeContext {
-                //        ProductQuantities = productQuantities,
-                //        ShippingMethods = shippingMethods,
-                //        Country = countryName,
-                //        PostalCode = model.ShippingPostalCode,
-                //        WorkContextAccessor = _workContextAccessor
-                //    }).ToList();
-                //// Those tests done like that cannot be very reliable with respect to
-                //// territories' configuration, unless we configure a hierarchy of postal
-                //// codes. Rather than do that, we are going to do an hack on the PostalCode
-                //// that will let a shipping criterion parse out the territory Ids.
-                //allShippingOptions
-                //    .AddRange(ShippingService
-                //        .GetShippingOptions(new ExtendedShippingOptionComputeContext {
-                //            ProductQuantities = productQuantities,
-                //            ShippingMethods = shippingMethods,
-                //            Country = countryName,
-                //            PostalCode = model.ShippingPostalCode,
-                //            WorkContextAccessor = _workContextAccessor,
-                //                // Ids of territories from the shipping address provider
-                //            CountryId = model.SelectedShippingAddressProvider
-                //                .GetShippingCountryId(model),
-                //            ProvinceId = model.SelectedShippingAddressProvider
-                //                .GetShippingProvinceId(model),
-                //            CityId = model.SelectedShippingAddressProvider
-                //                .GetShippingCityId(model)
-                //        }));
 
                 // Compute available shipping options
                 var allShippingOptions = ShippingService
@@ -502,7 +473,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // probably be agnostic on the step it's called in and simply make sure all information 
             // in the viewmodel can be accessed without sideeffects by the rest of the system.
             // This operation includes reinflating the addresses as stored by each provider.
-            model.ReiflateState(
+            model.ReinflateState(
                 _contentManager,
                 _addressConfigurationService,
                 _checkoutShippingAddressProviders);
@@ -566,7 +537,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // probably be agnostic on the step it's called in and simply make sure all information 
             // in the viewmodel can be accessed without sideeffects by the rest of the system.
             // This operation includes reinflating the addresses as stored by each provider.
-            model.ReiflateState(
+            model.ReinflateState(
                 _contentManager,
                 _addressConfigurationService,
                 _checkoutShippingAddressProviders);
@@ -598,8 +569,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.EncodeAddresses();
             InjectServices(model);
             model.FinalSetup();
-            // make sure services are injected so they may be used
-            InjectServices(model);
             return View(model);
         }
 
@@ -620,7 +589,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // probably be agnostic on the step it's called in and simply make sure all information 
             // in the viewmodel can be accessed without sideeffects by the rest of the system.
             // This operation includes reinflating the addresses as stored by each provider.
-            model.ReiflateState(
+            model.ReinflateState(
                 _contentManager,
                 _addressConfigurationService,
                 _checkoutShippingAddressProviders);
@@ -648,7 +617,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
 
             // later we'll need the country and postal code
             var countryId = model.SelectedShippingAddressProvider
-                    .GetShippingCountryId(model);
+                .GetShippingCountryId(model);
             var country = _addressConfigurationService
                 ?.GetCountry(countryId);
             var countryName = country
@@ -720,12 +689,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private AddressEditViewModel CreateVM(AddressRecordType addressRecordType, AddressEditViewModel vm) {
             return AddressEditViewModel.CreateVM(_addressConfigurationService, addressRecordType, vm);
         }
-
-        private void ReinflateViewModelAddresses(CheckoutViewModel vm) {
-            // addresses
-            CheckoutViewModel.ReinflateViewModelAddresses(vm, _contentManager, _addressConfigurationService);
-        }
-
+        
         private void InjectServices(CheckoutViewModel vm) {
 
             // to correctly display prices, the view will need the currency provider
