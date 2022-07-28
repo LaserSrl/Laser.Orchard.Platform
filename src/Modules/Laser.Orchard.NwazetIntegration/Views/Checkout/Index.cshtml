@@ -85,6 +85,8 @@
                             id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
 
                     <fieldset class="shipping-address">
+                        @Html.HiddenFor(m => m.ShippingAddressVM.AddressType)
+                        @Html.HiddenFor(m => m.ShippingAddressVM.AddressRecord.AddressType)
                                 
                         @Display.AddressForm(
                             Prefix: "shippingAddressVM",
@@ -211,6 +213,8 @@
         } else {
             <fieldset class="shipping-address">
                 <legend>@T("Shipping Address")</legend>
+                @Html.HiddenFor(m => m.BillingAddressVM.AddressType)
+                @Html.HiddenFor(m => m.BillingAddressVM.AddressRecord.AddressType)
                 @Display.AddressForm(
                     Prefix: "shippingAddressVM",
                     Address: Model.ShippingAddressVM,

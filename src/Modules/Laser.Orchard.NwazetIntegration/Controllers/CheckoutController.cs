@@ -281,19 +281,10 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 return RedirectToAction("Index");
             }
             model.ShippingRequired = IsShippingRequired(); // we'll reuse this
-
-            // THESE NEXT FEW OPERATIONS ARE REINFLATION OF DATA THAT'S ALREADY AVAILABLE
+            
             // memorize the selected shipping address provider for later steps
             model.SelectedShippingAddressProvider = _checkoutShippingAddressProviders
                 .FirstOrDefault(sap => sap.IsSelectedProviderForIndex(model.SelectedShippingAddressProviderId));
-            // Ensure address types are initialized correctly 
-            model.BillingAddressVM.AddressType = AddressRecordType.BillingAddress;
-            model.BillingAddressVM.AddressRecord.AddressType = AddressRecordType.BillingAddress;
-            if (model.ShippingAddressVM != null) {
-                model.ShippingAddressVM.AddressType = AddressRecordType.ShippingAddress;
-                model.ShippingAddressVM.AddressRecord.AddressType = AddressRecordType.ShippingAddress;
-            }
-            // END OF REINFLATION
             
             // validate
             var validationSuccess = UpdateAndValidateVM(model);
