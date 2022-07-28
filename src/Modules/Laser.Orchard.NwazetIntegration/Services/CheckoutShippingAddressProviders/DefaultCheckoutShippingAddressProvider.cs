@@ -69,6 +69,18 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             yield break;
         }
 
+
+        public override IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel>
+            GetSummaryShippingAddressShapes(CheckoutViewModel cvm) {
+
+            if (!IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)) {
+                return base.GetSummaryShippingAddressShapes(cvm);
+            }
+            // TODO
+            // return the same shape currently used in AddressSummaryForm.cshtml
+            return base.GetSummaryShippingAddressShapes(cvm);
+        }
+
         public override bool IsSelectedProviderForIndex(string providerId) {
             // This is the default provider, so if for some reason no provider
             // appears selected, this will try and act as a fallback.

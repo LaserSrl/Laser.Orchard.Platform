@@ -20,13 +20,24 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         bool IsSelectedProviderForIndex(string providerId);
 
         /// <summary>
-        /// Shapes meant to be injected in the shape for the form that
+        /// Shapes meant to be injected in the shape for the form 
         /// where the user selects their shipping address.
         /// </summary>
         /// <param name="cvm">The current CheckoutViewModel under process.</param>
         /// <returns></returns>
         IEnumerable<AdditionalIndexShippingAddressViewModel>
             GetIndexShippingAddressShapes(CheckoutViewModel cvm);
+
+        /// <summary>
+        /// Shapes meant to be injected as small summary views across the checkout
+        /// process to remind the user of the selections they have made. Generally,
+        /// an implementation should only return somthing for the actively selected
+        /// provider, and only if the user has correctly selected a valid address.
+        /// </summary>
+        /// <param name="cvm"></param>
+        /// <returns></returns>
+        IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel>
+            GetSummaryShippingAddressShapes(CheckoutViewModel cvm);
 
         /// <summary>
         /// This will handle the values received when posting the addresses

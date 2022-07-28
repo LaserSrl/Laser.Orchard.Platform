@@ -136,8 +136,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public Dictionary<string, object> ProviderViewModels { get; set; }
 
         [JsonIgnore]
-        public IEnumerable<AdditionalIndexShippingAddressViewModel> AdditionalShippingAddressShapes { get; set; }
-
+        public IEnumerable<AdditionalIndexShippingAddressViewModel> 
+            AdditionalShippingAddressShapes { get; set; }
+        [JsonIgnore]
+        public IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel>
+            AdditionalShippingAddressSummaryShapes { get; set; }
 
         public Address BillingAddress { get; set; }
         public AddressEditViewModel BillingAddressVM { get; set; }

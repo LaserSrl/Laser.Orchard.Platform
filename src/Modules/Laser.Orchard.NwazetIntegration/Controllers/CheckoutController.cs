@@ -189,13 +189,25 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 // also load the list of existing addresses for them
                 model.ListAvailableBillingAddress =
                     _nwazetCommunicationService.GetBillingByUser(user);
+                if (model.ShippingRequired) {
+                    // we should also load shipping addresses to make sure further checks on them
+                    // are possible and don't risk depending on other providers.
+                    model.ListAvailableShippingAddress =
+                        _nwazetCommunicationService.GetShippingByUser(user);
+                }
             }
             // attempt to shortcircuit the actions
             if (model.UseDefaultAddress) {
-                // TODO: figure out a way for this to fall in line with the new address providers
-                // if the user has saved addresses, preselect the ones used most recently
-                if (model.ListAvailableBillingAddress.Any()
-                    && (!model.ShippingRequired || (model.ShippingRequired && model.ListAvailableShippingAddress.Any()))) {
+                // If the user has saved addresses, preselect the ones used most recently.
+                // TODO: this should really be handled by something whose logic is
+                // conceptually separate from this controller.
+                // There must be a selectable billing address
+                var tryShortCircuit = model.ListAvailableBillingAddress.Any();
+                // If shipping is required, there must be a selectable shipping address
+                if (model.ShippingRequired) {
+                    tryShortCircuit &= model.ListAvailableShippingAddress.Any();
+                }
+                if (tryShortCircuit) {
                     model.BillingAddressVM = new AddressEditViewModel(model
                         .ListAvailableBillingAddress
                         // pick the one used/updated most recently
@@ -206,7 +218,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         model.ShippingAddressVM = new AddressEditViewModel(model
                             .ListAvailableShippingAddress
                             .Where(ar => ar.CountryId > 0) // make sure the address is configured for a country that matches a territory
-                            // pick the one used/updated most recently
+                                                           // pick the one used/updated most recently
                             .OrderByDescending(a => a.TimeStampUTC)
                             .First());
                         model.SelectedShippingAddressProviderId = "default"; // hard coded fall back value
@@ -239,6 +251,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.AdditionalShippingAddressShapes =
                     _checkoutShippingAddressProviders.SelectMany(ep => 
                         ep.GetIndexShippingAddressShapes(model))
+                        // Enumerate so the methods are actually executed
                         .ToList();
             }
             InjectServices(model);
@@ -304,7 +317,9 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 if (model.ShippingRequired) {
                     model.AdditionalShippingAddressShapes =
                         _checkoutShippingAddressProviders.SelectMany(ep =>
-                            ep.GetIndexShippingAddressShapes(model));
+                            ep.GetIndexShippingAddressShapes(model))
+                            // Enumerate so the methods are actually executed
+                            .ToList();
                 }
                 InjectServices(model);
                 model.FinalSetup();

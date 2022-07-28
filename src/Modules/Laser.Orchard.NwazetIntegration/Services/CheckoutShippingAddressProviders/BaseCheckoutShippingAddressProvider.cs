@@ -15,6 +15,12 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             yield break;
         }
 
+        public virtual IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel>
+            GetSummaryShippingAddressShapes(CheckoutViewModel cvm) {
+            yield break;
+        }
+
+
         public virtual int GetShippingCountryId(CheckoutViewModel cvm) {
             return 0;
         }
