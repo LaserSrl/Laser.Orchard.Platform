@@ -158,30 +158,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
         [JsonIgnore]
         public List<AddressRecord> ListAvailableBillingAddress { get; set; }
-
-
+        
         private const string AddressEncryptionPurpose = "Serialize Address Information";
-        [JsonIgnore]
-        public string SerializedAddresses { get; set; }
-        public string EncodeAddresses() {
 
-            SerializedAddresses = Convert.ToBase64String(
-                MachineKey.Protect(
-                    Encoding.UTF8.GetBytes(
-                        JsonConvert.SerializeObject(AsAddressesVM())),
-                    AddressEncryptionPurpose
-                    ));
-            return SerializedAddresses;
-        }
-        public void DecodeAddresses() {
-            var bytes = Convert.FromBase64String(SerializedAddresses);
-            var unprotected = MachineKey.Unprotect(bytes, AddressEncryptionPurpose);
-            if (unprotected != null) {
-                SetAddressesVM(
-                    JsonConvert.DeserializeObject<AddressesVM>(
-                        Encoding.UTF8.GetString(unprotected)));
-            }
-        }
         public bool ResetAddresses { get; set; }
         #endregion
 
@@ -216,50 +195,6 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         /// </summary>
         public string SelectedPosService { get; set; }
         #endregion
-
-        public static void ReinflateViewModelAddresses(
-            CheckoutViewModel vm, IContentManager contentManager, IAddressConfigurationService addressConfigurationService) {
-            // addresses
-            if ((vm.ShippingAddressVM == null || vm.BillingAddressVM == null)
-                && !string.IsNullOrWhiteSpace(vm.SerializedAddresses)) {
-                vm.DecodeAddresses();
-            }
-            Func<string, int, string> inflateName = (str, id) => {
-                if (string.IsNullOrWhiteSpace(str)) {
-                    var territory = addressConfigurationService
-                        .SingleTerritory(id);
-                    if (territory != null) {
-                        return contentManager
-                            .GetItemMetadata(territory).DisplayText;
-                    }
-                }
-                return str;
-            };
-            if (vm.ShippingAddressVM != null) {
-                if (vm.ShippingAddress == null) {
-                    vm.ShippingAddress = vm.ShippingAddressVM.MakeAddressFromVM();
-                }
-                // reinflate the names of country, province and city
-                vm.ShippingAddressVM.Country = inflateName(
-                    vm.ShippingAddressVM.Country, vm.ShippingAddressVM.CountryId);
-                vm.ShippingAddressVM.Province = inflateName(
-                    vm.ShippingAddressVM.Province, vm.ShippingAddressVM.ProvinceId);
-                vm.ShippingAddressVM.City = inflateName(
-                    vm.ShippingAddressVM.City, vm.ShippingAddressVM.CityId);
-            }
-            if (vm.BillingAddressVM != null) {
-                if (vm.BillingAddress == null) {
-                    vm.BillingAddress = vm.BillingAddressVM.MakeAddressFromVM();
-                }
-                // reinflate the names of country, province and city
-                vm.BillingAddressVM.Country = inflateName(
-                    vm.BillingAddressVM.Country, vm.BillingAddressVM.CountryId);
-                vm.BillingAddressVM.Province = inflateName(
-                    vm.BillingAddressVM.Province, vm.BillingAddressVM.ProvinceId);
-                vm.BillingAddressVM.City = inflateName(
-                    vm.BillingAddressVM.City, vm.BillingAddressVM.CityId);
-            }
-        }
 
         [JsonIgnore]
         public string State { get; set; }

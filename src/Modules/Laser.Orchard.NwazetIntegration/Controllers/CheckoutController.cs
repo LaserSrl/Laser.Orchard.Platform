@@ -429,10 +429,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         return ShippingPOST(model);
                     }
                 }
-                // to correctly display prices, the view will need the currency provider
-                model.CurrencyProvider = _currencyProvider;
-                // encode addresses so we can hide them in the form
-                model.EncodeAddresses();
+
                 FinalizeCheckoutViewModel(model);
                 return View(model);
             }

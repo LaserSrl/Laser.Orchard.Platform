@@ -119,7 +119,6 @@
     Url.Action("Index", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "address-summary" })) {
 
     @*serialized address data*@
-    @Html.Hidden("SerializedAddresses", viewModel.SerializedAddresses)
     @Html.Hidden("State", viewModel.State)
     @Html.Hidden("BillAtSameShippingAddress", viewModel.BillAtSameShippingAddress)
     @* We aren't also putting in this form the shipping options, even when they exist,
