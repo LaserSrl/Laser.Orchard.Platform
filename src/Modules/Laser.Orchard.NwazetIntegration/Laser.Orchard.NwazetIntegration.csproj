@@ -502,6 +502,10 @@
     <Content Include="Views\EditorTemplates\Parts\PickupPoint.BackToList.cshtml" />
     <Content Include="Views\CheckoutPickupPointsIndexShape.cshtml" />
     <Content Include="Views\Parts\PickupPoint_Summary.cshtml" />
+    <Content Include="Views\CheckoutPickupPointAddressSummaryShape.cshtml" />
+    <Content Include="Views\CheckoutDefaultShippingAddressSummaryShape.cshtml" />
+    <Content Include="Views\Content.AddressSummary.cshtml" />
+    <Content Include="Views\PickupPointAddressSummaryTitle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

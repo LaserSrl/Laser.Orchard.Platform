@@ -5,6 +5,9 @@
     </Match>
     <Place Parts_PickupPoint_Summary="Content:2" />
   </Match>
+  <Match DisplayType="AddressSummary">
+    <Place Parts_PickupPoint_Summary="Content:2" />
+  </Match>
   <Place Parts_NwazetContact="Content:5" />
   <Place SiteSettings_CheckoutSettings="Content:4.1" />
   <Place SiteSettings_CheckoutPolicySettings="Content:4.2" />
@@ -28,4 +31,15 @@
   <!--Hide away the editor shape for shipping areas-->
   <Place Parts_ShippingMethodShippingAreas_Edit="-"/>
   <Place Parts_EcommerceAnalyticsSettings_Edit="Content:10.1"/>
+  
+  <!--Frontend stuff for pickup points in checkout steps-->
+  <Match HasParts="PickupPointPart">
+    <Match DisplayType="Detail"></Match>
+    <Match DisplayType="Summary">
+      <Place Parts_Title_Summary="Header:5;Alternate=PickupPointAddressSummaryTitle"/>
+    </Match>
+    <Match DisplayType="AddressSummary">
+      <Place Parts_Title_Summary="Header:5;Alternate=PickupPointAddressSummaryTitle"/>
+    </Match>
+  </Match>
 </Placement>

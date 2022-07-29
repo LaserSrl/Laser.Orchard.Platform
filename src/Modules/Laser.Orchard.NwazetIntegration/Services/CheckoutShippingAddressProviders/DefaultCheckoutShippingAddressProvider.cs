@@ -7,6 +7,8 @@ using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Title.Models;
+using Orchard.DisplayManagement;
+using Orchard.Localization;
 
 namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders {
     public class DefaultCheckoutShippingAddressProvider
@@ -17,13 +19,15 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IContentManager _contentManager;
+        private readonly dynamic _shapeFactory;
 
         public DefaultCheckoutShippingAddressProvider(
             IAddressConfigurationService addressConfigurationService,
             IEnumerable<IValidationProvider> validationProviders,
             IWorkContextAccessor workContextAccessor,
             INwazetCommunicationService nwazetCommunicationService,
-            IContentManager contentManager) 
+            IContentManager contentManager,
+            IShapeFactory shapeFactory) 
             : base() {
 
             _addressConfigurationService = addressConfigurationService;
@@ -31,7 +35,9 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             _workContextAccessor = workContextAccessor;
             _nwazetCommunicationService = nwazetCommunicationService;
             _contentManager = contentManager;
+            _shapeFactory = shapeFactory;
         }
+        
 
         private const string ProviderId = "default";
 
@@ -72,13 +78,20 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
 
         public override IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel>
             GetSummaryShippingAddressShapes(CheckoutViewModel cvm) {
-
-            if (!IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)) {
-                return base.GetSummaryShippingAddressShapes(cvm);
+            
+            if (IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)
+                && cvm.ShippingAddressVM != null) {
+                // The shape used for summary is generally the same we used to 
+                // display in AddessSummaryForm.cshtml for the ShippingAddressVM, 
+                // only now it's returned separately so it's only displayed when 
+                // this is the provider being used for shipping addresses.
+                yield return new AdditionalCheckoutShippingAddressSummaryViewModel {
+                    UniqueProviderId = ProviderId,
+                    TabShape = _shapeFactory.CheckoutDefaultShippingAddressSummaryShape(
+                        ViewModel: cvm.ShippingAddressVM
+                        )
+                };
             }
-            // TODO
-            // return the same shape currently used in AddressSummaryForm.cshtml
-            return base.GetSummaryShippingAddressShapes(cvm);
         }
 
         public override bool IsSelectedProviderForIndex(string providerId) {

@@ -78,13 +78,22 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         public override IEnumerable<AdditionalCheckoutShippingAddressSummaryViewModel> 
             GetSummaryShippingAddressShapes(CheckoutViewModel cvm) {
 
-            if (!IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)) {
-                return base.GetSummaryShippingAddressShapes(cvm);
+            if (IsSelectedProviderForIndex(cvm.SelectedShippingAddressProviderId)) {
+                // Get the selected PickupPoint and prepare a shape to display it
+                // in summaries across the checkout process.
+                var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)
+                    ? (PickupPointsCheckoutViewModel)cvm.ProviderViewModels[ProviderId]
+                    : new PickupPointsCheckoutViewModel();
+                var selectedPart = viewModel.PickupPointPart;
+                if (selectedPart != null) {
+                    yield return new AdditionalCheckoutShippingAddressSummaryViewModel {
+                        UniqueProviderId = ProviderId,
+                        TabShape = _shapeFactory.CheckoutPickupPointAddressSummaryShape(
+                            PickupPointPart: selectedPart
+                        )
+                    };
+                }
             }
-            // TODO
-            // Get the selected PickupPoint and prepare a shape to display it
-            // in summaries across the checkout process.
-            return base.GetSummaryShippingAddressShapes(cvm);
         }
 
         public override bool IsSelectedProviderForIndex(string providerId) {

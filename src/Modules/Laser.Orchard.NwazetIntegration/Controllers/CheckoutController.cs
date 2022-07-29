@@ -232,10 +232,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         _shoppingCart.ZipCode = model.ShippingAddressVM.PostalCode;
                     }
                     // redirect to next step
-                    InjectServices(model);
-                    model.FinalSetup();
-                    // Put the model we validated in TempData so it can be reused in the next action.
-                    TempData["CheckoutViewModel"] = model;
+                    FinalizeCheckoutViewModel(model, false);
                     // we redirect to this post action, where we do validation
                     return IndexPOST(model);
                 }
@@ -254,8 +251,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // Enumerate so the methods are actually executed
                         .ToList();
             }
-            InjectServices(model);
-            model.FinalSetup();
+            FinalizeCheckoutViewModel(model, false);
             return View(model);
         }
 
@@ -287,10 +283,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     _contentManager,
                     _addressConfigurationService,
                     _checkoutShippingAddressProviders);
-                InjectServices(model);
-                model.FinalSetup();
-                // Put the model we validated in TempData so it can be reused in the next action.
-                TempData["CheckoutViewModel"] = model;
+                FinalizeCheckoutViewModel(model, false);
                 return RedirectToAction("Index");
             }
             model.ShippingRequired = IsShippingRequired(); // we'll reuse this
@@ -321,8 +314,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             // Enumerate so the methods are actually executed
                             .ToList();
                 }
-                InjectServices(model);
-                model.FinalSetup();
+                FinalizeCheckoutViewModel(model, false);
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -337,10 +329,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // If no shipping is required we can move on to reviewing the order.
             // At this stage, since we also have the correct address, we can correctly compute TAX
             // TODO: compute VAT
-            InjectServices(model);
-            model.FinalSetup();
-            // Put the model we validated in TempData so it can be reused in the next action.
-            TempData["CheckoutViewModel"] = model;
+            FinalizeCheckoutViewModel(model, false);
             if (IsShippingRequired()) {
                 // Set values into the ShoppingCart storage
                 // This information may come from "any" shipping destination, not just the shipping
@@ -436,8 +425,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // option so it should not trigger this condition
                     if (string.IsNullOrWhiteSpace(model.ShippingOption) && model.AvailableShippingOptions.Count == 1) {
                         model.ShippingOption = model.AvailableShippingOptions.First().FormValue;
-                        InjectServices(model);
-                        model.FinalSetup();
+                        FinalizeCheckoutViewModel(model);
                         return ShippingPOST(model);
                     }
                 }
@@ -445,9 +433,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 model.CurrencyProvider = _currencyProvider;
                 // encode addresses so we can hide them in the form
                 model.EncodeAddresses();
-                // make sure services are injected so they may be used
-                InjectServices(model);
-                model.FinalSetup();
+                FinalizeCheckoutViewModel(model);
                 return View(model);
             }
             // to get here something must have gone very wrong. Perhaps the user
@@ -456,10 +442,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // Either way, go through the index in an attempt to properly repopulate 
             // the addresses
             model.UseDefaultAddress = true;
-            InjectServices(model);
-            model.FinalSetup();
-            // Put the model in TempData so it can be reused in the next action.
-            TempData["CheckoutViewModel"] = model;
+            FinalizeCheckoutViewModel(model);
             return RedirectToAction("Index");
         }
 
@@ -488,9 +471,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (model.ResetShipping || string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // Put the model we validated in TempData so it can be reused in the next action.
                 _shoppingCart.ShippingOption = null;
-                InjectServices(model);
-                model.FinalSetup();
-                TempData["CheckoutViewModel"] = model;
+                FinalizeCheckoutViewModel(model);
 
                 // used tempdata because doing the "redirecttoaction" doesn't keep the modelstate value saved
                 // it is an error only if I am not doing a reset shipping, 
@@ -504,9 +485,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (string.IsNullOrWhiteSpace(model.ShippingOption)) {
                 // TODO: they selected no shipping!
                 // redirect them somewhere_shoppingCart.ShippingOption = null;
-                InjectServices(model);
-                model.FinalSetup();
-                TempData["CheckoutViewModel"] = model;
+                FinalizeCheckoutViewModel(model);
                 // This is such a weird error that we aren't sure how to handle it properly, so start over
                 return RedirectToAction("Index");
             }
@@ -515,10 +494,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.SelectedShippingOption = selectedOption;
             model.ShippingRequired = IsShippingRequired();
 
-            InjectServices(model);
-            model.FinalSetup();
-            // Put the model in TempData so it can be reused in the next action.
-            TempData["CheckoutViewModel"] = model;
+            FinalizeCheckoutViewModel(model);
             return RedirectToAction("Review");
         }
 
@@ -556,9 +532,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                     // Put the model in TempData so it can be reused in the next action.
                     // This is an attempt to skip shipping, so try to shortcircuit.
                     model.UseDefaultShipping = true;
-                    InjectServices(model);
-                    model.FinalSetup();
-                    TempData["CheckoutViewModel"] = model;
+                    FinalizeCheckoutViewModel(model);
                     return RedirectToAction("Shipping");
                 }
                 var selectedOption = ShippingService.RebuildShippingOption(model.ShippingOption);
@@ -572,8 +546,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             model.PosServices = _posServices;
 
             // encode addresses so we can hide them in the form
-            model.EncodeAddresses();
-            InjectServices(model);
+            FinalizeCheckoutViewModel(model);
             model.FinalSetup();
             return View(model);
         }
@@ -603,9 +576,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (string.IsNullOrWhiteSpace(model.SelectedPosService)) {
                 // the user selected no payment method
                 _notifier.Error(T("Impossible to start payment with the selected provider. Please try again."));
-                InjectServices(model);
-                model.FinalSetup();
-                TempData["CheckoutViewModel"] = model;
+                FinalizeCheckoutViewModel(model);
                 return RedirectToAction("Review");
             }
             // get the pos by name
@@ -615,9 +586,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (selectedService == null) {
                 // data got corrupted?
                 _notifier.Error(T("Impossible to start payment with the selected provider. Please try again."));
-                InjectServices(model);
-                model.FinalSetup();
-                TempData["CheckoutViewModel"] = model;
+                FinalizeCheckoutViewModel(model);
                 return RedirectToAction("Review");
             }
 
@@ -671,9 +640,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             payment = selectedService.StartPayment(payment, paymentGuid);
             // 5. Get form the IPosService the controller URL and redirect there.
             // Put the model in TempData so it can be reused in the next action.
-            InjectServices(model);
-            model.FinalSetup();
-            TempData["CheckoutViewModel"] = model;
+            FinalizeCheckoutViewModel(model);
             return Redirect(selectedService.GetPosActionUrl(payment.Guid));
         }
 
@@ -702,6 +669,23 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             vm.CurrencyProvider = _currencyProvider;
             vm.ShoppingCart = _shoppingCart;
             vm.ProductPriceService = _productPriceService;
+        }
+
+        private void FinalizeCheckoutViewModel(CheckoutViewModel vm, 
+            bool addAddressSummaryShapes = true) {
+
+            if (addAddressSummaryShapes && vm.ShippingRequired) {
+                vm.AdditionalShippingAddressSummaryShapes =
+                    _checkoutShippingAddressProviders.SelectMany(ep =>
+                        ep.GetSummaryShippingAddressShapes(vm))
+                        // Enumerate so the methods are actually executed
+                        .ToList();
+            }
+            InjectServices(vm);
+            vm.FinalSetup();
+            // Put the model we validated in TempData so it can be reused in the next action.
+            // This also helps when users refresh the page in a step.
+            TempData["CheckoutViewModel"] = vm;
         }
 
         private bool UpdateAndValidateVM(CheckoutViewModel vm) {

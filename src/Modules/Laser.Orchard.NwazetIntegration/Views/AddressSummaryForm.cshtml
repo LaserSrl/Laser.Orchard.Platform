@@ -80,11 +80,10 @@
     }
 </div>
 }
-@if (viewModel.ShippingAddressVM != null) {
-    <fieldset class="address-summary shipping-address">
-        <legend>@T("Shipping to:")</legend>
-        @DrawAddress(viewModel.ShippingAddressVM)
-    </fieldset>
+@if (viewModel.AdditionalShippingAddressSummaryShapes != null) {
+    foreach (var acsas in viewModel.AdditionalShippingAddressSummaryShapes) {
+        @Display(acsas.TabShape)
+    }
 }
 @if (viewModel.BillingAddressVM != null) {
     <fieldset class="address-summary billing-address">
