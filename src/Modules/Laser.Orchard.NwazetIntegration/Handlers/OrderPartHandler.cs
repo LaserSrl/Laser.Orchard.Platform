@@ -32,7 +32,6 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
             }
             return definition.Parts.Any(ctpd => ctpd.PartDefinition.Name.Equals("OrderPart"));
         }
-
         protected override void GetItemMetadata(GetContentItemMetadataContext context) {
             var order = context.ContentItem.As<OrderPart>();
             if (order == null) {

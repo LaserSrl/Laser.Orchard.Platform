@@ -304,6 +304,16 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 ShippingPostalCode = SelectedShippingAddressProvider
                     .GetShippingPostalCode(this);
             }
+
+            // always reinflate this information
+            Email = string.IsNullOrWhiteSpace(Email) 
+                ? tempVm.Email : Email;
+            Phone = string.IsNullOrWhiteSpace(Phone) 
+                ? tempVm.Phone : Phone;
+            PhonePrefix = string.IsNullOrWhiteSpace(PhonePrefix) 
+                ? tempVm.PhonePrefix : PhonePrefix;
+            SpecialInstructions = string.IsNullOrWhiteSpace(SpecialInstructions) 
+                ? tempVm.SpecialInstructions : SpecialInstructions;
         }
 
         /// <summary>

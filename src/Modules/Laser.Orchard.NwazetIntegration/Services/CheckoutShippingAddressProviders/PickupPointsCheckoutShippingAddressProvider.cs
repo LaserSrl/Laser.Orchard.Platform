@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Newtonsoft.Json.Linq;
+using Nwazet.Commerce.Models;
 using Orchard.ContentManagement;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
@@ -259,6 +260,25 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
                     ProviderId, inflatedInfoObject);
             } else {
                 context.TargetCheckoutViewModel.ProviderViewModels[ProviderId] = inflatedInfoObject;
+            }
+            // In case this provider is the actively selected one, we should be also reinflating 
+            // the ShippingAddress property of the CheckoutViewmodel. This is the object Nwazet 
+            // will try to understand as an address.
+            if (IsSelectedProviderForIndex(context.TargetCheckoutViewModel.SelectedShippingAddressProviderId)) {
+                if (inflatedInfoObject != null && inflatedInfoObject.PickupPointPart != null) {
+                    // Some information is not available on PickupPoints, so we take it from the
+                    // BillingAddress, since that is always mandatory.
+                    context.TargetCheckoutViewModel.ShippingAddress = new Address {
+                        FirstName = context.TargetCheckoutViewModel.BillingAddress.FirstName,
+                        LastName = context.TargetCheckoutViewModel.BillingAddress.LastName,
+                        Address1 = inflatedInfoObject.PickupPointPart.AddressLine1,
+                        Address2 = inflatedInfoObject.PickupPointPart.AddressLine2,
+                        City = inflatedInfoObject.PickupPointPart.CityName,
+                        Province = inflatedInfoObject.PickupPointPart.ProvinceName,
+                        PostalCode = inflatedInfoObject.PickupPointPart.PostalCode,
+                        Country = inflatedInfoObject.PickupPointPart.CountryName
+                    };
+                }
             }
         }
 

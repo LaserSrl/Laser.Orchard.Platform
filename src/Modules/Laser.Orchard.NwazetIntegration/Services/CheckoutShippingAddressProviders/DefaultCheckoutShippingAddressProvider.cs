@@ -164,7 +164,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
 
         public override void ReinflateShippingAddress(ShippingAddressReinflationContext context) {
             if (context.TargetCheckoutViewModel.ShippingAddressVM == null) {
-                context.TargetCheckoutViewModel.ShippingAddressVM = context.SourceCheckoutViewModel.ShippingAddressVM;
+                context.TargetCheckoutViewModel.ShippingAddressVM = 
+                    context.SourceCheckoutViewModel.ShippingAddressVM;
             }
             if (context.TargetCheckoutViewModel.ShippingAddressVM != null) {
                 if (context.TargetCheckoutViewModel.ShippingAddress == null) {

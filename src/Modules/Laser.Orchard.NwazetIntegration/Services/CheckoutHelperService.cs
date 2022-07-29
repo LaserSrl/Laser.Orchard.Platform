@@ -21,6 +21,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         private readonly ICurrencyProvider _currencyProvider;
         private readonly IEnumerable<IOrderAdditionalInformationProvider> _orderAdditionalInformationProviders;
         private readonly Lazy<IEnumerable<ICheckoutCondition>> _checkoutConditions;
+        private readonly IAddressConfigurationService _addressConfigurationService;
 
         public CheckoutHelperService(
             IShoppingCart shoppingCart,
@@ -30,7 +31,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             IWorkContextAccessor workContextAccessor,
             ICurrencyProvider currencyProvider,
             IEnumerable<IOrderAdditionalInformationProvider> orderAdditionalInformationProviders,
-            Lazy<IEnumerable<ICheckoutCondition>> checkoutConditions) {
+            Lazy<IEnumerable<ICheckoutCondition>> checkoutConditions,
+            IAddressConfigurationService addressConfigurationService) {
 
             _shoppingCart = shoppingCart;
             _productPriceService = productPriceService;
@@ -40,6 +42,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             _currencyProvider = currencyProvider;
             _orderAdditionalInformationProviders = orderAdditionalInformationProviders;
             _checkoutConditions = checkoutConditions;
+            _addressConfigurationService = addressConfigurationService;
         }
 
         private IEnumerable<ICheckoutCondition> CheckoutConditions {
@@ -49,11 +52,23 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         }
 
         public OrderPart CreateOrder(
-            AddressesVM model,
-            string paymentGuid,
-            string countryName = null,
-            string postalCode = null) {
+            CheckoutViewModel cvm,
+            string paymentGuid) {
 
+            // Prepare some preliminary information we'll use for the next steps
+            var countryId = cvm.SelectedShippingAddressProvider
+                .GetShippingCountryId(cvm);
+            var country = _addressConfigurationService
+                ?.GetCountry(countryId);
+            var countryName = country
+                ?.Record?.TerritoryInternalRecord.Name;
+            _shoppingCart.Country = countryName;
+            var postalCode = cvm.ShippingPostalCode;
+
+            // Prepare the parameters we'll need to configure a new Order:
+            // Object describing the economic transaction.
+            var charge = new PaymentGatewayCharge("Checkout Controller", paymentGuid);
+            // Items/products in the cart
             var checkoutItems = _shoppingCart.GetProducts()
                 .Select(scp => new CheckoutItem {
                     Attributes = scp.AttributeIdsToValues,
@@ -68,66 +83,76 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     Title = _contentManager.GetItemMetadata(scp.Product).DisplayText,
                     ProductVersion = scp.Product.ContentItem.Version
                 });
-
-            var charge = new PaymentGatewayCharge("Checkout Controller", paymentGuid);
-            // 2. Create the Order ContentItem
+            // Shipping address is computed based on the selected shipping address provider: each
+            // provider handles that on its own when reinflating its information, if it is the
+            // selected provider.
+            var shippingAddress = cvm.ShippingAddress;
+            // Current user
             var user = _workContextAccessor.GetContext().CurrentUser;
-            var orderContext = new OrderContext {
+            // Context object for providers extending the order.
+            // TODO: This should be extended 
+            var orderContext = new ExtendedOrderContext {
                 WorkContextAccessor = _workContextAccessor,
                 ShoppingCart = _shoppingCart,
                 Charge = charge,
-                ShippingAddress = model.ShippingAddress,
-                BillingAddress = model.BillingAddress
+                ShippingAddress = shippingAddress,
+                BillingAddress = cvm.BillingAddress,
+                CheckoutViewModel = cvm
             };
+
+            // Create the Order ContentItem. This goes through its own service chain so it
+            // doesn't normally fire the normal sequence of content handlers.
             var order = _orderService.CreateOrder(
-                charge,
-                checkoutItems,
-                _shoppingCart.Subtotal(),
-                _shoppingCart.Total(),
-                _shoppingCart.Taxes(),
-                _shoppingCart.ShippingOption,
-                model.ShippingAddress,
-                model.BillingAddress,
-                model.Email,
-                model.PhonePrefix + " " + model.Phone,
-                model.SpecialInstructions,
-                OrderPart.Pending, //.Cancelled,
-                null,
-                false,
-                user != null ? user.Id : -1,
-                0,
-                "",
-                _currencyProvider.CurrencyCode,
-                _orderAdditionalInformationProviders
+                charge: charge,
+                items: checkoutItems,
+                subTotal: _shoppingCart.Subtotal(),
+                total: _shoppingCart.Total(),
+                taxes: _shoppingCart.Taxes(),
+                shippingOption: _shoppingCart.ShippingOption,
+                shippingAddress: shippingAddress,
+                billingAddress: cvm.BillingAddress,
+                customerEmail: cvm.Email,
+                customerPhone: cvm.PhonePrefix + " " + cvm.Phone,
+                specialInstructions: cvm.SpecialInstructions,
+                status: OrderPart.Pending, //.Cancelled,
+                trackingUrl:  null,
+                isTestOrder: false,
+                userId: user != null ? user.Id : -1,
+                amountPaid: 0.0M,
+                purchaseOrder: "",
+                currencyCode: _currencyProvider.CurrencyCode,
+                additionalElements: _orderAdditionalInformationProviders
                     .SelectMany(oaip => oaip.PrepareAdditionalInformation(orderContext)));
 
-            // 2.1. Verify address information in the AddressOrderPart
+            // Verify address information in the AddressOrderPart
             //   (we have to do this explicitly because the management of Order
             //   ContentItems does not go through drivers and such)
             var addressPart = order.As<AddressOrderPart>();
             if (addressPart != null) {
-                // shipping info
-                if (model.ShippingAddressVM != null) {
-                    // may not have a shipping address is shipping isn't required
-                    addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
-                    addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
-                    addressPart.ShippingCityName = model.ShippingAddressVM.City;
-                    addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
-                    addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
-                    addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
+                // TODO: Shipping info should come from the providers
+                if (cvm.ShippingRequired) {
+                    // may not have a shipping address if shipping isn't required
+                    addressPart.ShippingCountryName = cvm.ShippingAddress.Country;
+                    addressPart.ShippingCountryId = cvm.SelectedShippingAddressProvider
+                        .GetShippingCountryId(cvm);
+                    addressPart.ShippingCityName = cvm.ShippingAddress.City;
+                    addressPart.ShippingCityId = cvm.SelectedShippingAddressProvider
+                        .GetShippingCityId(cvm);
+                    addressPart.ShippingProvinceName = cvm.ShippingAddress.Province;
+                    addressPart.ShippingProvinceId = cvm.SelectedShippingAddressProvider
+                        .GetShippingProvinceId(cvm);
                     // added information to manage saving in bo
                     addressPart.ShippingAddressIsOptional = false;
-                }
-                else {
+                } else {
                     addressPart.ShippingAddressIsOptional = true;
                 }
-                // billing
-                addressPart.BillingCountryName = model.BillingAddressVM.Country;
-                addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
-                addressPart.BillingCityName = model.BillingAddressVM.City;
-                addressPart.BillingCityId = model.BillingAddressVM.CityId;
-                addressPart.BillingProvinceName = model.BillingAddressVM.Province;
-                addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                // Billing address
+                addressPart.BillingCountryName = cvm.BillingAddressVM.Country;
+                addressPart.BillingCountryId = cvm.BillingAddressVM.CountryId;
+                addressPart.BillingCityName = cvm.BillingAddressVM.City;
+                addressPart.BillingCityId = cvm.BillingAddressVM.CityId;
+                addressPart.BillingProvinceName = cvm.BillingAddressVM.Province;
+                addressPart.BillingProvinceId = cvm.BillingAddressVM.ProvinceId;
             }
             // To properly handle the order's advanced address configuration we need
             // to call again the providers to store the additional data, because when they 
@@ -137,9 +162,12 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             foreach (var oaip in _orderAdditionalInformationProviders) {
                 oaip.StoreAdditionalInformation(order);
             }
-            order.LogActivity(OrderPart.Event, "Order created", _workContextAccessor.GetContext()?.CurrentUser?.UserName ?? (!string.IsNullOrWhiteSpace(model.Email) ? model.Email : "Anonymous"));
-            // 2.2. Unpublish the order
-            // we unpublish the order here. The service from Nwazet creates it
+            order.LogActivity(OrderPart.Event,
+                "Order created",
+                _workContextAccessor.GetContext()?.CurrentUser?.UserName
+                    ?? (!string.IsNullOrWhiteSpace(cvm.Email) ? cvm.Email : "Anonymous"));
+            // Unpublish the order
+            // We MUST unpublish the order here. The service from Nwazet creates it
             // and publishes it. This would cause issues whenever a user leaves
             // mid checkout rather than completing the entire process, because we
             // would end up having unprocessed orders that are created and published.

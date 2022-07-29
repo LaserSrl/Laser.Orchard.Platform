@@ -108,7 +108,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <summary>
         /// Perform necessary operations to reinflate shipping addresses that
         /// may be referenced from within the passed context. This method should on principle
-        /// only be called for selected providers.
+        /// only be called for selected providers. In implementations of this method, selected
+        /// providers should take care of assigning values to the ShippingAddress property
+        /// of the CheckoutViewmodel that will be used at the end of the checkout process to
+        /// create a new Order.
         /// </summary>
         /// <param name="context"></param>
         void ReinflateShippingAddress(ShippingAddressReinflationContext context);

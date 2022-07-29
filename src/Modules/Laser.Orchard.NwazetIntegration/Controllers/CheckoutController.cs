@@ -613,12 +613,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             // TODO: Validate Cart
             // Here we want to:
-            // 1. Create the PayementGatewayCharge we'll use for events
+            // 1. Create the guid we'll use to identify the payment in events, the order and
+            // in the payment gateways
             var paymentGuid = Guid.NewGuid().ToString();
             // 2. Create the Order ContentItem
             // TODO: The address may come from providers so it may be something else than the
             // address for a user.
-            var order = _checkoutHelperService.CreateOrder(model.AsAddressesVM(), paymentGuid, countryName, postalCode);
+            var order = _checkoutHelperService.CreateOrder(model, paymentGuid);
 
             // 3. Don't attach the address from the Order to the Contact for
             //   the user, because that was done when inputing the address.

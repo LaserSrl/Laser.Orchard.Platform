@@ -234,6 +234,7 @@
     <Compile Include="Services\CheckoutShippingAddressProviders\PickupPointsCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\ShippingAddressReinflationContext.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\ExtendedOrderContext.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
