@@ -9719,9 +9719,22 @@ body.mce-fullscreen #header {
     content: "\00a0"; }
 
 /* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
-#local-navigation {
-  margin-bottom: -17px; }
-  #local-navigation .localmenu-local-admin li {
-    line-height: 1.6em; }
-    #local-navigation .localmenu-local-admin li a {
-      line-height: 1.6em; }
+/*html {
+    &.orchard-blogs {
+        #local-navigation {
+            margin-bottom: -17px;
+
+            .localmenu-local-admin {
+                li {
+                    &.local-section-blog-posts, &.local-section-search-posts {
+                        line-height: 1.6em;
+
+                        a {
+                            line-height: 1.6em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}*/
