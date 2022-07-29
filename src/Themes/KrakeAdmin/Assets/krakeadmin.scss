@@ -11897,3 +11897,20 @@ body {
         }
     }
 }
+
+/* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
+#content {
+    margin-top: 0;
+}
+
+#local-navigation {
+    .localmenu-local-admin {
+        li {
+            line-height: 1.6em;
+
+            a {
+                line-height: 1.6em;
+            }
+        }
+    }
+}
