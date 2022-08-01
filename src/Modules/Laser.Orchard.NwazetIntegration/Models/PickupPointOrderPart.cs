@@ -98,6 +98,14 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return Retrieve(r => r.IsOrderPickupPoint); }
             set { Store(r => r.IsOrderPickupPoint, value); }
         }
+        // The PickupPointPart that had been selected for the order (if any)
+        // might be updated during the lifetime of an order. Rather than
+        // storing a reference to it, we store its displaytext/title here,
+        // so we may show it to users both in the frontend and the backend.
+        public string PickupPointTitle {
+            get { return Retrieve(r => r.PickupPointTitle); }
+            set { Store(r => r.PickupPointTitle, value); }
+        }
 
         public void ExtendCreation(CheckoutViewModel cvm) {
             // If the Order is addressed to a pickup point, then flag this
@@ -126,6 +134,8 @@ namespace Laser.Orchard.NwazetIntegration.Models {
                     AddressLine1 = selectedPart.AddressLine1;
                     AddressLine2 = selectedPart.AddressLine2;
                     PostalCode = selectedPart.PostalCode;
+                    PickupPointTitle = selectedPart.ContentItem
+                        ?.ContentManager?.GetItemMetadata(selectedPart)?.DisplayText ?? string.Empty;
                 }
             }
         }

@@ -25,5 +25,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         // Flag telling whether a pickup point had been selected for the
         // order this part is attached to.
         public virtual bool IsOrderPickupPoint { get; set; }
+        // The PickupPointPart that had been selected for the order (if any)
+        // might be updated during the lifetime of an order. Rather than
+        // storing a reference to it, we store its displaytext/title here,
+        // so we may show it to users both in the frontend and the backend.
+        public virtual string PickupPointTitle { get; set; }
     }
 }

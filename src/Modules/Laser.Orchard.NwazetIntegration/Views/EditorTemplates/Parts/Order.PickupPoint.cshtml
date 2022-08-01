@@ -10,7 +10,7 @@
         <fieldset>
             @if (addressHasChanged) {
                 <legend>
-                    @T("The customer had selected a pickup point at the following address:")
+                    @T("The customer had selected the pickup point \"{0}\" at the following address:", part.PickupPointTitle)
                 </legend>
                 <div class="address-line">
                     @part.AddressText()
@@ -20,7 +20,7 @@
                 </div>
             } else {
                 <legend>
-                    @T("The shipping address is a pickup point.")
+                    @T("The shipping address is the pickup point \"{0}\".", part.PickupPointTitle)
                 </legend>
             }
         </fieldset>

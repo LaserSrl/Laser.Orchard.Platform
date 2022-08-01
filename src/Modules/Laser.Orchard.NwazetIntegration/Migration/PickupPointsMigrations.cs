@@ -74,5 +74,13 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
             return 5;
 
         }
+
+        public int UpdateFrom5() {
+            SchemaBuilder.AlterTable("PickupPointOrderPartRecord", table => table
+                .AddColumn<string>("PickupPointTitle")
+            );
+
+            return 6;
+        }
     }
 }
