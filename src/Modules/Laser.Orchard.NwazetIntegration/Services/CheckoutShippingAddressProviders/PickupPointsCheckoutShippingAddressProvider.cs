@@ -35,7 +35,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
 
         public Localizer T { get; set; }
 
-        private const string ProviderId = "PickupPointsCheckout";
+        public const string ProviderId = "PickupPointsCheckout";
         // constants for the form
         private const string Prefix = "PickupPointsCheckout";
         private const string SelectedPointInputName = Prefix + ".SelectedPickupPoint";

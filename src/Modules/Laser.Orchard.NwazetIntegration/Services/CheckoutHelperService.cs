@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.NwazetIntegration.Models;
+﻿using Laser.Orchard.NwazetIntegration.Aspects;
+using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
@@ -123,37 +124,22 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 currencyCode: _currencyProvider.CurrencyCode,
                 additionalElements: _orderAdditionalInformationProviders
                     .SelectMany(oaip => oaip.PrepareAdditionalInformation(orderContext)));
-
-            // Verify address information in the AddressOrderPart
-            //   (we have to do this explicitly because the management of Order
-            //   ContentItems does not go through drivers and such)
-            var addressPart = order.As<AddressOrderPart>();
-            if (addressPart != null) {
-                // TODO: Shipping info should come from the providers
-                if (cvm.ShippingRequired) {
-                    // may not have a shipping address if shipping isn't required
-                    addressPart.ShippingCountryName = cvm.ShippingAddress.Country;
-                    addressPart.ShippingCountryId = cvm.SelectedShippingAddressProvider
-                        .GetShippingCountryId(cvm);
-                    addressPart.ShippingCityName = cvm.ShippingAddress.City;
-                    addressPart.ShippingCityId = cvm.SelectedShippingAddressProvider
-                        .GetShippingCityId(cvm);
-                    addressPart.ShippingProvinceName = cvm.ShippingAddress.Province;
-                    addressPart.ShippingProvinceId = cvm.SelectedShippingAddressProvider
-                        .GetShippingProvinceId(cvm);
-                    // added information to manage saving in bo
-                    addressPart.ShippingAddressIsOptional = false;
-                } else {
-                    addressPart.ShippingAddressIsOptional = true;
-                }
-                // Billing address
-                addressPart.BillingCountryName = cvm.BillingAddressVM.Country;
-                addressPart.BillingCountryId = cvm.BillingAddressVM.CountryId;
-                addressPart.BillingCityName = cvm.BillingAddressVM.City;
-                addressPart.BillingCityId = cvm.BillingAddressVM.CityId;
-                addressPart.BillingProvinceName = cvm.BillingAddressVM.Province;
-                addressPart.BillingProvinceId = cvm.BillingAddressVM.ProvinceId;
+            
+            // Some ContentParts extend Order functionalities by being attached to it, but
+            // are not handled directly by OrderService, and it doesn't invoke the entire
+            // stack of ContentManagement handlers. Moreover, it doesn't carry within itself
+            // the entirety of the chckout context.
+            // Here we'll invoke their own methods so that we can update them and their records
+            // properly.
+            var orderExtensionParts = order.ContentItem.Parts
+                .Where(p => p is IOrderExtensionAspect);
+            foreach (var exPart in orderExtensionParts) {
+                // We have to actually cast rather than use Orchard's extension methods, because
+                // those would end up always fetching the first IOrderExtensionAspect out of all
+                // the parts implementing it.
+                ((IOrderExtensionAspect)exPart).ExtendCreation(cvm);
             }
+
             // To properly handle the order's advanced address configuration we need
             // to call again the providers to store the additional data, because when they 
             // are invoked in Nwazet's IOrderService implementation we can't have access

@@ -2,6 +2,7 @@
 using Laser.Orchard.NwazetIntegration.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.ContentManagement.MetaData;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using System;
@@ -13,33 +14,30 @@ using System.Web.Routing;
 namespace Laser.Orchard.NwazetIntegration.Handlers {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointsContentHandler : ContentHandler {
+        private readonly IContentDefinitionManager _contentDefinitionManager;
 
         public PickupPointsContentHandler(
-            IRepository<PickupPointPartRecord> repository) {
+            IContentDefinitionManager contentDefinitionManager,
+            IRepository<PickupPointPartRecord> pickupPointPartRepository,
+            IRepository<PickupPointOrderPartRecord> pickupPointOrderPartRepository) {
 
-            Filters.Add(StorageFilter.For(repository));
+            _contentDefinitionManager = contentDefinitionManager;
+
+            Filters.Add(StorageFilter.For(pickupPointPartRepository));
+            Filters.Add(StorageFilter.For(pickupPointOrderPartRepository));
+
+            // attach PickupPointOrderPart to ContentTypes that are orders
+            Filters.Add(new ActivatingFilter<PickupPointOrderPart>(IsOrder));
         }
-        /*
-        // PickupPointPart will have to affect the Metadata of the content,
-        // changing the routes to edit it so the correct controller is used.
-        protected override void GetItemMetadata(GetContentItemMetadataContext context) {
-            var pickupPoint = context.ContentItem.As<PickupPointPart>();
-            if (pickupPoint == null) {
-                return;
+
+        private bool IsOrder(string contentType) {
+            // return true if type has OrderPart
+            var definition = _contentDefinitionManager.GetTypeDefinition(contentType);
+            if (definition == null) {
+                return false;
             }
-
-            context.Metadata.CreateRouteValues = new RouteValueDictionary {
-                {"Area", PickupPointsAdminController.AreaName},
-                {"Controller", PickupPointsAdminController.ControllerName},
-                {"Action", PickupPointsAdminController.CreateActionName},
-            };
-            context.Metadata.EditorRouteValues = new RouteValueDictionary {
-                {"Area", PickupPointsAdminController.AreaName},
-                {"Controller", PickupPointsAdminController.ControllerName},
-                {"Action", PickupPointsAdminController.EditActionName},
-                {"Id", pickupPoint.Id},
-            };
+            return definition.Parts.Any(ctpd => ctpd
+                .PartDefinition.Name.Equals("OrderPart"));
         }
-        */
     }
 }

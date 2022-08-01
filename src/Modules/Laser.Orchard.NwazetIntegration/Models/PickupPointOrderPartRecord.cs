@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
-    public class PickupPointPartRecord : ContentPartRecord {
+    public class PickupPointOrderPartRecord : ContentPartRecord {
 
         public virtual string CountryName { get; set; }
         public virtual int CountryId { get; set; }
@@ -22,5 +22,8 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual string AddressLine2 { get; set; }
         public virtual string PostalCode { get; set; }
 
+        // Flag telling whether a pickup point had been selected for the
+        // order this part is attached to.
+        public virtual bool IsOrderPickupPoint { get; set; }
     }
 }

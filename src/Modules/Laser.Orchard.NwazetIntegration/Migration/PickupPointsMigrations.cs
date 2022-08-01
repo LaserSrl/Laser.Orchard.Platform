@@ -55,5 +55,24 @@ namespace Laser.Orchard.NwazetIntegration.Migration {
 
             return 4;
         }
+
+        public int UpdateFrom4() {
+            // Tables
+            SchemaBuilder.CreateTable("PickupPointOrderPartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("CountryName")
+                .Column<int>("CountryId")
+                .Column<string>("ProvinceName")
+                .Column<int>("ProvinceId")
+                .Column<string>("CityName")
+                .Column<int>("CityId")
+                .Column<string>("AddressLine1")
+                .Column<string>("AddressLine2")
+                .Column<string>("PostalCode")
+                .Column<bool>("IsOrderPickupPoint"));
+
+            return 5;
+
+        }
     }
 }

@@ -1,0 +1,28 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
+@model PickupPointOrderViewModel
+@{ 
+    var part = Model.Part;
+    var addressHasChanged = Model.AddressHasChanged;
+}
+@if(part.IsOrderPickupPoint) {
+    <div class="order-editor col-md-12">
+        <fieldset>
+            @if (addressHasChanged) {
+                <legend>
+                    @T("The customer had selected a pickup point at the following address:")
+                </legend>
+                <div class="address-line">
+                    @part.AddressText()
+                </div>
+                <div class="callout callout-warning">
+                    @T("Warning: This order's shipping address is not the same as the one selected for pickup.")
+                </div>
+            } else {
+                <legend>
+                    @T("The shipping address is a pickup point.")
+                </legend>
+            }
+        </fieldset>
+    </div>
+}

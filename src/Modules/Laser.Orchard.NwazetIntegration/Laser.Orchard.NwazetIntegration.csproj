@@ -124,6 +124,7 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
+    <Compile Include="Aspects\IOrderExtensionAspect.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\PickupPointOrderPartDriver.cs" />
     <Compile Include="Drivers\PickupPointPartDriver.cs" />
     <Compile Include="Drivers\ProductVatConfigurationPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
@@ -188,6 +190,8 @@
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\PickupPointOrderPart.cs" />
+    <Compile Include="Models\PickupPointOrderPartRecord.cs" />
     <Compile Include="Models\PickupPointPart.cs" />
     <Compile Include="Models\PickupPointPartRecord.cs" />
     <Compile Include="Models\ProductVatConfigurationPartInputPriceSettings.cs" />
@@ -292,6 +296,7 @@
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\PickupPointAddressEditViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointOrderViewModel.cs" />
     <Compile Include="ViewModels\PickupPointPartEditViewModel.cs" />
     <Compile Include="ViewModels\PickupPointsCheckoutViewModel.cs" />
     <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
@@ -507,6 +512,7 @@
     <Content Include="Views\CheckoutDefaultShippingAddressSummaryShape.cshtml" />
     <Content Include="Views\Content.AddressSummary.cshtml" />
     <Content Include="Views\PickupPointAddressSummaryTitle.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Order.PickupPoint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />
