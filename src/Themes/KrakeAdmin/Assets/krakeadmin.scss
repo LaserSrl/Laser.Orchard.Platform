@@ -11602,8 +11602,16 @@ ul.widgets h3 {
 }
 
 /* Navigation */
-#local-navigation ul.localmenu.group {
-    margin-bottom: 8px;
+#local-navigation {
+    margin-bottom: -9px;
+
+    ul {
+        &.localmenu {
+            &.group {
+                margin-bottom: 8px;
+            }
+        }
+    }
 }
 
 /* Article dialog, for position calculate from jquery, change starded top for calculate correct position  */
@@ -11899,7 +11907,7 @@ body {
 }
 
 /* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
-/*html {
+html {
     &.orchard-blogs {
         #local-navigation {
             margin-bottom: -17px;
@@ -11915,6 +11923,11 @@ body {
                     }
                 }
             }
+
+            /* This is a correction for create and edit blog post page, which is misaligned */
+            #local-navigation {
+                padding-bottom: 1px;
+            }
         }
     }
-}*/
+}
