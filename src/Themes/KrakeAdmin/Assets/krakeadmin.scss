@@ -11897,3 +11897,24 @@ body {
         }
     }
 }
+
+/* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
+/*html {
+    &.orchard-blogs {
+        #local-navigation {
+            margin-bottom: -17px;
+
+            .localmenu-local-admin {
+                li {
+                    &.local-section-blog-posts, &.local-section-search-posts {
+                        line-height: 1.6em;
+
+                        a {
+                            line-height: 1.6em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}*/
