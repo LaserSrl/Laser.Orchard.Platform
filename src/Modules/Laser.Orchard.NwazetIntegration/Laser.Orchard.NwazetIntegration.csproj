@@ -239,6 +239,7 @@
     <Compile Include="Services\CheckoutShippingAddressProviders\ShippingAddressReinflationContext.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
     <Compile Include="Services\ExtendedOrderContext.cs" />
+    <Compile Include="Services\ExtendedShippingAddressOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
@@ -513,6 +514,7 @@
     <Content Include="Views\Content.AddressSummary.cshtml" />
     <Content Include="Views\PickupPointAddressSummaryTitle.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Order.PickupPoint.cshtml" />
+    <Content Include="Views\BaseOrderShippingAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

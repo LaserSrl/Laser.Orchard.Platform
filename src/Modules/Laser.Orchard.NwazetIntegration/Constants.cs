@@ -17,5 +17,8 @@
         public const string EmailPattern =
             @"^(?![\.@])(""([^""\r\\]|\\[""\r\\])*""|([-\p{L}0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
             + @"@([a-z0-9][\w-]*\.)+[a-z]{2,}$";
+
+        public const string ShippingAddressProviderOrderXElementName = 
+            "SelectedCheckoutShippingAddressProvider";
     }
 }

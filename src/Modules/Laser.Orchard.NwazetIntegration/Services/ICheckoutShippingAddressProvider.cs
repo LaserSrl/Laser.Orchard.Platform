@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
 using Orchard;
 using System;
 using System.Collections.Generic;
@@ -122,5 +123,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// </summary>
         /// <param name="viewModel"></param>
         void ReinflateViewModel(CheckoutViewModel viewModel);
+
+        /// <summary>
+        /// This method returns shapes to be used to display Shipping addresses in
+        /// order confirmations.
+        /// </summary>
+        /// <param name="orderPart"></param>
+        /// <returns></returns>
+        IEnumerable<dynamic> GetOrderShippingAddressShapes(OrderPart orderPart);
     }
 }

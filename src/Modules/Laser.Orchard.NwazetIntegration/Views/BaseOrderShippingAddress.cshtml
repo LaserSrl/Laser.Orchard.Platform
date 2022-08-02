@@ -1,0 +1,17 @@
+﻿@using Nwazet.Commerce.Models;
+@using Nwazet.Commerce.Services;
+@{ 
+    var formatter = WorkContext.Resolve<IAddressFormatter>();
+    var orderPart = (OrderPart)Model.OrderPart;
+    var shippingAddress = formatter.Format(orderPart.ShippingAddress);
+}
+<h4>@T("Shipping to:")</h4>
+@if (!string.IsNullOrWhiteSpace(shippingAddress.Replace(",", "").Trim())) {
+    <address>
+        @Html.Raw(Html.Encode(shippingAddress).Replace(Environment.NewLine, "<br/>"))
+    </address>
+} else {
+    <address>
+        @T("There is no shipment for this order.")
+    </address>
+}

@@ -21,7 +21,7 @@
   <Place Parts_Territory_ISO3166Code_Edit="Content:2.2" />
   <Place Parts_Territory_AddressType_Edit="Content:2.1" />
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
-  <Place Parts_Order_PickupPoint_Edit="Content:1.30" />
+  <Place Parts_Order_PickupPoint_Edit="Content:1.28" />
   <Place Parts_Order_PaymentInfo="Content:1.60"/>
   <Place Parts_Order_CheckoutPolicies="Content:1.61"/>
   <Place Parts_PickupPointPart_Edit="Content:2" />

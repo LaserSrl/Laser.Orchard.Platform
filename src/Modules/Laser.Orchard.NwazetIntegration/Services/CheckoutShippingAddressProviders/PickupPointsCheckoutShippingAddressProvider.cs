@@ -15,8 +15,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
     [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointsCheckoutShippingAddressProvider 
         : BaseCheckoutShippingAddressProvider {
-
-        private readonly dynamic _shapeFactory;
+        
         private readonly IContentManager _contentManager;
         private readonly IAddressConfigurationService _addressConfigurationService;
 
@@ -24,9 +23,8 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             IShapeFactory shapeFactory,
             IContentManager contentManager,
             IAddressConfigurationService addressConfigurationService)
-            : base() {
-
-            _shapeFactory = shapeFactory;
+            : base(shapeFactory) {
+            
             _contentManager = contentManager;
             _addressConfigurationService = addressConfigurationService;
 

@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Models;
+using Orchard.DisplayManagement;
 
 namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders {
     public abstract class BaseCheckoutShippingAddressProvider
         : ICheckoutShippingAddressProvider {
 
-        protected BaseCheckoutShippingAddressProvider() { }
+        protected readonly dynamic _shapeFactory;
+
+        protected BaseCheckoutShippingAddressProvider(
+            IShapeFactory shapeFactory) {
+
+            _shapeFactory = shapeFactory;
+        }
 
         public virtual IEnumerable<AdditionalIndexShippingAddressViewModel> 
             GetIndexShippingAddressShapes(CheckoutViewModel cvm) {
@@ -38,7 +46,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         }
 
         public virtual string GetShippingPostalCode(CheckoutViewModel cvm) {
-            return null;
+            return string.Empty;
         }
 
         public virtual bool IsSelectedProviderForIndex(string providerId) {
@@ -58,5 +66,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         public virtual void ReinflateShippingAddress(ShippingAddressReinflationContext context) { }
 
         public virtual void ReinflateViewModel(CheckoutViewModel viewModel) { }
+
+        public virtual IEnumerable<dynamic> GetOrderShippingAddressShapes(OrderPart orderPart) {
+            yield return _shapeFactory.BaseOrderShippingAddress(
+                OrderPart: orderPart
+                );
+        }
     }
 }

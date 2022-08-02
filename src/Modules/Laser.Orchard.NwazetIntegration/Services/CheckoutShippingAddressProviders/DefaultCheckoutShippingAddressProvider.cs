@@ -19,7 +19,6 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly INwazetCommunicationService _nwazetCommunicationService;
         private readonly IContentManager _contentManager;
-        private readonly dynamic _shapeFactory;
 
         public DefaultCheckoutShippingAddressProvider(
             IAddressConfigurationService addressConfigurationService,
@@ -28,14 +27,13 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             INwazetCommunicationService nwazetCommunicationService,
             IContentManager contentManager,
             IShapeFactory shapeFactory) 
-            : base() {
+            : base(shapeFactory) {
 
             _addressConfigurationService = addressConfigurationService;
             _validationProviders = validationProviders;
             _workContextAccessor = workContextAccessor;
             _nwazetCommunicationService = nwazetCommunicationService;
             _contentManager = contentManager;
-            _shapeFactory = shapeFactory;
         }
         
 
