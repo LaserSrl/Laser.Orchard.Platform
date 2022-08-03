@@ -515,6 +515,7 @@
     <Content Include="Views\PickupPointAddressSummaryTitle.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Order.PickupPoint.cshtml" />
     <Content Include="Views\BaseOrderShippingAddress.cshtml" />
+    <Content Include="Views\PickupPointOrderShippingAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

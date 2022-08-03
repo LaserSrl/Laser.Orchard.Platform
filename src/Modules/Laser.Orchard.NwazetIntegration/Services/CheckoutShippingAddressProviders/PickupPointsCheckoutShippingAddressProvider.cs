@@ -291,6 +291,42 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             }
         }
 
+        public override IEnumerable<dynamic> GetOrderShippingAddressShapes(OrderPart orderPart) {
+            var pickupPointOrderPart = orderPart.As<PickupPointOrderPart>();
+            var addressIsSame = false;
+            if (pickupPointOrderPart.IsOrderPickupPoint) {
+                // compare address in part with the one currently in the order
+                var addressPart = pickupPointOrderPart.As<AddressOrderPart>();
+                // if anything is now different, flag it
+                if (addressPart != null) {
+                    addressIsSame =
+                        pickupPointOrderPart.CountryName.Equals(addressPart.ShippingCountryName)
+                        && pickupPointOrderPart.CountryId == addressPart.CountryId
+                        && pickupPointOrderPart.ProvinceName.Equals(addressPart.ShippingProvinceName)
+                        && pickupPointOrderPart.ProvinceId == addressPart.ProvinceId
+                        && pickupPointOrderPart.CityName.Equals(addressPart.ShippingCityName)
+                        && pickupPointOrderPart.CityId == addressPart.CityId
+                        ;
+                }
+                // street address and postal code is not stored in AddressOrderPart
+                if (addressIsSame) {
+                    if (orderPart != null) {
+                        var shippingAddress = orderPart.ShippingAddress;
+                        // these strings may be null in both addresses
+                        addressIsSame &=
+                            string.Equals(pickupPointOrderPart.AddressLine1, shippingAddress.Address1)
+                            && string.Equals(pickupPointOrderPart.AddressLine2, shippingAddress.Address2)
+                            && string.Equals(pickupPointOrderPart.PostalCode, shippingAddress.PostalCode);
+                    }
+                }
+            }
+            yield return _shapeFactory.PickupPointOrderShippingAddress(
+                OrderPart: orderPart,
+                PickupPointOrderPart: pickupPointOrderPart,
+                AddressHasChanged: !addressIsSame
+                );
+        }
+
         private PickupPointsCheckoutViewModel InflatePickupPointsVM(CheckoutViewModel cvm) {
             // get existing view model for pickup points (if any)
             var viewModel = cvm.ProviderViewModels.ContainsKey(ProviderId)

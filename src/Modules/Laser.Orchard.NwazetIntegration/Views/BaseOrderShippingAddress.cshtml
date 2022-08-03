@@ -10,8 +10,4 @@
     <address>
         @Html.Raw(Html.Encode(shippingAddress).Replace(Environment.NewLine, "<br/>"))
     </address>
-} else {
-    <address>
-        @T("There is no shipment for this order.")
-    </address>
-}
+} 
