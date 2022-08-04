@@ -2,15 +2,15 @@
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.DisplayManagement;
+using Orchard.Environment.Extensions;
 using Orchard.Forms.Services;
 using Orchard.Localization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
+    [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointsForm : IFormProvider {
 
         private readonly IContentManager _contentManager;

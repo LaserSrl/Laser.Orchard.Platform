@@ -3,7 +3,6 @@ using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
-using Laser.Orchard.PaymentGateway.Providers;
 using Nwazet.Commerce.Models;
 using Nwazet.Commerce.Services;
 using Orchard;

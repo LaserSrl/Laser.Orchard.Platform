@@ -2,10 +2,6 @@
 using Orchard.ContentManagement.MetaData;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Migration {
     [OrchardFeature("Laser.Orchard.PickupPoints")]

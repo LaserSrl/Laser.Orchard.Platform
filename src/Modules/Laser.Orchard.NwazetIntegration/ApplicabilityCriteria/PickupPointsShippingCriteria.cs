@@ -6,10 +6,7 @@ using Nwazet.Commerce.Services;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
     [OrchardFeature("Laser.Orchard.PickupPoints")]

@@ -1,12 +1,11 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
-using System;
+using Orchard.Environment.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.ViewModels {
+    [OrchardFeature("Laser.Orchard.PickupPoints")]
     public class PickupPointAddressEditViewModel {
         // This address view model is a smaller and simpler version of a "full"
         // AddressEditViewModel, because a PickupPoint only needs the "address"

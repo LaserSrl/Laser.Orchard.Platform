@@ -2,10 +2,6 @@
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Navigation {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
@@ -21,7 +17,7 @@ namespace Laser.Orchard.NwazetIntegration.Navigation {
         public Localizer T { get; set; }
 
         public void GetNavigation(NavigationBuilder builder) {
-            // The "page" to manage PickupPoints will live unders the same
+            // TODO: The "page" to manage PickupPoints will live unders the same
             // menu as the Shipping configurations.
             builder
                 .AddImageSet("nwazet-commerce")

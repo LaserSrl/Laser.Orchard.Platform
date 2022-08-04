@@ -3,10 +3,8 @@ using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
     [OrchardFeature("Laser.Orchard.PickupPoints")]

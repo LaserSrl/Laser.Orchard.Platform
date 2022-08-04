@@ -1,10 +1,8 @@
 ﻿using Orchard.Environment.Extensions;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Security.Permissions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Security {
     [OrchardFeature("Laser.Orchard.PickupPoints")]

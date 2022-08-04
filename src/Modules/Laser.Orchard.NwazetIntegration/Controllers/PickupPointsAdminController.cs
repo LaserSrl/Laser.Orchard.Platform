@@ -3,24 +3,18 @@ using Laser.Orchard.NwazetIntegration.Security;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Orchard;
 using Orchard.ContentManagement;
-using Orchard.Core.Contents.Controllers;
 using Orchard.Data;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.Mvc.Extensions;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using Orchard.UI.Notify;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace Laser.Orchard.NwazetIntegration.Controllers {
     [OrchardFeature("Laser.Orchard.PickupPoints")]
@@ -33,9 +27,6 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         // elsewhere in the feature.
         public const string AreaName = "Laser.Orchard.NwazetIntegration";
         public const string ControllerName = "PickupPointsAdmin";
-        /*public const string CreateActionName = "Create";
-        public const string EditActionName = "Edit";
-        */
 
         private readonly IContentManager _contentManager;
         private readonly IAuthorizer _authorizer;
@@ -56,8 +47,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             ISiteService siteService,
             IShapeFactory shapeFactory,
             ITransactionManager transactionManager,
-            INotifier notifier)
-            /*: base(contentManager)*/{
+            INotifier notifier) {
 
             _contentManager = contentManager;
             _authorizer = authorizer;
@@ -117,75 +107,5 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             return View((object)viewModel);
         }
         #endregion
-        /*
-        #region Create
-        [HttpGet]
-        public ActionResult Create() {
-            if (!_authorizer.Authorize(
-                PickupPointPermissions.MayConfigurePickupPoints,
-                null,
-                T("Cannot manage pickup points"))) {
-                return new HttpUnauthorizedResult();
-            }
-
-            var pickupItem = _contentManager
-                .New(PickupPointPart.DefaultContentTypeName);
-            var model = _contentManager
-                .BuildEditor(pickupItem);
-
-            return View(model);
-        }
-        [HttpPost, ActionName("Create")]
-        public ActionResult CreatePOST(string returnUrl) {
-            if (!_authorizer.Authorize(
-                PickupPointPermissions.MayConfigurePickupPoints,
-                null,
-                T("Cannot manage pickup points"))) {
-                return new HttpUnauthorizedResult();
-            }
-            var item = _contentManager
-                .New(PickupPointPart.DefaultContentTypeName);
-            _contentManager.Create(item, VersionOptions.Draft);
-            var model = _contentManager.UpdateEditor(item, this);
-
-            if (!ModelState.IsValid) {
-                _transactionManager.Cancel();
-                return View(model);
-            }
-
-            _contentManager.Publish(item);
-
-            _notifier.Information(string.IsNullOrWhiteSpace(item.TypeDefinition.DisplayName)
-                ? T("Your content has been created.")
-                : T("Your {0} has been created.", item.TypeDefinition.DisplayName));
-
-            return this.RedirectLocal(returnUrl, () =>
-                RedirectToAction("Edit", new RouteValueDictionary { { "Id", item.Id } }));
-        }
-
-        #endregion
-
-        #region Edit
-
-        #endregion
-
-        #region Delete
-
-        #endregion
-
-        #region IUpdateModel implementation
-        public void AddModelError(string key, LocalizedString errorMessage) {
-            ModelState.AddModelError(key, errorMessage.ToString());
-        }
-
-        public void AddModelError(string key, string errorMessage) {
-            ModelState.AddModelError(key, errorMessage);
-        }
-
-        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) {
-            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
-        }
-        #endregion
-        */
     }
 }
