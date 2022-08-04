@@ -125,6 +125,10 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                         // the outerCriterion converted the applicable assignment to false
                         context.IsApplicable = false;
                     }
+                } else {
+                    // If the context is not of the right class, rather than skipping the tests, 
+                    // cause the criterion to fail.
+                    context.IsApplicable = false;
                 }
             }
         }

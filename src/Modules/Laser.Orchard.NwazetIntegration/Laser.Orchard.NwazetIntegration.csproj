@@ -123,6 +123,7 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
+    <Compile Include="ApplicabilityCriteria\PickupPointsForm.cs" />
     <Compile Include="ApplicabilityCriteria\PickupPointsShippingCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
     <Compile Include="Aspects\IOrderExtensionAspect.cs" />

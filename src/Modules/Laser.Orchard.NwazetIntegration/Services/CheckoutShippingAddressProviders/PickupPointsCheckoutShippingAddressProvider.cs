@@ -47,6 +47,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
             // available PickupPoints.
             // TODO: set things up to filter pickup points based on the cvm
             var pPPoints = _contentManager
+                // TODO: extend this to other content types
                 .Query<PickupPointPart>(VersionOptions.Published, PickupPointPart.DefaultContentTypeName)
                 .List();
             // get existing view model for pickup points (if any)
