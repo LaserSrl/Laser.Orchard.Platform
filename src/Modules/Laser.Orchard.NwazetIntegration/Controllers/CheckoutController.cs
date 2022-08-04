@@ -413,7 +413,14 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         ProvinceId = model.SelectedShippingAddressProvider
                                 .GetShippingProvinceId(model),
                         CityId = model.SelectedShippingAddressProvider
-                                .GetShippingCityId(model)
+                                .GetShippingCityId(model),
+                        // More shipping address details can be gleaned from the providers
+                        // so we pass along information that should allow to obtain that
+                        ShippingAddressProviderId = model.SelectedShippingAddressProviderId,
+                        ShippingAddressProviderViewModel = 
+                            model.ProviderViewModels.ContainsKey(model.SelectedShippingAddressProviderId)
+                                ? model.ProviderViewModels[model.SelectedShippingAddressProviderId]
+                                : null
                     }).ToList();
                 // remove duplicate shipping options
                 model.AvailableShippingOptions = allShippingOptions

@@ -38,8 +38,8 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
         public void Describe(DescribeCriterionContext describe) {
             describe
                 .For("Destination",
-                    T("Destination in territories"),
-                    T("Destination in territories"))
+                    T("Shipping Address"),
+                    T("Shipping Address"))
                 .Element("Destination in territories",
                     T("Destination in territories"),
                     T("Destination in territories Criterion"),
