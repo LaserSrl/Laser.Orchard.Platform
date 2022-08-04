@@ -148,7 +148,8 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                         // get products in the cart
                         var shopItems = (IEnumerable<dynamic>)model.ShopItems;
                         var products = shopItems
-                            ?.Select(sci => {
+                            ?.Where(sci => ((ProductPart)sci.Product).Is<GTMProductPart>())
+                            .Select(sci => {
                                 var product = (ProductPart)sci.Product;
                                 var quantity = (int)sci.Quantity;
                                 var part = product.As<GTMProductPart>();
@@ -275,7 +276,8 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
         private IEnumerable<IGAProductVM> GetProducts(CheckoutViewModel checkoutVM) {
             var shopItems = checkoutVM.GetProductQuantities();
             return shopItems
-                ?.Select(sci => {
+                ?.Where(sci => sci.Product.Is<GTMProductPart>())
+                .Select(sci => {
                     var product = sci.Product;
                     var quantity = sci.Quantity;
                     var part = product.As<GTMProductPart>();

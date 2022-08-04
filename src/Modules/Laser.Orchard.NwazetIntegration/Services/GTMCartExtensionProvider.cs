@@ -34,6 +34,9 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 var useGA4 = _GTMProductService.UseGA4();
 
                 var gtmObjs = productQuantities
+                    // Should we take for granted the fact that a product will always
+                    // have a GTMProductPart?
+                    .Where(pq => pq.Product.Is<GTMProductPart>())
                     .Select(pq => {
                         var part = pq.Product.As<GTMProductPart>();
                         _GTMProductService.FillPart(part);

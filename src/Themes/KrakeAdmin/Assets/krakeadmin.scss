@@ -11597,8 +11597,16 @@ ul.widgets h3 {
 }
 
 /* Navigation */
-#local-navigation ul.localmenu.group {
-    margin-bottom: 8px;
+#local-navigation {
+    margin-bottom: -9px;
+
+    ul {
+        &.localmenu {
+            &.group {
+                margin-bottom: 8px;
+            }
+        }
+    }
 }
 
 /* Article dialog, for position calculate from jquery, change starded top for calculate correct position  */
@@ -11888,6 +11896,32 @@ body {
                         content: "\00a0"; // some whitespace before the 'x' to remove a tag
                     }
                 }
+            }
+        }
+    }
+}
+
+/* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
+html {
+    &.orchard-blogs {
+        #local-navigation {
+            margin-bottom: -17px;
+
+            .localmenu-local-admin {
+                li {
+                    &.local-section-blog-posts, &.local-section-search-posts {
+                        line-height: 1.6em;
+
+                        a {
+                            line-height: 1.6em;
+                        }
+                    }
+                }
+            }
+
+            /* This is a correction for create and edit blog post page, which is misaligned */
+            #local-navigation {
+                padding-bottom: 1px;
             }
         }
     }
