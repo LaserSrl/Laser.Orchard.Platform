@@ -126,10 +126,23 @@ namespace Laser.Orchard.TemplateManagement {
             return 8;
         }
         public int UpdateFrom8() {
-            // note that doing Query<TPart>() is terrible because it fetches ALL CONTENT ITEMS
-            // and the filters, in memory, for those that have the Part attached. Adding TRecord
-            // should cause a Join to pre-filter out a bunch of stuff.
-            var templates = _contentManager.Query<TemplatePart, TemplatePartRecord>().List();
+            // Note that doing Query<TPart>() is terrible because it fetches ALL CONTENT ITEMS
+            // and then filters, in memory, for those that have the Part attached. Adding TRecord
+            // would cause a Join to pre-filter out a bunch of stuff. However, using a TRecord
+            // causes the migration to fail if the schema is changed later (e.g. if we add a
+            // field/column to that record in a later migration).
+            // A different way to fetch fewer content items then is to filter on the content
+            // types that have a TemplatePart.
+
+            // All ContentTypes that contain a TemplatePart are affected by the changes
+            var typeNames = ContentDefinitionManager
+                .ListTypeDefinitions()
+                .Where(ctd => ctd.Parts.Any(ctpd => ctpd.PartDefinition.Name == "TemplatePart"))
+                .Select(ctd => ctd.Name);
+            var templates = _contentManager
+                .Query<TemplatePart>(typeNames.ToArray())
+                .List();
+
             var sendTemplateActivities = _repositoryActivity.Table.Where(x => x.Name == "SendTemplatedEmail").ToList();
 
             foreach (var sendActivity in sendTemplateActivities) {
