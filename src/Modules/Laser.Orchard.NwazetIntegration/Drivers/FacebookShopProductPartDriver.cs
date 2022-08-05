@@ -49,8 +49,11 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             }
 
             bool flag = false;
-            bool.TryParse(context.Attribute(part.PartDefinition.Name, "SynchronizeFacebookShop"), out flag);
-            part.SynchronizeFacebookShop = flag;
+            if (bool.TryParse(context.Attribute(part.PartDefinition.Name, "SynchronizeFacebookShop"), out flag)) {
+                part.SynchronizeFacebookShop = flag;
+            } else {
+                part.SynchronizeFacebookShop = false;
+            }
         }
     }
 }

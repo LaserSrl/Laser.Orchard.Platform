@@ -1,4 +1,5 @@
-﻿using Orchard;
+﻿using Laser.Orchard.NwazetIntegration.ViewModels;
+using Orchard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// the checkout process.
         /// </summary>
         /// <param name="context"></param>
-        void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context);
+        void ProcessAdditionalCheckoutStartInformation(
+            CheckoutExtensionContext context);
+        
     }
 }

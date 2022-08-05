@@ -19,7 +19,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             new OrderStatus { StatusName = Constants.PaymentPending, Priority = "2.3" };
         #endregion
 
-        public static readonly string[] states = {
+        private static readonly string[] states = {
            Constants.PaymentSucceeded,
            Constants.PaymentFailed,
            Constants.PaymentPending
