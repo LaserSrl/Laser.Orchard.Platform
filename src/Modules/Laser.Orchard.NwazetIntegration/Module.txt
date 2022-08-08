@@ -3,7 +3,7 @@ AntiForgery: enabled
 Author: Laser srl
 Website: http://www.laser-group.com
 Version: 1.0
-OrchardVersion: 1.0
+OrchardVersion: 1.10.x
 Description: Integration of Nwazet e-commerce in Krake.
 Features:
     Laser.Orchard.NwazetIntegration:
@@ -14,3 +14,7 @@ Features:
 		Description: Integration of Facebook shop apis (Graph API)
 		Category: Commerce
 		Dependencies: Nwazet.Commerce
+	Laser.Orchard.PickupPoints:
+		Description: Enables pickup points (such as in-store pickup) for e-commerce.
+		Category: Commerce
+		Dependencies: Nwazet.Commerce, Nwazet.Orders, Laser.Orchard.NwazetIntegration, Nwazet.FlexibleShippingImplementations

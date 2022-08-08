@@ -1,0 +1,10 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@{ 
+    var part = (PickupPointPart)Model.PickupPointPart;
+}
+@if (part != null) {
+    <fieldset class="address-summary shipping-address">
+        <legend>@T("Pickup point:")</legend>
+        @Display(BuildDisplay(part, "AddressSummary"))
+    </fieldset>
+}

@@ -1,0 +1,29 @@
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using Nwazet.Commerce.Models;
+@using Nwazet.Commerce.Services;
+@{ 
+    var formatter = WorkContext.Resolve<IAddressFormatter>();
+    var orderPart = (OrderPart)Model.OrderPart;
+    var pickupPointOrderPart = (PickupPointOrderPart)Model.PickupPointOrderPart;
+    var addressHasChanged = (bool)Model.AddressHasChanged;
+    var shippingAddress = formatter.Format(orderPart.ShippingAddress);
+}
+<h4>@T("Pickup point:")</h4>
+    <address>
+        <span class="address-title">
+            @pickupPointOrderPart.PickupPointTitle
+        </span>
+        <div class="address-line">
+            @pickupPointOrderPart.AddressText()
+        </div>
+    </address>
+@if (addressHasChanged) {
+    <div class="callout callout-warning">
+        @T("Warning: This order's shipping address is not the same as the one selected for pickup.")
+    </div>
+    if (!string.IsNullOrWhiteSpace(shippingAddress.Replace(",", "").Trim())) {
+        <address>
+            @Html.Raw(Html.Encode(shippingAddress).Replace(Environment.NewLine, "<br/>"))
+        </address>
+    }
+}

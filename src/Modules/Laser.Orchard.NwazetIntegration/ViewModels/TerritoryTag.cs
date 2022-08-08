@@ -20,8 +20,10 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             get {
                 var str = vSplit != null && vSplit.Length > 0 ? vSplit[0] : "";
                 int tmp = 0;
-                int.TryParse(vSplit[0], out tmp);
-                return tmp;
+                if (int.TryParse(vSplit[0], out tmp)) {
+                    return tmp;
+                }
+                return 0;
             }
         }
 

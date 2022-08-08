@@ -23,20 +23,210 @@
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
 
-    if (Model.ShippingAddressVM != null) {
-        <fieldset class="shipping-address">
-            <legend>@T("Shipping Address")</legend>
-            @Display.AddressForm(
-                Prefix: "shippingAddressVM",
-                Address: Model.ShippingAddressVM,
-                IncludeCountry: true,
-                ListAddress:Model.ListAvailableShippingAddress)
-        </fieldset>
+    if (Model.ShippingRequired) {
+        if (Model.AdditionalShippingAddressShapes != null
+            && Model.AdditionalShippingAddressShapes.Any()) {
+            @*
+            When pickup points are enabled here we have a tabulated UI that allows user to
+                select between their own addresses and one of the configured pickup points.
+                Either way to configure the shipping "destination" should on principle be
+                controlled by its own shapes.
+                The first tab is always the one for the shipping address, same as if we didn't
+                have the pickup points. The other tabs are injected dynamically.
 
-        <fieldset class="toggle-billing">
-            <input id="toggle-billing-address" type="checkbox" />
-            <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
-        </fieldset>
+                We need to make sure that the form validates correctly on post depending on the
+                stuff the user is selecting. For example, if the user is selecting a pickup point,
+                the submit shouldn't fail because the shipping address isn't valid.
+                We should also make sure that the actions realize what is being posted and don't
+                try to validate the wrong stuff. For example, if we are posting a shipping
+                address we shouldn't validate pickup points, and viceversa.
+                Both these requirements are achieved by disabling all form elements within the
+                hidden tabs; this should be in turn achieved by disabling a wrapping fieldset.
+
+                We also want to carry the information on the actively selected provider, so it's
+                easier down the line to process things, and to know which provider should handle 
+                things.
+            *@
+            <nav>
+                <div class="nav nav-tabs address-tab-headers" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" 
+                    id="nav-shipping-address" data-toggle="tab" 
+                    href="#nav-shipping" role="tab" 
+                    aria-controls="nav-shipping" aria-selected="true">
+                    <h2>@T("Shipping Address")</h2>
+                </a>
+                    @foreach (var asas in Model.AdditionalShippingAddressShapes) {
+                    <a class="nav-item nav-link" 
+                        id="@asas.TabId" 
+                        data-toggle="tab" 
+                        href="#@asas.NavId" 
+                        role="tab" 
+                        aria-controls="@asas.NavId" 
+                        aria-selected="false"><h2>@asas.TabTitle</h2></a>
+                    }
+                        
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+                <fieldset class="tab-pane fade show active" 
+                    id="nav-shipping" 
+                    role="tabpanel" 
+                    aria-labelledby="nav-shipping-address">
+                          
+                    @* Hidden for the selected shipping address provider. Its value is 
+                        "default" in this case. This is disabled along with the other
+                        form elements so it won't be submitted when a different provider
+                        is selected. The trick here is that only the hidden for the 
+                        "selected" provider is submitted by the form. Different UIs will
+                        require a different way to select the "active" provider. *@
+                    <input type="hidden" value="default"
+                            name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
+                            id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
+
+                    <fieldset class="shipping-address">
+                        @Html.HiddenFor(m => m.ShippingAddressVM.AddressType)
+                        @Html.HiddenFor(m => m.ShippingAddressVM.AddressRecord.AddressType)
+                                
+                        @Display.AddressForm(
+                            Prefix: "shippingAddressVM",
+                            Address: Model.ShippingAddressVM,
+                            IncludeCountry: true,
+                            ListAddress:Model.ListAvailableShippingAddress)
+                    </fieldset>
+
+                    <fieldset class="toggle-billing">
+                        <input id="toggle-billing-address" type="checkbox" />
+                        <label for="toggle-billing-address" class="for-checkbox">
+                            @T("Bill me at the shipping address.")
+                        </label>
+                    </fieldset>
+                    @* additionally, when we are not on this tab, deselect the 
+                        BillAtSameShippingAddress flag *@
+                    @using (Script.Foot()) {
+                        <script type="text/javascript">
+                            $('#nav-shipping-address')
+                                .on('hidden.bs.tab', function (e) {
+
+                                    // unflag BillAtSameShippingAddress
+                                    var $hiddenTab = $(e.currentTarget); // this is the tab that is getting hidden
+                                    var hiddenPaneId = $hiddenTab.attr("href");
+                                    var $hiddenPane = $(hiddenPaneId);
+                                    var $checkBox = $hiddenPane.find('#toggle-billing-address');
+                                    // set the checked property to false
+                                    var oldValue = $checkBox.prop("checked");
+                                    $checkBox.prop("checked", false);
+                                    if (oldValue) {
+                                        // if the checkbox was checked, now it has changed,
+                                        // so trigger the events
+                                        $checkBox.trigger("change");
+                                    }
+                                });
+                        </script>
+                    }
+                </fieldset>
+                    @foreach (var asas in Model.AdditionalShippingAddressShapes) {
+                        <fieldset class="tab-pane fade" 
+                            id="@asas.NavId" 
+                            role="tabpanel" 
+                            aria-labelledby="@asas.TabId"
+                            disabled>
+                                     
+                        @* Hidden for the selected shipping address provider. 
+                            This is disabled along with the other
+                            form elements so it won't be submitted when a different provider
+                            is selected. The trick here is that only the hidden for the 
+                            "selected" provider is submitted by the form. Different UIs will
+                            require a different way to select the "active" provider. *@
+                        <input type="hidden" value="@asas.UniqueProviderId"
+                                name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
+                                id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
+                            @Display(asas.TabShape)
+                        </fieldset>
+                    }
+                      
+            </div>
+            using(Script.Foot()) {
+                @* TODO: move this in a js file that gets imported around *@
+                // disable all form elements for hidden tabs so they are not validated/posted
+                // and make sure the ones from the fieldset we are showing are enabled
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.address-tab-headers .nav-link')
+                            .on('hidden.bs.tab', function (e) {
+                                var $hiddenTab = $(e.currentTarget); // this is the tab that is getting hidden
+                                var hiddenPaneId = $hiddenTab.attr("href");
+                                var $hiddenPane = $(hiddenPaneId); // this is the fieldset to disable
+                                $hiddenPane.prop('disabled', true);
+
+                                // Some stuff (such as select2 elements) doesn't get correctly disabled 
+                                // by being in a disabled fieldset.
+                                // We save their enabled/disabled state in a property to restore it 
+                                // correctly if the tab is shown again, rather than assume they're enabled
+                                var toDisable = $hiddenPane.find('select[data-select2-id], .required');
+                                if (toDisable && toDisable.length > 0) {
+                                    for (i = 0; i < toDisable.length; i++) {
+                                        var $currentS2 = $(toDisable[i]);
+                                        var dState = $currentS2.prop('disabled');
+                                        if (!dState) {
+                                            dState = false; // make sure the variable is the bool, and not undefined
+                                        }
+                                        $currentS2.attr('data-disabled-when-hidden', dState);
+                                        $currentS2.prop('disabled', true);
+                                        // We want to remove the 'required' class if the element has it
+                                        // to prevent html5 validation that would stop form submission
+                                        if ($currentS2.hasClass('required')) {
+                                            $currentS2.attr('data-classes-removed-when-hidden', 'required');
+                                            $currentS2.removeClass('required');
+                                        }
+                                    }
+                                }
+                                        
+                            })
+                            .on('show.bs.tab', function (e) {
+                                var $showingTab = $(e.target); // tab getting shown
+                                var paneId = $showingTab.attr("href");
+                                var $pane = $(paneId); // this is the fieldset to enable
+                                $pane.prop('disabled', false);
+                                        
+                                // restore the stuff we disabled explicitly
+                                var toEnable = $pane.find('[data-disabled-when-hidden]');
+                                if (toEnable && toEnable.length > 0) {
+                                    for (i = 0; i < toEnable.length; i++) {
+                                        var $currentS2 = $(toEnable[i]);
+                                        var oldState = $currentS2.attr('data-disabled-when-hidden');
+                                        // if we never set that property, it defaults to false
+                                        $currentS2.prop('disabled', (oldState === 'true'));
+                                        // if we had removed some classes, add them back
+                                        var removedClasses = $currentS2.attr('data-classes-removed-when-hidden');
+                                        if (removedClasses) {
+                                            $currentS2.attr('data-classes-removed-when-hidden', null);
+                                            $currentS2.addClass(removedClasses);
+                                        }
+                                    }
+                                }
+                                        
+                            });
+                    });
+                </script>
+            }
+        } else {
+            <fieldset class="shipping-address">
+                <legend>@T("Shipping Address")</legend>
+                @Html.HiddenFor(m => m.BillingAddressVM.AddressType)
+                @Html.HiddenFor(m => m.BillingAddressVM.AddressRecord.AddressType)
+                @Display.AddressForm(
+                    Prefix: "shippingAddressVM",
+                    Address: Model.ShippingAddressVM,
+                    IncludeCountry: true,
+                    ListAddress:Model.ListAvailableShippingAddress)
+            </fieldset>
+
+            <fieldset class="toggle-billing">
+                <input id="toggle-billing-address" type="checkbox" />
+                <label for="toggle-billing-address" class="for-checkbox">@T("Bill me at the shipping address.")</label>
+            </fieldset>
+        }
     }
     <fieldset class="billing-address">
         <legend>@T("Billing Address")</legend>

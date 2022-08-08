@@ -1,0 +1,9 @@
+﻿@using Laser.Orchard.NwazetIntegration.Controllers
+<fieldset class="save-button">
+    @Html.ActionLink(T("Back to list"),
+        "List",
+        new {
+            Area = PickupPointsAdminController.AreaName,
+            Controller = PickupPointsAdminController.ControllerName },
+        new { @class = "button" })
+</fieldset>
