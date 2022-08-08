@@ -72,7 +72,7 @@ namespace Laser.Orchard.NwazetIntegration.Filters {
                                     .ToList();
                                 // initialize list of GTMProductVM (now using interface IGAProductVM to manage GA4ProductVM too)
                                 var productList = new List<IGAProductVM>();
-                                foreach (var p in products) {
+                                foreach (var p in products.Where(pr => pr.Is<GTMProductPart>())) {
                                     // populate list of GTMProductVM 
                                     var part = p.As<GTMProductPart>();
                                     _GTMProductService.FillPart(part);
