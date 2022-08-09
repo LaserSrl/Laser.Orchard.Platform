@@ -1198,14 +1198,13 @@ input[type="number"]:focus {
 
 /**** zone content ****/
 #main {
-    margin-left: 0px !important;
-    margin-top: 20px;
+    margin: 0px !important;
 }
 
 #layout-main {
     border: 0px;
     background: none;
-    padding: 16px 24px;
+    padding: 8px 24px;
     margin: 8px 0 0 0;
     clear: both;
     /*CSS3 properties*/
@@ -3207,7 +3206,7 @@ a.text-success:hover {
     /*position: relative;*/
     width: 100%;
     left: 0;
-    padding-top: 14px;
+    margin-top: 54px;
 }
 
 
