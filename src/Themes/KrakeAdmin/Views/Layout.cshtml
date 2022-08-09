@@ -63,6 +63,7 @@
 
                 @if (Model.LocalNavigation != null) {
                     <div id="local-navigation">
+                        &nbsp; @* needed by the fixed top bar of the admin panel *@
                         @Zone(Model.LocalNavigation)
                     </div>
                 }
