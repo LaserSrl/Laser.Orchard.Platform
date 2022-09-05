@@ -243,7 +243,7 @@ button.link:hover {
   text-decoration: underline !important; }
 
 .zone-messages {
-  padding-top: 40px; }
+  padding-top: 10px; }
 
 .edit-item-sidebar {
   float: right !important;
@@ -276,7 +276,9 @@ select[multiple] {
 
 #orchard-version {
   font-style: italic;
-  color: #6db7e5; }
+  color: #6db7e5;
+  top: 44px;
+  right: 24px; }
 
 #orchard-version::before {
   content: "\f126";
