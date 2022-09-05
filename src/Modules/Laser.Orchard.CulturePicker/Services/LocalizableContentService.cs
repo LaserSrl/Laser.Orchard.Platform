@@ -110,7 +110,7 @@ namespace Laser.Orchard.CulturePicker.Services {
         /// <returns>IList of Rich Cultures defined in Culture picker settings</returns>
         public IList<ExtendedCultureRecord> AvailableTranslations(string url, bool isHomePage = false) {
             var cultureList = new List<ExtendedCultureRecord>();
-            if (isHomePage || !String.IsNullOrEmpty(url)) {
+            if (isHomePage || !string.IsNullOrEmpty(url)) {
                 AutoroutePart currentRoutePart;
                 TryGetRouteForUrl(url, out currentRoutePart);
                 if (currentRoutePart != null && currentRoutePart.As<LocalizationPart>() != null) {
