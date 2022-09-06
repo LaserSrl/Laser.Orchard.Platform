@@ -116,6 +116,11 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return ChallengeEmailApiLogic(nonce);
         }
 
+        [HttpPost]
+        public ContentResult ChangePasswordSsl(string currentPassword, string newPassword, string confirmPassword) {
+            return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
+        }
+
         #endregion [https calls]
 
     }
