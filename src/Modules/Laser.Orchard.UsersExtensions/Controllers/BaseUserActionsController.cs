@@ -142,15 +142,19 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         protected ContentResult SignInLogic(UserLogin login) {
             Response result;
-            try {
-                _usersExtensionsServices.SignIn(login);
-                List<string> roles = new List<string>();
-                var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
-                var json = registeredServicesData.ToString();
-                result = UtilsServices.GetResponse(ResponseType.Success, "", json);
-            }
-            catch (Exception ex) {
-                result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+            // If username or password are empty, send a MissingParameters response.
+            if (string.IsNullOrWhiteSpace(login.Username) || string.IsNullOrWhiteSpace(login.Password)) {
+                result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("Provide valid username and password").Text);
+            } else {
+                try {
+                    _usersExtensionsServices.SignIn(login);
+                    List<string> roles = new List<string>();
+                    var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
+                    var json = registeredServicesData.ToString();
+                    result = UtilsServices.GetResponse(ResponseType.Success, "", json);
+                } catch (Exception ex) {
+                    result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+                }
             }
             return UtilsServices.ConvertToJsonResult(result);
         }
