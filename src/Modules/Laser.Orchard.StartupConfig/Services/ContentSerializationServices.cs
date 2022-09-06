@@ -121,6 +121,8 @@ namespace Laser.Orchard.StartupConfig.Services {
             JObject json;
             // BuildDisplay populates the TagCache properly with the Id of the content
             // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
+            // Invoking BuilDisplay also ensures all handlers are correctly invoked for the content:
+            // this ensures some rare conditions are correctly handled, e.g. FieldExternal
             _orchardServices.ContentManager.BuildDisplay(content);
             var filteredContent = content;
             _filter = filter.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.EndsWith(".") ? x : x + ".").ToArray();
@@ -342,8 +344,13 @@ namespace Laser.Orchard.StartupConfig.Services {
 
                 fieldObject.Add("Options", JToken.FromObject(options));
                 fieldObject.Add("SelectedValues", JToken.FromObject(selected));
-            }
-            else {
+            } else if (field.FieldDefinition.Name == "FieldExternal") {
+                // The only property that should be serialized out is ContentObject.
+                // Laser.Orchard.ExternalContent depends on Laser.Orchard.StartupConfig
+                var externalField = field; // (FieldExternal)field;
+                
+
+            } else {
                 var properties = field.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(prop =>
                     !_skipFieldTypes.Contains(prop.Name) //skip 
                     );
@@ -357,8 +364,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 PopulateJObject(ref fieldObject, property, val, _skipFieldProperties, actualLevel, item?.Id ?? 0);
                             }
                         }
-                    }
-                    catch {
+                    } catch {
 
                     }
                 }
@@ -366,7 +372,7 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             return new JProperty(field.Name + field.FieldDefinition.Name, fieldObject);
         }
-
+        
         private JProperty SerializeField(ContentField field, int actualLevel, int parentContentId, ContentItem item = null) {
             var fieldObject = new JObject();
 
