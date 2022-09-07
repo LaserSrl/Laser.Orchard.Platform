@@ -114,6 +114,7 @@
     <Compile Include="Handlers\FieldExternalHandler.cs" />
     <Compile Include="Migration.cs" />
     <Compile Include="Services\ExternalFieldDumperService.cs" />
+    <Compile Include="Services\ExternalFieldSerializationProvider.cs" />
     <Compile Include="Services\FieldExternalService.cs" />
     <Compile Include="Settings\FieldExternalEditorEvents.cs" />
     <Compile Include="Settings\FieldExternalSetting.cs" />
