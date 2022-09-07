@@ -121,6 +121,18 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
         }
 
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult ChangeExpiredPasswordSsl(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            return ChangeExpiredPasswordLogic(currentPassword, newPassword, confirmPassword, userName);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult ChangeLostPasswordSsl(string nonce, string newPassword, string confirmPassword) {
+            return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
+        }
+
         #endregion [https calls]
 
     }
