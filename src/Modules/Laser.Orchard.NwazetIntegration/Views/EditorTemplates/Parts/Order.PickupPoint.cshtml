@@ -6,7 +6,7 @@
     var addressHasChanged = Model.AddressHasChanged;
 }
 @if(part.IsOrderPickupPoint) {
-    <div class="order-editor col-md-12">
+    <div class="order-editor col-md-12 pickup-point-order">
         <fieldset>
             @if (addressHasChanged) {
                 <legend>
