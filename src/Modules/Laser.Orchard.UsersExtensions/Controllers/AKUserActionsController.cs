@@ -27,7 +27,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IUtilsServices utilsServices,
             IUserEventHandler userEventHandler,
             IEnumerable<IIdentityProvider> identityProviders,
-            ICsrfTokenHelper csrfTokenHelper
+            ICsrfTokenHelper csrfTokenHelper,
+            IMembershipService membershipService
 ) : base(
                  orchardServices,
                  utilsServices,
@@ -35,7 +36,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                  identityProviders,
                  userService,
                  userEventHandler,
-                 csrfTokenHelper
+                 csrfTokenHelper,
+                 membershipService
                  ) {
         }
 
@@ -129,6 +131,27 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         [HttpPost, AlwaysAccessible]
         public JsonResult ChallengeEmailApiSsl(string nonce) {
             return ChallengeEmailApiLogic(nonce);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        [WebApiKeyFilterForControllers(true)]
+        public ContentResult ChangePasswordSsl(string currentPassword, string newPassword, string confirmPassword) {
+            return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        [WebApiKeyFilterForControllers(true)]
+        public ContentResult ChangeExpiredPasswordSsl(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            return ChangeExpiredPasswordLogic(currentPassword, newPassword, confirmPassword, userName);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        [WebApiKeyFilterForControllers(true)]
+        public ContentResult ChangeLostPasswordSsl(string nonce, string newPassword, string confirmPassword) {
+            return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
         }
 
         #endregion [https calls]
