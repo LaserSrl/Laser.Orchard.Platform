@@ -17,6 +17,7 @@ namespace Laser.Orchard.ExternalContent.Services {
         public int Specificity => 10;
 
         private SerializationSettings CurrentSerializationSettings { get; set; }
+        private const string SerializedPropertyName = "ContentObject";
 
         public string ComputeFieldClassName(ContentField field, ContentItem item = null) {
             var fieldExternal = (FieldExternal)field;
@@ -165,7 +166,12 @@ namespace Laser.Orchard.ExternalContent.Services {
             // Then we should serialize whatever that is, iteratively/recursively.
 
             // Finally, we add that result to the serialization we are building
-            targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            //targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            PopulateJObject(
+                ref targetFieldObject,
+                transformedObject,
+                actualLevel,
+                itemToSerialize?.Id ?? 0);
         }
 
         private dynamic CleanContentObject(dynamic objec) {
@@ -178,9 +184,7 @@ namespace Laser.Orchard.ExternalContent.Services {
         
         private void PopulateJObject(
             ref JObject jObject,
-            PropertyInfo property,
             object val,
-            string[] skipProperties,
             int actualLevel,
             int parentContentId) {
             // this replicates the PopulateJObject from ContentSerializationServices
@@ -192,7 +196,7 @@ namespace Laser.Orchard.ExternalContent.Services {
 
                     if (!CurrentSerializationSettings.IsBasicType(itemArray.GetType())) {
                         var aux = CurrentSerializationSettings.ObjectSerializerMethod
-                            (itemArray, actualLevel, parentContentId, skipProperties);
+                            (itemArray, actualLevel, parentContentId, CurrentSerializationSettings.SkipFieldProperties);
                         array.Add(new JObject(aux));
                     } else {
                         var valItem = itemArray;
@@ -200,26 +204,26 @@ namespace Laser.Orchard.ExternalContent.Services {
                         array.Add(valItem);
                     }
                 }
-                jObject.Add(new JProperty(property.Name, array));
+                jObject.Add(new JProperty(SerializedPropertyName, array));
 
             } else if (val is ContentItem) {
                 var contentProperty = CurrentSerializationSettings.ObjectSerializerMethod
                     (val, actualLevel, parentContentId, null);
-                jObject.Add(new JProperty(property.Name, new JObject(contentProperty)));
+                jObject.Add(new JProperty(SerializedPropertyName, new JObject(contentProperty)));
             }
             if (!CurrentSerializationSettings.IsBasicType(val.GetType())) {
                 try {
                     propertiesObject = JObject.FromObject(val, serializer);
-                    foreach (var skip in skipProperties) {
+                    foreach (var skip in CurrentSerializationSettings.SkipFieldProperties) {
                         propertiesObject.Remove(skip);
                     }
-                    jObject.Add(property.Name, propertiesObject);
+                    jObject.Add(SerializedPropertyName, propertiesObject);
                 } catch {
-                    jObject.Add(new JProperty(property.Name, val.GetType().FullName));
+                    jObject.Add(new JProperty(SerializedPropertyName, val.GetType().FullName));
                 }
             } else {
                 SerializationSettings.FormatValue(ref val);
-                jObject.Add(new JProperty(property.Name, val));
+                jObject.Add(new JProperty(SerializedPropertyName, val));
             }
         }
     }
