@@ -19,6 +19,10 @@ namespace Laser.Orchard.ExternalContent.Services {
         private SerializationSettings CurrentSerializationSettings { get; set; }
 
         public string ComputeFieldClassName(ContentField field, ContentItem item = null) {
+            var fieldExternal = (FieldExternal)field;
+            if (fieldExternal == null) {
+                return field.FieldDefinition.Name;
+            }
             // {ContentType}.{ContentPart.PartDefinition.Name}.{field.FieldDefinition.Name}.{field.Name};
             var classNameElements = new List<string>();
             if (item != null) {
@@ -29,16 +33,35 @@ namespace Laser.Orchard.ExternalContent.Services {
                         .Any(fi => fi.Name.Equals(field.Name) 
                             && fi is FieldExternal));
                 if (parts.Any()) { // sanity check
+                    var part = (ContentPart)null;
                     if (parts.Count() == 1) {
                         // "normal" healthy case
-                        var part = parts.FirstOrDefault();
-                        classNameElements.Add(part.PartDefinition.Name);
+                        part = parts.FirstOrDefault();
                     } else {
-                        // two FieldExternal with the same name in two different ContentParts
-                        // TODO: check other properties of the field?
+                        // FieldExternal with the same name in different ContentParts.
+                        // Check other properties of the field to compare with the ones from
+                        // the parts.
+                        part = parts.FirstOrDefault(pa => {
+                            var candidateField = pa.Fields
+                                .FirstOrDefault(fi => fi is FieldExternal
+                                    && fi.Name.Equals(field.Name)) as FieldExternal;
+                            return string.Equals(fieldExternal.DisplayName, candidateField.DisplayName)
+                                && string.Equals(fieldExternal.ExternalUrl, candidateField.ExternalUrl)
+                                && string.Equals(fieldExternal.HttpVerbCode, candidateField.HttpVerbCode)
+                                && string.Equals(fieldExternal.HttpDataTypeCode, candidateField.HttpDataTypeCode)
+                                && string.Equals(fieldExternal.BodyRequest, candidateField.BodyRequest)
+                                && string.Equals(fieldExternal.AdditionalHeadersText, candidateField.AdditionalHeadersText);
+                            });
+                    }
+                    if (part != null) {
+                        // we've managed to identify the ContentPart where the ContentField is in
+                        classNameElements.Add(part.PartDefinition.Name);
                     }
                 }
             }
+            classNameElements.Add(field.FieldDefinition.Name); // This is "FieldExternal"
+            classNameElements.Add(field.Name); // Technical Name of the ContentField
+            return string.Join("", classNameElements);
         }
 
         public void Configure(SerializationSettings serializationSettings) {
@@ -57,6 +80,10 @@ namespace Laser.Orchard.ExternalContent.Services {
 
             var field = (FieldExternal)fieldToSerialize;
             // The only property we should serialize here is ContentObject.
+            // Either the call or the management of its response may have failed:
+            if (field.ContentObject is Exception) {
+                return;
+            }
 
             // If we serialized it using default methods (i.e. using reflection), the result would be:
             /*
@@ -126,7 +153,11 @@ namespace Laser.Orchard.ExternalContent.Services {
                     } else {
                         // this is the case from the comments/examples above.
                         // We need to "wrap" each object here in its "Type".
-
+                        foreach (var item in arrayMember) {
+                            var itemModel = new Dictionary<string, object>();
+                            itemModel.Add(memberName, item);
+                            transformedObject.Add((dynamic)itemModel);
+                        }
                     }
                 }
             }
