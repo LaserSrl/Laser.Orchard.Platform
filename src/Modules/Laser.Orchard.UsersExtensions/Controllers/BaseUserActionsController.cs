@@ -123,6 +123,11 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
         }
 
+        [HttpPost]
+        public ContentResult SendChallengeEmail(string username) {
+            return SendChallengeEmailLogic(username);
+        }
+
         #endregion [http calls]
 
         public Localizer T { get; set; }
@@ -458,6 +463,35 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
             result = UtilsServices.GetResponse(ResponseType.Success, T("Password changed.").Text);
             return UtilsServices.ConvertToJsonResult(result);
+        }
+
+        protected ContentResult SendChallengeEmailLogic(string username) {
+            Response result;
+
+            // Check users must confirm their account on registration.
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersMustValidateEmail) {
+                result = UtilsServices.GetResponse(ResponseType.None, T("Invalid operation: users do not need to validate their email.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            if (string.IsNullOrWhiteSpace(username)) {
+                result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("You must specify a username or e-mail.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            var user = _userService.GetUserByNameOrEmail(username);
+            if (user != null && user.EmailStatus == UserStatus.Pending) {
+                var siteUrl = OrchardServices.WorkContext.CurrentSite.BaseUrl;
+                _userService.SendChallengeEmail(user.As<UserPart>(), nonce => Url.MakeAbsolute(Url.Action("ChallengeEmail", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl));
+                _userEventHandler.SentChallengeEmail(user);
+                
+                result = UtilsServices.GetResponse(ResponseType.Success, T("Challenge email sent.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            } else {
+                result = UtilsServices.GetResponse(ResponseType.InvalidUser, T("Invalid username or e-mail.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
         }
     }
 }
