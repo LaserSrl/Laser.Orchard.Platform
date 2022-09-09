@@ -10,7 +10,8 @@ namespace Laser.Orchard.StartupConfig.Services.ContentSerialization {
 
         public int Specificity => 10;
 
-        public string ComputeFieldClassName(ContentField field, ContentItem item = null) {
+        public string ComputeFieldClassName(ContentField field, 
+            ContentPart part = null, ContentItem item = null) {
             return field.FieldDefinition.Name;
         }
 
@@ -28,7 +29,9 @@ namespace Laser.Orchard.StartupConfig.Services.ContentSerialization {
 
             var enumField = (EnumerationField)fieldToSerialize;
             string[] selected = enumField.SelectedValues;
-            string[] options = enumField.PartFieldDefinition.Settings["EnumerationFieldSettings.Options"].Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+            string[] options = enumField.PartFieldDefinition
+                .Settings["EnumerationFieldSettings.Options"]
+                .Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
             targetFieldObject.Add("Options", JToken.FromObject(options));
             targetFieldObject.Add("SelectedValues", JToken.FromObject(selected));

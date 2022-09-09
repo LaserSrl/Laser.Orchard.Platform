@@ -19,7 +19,8 @@ namespace Laser.Orchard.ExternalContent.Services {
         private SerializationSettings CurrentSerializationSettings { get; set; }
         private const string SerializedPropertyName = "ContentObject";
 
-        public string ComputeFieldClassName(ContentField field, ContentItem item = null) {
+        public string ComputeFieldClassName(ContentField field,
+            ContentPart part = null, ContentItem item = null) {
             var fieldExternal = (FieldExternal)field;
             if (fieldExternal == null) {
                 return field.FieldDefinition.Name;
@@ -28,37 +29,38 @@ namespace Laser.Orchard.ExternalContent.Services {
             var classNameElements = new List<string>();
             if (item != null) {
                 classNameElements.Add(item.ContentType);
-                // find the part the field is in
-                var parts = item.Parts
-                    .Where(pa => pa.Fields
-                        .Any(fi => fi.Name.Equals(field.Name) 
-                            && fi is FieldExternal));
-                if (parts.Any()) { // sanity check
-                    var part = (ContentPart)null;
-                    if (parts.Count() == 1) {
-                        // "normal" healthy case
-                        part = parts.FirstOrDefault();
-                    } else {
-                        // FieldExternal with the same name in different ContentParts.
-                        // Check other properties of the field to compare with the ones from
-                        // the parts.
-                        part = parts.FirstOrDefault(pa => {
-                            var candidateField = pa.Fields
-                                .FirstOrDefault(fi => fi is FieldExternal
-                                    && fi.Name.Equals(field.Name)) as FieldExternal;
-                            return string.Equals(fieldExternal.DisplayName, candidateField.DisplayName)
-                                && string.Equals(fieldExternal.ExternalUrl, candidateField.ExternalUrl)
-                                && string.Equals(fieldExternal.HttpVerbCode, candidateField.HttpVerbCode)
-                                && string.Equals(fieldExternal.HttpDataTypeCode, candidateField.HttpDataTypeCode)
-                                && string.Equals(fieldExternal.BodyRequest, candidateField.BodyRequest)
-                                && string.Equals(fieldExternal.AdditionalHeadersText, candidateField.AdditionalHeadersText);
+                if (part == null) {
+                    // find the part the field is in
+                    var parts = item.Parts
+                        .Where(pa => pa.Fields
+                            .Any(fi => fi.Name.Equals(field.Name)
+                                && fi is FieldExternal));
+                    if (parts.Any()) { // sanity check
+                        if (parts.Count() == 1) {
+                            // "normal" healthy case
+                            part = parts.FirstOrDefault();
+                        } else {
+                            // FieldExternal with the same name in different ContentParts.
+                            // Check other properties of the field to compare with the ones from
+                            // the parts.
+                            part = parts.FirstOrDefault(pa => {
+                                var candidateField = pa.Fields
+                                    .FirstOrDefault(fi => fi is FieldExternal
+                                        && fi.Name.Equals(field.Name)) as FieldExternal;
+                                return string.Equals(fieldExternal.DisplayName, candidateField.DisplayName)
+                                    && string.Equals(fieldExternal.ExternalUrl, candidateField.ExternalUrl)
+                                    && string.Equals(fieldExternal.HttpVerbCode, candidateField.HttpVerbCode)
+                                    && string.Equals(fieldExternal.HttpDataTypeCode, candidateField.HttpDataTypeCode)
+                                    && string.Equals(fieldExternal.BodyRequest, candidateField.BodyRequest)
+                                    && string.Equals(fieldExternal.AdditionalHeadersText, candidateField.AdditionalHeadersText);
                             });
-                    }
-                    if (part != null) {
-                        // we've managed to identify the ContentPart where the ContentField is in
-                        classNameElements.Add(part.PartDefinition.Name);
+                        }
                     }
                 }
+            }
+            if (part != null) {
+                // we've managed to identify the ContentPart where the ContentField is in
+                classNameElements.Add(part.PartDefinition.Name);
             }
             classNameElements.Add(field.FieldDefinition.Name); // This is "FieldExternal"
             classNameElements.Add(field.Name); // Technical Name of the ContentField
@@ -166,12 +168,12 @@ namespace Laser.Orchard.ExternalContent.Services {
             // Then we should serialize whatever that is, iteratively/recursively.
 
             // Finally, we add that result to the serialization we are building
-            //targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
-            PopulateJObject(
-                ref targetFieldObject,
-                transformedObject,
-                actualLevel,
-                itemToSerialize?.Id ?? 0);
+            targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            //PopulateJObject(
+            //    ref targetFieldObject,
+            //    transformedObject,
+            //    actualLevel,
+            //    itemToSerialize?.Id ?? 0);
         }
 
         private dynamic CleanContentObject(dynamic objec) {
