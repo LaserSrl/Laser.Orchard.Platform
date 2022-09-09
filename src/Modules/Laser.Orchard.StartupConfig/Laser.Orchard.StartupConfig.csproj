@@ -537,10 +537,13 @@
     <Compile Include="Services\BearerTokenEncryptionService.cs" />
     <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
     <Compile Include="Services\ConfigurableEditorBuilderWrapper.cs" />
+    <Compile Include="Services\ContentSerialization\EnumerationFieldSerializationProvider.cs" />
+    <Compile Include="Services\ContentSerialization\SerializationSettings.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
     <Compile Include="Services\IApiCredentialsManagementService.cs" />
     <Compile Include="Services\IBearerTokenEncryptionService.cs" />
     <Compile Include="Services\IFrontEndEditService.cs" />
+    <Compile Include="Services\ContentSerialization\ISpecificContentFieldSerializationProvider.cs" />
     <Compile Include="Services\IThemeHelperService.cs" />
     <Compile Include="Services\ThemeHelperService.cs" />
     <Compile Include="Settings\CacheEvictorPartSettingsHook.cs" />
@@ -647,7 +650,7 @@
     <Compile Include="RazorCodeExecution\Forms\RazorExecuteForm.cs" />
     <Compile Include="RazorCodeExecution\Services\IRazorTemplateManager.cs" />
     <Compile Include="Services\ApiKeyService.cs" />
-    <Compile Include="Services\ContentSerializationServices.cs" />
+    <Compile Include="Services\ContentSerialization\ContentSerializationServices.cs" />
     <Compile Include="Services\IApiKeyService.cs" />
     <Compile Include="RazorCodeExecution\Services\IRazorExecuteService.cs" />
     <Compile Include="Services\IMaintenanceService.cs" />

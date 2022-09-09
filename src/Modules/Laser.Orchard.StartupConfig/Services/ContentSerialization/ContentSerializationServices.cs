@@ -1,4 +1,5 @@
-﻿using Markdown.Services;
+﻿using Laser.Orchard.StartupConfig.Services.ContentSerialization;
+using Markdown.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard;
@@ -30,6 +31,8 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IProjectionManager _projectionManager;
         private readonly ITaxonomyService _taxonomyService;
         private readonly ILocalizationService _localizationService;
+        private readonly IEnumerable<ISpecificContentFieldSerializationProvider> _contentFieldSerializationProviders;
+
         private readonly MarkdownFilter _markdownFilter;
 
         private readonly string[] _skipAlwaysProperties;
@@ -49,12 +52,16 @@ namespace Laser.Orchard.StartupConfig.Services {
         private string[] _filter;
 
         public ContentSerializationServices(IOrchardServices orchardServices,
-            IProjectionManager projectionManager, ITaxonomyService taxonomyService,
-            ILocalizationService localizationService) {
+            IProjectionManager projectionManager, 
+            ITaxonomyService taxonomyService,
+            ILocalizationService localizationService,
+            IEnumerable<ISpecificContentFieldSerializationProvider> contentFieldSerializationProviders) {
+
             _orchardServices = orchardServices;
             _projectionManager = projectionManager;
             _taxonomyService = taxonomyService;
             _localizationService = localizationService;
+            _contentFieldSerializationProviders = contentFieldSerializationProviders;
             _markdownFilter = new MarkdownFilter();
 
             _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
@@ -74,6 +81,26 @@ namespace Laser.Orchard.StartupConfig.Services {
                 typeof(DateTime),
                 typeof(Enum)
             };
+
+            // initialize ContentField serialization providers with the configurazion for this serialization.
+            var settings = new SerializationSettings {
+                SkipAlwaysProperties = _skipAlwaysProperties,
+                SkipAlwaysPropertiesEndWith = _skipAlwaysPropertiesEndWith,
+                SkipFieldProperties=_skipFieldProperties,
+                SkipFieldTypes= _skipFieldTypes,
+                SkipPartNames= _skipPartNames,
+                SkipPartProperties= _skipPartProperties,
+                SkipPartTypes= _skipPartTypes,
+                BasicTypes= _basicTypes,
+                MaxLevel= _maxLevel,
+                // backreferences
+                ContentSerializationService = this,
+                SerializerFactory = JsonSerializerInstance,
+                ObjectSerializerMethod = SerializeObject
+            };
+            foreach (var p in _contentFieldSerializationProviders) {
+                p.Configure(settings);
+            }
 
             processedItems = new List<ProcessedObject>();
         }
@@ -121,6 +148,8 @@ namespace Laser.Orchard.StartupConfig.Services {
             JObject json;
             // BuildDisplay populates the TagCache properly with the Id of the content
             // It impacts performances but we have to choose if to call the BuildDisplay or to manually populate the Tag cache with the content Id
+            // Invoking BuilDisplay also ensures all handlers are correctly invoked for the content:
+            // this ensures some rare conditions are correctly handled, e.g. FieldExternal
             _orchardServices.ContentManager.BuildDisplay(content);
             var filteredContent = content;
             _filter = filter.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.EndsWith(".") ? x : x + ".").ToArray();
@@ -328,22 +357,32 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
         }
 
-        private JProperty SerializeObjectField(ContentField field, int actualLevel, int parentContentId, ContentItem item = null) {
-            var fieldObject = new JObject();
+        private JProperty SerializeObjectField(
+            ContentField field, int actualLevel, int parentContentId, ContentItem item = null) {
 
-            fieldObject.Add("ContentFieldClassName", JToken.FromObject(field.FieldDefinition.Name));
+            var fieldObject = new JObject();
+            // find if the field has providers dedicated to its own serialization:
+            var specificProviders = _contentFieldSerializationProviders.Where(p => p.IsSpecificForField(field));
+
+            var fieldClassName = field.FieldDefinition.Name;
+            if (specificProviders.Any()) {
+                var mostSpecificProvider = specificProviders
+                    .OrderByDescending(p => p.Specificity)
+                    .FirstOrDefault();
+                fieldClassName = mostSpecificProvider.ComputeFieldClassName(field, item);
+            }
+
+            fieldObject.Add("ContentFieldClassName", JToken.FromObject(fieldClassName));
             fieldObject.Add("ContentFieldTechnicalName", JToken.FromObject(field.Name));
             fieldObject.Add("ContentFieldDisplayName", JToken.FromObject(field.DisplayName));
 
-            if (field.FieldDefinition.Name == "EnumerationField") {
-                var enumField = (EnumerationField)field;
-                string[] selected = enumField.SelectedValues;
-                string[] options = enumField.PartFieldDefinition.Settings["EnumerationFieldSettings.Options"].Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
-
-                fieldObject.Add("Options", JToken.FromObject(options));
-                fieldObject.Add("SelectedValues", JToken.FromObject(selected));
-            }
-            else {
+            // if that is the case, they will handle serialization
+            if (specificProviders.Any()) {
+                foreach (var provider in specificProviders) {
+                    provider.PopulateJObject(ref fieldObject, field, actualLevel, item);
+                }
+            } else {
+                // otherwise, we have a generic serialization step that uses reflection
                 var properties = field.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(prop =>
                     !_skipFieldTypes.Contains(prop.Name) //skip 
                     );
@@ -357,8 +396,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 PopulateJObject(ref fieldObject, property, val, _skipFieldProperties, actualLevel, item?.Id ?? 0);
                             }
                         }
-                    }
-                    catch {
+                    } catch {
 
                     }
                 }
@@ -366,7 +404,7 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             return new JProperty(field.Name + field.FieldDefinition.Name, fieldObject);
         }
-
+        
         private JProperty SerializeField(ContentField field, int actualLevel, int parentContentId, ContentItem item = null) {
             var fieldObject = new JObject();
 
@@ -539,7 +577,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             return _basicTypes.Contains(type) || type.IsEnum;
         }
 
-        private void FormatValue(ref object val) {
+        private static void FormatValue(ref object val) {
             if (val != null && val.GetType().IsEnum) {
                 val = val.ToString();
             }
