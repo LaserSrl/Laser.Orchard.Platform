@@ -133,6 +133,11 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
         }
 
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult SendChallengeEmailSsl(string username) {
+            return SendChallengeEmailLogic(username);
+        }
         #endregion [https calls]
 
     }

@@ -135,23 +135,31 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         [HttpPost]
         [AlwaysAccessible]
+        [ValidateAntiForgeryTokenOrchard(false)]
         [WebApiKeyFilterForControllers(true)]
-        public ContentResult ChangePasswordSsl(string currentPassword, string newPassword, string confirmPassword) {
+        public ContentResult ChangePasswordApiSsl(string currentPassword, string newPassword, string confirmPassword) {
             return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
         }
 
         [HttpPost]
         [AlwaysAccessible]
         [WebApiKeyFilterForControllers(true)]
-        public ContentResult ChangeExpiredPasswordSsl(string currentPassword, string newPassword, string confirmPassword, string userName) {
+        public ContentResult ChangeExpiredPasswordApiSsl(string currentPassword, string newPassword, string confirmPassword, string userName) {
             return ChangeExpiredPasswordLogic(currentPassword, newPassword, confirmPassword, userName);
         }
 
         [HttpPost]
         [AlwaysAccessible]
         [WebApiKeyFilterForControllers(true)]
-        public ContentResult ChangeLostPasswordSsl(string nonce, string newPassword, string confirmPassword) {
+        public ContentResult ChangeLostPasswordApiSsl(string nonce, string newPassword, string confirmPassword) {
             return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        [WebApiKeyFilterForControllers(true)]
+        public ContentResult SendChallengeEmailApiSsl(string username) {
+            return SendChallengeEmailLogic(username);
         }
 
         #endregion [https calls]
