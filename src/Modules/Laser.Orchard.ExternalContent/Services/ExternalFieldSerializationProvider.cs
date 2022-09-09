@@ -168,12 +168,12 @@ namespace Laser.Orchard.ExternalContent.Services {
             // Then we should serialize whatever that is, iteratively/recursively.
 
             // Finally, we add that result to the serialization we are building
-            targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
-            //PopulateJObject(
-            //    ref targetFieldObject,
-            //    transformedObject,
-            //    actualLevel,
-            //    itemToSerialize?.Id ?? 0);
+            //targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            PopulateJObject(
+                ref targetFieldObject,
+                transformedObject,
+                actualLevel,
+                itemToSerialize?.Id ?? 0);
         }
 
         private dynamic CleanContentObject(dynamic objec) {

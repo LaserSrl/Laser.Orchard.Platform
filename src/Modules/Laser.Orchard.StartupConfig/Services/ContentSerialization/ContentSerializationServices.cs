@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web.Helpers;
 
 namespace Laser.Orchard.StartupConfig.Services {
     public interface IContentSerializationServices : IDependency {
@@ -256,24 +257,17 @@ namespace Laser.Orchard.StartupConfig.Services {
                     PopulateProcessedItems(item.GetType().Name, ((dynamic)item).Id, parentContentId);
                 }
                 if (item is ContentPart) {
+                    // We should never be falling through this branch, because ContentParts
+                    // should always be serialized from the ContentItem they belong to.
                     return SerializePart((ContentPart)item, actualLevel, ((ContentPart)item).Id);
                 } else if (item is ContentField) {
-                    return SerializeField((ContentField)item, actualLevel); //, ((ContentPart)item).Id);
+                    // We should never be falling through this branch, because ContentFields
+                    // should always be serialized from the ContentPart they belong to.
+                    return SerializeField((ContentField)item, actualLevel);
                 } else if (item is ContentItem) {
                     return SerializeContentItem((ContentItem)item, actualLevel + 1, parentContentId);
                 } else if (typeof(IEnumerable).IsInstanceOfType(item)) { // Lista o array
-                    JArray array = new JArray();
-                    foreach (var itemArray in (item as IEnumerable)) {
-                        if (IsBasicType(itemArray.GetType())) {
-                            var valItem = itemArray;
-                            FormatValue(ref valItem);
-                            array.Add(valItem);
-                        } else {
-                            aux = SerializeObject(itemArray, actualLevel + 1, parentContentId, skipProperties);
-                            array.Add(new JObject(aux));
-                        }
-                    }
-                    return new JProperty(item.GetType().Name, array);
+                    return SerializeIEnumerable((IEnumerable)item, actualLevel, parentContentId, skipProperties);
                 } else if (item.GetType().IsClass) {
                     var members = item.GetType()
                         .GetFields(BindingFlags.Instance | BindingFlags.Public)
@@ -310,19 +304,55 @@ namespace Laser.Orchard.StartupConfig.Services {
                     }
                     return new JProperty(item.GetType().Name, new JObject(properties));
 
-                    //JObject propertiesObject;
-                    //var serializer = JsonSerializerInstance();
-                    //propertiesObject = JObject.FromObject(item, serializer);
-                    //foreach (var skip in skipProperties) {
-                    //    propertiesObject.Remove(skip);
-                    //}
-                    //PopulateProcessedItems(item.GetType().Name, ((dynamic)item).Id);
-                    //return new JProperty(item.GetType().Name, propertiesObject);
                 } else {
                     return new JProperty(item.GetType().Name, item);
                 }
             } catch (Exception ex) {
                 return new JProperty(item.GetType().Name, ex.Message);
+            }
+        }
+
+        private JProperty SerializeIEnumerable(
+            IEnumerable item, int actualLevel, int parentContentId, string[] skipProperties = null) {
+
+            JProperty aux = null;
+            if (typeof(IDictionary).IsInstanceOfType(item)) {
+                // A Dictionary should be serialized as
+                // "key1": "value1",
+                // "key2": "value2"
+                // Those values may be objects
+                var itemDictionary = ((IDictionary)item);
+                var itemKeys = itemDictionary.Keys;
+                List<JProperty> properties = new List<JProperty>();
+                foreach (var key in itemKeys) {
+                    var keyName = key.ToString(); // TODO
+                    var itemElement = itemDictionary[key];
+                    if (IsBasicType(itemElement.GetType())) {
+                        var valItem = itemElement;
+                        FormatValue(ref valItem);
+                        properties.Add(new JProperty(keyName, valItem));
+                    } else if (typeof(IEnumerable).IsInstanceOfType(itemElement)) {
+                        aux = SerializeIEnumerable((IEnumerable)itemElement, actualLevel + 1, parentContentId, skipProperties);
+                        properties.Add(aux);
+                    } else {
+                        aux = SerializeObject(itemElement, actualLevel + 1, parentContentId, skipProperties);
+                        properties.Add(aux);
+                    }
+                }
+                return new JProperty(item.GetType().Name, new JObject(properties));
+            } else {
+                JArray array = new JArray();
+                foreach (var itemArray in (item as IEnumerable)) {
+                    if (IsBasicType(itemArray.GetType())) {
+                        var valItem = itemArray;
+                        FormatValue(ref valItem);
+                        array.Add(valItem);
+                    } else {
+                        aux = SerializeObject(itemArray, actualLevel + 1, parentContentId, skipProperties);
+                        array.Add(new JObject(aux));
+                    }
+                }
+                return new JProperty(item.GetType().Name, array);
             }
         }
 
@@ -362,8 +392,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         private JProperty SerializePart(
             ContentPart part, int actualLevel, int parentContentId, ContentItem item = null) {
             // Part properties
-            var properties = part.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(prop =>
-                !_skipPartTypes.Contains(prop.Name) //skip 
+            var properties = part.GetType()
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(prop =>
+                    !_skipPartTypes.Contains(prop.Name) //skip 
                 );
             var partObject = new JObject();
             foreach (var property in properties) {
