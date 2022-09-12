@@ -294,7 +294,8 @@ button.link:hover {
 }
 
 .zone-messages {
-    padding-top: 40px;
+    //padding-top: 40px;
+    padding-top: 10px;
 }
 
 .edit-item-sidebar {
@@ -333,6 +334,10 @@ select[multiple] {
 #orchard-version {
     font-style: italic;
     color: #6db7e5;
+    //top: 36px;
+    //right: 16px;
+    top: 44px;
+    right: 24px;
 }
 
 #orchard-version::before {
@@ -1198,14 +1203,13 @@ input[type="number"]:focus {
 
 /**** zone content ****/
 #main {
-    margin-left: 0px !important;
-    margin-top: 20px;
+    margin: 0px !important;
 }
 
 #layout-main {
     border: 0px;
     background: none;
-    padding: 16px 24px;
+    padding: 8px 24px;
     margin: 8px 0 0 0;
     clear: both;
     /*CSS3 properties*/
@@ -3207,7 +3211,7 @@ a.text-success:hover {
     /*position: relative;*/
     width: 100%;
     left: 0;
-    padding-top: 14px;
+    margin-top: 54px;
 }
 
 
@@ -11901,32 +11905,6 @@ body {
                         content: "\00a0"; // some whitespace before the 'x' to remove a tag
                     }
                 }
-            }
-        }
-    }
-}
-
-/* Corrections to margin and line-heigth to correctly display Blog tabs at backoffice */
-html {
-    &.orchard-blogs {
-        #local-navigation {
-            margin-bottom: -17px;
-
-            .localmenu-local-admin {
-                li {
-                    &.local-section-blog-posts, &.local-section-search-posts {
-                        line-height: 1.6em;
-
-                        a {
-                            line-height: 1.6em;
-                        }
-                    }
-                }
-            }
-
-            /* This is a correction for create and edit blog post page, which is misaligned */
-            #local-navigation {
-                padding-bottom: 1px;
             }
         }
     }
