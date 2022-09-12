@@ -268,6 +268,45 @@ namespace Laser.Orchard.StartupConfig.Services {
                     return SerializeContentItem((ContentItem)item, actualLevel + 1, parentContentId);
                 } else if (typeof(IEnumerable).IsInstanceOfType(item)) { // Lista o array
                     return SerializeIEnumerable((IEnumerable)item, actualLevel, parentContentId, skipProperties);
+                } else if (item is DynamicJsonObject) {
+                    // This would be the same as the IsClass branch, but the object has
+                    // been built dynamically. A DynamicJsonObject can be thought of as
+                    // a sort of wrapper to a Dictionary<string, object>, that can be
+                    // addressed at runtime as if it were an object.
+                    var djObject = (DynamicJsonObject)item;
+                    var dynamicObject = (dynamic)item;
+                    var memberNames = djObject.GetDynamicMemberNames()
+                        .Where(mn => !skipProperties.Contains(mn)
+                            && !_skipAlwaysProperties.Contains(mn)
+                            && !mn.EndsWith(_skipAlwaysPropertiesEndWith));
+                    List<JProperty> properties = new List<JProperty>();
+                    foreach (var memberName in memberNames) {
+                        var val = dynamicObject[memberName];
+                        if (val.GetType().Equals(typeof(DynamicJsonArray))) {
+                            JArray arr = new JArray();
+                            properties.Add(new JProperty(memberName, arr));
+                            // serialize the collection
+                            foreach (var element in (val as DynamicJsonArray)) {
+                                if (IsBasicType(element.GetType())) {
+                                    var valItem = element;
+                                    FormatValue(ref valItem);
+                                    arr.Add(valItem);
+                                } else {
+                                    aux = SerializeObject(element, actualLevel + 1, parentContentId, skipProperties);
+                                    arr.Add(new JObject(aux));
+                                }
+                            }
+                        } else if (IsBasicType(val.GetType())) {
+                            var memberVal = (object)val;
+                            FormatValue(ref memberVal);
+                            properties.Add(new JProperty(memberName, memberVal));
+                        } else {
+                            // TODO: just reinvoke more recursion? check this
+                            aux = SerializeObject(val, actualLevel + 1, parentContentId, skipProperties);
+                            properties.Add(aux);
+                        }
+                    }
+                    return new JProperty(item.GetType().Name, new JObject(properties));
                 } else if (item.GetType().IsClass) {
                     var members = item.GetType()
                         .GetFields(BindingFlags.Instance | BindingFlags.Public)
