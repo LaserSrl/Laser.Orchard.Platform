@@ -21,7 +21,8 @@
 </div>
 
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
+    Url.Action("Index"), FormMethod.Post, 
+    new { @id = "address-form", @class= "checkout-form address-form" })) {
 
     if (Model.ShippingRequired) {
         if (Model.AdditionalShippingAddressShapes != null
