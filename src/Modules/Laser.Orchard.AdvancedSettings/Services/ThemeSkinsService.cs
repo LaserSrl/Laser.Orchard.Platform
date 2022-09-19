@@ -152,11 +152,16 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     selectedSkin = manifest.Skins.FirstOrDefault(tsd => tsd.Name.Equals("Default", StringComparison.OrdinalIgnoreCase));
                 }
                 if (selectedSkin != null) {
+                    var version = "1.0";
+                    if (!string.IsNullOrWhiteSpace(selectedSkin.Version))
+                    {
+                        version = selectedSkin.Version;
+                    }
                     // add css files to head of page
                     if (selectedSkin.StyleSheets != null) {
                         foreach (var cssName in selectedSkin.StyleSheets) {
-                            var debugPath = GetStyleSheet(cssName);
-                            var resourcePath = GetStyleSheet(cssName, true);
+                            var debugPath = GetStyleSheet(cssName) + "?v=" + version;
+                            var resourcePath = GetStyleSheet(cssName, true) + "?v=" + version;
                             if (string.IsNullOrWhiteSpace(resourcePath)) {
                                 resourcePath = debugPath;
                             }
@@ -168,8 +173,8 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     // add scripts to head of page
                     if (selectedSkin.HeadScripts != null) {
                         foreach (var scriptName in selectedSkin.HeadScripts) {
-                            var debugPath = GetScript(scriptName);
-                            var resourcePath = GetScript(scriptName, true);
+                            var debugPath = GetScript(scriptName) + "?v=" + version;
+                            var resourcePath = GetScript(scriptName, true) + "?v=" + version;
                             if (string.IsNullOrWhiteSpace(resourcePath)) {
                                 resourcePath = debugPath;
                             }
@@ -181,8 +186,8 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     // add scripts to foot of page
                     if (selectedSkin.FootScripts != null) {
                         foreach (var scriptName in selectedSkin.FootScripts) {
-                            var debugPath = GetScript(scriptName);
-                            var resourcePath = GetScript(scriptName, true);
+                            var debugPath = GetScript(scriptName) + "?v=" + version;
+                            var resourcePath = GetScript(scriptName, true) + "?v=" + version;
                             if (string.IsNullOrWhiteSpace(resourcePath)) {
                                 resourcePath = debugPath;
                             }
