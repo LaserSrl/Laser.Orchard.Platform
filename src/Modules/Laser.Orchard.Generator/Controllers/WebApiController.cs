@@ -27,11 +27,13 @@ namespace Laser.Orchard.Generator.Controllers {
         public ILogger Logger { get; set; }
 
         [AlwaysAccessible]
+        [OutputCache(NoStore = true, Duration = 0)] // do not cache generator calls
         public ActionResult Terms(string alias, int maxLevel = 10) {
             return _webApiServices.Terms(alias, maxLevel);
         }
 
         [AlwaysAccessible]
+        [OutputCache(NoStore = true, Duration = 0)] // do not cache generator calls
         public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
             JObject json;
 
