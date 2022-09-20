@@ -11,6 +11,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         : ICheckoutShippingAddressProvider {
 
         protected readonly dynamic _shapeFactory;
+        
+        public virtual string GetShippingAddressProviderId()
+        {
+            return "default";
+        }
 
         protected BaseCheckoutShippingAddressProvider(
             IShapeFactory shapeFactory) {

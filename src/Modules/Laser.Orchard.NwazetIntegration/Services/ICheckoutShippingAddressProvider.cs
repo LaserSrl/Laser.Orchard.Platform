@@ -131,5 +131,11 @@ namespace Laser.Orchard.NwazetIntegration.Services {
         /// <param name="orderPart"></param>
         /// <returns></returns>
         IEnumerable<dynamic> GetOrderShippingAddressShapes(OrderPart orderPart);
+
+        /// <summary>
+        /// This method returns the shipping address provider id used in the checkout controller.
+        /// </summary>
+        /// <returns></returns>
+        string GetShippingAddressProviderId();
     }
 }
