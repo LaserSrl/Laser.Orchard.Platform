@@ -196,6 +196,7 @@ namespace Laser.Orchard.UsersExtensions.Services {
         }
 
         public ResponseType SignIn(UserLogin userLoginParams) {
+            // Sanity check that should never fail because it's already implemented by the calling function.
             if (string.IsNullOrWhiteSpace(userLoginParams.Username) || string.IsNullOrWhiteSpace(userLoginParams.Password)) {
                 return ResponseType.MissingParameters;
             }
