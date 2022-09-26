@@ -5,6 +5,7 @@ using Laser.Orchard.Policy.Services;
 using Laser.Orchard.Policy.ViewModels;
 using Laser.Orchard.StartupConfig.Models;
 using Laser.Orchard.StartupConfig.Services;
+using Laser.Orchard.StartupConfig.ViewModels;
 using Laser.Orchard.UsersExtensions.Models;
 using Orchard;
 using Orchard.ContentManagement;
@@ -33,7 +34,7 @@ using System.Web.Mvc;
 namespace Laser.Orchard.UsersExtensions.Services {
     public interface IUsersExtensionsServices : IDependency {
         void Register(UserRegistration userRegistrationParams);
-        void SignIn(UserLogin userLoginParams);
+        ResponseType SignIn(UserLogin userLoginParams);
         void SignOut();
         IEnumerable<PolicyTextInfoPart> GetUserLinkedPolicies(string culture = null);
         bool ValidateRegistration(string userName, string email, string password, string confirmPassword, out List<string> errors);
@@ -194,15 +195,32 @@ namespace Laser.Orchard.UsersExtensions.Services {
             }
         }
 
-        public void SignIn(UserLogin userLoginParams) {
+        public ResponseType SignIn(UserLogin userLoginParams) {
+            if (string.IsNullOrWhiteSpace(userLoginParams.Username) || string.IsNullOrWhiteSpace(userLoginParams.Password)) {
+                return ResponseType.MissingParameters;
+            }
+
             var user = _membershipService.ValidateUser(userLoginParams.Username, userLoginParams.Password);
             if (user != null) {
                 _userEventHandler.LoggingIn(userLoginParams.Username, userLoginParams.Password);
+
+                // Check if password is expired, if needed.
+                var membershipSettings = _membershipService.GetSettings();
+                if (membershipSettings.EnableCustomPasswordPolicy && membershipSettings.EnablePasswordExpiration) {
+                    if (_membershipService.PasswordIsExpired(user, membershipSettings.PasswordExpirationTimeInDays)) {
+                        //throw new SecurityException(T("The password is expired.").Text);
+                        return ResponseType.ExpiredPassword;
+                    }
+                }
+
                 _authenticationService.SignIn(user, userLoginParams.CreatePersistentCookie);
                 _userEventHandler.LoggedIn(user);
+                return ResponseType.Success;
             }
             else {
-                throw new SecurityException(T("The username or e-mail or password provided is incorrect.").Text);
+                _userEventHandler.LogInFailed(userLoginParams.Username, userLoginParams.Password);
+                return ResponseType.InvalidUser;
+                //throw new SecurityException(T("The username or e-mail or password provided is incorrect.").Text);
             }
         }
 

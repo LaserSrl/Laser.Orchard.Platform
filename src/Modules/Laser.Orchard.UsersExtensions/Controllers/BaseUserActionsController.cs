@@ -171,11 +171,15 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                 result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("Provide valid username and password").Text);
             } else {
                 try {
-                    _usersExtensionsServices.SignIn(login);
-                    List<string> roles = new List<string>();
-                    var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
-                    var json = registeredServicesData.ToString();
-                    result = UtilsServices.GetResponse(ResponseType.Success, "", json);
+                    var response = _usersExtensionsServices.SignIn(login);
+                    if (response == ResponseType.Success) {
+                        List<string> roles = new List<string>();
+                        var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
+                        var json = registeredServicesData.ToString();
+                        result = UtilsServices.GetResponse(ResponseType.Success, "", json);
+                    } else {
+                        result = UtilsServices.GetResponse(response, "");
+                    }
                 } catch (Exception ex) {
                     result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
                 }
