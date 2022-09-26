@@ -181,11 +181,13 @@ namespace Contrib.Widgets.Drivers {
                 // configuration, because the latter changed but the former hasn't updated
                 // yet.
                 var currentWidget = _widgetsService.GetWidget(widgetId);
-                if(_authorizer.Authorize(
+                if (currentWidget != null && _authorizer.Authorize(
                     Orchard.Core.Contents.Permissions.DeleteContent, currentWidget)) {
                     _widgetsService.DeleteWidget(widgetId);
                 } else {
-                    unableToDeleteSome = true;
+                    // If current widget is null, it means it has already been removed (perhaps a concurrent delete call - e.g. when two browser tabs are open?).
+                    // It is not a permission issue, so nothing should really be notified to the user.
+                    unableToDeleteSome = (currentWidget != null);
                 }
             }
             if (unableToDeleteSome) {

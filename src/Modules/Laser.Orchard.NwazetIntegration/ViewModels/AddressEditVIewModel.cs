@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Newtonsoft.Json;
+using Nwazet.Commerce.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -170,6 +171,24 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             }
             viewModel.AddressType = addressRecordType;
             return viewModel;
+        }
+
+        public Address MakeAddressFromVM() {
+            return new Address {
+                Honorific = Honorific,
+                FirstName = FirstName,
+                LastName = LastName,
+                Company = Company,
+                Address1 = Address1,
+                Address2 = Address2,
+                PostalCode = PostalCode,
+                // advanced address stuff
+                // The string values here are the DisplayText properties of
+                // configured territories, or "custom" text entered by the user.
+                Country = Country,
+                City = City,
+                Province = Province
+            };
         }
     }
 }

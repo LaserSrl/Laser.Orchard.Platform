@@ -11,12 +11,11 @@ using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public interface ICheckoutHelperService : IDependency {
-
+        
         OrderPart CreateOrder(
-            AddressesVM model,
-            string paymentGuid,
-            string countryName = null,
-            string postalCode = null);
+            CheckoutViewModel cvm,
+            string paymentGuid);
+
         /// <summary>
         /// Tests whether the user is allowed to checkout. If not, the method should
         /// provide the action the user should be redirected to.
