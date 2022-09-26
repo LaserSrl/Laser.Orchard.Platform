@@ -234,6 +234,7 @@
     <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
+    <Compile Include="Services\Combinations\VatConfigurationPartDetailProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\BaseCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\DefaultCheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\CheckoutShippingAddressProviders\ExtendedShippingOptionComputeContext.cs" />
