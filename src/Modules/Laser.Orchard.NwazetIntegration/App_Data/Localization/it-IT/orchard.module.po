@@ -780,6 +780,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/T
 msgid "Contains provinces"
 msgstr "Contiene province"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.ISO3166Code.cshtml"
+msgid "Input an ISO code for this territory. You can find them <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes\">online</a>. The use your system will make of this depend on your specific configuration."
+msgstr "Indica un codice ISO per questo territorio. Puoi trovarli <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes\">online</a>. L'uso che il tuo sistema farà di questo codice dipende dalla tua specifica configurazione."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.ISO3166Code.cshtml"
+msgid "ISO code for this territory"
+msgstr "Codice ISO per questo territorio"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryHierarchyIsCountriesHierarchy.cshtml"
 msgid "This hierarchy is selected to be the reference for valid countries."
 msgstr "Questa gerarchia è selezionata per essere il riferimento per gli stati validi."
