@@ -178,7 +178,23 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
                         var json = registeredServicesData.ToString();
                         result = UtilsServices.GetResponse(ResponseType.Success, "", json);
                     } else {
-                        result = UtilsServices.GetResponse(response, "");
+                        switch (response) {
+                            case ResponseType.ExpiredPassword:
+                                result = UtilsServices.GetResponse(response, T("Password expired").Text);
+                                break;
+
+                            case ResponseType.MissingParameters:
+                                result = UtilsServices.GetResponse(response, T("Provide valid username and password").Text);
+                                break;
+
+                            case ResponseType.InvalidUser:
+                                result = UtilsServices.GetResponse(response, T("Invalid user").Text);
+                                break;
+
+                            default:
+                                result = UtilsServices.GetResponse(response, "");
+                                break;
+                        }
                     }
                 } catch (Exception ex) {
                     result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
