@@ -15,7 +15,7 @@ namespace Laser.Orchard.StartupConfig.ViewModels {
     /// </summary>
     public enum ResolutionAction { NoAction = 0, Login = 1000, ToConfirmEmail = 1003, AcceptPolicies = 3000, AddParameter = 4000 }
 
-    public enum ResponseType { None = 0, Success = 1, ToConfirmEmail = 2 , InvalidUser = 1000, InvalidXSRF = 1001, UnAuthorized = 1002, Validation = 2000, MissingPolicies = 3000, MissingParameters = 4000 }
+    public enum ResponseType { None = 0, Success = 1, ToConfirmEmail = 2 , InvalidUser = 1000, InvalidXSRF = 1001, UnAuthorized = 1002, ExpiredPassword = 1003, Validation = 2000, MissingPolicies = 3000, MissingParameters = 4000 }
 
 
     public class Response {
