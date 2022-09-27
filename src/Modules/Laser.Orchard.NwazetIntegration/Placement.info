@@ -1,8 +1,12 @@
 ﻿<Placement>
   <Match DisplayType="Summary">
     <Match ContentType="Order">
-		<Place Parts_Order="Content:1;Alternate=PaymentGatewayOrder"/>
+		  <Place Parts_Order="Content:1;Alternate=PaymentGatewayOrder"/>
     </Match>
+    <Place Parts_PickupPoint_Summary="Content:2" />
+  </Match>
+  <Match DisplayType="AddressSummary">
+    <Place Parts_PickupPoint_Summary="Content:2" />
   </Match>
   <Place Parts_NwazetContact="Content:5" />
   <Place SiteSettings_CheckoutSettings="Content:4.1" />
@@ -17,12 +21,26 @@
   <Place Parts_Territory_ISO3166Code_Edit="Content:2.2" />
   <Place Parts_Territory_AddressType_Edit="Content:2.1" />
   <Place Parts_Order_AdvancedAddress_Edit="Content:1.29" />
+  <Place Parts_Order_PickupPoint_Edit="Content:1.28" />
   <Place Parts_Order_PaymentInfo="Content:1.60"/>
   <Place Parts_Order_CheckoutPolicies="Content:1.61"/>
+  <Place Parts_PickupPointPart_Edit="Content:2" />
+  <Place Parts_PickupPointPart_BackToList="Sidebar:20" />
   <Place Parts_Product_TagManager="Content:1"/>
   <Place Parts_ProductPriceWithVAT_Edit="Content:3.5" />
   <Place Parts_FacebookShopProductPart="Content:1" />
   <!--Hide away the editor shape for shipping areas-->
   <Place Parts_ShippingMethodShippingAreas_Edit="-"/>
   <Place Parts_EcommerceAnalyticsSettings_Edit="Content:10.1"/>
+  
+  <!--Frontend stuff for pickup points in checkout steps-->
+  <Match HasParts="PickupPointPart">
+    <Match DisplayType="Detail"></Match>
+    <Match DisplayType="Summary">
+      <Place Parts_Title_Summary="Header:5;Alternate=PickupPointAddressSummaryTitle"/>
+    </Match>
+    <Match DisplayType="AddressSummary">
+      <Place Parts_Title_Summary="Header:5;Alternate=PickupPointAddressSummaryTitle"/>
+    </Match>
+  </Match>
 </Placement>
