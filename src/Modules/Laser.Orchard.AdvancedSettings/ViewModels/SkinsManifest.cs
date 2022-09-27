@@ -33,8 +33,6 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
         public string[] HeadScripts { get; set; }
         [JsonProperty("footscripts", NullValueHandling = NullValueHandling.Ignore)]
         public string[] FootScripts { get; set; }
-        [JsonProperty("version", NullValueHandling = NullValueHandling.Ignore)]
-        public string Version { get; set; }
     }
 
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
