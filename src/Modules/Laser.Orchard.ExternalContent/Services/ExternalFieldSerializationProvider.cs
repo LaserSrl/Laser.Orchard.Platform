@@ -17,8 +17,10 @@ namespace Laser.Orchard.ExternalContent.Services {
         public int Specificity => 10;
 
         private SerializationSettings CurrentSerializationSettings { get; set; }
+        private const string SerializedPropertyName = "ContentObject";
 
-        public string ComputeFieldClassName(ContentField field, ContentItem item = null) {
+        public string ComputeFieldClassName(ContentField field,
+            ContentPart part = null, ContentItem item = null) {
             var fieldExternal = (FieldExternal)field;
             if (fieldExternal == null) {
                 return field.FieldDefinition.Name;
@@ -27,37 +29,38 @@ namespace Laser.Orchard.ExternalContent.Services {
             var classNameElements = new List<string>();
             if (item != null) {
                 classNameElements.Add(item.ContentType);
-                // find the part the field is in
-                var parts = item.Parts
-                    .Where(pa => pa.Fields
-                        .Any(fi => fi.Name.Equals(field.Name) 
-                            && fi is FieldExternal));
-                if (parts.Any()) { // sanity check
-                    var part = (ContentPart)null;
-                    if (parts.Count() == 1) {
-                        // "normal" healthy case
-                        part = parts.FirstOrDefault();
-                    } else {
-                        // FieldExternal with the same name in different ContentParts.
-                        // Check other properties of the field to compare with the ones from
-                        // the parts.
-                        part = parts.FirstOrDefault(pa => {
-                            var candidateField = pa.Fields
-                                .FirstOrDefault(fi => fi is FieldExternal
-                                    && fi.Name.Equals(field.Name)) as FieldExternal;
-                            return string.Equals(fieldExternal.DisplayName, candidateField.DisplayName)
-                                && string.Equals(fieldExternal.ExternalUrl, candidateField.ExternalUrl)
-                                && string.Equals(fieldExternal.HttpVerbCode, candidateField.HttpVerbCode)
-                                && string.Equals(fieldExternal.HttpDataTypeCode, candidateField.HttpDataTypeCode)
-                                && string.Equals(fieldExternal.BodyRequest, candidateField.BodyRequest)
-                                && string.Equals(fieldExternal.AdditionalHeadersText, candidateField.AdditionalHeadersText);
+                if (part == null) {
+                    // find the part the field is in
+                    var parts = item.Parts
+                        .Where(pa => pa.Fields
+                            .Any(fi => fi.Name.Equals(field.Name)
+                                && fi is FieldExternal));
+                    if (parts.Any()) { // sanity check
+                        if (parts.Count() == 1) {
+                            // "normal" healthy case
+                            part = parts.FirstOrDefault();
+                        } else {
+                            // FieldExternal with the same name in different ContentParts.
+                            // Check other properties of the field to compare with the ones from
+                            // the parts.
+                            part = parts.FirstOrDefault(pa => {
+                                var candidateField = pa.Fields
+                                    .FirstOrDefault(fi => fi is FieldExternal
+                                        && fi.Name.Equals(field.Name)) as FieldExternal;
+                                return string.Equals(fieldExternal.DisplayName, candidateField.DisplayName)
+                                    && string.Equals(fieldExternal.ExternalUrl, candidateField.ExternalUrl)
+                                    && string.Equals(fieldExternal.HttpVerbCode, candidateField.HttpVerbCode)
+                                    && string.Equals(fieldExternal.HttpDataTypeCode, candidateField.HttpDataTypeCode)
+                                    && string.Equals(fieldExternal.BodyRequest, candidateField.BodyRequest)
+                                    && string.Equals(fieldExternal.AdditionalHeadersText, candidateField.AdditionalHeadersText);
                             });
-                    }
-                    if (part != null) {
-                        // we've managed to identify the ContentPart where the ContentField is in
-                        classNameElements.Add(part.PartDefinition.Name);
+                        }
                     }
                 }
+            }
+            if (part != null) {
+                // we've managed to identify the ContentPart where the ContentField is in
+                classNameElements.Add(part.PartDefinition.Name);
             }
             classNameElements.Add(field.FieldDefinition.Name); // This is "FieldExternal"
             classNameElements.Add(field.Name); // Technical Name of the ContentField
@@ -166,6 +169,11 @@ namespace Laser.Orchard.ExternalContent.Services {
 
             // Finally, we add that result to the serialization we are building
             targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            //PopulateJObject(
+            //    ref targetFieldObject,
+            //    transformedObject,
+            //    actualLevel,
+            //    itemToSerialize?.Id ?? 0);
         }
 
         private dynamic CleanContentObject(dynamic objec) {
@@ -178,9 +186,7 @@ namespace Laser.Orchard.ExternalContent.Services {
         
         private void PopulateJObject(
             ref JObject jObject,
-            PropertyInfo property,
             object val,
-            string[] skipProperties,
             int actualLevel,
             int parentContentId) {
             // this replicates the PopulateJObject from ContentSerializationServices
@@ -192,7 +198,7 @@ namespace Laser.Orchard.ExternalContent.Services {
 
                     if (!CurrentSerializationSettings.IsBasicType(itemArray.GetType())) {
                         var aux = CurrentSerializationSettings.ObjectSerializerMethod
-                            (itemArray, actualLevel, parentContentId, skipProperties);
+                            (itemArray, actualLevel, parentContentId, CurrentSerializationSettings.SkipFieldProperties);
                         array.Add(new JObject(aux));
                     } else {
                         var valItem = itemArray;
@@ -200,26 +206,26 @@ namespace Laser.Orchard.ExternalContent.Services {
                         array.Add(valItem);
                     }
                 }
-                jObject.Add(new JProperty(property.Name, array));
+                jObject.Add(new JProperty(SerializedPropertyName, array));
 
             } else if (val is ContentItem) {
                 var contentProperty = CurrentSerializationSettings.ObjectSerializerMethod
                     (val, actualLevel, parentContentId, null);
-                jObject.Add(new JProperty(property.Name, new JObject(contentProperty)));
+                jObject.Add(new JProperty(SerializedPropertyName, new JObject(contentProperty)));
             }
             if (!CurrentSerializationSettings.IsBasicType(val.GetType())) {
                 try {
                     propertiesObject = JObject.FromObject(val, serializer);
-                    foreach (var skip in skipProperties) {
+                    foreach (var skip in CurrentSerializationSettings.SkipFieldProperties) {
                         propertiesObject.Remove(skip);
                     }
-                    jObject.Add(property.Name, propertiesObject);
+                    jObject.Add(SerializedPropertyName, propertiesObject);
                 } catch {
-                    jObject.Add(new JProperty(property.Name, val.GetType().FullName));
+                    jObject.Add(new JProperty(SerializedPropertyName, val.GetType().FullName));
                 }
             } else {
                 SerializationSettings.FormatValue(ref val);
-                jObject.Add(new JProperty(property.Name, val));
+                jObject.Add(new JProperty(SerializedPropertyName, val));
             }
         }
     }

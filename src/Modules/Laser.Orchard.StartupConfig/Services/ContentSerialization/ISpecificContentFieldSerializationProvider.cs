@@ -31,7 +31,8 @@ namespace Laser.Orchard.StartupConfig.Services.ContentSerialization {
         /// <param name="field"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        string ComputeFieldClassName(ContentField field, ContentItem item = null);
+        string ComputeFieldClassName(ContentField field, 
+            ContentPart part = null, ContentItem item = null);
 
         /// <summary>
         /// Actual serialization step

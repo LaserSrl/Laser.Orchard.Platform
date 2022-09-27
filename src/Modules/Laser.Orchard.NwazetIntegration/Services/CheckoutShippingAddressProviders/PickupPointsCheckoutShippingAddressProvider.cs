@@ -37,6 +37,11 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         private const string SelectedPointInputName = Prefix + ".SelectedPickupPoint";
         private const string SelectedPointInputBaseId = Prefix + "_SelectedPickupPoint";
 
+        public override string GetShippingAddressProviderId()
+        {
+            return ProviderId;
+        }
+
         public override IEnumerable<AdditionalIndexShippingAddressViewModel> 
             GetIndexShippingAddressShapes(CheckoutViewModel cvm) {
 

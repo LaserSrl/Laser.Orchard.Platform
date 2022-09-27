@@ -303,6 +303,8 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
                 ShippingCountryDisplayName = contentManager.GetItemMetadata(country).DisplayText;
                 ShippingPostalCode = SelectedShippingAddressProvider
                     .GetShippingPostalCode(this);
+
+                SelectedShippingAddressProviderId = SelectedShippingAddressProvider.GetShippingAddressProviderId();
             }
 
             // always reinflate this information

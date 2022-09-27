@@ -18,7 +18,7 @@
         </div>
     </address>
 @if (addressHasChanged) {
-    <div class="callout callout-warning">
+    <div class="alert alert-warning">
         @T("Warning: This order's shipping address is not the same as the one selected for pickup.")
     </div>
     if (!string.IsNullOrWhiteSpace(shippingAddress.Replace(",", "").Trim())) {

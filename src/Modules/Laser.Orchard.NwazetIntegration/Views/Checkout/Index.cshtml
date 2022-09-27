@@ -21,7 +21,8 @@
 </div>
 
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Index"), FormMethod.Post, new { @id = "address-form" })) {
+    Url.Action("Index"), FormMethod.Post, 
+    new { @id = "address-form", @class= "checkout-form checkout-address-form" })) {
 
     if (Model.ShippingRequired) {
         if (Model.AdditionalShippingAddressShapes != null
@@ -48,7 +49,7 @@
                 things.
             *@
             <nav>
-                <div class="nav nav-tabs address-tab-headers" id="nav-tab" role="tablist">
+                <div class="nav nav-tabs nav-justified address-tab-headers" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" 
                     id="nav-shipping-address" data-toggle="tab" 
                     href="#nav-shipping" role="tab" 

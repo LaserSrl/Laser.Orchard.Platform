@@ -14,7 +14,8 @@
     @Display.AddressSummaryForm(ViewModel: Model)
 </div>
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Shipping"), FormMethod.Post, new { @id = "shipping-form" })) {
+    Url.Action("Shipping"), FormMethod.Post, 
+    new { @id = "shipping-form", @class= "checkout-form checkout-shipping-form" })) {
     @*serialized address data*@
     @Html.HiddenFor(m => m.State)
     @Html.HiddenFor(m => m.BillAtSameShippingAddress)

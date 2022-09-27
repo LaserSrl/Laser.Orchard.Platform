@@ -37,7 +37,7 @@ namespace Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProvid
         }
         
 
-        private const string ProviderId = "default";
+        public const string ProviderId = "default";
 
         public override IEnumerable<AdditionalIndexShippingAddressViewModel> 
             GetIndexShippingAddressShapes(CheckoutViewModel cvm) {
