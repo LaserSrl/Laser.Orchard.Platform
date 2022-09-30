@@ -16,22 +16,49 @@
         
         @foreach(var pickupPointPart in pickupPointParts) {
             var radioId = selectedPointInputId + "_" + pickupPointPart.Id;
-            <div class="input-group d-flex justify-content-between align-items-center">
-                <label class="input-group-prepend flex-fill"
-                     for="@radioId">
+            <div class="input-group d-flex 
+                    justify-content-between 
+                    align-items-center
+                    pickup-point-selector-container
+                    @if (first) { <text>pickup-point-selected</text>}">
+                <input type="radio"
+                       name="@selectedPointInputName" id="@radioId"
+                       value="@pickupPointPart.Id"
+                       aria-describedby="pickup-point-card-@pickupPointPart.Id"
+                       @if (first) { <text> checked</text>}
+                       class="" />
+                <label class="input-group-prepend flex-fill pickup-point-selector-label"
+                       for="@radioId">
                     <div class="input-group-prepend pickup-point-card"
                          id="pickup-point-card-@pickupPointPart.Id">
                         @Display(BuildDisplay(pickupPointPart, "Summary"))
                     </div>
                 </label>
-                <input type="radio"
-                       name="@selectedPointInputName" id="@radioId"
-                       value="@pickupPointPart.Id"
-                       aria-describedby="pickup-point-card-@pickupPointPart.Id"
-                       @if(first) {<text>checked</text>}
-                       class=""/>
             </div>
             first = false;
+        }
+        @using(Script.Foot()) {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    // all radio buttons
+                    var $radios = $('input[name="@selectedPointInputName"]');
+                    // when we select a pickup point (its radio), move the highlight class
+                    $radios.on('change', function () {
+                        var $this = $(this);
+                        // remove the highlight from previously selected
+                        var $selectedDiv = $this.closest('.pickup-point-input-groups')
+                            .find('.pickup-point-selected');
+                        if ($selectedDiv && $selectedDiv.length) {
+                            for (var i = 0; i < $selectedDiv.length; i++) {
+                                $($selectedDiv[i]).removeClass('pickup-point-selected');
+                            }
+                        }
+                        // highlight currently selected
+                        $this.closest('.pickup-point-selector-container')
+                            .addClass('pickup-point-selected');
+                    });
+                });
+            </script>
         }
     </div>
 }
