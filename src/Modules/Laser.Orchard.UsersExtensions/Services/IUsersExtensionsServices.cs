@@ -212,7 +212,8 @@ namespace Laser.Orchard.UsersExtensions.Services {
                         //throw new SecurityException(T("The password is expired.").Text);
                         return ResponseType.ExpiredPassword;
                     }
-                } else if (user.As<UserPart>().ForcePasswordChange) {
+                } 
+                if (user.As<UserPart>().ForcePasswordChange) {
                     return ResponseType.ExpiredPassword;
                 }
 
