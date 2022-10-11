@@ -92,7 +92,7 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.Schema.3.0.13\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=5.3.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.5.3.10\lib\net461\NHibernate.dll</HintPath>
+      <HintPath>..\..\..\..\Orchard\src\packages\NHibernate.5.3.13\lib\net461\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\Orchard\src\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
