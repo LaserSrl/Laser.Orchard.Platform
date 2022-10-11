@@ -48,6 +48,7 @@ namespace Laser.Orchard.Questionnaires.Controllers {
             var currentUser = _orchardServices.WorkContext.CurrentUser;
 
             try {
+                editModel.WorkContext = _orchardServices.WorkContext;
                 if (TryUpdateModel(editModel, _prefix)) {
                     TempData["QuestUpdatedEditModel"] = editModel; // devo avere modo di fare non perdere le risposte date finora!!!
                     TempData["HasAcceptedTerms"] = editModel.HasAcceptedTerms;
