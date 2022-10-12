@@ -27,6 +27,9 @@ namespace Laser.Orchard.NwazetIntegration {
                 .Column<int>("CountryId")
                 .Column<int>("CityId")
                 .Column<int>("ProvinceId")
+                .Column<string>("FiscalCode")
+                .Column<string>("VATNumber")
+                .Column<bool>("InvoiceRequest")
                 );
 
             SchemaBuilder.CreateTable("AddressOrderPartRecord", table => table
@@ -44,6 +47,9 @@ namespace Laser.Orchard.NwazetIntegration {
                  .Column<string>("BillingProvinceName")
                  .Column<int>("BillingProvinceId")
                  .Column<bool>("ShippingAddressIsOptional")
+                .Column<string>("BillingFiscalCode")
+                .Column<string>("BillingVATNumber")
+                .Column<bool>("BillingInvoiceRequest")
                  );
 
             SchemaBuilder.CreateTable("TerritoryAdministrativeTypePartRecord", table => table
@@ -56,7 +62,7 @@ namespace Laser.Orchard.NwazetIntegration {
                 );
             SchemaBuilder.AlterTable("TerritoryAdministrativeTypePartRecord",
                 table => table.CreateIndex("IDX_AdministrativeType", "AdministrativeType"));
-            
+
             SchemaBuilder.CreateTable("TerritoryAddressTypePartRecord", table => table
                 .ContentPartRecord()
                 .Column<bool>("Shipping")
@@ -68,7 +74,12 @@ namespace Laser.Orchard.NwazetIntegration {
             SchemaBuilder.AlterTable("TerritoryAddressTypePartRecord",
                 table => table.CreateIndex("IDX_Billing", "Billing"));
 
-            return 8;
+            SchemaBuilder.CreateTable("TerritoryISO3166CodePartRecord", table => table
+                .ContentPartRecord()
+                .Column<string>("ISO3166Code")
+                .Column<int>("TerritoryInternalRecord_Id"));
+
+            return 10;
         }
 
         public int UpdateFrom1() {
@@ -158,6 +169,23 @@ namespace Laser.Orchard.NwazetIntegration {
                 .Column<int>("TerritoryInternalRecord_Id"));
 
             return 9;
+        }
+
+        public int UpdateFrom9() {
+            //Adds VAT Number and Fiscal code for billing addresses
+            SchemaBuilder.AlterTable("AddressRecord", table =>
+                table.AddColumn<string>("FiscalCode"));
+            SchemaBuilder.AlterTable("AddressRecord", table =>
+                table.AddColumn<string>("VATNumber"));
+            SchemaBuilder.AlterTable("AddressRecord", table =>
+                table.AddColumn<bool>("InvoiceRequest"));
+            SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
+                table.AddColumn<string>("BillingFiscalCode"));
+            SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
+                table.AddColumn<string>("BillingVATNumber"));
+            SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
+                table.AddColumn<bool>("BillingInvoiceRequest"));
+            return 10;
         }
     }
 }

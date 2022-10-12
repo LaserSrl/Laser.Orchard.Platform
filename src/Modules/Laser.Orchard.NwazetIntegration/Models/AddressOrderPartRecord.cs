@@ -26,5 +26,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
 
         public virtual string BillingProvinceName { get; set; }
         public virtual int BillingProvinceId { get; set; }
+
+        // billing specific fields
+        public virtual string BillingFiscalCode { get; set; }
+        public virtual string BillingVATNumber { get; set; }
+        public virtual bool BillingInvoiceRequest { get; set; }
     }
 }

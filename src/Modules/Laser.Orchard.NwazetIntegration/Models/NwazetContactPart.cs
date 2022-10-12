@@ -53,6 +53,11 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual int CityId { get; set; }
         public virtual int ProvinceId { get; set; }
 
+        // billing specific fields
+        public virtual string FiscalCode { get; set; }
+        public virtual string VATNumber { get; set; }
+        public virtual bool InvoiceRequest { get; set; }
+
         public override bool Equals(object objAddress) {
             if (!(objAddress is AddressRecord))
                 return false;

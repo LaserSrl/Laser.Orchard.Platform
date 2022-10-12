@@ -94,6 +94,24 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             set { AddressRecord.Country = value; }
         }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string VATNumber {
+            get { return AddressRecord.VATNumber; }
+            set { AddressRecord.VATNumber = value; }
+        }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string FiscalCode {
+            get { return AddressRecord.FiscalCode; }
+            set { AddressRecord.FiscalCode = value; }
+        }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public bool InvoiceRequest {
+            get { return AddressRecord.InvoiceRequest; }
+            set { AddressRecord.InvoiceRequest = value; }
+        }
+
         /// <summary>
         /// Id of the TerritoryInternalRecord that matches the country
         /// </summary>
