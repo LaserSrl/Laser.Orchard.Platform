@@ -1,11 +1,11 @@
 ﻿
 @model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
 @* This will display the advanced address and hide the "standard" one.
-    To avoid changing the OrderPart, this view, its partials and the 
+    To avoid changing the OrderPart, this view, its partials and the
     underlying driver are somewhat dependent on it. In particular, changes
     in the view for OrderPart addresses will reflect on this view and
     on the partials used for each address here. *@
-@{ 
+@{
     Style.Require("Bootstrap");
     Style.Require("FontAwesome");
     Script.Require("Bootstrap");
@@ -24,7 +24,7 @@
             <a href="#@billingId" data-toggle="tab" aria-expanded="false">@T("Billing Address")</a>
         </li>
     </ul>
-    
+
     <div class="tab-content">
         <div id="@shippingId" class="tab-pane active order-address-editor shipping-address col-md-12">
             @Html.EditorFor(m => m.ShippingAddressVM,
@@ -43,4 +43,17 @@
         </div>
     </div>
 </div>
+@if (Model.AddressOrderPart.BillingInvoiceRequest) {
+    <div class="order-editor advanced-addresses invoice-info">
+        <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
+        <div class="invoice-info-invoicerequest-value">
+            @Html.EditorFor(m => m.BillingAddressVM.InvoiceRequest)
+            @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Invoice request").Text, new { @class = "forcheckbox" })
+        </div>
+        <div class="invoice-info-fiscalcode-label">@Html.LabelFor(m => m.BillingAddressVM.FiscalCode, T("Fiscal code"))</div>
+        <div class="invoice-info-fiscalcode-value">@Html.EditorFor(m => m.BillingAddressVM.FiscalCode)</div>
+        <div class="invoice-info-vatnumber-label">@Html.LabelFor(m => m.BillingAddressVM.VATNumber, T("VAT number"))</div>
+        <div class="invoice-info-vatnumber-value">@Html.EditorFor(m => m.BillingAddressVM.VATNumber)</div>
+    </div>
+}
 

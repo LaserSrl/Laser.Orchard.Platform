@@ -221,6 +221,17 @@
                     $('#' + options.elementsPrefix + 'CountryId option[value=' + arrayOfStoredAddresses[i].CountryId + ']').prop('selected', true);
                     global_CopyingAddresses = true;
                     $('#' + options.elementsPrefix + 'CountryId').trigger("change");
+
+                    //manage VATNumber and FiscalCode
+                    if (arrayOfStoredAddresses[i].AddressType == 1 /*Billing Address */) {
+                        if ($('#' + options.elementsPrefix + 'InvoiceRequest') != null) {
+                            $('#' + options.elementsPrefix + 'VATNumber').val(arrayOfStoredAddresses[i].VATNumber).trigger("change");
+                            $('#' + options.elementsPrefix + 'FiscalCode').val(arrayOfStoredAddresses[i].FiscalCode).trigger("change");
+                            if ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox')) {
+                                $('#' + options.elementsPrefix + 'InvoiceRequest').prop("checked", arrayOfStoredAddresses[i].InvoiceRequest);
+                            }
+                        }
+                    }
                     global_CopyingAddresses = false;
                 }
             }
@@ -307,4 +318,3 @@ function EnsureVisibility(options) {
         Select2ShippingAddressVisibility($('#' + options.elementsPrefix + 'ProvinceSelectedId'), false);
     }
 }
-

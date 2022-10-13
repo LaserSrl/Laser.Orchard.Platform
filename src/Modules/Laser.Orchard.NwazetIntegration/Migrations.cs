@@ -47,9 +47,9 @@ namespace Laser.Orchard.NwazetIntegration {
                  .Column<string>("BillingProvinceName")
                  .Column<int>("BillingProvinceId")
                  .Column<bool>("ShippingAddressIsOptional")
-                .Column<string>("BillingFiscalCode")
-                .Column<string>("BillingVATNumber")
-                .Column<bool>("BillingInvoiceRequest")
+                 .Column<string>("BillingFiscalCode")
+                 .Column<string>("BillingVATNumber")
+                 .Column<bool>("BillingInvoiceRequest")
                  );
 
             SchemaBuilder.CreateTable("TerritoryAdministrativeTypePartRecord", table => table

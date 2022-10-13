@@ -64,6 +64,19 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { Store(r => r.BillingProvinceId, value); }
         }
 
+        public string BillingFiscalCode {
+            get { return Retrieve(r => r.BillingFiscalCode); }
+            set { Store(r => r.BillingFiscalCode, value); }
+        }
+        public string BillingVATNumber {
+            get { return Retrieve(r => r.BillingVATNumber); }
+            set { Store(r => r.BillingVATNumber, value); }
+        }
+        public bool BillingInvoiceRequest {
+            get { return Retrieve(r => r.BillingInvoiceRequest); }
+            set { Store(r => r.BillingInvoiceRequest, value); }
+        }
+
         public IEnumerable<int> TerritoriesIds => 
             new int[] { ShippingCityId, ShippingProvinceId, ShippingCountryId,
                 BillingCityId, BillingProvinceId, BillingCountryId };

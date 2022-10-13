@@ -128,6 +128,10 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 addressPart.BillingCityId = model.BillingAddressVM.CityId;
                 addressPart.BillingProvinceName = model.BillingAddressVM.Province;
                 addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
+                addressPart.BillingInvoiceRequest = model.BillingAddressVM.InvoiceRequest;
+                addressPart.BillingVATNumber = model.BillingAddressVM.VATNumber;
+                addressPart.BillingFiscalCode = model.BillingAddressVM.FiscalCode;
+
             }
             // To properly handle the order's advanced address configuration we need
             // to call again the providers to store the additional data, because when they 
