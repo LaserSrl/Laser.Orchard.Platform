@@ -19,19 +19,19 @@
            " />
   <ContentDefinition>
     <Types>
-      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True" 
-                       ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True" 
+      <ProdottoDefault ContentTypeSettings.Creatable="False" ContentTypeSettings.Draftable="True"
+                       ContentTypeSettings.Listable="False" ContentTypeSettings.Securable="True"
                        ContentTypeLayoutSettings.Placeable="False" DisplayName="Prodotto base"
                        TypeIndexing.Indexes="AdminSearch:latest,,Search"
                        ContentTypeSettings.Placement.Editor="[{&quot;ShapeType&quot;:&quot;Parts_Common_SummaryInfoFor_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;0&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Title_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;1&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Autoroute_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;2&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Laser_Orchard_InsertStuff_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;3&quot;,&quot;Differentiator&quot;:&quot;HideTechnicalTabs&quot;},{&quot;ShapeType&quot;:&quot;Parts_Localization_ContentTranslations_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;4&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;5&quot;,&quot;Differentiator&quot;:&quot;QuickDetail&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;6&quot;,&quot;Differentiator&quot;:&quot;Descrizione&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;7&quot;,&quot;Differentiator&quot;:&quot;CategoriaPrincipale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;8&quot;,&quot;Differentiator&quot;:&quot;CategoriaPrincipale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;9&quot;,&quot;Differentiator&quot;:&quot;CategoriaSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;10&quot;,&quot;Differentiator&quot;:&quot;CategoriaSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyField_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;11&quot;,&quot;Differentiator&quot;:&quot;CategoriaAddizionale&quot;},{&quot;ShapeType&quot;:&quot;Fields_TaxonomyFieldList_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;12&quot;,&quot;Differentiator&quot;:&quot;CategoriaAddizionale&quot;},{&quot;ShapeType&quot;:&quot;Fields_MediaLibraryPicker_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;13&quot;,&quot;Differentiator&quot;:&quot;ProductImage&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;14&quot;,&quot;Differentiator&quot;:&quot;Label&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;15&quot;,&quot;Differentiator&quot;:&quot;LabelSecondaria&quot;},{&quot;ShapeType&quot;:&quot;Fields_Enumeration_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;16&quot;,&quot;Differentiator&quot;:&quot;Popolarita&quot;},{&quot;ShapeType&quot;:&quot;Fields_Numeric_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;17&quot;,&quot;Differentiator&quot;:&quot;Creator&quot;},{&quot;ShapeType&quot;:&quot;Parts_Common_Container_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;18&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Numeric_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;19&quot;,&quot;Differentiator&quot;:&quot;LastModifier&quot;},{&quot;ShapeType&quot;:&quot;Parts_Common_Owner_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;20&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_ContentPicker_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;21%Extra&quot;,&quot;Differentiator&quot;:&quot;RelatedProducts&quot;},{&quot;ShapeType&quot;:&quot;Fields_ContentPickerLocalization_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;22%Extra&quot;,&quot;Differentiator&quot;:&quot;RelatedProducts&quot;},{&quot;ShapeType&quot;:&quot;Fields_Common_Text_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;23%Extra&quot;,&quot;Differentiator&quot;:&quot;Keywords&quot;},{&quot;ShapeType&quot;:&quot;Part_Product_SKUEdit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;24#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Part_Product_InventoryBySKUEdit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;25#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Accessibility_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;26#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;27#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ProductPriceWithVAT_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;28#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ProductVatConfiguration_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;29#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Inventory_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;30#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Inventory_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;31#E-commerce&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_SEO_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;32#SEO&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_ShareLink&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;33#SEO&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Parts_Product_Shipping_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;34#TechnicalFields&quot;,&quot;Differentiator&quot;:null},{&quot;ShapeType&quot;:&quot;Fields_Hidden_String_Edit&quot;,&quot;Zone&quot;:&quot;Content&quot;,&quot;Position&quot;:&quot;35#TechnicalFields&quot;,&quot;Differentiator&quot;:&quot;CalculatedKeywords&quot;}]">
-        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True" 
+        <AutoroutePart AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.AllowCustomPattern="True"
                        AutorouteSettings.UseCulturePattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False"
-                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" 
+                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;en/product/{Content.Slug}&quot;,&quot;Description&quot;:&quot;en/product/my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;it/prodotto/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/prodotto/my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]"
                        AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]"/>
         <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
-        <GTMProductPart GTMProductSettingVM.Id="Sku" GTMProductSettingVM.Name="{Content.DisplayText}" 
-                        GTMProductSettingVM.Brand="" 
-                        GTMProductSettingVM.Category="{Content.ContentType}/{Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0.DisplayText}" 
+        <GTMProductPart GTMProductSettingVM.Id="Sku" GTMProductSettingVM.Name="{Content.DisplayText}"
+                        GTMProductSettingVM.Brand=""
+                        GTMProductSettingVM.Category="{Content.ContentType}/{Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0.DisplayText}"
                         GTMProductSettingVM.Variant="" />
         <IdentityPart />
         <InventoryPart />
@@ -43,14 +43,14 @@
         <ProductSearchPart />
         <ProductRelationshipPart />
         <ProductVatConfigurationPart ProductVatConfigurationPartInputPriceSettings.InputFinalPrice="True" />
-        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
-                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" SeoPartSettings.RobotsNoImageIndex="False" 
-                 SeoPartSettings.GoogleNoSiteLinkSearchBox="False" SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" 
-                 SeoPartSettings.JsonLd="&lt;script type=&quot;application/ld+json&quot;&gt;&#xD;&#xA;{{&#xD;&#xA;  &quot;@context&quot;: &quot;http://schema.org/&quot;,&#xD;&#xA;  &quot;@type&quot;: &quot;Product&quot;,&#xD;&#xA;  &quot;name&quot;: &quot;{Content.DisplayText}&quot;,&#xD;&#xA;  &quot;image&quot;: [&#xD;&#xA;    &quot;{Site.BaseUrl}{Content.Fields.ProductDefaultPart.ProductImage.Url}&quot;&#xD;&#xA;   ],&#xD;&#xA;  &quot;description&quot;: &quot;{Content.SeoDescription}&quot;,&#xD;&#xA;  &quot;offers&quot;: {{&#xD;&#xA;    &quot;@type&quot;: &quot;Offer&quot;,&#xD;&#xA;    &quot;priceCurrency&quot;: &quot;EUR&quot;,&#xD;&#xA;    &quot;price&quot;: &quot;{Content.FrontendPriceString}&quot;,&#xD;&#xA; &quot;url&quot;:&quot;{Site.BaseUrl}{Content.DisplayUrl}&quot;&#xD;&#xA;  }}&#xD;&#xA;}}&#xD;&#xA;&lt;/script&gt;" 
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" SeoPartSettings.RobotsNoImageIndex="False"
+                 SeoPartSettings.GoogleNoSiteLinkSearchBox="False" SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="&lt;script type=&quot;application/ld+json&quot;&gt;&#xD;&#xA;{{&#xD;&#xA;  &quot;@context&quot;: &quot;http://schema.org/&quot;,&#xD;&#xA;  &quot;@type&quot;: &quot;Product&quot;,&#xD;&#xA;  &quot;name&quot;: &quot;{Content.DisplayText}&quot;,&#xD;&#xA;  &quot;image&quot;: [&#xD;&#xA;    &quot;{Site.BaseUrl}{Content.Fields.ProductDefaultPart.ProductImage.Url}&quot;&#xD;&#xA;   ],&#xD;&#xA;  &quot;description&quot;: &quot;{Content.SeoDescription}&quot;,&#xD;&#xA;  &quot;offers&quot;: {{&#xD;&#xA;    &quot;@type&quot;: &quot;Offer&quot;,&#xD;&#xA;    &quot;priceCurrency&quot;: &quot;EUR&quot;,&#xD;&#xA;    &quot;price&quot;: &quot;{Content.FrontendPriceString}&quot;,&#xD;&#xA; &quot;url&quot;:&quot;{Site.BaseUrl}{Content.DisplayUrl}&quot;&#xD;&#xA;  }}&#xD;&#xA;}}&#xD;&#xA;&lt;/script&gt;"
                  SeoPartSettings.ShowAggregatedMicrodata="False" />
-        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="{Site.BaseUrl}{Content.DisplayUrl}" ShareLinkPartSettingVM.SharedBody="" 
-                       ShareLinkPartSettingVM.SharedText="{Content.DisplayText}" ShareLinkPartSettingVM.SharedImage="{Content.Fields.ProductDefaultPart.ProductImage.Url}" 
-                       ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False" 
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="{Site.BaseUrl}{Content.DisplayUrl}" ShareLinkPartSettingVM.SharedBody=""
+                       ShareLinkPartSettingVM.SharedText="{Content.DisplayText}" ShareLinkPartSettingVM.SharedImage="{Content.Fields.ProductDefaultPart.ProductImage.Url}"
+                       ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </ProdottoDefault>
@@ -74,16 +74,17 @@
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <CommonPart />
         <LocalizationPart />
-        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False" 
-                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False" 
-                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False" 
-                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False" 
-                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl="" 
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
                  SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
         <TaxonomyExtensionPart />
         <TaxonomyFilterPart />
         <TaxonomyPart />
         <TitlePart />
+        <IdentityPart />
       </Taxonomy>
       <CategoriaAddizionaleTerm Taxonomy="Categoria Addizionale" ContentPermissionsTypeSettings.SecurableContentItems="False" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Addizionale Term">
         <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
@@ -143,42 +144,42 @@
       <ProdottoDefault ContentPartSettings.Attachable="True">
         <LabelSecondaria.TextField DisplayName="Label Secondaria" TextFieldSettings.Required="False" FieldIndexing.Included="True"
                          TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine." />
-        <CategoriaAddizionale.TaxonomyField DisplayName="Categoria Addizionale" TaxonomyFieldSettings.Taxonomy="Categoria Addizionale" TaxonomyFieldSettings.LeavesOnly="False" 
-                                 TaxonomyFieldSettings.Required="False" TaxonomyFieldSettings.SingleChoice="False" TaxonomyFieldSettings.Autocomplete="False" 
+        <CategoriaAddizionale.TaxonomyField DisplayName="Categoria Addizionale" TaxonomyFieldSettings.Taxonomy="Categoria Addizionale" TaxonomyFieldSettings.LeavesOnly="False"
+                                 TaxonomyFieldSettings.Required="False" TaxonomyFieldSettings.SingleChoice="False" TaxonomyFieldSettings.Autocomplete="False"
                                  TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" />
-        <CategoriaSecondaria.TaxonomyField DisplayName="Categoria Secondaria" TaxonomyFieldSettings.Taxonomy="Categoria Secondaria" TaxonomyFieldSettings.LeavesOnly="False" 
-                               TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
+        <CategoriaSecondaria.TaxonomyField DisplayName="Categoria Secondaria" TaxonomyFieldSettings.Taxonomy="Categoria Secondaria" TaxonomyFieldSettings.LeavesOnly="False"
+                               TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False"
                                TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" />
         <HideTechnicalTabs.InsertStuffField DisplayName="HideTechnicalTabs" InsertStuffFieldSettings.RawHtml="&lt;script type=&quot;text/javascript&quot;&gt;&#xD;&#xA;  //$('a[href=&quot;#tab-master-fields&quot;').parent('li').hide()&#xD;&#xA;  $('a[href=&quot;#tab-technical-fields&quot;').parent('li').hide()&#xD;&#xA;&lt;/script&gt;" InsertStuffFieldSettings.OnFooter="true" />
       </ProdottoDefault>
       <ProductDefaultPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="ContentFields for the base product" ContentPartLayoutSettings.Placeable="False">
-        <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False" 
-                                           TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False" 
+        <CategoriaPrincipale.TaxonomyField DisplayName="Tipologia Prodotto" TaxonomyFieldSettings.Taxonomy="Categoria Principale" TaxonomyFieldSettings.LeavesOnly="False"
+                                           TaxonomyFieldSettings.Required="True" TaxonomyFieldSettings.SingleChoice="True" TaxonomyFieldSettings.Autocomplete="False"
                                            TaxonomyFieldSettings.AllowCustomTerms="False" TaxonomyFieldLocalizationSettings.TryToLocalize="True" FieldIndexing.Included="True" />
         <Descrizione.TextField DisplayName="Descrizione" TextFieldSettings.Required="False" FieldIndexing.Included="True" TextFieldSettings.Flavor="Html"  />
         <Label.TextField DisplayName="Label" TextFieldSettings.Required="False" FieldIndexing.Included="True"
                          TextFieldSettings.Hint="Etichetta che viene mostrata sovrapposta all'immagine."/>
-        <Popolarita.EnumerationField DisplayName="Popolarità" 
-                                     EnumerationFieldSettings.Hint="I prodotti più popolari (= numero maggiore) verranno mostrati per primi." 
-                                     EnumerationFieldSettings.Required="True" 
-                                     EnumerationFieldSettings.Options="0&#xD;&#xA;100&#xD;&#xA;200&#xD;&#xA;300&#xD;&#xA;400" 
-                                     EnumerationFieldSettings.ListMode="Dropdown" 
+        <Popolarita.EnumerationField DisplayName="Popolarità"
+                                     EnumerationFieldSettings.Hint="I prodotti più popolari (= numero maggiore) verranno mostrati per primi."
+                                     EnumerationFieldSettings.Required="True"
+                                     EnumerationFieldSettings.Options="0&#xD;&#xA;100&#xD;&#xA;200&#xD;&#xA;300&#xD;&#xA;400"
+                                     EnumerationFieldSettings.ListMode="Dropdown"
                                      EnumerationFieldSettings.DefaultValue="0" />
-        <ProductImage.MediaLibraryPickerField DisplayName="Gallery" 
-                                              MediaLibraryPickerFieldSettings.Hint="Galleria di immagini per il prodotto. Immagini quadrate con almeno 600px di lato." 
-                                              MediaLibraryPickerFieldSettings.Required="True" 
-                                              MediaLibraryPickerFieldSettings.Multiple="True" 
-                                              MediaLibraryPickerFieldLocalizationSettings.TryToLocalizeMedia="True" 
-                                              MediaLibraryPickerFieldLocalizationSettings.RemoveItemsWithoutLocalization="False" 
+        <ProductImage.MediaLibraryPickerField DisplayName="Gallery"
+                                              MediaLibraryPickerFieldSettings.Hint="Galleria di immagini per il prodotto. Immagini quadrate con almeno 600px di lato."
+                                              MediaLibraryPickerFieldSettings.Required="True"
+                                              MediaLibraryPickerFieldSettings.Multiple="True"
+                                              MediaLibraryPickerFieldLocalizationSettings.TryToLocalizeMedia="True"
+                                              MediaLibraryPickerFieldLocalizationSettings.RemoveItemsWithoutLocalization="False"
                                               MediaLibraryPickerFieldLocalizationSettings.RemoveItemsWithNoLocalizationPart="False" />
-        <QuickDetail.TextField DisplayName="Dettaglio breve" 
-                               TextFieldSettings.Hint="Etichetta che viene mostrata accanto al titolo nella pagina del prodotto, ed accanto alla categoria nei cataloghi." 
+        <QuickDetail.TextField DisplayName="Dettaglio breve"
+                               TextFieldSettings.Hint="Etichetta che viene mostrata accanto al titolo nella pagina del prodotto, ed accanto alla categoria nei cataloghi."
                                TextFieldSettings.Required="False" />
       </ProductDefaultPart>
       <ProductPart ContentPartSettings.Attachable="True" />
       <ProductSearchPart ContentPartSettings.Attachable="True" ContentPartLayoutSettings.Placeable="False">
-        <CalculatedKeywords.HiddenStringField DisplayName="CalculatedKeywords" HiddenStringFieldSettings.Tokenized="True" 
-                                              HiddenStringFieldSettings.TemplateString="{Content.Parameter:TitlePart-Title} {Content.Fields.ProductSearchPart.Keywords} {Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0}" 
+        <CalculatedKeywords.HiddenStringField DisplayName="CalculatedKeywords" HiddenStringFieldSettings.Tokenized="True"
+                                              HiddenStringFieldSettings.TemplateString="{Content.Parameter:TitlePart-Title} {Content.Fields.ProductSearchPart.Keywords} {Content.Fields.ProductDefaultPart.CategoriaPrincipale.Terms:0}"
                                               HiddenStringFieldSettings.AutomaticAdjustmentOnEdit="True" />
         <Keywords.TextField DisplayName="Keywords" TextFieldSettings.Flavor="Large" TextFieldSettings.Required="False" />
       </ProductSearchPart>
@@ -303,7 +304,7 @@
       </QueryPart>
       <TitlePart Title="Tutti i ProdottoDefault in una certa categoria con filtri per categorie" />
     </Query>
-    <Taxonomy Id="/alias=it\/categoria-addizionale" Status="Published">
+    <Taxonomy Id="/alias=it\/categoria-addizionale/Identifier=taxCategoriaAddizionale" Status="Published">
       <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
@@ -314,8 +315,9 @@
       <TaxonomyExtensionPart OrderBy="Default" />
       <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
       <TitlePart Title="Categoria Addizionale" />
+      <IdentityPart Identifier="taxCategoriaAddizionale" />
     </Taxonomy>
-    <Taxonomy Id="/alias=it\/categoria-principale" Status="Published">
+    <Taxonomy Id="/alias=it\/categoria-principale/Identifier=taxCategoriaPrincipale" Status="Published">
       <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
@@ -326,8 +328,9 @@
       <TaxonomyExtensionPart OrderBy="Default" />
       <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
       <TitlePart Title="Categoria Principale" />
+      <IdentityPart Identifier="taxCategoriaPrincipale" />
     </Taxonomy>
-    <Taxonomy Id="/alias=it\/categoria-secondaria" Status="Published">
+    <Taxonomy Id="/alias=it\/categoria-secondaria/Identifier=taxCategoriaSecondaria" Status="Published">
       <BooleanField.ShowContextualSubterms Value="true" />
       <NumericField.Creator Value="2" />
       <NumericField.LastModifier Value="2" />
@@ -338,6 +341,7 @@
       <TaxonomyExtensionPart OrderBy="Default" />
       <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
       <TitlePart Title="Categoria Secondaria" />
+      <IdentityPart Identifier="taxCategoriaSecondaria" />
     </Taxonomy>
   </Content>
   <!-- cache allocation step evictor part outside the initial content definition 
@@ -356,10 +360,10 @@
     <ECommerceCurrencySiteSettingsPart CurrencyCode="EUR" />
     <InventoryBySKUSiteSettingsPart InventoriesAreAllInSynch="true" />
   </Settings>
-	<!-- step to remove the default content type "Product" from the recipe -->
-	<RemoveContentDefinition>
-	  <Types>
-		<Product></Product>
-	  </Types>
+  <!-- step to remove the default content type "Product" from the recipe -->
+  <RemoveContentDefinition>
+    <Types>
+      <Product></Product>
+    </Types>
   </RemoveContentDefinition>
 </Orchard>
