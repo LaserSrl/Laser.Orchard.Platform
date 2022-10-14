@@ -122,6 +122,7 @@
     <Compile Include="Controllers\PaymentGatewayAPIController.cs" />
     <Compile Include="Controllers\PaymentInfoController.cs" />
     <Compile Include="Controllers\PosAdminBaseController.cs" />
+    <Compile Include="CustomPaymentMigrations.cs" />
     <Compile Include="Drivers\PayButtonPartDriver.cs" />
     <Compile Include="Handlers\CustomPosSiteSettingsPartHandler.cs" />
     <Compile Include="Handlers\PaymentGatewaySiteSettingsPartHandler.cs" />
