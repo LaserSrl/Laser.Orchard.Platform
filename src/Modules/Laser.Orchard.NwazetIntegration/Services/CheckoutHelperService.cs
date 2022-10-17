@@ -140,38 +140,6 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 ((IOrderExtensionAspect)exPart).ExtendCreation(cvm);
             }
 
-            // 2.1. Verify address information in the AddressOrderPart
-            //   (we have to do this explicitly because the management of Order
-            //   ContentItems does not go through drivers and such)
-            var addressPart = order.As<AddressOrderPart>();
-            if (addressPart != null) {
-                // shipping info
-                if (model.ShippingAddressVM != null) {
-                    // may not have a shipping address is shipping isn't required
-                    addressPart.ShippingCountryName = model.ShippingAddressVM.Country;
-                    addressPart.ShippingCountryId = model.ShippingAddressVM.CountryId;
-                    addressPart.ShippingCityName = model.ShippingAddressVM.City;
-                    addressPart.ShippingCityId = model.ShippingAddressVM.CityId;
-                    addressPart.ShippingProvinceName = model.ShippingAddressVM.Province;
-                    addressPart.ShippingProvinceId = model.ShippingAddressVM.ProvinceId;
-                    // added information to manage saving in bo
-                    addressPart.ShippingAddressIsOptional = false;
-                }
-                else {
-                    addressPart.ShippingAddressIsOptional = true;
-                }
-                // billing
-                addressPart.BillingCountryName = model.BillingAddressVM.Country;
-                addressPart.BillingCountryId = model.BillingAddressVM.CountryId;
-                addressPart.BillingCityName = model.BillingAddressVM.City;
-                addressPart.BillingCityId = model.BillingAddressVM.CityId;
-                addressPart.BillingProvinceName = model.BillingAddressVM.Province;
-                addressPart.BillingProvinceId = model.BillingAddressVM.ProvinceId;
-                addressPart.BillingInvoiceRequest = model.BillingAddressVM.InvoiceRequest;
-                addressPart.BillingVATNumber = model.BillingAddressVM.VATNumber;
-                addressPart.BillingFiscalCode = model.BillingAddressVM.FiscalCode;
-
-            }
             // To properly handle the order's advanced address configuration we need
             // to call again the providers to store the additional data, because when they 
             // are invoked in Nwazet's IOrderService implementation we can't have access
