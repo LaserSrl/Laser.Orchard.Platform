@@ -53,6 +53,10 @@ msgid "Thank you for registering. We sent you an e-mail with instructions to ena
 msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Challenge email sent."
+msgstr "Email di conferma inviata."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Email confirmed"
 msgstr "Email confermata"
 
@@ -65,8 +69,20 @@ msgid "Generic error"
 msgstr "Errore generico"
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Invalid operation: users do not need to validate their email."
+msgstr "Operazione non valida: gli utenti non hanno bisogno di confermare la loro email."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Invalid user"
+msgstr "Utente non valido"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Invalid user."
 msgstr "Utente non valido."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Invalid username or e-mail."
+msgstr "Nome utente o e-mail non validi"
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Message rejected: too many characters. (160 max)"
@@ -81,8 +97,28 @@ msgid "Missing text"
 msgstr "Testo mancante"
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "New password and confirm password must be equal."
+msgstr "La nuova password e la conferma password devono essere uguali."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "New password does not meet password policies: "
+msgstr "La nuova password non rispetta le regole per le password:"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Password changed."
+msgstr "Password modificata."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Password expired"
+msgstr "Password scaduta"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Priority missing or wrong"
 msgstr "Priorità mancante o errata"
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "Provide valid username and password"
+msgstr "Fornisci utente e password validi"
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Send email failed."
@@ -105,12 +141,28 @@ msgid "Thank you for registering. We sent you an e-mail with instructions to ena
 msgstr "Grazie per esserti registrato. Ti abbiamo inviato una e-mail con le istruzioni per attivare la tua utenza."
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "The current password provided is not valid."
+msgstr "La password attualmente indicata non è valida."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "The new password must be different from the current password."
+msgstr "La nuova password deve essere diversa da quella attuale."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Users cannot recover lost password due to site settings."
 msgstr "Le impostazioni del sito non permettono il recupero della password."
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
 msgid "Users cannot register due to site settings."
 msgstr "Le impostazioni del sito non permettono la registrazione di nuovi utenti."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "You must specify a username or e-mail."
+msgstr "Devi specificare un nome utente o una e-mail."
+
+msgctxt "Laser.Orchard.UsersExtensions.Controllers.BaseUserActionsController"
+msgid "You must specify current password, new password and confirm password."
+msgstr "Devi specificare la password attuale, la nuova password e la conferma della password."
 
 msgctxt "Laser.Orchard.UsersExtensions.Controllers.UserActionsAPIController"
 msgid "Generic error"

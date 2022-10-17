@@ -1,4 +1,6 @@
-﻿using Nwazet.Commerce.Aspects;
+﻿using Laser.Orchard.NwazetIntegration.Aspects;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+using Nwazet.Commerce.Aspects;
 using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,9 @@ using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
     public class AddressOrderPart 
-        : ContentPart<AddressOrderPartRecord>, ITerritoryAddressAspect {
+        : ContentPart<AddressOrderPartRecord>, 
+        ITerritoryAddressAspect,
+        IOrderExtensionAspect {
 
         public string ShippingCountryName {
             get { return Retrieve(r => r.ShippingCountryName); }
@@ -86,5 +90,32 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public int ProvinceId => ShippingProvinceId;
 
         public int CityId => ShippingCityId;
+
+        public void ExtendCreation(CheckoutViewModel cvm) {
+            // Verify address information in the AddressOrderPart
+            if (cvm.ShippingRequired) {
+                // may not have a shipping address if shipping isn't required
+                ShippingCountryName = cvm.ShippingAddress.Country;
+                ShippingCountryId = cvm.SelectedShippingAddressProvider
+                    .GetShippingCountryId(cvm);
+                ShippingCityName = cvm.ShippingAddress.City;
+                ShippingCityId = cvm.SelectedShippingAddressProvider
+                    .GetShippingCityId(cvm);
+                ShippingProvinceName = cvm.ShippingAddress.Province;
+                ShippingProvinceId = cvm.SelectedShippingAddressProvider
+                    .GetShippingProvinceId(cvm);
+                // added information to manage saving in bo
+                ShippingAddressIsOptional = false;
+            } else {
+                ShippingAddressIsOptional = true;
+            }
+            // Billing address
+            BillingCountryName = cvm.BillingAddressVM.Country;
+            BillingCountryId = cvm.BillingAddressVM.CountryId;
+            BillingCityName = cvm.BillingAddressVM.City;
+            BillingCityId = cvm.BillingAddressVM.CityId;
+            BillingProvinceName = cvm.BillingAddressVM.Province;
+            BillingProvinceId = cvm.BillingAddressVM.ProvinceId;
+        }
     }
 }

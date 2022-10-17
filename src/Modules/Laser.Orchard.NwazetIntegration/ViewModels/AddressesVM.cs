@@ -26,6 +26,11 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string Phone { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SpecialInstructions { get; set; }
+
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public Dictionary<string, object> ProviderViewModels { get; set; }
+
         [JsonIgnore]
         public List<AddressRecord> ListAvailableShippingAddress { get; set; }
         [JsonIgnore]

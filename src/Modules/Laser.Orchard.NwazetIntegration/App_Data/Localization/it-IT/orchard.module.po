@@ -324,6 +324,10 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.csht
 msgid "Special instructions"
 msgstr "Istruzioni speciali"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/BaseOrderShippingAddress.cshtml"
+msgid "Shipping to:"
+msgstr "Spedizione a:"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "{0} is required."
 msgstr "{0} è obbligatorio."
@@ -451,6 +455,14 @@ msgstr "Valore"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutCartSummary.cshtml"
 msgid "Your cart"
 msgstr "Il tuo carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutDefaultShippingAddressSummaryShape.cshtml"
+msgid "Shipping to:"
+msgstr "Spedizione a:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPickupPointAddressSummaryShape.cshtml"
+msgid "Pickup point:"
+msgstr "Punto di ritiro:"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/CheckoutPoliciesCheckoutStartShape.cshtml"
 msgid "(optional) I have read and agree to {0}"
@@ -736,6 +748,22 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/O
 msgid "Transaction ID"
 msgstr "ID Transazione"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PickupPoint.cshtml"
+msgid "The customer had selected the pickup point \"{0}\" at the following address:"
+msgstr "Il cliente ha selezionato il punto di ritiro \"{0}\" al seguente indirizzo:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PickupPoint.cshtml"
+msgid "The shipping address is the pickup point \"{0}\"."
+msgstr "L'indirizzo di spedizione è il punto di ritiro \"{0}\"."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PickupPoint.cshtml"
+msgid "Warning: This order's shipping address is not the same as the one selected for pickup."
+msgstr "Attenzione: l'indirizzo di spedizione di questo ordine non è lo stesso selezionato per il ritiro."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/PickupPoint.BackToList.cshtml"
+msgid "Back to list"
+msgstr "Ritorna alla Lista"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/ProductPriceWithVATEditor.cshtml"
 msgid "Base prices are computed using VAT __RATE__% from the selected category and for the selected default region ({0})."
 msgstr "I prezzi di base vengono calcolati utilizzando l'IVA __RATE__% dalla categoria selezionata e per la regione predefinita selezionata ({0})."
@@ -780,6 +808,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/T
 msgid "Contains provinces"
 msgstr "Contiene province"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.ISO3166Code.cshtml"
+msgid "Input an ISO code for this territory. You can find them <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes\">online</a>. The use your system will make of this depend on your specific configuration."
+msgstr "Indica un codice ISO per questo territorio. Puoi trovarli <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes\">online</a>. L'uso che il tuo sistema farà di questo codice dipende dalla tua specifica configurazione."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Territory.ISO3166Code.cshtml"
+msgid "ISO code for this territory"
+msgstr "Codice ISO per questo territorio"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryHierarchyIsCountriesHierarchy.cshtml"
 msgid "This hierarchy is selected to be the reference for valid countries."
 msgstr "Questa gerarchia è selezionata per essere il riferimento per gli stati validi."
@@ -791,6 +827,66 @@ msgstr "Una localizzazione di questa gerarchia è selezionata come riferimento p
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/TerritoryPartIsSelectedCountry.cshtml"
 msgid "This territory is selected to be a reference for valid countries."
 msgstr "Questo territorio è selezionato come riferimento per paesi validi."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Address"
+msgstr "Indirizzo"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Address (second line)"
+msgstr "Indirizzo (seconda riga)"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "City"
+msgstr "Città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Country"
+msgstr "Nazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Pickup Point Address"
+msgstr "Indirizzo del Punto di Ritiro"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Please specify the state, province, prefecture, republic or region code as appropriate. For example, 'WA' for the state of Washington in the United States."
+msgstr "Per favore, specificare stato, provincia, prefettura, repubblica o codice regione in maniera appropriata. Per esempio, 'TO' per la provincia di Torino."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Postal Code"
+msgstr "CAP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Postal or ZIP code"
+msgstr "Codice postale o ZIP"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Province"
+msgstr "Provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Province or state"
+msgstr "Provincia o Stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Select a city"
+msgstr "Seleziona una città"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Select a city from the list."
+msgstr "Seleziona una città dall'elenco."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Select a country"
+msgstr "Seleziona uno stato"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Select a province"
+msgstr "Seleziona una provincia"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/PickupPointAddressEditViewModel.cshtml"
+msgid "Select a valid country from the list."
+msgstr "Seleziona uno stato valido dall'elenco."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/AddressConfiguration.cshtml"
 msgid "Select the hierarchy that contains the territories to be used to validate addresses. Later you will be able to select specific territories."
@@ -939,6 +1035,30 @@ msgstr "{0} &times; {1}"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PaymentGatewayOrder.cshtml"
 msgid "Back to cart"
 msgstr "Torna al carrello"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointOrderShippingAddress.cshtml"
+msgid "Pickup point:"
+msgstr "Punto di ritiro:"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointOrderShippingAddress.cshtml"
+msgid "Warning: This order's shipping address is not the same as the one selected for pickup."
+msgstr "Attenzione: l'indirizzo di spedizione di questo ordine non è lo stesso selezionato per il ritiro."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointsAdmin/List.cshtml"
+msgid "Create"
+msgstr "Crea"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointsAdmin/List.cshtml"
+msgid "Create Pickup Point"
+msgstr "Crea Punto di Ritiro"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointsAdmin/List.cshtml"
+msgid "Manage Pickup Points"
+msgstr "Gestisci Punti di Ritiro"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/PickupPointsAdmin/List.cshtml"
+msgid "Pickup Points"
+msgstr "Punti di Ritiro"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Pos.cshtml"
 msgid "Checkout"
@@ -1380,6 +1500,10 @@ msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerrit
 msgid "Destination not in territories Criterion"
 msgstr "Criterio sulla destinazione non nei territori"
 
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.DestinationTerritoryCriteria"
+msgid "Shipping Address"
+msgstr "Indirizzo di spedizione"
+
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueForm"
 msgid "Enter the name of the header."
 msgstr "Inserisci la chiave dell'intestazione (Header Key/Name)."
@@ -1439,6 +1563,42 @@ msgstr "Valore"
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.HeaderValueFormValidator"
 msgid "Insert a value for the Name of the header to test (it is allowed to be a token)."
 msgstr "Inserisci un valore per la chiave dell'intestazione (Header Key/Name) da testare (sono consentiti valori con Token)."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsForm"
+msgid "Any"
+msgstr "Tutti"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsForm"
+msgid "Pickup Points"
+msgstr "Punti di Ritiro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsForm"
+msgid "Select the pickup points."
+msgstr "Seleziona i punti di ritiro."
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "Destination address is a pickup point"
+msgstr "L'indirizzo di destinazione è un punto di ritiro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "Destination address isn't a pickup point"
+msgstr "L'indirizzo di destinazione non è un punto di ritiro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "The destination address for this order is a pickup point"
+msgstr "L'indirizzo di destinazione per questo ordine è un punto di ritiro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "The destination address for this order is among these pickup points: {0}"
+msgstr "L'indirizzo di destinazione per questo ordine è fra questi punti di ritiro: {0}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "The destination address for this order is any pickup point"
+msgstr "L'indirizzo di destinazione per questo ordine è un qualunque punto di ritiro"
+
+msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.PickupPointsShippingCriteria"
+msgid "The destination address for this order isn't a pickup point"
+msgstr "L'indirizzo di destinazione per questo ordine non è un punto di ritiro"
 
 msgctxt "Laser.Orchard.NwazetIntegration.ApplicabilityCriteria.ProductContentTypeForm"
 msgid "Any"
@@ -1524,6 +1684,10 @@ msgctxt "Laser.Orchard.NwazetIntegration.Controllers.CheckoutController"
 msgid "Select a shipment to proceed with your order"
 msgstr "Seleziona una spedizione per procedere con il tuo ordine"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Controllers.PickupPointsAdminController"
+msgid "Cannot manage pickup points"
+msgstr "Non sei autorizzato a gestire i punti di ritiro"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.AddressOrderPartDriver"
 msgid "Cannot manage orders"
 msgstr "Impossibile gestire gli ordini"
@@ -1559,6 +1723,10 @@ msgstr "Impossibile gestire gli ordini"
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.OrderPartDriver"
 msgid "Transaction id changed from {0} to {1}"
 msgstr "Id transazione modificato da {0} a {1}"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Drivers.PickupPointPartDriver"
+msgid "Cannot manage pickup points"
+msgstr "Non sei autorizzato a gestire i punti di ritiro"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Drivers.TerritoryAdministrativeTypePartDriver"
 msgid "City"
@@ -1692,6 +1860,14 @@ msgctxt "Laser.Orchard.NwazetIntegration.Navigation.FacebookSiteSettingsAdminMen
 msgid "Settings"
 msgstr "Impostazioni"
 
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.PickupPointsAdminMenu"
+msgid "Commerce"
+msgstr "E-Commerce"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Navigation.PickupPointsAdminMenu"
+msgid "Pickup Points"
+msgstr "Punti di Ritiro"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Services.AddressConfigurationService"
 msgid "Select a country"
 msgstr "Seleziona uno stato"
@@ -1743,6 +1919,10 @@ msgstr "<a href=\"{0}\"> Accedi per completare l'ordine. </a>"
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutPoliciesService"
 msgid "Please agree to the terms and conditions before making a purchase."
 msgstr "È necessario accettare i termini e le condizioni prima di effettuare un acquisto."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders.PickupPointsCheckoutShippingAddressProvider"
+msgid "Pickup Points"
+msgstr "Punti di Ritiro"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.CountriesHierarchyDoesNotExist"
 msgid "No countries' hierarchy was configured. Have an administrator configure one <a href=\"{0}\">here</a>."

@@ -16,7 +16,7 @@ using System.Web.Mvc;
 
 namespace Laser.Orchard.NwazetIntegration.Services {
     public class CheckoutPoliciesService 
-        : ICheckoutPoliciesService, ICheckoutExtensionProvider {
+        : BaseCheckoutExtensionProvider, ICheckoutPoliciesService {
 
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly ICacheManager _cacheManager;
@@ -99,7 +99,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
 
         #region ICheckoutExtensionProvider
         private const string Prefix = "CheckoutPolicy";
-        public IEnumerable<dynamic> AdditionalCheckoutStartShapes() {
+        public override IEnumerable<dynamic> AdditionalCheckoutStartShapes() {
             // The shape from this will add the option for the user to accept 
             // checkout policies.
             // There will be one "line" (with a checkbox) for each configured
@@ -121,7 +121,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 );
         }
         
-        public void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context) {
+        public override void ProcessAdditionalCheckoutStartInformation(CheckoutExtensionContext context) {
             var allCheckoutPolicies = CheckoutPoliciesForUser();
             // save the fact that the user has accepted the policies
             var policiesToUpdate = new List<PolicyForUserViewModel>();
