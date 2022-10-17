@@ -95,7 +95,7 @@
     </fieldset>
 }
 @{
-    @* 5. VAT Number and Fiscal code*@
+    @*VAT Number and Fiscal code*@
     var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
     if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
     <fieldset class="address-summary invoice-information">

@@ -49,18 +49,17 @@
             IncludeCountry: true,
             ListAddress: Model.ListAvailableBillingAddress)
     </fieldset>
-    @* 5. VAT Number and Fiscal code*@
+    @*VAT Number and Fiscal code*@
     var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
     if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
         <fieldset class="invoice-information" id="invoice-information">
             <legend>@T("Invoice information")</legend>
 
             @if (!invoiceSettings.InvoiceRequestForceChoice) {
-                <div class="address-input invoice-request-input">
-                    @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Request invoice").Text, new { @class = "forcheckbox" })
-                    @Html.EditorFor(m => m.BillingAddressVM.InvoiceRequest)
-                    @*jquery onchange sets the*@
-                </div>
+            <div class="address-input invoice-request-input">
+                @Html.CheckBoxFor(m => m.BillingAddressVM.InvoiceRequest)
+                @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Request invoice").Text, new { @class = "forcheckbox" })
+            </div>
             }
             else {
                 <input type="hidden" name="@Html.NameFor(m => m.BillingAddressVM.InvoiceRequest)" id="@Html.IdFor(m=>m.BillingAddressVM.InvoiceRequest)" value="@invoiceSettings.InvoiceRequestDefaultValue.ToString()" />
