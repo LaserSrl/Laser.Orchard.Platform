@@ -183,6 +183,15 @@
             $('#' + options.elementsPrefix + 'ProvinceSelectedId').empty().trigger("change");
             $('#' + options.elementsPrefix + 'City').val("").trigger("change");
             $('#' + options.elementsPrefix + 'Province').val("").trigger("change");
+            if (options.isBillingAddress) {
+                if ($('#' + options.elementsPrefix + 'InvoiceRequest') != null) {
+                    $('#' + options.elementsPrefix + 'VATNumber').val("").trigger("change");
+                    $('#' + options.elementsPrefix + 'FiscalCode').val("").trigger("change");
+                    if ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox')) {
+                        $('#' + options.elementsPrefix + 'InvoiceRequest').prop("checked", false);
+                    }
+                }
+            }
             global_CopyingAddresses = false;
         } else {
             // figure out what address is selected

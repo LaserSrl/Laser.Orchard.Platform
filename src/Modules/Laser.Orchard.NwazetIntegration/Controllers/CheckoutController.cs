@@ -313,6 +313,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             // Enumerate so the methods are actually executed
                             .ToList();
                 }
+                //if Addresses have errors show them 
+                foreach (var error in model.ShippingAddressVM.Errors) {
+                    ModelState.AddModelError("_FORM", error);
+                }
+                foreach (var error in model.BillingAddressVM.Errors) {
+                    ModelState.AddModelError("_FORM", error);
+                }
                 FinalizeCheckoutViewModel(model, false);
                 return View(model);
             }

@@ -93,7 +93,7 @@
                         @Html.HiddenFor(m => m.ShippingAddressVM.AddressRecord.AddressType)
                                 
                         @Display.AddressForm(
-                            Prefix: "shippingAddressVM",
+                            Prefix: "ShippingAddressVM",
                             Address: Model.ShippingAddressVM,
                             IncludeCountry: true,
                             ListAddress:Model.ListAvailableShippingAddress)
@@ -220,7 +220,7 @@
                 @Html.HiddenFor(m => m.BillingAddressVM.AddressType)
                 @Html.HiddenFor(m => m.BillingAddressVM.AddressRecord.AddressType)
                 @Display.AddressForm(
-                    Prefix: "shippingAddressVM",
+                    Prefix: "ShippingAddressVM",
                     Address: Model.ShippingAddressVM,
                     IncludeCountry: true,
                     ListAddress:Model.ListAvailableShippingAddress)

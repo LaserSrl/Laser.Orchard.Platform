@@ -101,11 +101,15 @@
         @if (viewModel.BillingAddressVM.InvoiceRequest) {
         <div class="additional-address-invoice-info">
             <div class="invoice-info-request">@T("An invoice was requested for this order.")</div>
-            <div class="invoice-info-fiscalcode-label">@T("Fiscal code")</div>
-            <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.FiscalCode</div>
-            <div class="invoice-info-fiscalcode-label">@T("VAT number")</div>
-            <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.VATNumber</div>
-        </div>
+            @if (!string.IsNullOrWhiteSpace(viewModel.BillingAddressVM.FiscalCode)) {
+                <div class="invoice-info-fiscalcode-label">@T("Fiscal code")</div>
+                <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.FiscalCode</div>
+            }
+            @if (!string.IsNullOrWhiteSpace(viewModel.BillingAddressVM.VATNumber)) {
+                <div class="invoice-info-fiscalcode-label">@T("VAT number")</div>
+                <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.VATNumber</div>
+            }
+            </div>
         }
     </fieldset>
     }
