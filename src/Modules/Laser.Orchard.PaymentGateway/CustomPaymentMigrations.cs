@@ -1,4 +1,5 @@
 ﻿using Laser.Orchard.AdvancedSettings.Models;
+using Laser.Orchard.AdvancedSettings.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Common.Fields;
@@ -15,11 +16,14 @@ namespace Laser.Orchard.PaymentGateway {
     public class CustomPaymentMigrations : DataMigrationImpl {
         IContentManager _contentManager;
         IMembershipService _membershipService;
+        IAdvancedSettingsService _advancedSettingsService;
 
         public CustomPaymentMigrations(IContentManager contentManager,
-            IMembershipService membershipService) {
+            IMembershipService membershipService,
+            IAdvancedSettingsService advancedSettingsService) {
             _contentManager = contentManager;
             _membershipService = membershipService;
+            _advancedSettingsService = advancedSettingsService;
         }
 
         public int Create() {
@@ -45,49 +49,17 @@ namespace Laser.Orchard.PaymentGateway {
                     .WithSetting("TextFieldSettings.Flavor", "Large"))
             );
 
-            // Creating a ImpostazioniPagamenti content needs to check if there already is the same content inside the database.
-            // In that case, take note of current settings before replacing the content with a new one, created by this migration.
-            var currentIban = "";
-            var currentEmail = "";
-            var advancedSettingsPart = _contentManager.Query<AdvancedSettingsPart, AdvancedSettingsPartRecord>()
-                .Where(asp => asp.Name.Equals("Impostazioni Pagamenti", StringComparison.OrdinalIgnoreCase))
-                .List()
-                .FirstOrDefault();
-            if (advancedSettingsPart != null) {
-                var currentSettings = _contentManager.Get(advancedSettingsPart.Id, VersionOptions.Published);
-                if (currentSettings != null) {
-                    var currentEmailField = currentSettings.Parts
-                        .SelectMany(pa => pa.Fields)
-                        .FirstOrDefault(fi => fi is TextField && fi.Name.Equals("BankTransferEmail", StringComparison.OrdinalIgnoreCase));
-                    currentEmail = currentEmailField != null ? ((TextField)currentEmailField).Value : "";
-                    var currentIbanField = currentSettings.Parts
-                        .SelectMany(pa => pa.Fields)
-                        .FirstOrDefault(fi => fi is TextField && fi.Name.Equals("IBAN", StringComparison.OrdinalIgnoreCase));
-                    currentIban = currentIbanField != null ? ((TextField)currentIbanField).Value : "";
-                }
-
-                _contentManager.Remove(currentSettings);
+            // Check if there already is the Impostazioni Pagamenti content item.
+            var advancedSettings = _advancedSettingsService.GetCachedSetting("Impostazioni Pagamenti");
+            if (advancedSettings == null) {
+                var impostazioniPagamenti = _contentManager.New("ImpostazioniPagamenti");
+                _contentManager.Create(impostazioniPagamenti, VersionOptions.Draft);
+                impostazioniPagamenti.As<AdvancedSettingsPart>().Name = "Impostazioni Pagamenti";
+                impostazioniPagamenti.As<CommonPart>().Owner = _membershipService.GetUser("admin");
+                impostazioniPagamenti.VersionRecord.Published = false;
+                _contentManager.Publish(impostazioniPagamenti);
             }
-
-            var impostazioniPagamenti = _contentManager.New("ImpostazioniPagamenti");
             
-            _contentManager.Create(impostazioniPagamenti, VersionOptions.Draft);
-            impostazioniPagamenti.As<AdvancedSettingsPart>().Name = "Impostazioni Pagamenti";
-            impostazioniPagamenti.As<CommonPart>().Owner = _membershipService.GetUser("admin");
-            // Set BankTransferEmail and IBAN from the content that has just been replaced.
-            TextField emailField = impostazioniPagamenti.Parts
-                .SelectMany(pa => pa.Fields)
-                .FirstOrDefault(fi => fi.Name.Equals("BankTransferEmail", StringComparison.OrdinalIgnoreCase))
-                as TextField;
-            emailField.Value = currentEmail;
-            TextField ibanField = impostazioniPagamenti.Parts
-                .SelectMany(pa => pa.Fields)
-                .FirstOrDefault(fi => fi.Name.Equals("IBAN", StringComparison.OrdinalIgnoreCase))
-                as TextField;
-            ibanField.Value = currentIban;
-            impostazioniPagamenti.VersionRecord.Published = false;
-            _contentManager.Publish(impostazioniPagamenti);
-
             return 1;
         }
     }
