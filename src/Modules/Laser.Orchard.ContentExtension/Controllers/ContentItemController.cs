@@ -423,7 +423,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                     // return an error
                     if (_orchardServices.WorkContext.CurrentUser == null) {
                         // This replicates the response of the Display method of WebApiController.
-                        return _utilsServices.GetResponse(false, ErrorCode.UnAuthorized, ResolutionAction.Login, T("Invalid User").ToString());
+                        return _utilsServices.GetResponse(false, ErrorCode.UnAuthorized, ResolutionAction.Login, T("UnAuthorized Action").ToString());
                     }
                     return _utilsServices.GetResponse(ResponseType.UnAuthorized);
                 }
