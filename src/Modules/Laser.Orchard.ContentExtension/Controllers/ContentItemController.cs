@@ -132,12 +132,10 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         tenantname = _shellSettings.RequestUrlPrefix + "/";
                     }
                     return Redirect(Url.Content("~/" + tenantname + "WebServices/Alias?displayAlias=" + ((dynamic)ContentToView).AutoroutePart.DisplayAlias));
-                }
-                else {
+                } else {
                     throw new Exception("Method not implemented, content without AutoroutePart");
                 }
-            }
-            else
+            } else
                 return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
         }
 
@@ -193,8 +191,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             try {
                                 MediaLibraryPickerField mpf = (MediaLibraryPickerField)(term.Fields.Where(x => x.FieldDefinition.Name == "MediaLibraryPickerField").FirstOrDefault());
                                 mediaid = mpf.Ids[0];
-                            }
-                            catch { }
+                            } catch { }
                             if (!term.Selectable)
                                 valore = null;
                             if (term.FullPath == "/" + term.Id.ToString() || term.FullPath == term.Id.ToString())
@@ -217,8 +214,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         eObj.Add(ctpd.PartDefinition.Name + "." + singleField.Name, re);
 
                         #endregion Tassonomia in Lingua
-                    }
-                    else
+                    } else
                         if (tipofield == typeof(EnumerationField).Name) {
                         string[] elencovalori = singleField.Settings["EnumerationFieldSettings.Options"].Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         List<string> elencoValoriInLingua = new List<string>();
@@ -299,8 +295,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                     }
                 }
                 return null;
-            }
-            else
+            } else
                 return null;
         }
 
@@ -326,12 +321,10 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                     // propaga l'evento Removed per il ContentItem
                     var context = new RemoveContentContext(ContentToDelete);
                     Handlers.Invoke(handler => handler.Removed(context), Logger);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     return _utilsServices.GetResponse(ResponseType.None, ex.Message);
                 }
-            }
-            else
+            } else
                 return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
             return (_utilsServices.GetResponse(ResponseType.Success));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
         }
@@ -383,8 +376,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             else
                 if (_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
                 return StoreNewContentItem(eObj);
-            }
-            else
+            } else
                 return (_utilsServices.GetResponse(ResponseType.InvalidXSRF));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
         }
 
@@ -429,6 +421,10 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                 if (!_authorizer.Authorize(CorePermissions.CreateContent, NewOrModifiedContent)) {
                     // the user cannot create content of the given type, so
                     // return an error
+                    if (_orchardServices.WorkContext.CurrentUser == null) {
+                        // This replicates the response of the Display method of WebApiController.
+                        return _utilsServices.GetResponse(false, ErrorCode.UnAuthorized, ResolutionAction.Login, T("Invalid User").ToString());
+                    }
                     return _utilsServices.GetResponse(ResponseType.UnAuthorized);
                 }
                 // since we may create, create
@@ -507,8 +503,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
                         }
                         rsp.Data = data;
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
                     }
                 }
