@@ -170,7 +170,8 @@
                     break;
                 case 7:
                     document.getElementById("ownerResults").disabled = false;
-                    document.getElementById("isOwnedByMe").value = 0;
+                    document.getElementById("isOwnedByMe").value = false;
+                    document.getElementById("ownerResults").value = "";
                     break;
                 case 8:
                     document.getElementById("@Html.FieldIdFor(m => AdvancedOptions.SelectedFromDateEditor.Date)").value = "";
@@ -179,7 +180,7 @@
                     document.getElementById("@Html.FieldIdFor(m => AdvancedOptions.SelectedToDateEditor.Date)").value = "";
                     break;
                 case 10:
-                    document.getElementById("hasMediaResults").value = 0;
+                    document.getElementById("hasMediaResults").value = false;
                     break;
                 case 11:
                     document.getElementById("CPFIdToSearch").value = null;
@@ -203,6 +204,7 @@
                 tbOwner.disabled = true;
             } else {
                 tbOwner.disabled = false;
+                tbOwner.value = "";
             }
         }
     </script>
