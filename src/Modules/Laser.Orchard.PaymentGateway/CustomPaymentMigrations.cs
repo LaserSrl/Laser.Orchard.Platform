@@ -2,14 +2,11 @@
 using Laser.Orchard.AdvancedSettings.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
-using Orchard.Core.Common.Fields;
 using Orchard.Core.Common.Models;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 using Orchard.Security;
-using System;
-using System.Linq;
 
 namespace Laser.Orchard.PaymentGateway {
     [OrchardFeature("Laser.Orchard.CustomPaymentGateway")]
