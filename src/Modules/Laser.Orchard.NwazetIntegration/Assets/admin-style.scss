@@ -83,7 +83,11 @@
         }
     }
 }
+
 .advanced-addresses {
+    & .invoice-info {
+        margin: 1em;
+    }
 
     .order-address-editor, .admin-address-editor {
 

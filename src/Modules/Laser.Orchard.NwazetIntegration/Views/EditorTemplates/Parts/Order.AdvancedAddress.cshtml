@@ -47,56 +47,56 @@
          })
         </div>
     </div>
-</div>
-@{
-    var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
-    if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
-        <div class="order-editor advanced-addresses invoice-info">
-            @if (Model.BillingAddressVM.InvoiceRequest) {
-                <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
-            }
-            <div class="invoice-info-invoicerequest">
-                @Html.EditorFor(m => m.BillingAddressVM.InvoiceRequest)
-                @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Invoice request").Text, new { @class = "forcheckbox" })
-            </div>
-            <div class="invoice-info-customertype">
-                @Html.LabelFor(m => m.BillingAddressVM.CustomerType, T("Customer Type"))
-                @Html.DropDownListFor(m => m.BillingAddressVM.CustomerType, invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType))
-            </div>
-            <div class="invoice-info-fiscalcode">
-                @Html.LabelFor(m => m.BillingAddressVM.FiscalCode, T("Fiscal code"))
-                @Html.EditorFor(m => m.BillingAddressVM.FiscalCode)
-            </div>
-            <div class="invoice-info-vatnumber">
-                @Html.LabelFor(m => m.BillingAddressVM.VATNumber, T("VAT number"))
-                @Html.EditorFor(m => m.BillingAddressVM.VATNumber)
-            </div>
-        </div>
-    }
-    else if (Model.BillingAddressVM.InvoiceRequest) {
-        <div class="order-editor advanced-addresses invoice-info">
-            <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
-            <div class="invoice-info-customertype">
-                <label>
-                    @T("Customer Type")
-                </label>
-                @{
-                    @invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType).Where(x => x.Selected).Select(x => x.Text);
+    @{
+        var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
+        if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
+            <div class="order-editor advanced-addresses invoice-info">
+                @if (Model.BillingAddressVM.InvoiceRequest) {
+                    <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
                 }
+                <div class="invoice-info-invoicerequest">
+                    @Html.EditorFor(m => m.BillingAddressVM.InvoiceRequest)
+                    @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Invoice request").Text, new { @class = "forcheckbox" })
+                </div>
+                <div class="invoice-info-customertype">
+                    @Html.LabelFor(m => m.BillingAddressVM.CustomerType, T("Customer Type"))
+                    @Html.DropDownListFor(m => m.BillingAddressVM.CustomerType, invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType))
+                </div>
+                <div class="invoice-info-fiscalcode">
+                    @Html.LabelFor(m => m.BillingAddressVM.FiscalCode, T("Fiscal code"))
+                    @Html.EditorFor(m => m.BillingAddressVM.FiscalCode)
+                </div>
+                <div class="invoice-info-vatnumber">
+                    @Html.LabelFor(m => m.BillingAddressVM.VATNumber, T("VAT number"))
+                    @Html.EditorFor(m => m.BillingAddressVM.VATNumber)
+                </div>
             </div>
-            <div class="invoice-info-fiscalcode">
-                <label>
-                    @T("Fiscal code")
-                </label>
-                @Model.BillingAddressVM.FiscalCode
+        }
+        else if (Model.BillingAddressVM.InvoiceRequest) {
+            <div class="order-editor advanced-addresses invoice-info">
+                <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
+                <div class="invoice-info-customertype">
+                    <label>
+                        @T("Customer Type")
+                    </label>
+                    @{
+                        @invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType).Where(x => x.Selected).Select(x => x.Text);
+                    }
+                </div>
+                <div class="invoice-info-fiscalcode">
+                    <label>
+                        @T("Fiscal code")
+                    </label>
+                    @Model.BillingAddressVM.FiscalCode
+                </div>
+                <div class="invoice-info-vatnumber">
+                    <label>
+                        @T("VAT number")
+                    </label>
+                    @Model.BillingAddressVM.VATNumber
+                </div>
             </div>
-            <div class="invoice-info-vatnumber">
-                <label>
-                    @T("VAT number")
-                </label>
-                @Model.BillingAddressVM.VATNumber
-            </div>
-        </div>
 
+        }
     }
-}
+</div>
