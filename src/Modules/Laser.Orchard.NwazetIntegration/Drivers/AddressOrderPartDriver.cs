@@ -93,6 +93,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             part.BillingInvoiceRequest = updatedModel.BillingAddressVM.InvoiceRequest;
             part.BillingFiscalCode = updatedModel.BillingAddressVM.FiscalCode;
             part.BillingVATNumber = updatedModel.BillingAddressVM.VATNumber;
+            part.BillingCustomerType = updatedModel.BillingAddressVM.CustomerType;
             return Editor(part, shapeHelper);
         }
 
@@ -165,6 +166,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
             var provinceId = part.ShippingProvinceId;
             string fiscalCode = "";
             var vatNumber = "";
+            CustomerTypeOptions customerType = CustomerTypeOptions.Undefined;
             bool invoiceRequest = false;
 
             if (addressType == AddressRecordType.BillingAddress) {
@@ -178,6 +180,7 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 fiscalCode = part.BillingFiscalCode;
                 vatNumber = part.BillingVATNumber;
                 invoiceRequest = part.BillingInvoiceRequest;
+                customerType = part.BillingCustomerType;
             }
 
             //// if properties are null, get them from the address that was in OrderPart
@@ -211,7 +214,8 @@ namespace Laser.Orchard.NwazetIntegration.Drivers {
                 ProvinceId = provinceId,
                 InvoiceRequest = invoiceRequest,
                 FiscalCode = fiscalCode,
-                VATNumber =vatNumber
+                VATNumber = vatNumber,
+                CustomerType = customerType
             };
         }
 

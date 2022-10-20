@@ -264,6 +264,8 @@
     <Compile Include="Services\ICheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
+    <Compile Include="Services\Invoice\IInvoiceService.cs" />
+    <Compile Include="Services\Invoice\InvoiceService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />

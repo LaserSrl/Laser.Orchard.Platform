@@ -133,17 +133,17 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                 if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
                     if (vm.InvoiceRequest || (invoiceSettings.InvoiceRequestForceChoice && invoiceSettings.InvoiceRequestDefaultValue)) {
                         //Check if at least one of VATNumber and FiscalCode is there
-                        if (string.IsNullOrWhiteSpace(vm.VATNumber) && string.IsNullOrWhiteSpace(vm.FiscalCode)) {
-                            vm.Errors.Add(T("At least one between fiscal code and VAT number is mandatory.").Text);
+                        if (vm.CustomerType == CustomerTypeOptions.Undefined) {
+                            vm.Errors.Add(T("Choose one of the allowed legal entities.").Text);
                             return false;
                         }
                         else {
-                            if (!string.IsNullOrWhiteSpace(vm.FiscalCode) && !ValidateFiscalCode(vm.FiscalCode)) {
-                                vm.Errors.Add(T("the fiscal code is not valid.").Text);
+                            if (vm.CustomerType == CustomerTypeOptions.Individual && (string.IsNullOrWhiteSpace(vm.FiscalCode) || !ValidateFiscalCode(vm.FiscalCode))) {
+                                vm.Errors.Add(T("The fiscal code is invalid.").Text);
                                 return false;
                             }
-                            if (!string.IsNullOrWhiteSpace(vm.VATNumber) && !ValidateVATNumber(vm.VATNumber)) {
-                                vm.Errors.Add(T("the VAT number is not valid.").Text);
+                            if (vm.CustomerType == CustomerTypeOptions.LegalEntity && (string.IsNullOrWhiteSpace(vm.VATNumber) || !ValidateVATNumber(vm.VATNumber))) {
+                                vm.Errors.Add(T("The VAT number is invalid.").Text);
                                 return false;
                             }
                         }
@@ -152,6 +152,7 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             return true;
         }
+
         private bool SubValidation(IEnumerable<TerritoryPart> list, TerritoryPart item) {
             if (list == null || !list.Any()) {
                 return false;

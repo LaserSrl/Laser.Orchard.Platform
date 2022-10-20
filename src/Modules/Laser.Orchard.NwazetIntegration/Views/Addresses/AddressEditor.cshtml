@@ -1,4 +1,5 @@
-﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿@using Laser.Orchard.NwazetIntegration;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.Localization;
 @using Orchard.ContentManagement;
 @using System.Linq.Expressions;
@@ -125,6 +126,11 @@
             else {
                 <input type="hidden" name="@Html.NameFor(m => m.InvoiceRequest)" id="@Html.IdFor(m=>m.InvoiceRequest)" value="@invoiceSettings.InvoiceRequestDefaultValue.ToString()" />
             }
+            <div class="address-input customer-type-input">
+                @Html.LabelFor(m => m.CustomerType, T("Customer Type"))
+                @Html.DropDownListFor(m => m.CustomerType, (IEnumerable<SelectListItem>)ViewBag.CustomerTypeOptions, new { @class = "input-medium" })
+                @Html.ValidationMessageFor(m => m.CustomerType)
+            </div>
             <div class="address-input fiscal-code-input">
                 @Html.LabelFor(m => m.FiscalCode, T("Fiscal code"))
                 @Html.EditorFor(m => m.FiscalCode)

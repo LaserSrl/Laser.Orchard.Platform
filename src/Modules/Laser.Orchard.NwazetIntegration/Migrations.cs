@@ -29,7 +29,9 @@ namespace Laser.Orchard.NwazetIntegration {
                 .Column<int>("ProvinceId")
                 .Column<string>("FiscalCode")
                 .Column<string>("VATNumber")
+                .Column<string>("CustomerType", col=>col.WithLength(20))
                 .Column<bool>("InvoiceRequest")
+
                 );
 
             SchemaBuilder.CreateTable("AddressOrderPartRecord", table => table
@@ -49,6 +51,7 @@ namespace Laser.Orchard.NwazetIntegration {
                  .Column<bool>("ShippingAddressIsOptional")
                  .Column<string>("BillingFiscalCode")
                  .Column<string>("BillingVATNumber")
+                 .Column<string>("BillingCustomerType", col => col.WithLength(20))
                  .Column<bool>("BillingInvoiceRequest")
                  );
 
@@ -178,13 +181,17 @@ namespace Laser.Orchard.NwazetIntegration {
             SchemaBuilder.AlterTable("AddressRecord", table =>
                 table.AddColumn<string>("VATNumber"));
             SchemaBuilder.AlterTable("AddressRecord", table =>
+                table.AddColumn<string>("CustomerType"));
+            SchemaBuilder.AlterTable("AddressRecord", table =>
                 table.AddColumn<bool>("InvoiceRequest"));
             SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
                 table.AddColumn<string>("BillingFiscalCode"));
             SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
                 table.AddColumn<string>("BillingVATNumber"));
             SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
-                table.AddColumn<bool>("BillingInvoiceRequest"));
+                table.AddColumn<string>("BillingCustomerType", col => col.WithLength(20)));
+            SchemaBuilder.AlterTable("AddressOrderPartRecord", table =>
+                table.AddColumn<bool>("BillingInvoiceRequest", col => col.WithLength(20)));
             return 10;
         }
     }

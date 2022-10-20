@@ -1,5 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Aspects;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Nwazet.Commerce.Aspects;
 using Orchard.ContentManagement;
 using System;
@@ -76,6 +78,13 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             get { return Retrieve(r => r.BillingVATNumber); }
             set { Store(r => r.BillingVATNumber, value); }
         }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CustomerTypeOptions BillingCustomerType {
+            get { return Retrieve(r => r.BillingCustomerType); }
+            set { Store(r => r.BillingCustomerType, value); }
+        }
+        
         public bool BillingInvoiceRequest {
             get { return Retrieve(r => r.BillingInvoiceRequest); }
             set { Store(r => r.BillingInvoiceRequest, value); }
@@ -120,6 +129,7 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             BillingInvoiceRequest = cvm.BillingAddressVM.InvoiceRequest;
             BillingVATNumber = cvm.BillingAddressVM.VATNumber;
             BillingFiscalCode = cvm.BillingAddressVM.FiscalCode;
+            BillingCustomerType = cvm.BillingAddressVM.CustomerType;
         }
     }
 }

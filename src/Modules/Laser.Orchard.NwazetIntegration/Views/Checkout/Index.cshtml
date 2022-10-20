@@ -1,4 +1,5 @@
-﻿@using Laser.Orchard.NwazetIntegration.Models;
+﻿@using Laser.Orchard.NwazetIntegration;
+@using Laser.Orchard.NwazetIntegration.Models;
 @using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.ContentManagement;
 
@@ -24,74 +25,74 @@
 </div>
 
 @using (Html.BeginFormAntiForgeryPost(
-    Url.Action("Index"), FormMethod.Post, 
-    new { @id = "address-form", @class= "checkout-form checkout-address-form" })) {
+    Url.Action("Index"), FormMethod.Post,
+    new { @id = "address-form", @class = "checkout-form checkout-address-form" })) {
 
     if (Model.ShippingRequired) {
         if (Model.AdditionalShippingAddressShapes != null
             && Model.AdditionalShippingAddressShapes.Any()) {
             @*
-            When pickup points are enabled here we have a tabulated UI that allows user to
-                select between their own addresses and one of the configured pickup points.
-                Either way to configure the shipping "destination" should on principle be
-                controlled by its own shapes.
-                The first tab is always the one for the shipping address, same as if we didn't
-                have the pickup points. The other tabs are injected dynamically.
+                When pickup points are enabled here we have a tabulated UI that allows user to
+                    select between their own addresses and one of the configured pickup points.
+                    Either way to configure the shipping "destination" should on principle be
+                    controlled by its own shapes.
+                    The first tab is always the one for the shipping address, same as if we didn't
+                    have the pickup points. The other tabs are injected dynamically.
 
-                We need to make sure that the form validates correctly on post depending on the
-                stuff the user is selecting. For example, if the user is selecting a pickup point,
-                the submit shouldn't fail because the shipping address isn't valid.
-                We should also make sure that the actions realize what is being posted and don't
-                try to validate the wrong stuff. For example, if we are posting a shipping
-                address we shouldn't validate pickup points, and viceversa.
-                Both these requirements are achieved by disabling all form elements within the
-                hidden tabs; this should be in turn achieved by disabling a wrapping fieldset.
+                    We need to make sure that the form validates correctly on post depending on the
+                    stuff the user is selecting. For example, if the user is selecting a pickup point,
+                    the submit shouldn't fail because the shipping address isn't valid.
+                    We should also make sure that the actions realize what is being posted and don't
+                    try to validate the wrong stuff. For example, if we are posting a shipping
+                    address we shouldn't validate pickup points, and viceversa.
+                    Both these requirements are achieved by disabling all form elements within the
+                    hidden tabs; this should be in turn achieved by disabling a wrapping fieldset.
 
-                We also want to carry the information on the actively selected provider, so it's
-                easier down the line to process things, and to know which provider should handle 
-                things.
+                    We also want to carry the information on the actively selected provider, so it's
+                    easier down the line to process things, and to know which provider should handle
+                    things.
             *@
             <nav>
                 <div class="nav nav-tabs nav-justified address-tab-headers" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" 
-                    id="nav-shipping-address" data-toggle="tab" 
-                    href="#nav-shipping" role="tab" 
-                    aria-controls="nav-shipping" aria-selected="true">
-                    <h2>@T("Shipping Address")</h2>
-                </a>
+                    <a class="nav-item nav-link active"
+                       id="nav-shipping-address" data-toggle="tab"
+                       href="#nav-shipping" role="tab"
+                       aria-controls="nav-shipping" aria-selected="true">
+                        <h2>@T("Shipping Address")</h2>
+                    </a>
                     @foreach (var asas in Model.AdditionalShippingAddressShapes) {
-                    <a class="nav-item nav-link" 
-                        id="@asas.TabId" 
-                        data-toggle="tab" 
-                        href="#@asas.NavId" 
-                        role="tab" 
-                        aria-controls="@asas.NavId" 
-                        aria-selected="false"><h2>@asas.TabTitle</h2></a>
+                        <a class="nav-item nav-link"
+                           id="@asas.TabId"
+                           data-toggle="tab"
+                           href="#@asas.NavId"
+                           role="tab"
+                           aria-controls="@asas.NavId"
+                           aria-selected="false"><h2>@asas.TabTitle</h2></a>
                     }
-                        
+
                 </div>
             </nav>
 
             <div class="tab-content" id="nav-tabContent">
-                <fieldset class="tab-pane fade show active" 
-                    id="nav-shipping" 
-                    role="tabpanel" 
-                    aria-labelledby="nav-shipping-address">
-                          
-                    @* Hidden for the selected shipping address provider. Its value is 
+                <fieldset class="tab-pane fade show active"
+                          id="nav-shipping"
+                          role="tabpanel"
+                          aria-labelledby="nav-shipping-address">
+
+                    @* Hidden for the selected shipping address provider. Its value is
                         "default" in this case. This is disabled along with the other
                         form elements so it won't be submitted when a different provider
-                        is selected. The trick here is that only the hidden for the 
+                        is selected. The trick here is that only the hidden for the
                         "selected" provider is submitted by the form. Different UIs will
                         require a different way to select the "active" provider. *@
                     <input type="hidden" value="default"
-                            name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
-                            id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
+                           name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
+                           id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
 
                     <fieldset class="shipping-address">
                         @Html.HiddenFor(m => m.ShippingAddressVM.AddressType)
                         @Html.HiddenFor(m => m.ShippingAddressVM.AddressRecord.AddressType)
-                                
+
                         @Display.AddressForm(
                             Prefix: "ShippingAddressVM",
                             Address: Model.ShippingAddressVM,
@@ -105,7 +106,7 @@
                             @T("Bill me at the shipping address.")
                         </label>
                     </fieldset>
-                    @* additionally, when we are not on this tab, deselect the 
+                    @* additionally, when we are not on this tab, deselect the
                         BillAtSameShippingAddress flag *@
                     @using (Script.Foot()) {
                         <script type="text/javascript">
@@ -129,28 +130,28 @@
                         </script>
                     }
                 </fieldset>
-                    @foreach (var asas in Model.AdditionalShippingAddressShapes) {
-                        <fieldset class="tab-pane fade" 
-                            id="@asas.NavId" 
-                            role="tabpanel" 
-                            aria-labelledby="@asas.TabId"
-                            disabled>
-                                     
-                        @* Hidden for the selected shipping address provider. 
+                @foreach (var asas in Model.AdditionalShippingAddressShapes) {
+                    <fieldset class="tab-pane fade"
+                              id="@asas.NavId"
+                              role="tabpanel"
+                              aria-labelledby="@asas.TabId"
+                              disabled>
+
+                        @* Hidden for the selected shipping address provider.
                             This is disabled along with the other
                             form elements so it won't be submitted when a different provider
-                            is selected. The trick here is that only the hidden for the 
+                            is selected. The trick here is that only the hidden for the
                             "selected" provider is submitted by the form. Different UIs will
                             require a different way to select the "active" provider. *@
                         <input type="hidden" value="@asas.UniqueProviderId"
-                                name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
-                                id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
-                            @Display(asas.TabShape)
-                        </fieldset>
-                    }
-                      
+                               name="@Html.FieldNameFor(m => m.SelectedShippingAddressProviderId)"
+                               id="@Html.FieldIdFor(m => m.SelectedShippingAddressProviderId)" />
+                        @Display(asas.TabShape)
+                    </fieldset>
+                }
+
             </div>
-            using(Script.Foot()) {
+            using (Script.Foot()) {
                 @* TODO: move this in a js file that gets imported around *@
                 // disable all form elements for hidden tabs so they are not validated/posted
                 // and make sure the ones from the fieldset we are showing are enabled
@@ -163,9 +164,9 @@
                                 var $hiddenPane = $(hiddenPaneId); // this is the fieldset to disable
                                 $hiddenPane.prop('disabled', true);
 
-                                // Some stuff (such as select2 elements) doesn't get correctly disabled 
+                                // Some stuff (such as select2 elements) doesn't get correctly disabled
                                 // by being in a disabled fieldset.
-                                // We save their enabled/disabled state in a property to restore it 
+                                // We save their enabled/disabled state in a property to restore it
                                 // correctly if the tab is shown again, rather than assume they're enabled
                                 var toDisable = $hiddenPane.find('select[data-select2-id], .required');
                                 if (toDisable && toDisable.length > 0) {
@@ -185,14 +186,14 @@
                                         }
                                     }
                                 }
-                                        
+
                             })
                             .on('show.bs.tab', function (e) {
                                 var $showingTab = $(e.target); // tab getting shown
                                 var paneId = $showingTab.attr("href");
                                 var $pane = $(paneId); // this is the fieldset to enable
                                 $pane.prop('disabled', false);
-                                        
+
                                 // restore the stuff we disabled explicitly
                                 var toEnable = $pane.find('[data-disabled-when-hidden]');
                                 if (toEnable && toEnable.length > 0) {
@@ -209,12 +210,13 @@
                                         }
                                     }
                                 }
-                                        
+
                             });
                     });
                 </script>
             }
-        } else {
+        }
+        else {
             <fieldset class="shipping-address">
                 <legend>@T("Shipping Address")</legend>
                 @Html.HiddenFor(m => m.BillingAddressVM.AddressType)
@@ -247,14 +249,20 @@
             <legend>@T("Invoice information")</legend>
 
             @if (!invoiceSettings.InvoiceRequestForceChoice) {
-            <div class="address-input invoice-request-input">
-                @Html.CheckBoxFor(m => m.BillingAddressVM.InvoiceRequest)
-                @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Request invoice").Text, new { @class = "forcheckbox" })
-            </div>
+                <div class="address-input invoice-request-input">
+                    @Html.CheckBoxFor(m => m.BillingAddressVM.InvoiceRequest)
+                    @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Request invoice").Text, new { @class = "forcheckbox" })
+                </div>
             }
             else {
-                <input type="hidden" name="@Html.NameFor(m => m.BillingAddressVM.InvoiceRequest)" id="@Html.IdFor(m=>m.BillingAddressVM.InvoiceRequest)" value="@invoiceSettings.InvoiceRequestDefaultValue.ToString()" />
+                <input type="hidden" name="@Html.NameFor(m => m.BillingAddressVM.InvoiceRequest)" id="@Html.IdFor(m => m.BillingAddressVM.InvoiceRequest)" value="@invoiceSettings.InvoiceRequestDefaultValue.ToString()" />
             }
+            <div class="address-input customer-type-input">
+                @Html.LabelFor(m => m.BillingAddressVM.CustomerType, T("Customer Type"))
+                @Html.DropDownListFor(m => m.BillingAddressVM.CustomerType, (IEnumerable<SelectListItem>)ViewBag.CustomerTypeOptions, new { @class = "input-medium" })
+                @Html.ValidationMessageFor(m => m.BillingAddressVM.CustomerType)
+            </div>
+
             <div class="address-input fiscal-code-input">
                 @Html.LabelFor(m => m.BillingAddressVM.FiscalCode, T("Fiscal code"))
                 @Html.EditorFor(m => m.BillingAddressVM.FiscalCode, new { @class = "input-medium" })

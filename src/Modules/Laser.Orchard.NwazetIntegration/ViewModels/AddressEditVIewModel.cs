@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Nwazet.Commerce.Models;
 using System;
 using System.Collections.Generic;
@@ -105,6 +106,13 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
         public string FiscalCode {
             get { return AddressRecord.FiscalCode; }
             set { AddressRecord.FiscalCode = value; }
+        }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CustomerTypeOptions CustomerType {
+            get { return AddressRecord.CustomerType; }
+            set { AddressRecord.CustomerType = value; }
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
