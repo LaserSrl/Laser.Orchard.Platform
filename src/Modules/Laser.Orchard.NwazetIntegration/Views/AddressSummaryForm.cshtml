@@ -1,84 +1,86 @@
-﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿@using Laser.Orchard.NwazetIntegration.Models;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
+@using Orchard.ContentManagement;
 @{
     /*This shape displays the selected address in checkout pages. The form here is used so that when
      we hit the link to reset the selected address we can post some information to the actions.*/
     var viewModel = (CheckoutViewModel)Model.ViewModel;
 }
 @helper DrawAddress(AddressEditViewModel address) {
-<div class="address-summary-info">
-    @* LINE 1: Hon. Name Surname*@
-    @if (!string.IsNullOrWhiteSpace(address.Honorific + address.FirstName + address.LastName)) {
-        <div class="row address-row">
-            @if (!string.IsNullOrWhiteSpace(address.Honorific)) {
-                <div class="address-summary-honorific">
-                    @address.Honorific
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(address.FirstName)) {
-                <div class="address-summary-firstname">
-                    @address.FirstName
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(address.LastName)) {
-                <div class="address-summary-lastname">
-                    @address.LastName
-                </div>
-            }
-        </div>
-    }
-    @* LINE 2: company *@
-    @if (!string.IsNullOrWhiteSpace(address.Company)) {
-        <div class="row address-row">
-            <div class="address-summary-company">
-                @address.Company
+    <div class="address-summary-info">
+        @* LINE 1: Hon. Name Surname*@
+        @if (!string.IsNullOrWhiteSpace(address.Honorific + address.FirstName + address.LastName)) {
+            <div class="row address-row">
+                @if (!string.IsNullOrWhiteSpace(address.Honorific)) {
+                    <div class="address-summary-honorific">
+                        @address.Honorific
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(address.FirstName)) {
+                    <div class="address-summary-firstname">
+                        @address.FirstName
+                    </div><text>&nbsp;</text>
+                }
+                @if (!string.IsNullOrWhiteSpace(address.LastName)) {
+                    <div class="address-summary-lastname">
+                        @address.LastName
+                    </div>
+                }
             </div>
+        }
+        @* LINE 2: company *@
+        @if (!string.IsNullOrWhiteSpace(address.Company)) {
+            <div class="row address-row">
+                <div class="address-summary-company">
+                    @address.Company
+                </div>
+            </div>
+        }
+        @* LINE 3: Address Line 1*@
+        <div class="row address-row">
+            @if (!string.IsNullOrWhiteSpace(address.Address1)) {
+                <div class="address-summary-address">
+                    @address.Address1
+                </div>
+            }
         </div>
-    }
-    @* LINE 3: Address Line 1*@
-    <div class="row address-row">
-        @if (!string.IsNullOrWhiteSpace(address.Address1)) {
-            <div class="address-summary-address">
-                @address.Address1
+        @* LINE 4: Address Line 2*@
+        <div class="row address-row">
+            @if (!string.IsNullOrWhiteSpace(address.Address2)) {
+                <div class="address-summary-address">
+                    @address.Address2
+                </div>
+            }
+        </div>
+        @* LINE 5: City ZIP Provice*@
+        @if (!string.IsNullOrWhiteSpace(address.City + address.PostalCode + address.Province)) {
+            <div class="row address-row">
+                @if (!string.IsNullOrWhiteSpace(address.City)) {
+                    <div class="address-summary-city">
+                        @address.City
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(address.PostalCode)) {
+                    <div class="address-summary-province">
+                        @address.PostalCode
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(address.Province)) {
+                    <div class="address-summary-province">
+                        @address.Province
+                    </div>
+                }
+            </div>
+        }
+        @* LINE 6: Country *@
+        @if (!string.IsNullOrWhiteSpace(address.Country)) {
+            <div class="row address-row">
+                <div class="address-summary-country">
+                    @address.Country
+                </div>
             </div>
         }
     </div>
-    @* LINE 4: Address Line 2*@
-    <div class="row address-row">
-        @if (!string.IsNullOrWhiteSpace(address.Address2)) {
-            <div class="address-summary-address">
-                @address.Address2
-            </div>
-        }
-    </div>
-    @* LINE 5: City ZIP Provice*@
-    @if (!string.IsNullOrWhiteSpace(address.City + address.PostalCode + address.Province)) {
-        <div class="row address-row">
-            @if (!string.IsNullOrWhiteSpace(address.City)) {
-                <div class="address-summary-city">
-                    @address.City
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(address.PostalCode)) {
-                <div class="address-summary-province">
-                    @address.PostalCode
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(address.Province)) {
-                <div class="address-summary-province">
-                    @address.Province
-                </div>
-            }
-        </div>
-    }
-    @* LINE 6: Country *@
-    @if (!string.IsNullOrWhiteSpace(address.Country)) {
-        <div class="row address-row">
-            <div class="address-summary-country">
-                @address.Country
-            </div>
-        </div>
-    }
-</div>
 }
 @if (viewModel.AdditionalShippingAddressSummaryShapes != null) {
     foreach (var acsas in viewModel.AdditionalShippingAddressSummaryShapes) {
@@ -91,30 +93,51 @@
         @DrawAddress(viewModel.BillingAddressVM)
     </fieldset>
 }
-    <fieldset class="address-summary additional-address-infos">
-        @if (!string.IsNullOrWhiteSpace(viewModel.Email)) {
-            <div class="additional-address-info">
-                <div class="additional-address-info-title">@T("Email address")</div>
-                <div class="additional-address-info-value">@viewModel.Email</div>
-            </div>
-        }
-        @if (!string.IsNullOrWhiteSpace(viewModel.Phone)) {
-            <div class="additional-address-info">
-                <div class="additional-address-info-title">@T("Phone number")</div>
-                <div class="additional-address-info-value">
-                    @(string.IsNullOrWhiteSpace(viewModel.PhonePrefix)
-                                ? viewModel.Phone
-                                : (viewModel.PhonePrefix + viewModel.Phone))
-                </div>
-            </div>
-        }
-        @if (!string.IsNullOrWhiteSpace(viewModel.SpecialInstructions)) {
-            <div class="additional-address-info">
-                <div class="additional-address-info-title">@T("Special instructions")</div>
-                <div class="additional-address-info-value">@viewModel.SpecialInstructions</div>
+@{
+    @*VAT Number and Fiscal code*@
+    var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
+    if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
+    <fieldset class="address-summary invoice-information">
+        @if (viewModel.BillingAddressVM.InvoiceRequest) {
+        <div class="additional-address-invoice-info">
+            <div class="invoice-info-request">@T("An invoice was requested for this order.")</div>
+            @if (viewModel.BillingAddressVM.CustomerType == Laser.Orchard.NwazetIntegration.CustomerTypeOptions.Individual && !string.IsNullOrWhiteSpace(viewModel.BillingAddressVM.FiscalCode)) {
+                <div class="invoice-info-fiscalcode-label">@T("Fiscal code")</div>
+                <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.FiscalCode</div>
+            }
+            @if (viewModel.BillingAddressVM.CustomerType == Laser.Orchard.NwazetIntegration.CustomerTypeOptions.LegalEntity && !string.IsNullOrWhiteSpace(viewModel.BillingAddressVM.VATNumber)) {
+                <div class="invoice-info-fiscalcode-label">@T("VAT number")</div>
+                <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.VATNumber</div>
+            }
             </div>
         }
     </fieldset>
+    }
+}
+<fieldset class="address-summary additional-address-infos">
+    @if (!string.IsNullOrWhiteSpace(viewModel.Email)) {
+        <div class="additional-address-info">
+            <div class="additional-address-info-title">@T("Email address")</div>
+            <div class="additional-address-info-value">@viewModel.Email</div>
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(viewModel.Phone)) {
+        <div class="additional-address-info">
+            <div class="additional-address-info-title">@T("Phone number")</div>
+            <div class="additional-address-info-value">
+                @(string.IsNullOrWhiteSpace(viewModel.PhonePrefix)
+                                            ? viewModel.Phone
+                                            : (viewModel.PhonePrefix + viewModel.Phone))
+            </div>
+        </div>
+    }
+    @if (!string.IsNullOrWhiteSpace(viewModel.SpecialInstructions)) {
+        <div class="additional-address-info">
+            <div class="additional-address-info-title">@T("Special instructions")</div>
+            <div class="additional-address-info-value">@viewModel.SpecialInstructions</div>
+        </div>
+    }
+</fieldset>
 @using (Html.BeginFormAntiForgeryPost(
     Url.Action("Index", "Checkout", new { area = "Laser.Orchard.NwazetIntegration" }), FormMethod.Post, new { @id = "address-summary" })) {
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 
@@ -52,6 +54,13 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public virtual int CountryId { get; set; }
         public virtual int CityId { get; set; }
         public virtual int ProvinceId { get; set; }
+
+        // billing specific fields
+        public virtual string FiscalCode { get; set; }
+        public virtual string VATNumber { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public virtual CustomerTypeOptions CustomerType { get; set; }
+        public virtual bool InvoiceRequest { get; set; }
 
         public override bool Equals(object objAddress) {
             if (!(objAddress is AddressRecord))
