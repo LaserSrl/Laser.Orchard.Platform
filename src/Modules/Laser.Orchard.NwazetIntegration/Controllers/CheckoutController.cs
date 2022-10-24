@@ -61,7 +61,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
         private readonly IEnumerable<ICheckoutShippingAddressProvider> _checkoutShippingAddressProviders;
         private readonly IInvoiceService _invoiceService;
-
+        private EcommerceInvoiceSettingsPart _ecommerceInvoiceSettingsPart;
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
             IAddressConfigurationService addressConfigurationService,
@@ -99,6 +99,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
 
+            _ecommerceInvoiceSettingsPart = _workContextAccessor.GetContext().CurrentSite.As<EcommerceInvoiceSettingsPart>();
             T = NullLocalizer.Instance;
         }
 
@@ -697,6 +698,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // Enumerate so the methods are actually executed
                         .ToList();
             }
+            // Set Invoice Defaults if needed
+            if (_ecommerceInvoiceSettingsPart.EnableInvoiceRequest && _ecommerceInvoiceSettingsPart.InvoiceRequestForceChoice ) {
+                vm.BillingAddressVM.InvoiceRequest = _ecommerceInvoiceSettingsPart.InvoiceRequestDefaultValue;
+            }
+
+
             InjectServices(vm);
             vm.FinalSetup();
             // Put the model we validated in TempData so it can be reused in the next action.
