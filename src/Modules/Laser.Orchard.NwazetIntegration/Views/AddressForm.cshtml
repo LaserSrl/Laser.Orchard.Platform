@@ -18,9 +18,9 @@
     // handle the case where the OtherPrefix is null, because this didn't
     // always exist.
     if (string.IsNullOrWhiteSpace(otherPrefix)) {
-        otherPrefix = prefix == "shippingAddressVM"
-            ? "billingAddressVM"
-            : "shippingAddressVM";
+        otherPrefix = prefix == "ShippingAddressVM"
+            ? "BillingAddressVM"
+            : "ShippingAddressVM";
     }
 
     string isBillingAddress = (address.AddressType == AddressRecordType.BillingAddress)

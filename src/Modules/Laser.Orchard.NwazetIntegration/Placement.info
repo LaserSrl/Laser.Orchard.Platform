@@ -32,6 +32,7 @@
   <!--Hide away the editor shape for shipping areas-->
   <Place Parts_ShippingMethodShippingAreas_Edit="-"/>
   <Place Parts_EcommerceAnalyticsSettings_Edit="Content:10.1"/>
+  <Place Parts_EcommerceInvoiceSettings_Edit="Content:10.2"/>
   
   <!--Frontend stuff for pickup points in checkout steps-->
   <Match HasParts="PickupPointPart">

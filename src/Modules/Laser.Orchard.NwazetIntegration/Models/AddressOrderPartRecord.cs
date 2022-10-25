@@ -1,4 +1,6 @@
-﻿using Orchard.ContentManagement.Records;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Orchard.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +28,12 @@ namespace Laser.Orchard.NwazetIntegration.Models {
 
         public virtual string BillingProvinceName { get; set; }
         public virtual int BillingProvinceId { get; set; }
+
+        // billing specific fields
+        public virtual string BillingFiscalCode { get; set; }
+        public virtual string BillingVATNumber { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public virtual CustomerTypeOptions BillingCustomerType { get; set; }
+        public virtual bool BillingInvoiceRequest { get; set; }
     }
 }

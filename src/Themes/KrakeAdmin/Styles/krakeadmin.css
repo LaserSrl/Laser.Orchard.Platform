@@ -6115,7 +6115,8 @@ li.dropdown-progress .progress {
 
 .nav-tabs-custom .tab-content {
   margin-top: 0;
-  padding: 0; }
+  padding: 0;
+  display: grid; }
 
 .nav-tabs-custom .tab-content > .tab-pane {
   background-color: white;
