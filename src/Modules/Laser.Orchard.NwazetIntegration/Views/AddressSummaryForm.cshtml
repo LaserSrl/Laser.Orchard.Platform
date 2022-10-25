@@ -106,8 +106,8 @@
                 <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.FiscalCode</div>
             }
             @if (viewModel.BillingAddressVM.CustomerType == Laser.Orchard.NwazetIntegration.CustomerTypeOptions.LegalEntity && !string.IsNullOrWhiteSpace(viewModel.BillingAddressVM.VATNumber)) {
-                <div class="invoice-info-fiscalcode-label">@T("VAT number")</div>
-                <div class="invoice-info-fiscalcode-value">@viewModel.BillingAddressVM.VATNumber</div>
+                <div class="invoice-info-vatnumber-label">@T("VAT number")</div>
+                <div class="invoice-info-vatnumber-value">@viewModel.BillingAddressVM.VATNumber</div>
             }
             </div>
         }
