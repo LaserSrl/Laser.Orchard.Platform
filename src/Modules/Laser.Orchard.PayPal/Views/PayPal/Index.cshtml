@@ -155,10 +155,10 @@
                                     pId: '@Model.Record.Id'
                                 },
                                 success: function(data){
-                                    PaymentResult();
+                                    PaymentResult(data);
                                 },
                                 error: function (data) {
-                                    PaymentResult();
+                                    PaymentResult(data);
                                 }
                             });
                         });
@@ -198,14 +198,9 @@
                 }).render('#paypal-button');
             }
 
-            function PaymentResult() {
+            function PaymentResult(data) {
                  // redirect to info page payment
-                window.location.href = '@Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid })';
-
-                $("#div-warning").css("display", "none");
-
-                $(".disable-button").css("display", "none");
-                $(".container-paypal").css("opacity", "1");
+                window.location.href = '@Html.Raw(Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid }))';
             }
 
             @if (Model.Record.Amount <= 0) {
