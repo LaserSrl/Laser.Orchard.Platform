@@ -124,32 +124,44 @@ function shippingAddressHasChanged(sender) {
     var input = sender,
         name = input.attr("name").indexOf(".") > 0 ? input.attr("name").substr("ShippingAddressVM.".length) : input.attr("name").substr("ShippingAddressVM".length);
 
-    if (sender.prop("tagName").toLowerCase() == "input") {
-        $('input[name="BillingAddressVM.' + name + '"]')
-            .val(input.val())
-            .trigger('change');
-    } else if (sender.prop("tagName").toLowerCase() == "select") {
-        var other;
-        if (name != "ListAddress") {
-            other = $('select[name="BillingAddressVM.' + name + '"]');
-            var newValue = input.val();
-            if (other.find('option[value="' + newValue + '"]').length == 0) {
-                // add and select the option
-                newOption = new Option(
-                    input.find('option[value=' + newValue + ']').text(), //text
-                    newValue, //value
-                    true, //defaultSelected
-                    true); //selected
-                other.append(newOption);
-            }
-        } else {
-            other = $('select[name="BillingAddressVMListAddress"]');
-            newValue = "-1";
-        }
+    // Update input value if name doesn't end with one of the forbidden suffixes (e.g. "AddressType") only.
+    var suffixes = ["AddressType"];
+    var replaceValue = true;
 
-        other.val(newValue);
-        if (newValue != "-1" || name != 'ListAddress') {
-            other.trigger('change');
+    for (var i = 0; i < suffixes.length; i++) {
+        if (name.endsWith(suffixes[i])) {
+            replaceValue = false;
+            break;
+        }
+    }
+    if (replaceValue) {
+        if (sender.prop("tagName").toLowerCase() == "input") {
+            $('input[name="BillingAddressVM.' + name + '"]')
+                .val(input.val())
+                .trigger('change');
+        } else if (sender.prop("tagName").toLowerCase() == "select") {
+            var other;
+            if (name != "ListAddress") {
+                other = $('select[name="BillingAddressVM.' + name + '"]');
+                var newValue = input.val();
+                if (other.find('option[value="' + newValue + '"]').length == 0) {
+                    // add and select the option
+                    newOption = new Option(
+                        input.find('option[value=' + newValue + ']').text(), //text
+                        newValue, //value
+                        true, //defaultSelected
+                        true); //selected
+                    other.append(newOption);
+                }
+            } else {
+                other = $('select[name="BillingAddressVMListAddress"]');
+                newValue = "-1";
+            }
+
+            other.val(newValue);
+            if (newValue != "-1" || name != 'ListAddress') {
+                other.trigger('change');
+            }
         }
     }
 }
