@@ -12,8 +12,6 @@ using ITokenProvider = Orchard.Tokens.ITokenProvider;
 namespace Laser.Orchard.AdvancedSettings.Tokens {
     public class AdvancedSettingsTokens : ITokenProvider {
         private readonly IAdvancedSettingsService _advancedSettingsService;
-        private string _fullToken = "";
-        private IContent _tokenValue;
         public AdvancedSettingsTokens(IAdvancedSettingsService advancedSettingsService) {
             T = NullLocalizer.Instance;
             _advancedSettingsService = advancedSettingsService;
@@ -27,12 +25,24 @@ namespace Laser.Orchard.AdvancedSettings.Tokens {
         }
 
         public void Evaluate(EvaluateContext context) {
-            context.For("AdvancedSettings", _tokenValue)
+            context.For("AdvancedSettings", new ContentItem())
                 .Token(
                     token => token.StartsWith("GetCachedSetting:(", StringComparison.OrdinalIgnoreCase) ? GetAdvancedSettingsToken(token) : "",
                     (token, content) => GetSetting(token)
                 )
-                .Chain(_fullToken, "Content", (token) => _tokenValue);
+                .Chain(
+                    token => {
+                        var cleanToken = GetAdvancedSettingsToken(token);
+                        if (string.IsNullOrWhiteSpace(cleanToken)) return null;
+                        int cleanTokenLength = cleanToken.Length;
+                        var subTokens = token.Length > cleanTokenLength ? token.Substring(cleanTokenLength + 1) : "";
+                        return new Tuple<string, string>(
+                            cleanToken, //The specific Token GetCachedSetting:(setting-name): is the key
+                            subTokens //The subsequent Tokens (i.e Fields.Part.Field)
+                            );
+                    },
+                    "Content",
+                    (token, content) => GetSetting(token));
         }
 
         private IContent GetSetting(string token) {
@@ -40,10 +50,7 @@ namespace Laser.Orchard.AdvancedSettings.Tokens {
             if (string.IsNullOrWhiteSpace(settingName)) {
                 return null;
             }
-            _tokenValue = _advancedSettingsService.GetCachedSetting(settingName);
-            return _tokenValue;
-
-
+            return _advancedSettingsService.GetCachedSetting(settingName);
         }
 
         private string GetAdvancedSettingsToken(string fullToken) {
@@ -55,9 +62,7 @@ namespace Laser.Orchard.AdvancedSettings.Tokens {
             if (startingTokenIndex == -1) {
                 return "";
             }
-            _fullToken = fullToken.Substring(startingTokenIndex, fullToken.IndexOf(")", startingTokenIndex) + 1 - startingTokenIndex); //Returns the entire token 'GetCachedSetting:(setting-name)'
-            return _fullToken;
-
+            return fullToken.Substring(startingTokenIndex, fullToken.IndexOf(")", startingTokenIndex) + 1 - startingTokenIndex); //Returns the entire token 'GetCachedSetting:(setting-name)'
         }
         private string GetSettingName(string token) {
             // Input validation
