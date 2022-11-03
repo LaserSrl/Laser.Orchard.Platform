@@ -285,6 +285,10 @@ msgid "No content with this Id"
 msgstr "Contenuto inesistente"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
+msgid "UnAuthorized Action"
+msgstr "Azione non autorizzata"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
 msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"
 msgstr "Non hai il permesso \"Manage settings\" per definire e gestire i gruppi di utenti."
 
