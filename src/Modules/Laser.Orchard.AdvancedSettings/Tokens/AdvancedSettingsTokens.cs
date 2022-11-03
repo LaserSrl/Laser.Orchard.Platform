@@ -37,8 +37,8 @@ namespace Laser.Orchard.AdvancedSettings.Tokens {
                         int cleanTokenLength = cleanToken.Length;
                         var subTokens = token.Length > cleanTokenLength ? token.Substring(cleanTokenLength + 1) : "";
                         return new Tuple<string, string>(
-                            cleanToken, //The specific Token GetCachedSetting:(setting-name): is the key
-                            subTokens //The subsequent Tokens (i.e Fields.Part.Field)
+                            cleanToken, //The specific Token GetCachedSetting:(setting-name), it is the key
+                            subTokens //The subsequent Tokens (i.e Fields.PartName.FieldName)
                             );
                     },
                     "Content",
