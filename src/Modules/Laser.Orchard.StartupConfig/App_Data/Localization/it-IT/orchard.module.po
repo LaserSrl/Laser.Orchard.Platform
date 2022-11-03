@@ -1940,6 +1940,30 @@ msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnerEmailToken"
 msgid "The email of user creator."
 msgstr "L'email dell'utente creatore."
 
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Content"
+msgstr "Contenuto"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Owner of content item or User content item."
+msgstr "Proprietario del contenuto o contenuto Utente."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "Owner or User"
+msgstr "Proprietario o Utente"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "OwnerEmail"
+msgstr "ProprietarioEmail"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "The email of user creator."
+msgstr "L'email dell'utente creatore."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.OwnershipTokens"
+msgid "The processed content"
+msgstr "Il contenuto elaborato"
+
 msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
 msgid "Parameter:<PartName-PropertyName>"
 msgstr "Parametro:<NomeDellaParte-Proprietà>"

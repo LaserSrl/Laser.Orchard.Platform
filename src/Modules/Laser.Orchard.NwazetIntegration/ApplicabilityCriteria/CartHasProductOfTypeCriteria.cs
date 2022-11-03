@@ -52,7 +52,12 @@ namespace Laser.Orchard.NwazetIntegration.ApplicabilityCriteria {
                     // "doesn't contain products of type"
                     context.ApplicabilityContext
                         .ProductQuantities
-                        .Any(pq => types.Contains(pq.Product.TypeDefinition.Name)));
+                        //.Any(pq => types.Contains(pq.Product.TypeDefinition.Name)));
+                        // Instead of reading TypeDefinition.Name (which has a private setter)
+                        // we need to read ContentItem.ContentType.
+                        // This is to make feature using special content types in a product container (e.g. ProductCombinations) work 
+                        // by forcing their content type to their container's.
+                        .Any(pq => types.Contains(pq.Product.ContentItem.ContentType)));
             }
         }
 

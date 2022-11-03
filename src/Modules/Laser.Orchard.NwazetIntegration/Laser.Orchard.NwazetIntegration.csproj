@@ -59,8 +59,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -122,28 +123,37 @@
     <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCouponLineCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\CartHasProductDiscountCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\HeaderValueForm.cs" />
+    <Compile Include="ApplicabilityCriteria\PickupPointsForm.cs" />
+    <Compile Include="ApplicabilityCriteria\PickupPointsShippingCriteria.cs" />
     <Compile Include="ApplicabilityCriteria\ProductContentTypeForm.cs" />
+    <Compile Include="Aspects\IOrderExtensionAspect.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AddressConfigurationAdminController.cs" />
     <Compile Include="Controllers\AddressesController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CouponApiController.cs" />
+    <Compile Include="Controllers\ICheckoutController.cs" />
+    <Compile Include="Controllers\PickupPointsAdminController.cs" />
     <Compile Include="Controllers\TerritoriesApiController.cs" />
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceInvoiceSettingsPartDriver.cs" />
     <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\GTMProductDriver.cs" />
     <Compile Include="Drivers\NwazetContactPartDriver.cs" />
     <Compile Include="Drivers\OrderPartDriver.cs" />
+    <Compile Include="Drivers\PickupPointOrderPartDriver.cs" />
+    <Compile Include="Drivers\PickupPointPartDriver.cs" />
     <Compile Include="Drivers\ProductVatConfigurationPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesHierarchyPartDriver.cs" />
     <Compile Include="Drivers\ShippingCountriesTerritoryPartDriver.cs" />
     <Compile Include="Drivers\AddressConfigurationSiteSettingsPartDriver.cs" />
     <Compile Include="Drivers\TerritoryAddressTypePartDriver.cs" />
     <Compile Include="Drivers\TerritoryAdministrativeTypePartDriver.cs" />
+    <Compile Include="Drivers\TerritoryISO3166CodePartDriver.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Features\NwazetIntegrationFeature.cs" />
     <Compile Include="Filters\CheckoutStepsFilter.cs" />
@@ -153,6 +163,7 @@
     <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceInvoiceSettingsPartHandler.cs" />
     <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
@@ -161,16 +172,18 @@
     <Compile Include="Handlers\NwazetContactPartHandler.cs" />
     <Compile Include="Handlers\OrderPartHandler.cs" />
     <Compile Include="Handlers\AddressConfigurationSiteSettingsPartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAddressTypePartHandler.cs" />
-    <Compile Include="Handlers\TerritoryAdministrativeTypePartHandler.cs" />
+    <Compile Include="Handlers\TerritoryPartExtensionsHandler.cs" />
+    <Compile Include="Handlers\PickupPointsContentHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Migration\MigrationsFacebookShop.cs" />
+    <Compile Include="Migration\PickupPointsMigrations.cs" />
     <Compile Include="Models\AddressOrderPart.cs" />
     <Compile Include="Models\AddressOrderPartRecord.cs" />
     <Compile Include="Migration\MigrationsGTM.cs" />
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceInvoiceSettingsPart.cs" />
     <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
     <Compile Include="Models\FacebookShopHandleRecord.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
@@ -182,13 +195,20 @@
     <Compile Include="Models\PaymentGatewayCharge.cs" />
     <Compile Include="Handlers\PaymentEventHandler.cs" />
     <Compile Include="Models\AddressConfigurationSiteSettingsPart.cs" />
+    <Compile Include="Models\PickupPointOrderPart.cs" />
+    <Compile Include="Models\PickupPointOrderPartRecord.cs" />
+    <Compile Include="Models\PickupPointPart.cs" />
+    <Compile Include="Models\PickupPointPartRecord.cs" />
     <Compile Include="Models\ProductVatConfigurationPartInputPriceSettings.cs" />
     <Compile Include="Models\TerritoryAddressTypePart.cs" />
     <Compile Include="Models\TerritoryAddressTypePartRecord.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePart.cs" />
     <Compile Include="Models\TerritoryAdministrativeTypePartRecord.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePart.cs" />
+    <Compile Include="Models\TerritoryISO3166CodePartRecord.cs" />
     <Compile Include="Navigation\AddressSettingsAdminMenu.cs" />
     <Compile Include="Navigation\FacebookSiteSettingsAdminMenu.cs" />
+    <Compile Include="Navigation\PickupPointsAdminMenu.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartEditorEvents.cs" />
     <Compile Include="PartSettings\FacebookShopProductPartSettings.cs" />
     <Compile Include="PartSettings\GTMProductEditEvent.cs" />
@@ -198,9 +218,13 @@
     <Compile Include="Routes\AddressesRoutes.cs" />
     <Compile Include="Routes\CheckoutRoutes.cs" />
     <Compile Include="Routes\CouponRESTApiRoutes.cs" />
+    <Compile Include="Routes\PickupPointsRoutes.cs" />
     <Compile Include="Security\FacebookShopSynchronizationPermission.cs" />
+    <Compile Include="Security\PickupPointPermissions.cs" />
+    <Compile Include="Security\PickupPointsAuthorizationEventHandler.cs" />
     <Compile Include="Services\AddressConfigurationService.cs" />
     <Compile Include="Services\AttributesValidationContext.cs" />
+    <Compile Include="Services\BaseCheckoutExtensionProvider.cs" />
     <Compile Include="Services\CheckoutConditions\CheckoutConditionValidationContext.cs" />
     <Compile Include="Services\CheckoutConditions\EmptyCartCheckoutCondition.cs" />
     <Compile Include="Services\CheckoutConditions\OrderQuantityCheckoutCondition.cs" />
@@ -213,7 +237,15 @@
     <Compile Include="Services\CheckoutHelperService.cs" />
     <Compile Include="Services\CheckoutPoliciesOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\CheckoutPoliciesService.cs" />
+    <Compile Include="Services\Combinations\VatConfigurationPartDetailProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\BaseCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\DefaultCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\ExtendedShippingOptionComputeContext.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\PickupPointsCheckoutShippingAddressProvider.cs" />
+    <Compile Include="Services\CheckoutShippingAddressProviders\ShippingAddressReinflationContext.cs" />
     <Compile Include="Services\CountriesHierarchyDoesNotExist.cs" />
+    <Compile Include="Services\ExtendedOrderContext.cs" />
+    <Compile Include="Services\ExtendedShippingAddressOrderAdditionalInformationProvider.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductDeleteRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopProductUpdateRequest.cs" />
     <Compile Include="Services\FacebookShop\FacebookShopRequestContainer.cs" />
@@ -229,8 +261,11 @@
     <Compile Include="Services\ICheckoutHelperService.cs" />
     <Compile Include="Services\ICheckoutPoliciesService.cs" />
     <Compile Include="Services\FacebookShop\IFacebookShopService.cs" />
+    <Compile Include="Services\ICheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
+    <Compile Include="Services\Invoice\IInvoiceService.cs" />
+    <Compile Include="Services\Invoice\InvoiceService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />
@@ -247,6 +282,8 @@
     <Compile Include="Services\UUIDCouponUserIdentifierProvider.cs" />
     <Compile Include="Services\ValidationAddressViewModelService.cs" />
     <Compile Include="Services\WorkflowActtributesValidation.cs" />
+    <Compile Include="ViewModels\AdditionalCheckoutShippingAddressSummaryViewModel.cs" />
+    <Compile Include="ViewModels\AdditionalIndexShippingAddressViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationTerritoryViewModel.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddressesVM.cs" />
@@ -267,10 +304,16 @@
     <Compile Include="ViewModels\GTMPurchaseVM.cs" />
     <Compile Include="ViewModels\PaymentInfoViewModel.cs" />
     <Compile Include="ViewModels\AddressConfigurationSiteSettingsPartViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointAddressEditViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointOrderViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointPartEditViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointsCheckoutViewModel.cs" />
+    <Compile Include="ViewModels\PickupPointsListViewModel.cs" />
     <Compile Include="ViewModels\ProductPriceEditorViewModel.cs" />
     <Compile Include="ViewModels\ProductVatConfigurationPartInputPriceSettingsVM.cs" />
     <Compile Include="ViewModels\TerritoryAddressTypeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryAdministrativeTypeEditViewModel.cs" />
+    <Compile Include="ViewModels\TerritoryISO3166CodeEditViewModel.cs" />
     <Compile Include="ViewModels\TerritoryTag.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -467,6 +510,21 @@
     <Content Include="Views\GA4Purchase.cshtml" />
     <Content Include="Views\GA4ShippingInfo.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceInvoiceSettings.cshtml" />
+    <Content Include="Views\PickupPointsAdmin\List.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PickupPoint.cshtml" />
+    <Content Include="Views\EditorTemplates\PickupPointAddressEditViewModel.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\PickupPoint.BackToList.cshtml" />
+    <Content Include="Views\CheckoutPickupPointsIndexShape.cshtml" />
+    <Content Include="Views\Parts\PickupPoint_Summary.cshtml" />
+    <Content Include="Views\CheckoutPickupPointAddressSummaryShape.cshtml" />
+    <Content Include="Views\CheckoutDefaultShippingAddressSummaryShape.cshtml" />
+    <Content Include="Views\Content.AddressSummary.cshtml" />
+    <Content Include="Views\PickupPointAddressSummaryTitle.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\Order.PickupPoint.cshtml" />
+    <Content Include="Views\BaseOrderShippingAddress.cshtml" />
+    <Content Include="Views\PickupPointOrderShippingAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\GTMProductSettingVM.cshtml" />

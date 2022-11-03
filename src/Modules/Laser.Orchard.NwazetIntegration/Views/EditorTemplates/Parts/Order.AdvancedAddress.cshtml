@@ -1,11 +1,14 @@
-﻿
+﻿@using Laser.Orchard.NwazetIntegration.Services.Invoice;
+@using Laser.Orchard.NwazetIntegration.Models;
+@using Orchard.ContentManagement;
+
 @model Laser.Orchard.NwazetIntegration.ViewModels.OrderAddressEditorViewModel
 @* This will display the advanced address and hide the "standard" one.
-    To avoid changing the OrderPart, this view, its partials and the 
+    To avoid changing the OrderPart, this view, its partials and the
     underlying driver are somewhat dependent on it. In particular, changes
     in the view for OrderPart addresses will reflect on this view and
     on the partials used for each address here. *@
-@{ 
+@{
     Style.Require("Bootstrap");
     Style.Require("FontAwesome");
     Script.Require("Bootstrap");
@@ -13,6 +16,8 @@
 
     var shippingId = Html.Id("shipping-tab");
     var billingId = Html.Id("billing-tab");
+    IInvoiceService invoiceService;
+    WorkContext.TryResolve<IInvoiceService>(out invoiceService);
 }
 
 <div class="order-editor advanced-addresses col-md-12 nav-tabs-custom">
@@ -24,23 +29,74 @@
             <a href="#@billingId" data-toggle="tab" aria-expanded="false">@T("Billing Address")</a>
         </li>
     </ul>
-    
+
     <div class="tab-content">
         <div id="@shippingId" class="tab-pane active order-address-editor shipping-address col-md-12">
             @Html.EditorFor(m => m.ShippingAddressVM,
-                new {
-                    OtherElementSelector = ".order-editor .addresses fieldset.shipping-address",
-                    OtherPrefix = "NwazetCommerceOrder"
-                })
+         new {
+             OtherElementSelector = ".order-editor .addresses fieldset.shipping-address",
+             OtherPrefix = "NwazetCommerceOrder"
+         })
         </div>
 
         <div id="@billingId" class="tab-pane order-address-editor billing-address col-md-12">
             @Html.EditorFor(m => m.BillingAddressVM,
-                new {
-                    OtherElementSelector = ".order-editor .addresses fieldset.billing-address",
-                    OtherPrefix = "NwazetCommerceOrder"
-                })
+         new {
+             OtherElementSelector = ".order-editor .addresses fieldset.billing-address",
+             OtherPrefix = "NwazetCommerceOrder"
+         })
         </div>
     </div>
-</div>
+    @{
+        var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
+        if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
+            <div class="order-editor advanced-addresses invoice-info">
+                @if (Model.BillingAddressVM.InvoiceRequest) {
+                    <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
+                }
+                <div class="invoice-info-invoicerequest">
+                    @Html.EditorFor(m => m.BillingAddressVM.InvoiceRequest)
+                    @Html.LabelFor(m => m.BillingAddressVM.InvoiceRequest, T("Invoice request").Text, new { @class = "forcheckbox" })
+                </div>
+                <div class="invoice-info-customertype">
+                    @Html.LabelFor(m => m.BillingAddressVM.CustomerType, T("Customer Type"))
+                    @Html.DropDownListFor(m => m.BillingAddressVM.CustomerType, invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType))
+                </div>
+                <div class="invoice-info-fiscalcode">
+                    @Html.LabelFor(m => m.BillingAddressVM.FiscalCode, T("Fiscal code"))
+                    @Html.EditorFor(m => m.BillingAddressVM.FiscalCode)
+                </div>
+                <div class="invoice-info-vatnumber">
+                    @Html.LabelFor(m => m.BillingAddressVM.VATNumber, T("VAT number"))
+                    @Html.EditorFor(m => m.BillingAddressVM.VATNumber)
+                </div>
+            </div>
+        }
+        else if (Model.BillingAddressVM.InvoiceRequest) {
+            <div class="order-editor advanced-addresses invoice-info">
+                <div class="invoice-info-request alert alert-info">@T("An invoice was requested for this order.")</div>
+                <div class="invoice-info-customertype">
+                    <label>
+                        @T("Customer Type")
+                    </label>
+                    @{
+                        @invoiceService.BuildCustomerOptions(Model.BillingAddressVM.CustomerType).Where(x => x.Selected).Select(x => x.Text);
+                    }
+                </div>
+                <div class="invoice-info-fiscalcode">
+                    <label>
+                        @T("Fiscal code")
+                    </label>
+                    @Model.BillingAddressVM.FiscalCode
+                </div>
+                <div class="invoice-info-vatnumber">
+                    <label>
+                        @T("VAT number")
+                    </label>
+                    @Model.BillingAddressVM.VATNumber
+                </div>
+            </div>
 
+        }
+    }
+</div>

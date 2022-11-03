@@ -33,6 +33,10 @@ msgid "Currency code to configure the payment."
 msgstr "Codice della valuta per configurare il pagamento."
 
 msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Determines if Paypal calls are made to a live account."
+msgstr "Determina se le chiamate di Paypal sono effettuate a un account live."
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
 msgid "Enable Fundings"
 msgstr "Abilita i finanziamenti"
 
@@ -59,6 +63,10 @@ msgstr "Credito PayPal"
 msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
 msgid "PayPal Setting"
 msgstr "Impostazione PayPal"
+
+msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
+msgid "Production Environment"
+msgstr "Ambiente di produzione"
 
 msgctxt "~/Modules/Laser.Orchard.PayPal/Views/Admin/Index.cshtml"
 msgid "Przelewy24"

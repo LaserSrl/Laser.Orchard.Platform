@@ -294,7 +294,8 @@ button.link:hover {
 }
 
 .zone-messages {
-    padding-top: 40px;
+    //padding-top: 40px;
+    padding-top: 10px;
 }
 
 .edit-item-sidebar {
@@ -338,6 +339,10 @@ select[multiple] {
 #orchard-version {
     font-style: italic;
     color: #6db7e5;
+    //top: 36px;
+    //right: 16px;
+    top: 44px;
+    right: 24px;
 }
 
 #orchard-version::before {
@@ -1203,14 +1208,13 @@ input[type="number"]:focus {
 
 /**** zone content ****/
 #main {
-    margin-left: 0px !important;
-    margin-top: 20px;
+    margin: 0px !important;
 }
 
 #layout-main {
     border: 0px;
     background: none;
-    padding: 16px 24px;
+    padding: 8px 24px;
     margin: 8px 0 0 0;
     clear: both;
     /*CSS3 properties*/
@@ -3212,7 +3216,7 @@ a.text-success:hover {
     /*position: relative;*/
     width: 100%;
     left: 0;
-    padding-top: 14px;
+    margin-top: 54px;
 }
 
 
@@ -7548,6 +7552,7 @@ li.dropdown-progress .progress {
 .nav-tabs-custom .tab-content {
     margin-top: 0;
     padding: 0;
+    display: grid;
 }
 
 .nav-tabs-custom .tab-content > .tab-pane {
@@ -11607,8 +11612,16 @@ ul.widgets h3 {
 }
 
 /* Navigation */
-#local-navigation ul.localmenu.group {
-    margin-bottom: 8px;
+#local-navigation {
+    margin-bottom: -9px;
+
+    ul {
+        &.localmenu {
+            &.group {
+                margin-bottom: 8px;
+            }
+        }
+    }
 }
 
 /* Article dialog, for position calculate from jquery, change starded top for calculate correct position  */
@@ -11883,5 +11896,22 @@ body {
 #stickyContainer {
     &.sticky-top {
         top: 64px;
+    }
+}
+/* End of Tiny MCE full screen fix */
+/* Style for autocompletes based on tagit.js */
+.tagit {
+    li {
+        &.tagit-choice {
+            cursor: pointer;
+
+            >a {
+                &.tagit-close {
+                    &:before {
+                        content: "\00a0"; // some whitespace before the 'x' to remove a tag
+                    }
+                }
+            }
+        }
     }
 }
