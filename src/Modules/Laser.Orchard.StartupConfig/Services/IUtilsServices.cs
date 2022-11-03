@@ -211,6 +211,28 @@ namespace Laser.Orchard.StartupConfig.Services {
                     rsp.Data = data;
                     rsp.ResolutionAction = ResolutionAction.ToConfirmEmail;
                     break;
+
+                case ResponseType.MissingParameters:
+                    rsp.Success = false;
+                    if (message != "")
+                        rsp.Message = message;
+                    else
+                        rsp.Message = T("Invalid value for username or password").ToString();
+                    rsp.ErrorCode = ErrorCode.MissingParameters;
+                    rsp.Data = data;
+                    rsp.ResolutionAction = ResolutionAction.NoAction;
+                    break;
+
+                case ResponseType.ExpiredPassword:
+                    rsp.Success = false;
+                    if (message != "")
+                        rsp.Message = message;
+                    else
+                        rsp.Message = T("The password is expired").ToString();
+                    rsp.ErrorCode = ErrorCode.ExpiredPassword;
+                    rsp.Data = data;
+                    rsp.ResolutionAction = ResolutionAction.ToChangeExpiredPassword;
+                    break;
             }
             return rsp;
         }

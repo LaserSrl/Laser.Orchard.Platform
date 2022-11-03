@@ -12,6 +12,7 @@ using Orchard.Core.Common.Models;
 using Orchard.Core.Title.Models;
 using Orchard.Localization;
 using Orchard.Mvc.Extensions;
+using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Models;
 using Orchard.Users.Services;
@@ -38,6 +39,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         private readonly IEnumerable<IIdentityProvider> _identityProviders;
         private readonly IUserService _userService;
         private readonly IUserEventHandler _userEventHandler;
+        private readonly IMembershipService _membershipService;
 
         public BaseUserActionsController(
             IOrchardServices orchardServices,
@@ -46,7 +48,8 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             IEnumerable<IIdentityProvider> identityProviders,
             IUserService userService,
             IUserEventHandler userEventHandler,
-            ICsrfTokenHelper csrfTokenHelper) {
+            ICsrfTokenHelper csrfTokenHelper,
+            IMembershipService membershipService) {
             OrchardServices = orchardServices;
             UtilsServices = utilsServices;
             _usersExtensionsServices = usersExtensionsServices;
@@ -54,6 +57,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             _userService = userService;
             _userEventHandler = userEventHandler;
             CsrfTokenHelper = csrfTokenHelper;
+            _membershipService = membershipService;
             T = NullLocalizer.Instance;
         }
 
@@ -104,6 +108,26 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return GetUserRegistrationModelLogic();
         }
 
+        [HttpPost]
+        public ContentResult ChangePassword(string currentPassword, string newPassword, string confirmPassword) {
+            return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        public ContentResult ChangeExpiredPassword(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            return ChangeExpiredPasswordLogic(currentPassword, newPassword, confirmPassword, userName);
+        }
+
+        [HttpPost]
+        public ContentResult ChangeLostPassword(string nonce, string newPassword, string confirmPassword) {
+            return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        public ContentResult SendChallengeEmail(string username) {
+            return SendChallengeEmailLogic(username);
+        }
+
         #endregion [http calls]
 
         public Localizer T { get; set; }
@@ -142,15 +166,39 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
 
         protected ContentResult SignInLogic(UserLogin login) {
             Response result;
-            try {
-                _usersExtensionsServices.SignIn(login);
-                List<string> roles = new List<string>();
-                var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
-                var json = registeredServicesData.ToString();
-                result = UtilsServices.GetResponse(ResponseType.Success, "", json);
-            }
-            catch (Exception ex) {
-                result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+            // If username or password are empty, send a MissingParameters response.
+            if (string.IsNullOrWhiteSpace(login.Username) || string.IsNullOrWhiteSpace(login.Password)) {
+                result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("Provide valid username and password").Text);
+            } else {
+                try {
+                    var response = _usersExtensionsServices.SignIn(login);
+                    if (response == ResponseType.Success) {
+                        List<string> roles = new List<string>();
+                        var registeredServicesData = UtilsServices.GetUserIdentityProviders(_identityProviders);
+                        var json = registeredServicesData.ToString();
+                        result = UtilsServices.GetResponse(ResponseType.Success, "", json);
+                    } else {
+                        switch (response) {
+                            case ResponseType.ExpiredPassword:
+                                result = UtilsServices.GetResponse(response, T("Password expired").Text);
+                                break;
+
+                            case ResponseType.MissingParameters:
+                                result = UtilsServices.GetResponse(response, T("Provide valid username and password").Text);
+                                break;
+
+                            case ResponseType.InvalidUser:
+                                result = UtilsServices.GetResponse(response, T("Invalid user").Text);
+                                break;
+
+                            default:
+                                result = UtilsServices.GetResponse(response, "");
+                                break;
+                        }
+                    }
+                } catch (Exception ex) {
+                    result = UtilsServices.GetResponse(ResponseType.InvalidUser, ex.Message);
+                }
             }
             return UtilsServices.ConvertToJsonResult(result);
         }
@@ -332,6 +380,138 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             }
             result = UtilsServices.GetResponse(ResponseType.None, T("Email not confirmed").Text);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        protected ContentResult ChangePasswordLogic(string currentPassword, string newPassword, string confirmPassword) {
+            return ChangePasswordLogicInternal(currentPassword, newPassword, confirmPassword, OrchardServices.WorkContext.CurrentUser.UserName);
+        }
+
+        protected ContentResult ChangeExpiredPasswordLogic(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            return ChangePasswordLogicInternal(currentPassword, newPassword, confirmPassword, userName);
+        }
+
+        protected ContentResult ChangePasswordLogicInternal(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            Response result;
+
+            var membershipSettings = _membershipService.GetSettings();
+
+            // Using string.IsNullOrEmpty because AccountController does that
+            if (string.IsNullOrEmpty(currentPassword) ||
+                    string.IsNullOrEmpty(newPassword) ||
+                    string.IsNullOrEmpty(confirmPassword)) {
+                result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("You must specify current password, new password and confirm password.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            if (string.Equals(currentPassword, newPassword, StringComparison.Ordinal)) {
+                result = UtilsServices.GetResponse(ResponseType.Validation, T("The new password must be different from the current password.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            if (!string.Equals(newPassword, confirmPassword, StringComparison.Ordinal)) {
+                result = UtilsServices.GetResponse(ResponseType.Validation, T("New password and confirm password must be equal.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            // Try to validate user + password combination.
+            // During this call, user should be authenticated, so CurrentUser can be used.
+            var user = _membershipService.ValidateUser(userName, currentPassword);
+            if (user == null) {
+                result = UtilsServices.GetResponse(ResponseType.Validation, T("The current password provided is not valid.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            // Check if new password meets password policies.
+            IDictionary<string, LocalizedString> validationErrors;
+            _userService.PasswordMeetsPolicies(newPassword, user, out validationErrors);
+            if (validationErrors != null && validationErrors.Any()) {
+                var errorString = T("New password does not meet password policies: ").Text;
+                foreach (var error in validationErrors) {
+                    errorString += Environment.NewLine + error.Value.Text;
+                }
+
+                result = UtilsServices.GetResponse(ResponseType.Validation, errorString);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            var shouldSignout = OrchardServices.WorkContext
+                .CurrentSite.As<SecuritySettingsPart>()
+                .ShouldInvalidateAuthOnPasswordChanged;
+
+            _userEventHandler.ChangingPassword(user, newPassword);
+            _membershipService.SetPassword(user, newPassword);
+            _userEventHandler.ChangedPassword(user);
+            if (shouldSignout) {
+                _usersExtensionsServices.SignOut();
+            }
+
+            result = UtilsServices.GetResponse(ResponseType.Success, T("Password changed.").Text);
+            return UtilsServices.ConvertToJsonResult(result);
+        }
+
+        protected ContentResult ChangeLostPasswordLogic(string nonce, string newPassword, string confirmPassword) {
+            Response result;
+
+            if (!string.Equals(newPassword, confirmPassword, StringComparison.Ordinal)) {
+                result = UtilsServices.GetResponse(ResponseType.Validation, T("New password and confirm password must be equal.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            IUser user = _userService.ValidateLostPassword(nonce);
+
+            if (user == null) {
+                result = UtilsServices.GetResponse(ResponseType.InvalidUser, "Invalid user.");
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            // Check if new password meets password policies.
+            IDictionary<string, LocalizedString> validationErrors;
+            _userService.PasswordMeetsPolicies(newPassword, user, out validationErrors);
+            if (validationErrors != null && validationErrors.Any()) {
+                var errorString = T("New password does not meet password policies: ").Text;
+                foreach (var error in validationErrors) {
+                    errorString += Environment.NewLine + error.Value.Text;
+                }
+
+                result = UtilsServices.GetResponse(ResponseType.Validation, errorString);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            _userEventHandler.ChangingPassword(user, newPassword);
+            _membershipService.SetPassword(user, newPassword);
+            _userEventHandler.ChangedPassword(user);
+
+            result = UtilsServices.GetResponse(ResponseType.Success, T("Password changed.").Text);
+            return UtilsServices.ConvertToJsonResult(result);
+        }
+
+        protected ContentResult SendChallengeEmailLogic(string username) {
+            Response result;
+
+            // Check users must confirm their account on registration.
+            var membershipSettings = _membershipService.GetSettings();
+            if (!membershipSettings.UsersMustValidateEmail) {
+                result = UtilsServices.GetResponse(ResponseType.None, T("Invalid operation: users do not need to validate their email.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            if (string.IsNullOrWhiteSpace(username)) {
+                result = UtilsServices.GetResponse(ResponseType.MissingParameters, T("You must specify a username or e-mail.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
+
+            var user = _userService.GetUserByNameOrEmail(username);
+            if (user != null && user.EmailStatus == UserStatus.Pending) {
+                var siteUrl = OrchardServices.WorkContext.CurrentSite.BaseUrl;
+                _userService.SendChallengeEmail(user.As<UserPart>(), nonce => Url.MakeAbsolute(Url.Action("ChallengeEmail", "Account", new { Area = "Orchard.Users", nonce = nonce }), siteUrl));
+                _userEventHandler.SentChallengeEmail(user);
+                
+                result = UtilsServices.GetResponse(ResponseType.Success, T("Challenge email sent.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            } else {
+                result = UtilsServices.GetResponse(ResponseType.InvalidUser, T("Invalid username or e-mail.").Text);
+                return UtilsServices.ConvertToJsonResult(result);
+            }
         }
     }
 }
