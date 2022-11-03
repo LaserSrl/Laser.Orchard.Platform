@@ -8,6 +8,7 @@ Features:
     Laser.Orchard.AdvancedSettings:
 		Category: Admin
 		Description: Extends settings adding the capability to create custom contents usable as settings.
+		Dependencies: Orchard.Tokens
 	Laser.Orchard.ThemeSkins:
 		Name: Laser.Orchard.ThemeSkins
 		Category: Frontend
