@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
 using Laser.Orchard.NwazetIntegration.Services.CheckoutShippingAddressProviders;
+using Laser.Orchard.NwazetIntegration.Services.Invoice;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
@@ -59,7 +60,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly INotifier _notifier;
         private readonly IEnumerable<ICheckoutExtensionProvider> _checkoutExtensionProviders;
         private readonly IEnumerable<ICheckoutShippingAddressProvider> _checkoutShippingAddressProviders;
-
+        private readonly IInvoiceService _invoiceService;
+        private EcommerceInvoiceSettingsPart _ecommerceInvoiceSettingsPart;
         public CheckoutController(
             IWorkContextAccessor workContextAccessor,
             IAddressConfigurationService addressConfigurationService,
@@ -75,7 +77,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             IProductPriceService productPriceService,
             INotifier notifier,
             IEnumerable<ICheckoutExtensionProvider> checkoutExtensionProviders,
-            IEnumerable<ICheckoutShippingAddressProvider> checkoutShippingAddressProviders) {
+            IEnumerable<ICheckoutShippingAddressProvider> checkoutShippingAddressProviders,
+            IInvoiceService invoiceService) {
 
             _workContextAccessor = workContextAccessor;
             _addressConfigurationService = addressConfigurationService;
@@ -92,10 +95,11 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _notifier = notifier;
             _checkoutExtensionProviders = checkoutExtensionProviders;
             _checkoutShippingAddressProviders = checkoutShippingAddressProviders;
-
+            _invoiceService = invoiceService;
             if (!string.IsNullOrEmpty(_shellSettings.RequestUrlPrefix))
                 _urlPrefix = new UrlPrefix(_shellSettings.RequestUrlPrefix);
 
+            _ecommerceInvoiceSettingsPart = _workContextAccessor.GetContext().CurrentSite.As<EcommerceInvoiceSettingsPart>();
             T = NullLocalizer.Instance;
         }
 
@@ -251,6 +255,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         .ToList();
             }
             FinalizeCheckoutViewModel(model, false);
+            ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(model.BillingAddressVM.CustomerType);
             return View(model);
         }
 
@@ -313,7 +318,15 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                             // Enumerate so the methods are actually executed
                             .ToList();
                 }
+                //if Addresses have errors show them 
+                foreach (var error in model.ShippingAddressVM.Errors) {
+                    ModelState.AddModelError("_FORM", error);
+                }
+                foreach (var error in model.BillingAddressVM.Errors) {
+                    ModelState.AddModelError("_FORM", error);
+                }
                 FinalizeCheckoutViewModel(model, false);
+                ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(model.BillingAddressVM.CustomerType);
                 return View(model);
             }
             // in case validation is successful, if a user exists, try to store the 
@@ -685,6 +698,12 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                         // Enumerate so the methods are actually executed
                         .ToList();
             }
+            // Set Invoice Defaults if needed
+            if (_ecommerceInvoiceSettingsPart.EnableInvoiceRequest && _ecommerceInvoiceSettingsPart.InvoiceRequestForceChoice ) {
+                vm.BillingAddressVM.InvoiceRequest = _ecommerceInvoiceSettingsPart.InvoiceRequestDefaultValue;
+            }
+
+
             InjectServices(vm);
             vm.FinalSetup();
             // Put the model we validated in TempData so it can be reused in the next action.

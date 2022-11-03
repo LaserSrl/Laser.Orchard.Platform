@@ -138,6 +138,7 @@
     <Compile Include="Drivers\AddressOrderPartDriver.cs" />
     <Compile Include="Drivers\CheckoutPolicySettingsPartDriver.cs" />
     <Compile Include="Drivers\CheckoutSettingsPartDriver.cs" />
+    <Compile Include="Drivers\EcommerceInvoiceSettingsPartDriver.cs" />
     <Compile Include="Drivers\EcommerceAnalyticsSettingsPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopProductPartDriver.cs" />
     <Compile Include="Drivers\FacebookShopSiteSettingsPartDriver.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Filters\SelectTermsFormForLines.cs" />
     <Compile Include="Handlers\CheckoutPolicySettingsPartHandler.cs" />
     <Compile Include="Handlers\CheckoutSettingsPartHandler.cs" />
+    <Compile Include="Handlers\EcommerceInvoiceSettingsPartHandler.cs" />
     <Compile Include="Handlers\EcommerceAnalyticsSettingsPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductPartHandler.cs" />
     <Compile Include="Handlers\FacebookShopProductSynchronizationTaskHandler.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Models\AddedMeasuringPurchase.cs" />
     <Compile Include="Models\CheckoutPolicySettingsPart.cs" />
     <Compile Include="Models\CheckoutSettingsPart.cs" />
+    <Compile Include="Models\EcommerceInvoiceSettingsPart.cs" />
     <Compile Include="Models\EcommerceAnalyticsSettingsPart.cs" />
     <Compile Include="Models\FacebookShopHandleRecord.cs" />
     <Compile Include="Models\FacebookShopProductPart.cs" />
@@ -261,6 +264,8 @@
     <Compile Include="Services\ICheckoutShippingAddressProvider.cs" />
     <Compile Include="Services\IGTMMeasuringPurchase.cs" />
     <Compile Include="Services\IGTMProductService.cs" />
+    <Compile Include="Services\Invoice\IInvoiceService.cs" />
+    <Compile Include="Services\Invoice\InvoiceService.cs" />
     <Compile Include="Services\INwazetCommunicationService.cs" />
     <Compile Include="Services\JsonConverters\PriceFormatConverter.cs" />
     <Compile Include="Services\NwazetCommunicationService.cs" />
@@ -506,6 +511,7 @@
     <Content Include="Views\GA4ShippingInfo.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\EcommerceAnalyticsSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\Territory.ISO3166Code.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\EcommerceInvoiceSettings.cshtml" />
     <Content Include="Views\PickupPointsAdmin\List.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\PickupPoint.cshtml" />
     <Content Include="Views\EditorTemplates\PickupPointAddressEditViewModel.cshtml" />
