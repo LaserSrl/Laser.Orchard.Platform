@@ -1,7 +1,7 @@
-﻿using Orchard.Mvc.Html;
-using Laser.Orchard.ExternalContent.Fields;
+﻿using Laser.Orchard.ExternalContent.Fields;
 using Laser.Orchard.ExternalContent.Services;
 using Laser.Orchard.ExternalContent.Settings;
+using Laser.Orchard.StartupConfig.Services;
 using Orchard;
 using Orchard.Autoroute.Models;
 using Orchard.ContentManagement;
@@ -9,14 +9,9 @@ using Orchard.Environment.Configuration;
 using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web.Hosting;
-using System.Web.Mvc;
-using Orchard.Mvc;
-using Laser.Orchard.StartupConfig.Services;
 
 namespace Laser.Orchard.ExternalContent.Tasks {
     public class ToolScheduledTaskHandler : IScheduledTaskHandler {
@@ -26,7 +21,6 @@ namespace Laser.Orchard.ExternalContent.Tasks {
         private readonly IScheduledTaskManager _scheduledTaskManager;
         private readonly ShellSettings _shellSettings;
         private readonly IFieldExternalService _fieldExternalService;
-        private readonly IWorkContextAccessor _workContextAccessor;
 
 
         public ILogger Logger { get; set; }
@@ -35,9 +29,8 @@ namespace Laser.Orchard.ExternalContent.Tasks {
             IOrchardServices orchardServices,
             IScheduledTaskManager scheduledTaskManager,
             ShellSettings shellSettings,
-            IFieldExternalService fieldExternalService,
-            IWorkContextAccessor workContextAccessor) {
-            _workContextAccessor = workContextAccessor;
+            IFieldExternalService fieldExternalService) {
+
             _orchardServices = orchardServices;
             _scheduledTaskManager = scheduledTaskManager;
             _fieldExternalService = fieldExternalService;
