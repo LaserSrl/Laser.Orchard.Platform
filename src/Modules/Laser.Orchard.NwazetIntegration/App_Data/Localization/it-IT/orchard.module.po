@@ -41,8 +41,16 @@ msgid "Country"
 msgstr "Nazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Customer Type"
+msgstr "Tipo di cliente"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "First Name"
 msgstr "Nome"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Fiscal code"
+msgstr "Codice fiscale"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Last Name"
@@ -67,6 +75,10 @@ msgstr "Provincia"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Province, starting with a letter."
 msgstr "Provincia, deve iniziare con una lettera."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "Request invoice by default"
+msgstr "Richiedi fattura di default"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Select a city"
@@ -103,6 +115,10 @@ msgstr "Titolo"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
 msgid "Title or honorific, e.g. Mr., Mrs., Dr., San, etc."
 msgstr "Titolo o onorifico, e.g. Sig., Dott., etc."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/AddressEditor.cshtml"
+msgid "VAT number"
+msgstr "Partita IVA"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Addresses/Create.cshtml"
 msgid "Back to List"
@@ -301,6 +317,10 @@ msgid "You may leave this blank for the United States."
 msgstr "Lasciare vuoto per gli Stati Uniti d'America."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "An invoice was requested for this order."
+msgstr "Per questo ordine è stata richiesta una fattura."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Billing to:"
 msgstr "Fatturazione a:"
 
@@ -313,6 +333,10 @@ msgid "Email address"
 msgstr "Indirizzo email"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "Fiscal code"
+msgstr "Codice fiscale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Phone number"
 msgstr "Numero di telefono"
 
@@ -323,6 +347,10 @@ msgstr "Spedizione a:"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
 msgid "Special instructions"
 msgstr "Istruzioni speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/AddressSummaryForm.cshtml"
+msgid "VAT number"
+msgstr "Partita IVA"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/BaseOrderShippingAddress.cshtml"
 msgid "Shipping to:"
@@ -353,12 +381,24 @@ msgid "Checkout: Shipping & Billing Addresses"
 msgstr "Checkout: indirizzi di spedizione e fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Customer Type"
+msgstr "Tipo di cliente"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "e-mail"
 msgstr "e-mail"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Fiscal code"
+msgstr "Codice fiscale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "International Phone Prefix"
 msgstr "Prefisso telefonico internazionale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Invoice information"
+msgstr "Dati di fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Next"
@@ -381,6 +421,10 @@ msgid "Please provide an international phone prefix, For example +39 for Italy"
 msgstr "Per favore inserire un prefisso internazionale, ad esempio +39 per l'Italia"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "Request invoice"
+msgstr "Richiedi fattura"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Required information"
 msgstr "Informazioni richieste"
 
@@ -391,6 +435,10 @@ msgstr "Indirizzo di spedizione"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
 msgid "Special Instructions"
 msgstr "Istruzioni Speciali"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Index.cshtml"
+msgid "VAT number"
+msgstr "Partita IVA"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/Checkout/Review.cshtml"
 msgid "Checkout: Review Order"
@@ -660,6 +708,34 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/E
 msgid "Technical"
 msgstr "Tecnici"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Check to set the default value to true"
+msgstr "Seleziona per impostare il valore predefinito a vero"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Choose whether the customer can request an invoice"
+msgstr "Determina se il cliente può richiedere la fattura"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Default value"
+msgstr "Valore predefinito"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Ecommerce Invoice settings"
+msgstr "Opzioni di fatturazione dell'e-commerce"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Enable Invoice Request"
+msgstr "Abilita la richiesta di fattura"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Force the choice"
+msgstr "Obbliga la selezione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/EcommerceInvoiceSettings.cshtml"
+msgid "Force the customer choice"
+msgstr "Obbliga la selezione al cliente"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/FacebookShopProductPartEditor.cshtml"
 msgid "Keep the product synchronized with Facebook Shop every time the product is published."
 msgstr "Mantieni il prodotto sincronizzato nel negozio di Facebook ogni volta che viene pubblicato."
@@ -669,12 +745,32 @@ msgid "Synchronize with Facebook Shop"
 msgstr "Sincronizza sul negozio di Facebook"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "An invoice was requested for this order."
+msgstr "Per questo ordine è stata richiesta una fattura."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
 msgid "Billing Address"
 msgstr "Indirizzo di fatturazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "Customer Type"
+msgstr "Tipo di cliente"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "Fiscal code"
+msgstr "Codice fiscale"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "Invoice request"
+msgstr "Richiesta di fattura"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
 msgid "Shipping Address"
 msgstr "Indirizzo di spedizione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.AdvancedAddress.cshtml"
+msgid "VAT number"
+msgstr "Partita IVA"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.CheckoutPolicies.cshtml"
 msgid "<a href=\"{0}\">{1}</a>"
@@ -2001,6 +2097,10 @@ msgid "Payment made with {0}"
 msgstr "Pagamento fatto tramite {0}"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "Choose one of the allowed legal entities."
+msgstr "Seleziona una delle entità legali autorizzate."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
 msgid "Format for phone prefix is the + sign followed by digits."
 msgstr "Il formato per il prefisso telefonico è il segno + seguito da cifre."
 
@@ -2019,4 +2119,12 @@ msgstr "Il prefisso del numero di telefono è obbligatorio."
 msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
 msgid "Postal or ZIP code may contain only characters or digits."
 msgstr "Il codice postale o CAP può contenere solo lettere o numeri."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "The fiscal code is invalid."
+msgstr "Il codice fiscale non è valido."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.ValidationAddressViewModelService"
+msgid "The VAT number is invalid."
+msgstr "La partita IVA non è valida."
 

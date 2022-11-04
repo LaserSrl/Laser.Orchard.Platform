@@ -304,8 +304,13 @@ button.link:hover {
     white-space: nowrap;
 }
 
-fieldset.publish-button {
-    border: 0px !important;
+fieldset {
+    &.publish-button {
+        border: 0px !important;
+    }
+    &.unpublish-button {
+        border: 0px !important;
+    }
 }
 
 select:not(.selector):not(.ui-datepicker-month):not(.ui-datepicker-year):not(.calendars-month-year) {
@@ -1228,7 +1233,7 @@ label {
     min-width: 170px;
 }
 
-fieldset:not(.save-button):not(.bulk-items):not(.publish-button):not(.publish-later-datetime):not(.bulk-actions):not(.bulk-actions-auto):not(.archive-later-datetime)::after {
+fieldset:not(.save-button):not(.bulk-items):not(.publish-button):not(.unpublish-button):not(.publish-later-datetime):not(.bulk-actions):not(.bulk-actions-auto):not(.archive-later-datetime)::after {
     display: block;
     content: " ";
     width: 100%;
@@ -7547,6 +7552,7 @@ li.dropdown-progress .progress {
 .nav-tabs-custom .tab-content {
     margin-top: 0;
     padding: 0;
+    display: grid;
 }
 
 .nav-tabs-custom .tab-content > .tab-pane {

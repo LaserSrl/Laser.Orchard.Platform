@@ -1,5 +1,7 @@
-﻿@using Laser.Orchard.NwazetIntegration.ViewModels;
+﻿@using Laser.Orchard.NwazetIntegration;
+@using Laser.Orchard.NwazetIntegration.ViewModels;
 @using Orchard.Localization;
+@using Orchard.ContentManagement;
 @using System.Linq.Expressions;
 @using Laser.Orchard.NwazetIntegration.Models;
 
@@ -109,6 +111,38 @@
         @Html.EditorFor(m => m.Address1)
         @Html.EditorFor(m => m.Address2)
     </div>
+
+
+    @* 5. VAT Number and Fiscal code*@
+    @if (Model.AddressType == AddressRecordType.BillingAddress) {
+        var invoiceSettings = WorkContext.CurrentSite.As<EcommerceInvoiceSettingsPart>();
+        if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
+            if (!invoiceSettings.InvoiceRequestForceChoice) {
+                <div class="address-input invoice-request-input">
+                    @Html.CheckBoxFor(m => m.InvoiceRequest)
+                    @Html.LabelFor(m => m.InvoiceRequest, T("Request invoice by default").Text, new { @class = "for-checkbox" })
+                </div>
+            }
+            else {
+                <input type="hidden" name="@Html.NameFor(m => m.InvoiceRequest)" id="@Html.IdFor(m=>m.InvoiceRequest)" value="@invoiceSettings.InvoiceRequestDefaultValue.ToString()" />
+            }
+            <div class="address-input customer-type-input">
+                @Html.LabelFor(m => m.CustomerType, T("Customer Type"))
+                @Html.DropDownListFor(m => m.CustomerType, (IEnumerable<SelectListItem>)ViewBag.CustomerTypeOptions, new { @class = "input-medium" })
+                @Html.ValidationMessageFor(m => m.CustomerType)
+            </div>
+            <div class="address-input fiscal-code-input">
+                @Html.LabelFor(m => m.FiscalCode, T("Fiscal code"))
+                @Html.EditorFor(m => m.FiscalCode)
+                @Html.ValidationMessageFor(m => m.FiscalCode)
+            </div>
+            <div class="address-input vat-number-input">
+                @Html.LabelFor(m => m.VATNumber, T("VAT number"))
+                @Html.EditorFor(m => m.VATNumber)
+                @Html.ValidationMessageFor(m => m.VATNumber)
+            </div>
+        }
+    }
 </div>
 @using (Script.Foot()) {
     <script type="text/javascript">

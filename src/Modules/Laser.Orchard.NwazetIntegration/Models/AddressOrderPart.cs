@@ -1,5 +1,7 @@
 ﻿using Laser.Orchard.NwazetIntegration.Aspects;
 using Laser.Orchard.NwazetIntegration.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Nwazet.Commerce.Aspects;
 using Orchard.ContentManagement;
 using System;
@@ -8,8 +10,8 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
-    public class AddressOrderPart 
-        : ContentPart<AddressOrderPartRecord>, 
+    public class AddressOrderPart
+        : ContentPart<AddressOrderPartRecord>,
         ITerritoryAddressAspect,
         IOrderExtensionAspect {
 
@@ -68,7 +70,27 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { Store(r => r.BillingProvinceId, value); }
         }
 
-        public IEnumerable<int> TerritoriesIds => 
+        public string BillingFiscalCode {
+            get { return Retrieve(r => r.BillingFiscalCode); }
+            set { Store(r => r.BillingFiscalCode, value); }
+        }
+        public string BillingVATNumber {
+            get { return Retrieve(r => r.BillingVATNumber); }
+            set { Store(r => r.BillingVATNumber, value); }
+        }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CustomerTypeOptions BillingCustomerType {
+            get { return Retrieve(r => r.BillingCustomerType); }
+            set { Store(r => r.BillingCustomerType, value); }
+        }
+        
+        public bool BillingInvoiceRequest {
+            get { return Retrieve(r => r.BillingInvoiceRequest); }
+            set { Store(r => r.BillingInvoiceRequest, value); }
+        }
+
+        public IEnumerable<int> TerritoriesIds =>
             new int[] { ShippingCityId, ShippingProvinceId, ShippingCountryId,
                 BillingCityId, BillingProvinceId, BillingCountryId };
 
@@ -93,7 +115,8 @@ namespace Laser.Orchard.NwazetIntegration.Models {
                     .GetShippingProvinceId(cvm);
                 // added information to manage saving in bo
                 ShippingAddressIsOptional = false;
-            } else {
+            }
+            else {
                 ShippingAddressIsOptional = true;
             }
             // Billing address
@@ -103,6 +126,10 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             BillingCityId = cvm.BillingAddressVM.CityId;
             BillingProvinceName = cvm.BillingAddressVM.Province;
             BillingProvinceId = cvm.BillingAddressVM.ProvinceId;
+            BillingInvoiceRequest = cvm.BillingAddressVM.InvoiceRequest;
+            BillingVATNumber = cvm.BillingAddressVM.VATNumber;
+            BillingFiscalCode = cvm.BillingAddressVM.FiscalCode;
+            BillingCustomerType = cvm.BillingAddressVM.CustomerType;
         }
     }
 }
