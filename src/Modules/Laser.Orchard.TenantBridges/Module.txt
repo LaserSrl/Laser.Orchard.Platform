@@ -1,0 +1,11 @@
+﻿Name: Laser.Orchard.TenantBridges
+AntiForgery: enabled
+Author: Laser srl
+Website: https://www.laser-group.com
+Version: 1.0
+OrchardVersion: 1.10.x
+Description: Features enabling communication and synchronization among multiple tenants.
+Features:
+    Laser.Orchard.TenantBridges:
+        Description: Base feature for sharing content and configurations between tenants.
+        Dependencies: Orchard.Widgets
