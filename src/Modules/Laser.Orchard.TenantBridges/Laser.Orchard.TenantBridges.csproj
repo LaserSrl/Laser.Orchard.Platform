@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes\ContentBridgeRoutes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
