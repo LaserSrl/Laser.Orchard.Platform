@@ -103,6 +103,7 @@
     <Compile Include="Routes\ContentBridgeRoutes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\RecipeController.cs" />
     <Content Include="packages.config" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
@@ -110,6 +111,10 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Modules\Orchard.Modules.csproj">
+      <Project>{17f86780-9a1f-4aa1-86f1-875eec2730c7}</Project>
+      <Name>Orchard.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
       <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>
       <Name>Orchard.Widgets</Name>
