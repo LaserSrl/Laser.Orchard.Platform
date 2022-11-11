@@ -525,6 +525,18 @@ msgid "Default json"
 msgstr "Json predefinito"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
+msgid "If value is a constant it will be used as is."
+msgstr "Se il valore è una costante verrà utilizzato così come è."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
+msgid "If value is a token it will be computed as a token."
+msgstr "Se il valore è un token verrà elaborato come un token."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
+msgid "If value is empty it will be generated based on product data."
+msgstr "Se il valore è vuoto verrà generato in base ai dati del prodotto."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/DefinitionTemplates/FacebookShopProductPartSettings.cshtml"
 msgid "This is the json body for product creation / update on Facebook shop."
 msgstr "Questo è il corpo del json per la creazione o l'aggiornamento dei prodotti sul negozio di Facebook."
 
@@ -1107,6 +1119,18 @@ msgstr "Id del catalogo sul business di Facebook"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
 msgid "Id of the Facebook business"
 msgstr "Id del business di Facebook"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "If value is a constant it will be used as is."
+msgstr "Se il valore è una costante verrà utilizzato così come è."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "If value is a token it will be computed as a token."
+msgstr "Se il valore è un token verrà elaborato come un token."
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
+msgid "If value is empty it will be generated based on product data."
+msgstr "Se il valore è vuoto verrà generato in base ai dati del prodotto."
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/SiteSettings/FacebookShopSiteSettings.cshtml"
 msgid "Synchronize all published content on Facebook Shop when saving."
