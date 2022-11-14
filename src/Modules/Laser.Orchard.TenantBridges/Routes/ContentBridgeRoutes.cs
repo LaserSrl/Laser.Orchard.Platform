@@ -22,7 +22,8 @@ namespace Laser.Orchard.TenantBridges.Routes {
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.TenantBridges"}
                         },
-                        new MvcRouteHandler())
+                        new MvcRouteHandler()),
+                    Name = "ContentBridgeItemSnippetRoute"
                 }
             };
         }

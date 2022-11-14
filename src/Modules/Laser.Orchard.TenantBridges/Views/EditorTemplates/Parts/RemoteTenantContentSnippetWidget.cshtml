@@ -1,0 +1,85 @@
+﻿@using Laser.Orchard.TenantBridges.ViewModels;
+@model RemoteTenantContentSnippetWidgetPartEditorViewModel
+
+<div class="form-group">
+    <label class="col-form-label"
+           for="@Html.FieldIdFor(m => m.RemoteTenantBaseUrl)">
+        @T("Base URL of the remote tenant.")
+    </label>
+    @Html.TextBoxFor(m => m.RemoteTenantBaseUrl, new { @class= "text large"})
+</div>
+<div class="form-group">
+    <div class="form-check">
+        <div class="form-check-input">
+            @Html.RadioButtonFor(m => m.ShouldGetHtmlSnippet, true)
+        </div>
+        <div class="form-check-label">
+            @T("Get HTML rendered remotely.")
+        </div>
+    </div>
+    <div class="form-check">
+        <div class="form-check-input">
+            @Html.RadioButtonFor(m => m.ShouldGetHtmlSnippet, false)
+        </div>
+        <div class="form-check-label">
+            @T("Get content and render it locally.")
+        </div> 
+    </div>
+</div>
+
+<div class="" data-remote-format-config="html" style="display:hidden;">
+    <div class="form-group">
+        <label class="col-form-label"
+               for="@Html.FieldIdFor(m => m.RemoteContentId)">
+            @T("Id of the content to fetch.")
+        </label>
+        @Html.TextBoxFor(m => m.RemoteContentId)
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <div class="form-check-input">
+                @Html.RadioButtonFor(m => m.RemoveRemoteWrappers, true)
+            </div>
+            <div class="form-check-label">
+                @T("Try to remove pre-rendered wrappers.")
+            </div>
+        </div>
+        <div class="form-check">
+            <div class="form-check-input">
+                @Html.RadioButtonFor(m => m.RemoveRemoteWrappers, false)
+            </div>
+            <div class="form-check-label">
+                @T("Don't try to remove pre-rendered wrappers.")
+            </div>
+        </div>
+    </div>
+</div>
+<div class="" data-remote-format-config="json" style="display:hidden;">
+    JSON
+</div>
+
+@using (Script.Foot()) {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if (Model.ShouldGetHtmlSnippet) {
+                <text>$('[data-remote-format-config="html"]').show();</text>
+                <text>$('[data-remote-format-config="json"]').hide();</text>
+            } else {
+                <text>$('[data-remote-format-config="html"]').hide();</text>
+                <text>$('[data-remote-format-config="json"]').show();</text>
+            }
+        });
+
+        // when the radio for the type of call changes, hide/show the corresponding portion of form
+        $('[name="@Html.FieldNameFor(m => m.ShouldGetHtmlSnippet)"]').on('change', function () {
+
+            if ($(this).val() == "True") {
+                $('[data-remote-format-config="html"]').show();
+                $('[data-remote-format-config="json"]').hide();
+            } else {
+                $('[data-remote-format-config="html"]').hide();
+                $('[data-remote-format-config="json"]').show();
+            }
+        });
+    </script>
+}
