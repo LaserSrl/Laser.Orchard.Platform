@@ -103,6 +103,7 @@
     <Compile Include="Models\RemoteTenantContentSnippetWidgetPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routes\ContentBridgeRoutes.cs" />
+    <Compile Include="Security\ExecuteRemoteRecipesPermission.cs" />
     <Compile Include="Services\IRemoteContentService.cs" />
     <Compile Include="Services\RemoteContentService.cs" />
     <Compile Include="ViewModels\RemoteTenantContentSnippetWidgetPartEditorViewModel.cs" />
