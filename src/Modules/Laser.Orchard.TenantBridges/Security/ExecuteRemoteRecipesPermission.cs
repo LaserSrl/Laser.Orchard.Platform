@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Laser.Orchard.TenantBridges.Security {
     public class ExecuteRemoteRecipesPermission : IPermissionProvider {
+        // This permission is valid for every recipe
         public static readonly Permission ExecuteRemoteRecipes = new Permission {
             Description = "Execute recipes remotely.",
             Name = "ExecuteRemoteRecipes"

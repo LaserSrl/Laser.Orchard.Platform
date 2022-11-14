@@ -47,7 +47,16 @@ namespace Laser.Orchard.TenantBridges.Controllers {
 		[HttpPost]
 		[ValidateAntiForgeryTokenOrchard(false)]
 		public JsonResult Execute(string moduleId, string name) {
+			var user = Services.WorkContext.CurrentUser;
+			if (user != null) {
+				Logger.Information("User {0} is trying to remotely execute recipe {1} in module {2}.",
+					user.UserName, name, moduleId);
+            } else {
+				Logger.Information("Anonymous user is trying to remotely execute recipe {0} in module {1}.",
+					name, moduleId);
+			}
 			if (!Services.Authorizer.Authorize(ExecuteRemoteRecipesPermission.ExecuteRemoteRecipes, T("Not allowed to remotely execute recipes."))) {
+				Logger.Information("User is not allowed to remotely execute recipes.");
 				return GetUnauthorizedResult();
 			}
 
@@ -58,6 +67,7 @@ namespace Laser.Orchard.TenantBridges.Controllers {
 				.FirstOrDefault();
 
 			if (module == null) {
+				Logger.Error("Module {0} not found", moduleId);
 				return GetNotFoundResult(T("Module not found"));
             }
 
@@ -66,6 +76,7 @@ namespace Laser.Orchard.TenantBridges.Controllers {
 				.FirstOrDefault(x => !x.IsSetupRecipe && x.Name == name);
 
 			if (recipe == null) {
+				Logger.Error("Recipe {0} not found in module {1}", name, moduleId);
 				return GetNotFoundResult(T("Recipe not found"));
 			}
 
