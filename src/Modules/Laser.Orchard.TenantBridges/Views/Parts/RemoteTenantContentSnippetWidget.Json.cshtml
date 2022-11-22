@@ -1,1 +1,9 @@
-﻿
+﻿<!--Laser.Orchard.TenantBridges\Views\Parts\RemoteTenantContentSnippetWidget.Html.cshtml-->
+@using Laser.Orchard.TenantBridges.ViewModels
+@{
+    var viewModel = (RemoteTenantContentSnippetWidgetPartJsonDisplayViewModel)
+        Model.ViewModel;
+}
+<script>
+    var json = @Html.Raw(viewModel.Json);
+</script>

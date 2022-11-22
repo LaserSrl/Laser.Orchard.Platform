@@ -1,6 +1,7 @@
 ﻿using Laser.Orchard.TenantBridges.Models;
 using Laser.Orchard.TenantBridges.Services;
 using Laser.Orchard.TenantBridges.ViewModels;
+using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
@@ -36,8 +37,23 @@ namespace Laser.Orchard.TenantBridges.Drivers {
             }
             else {
                 // Get the content from the web API on the remote tenant
+                // The Laser WebServices feature has to be enabled on the remote tenant for this to work
+                // if it isn't we get a 404 error
                 return ContentShape("Parts_RemoteTenantContentSnippetWidget_Json", () => {
-                    return shapeHelper.Parts_RemoteTenantContentSnippetWidget_Json();
+                    string json = _remoteContentService.GetJson(part);
+                    JObject jObject = default(JObject);
+                    try {
+                        jObject = JObject.Parse(json);
+                    }
+                    catch (Exception) { 
+                        // TODO: Do we set a particular value so the shape can know there was an error?
+                    }
+
+                    return shapeHelper.Parts_RemoteTenantContentSnippetWidget_Json(
+                        ViewModel: new RemoteTenantContentSnippetWidgetPartJsonDisplayViewModel {                            
+                            Json = json,
+                            JObject = jObject
+                    });;                  
                 });
             }
         }
@@ -83,6 +99,8 @@ namespace Laser.Orchard.TenantBridges.Drivers {
                 .SetAttributeValue("RemoteContentId", part.RemoteContentId);
             context.Element(partName)
                 .SetAttributeValue("RemoveRemoteWrappers", part.RemoveRemoteWrappers);
+            context.Element(partName)
+                 .SetAttributeValue("Alias", part.Alias);
         }
 
         protected override void Importing(
@@ -93,6 +111,7 @@ namespace Laser.Orchard.TenantBridges.Drivers {
             part.ShouldGetHtmlSnippet = bool.Parse(context.Attribute(partName, "ShouldGetHtmlSnippet"));
             part.RemoteContentId = Int32.Parse(context.Attribute(partName, "RemoteContentId"));
             part.RemoveRemoteWrappers = bool.Parse(context.Attribute(partName, "RemoveRemoteWrappers"));
+            part.Alias = context.Attribute(partName, "Alias");
         }
 
         protected override void Cloning(
@@ -102,6 +121,7 @@ namespace Laser.Orchard.TenantBridges.Drivers {
 
             clonePart.RemoteContentId = originalPart.RemoteContentId;
             clonePart.RemoveRemoteWrappers = originalPart.RemoveRemoteWrappers;
+            clonePart.Alias = originalPart.Alias;
         }
     }
 }

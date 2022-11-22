@@ -37,7 +37,10 @@ namespace Laser.Orchard.TenantBridges.Models {
         #endregion
 
         #region Properties for when we are getting the serialized content
-        // TODO
+        public string Alias {
+            get { return this.Retrieve(x => x.Alias); }
+            set { this.Store(x => x.Alias, value); }
+        }
         #endregion
     }
 }

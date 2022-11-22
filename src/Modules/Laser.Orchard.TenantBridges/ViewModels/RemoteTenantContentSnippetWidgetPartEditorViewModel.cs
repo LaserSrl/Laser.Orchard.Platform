@@ -21,6 +21,7 @@ namespace Laser.Orchard.TenantBridges.ViewModels {
             vm.ShouldGetHtmlSnippet = part.ShouldGetHtmlSnippet;
             vm.RemoteContentId = part.RemoteContentId;
             vm.RemoveRemoteWrappers = part.RemoveRemoteWrappers;
+            vm.Alias = part.Alias;
             return vm;
         }
 
@@ -29,6 +30,7 @@ namespace Laser.Orchard.TenantBridges.ViewModels {
             part.ShouldGetHtmlSnippet = ShouldGetHtmlSnippet;
             part.RemoteContentId = RemoteContentId;
             part.RemoveRemoteWrappers = RemoveRemoteWrappers;
+            part.Alias = Alias;
         }
         [Required]
         public string RemoteTenantBaseUrl { get; set; }
@@ -41,8 +43,10 @@ namespace Laser.Orchard.TenantBridges.ViewModels {
         #endregion
 
         #region Properties for when we are getting the serialized content
-        // TODO
+        public string Alias { get; set; }
         #endregion
+
+
     }
     /// <summary>
     /// This validator is to apply specific logic on some properties of the viewmodel
@@ -67,6 +71,11 @@ namespace Laser.Orchard.TenantBridges.ViewModels {
                 }
             }
             else {
+                // Alias should be a non empty string
+                if (string.IsNullOrWhiteSpace(model.Alias)) {
+                    return new ValidationResult(T("Invalid Alias.").Text);
+                }
+                //TODO: should we check other things like special characters?
 
             }
 

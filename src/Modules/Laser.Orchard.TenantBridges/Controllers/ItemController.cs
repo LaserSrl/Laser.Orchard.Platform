@@ -48,6 +48,9 @@ namespace Laser.Orchard.TenantBridges.Controllers {
             // However, that kind of output is the whole point for this Action, so we don't
             // check that, and assume that is the intent of the caller.
 
+
+            //TODO: Users and things we don't want to show may be asked. handle that
+
             // Start processing
             if (id == null) {
                 // this is just a 404 "partial"
@@ -83,6 +86,7 @@ namespace Laser.Orchard.TenantBridges.Controllers {
                 // this is just a 401 "partial"
                 return PartialUnauthorizedResult();
             }
+
 
             var clearWrappers = !(wrappers.HasValue && wrappers.Value);
             var isWidget = contentItem.Is<WidgetPart>();

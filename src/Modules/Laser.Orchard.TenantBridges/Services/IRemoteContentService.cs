@@ -10,5 +10,7 @@ namespace Laser.Orchard.TenantBridges.Services {
     public interface IRemoteContentService : IDependency {
 
         string GetSnippet(RemoteTenantContentSnippetWidgetPart part);
+        string GetJson(RemoteTenantContentSnippetWidgetPart part);
     }
 }
+

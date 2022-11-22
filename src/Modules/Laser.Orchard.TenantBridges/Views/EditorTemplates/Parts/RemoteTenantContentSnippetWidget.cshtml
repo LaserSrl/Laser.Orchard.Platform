@@ -55,11 +55,17 @@
     </div>
 </div>
 <div class="" data-remote-format-config="json" style="display:hidden;">
-    JSON
+    <div class="form-group">
+        <label class="col-form-label"
+               for="@Html.FieldIdFor(m => m.RemoteContentId)">
+            @T("Alias of the content to fetch.")
+        </label>
+        @Html.TextBoxFor(m => m.Alias)
+    </div>
 </div>
 
-@using (Script.Foot()) {
-    <script type="text/javascript">
+    @using (Script.Foot()) {
+        <script type="text/javascript">
         $(document).ready(function () {
             @if (Model.ShouldGetHtmlSnippet) {
                 <text>$('[data-remote-format-config="html"]').show();</text>
@@ -81,5 +87,6 @@
                 $('[data-remote-format-config="json"]').show();
             }
         });
-    </script>
-}
+        </script>
+    }
+

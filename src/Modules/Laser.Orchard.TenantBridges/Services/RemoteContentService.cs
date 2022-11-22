@@ -26,7 +26,7 @@ namespace Laser.Orchard.TenantBridges.Services {
             }
 
             var fullUrl = $"{baseUrl}/{Constants.GetSnippetUrl}/{part.RemoteContentId}" +
-                $"?wrappers={part.RemoveRemoteWrappers.ToString().ToLower()}";
+                $"?wrappers={(!part.RemoveRemoteWrappers).ToString().ToLower()}";
 
             var wr = HttpWebRequest.CreateHttp(fullUrl);
             wr.Method = WebRequestMethods.Http.Get;
@@ -48,6 +48,61 @@ namespace Laser.Orchard.TenantBridges.Services {
                 var resp = (HttpWebResponse)ex.Response;
                 Logger.Error("TenantBridge: WebException calling GET on {0}. Response: {1}. Exception: {2}.",
                     fullUrl, resp, ex.Message);
+                using (var reader = new StreamReader(resp.GetResponseStream())) {
+                    // TODO: should we have a setting in the part to choose what to do here?
+                    // we still return the html: the controller of the other tenant will have
+                    // responded with a 404 or something like that
+                    return reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex) {
+                Logger.Error("TenantBridge: Exception calling GET on {0}. Response: {1}. Exception: {2}.",
+                    fullUrl, ex.Message);
+                // can't recover from this.
+            }
+
+            return string.Empty;
+        }
+
+        string IRemoteContentService.GetJson(RemoteTenantContentSnippetWidgetPart part) {
+
+            // compute the full path we'll need to call
+            var baseUrl = part.RemoteTenantBaseUrl.Trim().Trim('/').Trim();
+            if (string.IsNullOrWhiteSpace(baseUrl)) {
+                return string.Empty;
+            }
+
+           
+            var fullUrl = $"{baseUrl}/{Constants.GetJsonUrl}" +
+                $"?alias={(part.Alias).ToString().ToLower()}";
+
+            var wr = HttpWebRequest.CreateHttp(fullUrl);
+            wr.Method = WebRequestMethods.Http.Get;
+#if DEBUG
+            // when debugging, also accept selfsigned certificates
+            wr.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+#endif
+
+            try {
+                using (var resp = wr.GetResponse() as HttpWebResponse) {
+                    if (resp.StatusCode == HttpStatusCode.OK) {
+                        using (var reader = new StreamReader(resp.GetResponseStream())) {
+                            return reader.ReadToEnd();
+                        }
+                    }
+                }
+            }
+            catch (WebException ex) {
+                var resp = (HttpWebResponse)ex.Response;
+                string error = string.Format("TenantBridge: WebException calling GET on {0}. Response: {1}. Exception: {2}.",
+                    fullUrl, resp, ex.Message);
+              
+                if (resp.StatusCode == HttpStatusCode.NotFound) {
+                    error += Environment.NewLine + "The Laser.WebService feature on the remote tab may not be enabled";
+                }
+
+                Logger.Error(error);
+
                 using (var reader = new StreamReader(resp.GetResponseStream())) {
                     // TODO: should we have a setting in the part to choose what to do here?
                     // we still return the html: the controller of the other tenant will have

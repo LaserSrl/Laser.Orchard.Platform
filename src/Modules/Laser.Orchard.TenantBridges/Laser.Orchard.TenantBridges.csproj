@@ -58,6 +58,9 @@
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -106,6 +109,7 @@
     <Compile Include="Security\ExecuteRemoteRecipesPermission.cs" />
     <Compile Include="Services\IRemoteContentService.cs" />
     <Compile Include="Services\RemoteContentService.cs" />
+    <Compile Include="ViewModels\RemoteTenantContentSnippetWidgetPartJsonDisplayViewModel.cs" />
     <Compile Include="ViewModels\RemoteTenantContentSnippetWidgetPartEditorViewModel.cs" />
     <Compile Include="ViewModels\RemoteTenantContentSnippetWidgetPartHtmlDisplayViewModel.cs" />
   </ItemGroup>
