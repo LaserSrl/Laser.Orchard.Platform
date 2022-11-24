@@ -296,11 +296,9 @@ namespace Laser.Orchard.NwazetIntegration.ViewModels {
             #endregion
 
             if (SelectedShippingAddressProvider != null) {
-                var countryId = SelectedShippingAddressProvider
-                    .GetShippingCountryId(this);
-                var country = addressConfigurationService
-                    ?.GetCountry(countryId);
-                ShippingCountryDisplayName = contentManager.GetItemMetadata(country).DisplayText;
+
+                ShippingCountryDisplayName = SelectedShippingAddressProvider
+                    .GetShippingCountryName(this);
                 ShippingPostalCode = SelectedShippingAddressProvider
                     .GetShippingPostalCode(this);
 
