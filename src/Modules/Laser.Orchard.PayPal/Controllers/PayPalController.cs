@@ -93,12 +93,12 @@ namespace Laser.Orchard.PayPal.Controllers {
         }
 
         [HttpPost]
-        public ActionResult ErrorPay(int pId) {
+        public ActionResult ErrorPay(int pId, string error) {
             // this controller manage only response negative.
             // is called into action onError manage from javascript PayPal
             CheckOrderResult result = new CheckOrderResult();
             result.Success = false;
-            result.MessageError = string.Format("Something went wrong during the payment");
+            result.MessageError = string.Format("Something went wrong during the payment: {0}", error);
 
             var payment = _posService.GetPaymentInfo(pId);
             _posService.EndPayment(payment.Id, result.Success, result.MessageError, result.Info);
