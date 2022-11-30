@@ -356,3 +356,7 @@ msgctxt "Laser.Orchard.PaymentGateway.Services.PosServiceBase"
 msgid "Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
 msgstr "Errore PosServiceBase.EndPayment con i seguenti parametri: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
 
+msgctxt "Laser.Orchard.PaymentGateway.Services.PosServiceBase"
+msgid "Transaction was already complete! Multiple payment transactions attempted by user. Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
+msgstr "La transazione era già stata completata! Pagamenti multipli sono stati avviati dall'utente. Errore PosServiceBase.EndPayment con i seguenti parametri: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\""
+
