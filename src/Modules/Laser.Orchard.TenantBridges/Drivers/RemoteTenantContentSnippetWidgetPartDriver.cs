@@ -25,6 +25,9 @@ namespace Laser.Orchard.TenantBridges.Drivers {
         }
 
         protected override DriverResult Display(
+            
+            //TODO: Add the possibility to call a generic url and get the markup to show it
+
             RemoteTenantContentSnippetWidgetPart part, string displayType, dynamic shapeHelper) {
             if (part.ShouldGetHtmlSnippet) {
                 // Fetch the html snippet from the remote content controller on the remote tenant
