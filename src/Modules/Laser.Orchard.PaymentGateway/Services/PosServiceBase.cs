@@ -193,7 +193,7 @@ namespace Laser.Orchard.PaymentGateway.Services {
                 //if (newError) {
                 //    _paymentEventHandler.OnError(paymentToSave.Id, paymentToSave.ContentItemId);
                 //}
-                Logger.Error(T("Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\"",
+                Logger.Error(T("Transaction was already complete! Multiple payment transactions attempted by user. Error PosServiceBase.EndPayment with parameters: paymentId=\"{0}\", success=\"{1}\", error=\"{2}\", info=\"{3}\", transacionId=\"{4}\"",
                     paymentId,
                     success,
                     string.IsNullOrWhiteSpace(error) ? string.Empty : error,
