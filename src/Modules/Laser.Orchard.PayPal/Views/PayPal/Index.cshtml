@@ -158,12 +158,23 @@
                                     PaymentResult(data);
                                 },
                                 error: function (data) {
-                                    PaymentResult(data);
+                                    //PaymentResult(data);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
+                                        data: {
+                                            __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                            pId: '@Model.Record.Id',
+                                            error: data
+                                        },
+                                        success: function (resp) {
+                                            PaymentResult();
+                                        }
+                                    });
                                 }
                             });
                         });
-                    }
-                    ,
+                    },
                     onClick: function (data, actions) {
                         if (data.fundingSource == "paypal") {
                             $("#div-warning").css("display", "block");
@@ -188,7 +199,8 @@
                             url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
                             data: {
                                 __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
-                                pId: '@Model.Record.Id'
+                                pId: '@Model.Record.Id',
+                                error: err
                             },
                             success: function (data) {
                                 PaymentResult();

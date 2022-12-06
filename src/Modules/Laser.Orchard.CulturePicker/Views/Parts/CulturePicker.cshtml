@@ -11,7 +11,9 @@
             availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, disaplyedName));
         }
         catch {
-            availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, culture.CultureCode));
+            if (culture != null) {
+                availableCultureswithNames.Add(new KeyValuePair<string, string>(culture.CultureCode, culture.CultureCode));
+            }
         }
     }
 }
