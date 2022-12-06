@@ -56,7 +56,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                         ParentContentItem = _contentManager.Get<ContentItem>(s.Id, VersionOptions.Published)
                     }).ToArray();
 
-            return parents;
+            /// If a content has been unpublished the ParentContentItem in the list is null, 
+            /// that results in an exception when serializing, so the null values must be filtered out                        
+            return parents.Where(p => p.ParentContentItem != null);
         }
 
         public void StoreInspectExpandoFields(List<ContentPart> listpart, string key, object value, ContentItem theContentItem) {
