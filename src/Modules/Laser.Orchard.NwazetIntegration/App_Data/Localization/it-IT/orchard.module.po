@@ -2104,6 +2104,14 @@ msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopServi
 msgid "Product part or Facebook part are not valid."
 msgstr "Parte prodotto o parte Facebook non valide."
 
+msgctxt "Laser.Orchard.NwazetIntegration.Services.Invoice.InvoiceService"
+msgid "Company or individual business"
+msgstr "Società o ditta individuale"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.Invoice.InvoiceService"
+msgid "Final consumer"
+msgstr "Privato"
+
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
 msgid "Payment Failed"
 msgstr "Pagamento Fallito"
