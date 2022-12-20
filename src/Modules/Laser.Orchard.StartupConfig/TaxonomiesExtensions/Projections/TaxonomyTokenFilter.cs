@@ -40,7 +40,7 @@ namespace Laser.Orchard.StartupConfig.TaxonomiesExtensions.Projections {
 
                 var terms = idList.Select(_taxonomyService.GetTerm).ToList();
                 var allTerms = new List<TermPart>();
-                foreach (var term in terms) {
+                foreach (var term in terms.Where(t => t != null)) {
                     bool.TryParse(context.State.IncludeChildren?.Value, out bool includeChildren);
                     if (includeChildren)
                         allTerms.AddRange(_taxonomyService.GetChildren(term));
