@@ -7,12 +7,10 @@
     @if (contentItems != null && contentItems.Any()) {
         <span class="name">@T("Events"):</span>
         foreach (var contentItem in contentItems) {
-            if (contentItem.ParentContentItem != null) {
         <span class="value">@Html.ItemDisplayLink(contentItem.ParentContentItem)</span>
                 if (contentItem != contentItems.Last()) {
         <span>,</span>
                 }
-            }
         }
     } 
 </p>
