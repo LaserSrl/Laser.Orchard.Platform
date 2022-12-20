@@ -19,6 +19,12 @@ namespace Laser.Orchard.TenantBridges.Services {
         public ILogger Logger { get; set; }
 
         public string GetSnippet(RemoteTenantContentSnippetWidgetPart part) {
+
+            // TODO: Limit the type of content this call can retrieve:
+            // right now every id can be requested, consider the idea of returning a valid 
+            // snippet only if a widget is requested and return an exception/generic message/whatever in every other case
+
+
             // compute the full path we'll need to call
             var baseUrl = part.RemoteTenantBaseUrl.Trim().Trim('/').Trim();
             if (string.IsNullOrWhiteSpace(baseUrl)) {
@@ -65,6 +71,13 @@ namespace Laser.Orchard.TenantBridges.Services {
         }
 
         string IRemoteContentService.GetJson(RemoteTenantContentSnippetWidgetPart part) {
+
+            // TODO: In some cases the current tenant must be authenticated in the remote tenant
+            // and the following call should ideally be identical to the ones made by the mobile library.
+            // That means this call must know the ApiKey, ApiChannel and encryption key of the remote tenant.
+            // A possibile solution could be to create a new content called RemoteTenant where we can specify these values 
+            // and change the remote content snippet widget so that one of its fields is the RemoteTenant to get the data from, but this has to be discussed together.
+        
 
             // compute the full path we'll need to call
             var baseUrl = part.RemoteTenantBaseUrl.Trim().Trim('/').Trim();
