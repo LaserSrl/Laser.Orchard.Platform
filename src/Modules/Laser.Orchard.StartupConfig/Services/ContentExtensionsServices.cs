@@ -54,11 +54,13 @@ namespace Laser.Orchard.StartupConfig.Services {
                     new ParentContent {
                         FieldNames = s.StringFieldIndexRecords.Where(w2 => normalizedContentTypes.Contains(w2.PropertyName) && w2.Value != null && w2.Value.Contains("{" + contentId + "}")).Select(names => names.PropertyName).ToArray(),
                         ParentContentItem = _contentManager.Get<ContentItem>(s.Id, VersionOptions.Published)
-                    }).ToArray();
-
-            /// If a content has been unpublished the ParentContentItem in the list is null, 
-            /// that results in an exception when serializing, so the null values must be filtered out                        
-            return parents.Where(p => p.ParentContentItem != null);
+                    })
+                // If a content has been unpublished the ParentContentItem in the list is null, 
+                // that results in an exception when serializing, so the null values must be filtered out   
+                .Where(p => p.ParentContentItem != null)
+                .ToArray();
+                
+            return parents;
         }
 
         public void StoreInspectExpandoFields(List<ContentPart> listpart, string key, object value, ContentItem theContentItem) {
