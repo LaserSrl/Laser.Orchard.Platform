@@ -163,6 +163,15 @@ namespace Laser.Orchard.ExternalContent.Services {
                         }
                     }
                 }
+                
+                else {
+                    // If it's not an array we wrap it inside an array anyway
+                    // TODO: We could handle the case where contentObject[memberName] is a basic type but for now it won't happen
+                    // since FieldExternalService.GetContentFromField returns an exception when trying to parse a JObject
+                    var itemModel = new Dictionary<string, object>();
+                    itemModel.Add(memberName, arrayMember);
+                    transformedObject.Add((dynamic)itemModel);
+                }
             }
 
             // Then we should serialize whatever that is, iteratively/recursively.
