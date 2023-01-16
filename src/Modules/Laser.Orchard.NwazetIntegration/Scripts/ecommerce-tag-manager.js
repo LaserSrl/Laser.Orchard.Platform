@@ -214,7 +214,11 @@ $(function () {
                     window.dataLayer.push({
                         event: 'add_to_cart',
                         ecommerce: {
-                            items: addedToCart
+                            items: addedToCart,
+                            currency: 'EUR'
+                        },
+                        eventCallback: function (id) {
+                            console.log(id);
                         }
                     });
                 } else {
@@ -224,6 +228,9 @@ $(function () {
                             'add': {
                                 'products': addedToCart
                             }
+                        },
+                        'eventCallback': function (id) {
+                            console.log(id);
                         }
                     });
                 }
@@ -293,7 +300,11 @@ $(function () {
                 window.dataLayer.push({
                     event: 'add_to_cart',
                     ecommerce: {
-                        items: [productAdded]
+                        items: [productAdded],
+                        currency: 'EUR'
+                    },
+                    eventCallback: function (id) {
+                        console.log(id);
                     }
                 });
             } else {
@@ -303,6 +314,9 @@ $(function () {
                         'add': {
                             'products': [productAdded]
                         }
+                    },
+                    'eventCallback': function (id) {
+                        console.log(id);
                     }
                 });
             }
