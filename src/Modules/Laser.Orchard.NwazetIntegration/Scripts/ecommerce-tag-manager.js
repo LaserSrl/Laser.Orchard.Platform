@@ -297,16 +297,36 @@ $(function () {
             productAdded.quantity = quantity;
 
             if (window.useGA4) {
-                window.dataLayer.push({
-                    event: 'add_to_cart',
-                    ecommerce: {
-                        items: [productAdded],
-                        currency: 'EUR'
-                    },
-                    eventCallback: function (id) {
-                        console.log(id);
-                    }
+                //window.dataLayer.push({
+                //    event: 'add_to_cart',
+                //    ecommerce: {
+                //        items: [productAdded],
+                //        currency: 'EUR'
+                //    },
+                //    eventCallback: function (id) {
+                //        console.log(id);
+                //    }
+                //});
+                gtag("event", "add_to_cart", {
+                    currency: "EUR",
+                    value: 7.77,
+                    items: [productAdded]
                 });
+                //gtag("event", "add_to_cart", {
+                //    "currency": "USD",
+                //    "value": 92,
+                //    "items": [{
+                //        "item_id": "bc823",
+                //        "item_name": "Fuelworks T-Shirt",
+                //        "price": "92.00",
+                //        "quantity": 1,
+                //        "item_brand": "Fuelworks",
+                //        "item_category": "T-Shirts",
+                //        "item_variant": "red",
+                //        "index": 0,
+                //        "size": "M"
+                //    }]
+                //});
             } else {
                 window.dataLayer.push({
                     'event': 'addToCart',
