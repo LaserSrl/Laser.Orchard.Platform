@@ -37,7 +37,9 @@ namespace Laser.Orchard.StartupConfig.Services {
             } else {
                 ContentItem ci = null;
                 if (!_contentItemMemory.ContainsKey(contentId.Value)) {
-                    _contentItemMemory.Add(contentId.Value, _contentManager.Get(contentId.Value));
+                    try {
+                        _contentItemMemory.Add(contentId.Value, _contentManager.Get(contentId.Value));
+                    } catch { }
                 }
                 ci = _contentItemMemory[contentId.Value];
                 // rehydrate ContentManager to prevent expired lifetime scopes
