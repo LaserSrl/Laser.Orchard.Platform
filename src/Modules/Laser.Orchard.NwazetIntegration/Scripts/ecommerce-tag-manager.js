@@ -134,27 +134,37 @@ $(function () {
 
     if (window.useGA4) {
         if (!$.isEmptyObject(GA4Object)) {
-            window.dataLayer.push(GA4Object);
+            gtag("event", GA4Object.event, GA4Object.ecommerce);
+            //window.dataLayer.push(GA4Object);
         }
 
         // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.detail.products.length) {
-            var GA4_view_item = {};
-            GA4_view_item.event = "view_item";
-            GA4_view_item.ecommerce = {};
-            GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
-            window.dataLayer.push(GA4_view_item);
+            gtag("event", "view_item", {
+                currency: "EUR",
+                items: [window.ecommerceData.detail.products]
+            });
+            //var GA4_view_item = {};
+            //GA4_view_item.event = "view_item";
+            //GA4_view_item.ecommerce = {};
+            //GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+            //window.dataLayer.push(GA4_view_item);
         }
 
         // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.impressions.length) {
-            var GA4_view_item_list = {};
-            GA4_view_item_list.event = "view_item_list";
-            GA4_view_item_list.ecommerce = {};
-            GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
-            window.dataLayer.push(GA4_view_item_list);
+            gtag("event", "view_item_list", {
+                item_list_id: "impressions",
+                item_list_name: "impressions",
+                items: window.ecommerceData.impressions
+            });
+            //var GA4_view_item_list = {};
+            //GA4_view_item_list.event = "view_item_list";
+            //GA4_view_item_list.ecommerce = {};
+            //GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+            //window.dataLayer.push(GA4_view_item_list);
         }
     }
 
@@ -211,12 +221,20 @@ $(function () {
             // raise the events for addition/removal from cart
             if (addedToCart.length) {
                 if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'add_to_cart',
-                        ecommerce: {
-                            items: addedToCart
-                        }
+                    gtag("event", "add_to_cart", {
+                        currency: "EUR",
+                        items: [productAdded]
                     });
+                    //window.dataLayer.push({
+                    //    event: 'add_to_cart',
+                    //    ecommerce: {
+                    //        items: addedToCart,
+                    //        currency: 'EUR'
+                    //    },
+                    //    eventCallback: function (id) {
+                    //        console.log(id);
+                    //    }
+                    //});
                 } else {
                     window.dataLayer.push({
                         'event': 'addToCart',
@@ -224,18 +242,25 @@ $(function () {
                             'add': {
                                 'products': addedToCart
                             }
+                        },
+                        'eventCallback': function (id) {
+                            console.log(id);
                         }
                     });
                 }
             }
             if (removedFromCart.length) {
                 if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'remove_from_cart',
-                        ecommerce: {
-                            items: removedFromCart
-                        }
+                    gtag("event", "remove_from_cart", {
+                        currency: "EUR",
+                        items: [removedFromCart]
                     });
+                    //window.dataLayer.push({
+                    //    event: 'remove_from_cart',
+                    //    ecommerce: {
+                    //        items: removedFromCart
+                    //    }
+                    //});
                 } else {
                     window.dataLayer.push({
                         'event': 'removeFromCart',
@@ -290,11 +315,19 @@ $(function () {
             productAdded.quantity = quantity;
 
             if (window.useGA4) {
-                window.dataLayer.push({
-                    event: 'add_to_cart',
-                    ecommerce: {
-                        items: [productAdded]
-                    }
+                //window.dataLayer.push({
+                //    event: 'add_to_cart',
+                //    ecommerce: {
+                //        items: [productAdded],
+                //        currency: 'EUR'
+                //    },
+                //    eventCallback: function (id) {
+                //        console.log(id);
+                //    }
+                //});
+                gtag("event", "add_to_cart", {
+                    currency: "EUR",
+                    items: [productAdded]
                 });
             } else {
                 window.dataLayer.push({
@@ -303,6 +336,9 @@ $(function () {
                         'add': {
                             'products': [productAdded]
                         }
+                    },
+                    'eventCallback': function (id) {
+                        console.log(id);
                     }
                 });
             }
@@ -323,12 +359,16 @@ $(function () {
             // send a removed from cart event to tag manager
             if (productRemoved.quantity > 0) {
                 if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'remove_from_cart',
-                        ecommerce: {
-                            items: [productRemoved]
-                        }
+                    gtag("event", "remove_from_cart", {
+                        currency: "EUR",
+                        items: [productRemoved]
                     });
+                    //window.dataLayer.push({
+                    //    event: 'remove_from_cart',
+                    //    ecommerce: {
+                    //        items: [productRemoved]
+                    //    }
+                    //});
                 } else {
                     // this check will allow us to avoid sending duplicate events
                     window.dataLayer.push({
@@ -405,12 +445,17 @@ $(function () {
                 }
             }
             if (window.useGA4) {
-                window.dataLayer.push({
-                    event: 'select_item',
-                    ecommerce: {
-                        items: [productClicked]
-                    }
+                gtag("event", "select_item", {
+                    item_list_id: "impressions",
+                    item_list_name: "impressions",
+                    items: [productClicked]
                 });
+                //window.dataLayer.push({
+                //    event: 'select_item',
+                //    ecommerce: {
+                //        items: [productClicked]
+                //    }
+                //});
             } else {
                 // generate a product click event
                 window.dataLayer.push({
@@ -431,16 +476,23 @@ $(function () {
                 // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
                 var posService = e.originalEvent.submitter.value;
                 if (posService) {
-                    window.dataLayer.push({
-                        event: 'add_payment_info',
+                    gtag("event", "add_payment_info", {
                         currency: window.GA4Data.ecommerce.currency,
                         value: window.GA4Data.ecommerce.value,
                         coupon: window.GA4Data.ecommerce.coupon,
                         payment_type: posService,
-                        ecommerce: {
-                            items: window.GA4Data.ecommerce.items || []
-                        }
+                        items: window.GA4Data.ecommerce.items || []
                     });
+                    //window.dataLayer.push({
+                    //    event: 'add_payment_info',
+                    //    currency: window.GA4Data.ecommerce.currency,
+                    //    value: window.GA4Data.ecommerce.value,
+                    //    coupon: window.GA4Data.ecommerce.coupon,
+                    //    payment_type: posService,
+                    //    ecommerce: {
+                    //        items: window.GA4Data.ecommerce.items || []
+                    //    }
+                    //});
                 }
             }
         })
