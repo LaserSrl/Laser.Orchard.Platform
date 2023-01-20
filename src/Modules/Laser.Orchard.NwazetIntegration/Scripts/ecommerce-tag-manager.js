@@ -225,29 +225,35 @@ $(function () {
                         currency: "EUR",
                         items: [productAdded]
                     });
-                    //window.dataLayer.push({
-                    //    event: 'add_to_cart',
-                    //    ecommerce: {
-                    //        items: addedToCart,
-                    //        currency: 'EUR'
-                    //    },
-                    //    eventCallback: function (id) {
-                    //        console.log(id);
-                    //    }
-                    //});
-                } else {
-                    window.dataLayer.push({
-                        'event': 'addToCart',
-                        'ecommerce': {
-                            'add': {
-                                'products': addedToCart
-                            }
-                        },
-                        'eventCallback': function (id) {
-                            console.log(id);
-                        }
-                    });
+                    
                 }
+                if (window.useGTM) {
+                    if (window.useGA4) {
+                        window.dataLayer.push({
+                            event: 'add_to_cart',
+                            ecommerce: {
+                                items: addedToCart,
+                                currency: 'EUR'
+                            },
+                            eventCallback: function (id) {
+                                console.log(id);
+                            }
+                        });
+                    } else {
+                        window.dataLayer.push({
+                            'event': 'addToCart',
+                            'ecommerce': {
+                                'add': {
+                                    'products': addedToCart
+                                }
+                            },
+                            'eventCallback': function (id) {
+                                console.log(id);
+                            }
+                        });
+                    }
+                }
+                // If no GTM or GA4 are used, how do I send ecommerce data to Universal Analytics even if it's obsolete?
             }
             if (removedFromCart.length) {
                 if (window.useGA4) {

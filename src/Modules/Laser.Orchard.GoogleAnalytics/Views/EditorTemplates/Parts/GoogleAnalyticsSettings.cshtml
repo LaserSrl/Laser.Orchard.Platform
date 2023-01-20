@@ -5,37 +5,18 @@
     <a name="googleanalitycssetting"></a>
     <legend>@T("Google Analytics")</legend>
     <div class="form-group">
-        <div class="checkbox">
-            <label for="@Html.FieldIdFor(m => m.UseTagManager)" class="forcheckbox" title="@T("Use Google Tag Manager")">
-                @Html.EditorFor(m => m.UseTagManager)
-                @T("Use Google Tag Manager")
-            </label>
-        </div>
-        <span class="hint">
-            @T("Mark this to use Google Tag Manager rather than analytics.js.")
-        </span>
-    </div>
-
-    <div class="checkbox">
-        <label for="@Html.FieldIdFor(m => m.UseGA4)" class="forcheckbox">
-            @Html.EditorFor(m => m.UseGA4, new { title = @T("Use GA4 management (requires Tag Manager)").Text })
-            @T("Use GA4 management (requires Tag Manager)")
-        </label>
-    </div>
-
-    <div class="form-group">
-        <label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Analytics Tracking Key (UA-XXXXXXX-X) or Tag Manager Container ID (GTM-YYYYYYY)")</label>
+        <label for="@Html.FieldIdFor(m => m.GoogleAnalyticsKey)">@T("Google Universal Analytics Tracking Key (UA-XXXXXXX-X) or GA4 Tracking Key (G-YYYYYYY)")</label>
         @Html.TextBoxFor(m => m.GoogleAnalyticsKey,
              htmlAttributes: new {
                  @class = "form-control",
                  placeholder = @T("Key or Id...").Text,
-                 title = @T("Analytics Key or Tag Container Id.").Text })
+                 title = @T("Analytics Key.").Text
+                  })
         <span class="hint">
-            @T("The value here will be used as either the analytics key if Google analytics is being used, or as the Tag Manager Container Id if Tag Manager is active instead.")
+            @T("The value here will be used as either the universal analytics key, or as the GA4 key, based on its prefix.")
         </span>
         @Html.ValidationMessage("GoogleAnalyticsKey", "*")
     </div>
-
     <div class="checkbox">
         <label for="@Html.FieldIdFor(m => m.TrackOnAdmin)" class="forcheckbox" title="@T("Include on /Admin Pages")">
             @Html.EditorFor(m => m.TrackOnAdmin)
@@ -48,12 +29,48 @@
             @T("Include on front end Pages")
         </label>
     </div>
+
+    <legend>@T("Google Tag Manager")</legend>
+    @*<div class="form-group">
+            <div class="checkbox">
+                <label for="@Html.FieldIdFor(m => m.UseTagManager)" class="forcheckbox" title="@T("Use Google Tag Manager")">
+                    @Html.EditorFor(m => m.UseTagManager)
+                    @T("Use Google Tag Manager")
+                </label>
+            </div>
+            <span class="hint">
+                @T("Mark this to use Google Tag Manager rather than analytics.js.")
+            </span>
+        </div>*@
+    <label for="@Html.FieldIdFor(m => m.GTMContainerId)">@T("Google Tag Manager Container Id (GTM-YYYYYYY)")</label>
+    @Html.TextBoxFor(m => m.GTMContainerId,
+         htmlAttributes: new {
+             @class = "form-control",
+             placeholder = @T("Key or Id...").Text,
+             title = @T("Analytics Key.").Text
+              })
+    <span class="hint">
+        @T("The value here will be used for Google Tag Manager Container Id.")
+    </span>
+    @Html.ValidationMessage("GTMContainerId", "*")
     <div class="checkbox">
-        <label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">
-            @Html.EditorFor(m => m.AnonymizeIp, new { title = @T("Track but anonymize IP").Text })
-            @T("Track but anonymize ip (optional)")
+        <label for="@Html.FieldIdFor(m => m.TrackGTMOnAdmin)" class="forcheckbox" title="@T("Include on /Admin Pages")">
+            @Html.EditorFor(m => m.TrackGTMOnAdmin)
+            @T("Include on /Admin Pages")
         </label>
     </div>
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.TrackGTMOnFrontEnd)" class="forcheckbox" title="@T("Include on front end Pages")">
+            @Html.EditorFor(m => m.TrackGTMOnFrontEnd)
+            @T("Include on front end Pages")
+        </label>
+    </div>
+    @*<div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.UseGA4)" class="forcheckbox">
+                @Html.EditorFor(m => m.UseGA4, new { title = @T("Use GA4 management (requires Tag Manager)").Text })
+                @T("Use GA4 management (requires Tag Manager)")
+            </label>
+        </div>*@
 
     <div class="box box-default">
         <div class="box-body">
@@ -61,9 +78,10 @@
                 <label for="@Html.FieldIdFor(m => m.DomainName)">@T("Override Domain Name (optional)")</label>
                 @Html.TextBoxFor(m => m.DomainName,
                      htmlAttributes: new {
-                         @class ="form-control",
+                         @class = "form-control",
                          placeholder = @T("Domain name...").Text,
-                         title = @T("Domain name override").Text })
+                         title = @T("Domain name override").Text
+                          })
             </div>
             <div>
                 @Html.HiddenFor(m => m.UseAsyncTracking) <strong>@T("Async Tracking is Enabled")</strong>
@@ -72,10 +90,19 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <div class="checkbox">
+            <label for="@Html.FieldIdFor(m => m.AnonymizeIp)" class="forcheckbox">
+                @Html.EditorFor(m => m.AnonymizeIp, new { title = @T("Track but anonymize IP").Text })
+                @T("Track but anonymize ip (optional)")
+            </label>
+        </div>
+    </div>
+
     <div class="box box-default">
         <div class="box-body">
             <div class="form-group">
-                <label>@T("Google Analitics Cookie Level")</label>
+                <label>@T("Cookie Level")</label>
                 <div class="cookie-level">
                     @Html.RadioButtonFor(m => m.CookieLevel, CookieType.Technical.ToString(), new { id = "TechnicalCookieLevel" })
                     <label for="TechnicalCookieLevel" class="forcheckbox">@T("Technical")</label>
@@ -93,7 +120,7 @@
                     <label for="PreferencesCookieLevel" class="forcheckbox">@T("Preferences")</label>
                 </div>
 
-                <span class="hint">@T("Choose the level of cookies of Google Analitics.")</span>
+                <span class="hint">@T("Choose the level of cookies of Google Analitics / Google Tag Manager.")</span>
             </div>
         </div>
     </div>
