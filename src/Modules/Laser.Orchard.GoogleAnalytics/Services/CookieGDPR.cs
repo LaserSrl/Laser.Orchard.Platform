@@ -96,7 +96,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             StringBuilder script = new StringBuilder();
             script.AppendLine("<script>");
             script.AppendLine("window.useGTM = 0;");
-            script.AppendLine("<script>");
+            script.AppendLine("</script>");
             return script.ToString();
         }
 
@@ -105,7 +105,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             script.AppendLine("<script>");
             script.AppendLine("window.useGA4 = 0;");
             script.AppendLine("window.useUA = 0;");
-            script.AppendLine("<script>");
+            script.AppendLine("</script>");
             return script.ToString();
         }
 
