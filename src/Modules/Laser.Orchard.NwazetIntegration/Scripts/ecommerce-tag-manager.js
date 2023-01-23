@@ -127,6 +127,7 @@ $(function () {
     window.dataLayer = window.dataLayer || [];
     // if there is anything to be sent immediately, push it
     if (!$.isEmptyObject(ecommerceObject)) {
+        // GTM
         window.dataLayer.push({
             'ecommerce': ecommerceObject
         });
@@ -134,37 +135,49 @@ $(function () {
 
     if (window.useGA4) {
         if (!$.isEmptyObject(GA4Object)) {
+            // GA4
             gtag("event", GA4Object.event, GA4Object.ecommerce);
-            //window.dataLayer.push(GA4Object);
+            if (window.useGTM) {
+                // GTM + GA4
+                window.dataLayer.push(GA4Object);
+            }
         }
 
         // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.detail.products.length) {
+            // GA4
             gtag("event", "view_item", {
                 currency: "EUR",
                 items: [window.ecommerceData.detail.products]
             });
-            //var GA4_view_item = {};
-            //GA4_view_item.event = "view_item";
-            //GA4_view_item.ecommerce = {};
-            //GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
-            //window.dataLayer.push(GA4_view_item);
+            if (window.useGTM) {
+                // GTM + GA4
+                var GA4_view_item = {};
+                GA4_view_item.event = "view_item";
+                GA4_view_item.ecommerce = {};
+                GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+                window.dataLayer.push(GA4_view_item);
+            }
         }
 
         // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.impressions.length) {
+            // GA4
             gtag("event", "view_item_list", {
                 item_list_id: "impressions",
                 item_list_name: "impressions",
                 items: window.ecommerceData.impressions
             });
-            //var GA4_view_item_list = {};
-            //GA4_view_item_list.event = "view_item_list";
-            //GA4_view_item_list.ecommerce = {};
-            //GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
-            //window.dataLayer.push(GA4_view_item_list);
+            if (window.useGTM) {
+                // GTM + GA4
+                var GA4_view_item_list = {};
+                GA4_view_item_list.event = "view_item_list";
+                GA4_view_item_list.ecommerce = {};
+                GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+                window.dataLayer.push(GA4_view_item_list);
+            }
         }
     }
 
@@ -221,34 +234,30 @@ $(function () {
             // raise the events for addition/removal from cart
             if (addedToCart.length) {
                 if (window.useGA4) {
+                    // GA4
                     gtag("event", "add_to_cart", {
                         currency: "EUR",
                         items: [productAdded]
-                    });
-                    
+                    });                    
                 }
                 if (window.useGTM) {
                     if (window.useGA4) {
+                        // GTM + GA4
                         window.dataLayer.push({
                             event: 'add_to_cart',
                             ecommerce: {
                                 items: addedToCart,
                                 currency: 'EUR'
-                            },
-                            eventCallback: function (id) {
-                                console.log(id);
                             }
                         });
                     } else {
+                        // GTM + UA
                         window.dataLayer.push({
                             'event': 'addToCart',
                             'ecommerce': {
                                 'add': {
                                     'products': addedToCart
                                 }
-                            },
-                            'eventCallback': function (id) {
-                                console.log(id);
                             }
                         });
                     }
@@ -257,26 +266,33 @@ $(function () {
             }
             if (removedFromCart.length) {
                 if (window.useGA4) {
+                    // GA4
                     gtag("event", "remove_from_cart", {
                         currency: "EUR",
                         items: [removedFromCart]
                     });
-                    //window.dataLayer.push({
-                    //    event: 'remove_from_cart',
-                    //    ecommerce: {
-                    //        items: removedFromCart
-                    //    }
-                    //});
-                } else {
-                    window.dataLayer.push({
-                        'event': 'removeFromCart',
-                        'ecommerce': {
-                            'remove': {
-                                'products': removedFromCart
-                            }
-                        }
-                    });
                 }
+                if (window.useGTM) {
+                    if (window.useGA4) {
+                        // GTM + GA4
+                        window.dataLayer.push({
+                            event: 'remove_from_cart',
+                            ecommerce: {
+                                items: removedFromCart
+                            }
+                        });
+                    } else {
+                        // GTM + UA
+                        window.dataLayer.push({
+                            'event': 'removeFromCart',
+                            'ecommerce': {
+                                'remove': {
+                                    'products': removedFromCart
+                                }
+                            }
+                        });
+                    }
+                } 
             }
         }
     }
@@ -321,33 +337,34 @@ $(function () {
             productAdded.quantity = quantity;
 
             if (window.useGA4) {
-                //window.dataLayer.push({
-                //    event: 'add_to_cart',
-                //    ecommerce: {
-                //        items: [productAdded],
-                //        currency: 'EUR'
-                //    },
-                //    eventCallback: function (id) {
-                //        console.log(id);
-                //    }
-                //});
+                // GA4
                 gtag("event", "add_to_cart", {
                     currency: "EUR",
                     items: [productAdded]
                 });
-            } else {
-                window.dataLayer.push({
-                    'event': 'addToCart',
-                    'ecommerce': {
-                        'add': {
-                            'products': [productAdded]
-                        }
-                    },
-                    'eventCallback': function (id) {
-                        console.log(id);
-                    }
-                });
             }
+            if (window.useGTM) {
+                if (window.useGTA4) {
+                    // GTM + GA4
+                    window.dataLayer.push({
+                        event: 'add_to_cart',
+                        ecommerce: {
+                            items: [productAdded],
+                            currency: 'EUR'
+                        }
+                    });
+                } else {
+                    // GTM + UA
+                    window.dataLayer.push({
+                        'event': 'addToCart',
+                        'ecommerce': {
+                            'add': {
+                                'products': [productAdded]
+                            }
+                        }
+                    });
+                }
+            } 
         })
         // RemoveFromCart1: use the event from shoppingcart.js
         .on("nwazet.removefromcart", "form.addtocart", function (e) {
@@ -365,27 +382,34 @@ $(function () {
             // send a removed from cart event to tag manager
             if (productRemoved.quantity > 0) {
                 if (window.useGA4) {
+                    // GA4
                     gtag("event", "remove_from_cart", {
                         currency: "EUR",
                         items: [productRemoved]
                     });
-                    //window.dataLayer.push({
-                    //    event: 'remove_from_cart',
-                    //    ecommerce: {
-                    //        items: [productRemoved]
-                    //    }
-                    //});
-                } else {
-                    // this check will allow us to avoid sending duplicate events
-                    window.dataLayer.push({
-                        'event': 'removeFromCart',
-                        'ecommerce': {
-                            'remove': {
-                                'products': [productRemoved]
-                            }
-                        }
-                    });
                 }
+                if (window.useGTM) {
+                    if (window.useGA4) {
+                        // GTM + GA4
+                        window.dataLayer.push({
+                            event: 'remove_from_cart',
+                            ecommerce: {
+                                items: [productRemoved]
+                            }
+                        });
+                    } else {
+                        // GTM + UA
+                        window.dataLayer.push({
+                            'event': 'removeFromCart',
+                            'ecommerce': {
+                                'remove': {
+                                    'products': [productRemoved]
+                                }
+                            }
+                        });
+                    }
+                } 
+                // this will avoid sending duplicate events
                 productRemoved.quantity = 0;
             }
             console.log('removefromcart');
@@ -451,28 +475,35 @@ $(function () {
                 }
             }
             if (window.useGA4) {
+                // GA4
                 gtag("event", "select_item", {
                     item_list_id: "impressions",
                     item_list_name: "impressions",
                     items: [productClicked]
                 });
-                //window.dataLayer.push({
-                //    event: 'select_item',
-                //    ecommerce: {
-                //        items: [productClicked]
-                //    }
-                //});
-            } else {
-                // generate a product click event
-                window.dataLayer.push({
-                    'event': 'productClick',
-                    'ecommerce': {
-                        'click': {
-                            'products': [productClicked]
-                        }
-                    }
-                });
             }
+            if (window.useGTM) {
+                if (window.useGA4) {
+                    // GTM + GA4
+                    window.dataLayer.push({
+                        event: 'select_item',
+                        ecommerce: {
+                            items: [productClicked]
+                        }
+                    });
+                } else {
+                    // GTM + UA
+                    // generate a product click event
+                    window.dataLayer.push({
+                        'event': 'productClick',
+                        'ecommerce': {
+                            'click': {
+                                'products': [productClicked]
+                            }
+                        }
+                    });
+                }
+            }            
         })
         .on("submit", 'form[data-analytics-form="review"]', function (e) {
             if (window.useGA4) {
@@ -482,6 +513,7 @@ $(function () {
                 // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
                 var posService = e.originalEvent.submitter.value;
                 if (posService) {
+                    // GA4
                     gtag("event", "add_payment_info", {
                         currency: window.GA4Data.ecommerce.currency,
                         value: window.GA4Data.ecommerce.value,
@@ -489,16 +521,19 @@ $(function () {
                         payment_type: posService,
                         items: window.GA4Data.ecommerce.items || []
                     });
-                    //window.dataLayer.push({
-                    //    event: 'add_payment_info',
-                    //    currency: window.GA4Data.ecommerce.currency,
-                    //    value: window.GA4Data.ecommerce.value,
-                    //    coupon: window.GA4Data.ecommerce.coupon,
-                    //    payment_type: posService,
-                    //    ecommerce: {
-                    //        items: window.GA4Data.ecommerce.items || []
-                    //    }
-                    //});
+                    if (window.useGTM) {
+                        // GTM + GA4
+                        window.dataLayer.push({
+                            event: 'add_payment_info',
+                            currency: window.GA4Data.ecommerce.currency,
+                            value: window.GA4Data.ecommerce.value,
+                            coupon: window.GA4Data.ecommerce.coupon,
+                            payment_type: posService,
+                            ecommerce: {
+                                items: window.GA4Data.ecommerce.items || []
+                            }
+                        });
+                    }
                 }
             }
         })
