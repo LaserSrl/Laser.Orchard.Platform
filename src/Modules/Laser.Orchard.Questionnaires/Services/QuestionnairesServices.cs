@@ -490,7 +490,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 && x.Context == editModel.Context).Count() > 0) {
                         exit = true;
                     }
-                } else { // anonymous user => check SessionID
+                }
+                else { // anonymous user => check SessionID
                     var answeredInstance = !string.IsNullOrWhiteSpace(SessionID)
                         ? GetMostRecentInstanceId(part, SessionID, editModel.Context)
                         : string.Empty;
@@ -513,7 +514,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     + Guid.NewGuid().ToString());
                 var instanceRecord = new UserAnswerInstanceRecord() {
                     QuestionnairePartRecord_Id = editModel.Id,
-                    User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous) 
+                    User_Id = (currentUser == null || questionnairePartSettings.ForceAnonymous)
                         ? 0 : currentUser.Id,
                     SessionID = SessionID,
                     Context = editModel.Context,
@@ -630,7 +631,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (user == null) {
                 throw new ArgumentNullException("user");
             }
-            
+
             string instanceId = null;
             if (context == null) {
                 instanceId = _repositoryinstanceRecords
@@ -640,7 +641,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                     .OrderByDescending(uair => uair.AnswerDate)
                     .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
-            } else {
+            }
+            else {
                 instanceId = _repositoryinstanceRecords
                     .Table
                     .Where(uair => uair.User_Id == user.Id
@@ -668,7 +670,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                     .OrderByDescending(uair => uair.AnswerDate)
                     .Select(uair => uair.AnswerInstance)
                     .FirstOrDefault();
-            } else {
+            }
+            else {
                 instanceId = _repositoryinstanceRecords
                     .Table
                     .Where(uair => uair.SessionID == sessionId
@@ -735,6 +738,22 @@ namespace Laser.Orchard.Questionnaires.Services {
             return viewModel;
         }
 
+
+        private bool canBeDeleted(int questionnaireID, int questionID) {
+            // if an question has already been answered by someone
+            // it can't be deleted or it would throw an exception when trying
+            // to perform the delete query
+
+
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID);
+
+            var answers = qsvm.QuestionsStatsList
+                .Where(x => x.QuestionId == questionID)
+                .SelectMany(x => x.Answers);
+
+            return !answers.Any();
+        }
+
         public void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel) {
             try {
                 var partRecord = item.As<QuestionnairePart>().Record;
@@ -775,18 +794,44 @@ namespace Laser.Orchard.Questionnaires.Services {
                     }
                     var originalQuestionRecordId = questionRecord.Id; // 0 if new, a valid Id if get from DB
                     if (quest.Delete) {
-                        try {
-                            foreach (var answer in questionRecord.Answers) {
-                                if (answer.Id > 0) {
-                                    _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                        if (quest.Id > 0) {
+                            // If this question has already been answered it can't be deleted
+                            if (!canBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
+
+                                // Change the delete flag for the question
+                                quest.Delete = false;
+                                // and for its answers
+                                foreach (var answer in quest.Answers) {
+                                    answer.Delete = false;
                                 }
+                                // Re-add the question to the model, it seems the previous line makes this one useless. 
+                                //partEditModel.Questions.Append(quest);                                                                       
+
+                                // Set the "visible" flag to false for this message
+                                quest.Published = false;                                
+
+                                // TODO: quest has to be saved now. the following code is copied from the else branch of this if statement, just to test it
+                                // Write this properly
+                                questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
+                                questionRecord.QuestionnairePartRecord_Id = PartID;
+                                if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
+                                    questionRecord.Id = originalQuestionRecordId;
+                                }
+                                _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+
+
+                                throw new Exception(T("Cannot delete question: {0}. The question has been hidden.", quest.Question).Text);
                             }
-                            if (quest.Id > 0) {
+                            else {
+                                // Delete all the possible answers for this question
+                                foreach (var answer in questionRecord.Answers) {
+                                    if (answer.Id > 0) {
+                                        _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                    }
+                                }
+                                // Delete the question
                                 _questionAnswerRepositoryService.DeleteQuestion(quest.Id);
                             }
-                        }
-                        catch (Exception ex) {
-                            throw new Exception("quest.Delete\r\n" + ex.Message);
                         }
                     }
                     else {
@@ -839,14 +884,14 @@ namespace Laser.Orchard.Questionnaires.Services {
                             }
                         }
                         catch (Exception ex) {
-                            throw new Exception("quest.CorrezzioneCondizioni\r\n" + ex.Message);
+                            throw new Exception("quest.CorrezioneCondizioni\r\n" + ex.Message);
                         }
 
                     }
                 }
             }
             catch (Exception ex) {
-                throw new Exception("quest.UpdateTotale\r\n" + ex.Message);
+                throw ex;
             }
         }
 
@@ -870,7 +915,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 cfg.CreateMap<AnswerRecord, AnswerEditModel>();
             });
             var mapper = mapperConfiguration.CreateMapper();
-            
+
             var viewModel = mapper.Map<QuestionnaireViewModel>(part);
             return (viewModel);
         }
@@ -890,7 +935,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                } else {
+                }
+                else {
                     mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published)));
@@ -905,7 +951,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
                         cfg.CreateMap<QuestionnairePart, QuestionnaireWithResultsViewModel>().ForMember(dest => dest.QuestionsWithResults, opt => opt.MapFrom(src => src.Questions.Where(w => w.Published)));
                     });
-                } else {
+                }
+                else {
                     mapperConfiguration = new MapperConfiguration(cfg => {
                         cfg.CreateMap<AnswerRecord, AnswerWithResultViewModel>();
                         cfg.CreateMap<QuestionRecord, QuestionWithResultsViewModel>().ForMember(dest => dest.AnswersWithResult, opt => opt.MapFrom(src => src.Answers.Where(w => w.Published).OrderBy(o => o.Position)));
