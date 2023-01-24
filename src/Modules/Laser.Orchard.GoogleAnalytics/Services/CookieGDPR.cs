@@ -220,7 +220,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             script.AppendLine("<!-- Google Tag Manager -->");
             script.AppendLine("<script type='text/javascript'>");
-            script.Append("window.useGTM = 1");
+            script.Append("window.useGTM = 1;");
             script.AppendLine("window.dataLayer = window.dataLayer || [];");
             if (SettingsPart.AnonymizeIp || !allowedTypes.Contains(CookieType.Statistical)) {
                 // insert into the datalayer a variable that tells to anonymize
