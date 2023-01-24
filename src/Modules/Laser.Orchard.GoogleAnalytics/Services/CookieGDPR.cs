@@ -324,13 +324,17 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 return string.Empty; // Not a valid configuration, ignore
             }
 
+            bool useGTM = (!string.IsNullOrWhiteSpace(SettingsPart.GTMContainerId) &&
+                    ((SettingsPart.TrackGTMOnAdmin && isAdmin) ||
+                    (SettingsPart.TrackGTMOnFrontEnd && !isAdmin)));
+
             // Tag manager deployment
-            if (SettingsPart.UseTagManager) {
+            if (useGTM) {
 
                 var snippet = new StringBuilder();
 
                 snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
-                snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GoogleAnalyticsKey + "'");
+                snippet.AppendLine("<noscript><iframe src='//www.googletagmanager.com/ns.html?id=" + SettingsPart.GTMContainerId + "'");
                 snippet.AppendLine("height='0' width='0' style='display: none; visibility: hidden'></iframe></noscript>");
                 snippet.AppendLine("<!-- End Google Tag Manager (noscript) -->");
 
