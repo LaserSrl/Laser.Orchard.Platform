@@ -145,6 +145,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             // If Tag Manager is enabled, I don't need to add anything here.
             // If Google Analytics Key is in the format UA-XXXXXXX-X, old Universal Analytics is used.
             // If it's in the format G-YYYYYYY, GA4 is used.
+            var ua = gaSettings.GoogleAnalyticsKey.StartsWith("UA-");
             var ga4 = gaSettings.GoogleAnalyticsKey.StartsWith("G-");
             if (ga4) {
                 StringBuilder script = new StringBuilder();
@@ -155,10 +156,13 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
                 // Add gtag javascript function to the script.
                 script.AppendLine("window.dataLayer = window.dataLayer || [];");
-                script.AppendLine("function gtag() {");
-                script.AppendLine("    window.dataLayer = window.dataLayer || [];");
-                script.AppendLine("    dataLayer.push(arguments);");
-                script.AppendLine("}");
+                if (!useGTM) {
+                    // gtag() function is already added by GTM script, so we add it again only if GTM isn't enabled.
+                    script.AppendLine("function gtag() {");
+                    script.AppendLine("    window.dataLayer = window.dataLayer || [];");
+                    script.AppendLine("    dataLayer.push(arguments);");
+                    script.AppendLine("}");
+                }
                 script.AppendLine("gtag('js', new Date());");
                 script.AppendLine("gtag('config', '" + gaSettings.GoogleAnalyticsKey + "');");
                 // End gtag script
@@ -166,7 +170,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 script.AppendLine("</script>");
 
                 return script.ToString();
-            } else if (!useGTM) {
+            } else if (!useGTM && ua) {
                 StringBuilder script = new StringBuilder();
                 script.AppendLine("<!-- Google Analytics -->");
                 script.AppendLine("<script async src='//www.google-analytics.com/analytics.js'></script>");
@@ -201,7 +205,10 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 StringBuilder script = new StringBuilder();
                 script.AppendLine("<script>");
                 script.AppendLine("window.useGA4 = 0;");
-                script.AppendLine("<script>");
+                if (ua) {
+                    script.AppendLine("window.useUA = 1;");
+                }
+                script.AppendLine("</script>");
                 return script.ToString();
             }
 
@@ -281,6 +288,15 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             // done tag manager consent settings
             script.AppendLine("</script>");
+
+            // gtag() function
+            script.AppendLine("<script>");
+            script.AppendLine("function gtag() {");
+            script.AppendLine("    window.dataLayer = window.dataLayer || [];");
+            script.AppendLine("    dataLayer.push(arguments);");
+            script.AppendLine("}");
+            script.AppendLine("</script>");
+
             script.AppendLine("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':");
             script.AppendLine("new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],");
             script.AppendLine("j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=");
