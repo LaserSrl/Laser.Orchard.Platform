@@ -24,7 +24,7 @@ namespace Laser.Orchard.NwazetIntegration {
             // register the information should be configured with a DOM Ready trigger.
             manifest
                 .DefineScript("NwazetIntegration.TagManager")
-                .SetUrl("ecommerce-tag-manager.min.js?v=1.0", "ecommerce-tag-manager.js?v=1.0")
+                .SetUrl("ecommerce-tag-manager.min.js?v=2.0", "ecommerce-tag-manager.js?v=2.0")
                 .SetDependencies("jQuery");
 
             // These scripts are used for autocomplete in the selection of territories

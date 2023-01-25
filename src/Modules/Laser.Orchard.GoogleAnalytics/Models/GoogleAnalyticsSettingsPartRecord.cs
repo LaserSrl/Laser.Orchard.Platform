@@ -8,6 +8,11 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
 		public virtual string GoogleAnalyticsKey { get; set; }
 
 		/// <summary>
+		/// Gets or sets the Google Tag Manager container id used to track events with GTM.
+		/// </summary>
+		public virtual string GTMContainerId { get; set; }
+
+		/// <summary>
 		/// Gets or sets the override domain name that may optionally be used for performing things like multiple domain/sub-domain tracking.
 		/// </summary>
 		public virtual string DomainName { get; set; }
@@ -27,6 +32,16 @@ namespace Laser.Orchard.GoogleAnalytics.Models {
 		/// Gets or sets a value indicating whether Google Analytics tracking will be included on front end pages.
 		/// </summary>
         public virtual bool TrackOnFrontEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Google Tag Manager tracking will be included on /Admin pages.
+        /// </summary>
+        public virtual bool TrackGTMOnAdmin { get; set; }
+
+        /// <summary>
+		/// Gets or sets a value indicating whether Google Tag Manager tracking will be included on front end pages.
+		/// </summary>
+        public virtual bool TrackGTMOnFrontEnd { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Google Analytics tracking will anonymize IP.
