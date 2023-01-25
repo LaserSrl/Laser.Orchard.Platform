@@ -739,8 +739,8 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
 
-        private bool canBeDeleted(int questionnaireID, int questionID) {
-            // if an question has already been answered by someone
+        private bool canQuestionBeDeleted(int questionnaireID, int questionID) {
+            // if a question has already been answered by someone
             // it can't be deleted or it would throw an exception when trying
             // to perform the delete query
 
@@ -752,6 +752,59 @@ namespace Laser.Orchard.Questionnaires.Services {
                 .SelectMany(x => x.Answers);
 
             return !answers.Any();
+        }
+
+
+        private bool canAnswerBeDeleted(int questionnaireID, int questionID) {
+            // if an answer has already been selected by someone
+            // it can't be deleted or it would throw an exception when trying
+            // to perform the delete query
+
+
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID);
+
+            var answers = qsvm.QuestionsStatsList
+                .Where(x => x.QuestionId == questionID)
+                .SelectMany(x => x.Answers);
+
+            return !answers.Any();
+        }
+
+
+
+        private void saveQuestion(QuestionEditModel quest, QuestionRecord questionRecord, IMapper questionMapper, int PartID, int originalQuestionRecordId) {
+            questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
+            questionRecord.QuestionnairePartRecord_Id = PartID;
+            if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
+                questionRecord.Id = originalQuestionRecordId;
+            }
+            _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+        }
+
+        private void saveAnswer(AnswerEditModel answer, List<AnswerRecord> storedAnswers, IMapper answerMapper, int recordQuestionID, Dictionary<String, String>mappingA) {
+            AnswerRecord answerRecord;
+            if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
+                answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+            }
+            else {
+                answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
+            }
+            var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
+
+            answerMapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
+            answerRecord.QuestionRecord_Id = recordQuestionID;
+            if (answerRecord.Id == 0 && originalAnswerRecordId > 0) {
+                answerRecord.Id = originalAnswerRecordId;
+            }
+
+            _questionAnswerRepositoryService.UpdateAnswer(answerRecord);
+
+
+            if (answer.OriginalId > 0) {
+                mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
+            }
+
+
         }
 
         public void UpdateForContentItem(ContentItem item, QuestionnaireEditModel partEditModel) {
@@ -796,7 +849,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     if (quest.Delete) {
                         if (quest.Id > 0) {
                             // If this question has already been answered it can't be deleted
-                            if (!canBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
+                            if (!canQuestionBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
 
                                 // Change the delete flag for the question
                                 quest.Delete = false;
@@ -808,19 +861,13 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 //partEditModel.Questions.Append(quest);                                                                       
 
                                 // Set the "visible" flag to false for this message
-                                quest.Published = false;                                
+                                quest.Published = false;
 
-                                // TODO: quest has to be saved now. the following code is copied from the else branch of this if statement, just to test it
-                                // Write this properly
-                                questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
-                                questionRecord.QuestionnairePartRecord_Id = PartID;
-                                if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
-                                    questionRecord.Id = originalQuestionRecordId;
-                                }
-                                _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                                // Save the question
+                                saveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
 
 
-                                throw new Exception(T("Cannot delete question: {0}. The question has been hidden.", quest.Question).Text);
+                                throw new Exception(T("Cannot delete the following question: {0}. The question has been hidden.", quest.Question).Text);
                             }
                             else {
                                 // Delete all the possible answers for this question
@@ -835,45 +882,26 @@ namespace Laser.Orchard.Questionnaires.Services {
                         }
                     }
                     else {
-                        questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
-                        questionRecord.QuestionnairePartRecord_Id = PartID;
-                        if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
-                            questionRecord.Id = originalQuestionRecordId;
-                        }
-                        _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
+                        saveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
                         var recordQuestionID = questionRecord.Id;
-                        try {
                             foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
                                 if (answer.Delete) {
                                     if (answer.Id > 0) {
-                                        _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                        if (!canAnswerBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
+                                            answer.Delete = false;
+                                            answer.Published = false;
+                                            saveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
+                                            throw new Exception(T("Cannot delete the following answer: {0}. The answer has been hidden.", answer.Answer).Text);
+                                        }
+                                        else {
+                                            _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
+                                        }
                                     }
                                 }
-                                else {
-                                    AnswerRecord answerRecord;
-                                    if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
-                                        answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
-                                    }
-                                    else {
-                                        answerRecord = storedAnswers.SingleOrDefault(x => x.Id == answer.Id) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
-                                    }
-                                    var originalAnswerRecordId = answerRecord.Id; // 0 if new, a valid Id if get from DB
-
-                                    answerMapper.Map<AnswerEditModel, AnswerRecord>(answer, answerRecord);
-                                    answerRecord.QuestionRecord_Id = recordQuestionID;
-                                    if (answerRecord.Id == 0 && originalAnswerRecordId > 0) {
-                                        answerRecord.Id = originalAnswerRecordId;
-                                    }
-                                    _questionAnswerRepositoryService.UpdateAnswer(answerRecord);
-                                    if (answer.OriginalId > 0) {
-                                        mappingA[answer.OriginalId.ToString()] = answerRecord.Id.ToString();
-                                    }
+                                else {                                    
+                                    saveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
                                 }
                             }
-                        }
-                        catch (Exception ex) {
-                            throw new Exception("quest.Update\r\n" + ex.Message);
-                        }
                         try {
                             // fix condtions if necessary
                             if (mappingA.Count() > 0 && questionRecord.Condition != null) {
