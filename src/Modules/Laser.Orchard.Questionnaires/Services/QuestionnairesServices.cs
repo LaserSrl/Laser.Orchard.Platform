@@ -755,7 +755,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         }
 
 
-        private bool canAnswerBeDeleted(int questionnaireID, int questionID) {
+        private bool CanAnswerBeDeleted(int questionnaireID, int questionID) {
             // if an answer has already been selected by someone
             // it can't be deleted or it would throw an exception when trying
             // to perform the delete query
@@ -772,7 +772,7 @@ namespace Laser.Orchard.Questionnaires.Services {
 
 
 
-        private void saveQuestion(QuestionEditModel quest, QuestionRecord questionRecord, IMapper questionMapper, int PartID, int originalQuestionRecordId) {
+        private void SaveQuestion(QuestionEditModel quest, QuestionRecord questionRecord, IMapper questionMapper, int PartID, int originalQuestionRecordId) {
             questionMapper.Map<QuestionEditModel, QuestionRecord>(quest, questionRecord);
             questionRecord.QuestionnairePartRecord_Id = PartID;
             if (questionRecord.Id == 0 && originalQuestionRecordId > 0) {
@@ -781,7 +781,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
         }
 
-        private void saveAnswer(AnswerEditModel answer, List<AnswerRecord> storedAnswers, IMapper answerMapper, int recordQuestionID, Dictionary<String, String>mappingA) {
+        private void SaveAnswer(AnswerEditModel answer, List<AnswerRecord> storedAnswers, IMapper answerMapper, int recordQuestionID, Dictionary<String, String>mappingA) {
             AnswerRecord answerRecord;
             if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
                 answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
@@ -864,7 +864,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 quest.Published = false;
 
                                 // Save the question
-                                saveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
+                                SaveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
 
 
                                 throw new Exception(T("Cannot delete the following question: {0}. The question has been hidden.", quest.Question).Text);
@@ -882,15 +882,15 @@ namespace Laser.Orchard.Questionnaires.Services {
                         }
                     }
                     else {
-                        saveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
+                        SaveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
                         var recordQuestionID = questionRecord.Id;
                             foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
                                 if (answer.Delete) {
                                     if (answer.Id > 0) {
-                                        if (!canAnswerBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
+                                        if (!CanAnswerBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
                                             answer.Delete = false;
                                             answer.Published = false;
-                                            saveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
+                                            SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
                                             throw new Exception(T("Cannot delete the following answer: {0}. The answer has been hidden.", answer.Answer).Text);
                                         }
                                         else {
@@ -899,7 +899,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                     }
                                 }
                                 else {                                    
-                                    saveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
+                                    SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
                                 }
                             }
                         try {
