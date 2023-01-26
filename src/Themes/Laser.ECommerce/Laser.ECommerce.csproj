@@ -211,34 +211,42 @@
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.ContentPicker\Orchard.ContentPicker.csproj">
       <Project>{f301ef7d-f19c-4d83-aa94-cb64f29c037d}</Project>
       <Name>Orchard.ContentPicker</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Taxonomies\Orchard.Taxonomies.csproj">
       <Project>{e649ea64-d213-461b-87f7-d67035801443}</Project>
       <Name>Orchard.Taxonomies</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Modules\Orchard.Widgets\Orchard.Widgets.csproj">
       <Project>{194d3ccc-1153-474d-8176-fde8d7d0d0bd}</Project>
       <Name>Orchard.Widgets</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\Contrib.Reviews\Contrib.Reviews.csproj">
       <Project>{f72680eb-12ee-482f-93c8-2f1279e2b710}</Project>
       <Name>Contrib.Reviews</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\Laser.Orchard.NewsLetters\Laser.Orchard.NewsLetters.csproj">
       <Project>{51da5b67-ce19-4629-b15e-eaef85de5666}</Project>
       <Name>Laser.Orchard.NewsLetters</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\Laser.Orchard.OpenAuthentication\Laser.Orchard.OpenAuthentication.csproj">
       <Project>{9ce00190-3abe-41e2-966f-76a9b017eb65}</Project>
       <Name>Laser.Orchard.OpenAuthentication</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
