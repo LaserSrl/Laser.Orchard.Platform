@@ -867,7 +867,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                 SaveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
 
 
-                                throw new Exception(T("Cannot delete the following question: {0}. The question has been hidden.", quest.Question).Text);
+                                throw new Exception(T("Cannot delete the following question: {0}. The question has been hidden. Save or publish the questionnaire to apply these changes.", quest.Question).Text);
                             }
                             else {
                                 // Delete all the possible answers for this question
@@ -891,7 +891,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                                             answer.Delete = false;
                                             answer.Published = false;
                                             SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
-                                            throw new Exception(T("Cannot delete the following answer: {0}. The answer has been hidden.", answer.Answer).Text);
+                                            throw new Exception(T("Cannot delete the following answer: {0}. The answer has been hidden. Save or publish the questionnaire to apply these changes.", answer.Answer).Text);
                                         }
                                         else {
                                             _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
