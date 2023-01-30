@@ -151,12 +151,81 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 StringBuilder script = new StringBuilder();
                 script.AppendLine("<script async src=\"https://www.googletagmanager.com/gtag/js?id=" + gaSettings.GoogleAnalyticsKey + "\"></script>");
                 script.AppendLine("<script>");
+
                 script.AppendLine("window.useGA4 = 1;");
                 script.AppendLine("window.useUA = 0;");
 
                 // Add gtag javascript function to the script.
                 script.AppendLine("window.dataLayer = window.dataLayer || [];");
                 if (!useGTM) {
+                    // If GTM isn't enabled, add cookie management to the script.
+                    // If it's enabled, the following script has already been added to the page.
+                    // --- BEGIN COOKIE MANAGEMENT
+                    if (SettingsPart.AnonymizeIp || !allowedTypes.Contains(CookieType.Statistical)) {
+                        // insert into the datalayer a variable that tells to anonymize
+                        // ips for gathered interactions (i.e. fired tags)
+                        script.AppendLine("window.dataLayer.push({'anonymizeIp': 'true'});");
+                    }
+                    // set the initial (on page load) values of cookie consents
+                    script.AppendLine("window.dataLayer.push({'preferencesCookiesAccepted': '"
+                        + allowedTypes.Contains(CookieType.Preferences).ToString().ToLowerInvariant() + "'});");
+                    script.AppendLine("window.dataLayer.push({'statisticalCookiesAccepted': '"
+                        + allowedTypes.Contains(CookieType.Statistical).ToString().ToLowerInvariant() + "'});");
+                    script.AppendLine("window.dataLayer.push({'marketingCookiesAccepted': '"
+                        + allowedTypes.Contains(CookieType.Marketing).ToString().ToLowerInvariant() + "'});");
+                    // set the default value of cookie domain
+                    if (string.IsNullOrWhiteSpace(SettingsPart.DomainName)) {
+                        script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                            + HostDomain() + "'});");
+                    } else {
+                        script.AppendLine("window.dataLayer.push({'DefaultCookieDomain': '"
+                            + SettingsPart.DomainName + "'});");
+                    }
+                    // script that handles changes in the settings for cookie consent
+                    script.AppendLine("$(document)");
+                    script.AppendLine("	.on('cookieConsent.reset', function(e) {");
+                    script.AppendLine("		window.dataLayer.push({");
+                    script.AppendLine("			'event': 'cookieConsent',");
+                    script.AppendLine("			'preferencesCookiesAccepted': false,");
+                    script.AppendLine("			'statisticalCookiesAccepted': false,");
+                    script.AppendLine("			'marketingCookiesAccepted': false");
+                    script.AppendLine("		});");
+                    script.AppendLine("	})");
+                    script.AppendLine("	.on('cookieConsent.accept', function(e, options) {");
+                    script.AppendLine("		window.dataLayer.push({");
+                    script.AppendLine("			'event': 'cookieConsent',");
+                    script.AppendLine("			'preferencesCookiesAccepted': options.preferences,");
+                    script.AppendLine("			'statisticalCookiesAccepted': options.statistical,");
+                    script.AppendLine("			'marketingCookiesAccepted': options.marketing");
+                    script.AppendLine("		});");
+                    script.AppendLine("	});");
+                    // done handlers for changes in cookie consent
+                    // tag manager consent settings
+                    script.AppendLine("window.dataLayer.push(");
+                    script.AppendLine("    'consent', 'default', {");
+                    script.AppendLine("        'ad_storage': 'denied',");
+                    script.AppendLine("        'functionality_storage': 'denied',");
+                    script.AppendLine("        'security_storage': 'granted',");
+                    script.AppendLine("        'personalization_storage': 'denied',");
+                    script.AppendLine("        'analytics_storage': 'denied'");
+                    script.AppendLine("	    });");
+                    if (allowedTypes.Contains(CookieType.Statistical)
+                        || allowedTypes.Contains(CookieType.Marketing)
+                        || allowedTypes.Contains(CookieType.Preferences)) {
+                        script.AppendLine("window.dataLayer.push('consent', 'update', {");
+                        if (allowedTypes.Contains(CookieType.Marketing)) {
+                            script.AppendLine("    'ad_storage': 'granted',");
+                        }
+                        if (allowedTypes.Contains(CookieType.Preferences)) {
+                            script.AppendLine("    'personalization_storage': 'granted',");
+                        }
+                        if (allowedTypes.Contains(CookieType.Statistical)) {
+                            script.AppendLine("    'analytics_storage': 'granted'");
+                        }
+                        script.AppendLine("	});");
+                    }
+                    // --- END COOKIE MANAGEMENT
+
                     // gtag() function is already added by GTM script, so we add it again only if GTM isn't enabled.
                     script.AppendLine("function gtag() {");
                     script.AppendLine("    window.dataLayer = window.dataLayer || [];");
