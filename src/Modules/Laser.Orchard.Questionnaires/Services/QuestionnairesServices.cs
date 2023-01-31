@@ -869,9 +869,9 @@ namespace Laser.Orchard.Questionnaires.Services {
 
                                 // The user will need to Save/Publish the content to apply the previous changes.
                                 // Check which operation is needed based on the settings of the content to show it in the error message
-                                var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable && item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
+                                var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
 
-                                throw new Exception(T("Cannot delete the question: \"{0}\" since it already contains one or more user answers.The question has been set to \"not visible\".{1} the content to accept these changes.", quest.Question, operation).Text);
+                                throw new Exception(T("Cannot delete the question: \"{0}\" since it already contains one or more user answers.The question has been set to \"not visible\". {1} the content to accept these changes.", quest.Question, operation).Text);
                             }
                             else {
                                 // Delete all the possible answers for this question
@@ -898,9 +898,9 @@ namespace Laser.Orchard.Questionnaires.Services {
                                         
                                             // The user will need to Save/Publish the content to apply the previous changes.
                                             // Check which operation is needed based on the settings of the content to show it in the error message
-                                            var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable && item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
+                                            var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
 
-                                            throw new Exception(T("Cannot delete the answer: \"{0}\" since it has already beens selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes.", answer.Answer, operation).Text);
+                                            throw new Exception(T("Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes.", answer.Answer, operation).Text);
                                         }
                                         else {
                                             _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
