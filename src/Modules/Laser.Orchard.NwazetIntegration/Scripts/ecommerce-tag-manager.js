@@ -344,7 +344,7 @@ $(function () {
                     currency: "EUR",
                     items: [productAdded]
                 });
-            } else if (window.useGTM && window.useGA) {
+            } else if (window.useGTM && window.useUA) {
                 // GTM + UA
                 window.dataLayer.push({
                     'event': 'addToCart',
