@@ -13,12 +13,24 @@ msgid "Analytics Key or Tag Container Id."
 msgstr "Analytics Key o Id del Container di Tag Manager."
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Analytics Key."
+msgstr "Chiave di Analytics"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Async Tracking is Enabled"
 msgstr "Async Tracking è abilitato"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Choose the level of cookies of Google Analitics / Google Tag Manager."
+msgstr "Seleziona il livello di cookie per Google Analytics / Google Tag Manager."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Choose the level of cookies of Google Analitics."
 msgstr "Seleziona il livello dei cookies di Google Analytics."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Cookie Level"
+msgstr "Livello Cookie"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Domain name override"
@@ -43,6 +55,18 @@ msgstr "Google Analytics Tracking Key (UA-XXXXXXX-X)"
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Google Analytics Tracking Key (UA-XXXXXXX-X) or Tag Manager Container ID (GTM-YYYYYYY)"
 msgstr "Google Analytics Tracking Key (UA-XXXXXXX-X) o ID del Container Tag Manager  (GTM-YYYYYYY)"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Google Tag Manager"
+msgstr "Google Tag Manager"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Google Tag Manager Container Id (GTM-YYYYYYY)"
+msgstr "Container Id di Google Tag Manager (GTM-YYYYYYY)"
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "Google Universal Analytics Tracking Key (UA-XXXXXXX-X) or GA4 Tracking Key (G-YYYYYYY)"
+msgstr "Tracking Key di Google Universal Analytics (UA-XXXXXXX-X) o di GA4 (G-YYYYYYY)"
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Include on /Admin Pages"
@@ -87,6 +111,14 @@ msgstr "Le seguenti impostazioni si applicano solo a analytics.js e vengono igno
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "The value here will be used as either the analytics key if Google analytics is being used, or as the Tag Manager Container Id if Tag Manager is active instead."
 msgstr "Il valore qui verrà utilizzato come chiave di analisi se si utilizza Google Analytics o come ID del Contenitore di Tag Manager se invece è attivo Tag Manager."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "The value here will be used as either the universal analytics key, or as the GA4 key, based on its prefix."
+msgstr "Questo valore verrà usato sia per la chiave di universal analytics, sia per quella di GA4 in base al suo prefisso."
+
+msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
+msgid "The value here will be used for Google Tag Manager Container Id."
+msgstr "Questo valore sarà usato per il Container Id di Google Tag Manager."
 
 msgctxt "~/Modules/Laser.Orchard.GoogleAnalytics/Views/EditorTemplates/Parts/GoogleAnalyticsSettings.cshtml"
 msgid "Track but anonymize IP"
