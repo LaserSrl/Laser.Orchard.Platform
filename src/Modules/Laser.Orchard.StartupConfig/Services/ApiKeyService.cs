@@ -81,34 +81,95 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (action == null) {
                     // caso che si verifica con le web api (ApiController)
                     entryToVerify = string.Format("{0}.{1}", area, controller);
-                }
-                else {
+                } else {
                     // caso che si verifica con i normali Controller
                     entryToVerify = string.Format("{0}.{1}.{2}", area, controller, action);
                 }
                 if (protectedControllers.Contains(entryToVerify, StringComparer.InvariantCultureIgnoreCase)) {
                     check = true;
                 }
-            }
-            else {
+            } else {
                 check = true;
             }
 
             if (check == true) {
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
-                var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
-                var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                if (!TryValidateKey(
-                        myApikey, myAkiv, 
-                        (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"), 
-                        myApiChannel)) {
+
+                // Get valid ExternalApplication with the provided Api Channel.
+                if (!string.IsNullOrWhiteSpace(myApiChannel)) {
+                    var app = CurrentSettings.ExternalApplicationList.ExternalApplications
+                        .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
+
+                    if (app != null) {
+                        if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
+                            additionalCacheKey = "AuthorizedApi";
+                        } else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
+                            additionalCacheKey = "AuthorizedApi";
+                        } else {
+                            // If referer and ip address are not authorized, check the api key.
+                            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
+                            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
+                            if (!TryValidateKey(
+                                    myApikey, myAkiv,
+                                    (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
+                                    myApiChannel)) {
+                                additionalCacheKey = "UnauthorizedApi";
+                            } else {
+                                additionalCacheKey = "AuthorizedApi";
+                            }
+                        }
+                    } else {
+                        additionalCacheKey = "UnauthorizedApi";
+                    }
+                } else {
                     additionalCacheKey = "UnauthorizedApi";
-                }
-                else {
-                    additionalCacheKey = "AuthorizedApi";
                 }
             }
             return additionalCacheKey;
+        }
+
+        private bool CheckReferer(ExternalApplication app) {
+            var currentReferer = _request.ServerVariables["HTTP_REFERER"];
+
+            var websites = app.ApiKey.Split(',');
+            // If no website is specified
+            if (websites.Length == 0) {
+                return false;
+            }
+
+            foreach (var website in websites) {
+                if (currentReferer.StartsWith(website)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckIpAddress(ExternalApplication app) {
+            var currentIp = _request.ServerVariables["REMOTE_ADDR"];
+            
+            var ips = app.ApiKey.Split(',');
+            // If no ip is specified
+            if (ips.Length == 0) {
+                return false;
+            }
+
+            foreach (var ip in ips) {
+                if (ip.Equals(currentIp)) {
+                    return true;
+                }
+
+                if (ip.EndsWith("*")) {
+                    // Change current ip to match something like "1.2.3.*".
+                    var currentMask = currentIp.Substring(0, currentIp.LastIndexOf('.') + 1) + "*";
+                    if (ip.Equals(currentMask)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public string GetValidApiKey(string sIV, bool useTimeStamp = false) {
@@ -127,8 +188,7 @@ namespace Laser.Orchard.StartupConfig.Services {
 
                 byte[] encryptedAES = EncryptStringToBytes_Aes(aux, mykey, myiv);
                 key = Convert.ToBase64String(encryptedAES);
-            }
-            catch {
+            } catch {
                 // ignora volutamente qualsiasi errore e restituisce una stringa vuota
             }
             return key;
@@ -140,7 +200,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
 
-        private bool TryValidateKey(string token, string akiv, bool clearText, string channel= "TheDefaultChannel") {
+        private bool TryValidateKey(string token, string akiv, bool clearText, string channel = "TheDefaultChannel") {
             string cacheKey;
             _request = HttpContext.Current.Request;
             try {
@@ -156,8 +216,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                     var encryptedAES = Convert.FromBase64String(token);
                     key = DecryptStringFromBytes_Aes(encryptedAES, mykey, myiv);
                     //key = aes.Decrypt(token, mykey, myiv);
-                }
-                else {
+                } else {
                     var encryptedAES = EncryptStringToBytes_Aes(token, mykey, myiv);
                     var base64EncryptedAES = Convert.ToBase64String(encryptedAES, Base64FormattingOptions.None);
                     //var encrypted = aes.Crypt(token, mykey, myiv);
@@ -197,14 +256,12 @@ namespace Laser.Orchard.StartupConfig.Services {
                     if (floorLimit > ((item.Validity > 0 ? item.Validity : 5)/*minutes*/ * 60)) {
                         Logger.Error("Timestamp validity expired: key = " + key);
                         return false;
-                    }
-                    else {
+                    } else {
                         _cacheStorage.Put(cacheKey, "", new TimeSpan(0, item.Validity > 0 ? item.Validity : 5, 0));
                     }
                 }
                 return true;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Logger.Error("Exception: " + ex.Message);
                 return false;
             }
