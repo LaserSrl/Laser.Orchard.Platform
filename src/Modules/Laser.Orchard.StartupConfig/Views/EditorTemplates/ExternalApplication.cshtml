@@ -42,7 +42,7 @@
                 break;
 
             case "Website":
-                $("#@Html.FieldIdFor(m => m.ApiKey)").attr("placeholder", "@T("Website urls, separated by comma")");
+                $("#@Html.FieldIdFor(m => m.ApiKey)").attr("placeholder", "@T("Website urls, separated by comma. Each entry must start with its protocol (e.g.: 'http://')")");
                 $("#@genKeyDivId").hide();
                 break;
 
