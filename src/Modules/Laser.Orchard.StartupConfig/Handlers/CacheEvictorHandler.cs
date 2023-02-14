@@ -89,14 +89,16 @@ namespace Laser.Orchard.StartupConfig.Handlers {
 
                     #region third part: projection
                     var filterQueryRecordId = part.Settings.GetModel<CacheEvictorPartSettings>().FilterQueryRecordId;
-                    var filterQueryRecordsId = filterQueryRecordId.Split(';');
-                    // If -1 "no query" is selected in the ids, the ids will not be selected.
-                    if (!string.IsNullOrWhiteSpace(filterQueryRecordId) && !filterQueryRecordsId.Any(q => q == "-1")) {
-                        var projectionsId = _projecRepository.Table
-                           .Where(p => filterQueryRecordsId.Contains(p.QueryPartRecord.Id.ToString()))
-                           .Select(p => p.Id)
-                           .ToList();
-                        evictIds.UnionWith(projectionsId);
+                    if (!string.IsNullOrWhiteSpace(filterQueryRecordId)) {
+                        var filterQueryRecordsId = filterQueryRecordId.Split(';');
+                        // If -1 "no query" is selected in the ids, the ids will not be selected.
+                        if (!filterQueryRecordsId.Any(q => q == "-1")) {
+                            var projectionsId = _projecRepository.Table
+                               .Where(p => filterQueryRecordsId.Contains(p.QueryPartRecord.Id.ToString()))
+                               .Select(p => p.Id)
+                               .ToList();
+                            evictIds.UnionWith(projectionsId);
+                        }
                     }
                     #endregion
 
