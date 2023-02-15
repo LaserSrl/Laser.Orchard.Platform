@@ -131,6 +131,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         private bool CheckReferer(ExternalApplication app) {
             var currentReferer = _request.ServerVariables["HTTP_REFERER"];
 
+            if (string.IsNullOrWhiteSpace(currentReferer)) {
+                return false;
+            }
+
             var websites = app.ApiKey.Split(',');
             // If no website is specified
             if (websites.Length == 0) {

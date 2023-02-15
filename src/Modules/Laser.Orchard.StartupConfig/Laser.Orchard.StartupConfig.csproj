@@ -734,6 +734,7 @@
     <Compile Include="ViewModels\UsersGroupsVM.cs" />
     <Compile Include="WebApiProtection\Drivers\ProtectionSettingsDriver.cs" />
     <Compile Include="WebApiProtection\Filters\ApiKeyFilter.cs" />
+    <Compile Include="WebApiProtection\Filters\PreFlightFilter.cs" />
     <Compile Include="WebApiProtection\Filters\WebApiKeyFilter.cs" />
     <Compile Include="WebApiProtection\Handlers\ProtectionSettingsHandler.cs" />
     <Compile Include="WebApiProtection\Migrations.cs" />
