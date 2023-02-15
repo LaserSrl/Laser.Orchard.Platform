@@ -130,9 +130,7 @@ namespace Laser.Orchard.StartupConfig.Services {
 
         private bool CheckReferer(ExternalApplication app) {
             var currentReferer = _request.ServerVariables["HTTP_REFERER"];
-
-            // If protocol isn't http or https, referer is not valid.
-            if (!currentReferer.StartsWith("http://") && !currentReferer.StartsWith("https://")) {
+            if (string.IsNullOrWhiteSpace(currentReferer)) {
                 return false;
             }
 
@@ -142,10 +140,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                 return false;
             }
 
-            // I remove http and https from both referer and permitted websites to ignore the protocol.
-            currentReferer = currentReferer.Replace("http://", "").Replace("https://", "");
             foreach (var website in websites) {
-                if (currentReferer.StartsWith(website.Replace("http://", "").Replace("https://", ""))) {
+                if (currentReferer.StartsWith(website)) {
                     return true;
                 }
             }
