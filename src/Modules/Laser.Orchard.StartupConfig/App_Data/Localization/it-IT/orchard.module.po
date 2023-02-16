@@ -1757,6 +1757,10 @@ msgid "One or more parameters are null"
 msgstr "Uno o più parametri sono nulli"
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "Some parameters are missing"
+msgstr "Uno o più parametri mancanti"
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "Successfully Executed"
 msgstr "Eseguito con successo"
 

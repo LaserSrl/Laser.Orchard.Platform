@@ -1,13 +1,27 @@
-﻿@model Laser.Orchard.Reporting.ViewModels.ShowReportsViewModel
+﻿@using Orchard;
+@using Orchard.ContentManagement;
+@using Orchard.Core.Contents;
+
+@model Laser.Orchard.Reporting.ViewModels.ShowReportsViewModel
+
+@{
+    IOrchardServices orchardServices = WorkContext.Resolve<IOrchardServices>();
+    IContentManager contentManager = WorkContext.Resolve<IContentManager>();
+}
+
 <h1>@Html.TitleForPage(T("Execute Data Reports").ToString())</h1>
 @using (Html.BeginForm("ShowReports", "Report", FormMethod.Get)) {
     @Html.AntiForgeryToken()
     @Html.LabelFor(m => m.TitleFilter)
     @Html.TextBoxFor(m => m.TitleFilter)
     <button type="submit">@T("Apply Filter")</button>
+
     <div style="margin-top:0.5em;margin-bottom:0.5em">
         @foreach (var ct in Model.ContentTypes) {
-            <a class="button" href="@(Model.BaseUrlForCreate + ct.Name)">@T("Create") @ct.DisplayName</a>
+            var dummyContent = contentManager.New(ct.Name);
+            if (orchardServices.Authorizer.Authorize(Permissions.CreateContent, dummyContent)) {
+                <a class="button" href="@(Model.BaseUrlForCreate + ct.Name)">@T("Create") @ct.DisplayName</a>
+            }
         }
     </div>
 }
@@ -24,8 +38,7 @@
                 <td><a href="@Url.Action("Display", "Report", new { area = "Laser.Orchard.Reporting", Id = report.Id })">@report.Title</a></td>
                 @if (report.ContentItem != null) {
                     <td><a href="@Url.ItemEditUrl(report.ContentItem)">@T("Edit")</a></td>
-                }
-                else {
+                } else {
                     <td></td>
                 }
             </tr>

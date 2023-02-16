@@ -127,34 +127,61 @@ $(function () {
     window.dataLayer = window.dataLayer || [];
     // if there is anything to be sent immediately, push it
     if (!$.isEmptyObject(ecommerceObject)) {
-        window.dataLayer.push({
-            'ecommerce': ecommerceObject
-        });
+        if (window.useGA4 || (window.useGTM && !window.useUA)) {
+            gtag({ 'ecommerce': ecommerceObject });
+        } else if (window.useGTM && window.useUA) {
+            // UA
+            window.dataLayer.push({
+                'ecommerce': ecommerceObject
+            });
+        }
     }
 
-    if (window.useGA4) {
+    if (window.useGA4 || (window.useGTM && !window.useUA)) {
         if (!$.isEmptyObject(GA4Object)) {
-            window.dataLayer.push(GA4Object);
+            // GA4
+            gtag("event", GA4Object.event, GA4Object.ecommerce);
+            //if (window.useGTM) {
+            //    // GTM + GA4
+            //    window.dataLayer.push(GA4Object);
+            //}
         }
 
         // view_item event, pushed if there is any element in window.ecommerceData.datail.products.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.detail.products.length) {
-            var GA4_view_item = {};
-            GA4_view_item.event = "view_item";
-            GA4_view_item.ecommerce = {};
-            GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
-            window.dataLayer.push(GA4_view_item);
+            // GA4
+            gtag("event", "view_item", {
+                currency: "EUR",
+                items: [window.ecommerceData.detail.products]
+            });
+            //if (window.useGTM) {
+            //    // GTM + GA4
+            //    var GA4_view_item = {};
+            //    GA4_view_item.event = "view_item";
+            //    GA4_view_item.ecommerce = {};
+            //    GA4_view_item.ecommerce.items = window.ecommerceData.detail.products;
+            //    window.dataLayer.push(GA4_view_item);
+            //}
         }
 
         // view_item_list event, pushed if there is any element in window.ecommerceData.impressions.
         // I can use the same array because, when loading, I load the data in the new format using IGAProductVM interface.
         if (window.ecommerceData.impressions.length) {
-            var GA4_view_item_list = {};
-            GA4_view_item_list.event = "view_item_list";
-            GA4_view_item_list.ecommerce = {};
-            GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
-            window.dataLayer.push(GA4_view_item_list);
+            // GA4
+            gtag("event", "view_item_list", {
+                item_list_id: "impressions",
+                item_list_name: "impressions",
+                items: window.ecommerceData.impressions
+            });
+            //if (window.useGTM) {
+            //    // GTM + GA4
+            //    var GA4_view_item_list = {};
+            //    GA4_view_item_list.event = "view_item_list";
+            //    GA4_view_item_list.ecommerce = {};
+            //    GA4_view_item_list.ecommerce.items = window.ecommerceData.impressions;
+            //    window.dataLayer.push(GA4_view_item_list);
+            //}
         }
     }
 
@@ -210,14 +237,14 @@ $(function () {
             }
             // raise the events for addition/removal from cart
             if (addedToCart.length) {
-                if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'add_to_cart',
-                        ecommerce: {
-                            items: addedToCart
-                        }
+                if (window.useGA4 || (window.useGTM && !window.useUA)) {
+                    // GA4
+                    gtag("event", "add_to_cart", {
+                        currency: "EUR",
+                        items: [productAdded]
                     });
-                } else {
+                } else if (window.useGTM && window.useUA) {
+                    // GTM + UA
                     window.dataLayer.push({
                         'event': 'addToCart',
                         'ecommerce': {
@@ -227,16 +254,17 @@ $(function () {
                         }
                     });
                 }
+                // If no GTM or GA4 are used, how do I send ecommerce data to Universal Analytics even if it's obsolete?
             }
             if (removedFromCart.length) {
-                if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'remove_from_cart',
-                        ecommerce: {
-                            items: removedFromCart
-                        }
+                if (window.useGA4 || (window.useGTM && !window.useUA)) {
+                    // GA4
+                    gtag("event", "remove_from_cart", {
+                        currency: "EUR",
+                        items: [removedFromCart]
                     });
-                } else {
+                } else if (window.useGTM && window.useUA) {
+                    // GTM + UA
                     window.dataLayer.push({
                         'event': 'removeFromCart',
                         'ecommerce': {
@@ -246,6 +274,27 @@ $(function () {
                         }
                     });
                 }
+                //if (window.useGTM) {
+                //    if (window.useGA4) {
+                //        // GTM + GA4
+                //        window.dataLayer.push({
+                //            event: 'remove_from_cart',
+                //            ecommerce: {
+                //                items: removedFromCart
+                //            }
+                //        });
+                //    } else {
+                //        // GTM + UA
+                //        window.dataLayer.push({
+                //            'event': 'removeFromCart',
+                //            'ecommerce': {
+                //                'remove': {
+                //                    'products': removedFromCart
+                //                }
+                //            }
+                //        });
+                //    }
+                //} 
             }
         }
     }
@@ -289,14 +338,14 @@ $(function () {
             var quantity = context.movedQuantity;
             productAdded.quantity = quantity;
 
-            if (window.useGA4) {
-                window.dataLayer.push({
-                    event: 'add_to_cart',
-                    ecommerce: {
-                        items: [productAdded]
-                    }
+            if (window.useGA4 || (window.useGTM && !window.useUA)) {
+                // GA4
+                gtag("event", "add_to_cart", {
+                    currency: "EUR",
+                    items: [productAdded]
                 });
-            } else {
+            } else if (window.useGTM && window.useUA) {
+                // GTM + UA
                 window.dataLayer.push({
                     'event': 'addToCart',
                     'ecommerce': {
@@ -306,6 +355,28 @@ $(function () {
                     }
                 });
             }
+            //if (window.useGTM) {
+            //    if (window.useGTA4) {
+            //        // GTM + GA4
+            //        window.dataLayer.push({
+            //            event: 'add_to_cart',
+            //            ecommerce: {
+            //                items: [productAdded],
+            //                currency: 'EUR'
+            //            }
+            //        });
+            //    } else {
+            //        // GTM + UA
+            //        window.dataLayer.push({
+            //            'event': 'addToCart',
+            //            'ecommerce': {
+            //                'add': {
+            //                    'products': [productAdded]
+            //                }
+            //            }
+            //        });
+            //    }
+            //} 
         })
         // RemoveFromCart1: use the event from shoppingcart.js
         .on("nwazet.removefromcart", "form.addtocart", function (e) {
@@ -322,15 +393,14 @@ $(function () {
             }
             // send a removed from cart event to tag manager
             if (productRemoved.quantity > 0) {
-                if (window.useGA4) {
-                    window.dataLayer.push({
-                        event: 'remove_from_cart',
-                        ecommerce: {
-                            items: [productRemoved]
-                        }
+                if (window.useGA4 || (window.useGTM && !window.useUA)) {
+                    // GA4
+                    gtag("event", "remove_from_cart", {
+                        currency: "EUR",
+                        items: [productRemoved]
                     });
-                } else {
-                    // this check will allow us to avoid sending duplicate events
+                } else if (window.useGTM && window.useUA) {
+                    // GTM + UA
                     window.dataLayer.push({
                         'event': 'removeFromCart',
                         'ecommerce': {
@@ -340,6 +410,28 @@ $(function () {
                         }
                     });
                 }
+                //if (window.useGTM) {
+                //    if (window.useGA4) {
+                //        // GTM + GA4
+                //        window.dataLayer.push({
+                //            event: 'remove_from_cart',
+                //            ecommerce: {
+                //                items: [productRemoved]
+                //            }
+                //        });
+                //    } else {
+                //        // GTM + UA
+                //        window.dataLayer.push({
+                //            'event': 'removeFromCart',
+                //            'ecommerce': {
+                //                'remove': {
+                //                    'products': [productRemoved]
+                //                }
+                //            }
+                //        });
+                //    }
+                //} 
+                // this will avoid sending duplicate events
                 productRemoved.quantity = 0;
             }
             console.log('removefromcart');
@@ -404,14 +496,15 @@ $(function () {
                     return;
                 }
             }
-            if (window.useGA4) {
-                window.dataLayer.push({
-                    event: 'select_item',
-                    ecommerce: {
-                        items: [productClicked]
-                    }
+            if (window.useGA4 || (window.useGTM && !window.useUA)) {
+                // GA4
+                gtag("event", "select_item", {
+                    item_list_id: "impressions",
+                    item_list_name: "impressions",
+                    items: [productClicked]
                 });
-            } else {
+            } else if (window.useGTM && window.useUA) {
+                // GTM + UA
                 // generate a product click event
                 window.dataLayer.push({
                     'event': 'productClick',
@@ -422,25 +515,58 @@ $(function () {
                     }
                 });
             }
+            //if (window.useGTM) {
+            //    if (window.useGA4) {
+            //        // GTM + GA4
+            //        window.dataLayer.push({
+            //            event: 'select_item',
+            //            ecommerce: {
+            //                items: [productClicked]
+            //            }
+            //        });
+            //    } else {
+            //        // GTM + UA
+            //        // generate a product click event
+            //        window.dataLayer.push({
+            //            'event': 'productClick',
+            //            'ecommerce': {
+            //                'click': {
+            //                    'products': [productClicked]
+            //                }
+            //            }
+            //        });
+            //    }
+            //}            
         })
         .on("submit", 'form[data-analytics-form="review"]', function (e) {
-            if (window.useGA4) {
+            if (window.useGA4 || (window.useGTM && !window.useUA)) {
                 // This event represents the click on the payment button of each payment provider (before the actual payment, it's the payment provider selection).
                 // For this reason, I only need to check if a valid pos service has been selected.
                 // Other info required by GA4 event are read from the global GA4Data object.
                 // SelectedPosService isn't in the formData object, because it's not an input control, it's the value of the original submit button clicked.
                 var posService = e.originalEvent.submitter.value;
                 if (posService) {
-                    window.dataLayer.push({
-                        event: 'add_payment_info',
+                    // GA4
+                    gtag("event", "add_payment_info", {
                         currency: window.GA4Data.ecommerce.currency,
                         value: window.GA4Data.ecommerce.value,
                         coupon: window.GA4Data.ecommerce.coupon,
                         payment_type: posService,
-                        ecommerce: {
-                            items: window.GA4Data.ecommerce.items || []
-                        }
+                        items: window.GA4Data.ecommerce.items || []
                     });
+                    //if (window.useGTM) {
+                    //    // GTM + GA4
+                    //    window.dataLayer.push({
+                    //        event: 'add_payment_info',
+                    //        currency: window.GA4Data.ecommerce.currency,
+                    //        value: window.GA4Data.ecommerce.value,
+                    //        coupon: window.GA4Data.ecommerce.coupon,
+                    //        payment_type: posService,
+                    //        ecommerce: {
+                    //            items: window.GA4Data.ecommerce.items || []
+                    //        }
+                    //    });
+                    //}
                 }
             }
         })

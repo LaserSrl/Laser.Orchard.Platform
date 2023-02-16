@@ -25,8 +25,8 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
         private readonly dynamic _shapeFactory;
 
         public GoogleAnalyticsFilter(
-            IResourceManager resourceManager, 
-            IOrchardServices orchardServices, 
+            IResourceManager resourceManager,
+            IOrchardServices orchardServices,
             IGoogleAnalyticsCookie googleAnalyticsCookie,
             IWorkContextAccessor workContextAccessor,
             ICacheManager cacheManager,
@@ -51,23 +51,40 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
 
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(filterContext.RequestContext);
+
+            bool addScript = (SettingsPart != null);
+            bool addGTM = false;
+            bool addAnalytics = false;
+
+            // Checking addScript variable ensures SettingsPart is not null and avoid exceptions.
+            if (addScript) {
+                addGTM = (!string.IsNullOrWhiteSpace(SettingsPart.GTMContainerId) &&
+                    SettingsPart.TrackGTMOnAdmin && isAdmin);
+                addAnalytics = (!string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey) &&
+                    SettingsPart.TrackOnAdmin && isAdmin);
+            }
+
             // This is designed to only run in the admin, because frontend scripts are
             // handled by the module for GDPR cookies
-            if (SettingsPart != null 
-                && SettingsPart.TrackOnAdmin 
-                && isAdmin 
-                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)) {
+            if (addScript && (addGTM || addAnalytics)) {
                 // Register Google's new, recommended asynchronous universal analytics script to the header
                 // (or the tag manager script if we have that configuration)
                 _resourceManager.RegisterHeadScript(
                     _googleAnalyticsCookie.GetHeadScript(_googleAnalyticsCookie.GetCookieTypes()));
             }
 
-            // add the <noscript> element for tagmanager
-            if (SettingsPart != null
-                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
-                && ((isAdmin && SettingsPart.TrackOnAdmin) || (!isAdmin && SettingsPart.TrackOnFrontEnd))) {
+            // Checking addScript variable ensures SettingsPart is not null and avoid exceptions.
+            if (addScript) {
+                addGTM = (!string.IsNullOrWhiteSpace(SettingsPart.GTMContainerId) &&
+                    ((SettingsPart.TrackGTMOnAdmin && isAdmin) ||
+                    (SettingsPart.TrackGTMOnFrontEnd && !isAdmin)));
+                addAnalytics = (!string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey) &&
+                    ((SettingsPart.TrackOnAdmin && isAdmin) ||
+                    (SettingsPart.TrackOnFrontEnd && !isAdmin)));
+            }
 
+            // add the <noscript> element for tagmanager
+            if (addScript && (addGTM || addAnalytics)) {
                 var snippet = _googleAnalyticsCookie.GetNoScript();
                 if (!string.IsNullOrWhiteSpace(snippet)) {
                     var noscript = new HtmlString(snippet);

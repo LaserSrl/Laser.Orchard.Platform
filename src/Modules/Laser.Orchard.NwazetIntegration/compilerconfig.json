@@ -2,5 +2,9 @@
   {
     "outputFile": "Styles/admin-style.css",
     "inputFile": "Assets/admin-style.scss"
+  },
+  {
+    "outputFile": "Scripts/ecommerce-tag-manager.min.js",
+    "inputFile": "Scripts/ecommerce-tag-manager.js"
   }
 ]
