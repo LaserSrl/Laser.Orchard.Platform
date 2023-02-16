@@ -59,9 +59,9 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
             // Checking addScript variable ensures SettingsPart is not null and avoid exceptions.
             if (addScript) {
                 addGTM = (!string.IsNullOrWhiteSpace(SettingsPart.GTMContainerId) &&
-                    SettingsPart.TrackGTMOnFrontEnd && !isAdmin);
+                    SettingsPart.TrackGTMOnAdmin && isAdmin);
                 addAnalytics = (!string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey) &&
-                    SettingsPart.TrackOnFrontEnd && !isAdmin);
+                    SettingsPart.TrackOnAdmin && isAdmin);
             }
 
             // This is designed to only run in the admin, because frontend scripts are
