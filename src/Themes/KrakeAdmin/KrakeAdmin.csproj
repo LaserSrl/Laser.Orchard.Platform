@@ -279,9 +279,6 @@
     <Content Include="Styles\fonts\Material-Design-Iconic-Font.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Laser.Bootstrap\Admin\OptionsIndex.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Pager.CurrentPage.cshtml" />
   </ItemGroup>
   <ItemGroup>

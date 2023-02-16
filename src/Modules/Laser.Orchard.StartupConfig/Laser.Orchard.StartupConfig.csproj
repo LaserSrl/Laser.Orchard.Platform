@@ -784,7 +784,6 @@
     <Content Include="Views\DefinitionTemplates\Parts\ContentPickerConnector.Settings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\UsersGroups.cshtml" />
     <Content Include="Views\UsersGroupsSettings\Settings.cshtml" />
-    <Content Include="Views\EditorTemplates\Parts\TaxonomyExtensionsSiteSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\UserGroupSettings.cshtml" />
     <Content Include="Views\DefinitionTemplates\ContentPickerFieldExtensionSettings.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\TaxonomyExtension_Edit.cshtml" />
