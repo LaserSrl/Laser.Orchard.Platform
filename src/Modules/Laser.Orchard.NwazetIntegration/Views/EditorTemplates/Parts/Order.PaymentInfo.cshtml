@@ -59,19 +59,26 @@
                                 @Html.TextBoxFor(m => m.TransactionId, new { style = "display: none; width: 250px;" })
                                 <button id="enable-edit" name="enableEdit" class="edit-button link">
                                     @T("Edit")
-                                </button> 
+                                </button>
                             }
                         </td>
                     </tr>
                 } else {
-                    <tr>
-                        <td width="20%">@T("Outcome")</td>
-                        <td><span>@T("Failed")</span></td>
-                    </tr>
-                    <tr>
-                        <td width="20%">@T("Error")</td>
-                        <td><span>@Model.Error</span></td>
-                    </tr>
+                    if (string.IsNullOrWhiteSpace(Model.Error) && string.IsNullOrWhiteSpace(Model.TransactionId)) {
+                        <tr>
+                            <td width="20%">@T("Outcome")</td>
+                            <td><span>@T("Waiting for payment")</span></td>
+                        </tr>
+                    } else {
+                        <tr>
+                            <td width="20%">@T("Outcome")</td>
+                            <td><span>@T("Failed")</span></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">@T("Error")</td>
+                            <td><span>@Model.Error</span></td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
