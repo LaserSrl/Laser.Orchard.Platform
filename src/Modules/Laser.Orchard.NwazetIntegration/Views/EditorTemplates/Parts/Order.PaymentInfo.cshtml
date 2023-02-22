@@ -48,7 +48,11 @@
                 @if (Model.Success) {
                     <tr>
                         <td width="20%">@T("Outcome")</td>
-                        <td><span>@T("Succeeded")</span></td>
+                        @if (string.IsNullOrWhiteSpace(Model.TransactionId)) {
+                            <td><span>@T("Waiting for transaction info")</span></td>
+                        } else {
+                            <td><span>@T("Succeeded")</span></td>
+                        }
                     </tr>
                     <tr>
                         <td width="20%">@T("Transaction ID")</td>
