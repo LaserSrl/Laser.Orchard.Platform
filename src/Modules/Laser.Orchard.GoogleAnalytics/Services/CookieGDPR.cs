@@ -280,8 +280,6 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 script.AppendLine("</script>");
                 return script.ToString();
             }
-
-            return "";
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
