@@ -17,10 +17,7 @@ namespace Laser.Orchard.Cookies.Services {
             }
 
             // If no valid provider is found, technical cookies only are accepted.
-            var result = new List<CookieType>();
-            // accepted by default
-            result.Add(CookieType.Technical);
-            return result;
+            return new List<CookieType>() { CookieType.Technical };
         }
     }
 }
