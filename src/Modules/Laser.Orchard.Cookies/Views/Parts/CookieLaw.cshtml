@@ -33,9 +33,10 @@
     var isPolicyPage = Model.isPolicyPage;
 
     using (Script.Head()) {
-        foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
+        // Header script injection isn't implemented here anymore, it must be managed by a proper filter (e.g. GoogleAnalyticsFilter)
+        @*foreach (var cookie in gdprScriptService.GetAllowedCookies()) {
             <text>@Html.Raw(cookie.GetHeadScript(gdprScriptService.GetAcceptedCookieTypes())) </text>
-        }
+        }*@
 
         var technicalCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetTechnicalCookies()));
         var preferencesCookies = Html.Raw(Json.Encode(_defaultCookieProvider.GetPreferencesCookies()));
