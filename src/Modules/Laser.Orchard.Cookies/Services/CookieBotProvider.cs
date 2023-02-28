@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Xml.XPath;
 
 namespace Laser.Orchard.Cookies.Services {
     public class CookieBotProvider : ICookieManagerProvider {
@@ -20,16 +17,16 @@ namespace Laser.Orchard.Cookies.Services {
                 var decodedValue = HttpUtility.UrlDecode(cookie.Value);
                 dynamic deserializedValue = JsonConvert.DeserializeObject(decodedValue);
                 // Techinal cookies are usually accepted by default, but as long as they're inside this cookie, they're read from it.
-                if (deserializedValue.necessary.Value) {
+                if (deserializedValue.necessary != null && deserializedValue.necessary.Value) {
                     result.Add(CookieType.Technical);
                 }
-                if (deserializedValue.preferences.Value) {
+                if (deserializedValue.preferences != null && deserializedValue.preferences.Value) {
                     result.Add(CookieType.Preferences);
                 }
-                if (deserializedValue.statistics.Value) {
+                if (deserializedValue.statistics != null && deserializedValue.statistics.Value) {
                     result.Add(CookieType.Statistical);
                 }
-                if (deserializedValue.marketing.Value) {
+                if (deserializedValue.marketing != null && deserializedValue.marketing.Value) {
                     result.Add(CookieType.Marketing);
                 }
             }

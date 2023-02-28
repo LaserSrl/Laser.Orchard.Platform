@@ -79,7 +79,7 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
 
             // add the <noscript> element for tagmanager
             if (addScript && (addGTM || addAnalytics)) {
-                var snippet = _googleAnalyticsCookie.GetNoScript();
+                var snippet = _googleAnalyticsCookie.GetNoScript(_cookieManagerProviderService.GetAcceptedCookieTypes());
                 if (!string.IsNullOrWhiteSpace(snippet)) {
                     var noscript = new HtmlString(snippet);
                     // write that to the top of the page, immediately after the opening <body> tag
