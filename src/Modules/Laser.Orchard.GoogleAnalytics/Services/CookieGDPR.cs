@@ -5,16 +5,14 @@ using Laser.Orchard.GoogleAnalytics.ViewModels;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.DisplayManagement;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
-using System.Web.UI.WebControls;
 using OUI = Orchard.UI;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
     public interface IGoogleAnalyticsCookie : ICookieGDPR {
-        string GetNoScript();
+        string GetNoScript(IList<CookieType> allowedTypes);
     }
     public class CookieGDPR : IGoogleAnalyticsCookie {
         private readonly IOrchardServices _orchardServices;
@@ -33,11 +31,29 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             _cacheManager = cacheManager;
             _signals = signals;
         }
+
         public string GetCookieName() {
             return "Google Analytics";
         }
 
         public IList<CookieType> GetCookieTypes() {
+            if (SettingsPart != null) {
+                var cookieLevel = SettingsPart.CookieLevel;
+                switch (cookieLevel) {
+                    case CookieType.Technical:
+                        return new List<CookieType>() { CookieType.Technical };
+
+                    case CookieType.Preferences:
+                        return new List<CookieType>() { CookieType.Preferences };
+
+                    case CookieType.Statistical:
+                        return new List<CookieType>() { CookieType.Statistical };
+
+                    case CookieType.Marketing:
+                        return new List<CookieType>() { CookieType.Marketing };
+                }
+            }
+
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
             bool addGTM = false;
 
@@ -82,8 +98,19 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     ((SettingsPart.TrackOnAdmin && isAdmin) ||
                     (SettingsPart.TrackOnFrontEnd && !isAdmin)));
 
+                // Analytics is injected if required cookies (read from settings) are allowed
+                bool cookiesOk = true;
+                if (cookiesOk) {
+                    foreach (var c in GetCookieTypes()) {
+                        if (!allowedTypes.Contains(c)) {
+                            cookiesOk = false;
+                            break;
+                        }
+                    }
+                }
+
                 // analytics.js deployment
-                if (addAnalytics) {
+                if (addAnalytics && cookiesOk) {
                     finalScript += GoogleAnalyticsScript(allowedTypes);
                 } else {
                     finalScript += GetNoAnalyticsScript();
@@ -239,7 +266,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 script.AppendLine("</script>");
 
                 return script.ToString();
-            } else if (!useGTM && ua) {
+            } else if (ua) {
                 StringBuilder script = new StringBuilder();
                 script.AppendLine("<!-- Google Analytics -->");
                 script.AppendLine("<script async src='//www.google-analytics.com/analytics.js'></script>");
@@ -271,14 +298,8 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 // Register Google's new, recommended asynchronous universal analytics script to the header
                 return script.ToString();
             } else {
-                StringBuilder script = new StringBuilder();
-                script.AppendLine("<script>");
-                script.AppendLine("window.useGA4 = 0;");
-                if (ua) {
-                    script.AppendLine("window.useUA = 1;");
-                }
-                script.AppendLine("</script>");
-                return script.ToString();
+                // This should never happen because, when no GA4 or UA are active, this function should not be executed in the first place.
+                return GetNoAnalyticsScript();
             }
         }
 
@@ -379,7 +400,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             return string.Empty;
         }
 
-        public string GetNoScript() {
+        public string GetNoScript(IList<CookieType> allowedTypes) {
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
@@ -397,7 +418,6 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             // Tag manager deployment
             if (useGTM) {
-
                 var snippet = new StringBuilder();
 
                 snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
