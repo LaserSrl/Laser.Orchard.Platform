@@ -217,6 +217,15 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     script.AppendLine("			'statisticalCookiesAccepted': false,");
                     script.AppendLine("			'marketingCookiesAccepted': false");
                     script.AppendLine("		});");
+                    // Reset Google storage options.
+                    script.AppendLine("     window.dataLayer.push(");
+                    script.AppendLine("         'consent', 'default', {");
+                    script.AppendLine("             'ad_storage': 'denied',");
+                    script.AppendLine("             'functionality_storage': 'denied',");
+                    script.AppendLine("             'security_storage': 'granted',");
+                    script.AppendLine("             'personalization_storage': 'denied',");
+                    script.AppendLine("             'analytics_storage': 'denied'");
+                    script.AppendLine("	    });");
                     script.AppendLine("	})");
                     script.AppendLine("	.on('cookieConsent.accept', function(e, options) {");
                     script.AppendLine("		window.dataLayer.push({");
@@ -225,6 +234,24 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     script.AppendLine("			'statisticalCookiesAccepted': options.statistical,");
                     script.AppendLine("			'marketingCookiesAccepted': options.marketing");
                     script.AppendLine("		});");
+                    // Update Google storage options.
+                    script.AppendLine("     var ad = 'denied';");
+                    script.AppendLine("     var personalization = 'denied';");
+                    script.AppendLine("     var analytics = 'denied';");
+                    script.AppendLine("     if (options.marketing) {");
+                    script.AppendLine("         ad = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     if (options.preferences) {");
+                    script.AppendLine("         personalization = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     if (options.statistical) {");
+                    script.AppendLine("         analytics = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     window.dataLayer.push('consent', 'update', {");
+                    script.AppendLine("         'ad_storage': ad,");
+                    script.AppendLine("         'personalization_storage': personalization,");
+                    script.AppendLine("         'analytics_storage': analytics");
+                    script.AppendLine("	    });");
                     script.AppendLine("	});");
                     // done handlers for changes in cookie consent
                     // tag manager consent settings
