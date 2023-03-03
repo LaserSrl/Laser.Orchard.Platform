@@ -11,11 +11,13 @@ namespace Laser.Orchard.HubSpot.Services {
     public class HubSpotCookieGDPR : ICookieGDPR {
 
         private readonly IOrchardServices _orchardServices;
-
+        private readonly ICookieManagerProviderService _cookieManagerProviderService;
         public HubSpotCookieGDPR(
-            IOrchardServices orchardServices)
+            IOrchardServices orchardServices,
+            ICookieManagerProviderService cookieManagerProviderService)
         {
             _orchardServices = orchardServices;
+            _cookieManagerProviderService = cookieManagerProviderService;
         }
 
         public string GetCookieName()
@@ -30,6 +32,14 @@ namespace Laser.Orchard.HubSpot.Services {
 
         public string GetFootScript(IList<CookieType> allowedTypes)
         {
+            // Check if required cookies have been accepted by user.
+            var acceptedCookies = _cookieManagerProviderService.GetAcceptedCookieTypes();
+            foreach (var c in GetCookieTypes()) {
+                if (!acceptedCookies.Contains(c)) {
+                    return string.Empty;
+                }
+            }
+
             //string result = "<!-- Start of HubSpot Embed Code -->\r\n<script type=\"text/javascript\" id=\"hs - script - loader\" async defer src=\"//js.hs-scripts.com/2170079.js\"></script>\r\n<!-- End of HubSpot Embed Code -->";
             string result = string.Empty;
 

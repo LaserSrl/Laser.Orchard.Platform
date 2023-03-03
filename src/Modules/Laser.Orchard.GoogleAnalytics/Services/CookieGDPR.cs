@@ -5,16 +5,14 @@ using Laser.Orchard.GoogleAnalytics.ViewModels;
 using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.DisplayManagement;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
-using System.Web.UI.WebControls;
 using OUI = Orchard.UI;
 
 namespace Laser.Orchard.GoogleAnalytics.Services {
     public interface IGoogleAnalyticsCookie : ICookieGDPR {
-        string GetNoScript();
+        string GetNoScript(IList<CookieType> allowedTypes);
     }
     public class CookieGDPR : IGoogleAnalyticsCookie {
         private readonly IOrchardServices _orchardServices;
@@ -33,11 +31,29 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             _cacheManager = cacheManager;
             _signals = signals;
         }
+
         public string GetCookieName() {
             return "Google Analytics";
         }
 
         public IList<CookieType> GetCookieTypes() {
+            if (SettingsPart != null) {
+                var cookieLevel = SettingsPart.CookieLevel;
+                switch (cookieLevel) {
+                    case CookieType.Technical:
+                        return new List<CookieType>() { CookieType.Technical };
+
+                    case CookieType.Preferences:
+                        return new List<CookieType>() { CookieType.Preferences };
+
+                    case CookieType.Statistical:
+                        return new List<CookieType>() { CookieType.Statistical };
+
+                    case CookieType.Marketing:
+                        return new List<CookieType>() { CookieType.Marketing };
+                }
+            }
+
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
             bool addGTM = false;
 
@@ -142,6 +158,39 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     ((SettingsPart.TrackGTMOnAdmin && isAdmin) ||
                     (SettingsPart.TrackGTMOnFrontEnd && !isAdmin)));
 
+            // Analytics is injected if required cookies (read from settings) are allowed
+            bool cookiesOk = true;
+            // Set up a variable with a js clause to check to enable GA4 cookies.
+            // String should be something like "options.preferences && options.marketing"
+            // and will be used inside the cookieConsent.accept function.
+            // if (variable) { .... }
+            string cookieOptions = "";
+            if (cookiesOk) {
+                foreach (var c in GetCookieTypes()) {
+                    if (!allowedTypes.Contains(c)) {
+                        cookiesOk = false;
+                    }
+
+                    switch (c) {
+                        case CookieType.Statistical:
+                            cookieOptions += "&& options.statistical";
+                            break;
+
+                        case CookieType.Preferences:
+                            cookieOptions += "&& options.preferences";
+                            break;
+
+                        case CookieType.Marketing:
+                            cookieOptions += "&& options.marketing";
+                            break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(cookieOptions)) {
+                cookieOptions = cookieOptions.Substring(2);
+            }
+
             // If Tag Manager is enabled, I don't need to add anything here.
             // If Google Analytics Key is in the format UA-XXXXXXX-X, old Universal Analytics is used.
             // If it's in the format G-YYYYYYY, GA4 is used.
@@ -149,6 +198,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             var ga4 = gaSettings.GoogleAnalyticsKey.StartsWith("G-");
             if (ga4) {
                 StringBuilder script = new StringBuilder();
+                script.AppendLine("<script>");
+                script.AppendLine("window['ga-disable-" + gaSettings.GoogleAnalyticsKey + "'] = " + (cookiesOk ? "false" : "true") + ";");
+                script.AppendLine("</script>");
                 script.AppendLine("<script async src=\"https://www.googletagmanager.com/gtag/js?id=" + gaSettings.GoogleAnalyticsKey + "\"></script>");
                 script.AppendLine("<script>");
 
@@ -158,6 +210,12 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 // Add gtag javascript function to the script.
                 script.AppendLine("window.dataLayer = window.dataLayer || [];");
                 if (!useGTM) {
+                    // gtag() function is already added by GTM script, so we add it again only if GTM isn't enabled.
+                    script.AppendLine("function gtag() {");
+                    script.AppendLine("    window.dataLayer = window.dataLayer || [];");
+                    script.AppendLine("    dataLayer.push(arguments);");
+                    script.AppendLine("}");
+
                     // If GTM isn't enabled, add cookie management to the script.
                     // If it's enabled, the following script has already been added to the page.
                     // --- BEGIN COOKIE MANAGEMENT
@@ -190,6 +248,16 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     script.AppendLine("			'statisticalCookiesAccepted': false,");
                     script.AppendLine("			'marketingCookiesAccepted': false");
                     script.AppendLine("		});");
+                    // Reset Google storage options.
+                    script.AppendLine("     gtag(");
+                    script.AppendLine("         'consent', 'default', {");
+                    script.AppendLine("             'ad_storage': 'denied',");
+                    script.AppendLine("             'functionality_storage': 'denied',");
+                    script.AppendLine("             'security_storage': 'granted',");
+                    script.AppendLine("             'personalization_storage': 'denied',");
+                    script.AppendLine("             'analytics_storage': 'denied'");
+                    script.AppendLine("	    });");
+                    script.AppendLine("     window['ga-disable-" + gaSettings.GoogleAnalyticsKey + "'] = true");
                     script.AppendLine("	})");
                     script.AppendLine("	.on('cookieConsent.accept', function(e, options) {");
                     script.AppendLine("		window.dataLayer.push({");
@@ -198,10 +266,39 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     script.AppendLine("			'statisticalCookiesAccepted': options.statistical,");
                     script.AppendLine("			'marketingCookiesAccepted': options.marketing");
                     script.AppendLine("		});");
+                    // Update Google storage options.
+                    script.AppendLine("     var ad = 'denied';");
+                    script.AppendLine("     var personalization = 'denied';");
+                    script.AppendLine("     var analytics = 'denied';");
+                    script.AppendLine("     if (options.marketing) {");
+                    script.AppendLine("         ad = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     if (options.preferences) {");
+                    script.AppendLine("         personalization = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     if (options.statistical) {");
+                    script.AppendLine("         analytics = 'granted';");
+                    script.AppendLine("     }");
+                    script.AppendLine("     gtag('consent', 'update', {");
+                    script.AppendLine("         'ad_storage': ad,");
+                    script.AppendLine("         'personalization_storage': personalization,");
+                    script.AppendLine("         'analytics_storage': analytics");
+                    script.AppendLine("	    });");
+                    // Reinject cookies if required cookies have been allowed
+                    // or disable tracking.
+                    if (!string.IsNullOrWhiteSpace(cookieOptions)) {
+                        script.AppendLine("if (" + cookieOptions + ") {");
+                        script.AppendLine("     window['ga-disable-" + gaSettings.GoogleAnalyticsKey + "'] = false;");
+                        script.AppendLine("     gtag('config', '" + gaSettings.GoogleAnalyticsKey + "');");
+                        script.AppendLine("}");
+                        script.AppendLine("else {");
+                        script.AppendLine("     window['ga-disable-" + gaSettings.GoogleAnalyticsKey + "'] = true;");
+                        script.AppendLine("}");
+                    }
                     script.AppendLine("	});");
                     // done handlers for changes in cookie consent
                     // tag manager consent settings
-                    script.AppendLine("window.dataLayer.push(");
+                    script.AppendLine("gtag(");
                     script.AppendLine("    'consent', 'default', {");
                     script.AppendLine("        'ad_storage': 'denied',");
                     script.AppendLine("        'functionality_storage': 'denied',");
@@ -212,7 +309,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                     if (allowedTypes.Contains(CookieType.Statistical)
                         || allowedTypes.Contains(CookieType.Marketing)
                         || allowedTypes.Contains(CookieType.Preferences)) {
-                        script.AppendLine("window.dataLayer.push('consent', 'update', {");
+                        script.AppendLine("gtag('consent', 'update', {");
                         if (allowedTypes.Contains(CookieType.Marketing)) {
                             script.AppendLine("    'ad_storage': 'granted',");
                         }
@@ -224,13 +321,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                         }
                         script.AppendLine("	});");
                     }
-                    // --- END COOKIE MANAGEMENT
-
-                    // gtag() function is already added by GTM script, so we add it again only if GTM isn't enabled.
-                    script.AppendLine("function gtag() {");
-                    script.AppendLine("    window.dataLayer = window.dataLayer || [];");
-                    script.AppendLine("    dataLayer.push(arguments);");
-                    script.AppendLine("}");
+                    // --- END COOKIE MANAGEMENT                    
                 }
                 script.AppendLine("gtag('js', new Date());");
                 script.AppendLine("gtag('config', '" + gaSettings.GoogleAnalyticsKey + "');");
@@ -239,7 +330,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 script.AppendLine("</script>");
 
                 return script.ToString();
-            } else if (!useGTM && ua) {
+            } else if (ua && cookiesOk) {
                 StringBuilder script = new StringBuilder();
                 script.AppendLine("<!-- Google Analytics -->");
                 script.AppendLine("<script async src='//www.google-analytics.com/analytics.js'></script>");
@@ -271,17 +362,9 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
                 // Register Google's new, recommended asynchronous universal analytics script to the header
                 return script.ToString();
             } else {
-                StringBuilder script = new StringBuilder();
-                script.AppendLine("<script>");
-                script.AppendLine("window.useGA4 = 0;");
-                if (ua) {
-                    script.AppendLine("window.useUA = 1;");
-                }
-                script.AppendLine("</script>");
-                return script.ToString();
+                // This should never happen because, when no GA4 or UA are active, this function should not be executed in the first place.
+                return GetNoAnalyticsScript();
             }
-
-            return "";
         }
 
         private string GoogleTagManagerScript(IList<CookieType> allowedTypes) {
@@ -381,7 +464,7 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
             return string.Empty;
         }
 
-        public string GetNoScript() {
+        public string GetNoScript(IList<CookieType> allowedTypes) {
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
@@ -399,7 +482,6 @@ namespace Laser.Orchard.GoogleAnalytics.Services {
 
             // Tag manager deployment
             if (useGTM) {
-
                 var snippet = new StringBuilder();
 
                 snippet.AppendLine("<!-- Google Tag Manager (noscript) -->");
