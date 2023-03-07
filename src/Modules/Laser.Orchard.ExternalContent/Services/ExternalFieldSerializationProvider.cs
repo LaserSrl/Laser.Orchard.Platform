@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Web;
 using System.Web.Helpers;
@@ -128,7 +129,7 @@ namespace Laser.Orchard.ExternalContent.Services {
              * */
             // To begin with, we should remove all the "ToRemove" levels".
             var contentObject = CleanContentObject(field.ContentObject);
-            if (contentObject == null) {
+            if (contentObject == null || String.IsNullOrEmpty(contentObject.ToString())) {
                 return; // sanity check
             }
             var transformedObject = new List<dynamic>();
@@ -187,12 +188,15 @@ namespace Laser.Orchard.ExternalContent.Services {
 
         private dynamic CleanContentObject(dynamic objec) {
             if (objec != null)
-                if (objec.ToRemove != null) {
-                    return CleanContentObject(objec.ToRemove);
+                try {
+                    if (objec.ToRemove != null) {
+                        return CleanContentObject(objec.ToRemove);
+                    }
                 }
+                catch { };
             return objec;
         }
-        
+
         private void PopulateJObject(
             ref JObject jObject,
             object val,
