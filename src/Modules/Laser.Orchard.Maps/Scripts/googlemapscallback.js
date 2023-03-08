@@ -1,4 +1,4 @@
-﻿function InitializeMaps() {
+﻿function InitializeGoogleMaps() {
     $("[data-map-provider='google']").each(function () {
         var mapId = $(this).attr("data-map-id");
         if (mapId) {

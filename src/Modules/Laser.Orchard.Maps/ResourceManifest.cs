@@ -28,12 +28,14 @@ namespace Laser.Orchard.Maps {
             manifest.DefineScript("GoogleMapsApiCallback")
                 .SetUrl("googlemapscallback.js");
             manifest.DefineScript("GoogleMapsAPI")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps);
-            manifest.DefineScript("GoogleMapsAPI_callback")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMaps")
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeGoogleMaps")
                 .AddAttribute("async", "async")
                 .AddAttribute("defer", "defer")
                 .SetDependencies("GoogleMapsApiCallback");
+            manifest.DefineScript("GoogleMapsAPI_callback")
+                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap")
+                .AddAttribute("async", "async")
+                .AddAttribute("defer", "defer");
             manifest.DefineScript("GoogleMapsAPIMarkerSpiderfier_callback")
                  .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js?spiderfier_callback=InitializeMap")
                  .AddAttribute("async", "async")
