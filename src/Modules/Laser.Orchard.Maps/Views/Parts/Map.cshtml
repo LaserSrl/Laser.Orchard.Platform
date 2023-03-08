@@ -3,7 +3,7 @@
 
 
 @{
-    Script.Require("GoogleMapsAPI").AtHead();
+    Script.Require("GoogleMapsAPI_callback").AtHead();
 
 
 
@@ -89,7 +89,7 @@
                 google.maps.event.trigger(map, 'resize');
             }
 
-            google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+            //google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
         </script>
     }
     <fieldset class="map">
@@ -100,7 +100,7 @@
         @if (Model.LocationAddress != String.Empty) {
             <div class="map-locationaddress">@Model.LocationAddress</div>
         }
-        <div class="map-canvas" id="map_canvas-@ID">
+        <div class="map-canvas" data-map-provider="google" data-map-id="@ID" id="map_canvas-@ID">
         </div>
     </fieldset>
 }

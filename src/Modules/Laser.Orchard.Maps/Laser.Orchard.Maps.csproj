@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Contents\default-pin.png" />
+    <Content Include="Scripts\googlemapscallback.js" />
     <Content Include="Scripts\maps.js" />
     <Content Include="Scripts\markerclusterer.js" />
     <Content Include="Scripts\ol-geocoder.js" />
