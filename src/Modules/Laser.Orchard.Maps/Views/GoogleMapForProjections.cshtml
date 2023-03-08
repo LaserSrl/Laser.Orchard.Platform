@@ -72,11 +72,11 @@
             }
             map.fitBounds(bounds);
         }
-        google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+        //google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
     </script>
         }
     <fieldset class="map">
-        <div class="map-canvas" id="map_canvas-@ID">
+        <div class="map-canvas" data-map-provider="google" data-map-id="@ID" id="map_canvas-@ID">
         </div>
     </fieldset>
     }
