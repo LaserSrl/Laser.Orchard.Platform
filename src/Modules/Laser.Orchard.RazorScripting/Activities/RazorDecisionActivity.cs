@@ -53,7 +53,8 @@ namespace Laser.Orchard.RazorScripting.Activities {
         public override IEnumerable<LocalizedString> Execute(WorkflowContext workflowContext, ActivityContext activityContext) {
             string script = Json.Decode(activityContext.Record.State).RazorScript;
             //  var script = "@{" + activityContext.GetState<string>("RazorScript") + "}"; Orchard mi elimina il codice scritto nelle graffe
-            string outcome = _razorExecuteService.ExecuteString(script, (dynamic)workflowContext.Content.ContentItem, null);
+            // Null check on Content, that can be null for some events.
+            string outcome = _razorExecuteService.ExecuteString(script, (dynamic)workflowContext.Content?.ContentItem, workflowContext.Tokens);
             outcome = (outcome ?? "").Replace("\r\n", "");
             yield return T.Encode(Convert.ToString(outcome));
         }
