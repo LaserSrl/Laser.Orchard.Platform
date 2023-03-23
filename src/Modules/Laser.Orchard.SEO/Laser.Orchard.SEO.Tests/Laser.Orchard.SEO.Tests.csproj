@@ -85,22 +85,27 @@
     <ProjectReference Include="..\..\..\..\..\Orchard\src\Orchard.Tests.Modules\Orchard.Tests.Modules.csproj">
       <Project>{6cb3eb30-f725-45c0-9742-42599ba8e8d2}</Project>
       <Name>Orchard.Tests.Modules</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Orchard\src\Orchard.Tests\Orchard.Framework.Tests.csproj">
       <Project>{abc826d4-2fa1-4f2f-87de-e6095f653810}</Project>
       <Name>Orchard.Framework.Tests</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.SEO.csproj">
       <Project>{3512D074-E5B4-4F06-AD78-A6117DAC8334}</Project>
       <Name>Laser.Orchard.SEO</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

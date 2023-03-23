@@ -18,5 +18,5 @@
     }
     @String.Format(T("For this site exists the '{0}' mobile App on {1}. Do you want to download it?").Text, Model.AppName, storeName)
     @Html.ActionLink(T("Yes").Text, "Url", "AppStoreRedirect", new { Area = "Laser.Orchard.Mobile", url = Model.Store.RedirectUrl, appName = Model.AppName }, null)
-    @Html.ActionLink(T("No").Text, "Url", "AppStoreRedirect", new { Area = "Laser.Orchard.Mobile", url = "", appName = Model.AppName }, null)*@
+    @Html.ActionLink(T("No").Text, "Url", "AppStoreRedirect", new { Area = "Laser.Orchard.Mobile", url = "", appName = Model.AppName }, null)
 </div>
