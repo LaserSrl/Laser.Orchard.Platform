@@ -73,15 +73,14 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                 config.Debug = true;
 #endif
                 string result = "";
-                using (var service = RazorEngineService.Create(config)) {
-                    var model = new RazorModelContext {
-                        OrchardServices = _orchardServices,
-                        ContentItem = content,
-                        Tokens = tokens ?? new Dictionary<string, object>(),
-                        T = T
-                    };
-                    result = service.RunCompile(new LoadedTemplateSource(codeTemplate, null), "htmlRawTemplatea", null, (Object)model);
-                }
+                _razorTemplateManager.StartNewRazorEngine();
+                var model = new RazorModelContext {
+                    OrchardServices = _orchardServices,
+                    ContentItem = content,
+                    Tokens = tokens ?? new Dictionary<string, object>(),
+                    T = T
+                };
+                result = _razorTemplateManager.RunString(Guid.NewGuid().ToString(), codeTemplate, (Object)model, null, "htmlRawTemplate");
                 string resultnobr = result.Replace("\r\n", "").Replace(" ", "");
                 if (!string.IsNullOrEmpty(resultnobr)) {
                     return result;
