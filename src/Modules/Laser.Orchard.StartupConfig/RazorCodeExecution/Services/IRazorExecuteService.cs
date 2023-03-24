@@ -15,6 +15,7 @@ using Orchard.Workflows.Models;
 using RazorEngine;
 using Laser.Orchard.StartupConfig.Models;
 using Laser.Orchard.StartupConfig.RazorBase.Services;
+using System.Security.Cryptography;
 
 namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
 
@@ -73,15 +74,20 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                 config.Debug = true;
 #endif
                 string result = "";
-                using (var service = RazorEngineService.Create(config)) {
-                    var model = new RazorModelContext {
-                        OrchardServices = _orchardServices,
-                        ContentItem = content,
-                        Tokens = tokens ?? new Dictionary<string, object>(),
-                        T = T
-                    };
-                    result = service.RunCompile(new LoadedTemplateSource(codeTemplate, null), "htmlRawTemplatea", null, (Object)model);
+                _razorTemplateManager.StartNewRazorEngine();
+                var model = new RazorModelContext {
+                    OrchardServices = _orchardServices,
+                    ContentItem = content,
+                    Tokens = tokens ?? new Dictionary<string, object>(),
+                    T = T
+                };
+                var cacheKey = Guid.NewGuid().ToString();
+                using (var md5 = MD5.Create()) {
+                    var hashBytes = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(codeTemplate));
+                    cacheKey = Convert.ToBase64String(hashBytes);
                 }
+
+                result = _razorTemplateManager.RunString(cacheKey, codeTemplate, (Object)model, null, "htmlRawTemplate");
                 string resultnobr = result.Replace("\r\n", "").Replace(" ", "");
                 if (!string.IsNullOrEmpty(resultnobr)) {
                     return result;
