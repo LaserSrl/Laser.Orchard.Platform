@@ -250,8 +250,17 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             if (Directory.Exists(razorReferencesFolder)) {
                 var dlls = Directory.GetFiles(razorReferencesFolder, "*.dll");
                 foreach (var dll in dlls) {
-                    var reference = CompilerReference.From(Path.Combine(razorReferencesFolder, dll));
-                    if (!AssemblyToReference.Contains(reference)) {
+                    // don't add the dll to the references if it's already there
+                    if (!(AssemblyToReference.Any(ar => {
+                        try {
+                            var fileName = ar.GetFile();
+                            return string.Equals(Path.GetFileName(dll), Path.GetFileName(fileName));
+                        }
+                        catch (Exception) {
+                            return false;
+                        }
+                    }))) {
+                        var reference = CompilerReference.From(dll);
                         yield return reference;
                     }
                 }
