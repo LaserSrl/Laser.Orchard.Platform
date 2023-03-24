@@ -89,19 +89,21 @@
                 google.maps.event.trigger(map, 'resize');
             }
 
-            google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+            //google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
         </script>
     }
-    <fieldset class="map">
-        <legend class="map-legend">@T("Map")</legend>
-        @if (Model.LocationInfo != String.Empty) {
-            <div class="map-locationinfo">@Model.LocationInfo</div>
-        }
-        @if (Model.LocationAddress != String.Empty) {
-            <div class="map-locationaddress">@Model.LocationAddress</div>
-        }
-        <div class="map-canvas" id="map_canvas-@ID">
-        </div>
-    </fieldset>
+<fieldset class="map">
+    <legend class="map-legend">@T("Map")</legend>
+    @if (Model.LocationInfo != String.Empty) {
+        <div class="map-locationinfo">@Model.LocationInfo</div>
+    }
+    @if (Model.LocationAddress != String.Empty) {
+        <div class="map-locationaddress">@Model.LocationAddress</div>
+    }
+    @* data-map-provider and data-map-id attributes are needed to properly initialize the map via the Google Maps Api callback
+        that looks for the "initializeSuffix" function (data-map-id value is the Suffix for the function name). *@
+    <div class="map-canvas" data-map-provider="google" data-map-id="@ID" id="map_canvas-@ID">
+    </div>
+</fieldset>
 }
 

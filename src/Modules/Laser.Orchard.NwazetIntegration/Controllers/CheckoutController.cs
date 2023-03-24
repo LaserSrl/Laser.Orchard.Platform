@@ -535,6 +535,13 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             // probably be agnostic on the step it's called in and simply make sure all information 
             // in the viewmodel can be accessed without sideeffects by the rest of the system.
             // This operation includes reinflating the addresses as stored by each provider.
+            // If model state is empty, ReinflateState crashes with a exception when trying to decode it.
+            // For this reason, redirect to checkout Index.
+            // This happens when clicking "back" from the payment page 
+            // and when linking to the review action without the proper information.
+            if (model != null && string.IsNullOrWhiteSpace(model.State)) {
+                return RedirectToAction("Index");
+            }
             model.ReinflateState(
                 _contentManager,
                 _addressConfigurationService,

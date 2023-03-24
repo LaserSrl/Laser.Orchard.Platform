@@ -42,8 +42,10 @@ namespace Laser.Orchard.StartupConfig.Navigation
             var menu = menuItem.Menu;
             int level = menuItem.Level;
             AddAlternates(alternates, "SimpleMenuItem");
-            AddAlternates(alternates, "SimpleMenuItem__" + EncodeAlternateElement(menu.MenuName));
-            AddAlternates(alternates, "SimpleMenuItem__" + EncodeAlternateElement(menu.MenuName) + "__level__" + level);
+            if (menu != null) {
+                AddAlternates(alternates, "SimpleMenuItem__" + EncodeAlternateElement(menu.MenuName));
+                AddAlternates(alternates, "SimpleMenuItem__" + EncodeAlternateElement(menu.MenuName) + "__level__" + level);
+            }
         }
 
         private static void AddMenuItemLinkAlternates(ShapeDisplayingContext displayedContext) {

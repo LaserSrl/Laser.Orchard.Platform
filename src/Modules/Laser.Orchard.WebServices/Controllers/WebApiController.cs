@@ -156,7 +156,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                     values["controller"].ToString().ToLowerInvariant().Equals("webapi") &&
                     values["action"].ToString().ToLowerInvariant().Equals("display")) {
                     var alias = _request.QueryString["alias"];
-                    if (alias.ToLower() == "user+info" || alias.ToLower() == "user info") {
+                    if (!string.IsNullOrWhiteSpace(alias) && (alias.ToLower() == "user+info" || alias.ToLower() == "user info")) {
                         var currentUser = _authenticationService.GetAuthenticatedUser();
                         if (currentUser != null) {
                             key.Append("user:" + currentUser.Id + ";");

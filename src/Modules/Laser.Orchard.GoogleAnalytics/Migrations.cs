@@ -57,5 +57,16 @@ namespace Laser.Orchard.GoogleAnalytics {
                 table => table.AddColumn<string>("CookieLevel"));
             return 6;
         }
+
+        public int UpdateFrom6() {
+            SchemaBuilder.AlterTable("GoogleAnalyticsSettingsPartRecord",
+                table => table.AddColumn<string>("GTMContainerId"));
+            SchemaBuilder.AlterTable("GoogleAnalyticsSettingsPartRecord",
+                table => table.AddColumn<bool>("TrackGTMOnAdmin"));
+            SchemaBuilder.AlterTable("GoogleAnalyticsSettingsPartRecord",
+                table => table.AddColumn<bool>("TrackGTMOnFrontEnd"));
+
+            return 7;
+        }
     }
 }

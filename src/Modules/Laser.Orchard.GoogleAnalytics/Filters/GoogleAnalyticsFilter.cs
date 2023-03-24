@@ -1,4 +1,5 @@
-﻿using Laser.Orchard.GoogleAnalytics.Models;
+﻿using Laser.Orchard.Cookies.Services;
+using Laser.Orchard.GoogleAnalytics.Models;
 using Laser.Orchard.GoogleAnalytics.Services;
 using Laser.Orchard.GoogleAnalytics.ViewModels;
 using Orchard;
@@ -23,15 +24,17 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
         private readonly dynamic _shapeFactory;
+        private readonly ICookieManagerProviderService _cookieManagerProviderService;
 
         public GoogleAnalyticsFilter(
-            IResourceManager resourceManager, 
-            IOrchardServices orchardServices, 
+            IResourceManager resourceManager,
+            IOrchardServices orchardServices,
             IGoogleAnalyticsCookie googleAnalyticsCookie,
             IWorkContextAccessor workContextAccessor,
             ICacheManager cacheManager,
             ISignals signals,
-            IShapeFactory shapeFactory) {
+            IShapeFactory shapeFactory,
+            ICookieManagerProviderService cookieManagerProviderService) {
 
             _resourceManager = resourceManager;
             _orchardServices = orchardServices;
@@ -40,6 +43,7 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
             _cacheManager = cacheManager;
             _signals = signals;
             _shapeFactory = shapeFactory;
+            _cookieManagerProviderService = cookieManagerProviderService;
         }
 
         #region IResultFilter Members
@@ -51,24 +55,31 @@ namespace Laser.Orchard.GoogleAnalytics.Filters {
 
             //Determine if we're on an admin page
             bool isAdmin = OUI.Admin.AdminFilter.IsApplied(filterContext.RequestContext);
+
+            bool addScript = (SettingsPart != null);
+            bool addGTM = false;
+            bool addAnalytics = false;
+
+            // Checking addScript variable ensures SettingsPart is not null and avoid exceptions.
+            if (addScript) {
+                addGTM = (!string.IsNullOrWhiteSpace(SettingsPart.GTMContainerId) &&
+                    ((SettingsPart.TrackGTMOnAdmin && isAdmin) || (SettingsPart.TrackGTMOnFrontEnd && !isAdmin)));
+                addAnalytics = (!string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey) &&
+                    ((SettingsPart.TrackOnAdmin && isAdmin) || (SettingsPart.TrackOnFrontEnd && !isAdmin)));
+            }
+
             // This is designed to only run in the admin, because frontend scripts are
             // handled by the module for GDPR cookies
-            if (SettingsPart != null 
-                && SettingsPart.TrackOnAdmin 
-                && isAdmin 
-                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)) {
+            // From 2023-02-27 implementation, this also works at frontend because it's not bound anymore to CookieLawWidget.
+            if (addScript && (addGTM || addAnalytics)) {
                 // Register Google's new, recommended asynchronous universal analytics script to the header
                 // (or the tag manager script if we have that configuration)
-                _resourceManager.RegisterHeadScript(
-                    _googleAnalyticsCookie.GetHeadScript(_googleAnalyticsCookie.GetCookieTypes()));
+                _resourceManager.RegisterHeadScript(_googleAnalyticsCookie.GetHeadScript(_cookieManagerProviderService.GetAcceptedCookieTypes()));
             }
 
             // add the <noscript> element for tagmanager
-            if (SettingsPart != null
-                && !string.IsNullOrWhiteSpace(SettingsPart.GoogleAnalyticsKey)
-                && ((isAdmin && SettingsPart.TrackOnAdmin) || (!isAdmin && SettingsPart.TrackOnFrontEnd))) {
-
-                var snippet = _googleAnalyticsCookie.GetNoScript();
+            if (addScript && (addGTM || addAnalytics)) {
+                var snippet = _googleAnalyticsCookie.GetNoScript(_cookieManagerProviderService.GetAcceptedCookieTypes());
                 if (!string.IsNullOrWhiteSpace(snippet)) {
                     var noscript = new HtmlString(snippet);
                     // write that to the top of the page, immediately after the opening <body> tag
