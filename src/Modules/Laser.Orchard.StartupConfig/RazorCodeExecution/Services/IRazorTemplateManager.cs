@@ -252,7 +252,7 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                 foreach (var dll in dlls) {
                     var reference = CompilerReference.From(Path.Combine(razorReferencesFolder, dll));
                     if (!AssemblyToReference.Contains(reference)) {
-                        yield return CompilerReference.From(Path.Combine(razorReferencesFolder, dll));
+                        yield return CompilerReference.From(reference);
                     }
                 }
             }
