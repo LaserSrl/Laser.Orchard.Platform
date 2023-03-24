@@ -9,8 +9,8 @@ function InitializeGoogleMaps() {
     $("[data-map-provider='google']").each(function () {
         var mapId = $(this).attr("data-map-id");
         if (mapId) {
-            $(document).ready(function (mapId) {
-                var functionName = "initialize" + mapId;
+            var functionName = "initialize" + mapId;
+            $(document).ready(function () {
                 window[functionName]();
             });
         }
