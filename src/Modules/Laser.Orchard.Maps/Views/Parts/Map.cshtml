@@ -36,7 +36,9 @@
 @if (Model.Latitude > 0) {
     using (Script.Foot()) {
         <script type="text/javascript">
-            function @("initialize" + ID + "()") {
+            async function @("initialize" + ID + "()") {
+                const { Map } = await google.maps.importLibrary("maps");
+
                 var mapOptions = {
                 scaleControl: true,
                 center: new google.maps.LatLng(@Model.Latitude.ToString().Replace(",", "."),@Model.Longitude.ToString().Replace(",", ".")),
@@ -51,7 +53,7 @@
                     }
                 };
 
-                var map = new google.maps.Map(document.getElementById('map_canvas-@ID'), mapOptions);
+                var map = new Map(document.getElementById('map_canvas-@ID'), mapOptions);
                 @if (httpTiles) { //Define OSM map type pointing at the OpenStreetMap tile server
                     <text>
                     map.mapTypes.set("OSM", new google.maps.ImageMapType({
