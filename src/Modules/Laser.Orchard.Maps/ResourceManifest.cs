@@ -27,11 +27,14 @@ namespace Laser.Orchard.Maps {
             //Scripts
             manifest.DefineScript("GoogleMapsApiCallback")
                 .SetUrl("googlemapscallback.js");
+            //manifest.DefineScript("GoogleMapsAPI")
+            //    .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeGoogleMaps")
+            //    .AddAttribute("async", "async")
+            //    .AddAttribute("defer", "defer")
+            //    .SetDependencies("GoogleMapsApiCallback");
             manifest.DefineScript("GoogleMapsAPI")
-                .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeGoogleMaps")
-                .AddAttribute("async", "async")
-                .AddAttribute("defer", "defer")
-                .SetDependencies("GoogleMapsApiCallback");
+                .SetUrl("googlemapsapiloader.js?key=" + apiKey + languageQueryStringForGoogleMaps)
+                .AddAttribute("googlemapsloader", "googlemapsloader");
             manifest.DefineScript("GoogleMapsAPI_callback")
                 .SetUrl("https://maps.googleapis.com/maps/api/js?v=3&key=" + apiKey + languageQueryStringForGoogleMaps + "&callback=InitializeMap")
                 .AddAttribute("async", "async")
