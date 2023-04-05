@@ -6,7 +6,6 @@
     Script.Require("GoogleMapsAPI").AtHead();
 
 
-
     Script.Require("LaserOrchardMaps").AtHead();
     Style.Require("GoogleMaps").AtHead();
 
@@ -91,6 +90,7 @@
                 google.maps.event.trigger(map, 'resize');
             }
 
+            @("initialize" + ID + "();")
             //google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
         </script>
     }
