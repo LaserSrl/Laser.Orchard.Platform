@@ -93,37 +93,40 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
 
             if (check == true) {
+
+                var authorized = false;
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
 
-                // Get valid ExternalApplication with the provided Api Channel.
+                // New validation methods for API using authorized websites or IP addresses.
+                // These new methos require a valid ApiChannel
                 if (!string.IsNullOrWhiteSpace(myApiChannel)) {
                     var app = CurrentSettings.ExternalApplicationList.ExternalApplications
                         .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
-
-                    if (app != null) {
-                        if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
-                            additionalCacheKey = "AuthorizedApi";
-                        } else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
-                            additionalCacheKey = "AuthorizedApi";
-                        } else {
-                            // If referer and ip address are not authorized, check the api key.
-                            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
-                            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                            if (!TryValidateKey(
-                                    myApikey, myAkiv,
-                                    (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
-                                    myApiChannel)) {
-                                additionalCacheKey = "UnauthorizedApi";
-                            } else {
-                                additionalCacheKey = "AuthorizedApi";
-                            }
-                        }
-                    } else {
-                        additionalCacheKey = "UnauthorizedApi";
+                    if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
+                        authorized = true;
                     }
-                } else {
-                    additionalCacheKey = "UnauthorizedApi";
+                    else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
+                        authorized = true;
+                    }
                 }
+                // If we haven't authorized the call yet, check apikey. This includes legacy support
+                // for the situation where ApiChannel was null.
+                if (!authorized) {
+                    // If referer and ip address are not authorized, check the api key.
+                    var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
+                    var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
+                    if (!TryValidateKey(
+                            myApikey, myAkiv,
+                            (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
+                            myApiChannel)) {
+                        authorized = false;
+                    }
+                    else {
+                        authorized = true;
+                    }
+                }
+
+                additionalCacheKey = authorized ? "AuthorizedApi" : "UnauthorizedApi";
             }
             return additionalCacheKey;
         }
