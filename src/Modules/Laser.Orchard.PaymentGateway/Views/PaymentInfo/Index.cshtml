@@ -30,6 +30,10 @@
                 else {
                     if (string.IsNullOrWhiteSpace(rec.PosName)) {
                         outcome = T("Abandoned").ToString();
+                    } else {
+                        if (string.IsNullOrWhiteSpace(rec.Error) && string.IsNullOrWhiteSpace(rec.TransactionId)) {
+                            outcome = T("Waiting for payment").ToString();
+                        }
                     }
                 }
                 <tr>

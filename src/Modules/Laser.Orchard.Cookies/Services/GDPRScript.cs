@@ -14,11 +14,16 @@ namespace Laser.Orchard.Cookies.Services {
         private readonly IOrchardServices _orchardServices;
         private List<CookieType> orderedTypes = new List<CookieType>() { CookieType.Technical, CookieType.Preferences, CookieType.Statistical, CookieType.Marketing };
         private IEnumerable<ICookieGDPR> _cookies;
+        private ICookieManagerProviderService _cookieManagerProviderService;
         public Localizer T { get; set; }
 
-        public GDPRScript(IEnumerable<ICookieGDPR> cookies, IOrchardServices orchardServices) {
+        public GDPRScript(IEnumerable<ICookieGDPR> cookies, 
+            IOrchardServices orchardServices,
+            ICookieManagerProviderService cookieManagerProviderService) {
             _cookies = cookies;
             _orchardServices = orchardServices;
+            _cookieManagerProviderService = cookieManagerProviderService;
+
             T = NullLocalizer.Instance;
         }
         /// <summary>
@@ -156,27 +161,28 @@ namespace Laser.Orchard.Cookies.Services {
         /// </summary>
         /// <returns></returns>
         public IList<CookieType> GetAcceptedCookieTypes() {
-            var result = new List<CookieType>();
-            // accepted by default
-            result.Add(CookieType.Technical);
+            return _cookieManagerProviderService.GetAcceptedCookieTypes();
+            //var result = new List<CookieType>();
+            //// accepted by default
+            //result.Add(CookieType.Technical);
 
-            var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
-            if (cookie != null) {
-                var arrVal = cookie.Value.Split('.');
-                if (arrVal != null && arrVal.Length > 1) {
-                    var arrCheck = arrVal[1];
-                    if (arrCheck.Length > 0 && arrCheck[0] == '1') {
-                        result.Add(CookieType.Preferences);
-                    }
-                    if (arrCheck.Length > 1 && arrCheck[1] == '1') {
-                        result.Add(CookieType.Statistical);
-                    }
-                    if (arrCheck.Length > 2 && arrCheck[2] == '1') {
-                        result.Add(CookieType.Marketing);
-                    }
-                }
-            }
-            return result;
+            //var cookie = HttpContext.Current.Request.Cookies["cc_cookie_accept"];
+            //if (cookie != null) {
+            //    var arrVal = cookie.Value.Split('.');
+            //    if (arrVal != null && arrVal.Length > 1) {
+            //        var arrCheck = arrVal[1];
+            //        if (arrCheck.Length > 0 && arrCheck[0] == '1') {
+            //            result.Add(CookieType.Preferences);
+            //        }
+            //        if (arrCheck.Length > 1 && arrCheck[1] == '1') {
+            //            result.Add(CookieType.Statistical);
+            //        }
+            //        if (arrCheck.Length > 2 && arrCheck[2] == '1') {
+            //            result.Add(CookieType.Marketing);
+            //        }
+            //    }
+            //}
+            //return result;
         }
     }
 }
