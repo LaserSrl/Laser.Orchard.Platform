@@ -23,6 +23,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         public ILogger Logger;
         private ICacheStorageProvider _cacheStorage;
         private readonly IApiKeySettingService _apiKeySettingService;
+
+        // we use this constant array for trimming URI segments
+        private static char[] _slash = { '/' };
+
         public ApiKeyService(ShellSettings shellSettings, IOrchardServices orchardServices, ICacheStorageProvider cacheManager, IApiKeySettingService apiKeySettingService) {
             _apiKeySettingService = apiKeySettingService;
             _shellSettings = shellSettings;
@@ -148,23 +152,47 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
         private bool CheckReferer(ExternalApplication app) {
+            // See the ValidationAttributes of the ExternalApplication class for a discussion
+            // on the validation of the string used for URL Referer configuration.
             var currentReferer = _request.ServerVariables["HTTP_REFERER"];
             if (string.IsNullOrWhiteSpace(currentReferer)) {
                 return false;
             }
 
             var websites = app.ApiKey.Split(',');
-            // If no website is specified
-            if (websites.Length == 0) {
-                return false;
-            }
-
-            foreach (var website in websites) {
-                if (currentReferer.StartsWith(website)) {
-                    return true;
+            if (websites.Any()) {
+                var refererUri = new Uri(currentReferer);
+                foreach (var website in websites) {
+                    // The test here cannot simply be a comparison between the strings.
+                    var websiteUri = new Uri(website);
+                    // Compare uris by Scheme (http/https), host, port
+                    if (Uri.Compare(refererUri, websiteUri, UriComponents.SchemeAndServer, UriFormat.Unescaped, StringComparison.OrdinalIgnoreCase) == 0) {
+                        // Compare uris by segments:
+                        // https://learn.microsoft.com/en-us/dotnet/api/system.uri.segments?view=netframework-4.8.1
+                        // the segments from the website (the one configured in the application) must match exactly,
+                        // also in the same order, the segments from the referer. Note that because of how segments are
+                        // defined/built by the framework, the last significant one for us may actually be different,
+                        // since it may have a trailing '/' character.
+                        if (refererUri.Segments.Length >= websiteUri.Segments.Length) {
+                            int i = 0;
+                            for (; i < websiteUri.Segments.Length; i++) {
+                                var webSegment = websiteUri.Segments[i].TrimEnd(_slash);
+                                var refSegment = refererUri.Segments[i].TrimEnd(_slash);
+                                if (!string.Equals(webSegment, refSegment, StringComparison.OrdinalIgnoreCase)) {
+                                    // If the segments don't match, break out and stop testing this website
+                                    // for the referer
+                                    break;
+                                }
+                            }
+                            if (i == websiteUri.Segments.Length) {
+                                // All segments matched, so the referer matches this configured website
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
-
+            // We found no configured website that matched the referer
             return false;
         }
 
