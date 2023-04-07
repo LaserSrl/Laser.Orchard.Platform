@@ -152,6 +152,7 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
 
             foreach (var ip in ips) {
                 var mask = ip.Split('.'); 
+                // TODO: this only validates IPv4. Extend to make this IPv4 compatible in the future.
                 if (mask.Length != 4) {
                     return false;
                 }

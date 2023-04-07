@@ -47,7 +47,7 @@
                 break;
 
             case "IpAddress":
-                $("#@Html.FieldIdFor(m => m.ApiKey)").attr("placeholder", "@T("Ip addresses, separated by comma")");
+                $("#@Html.FieldIdFor(m => m.ApiKey)").attr("placeholder", "@T("Ip addresses, separated by comma. The last digit may be a * to represent a range of IPs. This only accepts IPv4.")");
                 $("#@genKeyDivId").hide();
                 break;
 

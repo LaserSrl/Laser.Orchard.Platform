@@ -102,11 +102,13 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (!string.IsNullOrWhiteSpace(myApiChannel)) {
                     var app = CurrentSettings.ExternalApplicationList.ExternalApplications
                         .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
-                    if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
-                        authorized = true;
-                    }
-                    else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
-                        authorized = true;
+                    if (app != null) {
+                        if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
+                            authorized = true;
+                        }
+                        else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
+                            authorized = true;
+                        }
                     }
                 }
                 // If we haven't authorized the call yet, check apikey. This includes legacy support
