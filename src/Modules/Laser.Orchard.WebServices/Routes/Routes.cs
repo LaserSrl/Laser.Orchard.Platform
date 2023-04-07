@@ -49,7 +49,7 @@ namespace Laser.Orchard.WebServices.Routes {
                         },
                         new MvcRouteHandler())
                 },
-                 new RouteDescriptor {
+                new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
                         "webapi/v2/terms/display/{*alias}",
