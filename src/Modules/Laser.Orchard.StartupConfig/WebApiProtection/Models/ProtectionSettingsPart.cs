@@ -136,6 +136,20 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
             } 
 
             foreach(var website in websites) {
+                // This is only a formal validation. This string may not be the domain, but rather
+                // the URL of a page or section, meaning that in principle we may be configuring
+                // an application to be a specific section of a website, e.g. https://www.site.com/it/area/
+                // Careful that the test in ApiKeyService can't be done with a StartsWith, so if this
+                // string does not end with a separator (e.g. a '/' character) we may end up testing
+                // something wrong:
+                // Example:
+                // here website = "https://www.site.com/it" tests true.
+                // A call from https://www.site.com/ita would appear to be from a valid URL referer,
+                // but it's not.
+                // However, things aren't as simple as adding a '/' at the end, because both these URLs
+                // should be valid URL referers:
+                //   - https://www.site.com/it/asd
+                //   - https://www.site.com/it?myquerystring=values
                 if (!Uri.IsWellFormedUriString(website, UriKind.Absolute)) {
                     return false;   
                 }
@@ -152,6 +166,7 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
 
             foreach (var ip in ips) {
                 var mask = ip.Split('.'); 
+                // TODO: this only validates IPv4. Extend to make this IPv4 compatible in the future.
                 if (mask.Length != 4) {
                     return false;
                 }
