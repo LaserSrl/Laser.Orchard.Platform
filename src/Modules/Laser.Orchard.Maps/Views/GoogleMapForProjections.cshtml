@@ -32,7 +32,9 @@
     if (contents.Any()) {
         using (Script.Foot()) {
     <script type="text/javascript">
-        function @("initialize" + ID + "()") {
+        async function @("initialize" + ID + "()") {
+            const { Map } = await google.maps.importLibrary("maps");
+
             var bounds = new google.maps.LatLngBounds();
             var mapOptions = {
                 scaleControl: true,
@@ -42,7 +44,7 @@
             var locations = [
                 @Html.Raw(String.Join(",", locationsList))
             ];
-            var map = new google.maps.Map(document.getElementById('map_canvas-@ID'), mapOptions);
+            var map = new Map(document.getElementById('map_canvas-@ID'), mapOptions);
 
             var infowindow = new google.maps.InfoWindow();
 

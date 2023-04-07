@@ -20,9 +20,9 @@
         var map;
         var marker;
         initMap();
-        function initMap() {
-
-            map = new google.maps.Map(document.getElementById('gmap'), {
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            map = Map(document.getElementById('gmap'), {
                 zoom: 9,
                 center: {lat: 45.595034, lng: 7.535305},
                 draggable: true,
