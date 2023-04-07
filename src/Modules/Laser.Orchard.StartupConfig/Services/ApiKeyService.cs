@@ -98,39 +98,53 @@ namespace Laser.Orchard.StartupConfig.Services {
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
 
                 // New validation methods for API using authorized websites or IP addresses.
-                // These new methos require a valid ApiChannel
+                // These new methods require the client to have sent us a valid ApiChannel. On the other hand,
+                // if we get a channel, we will attempt to test a configuration for it
                 if (!string.IsNullOrWhiteSpace(myApiChannel)) {
                     var app = CurrentSettings.ExternalApplicationList.ExternalApplications
                         .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
+                    // Even if an ApiChannel is sent, if no application is configured for it, no test is made. 
+                    // At the same time, there is, purposefully, no fallback condition: if an ApiChannel is sent, 
+                    // and the test for the corresponding configuration fails, there is no fallback test being
+                    // performed to recover.
                     if (app != null) {
-                        if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
-                            authorized = true;
-                        }
-                        else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
-                            authorized = true;
+                        switch (app.ValidationType) {
+                            case ApiValidationTypes.ApiKey:
+                                // This replicates the "legacy" validation logic
+                                authorized = TestApiKeyForChannel(myApiChannel);
+                                break;
+                            case ApiValidationTypes.Website:
+                                authorized = CheckReferer(app);
+                                break;
+                            case ApiValidationTypes.IpAddress:
+                                authorized = CheckIpAddress(app);
+                                break;
+                            default:
+                                // invalid condition
+                                authorized = false;
+                                break;
                         }
                     }
                 }
-                // If we haven't authorized the call yet, check apikey. This includes legacy support
-                // for the situation where ApiChannel was null.
-                if (!authorized) {
-                    // If referer and ip address are not authorized, check the api key.
-                    var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
-                    var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                    if (!TryValidateKey(
-                            myApikey, myAkiv,
-                            (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
-                            myApiChannel)) {
-                        authorized = false;
-                    }
-                    else {
-                        authorized = true;
-                    }
+                else {
+                    // The fallback condition in case no ApiChannel has been sent is to imply a default
+                    // Api Channel, and test whether the client has sent valid apikey and akiv. This is
+                    // the legacy situation we are still supporting: ApiChannel used to alway be null.
+                    authorized = TestApiKeyForChannel(myApiChannel);
                 }
 
                 additionalCacheKey = authorized ? "AuthorizedApi" : "UnauthorizedApi";
             }
             return additionalCacheKey;
+        }
+
+        private bool TestApiKeyForChannel(string myApiChannel) {
+            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
+            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
+            return TryValidateKey(
+                myApikey, myAkiv,
+                (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
+                myApiChannel);
         }
 
         private bool CheckReferer(ExternalApplication app) {

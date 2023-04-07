@@ -78,6 +78,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 ReadFileSetting();
             }
             var encryptionKeyValue = _shellSettings.EncryptionKey; //default value
+            // use the specific key
             if (!string.IsNullOrEmpty(key) && _encryptionKeys.Keys.Contains(key) && !string.IsNullOrWhiteSpace(_encryptionKeys[key])) { //if exists the specific key value
                 encryptionKeyValue = _encryptionKeys[key];
             }
