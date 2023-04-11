@@ -111,32 +111,54 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             get { return _handlers.Value; }
         }
         public dynamic Get(Int32 id, string contentType="") {
+            return GetById(id, contentType);
+        }
+
+        [HttpGet]
+        public dynamic GetById(Int32 id, string contentType) {
             ContentItem ContentToView;
             Response rsp = new Response();
             if (id > 0) {
+                //######
+                // This code seems to be oversized and coudl be changed in one ContentManager.Get(id)
+                // because in the light of the Redirect to the GetByAlias action of the Laser.Orchard.WebServices.JsonController
                 List<ContentItem> li = _orchardServices.ContentManager.GetAllVersions(id).ToList();
-                if (li.Count() == 0)
+                if (li.Count() == 0) {
                     return _utilsServices.GetResponse(ResponseType.Validation, T("No content with this Id").ToString());
-                else
-                    if (li.Count() == 1)
-                    ContentToView = li[0];
-                else
-                    ContentToView = _orchardServices.ContentManager.Get(id, VersionOptions.Latest);
-                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.ViewContent, ContentToView))
-                    if (!_contentExtensionService.HasPermission(ContentToView.ContentType, Methods.Get, ContentToView))
-                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                if (((dynamic)ContentToView).AutoroutePart != null) {
-                    string tenantname = "";
-                    if (string.IsNullOrWhiteSpace(_shellSettings.RequestUrlPrefix) == false) {
-                        tenantname = _shellSettings.RequestUrlPrefix + "/";
-                    }
-                    return Redirect(Url.Content("~/" + tenantname + "WebServices/Alias?displayAlias=" + ((dynamic)ContentToView).AutoroutePart.DisplayAlias));
-                } else {
-                    throw new Exception("Method not implemented, content without AutoroutePart");
                 }
-            } else
+                else if (li.Count() == 1) {
+                    ContentToView = li[0];
+                }
+                else {
+                    ContentToView = li.SingleOrDefault(x => x.VersionRecord.Latest == true);
+                }
+                //End of the oversized code
+                //######
+                if (ContentToView != null) {
+                    if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.ViewContent, ContentToView))
+                        if (!_contentExtensionService.HasPermission(ContentToView.ContentType, Methods.Get, ContentToView))
+                            return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                    if (((dynamic)ContentToView).AutoroutePart != null) {
+                        string tenantname = "";
+                        if (string.IsNullOrWhiteSpace(_shellSettings.RequestUrlPrefix) == false) {
+                            tenantname = _shellSettings.RequestUrlPrefix + "/";
+                        }
+                        return Redirect(Url.Content("~/" + tenantname + "WebServices/Alias?displayAlias=" + ((dynamic)ContentToView).AutoroutePart.DisplayAlias));
+                    }
+                    else {
+                        throw new Exception("Method not implemented, content without AutoroutePart");
+                    }
+                }
+                else {
+                    return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
+                }
+
+            }
+            else {
                 return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
+            }
         }
+
 
         /// <summary>
         /// esempio http://localhost/Laser.Orchard/expoincitta/api/Laser.Orchard.ContentExtension/Content?ContentType=User
@@ -370,7 +392,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
 
             // Check if the ContentType of the serialized ContentItem and the ContentType parameter (if set) match
             if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(tipoContent, StringComparison.InvariantCultureIgnoreCase)) {
-                return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the serialized ContentItem and the ContentType parameter does not match.");
+                return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the serialized ContentItem and the ContentType parameter do not match.");
             }
 
             // We will also need to know the content's Id in case we are
@@ -536,7 +558,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
 
                 // Check if the ContentType of the ContentItem to be deleted and the ContentType parameter (if set) match
                 if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(ContentToDelete.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
-                    return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the ContentItem and the ContentType parameter does not match.");
+                    return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the ContentItem and the ContentType parameter do not match.");
                 }
 
                 if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.DeleteContent, ContentToDelete))
