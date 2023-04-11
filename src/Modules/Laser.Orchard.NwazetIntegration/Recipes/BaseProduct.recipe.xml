@@ -49,7 +49,7 @@
                  SeoPartSettings.JsonLd="&lt;script type=&quot;application/ld+json&quot;&gt;&#xD;&#xA;{{&#xD;&#xA;  &quot;@context&quot;: &quot;http://schema.org/&quot;,&#xD;&#xA;  &quot;@type&quot;: &quot;Product&quot;,&#xD;&#xA;  &quot;name&quot;: &quot;{Content.DisplayText}&quot;,&#xD;&#xA;  &quot;image&quot;: [&#xD;&#xA;    &quot;{Site.BaseUrl}{Content.Fields.ProductDefaultPart.ProductImage.Url}&quot;&#xD;&#xA;   ],&#xD;&#xA;  &quot;description&quot;: &quot;{Content.SeoDescription}&quot;,&#xD;&#xA;  &quot;offers&quot;: {{&#xD;&#xA;    &quot;@type&quot;: &quot;Offer&quot;,&#xD;&#xA;    &quot;priceCurrency&quot;: &quot;EUR&quot;,&#xD;&#xA;    &quot;price&quot;: &quot;{Content.FrontendPriceString}&quot;,&#xD;&#xA; &quot;url&quot;:&quot;{Site.BaseUrl}{Content.DisplayUrl}&quot;&#xD;&#xA;  }}&#xD;&#xA;}}&#xD;&#xA;&lt;/script&gt;"
                  SeoPartSettings.ShowAggregatedMicrodata="False" />
         <ShareLinkPart ShareLinkPartSettingVM.SharedLink="{Site.BaseUrl}{Content.DisplayUrl}" ShareLinkPartSettingVM.SharedBody=""
-                       ShareLinkPartSettingVM.SharedText="{Content.DisplayText}" ShareLinkPartSettingVM.SharedImage="{Content.Fields.ProductDefaultPart.ProductImage.Url}"
+                       ShareLinkPartSettingVM.SharedText="{Content.DisplayText}" ShareLinkPartSettingVM.SharedImage="{Site.BaseUrl}{Content.Fields.ProductDefaultPart.ProductImage.Url}"
                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
@@ -61,6 +61,10 @@
         <LocalizationPart />
         <MenuPart />
         <ProjectionPart ProjectionPartSettings.QueryLayoutRecordId="14;1" ProjectionPartSettings.IdentityQueryLayoutRecord="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371;753a374b-f73a-4951-9a4c-c0f7ee5ba733" ProjectionPartSettings.FilterQueryRecordId="14;1" ProjectionPartSettings.IdentityFilterQueryRecord="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371;753a374b-f73a-4951-9a4c-c0f7ee5ba733" ProjectionPartSettings.Items="12" ProjectionPartSettings.LockEditingItems="True" ProjectionPartSettings.Skip="0" ProjectionPartSettings.LockEditingSkip="True" ProjectionPartSettings.MaxItems="120" ProjectionPartSettings.LockEditingMaxItems="True" ProjectionPartSettings.LockEditingPagerSuffix="True" ProjectionPartSettings.DisplayPager="True" ProjectionPartSettings.LockEditingDisplayPager="True" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TitlePart />
       </Catalogo>
       <Query DisplayName="Query">
@@ -80,6 +84,10 @@
                  SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
                  SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
                  SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TaxonomyExtensionPart />
         <TaxonomyFilterPart />
         <TaxonomyPart />
@@ -97,6 +105,10 @@
                  SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
                  SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
                  SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaAddizionaleTerm>
@@ -111,6 +123,10 @@
                  SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
                  SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
                  SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaPrincipaleTerm>
@@ -125,6 +141,10 @@
                  SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
                  SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
                  SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
         <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
         <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
       </CategoriaSecondariaTerm>
