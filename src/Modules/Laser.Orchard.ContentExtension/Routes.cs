@@ -46,7 +46,7 @@ namespace Laser.Orchard.ContentExtension {
                 },
                 new HttpRouteDescriptor {
                     // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
-                    Name = "ContentItemCRUDApiRoutes",
+                    Name = "ContentItemWriteApiRoutes",
                     Priority = 85,
                     RouteTemplate = "api/content/{contentType}",
                     Defaults = new {
@@ -56,13 +56,30 @@ namespace Laser.Orchard.ContentExtension {
                 },
                 new HttpRouteDescriptor {
                     // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
-                    Name = "ContentItemSettingsApiRoutes",
-                    Priority = 85,
-                    RouteTemplate = "api/contenttype/{contentType}",
+                    Name = "ContentItemReadApiRoutes",
+                    Priority = 80,
+                    RouteTemplate = "api/content/{contentType}/{id*}",
+                    Constraints = new {
+                        id = @"\d+"
+                    },
                     Defaults = new {
                         area = "Laser.Orchard.ContentExtension",
                         controller = "ContentItem",
-                        action = "Get",
+                        action = "Get"
+                    }
+                },
+                new HttpRouteDescriptor {
+                    // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
+                    Name = "ContentTypeApiRoutes",
+                    Priority = 85,
+                    RouteTemplate = "api/contenttype/{contentType}",
+                    Constraints = new {
+                        id = @"^\d+"
+                    },
+                    Defaults = new {
+                        area = "Laser.Orchard.ContentExtension",
+                        controller = "ContentItem",
+                        action = "Get"
                     }
                 }
             };
