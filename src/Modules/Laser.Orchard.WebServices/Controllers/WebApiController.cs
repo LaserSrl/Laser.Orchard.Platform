@@ -77,7 +77,7 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         [AlwaysAccessible]
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "", string contentType="") {
             try {
                 JObject json;
 
@@ -120,6 +120,8 @@ namespace Laser.Orchard.WebServices.Controllers {
                 }
 
                 if (content == null) {
+                    return new HttpStatusCodeResult(404);
+                } else if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(content.ContentItem.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
                     return new HttpStatusCodeResult(404);
                 }
 

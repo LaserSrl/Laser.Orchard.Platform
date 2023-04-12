@@ -16,13 +16,110 @@ namespace Laser.Orchard.WebServices.Routes {
 
         public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
+                #region [ WebApiController ]
                 new RouteDescriptor {
                     Route = new Route(
-                        "WebServices/Alias",
+                        //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
+                        "webapi/v2/content/display/{*alias}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "WebApi"},
+                            {"action", "Display"},
+                            {"alias", UrlParameter.Optional}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
+                        "webapi/v2/content/{contenttype}/display/{*alias}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "WebApi"},
+                            {"action", "Display"},
+                            {"alias", UrlParameter.Optional}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
+                        "webapi/v2/terms/display/{*alias}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "WebApi"},
+                            {"action", "Terms"},
+                            {"alias", UrlParameter.Optional}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "Terms/GetIconsIds",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "Terms"},
+                            {"action", "GetIconsIds"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                #endregion
+                #region [ LMNV - JsonController ]
+                new RouteDescriptor {
+                    Route = new Route(
+                        //Laser.Orchard.Webservices/Json/GetByAlias?DisplayAlias={displayalias}
+                        "webapi/v1/content/display/{*displayalias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "Json"},
-                            {"action", "GetByAlias"}
+                            {"action", "GetByAlias"},
+                            {"displayalias", UrlParameter.Optional}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        //Laser.Orchard.Webservices/Json/GetByAlias?DisplayAlias={displayalias}
+                        "webapi/v1/content/{contenttype}/display/{*displayalias}",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "Json"},
+                            {"action", "GetByAlias"},
+                            {"displayalias", UrlParameter.Optional}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"}
+                        },
+                        new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "WebServices/Alias/",
+                        new RouteValueDictionary {
+                            {"area", "Laser.Orchard.WebServices"},
+                            {"controller", "Json"},
+                            {"action", "GetByAlias"},
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
@@ -44,7 +141,7 @@ namespace Laser.Orchard.WebServices.Routes {
                         },
                         new MvcRouteHandler())
                 },
-                 new RouteDescriptor {
+                new RouteDescriptor {
                      Priority=1,
                     Route = new Route(
                         "WebServices/ObjectAlias",
@@ -61,6 +158,8 @@ namespace Laser.Orchard.WebServices.Routes {
                         },
                         new MvcRouteHandler())
                 },
+                #endregion
+                #region [E015]
                 new RouteDescriptor {
                     Route = new Route(
                         "WebServices/E015",
@@ -121,21 +220,8 @@ namespace Laser.Orchard.WebServices.Routes {
                             {"area", "Laser.Orchard.WebServices"}
                         },
                         new MvcRouteHandler())
-                },
-                new RouteDescriptor {
-                    Route = new Route(
-                        "Terms/GetIconsIds",
-                        new RouteValueDictionary {
-                            {"area", "Laser.Orchard.WebServices"},
-                            {"controller", "Terms"},
-                            {"action", "GetIconsIds"}
-                        },
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary {
-                            {"area", "Laser.Orchard.WebServices"}
-                        },
-                        new MvcRouteHandler())
                 }
+                #endregion
             };
         }
 

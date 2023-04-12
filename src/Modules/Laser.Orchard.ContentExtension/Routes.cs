@@ -30,7 +30,7 @@ namespace Laser.Orchard.ContentExtension {
                         },
                         new MvcRouteHandler())
                 },
-            new RouteDescriptor {
+                new RouteDescriptor {
                     Route = new Route(
                         "Admin/ContentExtension/DynamicProjectionDisplay/List/{contentid}",
                         new RouteValueDictionary {
@@ -43,6 +43,30 @@ namespace Laser.Orchard.ContentExtension {
                             {"area", "Laser.Orchard.ContentExtension"}
                         },
                         new MvcRouteHandler())
+                },
+                new HttpRouteDescriptor {
+                    // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
+                    Name = "ContentItemWriteApiRoutes",
+                    Priority = 85,
+                    RouteTemplate = "api/content/{contentType}",
+                    Defaults = new {
+                        area = "Laser.Orchard.ContentExtension",
+                        controller = "ContentItem"
+                    }
+                },
+                new HttpRouteDescriptor {
+                    // Route name MUST be unique -> Ensure that by checking other GetRoutes() functions.
+                    Name = "ContentItemReadApiRoutes",
+                    Priority = 80,
+                    RouteTemplate = "api/content/{contentType}/{id}",
+                    Constraints = new {
+                        id = @"\d+"
+                    },
+                    Defaults = new {
+                        area = "Laser.Orchard.ContentExtension",
+                        controller = "ContentItem",
+                        action = "GetById"
+                    }
                 }
             };
 
