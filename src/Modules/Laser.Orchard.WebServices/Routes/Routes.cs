@@ -20,7 +20,7 @@ namespace Laser.Orchard.WebServices.Routes {
                 new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
-                        "webapi/v2/content/display/{*alias}",
+                        "api/v2/content/display/{*alias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "WebApi"},
@@ -36,7 +36,7 @@ namespace Laser.Orchard.WebServices.Routes {
                 new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
-                        "webapi/v2/content/{contenttype}/display/{*alias}",
+                        "api/v2/content/{contenttype}/display/{*alias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "WebApi"},
@@ -52,7 +52,7 @@ namespace Laser.Orchard.WebServices.Routes {
                 new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/WebApi/Display?alias={alias}
-                        "webapi/v2/terms/display/{*alias}",
+                        "api/v2/terms/display/{*alias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "WebApi"},
@@ -84,7 +84,7 @@ namespace Laser.Orchard.WebServices.Routes {
                 new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/Json/GetByAlias?DisplayAlias={displayalias}
-                        "webapi/v1/content/display/{*displayalias}",
+                        "api/v1/content/display/{*displayalias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "Json"},
@@ -100,7 +100,7 @@ namespace Laser.Orchard.WebServices.Routes {
                 new RouteDescriptor {
                     Route = new Route(
                         //Laser.Orchard.Webservices/Json/GetByAlias?DisplayAlias={displayalias}
-                        "webapi/v1/content/{contenttype}/display/{*displayalias}",
+                        "api/v1/content/{contenttype}/display/{*displayalias}",
                         new RouteValueDictionary {
                             {"area", "Laser.Orchard.WebServices"},
                             {"controller", "Json"},

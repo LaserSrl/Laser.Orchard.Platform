@@ -17,6 +17,6 @@ function setCultureCookie(culture) {
         var d = new Date();
         d.setTime(d.getTime() + (28 * 24 * 60 * 60 * 1000)); //expires in 4 weeks
         var expires = "expires=" + d.toGMTString();
-        document.cookie = "cultureData=" + cvalue + ";" + expires + ";path=/";
+        document.cookie = "cultureData=" + cvalue + ";" + expires + ";path=/;secure";
     }
 }
