@@ -23,6 +23,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         public ILogger Logger;
         private ICacheStorageProvider _cacheStorage;
         private readonly IApiKeySettingService _apiKeySettingService;
+
+        // we use this constant array for trimming URI segments
+        private static char[] _slash = { '/' };
+
         public ApiKeyService(ShellSettings shellSettings, IOrchardServices orchardServices, ICacheStorageProvider cacheManager, IApiKeySettingService apiKeySettingService) {
             _apiKeySettingService = apiKeySettingService;
             _shellSettings = shellSettings;
@@ -93,59 +97,102 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
 
             if (check == true) {
+
+                var authorized = false;
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
 
-                // Get valid ExternalApplication with the provided Api Channel.
+                // New validation methods for API using authorized websites or IP addresses.
+                // These new methods require the client to have sent us a valid ApiChannel. On the other hand,
+                // if we get a channel, we will attempt to test a configuration for it
                 if (!string.IsNullOrWhiteSpace(myApiChannel)) {
                     var app = CurrentSettings.ExternalApplicationList.ExternalApplications
                         .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
-
+                    // Even if an ApiChannel is sent, if no application is configured for it, no test is made. 
+                    // At the same time, there is, purposefully, no fallback condition: if an ApiChannel is sent, 
+                    // and the test for the corresponding configuration fails, there is no fallback test being
+                    // performed to recover.
                     if (app != null) {
-                        if (app.ValidationType == ApiValidationTypes.Website && CheckReferer(app)) {
-                            additionalCacheKey = "AuthorizedApi";
-                        } else if (app.ValidationType == ApiValidationTypes.IpAddress && CheckIpAddress(app)) {
-                            additionalCacheKey = "AuthorizedApi";
-                        } else {
-                            // If referer and ip address are not authorized, check the api key.
-                            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
-                            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                            if (!TryValidateKey(
-                                    myApikey, myAkiv,
-                                    (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
-                                    myApiChannel)) {
-                                additionalCacheKey = "UnauthorizedApi";
-                            } else {
-                                additionalCacheKey = "AuthorizedApi";
-                            }
+                        switch (app.ValidationType) {
+                            case ApiValidationTypes.ApiKey:
+                                // This replicates the "legacy" validation logic
+                                authorized = TestApiKeyForChannel(myApiChannel);
+                                break;
+                            case ApiValidationTypes.Website:
+                                authorized = CheckReferer(app);
+                                break;
+                            case ApiValidationTypes.IpAddress:
+                                authorized = CheckIpAddress(app);
+                                break;
+                            default:
+                                // invalid condition
+                                authorized = false;
+                                break;
                         }
-                    } else {
-                        additionalCacheKey = "UnauthorizedApi";
                     }
-                } else {
-                    additionalCacheKey = "UnauthorizedApi";
                 }
+                else {
+                    // The fallback condition in case no ApiChannel has been sent is to imply a default
+                    // Api Channel, and test whether the client has sent valid apikey and akiv. This is
+                    // the legacy situation we are still supporting: ApiChannel used to alway be null.
+                    authorized = TestApiKeyForChannel(myApiChannel);
+                }
+
+                additionalCacheKey = authorized ? "AuthorizedApi" : "UnauthorizedApi";
             }
             return additionalCacheKey;
         }
 
+        private bool TestApiKeyForChannel(string myApiChannel) {
+            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
+            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
+            return TryValidateKey(
+                myApikey, myAkiv,
+                (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
+                myApiChannel);
+        }
+
         private bool CheckReferer(ExternalApplication app) {
+            // See the ValidationAttributes of the ExternalApplication class for a discussion
+            // on the validation of the string used for URL Referer configuration.
             var currentReferer = _request.ServerVariables["HTTP_REFERER"];
             if (string.IsNullOrWhiteSpace(currentReferer)) {
                 return false;
             }
 
             var websites = app.ApiKey.Split(',');
-            // If no website is specified
-            if (websites.Length == 0) {
-                return false;
-            }
-
-            foreach (var website in websites) {
-                if (currentReferer.StartsWith(website)) {
-                    return true;
+            if (websites.Any()) {
+                var refererUri = new Uri(currentReferer);
+                foreach (var website in websites) {
+                    // The test here cannot simply be a comparison between the strings.
+                    var websiteUri = new Uri(website);
+                    // Compare uris by Scheme (http/https), host, port
+                    if (Uri.Compare(refererUri, websiteUri, UriComponents.SchemeAndServer, UriFormat.Unescaped, StringComparison.OrdinalIgnoreCase) == 0) {
+                        // Compare uris by segments:
+                        // https://learn.microsoft.com/en-us/dotnet/api/system.uri.segments?view=netframework-4.8.1
+                        // the segments from the website (the one configured in the application) must match exactly,
+                        // also in the same order, the segments from the referer. Note that because of how segments are
+                        // defined/built by the framework, the last significant one for us may actually be different,
+                        // since it may have a trailing '/' character.
+                        if (refererUri.Segments.Length >= websiteUri.Segments.Length) {
+                            int i = 0;
+                            for (; i < websiteUri.Segments.Length; i++) {
+                                var webSegment = websiteUri.Segments[i].TrimEnd(_slash);
+                                var refSegment = refererUri.Segments[i].TrimEnd(_slash);
+                                if (!string.Equals(webSegment, refSegment, StringComparison.OrdinalIgnoreCase)) {
+                                    // If the segments don't match, break out and stop testing this website
+                                    // for the referer
+                                    break;
+                                }
+                            }
+                            if (i == websiteUri.Segments.Length) {
+                                // All segments matched, so the referer matches this configured website
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
-
+            // We found no configured website that matched the referer
             return false;
         }
 
