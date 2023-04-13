@@ -1,16 +1,11 @@
 ﻿using Laser.Orchard.ExternalContent.Fields;
-using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.Services.ContentSerialization;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard.ContentManagement;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Web;
 using System.Web.Helpers;
 
 namespace Laser.Orchard.ExternalContent.Services {
@@ -175,10 +170,14 @@ namespace Laser.Orchard.ExternalContent.Services {
                 }
             }
 
-            // Then we should serialize whatever that is, iteratively/recursively.
+            // prune results
+            var resultObject = transformedObject
+                .Select(el => PruneTransformedObject(el))
+                .ToList();
 
             // Finally, we add that result to the serialization we are building
-            targetFieldObject.Add("ContentObject", JToken.FromObject(transformedObject));
+            targetFieldObject.Add("ContentObject", 
+                JToken.FromObject(resultObject));
             //PopulateJObject(
             //    ref targetFieldObject,
             //    transformedObject,
@@ -195,6 +194,53 @@ namespace Laser.Orchard.ExternalContent.Services {
                 }
                 catch { };
             return objec;
+        }
+
+        // Clean transformedObject by removing "ToRemove" leaves that might have been
+        // nested under some level we attached.
+        private dynamic PruneTransformedObject(dynamic singleResult) {
+            if (CurrentSerializationSettings.IsBasicType(singleResult.GetType())) {
+                // this "object" we are testing is actually a basic type, so we have no test to perform
+                return singleResult;
+            }
+            // These other types need testing, and perhaps recursion
+            // DynamicJsonArray
+            if (singleResult is DynamicJsonArray) {
+                // we need to test each element in the array
+                return new DynamicJsonArray(
+                    ((DynamicJsonArray)singleResult)
+                        .Select(el => PruneTransformedObject(el))
+                        .ToArray());
+            }
+            // DynamicJsonObject
+            if (singleResult is DynamicJsonObject) {
+                var dynamicMemberNames = ((DynamicJsonObject)singleResult).GetDynamicMemberNames();
+                // if a member is called "ToRemove" we should remove it. Moreover, we should test
+                // all members of this object.
+                var newDictionary = dynamicMemberNames
+                    .Where(k => !k.Equals("ToRemove", StringComparison.OrdinalIgnoreCase))
+                    // We make this into a collection of KeyValuePairs to create a Dictionary
+                    .Select(k => new KeyValuePair<string, dynamic>(
+                        k,
+                        PruneTransformedObject(singleResult[k])))
+                    // Then from the Dictionary we create a DynamicJsonObject
+                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                return new DynamicJsonObject(newDictionary);
+            }
+            // Dictionary
+            if (singleResult is IDictionary) {
+                // If any key is "ToRemove", we should remove it. Moreover, we should test all
+                // values in the dictionary.
+                var newDictionary = ((IDictionary<string, dynamic>)singleResult)
+                    .Where(kvp => !kvp.Key.Equals("ToRemove", StringComparison.OrdinalIgnoreCase))
+                    .ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => PruneTransformedObject(kvp.Value));
+                return newDictionary;
+            }
+
+            // fallback case in which we don't really know that there is anything special to do:
+            return singleResult;
         }
 
         private void PopulateJObject(
