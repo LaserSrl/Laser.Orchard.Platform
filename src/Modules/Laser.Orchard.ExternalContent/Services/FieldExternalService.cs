@@ -204,9 +204,9 @@ namespace Laser.Orchard.ExternalContent.Services {
                             // If the web application (i.e. Orchard) is precompiled, IIS does not allow it to have an App_Code folder
                             // so we may no use that name for the folder where we store the executables we use for external fields.
                             // Historically, that used to be the folder name we used, but then we started having precompiled releases.
-                            string filename = HostingEnvironment.MapPath("~/") + @"App_Code\" + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
+                            string filename = HostingEnvironment.MapPath("~/App_Code/") + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
                             if (!File.Exists(filename)) {
-                                filename = HostingEnvironment.MapPath("~/") + @"ExternalApplication\" + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
+                                filename = HostingEnvironment.MapPath("~/ExternalApplication/") + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
                             }
                             if (!File.Exists(filename)) {
                                 throw new Exception(String.Format("File \"{0}\" not found!", filename));
