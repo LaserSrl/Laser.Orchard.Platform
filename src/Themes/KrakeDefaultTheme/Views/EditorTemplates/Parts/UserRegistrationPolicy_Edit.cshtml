@@ -26,7 +26,7 @@
                     @Html.Raw(Model[i].Policy.Body)
                     <br>
                     <div class="text-right">
-                        @if (Model[i].Policy.Type == null || acceptTypePolicy) {// Privacy
+                        @if (acceptTypePolicy) {// Privacy
                             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept" }) @T("Accept")</label>
                             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept" }) @T("Don't Accept")</label>
                         } else { // Regolamento

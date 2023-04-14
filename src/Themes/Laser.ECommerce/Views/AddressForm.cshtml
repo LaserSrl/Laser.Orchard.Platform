@@ -43,7 +43,7 @@
             <legend>@T("Stored Billing Address")</legend>
         }
 
-        <select id="@idlistaddress" name="@idlistaddress">
+        <select id="@idListAddress" name="@idListAddress">
             <option value=-1 selected title="@T("New address")">@T("New address")</option>
             @foreach (var ad in addressList) {
                 <option value=@ad.Id title="@ad.Honorific @ad.FirstName @ad.LastName @ad.Company">@ad.Address1 @ad.Address2 @ad.City</option>
