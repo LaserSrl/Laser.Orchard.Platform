@@ -241,7 +241,8 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                        .GroupBy(a => a.GetName().Name).Select(grp => grp.First(y => y.GetName().Version == grp.Max(x => x.GetName().Version))) // only select distinct assemblies based on FullName to avoid loading duplicate assemblies
                        .Select(a => CompilerReference.From(a))
                .Concat(includeAssemblies ?? Enumerable.Empty<CompilerReference>());
-            yield return CompilerReference.From(HostingEnvironment.ApplicationPhysicalPath + @"Modules\Laser.Orchard.StartupConfig\bin\System.Web.Helpers.dll");
+            // System.Web.Helpers.dll is always found in Orchard.Web\bin so we don't need to explicitly add this path
+            //yield return CompilerReference.From(HostingEnvironment.ApplicationPhysicalPath + @"Modules\Laser.Orchard.StartupConfig\bin\System.Web.Helpers.dll");
             foreach (var assembly in AssemblyToReference)
                 yield return assembly;
 
