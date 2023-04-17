@@ -24,7 +24,7 @@ namespace Laser.Orchard.ExternalContent.Drivers {
                 _orchardServices = orchardServices;
                 _shellSettings = shellSettings;
             T = NullLocalizer.Instance;
-            string mobile_folder = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Xslt\";
+            string mobile_folder = HostingEnvironment.MapPath(string.Format("~/App_Data/Sites/{0}/Xslt", _shellSettings.Name));
             if (!System.IO.Directory.Exists(mobile_folder))
                 System.IO.Directory.CreateDirectory(mobile_folder);
         }

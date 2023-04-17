@@ -52,7 +52,9 @@ namespace Laser.Orchard.ExternalContent.Settings {
                 } // otherwise keep private key untouched
 
                 if (model.CertificateRequired) {
-                    string mobile_folder = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\ExternalFields\";
+                    string mobile_folder = HostingEnvironment.MapPath(
+                        string.Format("~/App_Data/Sites/{0}/ExternalFields",
+                            _shellSettings.Name));
                     if (!System.IO.Directory.Exists(mobile_folder))
                         System.IO.Directory.CreateDirectory(mobile_folder);
 

@@ -153,7 +153,7 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                     key += d.ToShortDateString() + d.ToLongTimeString();
                 }
 
-                string myfile2 = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\common.cshtml";
+                string myfile2 = HostingEnvironment.MapPath("~/App_Data/Sites/common.cshtml");
                 if (File.Exists(myfile2)) {
                     // add the date of common.cshtml to the key, to update the file even if only the common has changed and not just the file
                     DateTime d2 = System.IO.File.GetLastWriteTime(myfile2);
