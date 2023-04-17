@@ -219,7 +219,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                     CiType += version.ToString();
                 }
                 string myview = "~/" + @"App_Data/Sites/" + _shellSetting.Name + "/WebServices/" + CiType + ".cshtml";
-                string myfile = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\WebServices\" + CiType + ".cshtml";
+                string myfile = HostingEnvironment.MapPath(myview);
                 if (System.IO.File.Exists(myfile))
                     return View(myview, (object)ListShape);
                 else {

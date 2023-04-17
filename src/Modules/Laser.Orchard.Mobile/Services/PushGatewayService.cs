@@ -1234,12 +1234,16 @@ namespace Laser.Orchard.Mobile.Services {
             if (produzione) {
                 environment = ApnsConfiguration.ApnsServerEnvironment.Production;
                 setting_password = pushSettings.AppleCertificatePassword;
-                setting_file = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Mobile\" + pushSettings.ApplePathCertificateFile;
+                setting_file = HostingEnvironment.MapPath(
+                    string.Format("~/App_Data/Sites/{0}/Mobile/{1}",
+                        _shellSetting.Name, pushSettings.ApplePathCertificateFile));
                 if (string.IsNullOrEmpty(pushSettings.ApplePathCertificateFile))
                     certificateexist = false;
             } else {
                 setting_password = pushSettings.AppleCertificatePasswordDevelopment;
-                setting_file = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Mobile\" + pushSettings.ApplePathCertificateFileDevelopment;
+                setting_file = HostingEnvironment.MapPath(
+                    string.Format("~/App_Data/Sites/{0}/Mobile/{1}",
+                        _shellSetting.Name, pushSettings.ApplePathCertificateFileDevelopment));
                 if (string.IsNullOrEmpty(pushSettings.ApplePathCertificateFileDevelopment))
                     certificateexist = false;
             }
