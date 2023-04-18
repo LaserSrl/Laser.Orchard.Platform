@@ -36,7 +36,7 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
         private readonly IOrchardServices _orchardServices;
         private readonly ShellSettings _shellSettings;
 
-        public RazorTemplateManager(ShellSettings shellSettings, 
+        public RazorTemplateManager(ShellSettings shellSettings,
             IOrchardServices orchardServices,
             IEnumerable<ICustomRazorTemplateResolver> razorTemplateResolvers) {
             listCached = new List<string>();
@@ -76,12 +76,12 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
             config.Namespaces.Add("Orchard.Localization");
             //config.Namespaces.Add("System.Web.Helpers");
             config.ReferenceResolver = new MyIReferenceResolver();
-            
+
             config.TemplateManager = new CustomRazorTemplateManager(_shellSettings, _orchardServices);
             //config.CachingProvider = new CustomRazorCachingProvider();
 
             _razorEngine = RazorEngineService.Create(config);
-            
+
             listOldCached.AddRange(listCached);
             listCached = new List<string>();
         }
@@ -120,12 +120,12 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                         defFileName = key;
                     defFileName = System.IO.Path.GetTempPath() + defFileName + ".cshtml";
                     // add a breakpoint so we can debug the templates
-                    code = 
+                    code =
                         "@{"
-                        +   "if (System.Diagnostics.Debugger.IsAttached) {"
-                        +     "System.Diagnostics.Debugger.Break();"
-                        +   "}"
-                        + "}" 
+                        + "if (System.Diagnostics.Debugger.IsAttached) {"
+                        + "System.Diagnostics.Debugger.Break();"
+                        + "}"
+                        + "}"
                         + code;
                     File.WriteAllText(defFileName, code);
 
@@ -241,10 +241,32 @@ namespace Laser.Orchard.StartupConfig.RazorCodeExecution.Services {
                        .GroupBy(a => a.GetName().Name).Select(grp => grp.First(y => y.GetName().Version == grp.Max(x => x.GetName().Version))) // only select distinct assemblies based on FullName to avoid loading duplicate assemblies
                        .Select(a => CompilerReference.From(a))
                .Concat(includeAssemblies ?? Enumerable.Empty<CompilerReference>());
-            yield return CompilerReference.From(HostingEnvironment.ApplicationPhysicalPath + @"Modules\Laser.Orchard.StartupConfig\bin\System.Web.Helpers.dll");
+            // System.Web.Helpers.dll is always found in Orchard.Web\bin so we don't need to explicitly add this path
+            //yield return CompilerReference.From(HostingEnvironment.ApplicationPhysicalPath + @"Modules\Laser.Orchard.StartupConfig\bin\System.Web.Helpers.dll");
             foreach (var assembly in AssemblyToReference)
                 yield return assembly;
 
+            //adds specific dlls in /Sites/__RazorReferences 
+            var razorReferencesFolder = HostingEnvironment.MapPath("~/App_Data/Sites/__RazorReferences");
+            if (Directory.Exists(razorReferencesFolder)) {
+                var dlls = Directory.GetFiles(razorReferencesFolder, "*.dll");
+                foreach (var dll in dlls) {
+                    // don't add the dll to the references if it's already there
+                    if (!(AssemblyToReference.Any(ar => {
+                        try {
+                            var fileName = ar.GetFile();
+                            return string.Equals(Path.GetFileName(dll), Path.GetFileName(fileName));
+                        }
+                        catch (Exception) {
+                            return false;
+                        }
+                    }))) {
+                        var reference = CompilerReference.From(dll);
+                        yield return reference;
+                    }
+                }
+            }
         }
     }
 }
+

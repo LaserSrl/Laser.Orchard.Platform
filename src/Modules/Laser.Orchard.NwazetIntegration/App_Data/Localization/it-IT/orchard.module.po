@@ -856,6 +856,14 @@ msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/O
 msgid "Transaction ID"
 msgstr "ID Transazione"
 
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Waiting for payment"
+msgstr "In attesa del pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Waiting for transaction info"
+msgstr "In attesa delle informazioni della transazione"
+
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PickupPoint.cshtml"
 msgid "The customer had selected the pickup point \"{0}\" at the following address:"
 msgstr "Il cliente ha selezionato il punto di ritiro \"{0}\" al seguente indirizzo:"

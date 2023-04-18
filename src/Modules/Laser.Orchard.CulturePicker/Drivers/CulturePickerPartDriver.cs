@@ -129,6 +129,12 @@ namespace Laser.Orchard.CulturePicker.Drivers {
             part.UserCulture = _extendedCultureService
                 .GetExtendedCulture(_cultureManager.GetCurrentCulture(_workContextAccessor.GetContext().HttpContext));
 
+            // if the UserCulture is null set the default culture of the site
+            if (part.UserCulture == null) {
+                part.UserCulture = _extendedCultureService
+                    .GetExtendedCulture(_workContextAccessor.GetContext().CurrentSite.SiteCulture);
+            }
+
             return ContentShape("Parts_CulturePicker", 
                 () => shapeHelper.Parts_CulturePicker(
                     AvailableCultures: part.AvailableCultures,
