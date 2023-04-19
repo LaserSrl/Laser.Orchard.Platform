@@ -124,10 +124,15 @@ namespace Laser.Orchard.StartupConfig.Services {
                                 authorized = CheckIpAddress(app);
                                 break;
                             default:
-                                // invalid condition
+                                // invalid condition: this is really a sanity check where the code should never fall
                                 authorized = false;
+                                Logger.Error("Invalid ValidationType set for ExternalApplication " + app.Name);
                                 break;
                         }
+                    }
+                    else { 
+                        authorized = false;
+                        Logger.Error("Impossible to identify configuration for ApiChannel " + myApiChannel);
                     }
                 }
                 else {
@@ -156,6 +161,7 @@ namespace Laser.Orchard.StartupConfig.Services {
             // on the validation of the string used for URL Referer configuration.
             var currentReferer = _request.ServerVariables["HTTP_REFERER"];
             if (string.IsNullOrWhiteSpace(currentReferer)) {
+                Logger.Error("Impossible to validate and empty Referer.");
                 return false;
             }
 
@@ -193,15 +199,22 @@ namespace Laser.Orchard.StartupConfig.Services {
                 }
             }
             // We found no configured website that matched the referer
+            Logger.Error(string.Format("Impossible to validate Referer {0} for Application {1}.", currentReferer, app.Name));
             return false;
         }
 
         private bool CheckIpAddress(ExternalApplication app) {
             var currentIp = _request.ServerVariables["REMOTE_ADDR"];
+            if (string.IsNullOrWhiteSpace(currentIp)) {
+                // sanity check
+                Logger.Error("Impossible to validate and empty IP.");
+                return false;
+            }
             
             var ips = app.ApiKey.Split(',');
             // If no ip is specified
             if (ips.Length == 0) {
+                Logger.Error(string.Format("No IP is configured for {0}.", app.Name));
                 return false;
             }
 
@@ -219,6 +232,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                 }
             }
 
+            // We found no configured IP that matched the caller
+            Logger.Error(string.Format("Impossible to validate caller IP {0} for Application {1}.", currentIp, app.Name));
             return false;
         }
 
