@@ -1055,7 +1055,9 @@ namespace Laser.Orchard.Questionnaires.Services {
             var elenco = GetUsersAnswers(questionnaireId, from, to);
             ContentItem ci = _orchardServices.ContentManager.Get(questionnaireId);
             string fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), from, to);
-            string filePath = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Export\QuestionnairesStatistics\" + fileName;
+            string filePath = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Export/QuestionnairesStatistics/{1}",
+                    _shellSettings.Name, fileName));
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
             if (fi.Directory.Parent.Exists == false) {

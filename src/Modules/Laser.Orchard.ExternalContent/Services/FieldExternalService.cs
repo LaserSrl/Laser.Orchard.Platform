@@ -191,7 +191,9 @@ namespace Laser.Orchard.ExternalContent.Services {
                     string certPath;
                     string webpagecontent;
                     if (settings.CertificateRequired && !String.IsNullOrWhiteSpace(settings.CerticateFileName)) {
-                        certPath = String.Format(HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\ExternalFields\{0}", settings.CerticateFileName);
+                        certPath = HostingEnvironment.MapPath(
+                            string.Format("~/App_Data/Sites/{0}/ExternalFields/{1}",
+                                _shellSetting.Name, settings.CerticateFileName));
                         if (File.Exists(certPath)) {
                             webpagecontent = GetHttpPage(UrlToGet, httpMethod, httpDataType, additionalHeadersText, bodyRequest, certPath, settings.CertificatePrivateKey.DecryptString(_shellSetting.EncryptionKey)).Trim();
                         }
@@ -201,7 +203,13 @@ namespace Laser.Orchard.ExternalContent.Services {
                     }
                     else {
                         if (settings.DataType == OriginData.Executable) {
-                            string filename = HostingEnvironment.MapPath("~/") + @"App_Code\" + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
+                            // If the web application (i.e. Orchard) is precompiled, IIS does not allow it to have an App_Code folder
+                            // so we may no use that name for the folder where we store the executables we use for external fields.
+                            // Historically, that used to be the folder name we used, but then we started having precompiled releases.
+                            string filename = HostingEnvironment.MapPath("~/App_Code/") + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
+                            if (!File.Exists(filename)) {
+                                filename = HostingEnvironment.MapPath("~/ExternalApplication/") + externalUrl.Substring(0, externalUrl.IndexOf(".exe") + 4);
+                            }
                             if (!File.Exists(filename)) {
                                 throw new Exception(String.Format("File \"{0}\" not found!", filename));
                             }
@@ -278,8 +286,9 @@ namespace Laser.Orchard.ExternalContent.Services {
                             string inputcache = _tokenizer.Replace(settings.CacheInput, contesto);
                             mycache = _cacheStorageProvider.Get<object>(inputcache);
                             if (mycache == null) {
-                                if (File.Exists(String.Format(HostingEnvironment.MapPath("~/") + "App_Data/Cache/" + inputcache))) {
-                                    string filecontent = File.ReadAllText(String.Format(HostingEnvironment.MapPath("~/") + "App_Data/Cache/" + inputcache));
+                                var cacheFile = HostingEnvironment.MapPath("~/App_Data/Cache/" + inputcache);
+                                if (File.Exists(cacheFile)) {
+                                    string filecontent = File.ReadAllText(cacheFile);
                                     mycache = JsonConvert.DeserializeObject(filecontent);
                                     _cacheStorageProvider.Put(inputcache, mycache);
                                 }
@@ -306,9 +315,10 @@ namespace Laser.Orchard.ExternalContent.Services {
                             _cacheStorageProvider.Put(chiavedate, new { When = DateTime.UtcNow }, new TimeSpan(0, 0, settings.CacheMinute, 0, 0));
                         }
                         if (settings.CacheToFileSystem) {
-                            if (!Directory.Exists(HostingEnvironment.MapPath("~/") + "App_Data/Cache"))
-                                Directory.CreateDirectory(HostingEnvironment.MapPath("~/") + "App_Data/Cache");
-                            using (StreamWriter sw = File.CreateText(String.Format(HostingEnvironment.MapPath("~/") + "App_Data/Cache/" + chiavecache))) {
+                            if (!Directory.Exists(HostingEnvironment.MapPath("~/App_Data/Cache"))) {
+                                Directory.CreateDirectory(HostingEnvironment.MapPath("~/App_Data/Cache"));
+                            }
+                            using (StreamWriter sw = File.CreateText(String.Format(HostingEnvironment.MapPath("~/App_Data/Cache/" + chiavecache)))) {
                                 sw.WriteLine(JsonConvert.SerializeObject(ci));//, Jsettings));// new JsonSerializerSettings {  EmptyArrayHandling = EmptyArrayHandling.Set }));
                             }
                         }
@@ -367,9 +377,13 @@ namespace Laser.Orchard.ExternalContent.Services {
 
         private dynamic RazorTransform(string xmlpage, string xsltname, string contentType = "", Dictionary<string, object> dvb = null) {
             string output = "";
-            string myfile = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Xslt\" + contentType + xsltname + ".cshtml";
+            string myfile = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Xslt/{1}{2}.cshtml",
+                    _shellSetting.Name, contentType, xsltname));
             if (!System.IO.File.Exists(myfile)) {
-                myfile = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Xslt\" + xsltname + ".cshtml";
+                myfile = HostingEnvironment.MapPath(
+                    string.Format("~/App_Data/Sites/{0}/Xslt/{1}.cshtml",
+                        _shellSetting.Name, xsltname));
             }
 
             if (System.IO.File.Exists(myfile)) {
@@ -377,7 +391,7 @@ namespace Laser.Orchard.ExternalContent.Services {
                 DateTime d = System.IO.File.GetLastWriteTime(myfile);
                 key += d.ToShortDateString() + d.ToLongTimeString();
                 string mytemplate = File.ReadAllText(myfile);
-                string myfile2 = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\common.cshtml";
+                string myfile2 = HostingEnvironment.MapPath("~/App_Data/Sites/common.cshtml");
                 if (System.IO.File.Exists(myfile2)) {
                     mytemplate = File.ReadAllText(myfile2) + mytemplate;
 
@@ -467,8 +481,12 @@ namespace Laser.Orchard.ExternalContent.Services {
             namespaces = namespaces.Except(new string[] { namespaces.Last() });
             var area = string.Join(".", namespaces);
             // se esiste un xslt chiamato {ContentType}.{FieldName}.xslt ha priorità rispetto agli altri
-            myXmlFile = myXmlFileLessSpecific = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Xslt\" + xsltname + ".xslt";
-            myXmlFileMoreSpecific = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\Xslt\" + contentType + "." + xsltname + ".xslt";
+            myXmlFile = myXmlFileLessSpecific = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Xslt/{1}.xslt",
+                    _shellSetting.Name, xsltname));
+            myXmlFileMoreSpecific = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Xslt/{1}.{2}.xslt",
+                    _shellSetting.Name, contentType, xsltname));
             if (File.Exists(myXmlFileMoreSpecific)) {
                 myXmlFile = myXmlFileMoreSpecific;
             }

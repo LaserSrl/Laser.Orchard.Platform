@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using System.Linq;
 using System.Web.UI.WebControls;
 using System.Web.Hosting;
+using System.Net.Mime;
 
 namespace Laser.Orchard.Mobile.Drivers {
     [OrchardFeature("Laser.Orchard.PushGateway")]
@@ -24,7 +25,10 @@ namespace Laser.Orchard.Mobile.Drivers {
             _orchardServices = orchardServices;
             _shellSettings = shellSettings;
             _taxonomyService = taxonomyService;
-            string mobile_folder = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Mobile\";
+            
+            string mobile_folder = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/Mobile/",
+                    _shellSettings.Name));
             if (!System.IO.Directory.Exists(mobile_folder))
                 System.IO.Directory.CreateDirectory(mobile_folder);
         }

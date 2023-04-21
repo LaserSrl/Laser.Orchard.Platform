@@ -123,7 +123,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
                 { "typ", "JWT" },
                 { "kid", providerAttributes["KeyID"] }
             };
-            var p8File = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSetting.Name + @"\" + providerAttributes["p8File"];
+            var p8File = HostingEnvironment.MapPath(
+                string.Format("~/App_Data/Sites/{0}/{1}",
+                    _shellSetting.Name, providerAttributes["p8File"]));
             if (File.Exists(p8File)) {
                 string content = File.ReadAllText(p8File);
                 string[] keyLines = content.Split('\n');

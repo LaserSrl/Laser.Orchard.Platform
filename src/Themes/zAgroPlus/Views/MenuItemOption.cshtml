@@ -1,6 +1,0 @@
-﻿<option value="@Model.MenuItem.Href">@(new String('-', (int)Model.Level * 3) + " " + Model.MenuItem.Text.Text)</option>
-@{var lv = Model.Level + 1;
-  foreach (var child in Model.MenuItem.Items) {
-    @Display(New.MenuItemOption(MenuItem: child, Level: lv));
-  }
-}
