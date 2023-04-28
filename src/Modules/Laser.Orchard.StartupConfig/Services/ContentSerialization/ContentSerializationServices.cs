@@ -10,6 +10,7 @@ using Orchard.Fields.Fields;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Projections.Services;
+using Orchard.Services;
 using Orchard.Taxonomies.Fields;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
@@ -34,7 +35,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly ILocalizationService _localizationService;
         private readonly IEnumerable<ISpecificContentFieldSerializationProvider> _contentFieldSerializationProviders;
 
-        private readonly MarkdownFilter _markdownFilter;
+        private readonly IEnumerable<IHtmlFilter> _htmlFilters;
 
         private readonly string[] _skipAlwaysProperties;
         private readonly string _skipAlwaysPropertiesEndWith;
@@ -43,6 +44,8 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly string[] _skipPartNames;
         private readonly string[] _skipPartProperties;
         private readonly string[] _skipPartTypes;
+        private readonly IEnumerable<HtmlTextDescriptor> _htmlPartsDescritor;
+        private readonly IEnumerable<HtmlTextDescriptor> _htmlFieldsDescritor;
 
         private readonly Type[] _basicTypes;
 
@@ -56,14 +59,15 @@ namespace Laser.Orchard.StartupConfig.Services {
             IProjectionManager projectionManager, 
             ITaxonomyService taxonomyService,
             ILocalizationService localizationService,
-            IEnumerable<ISpecificContentFieldSerializationProvider> contentFieldSerializationProviders) {
+            IEnumerable<ISpecificContentFieldSerializationProvider> contentFieldSerializationProviders,
+            IEnumerable<IHtmlFilter> htmlFilters) {
 
             _orchardServices = orchardServices;
             _projectionManager = projectionManager;
             _taxonomyService = taxonomyService;
             _localizationService = localizationService;
             _contentFieldSerializationProviders = contentFieldSerializationProviders;
-            _markdownFilter = new MarkdownFilter();
+            _htmlFilters = htmlFilters;
 
             _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
             _skipAlwaysPropertiesEndWith = "Proxy";
@@ -72,6 +76,18 @@ namespace Laser.Orchard.StartupConfig.Services {
             _skipPartNames = new string[] { "InfosetPart", "FieldIndexPart", "IdentityPart", "UserPart", "UserRolesPart", "AdminMenuPart", "MenuPart", "TaxonomyPart", "TermsPart" };
             _skipPartProperties = new string[] { "CommentedOnContentItem", "CommentedOnContentItemMetadata", "PendingComments" };
             _skipPartTypes = new string[] { "ContentItem", "Zones", "TypeDefinition", "TypePartDefinition", "PartDefinition", "Settings", "Fields", "Record" };
+            _htmlPartsDescritor = new List<HtmlTextDescriptor> {
+                new HtmlTextDescriptor {
+                    Name = "BodyPart",
+                    Properties = new List<string> { "Text" }
+                }
+            };
+            _htmlFieldsDescritor = new List<HtmlTextDescriptor> {
+                new HtmlTextDescriptor {
+                    Name = "TextField",
+                    Properties = new List<string> { "Value" }
+                }
+            }; 
 
             _basicTypes = new Type[] {
                 typeof(string),
@@ -446,6 +462,14 @@ namespace Laser.Orchard.StartupConfig.Services {
                     if (!_skipPartProperties.Contains(property.Name)) {
                         object val = property.GetValue(part, BindingFlags.GetProperty, null, null, null);
                         if (val != null) {
+
+                            //TODO: To implement a provider in order to manage serialization of specific part with its own logic
+                            // e.g. BodyPart => IHtmlFilter.ProcessContent
+                            // e.g. LayoutPart => HtmlElement with IHtmlFilter.ProcessContent
+                            if (part.PartDefinition.Name.Equals("BodyPart", StringComparison.InvariantCultureIgnoreCase) && property.Name.Equals("Text", StringComparison.InvariantCultureIgnoreCase)) {
+                                var flavor = part.PartDefinition.Settings["BodyTypePartSettings.Flavor"];
+                                val = _htmlFilters.Aggregate(val.ToString(), (text, filter) => filter.ProcessContent(text, flavor));
+                            }
                             PopulateJObject(ref partObject, property, val, _skipPartProperties, actualLevel, parentContentId);
                         }
                     }
@@ -519,8 +543,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (val != null) {
                     if (textField.PartFieldDefinition.Settings.ContainsKey("TextFieldSettings.Flavor")) {
                         var flavor = textField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"];
-                        // markdownFilter acts only if flavor is "markdown"
-                        val = _markdownFilter.ProcessContent(val.ToString(), flavor);
+                        val = _htmlFilters.Aggregate(val.ToString(), (text, filter) => filter.ProcessContent(text, flavor));
                     }
                     FormatValue(ref val);
                 }
@@ -677,7 +700,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
         #endregion
     }
-
+    class HtmlTextDescriptor {
+        public string Name { get; set; }
+        public IEnumerable<string> Properties { get; set; }
+    }
     class ProcessedObject {
         public int Id { get; set; }
         public string Type { get; set; }
