@@ -21,7 +21,7 @@
       "Precision": 5,
       "relativeUrls": true,
       "sourceMapRoot": "",
-      "lineFeed": "",
+      "lineFeed": "crlf",
       "sourceMap": false
     },
     "stylus": {
@@ -52,12 +52,14 @@
     "css": {
       "enabled": true,
       "termSemicolons": true,
-      "gzip": false
+      "gzip": false,
+      "lineFeed": "crlf"
     },
     "javascript": {
       "enabled": true,
       "termSemicolons": true,
-      "gzip": false
+      "gzip": false,
+      "lineFeed": "crlf"
     }
   }
 }
