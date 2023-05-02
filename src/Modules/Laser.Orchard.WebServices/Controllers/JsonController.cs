@@ -30,8 +30,7 @@ using Orchard.OutputCache;
 using Laser.Orchard.Commons.Enums;
 using Laser.Orchard.Policy.Services;
 
-namespace Laser.Orchard.WebServices.Controllers
-{
+namespace Laser.Orchard.WebServices.Controllers {
 
     public class JsonController : Controller, ICachingEventHandler {
         private readonly IOrchardServices _orchardServices;
@@ -88,7 +87,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     serializer.Serialize(writer, rsp);
                     var xml = sww.ToString();
                     return this.Content(xml, "text/xml");
-                } else {
+                }
+                else {
                     if (item.As<AutoroutePart>() != null)
                         return GetObjectByAlias(item.As<AutoroutePart>().DisplayAlias, sourceType, resultTarget, mfilter, page, pageSize, tinyResponse, deeplevel, version);
                     else {
@@ -104,7 +104,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     }
 
                 }
-            } else {
+            }
+            else {
                 Response rsp = _utilsServices.GetResponse(ResponseType.None);
                 rsp.Message = "Valore Id non valido";
                 XmlSerializer serializer = new XmlSerializer(typeof(Response));
@@ -143,7 +144,8 @@ namespace Laser.Orchard.WebServices.Controllers
                 IContent item = null;
                 if (autoroutePart != null && autoroutePart.ContentItem != null) {
                     item = autoroutePart.ContentItem;
-                } else {
+                }
+                else {
                     Response rsp = _utilsServices.GetResponse(ResponseType.None, "Pagina non trovata");
 
                     XmlSerializer serializer = new XmlSerializer(typeof(Response));
@@ -184,7 +186,8 @@ namespace Laser.Orchard.WebServices.Controllers
 
                         #endregion Projection
                     }
-                } else {
+                }
+                else {
                     //  string tipoCI = item.ContentItem.ContentType;
                     //   string CiType = ((ContentItem)autoroutePart.ContentItem).ContentType;
                     //  int id = ((ContentItem)autoroutePart.ContentItem).Id;
@@ -230,7 +233,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     var xml = sww.ToString();
                     return this.Content(xml, "text/xml");
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex) {
                 Response rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
                 //   rsp.Message=;
                 XmlSerializer serializer = new XmlSerializer(typeof(Response));
@@ -254,7 +258,8 @@ namespace Laser.Orchard.WebServices.Controllers
             try {
                 teoric_masterid = ((ContentItem)autoroutePart.ContentItem).As<LocalizationPart>().MasterContentItem.Id;
                 masterid = teoric_masterid;
-            } catch {
+            }
+            catch {
                 masterid = id;
             }
             var contentsLocalized = _orchardServices.ContentManager.Query(CiType).Where<LocalizationPartRecord>(l => l.MasterContentItemId == masterid || l.Id == masterid).List();
@@ -276,7 +281,7 @@ namespace Laser.Orchard.WebServices.Controllers
         // displayAlias: url di ingresso Es: displayAlias=produttore-hermes
         // filterSubItemsParts: elennco csv delle parti da estrarre in presenza di array di ContentItems Es: filterSubItemsParts=TitlePart,AutoroutePart,MapPart
         [AlwaysAccessible]
-        public ActionResult GetByAlias(string displayAlias, SourceTypes sourceType = SourceTypes.ContentItem, ResultTarget resultTarget = ResultTarget.Contents, string mfilter = "", int page = 1, int pageSize = 10, bool tinyResponse = true, bool minified = false, bool realformat = false, int deeplevel = 10, string complexBehaviour = "") {
+        public ActionResult GetByAlias(string displayAlias, SourceTypes sourceType = SourceTypes.ContentItem, ResultTarget resultTarget = ResultTarget.Contents, string mfilter = "", int page = 1, int pageSize = 10, bool tinyResponse = true, bool minified = false, bool realformat = false, int deeplevel = 10, string complexBehaviour = "", string contentType = "") {
             //   Logger.Error("inizio"+DateTime.Now.ToString());
             IContent item = null;
 
@@ -293,29 +298,36 @@ namespace Laser.Orchard.WebServices.Controllers
                         var result = new ContentResult { ContentType = "application/json" };
                         result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidUser));
                         return result;
-                    } else
+                    }
+                    else
                         if (!_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
                         var result = new ContentResult { ContentType = "application/json" };
                         result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidXSRF));
                         return result;
                         //   Content((Json(_utilsServices.GetResponse(ResponseType.InvalidXSRF))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
-                    } else {
+                    }
+                    else {
                         #region utente validato
                         item = currentUser.ContentItem;
 
                         #endregion
                     }
                     #endregion
-                } else {
+                }
+                else {
                     item = GetContentByAlias(displayAlias);
                 }
 
                 if (!_orchardServices.Authorizer.Authorize(Permissions.ViewContent, item))
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
 
-                if(item == null) {
+                if (item == null) {
                     return new HttpStatusCodeResult(404);
                 }
+                else if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(item.ContentItem.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
+                    return new HttpStatusCodeResult(404);
+                }
+
 
                 ContentResult cr = (ContentResult)GetContent(item, sourceType, resultTarget, mfilter, page, pageSize, tinyResponse, minified, realformat, deeplevel, complexBehaviour.Split(','));
                 //    Logger.Error("Fine:"+DateTime.Now.ToString());
@@ -324,11 +336,14 @@ namespace Laser.Orchard.WebServices.Controllers
                     Logger.Error(cr.Content.ToString());
                 }
                 return cr;
-            } catch (System.Security.SecurityException) {
+            }
+            catch (System.Security.SecurityException) {
                 return Json(_utilsServices.GetResponse(ResponseType.InvalidUser), JsonRequestBehavior.AllowGet);
-            } catch (OrchardSecurityException) {
+            }
+            catch (OrchardSecurityException) {
                 return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
-            } catch {
+            }
+            catch {
                 return new HttpStatusCodeResult(500);
             }
         }
@@ -419,11 +434,13 @@ namespace Laser.Orchard.WebServices.Controllers
 
                 sb.Append("]"); // l : [
                 sb.Append("}");
-            } else { // Se l'oggetto NON ha delle pending policies allora posso servire l'oggetto stesso
+            }
+            else { // Se l'oggetto NON ha delle pending policies allora posso servire l'oggetto stesso
                 shape = _orchardServices.ContentManager.BuildDisplay(content);
                 if (sourceType == SourceTypes.ContentItem) {
                     dump = dumper.Dump(content, "Model");
-                } else {
+                }
+                else {
                     dump = dumper.Dump(shape, "Model");
                 }
                 //dump.XPathSelectElements("");
@@ -441,7 +458,8 @@ namespace Laser.Orchard.WebServices.Controllers
 
                 try {
                     part = shape.ContentItem.ProjectionPart;
-                } catch {
+                }
+                catch {
                     part = null;
                 }
                 if (part != null) {
@@ -479,7 +497,8 @@ namespace Laser.Orchard.WebServices.Controllers
 
                 try {
                     part = shape.ContentItem.CalendarPart;
-                } catch {
+                }
+                catch {
                     part = null;
                 }
                 if (part != null) {
@@ -551,7 +570,8 @@ namespace Laser.Orchard.WebServices.Controllers
 
                 try {
                     part = shape.ContentItem.WidgetsContainerPart;
-                } catch {
+                }
+                catch {
                     part = null;
                 }
                 if (part != null) {
@@ -593,7 +613,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     if (shape.ContentItem.ContentType.EndsWith("Term") || !String.IsNullOrWhiteSpace(shape.ContentItem.TypeDefinition.Settings["Taxonomy"])) {
                         part = shape.ContentItem.TermPart;
                     }
-                } catch {
+                }
+                catch {
                     part = null;
                 }
                 if (part != null) {
@@ -604,9 +625,11 @@ namespace Laser.Orchard.WebServices.Controllers
                     dynamic termContentItems;
                     if (resultTarget == ResultTarget.Terms) {
                         termContentItems = _taxonomyService.GetChildren(part, true);
-                    } else if (resultTarget == ResultTarget.SubTerms) {
+                    }
+                    else if (resultTarget == ResultTarget.SubTerms) {
                         termContentItems = _taxonomyService.GetChildren(part, false);
-                    } else {
+                    }
+                    else {
                         termContentItems = _taxonomyService.GetContentItems(part, (page - 1) * pageSize, pageSize);
                     }
 
@@ -615,7 +638,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     if (resultTarget == ResultTarget.Contents) {
                         sb.AppendFormat("\"n\": \"{0}\"", "TaxonomyTermList");
                         sb.AppendFormat(", \"v\": \"{0}\"", "ContentItem[]");
-                    } else {
+                    }
+                    else {
                         sb.AppendFormat("\"n\": \"{0}\"", "TermPartList");
                         sb.AppendFormat(", \"v\": \"{0}\"", "TermPart[]");
                     }
@@ -630,7 +654,8 @@ namespace Laser.Orchard.WebServices.Controllers
                         if (resultTarget == ResultTarget.Contents) {
                             projectionDump = dumper.Dump(item.ContentItem, String.Format("[{0}]", i));
                             JsonConverter.ConvertToJSon(projectionDump, sb, minified, realformat);
-                        } else {
+                        }
+                        else {
                             var dumperForPart = new ObjectDumper(deeplevel, _filterContentFieldsParts, true, tinyResponse, complexBehaviour);
                             projectionDump = dumperForPart.Dump(item, "TermPart");
                             JsonConverter.ConvertToJSon(projectionDump, sb, minified, realformat);
@@ -659,7 +684,8 @@ namespace Laser.Orchard.WebServices.Controllers
                     if (objec.ToRemove != null) {
                         return cleanobj(objec.ToRemove);
                     }
-                } catch { };
+                }
+                catch { };
             return objec;
         }
 
@@ -671,7 +697,8 @@ namespace Laser.Orchard.WebServices.Controllers
 
             if (autoroutePart != null && autoroutePart.ContentItem != null) {
                 item = autoroutePart.ContentItem;
-            } else {
+            }
+            else {
                 new HttpException(404, ("Not found"));
                 return null;
             }
@@ -694,7 +721,8 @@ namespace Laser.Orchard.WebServices.Controllers
                         var policy = item.As<Policy.Models.PolicyPart>();
                         if (policy != null && (_policyServices.HasPendingPolicies(item.ContentItem) ?? false)) {
                             key.Append("policy-not-accepted;");
-                        } else if (policy != null && !(_policyServices.HasPendingPolicies(item.ContentItem) ?? false)) {
+                        }
+                        else if (policy != null && !(_policyServices.HasPendingPolicies(item.ContentItem) ?? false)) {
                             key.Append("policy-accepted;");
                         }
                     }
