@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.UI.WebControls;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
+using Orchard.Indexing;
 using Orchard.Localization;
 
 namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
@@ -44,10 +46,18 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
         public IEnumerable<ExternalApplication> ExternalApplications { get; set; }
     }
 
+    public enum ApiValidationTypes {
+        ApiKey = 0,
+        Website,
+        IpAddress
+    }
+
     public class ExternalApplication {
 
         [ValidateExternalApplication]
         public string Name { get; set; }
+
+        public ApiValidationTypes ValidationType { get; set; }
 
         [ValidateExternalApplication]
         public string ApiKey { get; set; }
@@ -70,7 +80,7 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext) {
             var model = (ExternalApplication)validationContext.ObjectInstance;
-            
+
 
             if (model.Delete)
                 return ValidationResult.Success; // it will be deleted, so no validation 
@@ -80,18 +90,102 @@ namespace Laser.Orchard.StartupConfig.WebApiProtection.Models {
                         return new ValidationResult(T("Name field is required.").Text);
                     }
                 } else if (validationContext.DisplayName == "ApiKey") {
-                    if (String.IsNullOrWhiteSpace(model.ApiKey)) {
-                        return new ValidationResult(T("ApiKey field is required.").Text);
-                    } else if (model.ApiKey.Trim().Length < 22) {
-                        return new ValidationResult(T("ApiKey field must be minimum 22 characters length.").Text);
+                    switch (model.ValidationType) {
+                        case ApiValidationTypes.ApiKey:
+                            if (String.IsNullOrWhiteSpace(model.ApiKey)) {
+                                return new ValidationResult(T("ApiKey field is required.").Text);
+                            } else if (model.ApiKey.Trim().Length < 22) {
+                                return new ValidationResult(T("ApiKey field must be minimum 22 characters length.").Text);
+                            }
+                            break;
+
+                        case ApiValidationTypes.Website:
+                            // Website url formal validation
+                            if (String.IsNullOrWhiteSpace(model.ApiKey)) {
+                                return new ValidationResult(T("Website field is required.").Text);
+                            }
+                            if (!ValidateWebsite(model.ApiKey.Trim())) {
+                                return new ValidationResult(T("One or more websites is not valid.").Text);
+                            }
+                            break;
+
+                        case ApiValidationTypes.IpAddress:
+                            // Ip address formal validation
+                            if (String.IsNullOrWhiteSpace(model.ApiKey)) {
+                                return new ValidationResult(T("Ip address field is required.").Text);
+                            }
+                            if (!ValidateIpAddresses(model.ApiKey.Trim())) {
+                                return new ValidationResult(T("One or more ip addresses is not valid.").Text);
+                            }
+                            break;
                     }
-                } else if (validationContext.DisplayName == "EnableTimeStampVerification") {
+                } else if (validationContext.DisplayName == "ApiKey" && validationContext.DisplayName == "EnableTimeStampVerification") {
                     if (model.EnableTimeStampVerification && model.Validity <= 0) {
                         return new ValidationResult(T("Validity should be more than 0 minutes.").Text);
                     }
                 }
             }
             return ValidationResult.Success;
+        }
+
+        private bool ValidateWebsite (string input) {
+            var websites = input.Split(',');
+            // If no website is specified
+            if (websites.Length == 0) { 
+                return false; 
+            } 
+
+            foreach(var website in websites) {
+                // This is only a formal validation. This string may not be the domain, but rather
+                // the URL of a page or section, meaning that in principle we may be configuring
+                // an application to be a specific section of a website, e.g. https://www.site.com/it/area/
+                // Careful that the test in ApiKeyService can't be done with a StartsWith, so if this
+                // string does not end with a separator (e.g. a '/' character) we may end up testing
+                // something wrong:
+                // Example:
+                // here website = "https://www.site.com/it" tests true.
+                // A call from https://www.site.com/ita would appear to be from a valid URL referer,
+                // but it's not.
+                // However, things aren't as simple as adding a '/' at the end, because both these URLs
+                // should be valid URL referers:
+                //   - https://www.site.com/it/asd
+                //   - https://www.site.com/it?myquerystring=values
+                if (!Uri.IsWellFormedUriString(website, UriKind.Absolute)) {
+                    return false;   
+                }
+            }
+            return true;
+        }
+
+        private bool ValidateIpAddresses(string input) {
+            var ips = input.Split(',');
+            // If no ip is specified
+            if (ips.Length == 0) {
+                return false;
+            }
+
+            foreach (var ip in ips) {
+                var mask = ip.Split('.'); 
+                // TODO: this only validates IPv4. Extend to make this IPv4 compatible in the future.
+                if (mask.Length != 4) {
+                    return false;
+                }
+
+                int i = 0;
+                foreach (var subnet in mask) {
+                    i++;                    
+                    // Last element of ip address can be the character '*'.
+                    if (!(i == 4 && subnet == "*")) {
+                        int subnetNr = -1;
+                        var isInt = int.TryParse(subnet, out subnetNr);
+                        if (!isInt || subnetNr < 0 || subnetNr > 255) {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
