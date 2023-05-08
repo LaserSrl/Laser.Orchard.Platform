@@ -117,7 +117,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                     var resultsfile = string.Empty;
                     if (!string.IsNullOrEmpty(part.ShapeForResults)) {
                         resultsfile = string.Format(
-                            "~/App_Data/Sites/{0}/Code/{1}",
+                            "~/App_Data/Sites/{0}/CodeViews/{1}",
                             _shellSettings.Name,
                             ci.As<DynamicProjectionPart>().ShapeForResults);
                     }
@@ -199,7 +199,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                 var formfile = string.Empty;
                 if (!string.IsNullOrEmpty(part.Shape)) {
                     formfile = string.Format(
-                        "~/App_Data/Sites/{0}/Code/{1}",
+                        "~/App_Data/Sites/{0}/CodeViews/{1}",
                         _shellSettings.Name,
                         ci.As<DynamicProjectionPart>().Shape);
                 }
