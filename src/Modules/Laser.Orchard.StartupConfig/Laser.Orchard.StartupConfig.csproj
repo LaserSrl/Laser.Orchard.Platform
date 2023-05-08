@@ -575,7 +575,9 @@
     <Compile Include="Services\BearerTokenEncryptionService.cs" />
     <Compile Include="Services\BearerTokenOwinMiddlewareProvider.cs" />
     <Compile Include="Services\ConfigurableEditorBuilderWrapper.cs" />
+    <Compile Include="Services\ContentSerialization\BodyPartSerializationProvider.cs" />
     <Compile Include="Services\ContentSerialization\EnumerationFieldSerializationProvider.cs" />
+    <Compile Include="Services\ContentSerialization\ISpecificContentPartSerializationProvider.cs" />
     <Compile Include="Services\ContentSerialization\SerializationSettings.cs" />
     <Compile Include="Services\FrontEndEditService.cs" />
     <Compile Include="Services\IApiCredentialsManagementService.cs" />
