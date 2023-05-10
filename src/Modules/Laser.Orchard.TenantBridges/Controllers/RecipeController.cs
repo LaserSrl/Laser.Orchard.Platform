@@ -23,6 +23,15 @@ namespace Laser.Orchard.TenantBridges.Controllers {
 		private readonly IExtensionManager _extensionManager;
 		private readonly ShellSettings _shellSettings;
 
+		// TODO: How would a UI for this look like?
+		// The most likely use for this controller is in scripts/automation.
+		// A UI should allow a user to input:
+		//  - The target tenant's base url
+		//  - The moduleId
+		//  - The recipe name
+		// A UI designed specifically just for that may make little sense, in terms 
+		// of actual use cases.
+
 		public RecipeController(
 			IRecipeHarvester recipeHarvester,
 			IRecipeManager recipeManager,

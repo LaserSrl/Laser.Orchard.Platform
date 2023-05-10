@@ -26,6 +26,7 @@ namespace Laser.Orchard.TenantBridges.Routes {
                     Name = "ContentBridgeItemSnippetRoute"
                 }
             };
+            //TODO: add route for RecipeController
         }
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {

@@ -38,6 +38,7 @@ namespace Laser.Orchard.TenantBridges.Controllers {
 
         public Localizer T { get; set; }
 
+        // TODO: remove zone parameter
         public ActionResult Display(
             int? id,
             string zone,
@@ -48,8 +49,9 @@ namespace Laser.Orchard.TenantBridges.Controllers {
             // However, that kind of output is the whole point for this Action, so we don't
             // check that, and assume that is the intent of the caller.
 
-
             //TODO: Users and things we don't want to show may be asked. handle that
+            // TODO: perhaps have this action only handle widgets: the default ItemController from
+            // Orchard.Core should handle content html already with the IsAjaxRequest flag
 
             // Start processing
             if (id == null) {
@@ -69,7 +71,7 @@ namespace Laser.Orchard.TenantBridges.Controllers {
                 return PartialNotFoundResult();
             }
             
-            // This logic on containers is the same as the one from the defail ItemController for 
+            // This logic on containers is the same as the one from the default ItemController for 
             // content items from Orchard.Core.
             var container = contentItem.As<CommonPart>()?.Container;
             if (container != null && !container.HasPublished()) {
