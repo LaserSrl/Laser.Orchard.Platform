@@ -77,7 +77,7 @@ namespace Laser.Orchard.WebServices.Controllers {
         }
 
         [AlwaysAccessible]
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "", string contentType="") {
             try {
                 JObject json;
 
@@ -121,6 +121,8 @@ namespace Laser.Orchard.WebServices.Controllers {
 
                 if (content == null) {
                     return new HttpStatusCodeResult(404);
+                } else if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(content.ContentItem.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
+                    return new HttpStatusCodeResult(404);
                 }
 
                 if (!_orchardServices.Authorizer.Authorize(viewPermission, content)) {
@@ -156,7 +158,7 @@ namespace Laser.Orchard.WebServices.Controllers {
                     values["controller"].ToString().ToLowerInvariant().Equals("webapi") &&
                     values["action"].ToString().ToLowerInvariant().Equals("display")) {
                     var alias = _request.QueryString["alias"];
-                    if (alias.ToLower() == "user+info" || alias.ToLower() == "user info") {
+                    if (!string.IsNullOrWhiteSpace(alias) && (alias.ToLower() == "user+info" || alias.ToLower() == "user info")) {
                         var currentUser = _authenticationService.GetAuthenticatedUser();
                         if (currentUser != null) {
                             key.Append("user:" + currentUser.Id + ";");

@@ -23,6 +23,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         public ILogger Logger;
         private ICacheStorageProvider _cacheStorage;
         private readonly IApiKeySettingService _apiKeySettingService;
+
+        // we use this constant array for trimming URI segments
+        private static char[] _slash = { '/' };
+
         public ApiKeyService(ShellSettings shellSettings, IOrchardServices orchardServices, ICacheStorageProvider cacheManager, IApiKeySettingService apiKeySettingService) {
             _apiKeySettingService = apiKeySettingService;
             _shellSettings = shellSettings;
@@ -81,34 +85,156 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (action == null) {
                     // caso che si verifica con le web api (ApiController)
                     entryToVerify = string.Format("{0}.{1}", area, controller);
-                }
-                else {
+                } else {
                     // caso che si verifica con i normali Controller
                     entryToVerify = string.Format("{0}.{1}.{2}", area, controller, action);
                 }
                 if (protectedControllers.Contains(entryToVerify, StringComparer.InvariantCultureIgnoreCase)) {
                     check = true;
                 }
-            }
-            else {
+            } else {
                 check = true;
             }
 
             if (check == true) {
+
+                var authorized = false;
                 var myApiChannel = _request.QueryString["ApiChannel"] ?? _request.Headers["ApiChannel"];
-                var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
-                var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
-                if (!TryValidateKey(
-                        myApikey, myAkiv, 
-                        (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"), 
-                        myApiChannel)) {
-                    additionalCacheKey = "UnauthorizedApi";
+
+                // New validation methods for API using authorized websites or IP addresses.
+                // These new methods require the client to have sent us a valid ApiChannel. On the other hand,
+                // if we get a channel, we will attempt to test a configuration for it
+                if (!string.IsNullOrWhiteSpace(myApiChannel)) {
+                    var app = CurrentSettings.ExternalApplicationList.ExternalApplications
+                        .FirstOrDefault(ea => ea.Name.Equals(myApiChannel, StringComparison.OrdinalIgnoreCase));
+                    // Even if an ApiChannel is sent, if no application is configured for it, no test is made. 
+                    // At the same time, there is, purposefully, no fallback condition: if an ApiChannel is sent, 
+                    // and the test for the corresponding configuration fails, there is no fallback test being
+                    // performed to recover.
+                    if (app != null) {
+                        switch (app.ValidationType) {
+                            case ApiValidationTypes.ApiKey:
+                                // This replicates the "legacy" validation logic
+                                authorized = TestApiKeyForChannel(myApiChannel);
+                                break;
+                            case ApiValidationTypes.Website:
+                                authorized = CheckReferer(app);
+                                break;
+                            case ApiValidationTypes.IpAddress:
+                                authorized = CheckIpAddress(app);
+                                break;
+                            default:
+                                // invalid condition: this is really a sanity check where the code should never fall
+                                authorized = false;
+                                Logger.Error("Invalid ValidationType set for ExternalApplication " + app.Name);
+                                break;
+                        }
+                    }
+                    else { 
+                        authorized = false;
+                        Logger.Error("Impossible to identify configuration for ApiChannel " + myApiChannel);
+                    }
                 }
                 else {
-                    additionalCacheKey = "AuthorizedApi";
+                    // The fallback condition in case no ApiChannel has been sent is to imply a default
+                    // Api Channel, and test whether the client has sent valid apikey and akiv. This is
+                    // the legacy situation we are still supporting: ApiChannel used to alway be null.
+                    authorized = TestApiKeyForChannel(myApiChannel);
                 }
+
+                additionalCacheKey = authorized ? "AuthorizedApi" : "UnauthorizedApi";
             }
             return additionalCacheKey;
+        }
+
+        private bool TestApiKeyForChannel(string myApiChannel) {
+            var myApikey = _request.QueryString["ApiKey"] ?? _request.Headers["ApiKey"];
+            var myAkiv = _request.QueryString["AKIV"] ?? _request.Headers["AKIV"];
+            return TryValidateKey(
+                myApikey, myAkiv,
+                (_request.QueryString["ApiKey"] != null && _request.QueryString["clear"] != "false"),
+                myApiChannel);
+        }
+
+        private bool CheckReferer(ExternalApplication app) {
+            // See the ValidationAttributes of the ExternalApplication class for a discussion
+            // on the validation of the string used for URL Referer configuration.
+            var currentReferer = _request.ServerVariables["HTTP_REFERER"];
+            if (string.IsNullOrWhiteSpace(currentReferer)) {
+                Logger.Error("Impossible to validate and empty Referer.");
+                return false;
+            }
+
+            var websites = app.ApiKey.Split(',');
+            if (websites.Any()) {
+                var refererUri = new Uri(currentReferer);
+                foreach (var website in websites) {
+                    // The test here cannot simply be a comparison between the strings.
+                    var websiteUri = new Uri(website);
+                    // Compare uris by Scheme (http/https), host, port
+                    if (Uri.Compare(refererUri, websiteUri, UriComponents.SchemeAndServer, UriFormat.Unescaped, StringComparison.OrdinalIgnoreCase) == 0) {
+                        // Compare uris by segments:
+                        // https://learn.microsoft.com/en-us/dotnet/api/system.uri.segments?view=netframework-4.8.1
+                        // the segments from the website (the one configured in the application) must match exactly,
+                        // also in the same order, the segments from the referer. Note that because of how segments are
+                        // defined/built by the framework, the last significant one for us may actually be different,
+                        // since it may have a trailing '/' character.
+                        if (refererUri.Segments.Length >= websiteUri.Segments.Length) {
+                            int i = 0;
+                            for (; i < websiteUri.Segments.Length; i++) {
+                                var webSegment = websiteUri.Segments[i].TrimEnd(_slash);
+                                var refSegment = refererUri.Segments[i].TrimEnd(_slash);
+                                if (!string.Equals(webSegment, refSegment, StringComparison.OrdinalIgnoreCase)) {
+                                    // If the segments don't match, break out and stop testing this website
+                                    // for the referer
+                                    break;
+                                }
+                            }
+                            if (i == websiteUri.Segments.Length) {
+                                // All segments matched, so the referer matches this configured website
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            // We found no configured website that matched the referer
+            Logger.Error(string.Format("Impossible to validate Referer {0} for Application {1}.", currentReferer, app.Name));
+            return false;
+        }
+
+        private bool CheckIpAddress(ExternalApplication app) {
+            var currentIp = _request.ServerVariables["REMOTE_ADDR"];
+            if (string.IsNullOrWhiteSpace(currentIp)) {
+                // sanity check
+                Logger.Error("Impossible to validate and empty IP.");
+                return false;
+            }
+            
+            var ips = app.ApiKey.Split(',');
+            // If no ip is specified
+            if (ips.Length == 0) {
+                Logger.Error(string.Format("No IP is configured for {0}.", app.Name));
+                return false;
+            }
+
+            foreach (var ip in ips) {
+                if (ip.Equals(currentIp)) {
+                    return true;
+                }
+
+                if (ip.EndsWith("*")) {
+                    // Change current ip to match something like "1.2.3.*".
+                    var currentMask = currentIp.Substring(0, currentIp.LastIndexOf('.') + 1) + "*";
+                    if (ip.Equals(currentMask)) {
+                        return true;
+                    }
+                }
+            }
+
+            // We found no configured IP that matched the caller
+            Logger.Error(string.Format("Impossible to validate caller IP {0} for Application {1}.", currentIp, app.Name));
+            return false;
         }
 
         public string GetValidApiKey(string sIV, bool useTimeStamp = false) {
@@ -127,8 +253,7 @@ namespace Laser.Orchard.StartupConfig.Services {
 
                 byte[] encryptedAES = EncryptStringToBytes_Aes(aux, mykey, myiv);
                 key = Convert.ToBase64String(encryptedAES);
-            }
-            catch {
+            } catch {
                 // ignora volutamente qualsiasi errore e restituisce una stringa vuota
             }
             return key;
@@ -140,7 +265,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
 
-        private bool TryValidateKey(string token, string akiv, bool clearText, string channel= "TheDefaultChannel") {
+        private bool TryValidateKey(string token, string akiv, bool clearText, string channel = "TheDefaultChannel") {
             string cacheKey;
             _request = HttpContext.Current.Request;
             try {
@@ -156,8 +281,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                     var encryptedAES = Convert.FromBase64String(token);
                     key = DecryptStringFromBytes_Aes(encryptedAES, mykey, myiv);
                     //key = aes.Decrypt(token, mykey, myiv);
-                }
-                else {
+                } else {
                     var encryptedAES = EncryptStringToBytes_Aes(token, mykey, myiv);
                     var base64EncryptedAES = Convert.ToBase64String(encryptedAES, Base64FormattingOptions.None);
                     //var encrypted = aes.Crypt(token, mykey, myiv);
@@ -197,14 +321,12 @@ namespace Laser.Orchard.StartupConfig.Services {
                     if (floorLimit > ((item.Validity > 0 ? item.Validity : 5)/*minutes*/ * 60)) {
                         Logger.Error("Timestamp validity expired: key = " + key);
                         return false;
-                    }
-                    else {
+                    } else {
                         _cacheStorage.Put(cacheKey, "", new TimeSpan(0, item.Validity > 0 ? item.Validity : 5, 0));
                     }
                 }
                 return true;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 Logger.Error("Exception: " + ex.Message);
                 return false;
             }

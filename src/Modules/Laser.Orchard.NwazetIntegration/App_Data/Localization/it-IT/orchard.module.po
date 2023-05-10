@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -855,6 +855,14 @@ msgstr "ID Transazione"
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
 msgid "Transaction ID"
 msgstr "ID Transazione"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Waiting for payment"
+msgstr "In attesa del pagamento"
+
+msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PaymentInfo.cshtml"
+msgid "Waiting for transaction info"
+msgstr "In attesa delle informazioni della transazione"
 
 msgctxt "~/Modules/Laser.Orchard.NwazetIntegration/Views/EditorTemplates/Parts/Order.PickupPoint.cshtml"
 msgid "The customer had selected the pickup point \"{0}\" at the following address:"
@@ -2103,6 +2111,14 @@ msgstr "Il prodotto {0} è stato sincronizzato sul negozio di Facebook."
 msgctxt "Laser.Orchard.NwazetIntegration.Services.FacebookShop.FacebookShopService"
 msgid "Product part or Facebook part are not valid."
 msgstr "Parte prodotto o parte Facebook non valide."
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.Invoice.InvoiceService"
+msgid "Company or individual business"
+msgstr "Società o ditta individuale"
+
+msgctxt "Laser.Orchard.NwazetIntegration.Services.Invoice.InvoiceService"
+msgid "Final consumer"
+msgstr "Privato"
 
 msgctxt "Laser.Orchard.NwazetIntegration.Services.PaymentStatusProvider"
 msgid "Payment Failed"

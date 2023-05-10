@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -209,6 +209,10 @@ msgid "Generate"
 msgstr "Genera"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
+msgid "Ip addresses, separated by comma. The last digit may be a * to represent a range of IPs. This only accepts IPv4."
+msgstr "Indirizzi ip, separati da virgola. L'ultima cifra può essere un carattere * per rappresentare un insieme di indirizzi ip. Questo parametro accetto soltanto il formato IPv4."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Name"
 msgstr "Nome"
 
@@ -223,6 +227,10 @@ msgstr "Validità in minuti"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
+msgid "Website urls, separated by comma. Each entry must start with its protocol (e.g.: 'http://')"
+msgstr "Gli indirizzi web, separati da virgola. Ogni valore deve iniziare con il protocollo (ad esempio: 'http://')"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
 msgid "You are not authorized to create the content types associated to this field."
@@ -1773,6 +1781,10 @@ msgid "One or more parameters are null"
 msgstr "Uno o più parametri sono nulli"
 
 msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
+msgid "Some parameters are missing"
+msgstr "Uno o più parametri mancanti"
+
+msgctxt "Laser.Orchard.StartupConfig.Services.UtilsServices"
 msgid "Successfully Executed"
 msgstr "Eseguito con successo"
 
@@ -2077,12 +2089,28 @@ msgid "ApiKey field must be minimum 22 characters length."
 msgstr "Il campo ApiKey deve essere di almeno 22 caratteri."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "Ip address field is required."
+msgstr "Il campo "indirizzo ip" deve essere compilato."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "Name field is required."
 msgstr "Il campo Nome è obbligatorio."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "One or more ip addresses is not valid."
+msgstr "Uno o più indirizzi ip non sono validi."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "One or more websites is not valid."
+msgstr "Uno o più siti web non sono validi."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "Validity should be more than 0 minutes."
 msgstr "Validità deve essere maggiore di 0 minuti"
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "Website field is required."
+msgstr "Il campo "sito web" deve essere compilato"
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplicationAttribute"
 msgid "ApiKey field is required."

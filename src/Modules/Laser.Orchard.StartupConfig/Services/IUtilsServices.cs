@@ -212,7 +212,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                     if (message != "")
                         rsp.Message = message;
                     else
-                        rsp.Message = T("Invalid value for username or password").ToString();
+                        rsp.Message = T("Some parameters are missing").ToString();
                     rsp.ErrorCode = ErrorCode.MissingParameters;
                     rsp.Data = data;
                     rsp.ResolutionAction = ResolutionAction.NoAction;

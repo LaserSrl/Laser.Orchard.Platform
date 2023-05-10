@@ -34,7 +34,7 @@ namespace Laser.Orchard.Generator.Controllers {
 
         [AlwaysAccessible]
         [OutputCache(NoStore = true, Duration = 0)] // do not cache generator calls
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "") {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "", string contentType=  "") {
             JObject json;
 
             IContent content;
@@ -53,7 +53,7 @@ namespace Laser.Orchard.Generator.Controllers {
                 #endregion
 
             } else {
-                return _webApiServices.Display(alias, page, pageSize, maxLevel, filter);
+                return _webApiServices.Display(alias, page, pageSize, maxLevel, filter, contentType);
             }
         }
 

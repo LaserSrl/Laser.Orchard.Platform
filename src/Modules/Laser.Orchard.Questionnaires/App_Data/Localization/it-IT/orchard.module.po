@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -785,6 +785,10 @@ msgid "Cannot update questionnaire....... "
 msgstr "Non è possibile aggiornare il questionario......."
 
 msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
+msgid "Cannot update questionnaire: "
+msgstr "Impossibile aggiornare il questionario:"
+
+msgctxt "Laser.Orchard.Questionnaires.Drivers.QuestionnairePartDriver"
 msgid "You have to be logged in, before answering a questionnaire!"
 msgstr "Devi essere autenticato per poter rispondere al nostro questionario!"
 
@@ -881,8 +885,24 @@ msgid "Statistics"
 msgstr "Statistiche"
 
 msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
+msgid "Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes."
+msgstr "Impossibile cancellare la risposta: \"{0}"\ in quanto già selezionata in una o più risposte utente. La risposta è stata impostata come \"invisibile\". Per accettare la modifica {1} il contenuto."
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
+msgid "Cannot delete the question: \"{0}\" since it already contains one or more user answers.The question has been set to \"not visible\". {1} the content to accept these changes."
+msgstr "Impossibile cancellare la domanda \"{0}\" in quanto contiene già una o più risposte utente. La domanda è stata impostata come \"invisibile\". Per accettare la modifica premere {1}."
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
 msgid "Operation Fail: Questionnaire already filled"
 msgstr "Operazione fallita: questionario già compilato"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
+msgid "Publish"
+msgstr "Pubblica"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
+msgid "Save"
+msgstr "Salva"
 
 msgctxt "Laser.Orchard.Questionnaires.Services.to"
 msgid "Operation Fail: Questionnaire already filled"
@@ -891,6 +911,10 @@ msgstr "Operazione fallita: questionario già compilato"
 msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionAttribute"
 msgid "You have to answer to {0}"
 msgstr "Domanda {0} obbligatoria"
+
+msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
+msgid "Impossible to validate conditions."
+msgstr "Impossibile validare le condizioni."
 
 msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAttribute"
 msgid "Please, accept our terms and conditions!"

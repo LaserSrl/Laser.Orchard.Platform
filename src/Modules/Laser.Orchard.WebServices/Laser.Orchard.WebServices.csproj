@@ -136,6 +136,7 @@
     <Compile Include="Models\RestApiResponse.cs" />
     <Compile Include="Models\WebServiceSettingsPart.cs" />
     <Compile Include="Navigation\CustomRestApiSettingsAdminMenu.cs" />
+    <Compile Include="Routes\SignalRESTApiRoutes.cs" />
     <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\IWebApiService.cs" />

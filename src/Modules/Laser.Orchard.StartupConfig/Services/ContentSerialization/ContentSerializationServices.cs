@@ -1,16 +1,12 @@
 ﻿using Laser.Orchard.StartupConfig.Services.ContentSerialization;
-using Markdown.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Fields;
-using Orchard.Core.Contents;
 using Orchard.Fields.Fields;
-using Orchard.Localization.Models;
-using Orchard.Localization.Services;
 using Orchard.Projections.Services;
-using Orchard.Taxonomies.Fields;
+using Orchard.Services;
 using Orchard.Taxonomies.Models;
 using Orchard.Taxonomies.Services;
 using System;
@@ -31,10 +27,10 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IOrchardServices _orchardServices;
         private readonly IProjectionManager _projectionManager;
         private readonly ITaxonomyService _taxonomyService;
-        private readonly ILocalizationService _localizationService;
         private readonly IEnumerable<ISpecificContentFieldSerializationProvider> _contentFieldSerializationProviders;
+        private readonly IEnumerable<ISpecificContentPartSerializationProvider> _contentPartSerializationProviders;
 
-        private readonly MarkdownFilter _markdownFilter;
+        private readonly IEnumerable<IHtmlFilter> _htmlFilters;
 
         private readonly string[] _skipAlwaysProperties;
         private readonly string _skipAlwaysPropertiesEndWith;
@@ -55,15 +51,18 @@ namespace Laser.Orchard.StartupConfig.Services {
         public ContentSerializationServices(IOrchardServices orchardServices,
             IProjectionManager projectionManager, 
             ITaxonomyService taxonomyService,
-            ILocalizationService localizationService,
-            IEnumerable<ISpecificContentFieldSerializationProvider> contentFieldSerializationProviders) {
+            IEnumerable<ISpecificContentFieldSerializationProvider> contentFieldSerializationProviders,
+            IEnumerable<ISpecificContentPartSerializationProvider> contentPartSerializationProviders,
+            IEnumerable<IHtmlFilter> htmlFilters) {
 
             _orchardServices = orchardServices;
             _projectionManager = projectionManager;
             _taxonomyService = taxonomyService;
-            _localizationService = localizationService;
-            _contentFieldSerializationProviders = contentFieldSerializationProviders;
-            _markdownFilter = new MarkdownFilter();
+            _contentFieldSerializationProviders = contentFieldSerializationProviders
+                .OrderByDescending(p => p.Specificity);
+            _contentPartSerializationProviders = contentPartSerializationProviders
+                .OrderByDescending(p => p.Specificity);
+            _htmlFilters = htmlFilters;
 
             _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
             _skipAlwaysPropertiesEndWith = "Proxy";
@@ -77,13 +76,14 @@ namespace Laser.Orchard.StartupConfig.Services {
                 typeof(string),
                 typeof(decimal),
                 typeof(float),
+                typeof(double),
                 typeof(int),
                 typeof(bool),
                 typeof(DateTime),
                 typeof(Enum)
             };
 
-            // initialize ContentField serialization providers with the configurazion for this serialization.
+            // initialize serialization providers with the configurazion for this serialization.
             var settings = new SerializationSettings {
                 SkipAlwaysProperties = _skipAlwaysProperties,
                 SkipAlwaysPropertiesEndWith = _skipAlwaysPropertiesEndWith,
@@ -99,6 +99,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                 SerializerFactory = JsonSerializerInstance,
                 ObjectSerializerMethod = SerializeObject
             };
+            foreach (var p in _contentPartSerializationProviders) {
+                p.Configure(settings);
+            }
             foreach (var p in _contentFieldSerializationProviders) {
                 p.Configure(settings);
             }
@@ -430,27 +433,49 @@ namespace Laser.Orchard.StartupConfig.Services {
 
         private JProperty SerializePart(
             ContentPart part, int actualLevel, int parentContentId, ContentItem item = null) {
+
             // Part properties
             var properties = part.GetType()
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                 .Where(prop =>
                     !_skipPartTypes.Contains(prop.Name) //skip 
-                );
+                )
+                // filter the properties that we should skip
+                .Where(prop => !_skipPartProperties.Contains(prop.Name))
+                ;
+            // skip "Id" property if it has the same value of the part's container content item id.
+            if (item != null && part.Id == item.Id) {
+                properties = properties.Where(prop => "Id" != prop.Name);
+            }
             var partObject = new JObject();
-            foreach (var property in properties) {
-                // skip "Id" property if it has the same value of the part's container content item id.
-                if (property.Name == "Id" && item != null && part.Id == item.Id) {
-                    continue;
+
+            var specificProviders = _contentPartSerializationProviders
+                .Where(p => p.IsSpecificForPart(part));
+            if (specificProviders.Any()) {
+                // We found we have specific providers for the part, so we don't go through the
+                // default processing that would simply use reflection. We still need to give the
+                // providers a way to invoke that default processing, because they "special" handling
+                // may involve only a few of the part's properties, while all the others will still
+                // need to go through the default reflection.
+                foreach (var provider in specificProviders) {
+                    provider.PopulateJObject(
+                        ref partObject, 
+                        part,
+                        properties,
+                        (jo, pi, obj) => PopulateJObject(ref jo, pi, obj, _skipPartProperties, actualLevel, parentContentId));
                 }
-                try {
-                    if (!_skipPartProperties.Contains(property.Name)) {
+            }
+            else {
+                
+                foreach (var property in properties) {
+                    try {
                         object val = property.GetValue(part, BindingFlags.GetProperty, null, null, null);
                         if (val != null) {
                             PopulateJObject(ref partObject, property, val, _skipPartProperties, actualLevel, parentContentId);
                         }
                     }
+                    catch { }
                 }
-                catch { }
             }
 
             // now add the fields to the json object
@@ -519,8 +544,7 @@ namespace Laser.Orchard.StartupConfig.Services {
                 if (val != null) {
                     if (textField.PartFieldDefinition.Settings.ContainsKey("TextFieldSettings.Flavor")) {
                         var flavor = textField.PartFieldDefinition.Settings["TextFieldSettings.Flavor"];
-                        // markdownFilter acts only if flavor is "markdown"
-                        val = _markdownFilter.ProcessContent(val.ToString(), flavor);
+                        val = _htmlFilters.Aggregate(val.ToString(), (text, filter) => filter.ProcessContent(text, flavor));
                     }
                     FormatValue(ref val);
                 }

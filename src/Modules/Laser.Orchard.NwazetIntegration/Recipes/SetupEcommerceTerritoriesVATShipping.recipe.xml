@@ -943,6 +943,7 @@
       <IdentityPart Identifier="mondohierarchyItalia" />
       <TerritoryAddressTypePart Shipping="True" Billing="True" TerritoryInternalRecordId="Italia" />
       <TerritoryAdministrativeTypePart AdministrativeType="Country" TerritoryInternalRecordId="Italia" />
+      <TerritoryISO3166CodePart ISO3166Code="IT" TerritoryInternalRecordId="Italia" />
       <TerritoryPart ParentTerritoryId="/Identifier=mondohierarchyUnione Europea" HierarchyId="/Identifier=mondohierarchy" TerritoryInternalRecordId="Italia" />
       <TitlePart Title="Italia" />
     </Territory>

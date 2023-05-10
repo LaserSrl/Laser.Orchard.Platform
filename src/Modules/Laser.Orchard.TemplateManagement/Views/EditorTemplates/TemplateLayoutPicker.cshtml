@@ -5,7 +5,7 @@
     var layouts = ((IEnumerable<TemplatePart>)ViewBag.Layouts).ToList();
     var currentValue = ViewData.TemplateInfo.FormattedModelValue as int?;
     var options = layouts.Select(x => new SelectListItem { Text = x.Title, Value = x.Id.ToString(), Selected = x.Id == currentValue });
-    var editUrl = currentValue != null ? Url.Action("Edit", "Admin", new {id = layouts[0].Id, area = "Contents"}) : "#";
+    var editUrl = currentValue != null ? Url.Action("Edit", "Admin", new {id = currentValue, area = "Contents"}) : "#";
     var style = currentValue != null ? "display:inline;" : "display:none;";
 }
 <div class="layout-picker-wrapper">
