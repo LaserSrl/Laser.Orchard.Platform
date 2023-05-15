@@ -626,6 +626,11 @@ namespace Laser.Orchard.StartupConfig.Services {
             ref JObject jObject, 
             PropertyInfo property, object val, string[] skipProperties, int actualLevel, int parentContentId) {
 
+            if (val == null) {
+                // safety check: we cannot serialize nothing
+                return;
+            }
+
             JObject propertiesObject;
             var serializer = JsonSerializerInstance();
             if (val is Array || val.GetType().IsGenericType) {
