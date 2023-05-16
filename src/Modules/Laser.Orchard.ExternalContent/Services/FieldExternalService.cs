@@ -444,17 +444,25 @@ namespace Laser.Orchard.ExternalContent.Services {
             }
 
             for (Int32 i = 0; i < xn.ChildNodes.Count; i++) {
+                var nodeUnderProcess = xn.ChildNodes[i];
                 if (ForceChildBeArray) {
                     XmlAttribute xattr = doc.CreateAttribute("json", "Array", "http://james.newtonking.com/projects/json");
                     xattr.Value = "true";
-                    xn.ChildNodes[i].Attributes.Append(xattr);
+                    nodeUnderProcess.Attributes.Append(xattr);
                 }
-                if (xn.ChildNodes[i].HasChildNodes) {
-                    XmlNode childnode = XmlWithJsonArrayTag(xn.ChildNodes[i], doc).Clone();
+                if (nodeUnderProcess.HasChildNodes) {
+                    XmlNode childnode = XmlWithJsonArrayTag(nodeUnderProcess, doc).Clone();
                     if (!string.IsNullOrEmpty(childnode.InnerText)) {
-                        xn.InsertBefore(childnode, xn.ChildNodes[i]);
+                        xn.InsertBefore(childnode, nodeUnderProcess);
+                        // Now the index (i) will point to the node we just added (childnode). The next
+                        // iteration (i++) would cause the index to point to the same node we have just
+                        // been processing.
+                        i++;
                     }
-                    xn.ChildNodes[i].ParentNode.RemoveChild(xn.ChildNodes[i]);
+                    nodeUnderProcess.ParentNode.RemoveChild(nodeUnderProcess);
+                    // Decrease the index to make sure we don't skip processing the next child node, because
+                    // we just removed a node from before it in the array.
+                    i--;
                 }
             }
             return xn;
