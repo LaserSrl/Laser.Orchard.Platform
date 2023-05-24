@@ -33,6 +33,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IEnumerable<IHtmlFilter> _htmlFilters;
 
         private readonly string[] _skipAlwaysProperties;
+        private readonly string[] _skipAlwaysPropertyTypes;
         private readonly string _skipAlwaysPropertiesEndWith;
         private readonly string[] _skipFieldProperties;
         private readonly string[] _skipFieldTypes;
@@ -64,7 +65,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                 .OrderByDescending(p => p.Specificity);
             _htmlFilters = htmlFilters;
 
-            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
+            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord", "UserPartRecord" };
+            _skipAlwaysPropertyTypes = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord", "UserPartRecord" };
+            // Used to skip properties whose name ends with "Proxy"
             _skipAlwaysPropertiesEndWith = "Proxy";
             _skipFieldProperties = new string[] { "Storage", "Name", "DisplayName", "Setting" };
             _skipFieldTypes = new string[] { "FieldDefinition", "PartFieldDefinition" };
@@ -243,12 +246,6 @@ namespace Laser.Orchard.StartupConfig.Services {
                     return new JProperty(item.GetType().Name, null);
                 }
             }
-            try {
-                if (item.GetType().Name.EndsWith(_skipAlwaysPropertiesEndWith)) {
-                    return new JProperty(item.GetType().Name, null);
-                }
-            } catch {
-            }
             skipProperties = skipProperties ?? new string[0];
             try {
                 if (item is ContentPart &&
@@ -321,27 +318,32 @@ namespace Laser.Orchard.StartupConfig.Services {
                     List<JProperty> properties = new List<JProperty>();
                     foreach (var member in members) {
                         var propertyInfo = item.GetType().GetProperty(member.Name);
-                        object val = item.GetType().GetProperty(member.Name).GetValue(item);
-                        if (IsBasicType(propertyInfo.PropertyType)) {
-                            var memberVal = val;
-                            FormatValue(ref memberVal);
-                            properties.Add(new JProperty(member.Name, memberVal));
-                        } else if (typeof(IEnumerable).IsInstanceOfType(val)) {
-                            JArray arr = new JArray();
-                            properties.Add(new JProperty(member.Name, arr));
-                            foreach (var element in (val as IEnumerable)) {
-                                if (IsBasicType(element.GetType())) {
-                                    var valItem = element;
-                                    FormatValue(ref valItem);
-                                    arr.Add(valItem);
-                                } else {
-                                    aux = SerializeObject(element, actualLevel + 1, parentContentId, skipProperties);
-                                    arr.Add(new JObject(aux));
+                        if (!_skipAlwaysPropertyTypes.Contains(propertyInfo.PropertyType.Name)) {
+                            object val = item.GetType().GetProperty(member.Name).GetValue(item);
+                            if (IsBasicType(propertyInfo.PropertyType)) {
+                                var memberVal = val;
+                                FormatValue(ref memberVal);
+                                properties.Add(new JProperty(member.Name, memberVal));
+                            }
+                            else if (typeof(IEnumerable).IsInstanceOfType(val)) {
+                                JArray arr = new JArray();
+                                properties.Add(new JProperty(member.Name, arr));
+                                foreach (var element in (val as IEnumerable)) {
+                                    if (IsBasicType(element.GetType())) {
+                                        var valItem = element;
+                                        FormatValue(ref valItem);
+                                        arr.Add(valItem);
+                                    }
+                                    else {
+                                        aux = SerializeObject(element, actualLevel + 1, parentContentId, skipProperties);
+                                        arr.Add(new JObject(aux));
+                                    }
                                 }
                             }
-                        } else {
-                            aux = SerializeObject(propertyInfo.GetValue(item), actualLevel + 1, parentContentId, skipProperties);
-                            properties.Add(aux);
+                            else {
+                                aux = SerializeObject(propertyInfo.GetValue(item), actualLevel + 1, parentContentId, skipProperties);
+                                properties.Add(aux);
+                            }
                         }
                     }
                     return new JProperty(item.GetType().Name, new JObject(properties));
@@ -672,8 +674,12 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
         }
 
-        #region Helper methos
+        #region Helper methods
         private bool IsBasicType(Type type) {
+            var innerType = Nullable.GetUnderlyingType(type);
+            if (innerType != null) {
+                return _basicTypes.Contains(innerType) || innerType.IsEnum;
+            }
             return _basicTypes.Contains(type) || type.IsEnum;
         }
 
