@@ -12,7 +12,7 @@
 
 <div id="divCreateNewButton_@Model.nameCPField" class="divCreateNewButton">
     <div id="divCTNewButton_@Model.nameCPField" class="divCTNewButton">
-        <input type="button" value="Create New Item" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" 
+        <input type="button" value="@T("Create New Item")" id="selectContentTypeBtn_@Model.nameCPField" data-nameCPField="@Model.nameCPField" 
                class="selectContentTypeBtn button"
                onclick="divCreateNewButton.onSelectCTClick.apply(this)" data-multiple="@Model.multiple" />
 
