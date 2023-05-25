@@ -239,11 +239,18 @@ namespace Laser.Orchard.StartupConfig.Services {
             object item, int actualLevel, int parentContentId, string[] skipProperties = null) {
 
             JProperty aux = null;
+            var itemType = item.GetType();
+            var propertyName = itemType.Name;
+            if (propertyName.EndsWith("Proxy")) {
+                if (itemType.BaseType != null) {
+                    propertyName = itemType.BaseType.Name;
+                }
+            }
             if ((actualLevel + 1) > _maxLevel) {
                 if (((dynamic)item).Id != null) {
-                    return new JProperty(item.GetType().Name, new JObject(new JProperty("Id", ((dynamic)item).Id)));
+                    return new JProperty(propertyName, new JObject(new JProperty("Id", ((dynamic)item).Id)));
                 } else {
-                    return new JProperty(item.GetType().Name, null);
+                    return new JProperty(propertyName, null);
                 }
             }
             skipProperties = skipProperties ?? new string[0];
@@ -253,8 +260,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                     return SerializeObject((ContentItem)((dynamic)item).ContentItem, actualLevel, parentContentId, skipProperties);
                 }
 
-                if (item.GetType().GetProperties().Count(x => x.Name == "Id") > 0) {
-                    PopulateProcessedItems(item.GetType().Name, ((dynamic)item).Id, parentContentId);
+                if (itemType.GetProperties().Count(x => x.Name == "Id") > 0) {
+                    PopulateProcessedItems(propertyName, ((dynamic)item).Id, parentContentId);
                 }
                 if (item is ContentPart) {
                     // We should never be falling through this branch, because ContentParts
@@ -306,20 +313,20 @@ namespace Laser.Orchard.StartupConfig.Services {
                             properties.Add(aux);
                         }
                     }
-                    return new JProperty(item.GetType().Name, new JObject(properties));
-                } else if (item.GetType().IsClass) {
-                    var members = item.GetType()
+                    return new JProperty(propertyName, new JObject(properties));
+                } else if (itemType.IsClass) {
+                    var members = itemType
                         .GetFields(BindingFlags.Instance | BindingFlags.Public)
                         .Cast<MemberInfo>()
-                        .Union(item.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                        .Union(itemType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
                         .Where(m => !skipProperties.Contains(m.Name)
                             && !_skipAlwaysProperties.Contains(m.Name)
                             && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith));
                     List<JProperty> properties = new List<JProperty>();
                     foreach (var member in members) {
-                        var propertyInfo = item.GetType().GetProperty(member.Name);
+                        var propertyInfo = itemType.GetProperty(member.Name);
                         if (!_skipAlwaysPropertyTypes.Contains(propertyInfo.PropertyType.Name)) {
-                            object val = item.GetType().GetProperty(member.Name).GetValue(item);
+                            object val = itemType.GetProperty(member.Name).GetValue(item);
                             if (IsBasicType(propertyInfo.PropertyType)) {
                                 var memberVal = val;
                                 FormatValue(ref memberVal);
@@ -346,13 +353,13 @@ namespace Laser.Orchard.StartupConfig.Services {
                             }
                         }
                     }
-                    return new JProperty(item.GetType().Name, new JObject(properties));
+                    return new JProperty(propertyName, new JObject(properties));
 
                 } else {
-                    return new JProperty(item.GetType().Name, item);
+                    return new JProperty(propertyName, item);
                 }
             } catch (Exception ex) {
-                return new JProperty(item.GetType().Name, ex.Message);
+                return new JProperty(propertyName, ex.Message);
             }
         }
 
