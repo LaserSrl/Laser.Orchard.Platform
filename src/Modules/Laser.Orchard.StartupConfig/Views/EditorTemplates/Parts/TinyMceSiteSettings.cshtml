@@ -22,12 +22,12 @@
     <div>
         <label for="@Html.FieldIdFor(m => m.AdditionalPlugins)">@T("Additional Plugins")</label>
         @Html.TextAreaFor(m => m.AdditionalPlugins, new { @class = "text large" })
-        <span class="hint">@T("A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js")</span>
+        <span class="hint">@T("A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js")</span>
     </div>
     <div>
         <label for="@Html.FieldIdFor(m => m.FrontendAdditionalPlugins)">@T("Frontend Additional Plugins")</label>
         @Html.TextAreaFor(m => m.FrontendAdditionalPlugins, new { @class = "text large"})
-        <span class="hint">@T("A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js")</span>
+        <span class="hint">@T("A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js")</span>
     </div>
 </fieldset>
 <script type="text/javascript">
