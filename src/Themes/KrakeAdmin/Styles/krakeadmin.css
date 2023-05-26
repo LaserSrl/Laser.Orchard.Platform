@@ -9616,8 +9616,13 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     width: 100% !important; } }
 
 /* Google Maps Styles */
-.gm-style button, .gm-style a.button {
-  color: black !important; }
+.gm-style button {
+  color: black !important;
+  min-width: unset; }
+
+.gm-style a.button {
+  color: black !important;
+  min-width: unset; }
 
 /* Red text for validation error hints. */
 .field-validation-error {

@@ -11770,8 +11770,18 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 
 
 /* Google Maps Styles */
-.gm-style button, .gm-style a.button {
-    color: rgb(0, 0, 0) !important;
+.gm-style {
+    button {
+        color: rgb(0, 0, 0) !important;
+        min-width: unset;
+    }
+
+    a {
+        &.button {
+            color: rgb(0, 0, 0) !important;
+            min-width: unset;
+        }
+    }
 }
 
 /* Red text for validation error hints. */
