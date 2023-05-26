@@ -38,8 +38,12 @@ namespace Laser.Orchard.ExternalContent.Drivers {
         }
 
         protected override DriverResult Display(ContentPart part, FieldExternal field, string displayType, dynamic shapeHelper) {
-            var settings = field.PartFieldDefinition.Settings.GetModel<FieldExternalSetting>();
-            return ContentShape("Fields_FieldExternal", GetDifferentiator(field, part), () => shapeHelper.Fields_FieldExternal(ContentPart: part, ContentField: field, Setting: settings));
+            return ContentShape("Fields_FieldExternal", 
+                GetDifferentiator(field, part), 
+                () => {
+                    var settings = field.PartFieldDefinition.Settings.GetModel<FieldExternalSetting>();
+                    return shapeHelper.Fields_FieldExternal(ContentPart: part, ContentField: field, Setting: settings);
+                });
         }
 
         protected override DriverResult Editor(ContentPart part, FieldExternal field, dynamic shapeHelper) {
