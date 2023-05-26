@@ -35,14 +35,17 @@ namespace Laser.Orchard.InsertStuff.Drivers {
         /// Gets called when the field is displayed
         /// </summary>
         protected override DriverResult Display(ContentPart part, InsertStuffField field, string displayType, dynamic shapeHelper) {
-            var settings = field.PartFieldDefinition.Settings.GetModel<InsertStuffFieldSettings>();
-
-            var viewModel = new InsertStuffViewModel {
-                DisplayName = field.Name
-            };
-
             return ContentShape("Fields_Laser_Orchard_InsertStuff", GetDifferentiator(field, part),
-                () => shapeHelper.Fields_Laser_Orchard_InsertStuff(ContentPart: part, ContentField: field, Model: viewModel));
+                () => {
+                    var settings = field.PartFieldDefinition.Settings.GetModel<InsertStuffFieldSettings>();
+
+                    var viewModel = new InsertStuffViewModel {
+                        DisplayName = field.Name
+                    };
+
+                    return shapeHelper.Fields_Laser_Orchard_InsertStuff(ContentPart: part, ContentField: field, Model: viewModel);
+                });
+        
         }
 
         /// <summary>
