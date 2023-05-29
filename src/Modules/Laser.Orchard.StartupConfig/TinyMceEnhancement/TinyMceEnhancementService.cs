@@ -76,7 +76,8 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 var contenPickerEnabled = (_shellDescriptor.Features.Any(x => x.Name == "Orchard.ContentPicker") ? true : false);
                 var tokensHtmlFilterEnabled = (_shellDescriptor.Features.Any(x => x.Name == "Orchard.Tokens.HtmlFilter") ? true : false);
                 if (contenPickerEnabled && tokensHtmlFilterEnabled && !currentToolbar.Contains("orchardlink")) {
-                    currentToolbar = currentToolbar.Replace("link ", "link orchardlink ");
+                    //TODO: make this replace more robust
+                    currentToolbar = currentToolbar.Replace(" link ", " link orchardlink ");
                 }
             }
             return currentToolbar;
