@@ -74,6 +74,9 @@ namespace Laser.Orchard.CulturePicker.Drivers {
             var isHomePage = false;
 
             var baseUrl = context.CurrentSite.BaseUrl;
+            if (!baseUrl.EndsWith("/")) {
+                baseUrl = baseUrl + "/";
+            }
             var baseUri = new Uri(baseUrl);
             var requestUri = context.HttpContext.Request.Url;
             if (baseUri.IsBaseOf(requestUri)) {
