@@ -225,6 +225,10 @@ msgid "Website urls, separated by comma. Each entry must start with its protocol
 msgstr "Gli indirizzi web, separati da virgola. Ogni valore deve iniziare con il protocollo (ad esempio: 'http://')"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
+msgid "Create New Item"
+msgstr "Crea nuovo"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
 msgid "You are not authorized to create the content types associated to this field."
 msgstr "Non sei autorizzato a creare contenuti del tipo associato a questo campo."
 
@@ -541,8 +545,16 @@ msgid "Taxonomy Settings"
 msgstr "Impostazioni della Tassonomia"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista dei plugin aggiuntivi quando TinyMce è eseguito a front end. Vai a capo per separare un plugin dall'altro. Se un plugin non ha il corrispondente plugin.min.js, specifica il nome corretto del file nella cartella dei plugin del modulo StartupConfig.<br/>Esempi:<br/>plugin1<br/>plugin2<br/>plugin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
 msgstr "Lista di plugin addizionali per l'esecuzione di TinyMce a front end. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista dei plugin aggiuntivi. Vai a capo per separare un plugin dall'altro. Se un plugin non ha il corrispondente plugin.min.js, specifica il nome corretto del file nella cartella dei plugin del modulo StartupConfig.<br/>Esempi:<br/>plugin1<br/>plugin2<br/>plugin3/editor_plugin.js"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
