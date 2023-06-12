@@ -359,10 +359,10 @@ $psv-overlay-zindex: 110 !default;
         margin-bottom: 4vh;
 
         svg {
-            width: map.get($psv-overlay-image-size, portrait);
+            width: map-get($psv-overlay-image-size, portrait);
 
             @media (orientation: landscape) {
-                width: map.get($psv-overlay-image-size, landscape);
+                width: map-get($psv-overlay-image-size, landscape);
             }
         }
     }
