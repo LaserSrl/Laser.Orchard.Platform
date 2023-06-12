@@ -243,7 +243,7 @@ $psv-overlay-zindex: 110 !default;
 
 .psv-button:not(.psv-button--disabled):focus-visible {
     outline: $psv-element-focus-outline;
-    outline-offset: -#{list.nth($psv-element-focus-outline, 1)};
+    outline-offset: -#{nth($psv-element-focus-outline, 1)};
 }
 
 .psv-container:not(.psv--is-touch) .psv-button--hover-scale:not(.psv-button--disabled):hover .psv-button-svg {
@@ -561,7 +561,7 @@ $psv-overlay-zindex: 110 !default;
             flex: none;
             height: $psv-panel-menu-item-height;
             width: $psv-panel-menu-item-height;
-            margin-right: #{list.nth($psv-panel-menu-item-padding, 1)};
+            margin-right: #{nth($psv-panel-menu-item-padding, 1)};
 
             img {
                 max-width: 100%;
@@ -577,7 +577,7 @@ $psv-overlay-zindex: 110 !default;
 
         &:focus-visible {
             outline: $psv-element-focus-outline;
-            outline-offset: -#{list.nth($psv-element-focus-outline, 1)};
+            outline-offset: -#{nth($psv-element-focus-outline, 1)};
         }
     }
 
