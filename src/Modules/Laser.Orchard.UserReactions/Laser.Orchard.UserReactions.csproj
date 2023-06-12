@@ -116,6 +116,8 @@
     <Content Include="Styles\fonts\reactions.svg" />
     <Content Include="Styles\icons-reference.html" />
     <Content Include="Styles\reactions.css" />
+    <Content Include="Styles\styles.css" />
+    <Content Include="Styles\styles.min.css" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
