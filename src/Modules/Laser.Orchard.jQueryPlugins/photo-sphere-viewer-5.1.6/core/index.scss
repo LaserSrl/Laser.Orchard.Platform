@@ -424,9 +424,9 @@ $psv-overlay-zindex: 110 !default;
         position: absolute;
         top: -1px;
         right: 0;
-        width: math.div($psv-panel-close-button-size, 5) * 3;
-        height: math.div($psv-panel-close-button-size, 5) * 3;
-        padding: math.div($psv-panel-close-button-size, 5);
+        width: $psv-panel-close-button-size / 5 * 3; //math.div($psv-panel-close-button-size, 5) * 3;
+        height: $psv-panel-close-button-size / 5 * 3; //math.div($psv-panel-close-button-size, 5) * 3;
+        padding: $psv-panel-close-button-size / 5; //math.div($psv-panel-close-button-size, 5);
         background: transparent;
         color: $psv-panel-close-button-color;
         transition: background $psv-panel-close-button-animate-delay ease-in-out;
@@ -466,11 +466,7 @@ $psv-overlay-zindex: 110 !default;
                 margin-top: (-$psv-panel-resizer-grip-height * 0.5);
                 width: 1px;
                 height: 1px;
-                box-shadow: make-dot-shadow(
-                    $psv-panel-resizer-grip-color,
-                    $psv-panel-resizer-grip-width,
-                    $psv-panel-resizer-grip-height
-                );
+                box-shadow: make-dot-shadow( $psv-panel-resizer-grip-color, $psv-panel-resizer-grip-width, $psv-panel-resizer-grip-height );
                 background: transparent;
             }
         }
