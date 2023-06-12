@@ -16,11 +16,5 @@
     "inputFiles": [
       "photo-sphere-viewer-5.1.6/core/index.js"
     ]
-  },
-  {
-    "outputFileName": "Scripts/Threejs/r153/three.min.js",
-    "inputFiles": [
-      "Scripts/Threejs/r153/three.js"
-    ]
   }
 ]

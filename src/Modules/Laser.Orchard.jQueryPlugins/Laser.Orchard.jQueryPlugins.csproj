@@ -703,9 +703,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Threejs\r153\three.js" />
-    <Content Include="Scripts\Threejs\r153\three.min.js">
-      <DependentUpon>three.js</DependentUpon>
-    </Content>
+    <Content Include="Scripts\Threejs\r153\three.min.js" />
     <Content Include="Scripts\Threejs\r153\three.module.js" />
     <Content Include="Scripts\Threejs\r153\three.module.min.js" />
     <Content Include="Styles\json-browse\jquery.json-browse.css" />
