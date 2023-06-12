@@ -1,0 +1,713 @@
+/*!
+ * PhotoSphereViewer 5.1.6
+ * @copyright 2014-2015 Jérémy Heleine
+ * @copyright 2023 Damien "Mistic" Sorel
+ * @licence MIT (https://opensource.org/licenses/MIT)
+ */
+
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+// *** MAIN ***
+$psv-main-background-stops: #fff 0%,
+    #fdfdfd 16%,
+    #fbfbfb 33%,
+    #f8f8f8 49%,
+    #efefef 66%,
+    #dfdfdf 82%,
+    #bfbfbf 100% !default;
+$psv-main-background: radial-gradient($psv-main-background-stops) !default;
+$psv-element-focus-outline: 2px solid #007cff !default;
+
+// *** LOADER ***
+$psv-loader-bg-color: rgba(61, 61, 61, 0.5) !default;
+$psv-loader-color: rgba(255, 255, 255, 0.7) !default;
+$psv-loader-width: 150px !default;
+$psv-loader-tickness: 10px !default;
+$psv-loader-border: 3px !default;
+$psv-loader-font: 600 16px sans-serif !default;
+
+// *** NAVBAR ***
+$psv-navbar-height: 40px !default;
+$psv-navbar-background: rgba(61, 61, 61, 0.5) !default;
+
+$psv-caption-font: 16px sans-serif !default;
+$psv-caption-text-color: rgba(255, 255, 255, 0.7) !default;
+
+$psv-buttons-height: 20px !default;
+$psv-buttons-padding: (($psv-navbar-height - $psv-buttons-height) * 0.5) !default;
+$psv-buttons-background: transparent !default;
+$psv-buttons-active-background: rgba(255, 255, 255, 0.2) !default;
+$psv-buttons-color: rgba(255, 255, 255, 0.7) !default;
+$psv-buttons-disabled-opacity: 0.5 !default;
+
+$psv-buttons-hover-scale: 1.2 !default;
+$psv-buttons-hover-scale-delay: 200ms !default;
+
+$psv-zoom-range-width: 80px !default;
+$psv-zoom-range-tickness: 1px !default;
+$psv-zoom-range-diameter: 7px !default;
+$psv-zoom-range-media-min-width: 600px !default;
+
+// *** TOOLTIP ***
+$psv-tooltip-background: rgba(61, 61, 61, 0.8) !default;
+$psv-tooltip-animate-offset: 5px !default;
+$psv-tooltip-animate-delay: 100ms !default;
+$psv-tooltip-radius: 4px !default;
+$psv-tooltip-padding: 0.5em 1em !default;
+$psv-tooltip-arrow-size: 7px !default;
+$psv-tooltip-arrow-color: $psv-tooltip-background !default;
+$psv-tooltip-max-width: 200px !default;
+
+$psv-tooltip-text-color: rgb(255, 255, 255) !default;
+$psv-tooltip-font: 14px sans-serif !default;
+$psv-tooltip-text-shadow: 0 1px #000 !default;
+
+$psv-tooltip-shadow-color: rgba(90, 90, 90, 0.7) !default;
+$psv-tooltip-shadow-offset: 3px !default; // the shadow is always at the opposite side of the arrow
+
+// *** PANEL ***
+$psv-panel-background: rgba(10, 10, 10, 0.7) !default;
+$psv-panel-text-color: rgb(220, 220, 220) !default;
+$psv-panel-font: 16px sans-serif !default;
+$psv-panel-width: 400px !default;
+$psv-panel-padding: 1em !default;
+$psv-panel-animate-delay: 100ms !default;
+
+$psv-panel-resizer-width: 9px !default; // must be odd
+$psv-panel-resizer-background: rgba(0, 0, 0, 0.9) !default;
+$psv-panel-resizer-grip-color: #fff !default;
+$psv-panel-resizer-grip-height: 29px !default; // must be odd
+$psv-panel-close-button-size: 32px !default;
+$psv-panel-close-button-background: $psv-panel-resizer-background !default;
+$psv-panel-close-button-color: #fff !default;
+$psv-panel-close-button-animate-delay: 300ms !default;
+
+$psv-panel-title-font: 24px sans-serif !default;
+$psv-panel-title-icon-size: 24px !default;
+$psv-panel-title-margin: 24px !default;
+
+$psv-panel-menu-item-height: 1.5em !default;
+$psv-panel-menu-item-padding: 0.5em 1em !default;
+$psv-panel-menu-item-active-outline: 1px !default;
+$psv-panel-menu-odd-background: rgba(255, 255, 255, 0.1) !default;
+$psv-panel-menu-even-background: transparent !default;
+$psv-panel-menu-hover-background: rgba(255, 255, 255, 0.2) !default;
+
+// *** NOTIFICATION ***
+$psv-notification-position-from: -$psv-navbar-height !default;
+$psv-notification-position-to: $psv-navbar-height * 2 !default;
+$psv-notification-animate-delay: 200ms !default;
+$psv-notification-background: $psv-tooltip-background !default;
+$psv-notification-radius: $psv-tooltip-radius !default;
+$psv-notification-padding: $psv-tooltip-padding !default;
+$psv-notification-font: $psv-tooltip-font !default;
+$psv-notification-text-color: $psv-tooltip-text-color !default;
+
+// *** OVERLAY ***
+$psv-overlay-opacity: 0.8 !default;
+$psv-overlay-title-font: 30px sans-serif !default;
+$psv-overlay-title-color: black !default;
+$psv-overlay-text-font: 20px sans-serif !default;
+$psv-overlay-text-color: rgba(0, 0, 0, 0.8) !default;
+$psv-overlay-image-size: (
+    portrait: 50vw,
+    landscape: 25vw,
+) !default;
+
+// *** Z-INDEXES ***
+$psv-canvas-zindex: 0 !default;
+$psv-hud-zindex: 10 !default;
+$psv-polygon-marker-zindex: 20 !default;
+$psv-marker-zindex: 30 !default;
+$psv-compass-zindex: 40 !default;
+$psv-tooltip-zindex: 50 !default;
+$psv-loader-zindex: 80 !default;
+$psv-panel-zindex: 90 !default;
+$psv-navbar-zindex: 90 !default;
+$psv-notification-zindex: 100 !default;
+$psv-overlay-zindex: 110 !default;
+
+.psv-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background: $psv-main-background;
+    overflow: hidden;
+
+    * {
+        box-sizing: content-box;
+    }
+}
+
+.psv-canvas-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: $psv-canvas-zindex;
+    transition: opacity linear 100ms;
+}
+
+.psv-canvas {
+    display: block;
+}
+
+.psv-loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $psv-loader-zindex;
+}
+
+.psv-loader {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $psv-loader-color;
+    width: $psv-loader-width;
+    height: $psv-loader-width;
+    outline: $psv-loader-border solid transparent;
+
+    &-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: $psv-loader-bg-color;
+        outline: $psv-loader-tickness solid transparent;
+        z-index: -1;
+    }
+
+    &-text {
+        font: $psv-loader-font;
+    }
+}
+
+.psv-navbar {
+    display: flex;
+    position: absolute;
+    z-index: $psv-navbar-zindex;
+    bottom: -$psv-navbar-height;
+    left: 0;
+    width: 100%;
+    height: $psv-navbar-height;
+    background: $psv-navbar-background;
+    transition: bottom ease-in-out 0.1s;
+    font: $psv-caption-font;
+
+    &--open {
+        bottom: 0;
+    }
+
+    &,
+    & * {
+        box-sizing: content-box;
+    }
+}
+
+.psv-button {
+    flex: 0 0 auto;
+    padding: $psv-buttons-padding;
+    position: relative;
+    cursor: pointer;
+    height: $psv-buttons-height;
+    width: $psv-buttons-height;
+    background: $psv-buttons-background;
+    color: $psv-buttons-color;
+
+    &--active {
+        background: $psv-buttons-active-background;
+    }
+
+    &--disabled {
+        pointer-events: none;
+        opacity: $psv-buttons-disabled-opacity;
+    }
+
+    &-svg {
+        width: 100%;
+        transform: scale(1);
+        transition: transform $psv-buttons-hover-scale-delay ease;
+        vertical-align: initial;
+    }
+}
+
+.psv-button:not(.psv-button--disabled):focus-visible {
+    outline: $psv-element-focus-outline;
+    outline-offset: -#{list.nth($psv-element-focus-outline, 1)};
+}
+
+.psv-container:not(.psv--is-touch) .psv-button--hover-scale:not(.psv-button--disabled):hover .psv-button-svg {
+    transform: scale($psv-buttons-hover-scale);
+}
+
+.psv-move-button + .psv-move-button {
+    margin-left: -$psv-buttons-padding;
+}
+
+.psv-custom-button {
+    width: auto;
+    min-width: $psv-buttons-height;
+}
+
+.psv-caption {
+    flex: 1 1 100%;
+    color: $psv-caption-text-color;
+    overflow: hidden;
+    text-align: center;
+    cursor: default;
+    padding: unset;
+    height: unset;
+    width: unset;
+
+    &-content {
+        display: inline-block;
+        padding: $psv-buttons-padding;
+        white-space: nowrap;
+    }
+}
+
+.psv-zoom-range {
+    &.psv-button {
+        width: $psv-zoom-range-width;
+        height: $psv-zoom-range-tickness;
+        margin: $psv-buttons-padding 0;
+        padding: #{($psv-buttons-height - $psv-zoom-range-tickness) * 0.5} 0;
+        max-width: $psv-zoom-range-media-min-width; // trick for JS access
+    }
+
+    &-line {
+        position: relative;
+        width: $psv-zoom-range-width;
+        height: $psv-zoom-range-tickness;
+        background: $psv-buttons-color;
+        transition: all 0.3s ease;
+    }
+
+    &-handle {
+        position: absolute;
+        border-radius: 50%;
+        top: #{($psv-zoom-range-tickness - $psv-zoom-range-diameter) * 0.5};
+        width: $psv-zoom-range-diameter;
+        height: $psv-zoom-range-diameter;
+        background: $psv-buttons-color;
+        transform: scale(1);
+        transition: transform 0.3s ease;
+    }
+
+    &:not(.psv-button--disabled):hover {
+        .psv-zoom-range-line {
+            box-shadow: 0 0 2px $psv-buttons-color;
+        }
+
+        .psv-zoom-range-handle {
+            transform: scale(1.3);
+        }
+    }
+}
+
+.psv-notification {
+    position: absolute;
+    z-index: $psv-notification-zindex;
+    bottom: $psv-notification-position-from;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 2em;
+    opacity: 0;
+    transition-property: opacity, bottom;
+    transition-timing-function: ease-in-out;
+    transition-duration: $psv-notification-animate-delay;
+
+    &-content {
+        max-width: 50em;
+        background: $psv-notification-background;
+        border-radius: $psv-notification-radius;
+        padding: $psv-notification-padding;
+        font: $psv-notification-font;
+        color: $psv-notification-text-color;
+    }
+
+    &--visible {
+        opacity: 100;
+        bottom: $psv-notification-position-to;
+    }
+}
+
+.psv-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: $psv-overlay-zindex;
+    inset: 0;
+    background: $psv-main-background;
+    opacity: $psv-overlay-opacity;
+
+    &-image {
+        margin-bottom: 4vh;
+
+        svg {
+            width: map.get($psv-overlay-image-size, portrait);
+
+            @media (orientation: landscape) {
+                width: map.get($psv-overlay-image-size, landscape);
+            }
+        }
+    }
+
+    &-title {
+        color: $psv-overlay-title-color;
+        font: $psv-overlay-title-font;
+        text-align: center;
+    }
+
+    &-text {
+        color: $psv-overlay-text-color;
+        font: $psv-overlay-text-font;
+        opacity: 0.8;
+        text-align: center;
+    }
+}
+
+@function make-dot-shadow($color, $w, $h) {
+    $val: 1px 0 $color;
+    $x: 3;
+    $y: 0;
+
+    @while $y < $h {
+        @if $x > $w {
+            $x: 1;
+            $y: $y + 2;
+        } @else {
+            $val: #{$val}, #{$x}px #{$y}px #{$color};
+            $x: $x + 2;
+        }
+    }
+
+    @return $val;
+}
+
+.psv-panel {
+    position: absolute;
+    z-index: $psv-panel-zindex;
+    right: 0;
+    height: 100%;
+    width: $psv-panel-width;
+    max-width: calc(100% - #{$psv-panel-resizer-width});
+    background: $psv-panel-background;
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: $psv-panel-animate-delay;
+    cursor: default;
+    margin-left: $psv-panel-resizer-width;
+
+    .psv--has-navbar & {
+        height: calc(100% - #{$psv-navbar-height});
+    }
+
+    &-close-button {
+        display: none;
+        position: absolute;
+        top: -1px;
+        right: 0;
+        width: math.div($psv-panel-close-button-size, 5) * 3;
+        height: math.div($psv-panel-close-button-size, 5) * 3;
+        padding: math.div($psv-panel-close-button-size, 5);
+        background: transparent;
+        color: $psv-panel-close-button-color;
+        transition: background $psv-panel-close-button-animate-delay ease-in-out;
+        cursor: pointer;
+
+        svg {
+            transition: transform $psv-panel-close-button-animate-delay ease-in-out;
+        }
+
+        &:hover {
+            background: $psv-panel-close-button-background;
+
+            svg {
+                transform: scale(-1);
+            }
+        }
+    }
+
+    &-resizer {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: -$psv-panel-resizer-width;
+        width: $psv-panel-resizer-width;
+        height: 100%;
+        background-color: $psv-panel-resizer-background;
+        cursor: col-resize;
+
+        $psv-panel-resizer-grip-width: $psv-panel-resizer-width - 4px;
+
+        @if $psv-panel-resizer-grip-width > 0 {
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: ($psv-panel-resizer-width - $psv-panel-resizer-grip-width) * 0.5 - 1px;
+                margin-top: (-$psv-panel-resizer-grip-height * 0.5);
+                width: 1px;
+                height: 1px;
+                box-shadow: make-dot-shadow(
+                    $psv-panel-resizer-grip-color,
+                    $psv-panel-resizer-grip-width,
+                    $psv-panel-resizer-grip-height
+                );
+                background: transparent;
+            }
+        }
+    }
+
+    &-content {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        color: $psv-panel-text-color;
+        font: $psv-panel-font;
+        overflow: auto;
+
+        &:not(&--no-margin) {
+            padding: $psv-panel-padding;
+        }
+
+        &--no-interaction {
+            user-select: none;
+            pointer-events: none;
+        }
+    }
+
+    &--open {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition-duration: 0.2s;
+
+        .psv-panel-close-button,
+        .psv-panel-resizer {
+            display: block;
+        }
+    }
+
+    @media screen and (max-width: #{$psv-panel-width}) {
+        width: 100% !important;
+        max-width: none;
+
+        &-resizer {
+            display: none !important;
+        }
+    }
+}
+
+.psv-panel-menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &-title {
+        flex: none;
+        display: flex;
+        align-items: center;
+        font: $psv-panel-title-font;
+        margin: $psv-panel-title-margin $psv-panel-title-margin * 0.5;
+
+        /* stylelint-disable-next-line no-descending-specificity */
+        svg {
+            width: $psv-panel-title-icon-size;
+            height: $psv-panel-title-icon-size;
+            margin-right: $psv-panel-title-margin * 0.5;
+        }
+    }
+
+    &-list {
+        flex: 1;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    &-item {
+        min-height: $psv-panel-menu-item-height;
+        padding: $psv-panel-menu-item-padding;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        transition: background 0.1s ease-in-out;
+
+        &--active {
+            outline: $psv-panel-menu-item-active-outline solid currentcolor;
+            outline-offset: -$psv-panel-menu-item-active-outline;
+        }
+
+        &-icon {
+            flex: none;
+            height: $psv-panel-menu-item-height;
+            width: $psv-panel-menu-item-height;
+            margin-right: #{list.nth($psv-panel-menu-item-padding, 1)};
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            /* stylelint-disable-next-line no-descending-specificity */
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &:focus-visible {
+            outline: $psv-element-focus-outline;
+            outline-offset: -#{list.nth($psv-element-focus-outline, 1)};
+        }
+    }
+
+    &--stripped &-item {
+        &:hover {
+            background: $psv-panel-menu-hover-background;
+        }
+
+        &:nth-child(odd),
+        &:nth-child(odd)::before {
+            background: $psv-panel-menu-odd-background;
+        }
+
+        &:nth-child(even),
+        &:nth-child(even)::before {
+            background: $psv-panel-menu-even-background;
+        }
+    }
+}
+
+.psv-container:not(.psv--is-touch) .psv-panel-menu-item:hover {
+    background: $psv-panel-menu-hover-background;
+}
+
+.psv-tooltip {
+    position: absolute;
+    z-index: $psv-tooltip-zindex;
+    box-sizing: border-box;
+    max-width: $psv-tooltip-max-width;
+    background: $psv-tooltip-background;
+    border-radius: $psv-tooltip-radius;
+    padding: $psv-tooltip-padding;
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-timing-function: ease-in-out;
+    transition-duration: $psv-tooltip-animate-delay;
+
+    &-content {
+        color: $psv-tooltip-text-color;
+        font: $psv-tooltip-font;
+        text-shadow: $psv-tooltip-text-shadow;
+    }
+
+    &-arrow {
+        position: absolute;
+        height: 0;
+        width: 0;
+        border: $psv-tooltip-arrow-size solid transparent;
+    }
+
+    &--top-left,
+    &--top-center,
+    &--top-right {
+        transform: translate3d(0, $psv-tooltip-animate-offset, 0);
+
+        .psv-tooltip-arrow {
+            border-top-color: $psv-tooltip-arrow-color;
+        }
+    }
+
+    &--bottom-left,
+    &--bottom-center,
+    &--bottom-right {
+        transform: translate3d(0, -$psv-tooltip-animate-offset, 0);
+
+        .psv-tooltip-arrow {
+            border-bottom-color: $psv-tooltip-arrow-color;
+        }
+    }
+
+    &--left-top,
+    &--center-left,
+    &--left-bottom {
+        transform: translate3d($psv-tooltip-animate-offset, 0, 0);
+
+        .psv-tooltip-arrow {
+            border-left-color: $psv-tooltip-arrow-color;
+        }
+    }
+
+    &--right-top,
+    &--center-right,
+    &--right-bottom {
+        transform: translate3d(-$psv-tooltip-animate-offset, 0, 0);
+
+        .psv-tooltip-arrow {
+            border-right-color: $psv-tooltip-arrow-color;
+        }
+    }
+
+    &--left-top,
+    &--top-left {
+        box-shadow: #{-$psv-tooltip-shadow-offset} #{-$psv-tooltip-shadow-offset} 0 $psv-tooltip-shadow-color;
+    }
+
+    &--top-center {
+        box-shadow: 0 #{-$psv-tooltip-shadow-offset} 0 $psv-tooltip-shadow-color;
+    }
+
+    &--right-top,
+    &--top-right {
+        box-shadow: $psv-tooltip-shadow-offset #{-$psv-tooltip-shadow-offset} 0 $psv-tooltip-shadow-color;
+    }
+
+    &--left-bottom,
+    &--bottom-left {
+        box-shadow: #{-$psv-tooltip-shadow-offset} $psv-tooltip-shadow-offset 0 $psv-tooltip-shadow-color;
+    }
+
+    &--bottom-center {
+        box-shadow: 0 $psv-tooltip-shadow-offset 0 $psv-tooltip-shadow-color;
+    }
+
+    &--right-bottom,
+    &--bottom-right {
+        box-shadow: $psv-tooltip-shadow-offset $psv-tooltip-shadow-offset 0 $psv-tooltip-shadow-color;
+    }
+
+    &--center-left {
+        box-shadow: #{-$psv-tooltip-shadow-offset} 0 0 $psv-tooltip-shadow-color;
+    }
+
+    &--center-right {
+        box-shadow: $psv-tooltip-shadow-offset 0 0 $psv-tooltip-shadow-color;
+    }
+
+    &--visible {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition-duration: $psv-tooltip-animate-delay;
+    }
+}
+

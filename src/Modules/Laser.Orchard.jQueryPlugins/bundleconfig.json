@@ -4,5 +4,23 @@
     "inputFiles": [
       "BootstrapItalia/css/bootstrap-italia.css"
     ]
+  },
+  {
+    "outputFileName": "photo-sphere-viewer-5.1.6/core/index.min.css",
+    "inputFiles": [
+      "photo-sphere-viewer-5.1.6/core/index.css"
+    ]
+  },
+  {
+    "outputFileName": "photo-sphere-viewer-5.1.6/core/index.min.js",
+    "inputFiles": [
+      "photo-sphere-viewer-5.1.6/core/index.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/Threejs/r153/three.min.js",
+    "inputFiles": [
+      "Scripts/Threejs/r153/three.js"
+    ]
   }
 ]
