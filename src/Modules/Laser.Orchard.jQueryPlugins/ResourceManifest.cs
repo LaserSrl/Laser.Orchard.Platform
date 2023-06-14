@@ -124,6 +124,10 @@ namespace Laser.Orchard.jQueryPlugins {
                 .SetDependencies("Three.js");
             manifest.DefineStyle("PhotoSphereViewer")
                 .SetUrl("../photo-sphere-viewer-5.1.6/core/index.min.css", "../photo-sphere-viewer-5.1.6/core/index.css");
+
+            // Animate.css
+            manifest.DefineStyle("AnimateCss")
+                .SetUrl("Animate/4.1.1/animate.min.css", "Animate/4.1.1/animate.css");
         }
     }
 }

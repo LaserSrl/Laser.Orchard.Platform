@@ -706,6 +706,10 @@
     <Content Include="Scripts\Threejs\r153\three.min.js" />
     <Content Include="Scripts\Threejs\r153\three.module.js" />
     <Content Include="Scripts\Threejs\r153\three.module.min.js" />
+    <Content Include="Styles\Animate\4.1.1\animate.css" />
+    <Content Include="Styles\Animate\4.1.1\animate.min.css" />
+    <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.css" />
+    <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.min.css" />
     <Content Include="Styles\json-browse\jquery.json-browse.css" />
     <Content Include="Scripts\json-browse\jquery.json-browse.js" />
     <Content Include="Scripts\Jssor\jssor.core.js" />
