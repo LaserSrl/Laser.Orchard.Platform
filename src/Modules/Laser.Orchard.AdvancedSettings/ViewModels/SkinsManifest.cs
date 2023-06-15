@@ -13,12 +13,15 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
         public SkinsManifest() {
             Skins = Enumerable.Empty<ThemeSkinDescription>().ToList();
             Variables = Enumerable.Empty<ThemeCssVariable>().ToList();
+            ThemePaths = Enumerable.Empty<string>().ToList();
         }
 
         [JsonProperty("skins", NullValueHandling = NullValueHandling.Ignore)]
         public List<ThemeSkinDescription> Skins { get; set; }
         [JsonProperty("variables", NullValueHandling = NullValueHandling.Ignore)]
         public List<ThemeCssVariable> Variables { get; set; }
+        [JsonIgnore]
+        public List<string> ThemePaths { get; set; }
 
         public static SkinsManifest MergeManifests(IEnumerable<SkinsManifest> manifests) {
             var cssVariablesComparer = new ThemeCssVariableComparer();

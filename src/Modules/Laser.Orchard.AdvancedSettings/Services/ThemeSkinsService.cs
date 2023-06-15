@@ -59,6 +59,7 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     });
                 // merge manifests into a single one
                 _skinsManifest = SkinsManifest.MergeManifests(allManifests.Where(m => m != null));
+                _skinsManifest.ThemePaths = themePaths.ToList();
             }
             return _skinsManifest;
         }
@@ -117,19 +118,6 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             }
         }
 
-        protected string GetSkinStylesPath() {
-            var basePath = GetThemePath();
-            var stylesPath = PathCombine(basePath, "Styles");
-            var skinsPath = PathCombine(stylesPath, "Skins");
-            return skinsPath;
-        }
-        protected string GetSkinScriptsPath() {
-            var basePath = GetThemePath();
-            var scriptsPath = PathCombine(basePath, "Scripts");
-            var skinsPath = PathCombine(scriptsPath, "Skins");
-            return skinsPath;
-        }
-
         protected ThemeSkinsPart GetConfigurationPart(string settingsName) {
             var settingsCI = _advancedSettingsService.GetCachedSetting(settingsName);
             if (settingsCI != null) {
@@ -139,21 +127,41 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             return null;
         }
 
-        // From the name of the settings CI, get the name of the skin/stylesheet
-        protected string GetSelectedSkin(string settingsName) {
-            var skinPart = GetConfigurationPart(settingsName);
-            if (skinPart != null) {
-                return skinPart.SkinName;
-            }
-            // no additional skin is configured
-            return null;
-        }
-
         protected string GetStyleSheet(string skinName, bool minified = false) {
-            return GetResourceFile(skinName, ".css", GetSkinStylesPath(), minified);
+            // In the manifest we stored the list of theme paths we used to discover
+            // the skins. We go through those again to find the resource now.
+            var paths = GetSkinsManifest().ThemePaths
+                .Select(p => PathCombine(p, "Styles")).Select(p => PathCombine(p, "Skins"));
+            // We look for the resource in the /Styles/Skins subpath. However Orchard seems
+            // to find alternates for it in the /Styles subpath.
+            foreach (var path in paths) {
+                var resourcePath = GetResourceFile(skinName, ".css", path, minified);
+                // if we found the file, return this path, otherwise go to the next path
+                if (_virtualPathProvider.FileExists(resourcePath)) {
+                    return resourcePath;
+                }
+            }
+            // fallbacks:
+            // We did not find the file. We return the path as if it was supposed to be in
+            // the current theme: this will end up being a 404 in the browser.
+            return GetResourceFile(skinName, ".css", paths.First(), minified);
         }
         protected string GetScript(string skinName, bool minified = false) {
-            return GetResourceFile(skinName, ".js", GetSkinScriptsPath(), minified);
+            // In the manifest we stored the list of theme paths we used to discover
+            // the skins. We go through those again to find the resource now.
+            var paths = GetSkinsManifest().ThemePaths
+                .Select(p => PathCombine(p, "Scripts")).Select(p => PathCombine(p, "Skins"));
+            foreach (var path in paths) {
+                var resourcePath = GetResourceFile(skinName, ".js", path, minified);
+                // if we found the file, return this path, otherwise go to the next path
+                if (_virtualPathProvider.FileExists(resourcePath)) {
+                    return resourcePath;
+                }
+            }
+            // fallbacks:
+            // We did not find the file. We return the path as if it was supposed to be in
+            // the current theme: this will end up being a 404 in the browser.
+            return GetResourceFile(skinName, ".js", paths.First(), minified);
         }
         protected string GetResourceFile(string skinName, string extension, string path, bool minified = false) {
             var filename = skinName;
