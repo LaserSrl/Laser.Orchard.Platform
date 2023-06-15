@@ -21,35 +21,44 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         private readonly IAdvancedSettingsService _advancedSettingsService;
         private readonly IResourceManager _resourceManager;
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IExtensionManager _extensionManager;
 
         public ThemeSkinsService(
             IVirtualPathProvider virtualPathProvider,
             ISiteThemeService siteThemeService,
             IAdvancedSettingsService advancedSettingsService,
             IResourceManager resourceManager,
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor,
+            IExtensionManager extensionManager) {
             
             _virtualPathProvider = virtualPathProvider;
             _siteThemeService = siteThemeService;
             _advancedSettingsService = advancedSettingsService;
             _resourceManager = resourceManager;
             _workContextAccessor = workContextAccessor;
+            _extensionManager = extensionManager;
         }
         
         private SkinsManifest _skinsManifest;
         protected SkinsManifest GetSkinsManifest() {
             if (_skinsManifest == null) {
                 _skinsManifest = new SkinsManifest();
-                var themePath = GetThemePath();
-                // find the manifest
-                var manifestFile = PathCombine(themePath, "skinsconfig.json");
-                if (_virtualPathProvider.FileExists(manifestFile)) {
-                    using (var manifestStream = _virtualPathProvider.OpenFile(manifestFile)) {
-                        using (var reader = new StreamReader(manifestStream)) {
-                            _skinsManifest = JsonConvert.DeserializeObject<SkinsManifest>(reader.ReadToEnd());
+                // Get the paths for the current theme and its base theme
+                var themePaths = GetThemePaths();
+                var manifestFiles = themePaths
+                    .Select(p => PathCombine(p, "skinsconfig.json"))
+                    .Where(_virtualPathProvider.FileExists);
+                // get corresponding manifests if they exists
+                var allManifests = manifestFiles
+                    .Select(f => {
+                        using (var manifestStream = _virtualPathProvider.OpenFile(f)) {
+                            using (var reader = new StreamReader(manifestStream)) {
+                                return JsonConvert.DeserializeObject<SkinsManifest>(reader.ReadToEnd());
+                            }
                         }
-                    }
-                }
+                    });
+                // merge manifests into a single one
+                _skinsManifest = SkinsManifest.MergeManifests(allManifests.Where(m => m != null));
             }
             return _skinsManifest;
         }
@@ -89,6 +98,25 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             var basePath = PathCombine(theme.Location, theme.Id);
             return basePath;
         }
+
+        protected IEnumerable<string> GetThemePaths() {
+            // get current frontend theme
+            var theme = _siteThemeService.GetSiteTheme();
+            while (theme != null) {
+                // find the Styles/Skins folder for the theme
+                var basePath = PathCombine(theme.Location, theme.Id);
+                yield return basePath;
+                // "climb" to the base theme
+                var baseThemeName = theme.BaseTheme;
+                if (!string.IsNullOrWhiteSpace(baseThemeName)) {
+                    theme = _extensionManager.GetExtension(baseThemeName);
+                } else {
+                    // if the theme had no base theme, end iterations
+                    break;
+                }
+            }
+        }
+
         protected string GetSkinStylesPath() {
             var basePath = GetThemePath();
             var stylesPath = PathCombine(basePath, "Styles");

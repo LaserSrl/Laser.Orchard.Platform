@@ -11,14 +11,53 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
     public class SkinsManifest {
         public SkinsManifest() {
-            Skins = Enumerable.Empty<ThemeSkinDescription>().ToArray();
-            Variables = Enumerable.Empty<ThemeCssVariable>().ToArray();
+            Skins = Enumerable.Empty<ThemeSkinDescription>().ToList();
+            Variables = Enumerable.Empty<ThemeCssVariable>().ToList();
         }
 
         [JsonProperty("skins", NullValueHandling = NullValueHandling.Ignore)]
-        public ThemeSkinDescription[] Skins { get; set; }
+        public List<ThemeSkinDescription> Skins { get; set; }
         [JsonProperty("variables", NullValueHandling = NullValueHandling.Ignore)]
-        public ThemeCssVariable[] Variables { get; set; }
+        public List<ThemeCssVariable> Variables { get; set; }
+
+        public static SkinsManifest MergeManifests(IEnumerable<SkinsManifest> manifests) {
+            var cssVariablesComparer = new ThemeCssVariableComparer();
+            // The input to this is assumed to ordered so that the first is more specific.
+            // (i.e. the first manifest passed is from the current theme, the second is from
+            // its base theme...)
+            var currentThemeManifest = manifests.FirstOrDefault();
+
+            foreach (var manifest in manifests.Skip(1)) {
+                // Merge skin descriptions: parent resources go first
+                foreach (var skin in manifest.Skins) {
+                    // The "Identifier" for the skin is its name. See if the current theme declares a
+                    // skin by the same name.
+                    var currentSkin = currentThemeManifest.Skins
+                        .FirstOrDefault(s => s.Name.Equals(skin.Name));
+                    if (currentSkin != null) {
+                        // In this case, the resources from the parent go before the resources from the child
+                        // (i.e. the "new" resources from the skin we are processing go before the ones we
+                        // already have in our object), except where they are re-inserted in the child.
+                        currentSkin.StyleSheets.InsertRange(0,
+                            skin.StyleSheets.Except(currentSkin.StyleSheets));
+                        currentSkin.HeadScripts.InsertRange(0,
+                            skin.HeadScripts.Except(currentSkin.HeadScripts));
+                        currentSkin.FootScripts.InsertRange(0,
+                            skin.FootScripts.Except(currentSkin.FootScripts));
+                    } else {
+                        // Add the skin
+                        currentThemeManifest.Skins.Add(skin);
+                    }
+                }
+                // Merge css variables: parent resources go first, unless we redefine them in the child.
+                // The comparison between css vriables is based on their name.
+                currentThemeManifest.Variables.InsertRange(0, 
+                    manifest.Variables.Except(
+                        currentThemeManifest.Variables, cssVariablesComparer));
+            }
+
+            return currentThemeManifest;
+        }
     }
 
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
@@ -28,11 +67,11 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
         public string Name { get; set; }
 
         [JsonProperty("stylesheets", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] StyleSheets { get; set; }
+        public List<string> StyleSheets { get; set; }
         [JsonProperty("headscripts", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] HeadScripts { get; set; }
+        public List<string> HeadScripts { get; set; }
         [JsonProperty("footscripts", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] FootScripts { get; set; }
+        public List<string> FootScripts { get; set; }
     }
 
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
@@ -46,6 +85,22 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
         [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
         public string Value { get; set; }
         
+    }
+
+    class ThemeCssVariableComparer : IEqualityComparer<ThemeCssVariable> {
+        public bool Equals(ThemeCssVariable x, ThemeCssVariable y) {
+            if (x == null && y == null) {
+                return true;
+            }
+            if (x == null || y == null) {
+                return false;
+            }
+            return string.Equals(x.Name, y.Name);
+        }
+
+        public int GetHashCode(ThemeCssVariable obj) {
+            return obj.Name.GetHashCode();
+        }
     }
 
     class SkinNameConverter : JsonConverter<string> {
