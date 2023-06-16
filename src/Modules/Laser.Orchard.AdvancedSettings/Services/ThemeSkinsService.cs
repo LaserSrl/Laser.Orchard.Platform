@@ -92,14 +92,6 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             return manifest.Variables;
         }
                 
-        protected string GetThemePath() {
-            // get current frontend theme
-            var theme = _siteThemeService.GetSiteTheme();
-            // find the Styles/Skins folder for the theme
-            var basePath = PathCombine(theme.Location, theme.Id);
-            return basePath;
-        }
-
         protected IEnumerable<string> GetThemePaths() {
             // get current frontend theme
             var theme = _siteThemeService.GetSiteTheme();
