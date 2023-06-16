@@ -21,35 +21,45 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         private readonly IAdvancedSettingsService _advancedSettingsService;
         private readonly IResourceManager _resourceManager;
         private readonly IWorkContextAccessor _workContextAccessor;
+        private readonly IExtensionManager _extensionManager;
 
         public ThemeSkinsService(
             IVirtualPathProvider virtualPathProvider,
             ISiteThemeService siteThemeService,
             IAdvancedSettingsService advancedSettingsService,
             IResourceManager resourceManager,
-            IWorkContextAccessor workContextAccessor) {
+            IWorkContextAccessor workContextAccessor,
+            IExtensionManager extensionManager) {
             
             _virtualPathProvider = virtualPathProvider;
             _siteThemeService = siteThemeService;
             _advancedSettingsService = advancedSettingsService;
             _resourceManager = resourceManager;
             _workContextAccessor = workContextAccessor;
+            _extensionManager = extensionManager;
         }
         
         private SkinsManifest _skinsManifest;
         protected SkinsManifest GetSkinsManifest() {
             if (_skinsManifest == null) {
                 _skinsManifest = new SkinsManifest();
-                var themePath = GetThemePath();
-                // find the manifest
-                var manifestFile = PathCombine(themePath, "skinsconfig.json");
-                if (_virtualPathProvider.FileExists(manifestFile)) {
-                    using (var manifestStream = _virtualPathProvider.OpenFile(manifestFile)) {
-                        using (var reader = new StreamReader(manifestStream)) {
-                            _skinsManifest = JsonConvert.DeserializeObject<SkinsManifest>(reader.ReadToEnd());
+                // Get the paths for the current theme and its base theme
+                var themePaths = GetThemePaths();
+                var manifestFiles = themePaths
+                    .Select(p => PathCombine(p, "skinsconfig.json"))
+                    .Where(_virtualPathProvider.FileExists);
+                // get corresponding manifests if they exists
+                var allManifests = manifestFiles
+                    .Select(f => {
+                        using (var manifestStream = _virtualPathProvider.OpenFile(f)) {
+                            using (var reader = new StreamReader(manifestStream)) {
+                                return JsonConvert.DeserializeObject<SkinsManifest>(reader.ReadToEnd());
+                            }
                         }
-                    }
-                }
+                    });
+                // merge manifests into a single one
+                _skinsManifest = SkinsManifest.MergeManifests(allManifests.Where(m => m != null));
+                _skinsManifest.ThemePaths = themePaths.ToList();
             }
             return _skinsManifest;
         }
@@ -89,17 +99,23 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             var basePath = PathCombine(theme.Location, theme.Id);
             return basePath;
         }
-        protected string GetSkinStylesPath() {
-            var basePath = GetThemePath();
-            var stylesPath = PathCombine(basePath, "Styles");
-            var skinsPath = PathCombine(stylesPath, "Skins");
-            return skinsPath;
-        }
-        protected string GetSkinScriptsPath() {
-            var basePath = GetThemePath();
-            var scriptsPath = PathCombine(basePath, "Scripts");
-            var skinsPath = PathCombine(scriptsPath, "Skins");
-            return skinsPath;
+
+        protected IEnumerable<string> GetThemePaths() {
+            // get current frontend theme
+            var theme = _siteThemeService.GetSiteTheme();
+            while (theme != null) {
+                // find the Styles/Skins folder for the theme
+                var basePath = PathCombine(theme.Location, theme.Id);
+                yield return basePath;
+                // "climb" to the base theme
+                var baseThemeName = theme.BaseTheme;
+                if (!string.IsNullOrWhiteSpace(baseThemeName)) {
+                    theme = _extensionManager.GetExtension(baseThemeName);
+                } else {
+                    // if the theme had no base theme, end iterations
+                    break;
+                }
+            }
         }
 
         protected ThemeSkinsPart GetConfigurationPart(string settingsName) {
@@ -111,21 +127,41 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             return null;
         }
 
-        // From the name of the settings CI, get the name of the skin/stylesheet
-        protected string GetSelectedSkin(string settingsName) {
-            var skinPart = GetConfigurationPart(settingsName);
-            if (skinPart != null) {
-                return skinPart.SkinName;
-            }
-            // no additional skin is configured
-            return null;
-        }
-
         protected string GetStyleSheet(string skinName, bool minified = false) {
-            return GetResourceFile(skinName, ".css", GetSkinStylesPath(), minified);
+            // In the manifest we stored the list of theme paths we used to discover
+            // the skins. We go through those again to find the resource now.
+            var paths = GetSkinsManifest().ThemePaths
+                .Select(p => PathCombine(p, "Styles")).Select(p => PathCombine(p, "Skins"));
+            // We look for the resource in the /Styles/Skins subpath. However Orchard seems
+            // to find alternates for it in the /Styles subpath.
+            foreach (var path in paths) {
+                var resourcePath = GetResourceFile(skinName, ".css", path, minified);
+                // if we found the file, return this path, otherwise go to the next path
+                if (_virtualPathProvider.FileExists(resourcePath)) {
+                    return resourcePath;
+                }
+            }
+            // fallbacks:
+            // We did not find the file. We return the path as if it was supposed to be in
+            // the current theme: this will end up being a 404 in the browser.
+            return GetResourceFile(skinName, ".css", paths.First(), minified);
         }
         protected string GetScript(string skinName, bool minified = false) {
-            return GetResourceFile(skinName, ".js", GetSkinScriptsPath(), minified);
+            // In the manifest we stored the list of theme paths we used to discover
+            // the skins. We go through those again to find the resource now.
+            var paths = GetSkinsManifest().ThemePaths
+                .Select(p => PathCombine(p, "Scripts")).Select(p => PathCombine(p, "Skins"));
+            foreach (var path in paths) {
+                var resourcePath = GetResourceFile(skinName, ".js", path, minified);
+                // if we found the file, return this path, otherwise go to the next path
+                if (_virtualPathProvider.FileExists(resourcePath)) {
+                    return resourcePath;
+                }
+            }
+            // fallbacks:
+            // We did not find the file. We return the path as if it was supposed to be in
+            // the current theme: this will end up being a 404 in the browser.
+            return GetResourceFile(skinName, ".js", paths.First(), minified);
         }
         protected string GetResourceFile(string skinName, string extension, string path, bool minified = false) {
             var filename = skinName;
