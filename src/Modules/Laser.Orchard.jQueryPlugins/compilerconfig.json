@@ -2,5 +2,9 @@
   {
     "outputFile": "BootstrapItalia/css/bootstrap-italia.css",
     "inputFile": "BootstrapItalia/src/scss/bootstrap-italia.scss"
+  },
+  {
+    "outputFile": "photo-sphere-viewer-5.1.6/core/index.css",
+    "inputFile": "photo-sphere-viewer-5.1.6/core/index.scss"
   }
 ]

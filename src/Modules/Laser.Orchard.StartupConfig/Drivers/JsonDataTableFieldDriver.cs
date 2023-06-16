@@ -24,8 +24,12 @@ namespace Laser.Orchard.StartupConfig.Drivers {
 
         protected override DriverResult Display(ContentPart part, JsonDataTableField field, string displayType, dynamic shapeHelper) {
             if (displayType == "Detail") {
-                var settings = field.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
-                return ContentShape("Fields_JsonDataTable", GetDifferentiator(field, part), () => shapeHelper.Fields_JsonDataTable(Table: field, Settings: settings));
+                return ContentShape("Fields_JsonDataTable", 
+                    GetDifferentiator(field, part), 
+                    () => {
+                        var settings = field.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
+                        return shapeHelper.Fields_JsonDataTable(Table: field, Settings: settings);
+                    });
             }
             else {
                 return null;

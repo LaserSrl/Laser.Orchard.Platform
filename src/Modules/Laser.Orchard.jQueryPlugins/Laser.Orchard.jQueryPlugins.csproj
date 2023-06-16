@@ -26,6 +26,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -258,6 +260,14 @@
     <Content Include="BootstrapItalia\src\svg\it-zoom-in.svg" />
     <Content Include="BootstrapItalia\src\svg\it-zoom-out.svg" />
     <Content Include="BootstrapItalia\svg\sprite.svg" />
+    <Content Include="photo-sphere-viewer-5.1.6\core\index.css" />
+    <Content Include="photo-sphere-viewer-5.1.6\core\index.js" />
+    <Content Include="photo-sphere-viewer-5.1.6\core\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="photo-sphere-viewer-5.1.6\core\index.min.js">
+      <DependentUpon>index.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\FullCalendar\fullcalendar-2.2.3\fullcalendar.js" />
     <Content Include="Scripts\FullCalendar\fullcalendar-2.2.3\fullcalendar.min.js" />
     <Content Include="Scripts\FullCalendar\fullcalendar-2.2.3\gcal.js" />
@@ -684,11 +694,22 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Scripts\FullCalendar\fullcalendar-5.6.0\README.md" />
+    <Content Include="photo-sphere-viewer-5.1.6\core\index.scss" />
+    <Content Include="photo-sphere-viewer-5.1.6\LICENSE" />
+    <Content Include="photo-sphere-viewer-5.1.6\Web.config" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Threejs\r153\three.js" />
+    <Content Include="Scripts\Threejs\r153\three.min.js" />
+    <Content Include="Scripts\Threejs\r153\three.module.js" />
+    <Content Include="Scripts\Threejs\r153\three.module.min.js" />
+    <Content Include="Styles\Animate\4.1.1\animate.css" />
+    <Content Include="Styles\Animate\4.1.1\animate.min.css" />
+    <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.css" />
+    <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.min.css" />
     <Content Include="Styles\json-browse\jquery.json-browse.css" />
     <Content Include="Scripts\json-browse\jquery.json-browse.js" />
     <Content Include="Scripts\Jssor\jssor.core.js" />
@@ -758,6 +779,7 @@
     <Content Include="Module.txt" />
     <Content Include="Styles\Jssor\jssor.bannerslider.css" />
     <Content Include="Styles\jqDataTable\images\Sorting icons.psd" />
+    <Content Include="Scripts\Threejs\r153\three.cjs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ResourceManifest.cs" />
@@ -775,6 +797,9 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -820,4 +845,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\..\..\..\Orchard\src\packages\BuildWebCompiler2022.1.14.10\build\BuildWebCompiler2022.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler2022.1.14.10\build\BuildWebCompiler2022.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildWebCompiler2022.1.14.10\build\BuildWebCompiler2022.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildWebCompiler2022.1.14.10\build\BuildWebCompiler2022.targets'))" />
+  </Target>
 </Project>

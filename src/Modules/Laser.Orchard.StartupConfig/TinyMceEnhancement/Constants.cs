@@ -7,12 +7,12 @@ using System.Web;
 namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
     [OrchardFeature("Laser.Orchard.StartupConfig.TinyMceEnhancement")]
     public static class Constants {
-        public const string BasePlugins = @"advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount";
-        public const string FrontendBasePlugins = @"advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount";
+        public const string BasePlugins = @"advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount, htmlsnippets";
+        public const string FrontendBasePlugins = @"advlist, anchor, autolink, autoresize, charmap, code, colorpicker, contextmenu, directionality, emoticons, fullscreen, hr, image, insertdatetime, link, lists, media, nonbreaking, pagebreak, paste, preview, print, searchreplace, table, template, textcolor, textpattern, visualblocks, visualchars, wordcount, htmlsnippets";
         public const string BaseLeftToolbar = @"undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify ltr rtl | ";
         public const string FrontendBaseLeftToolbar = @"undo redo cut copy paste | bold italic | bullist numlist outdent indent formatselect | alignleft aligncenter alignright alignjustify ltr rtl | ";
-        public const string BaseRightToolbar = @" link unlink charmap | code fullscreen";
-        public const string FrontendBaseRightToolbar = @" link unlink charmap | code fullscreen";
+        public const string BaseRightToolbar = @" link unlink charmap | code htmlsnippetsbutton fullscreen";
+        public const string FrontendBaseRightToolbar = @" link unlink charmap | code htmlsnippetsbutton fullscreen";
         public const string BasePartialInit = @"selector: ""textarea.tinymce"",
             theme: ""modern"",
             schema: ""html5"",

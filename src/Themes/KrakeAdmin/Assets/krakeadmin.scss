@@ -206,10 +206,6 @@ table.items {
     border-color: #dae7eb #dae7eb -moz-use-text-color !important;
 }
 
-.localmenu li.selected a {
-    color: rgba(41, 110, 144, 1) !important;
-}
-
 .widgets-listed li li.widgets-this-layer, #widgets-layer-visibility li.widgets-this-layer {
     background-color: #f5f5f5 !important;
 }
@@ -249,14 +245,6 @@ button.link {
 
 button.link:hover {
     text-decoration: underline;
-}
-
-.localmenu li.selected {
-    border-top: 4px solid #de625e !important;
-    border-left: 1px solid #de625e !important;
-    border-right: 1px solid #de625e !important;
-    border-bottom: 4px solid #fff !important;
-    border-radius: 5px 5px 0px 0px !important;
 }
 
 .local-section-content-types,
@@ -410,27 +398,40 @@ button.link:hover {
     min-width: 230px;
 }
 
-.localmenu li.middle, .localmenu li.last, .localmenu li.first {
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #ee726f #ee726f #ee726f;
-    border-image: none;
-    border-style: solid solid solid;
-    border-width: 1px 1px medium;
-    border-radius: 5px 5px 0px 0px;
-}
-
-
 .localmenu li {
-    background-color: #fff;
-}
 
-.localmenu li:hover {
+    &.selected {
+        border-top: 4px solid #de625e !important;
+        border-left: 1px solid #de625e !important;
+        border-right: 1px solid #de625e !important;
+        border-bottom: 4px solid #fff !important;
+        border-radius: 5px 5px 0px 0px !important;
+
+        a {
+            color: rgba(41, 110, 144, 1) !important;
+        }
+    }
+
+    &.middle, &.last, &.first {
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        border-color: #ee726f #ee726f #ee726f;
+        border-image: none;
+        border-style: solid solid solid;
+        border-width: 1px 1px medium;
+        border-radius: 5px 5px 0px 0px;
+    }
+
     background-color: #fff;
-    border-top: 4px solid #ee726f;
-    cursor: pointer;
-    border-radius: 5px 5px 0px 0px;
+    font-size: inherit;
+
+    &:hover {
+        background-color: #fff;
+        border-top: 4px solid #ee726f;
+        cursor: pointer;
+        border-radius: 5px 5px 0px 0px;
+    }
 }
 
 .localmenu-content-picker li {
@@ -11770,8 +11771,18 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
 
 
 /* Google Maps Styles */
-.gm-style button, .gm-style a.button {
-    color: rgb(0, 0, 0) !important;
+.gm-style {
+    button {
+        color: rgb(0, 0, 0) !important;
+        min-width: unset;
+    }
+
+    a {
+        &.button {
+            color: rgb(0, 0, 0) !important;
+            min-width: unset;
+        }
+    }
 }
 
 /* Red text for validation error hints. */

@@ -35,7 +35,7 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 return;
             }
             base.Displayed(context);
-            
+
             bool isAdmin = AdminFilter.IsApplied(HttpContext.Current.Request.RequestContext);
 
             var settings = _orchardServices.WorkContext.CurrentSite.As<TinyMceSiteSettingsPart>();
@@ -64,7 +64,8 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                             //scriptList.Add($"<script src=\"{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}\" type=\"text/javascript\"></script>");
                             var pluginName = item.Split('/')[0];
                             pluginList.Add($"'{pluginName}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}'");
-                        } else {
+                        }
+                        else {
                             pluginList.Add($"'{item}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}/plugin.min.js'");
                         }
                     }
@@ -80,9 +81,13 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 var initScript = settings.InitScript;
                 if (string.IsNullOrWhiteSpace(initScript)) {
                     init = _tinyMceEnhancementService.GetDefaultInitScript();
-                } else {
-                    init = initScript + @",
-                    plugins: [""" + plugins + @"""]";
+                }
+                else {
+                    init = initScript;
+                    if (!init.Contains("plugins:")) {
+                        init += @",
+                            plugins: [""" + plugins + @"""]";
+                    }
                 }
                 var additionalScripts = new StringBuilder();
                 foreach (var script in scriptList) {
@@ -98,7 +103,8 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                 </script>
                 " + additionalScripts.ToString() + htmlOrig;
                 context.ChildContent = new HtmlString(html);
-            } else {
+            }
+            else {
                 FrontendDisplayed(context, settings);
             }
         }
@@ -127,7 +133,8 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
                         //scriptList.Add($"<script src=\"{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}\" type=\"text/javascript\"></script>");
                         var pluginName = item.Split('/')[0];
                         pluginList.Add($"'{pluginName}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}'");
-                    } else {
+                    }
+                    else {
                         pluginList.Add($"'{item}': '{serverRelativeUrlBase}/Modules/Laser.Orchard.StartupConfig/Scripts/tinymceplugins/{item}/plugin.min.js'");
                     }
                 }
@@ -143,9 +150,13 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             var initScript = settings.FrontendInitScript;
             if (string.IsNullOrWhiteSpace(initScript)) {
                 init = _tinyMceEnhancementService.GetFrontendDefaultInitScript();
-            } else {
-                init = initScript + @",
-                    plugins: [""" + plugins + @"""]";
+            }
+            else {
+                init = initScript;
+                if (!init.Contains("plugins:")) {
+                    init += @",
+                            plugins: [""" + plugins + @"""]";
+                }
             }
             var additionalScripts = new StringBuilder();
             foreach (var script in scriptList) {
@@ -164,4 +175,3 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
         }
     }
 }
- 

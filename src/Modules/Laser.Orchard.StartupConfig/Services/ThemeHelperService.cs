@@ -58,6 +58,17 @@ namespace Laser.Orchard.StartupConfig.Services {
         }
 
         public string ProperUrl(string path) {
+            // if path is already an absolute URL (e.g. the url of a page on another website)
+            // we shouldn't try to fix it
+            Uri uriResult;
+            bool isAllowedAbsoluteUri = Uri.TryCreate(path, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp 
+                    || uriResult.Scheme == Uri.UriSchemeHttps 
+                    || uriResult.Scheme == Uri.UriSchemeMailto 
+                    || uriResult.Scheme == Uri.UriSchemeFtp);
+            if (isAllowedAbsoluteUri) {
+                return uriResult.ToString();
+            }
 
             return Url.Content("~/" + UrlPrefix + "/"
                 + path.TrimStart('/').TrimStart('~').TrimStart('/'));
