@@ -2,6 +2,8 @@
 using Orchard.Autoroute.Services;
 using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
+using Orchard.Environment.Extensions;
+using Orchard.FileSystems.VirtualPath;
 using Orchard.Localization.Models;
 using Orchard.Localization.Services;
 using Orchard.Mvc.Html;
@@ -14,17 +16,23 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IHomeAliasService _homeAliasService;
         private readonly ILocalizationService _localizationService;
+        private readonly IVirtualPathProvider _virtualPathProvider;
+        private readonly IExtensionManager _extensionManager;
 
         public ThemeHelperService(
             ShellSettings shellSettings,
             IWorkContextAccessor workContextAccessor,
             IHomeAliasService homeAliasService,
-            ILocalizationService localizationService) {
+            ILocalizationService localizationService,
+            IVirtualPathProvider virtualPathProvider,
+            IExtensionManager extensionManager) {
 
             _shellSettings = shellSettings;
             _workContextAccessor = workContextAccessor;
             _homeAliasService = homeAliasService;
             _localizationService = localizationService;
+            _virtualPathProvider = virtualPathProvider;
+            _extensionManager = extensionManager;
         }
 
         public string UrlPrefix {
@@ -72,6 +80,30 @@ namespace Laser.Orchard.StartupConfig.Services {
 
             return Url.Content("~/" + UrlPrefix + "/"
                 + path.TrimStart('/').TrimStart('~').TrimStart('/'));
+        }
+
+        public string ThemeAssetPath(HtmlHelper html, string relPath) {
+
+            var workContext = _workContextAccessor.GetContext();
+            var theme = workContext.CurrentTheme;
+            while (theme != null) {
+                var currentPath = html.ThemePath(theme, relPath);
+                if (_virtualPathProvider.FileExists(currentPath)) {
+                    return currentPath;
+                }
+                // "climb" to the base theme
+                var baseThemeName = theme.BaseTheme;
+                if (!string.IsNullOrWhiteSpace(baseThemeName)) {
+                    theme = _extensionManager.GetExtension(baseThemeName);
+                }
+                else {
+                    // if the theme had no base theme, end iterations
+                    break;
+                }
+            }
+            // using this file should cause a 404, that we can then debug
+            return html.ThemePath(workContext.CurrentTheme, relPath);
+
         }
     }
 }
