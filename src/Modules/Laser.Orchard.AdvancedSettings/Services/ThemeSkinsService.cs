@@ -92,14 +92,6 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             return manifest.Variables;
         }
                 
-        protected string GetThemePath() {
-            // get current frontend theme
-            var theme = _siteThemeService.GetSiteTheme();
-            // find the Styles/Skins folder for the theme
-            var basePath = PathCombine(theme.Location, theme.Id);
-            return basePath;
-        }
-
         protected IEnumerable<string> GetThemePaths() {
             // get current frontend theme
             var theme = _siteThemeService.GetSiteTheme();
@@ -188,43 +180,39 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     selectedSkin = manifest.Skins.FirstOrDefault(tsd => tsd.Name.Equals("Default", StringComparison.OrdinalIgnoreCase));
                 }
                 if (selectedSkin != null) {
+                    // Process "required" resouces first (i.e. the ones from our manifests) as they are
+                    // assumed to be base dependencies for the skin.
+                    if (selectedSkin.RequiredStyleSheets != null) {
+                        foreach (var resourceName in selectedSkin.RequiredStyleSheets) {
+                            Style.Require(resourceName).AtHead();
+                        }
+                    }
+                    if (selectedSkin.RequiredHeadScripts != null) {
+                        foreach (var resourceName in selectedSkin.RequiredHeadScripts) {
+                            Script.Require(resourceName).AtHead();
+                        }
+                    }
+                    if (selectedSkin.RequiredFootScripts != null) {
+                        foreach (var resourceName in selectedSkin.RequiredFootScripts) {
+                            Script.Require(resourceName).AtFoot();
+                        }
+                    }
                     // add css files to head of page
                     if (selectedSkin.StyleSheets != null) {
                         foreach (var cssName in selectedSkin.StyleSheets) {
-                            var debugPath = GetStyleSheet(cssName);
-                            var resourcePath = GetStyleSheet(cssName, true);
-                            if (string.IsNullOrWhiteSpace(resourcePath)) {
-                                resourcePath = debugPath;
-                            }
-                            if (!string.IsNullOrWhiteSpace(resourcePath)) {
-                                Style.Include(debugPath, resourcePath).AtHead();
-                            }
+                            IncludeResource(cssName, GetStyleSheet, Style, false);
                         }
                     }
                     // add scripts to head of page
                     if (selectedSkin.HeadScripts != null) {
                         foreach (var scriptName in selectedSkin.HeadScripts) {
-                            var debugPath = GetScript(scriptName);
-                            var resourcePath = GetScript(scriptName, true);
-                            if (string.IsNullOrWhiteSpace(resourcePath)) {
-                                resourcePath = debugPath;
-                            }
-                            if (!string.IsNullOrWhiteSpace(resourcePath)) {
-                                Script.Include(debugPath, resourcePath).AtHead();
-                            }
+                            IncludeResource(scriptName, GetScript, Script, false);
                         }
                     }
                     // add scripts to foot of page
                     if (selectedSkin.FootScripts != null) {
                         foreach (var scriptName in selectedSkin.FootScripts) {
-                            var debugPath = GetScript(scriptName);
-                            var resourcePath = GetScript(scriptName, true);
-                            if (string.IsNullOrWhiteSpace(resourcePath)) {
-                                resourcePath = debugPath;
-                            }
-                            if (!string.IsNullOrWhiteSpace(resourcePath)) {
-                                Script.Include(debugPath, resourcePath).AtFoot();
-                            }
+                            IncludeResource(scriptName, GetScript, Script, true);
                         }
                     }
                 }
@@ -241,6 +229,26 @@ namespace Laser.Orchard.AdvancedSettings.Services {
                     sb.AppendLine("}");
                     sb.AppendLine("</style>");
                     _resourceManager.RegisterHeadScript(sb.ToString());
+                }
+            }
+        }
+
+        protected void IncludeResource(
+            string resourceName, 
+            Func<string, bool, string> pathGetter,
+            ResourceRegister register,
+            bool atFoot) {
+
+            var debugPath = pathGetter(resourceName, false);
+            var resourcePath = pathGetter(resourceName, true);
+            if (string.IsNullOrWhiteSpace(resourcePath)) {
+                resourcePath = debugPath;
+            }
+            if (!string.IsNullOrWhiteSpace(resourcePath)) {
+                if (atFoot) {
+                    register.Include(debugPath, resourcePath).AtFoot();
+                } else {
+                    register.Include(debugPath, resourcePath).AtHead();
                 }
             }
         }

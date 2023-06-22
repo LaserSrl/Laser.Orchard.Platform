@@ -47,6 +47,13 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
                             skin.HeadScripts.Except(currentSkin.HeadScripts));
                         currentSkin.FootScripts.InsertRange(0,
                             skin.FootScripts.Except(currentSkin.FootScripts));
+                        // The same reasoning applies to reqsources that are defined in our manifests
+                        currentSkin.RequiredStyleSheets.InsertRange(0,
+                            skin.RequiredStyleSheets.Except(currentSkin.RequiredStyleSheets));
+                        currentSkin.RequiredHeadScripts.InsertRange(0,
+                            skin.RequiredHeadScripts.Except(currentSkin.RequiredHeadScripts));
+                        currentSkin.RequiredFootScripts.InsertRange(0,
+                            skin.RequiredFootScripts.Except(currentSkin.RequiredFootScripts));
                     } else {
                         // Add the skin
                         currentThemeManifest.Skins.Add(skin);
@@ -69,12 +76,21 @@ namespace Laser.Orchard.AdvancedSettings.ViewModels {
         [JsonConverter(typeof(SkinNameConverter))]
         public string Name { get; set; }
 
+        // These resources are loaded using .Include
         [JsonProperty("stylesheets", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> StyleSheets { get; set; }
         [JsonProperty("headscripts", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> HeadScripts { get; set; }
         [JsonProperty("footscripts", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> FootScripts { get; set; }
+
+        // These resources are loaded using .Require
+        [JsonProperty("requiredstylesheets", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> RequiredStyleSheets { get; set; }
+        [JsonProperty("requiredheadscripts", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> RequiredHeadScripts { get; set; }
+        [JsonProperty("requiredfootscripts", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> RequiredFootScripts { get; set; }
     }
 
     [OrchardFeature("Laser.Orchard.ThemeSkins")]
