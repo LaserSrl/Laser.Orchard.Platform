@@ -1,0 +1,199 @@
+﻿<Orchard>
+  <Recipe>
+    <Name>SetupProductTerms</Name>
+    <Author>Laser srl</Author>
+    <WebSite>www.laser-group.com</WebSite>
+    <Version>1.0</Version>
+    <Category>Setup</Category>
+    <Description>Set up the terms for ProdottoDefault.</Description>
+    <IsSetupRecipe>false</IsSetupRecipe>
+  </Recipe>
+  <ContentDefinition>
+    <Types>
+      <Catalogo ContentTypeSettings.Creatable="True" ContentTypeSettings.Listable="True" ContentTypeSettings.Draftable="False" 
+                ContentTypeSettings.Securable="False" TypeIndexing.Indexes="AdminSearch:latest,,Search" 
+                ContentTypeLayoutSettings.Placeable="False" DisplayName="Catalogo">
+        <AdminMenuPart AdminMenuPartTypeSettings.DefaultPosition="5" />
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" 
+                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/mia-projection&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" />
+        <LocalizationPart />
+        <MenuPart />
+        <ProjectionPart ProjectionPartSettings.QueryLayoutRecordId="14;1" 
+                        ProjectionPartSettings.IdentityQueryLayoutRecord="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371;753a374b-f73a-4951-9a4c-c0f7ee5ba733" 
+                        ProjectionPartSettings.FilterQueryRecordId="14;1" 
+                        ProjectionPartSettings.IdentityFilterQueryRecord="/Identifier=4a39a4f1ff7f42a48e896c1181f4c371;753a374b-f73a-4951-9a4c-c0f7ee5ba733" 
+                        ProjectionPartSettings.Items="12" ProjectionPartSettings.LockEditingItems="True" ProjectionPartSettings.Skip="0" 
+                        ProjectionPartSettings.LockEditingSkip="True" ProjectionPartSettings.MaxItems="120" ProjectionPartSettings.LockEditingMaxItems="True" 
+                        ProjectionPartSettings.LockEditingPagerSuffix="True" ProjectionPartSettings.DisplayPager="True" 
+                        ProjectionPartSettings.LockEditingDisplayPager="True" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TitlePart />
+      </Catalogo>
+      <CategoriaAddizionaleTerm Taxonomy="Categoria Addizionale" ContentPermissionsTypeSettings.SecurableContentItems="False" 
+                                ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" 
+                                ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," 
+                                ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Addizionale Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" 
+                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" 
+                       LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" ProjectionPartSettings.QueryLayoutRecordId="15;3" 
+                        ProjectionPartSettings.IdentityQueryLayoutRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" 
+                        ProjectionPartSettings.FilterQueryRecordId="15;4&amp;15;3" 
+                        ProjectionPartSettings.IdentityFilterQueryRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;83b2c05f-8564-497e-a4d5-c438fb8c707f&amp;/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" 
+                        ProjectionPartSettings.Items="18" ProjectionPartSettings.LockEditingItems="True" ProjectionPartSettings.Skip="0" 
+                        ProjectionPartSettings.LockEditingSkip="True" ProjectionPartSettings.MaxItems="0" ProjectionPartSettings.LockEditingMaxItems="True" 
+                        ProjectionPartSettings.LockEditingPagerSuffix="True" ProjectionPartSettings.DisplayPager="True" ProjectionPartSettings.LockEditingDisplayPager="True" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" 
+                  LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaAddizionaleTerm>
+      <CategoriaPrincipaleTerm Taxonomy="Categoria Principale" ContentPermissionsTypeSettings.SecurableContentItems="False" 
+                               ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" 
+                               ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," 
+                               ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Principale Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" 
+                       AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" 
+                       LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" ProjectionPartSettings.QueryLayoutRecordId="15;3" 
+                        ProjectionPartSettings.IdentityQueryLayoutRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" 
+                        ProjectionPartSettings.FilterQueryRecordId="15;4&amp;15;3" 
+                        ProjectionPartSettings.IdentityFilterQueryRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;83b2c05f-8564-497e-a4d5-c438fb8c707f&amp;/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" 
+                        ProjectionPartSettings.Items="18" ProjectionPartSettings.LockEditingItems="True" ProjectionPartSettings.Skip="0" 
+                        ProjectionPartSettings.LockEditingSkip="True" ProjectionPartSettings.MaxItems="0" ProjectionPartSettings.LockEditingMaxItems="True" 
+                        ProjectionPartSettings.LockEditingPagerSuffix="True" ProjectionPartSettings.DisplayPager="True" ProjectionPartSettings.LockEditingDisplayPager="True" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaPrincipaleTerm>
+      <CategoriaSecondariaTerm Taxonomy="Categoria Secondaria" ContentPermissionsTypeSettings.SecurableContentItems="False" ContentTypeSettings.Creatable="False" ContentTypeSettings.Listable="False" ContentTypeSettings.Draftable="False" ContentTypeSettings.Securable="False" TypeIndexing.Indexes=",," ContentTypeLayoutSettings.Placeable="False" DisplayName="Categoria Secondaria Term">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Taxonomy and Title&quot;,&quot;Pattern&quot;:&quot;{Content.Container.Path}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-taxonomy/my-term/sub-term&quot;,&quot;Culture&quot;:null},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;en-US&quot;},{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Slug}&quot;,&quot;Description&quot;:&quot;my-title&quot;,&quot;Culture&quot;:&quot;it-IT&quot;}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;en-US&quot;,&quot;PatternIndex&quot;:&quot;0&quot;},{&quot;Culture&quot;:&quot;it-IT&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart OwnerEditorSettings.ShowOwnerEditor="True" DateEditorSettings.ShowDateEditor="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <LocalizationPart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <ProjectionPart LocalizationCultureNeutralitySettings.CultureNeutral="False" ProjectionPartSettings.QueryLayoutRecordId="15;3" ProjectionPartSettings.IdentityQueryLayoutRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" ProjectionPartSettings.FilterQueryRecordId="15;4&amp;15;3" ProjectionPartSettings.IdentityFilterQueryRecord="/Identifier=1a0b7903917f403e84e37b9b02c88348;83b2c05f-8564-497e-a4d5-c438fb8c707f&amp;/Identifier=1a0b7903917f403e84e37b9b02c88348;8445e515-6cd0-4ea5-ac6e-0b43526a7166" ProjectionPartSettings.Items="18" ProjectionPartSettings.LockEditingItems="True" ProjectionPartSettings.Skip="0" ProjectionPartSettings.LockEditingSkip="True" ProjectionPartSettings.MaxItems="0" ProjectionPartSettings.LockEditingMaxItems="True" ProjectionPartSettings.LockEditingPagerSuffix="True" ProjectionPartSettings.DisplayPager="True" ProjectionPartSettings.LockEditingDisplayPager="True" />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TermPart TermPartSettings.OverrideDefaultPagination="False" TermPartSettings.PageSize="0" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <TitlePart LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </CategoriaSecondariaTerm>
+      <Taxonomy DisplayName="Taxonomy">
+        <AutoroutePart AutorouteSettings.AllowCustomPattern="True" AutorouteSettings.AutomaticAdjustmentOnEdit="False" AutorouteSettings.PatternDefinitions="[{&quot;Name&quot;:&quot;Title&quot;,&quot;Pattern&quot;:&quot;{Content.Culture.TwoLetterISOLanguageName}/{Content.Slug}&quot;,&quot;Description&quot;:&quot;it/my-taxonomy&quot;,&quot;Culture&quot;:null}]" AutorouteSettings.PerItemConfiguration="False" AutorouteSettings.UseCulturePattern="False" AutorouteSettings.DefaultPatternDefinitions="[{&quot;Culture&quot;:&quot;&quot;,&quot;PatternIndex&quot;:&quot;0&quot;}]" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+        <CommonPart />
+        <LocalizationPart />
+        <SeoPart SeoPartSettings.RobotsNoIndex="False" SeoPartSettings.RobotsNoFollow="False"
+                 SeoPartSettings.RobotsNoSnippet="False" SeoPartSettings.RobotsNoOdp="False"
+                 SeoPartSettings.RobotsNoArchive="False" SeoPartSettings.RobotsUnavailableAfter="False"
+                 SeoPartSettings.RobotsNoImageIndex="False" SeoPartSettings.GoogleNoSiteLinkSearchBox="False"
+                 SeoPartSettings.GoogleNoTranslate="False" SeoPartSettings.CanonicalUrl=""
+                 SeoPartSettings.JsonLd="" SeoPartSettings.ShowAggregatedMicrodata="False" />
+        <ShareLinkPart ShareLinkPartSettingVM.SharedLink="" ShareLinkPartSettingVM.SharedBody=""
+                        ShareLinkPartSettingVM.SharedText="" ShareLinkPartSettingVM.SharedImage=""
+                        ShareLinkPartSettingVM.ShowImageChoise="False" ShareLinkPartSettingVM.ShowBodyChoise="False"
+                        ShareLinkPartSettingVM.ShowTextChoise="False" ShareLinkPartSettingVM.ShowLinkChoise="False" />
+        <TaxonomyExtensionPart />
+        <TaxonomyFilterPart />
+        <TaxonomyPart />
+        <TitlePart />
+        <IdentityPart />
+      </Taxonomy>
+    </Types>
+    <Parts>
+      <AutoroutePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Adds advanced url configuration options to your content type to completely customize the url pattern for a content item." />
+      <CommonPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides common information about a content item, such as Owner, Date Created, Date Published and Date Modified." ContentPartLayoutSettings.Placeable="True">
+        <Creator.NumericField DisplayName="Id of user Creator" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" FrontendEditorConfigurationSettings.AllowFrontEndEdit="False" ContentFieldSerializationSettings.AllowSerialization="False" ContentFieldCombinationWeldingSettings.WeldToCombination="False" />
+        <LastModifier.NumericField DisplayName="Id of last user that have modified the content item" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="" NumericFieldSettings.Maximum="" FieldExternalSetting.Required="False" FieldExternalSetting.NoFollow="False" FieldExternalSetting.GenerateL="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" FrontendEditorConfigurationSettings.AllowFrontEndEdit="False" ContentFieldSerializationSettings.AllowSerialization="False" ContentFieldCombinationWeldingSettings.WeldToCombination="False" />
+      </CommonPart>
+      <IdentityPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Automatically generates a unique identity for the content item, which is required in import/export scenarios where one content item references another." />
+      <LocalizationPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides the user interface to localize content items." />
+      <ProjectionPart ContentPartSettings.Attachable="True" />
+      <SeoPart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Consente la personalizzazione degli attributi SEO (title, keywords, description, meta)." />
+      <ShareLinkPart ContentPartSettings.Attachable="True" />
+      <TaxonomyExtensionPart />
+      <TaxonomyFilterPart ContentPartSettings.Attachable="True" ContentPartLayoutSettings.Placeable="False">
+        <CollapseItemsAfter.NumericField DisplayName="CollapseItemsAfter" NumericFieldSettings.Required="False" NumericFieldSettings.Scale="0" NumericFieldSettings.Minimum="-1" NumericFieldSettings.Maximum="" />
+        <ShowContextualSubterms.BooleanField DisplayName="ShowContextualSubterms" BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="" />
+      </TaxonomyFilterPart>
+      <TaxonomyPart />
+      <TermPart>
+        <HideInFrontEnd.BooleanField DisplayName="Nascondi" BooleanFieldSettings.Hint="Se selezionato nasconde la voce nei menu e nei filtri. Non ha invece effetto sulla visibilità della pagina." BooleanFieldSettings.Optional="False" BooleanFieldSettings.OnLabel="Yes" BooleanFieldSettings.OffLabel="No" BooleanFieldSettings.SelectionMode="Checkbox" BooleanFieldSettings.DefaultValue="" />
+        <Icon.MediaLibraryPickerField DisplayName="Icon" MediaLibraryPickerFieldSettings.Required="False" MediaLibraryPickerFieldSettings.Multiple="False" LocalizationCultureNeutralitySettings.CultureNeutral="False" />
+      </TermPart>
+      <TitlePart ContentPartSettings.Attachable="True" ContentPartSettings.Description="Provides a Title for your content item." ContentPartLayoutSettings.Placeable="True" />
+    </Parts>
+  </ContentDefinition>
+  <Content>
+    <Taxonomy Id="/alias=it\/categoria-addizionale/Identifier=taxCategoriaAddizionale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
+      <AutoroutePart Alias="it/categoria-addizionale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:15.499015Z" PublishedUtc="2021-02-26T15:44:48.5729531Z" ModifiedUtc="2021-02-26T15:44:48.5555373Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaAddizionaleTerm" />
+      <TitlePart Title="Categoria Addizionale" />
+      <IdentityPart Identifier="taxCategoriaAddizionale" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=it\/categoria-principale/Identifier=taxCategoriaPrincipale" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
+      <AutoroutePart Alias="it/categoria-principale" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:19:02.4102408Z" PublishedUtc="2021-02-26T15:42:32.8663488Z" ModifiedUtc="2021-02-26T15:42:32.8302326Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaPrincipaleTerm" />
+      <TitlePart Title="Categoria Principale" />
+      <IdentityPart Identifier="taxCategoriaPrincipale" />
+    </Taxonomy>
+    <Taxonomy Id="/alias=it\/categoria-secondaria/Identifier=taxCategoriaSecondaria" Status="Published">
+      <BooleanField.ShowContextualSubterms Value="true" />
+      <NumericField.Creator Value="2" />
+      <NumericField.LastModifier Value="2" />
+      <NumericField.CollapseItemsAfter Value="" />
+      <AutoroutePart Alias="it/categoria-secondaria" UseCustomPattern="false" UseCulturePattern="false" PromoteToHomePage="false" />
+      <CommonPart Owner="/Identifier=/User.UserName=admin" CreatedUtc="2021-02-26T14:22:01.8356048Z" PublishedUtc="2021-02-26T15:43:18.8265254Z" ModifiedUtc="2021-02-26T15:43:18.8089412Z" />
+      <LocalizationPart Culture="it-IT" />
+      <TaxonomyExtensionPart OrderBy="Default" />
+      <TaxonomyPart TermTypeName="CategoriaSecondariaTerm" />
+      <TitlePart Title="Categoria Secondaria" />
+      <IdentityPart Identifier="taxCategoriaSecondaria" />
+    </Taxonomy>
+  </Content>
+</Orchard>
