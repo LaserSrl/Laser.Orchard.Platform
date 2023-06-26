@@ -53,7 +53,12 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 .Token("TenantTopLevel", 
                     T("Top Level for Tenant"),
                     T("A string intended to be used to start URLs. It resolves to either \"/\" if no prefix is set or \"/prefix/\" if there is a prefix for the tenant. If there is an application path that is correctly prepended."), "Text")
-                
+                // {Site.TenantName} is used to get the tenant's folder inside a url or a path.
+                // This can be used, for instance, to get the path of a specific media for the tenant.
+                // e.g. "~/Media/{Site.TenantName}/CSS/skin.css"
+                .Token("TenantName",
+                    T("Name of the Tenant"),
+                    T("A string intended to be used in URLs and folders to get the proper path of a file specific for the tenant, for instance a Media inside the tenant's media folder."), "Text")
                 ;
        
             context.For("CurrentCulture", T("Current Culture"), T("The current culture"))
@@ -80,12 +85,15 @@ namespace Laser.Orchard.StartupConfig.Tokens {
                 }
                 return appPath;
             });
+            var tenantNameFunc = (Func<ISite, object>)(content => _shellSettings.Name ?? "");
 
             forContent
                 .Token("RequestUrlPrefix", urlPrefixFunc)
                 .Chain("RequestUrlPrefix", "Text", urlPrefixFunc)
                 .Token("TenantTopLevel", topLevelPrefixFunc)
                 .Chain("TenantTopLevel", "Text", topLevelPrefixFunc)
+                .Token("TenantName", tenantNameFunc)
+                .Chain("TenantName", "Text", tenantNameFunc)
                 ;
 
             // same as Orchard.Core.Settings.Tokens.SettingsTokens
