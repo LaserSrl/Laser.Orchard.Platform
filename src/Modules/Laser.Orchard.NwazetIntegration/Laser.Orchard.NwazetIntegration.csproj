@@ -330,6 +330,8 @@
     <Content Include="Recipes\SetupEcommerceTerritoriesVATShipping.recipe.xml" />
     <Content Include="Recipes\SetupItalianVAT.recipe.xml" />
     <Content Include="Recipes\SetupMVPTerritories.recipe.xml" />
+    <Content Include="Recipes\SetupProductQueries.recipe.xml" />
+    <Content Include="Recipes\SetupProductTerms.recipe.xml" />
     <Content Include="Scripts\address-configuration.js" />
     <Content Include="Scripts\address-configuration.min.js">
       <DependentUpon>address-configuration.js</DependentUpon>
