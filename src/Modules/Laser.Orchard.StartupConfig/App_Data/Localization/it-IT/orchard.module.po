@@ -1997,6 +1997,10 @@ msgid "RazorExecute:<file name>"
 msgstr "RazorExecute:<file name>"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "A string intended to be used in URLs and folders to get the proper path of a file specific for the tenant, for instance a Media inside the tenant's media folder."
+msgstr "Una stringa da usare negli url e nelle cartelle per ottenere il percorso corretto di uno specifico file all'interno del tenant, per esempio un file multimediale presente all'interno della cartella del tenant nei media."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "A string intended to be used to start URLs. It resolves to either \"/\" if no prefix is set or \"/prefix/\" if there is a prefix for the tenant. If there is an application path that is correctly prepended."
 msgstr "Una stringa il cui scopo è essere usata all'inizio di URLs. Risulta in \"/\" se non è impostato nessun prefisso, o \"/prefisso/\" se c'è un prefisso configurato per il tenanto. Se è necessario inserire il path dell'applicazione, esso viene preposto correttamente."
 
@@ -2007,6 +2011,10 @@ msgstr "Cultura"
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Current Culture"
 msgstr "Cultura corrente"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Name of the Tenant"
+msgstr "Nome del Tenant"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Request Url Prefix"
