@@ -924,3 +924,6 @@ msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAt
 msgid "You have to answer to {0}"
 msgstr "Domanda {0} obbligatoria"
 
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"

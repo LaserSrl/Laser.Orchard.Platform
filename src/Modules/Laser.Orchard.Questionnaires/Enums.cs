@@ -13,4 +13,7 @@ namespace Laser.Orchard.Questionnaires {
     public enum ConditionType {
         Show,Hide
     };
+    public enum ValidationAnswerType {
+        AcceptTerms, RequiredAnswer, ImpossibleValidation, InvalidEmailAddress, InvalidInternetAddress, InvalidDate, InvalidDateTime, InvalidNumber
+    }
 }
