@@ -1,15 +1,30 @@
-﻿@model Laser.Orchard.SEO.ViewModels.FaviconSettingsViewModel
+﻿@using Orchard.Tokens;
+
+@model Laser.Orchard.SEO.ViewModels.FaviconSettingsViewModel
+
+@{
+    ITokenizer _tokenizer = WorkContext.Resolve<ITokenizer>();
+    var faviconUrl = Model.FaviconUrl;
+
+    // If the url contains a token, we need to replace it with tokenizer
+    if (faviconUrl.Contains("{")) {
+        Dictionary<string, object> tokens = new Dictionary<string, object>();
+        faviconUrl = _tokenizer.Replace(faviconUrl, tokens);
+    }
+}
+
 
 <fieldset>
   <legend>@T("Favicon")</legend>
 
   <div>
-    <label for="FaviconUrl">@T("Favicon URL")</label>
-    @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium" })
-    @if (!String.IsNullOrWhiteSpace(Model.FaviconUrl)) {
-      <img src="@Model.FaviconUrl" alt="@T("current")" title="@T("current")" />
+      <label for="FaviconUrl">@T("Favicon URL")</label>
+      @Html.TextBoxFor(m => m.FaviconUrl, new { @class = "textMedium" })
+      <span class="hint">@T("Url of the favicon. Can be a relative url and can also be tokenized (e.g.: /Media/{Site.TenantName}/favicon.ico)")</span>
+      @if (!String.IsNullOrWhiteSpace(faviconUrl)) {
+      <img src="@faviconUrl" alt="@T("current")" title="@T("current")" />
     }
-    @Html.ValidationMessage("FaviconUrl", "*")
+      @Html.ValidationMessage("FaviconUrl", "*")
   </div>
 
 </fieldset>
