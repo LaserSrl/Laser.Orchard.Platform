@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Laser.Orchard.Questionnaires.Models;
+using Laser.Orchard.Questionnaires.Services;
 
 namespace Laser.Orchard.Questionnaires.ViewModels {
 
@@ -29,5 +30,6 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public string Condition { get; set; }
         public ConditionType ConditionType { get; set; }
         public string AllFiles { get; set; }
+        public IQuestionnaireHelperServices QuestionnaireHelperService { get; set; }
     }
 }
