@@ -26,8 +26,7 @@ namespace Laser.Orchard.TaskScheduler.Drivers {
                 var ciId = _contentManager.GetItemMetadata(ci).Identity.ToString();
                 root.SetAttributeValue("ContentItemId", ciId);
             }
-            // The task must not be set to be running in the future, so RunningTaskId is set to 0.
-            //root.SetAttributeValue("RunningTaskId", part.RunningTaskId.ToString());
+            // The task must not be set to be running, so RunningTaskId is set to 0.
             root.SetAttributeValue("RunningTaskId", 0);
             root.SetAttributeValue("Autodestroy", part.Autodestroy);
             root.SetAttributeValue("ExecutionType", part.ExecutionType.ToString());
@@ -44,6 +43,8 @@ namespace Laser.Orchard.TaskScheduler.Drivers {
                 }
                 var scheduledStartUTC = root.Attribute("ScheduledStartUTC");
                 if (scheduledStartUTC != null) {
+                    // Since property (and related record property) ends with "UTC",
+                    // the date has to be forced to DateTimeKind.Utc.
                     var utcDate = Convert.ToDateTime(scheduledStartUTC.Value, CultureInfo.InvariantCulture);
                     utcDate = new DateTime(utcDate.Year, utcDate.Month, utcDate.Day, 
                         utcDate.Hour,utcDate.Minute,utcDate.Second, DateTimeKind.Utc);
@@ -59,16 +60,13 @@ namespace Laser.Orchard.TaskScheduler.Drivers {
                 }
                 var contentItemId = root.Attribute("ContentItemId");
                 if (contentItemId != null && !string.IsNullOrWhiteSpace(contentItemId.Value)) {
+                    // Try to resolve identity and get the id on the database of the content item.
                     var ci = _contentManager.ResolveIdentity(new ContentIdentity(contentItemId.Value));
                     if (ci != null) {
                         part.ContentItemId = ci.Id;
                     }
                 }
-                // The task must not be set to be running in the future, so RunningTaskId is set to 0.
-                //var runningTaskId = root.Attribute("RunningTaskId");
-                //if (runningTaskId != null) {
-                //    part.RunningTaskId = Convert.ToInt32(runningTaskId.Value);
-                //}
+                // The task must not be set to be running, so RunningTaskId is set to 0.
                 part.RunningTaskId = 0;
                 var autodestroy = root.Attribute("Autodestroy");
                 if (autodestroy != null) {
