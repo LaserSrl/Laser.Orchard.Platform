@@ -46,7 +46,7 @@
                 }
             }
             else {
-                if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                if (acceptTypePolicy) {
                     @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
                     @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
                 }
