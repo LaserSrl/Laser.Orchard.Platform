@@ -183,6 +183,15 @@
             $('#' + options.elementsPrefix + 'ProvinceSelectedId').empty().trigger("change");
             $('#' + options.elementsPrefix + 'City').val("").trigger("change");
             $('#' + options.elementsPrefix + 'Province').val("").trigger("change");
+            if (options.isBillingAddress) {
+                $('#' + options.elementsPrefix + 'InvoiceRequest').prop("checked", false)
+                $('#' + options.elementsPrefix + 'CustomerType').val("Individual").trigger("change"); //Individual is the Default
+                $('#' + options.elementsPrefix + 'VATNumber').val("").trigger("change");
+                $('#' + options.elementsPrefix + 'FiscalCode').val("").trigger("change");
+                if ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox')) {
+                    $('#' + options.elementsPrefix + 'InvoiceRequest').prop("checked", false).trigger("change");
+                }
+            }
             global_CopyingAddresses = false;
         } else {
             // figure out what address is selected
@@ -221,6 +230,25 @@
                     $('#' + options.elementsPrefix + 'CountryId option[value=' + arrayOfStoredAddresses[i].CountryId + ']').prop('selected', true);
                     global_CopyingAddresses = true;
                     $('#' + options.elementsPrefix + 'CountryId').trigger("change");
+
+                    //manage VATNumber and FiscalCode
+                    if (arrayOfStoredAddresses[i].AddressType == 1 /*Billing Address */) {
+                        if ($('#' + options.elementsPrefix + 'InvoiceRequest') != null) {
+                            var customerTypeString = arrayOfStoredAddresses[i].CustomerType.toString();//sets a default value
+                            if (arrayOfStoredAddresses[i].CustomerType == 1) {
+                                customerTypeString = "LegalEntity";
+                            }
+                            else {
+                                customerTypeString = "Individual";
+                            }
+                            $('#' + options.elementsPrefix + 'CustomerType').val(customerTypeString).trigger("change");
+                            $('#' + options.elementsPrefix + 'VATNumber').val(arrayOfStoredAddresses[i].VATNumber).trigger("change");
+                            $('#' + options.elementsPrefix + 'FiscalCode').val(arrayOfStoredAddresses[i].FiscalCode).trigger("change");
+                            if ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox')) {
+                                $('#' + options.elementsPrefix + 'InvoiceRequest').prop("checked", arrayOfStoredAddresses[i].InvoiceRequest).trigger("change");
+                            }
+                        }
+                    }
                     global_CopyingAddresses = false;
                 }
             }
@@ -277,9 +305,17 @@
         });
     }
 
+    $('#' + options.elementsPrefix + "CustomerType").on('change', function (e) {
+        EnsureInvoiceDataVisibility(options);
+    });
 
+    $('#' + options.elementsPrefix + "InvoiceRequest").on('change', function (e) {
+        EnsureInvoiceDataVisibility(options);
+    });
     // after creation of all Select2 UI we ensure visibility
     EnsureVisibility(options);
+
+    EnsureInvoiceDataVisibility(options);
 
 }
 
@@ -308,3 +344,26 @@ function EnsureVisibility(options) {
     }
 }
 
+function EnsureInvoiceDataVisibility(options) {
+    if (options.isBillingAddress) {
+        var customerTypeElement = $('#' + options.elementsPrefix + "CustomerType");
+        if (customerTypeElement != null) {
+            //show/hide the container of <label> + <select>
+            customerTypeElement.parent().hide();
+            $('#' + options.elementsPrefix + "FiscalCode").parent().hide();
+            $('#' + options.elementsPrefix + "VATNumber").parent().hide();
+            var isInvoiceRequested = ($('#' + options.elementsPrefix + 'InvoiceRequest').prop('checked') ||
+                ($('#' + options.elementsPrefix + 'InvoiceRequest').is(':checkbox') == false &&
+                    $('#' + options.elementsPrefix + 'InvoiceRequest').val().toLowerCase() == "true"));
+            if (isInvoiceRequested) {
+                customerTypeElement.parent().show();
+                if (customerTypeElement.val() == "Individual") {
+                    $('#' + options.elementsPrefix + "FiscalCode").parent().show();
+                }
+                else if (customerTypeElement.val() == "LegalEntity") {
+                    $('#' + options.elementsPrefix + "VATNumber").parent().show();
+                }
+            }
+        }
+    }
+}

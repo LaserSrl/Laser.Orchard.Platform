@@ -135,6 +135,7 @@
     <Content Include="Views\DefinitionTemplates\ProfileFrontEndSettings.cshtml" />
     <Content Include="App_Data\Localization\it-IT\orchard.module.po" />
     <Content Include="packages.config" />
+    <Content Include="Placement.info" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

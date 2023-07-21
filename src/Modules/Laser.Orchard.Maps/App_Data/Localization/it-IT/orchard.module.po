@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -123,6 +123,10 @@ msgstr "Longitudine"
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Map Fields"
 msgstr "Definizione della Mappa"
+
+msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
+msgid "Reset Coords"
+msgstr "Reimposta Coordinate"
 
 msgctxt "~/Modules/Laser.Orchard.Maps/Views/EditorTemplates/Parts/Map.cshtml"
 msgid "Show Coords"

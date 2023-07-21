@@ -1,5 +1,6 @@
 ﻿using Laser.Orchard.NwazetIntegration.Models;
 using Laser.Orchard.NwazetIntegration.Services;
+using Laser.Orchard.NwazetIntegration.Services.Invoice;
 using Laser.Orchard.NwazetIntegration.ViewModels;
 using Laser.Orchard.PaymentGateway.Models;
 using Nwazet.Commerce.Models;
@@ -33,7 +34,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
         private readonly IAddressConfigurationService _addressConfigurationService;
         private readonly IEnumerable<IValidationProvider> _validationProvider;
         private readonly ICheckoutHelperService _checkoutHelperService;
-
+        private readonly IInvoiceService _invoiceService;
         private readonly dynamic _shapeFactory;
 
         public AddressesController(
@@ -50,7 +51,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             INotifier notifier,
             IAddressConfigurationService addressConfigurationService,
             IEnumerable<IValidationProvider> validationProvider,
-            ICheckoutHelperService checkoutHelperService) {
+            ICheckoutHelperService checkoutHelperService,
+            IInvoiceService invoiceService) {
 
             _orderService = orderService;
             _paymentService = paymentService;
@@ -66,7 +68,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             _addressConfigurationService = addressConfigurationService;
             _validationProvider = validationProvider;
             _checkoutHelperService = checkoutHelperService;
-
+            _invoiceService = invoiceService;
             T = NullLocalizer.Instance;
         }
 
@@ -135,6 +137,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             }
             var model = CreateVM();
             model.AddressType = type == 0 ? AddressRecordType.ShippingAddress : AddressRecordType.BillingAddress;
+            ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(model.CustomerType);
             return View(model);
         }
         [HttpPost, Themed,
@@ -158,6 +161,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 FixUpdate(newAddress);
 
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
+                ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(newAddress.CustomerType);
                 return View(newAddress);
             }
             // Convert the values of Country, City, and Province to strings and ids for
@@ -181,6 +185,8 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
             if (address == null) {
                 return HttpNotFound();
             }
+            ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(address.CustomerType);
+
             return View(CreateVM(address));
         }
         [HttpPost, Themed,
@@ -209,6 +215,7 @@ namespace Laser.Orchard.NwazetIntegration.Controllers {
                 FixUpdate(newAddress);
 
                 newAddress.Errors.Add(T("It was impossible to validate your address.").Text);
+                ViewBag.CustomerTypeOptions = _invoiceService.BuildCustomerOptions(newAddress.CustomerType);
                 return View(newAddress);
             }
             // Convert the values of Country, City, and Province to strings and ids for

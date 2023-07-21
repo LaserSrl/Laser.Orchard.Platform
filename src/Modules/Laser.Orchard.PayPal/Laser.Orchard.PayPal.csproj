@@ -58,8 +58,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -112,6 +113,10 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Nwazet.Commerce\Nwazet.Commerce.csproj">
+      <Project>{909acc2c-d672-4752-b75b-6822e05fe0e3}</Project>
+      <Name>Nwazet.Commerce</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard\Orchard.Framework.csproj">
       <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
       <Name>Orchard.Framework</Name>
@@ -121,6 +126,10 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
       <Private>$(MvcBuildViews)</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Laser.Orchard.NwazetIntegration\Laser.Orchard.NwazetIntegration.csproj">
+      <Project>{dc68a88c-e516-4030-8da7-d954f5ea7424}</Project>
+      <Name>Laser.Orchard.NwazetIntegration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Laser.Orchard.PaymentGateway\Laser.Orchard.PaymentGateway.csproj">
       <Project>{e6900a95-3d80-497d-ad29-998adc8ad3d7}</Project>

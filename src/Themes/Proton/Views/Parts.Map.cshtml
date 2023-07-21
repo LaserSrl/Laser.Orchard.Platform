@@ -31,12 +31,13 @@
 @if (Model.Latitude > 0) {
     using (Script.Foot()) {
     <script type="text/javascript">
-        function @("initialize" + ID + "()") {
+        async function @("initialize" + ID + "()") {
+            const { Map } = await google.maps.importLibrary("maps");
             var mapOptions = {
             scaleControl: true,
             center: new google.maps.LatLng(@Model.Latitude.ToString().Replace(",", "."),@Model.Longitude.ToString().Replace(",", ".")),
                 zoom: 15,
-                mapTypeId: @Html.Raw(!httpTiles ? usedTiles : "'OSM'")   
+                mapTypeId: @Html.Raw(!httpTiles ? usedTiles : "'OSM'")
 
             @if (httpTiles) {
                 <text>,
@@ -57,7 +58,7 @@
                 var values = [zoom,coord.x,coord.y];
 
                 var result = switch_url(format(usedTilesJS, zoom, coord.x, coord.y));
-                    
+
                 return result; //"http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
             },
             tileSize: new google.maps.Size(256, 256),
@@ -85,8 +86,8 @@
             infowindow.open(map, marker);
         });
         }
-
-        google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
+        @("initialize" + ID + "();")
+        //google.maps.event.addDomListener(window, 'load', @("initialize" + ID) );
     </script>
     }
     <section id="map">

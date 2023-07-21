@@ -58,14 +58,15 @@ namespace Laser.Orchard.UsersExtensions.Filters {
 
         public void OnActionExecuting(ActionExecutingContext filterContext) {
             bool isAdminService = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AdminServiceAttribute), false).Any();
-
+            bool skipPolicyCheck = filterContext.ActionDescriptor.GetCustomAttributes(typeof(PolicyApiFilterAttribute), false).Where(x => ((PolicyApiFilterAttribute)x).Skip).Any();
             var fullActionName = filterContext.Controller.GetType().FullName + "." + filterContext.ActionDescriptor.ActionName;
-
+            if (skipPolicyCheck || isAdminService) {
+                return;
+            }
             if (_workContext.GetContext().CurrentUser != null && 
                 !allowedControllers.Contains(filterContext.Controller.GetType().FullName) && 
                 !allowedControllers.Contains(fullActionName)  &&
-                !AdminFilter.IsApplied(filterContext.RequestContext) &&
-                !isAdminService) {
+                !AdminFilter.IsApplied(filterContext.RequestContext)) {
                 var language = _workContext.GetContext().CurrentCulture;
                 IEnumerable<PolicyTextInfoPart> neededPolicies = _userExtensionServices.GetUserLinkedPolicies(language);
 

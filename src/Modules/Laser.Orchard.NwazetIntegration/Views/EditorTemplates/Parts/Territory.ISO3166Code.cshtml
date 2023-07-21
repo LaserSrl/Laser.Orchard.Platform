@@ -1,0 +1,9 @@
+﻿@using Laser.Orchard.NwazetIntegration.ViewModels
+@model TerritoryISO3166CodeEditViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.ISO3166Code, T("ISO code for this territory"))
+    @Html.TextBoxFor(m => m.ISO3166Code,
+        htmlAttributes: new { @class="form-control" })
+    @Html.Hint(T("Input an ISO code for this territory. You can find them <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes\">online</a>. The use your system will make of this depend on your specific configuration."))
+</div>

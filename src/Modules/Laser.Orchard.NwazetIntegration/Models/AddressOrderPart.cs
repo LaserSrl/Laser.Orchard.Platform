@@ -1,4 +1,8 @@
-﻿using Nwazet.Commerce.Aspects;
+﻿using Laser.Orchard.NwazetIntegration.Aspects;
+using Laser.Orchard.NwazetIntegration.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Nwazet.Commerce.Aspects;
 using Orchard.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -6,8 +10,10 @@ using System.Linq;
 using System.Web;
 
 namespace Laser.Orchard.NwazetIntegration.Models {
-    public class AddressOrderPart 
-        : ContentPart<AddressOrderPartRecord>, ITerritoryAddressAspect {
+    public class AddressOrderPart
+        : ContentPart<AddressOrderPartRecord>,
+        ITerritoryAddressAspect,
+        IOrderExtensionAspect {
 
         public string ShippingCountryName {
             get { return Retrieve(r => r.ShippingCountryName); }
@@ -64,7 +70,27 @@ namespace Laser.Orchard.NwazetIntegration.Models {
             set { Store(r => r.BillingProvinceId, value); }
         }
 
-        public IEnumerable<int> TerritoriesIds => 
+        public string BillingFiscalCode {
+            get { return Retrieve(r => r.BillingFiscalCode); }
+            set { Store(r => r.BillingFiscalCode, value); }
+        }
+        public string BillingVATNumber {
+            get { return Retrieve(r => r.BillingVATNumber); }
+            set { Store(r => r.BillingVATNumber, value); }
+        }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CustomerTypeOptions BillingCustomerType {
+            get { return Retrieve(r => r.BillingCustomerType); }
+            set { Store(r => r.BillingCustomerType, value); }
+        }
+        
+        public bool BillingInvoiceRequest {
+            get { return Retrieve(r => r.BillingInvoiceRequest); }
+            set { Store(r => r.BillingInvoiceRequest, value); }
+        }
+
+        public IEnumerable<int> TerritoriesIds =>
             new int[] { ShippingCityId, ShippingProvinceId, ShippingCountryId,
                 BillingCityId, BillingProvinceId, BillingCountryId };
 
@@ -73,5 +99,37 @@ namespace Laser.Orchard.NwazetIntegration.Models {
         public int ProvinceId => ShippingProvinceId;
 
         public int CityId => ShippingCityId;
+
+        public void ExtendCreation(CheckoutViewModel cvm) {
+            // Verify address information in the AddressOrderPart
+            if (cvm.ShippingRequired) {
+                // may not have a shipping address if shipping isn't required
+                ShippingCountryName = cvm.ShippingAddress.Country;
+                ShippingCountryId = cvm.SelectedShippingAddressProvider
+                    .GetShippingCountryId(cvm);
+                ShippingCityName = cvm.ShippingAddress.City;
+                ShippingCityId = cvm.SelectedShippingAddressProvider
+                    .GetShippingCityId(cvm);
+                ShippingProvinceName = cvm.ShippingAddress.Province;
+                ShippingProvinceId = cvm.SelectedShippingAddressProvider
+                    .GetShippingProvinceId(cvm);
+                // added information to manage saving in bo
+                ShippingAddressIsOptional = false;
+            }
+            else {
+                ShippingAddressIsOptional = true;
+            }
+            // Billing address
+            BillingCountryName = cvm.BillingAddressVM.Country;
+            BillingCountryId = cvm.BillingAddressVM.CountryId;
+            BillingCityName = cvm.BillingAddressVM.City;
+            BillingCityId = cvm.BillingAddressVM.CityId;
+            BillingProvinceName = cvm.BillingAddressVM.Province;
+            BillingProvinceId = cvm.BillingAddressVM.ProvinceId;
+            BillingInvoiceRequest = cvm.BillingAddressVM.InvoiceRequest;
+            BillingVATNumber = cvm.BillingAddressVM.VATNumber;
+            BillingFiscalCode = cvm.BillingAddressVM.FiscalCode;
+            BillingCustomerType = cvm.BillingAddressVM.CustomerType;
+        }
     }
 }

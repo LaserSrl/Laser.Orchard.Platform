@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -67,4 +67,20 @@ msgstr "Predefinito"
 msgctxt "Laser.Orchard.AdvancedSettings.Handlers.ThemeSkinsSettingsPartHandler"
 msgid "ThemeSkins"
 msgstr "Skin del Tema"
+
+msgctxt "Laser.Orchard.AdvancedSettings.Tokens.AdvancedSettingsTokens"
+msgid "Advanced Settings"
+msgstr "Opzioni Avanzate"
+
+msgctxt "Laser.Orchard.AdvancedSettings.Tokens.AdvancedSettingsTokens"
+msgid "Advanced settings tokens."
+msgstr "Token degli advanced settings."
+
+msgctxt "Laser.Orchard.AdvancedSettings.Tokens.AdvancedSettingsTokens"
+msgid "GetCachedSetting:(<settings-name>)"
+msgstr "GetCachedSetting:(<settings-name>)"
+
+msgctxt "Laser.Orchard.AdvancedSettings.Tokens.AdvancedSettingsTokens"
+msgid "Gets the Advanced Settings and Chain its ContentItem."
+msgstr "Ottiene l'Advanced Setting e concatena il suo ContentItem."
 

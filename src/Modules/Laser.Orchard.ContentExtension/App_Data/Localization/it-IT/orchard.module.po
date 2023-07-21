@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -283,6 +283,10 @@ msgstr "Contenuto inesistente"
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
 msgid "No content with this Id"
 msgstr "Contenuto inesistente"
+
+msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
+msgid "UnAuthorized Action"
+msgstr "Azione non autorizzata"
 
 msgctxt "Laser.Orchard.ContentExtension.Controllers.ElementDetail"
 msgid "You don't have permission \"Manage settings\" to define and manage User Groups!"

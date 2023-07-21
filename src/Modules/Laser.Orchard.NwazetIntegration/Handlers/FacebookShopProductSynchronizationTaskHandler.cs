@@ -27,8 +27,7 @@ namespace Laser.Orchard.NwazetIntegration.Handlers {
                 // Task name is something like "FacebookShopCheckHandle_RecordId"
                 var recordId = context.Task.TaskType.Substring((CHECKHANDLE_TASK + "_").Length);
                 int numericRecordId = 0;
-                int.TryParse(recordId, out numericRecordId);
-                if (numericRecordId > 0) {
+                if (int.TryParse(recordId, out numericRecordId) && numericRecordId > 0) {
                     var handleRecord = _handles.Get((int)numericRecordId);
                     _facebookShopService.CheckFacebookHandles(handleRecord.Handle, handleRecord.RequestJson);
                     handleRecord.Processed = true;

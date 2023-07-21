@@ -1,6 +1,5 @@
 ﻿using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.StartupConfig.ViewModels;
-using Laser.Orchard.StartupConfig.WebApiProtection.Filters;
 using Laser.Orchard.WebServices.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,16 +8,20 @@ using Orchard.ContentManagement;
 using Orchard.Core.Contents;
 using Orchard.Environment.Configuration;
 using Orchard.Logging;
+using Orchard.OutputCache;
 using Orchard.Projections.Services;
 using Orchard.Security;
 using Orchard.Taxonomies.Services;
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Laser.Orchard.WebServices.Controllers {
-    
-    public class WebApiController : Controller, IWebApiService {
+
+    public class WebApiController : Controller, IWebApiService, ICachingEventHandler {
         private readonly IOrchardServices _orchardServices;
         private readonly IProjectionManager _projectionManager;
         private readonly ITaxonomyService _taxonomyService;
@@ -62,45 +65,53 @@ namespace Laser.Orchard.WebServices.Controllers {
 
         public ILogger Logger { get; set; }
 
+        [AlwaysAccessible]
         public ActionResult Terms(string alias, int maxLevel = 10) {
             var content = _commonServices.GetContentByAlias(alias);
+            if (content == null) {
+                return new HttpStatusCodeResult(404);
+            }
+            // TODO: Permissions
             var json = _contentSerializationServices.Terms(content, maxLevel);
             return Content(json.ToString(Newtonsoft.Json.Formatting.None), "application/json");
         }
 
         [AlwaysAccessible]
-        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10) {
+        public ActionResult Display(string alias, int page = 1, int pageSize = 10, int maxLevel = 10, string filter = "", string contentType="") {
             try {
                 JObject json;
 
                 if (alias == null) {
                     var result = new ContentResult { ContentType = "application/json" };
-                    result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
+                    result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.MissingParameters));
                     return result;
                 }
 
                 IContent content;
+                var viewPermission = Permissions.ViewContent;
                 if (alias.ToLower() == "user+info" || alias.ToLower() == "user info") {
                     #region [ Richiesta dati di uno user ]
+                    viewPermission = Contrib.Profile.Permissions.ViewOwnProfile;
                     var currentUser = _authenticationService.GetAuthenticatedUser();
                     if (currentUser == null) {
                         //  return Content((Json(_utilsServices.GetResponse(ResponseType.InvalidUser))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
                         var result = new ContentResult { ContentType = "application/json" };
-                        result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidUser));
+                        Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        Response.SuppressFormsAuthenticationRedirect = true;
+                        result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidUser));
                         return result;
+                    } else if (!_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
+                        var result = new ContentResult { ContentType = "application/json" };
+                        Response.StatusCode = (int)HttpStatusCode.Unauthorized; // TODO: verify this is the correct code
+                        Response.SuppressFormsAuthenticationRedirect = true;
+                        result.Content = JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidXSRF));
+                        return result;
+                        //   Content((Json(_utilsServices.GetResponse(ResponseType.InvalidXSRF))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
+                    } else {
+                        #region utente validato
+                        content = currentUser.ContentItem;
+                        #endregion
                     }
-                    else
-                        if (!_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
-                            var result = new ContentResult { ContentType = "application/json" };
-                            result.Content = Newtonsoft.Json.JsonConvert.SerializeObject(_utilsServices.GetResponse(ResponseType.InvalidXSRF));
-                            return result;
-                            //   Content((Json(_utilsServices.GetResponse(ResponseType.InvalidXSRF))).ToString(), "application/json");// { Message = "Error: No current User", Success = false,ErrorCode=ErrorCode.InvalidUser,ResolutionAction=ResolutionAction.Login });
-                        }
-                        else {
-                            #region utente validato
-                            content = currentUser.ContentItem;
-                            #endregion
-                        }
                     #endregion
 
                 }
@@ -110,19 +121,26 @@ namespace Laser.Orchard.WebServices.Controllers {
 
                 if (content == null) {
                     return new HttpStatusCodeResult(404);
+                } else if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(content.ContentItem.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
+                    return new HttpStatusCodeResult(404);
                 }
 
-                if (!_orchardServices.Authorizer.Authorize(Permissions.ViewContent, content))
+                if (!_orchardServices.Authorizer.Authorize(viewPermission, content)) {
+                    Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    Response.SuppressFormsAuthenticationRedirect = true;
                     return Json(UnauthorizedResponse(), JsonRequestBehavior.AllowGet);
-
+                }
                 //_maxLevel = maxLevel;
-                json = _contentSerializationServices.GetJson(content, page, pageSize);
+                json = _contentSerializationServices.GetJson(content, page, pageSize, filter);
                 //_contentSerializationServices.NormalizeSingleProperty(json);
                 return Content(json.ToString(Newtonsoft.Json.Formatting.None), "application/json");
                 //return GetJson(content, page, pageSize);
-            }
-            catch (System.Security.SecurityException) {
+            } catch (System.Security.SecurityException) {
+                Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                Response.SuppressFormsAuthenticationRedirect = true;
                 return Json(_utilsServices.GetResponse(ResponseType.InvalidUser), JsonRequestBehavior.AllowGet);
+            } catch (Exception) {
+                return new HttpStatusCodeResult(500);
             }
         }
         private Response UnauthorizedResponse() {
@@ -133,6 +151,22 @@ namespace Laser.Orchard.WebServices.Controllers {
             return response;
         }
 
+        public void KeyGenerated(StringBuilder key) {
+            var values = _request.RequestContext.RouteData.Values;
+            if (values.ContainsKey("area") && values.ContainsKey("controller") && values.ContainsKey("action")) {
+                if (values["area"].ToString().ToLowerInvariant().Equals("laser.orchard.webservices") &&
+                    values["controller"].ToString().ToLowerInvariant().Equals("webapi") &&
+                    values["action"].ToString().ToLowerInvariant().Equals("display")) {
+                    var alias = _request.QueryString["alias"];
+                    if (!string.IsNullOrWhiteSpace(alias) && (alias.ToLower() == "user+info" || alias.ToLower() == "user info")) {
+                        var currentUser = _authenticationService.GetAuthenticatedUser();
+                        if (currentUser != null) {
+                            key.Append("user:" + currentUser.Id + ";");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public class EnumStringConverter : Newtonsoft.Json.Converters.StringEnumConverter {

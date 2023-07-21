@@ -7,5 +7,8 @@
         <label for="@Html.FieldIdFor(m=>m.JsonForProductUpdate)">@T("Default json")</label>
         @Html.TextAreaFor(m => m.JsonForProductUpdate, new { @class = "text medium tokenized", rows = "20" })
         <span class="hint">@T("This is the json body for product creation / update on Facebook shop.")</span>
+        <span class="hint">@T("If value is empty it will be generated based on product data.")</span>
+        <span class="hint">@T("If value is a constant it will be used as is.")</span>
+        <span class="hint">@T("If value is a token it will be computed as a token.")</span>
     </div>
 </fieldset>

@@ -251,7 +251,7 @@ namespace Laser.Orchard.CommunicationGateway.CRM.Mailchimp.Services {
 
         public bool ErrorHandlerGetMember(HttpVerbs httpVerb, string requestUrl, JObject bodyRequest, HttpResponseMessage response) {
             if (!response.IsSuccessStatusCode) {
-                LogError(httpVerb, requestUrl, bodyRequest, response);
+                LogDebug("User Not Found", httpVerb, requestUrl, bodyRequest, response);
                 return false;
             } else {
                 var resultJson = JObject.Parse(response.Content.ReadAsStringAsync().Result);

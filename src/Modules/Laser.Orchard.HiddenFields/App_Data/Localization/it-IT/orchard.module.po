@@ -1,5 +1,5 @@
 ﻿# Orchard resource strings - it-IT
-# Copyright (c) 2022 Laser s.r.l.
+# Copyright (c) 2023 Laser s.r.l.
 
 
 # > #: msgctxt { contesto del messaggio - Originale }
@@ -201,6 +201,18 @@ msgid "Empty fields"
 msgstr "Campi vuoti"
 
 msgctxt "Laser.Orchard.HiddenFields.Services.HiddenStringFieldUpdateProcessor"
+msgid "None"
+msgstr "Nessuno"
+
+msgctxt "Laser.Orchard.HiddenFields.Settings.HiddenStringFieldsSettingsEvents"
+msgid "All fields"
+msgstr "Tutti i campi"
+
+msgctxt "Laser.Orchard.HiddenFields.Settings.HiddenStringFieldsSettingsEvents"
+msgid "Empty fields"
+msgstr "Campi vuoti"
+
+msgctxt "Laser.Orchard.HiddenFields.Settings.HiddenStringFieldsSettingsEvents"
 msgid "None"
 msgstr "Nessuno"
 

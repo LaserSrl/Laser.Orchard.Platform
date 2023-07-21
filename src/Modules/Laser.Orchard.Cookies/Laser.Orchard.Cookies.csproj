@@ -56,6 +56,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -136,10 +139,15 @@
     <Compile Include="Providers\DefaultCookieProvider.cs" />
     <Compile Include="Providers\ICookieProvider.cs" />
     <Compile Include="ResourceManifest.cs" />
+    <Compile Include="Services\CookieBotProvider.cs" />
+    <Compile Include="Services\CookieCutterProvider.cs" />
+    <Compile Include="Services\CookieManagerProviderService.cs" />
     <Compile Include="Services\CookieServices.cs" />
     <Compile Include="Services\GDPRScript.cs" />
     <Compile Include="Services\HubSpotCookieGDPR.cs" />
     <Compile Include="Services\ICookieGDPR.cs" />
+    <Compile Include="Services\ICookieManagerProvider.cs" />
+    <Compile Include="Services\ICookieManagerProviderService.cs" />
     <Compile Include="Services\ICookieService.cs" />
     <Compile Include="Services\IGDPRScript.cs" />
     <Compile Include="ViewModels\CookieLawEditModel.cs" />
@@ -218,11 +226,4 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets" Condition="Exists('..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\Orchard\src\packages\BuildBundlerMinifier.3.2.449\build\BuildBundlerMinifier.targets'))" />
-  </Target>
 </Project>

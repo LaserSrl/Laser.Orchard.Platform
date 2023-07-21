@@ -81,8 +81,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             IRazorTemplateManager razorTemplateManager,
             IRazorBaseService razorService,
             IContentManager contentManager,
-            IAuthorizer authorizer
-            ) {
+            IAuthorizer authorizer) {
 
             _razorTemplateManager = razorTemplateManager;
             _localizedStringManager = localizedStringManager;
@@ -111,36 +110,55 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         public IEnumerable<IContentHandler> Handlers {
             get { return _handlers.Value; }
         }
+        public dynamic Get(Int32 id, string contentType="") {
+            return GetById(id, contentType);
+        }
 
-        public dynamic Get(Int32 id) {
+        [HttpGet]
+        public dynamic GetById(Int32 id, string contentType) {
             ContentItem ContentToView;
             Response rsp = new Response();
             if (id > 0) {
+                //######
+                // This code seems to be oversized and coudl be changed in one ContentManager.Get(id)
+                // because in the light of the Redirect to the GetByAlias action of the Laser.Orchard.WebServices.JsonController
                 List<ContentItem> li = _orchardServices.ContentManager.GetAllVersions(id).ToList();
-                if (li.Count() == 0)
+                if (li.Count() == 0) {
                     return _utilsServices.GetResponse(ResponseType.Validation, T("No content with this Id").ToString());
-                else
-                    if (li.Count() == 1)
+                }
+                else if (li.Count() == 1) {
                     ContentToView = li[0];
-                else
-                    ContentToView = _orchardServices.ContentManager.Get(id, VersionOptions.Latest);
-                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.ViewContent, ContentToView))
-                    if (!_contentExtensionService.HasPermission(ContentToView.ContentType, Methods.Get, ContentToView))
-                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                if (((dynamic)ContentToView).AutoroutePart != null) {
-                    string tenantname = "";
-                    if (string.IsNullOrWhiteSpace(_shellSettings.RequestUrlPrefix) == false) {
-                        tenantname = _shellSettings.RequestUrlPrefix + "/";
-                    }
-                    return Redirect(Url.Content("~/" + tenantname + "WebServices/Alias?displayAlias=" + ((dynamic)ContentToView).AutoroutePart.DisplayAlias));
                 }
                 else {
-                    throw new Exception("Method not implemented, content without AutoroutePart");
+                    ContentToView = li.SingleOrDefault(x => x.VersionRecord.Latest == true);
                 }
+                //End of the oversized code
+                //######
+                if (ContentToView != null) {
+                    if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.ViewContent, ContentToView))
+                        if (!_contentExtensionService.HasPermission(ContentToView.ContentType, Methods.Get, ContentToView))
+                            return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                    if (((dynamic)ContentToView).AutoroutePart != null) {
+                        string tenantname = "";
+                        if (string.IsNullOrWhiteSpace(_shellSettings.RequestUrlPrefix) == false) {
+                            tenantname = _shellSettings.RequestUrlPrefix + "/";
+                        }
+                        return Redirect(Url.Content("~/" + tenantname + "WebServices/Alias?displayAlias=" + ((dynamic)ContentToView).AutoroutePart.DisplayAlias));
+                    }
+                    else {
+                        throw new Exception("Method not implemented, content without AutoroutePart");
+                    }
+                }
+                else {
+                    return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
+                }
+
             }
-            else
+            else {
                 return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
+            }
         }
+
 
         /// <summary>
         /// esempio http://localhost/Laser.Orchard/expoincitta/api/Laser.Orchard.ContentExtension/Content?ContentType=User
@@ -149,8 +167,8 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         /// <param name="ContentType"></param>
         /// <param name="Language"></param>
         /// <returns></returns>
-        public dynamic Get(string ContentType, string Language = "it-IT") {
-            ContentTypeDefinition contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(ContentType);
+        public dynamic Get(string contentType, string Language = "it-IT") {
+            ContentTypeDefinition contentTypeDefinition = _contentDefinitionManager.GetTypeDefinition(contentType);
             if (contentTypeDefinition == null) {
                 Response resp = new Response() {
                     Success = false,
@@ -194,8 +212,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             try {
                                 MediaLibraryPickerField mpf = (MediaLibraryPickerField)(term.Fields.Where(x => x.FieldDefinition.Name == "MediaLibraryPickerField").FirstOrDefault());
                                 mediaid = mpf.Ids[0];
-                            }
-                            catch { }
+                            } catch { }
                             if (!term.Selectable)
                                 valore = null;
                             if (term.FullPath == "/" + term.Id.ToString() || term.FullPath == term.Id.ToString())
@@ -218,8 +235,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                         eObj.Add(ctpd.PartDefinition.Name + "." + singleField.Name, re);
 
                         #endregion Tassonomia in Lingua
-                    }
-                    else
+                    } else
                         if (tipofield == typeof(EnumerationField).Name) {
                         string[] elencovalori = singleField.Settings["EnumerationFieldSettings.Options"].Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         List<string> elencoValoriInLingua = new List<string>();
@@ -300,92 +316,64 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                     }
                 }
                 return null;
-            }
-            else
+            } else
                 return null;
         }
 
         #endregion private class/method for get
-
-        private Response DeleteContent(Int32 id) {
-            ContentItem ContentToDelete;
-            Response rsp = new Response();
-            if (id > 0) {
-                List<ContentItem> li = _orchardServices.ContentManager.GetAllVersions(id).ToList();
-                if (li.Count() == 0)
-                    return _utilsServices.GetResponse(ResponseType.Validation, T("No content with this Id").ToString());
-                else
-                    if (li.Count() == 1)
-                    ContentToDelete = li[0];
-                else
-                    ContentToDelete = _orchardServices.ContentManager.Get(id, VersionOptions.Latest);
-                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.DeleteContent, ContentToDelete))
-                    if (!_contentExtensionService.HasPermission(ContentToDelete.ContentType, Methods.Delete, ContentToDelete))
-                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
-                try {
-                    _orchardServices.ContentManager.Remove(ContentToDelete);
-                    // propaga l'evento Removed per il ContentItem
-                    var context = new RemoveContentContext(ContentToDelete);
-                    Handlers.Invoke(handler => handler.Removed(context), Logger);
-                }
-                catch (Exception ex) {
-                    return _utilsServices.GetResponse(ResponseType.None, ex.Message);
-                }
-            }
-            else
-                return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
-            return (_utilsServices.GetResponse(ResponseType.Success));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
-        }
 
         /// <summary>
         /// http://localhost/Laser.Orchard/expoincitta/Api/Laser.Orchard.ContentExtension/ContentItem/2925
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Response Delete(Int32 id) {
+        public Response Delete(Int32 id, string contentType = "") {
             var currentUser = _orchardServices.WorkContext.CurrentUser;
             if (currentUser == null)
-                return DeleteContent(id);
+                return DeleteContent(id, contentType);
             else
                 if (_csrfTokenHelper.DoesCsrfTokenMatchAuthToken())
-                return DeleteContent(id);
+                return DeleteContent(id, contentType);
             else
                 return (_utilsServices.GetResponse(ResponseType.InvalidXSRF));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
         }
 
         /// <summary>
         /// http://localhost/Laser.Orchard/expoincitta/Api/Laser.Orchard.ContentExtension/ContentItem/2940
+        /// Used to update a content
         /// </summary>
         /// <param name="id"></param>
         /// <param name="eObj"></param>
         /// <returns></returns>
-        public Response Put(Int32 id, ExpandoObject eObj) {
+        public Response Put(Int32 id, ExpandoObject eObj, string contentType = "") {
             ((dynamic)eObj).Id = id;
             return Post(eObj);
         }
 
         /// <summary>
-        /// test in feedler
+        /// 
+        /// Used to create a content or updateing it if the content is known
+        /// In order to test it in Fiddler
         /// User-Agent: Fiddler
-        ///Content-Type: application/json
-        ///Host: localhost
-        ///Content-Length: 105
-        ///Cookie: .ASPXAUTH=3BDDACF3339764AE73D8AF6A9992CE0C34247D3107C7E66561BCF0A8ACB81C0B0708A274B5B5A57B3C9425AA98825AF5429AE0DE9958CEC8923B998667D89184755E3446DAA5832C7C16C519ABDD1981E919AC22E1A81D277F615F3240264D5FB0B46F174EEC84EB839387462EA250CC71B856178CE26EF0EDEFD6B00E40FACF
-        ///X-XSRF-TOKEN: Tnaq+qFFu+B/NPrfJZnTg5FoATHDCrTP3aAAXA90MiS1vpkk5y2QwfRJ5aAmqu4n7GFv+6CcUos+klKlOXBu1A==
-        ///{"ContentType":"contenutoutente","TitlePart.Title":"Titolodiprova","sottotitolo":"il mio sottotitolo","BodyPart.Text":"<b>il mio body</b>","media":[158] }
+        /// Content-Type: application/json
+        /// Host: localhost
+        /// Content-Length: 105
+        /// Cookie: .ASPXAUTH=3BDDACF3339764AE73D8AF6A9992CE0C34247D3107C7E66561BCF0A8ACB81C0B0708A274B5B5A57B3C9425AA98825AF5429AE0DE9958CEC8923B998667D89184755E3446DAA5832C7C16C519ABDD1981E919AC22E1A81D277F615F3240264D5FB0B46F174EEC84EB839387462EA250CC71B856178CE26EF0EDEFD6B00E40FACF
+        /// X-XSRF-TOKEN: Tnaq+qFFu+B/NPrfJZnTg5FoATHDCrTP3aAAXA90MiS1vpkk5y2QwfRJ5aAmqu4n7GFv+6CcUos+klKlOXBu1A==
+        /// {"ContentType":"contenutoutente","TitlePart.Title":"Titolodiprova","sottotitolo":"il mio sottotitolo","BodyPart.Text":"<b>il mio body</b>","media":[158] }
         /// </summary>
         /// <param name="eObj"></param>
+        /// <param name="contentType">(optional)</param>
         /// <returns></returns>
         [PolicyApiFilter]
-        public Response Post(ExpandoObject eObj) {
+        public Response Post(ExpandoObject eObj, string contentType = "") {
             var currentUser = _orchardServices.WorkContext.CurrentUser;
             if (currentUser == null)
-                return StoreNewContentItem(eObj);
+                return StoreContentItem(eObj, contentType);
             else
                 if (_csrfTokenHelper.DoesCsrfTokenMatchAuthToken()) {
-                return StoreNewContentItem(eObj);
-            }
-            else
+                return StoreContentItem(eObj, contentType);
+            } else
                 return (_utilsServices.GetResponse(ResponseType.InvalidXSRF));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
         }
 
@@ -397,10 +385,16 @@ namespace Laser.Orchard.ContentExtension.Controllers {
         /// <param name="eObj"></param>
         /// <param name="TheContentItem"></param>
         /// <returns></returns>
-        private Response StoreNewContentItem(ExpandoObject eObj) {
+        private Response StoreContentItem(ExpandoObject eObj, string contentType) {
             // Reasoning on permissions will require us to know the type
             // of the content.
             string tipoContent = ((dynamic)eObj).ContentType;
+
+            // Check if the ContentType of the serialized ContentItem and the ContentType parameter (if set) match
+            if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(tipoContent, StringComparison.InvariantCultureIgnoreCase)) {
+                return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the serialized ContentItem and the ContentType parameter do not match.");
+            }
+
             // We will also need to know the content's Id in case we are
             // trying to edit an existing ContentItem.
             Int32 IdContentToModify = 0; // new content
@@ -430,6 +424,10 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                 if (!_authorizer.Authorize(CorePermissions.CreateContent, NewOrModifiedContent)) {
                     // the user cannot create content of the given type, so
                     // return an error
+                    if (_orchardServices.WorkContext.CurrentUser == null) {
+                        // This replicates the response of the Display method of WebApiController.
+                        return _utilsServices.GetResponse(false, ErrorCode.UnAuthorized, ResolutionAction.Login, T("UnAuthorized Action").ToString());
+                    }
                     return _utilsServices.GetResponse(ResponseType.UnAuthorized);
                 }
                 // since we may create, create
@@ -452,7 +450,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
             // Validation 2: check EditContent Permissions
             if (!_authorizer.Authorize(CorePermissions.EditContent, NewOrModifiedContent)
                 // we also check permissions that may exist for this specific method
-                && !_contentExtensionService.HasPermission(tipoContent, Methods.Post)) {
+                && !_contentExtensionService.HasPermission(tipoContent, Methods.Post, NewOrModifiedContent)) {
                 // return an error
                 return _utilsServices.GetResponse(ResponseType.UnAuthorized);
             }
@@ -508,8 +506,7 @@ namespace Laser.Orchard.ContentExtension.Controllers {
                             data.DisplayAlias = ((dynamic)NewOrModifiedContent).AutoroutePart.DisplayAlias;
                         }
                         rsp.Data = data;
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         rsp = _utilsServices.GetResponse(ResponseType.None, ex.Message);
                     }
                 }
@@ -541,10 +538,48 @@ namespace Laser.Orchard.ContentExtension.Controllers {
 
 
             // we want the ContentItem to be published, so it can be "seen" by mobile
+            // and the caches generated by the content will be evicted as well
             _contentManager.Publish(NewOrModifiedContent);
-
             return rsp;
         }
+
+        private Response DeleteContent(Int32 id, string contentType) {
+            ContentItem ContentToDelete;
+            Response rsp = new Response();
+            if (id > 0) {
+                List<ContentItem> li = _orchardServices.ContentManager.GetAllVersions(id).ToList();
+                if (li.Count() == 0)
+                    return _utilsServices.GetResponse(ResponseType.Validation, T("No content with this Id").ToString());
+                else
+                    if (li.Count() == 1)
+                    ContentToDelete = li[0];
+                else
+                    ContentToDelete = _orchardServices.ContentManager.Get(id, VersionOptions.Latest);
+
+                // Check if the ContentType of the ContentItem to be deleted and the ContentType parameter (if set) match
+                if (!string.IsNullOrWhiteSpace(contentType) && !contentType.Equals(ContentToDelete.ContentType, StringComparison.InvariantCultureIgnoreCase)) {
+                    return _utilsServices.GetResponse(ResponseType.Validation, "The ContentType of the ContentItem and the ContentType parameter do not match.");
+                }
+
+                if (!_orchardServices.Authorizer.Authorize(OrchardCore.Contents.Permissions.DeleteContent, ContentToDelete))
+                    if (!_contentExtensionService.HasPermission(ContentToDelete.ContentType, Methods.Delete, ContentToDelete))
+                        return _utilsServices.GetResponse(ResponseType.UnAuthorized);
+                try {
+                    _orchardServices.ContentManager.Remove(ContentToDelete);
+                    // propaga l'evento Removed per il ContentItem
+                    var context = new RemoveContentContext(ContentToDelete);
+                    Handlers.Invoke(handler => handler.Removed(context), Logger);
+                }
+                catch (Exception ex) {
+                    return _utilsServices.GetResponse(ResponseType.None, ex.Message);
+                }
+            }
+            else
+                return _utilsServices.GetResponse(ResponseType.None, T("No content with this Id").ToString());
+            return (_utilsServices.GetResponse(ResponseType.Success));// { Message = "Invalid Token/csrfToken", Success = false, ErrorCode=ErrorCode.InvalidXSRF,ResolutionAction=ResolutionAction.Login });
+        }
+
+
 
         private string ValidateMessage(ContentItem ci, string postfix) {
             string myfile = _razorService.CalculateFallbackTenantCodePosition("Validation", ci.ContentType + postfix + ".cshtml");

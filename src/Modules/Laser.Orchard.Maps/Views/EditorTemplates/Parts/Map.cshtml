@@ -1,4 +1,6 @@
-﻿@using Orchard.MediaLibrary.Fields;
+﻿<!-- Laser.Orchard.Maps/EditorTemplates/Parts/Map -->
+
+@using Orchard.MediaLibrary.Fields;
 @using Laser.Orchard.Maps.Models;
     @model Laser.Orchard.Maps.ViewModels.MapEditModel
     @{
@@ -26,7 +28,7 @@
         } catch { }
     }
     @using (Script.Head()) {
-        Script.Require("GoogleMapsPlacesLib");
+        Script.Require("GoogleMapsAPIPlaces");
         Script.Require("LaserOrchardMaps");
 
         <style>
@@ -68,7 +70,24 @@
                 return false;
             }
 
-            function initialize() {
+            function resetcoords(map) {
+                $('#@Html.FieldIdFor(model => model.Map.Latitude)').val(0);
+                $('#@Html.FieldIdFor(model => model.Map.Longitude)').val(0);
+                $('#@Html.FieldIdFor(model => model.Map.LocationInfo)').val('');
+                $('#@Html.FieldIdFor(model => model.Map.LocationAddress)').val('');
+                map.setCenter({ lat: 0, lng: 0 });
+                marker = new google.maps.Marker({
+                    map: map,
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                    position: map.getCenter()
+                });
+                return false;
+            }
+
+            async function initialize() {
+                const { Map } = await google.maps.importLibrary("maps");
+
                 var mapOptions = {
                     center: new google.maps.LatLng(@Model.Map.Latitude.ToString().Replace(",", "."), @Model.Map.Longitude.ToString().Replace(",", ".")),
                     zoom: 13,
@@ -83,7 +102,7 @@
                 };
 
 
-                var map = new google.maps.Map(document.getElementById('maparea'),
+                var map = new Map(document.getElementById('maparea'),
                   mapOptions);
 
                 @if (httpTiles) {
@@ -191,6 +210,10 @@
                     infowindow.open(map, marker);
                 });
 
+                $("#reset_coords").click(function () {
+                    resetcoords(map);
+                });
+
 
             }
 
@@ -208,7 +231,9 @@
             //    });
             //    ctaLayer.setMap(map);
             //}
-            google.maps.event.addDomListener(window, 'load', initialize);
+
+            initialize();
+            //google.maps.event.addDomListener(window, 'load', initialize);
         </script>
     }
     <fieldset>
@@ -217,6 +242,7 @@
             @T("Type a Location"):
         <input type="text" id="maplocation" size="50" class="text-medium" />
         <a id="show_coords" href="#show_coords" onclick="javascript:showcoords();" class="button">@T("Show Coords")</a>
+        <a id="reset_coords" href="#" class="button">@T("Reset Coords")</a>
     </p>
     <div class="location-infos">
         <span class="location-info">

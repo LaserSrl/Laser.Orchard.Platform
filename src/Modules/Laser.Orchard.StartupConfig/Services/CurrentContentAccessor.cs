@@ -1,7 +1,6 @@
-﻿using Orchard;
-using Orchard.Caching;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Utilities;
+using System.Collections.Generic;
 using System.Web.Routing;
 
 namespace Laser.Orchard.StartupConfig.Services {
@@ -9,23 +8,17 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly LazyField<ContentItem> _currentContentItemField = new LazyField<ContentItem>();
         private readonly IContentManager _contentManager;
         private readonly RequestContext _requestContext;
-        private readonly ICacheManager _cacheManager;
-        private readonly ISignals _signals;
-        private readonly IWorkContextAccessor _workContext;
 
         public CurrentContentAccessor(
             IContentManager contentManager, 
-            RequestContext requestContext,
-            ICacheManager cacheManager,
-            ISignals signals,
-            IWorkContextAccessor wca) {
+            RequestContext requestContext) {
 
             _contentManager = contentManager;
             _requestContext = requestContext;
+
             _currentContentItemField.Loader(GetCurrentContentItem);
-            _cacheManager = cacheManager;
-            _signals = signals;
-            _workContext = wca;
+
+            _contentItemMemory = new Dictionary<int, ContentItem>();
         }
 
         public ContentItem CurrentContentItem {
@@ -36,37 +29,23 @@ namespace Laser.Orchard.StartupConfig.Services {
             get { return (GetCurrentContentItemId()); }
         }
 
-        private string _keyBase = "";
-        private string KeyBase {
-            get {
-                if (string.IsNullOrWhiteSpace(_keyBase)) {
-                    var site = _workContext.GetContext()?.CurrentSite;
-                    _keyBase = string.Join("_",
-                        site?.BaseUrl ?? "",
-                        site?.SiteName ?? "",
-                        "Laser.Orchard.StartupConfig.Services.CurrentContentAccessor");
-                }
-
-                return _keyBase;
-            }
-        }
+        private Dictionary<int, ContentItem> _contentItemMemory;
         private ContentItem GetCurrentContentItem() {
             var contentId = GetCurrentContentItemId();
             if (contentId == null) {
                 return null;
             } else {
-                var signalKey = $"CurrentContentAccessor_{contentId.Value}";
-                var cacheKey = $"{KeyBase}_{signalKey}";
-                var ci = _cacheManager.Get(cacheKey, true, ctx => {
-                    ctx.Monitor(_signals.When(signalKey));
-                    return _contentManager.Get(contentId.Value);
-                });
-
+                ContentItem ci = null;
+                if (!_contentItemMemory.ContainsKey(contentId.Value)) {
+                    try {
+                        _contentItemMemory.Add(contentId.Value, _contentManager.Get(contentId.Value));
+                    } catch { }
+                }
+                ci = _contentItemMemory[contentId.Value];
                 // rehydrate ContentManager to prevent expired lifetime scopes
                 if (ci != null) {
                     ci.ContentManager = _contentManager;
                 }
-
                 return ci;
             }
         }

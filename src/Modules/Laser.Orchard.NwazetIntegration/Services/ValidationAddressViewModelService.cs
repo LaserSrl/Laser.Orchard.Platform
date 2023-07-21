@@ -117,7 +117,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             // therefore changed the control over the character
             if (string.IsNullOrWhiteSpace(vm.PostalCode)) {
                 return false;
-            } else {
+            }
+            else {
                 foreach (char c in vm.PostalCode) {
                     if (!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c)) {
                         vm.Errors.Add(T("Postal or ZIP code may contain only characters or digits.").Text);
@@ -125,8 +126,33 @@ namespace Laser.Orchard.NwazetIntegration.Services {
                     }
                 }
             }
+
+            //Conditionally Validate FiscalCode and VAT Number
+            if (vm.AddressType == AddressRecordType.BillingAddress) {
+                var invoiceSettings = _siteService.GetSiteSettings().As<EcommerceInvoiceSettingsPart>();
+                if (invoiceSettings != null && invoiceSettings.EnableInvoiceRequest) {
+                    if (vm.InvoiceRequest || (invoiceSettings.InvoiceRequestForceChoice && invoiceSettings.InvoiceRequestDefaultValue)) {
+                        //Check if at least one of VATNumber and FiscalCode is there
+                        if (vm.CustomerType == CustomerTypeOptions.Undefined) {
+                            vm.Errors.Add(T("Choose one of the allowed legal entities.").Text);
+                            return false;
+                        }
+                        else {
+                            if (vm.CustomerType == CustomerTypeOptions.Individual && (string.IsNullOrWhiteSpace(vm.FiscalCode) || !ValidateFiscalCode(vm.FiscalCode))) {
+                                vm.Errors.Add(T("The fiscal code is invalid.").Text);
+                                return false;
+                            }
+                            if (vm.CustomerType == CustomerTypeOptions.LegalEntity && (string.IsNullOrWhiteSpace(vm.VATNumber) || !ValidateVATNumber(vm.VATNumber))) {
+                                vm.Errors.Add(T("The VAT number is invalid.").Text);
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
             return true;
         }
+
         private bool SubValidation(IEnumerable<TerritoryPart> list, TerritoryPart item) {
             if (list == null || !list.Any()) {
                 return false;
@@ -137,6 +163,15 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             if (!list.Any(c => c.Id == item.Id)) {
                 return false;
             }
+            return true;
+        }
+
+        private bool ValidateVATNumber(string vatNumber) {
+            //TODO: verify if a robust validation exists
+            return true;
+        }
+        private bool ValidateFiscalCode(string fiscalCode) {
+            //TODO: verify if a robust validation exists
             return true;
         }
 
@@ -160,7 +195,8 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             var error = new List<LocalizedString>();
             if (PhoneNumberRequired && string.IsNullOrWhiteSpace(vm.Phone)) {
                 error.Add(T("Phone number is required."));
-            } else if (!string.IsNullOrWhiteSpace(vm.Phone)) {
+            }
+            else if (!string.IsNullOrWhiteSpace(vm.Phone)) {
                 // validate format for phone number
                 foreach (char c in vm.Phone) {
                     if (c < '0' || c > '9') {
@@ -171,11 +207,13 @@ namespace Laser.Orchard.NwazetIntegration.Services {
             }
             if (PhoneNumberRequired && string.IsNullOrWhiteSpace(vm.PhonePrefix)) {
                 error.Add(T("Phone number prefix is required."));
-            } else if (!string.IsNullOrWhiteSpace(vm.PhonePrefix)) {
+            }
+            else if (!string.IsNullOrWhiteSpace(vm.PhonePrefix)) {
                 // TODO: PhonePrefix should be one from a list of valid international prefixes
                 if (!vm.PhonePrefix.StartsWith("+")) {
                     error.Add(T("Format for phone prefix is the + sign followed by digits."));
-                } else {
+                }
+                else {
                     var pp = vm.PhonePrefix.TrimStart(new char[] { '+' });
                     foreach (char c in pp) {
                         if (c < '0' || c > '9') {

@@ -1,33 +1,33 @@
-﻿using Newtonsoft.Json;
+﻿using Laser.Orchard.Commons.Helpers;
+using Laser.Orchard.ExternalContent.Settings;
+using Laser.Orchard.StartupConfig.Exceptions;
+using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard;
+using Orchard.Caching.Services;
+using Orchard.ContentManagement;
 using Orchard.Environment.Configuration;
 using Orchard.Logging;
+using Orchard.Tasks.Scheduling;
 using Orchard.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Web.Helpers;
 using System.Web.Hosting;
+using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Xsl;
-using System.Numerics;
-using System.Dynamic;
-using System.Security.Cryptography.X509Certificates;
-using Laser.Orchard.ExternalContent.Settings;
-using Laser.Orchard.Commons.Helpers;
-using Orchard.Caching.Services;
-using System.Web.Script.Serialization;
-using Orchard.ContentManagement;
-using Orchard.Tasks.Scheduling;
-using Laser.Orchard.StartupConfig.Exceptions;
-using Laser.Orchard.StartupConfig.RazorCodeExecution.Services;
-using System.Diagnostics;
-using System.Text;
 
 namespace Laser.Orchard.ExternalContent.Services {
 
@@ -444,17 +444,25 @@ namespace Laser.Orchard.ExternalContent.Services {
             }
 
             for (Int32 i = 0; i < xn.ChildNodes.Count; i++) {
+                var nodeUnderProcess = xn.ChildNodes[i];
                 if (ForceChildBeArray) {
                     XmlAttribute xattr = doc.CreateAttribute("json", "Array", "http://james.newtonking.com/projects/json");
                     xattr.Value = "true";
-                    xn.ChildNodes[i].Attributes.Append(xattr);
+                    nodeUnderProcess.Attributes.Append(xattr);
                 }
-                if (xn.ChildNodes[i].HasChildNodes) {
-                    XmlNode childnode = XmlWithJsonArrayTag(xn.ChildNodes[i], doc).Clone();
+                if (nodeUnderProcess.HasChildNodes) {
+                    XmlNode childnode = XmlWithJsonArrayTag(nodeUnderProcess, doc).Clone();
                     if (!string.IsNullOrEmpty(childnode.InnerText)) {
-                        xn.InsertBefore(childnode, xn.ChildNodes[i]);
+                        xn.InsertBefore(childnode, nodeUnderProcess);
+                        // Now the index (i) will point to the node we just added (childnode). The next
+                        // iteration (i++) would cause the index to point to the same node we have just
+                        // been processing.
+                        i++;
                     }
-                    xn.ChildNodes[i].ParentNode.RemoveChild(xn.ChildNodes[i]);
+                    nodeUnderProcess.ParentNode.RemoveChild(nodeUnderProcess);
+                    // Decrease the index to make sure we don't skip processing the next child node, because
+                    // we just removed a node from before it in the array.
+                    i--;
                 }
             }
             return xn;

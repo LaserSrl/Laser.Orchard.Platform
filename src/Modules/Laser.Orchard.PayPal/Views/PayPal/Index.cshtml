@@ -2,6 +2,9 @@
 @using System.Globalization;
 @using Orchard.ContentManagement;
 @using Laser.Orchard.PayPal.Models;
+@using Nwazet.Commerce.Models;
+@using Laser.Orchard.NwazetIntegration.Models;
+@using Laser.Orchard.NwazetIntegration.Services;
 
 @model Laser.Orchard.PayPal.ViewModels.PaymentVM
 
@@ -16,9 +19,8 @@
             if (!config.Card && !config.Credit && !config.Bancontact && !config.Blik && !config.Eps && !config.Giropay && !config.Ideal &&
               !config.Mybank && !config.Przelewy && !config.Sepa && !config.Sofort && !config.Venmo) {
                 strScript += "&disable-funding=card,credit,bancontact,blik,eps,giropay,ideal,mybank,p24,sepa,sofort,venmo";
-            }
-            else if (!config.Card || !config.Credit || !config.Bancontact || !config.Blik || !config.Eps || !config.Giropay || !config.Ideal ||
-              !config.Mybank || !config.Przelewy || !config.Sepa || !config.Sofort || !config.Venmo) {
+            } else if (!config.Card || !config.Credit || !config.Bancontact || !config.Blik || !config.Eps || !config.Giropay || !config.Ideal ||
+                !config.Mybank || !config.Przelewy || !config.Sepa || !config.Sofort || !config.Venmo) {
                 strScript += "&disable-funding=";
                 if (!config.Card) {
                     strScript += "card,";
@@ -69,12 +71,31 @@
     Script.Require("jQuery").AtHead();
 
     var config = WorkContext.CurrentSite.As<PayPalSiteSettingsPart>();
+    var orderId = Model.Record.ContentItemId;
+    var contentManager = WorkContext.Resolve<IContentManager>();
+    var addressConfigurationService = WorkContext.Resolve<IAddressConfigurationService>();
+
+    // Reading Latest version because order may not be published yet.
+    var order = contentManager.Get(orderId, VersionOptions.Latest);
+    var orderPart = order.As<OrderPart>();
+    var billingAddress = orderPart.BillingAddress;
+
+    var addressPart = order.As<AddressOrderPart>();
+    var countryId = addressPart.BillingCountryId;
+    var territory = addressConfigurationService.GetCountry(countryId);
+
+    var countryIsoCode = "IT";
+    if (territory != null) {
+        var isoCodePart = territory.As<TerritoryISO3166CodePart>();
+        countryIsoCode = isoCodePart.ISO3166Code;
+    }
 
     var strScript = PayPalScript(config);
 
 }
 
 @using (Script.Head()) {
+
     if (strScript != string.Empty) {
         <script src="@strScript&locale=@WorkContext.CurrentCulture.Replace('-','_')"></script>
         <script type="text/javascript">
@@ -101,7 +122,25 @@
                                 amount: {
                                     value: '@Model.Record.Amount.ToString("F", new CultureInfo(WorkContext.CurrentCulture)).Replace(',', '.')'
                                 }
-                            }]
+                            }],
+                            payer: {
+                                address: {
+                                    address_line_1: '@billingAddress.Address1',
+                                    address_line_2: '@billingAddress.Address2',
+                                    admin_area_1: '@billingAddress.Province',
+                                    admin_area_2: '@billingAddress.City',
+                                    postal_code: '@billingAddress.PostalCode',
+                                    country_code: '@countryIsoCode'
+                                },
+                                name: {
+                                    given_name: '@billingAddress.FirstName',
+                                    surname: '@billingAddress.LastName'
+                                },
+                                email_address: '@orderPart.CustomerEmail'
+                            },
+                            application_context: {
+                                shipping_preference: 'NO_SHIPPING'
+                            }
                         });
                     },
                     onApprove: function (data, actions) {
@@ -116,15 +155,26 @@
                                     pId: '@Model.Record.Id'
                                 },
                                 success: function(data){
-                                    PaymentResult();
+                                    PaymentResult(data);
                                 },
                                 error: function (data) {
-                                    PaymentResult();
+                                    //PaymentResult(data);
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
+                                        data: {
+                                            __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
+                                            pId: '@Model.Record.Id',
+                                            error: data
+                                        },
+                                        success: function (resp) {
+                                            PaymentResult();
+                                        }
+                                    });
                                 }
                             });
                         });
-                    }
-                    ,
+                    },
                     onClick: function (data, actions) {
                         if (data.fundingSource == "paypal") {
                             $("#div-warning").css("display", "block");
@@ -149,7 +199,8 @@
                             url: "@Html.Raw(Model.TenantBaseUrl)/Laser.Orchard.PayPal/PayPal/ErrorPay",
                             data: {
                                 __RequestVerificationToken: '@Html.AntiForgeryTokenValueOrchard()',
-                                pId: '@Model.Record.Id'
+                                pId: '@Model.Record.Id',
+                                error: err
                             },
                             success: function (data) {
                                 PaymentResult();
@@ -159,14 +210,9 @@
                 }).render('#paypal-button');
             }
 
-            function PaymentResult() {
+            function PaymentResult(data) {
                  // redirect to info page payment
-                window.location.href = '@Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid })';
-
-                $("#div-warning").css("display", "none");
-
-                $(".disable-button").css("display", "none");
-                $(".container-paypal").css("opacity", "1");
+                window.location.href = '@Html.Raw(Url.Action("Info", "Payment", new { area = "Laser.Orchard.PaymentGateway", paymentId = Model.Record.Id, guid = Model.Record.Guid }))';
             }
 
             @if (Model.Record.Amount <= 0) {
@@ -189,4 +235,3 @@
     <div class="disable-button" style="width:100%; height:100%; position:absolute; z-index:999; display:none"></div>
     <div id="paypal-button"></div>
 </div>
-

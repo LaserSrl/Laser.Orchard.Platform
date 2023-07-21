@@ -8,6 +8,7 @@ using Laser.Orchard.StartupConfig.Handlers;
 using Laser.Orchard.StartupConfig.Models;
 using Laser.Orchard.StartupConfig.Services;
 using Orchard;
+using Orchard.Autoroute.Models;
 using Orchard.Autoroute.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
@@ -34,6 +35,7 @@ using Orchard.UI.Notify;
 using Orchard.Users.Models;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -564,6 +566,12 @@ namespace Laser.Orchard.CommunicationGateway.Services {
                             second.Url = linkField.Value;
                             second.Text = linkField.Text;
                             myval = second;
+                        } else if (cf.FieldDefinition.Name == "SecureFileField") {
+                            // Creating a dynamic variable to avoid adding reference to CloudConstruct.
+                            dynamic secureField = new ExpandoObject();
+                            secureField.Url = cf.Url;
+                            secureField.Upload = cf.Upload;
+                            myval = (object)secureField;
                         } else {
                             myval = ((object)(((dynamic)cf).Value));
                         }
@@ -707,7 +715,7 @@ namespace Laser.Orchard.CommunicationGateway.Services {
 
             #region aggiorna CommonPart
             if (contact.Has<CommonPart>()) {
-                contact.As<CommonPart>().ModifiedUtc = DateTime.Now;
+                contact.As<CommonPart>().ModifiedUtc = DateTime.UtcNow;
                 contact.As<CommonPart>().Owner = userContent;
             }
             #endregion
@@ -715,7 +723,7 @@ namespace Laser.Orchard.CommunicationGateway.Services {
             CopyProfilePart(user, contact);
 
             CopyPolicyAnswers(user, contact);
-
+            
             if (contact != null) {
                 //Whether the type is draftable or not, we still want to publish it, so at worst setting Published = false does nothing
                 contact.VersionRecord.Published = false;

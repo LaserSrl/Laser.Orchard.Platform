@@ -1,0 +1,9 @@
+﻿@using Laser.Orchard.WebServices.Settings
+
+@model ContentFieldSerializationSettings
+
+<fieldset>
+    @Html.CheckBoxFor(m => m.AllowSerialization)
+    <label for="@Html.FieldIdFor(m => m.AllowSerialization)" class="forcheckbox">@T("Allow serialization")</label>
+    <span class="hint">@T("Check to allow serialization of this content field and its properties.")</span>
+</fieldset>

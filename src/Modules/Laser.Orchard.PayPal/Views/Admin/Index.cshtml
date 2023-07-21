@@ -18,6 +18,11 @@
             @Html.TextBoxFor(m => m.CurrencyCode, new { @class = "text large" })
             <span class="hint">@T("Currency code to configure the payment.")</span>
         </div>
+        <div>
+            @Html.CheckBoxFor(m => m.ProductionEnvironment)
+            <label for="@Html.FieldIdFor(m => m.ProductionEnvironment)" class="forcheckbox">@T("Production Environment")</label>
+            <span class="hint">@T("Determines if Paypal calls are made to a live account.")</span>
+        </div>
     </fieldset>
     <fieldset>
         <legend>@T("Enable Fundings")</legend>

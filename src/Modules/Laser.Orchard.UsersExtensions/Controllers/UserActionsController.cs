@@ -4,6 +4,7 @@ using Laser.Orchard.StartupConfig.Services;
 using Laser.Orchard.UsersExtensions.Models;
 using Laser.Orchard.UsersExtensions.Services;
 using Orchard;
+using Orchard.Mvc.AntiForgery;
 using Orchard.Security;
 using Orchard.Users.Events;
 using Orchard.Users.Services;
@@ -52,6 +53,7 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
         }
 
         [HttpPost]
+        [ValidateAntiForgeryTokenOrchard(false)]
         public JsonResult SignOutSsl() {
             return SignOutLogic();
         }
@@ -114,6 +116,28 @@ namespace Laser.Orchard.UsersExtensions.Controllers {
             return ChallengeEmailApiLogic(nonce);
         }
 
+        [HttpPost]
+        public ContentResult ChangePasswordSsl(string currentPassword, string newPassword, string confirmPassword) {
+            return ChangePasswordLogic(currentPassword, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult ChangeExpiredPasswordSsl(string currentPassword, string newPassword, string confirmPassword, string userName) {
+            return ChangeExpiredPasswordLogic(currentPassword, newPassword, confirmPassword, userName);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult ChangeLostPasswordSsl(string nonce, string newPassword, string confirmPassword) {
+            return ChangeLostPasswordLogic(nonce, newPassword, confirmPassword);
+        }
+
+        [HttpPost]
+        [AlwaysAccessible]
+        public ContentResult SendChallengeEmailSsl(string username) {
+            return SendChallengeEmailLogic(username);
+        }
         #endregion [https calls]
 
     }

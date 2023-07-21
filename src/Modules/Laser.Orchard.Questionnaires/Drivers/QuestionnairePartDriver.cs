@@ -84,7 +84,7 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                     questionnaireContext = _tokenizer.Replace(questionnaireContext, new Dictionary<string, object> { { "Content", _currentContentAccessor.CurrentContentItem } });
                     // TempData may contains current answers to the current questionnaire instance.
                     // So if TempData is not null means that the current user just answered to the questionnaire.
-                    var fullModelWithAnswers = _controllerContextAccessor.Context.Controller.TempData["QuestUpdatedEditModel"]; 
+                    var fullModelWithAnswers = _controllerContextAccessor.Context.Controller.TempData["QuestUpdatedEditModel"];
                     var hasAcceptedTerms = _controllerContextAccessor.Context.Controller.TempData["HasAcceptedTerms"];
                     questionnaireHasJustBeenSubmitted = fullModelWithAnswers != null;
                     viewModel = _questServices.BuildViewModelWithResultsForQuestionnairePart(part); //Modello mappato senza risposte
@@ -205,8 +205,17 @@ namespace Laser.Orchard.Questionnaires.Drivers {
                                 part.ContentItem, editModel);
                         }
                         catch (Exception ex) {
-                            updater.AddModelError("QuestionnaireUpdateError", T("Cannot update questionnaire. " + ex.Message));
+
+                            updater.AddModelError("QuestionnaireUpdateError", T("Cannot update questionnaire: " + ex.Message));
+
                             _controllerContextAccessor.Context.Controller.TempData[Prefix + "ModelWithErrors"] = editModel;
+
+                            // Return the modified model
+                            return ContentShape("Parts_Questionnaire_Edit",
+                            () => shapeHelper.EditorTemplate(TemplateName: "Parts/Questionnaire_Edit",
+                               Model: editModel,
+                               Prefix: Prefix));
+
                         }
                     }
 

@@ -54,8 +54,9 @@
       <HintPath>..\..\..\..\Orchard\src\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Orchard\src\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,9 +136,12 @@
     <Compile Include="Models\RestApiResponse.cs" />
     <Compile Include="Models\WebServiceSettingsPart.cs" />
     <Compile Include="Navigation\CustomRestApiSettingsAdminMenu.cs" />
+    <Compile Include="Routes\SignalRESTApiRoutes.cs" />
     <Compile Include="Routes\CustomRESTApiRoutes.cs" />
     <Compile Include="Routes\Routes.cs" />
     <Compile Include="Services\IWebApiService.cs" />
+    <Compile Include="Settings\ContentFieldSerializationSettings.cs" />
+    <Compile Include="Settings\ContentFieldSerializationSettingsEditorEvents.cs" />
     <Compile Include="ViewModels\CustomRestApiSiteSettingsPartViewModel.cs" />
     <Compile Include="ViewModels\Eventi015VM.cs" />
   </ItemGroup>
@@ -186,6 +190,10 @@
       <Project>{9d49df40-ae74-4cce-b628-a1b26e99b2d4}</Project>
       <Name>Laser.Orchard.Commons</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Contrib.Profile\Contrib.Profile.csproj">
+      <Project>{bb5c57f4-d9cb-4440-89a6-d9ff9f41e4e3}</Project>
+      <Name>Contrib.Profile</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Contrib.Widgets\Contrib.Widgets.csproj">
       <Project>{a6b41d71-280d-49de-8e7c-607632d59d15}</Project>
       <Name>Contrib.Widgets</Name>
@@ -215,7 +223,9 @@
     <Content Include="Views\EditorTemplates\Parts\WebServiceSettings.cshtml" />
     <Content Include="Views\CustomRestApiSettingsAdmin\Index.cshtml" />
     <Content Include="Views\EditorTemplates\SiteSettings\CustomRestApiSiteSettingsPart.cshtml" />
+    <Content Include="Views\DefinitionTemplates\ContentFieldSerializationSettings.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
