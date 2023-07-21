@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Styles\bootstrap.min.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.min.css" />
