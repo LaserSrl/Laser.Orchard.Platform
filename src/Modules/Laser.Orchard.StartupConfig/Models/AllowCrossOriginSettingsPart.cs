@@ -21,5 +21,14 @@ namespace Laser.Orchard.StartupConfig.Models {
             get { return this.Retrieve(x => x.CookieSameSiteMode, CookieSameSiteModeSetting.DontAlter); }
             set { this.Store(x => x.CookieSameSiteMode, value); }
         }
+
+        public bool CookieForceSecure {
+            get { return this.Retrieve(x => x.CookieForceSecure, false); }
+            set { this.Store(x => x.CookieForceSecure, value); }
+        }
+        public bool CookieForceHttpOnly {
+            get { return this.Retrieve(x => x.CookieForceHttpOnly, false); }
+            set { this.Store(x => x.CookieForceHttpOnly, value); }
+        }
     }
 }

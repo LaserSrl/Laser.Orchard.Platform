@@ -48,6 +48,8 @@ namespace Laser.Orchard.StartupConfig.Filters {
                 RemoveXFrameHeaderFrontEnd = settings.RemoveXFrameHeaderFrontEnd;
                 RemoveXFrameHeaderBackEnd = settings.RemoveXFrameHeaderBackEnd;
                 SameSiteModeSetting = settings.CookieSameSiteMode;
+                ForceHttpOnly = settings.CookieForceHttpOnly;
+                ForceSecure = settings.CookieForceSecure;
             }
 
             RequireSSL = new Lazy<bool>(() => _sslSettingsProvider.GetRequiresSSL());
@@ -56,6 +58,8 @@ namespace Laser.Orchard.StartupConfig.Filters {
         private bool RemoveXFrameHeaderFrontEnd { get; set; }
         private bool RemoveXFrameHeaderBackEnd { get; set; }
         private CookieSameSiteModeSetting SameSiteModeSetting { get; set; }
+        private bool ForceHttpOnly { get; set; }
+        private bool ForceSecure { get; set; }
         private Lazy<bool> RequireSSL { get; set; }
 
         public void OnResultExecuted(ResultExecutedContext filterContext) {
@@ -102,6 +106,12 @@ namespace Laser.Orchard.StartupConfig.Filters {
                 }
                 foreach (var key in HttpContext.Current.Response.Cookies.AllKeys) {
                     attributeOp(HttpContext.Current.Response.Cookies[key]);
+                    if (ForceSecure) {
+                        HttpContext.Current.Response.Cookies[key].Secure = true;
+                    }
+                    if (ForceHttpOnly) {
+                        HttpContext.Current.Response.Cookies[key].HttpOnly = true;
+                    }
                 }
             }
         }
