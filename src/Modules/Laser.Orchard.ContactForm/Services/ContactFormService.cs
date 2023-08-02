@@ -204,7 +204,7 @@ namespace Laser.Orchard.ContactForm.Services {
                                     mediaData = _contentManager.Get(mediaid).As<MediaPart>();
                                 }
 
-                                var body = "<strong>" + name + "</strong><hr/>" + "<br/><br/><div>" + message + "</div>";
+                                var body = "<strong>" + name + "</strong>" +((email!=name) ? "(e-mail: "+ email + ")":"") + "<hr/>" + "<br/><br/><div>" + message + "</div>";
                                 if (mediaid != -1 && !attachFiles) {
                                     body += "<div><a href=\"" + host + mediaData.MediaUrl + "\">" + T("Attachment") + "</a></div>";
                                 }
