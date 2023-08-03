@@ -1,0 +1,1 @@
+{"version":3,"file":"toast.js","sources":["../../src/js/plugins/toast.js"],"sourcesContent":["import { default as BSToast } from 'bootstrap/js/src/toast'\r\n\r\nclass Toast extends BSToast {}\r\n\r\nexport default Toast\r\n"],"names":[],"mappings":";;AAEA,MAAM,KAAK,SAAS,OAAO,CAAC;;;;"}

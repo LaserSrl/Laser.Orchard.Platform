@@ -128,6 +128,15 @@ namespace Laser.Orchard.jQueryPlugins {
             // Animate.css
             manifest.DefineStyle("AnimateCss")
                 .SetUrl("Animate/4.1.1/animate.min.css", "Animate/4.1.1/animate.css");
+
+            // Bootstrap Italia 2.6.1
+            manifest.DefineStyle("BootstrapItalia-2.6.1")
+                .SetUrl("../BootstrapItalia-2.6.1/css/bootstrap-italia.min.css", "../BootstrapItalia-2.6.1/css/bootstrap-italia.css");
+            manifest.DefineStyle("BootstrapItalia-2.6.1-Comuni")
+                .SetUrl("../BootstrapItalia-2.6.1/css/bootstrap-italia-orchard-comuni.min.css", "../BootstrapItalia-2.6.1/css/bootstrap-italia-orchard-comuni.css");
+            manifest.DefineScript("BootstrapItalia-2.6.1")
+                .SetUrl("../BootstrapItalia-2.6.1/js/bootstrap-italia.bundle.min.js");
+
         }
     }
 }

@@ -1,0 +1,1 @@
+{"version":3,"file":"offcanvas.js","sources":["../../src/js/plugins/offcanvas.js"],"sourcesContent":["import { default as BSOffcanvas } from 'bootstrap/js/src/offcanvas'\r\n\r\nclass Offcanvas extends BSOffcanvas {}\r\n\r\nexport default Offcanvas\r\n"],"names":[],"mappings":";;AAEA,MAAM,SAAS,SAAS,WAAW,CAAC;;;;"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"button.js","sources":["../../src/js/plugins/button.js"],"sourcesContent":["import { default as BSButton } from 'bootstrap/js/src/button'\r\n\r\nclass Button extends BSButton {}\r\n\r\nexport default Button\r\n"],"names":[],"mappings":";;AAEA,MAAM,MAAM,SAAS,QAAQ,CAAC;;;;"}
