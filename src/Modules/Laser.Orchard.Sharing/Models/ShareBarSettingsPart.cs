@@ -2,12 +2,7 @@
 
 namespace Laser.Orchard.Sharing.Models
 {
-    public class ShareBarSettingsPart : ContentPart<ShareBarSettingsPartRecord>
+    public class ShareBarSettingsPart : ContentPart
     {
-        public string AddThisAccount
-        {
-            get { return Record.AddThisAccount; }
-            set { Record.AddThisAccount = value; }
-        }
     }
 }
