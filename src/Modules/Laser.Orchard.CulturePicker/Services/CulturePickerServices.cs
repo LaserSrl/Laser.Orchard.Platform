@@ -18,7 +18,7 @@ namespace Laser.Orchard.CulturePicker.Services {
             cultureCookie.Values.Add(CookieCultureSelector.CurrentCultureFieldName, cultureName);
             cultureCookie.Expires = DateTime.UtcNow.AddMonths(1);
             cultureCookie.Secure = true;
-
+            cultureCookie.HttpOnly = true;
             //setting up domain for cookie allows to share it to sub-domains as well
             //if non-default port is used, we consider it as a testing environment without sub-domains
             if (UseSubdomainCookie(context)) {
