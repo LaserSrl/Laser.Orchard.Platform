@@ -8,9 +8,9 @@ primary lighter: #F0F8F5;
 */
 
 // primary #007A52
-$primary-h: 160;
-$primary-s: 100;
-$primary-b: 48;
+$primary-h: 160; //var(--primary-hue); //
+$primary-s: 100; //var(--primary-saturation); //
+$primary-b: 48; //var(--primary-brigthness); //
 
 //buttons custom vars
 
@@ -20,6 +20,14 @@ $primary-b: 48;
 
 // funzioni e variabili colore
 @import 'functions';
+/*@function hsb($h-hsb, $s-hsb, $b-hsb) {
+
+	$l-hsl: calc(calc($b-hsb / 2) * calc(2 - calc($s-hsb / 100)));
+	//$s-hsl: calc(($b-hsb * $s-hsb) / if($l-hsl < 50, $l-hsl * 2, 200 - $l-hsl * 2));
+	//$s-hsl: calc(calc($b-hsb * $s-hsb) / calc(100 - 2 * abs(calc(50 - $l-hsl))));
+	$s-hsl: calc(calc($b-hsb * $s-hsb) / calc(100 - 2 * #{"abs"}(calc(50 - $l-hsl))));
+	@return hsl($h-hsb, calc($s-hsl * 1%), calc($l-hsl * 1%));
+}*/
 @import 'utilities/colors_vars';
 
 // color custom variables
