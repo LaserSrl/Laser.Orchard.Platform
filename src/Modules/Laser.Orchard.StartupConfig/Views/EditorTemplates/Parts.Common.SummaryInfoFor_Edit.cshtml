@@ -19,6 +19,15 @@
     DateTime? publishedUtc = Model == null ? null : Model.PublishedUtc;
     DateTime? modifiedUtc = Model == null ? null : Model.ModifiedUtc;
 
+    string createdUtcStr = createdUtc == null ? "" : Convert.ToString(createdUtc, cultureInfo);
+    DateTime createdLocal = (string.IsNullOrWhiteSpace(createdUtcStr)) ? DateTime.MinValue : Convert.ToDateTime(createdUtcStr, cultureInfo).ToLocalTime();
+
+    string publishedUtcStr = publishedUtc == null ? "" : Convert.ToString(publishedUtc, cultureInfo);
+    DateTime publishedLocal = (string.IsNullOrWhiteSpace(publishedUtcStr)) ? DateTime.MinValue : Convert.ToDateTime(publishedUtcStr, cultureInfo).ToLocalTime();
+
+    string modifiedUtcStr = modifiedUtc == null ? "" : Convert.ToString(modifiedUtc, cultureInfo);
+    DateTime modifiedLocal = (string.IsNullOrWhiteSpace(modifiedUtcStr)) ? DateTime.MinValue : Convert.ToDateTime(modifiedUtcStr, cultureInfo).ToLocalTime();
+
     var contentItem = Model.ContentItem == null ? null : (ContentItem)Model.ContentItem;
 
     var autoroutePart = contentItem.As<AutoroutePart>();
@@ -77,15 +86,15 @@
                 <div class="info-box-content row">
                     @if (createdUtc.HasValue) {
                         <span class="info-box-text col-sm-4">@T("Created on")</span>
-                        <span class="info-box-number col-sm-8">@createdUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                        <span class="info-box-number col-sm-8">@createdLocal.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
                     }
                     @if (publishedUtc.HasValue) {
                         <span class="info-box-text col-sm-4">@T("Published on")</span>
-                        <span class="info-box-number col-sm-8">@publishedUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                        <span class="info-box-number col-sm-8">@publishedLocal.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
                     }
                     @if (modifiedUtc.HasValue) {
                         <span class="info-box-text col-sm-4">@T("Modified on")</span>
-                        <span class="info-box-number col-sm-8">@modifiedUtc.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
+                        <span class="info-box-number col-sm-8">@modifiedLocal.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
                     }
                     <span class="info-box-text col-sm-4">@T("Last Modified")</span>
                     <span class="info-box-number col-sm-8">@Display.CommonMetadataLastModified(ContentPart: Model)</span>

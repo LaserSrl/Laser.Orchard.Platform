@@ -33,6 +33,7 @@ namespace Laser.Orchard.StartupConfig.Services {
         private readonly IEnumerable<IHtmlFilter> _htmlFilters;
 
         private readonly string[] _skipAlwaysProperties;
+        private readonly string[] _skipAlwaysPropertyTypes;
         private readonly string _skipAlwaysPropertiesEndWith;
         private readonly string[] _skipFieldProperties;
         private readonly string[] _skipFieldTypes;
@@ -64,7 +65,9 @@ namespace Laser.Orchard.StartupConfig.Services {
                 .OrderByDescending(p => p.Specificity);
             _htmlFilters = htmlFilters;
 
-            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord" };
+            _skipAlwaysProperties = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord", "UserPartRecord" };
+            _skipAlwaysPropertyTypes = new string[] { "ContentItemRecord", "ContentItemVersionRecord", "TermsPartRecord", "UserPolicyPartRecord", "UserPartRecord" };
+            // Used to skip properties whose name ends with "Proxy"
             _skipAlwaysPropertiesEndWith = "Proxy";
             _skipFieldProperties = new string[] { "Storage", "Name", "DisplayName", "Setting" };
             _skipFieldTypes = new string[] { "FieldDefinition", "PartFieldDefinition" };
@@ -236,18 +239,19 @@ namespace Laser.Orchard.StartupConfig.Services {
             object item, int actualLevel, int parentContentId, string[] skipProperties = null) {
 
             JProperty aux = null;
-            if ((actualLevel + 1) > _maxLevel) {
-                if (((dynamic)item).Id != null) {
-                    return new JProperty(item.GetType().Name, new JObject(new JProperty("Id", ((dynamic)item).Id)));
-                } else {
-                    return new JProperty(item.GetType().Name, null);
+            var itemType = item.GetType();
+            var propertyName = itemType.Name;
+            if (propertyName.EndsWith("Proxy")) {
+                if (itemType.BaseType != null) {
+                    propertyName = itemType.BaseType.Name;
                 }
             }
-            try {
-                if (item.GetType().Name.EndsWith(_skipAlwaysPropertiesEndWith)) {
-                    return new JProperty(item.GetType().Name, null);
+            if ((actualLevel + 1) > _maxLevel) {
+                if (((dynamic)item).Id != null) {
+                    return new JProperty(propertyName, new JObject(new JProperty("Id", ((dynamic)item).Id)));
+                } else {
+                    return new JProperty(propertyName, null);
                 }
-            } catch {
             }
             skipProperties = skipProperties ?? new string[0];
             try {
@@ -256,8 +260,8 @@ namespace Laser.Orchard.StartupConfig.Services {
                     return SerializeObject((ContentItem)((dynamic)item).ContentItem, actualLevel, parentContentId, skipProperties);
                 }
 
-                if (item.GetType().GetProperties().Count(x => x.Name == "Id") > 0) {
-                    PopulateProcessedItems(item.GetType().Name, ((dynamic)item).Id, parentContentId);
+                if (itemType.GetProperties().Count(x => x.Name == "Id") > 0) {
+                    PopulateProcessedItems(propertyName, ((dynamic)item).Id, parentContentId);
                 }
                 if (item is ContentPart) {
                     // We should never be falling through this branch, because ContentParts
@@ -309,48 +313,53 @@ namespace Laser.Orchard.StartupConfig.Services {
                             properties.Add(aux);
                         }
                     }
-                    return new JProperty(item.GetType().Name, new JObject(properties));
-                } else if (item.GetType().IsClass) {
-                    var members = item.GetType()
+                    return new JProperty(propertyName, new JObject(properties));
+                } else if (itemType.IsClass) {
+                    var members = itemType
                         .GetFields(BindingFlags.Instance | BindingFlags.Public)
                         .Cast<MemberInfo>()
-                        .Union(item.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                        .Union(itemType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
                         .Where(m => !skipProperties.Contains(m.Name)
                             && !_skipAlwaysProperties.Contains(m.Name)
                             && !m.Name.EndsWith(_skipAlwaysPropertiesEndWith));
                     List<JProperty> properties = new List<JProperty>();
                     foreach (var member in members) {
-                        var propertyInfo = item.GetType().GetProperty(member.Name);
-                        object val = item.GetType().GetProperty(member.Name).GetValue(item);
-                        if (IsBasicType(propertyInfo.PropertyType)) {
-                            var memberVal = val;
-                            FormatValue(ref memberVal);
-                            properties.Add(new JProperty(member.Name, memberVal));
-                        } else if (typeof(IEnumerable).IsInstanceOfType(val)) {
-                            JArray arr = new JArray();
-                            properties.Add(new JProperty(member.Name, arr));
-                            foreach (var element in (val as IEnumerable)) {
-                                if (IsBasicType(element.GetType())) {
-                                    var valItem = element;
-                                    FormatValue(ref valItem);
-                                    arr.Add(valItem);
-                                } else {
-                                    aux = SerializeObject(element, actualLevel + 1, parentContentId, skipProperties);
-                                    arr.Add(new JObject(aux));
+                        var propertyInfo = itemType.GetProperty(member.Name);
+                        if (!_skipAlwaysPropertyTypes.Contains(propertyInfo.PropertyType.Name)) {
+                            object val = itemType.GetProperty(member.Name).GetValue(item);
+                            if (IsBasicType(propertyInfo.PropertyType)) {
+                                var memberVal = val;
+                                FormatValue(ref memberVal);
+                                properties.Add(new JProperty(member.Name, memberVal));
+                            }
+                            else if (typeof(IEnumerable).IsInstanceOfType(val)) {
+                                JArray arr = new JArray();
+                                properties.Add(new JProperty(member.Name, arr));
+                                foreach (var element in (val as IEnumerable)) {
+                                    if (IsBasicType(element.GetType())) {
+                                        var valItem = element;
+                                        FormatValue(ref valItem);
+                                        arr.Add(valItem);
+                                    }
+                                    else {
+                                        aux = SerializeObject(element, actualLevel + 1, parentContentId, skipProperties);
+                                        arr.Add(new JObject(aux));
+                                    }
                                 }
                             }
-                        } else {
-                            aux = SerializeObject(propertyInfo.GetValue(item), actualLevel + 1, parentContentId, skipProperties);
-                            properties.Add(aux);
+                            else {
+                                aux = SerializeObject(propertyInfo.GetValue(item), actualLevel + 1, parentContentId, skipProperties);
+                                properties.Add(aux);
+                            }
                         }
                     }
-                    return new JProperty(item.GetType().Name, new JObject(properties));
+                    return new JProperty(propertyName, new JObject(properties));
 
                 } else {
-                    return new JProperty(item.GetType().Name, item);
+                    return new JProperty(propertyName, item);
                 }
             } catch (Exception ex) {
-                return new JProperty(item.GetType().Name, ex.Message);
+                return new JProperty(propertyName, ex.Message);
             }
         }
 
@@ -672,8 +681,12 @@ namespace Laser.Orchard.StartupConfig.Services {
             }
         }
 
-        #region Helper methos
+        #region Helper methods
         private bool IsBasicType(Type type) {
+            var innerType = Nullable.GetUnderlyingType(type);
+            if (innerType != null) {
+                return _basicTypes.Contains(innerType) || innerType.IsEnum;
+            }
             return _basicTypes.Contains(type) || type.IsEnum;
         }
 

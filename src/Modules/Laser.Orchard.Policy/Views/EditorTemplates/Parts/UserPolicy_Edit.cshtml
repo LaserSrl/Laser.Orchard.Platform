@@ -35,14 +35,14 @@
                     </td>
                     <td>@if (item.Accepted) {
                         <i class="fa fa-check-circle" style="color: green"></i> 
-                        if (item.PolicyTextInfoPartRecord.PolicyType == null || acceptTypePolicy) {
+                        if (acceptTypePolicy) {
                         @T("Accepted")
                         } else {
                         @T("Read")
                         }
                     } else {
                         <i class="fa fa-exclamation-triangle" style="color: red"></i> 
-                        if (item.PolicyTextInfoPartRecord.PolicyType == null || acceptTypePolicy) {
+                        if (acceptTypePolicy) {
                         @T("Not Accepted")
                         } else {
                         @T("Unread")

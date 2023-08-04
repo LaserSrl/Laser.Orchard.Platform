@@ -52,6 +52,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         private readonly Lazy<ISmtpChannel> _messageManager;
         private readonly ITokenizer _tokenizer;
         private readonly IQuestionAnswerRepositoryService _questionAnswerRepositoryService;
+        private readonly IQuestionnaireHelperServices _questionnaireHelperService;
 
         public Localizer T { get; set; }
 
@@ -70,7 +71,8 @@ namespace Laser.Orchard.Questionnaires.Services {
             IDateLocalizationServices dateServices,
             IQuestionAnswerRepositoryService questionAnswerRepositoryService,
             ShellSettings shellSettings,
-            IRepository<UserAnswerInstanceRecord> repositoryinstanceRecords) {
+            IRepository<UserAnswerInstanceRecord> repositoryinstanceRecords,
+            IQuestionnaireHelperServices questionnaireHelperService) {
 
             _orchardServices = orchardServices;
             _repositoryTitle = repositoryTitle;
@@ -89,6 +91,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             _dateServices = dateServices;
             _shellSettings = shellSettings;
             _repositoryinstanceRecords = repositoryinstanceRecords;
+            _questionnaireHelperService = questionnaireHelperService;
         }
 
         private string getusername(int id) {
@@ -698,7 +701,8 @@ namespace Laser.Orchard.Questionnaires.Services {
 
             var viewModel = new QuestionnaireWithResultsViewModel() {
                 Id = part.Id,
-                AnswersInstance = instance
+                AnswersInstance = instance,
+                QuestionnaireHelperService = _questionnaireHelperService
             };
             // get all answers belonging to this instance
             var userAnswers = _repositoryUserAnswer
@@ -733,7 +737,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                         OpenAnswerAnswerText = answer.QuestionType == QuestionType.OpenAnswer
                             ? answer.AnswerText : string.Empty,
                         QuestionnairePartRecord_Id = part.Id,
-                        AnswersWithResult = answerResults
+                        AnswersWithResult = answerResults,
+                        QuestionnaireHelperService = _questionnaireHelperService
                     });
             }
             return viewModel;
@@ -999,6 +1004,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             }
             var mapper = mapperConfiguration.CreateMapper();
             var viewModel = mapper.Map<QuestionnaireWithResultsViewModel>(part);
+            viewModel.QuestionnaireHelperService = _questionnaireHelperService;
             return (viewModel);
         }
 

@@ -1,7 +1,7 @@
 ﻿@model Laser.Orchard.StartupConfig.Models.AllowCrossOriginSettingsPart
 <fieldset>
     <legend>@T("Cross Origin Settings")</legend>
-    
+
     <div class="form-group">
         <div class="checkbox">
             <label for="@Html.FieldIdFor(m => m.RemoveXFrameHeaderBackEnd)" class="forcheckbox" title="@T("Allow Cross-Origin access to the backend.")">
@@ -26,7 +26,7 @@
         </span>
     </div>
     <span>@T("Forms with antiforgery tokens add the X-Frame-Options header to further harden against XSRF attacks. However this prevents use cases where we want our forms in an iframe. The options above allow removing that header.")</span>
-    
+
     <div class="form-group">
         <label>@T("Set the SameSite attribute for cookies.")</label>
         @Html.DropDownListFor(
@@ -56,4 +56,14 @@
             </ul>
         </div>
     </div>
+    <div class="form-group">
+        <label>@T("Cookies")</label>
+        <div>
+            @Html.LabelFor(x => x.CookieForceSecure,T("Force Secure cookies").Text, new { @class = "forcheckbox" })
+            @Html.CheckBoxFor(x => x.CookieForceSecure)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.CookieForceHttpOnly, T("Force HttpOnly cookies").Text, new { @class = "forcheckbox" })
+            @Html.CheckBoxFor(x => x.CookieForceHttpOnly)
+        </div>
 </fieldset>

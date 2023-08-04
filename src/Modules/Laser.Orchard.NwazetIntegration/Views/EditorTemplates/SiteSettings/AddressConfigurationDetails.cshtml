@@ -5,7 +5,6 @@
 @functions{
     int index = -1;
     string baseFieldName;
-    string codeFieldName;
     Dictionary<TerritoryAdministrativeType, string> administrativeTypeNames;
 }
 @{
@@ -16,7 +15,6 @@
     var hierarchy = Model.CountriesHierarchy;
 
     baseFieldName = Html.FieldNameFor(m => m.TerritoryTypeMap);
-    //codeFieldName = Html.FieldNameFor(m => m.TerritoryISOCode);
 
     administrativeTypeNames = new Dictionary<TerritoryAdministrativeType, string>();
     administrativeTypeNames.Add(TerritoryAdministrativeType.None, T("Undefined").Text);
