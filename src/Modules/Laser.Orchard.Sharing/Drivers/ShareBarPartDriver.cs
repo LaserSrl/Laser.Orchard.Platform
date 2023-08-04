@@ -14,8 +14,6 @@ using System.Web;
 using Orchard.Logging;
 using Orchard.Tokens;
 using System.Collections.Generic;
-using Laser.Orchard.Cookies.Services;
-using Laser.Orchard.Sharing.Services;
 
 namespace Laser.Orchard.Sharing.Drivers {
 
@@ -23,15 +21,13 @@ namespace Laser.Orchard.Sharing.Drivers {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IOrchardServices _services;
         private readonly ITokenizer _tokenizer;
-        private readonly IGDPRScript _gdprScript;
 
         public ILogger Logger { get; set; }
 
-        public ShareBarPartDriver(IHttpContextAccessor httpContextAccessor, IOrchardServices services, ITokenizer tokenizer, IGDPRScript gdprScript) {
+        public ShareBarPartDriver(IHttpContextAccessor httpContextAccessor, IOrchardServices services, ITokenizer tokenizer) {
             _httpContextAccessor = httpContextAccessor;
             _services = services;
             _tokenizer = tokenizer;
-            _gdprScript = gdprScript;
         }
 
         protected override DriverResult Display(ShareBarPart part, string displayType, dynamic shapeHelper) {
@@ -41,16 +37,6 @@ namespace Laser.Orchard.Sharing.Drivers {
 
                 string path;
                 ShareBarTypePartSettings typeSettings;
-
-                // check user choice according to GDPR
-                if(_gdprScript.IsAcceptableForUser(new Laser.Orchard.Sharing.Services.CookieGDPR()) == false) {
-                    return null;
-                }
-
-                // Prevent share bar from showing if account is not set
-                if (shareSettings == null || string.IsNullOrWhiteSpace(shareSettings.AddThisAccount)) {
-                    return null;
-                }
 
                 // Prevent share bar from showing when current item is not Routable and it's not possible to retrieve the url
                 if (!part.Is<IAliasAspect>()) {
@@ -103,8 +89,7 @@ namespace Laser.Orchard.Sharing.Drivers {
                     Title = !string.IsNullOrWhiteSpace(title) ? title : _services.ContentManager.GetItemMetadata(part).DisplayText,
                     Media = media,
                     Description = description,
-                    Account = shareSettings.AddThisAccount,
-                    Mode = typeSettings.Mode
+                    Settings = typeSettings
                 };
                 return shapeHelper.Parts_Share_ShareBar(ViewModel: model);
             });
