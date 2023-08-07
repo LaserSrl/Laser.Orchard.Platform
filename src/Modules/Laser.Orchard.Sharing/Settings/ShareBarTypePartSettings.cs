@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
@@ -25,6 +25,20 @@ namespace Laser.Orchard.Sharing.Settings {
     /// Overrides default editors to enable putting settings on Twitter Connect part.
     /// </summary>
     public class ShareBarSettingsHooks : ContentDefinitionEditorEventsBase {
+
+        /// <summary>
+        /// Overrides editor shown when part is attached to content type. Enables adding setting field to the content part
+        /// attached.
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        public override IEnumerable<TemplateViewModel> TypePartEditor(ContentTypePartDefinition definition) {
+            if (definition.PartDefinition.Name != "ShareBarPart")
+                yield break;
+            var model = definition.Settings.GetModel<ShareBarTypePartSettings>();
+            yield return DefinitionTemplate(model);
+        }
+
         public override IEnumerable<TemplateViewModel> TypePartEditorUpdate(ContentTypePartDefinitionBuilder builder, IUpdateModel updateModel) {
             if (builder.Name != "ShareBarPart")
                 yield break;
