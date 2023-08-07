@@ -1,1 +1,0 @@
-{"version":3,"file":"collapse.js","sources":["../../src/js/plugins/collapse.js"],"sourcesContent":["import { default as BSCollapse } from 'bootstrap/js/src/collapse'\r\n\r\nclass Collapse extends BSCollapse {}\r\n\r\nexport default Collapse\r\n"],"names":[],"mappings":";;AAEA,MAAM,QAAQ,SAAS,UAAU,CAAC;;;;"}
