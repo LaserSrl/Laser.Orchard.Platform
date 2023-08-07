@@ -35,9 +35,7 @@ namespace Laser.Orchard.Sharing.Drivers {
                 var shareSettings = _services.WorkContext.CurrentSite.As<ShareBarSettingsPart>();
                 var httpContext = _httpContextAccessor.Current();
 
-                string path;
-                ShareBarTypePartSettings typeSettings;
-
+                string path = "";
                 // Prevent share bar from showing when current item is not Routable and it's not possible to retrieve the url
                 if (!part.Is<IAliasAspect>()) {
                     try {
@@ -52,12 +50,17 @@ namespace Laser.Orchard.Sharing.Drivers {
                     }
 
                 }
-                else {
+                ShareBarTypePartSettings typeSettings;
+                var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
-                    path = part.As<IAliasAspect>().Path;
+                typeSettings = part.Settings.GetModel<ShareBarTypePartSettings>();
 
+                path = _tokenizer.Replace(typeSettings.Url, tokens);
+
+                // The default sharing URL is the browser URL address.
+                // It defines explicitly the URl only if the setttings sets a different URL 
+                if (!String.IsNullOrWhiteSpace(path)) {
                     var baseUrl = httpContext.Request.ToApplicationRootUrlString();
-
                     // remove any application path from the base url
                     var applicationPath = httpContext.Request.ApplicationPath ?? String.Empty;
 
@@ -77,9 +80,6 @@ namespace Laser.Orchard.Sharing.Drivers {
 
                     path = baseUrl + "/" + urlPrefix + path;
                 }
-
-                typeSettings = part.Settings.GetModel<ShareBarTypePartSettings>();
-                var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
                 var title = _tokenizer.Replace(typeSettings.Title, tokens);
                 var description = _tokenizer.Replace(typeSettings.Description, tokens);
