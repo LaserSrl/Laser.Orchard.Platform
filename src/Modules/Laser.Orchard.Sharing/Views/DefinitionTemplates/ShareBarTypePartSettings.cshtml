@@ -1,6 +1,11 @@
 ﻿@model Laser.Orchard.Sharing.Settings.ShareBarTypePartSettings
 <fieldset>
     <div>
+        @Html.LabelFor(m => m.Url, T("Share bar URL"))
+        @Html.TextBoxFor(m => m.Url, new { @class = "text large tokenized" })
+        <span class="hint">
+            @T("Leave empty to use the browser URL address.")
+        </span>
         @Html.LabelFor(m => m.Title, T("Share bar title"))
         @Html.TextBoxFor(m => m.Title, new { @class = "text medium tokenized" })
         <span class="hint">

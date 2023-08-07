@@ -14,6 +14,7 @@ namespace Laser.Orchard.Sharing.Settings {
             Buttons = "";
             IconSize = 32;
         }
+        public string Url { get; set; }
         public string Title { get; set; }
         public string Media { get; set; }
         public string Description { get; set; }
@@ -45,6 +46,8 @@ namespace Laser.Orchard.Sharing.Settings {
 
             var model = new ShareBarTypePartSettings();
             updateModel.TryUpdateModel(model, "ShareBarTypePartSettings", null, null);
+            builder.WithSetting("ShareBarTypePartSettings.Url",
+                model.Url);
             builder.WithSetting("ShareBarTypePartSettings.Title",
                 model.Title);
             builder.WithSetting("ShareBarTypePartSettings.Media",
