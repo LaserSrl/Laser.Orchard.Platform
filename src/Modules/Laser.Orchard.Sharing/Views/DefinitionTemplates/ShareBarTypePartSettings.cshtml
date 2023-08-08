@@ -1,6 +1,11 @@
 ﻿@model Laser.Orchard.Sharing.Settings.ShareBarTypePartSettings
 <fieldset>
     <div>
+        @Html.LabelFor(m => m.Url, T("Share bar URL"))
+        @Html.TextBoxFor(m => m.Url, new { @class = "text large tokenized" })
+        <span class="hint">
+            @T("Leave empty to use the browser URL address.")
+        </span>
         @Html.LabelFor(m => m.Title, T("Share bar title"))
         @Html.TextBoxFor(m => m.Title, new { @class = "text medium tokenized" })
         <span class="hint">
@@ -16,12 +21,21 @@
         <span class="hint">
             @T("Leave empty to use the default.")
         </span>
-        @Html.LabelFor(m => m.Mode, T("Share bar display style"))
-        @Html.DropDownListFor(m => m.Mode,
-        new System.Web.Mvc.SelectList(Enum.GetNames(typeof(Laser.Orchard.Sharing.Settings.ShareBarMode)), Model.Mode))
-        <span class="hint">
-            @T("Preview of available modes is available here: ")&nbsp;<a href="//www.addthis.com/Gallery">AddThis gallery</a>.
-        </span>
+        <div>
+            @Html.LabelFor(m => m.Buttons, T("Buttons"))
+            @Html.TextBoxFor(m => m.Buttons, new { @class = "text large tokenized" })
+            <span class="hint">
+                @T("Leave empty to use the defaults.")<br />
+                @T("list of available Service Codes: ") amazon_wish_list, aol_mail, balatarin, bibsonomy, bitty_browser, blogger, blogmarks, bookmarks_fr, box_net, buffer, copy_link, diary_ru, diaspora, digg, diigo, douban, draugiem, email, evernote, facebook, fark, flipboard, folkd, google_gmail, google_classroom, hacker_news, hatena, houzz, instapaper, kakao, known, line, linkedin, livejournal, mail_ru, mastodon, mendeley, meneame, facebook_messenger, mewe, mixi, myspace, odnoklassniki, outlook_com, papaly, pinboard, pinterest, plurk, pocket, print, printfriendly, pusha, kindle_it, qzone, reddit, rediff, refind, sina_weibo, sitejot, skype, slashdot, sms, snapchat, stocktwits, svejo, symbaloo_bookmarks, microsoft_teams, telegram, threema, trello, tumblr, twiddla, twitter, typepad_post, viber, vk, wechat, whatsapp, wordpress, wykop, x, xing, yahoo_mail, yummly
+            </span>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.IconSize, T("Icon Size"))
+            @Html.TextBoxFor(m => m.IconSize, new { @class = "text small tokenized" })
+            <span class="hint">
+                @T("Defaults is 32")
+            </span>
+        </div>
     </div>
 </fieldset>
 

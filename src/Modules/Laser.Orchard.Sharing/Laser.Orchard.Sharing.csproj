@@ -91,10 +91,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Styles\AddThis.TweetLikeShare.css" />
-    <Content Include="Styles\AddThis.LargeIcons.css" />
-    <Content Include="Styles\AddThis.RetweetLikeShare.css" />
-    <Content Include="Styles\AddThis.Css3StyleButtons.css" />
+    <Content Include="Scripts\page.min.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -102,23 +99,12 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Share.Settings.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Drivers\ShareBarPartDriver.cs" />
-    <Compile Include="Drivers\ShareBarSettingsPartDriver.cs" />
     <Compile Include="Handlers\ShareBarPartHandler.cs" />
-    <Compile Include="Handlers\ShareBarSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="MissingSettingsBanner.cs" />
     <Compile Include="ResourceManifest.cs" />
-    <Compile Include="Services\AdditionalCookieProvider.cs" />
-    <Compile Include="Services\CookieGDPR.cs" />
-    <Compile Include="Settings\ShareBarMode.cs" />
     <Compile Include="Models\ShareBarPart.cs" />
     <Compile Include="Models\ShareBarSettingsPart.cs" />
-    <Compile Include="Models\ShareBarSettingsPartRecord.cs" />
-    <Compile Include="Permissions.cs" />
     <Compile Include="Settings\ShareBarTypePartSettings.cs" />
     <Compile Include="ViewModels\ShareBarViewModel.cs" />
   </ItemGroup>
@@ -129,20 +115,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\EditorTemplates\Parts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DefinitionTemplates\ShareBarTypePartSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\Share.ShareBar.cshtml" />
-    <Content Include="Views\Modes.ShareBar.GoogleLikeShare.cshtml" />
-    <Content Include="Views\Modes.ShareBar.Css3StyleButtons.cshtml" />
-    <Content Include="Views\Modes.ShareBar.VerticalShareCounter.cshtml" />
-    <Content Include="Views\Modes.ShareBar.HorizontalShareCounter.cshtml" />
-    <Content Include="Views\Modes.ShareBar.MediumIcons.cshtml" />
-    <Content Include="Views\Modes.ShareBar.RetweetLikeShare.cshtml" />
-    <Content Include="Views\Modes.ShareBar.ToolboxFacebookLike.cshtml" />
-    <Content Include="Views\Modes.ShareBar.TweetLikeShare.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Orchard\src\Orchard.Web\Core\Orchard.Core.csproj">
@@ -157,13 +137,15 @@
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Laser.Orchard.Cookies\Laser.Orchard.Cookies.csproj">
-      <Project>{BDB0CD8D-7C6C-46F0-A041-6B2E1E0F9C9E}</Project>
-      <Name>Laser.Orchard.Cookies</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Share.ShareBar.Config.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Share.ShareBar.Base.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
