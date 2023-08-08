@@ -56,29 +56,33 @@ namespace Laser.Orchard.Sharing.Drivers {
                 typeSettings = part.Settings.GetModel<ShareBarTypePartSettings>();
 
                 path = _tokenizer.Replace(typeSettings.Url, tokens);
-
+                path = path.Trim();
                 // The default sharing URL is the browser URL address.
                 // It defines explicitly the URl only if the setttings sets a different URL 
                 if (!String.IsNullOrWhiteSpace(path)) {
-                    var baseUrl = httpContext.Request.ToApplicationRootUrlString();
-                    // remove any application path from the base url
-                    var applicationPath = httpContext.Request.ApplicationPath ?? String.Empty;
+                    // if the path is an URL beginning with http or https we leave it untouched
+                    // otherwise we build the absolute path to the page
+                    if (!path.StartsWith("http://") && !path.StartsWith("https://")) {
+                        var baseUrl = httpContext.Request.ToApplicationRootUrlString();
+                        // remove any application path from the base url
+                        var applicationPath = httpContext.Request.ApplicationPath ?? String.Empty;
 
-                    var urlPrefix = _services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
+                        var urlPrefix = _services.WorkContext.Resolve<ShellSettings>().RequestUrlPrefix;
 
-                    if (path.StartsWith(applicationPath, StringComparison.OrdinalIgnoreCase)) {
-                        path = path.Substring(applicationPath.Length);
+                        if (path.StartsWith(applicationPath, StringComparison.OrdinalIgnoreCase)) {
+                            path = path.Substring(applicationPath.Length);
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(urlPrefix))
+                            urlPrefix = urlPrefix + "/";
+                        else
+                            urlPrefix = "";
+
+                        baseUrl = baseUrl.TrimEnd('/');
+                        path = path.TrimStart('/');
+
+                        path = baseUrl + "/" + urlPrefix + path;
                     }
-
-                    if (!string.IsNullOrWhiteSpace(urlPrefix))
-                        urlPrefix = urlPrefix + "/";
-                    else
-                        urlPrefix = "";
-
-                    baseUrl = baseUrl.TrimEnd('/');
-                    path = path.TrimStart('/');
-
-                    path = baseUrl + "/" + urlPrefix + path;
                 }
 
                 var title = _tokenizer.Replace(typeSettings.Title, tokens);
