@@ -41,7 +41,7 @@
     </div>
     <div class="col-xs-12 col-sm-4 col-index">
         @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", "Account", new { area = Constants.OrchardUsersArea, ReturnUrl = returnUrl, UserName = userName, ExternalLoginData = externalLoginData, @class = "login-form" }))) {
-            @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
+            @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autocomplete = "off", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
             <div class="space-20"></div>
             @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = "Password...", @class = "input-text form-control" })
             <div class="space-20"></div>
