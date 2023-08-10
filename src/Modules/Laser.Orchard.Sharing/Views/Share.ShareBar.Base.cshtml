@@ -1,0 +1,32 @@
+﻿@using System.Collections.Generic;
+@using System.Linq
+<h5>@T("Share:")</h5>
+<div class="sharebar">
+    <!-- AddToAny Button BEGIN -->
+    @{
+        var buttons = new List<string>(Model.ViewModel.Settings.Buttons
+            .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+        var iconSize = Model.ViewModel.Settings.IconSize > 0 ? Model.ViewModel.Settings.IconSize.ToString() : "32";
+        if (!buttons.Any()) {
+            buttons.Add("facebook");
+            buttons.Add("twitter");
+            buttons.Add("linkedin");
+            buttons.Add("email");
+            buttons.Add("dd");
+        }
+    }
+    <div class="a2a_kit a2a_kit_size_@iconSize a2a_default_style"
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Link)) { <text> data-a2a-url="@(Model.ViewModel.Link as string)" </text> }
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Title)) { <text> data-a2a-title="@(Model.ViewModel.Title as string)" </text> }
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Media)) { <text> data-a2a-media="@(Model.ViewModel.Media as string)" </text> }
+         @if (!string.IsNullOrWhiteSpace(Model.ViewModel.Description)) { <text> data-a2a-description="@(Model.ViewModel.Description as string)" </text> }>
+        @foreach (var button in buttons) {
+            var prefix = "button_";
+            if (button.ToLower().Trim() == "dd") {
+                prefix = "";
+            }
+            <a class="a2a_@(prefix + button.ToLower().Trim())"></a>
+        }
+    </div>
+    <!-- AddToAny Button END -->
+</div>

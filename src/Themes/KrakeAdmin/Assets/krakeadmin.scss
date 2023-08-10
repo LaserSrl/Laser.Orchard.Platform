@@ -11916,3 +11916,9 @@ body {
         }
     }
 }
+/* Scroolbar for layout editor toolbox */
+.layout-editor > .layout-toolbox-wrapper {
+    max-height: calc(100vh - 80px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

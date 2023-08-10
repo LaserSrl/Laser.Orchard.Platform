@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -174,7 +175,6 @@
     <Content Include="Views\List-ProjectionPage.cshtml" />
     <Content Include="Views\List-ProjectionWidget-BeforeContent.cshtml" />
     <Content Include="Views\MenuItemOption.cshtml" />
-    <Content Include="Views\Modes.ShareBar.MediumIcons.cshtml" />
     <Content Include="Views\Parts.CardsForm.cshtml" />
     <Content Include="Views\Parts.Common.Body.Summary-POI.cshtml" />
     <Content Include="Views\Parts.Common.Body.Summary-Prodotto.cshtml" />

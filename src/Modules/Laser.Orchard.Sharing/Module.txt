@@ -4,10 +4,10 @@ Author: Laser srl
 Website: http://www.laser-group.com
 Version: 1.10
 OrchardVersion: 1.10
-Description: Adds content sharing functionality via AddThis sharing service.
+Description: Adds content sharing functionality via AddToAny sharing service.
 Features:
     Laser.Orchard.Sharing:
-        Description: Adds content sharing functionality via AddThis sharing service.
+        Description: Adds content sharing functionality via AddToAny sharing service.
         Name: Content sharing
         Category: Social
-		Dependencies: Orchard.Tokens, Laser.Orchard.Cookies
+		Dependencies: Orchard.Tokens
