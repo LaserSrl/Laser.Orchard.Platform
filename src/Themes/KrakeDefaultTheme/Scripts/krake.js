@@ -9,12 +9,13 @@ $('a.nav-link.dropdown-toggle').on('click', function (e) {
 });
 
 function multiLevelMenu_Click(event, sender, subsequentSelector) {
-    // sender is the clicked link
-    //we find all subsequent .dropdown-menu and we remove all the "show" cssclass
+    // we find all subsequent .dropdown-menu and we remove all the "show" cssclass
+    // so all the subsequent doprdown menus will be hidden
     sender.find(subsequentSelector).each(function (index) {
         $(this).parents(subsequentSelector).first().find('.show').removeClass('show');
     });
-    //we find all sibling .dropdown-menu and we remove all the "show" cssclass
+    // we find all sibling .dropdown-menu and we remove all the "show" cssclass
+    // so all the sibling doprdown menus will be hidden
     sender.next(subsequentSelector).each(function (index) {
         $(this).parents(subsequentSelector).first().find('.show').removeClass('show');
     });
@@ -24,17 +25,5 @@ function multiLevelMenu_Click(event, sender, subsequentSelector) {
     var $subMenu = sender.next(subsequentSelector);
     $subMenu.toggleClass('show');
 
-    return false;
-    
-    if (!sender.next().hasClass('show')) {
-        sender.parents('.dropdown-menu').first().find('.show').removeClass('show');
-    }
-    var $subMenu = sender.next('.dropdown-menu');
-    $subMenu.toggleClass('show');
-
-
-    sender.parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
-        $('.dropdown-submenu .show').removeClass('show');
-    });
     return false;
 }
