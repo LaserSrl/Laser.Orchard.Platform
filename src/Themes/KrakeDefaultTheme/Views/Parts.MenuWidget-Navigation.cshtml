@@ -11,60 +11,36 @@
 
 }
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="~/">@WorkContext.CurrentSite.SiteName</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right navbar-blue">
-                @foreach (var item in items) {
-                    //se la voce di menu ha figli
-                    /*
-                     * Secondo metodo risoluzione
-                     *
-                     * @Display(item)
-                     *
-                     * */
+<nav class="navbar navbar-expand-lg navbar-default">
+    <a class="navbar-brand" href="~/">@WorkContext.CurrentSite.SiteName</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent@(Model.ContentItem.Id)" aria-controls="navbarSupportedContent@(Model.ContentItem.Id)" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-                    //metodo funzionante
-                    if (item.Items.Count > 0) {
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@item.Text<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @DisplayChildren(item)
-                            </ul>
-                        </li>
-                    } else {
-                        // se la voce di menu non ha figli
-                        <li>
-                            <a href="@item.Href">@item.Text</a>
-                        </li>
-                    }
-                }
-
-                @if (WorkContext.CurrentUser != null) {
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@T("Welcome,") @Html.ItemDisplayText(WorkContext.CurrentUser)<span class="caret"></span></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent@(Model.ContentItem.Id)">
+        <ul class="navbar-nav ml-auto">
+            @foreach (var item in items) {
+                //Every item is a MenuItem shape
+                <li class="nav-item dropdown">
+                    @Display(item) 
+                </li>
+            }
+            @if (WorkContext.CurrentUser != null) {
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">@T("Welcome,") @Html.ItemDisplayText(WorkContext.CurrentUser)<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="@Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" })">@T("Change Password")</a></li>
-                            <li><a href="@Url.Action("LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">@T("Logoff")</a></li>
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("ChangePassword", new { Controller = "Account", Area = "Orchard.Users" })">@T("Change Password")</a>
+                            </li><li><a class="dropdown-item" href="@Url.Action("LogOff", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = Context.Request.RawUrl })">@T("Logoff")</a></li>
                             @if (AuthorizedFor(Orchard.Security.StandardPermissions.AccessAdminPanel)) {
-                                <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new { Area = "Dashboard", Controller = "Admin" })</li>
+                                <li>@Html.ActionLink(T("Dashboard").ToString(), "Index", new { Area = "Dashboard", Controller = "Admin" }, new { @class = "dropdown-item" })</li>
                             }
                         </ul>
                     </li>
-                } else {
-                    <li>@Html.ActionLink(T("Login").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) })</li>
+                }
+                else {
+                    @Html.ActionLink(T("Login").ToString(), "LogOn", new { Controller = "Account", Area = "Orchard.Users", ReturnUrl = (Request.QueryString["ReturnUrl"] ?? Request.RawUrl) }, new { @class = "dropdown-item" })
                 }
             </ul>
-        </div>
     </div>
 </nav>

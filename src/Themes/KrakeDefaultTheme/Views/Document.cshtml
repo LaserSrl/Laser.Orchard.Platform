@@ -23,14 +23,15 @@
     //Styles    
     Style.Include("https://fonts.googleapis.com/css?family=Istok+Web").AtHead();
     Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700").AtHead();
-    Style.Include("bootstrap.min.css").AtHead(); //Bootstrap v3.3.6
+    Style.Require("Bootstrap").AtHead(); //Bootstrap, Orchard current version
     Style.Include("style.css").AtHead();
     Style.Include("toggle.css").AtHead();
     Style.Include("fonts/font-awesome-4.6.2/css/font-awesome.min.css").AtHead();
 
     //Scripts
-    Script.Include("jquery.min.js"); //jQuery v1.11.2 for compatibility with bootstrap 3 js
-    Script.Include("bootstrap.min.js").AtFoot(); //Bootstrap v3.3.6
+    Script.Require("JQuery"); //jQuery, Orchard current version
+    Script.Require("Bootstrap").AtFoot(); //Bootstrap, Orchard current version
+    Script.Include("krake.js").AtFoot(); //Theme custom js
 }
 
 <!DOCTYPE html>

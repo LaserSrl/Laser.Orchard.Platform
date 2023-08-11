@@ -708,7 +708,6 @@
     <Content Include="Scripts\Threejs\r153\three.module.min.js" />
     <Content Include="Styles\Animate\4.1.1\animate.css" />
     <Content Include="Styles\Animate\4.1.1\animate.min.css" />
-
     <Content Include="Styles\bootstrap4-glyphicons\css\bootstrap-glyphicons.css" />
     <Content Include="Styles\bootstrap4-glyphicons\css\bootstrap-glyphicons.min.css" />
     <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.svg" />

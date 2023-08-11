@@ -39,11 +39,6 @@
 }
 
 
-.text-center .img-responsive {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .clear {
     clear: both;
 }
@@ -408,55 +403,69 @@ label {
     overflow-x: hidden;
 }
 
-.thunb-img{
+.thunb-img {
     min-width: 200px;
-    min-width:200px;
+    min-width: 200px;
 }
 
-legend{
+legend {
     font-size: 24px;
     border-bottom: none;
     margin-bottom: 15px;
 }
 
-h3{
-    margin-bottom:15px;
+h3 {
+    margin-bottom: 15px;
 }
 
 /*field*/
-.name{
+.name {
     font-weight: bold;
     margin-top: 3px;
     margin-bottom: 3px;
 }
 
 /*projection paje*/
-.projection-page ul{
+.projection-page ul {
     list-style-type: none;
 }
 
 /*title summary content*/
-.borderTop{
-   border-top: 2px solid lightgray;
+.borderTop {
+    border-top: 2px solid lightgray;
 }
 
-.floatRight{
-    float:right;
+.floatRight {
+    float: right;
 }
 
-.EndSummaryContent{
+.EndSummaryContent {
     height: 22px;
     margin-bottom: 20px;
 }
 
 .map {
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
-.action-button{
+.action-button {
     width: auto !important;
 }
 
-ul{
+ul {
     list-style-type: none;
+}
+
+/*Bootstrap multi-level menu*/
+
+.dropdown-item.sublevel::after {
+    transform: rotate(270deg); /* we optain a right arrow */
+    position: absolute;
+    right: 4px;
+    top: 50%;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu .dropdown-menu {
+    left: calc(100% + 3px);
+    top: 0;
 }
