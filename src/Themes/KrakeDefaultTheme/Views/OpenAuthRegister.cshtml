@@ -38,10 +38,10 @@
 
             <div class="space-20"></div>
 
-            @Html.TextBox("username", "", new { id = "form-username", autofocus = "autofocus", placeholder = T("Username") + "...", @class = "form-username input-text form-control" })
+            @Html.TextBox("username", "", new { id = "form-username", autocomplete = "off", autofocus = "autofocus", placeholder = T("Username") + "...", @class = "form-username input-text form-control" })
             @Html.ValidationMessage("username")
             <div class="space-20"></div>
-            @Html.TextBox("email", "", new { id = "form-email", autofocus = "autofocus", placeholder = T("Email") + "...", @class = "form-email input-text form-control" })
+            @Html.TextBox("email", "", new { id = "form-email", autocomplete = "off", autofocus = "autofocus", placeholder = T("Email") + "...", @class = "form-email input-text form-control" })
             @Html.ValidationMessage("email")
             <div class="space-20"></div>
             @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = T("Password") + "...", @class = "form-password input-text form-control" })
