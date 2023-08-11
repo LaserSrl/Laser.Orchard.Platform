@@ -4,8 +4,8 @@
   "@type": "Event",
   "name": "{Content.DisplayText}",
   "description": "{Content.Body.StripHtml}",
-  "startDate": "{Content.Parameter:ActivityPart-DateTimeStart}",
-  "endDate": "{Content.Parameter:ActivityPart-DateTimeEnd}",
+  "startDate": "{Content.DateTimeParameter:(ActivityPart-DateTimeStart).Format:yyyy-MM-ddTHH:mm:ss}",
+  "endDate": "{Content.DateTimeParameter:(ActivityPart-DateTimeEnd).Format:yyyy-MM-ddTHH:mm:ss}",
   "location": {{
     "@type": "Place",
     "name": "{Content.Parameter:MapPart-LocationInfo}",
