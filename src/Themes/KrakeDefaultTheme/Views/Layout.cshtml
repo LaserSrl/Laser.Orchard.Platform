@@ -88,8 +88,8 @@
 <header>
     <div class="container container-header">
         <div class="row">
-            <div class="col-xs-0 col-md-4"></div>
-            <div class="col-xs-12 col-md-4 text-center">
+            <div class="col-0 col-md-4"></div>
+            <div class="col-12 col-md-4 text-center">
                 <a href="~/">
                     @if (!String.IsNullOrEmpty(backgroundImage)) {
                         <img src="@backgroundImage" alt="logo" class="img-fluid" />
@@ -97,7 +97,7 @@
                         <img src="@subthemePath/images/logo.png" alt="logo" class="img-fluid" />}
                 </a>
             </div>
-            <div class="col-xs-0 col-md-4"></div>
+            <div class="col-0 col-md-4"></div>
         </div>
         <div class="space-20"></div>
         @if (Model.Navigation != null) {
@@ -108,7 +108,7 @@
 <div class="container">
     @if (Model.Messages != null) {
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 alert alert-warning">
+            <div class="col-12 col-sm-12 col-md-12 alert alert-warning">
                 @Zone(Model.Messages)
             </div>
         </div>
@@ -116,7 +116,7 @@
 
     @if (Model.Content != null) {
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-12 col-sm-12 col-md-12">
                 @Zone(Model.Content)
             </div>
         </div>

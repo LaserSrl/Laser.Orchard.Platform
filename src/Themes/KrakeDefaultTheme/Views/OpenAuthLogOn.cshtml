@@ -32,14 +32,14 @@
 }
 
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-index">
+    <div class="col-12 col-sm-4 col-index">
         @Display(New.PlaceholderLogo())
         <h3>@T("Account Information")</h3>
         <b>@T("Enter username and password")</b><br>
         @if (userCanRegister) {<a class="links" href="@Url.Register(userName, externalLoginData)">@T("Register")</a> @T(" if you don't have an account.")<br>}
         @if (enableLostPassword) {@Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword", null, null, new { @class = "links" })}
     </div>
-    <div class="col-xs-12 col-sm-4 col-index">
+    <div class="col-12 col-sm-4 col-index">
         @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", "Account", new { area = Constants.OrchardUsersArea, ReturnUrl = returnUrl, UserName = userName, ExternalLoginData = externalLoginData, @class = "login-form" }))) {
             @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autocomplete = "off", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
             <div class="space-20"></div>
@@ -53,7 +53,7 @@
 
     @if (clientsData.Any()) {
         using (Html.BeginFormAntiForgeryPost(Url.OpenAuthLogOn(returnUrl))) {
-            <div class="col-xs-12 col-sm-4 col-index">
+            <div class="col-12 col-sm-4 col-index">
                 <h3>@T("...or login with:")</h3>
                 <div class="social-login-buttons">
                     @foreach (OrchardAuthenticationClientData clientData in clientsData) {

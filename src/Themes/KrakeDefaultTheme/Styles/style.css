@@ -458,6 +458,10 @@ ul {
     list-style-type: none;
 }
 
+form {
+    margin: auto;
+}
+
 /*Bootstrap multi-level menu*/
 .navbar-light .navbar-nav .nav-link { /* redefines the colors of the menu items because they result to be too light */
     color: rgba(0, 0, 0, 0.8);
