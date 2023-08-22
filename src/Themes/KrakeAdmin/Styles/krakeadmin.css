@@ -900,7 +900,10 @@ input[type="number"]:focus {
 .dashboard-box .dashboard-box-content {
   padding: 25px 40px;
   color: #fff;
-  margin: 0 -30px -30px; }
+  margin: 0 -30px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%; }
 
 .dashboard-box.dashboard-box-cms .dashboard-box-content {
   background: #6699CC; }
