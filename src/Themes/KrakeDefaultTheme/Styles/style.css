@@ -268,10 +268,12 @@ label > span {
 }
 
 .placeholder-logo {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height:300px;
     background: url(images/placeholder.png);
     padding-right: 20px;
+    background-size: contain;
+    background-repeat: no-repeat
 }
 
 .lineheight-2 {
