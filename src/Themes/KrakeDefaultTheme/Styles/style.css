@@ -457,15 +457,27 @@ ul {
 }
 
 /*Bootstrap multi-level menu*/
-
-.dropdown-item.sublevel::after {
-    transform: rotate(270deg); /* we optain a right arrow */
-    position: absolute;
-    right: 4px;
-    top: 50%;
+.navbar-light .navbar-nav .nav-link { /* redefines the colors of the menu items because they result to be too light */
+    color: rgba(0, 0, 0, 0.8);
 }
 
 .navbar-expand-lg .navbar-nav .dropdown-menu .dropdown-menu {
     left: calc(100% + 3px);
     top: 0;
 }
+
+@media (min-width: 992px) { /* starting from 992px Bootstrap mega menu is shown */
+    .dropdown-item.sublevel::after {
+        transform: rotate(270deg); /* we optain a right arrow */
+        position: absolute;
+        right: 4px;
+        top: 50%;
+    }
+}
+
+@media (max-width: 991px) { /* ending at 991px Bootstrap hamburger menu is shown */
+    nav .dropdown-menu {
+        border: 0px;
+        padding-left: 1.25em;
+    }}
+/*Bootstrap multi-level menu END*/
