@@ -1,5 +1,6 @@
 ﻿@charset "UTF-8";
 /*Krake*/
+/* Variables */
 @font-face {
   font-family: 'krake';
   src: url("fonts/HANDGOTB.eot");
@@ -67,10 +68,12 @@ button, .button, a.button {
   border-radius: 2px;
   box-shadow: none;
   height: 30px;
-  line-height: 20px;
   min-width: 110px;
-  font-size: 13.4px;
+  font-size: 14px;
   padding: 6px 12px !important; }
+
+.widgets-actions {
+  font-size: 14px; }
 
 /* style buttons for google maps*/
 button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
@@ -1173,9 +1176,6 @@ fieldset small {
 .custom-button {
   clear: right; }
 
-#widgets-zones-orphans.widgets-listed li {
-  padding: 0 1em 0.75em 1em; }
-
 .widgets-listed li {
   padding: 0 1em 0.25em 1em; }
 
@@ -1218,6 +1218,9 @@ fieldset small {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #f5f5f5;
   padding: 5px; }
+  #widgets-zones h2, #widgets-zones-orphans h2, #widgets-available h2 {
+    font-size: 1.0em;
+    padding: 2px 2px; }
 
 #main .layout-widgets-placement ul.widgets li h3 {
   float: left;
@@ -9727,3 +9730,7 @@ body.mce-fullscreen #header {
   max-height: calc(100vh - 80px);
   overflow-y: scroll;
   overflow-x: hidden; }
+
+form .switch-for-switchable {
+  display: contents;
+  /*adjust jquery switchable preventing scrollbars to appear */ }
