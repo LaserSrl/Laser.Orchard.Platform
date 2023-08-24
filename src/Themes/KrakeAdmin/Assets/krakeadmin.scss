@@ -487,14 +487,6 @@ legend {
     margin: 0;
 }
 
-.settings legend {
-    font-size: 20px;
-    margin: 0;
-    white-space: nowrap;
-    margin-bottom: 10px;
-    background: #fff;
-}
-
 .time {
     min-width: 100px !important;
 }
@@ -677,8 +669,20 @@ input.tokenized {
     width: 10px;
 }
 
-div.settings span.tokenized-popup { // in the content-types for some reasons we have to have a negative top position in order to place corretly the token icon
-    top: -0.5em;
+.settings {
+    legend {
+        font-size: 20px;
+        margin: 0;
+        white-space: nowrap;
+        margin-bottom: 10px;
+        background: #fff;
+    }
+
+    .token-wrapper {
+        div {
+            margin: 0; // reset the margin in the content-types and in the site settings in order to keep the tokenized icon aligned with the input
+        }
+    }
 }
 
 #maplocation {

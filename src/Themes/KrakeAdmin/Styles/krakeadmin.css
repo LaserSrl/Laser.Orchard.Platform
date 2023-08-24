@@ -469,14 +469,6 @@ legend {
   margin: 0;
 }
 
-.settings legend {
-  font-size: 20px;
-  margin: 0;
-  white-space: nowrap;
-  margin-bottom: 10px;
-  background: #fff;
-}
-
 .time {
   min-width: 100px !important;
 }
@@ -656,8 +648,15 @@ input.tokenized {
   width: 10px;
 }
 
-div.settings span.tokenized-popup {
-  top: -0.5em;
+.settings legend {
+  font-size: 20px;
+  margin: 0;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.settings .token-wrapper div {
+  margin: 0;
 }
 
 #maplocation {
