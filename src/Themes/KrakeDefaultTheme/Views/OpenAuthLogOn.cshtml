@@ -23,12 +23,17 @@
 
 }
 <div class="row">
-    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    <div class="col-12">
+
+        @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    </div>
 </div>
 @if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(externalLoginData))
 {
     <div class="row">
-        <p>@T("This user account will be linked to <b>{0}</b> when you login.", userName)</p>
+        <div class="col-12">
+            <p>@T("This user account will be linked to <b>{0}</b> when you login.", userName)</p>
+        </div>
     </div>
 }
 
