@@ -469,14 +469,6 @@ legend {
   margin: 0;
 }
 
-.settings legend {
-  font-size: 20px;
-  margin: 0;
-  white-space: nowrap;
-  margin-bottom: 10px;
-  background: #fff;
-}
-
 .time {
   min-width: 100px !important;
 }
@@ -650,15 +642,21 @@ input.tokenized {
   background: rgba(0, 0, 0, 0) url("images/list-arrow.png") no-repeat scroll 0 0;
   cursor: pointer;
   height: 28px;
-  margin-top: 1px;
   padding-right: 35px;
   position: absolute;
   right: 100%;
   width: 10px;
 }
 
-div.settings span.tokenized-popup {
-  margin-top: -6px;
+.settings legend {
+  font-size: 20px;
+  margin: 0;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.settings .token-wrapper div {
+  margin: 0;
 }
 
 #maplocation {
@@ -1389,12 +1387,6 @@ fieldset small {
 .box.box-card .box-header h3 {
   font-weight: bold;
   color: #313534;
-}
-
-.form-control {
-  border-color: #d2d6de;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 .form-control:not(select) {
@@ -4929,20 +4921,6 @@ legend.text-right:after {
 .form-control-feedback {
   top: auto;
   bottom: 0;
-}
-
-.form-control {
-  padding: 0;
-  height: 37px;
-  border-left: none;
-  border-right: none;
-  border-top: none;
-  border-bottom-color: rgba(12, 12, 12, 0.12);
-  background: transparent;
-  color: #0c0c0c;
-  font-size: 16px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
 }
 
 .form-control.placeholder {
