@@ -8,7 +8,9 @@
 }
 
 <div class="row">
-    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    <div class="col-12">
+        @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    </div>
 </div>
 <div class="row">
     <div class="col-12 col-sm-4 col-index">
