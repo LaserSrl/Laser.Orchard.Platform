@@ -38,7 +38,7 @@
 }
 
 <div class="row">
-    <div class="col-12 col-sm-4 col-index">
+    <div class="col-12 col-md-6 col-lg-4 col-index">
         @Display(New.PlaceholderLogo())
         <h3>@T("Account Information")</h3>
         <b>@T("Enter username and password")</b><br>
@@ -47,14 +47,19 @@
         @if (enableLostPassword)
         {@Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword", null, null, new { @class = "links" })}
     </div>
-    <div class="col-12 col-sm-4 col-index">
+    <div class="col-12 col-md-6 col-lg-@(clientsData.Any()?"4":"8") col-index">
         @using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", "Account", new { area = Constants.OrchardUsersArea, ReturnUrl = returnUrl, UserName = userName, ExternalLoginData = externalLoginData, @class = "login-form" })))
         {
             @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autocomplete = "off", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
             <div class="space-20"></div>
             @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = "Password...", @class = "input-text form-control" })
             <div class="space-20"></div>
-            @T("Remember Me")<div class="padding-right-5"></div> @Html.CheckBox("rememberMe", new { id = "remember-me" })
+            <div class="form-check">
+                @Html.CheckBox("rememberMe", new { id = "remember-me", @class = "form-check-input" })
+                <label class="form-check-label" for="remember-me">
+                    @T("Remember Me")
+                </label>
+            </div>
             <div class="space-20"></div>
             <input type="submit" class="submit" value="@T("Sign In")">
         }
@@ -62,7 +67,7 @@
 
     @if (clientsData.Any())
     {
-        <div class="col-12 col-sm-4 col-index">
+        <div class="col-12 col-lg-4 col-index">
             <h3>@T("...or login with:")</h3>
             @using (Html.BeginFormAntiForgeryPost(Url.OpenAuthLogOn(returnUrl)))
             {
