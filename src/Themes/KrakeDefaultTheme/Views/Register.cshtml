@@ -26,7 +26,7 @@
     requirementsMessage += ".";
 }
 <div class="row">
-    <div class="col-12 col-sm-4 col-index">
+    <div class="col-12 col-md-4 col-index">
         @if (File.Exists(Server.MapPath(whitelabelLogo))) {
             <img src="@whitelabelLogo" alt="@tenantname" class="img-fluid" />
         }
@@ -35,7 +35,7 @@
         }
 
     </div>
-    <div class="col-12 col-padding-low">
+    <div class="col-12 col-md-8 col-padding-low">
         <h3>@Html.TitleForPage(T("Create a New Account").ToString())</h3>
         <p>@T("Use the form below to create a new account.")</p>
         <p>@requirementsMessage</p>
