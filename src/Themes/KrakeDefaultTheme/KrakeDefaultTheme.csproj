@@ -90,8 +90,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Scripts\krake.js" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.min.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.svg" />
@@ -282,7 +281,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SimpleMenuItem.cshtml" />
+    <Content Include="Views\__SimpleMenuItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Elements\Column.cshtml" />
@@ -328,6 +327,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orchard.Users\Account\ChangeExpiredPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MenuItem.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

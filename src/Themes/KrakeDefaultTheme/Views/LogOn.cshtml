@@ -8,13 +8,15 @@
 }
 
 <div class="row">
-    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    <div class="col-12">
+        @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-index">
+    <div class="col-12 col-sm-4 col-index">
         @Display(New.PlaceholderLogo())
     </div>
-    <div class="col-xs-12 col-sm-8 col-index">
+    <div class="col-12 col-sm-8 col-index">
 	        <h3>@T("Account Information")</h3>
         <b>@T("Enter username and password")</b><br>
            @using (Html.BeginFormAntiForgeryPost(

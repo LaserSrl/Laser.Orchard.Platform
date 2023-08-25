@@ -35,9 +35,9 @@ namespace KrakeAdmin.Filters {
 
         public void OnResultExecuting(ResultExecutingContext filterContext) {                 
             if (isAdminKrakePicker(filterContext.RouteData) || isAdminKrakeTranslator(filterContext.RouteData)) {
-                _resourceManager.Require("stylesheet", ResourceManifest.BaseAdmin).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.Bootstrap).AtHead();
-                _resourceManager.Require("stylesheet", ResourceManifest.Site).AtHead();
+                _resourceManager.Include("stylesheet", "~/themes/theadmin/styles/site.css", null).AtHead(); // as dependent css
+                _resourceManager.Require("stylesheet", ResourceManifest.BaseAdmin).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.KrakeAdmin).AtHead();
                 _resourceManager.Require("stylesheet", ResourceManifest.KrakeNavigation).AtHead();
 
@@ -85,11 +85,11 @@ namespace KrakeAdmin.Filters {
 
             string capturedText = _tempWriter.ToString();
 
-            var regex = new Regex("(<[^>]+site.css[^>]+>)");
-            Match firstOcc = regex.Match(capturedText);
-            var offset = firstOcc.Index + firstOcc.Length;
-            capturedText = regex.Replace(capturedText, "", 1, offset);
-       
+            //var regex = new Regex("(<[^>]+site.css[^>]+>)");
+            //Match firstOcc = regex.Match(capturedText);
+            //var offset = firstOcc.Index + firstOcc.Length;
+            //capturedText = regex.Replace(capturedText, "", 1, offset);
+
             filterContext.HttpContext.Response.Write(capturedText);
         }
     }

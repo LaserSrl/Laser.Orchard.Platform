@@ -1,4 +1,8 @@
 ﻿/*Krake*/
+/* Variables */
+$fontsize-default: 14px;
+
+
 
 @font-face {
     font-family: 'krake';
@@ -80,10 +84,13 @@ button, .button, a.button {
     border-radius: 2px;
     box-shadow: none;
     height: 30px;
-    line-height: 20px;
     min-width: 110px;
-    font-size: 13.4px;
+    font-size: $fontsize-default;
     padding: 6px 12px !important;
+}
+
+.widgets-actions {
+    font-size: $fontsize-default;
 }
 /* style buttons for google maps*/
 button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
@@ -296,6 +303,7 @@ fieldset {
     &.publish-button {
         border: 0px !important;
     }
+
     &.unpublish-button {
         border: 0px !important;
     }
@@ -479,14 +487,6 @@ legend {
     margin: 0;
 }
 
-.settings legend {
-    font-size: 20px;
-    margin: 0;
-    white-space: nowrap;
-    margin-bottom: 10px;
-    background: #fff;
-}
-
 .time {
     min-width: 100px !important;
 }
@@ -663,15 +663,26 @@ input.tokenized {
     background: rgba(0, 0, 0, 0) url("../Styles/images/list-arrow.png") no-repeat scroll 0 0;
     cursor: pointer;
     height: 28px;
-    margin-top: 1px;
     padding-right: 35px;
     position: absolute;
     right: 100%;
     width: 10px;
 }
 
-div.settings span.tokenized-popup {
-    margin-top: -6px;
+.settings {
+    legend {
+        font-size: 20px;
+        margin: 0;
+        white-space: nowrap;
+        margin-bottom: 10px;
+        background: #fff;
+    }
+
+    .token-wrapper {
+        div {
+            margin: 0; // reset the margin in the content-types and in the site settings in order to keep the tokenized icon aligned with the input
+        }
+    }
 }
 
 #maplocation {
@@ -1130,7 +1141,10 @@ input[type="number"]:focus {
 .dashboard-box .dashboard-box-content {
     padding: 25px 40px;
     color: #fff;
-    margin: 0 -30px -30px;
+    margin: 0 -30px;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }
 
 .dashboard-box.dashboard-box-cms .dashboard-box-content {
@@ -1424,12 +1438,6 @@ fieldset small {
     color: #313534;
 }
 
-.form-control {
-    border-color: #d2d6de;
-    border-radius: 0;
-    box-shadow: none;
-}
-
 .form-control:not(select) {
     -moz-appearance: none;
 }
@@ -1455,10 +1463,6 @@ fieldset small {
 
 .custom-button {
     clear: right;
-}
-
-#widgets-zones-orphans.widgets-listed li {
-    padding: 0 1em 0.75em 1em;
 }
 
 .widgets-listed li {
@@ -1508,32 +1512,79 @@ fieldset small {
     border: 1px solid #f5f5f5;
 }
 
+#widgets {
+    &.group {
+        font-size: 0.9em;
+    }
+}
+
 #widgets-zones, #widgets-zones-orphans, #widgets-available {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #f5f5f5;
     padding: 5px;
+
+    h2 {
+        font-size: 1.0em;
+        padding: 2px 2px;
+    }
 }
 
 
-#main .layout-widgets-placement ul.widgets li h3 {
-    float: left;
-    margin: 0 0.25em 0 0;
+#main {
+    #layout-widgets-placement { //Site Layers Widgets
+        h2 {
+            margin: 0.7em 0 0.3em;
+        }
+    }
+
+    .layout-widgets-placement { //Contrib Widgets
+        h3, h2 {
+            margin: 0.75em 0 0;
+        }
+
+
+        ul.widgets {
+            li {
+                h3 {
+                    float: left;
+                    margin: 0 0.25em 0 0;
+
+                    &:before {
+                        font-family: FontAwesome;
+                        content: "\f047";
+                        margin-left: -15px;
+                        color: #999;
+                    }
+                }
+            }
+        }
+    }
 }
 
-#main .layout-widgets-placement ul.widgets li h3:before {
-    font-family: FontAwesome;
-    content: "\f047";
-    margin-left: -15px;
-    color: #999;
+.widgets {
+    .layout-widgets-placement {
+        .zones-container {
+            .zones {
+                ol {
+                    li {
+                        ul {
+                            &.widgets {
+                                li {
+                                    position: relative;
+                                    background: #f3f4f5;
+                                    margin: 10px 0;
+                                    padding: 5px 5px 5px 25px;
+                                    color: #333;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-.widgets .layout-widgets-placement .zones-container .zones ol li ul.widgets li {
-    position: relative;
-    background: #f3f4f5;
-    margin: 10px 0;
-    padding: 5px 5px 5px 25px;
-    color: #333;
-}
 
 .layout-toolbox-items section {
     padding: 0;
@@ -1574,15 +1625,9 @@ fieldset small {
     background: rgba(0, 0, 0, 0) url("../Styles/images/summary-view-on.png") no-repeat scroll left top;
 }
 
-/* Add padding to button because if not comment in widget layer the buttons overwrite other objects */
-.switch-for-switchable .switch-button-group {
-    padding: 34px 0px 4px 0px;
-}
-
 div#widgets-layer-visibility {
     padding: 24px 0px 4px 0px;
 }
-
 /* fix display of widgets to prevent text overwriting in case of small screen */
 .widgets-listed .widgets-actions {
     position: absolute;
@@ -1789,7 +1834,6 @@ html.dashboard #content {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 /*settings vimeo*/
 #VideoSettings #Whitelist {
     margin-top: 20px;
@@ -1798,7 +1842,6 @@ html.dashboard #content {
 #VideoSettings #License, #VideoSettings #ReviewLink, #VideoSettings #Locale {
     margin-bottom: 20px;
 }
-
 /*advanced search*/
 input#AdvancedOptions_SelectedToDateEditor_Date, input#AdvancedOptions_SelectedFromDateEditor_Date {
     min-width: 100px;
@@ -1812,7 +1855,6 @@ input#AdvancedOptions_SelectedToDateEditor_Date, input#AdvancedOptions_SelectedF
 div#appliedFilters {
     padding: 12px;
 }
-
 /*taxonomy*/
 .taxonomy-wrapper span.expando-glyph-container {
     bottom: -4px;
@@ -1822,22 +1864,18 @@ div#appliedFilters {
     float: initial;
     margin-top: 0px;
 }
-
 /*ul pagina abilita/disabilita temi*/
 .templates {
     padding-left: 94px;
 }
-
 /*seo part*/
 #seo-data-container .editor-label {
     margin-top: 10px;
 }
-
 /*summary admin padding*/
 .primary {
     padding-top: 10px;
 }
-
 /*seo script text area*/
 #templateArea {
     height: auto;
@@ -1847,12 +1885,10 @@ div#appliedFilters {
     min-width: 85px;
     width: 85px;
 }
-
 /*questionnaires*/
 .st-btn-fieldset {
     vertical-align: initial;
 }
-
 /*Admin*/
 @-webkit-keyframes fadeIn {
     from {
@@ -3264,7 +3300,6 @@ a.text-success:hover {
     .menubar-pin .logo-icon-minimized {
         display: none;
     }
-
     /*.menubar-visible .logo-icon-minimized {
         display: initial;
     }
@@ -3272,7 +3307,6 @@ a.text-success:hover {
      .menubar-visible .logo-icon {
         display: none;
     }*/
-
 }
 
 @media (min-width: 769px) {
@@ -3476,6 +3510,7 @@ a.text-success:hover {
     font-style: normal;
     text-decoration: inherit;
     -webkit-font-smoothing: antialiased;
+    border: 0;
 }
 
 .header-nav-profile .dropdown > a .ink {
@@ -4913,6 +4948,7 @@ select.input-group-lg > .input-group-addon {
     line-height: 45px;
 }
 
+select[multiple],
 textarea.input-group-lg > .input-group-content > .form-control,
 textarea.input-group-lg > .input-group-addon,
 select[multiple].input-group-lg > .input-group-content > .form-control,
@@ -4924,13 +4960,6 @@ select.input-group-lg > .input-group-content > .form-control,
 select.input-group-lg > .input-group-addon {
     height: 45px;
     line-height: 45px;
-}
-
-textarea.input-group-lg > .input-group-content > .form-control,
-textarea.input-group-lg > .input-group-addon,
-select[multiple].input-group-lg > .input-group-content > .form-control,
-select[multiple].input-group-lg > .input-group-addon {
-    height: auto;
 }
 
 .floating-label .input-group-lg > .input-group-content > .form-control ~ label,
@@ -5138,20 +5167,6 @@ legend.text-right:after {
 .form-control-feedback {
     top: auto;
     bottom: 0;
-}
-
-.form-control {
-    padding: 0;
-    height: 37px;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    border-bottom-color: rgba(12, 12, 12, 0.12);
-    background: transparent;
-    color: #0c0c0c;
-    font-size: 16px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
 }
 
 .form-control.placeholder {
@@ -5992,7 +6007,6 @@ fieldset[disabled] .btn-default-dark.active {
 .btn-default-dark.btn-icon-toggle {
     color: #20252b;
 }
-
 /* Styles to override some parameter for the password eye, used in EncryptedStringField view */
 .btn-default.reveal, .btn-default.reveal:hover {
     color: #444 !important;
@@ -11551,12 +11565,10 @@ div.summary div.stars-rating h3 {
     float: left;
     margin: 5px 5px 0 0 !important;
 }
-
 /*Workaround: O 1.10 ha una logica di ricerca che si attiva via js, non supportata dal tema di admin attuale*/
 input#adminfilter {
     display: none;
 }
-
 /*settings vimeo*/
 #VideoSettings #Whitelist {
     margin-top: 20px;
@@ -11565,7 +11577,6 @@ input#adminfilter {
 #VideoSettings #License, #VideoSettings #ReviewLink, #VideoSettings #Locale {
     margin-bottom: 20px;
 }
-
 /*content picker field*/
 .content-picker-tab {
     border-top: 3px solid #de625e !important;
@@ -11575,20 +11586,17 @@ input#adminfilter {
     margin-top: 10px;
     margin-left: 10px;
 }
-
 /*devtools buttons*/
 .devButtons a {
     margin: 1px;
     margin-top: 3px;
     width: 180px;
 }
-
 /*contact index*/
 #buttonContactSearch {
     position: relative;
     z-index: 1;
 }
-
 /*Widgets container*/
 ul.widgets li:first-child {
     margin-top: 15px !important;
@@ -11598,7 +11606,6 @@ ul.widgets h3 {
     font-weight: normal;
     font-size: 15px;
 }
-
 /*Media Library*/
 .media-library-main-list-overlay p {
     margin: 0;
@@ -11611,7 +11618,6 @@ ul.widgets h3 {
 #media-library-main-editor .content-localization h4 {
     font-size: small;
 }
-
 /* Navigation */
 #local-navigation {
     margin-bottom: -9px;
@@ -11624,7 +11630,6 @@ ul.widgets h3 {
         }
     }
 }
-
 /* Article dialog, for position calculate from jquery, change starded top for calculate correct position  */
 .dialog-wrapper .dialog {
     top: 0px !important;
@@ -11644,7 +11649,6 @@ ul.widgets h3 {
 .error {
     padding: 4px 4px 4px 26px;
 }
-
 /* Placement Admin*/
 #placement .zone-container h2 {
     font-size: 19px;
@@ -11654,7 +11658,6 @@ ul.widgets h3 {
 #placement .zone-container h3 {
     font-size: 15px;
 }
-
 /* LTEAdmin Site.css and other css overrides*/
 label {
     display: inherit;
@@ -11699,58 +11702,70 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
     border-color: #c23321;
 }
 
-.contentItems.bulk-items .summary .related a:not(.btn) {
-    /*threat as buttons btn btn-primary btn-xs all links in SummaryAdmin related*/
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: normal;
-    text-align: center;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /*btn*/
-    border-radius: 3px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border: 1px solid transparent;
-    /*btn-primary*/
-    background-color: #3c8dbc;
-    border-color: #367fa9;
-    color: #fff;
-    /*btn-xs*/
-    font-size: 12px;
-    line-height: 1.5;
-    padding: 1px 5px;
+.contentItems {
+    &.bulk-items {
+        .summary {
+            .related {
+                a.btn {
+                    color: #fff;
+                    margin-left: 5px;
+                }
+
+                a[itemprop="RemoveUrl UnsafeUrl"]:not(.btn) {
+                    background-color: #dd4b39 !important;
+                    border-color: #d73925;
+                }
+
+                a:not(.btn) {
+                    /*threat as buttons btn btn-primary btn-xs all links in SummaryAdmin related*/
+                    display: inline-block;
+                    margin-bottom: 0;
+                    font-weight: normal;
+                    text-align: center;
+                    vertical-align: middle;
+                    -ms-touch-action: manipulation;
+                    touch-action: manipulation;
+                    cursor: pointer;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    white-space: nowrap;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    border-radius: 4px;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    /*btn*/
+                    border-radius: 3px;
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                    border: 1px solid transparent;
+                    /*btn-primary*/
+                    background-color: #3c8dbc;
+                    border-color: #367fa9;
+                    color: #fff;
+                    /*btn-xs*/
+                    font-size: 12px;
+                    line-height: 1.5;
+                    padding: 0.25rem 0.5rem;
+
+                    &:hover, &:active {
+                        background-color: #367fa9;
+                        -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                        -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+                    }
+                }
+            }
+        }
+    }
 }
 
-.contentItems.bulk-items .summary .related a[itemprop="RemoveUrl UnsafeUrl"]:not(.btn) {
-    background-color: #dd4b39 !important;
-    border-color: #d73925;
-}
 
-.contentItems.bulk-items .summary .related a:not(.btn):hover, .contentItems .summary .related a:not(.btn):active {
-    background-color: #367fa9;
-    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-}
 
-.contentItems.bulk-items .summary .related a.btn {
-    color: #fff;
-    margin-left: 5px;
-}
+
 
 .manage-type .content {
     min-height: unset;
@@ -11768,8 +11783,6 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
         width: 100% !important;
     }
 }
-
-
 /* Google Maps Styles */
 .gm-style {
     button {
@@ -11784,7 +11797,6 @@ select:focus, textarea:focus, input.text:focus, input.text-box:focus, input.text
         }
     }
 }
-
 /* Red text for validation error hints. */
 .field-validation-error {
     color: #dd4b39; /* This is the same red used for validation errors in the header of the page. */
@@ -11843,7 +11855,6 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 .text-through {
     text-decoration: line-through;
 }
-
 /* Projection Part */
 .row-settings-projection-part {
     display: flex;
@@ -11858,7 +11869,6 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
 .lock-editing-projection-part-field {
     padding-top: 20px;
 }
-
 /* Backoffice links for actions on contents */
 .action-links {
     display: inline-flex;
@@ -11870,7 +11880,6 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
     content: "|";
     margin: 0 2px 0 6px;
 }
-
 /* buttons in Editor views (save, publish...) are often contained in their own fieldsets 
     with classes like save-button and so on
 */
@@ -11880,7 +11889,6 @@ table.autoroute-settings-patterns input, table.autoroute-settings-patterns .text
     margin: 0 12px 0 0;
     padding: 0 12px;
 }
-
 /* Tiny MCE full screen fix */
 #layout-main div.mce-fullscreen {
     width: auto;
@@ -11916,7 +11924,7 @@ body {
         &.tagit-choice {
             cursor: pointer;
 
-            >a {
+            > a {
                 &.tagit-close {
                     &:before {
                         content: "\00a0"; // some whitespace before the 'x' to remove a tag
@@ -11931,4 +11939,11 @@ body {
     max-height: calc(100vh - 80px);
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+
+form {
+    .switch-for-switchable {
+        display: contents; /*adjust jquery switchable preventing scrollbars to appear */
+    }
 }

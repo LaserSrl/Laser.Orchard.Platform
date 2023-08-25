@@ -708,6 +708,14 @@
     <Content Include="Scripts\Threejs\r153\three.module.min.js" />
     <Content Include="Styles\Animate\4.1.1\animate.css" />
     <Content Include="Styles\Animate\4.1.1\animate.min.css" />
+    <Content Include="Styles\bootstrap4-glyphicons\css\bootstrap-glyphicons.css" />
+    <Content Include="Styles\bootstrap4-glyphicons\css\bootstrap-glyphicons.min.css" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.svg" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-regular-400.svg" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-solid-900.svg" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\bootstrap4-glyphicons\maps\glyphicons-fontawesome.css" />
+    <Content Include="Styles\bootstrap4-glyphicons\maps\glyphicons-fontawesome.min.css" />
     <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.css" />
     <Content Include="Styles\FullCalendar\fullcalendar-5.6.0\main.min.css" />
     <Content Include="Styles\json-browse\jquery.json-browse.css" />
@@ -780,6 +788,23 @@
     <Content Include="Styles\Jssor\jssor.bannerslider.css" />
     <Content Include="Styles\jqDataTable\images\Sorting icons.psd" />
     <Content Include="Scripts\Threejs\r153\three.cjs" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.eot" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.ttf" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.woff" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-brands-400.woff2" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-regular-400.eot" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-regular-400.ttf" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-regular-400.woff" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-regular-400.woff2" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-solid-900.eot" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-solid-900.ttf" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-solid-900.woff" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\fontawesome\fa-solid-900.woff2" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.eot" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.ttf" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.woff" />
+    <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.woff2" />
+    <Content Include="Styles\bootstrap4-glyphicons\maps\glyphicons-fontawesome.less" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ResourceManifest.cs" />

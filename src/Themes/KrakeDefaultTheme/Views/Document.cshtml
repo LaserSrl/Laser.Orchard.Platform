@@ -18,19 +18,20 @@
     }
 }
 @{
-      
+
 
     //Styles    
     Style.Include("https://fonts.googleapis.com/css?family=Istok+Web").AtHead();
     Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700").AtHead();
-    Style.Include("bootstrap.min.css").AtHead();
+    Style.Require("Bootstrap").AtHead(); //Bootstrap, Orchard current version
     Style.Include("style.css").AtHead();
     Style.Include("toggle.css").AtHead();
     Style.Include("fonts/font-awesome-4.6.2/css/font-awesome.min.css").AtHead();
 
     //Scripts
-    Script.Require("jQuery");
-    Script.Include("bootstrap.min.js").AtFoot();   
+    Script.Require("JQuery"); //jQuery, Orchard current version
+    Script.Require("Bootstrap").AtFoot(); //Bootstrap, Orchard current version
+    Script.Include("krake.js").AtFoot(); //Theme custom js
 }
 
 <!DOCTYPE html>
