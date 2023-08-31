@@ -1652,10 +1652,11 @@ html.media-library-modal-window .button-cancel {
   margin-bottom: 10px;
 }
 
-#media-library-main-list .media-thumbnail {
-  height: auto;
-  overflow: hidden;
-  width: auto;
+#media-library-main-list li {
+  min-width: 200px;
+  min-height: 200px;
+  width: unset;
+  height: unset;
 }
 
 #header {
@@ -11347,10 +11348,16 @@ ul.widgets h3 {
   margin: 0;
 }
 
-#media-library-main-editor .content-localization li {
-  display: inline;
+#media-library-main-editor ul.pageStatus {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  align-content: flex-start;
+  flex-wrap: wrap;
 }
-
+#media-library-main-editor .content-localization li {
+  display: inline-block;
+}
 #media-library-main-editor .content-localization h4 {
   font-size: small;
 }
