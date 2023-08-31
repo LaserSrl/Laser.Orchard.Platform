@@ -3227,7 +3227,6 @@ a.text-success:hover {
 }
 
 #base {
-    overflow: hidden;
     padding-left: 64px;
     width: 100%;
     min-height: 100%;
@@ -11934,13 +11933,15 @@ body {
         }
     }
 }
-/* Scroolbar for layout editor toolbox */
-.layout-editor > .layout-toolbox-wrapper {
-    max-height: calc(100vh - 80px);
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
 
+.layout-editor {
+    > .layout-toolbox-wrapper {
+        /* forcing the toolbox to stay sticked at the the top of its container */
+        position: -webkit-sticky;
+        position: sticky;
+        top: 70px; // the fixed header height
+    }
+}
 
 form {
     .switch-for-switchable {
