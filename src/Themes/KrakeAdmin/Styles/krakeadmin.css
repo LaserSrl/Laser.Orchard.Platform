@@ -71,27 +71,6 @@ html {
   padding: 0;
 }
 
-button, .button, a.button {
-  background: #de625e none repeat scroll 0 0;
-  color: #fff !important;
-  border: 0 none;
-  border-radius: 2px;
-  box-shadow: none;
-  height: 30px;
-  min-width: 110px;
-  font-size: 14px;
-  padding: 6px 12px !important;
-}
-
-.widgets-actions {
-  font-size: 14px;
-}
-
-/* style buttons for google maps*/
-button.gm-control-active, .button.gm-control-active, a.button.gm-control-active {
-  min-width: 0px;
-}
-
 .mce-btn button {
   color: initial !important;
 }
@@ -219,33 +198,59 @@ table.items {
   border-color: #1c2a37 !important;
 }
 
-button.widgets-move {
-  background-color: rgba(0, 0, 0, 0) !important;
-  background-image: url("../../../modules/orchard.widgets/styles/images/arrows.png") !important;
-  border: 0 none !important;
-}
-
-.widgets-actions .button.grey {
+.widgets-actions.button.grey {
   background: #00a65a;
   border-color: #008d4c;
   border-radius: 3px;
   color: #fff;
 }
 
-.content-picker .button.grey {
+.content-picker.button .grey {
   background: #00a65a;
   border-color: #008d4c;
   color: #fff;
 }
 
+button, .button, a.button {
+  background: #de625e none repeat scroll 0 0;
+  color: #fff !important;
+  border: 0 none;
+  border-radius: 2px;
+  box-shadow: none;
+  height: 30px;
+  min-width: 110px;
+  font-size: 14px;
+  padding: 6px 12px !important;
+}
+
+.widgets-actions {
+  font-size: 14px;
+}
+
+/* style buttons for google maps*/
+.button.gm-control-active {
+  min-width: 0px;
+}
+
+a.button.gm-control-active {
+  min-width: 0px;
+}
+
+button.widgets-move {
+  background-color: rgba(0, 0, 0, 0) !important;
+  background-image: url("../../../modules/orchard.widgets/styles/images/arrows.png") !important;
+  border: 0 none !important;
+}
 button.link {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
   border: 0 none !important;
   color: #252c36 !important;
 }
-
 button.link:hover {
   text-decoration: underline;
+}
+button.link.gm-control-active {
+  min-width: 0px;
 }
 
 .local-section-content-types,
@@ -254,7 +259,7 @@ button.link:hover {
   margin-bottom: -8px !important;
 }
 
-/*Ovverides jquery UI in order to make text into tabs same as the others */
+/*Overrides jquery UI in order to make text into tabs same as the others */
 .ui-widget {
   font-size: 1em !important;
   font-family: Roboto, sans-serif, Helvetica, Arial, sans-serif;
@@ -277,7 +282,6 @@ button.link:hover {
 .breadcrumb a {
   color: #1c2a37 !important;
 }
-
 .breadcrumb a:hover {
   text-decoration: underline !important;
 }
@@ -303,7 +307,11 @@ select:not(.selector):not(.ui-datepicker-month):not(.ui-datepicker-year):not(.ca
   min-width: 300px;
 }
 
-.bulk-actions > #filterResults, #filterCultures {
+.bulk-actions > #filterResults {
+  min-width: 10px;
+}
+
+#filterCultures {
   min-width: 10px;
 }
 
@@ -351,13 +359,12 @@ select[multiple] {
   border-radius: 3px;
 }
 
-.contentItems li:first-child {
+.contentItems li :first-child {
   -moz-border-radius: 3px 3px 0px 0px;
   -webkit-border-radius: 3px 3px 0px 0px;
   border-radius: 3px 3px 0px 0px;
 }
-
-.contentItems li:last-child {
+.contentItems li :last-child {
   -moz-border-radius: 0px 0px 3px 3px;
   -webkit-border-radius: 0px 0px 3px 10px;
   border-radius: 0px 0px 3px 3px;
@@ -376,10 +383,6 @@ form.link button, button.link {
 a, a:link, a:visited {
   color: #1e5d7d;
   text-decoration: none;
-}
-
-button.link:hover {
-  text-decoration: underline;
 }
 
 .pageStatus a {
@@ -584,7 +587,6 @@ legend {
   padding: 8px !important;
   font-size: 0.7em !important;
 }
-
 .mce-branding a {
   font-size: 1em !important;
   cursor: pointer !important;
@@ -676,7 +678,6 @@ input.tokenized {
   left: 330px;
   position: absolute;
 }
-
 .ui-autocomplete .acdesc {
   left: 780px;
   position: absolute;
@@ -913,7 +914,6 @@ input[type=number]:focus {
 .box-app-icone {
   margin-top: 15px;
 }
-
 .box-app-icone .link-app {
   background: #FFF;
   border-radius: 50%;
@@ -922,7 +922,6 @@ input[type=number]:focus {
   display: inline-block;
   text-align: center;
 }
-
 .box-app-icone .fa {
   color: #EEB377;
   font-size: 28px;
@@ -1510,7 +1509,7 @@ fieldset small {
   color: #1c2a37 !important;
 }
 
-.features .disabled.feature {
+.features.disabled.feature {
   background: #f5f5f5 none repeat scroll 0 0;
 }
 
@@ -11337,7 +11336,6 @@ input#adminfilter {
 ul.widgets li:first-child {
   margin-top: 15px !important;
 }
-
 ul.widgets h3 {
   font-weight: normal;
   font-size: 15px;
@@ -11348,6 +11346,10 @@ ul.widgets h3 {
   margin: 0;
 }
 
+#media-library-main-editor {
+  font-size: 0.9em;
+  min-width: 250px;
+}
 #media-library-main-editor ul.pageStatus {
   display: flex;
   flex-direction: row;
