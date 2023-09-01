@@ -44,16 +44,24 @@ namespace Laser.Orchard.Events.Tokens
 
         public void Evaluate(EvaluateContext context)
         {
-            if (_currentContentAccessor.CurrentContentItem == null)
-                return;
-            else if (_currentContentAccessor.CurrentContentItem.As<CalendarPart>() == null)
-                return;
+            // Sometimes this value seems to be null and it result in a lot of errors in the logs.
+            // This is a hotfix to prevent these errors, still it's not clear why suddenly this value 
+            // is null since this file hasn't been changed for years
+            if (_currentContentAccessor != null) {
+                if (_currentContentAccessor.CurrentContentItem == null) {
+                    return;
+                }
+                else if (_currentContentAccessor.CurrentContentItem.As<CalendarPart>() == null) {
+                    return;
+                }
 
-            context.For("Content", _currentContentAccessor.CurrentContentItem)
-                   .Token("CalendarStartDate", content => GetStartDate(content))
-                   .Chain("CalendarStartDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetStartDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; })
-                   .Token("CalendarEndDate", content => GetEndDate(content))
-                   .Chain("CalendarEndDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetEndDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; });
+                context.For("Content", _currentContentAccessor.CurrentContentItem)
+                       .Token("CalendarStartDate", content => GetStartDate(content))
+                       .Chain("CalendarStartDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetStartDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; })
+                       .Token("CalendarEndDate", content => GetEndDate(content))
+                       .Chain("CalendarEndDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetEndDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; });
+            }
+            return;
         }
 
         private string GetStartDate(ContentItem content)
