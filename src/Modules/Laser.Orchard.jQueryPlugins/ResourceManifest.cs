@@ -128,6 +128,7 @@ namespace Laser.Orchard.jQueryPlugins {
             // Animate.css
             manifest.DefineStyle("AnimateCss")
                 .SetUrl("Animate/4.1.1/animate.min.css", "Animate/4.1.1/animate.css");
+
         }
     }
 }
