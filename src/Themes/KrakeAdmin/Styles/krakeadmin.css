@@ -884,7 +884,6 @@ input[type=number]:focus {
 .box-social-icone {
   margin-top: 15px;
 }
-
 .box-social-icone .link-social {
   background: #FFF;
   border-radius: 50%;
@@ -893,13 +892,31 @@ input[type=number]:focus {
   display: inline-block;
   text-align: center;
 }
-
 .box-social-icone .fa {
   color: #539CB3;
   font-size: 22px;
   line-height: 35px;
 }
 
+/*
+.box-social-icone {
+    margin-top: 15px;
+}
+
+.box-social-icone .link-social {
+    background: #FFF;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    display: inline-block;
+    text-align: center;
+}
+
+.box-social-icone .fa {
+    color: #539CB3;
+    font-size: 22px;
+    line-height: 35px;
+}*/
 @media (max-width: 767px) {
   .box-social-icone .link-social {
     height: 27px;
@@ -1378,11 +1395,9 @@ fieldset small {
   border: 1px solid #d2d6de;
   border-top: 3px solid #8eaebe;
 }
-
 .box.box-card .box-header {
   background-color: #f4f4f4;
 }
-
 .box.box-card .box-header h3 {
   font-weight: bold;
   color: #313534;
@@ -8870,11 +8885,9 @@ body.offcanvas-expanded {
   position: relative;
   padding: 4px 16px;
 }
-
 .offcanvas-head header {
   font-size: 20px;
 }
-
 .offcanvas-head .offcanvas-tools {
   position: absolute;
   left: 4px;
@@ -8896,81 +8909,66 @@ sub.badge {
   margin-right: -5px;
 }
 
-.badge.style-default-dark {
-  background-color: #20252b;
-  color: #ffffff;
-}
-
 .badge.style-default {
   background-color: #e5e6e6;
   color: #313534;
 }
-
 .badge.style-default-light {
   background-color: #f2f3f3;
   color: #313534;
 }
-
+.badge.style-default-dark {
+  background-color: #20252b;
+  color: #ffffff;
+}
 .badge.style-default-bright {
   background-color: #ffffff;
   color: #313534;
 }
-
 .badge.style-primary {
   background-color: #00ccff;
   color: #ffffff;
 }
-
 .badge.style-primary-light {
   background-color: #7dd8d2;
   color: #313534;
 }
-
 .badge.style-primary-dark {
   background-color: #066265;
   color: #ffffff;
 }
-
 .badge.style-primary-bright {
   background-color: #caf0ee;
   color: #313534;
 }
-
 .badge.style-accent {
   background-color: #9c27b0;
   color: #ffffff;
 }
-
 .badge.style-accent-light {
   background-color: #c77bd4;
   color: #ffffff;
 }
-
 .badge.style-accent-dark {
   background-color: #681a7f;
   color: #ffffff;
 }
-
 .badge.style-accent-bright {
   background-color: #e9c9ef;
   color: #313534;
 }
-
 .badge.style-success {
   background-color: #4caf50;
   color: #ffffff;
 }
-
 .badge.style-warning {
   background-color: #ff9800;
   color: #ffffff;
 }
-
 .badge.style-danger {
   background-color: #f44336;
   color: #ffffff;
 }
-
 .badge.style-info {
   background-color: #2196f3;
   color: #ffffff;
@@ -9147,36 +9145,29 @@ sub.badge {
   list-style: none;
   line-height: 24px;
 }
-
 .list .tile {
   position: relative;
   display: table;
   width: 100%;
   min-height: 48px;
 }
-
 .list .tile > a {
   text-decoration: none;
 }
-
 .list .tile > a:hover {
   color: #00ccff;
 }
-
 .list .tile .tile-content {
   display: table-cell;
   padding-left: 16px;
 }
-
 .list .tile .tile-content:last-child {
   padding-right: 16px;
 }
-
 .list .tile .tile-content > div {
   display: table-cell;
   vertical-align: middle;
 }
-
 .list .tile > .btn {
   display: table-cell;
   vertical-align: middle;
@@ -9184,87 +9175,67 @@ sub.badge {
   width: 56px;
   text-align: center;
 }
-
-.list .tile > .btn .fa,
-.list .tile > .btn .md,
-.list .tile > .btn .glyphicon {
+.list .tile > .btn .fa, .list .tile > .btn .md, .list .tile > .btn .glyphicon {
   width: 24px;
+  margin-top: 4px;
   font-size: 20px;
   text-align: center;
 }
-
 .list .tile .tile-icon {
   min-width: 56px;
   width: 56px;
   padding: 8px 0;
   text-align: right;
 }
-
 .list .tile .tile-icon:first-child {
   text-align: left;
 }
-
 .list .tile .tile-icon img {
   width: 40px;
   height: 40px;
   border-radius: 40px;
 }
-
-.list .tile .tile-icon .fa,
-.list .tile .tile-icon .md,
-.list .tile .tile-icon .glyphicon {
+.list .tile .tile-icon .fa, .list .tile .tile-icon .md, .list .tile .tile-icon .glyphicon {
   width: 24px;
   margin-top: 4px;
   font-size: 20px;
   text-align: center;
 }
-
 .list .tile .tile-text {
   padding: 12px 0;
   font-size: 16px;
   width: 100%;
 }
-
 .list .tile .tile-text small {
   display: block;
   font-size: 14px;
   opacity: 0.6;
 }
-
 .list .tile .tile-text small span {
   opacity: 1;
 }
-
-.list .tile .checkbox-styled:not(ie8),
-.list .tile .radio-styled:not(ie8) {
-  display: table-cell;
-  padding: 0;
-}
-
-.list .tile .checkbox-styled:not(ie8) label,
-.list .tile .radio-styled:not(ie8) label {
-  display: block;
-  padding-left: 16px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-}
-
-.list .tile .checkbox-styled:not(ie8):last-child label,
-.list .tile .radio-styled:not(ie8):last-child label {
-  padding-right: 16px;
-}
-
-.list .tile .checkbox-styled:not(ie8) input ~ span,
-.list .tile .radio-styled:not(ie8) input ~ span {
-  padding-left: 54px;
-}
-
 .list .tile .ink-reaction .ink {
   width: 600px;
   height: 600px;
   margin-left: -300px;
   margin-top: -300px;
   background-color: rgba(83, 88, 88, 0.15);
+}
+.list .tile .checkbox-styled:not(ie8), .list .tile .radio-styled:not(ie8) {
+  display: table-cell;
+  padding: 0;
+}
+.list .tile .checkbox-styled:not(ie8) label, .list .tile .radio-styled:not(ie8) label {
+  display: block;
+  padding-left: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.list .tile .checkbox-styled:not(ie8):last-child label, .list .tile .radio-styled:not(ie8):last-child label {
+  padding-right: 16px;
+}
+.list .tile .checkbox-styled:not(ie8) input ~ span, .list .tile .radio-styled:not(ie8) input ~ span {
+  padding-left: 54px;
 }
 
 .list li.divider-full-bleed,
