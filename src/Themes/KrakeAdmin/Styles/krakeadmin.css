@@ -1462,6 +1462,11 @@ fieldset small {
   padding: 5px 5px 5px 25px;
 }
 
+#widgets-available {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid #f5f5f5;
+  padding: 5px;
+}
 #widgets-available li a {
   border: 1px solid #eaeaea;
   display: block;
@@ -1471,7 +1476,6 @@ fieldset small {
   background: #fff;
   font-family: "Roboto";
 }
-
 #widgets-available li a:hover {
   background: #f4f4f4;
   border: 1px solid #f5f5f5;
@@ -1481,12 +1485,12 @@ fieldset small {
   font-size: 0.9em;
 }
 
-#widgets-zones, #widgets-zones-orphans, #widgets-available {
+#widgets-zones, #widgets-zones-orphans {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #f5f5f5;
   padding: 5px;
 }
-#widgets-zones h2, #widgets-zones-orphans h2, #widgets-available h2 {
+#widgets-zones h2, #widgets-zones-orphans h2 {
   font-size: 1em;
   padding: 2px 2px;
 }
