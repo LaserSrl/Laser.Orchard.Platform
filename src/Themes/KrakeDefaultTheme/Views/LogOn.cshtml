@@ -8,32 +8,42 @@
 }
 
 <div class="row">
-    @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    <div class="col-12">
+        @Html.ValidationSummary(T("Login was unsuccessful. Please correct the errors and try again.").ToString())
+    </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-sm-4 col-index">
+    <div class="col-12 col-md-6 col-lg-4 col-index">
         @Display(New.PlaceholderLogo())
     </div>
-    <div class="col-xs-12 col-sm-8 col-index">
-	        <h3>@T("Account Information")</h3>
+    <div class="col-12 col-md-6 col-lg-8 col-index">
+        <h3>@T("Account Information")</h3>
         <b>@T("Enter username and password")</b><br>
-           @using (Html.BeginFormAntiForgeryPost(
-		Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"], @class = "login-form" }))) {
+        @using (Html.BeginFormAntiForgeryPost(
+     Url.Action("LogOn", new { ReturnUrl = Request.QueryString["ReturnUrl"], @class = "login-form" })))
+        {
             @Html.TextBox("userNameOrEmail", "", new { id = "form-username", autocomplete = "off", autofocus = "autofocus", placeholder = "Username...", @class = "input-text form-control" })
             <div class="space-20"></div>
             @Html.Password("password", "", new { id = "form-password", autofocus = "autofocus", placeholder = "Password...", @class = "input-text form-control" })
-           if (enableLostPassword) { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword", null, null, new { @class = "links" }) }
+            if (enableLostPassword)
+            { @Html.ActionLink(T("Lost your Password?").Text, "RequestLostPassword", null, null, new { @class = "links" }) }
 
-                 <div class="space-20"></div>
-            @T("Remember Me")<div class="padding-right-5"></div> @Html.CheckBox("rememberMe", new { id = "remember-me" })
-            <div class="space-20"></div>
-          
-            <input type="submit" class="submit" value="@T("Sign In")">
-        }<br />
-             @if (userCanRegister) {
-                 @Html.ActionLink(T("Register").Text, "Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] }) 
-                 <text> </text>@T(" if you don't have an account.")
-             }
-            
+        <div class="space-20"></div>
+        <div class="form-check">
+            @Html.CheckBox("rememberMe", new { id = "remember-me", @class = "form-check-input" })
+            <label class="form-check-label" for="remember-me">
+                @T("Remember Me")
+            </label>
+        </div>
+        <div class="space-20"></div>
+
+        <input type="submit" class="submit" value="@T("Sign In")">
+    }<br />
+        @if (userCanRegister)
+        {
+            @Html.ActionLink(T("Register").Text, "Register", new { ReturnUrl = Request.QueryString["ReturnUrl"] })
+            <text> </text>@T(" if you don't have an account.")
+        }
+
     </div>
 </div>

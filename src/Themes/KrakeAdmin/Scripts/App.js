@@ -173,7 +173,6 @@
 	p._initBreakpoints = function (alias) {
 		var html = '';
 		html += '<div id="device-breakpoints">';
-		html += '<div class="device-xs visible-xs" data-breakpoint="xs"></div>';
 		html += '<div class="device-sm visible-sm" data-breakpoint="sm"></div>';
 		html += '<div class="device-md visible-md" data-breakpoint="md"></div>';
 		html += '<div class="device-lg visible-lg" data-breakpoint="lg"></div>';
@@ -185,7 +184,7 @@
 		return $('.device-' + alias).is(':visible');
 	};
 	p.minBreakpoint = function (alias) {
-		var breakpoints = ['xs', 'sm', 'md', 'lg'];
+		var breakpoints = ['sm', 'md', 'lg'];
 		var breakpoint = $('#device-breakpoints div:visible').data('breakpoint');
 		return $.inArray(alias, breakpoints) < $.inArray(breakpoint, breakpoints);
 	};

@@ -93,6 +93,12 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("Select2")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css");
 
+            // Bootstrap 
+            manifest.DefineStyle("BootstrapGlyphicons")
+                .SetUrl("bootstrap4-glyphicons/css/bootstrap-glyphicons.min.css", "bootstrap4-glyphicons/css/bootstrap-glyphicons.css");
+            manifest.DefineStyle("GlyphiconsFontawesome")
+                .SetUrl("bootstrap4-glyphicons/maps/glyphicons-fontawesome.min.css", "bootstrap4-glyphicons/maps/glyphicons-fontawesome.css");
+
             // Bootstrap Italia
             manifest.DefineStyle("BootstrapItalia")
                 .SetUrl("../BootstrapItalia/css/bootstrap-italia.min.css");

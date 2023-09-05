@@ -83,7 +83,7 @@
             <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="fa fa-cog"></i></span>
 
-                <div class="info-box-content">
+                <div class="info-box-content row">
                     @if (createdUtc.HasValue) {
                         <span class="info-box-text col-sm-4">@T("Created on")</span>
                         <span class="info-box-number col-sm-8">@createdLocal.ToString("dddd, dd MMMM yyyy HH:mm:ss", cultureInfo)</span>
@@ -108,20 +108,20 @@
         <div class="col-md-12 col-lg-6 col-12 custom-width-info-box">
             <div class="info-box">
                 <span class="info-box-icon bg-@statusBackgroundColor"><i class="@statusIconClass"></i></span>
-                <div class="info-box-content">
+                <div class="info-box-content row">
                     <span class="info-box-text col-sm-4">@T("Status")</span>
                     <span class="info-box-number col-sm-4"><i class="fa fa-circle fa-lg text-@statusBackgroundColor"></i> @statusText</span>
                     <span class="col-sm-4">
                         @if (autoroutePart != null) {
                             if (contentItem.HasPublished()) {
                                 <a href="@Url.ItemDisplayUrl(contentItem)"
-                                   class="btn btn-success btn-xs text-white width-80"
+                                   class="btn btn-success btn-sm text-white width-80"
                                    target="_blank"
                                    title="@T("View")">
                                     <span class="glyphicon glyphicon-new-window"></span>
                                     @T("View").Text
                                 </a>
-                                @*@Html.ItemDisplayLink(T("View").Text, contentItem, new { @class = "btn btn-success btn-xs text-white" })*@
+                                @*@Html.ItemDisplayLink(T("View").Text, contentItem, new { @class = "btn btn-success btn-sm text-white" })*@
                             }
                         }
                     </span>
@@ -162,13 +162,12 @@
                                 if (contentItem.HasDraft()) {
                                     if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
                                         <a href="@Url.Action("Display", "Item",  new { area = "Contents", id = contentItem.Id, version = contentItem.Version })"
-                                           class="btn btn-warning btn-xs text-white width-80"
+                                           class="btn btn-warning btn-sm text-white width-80"
                                            target="_blank"
                                            title="@T("Preview")">
                                             <span class="glyphicon glyphicon-new-window"></span>
                                             @T("Preview").Text
                                         </a>
-                                        @*@Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs text-white" })*@
                                     }
                                 }
                             }
@@ -176,13 +175,12 @@
                                 if (contentItem.HasDraft()) {
                                     if (Authorizer.Authorize(Permissions.PreviewContent, contentItem)) {
                                         <a href="@Url.Action("Display", "Item",  new { area = "Contents", id = contentItem.Id, version = contentItem.Version })"
-                                           class="btn btn-warning btn-xs text-white width-80"
+                                           class="btn btn-warning btn-sm text-white width-80"
                                            target="_blank"
                                            title="@T("Preview")">
                                             <span class="glyphicon glyphicon-new-window"></span>
                                             @T("Preview").Text
                                         </a>
-                                        @*@Html.ActionLink(T("Preview").Text, "Display", "Item", new { area = "Contents", id = contentItem.Id, version = contentItem.Version }, new { @class = "btn btn-warning btn-xs text-white" })*@
                                     }
                                 }
                             }
