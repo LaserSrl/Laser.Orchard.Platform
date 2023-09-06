@@ -14,9 +14,9 @@ namespace Laser.Orchard.StartupConfig.Tokens {
         public void Describe(DescribeContext context) {
             context.For("Content")
                    .Token("Parameter:*", T("Parameter:<PartName-PropertyName>"), T("Return the property value of a part specified"))
-                   .Token("DateTimeParameter:*", T("DateTimeParameter:<PartName-PropertyName>"), T("Return the property value of a part specified"))
-                   .Token("UrlParameter:*", T("UrlParameter:<PartName-PropertyName>"), T("Return the property value of a part specified"))
-                   .Token("CultureParameter:*", T("CultureParameter:<PartName-PropertyName>"), T("Return the property value of a part specified"));
+                   .Token("Parameter[DateTime]:*", T("Parameter[DateTime]:<PartName-PropertyName>"), T("Return the property value of a part specified"))
+                   .Token("Parameter[Url]:*", T("Parameter[Url]:<PartName-PropertyName>"), T("Return the property value of a part specified"))
+                   .Token("Parameter[Culture]:*", T("Parameter[Culture]:<PartName-PropertyName>"), T("Return the property value of a part specified"));
         }
 
         public void Evaluate(EvaluateContext context) {
@@ -130,15 +130,16 @@ namespace Laser.Orchard.StartupConfig.Tokens {
             return FilterTokenTypedParam(token, "Culture");
         }
 
-        private string FilterTokenTypedParam(string token, string typePrefix) {
+        private string FilterTokenTypedParam(string token, string tokenType) {
             string tokenPrefix;
             int chainIndex, tokenLength;
 
             if (token.IndexOf(":") == -1) {
                 return null;
             }
+            tokenType = "[" + tokenType + "]";
             tokenPrefix = token.Substring(0, token.IndexOf(":"));
-            if (!tokenPrefix.Equals(typePrefix + "Parameter", StringComparison.InvariantCultureIgnoreCase)) {
+            if (!tokenPrefix.Equals("Parameter" + tokenType, StringComparison.InvariantCultureIgnoreCase)) {
                 return null;
             }
 
@@ -191,15 +192,16 @@ namespace Laser.Orchard.StartupConfig.Tokens {
             return FilterChainTypedParam(token, "Culture");
         }
 
-        private Tuple<string, string> FilterChainTypedParam(string token, string typePrefix) {
+        private Tuple<string, string> FilterChainTypedParam(string token, string tokenType) {
             string tokenPrefix;
             int chainIndex, tokenLength;
           
             if (token.IndexOf(":") == -1) {
                 return null;
             }
+            tokenType = "[" + tokenType + "]";
             tokenPrefix = token.Substring(0, token.IndexOf(":"));
-            if (!tokenPrefix.Equals(typePrefix + "Parameter", StringComparison.InvariantCultureIgnoreCase)) {
+            if (!tokenPrefix.Equals("Parameter" +  tokenType, StringComparison.InvariantCultureIgnoreCase)) {
                 return null;
             }
 
