@@ -10,8 +10,8 @@
   "image": [
     "{Site.BaseUrl}{Content.Fields.CONTENTNAME.GALLERY.Url}"
    ],
-  "datePublished": "{Content.Date}",
-  "dateModified": "{Content.DateModified}",
+  "datePublished": "{Content.Date.Local.Format:yyyy-MM-ddTHH:mm:ss}",
+  "dateModified": "{Content.DateModified.Local.Format:yyyy-MM-ddTHH:mm:ss}",
   "author": {{
     "@type": "Person",
     "name": "{Content.Fields.CommonPart.Creator}"
