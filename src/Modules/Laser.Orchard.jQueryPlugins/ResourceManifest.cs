@@ -139,6 +139,9 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("LightGallery")
                 .SetUrl("lightgallery/1.4.0/lightgallery.min.css", "lightgallery/1.4.0//lightgallery.css")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lightgallery.min.css", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lightgallery.css");
+            manifest.DefineStyle("LightGalleryTransitions")
+                .SetUrl("lightgallery/1.4.0/lg-transitions.min.css", "lightgallery/1.4.0//lg-transitions.css")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lg-transitions.min.css", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lg-transitions.css");
             manifest.DefineScript("LightGallery")
                 .SetUrl("lightgallery/1.4.0/lightgallery.min.js", "lightgallery/1.4.0//lightgallery.js")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/js/lightgallery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/js/lightgallery.js")

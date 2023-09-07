@@ -780,6 +780,8 @@
     <Content Include="Styles\jsTree\Default\style.css" />
     <Content Include="Styles\jsTree\Default\style.min.css" />
     <Content Include="Styles\jsTree\Default\throbber.gif" />
+    <Content Include="Styles\lightgallery\1.4.0\lg-transitions.css" />
+    <Content Include="Styles\lightgallery\1.4.0\lg-transitions.min.css" />
     <Content Include="Styles\lightgallery\1.4.0\lightgallery.css" />
     <Content Include="Styles\lightgallery\1.4.0\lightgallery.min.css" />
     <Content Include="Styles\rcswitcher.min.css" />
