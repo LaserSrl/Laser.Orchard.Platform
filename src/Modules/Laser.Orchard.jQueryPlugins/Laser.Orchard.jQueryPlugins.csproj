@@ -702,6 +702,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lightgallery\1.4.0\lightgallery.js" />
+    <Content Include="Scripts\lightgallery\1.4.0\lightgallery.min.js" />
     <Content Include="Scripts\Threejs\r153\three.js" />
     <Content Include="Scripts\Threejs\r153\three.min.js" />
     <Content Include="Scripts\Threejs\r153\three.module.js" />
@@ -778,6 +780,10 @@
     <Content Include="Styles\jsTree\Default\style.css" />
     <Content Include="Styles\jsTree\Default\style.min.css" />
     <Content Include="Styles\jsTree\Default\throbber.gif" />
+    <Content Include="Styles\lightgallery\1.4.0\lg-transitions.css" />
+    <Content Include="Styles\lightgallery\1.4.0\lg-transitions.min.css" />
+    <Content Include="Styles\lightgallery\1.4.0\lightgallery.css" />
+    <Content Include="Styles\lightgallery\1.4.0\lightgallery.min.css" />
     <Content Include="Styles\rcswitcher.min.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
