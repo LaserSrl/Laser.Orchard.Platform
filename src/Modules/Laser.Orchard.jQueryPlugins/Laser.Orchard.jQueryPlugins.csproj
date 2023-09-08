@@ -784,6 +784,11 @@
     <Content Include="Styles\lightgallery\1.4.0\lg-transitions.min.css" />
     <Content Include="Styles\lightgallery\1.4.0\lightgallery.css" />
     <Content Include="Styles\lightgallery\1.4.0\lightgallery.min.css" />
+    <Content Include="Styles\lightgallery\fonts\lg.svg" />
+    <Content Include="Styles\lightgallery\img\loading.gif" />
+    <Content Include="Styles\lightgallery\img\video-play.png" />
+    <Content Include="Styles\lightgallery\img\vimeo-play.png" />
+    <Content Include="Styles\lightgallery\img\youtube-play.png" />
     <Content Include="Styles\rcswitcher.min.css" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
@@ -811,6 +816,9 @@
     <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\bootstrap4-glyphicons\fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Styles\bootstrap4-glyphicons\maps\glyphicons-fontawesome.less" />
+    <Content Include="Styles\lightgallery\fonts\lg.eot" />
+    <Content Include="Styles\lightgallery\fonts\lg.ttf" />
+    <Content Include="Styles\lightgallery\fonts\lg.woff" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ResourceManifest.cs" />
