@@ -44,11 +44,23 @@ namespace Laser.Orchard.Maps {
                  .AddAttribute("async", "async")
                  .AddAttribute("defer", "defer");
 
+            // Obsolete script call for Places libraries
             manifest.DefineScript("GoogleMapsPlacesLib")
                 .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places");
 
+            // New script call for Places libraries
+            manifest.DefineScript("GoogleMapsAPIPlaces")
+                .SetUrl("googlemapsapiloader.js?key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=places")
+                .AddAttribute("googlemapsloader", "googlemapsloader");
+
+            // Obsolete script call for Geometry libraries
             manifest.DefineScript("GoogleMapsGeometryLib")
                 .SetUrl("https://maps.googleapis.com/maps/api/js?v=3.exp&key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=geometry");
+
+            // New script call for Geometry libraries
+            manifest.DefineScript("GoogleMapsAPIGeometry")
+                .SetUrl("googlemapsapiloader.js?key=" + apiKey + languageQueryStringForGoogleMaps + "&libraries=geometry")
+                .AddAttribute("googlemapsloader", "googlemapsloader");
 
             manifest.DefineScript("MarkerClusterer")
                 .SetUrl("MarkerClusterer.js");

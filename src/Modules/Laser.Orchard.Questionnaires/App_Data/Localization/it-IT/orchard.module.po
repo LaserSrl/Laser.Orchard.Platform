@@ -884,6 +884,34 @@ msgctxt "Laser.Orchard.Questionnaires.Navigation.AdminMenu"
 msgid "Statistics"
 msgstr "Statistiche"
 
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Impossible to validate conditions."
+msgstr "Impossibile validare le condizioni."
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Please, accept our terms and conditions!"
+msgstr "Si prega di accettare i termini e le condizioni!"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Your answer to {0} must be a valid date"
+msgstr "La tua risposta a {0} deve essere una data valida"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Your answer to {0} must be a valid date and time"
+msgstr "La tua risposta a {0} deve essere un valore valido di data e ora"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Your answer to {0} must be a valid email address"
+msgstr "La tua risposta a {0} deve essere un indirizzo e-mail valido"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Your answer to {0} must be a valid internet address"
+msgstr "La tua risposta a {0} deve essere un indirizzo internet valido"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "Your answer to {0} must be a valid number"
+msgstr "La tua risposta a {0} deve essere un numero valido"
+
 msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnairesServices"
 msgid "Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes."
 msgstr "Impossibile cancellare la risposta: \"{0}"\ in quanto già selezionata in una o più risposte utente. La risposta è stata impostata come \"invisibile\". Per accettare la modifica {1} il contenuto."
@@ -924,3 +952,6 @@ msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAt
 msgid "You have to answer to {0}"
 msgstr "Domanda {0} obbligatoria"
 
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"

@@ -93,6 +93,12 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("Select2")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css");
 
+            // Bootstrap 
+            manifest.DefineStyle("BootstrapGlyphicons")
+                .SetUrl("bootstrap4-glyphicons/css/bootstrap-glyphicons.min.css", "bootstrap4-glyphicons/css/bootstrap-glyphicons.css");
+            manifest.DefineStyle("GlyphiconsFontawesome")
+                .SetUrl("bootstrap4-glyphicons/maps/glyphicons-fontawesome.min.css", "bootstrap4-glyphicons/maps/glyphicons-fontawesome.css");
+
             // Bootstrap Italia
             manifest.DefineStyle("BootstrapItalia")
                 .SetUrl("../BootstrapItalia/css/bootstrap-italia.min.css");
@@ -116,6 +122,18 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("FullCalendar")
                 .SetUrl("fullcalendar/fullcalendar-5.6.0/main.min.css", "fullcalendar/fullcalendar-5.6.0/main.css").SetVersion("5.6.0");
 
+            // Three.js and Photo Sphere Viewer
+            manifest.DefineScript("Three.js")
+                .SetUrl("Threejs/r153/three.min.js", "Threejs/r153/three.js");
+            manifest.DefineScript("PhotoSphereViewer")
+                .SetUrl("../photo-sphere-viewer-5.1.6/core/index.min.js", "../photo-sphere-viewer-5.1.6/core/index.js")
+                .SetDependencies("Three.js");
+            manifest.DefineStyle("PhotoSphereViewer")
+                .SetUrl("../photo-sphere-viewer-5.1.6/core/index.min.css", "../photo-sphere-viewer-5.1.6/core/index.css");
+
+            // Animate.css
+            manifest.DefineStyle("AnimateCss")
+                .SetUrl("Animate/4.1.1/animate.min.css", "Animate/4.1.1/animate.css");
         }
     }
 }

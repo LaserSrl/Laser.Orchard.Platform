@@ -1,4 +1,5 @@
-﻿using Orchard;
+﻿using Laser.Orchard.Questionnaires.Services;
+using Orchard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,7 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         // Allow injecting the application context, so that it may be
         // used to aid validation.
         public WorkContext WorkContext { get; set; }
+
+        public IQuestionnaireHelperServices QuestionnaireHelperService { get; set; }
     }
 }

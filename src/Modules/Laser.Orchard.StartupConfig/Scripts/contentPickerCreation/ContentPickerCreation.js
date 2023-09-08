@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-    $(".button").button();
-    $(".buttonset").buttonset();
+    //$(".button").button();
+    //$(".buttonset").buttonset();
 
     $("#layout-content").on("orchard-admin-contentpicker-create", "form", function (ev, data) {
         data = data || {};

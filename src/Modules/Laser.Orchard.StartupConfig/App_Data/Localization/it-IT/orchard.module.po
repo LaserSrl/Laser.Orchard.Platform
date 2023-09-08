@@ -201,6 +201,10 @@ msgid "Generate"
 msgstr "Genera"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
+msgid "Ip addresses, separated by comma. The last digit may be a * to represent a range of IPs. This only accepts IPv4."
+msgstr "Indirizzi ip, separati da virgola. L'ultima cifra può essere un carattere * per rappresentare un insieme di indirizzi ip. Questo parametro accetto soltanto il formato IPv4."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Name"
 msgstr "Nome"
 
@@ -215,6 +219,14 @@ msgstr "Validità in minuti"
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
 msgid "Verify TimeStamp"
 msgstr "Verifica TimeStamp"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/ExternalApplication.cshtml"
+msgid "Website urls, separated by comma. Each entry must start with its protocol (e.g.: 'http://')"
+msgstr "Gli indirizzi web, separati da virgola. Ogni valore deve iniziare con il protocollo (ad esempio: 'http://')"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
+msgid "Create New Item"
+msgstr "Crea nuovo"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Fields/ContentPickerCreateItem.Edit.cshtml"
 msgid "You are not authorized to create the content types associated to this field."
@@ -533,8 +545,16 @@ msgid "Taxonomy Settings"
 msgstr "Impostazioni della Tassonomia"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista dei plugin aggiuntivi quando TinyMce è eseguito a front end. Vai a capo per separare un plugin dall'altro. Se un plugin non ha il corrispondente plugin.min.js, specifica il nome corretto del file nella cartella dei plugin del modulo StartupConfig.<br/>Esempi:<br/>plugin1<br/>plugin2<br/>plugin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "A list of additional plugins when TinyMce is executed at front end. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
 msgstr "Lista di plugin addizionali per l'esecuzione di TinyMce a front end. Usare il ritorno a capo come separatore. Se un plugin non ha il file plugin.min.js, specificare il file corretto nella cartella del plugin.<br/>Esempio:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
+msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder of the StartupConfig module.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
+msgstr "Lista dei plugin aggiuntivi. Vai a capo per separare un plugin dall'altro. Se un plugin non ha il corrispondente plugin.min.js, specifica il nome corretto del file nella cartella dei plugin del modulo StartupConfig.<br/>Esempi:<br/>plugin1<br/>plugin2<br/>plugin3/editor_plugin.js"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/TinyMceSiteSettings.cshtml"
 msgid "A list of additional plugins. Use newline as separator. If a plugin does not have a plugin.min.js file, please specify the correct file name in the plugin folder.<br/>Examples:<br/>plugin1<br/>plugin2<br/>pligin3/editor_plugin.js"
@@ -1977,6 +1997,10 @@ msgid "RazorExecute:<file name>"
 msgstr "RazorExecute:<file name>"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "A string intended to be used in URLs and folders to get the proper path of a file specific for the tenant, for instance a Media inside the tenant's media folder."
+msgstr "Una stringa da usare negli url e nelle cartelle per ottenere il percorso corretto di uno specifico file all'interno del tenant, per esempio un file multimediale presente all'interno della cartella del tenant nei media."
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "A string intended to be used to start URLs. It resolves to either \"/\" if no prefix is set or \"/prefix/\" if there is a prefix for the tenant. If there is an application path that is correctly prepended."
 msgstr "Una stringa il cui scopo è essere usata all'inizio di URLs. Risulta in \"/\" se non è impostato nessun prefisso, o \"/prefisso/\" se c'è un prefisso configurato per il tenanto. Se è necessario inserire il path dell'applicazione, esso viene preposto correttamente."
 
@@ -1987,6 +2011,10 @@ msgstr "Cultura"
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Current Culture"
 msgstr "Cultura corrente"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
+msgid "Name of the Tenant"
+msgstr "Nome del Tenant"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.SiteTokens"
 msgid "Request Url Prefix"
@@ -2065,12 +2093,28 @@ msgid "ApiKey field must be minimum 22 characters length."
 msgstr "Il campo ApiKey deve essere di almeno 22 caratteri."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "Ip address field is required."
+msgstr "Il campo "indirizzo ip" deve essere compilato."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "Name field is required."
 msgstr "Il campo Nome è obbligatorio."
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "One or more ip addresses is not valid."
+msgstr "Uno o più indirizzi ip non sono validi."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "One or more websites is not valid."
+msgstr "Uno o più siti web non sono validi."
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
 msgid "Validity should be more than 0 minutes."
 msgstr "Validità deve essere maggiore di 0 minuti"
+
+msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplication"
+msgid "Website field is required."
+msgstr "Il campo "sito web" deve essere compilato"
 
 msgctxt "Laser.Orchard.StartupConfig.WebApiProtection.Models.ValidateExternalApplicationAttribute"
 msgid "ApiKey field is required."

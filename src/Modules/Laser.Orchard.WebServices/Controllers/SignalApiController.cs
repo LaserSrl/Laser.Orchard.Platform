@@ -53,7 +53,10 @@ namespace Laser.Orchard.WebServices.Controllers {
         /// <returns>returns a Response Object</returns>
         [WebApiKeyFilter(true)]
         [OutputCache(NoStore = true, Duration = 0)]
-        public Response Post([FromBody] Signal signal) {
+        public Response Post([FromBody] Signal signal, string signalName = "") {
+            if (!string.IsNullOrWhiteSpace(signalName)) {
+                signal.Name = signalName;//the signalName parameter overrides the body Signal.Name
+            }
             if (String.IsNullOrWhiteSpace(signal.Name) || signal.ContentId <= 0) {
                 throw new Exception("Invalid Signal parameters");
             }

@@ -63,7 +63,7 @@
                         @if (Model.ContactForm.AcceptPolicy) {
                             <span class="required">*</span>
                         }
-                        @policyText <a href="@policyUrl" target="_blank">@policyText</a>
+                        @policyText <a href="@policyUrl" target="_blank">@policyUrlText</a>
                         <span role="alert" id="AcceptError-@uniqueId" class="wpcf7-not-valid-tip" style="display:none">@T("Privacy Policy must be accepted.")</span>
                     </span>
                 }

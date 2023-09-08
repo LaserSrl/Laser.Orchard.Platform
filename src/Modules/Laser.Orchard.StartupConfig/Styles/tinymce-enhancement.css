@@ -1,5 +1,6 @@
 ﻿/* Classes to manage proper visuals in TinyMCE editor */
 .mce-visualblocks div:not([data-mce-bogus]) {
-  margin: 0 !important; }
+  margin: 0 !important;
+}
 
-/*# sourceMappingURL=data:application/json;base64,ewoJInZlcnNpb24iOiAzLAoJImZpbGUiOiAiQXNzZXRzL3RpbnltY2UtZW5oYW5jZW1lbnQuY3NzIiwKCSJzb3VyY2VzIjogWwoJCSJBc3NldHMvdGlueW1jZS1lbmhhbmNlbWVudC5zY3NzIgoJXSwKCSJuYW1lcyI6IFtdLAoJIm1hcHBpbmdzIjogIkFBQUEsd0RBQXdEO0FBQ3hELEFBQ0ksaUJBRGEsQ0FDYixHQUFHLEFBQUEsSUFBSyxFQUFBLEFBQUEsQUFBQSxjQUFDLEFBQUEsR0FBaUI7RUFDdEIsTUFBTSxFQUFFLFlBQVksR0FDdkIiCn0= */
+/*# sourceMappingURL=data:application/json;charset=utf-8,%7B%22version%22:3,%22sourceRoot%22:%22%22,%22sources%22:%5B%22file:///E:/Releases/Laser.Orchard/Laser.Orchard.Platform/src/Modules/Laser.Orchard.StartupConfig/Assets/tinymce-enhancement.scss%22%5D,%22names%22:%5B%5D,%22mappings%22:%22AAAC;AAEG;EACI%22%7D */

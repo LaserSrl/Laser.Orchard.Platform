@@ -6,7 +6,13 @@
     Script.Require("jQuery");
     ITemplateService _templateService;
     WorkContext.TryResolve<ITemplateService>(out _templateService);
-    var listTemplate = _templateService.GetTemplates().Where(w => !w.IsLayout);
+    var listTemplate = _templateService.GetTemplates().Where(w => !w.IsLayout).ToList();
+    // Adds an empty option (value -1) to the Templates list
+    var templateSelectList = new SelectList(listTemplate, "Id", "Title", Model.ContactForm.TemplateRecord_Id).ToList();
+    templateSelectList.Insert(0, new SelectListItem {
+        Text = "",
+        Value = "-1"
+    });
 }
 <fieldset>
     <div class="editor-label">
@@ -57,7 +63,7 @@
     <div class="editor-field">
         <label>@Html.CheckBoxFor(model => model.ContactForm.EnableUpload) @T("Enable File Upload")</label>
         <span class="hint">@T("If checked, an upload button will be added to the form.")</span>
-        <span id="path-upload-field">@T("Upload files in the following path:") @Model.BasePath @Html.TextBoxFor(model => model.ContactForm.PathUpload, new { @class = "text"})</span>
+        <span id="path-upload-field">@T("Upload files in the following path:") @Model.BasePath @Html.TextBoxFor(model => model.ContactForm.PathUpload, new { @class = "text" })</span>
         <span id="path-upload-hint" class="hint">@T("If the folder does not exists, it will be created.")</span>
         <label id="required-attachment-field">@Html.CheckBoxFor(model => model.ContactForm.RequireAttachment) @T("Require attachment")</label>
         <span id="required-attachment-hint" class="hint"> @T("If this option is checked, every form submission or API request must have an attached file.")</span>
@@ -70,24 +76,23 @@
         @T("Mail Template")
     </div>
     <div class="editor-field">
-        @Html.DropDownListFor(m => m.ContactForm.TemplateRecord_Id, new SelectList(listTemplate, "Id", "Title", Model.ContactForm.TemplateRecord_Id), "")
+        @Html.DropDownListFor(m => m.ContactForm.TemplateRecord_Id, templateSelectList)
     </div>
     <span class="hint">
         @T("Variables passed to the template through the model:")
         <br />
         <ul>
-            <li><u>SenderName</u> (@T("The name of the sender"))</li>
-            <li><u>SenderEmail</u> (@T("The email address of the sender"))</li>
-            <li><u>Subject</u> (@T("The subject of the email"))</li>
-            <li><u>Message</u> (@T("The text of the email"))</li>
-            <li><u>AttachmentUrl</u> (@T("The URL of the attachment"))</li>
-            <li><u>AdditionalData</u> (@T("A dictionary containing all the other data"))</li>
+            <li><u>Model.SenderName</u> (@T("The name of the sender"))</li>
+            <li><u>Model.SenderEmail</u> (@T("The email address of the sender"))</li>
+            <li><u>Model.Subject</u> (@T("The subject of the email"))</li>
+            <li><u>Model.Message</u> (@T("The text of the email"))</li>
+            <li><u>Model.AttachmentUrl</u> (@T("The URL of the attachment"))</li>
+            <li><u>Model.AdditionalData</u> (@T("A dictionary containing all the other data"))</li>
         </ul>
     </span>
 </fieldset>
 
-@using (Script.Foot())
-{
+@using (Script.Foot()) {
     <script type="text/javascript">
 //<![CDATA[
         $(function () {
@@ -141,5 +146,5 @@
             });
         })
 //]]>
-</script>
+    </script>
 }

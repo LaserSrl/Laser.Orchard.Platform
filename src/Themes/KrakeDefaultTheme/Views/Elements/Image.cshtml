@@ -14,6 +14,6 @@
         tagBuilder.Attributes["alt"] = T("Image not found").Text;
     }
     
-    tagBuilder.AddCssClass("img-responsive");
+    tagBuilder.AddCssClass("img-fluid");
 }
 @tagBuilder.ToHtmlString(TagRenderMode.SelfClosing)

@@ -18,7 +18,7 @@
                     else {
                         <i class="fa fa-exclamation-triangle" style="color: red"></i>
                     }
-                    @if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                    @if (acceptTypePolicy) {
                         @T(Model.Policies[i].Accepted ? "Accepted policy on {0}" : "Not accepted policy on {0}", Model.Policies[i].AnswerDate)
                     }
                     else {
@@ -31,7 +31,7 @@
                 }
                 else if (!Model.Policies[i].Accepted || Model.EditMode) {
                     @Html.HiddenFor(model => model.Policies[i].AnswerId)
-                    if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                    if (acceptTypePolicy) {
                         @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
                         @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
                     }
@@ -46,7 +46,7 @@
                 }
             }
             else {
-                if (Model.Policies[i].PolicyText.PolicyType == null || acceptTypePolicy) {
+                if (acceptTypePolicy) {
                     @Html.RadioButtonFor(model => model.Policies[i].Accepted, true) @T("Accept")
                     @Html.RadioButtonFor(model => model.Policies[i].Accepted, false) @T("Don't Accept")
                 }

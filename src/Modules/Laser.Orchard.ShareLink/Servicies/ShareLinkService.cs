@@ -75,17 +75,17 @@ namespace Laser.Orchard.ShareLink.Servicies {
             var partSetting = part.Settings.GetModel<ShareLinkPartSettingVM>();
             var tokens = new Dictionary<string, object> { { "Content", part.ContentItem } };
 
-            if ((!partSetting.ShowBodyChoise) || part.SharedBody == "") {
+            if ((!partSetting.ShowBodyChoise) || string.IsNullOrWhiteSpace(part.SharedBody)) {
                 var s = FillString(partSetting.SharedBody, moduleSetting.SharedBody, tokens);
                 part.SharedBody = ProcessString(s, true);
             }
-            if ((!partSetting.ShowTextChoise) || part.SharedText == "") {
+            if ((!partSetting.ShowTextChoise) || string.IsNullOrWhiteSpace(part.SharedText)) {
                 var s = FillString(partSetting.SharedText, moduleSetting.SharedText, tokens);
                 if (!string.IsNullOrWhiteSpace(s)) {
                     part.SharedText = ProcessString(s);
                 }
             }
-            if ((!partSetting.ShowLinkChoise) || part.SharedLink == "") {
+            if ((!partSetting.ShowLinkChoise) || string.IsNullOrWhiteSpace(part.SharedLink)) {
                 var s = FillString(partSetting.SharedLink, moduleSetting.SharedLink, tokens);
                 if (!string.IsNullOrWhiteSpace(s)) {
                     part.SharedLink = ProcessString(s);
@@ -102,11 +102,10 @@ namespace Laser.Orchard.ShareLink.Servicies {
                     if (!string.IsNullOrEmpty(moduleSetting.SharedImage)) {
                         ListId = _tokenizer.Replace(moduleSetting.SharedImage, tokens);
                         part.SharedImage = GetImgUrl(ListId);
-
                     }
                 }
-
-                part.SharedIdImage = part.SharedImage.Replace("{", "").Replace("}", "");
+                
+                part.SharedIdImage = part.SharedImage?.Replace("{", "").Replace("}", "") ?? "";
                 part.SharedImage = GetImgUrl(part.SharedIdImage);
             }
         }
