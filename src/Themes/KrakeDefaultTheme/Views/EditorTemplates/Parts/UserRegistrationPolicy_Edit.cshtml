@@ -6,8 +6,9 @@
     <p>@T("Read carefully the following policies")</p>
     <div class="space-20"></div>
 </div>
-<div class="panel-group" id="accordion">
-    @for (int i = 0; i < Model.Count; i++) {
+<div id="accordion">
+    @for (int i = 0; i < Model.Count; i++)
+    {
         var acceptTypePolicy = Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.Policy
                            || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
                            || Model[i].Policy.Type == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
@@ -17,19 +18,26 @@
         @Html.HiddenFor(m => m[i].Policy.Type)
         @Html.HiddenFor(m => m[i].Policy.Title)
         @Html.HiddenFor(m => m[i].Policy.Body)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-@Model[i].PolicyId">@(Model[i].Policy.Title) </a></h4>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#accordion" data-target="#collapse-@Model[i].PolicyId" aria-controls="collapse-@Model[i].PolicyId" @((i == 0) ? "aria-expanded=true" : "")>
+                        @(Model[i].Policy.Title)
+                    </button>
+                </h4>
             </div>
-            <div id="collapse-@Model[i].PolicyId" class="panel-collapse collapse @((i==0)?"in":"")">
-                <div class="panel-body">
+            <div id="collapse-@Model[i].PolicyId" class="collapse @((i==0)?"show":"")">
+                <div class="card-body">
                     @Html.Raw(Model[i].Policy.Body)
                     <br>
                     <div class="text-right">
-                        @if (Model[i].Policy.Type == null || acceptTypePolicy) {// Privacy
+                        @if (Model[i].Policy.Type == null || acceptTypePolicy)
+                        {// Privacy
                             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept" }) @T("Accept")</label>
                             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id = Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept" }) @T("Don't Accept")</label>
-                        } else { // Regolamento
+                        }
+                        else
+                        { // Regolamento
                             <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
                         }
                     </div>
@@ -40,28 +48,28 @@
 </div>
 
 @*@using Orchard.ContentManagement;
-@model IList<Laser.Orchard.UsersExtensions.Models.UserPolicyAnswerWithContent>
-<fieldset>
-    <legend>@T("Policies")</legend>
-    @for (int i = 0; i < Model.Count; i++) {
-        var acceptTypePolicy = ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
-                          || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
+    @model IList<Laser.Orchard.UsersExtensions.Models.UserPolicyAnswerWithContent>
+    <fieldset>
+        <legend>@T("Policies")</legend>
+        @for (int i = 0; i < Model.Count; i++) {
+            var acceptTypePolicy = ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.Policy
+                              || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.CommercialUse
+                              || ((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == Laser.Orchard.Policy.PolicyTypeOptions.ThirdParty;
 
-        <div>
-            @Html.HiddenFor(m => m[i].PolicyId)
-            @Html.HiddenFor(m => m[i].UserHaveToAccept)
-            <h3>@(((dynamic)Model[i].PolicyText).TitlePart.Title)</h3>
-            <div>@Html.Raw(((dynamic)Model[i].PolicyText).BodyPart.Text)</div>
-            @if (((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == null || acceptTypePolicy) {// Privacy
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"}) @T("Accept")</label>
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"}) @T("Don't Accept")</label>
-            } else { // Regolamento
-                <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
-            }
-        </div>
-    }
-</fieldset>*@
+            <div>
+                @Html.HiddenFor(m => m[i].PolicyId)
+                @Html.HiddenFor(m => m[i].UserHaveToAccept)
+                <h3>@(((dynamic)Model[i].PolicyText).TitlePart.Title)</h3>
+                <div>@Html.Raw(((dynamic)Model[i].PolicyText).BodyPart.Text)</div>
+                @if (((dynamic)Model[i].PolicyText).PolicyTextInfoPart.PolicyType == null || acceptTypePolicy) {// Privacy
+                    <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, true, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_Accept"}) @T("Accept")</label>
+                    <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept")">@Html.RadioButtonFor(model => model[i].PolicyAnswer, false, new { id=Html.FieldIdFor(model => model[i].PolicyAnswer) + "_NoAccept"}) @T("Don't Accept")</label>
+                } else { // Regolamento
+                    <label for="@(Html.FieldIdFor(model => model[i].PolicyAnswer))">@Html.EditorFor(model => model[i].PolicyAnswer) @T("I have read the regulation.")</label>
+                }
+            </div>
+        }
+    </fieldset>*@
 
 <hr>
 

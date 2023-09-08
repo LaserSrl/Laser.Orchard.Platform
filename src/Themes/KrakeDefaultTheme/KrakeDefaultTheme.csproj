@@ -90,8 +90,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Styles\bootstrap.min.css" />
+    <Content Include="Scripts\krake.js" />
+    <Content Include="Scripts\krake.min.js">
+      <DependentUpon>krake.js</DependentUpon>
+    </Content>
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\css\font-awesome.min.css" />
     <Content Include="Styles\fonts\font-awesome-4.6.2\fonts\fontawesome-webfont.svg" />
@@ -102,7 +104,13 @@
     <Content Include="Styles\images\logo.png" />
     <Content Include="Styles\images\milano.png" />
     <Content Include="Styles\style.css" />
+    <Content Include="Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
     <Content Include="Styles\toggle.css" />
+    <Content Include="Styles\toggle.min.css">
+      <DependentUpon>toggle.css</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -274,7 +282,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SimpleMenuItem.cshtml" />
+    <Content Include="Views\__SimpleMenuItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Elements\Column.cshtml" />
@@ -320,6 +328,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Orchard.Users\Account\ChangeExpiredPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MenuItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

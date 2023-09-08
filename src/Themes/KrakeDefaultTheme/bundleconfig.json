@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "Styles/style.min.css",
+    "inputFiles": [
+      "Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Styles/toggle.min.css",
+    "inputFiles": [
+      "Styles/toggle.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/krake.min.js",
+    "inputFiles": [
+      "Scripts/krake.js"
+    ]
+  }
+]

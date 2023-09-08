@@ -73,7 +73,7 @@
                                 MediaLibraryPickerField field = (MediaLibraryPickerField)contentItem.Parts.SingleOrDefault(x => x.PartDefinition.Name == contentItem.ContentType).Fields.FirstOrDefault(f => f.PartFieldDefinition.FieldDefinition.Name == "MediaLibraryPickerField");
                                 if (field != null) {
                                     foreach (var mediapart in field.MediaParts.Take(8)) {
-                                        <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" src="@Display.ResizeMediaUrl(Width: 100, Height: 100, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" alt="" class="img-responsive img-zoomable" style="float:left;margin-right:5px;" />
+                                        <img data-zoomimage="@Display.ResizeMediaUrl(Width: 400, Height: 400, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" src="@Display.ResizeMediaUrl(Width: 100, Height: 100, Mode: "resize", Alignment: "middlecenter", Path: mediapart.MediaUrl)" alt="" class="img-fluid img-zoomable" style="float:left;margin-right:5px;" />
                                     }
                                 }
                             }

@@ -1,0 +1,40 @@
+﻿@{
+    // odd formatting in this file is to cause more attractive results in the output.
+    var items = Enumerable.Cast<dynamic>((System.Collections.IEnumerable)Model);
+}
+@{
+    if (!HasText(Model.Text)) {
+        @DisplayChildren(Model)
+    }
+    else {
+        if (Model.Classes.Count == 0) {
+            Model.Classes.Add("nav-link");
+        }
+        if ((bool)Model.Selected) {
+            Model.Classes.Add("active");
+        }
+
+        if (items.Any()) {
+            Model.Classes.Add("dropdown-toggle");
+            Model.Href = "#";
+        }
+
+        if (HasText(Model.Text)) {
+            var cssClasses = "";
+            if (Model.Classes != null) {
+                cssClasses = string.Join(" ", Model.Classes);
+            }
+            <a class="@cssClasses" href="@Model.Href" @(items.Any() ? "data-toggle=dropdown role=button aria-expanded=false" : "")>@Model.Text</a>
+            if (items.Any()) {
+                <ul class="dropdown-menu">
+                    @foreach (var item in Model.Items) {
+                        item.Classes.Add("dropdown-item sublevel");
+                        <li class="dropdown">
+                            @Display(item)
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    }
+}

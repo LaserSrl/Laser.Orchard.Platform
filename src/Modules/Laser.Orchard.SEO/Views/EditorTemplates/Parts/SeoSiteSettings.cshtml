@@ -2,7 +2,7 @@
 
 <fieldset>
     <legend>@T("SEO settings for all content")</legend>
-    <div>
+    <div class="settings">
         <label for="@Html.FieldIdFor(m => m.CanonicalUrl)" style="font-weight: normal;">@T("Canonical Url")</label>
         @Html.TextBoxFor(m => m.CanonicalUrl, new { @class = "large text tokenized", @title = T("Canonical Url.") })
   	    <span class="hint">@T("Canonical url es: {Site.BaseUrl}{Content.DisplayUrl}")</span>

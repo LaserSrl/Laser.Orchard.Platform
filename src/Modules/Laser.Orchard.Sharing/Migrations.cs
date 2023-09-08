@@ -8,17 +8,14 @@ namespace Laser.Orchard.Sharing
     {
         public int Create()
         {
-            
-            SchemaBuilder.CreateTable("ShareBarSettingsPartRecord",
-                                      table => table
-                                                   .ContentPartRecord()
-                                                   .Column<string>("AddThisAccount")
-                );
-
-
             ContentDefinitionManager.AlterPartDefinition("ShareBarPart", builder => builder.Attachable());
             
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.DropTable("ShareBarSettingsPartRecord");
+            return 2;
         }
     }
 }

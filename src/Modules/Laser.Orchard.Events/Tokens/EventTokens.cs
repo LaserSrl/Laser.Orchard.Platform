@@ -9,16 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Laser.Orchard.Events.Tokens
-{
-    public interface ITokenProvider : IEventHandler
-    {
-        void Describe(DescribeContext context);
-        void Evaluate(EvaluateContext context);
-    }
+namespace Laser.Orchard.Events.Tokens {
 
-    public class EventTokens : ITokenProvider
-    {
+    public class EventTokens : ITokenProvider {
         private readonly ICurrentContentAccessor _currentContentAccessor;
         private readonly ITokenizer _tokenizer;
         private readonly IWorkContextAccessor _workContextAccessor;
@@ -26,8 +19,7 @@ namespace Laser.Orchard.Events.Tokens
 
         public Localizer T { get; set; }
 
-        public EventTokens(ICurrentContentAccessor currentContentAccessor, ITokenizer tokenizer, IWorkContextAccessor workContextAccessor)
-        {
+        public EventTokens(ICurrentContentAccessor currentContentAccessor, ITokenizer tokenizer, IWorkContextAccessor workContextAccessor) {
             _currentContentAccessor = currentContentAccessor;
             _tokenizer = tokenizer;
             _workContextAccessor = workContextAccessor;
@@ -35,29 +27,21 @@ namespace Laser.Orchard.Events.Tokens
             T = NullLocalizer.Instance;
         }
 
-        public void Describe(DescribeContext context)
-        {
+        public void Describe(DescribeContext context) {
             context.For("Content", T("Event List"), T("Tokens for Calendars (list shape)"))
                    .Token("CalendarStartDate", T("List Start Date"), T("Start date of the parent Calendar"))
                    .Token("CalendarEndDate", T("List End Date"), T("End date of the parent Calendar"));
         }
 
-        public void Evaluate(EvaluateContext context)
-        {
-            if (_currentContentAccessor.CurrentContentItem == null)
-                return;
-            else if (_currentContentAccessor.CurrentContentItem.As<CalendarPart>() == null)
-                return;
-
-            context.For("Content", _currentContentAccessor.CurrentContentItem)
-                   .Token("CalendarStartDate", content => GetStartDate(content))
-                   .Chain("CalendarStartDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetStartDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; })
-                   .Token("CalendarEndDate", content => GetEndDate(content))
-                   .Chain("CalendarEndDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetEndDate(content), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; });
+        public void Evaluate(EvaluateContext context) {
+            context.For<IContent>("Content")
+                   .Token("CalendarStartDate", content => GetStartDate(content.ContentItem))
+                   .Chain("CalendarStartDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetStartDate(content.ContentItem), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; })
+                   .Token("CalendarEndDate", content => GetEndDate(content.ContentItem))
+                   .Chain("CalendarEndDate", "Date", content => { DateTime dateResult; if (DateTime.TryParse(GetEndDate(content.ContentItem), _cultureInfo.Value, DateTimeStyles.None, out dateResult)) return dateResult; else return null; });
         }
 
-        private string GetStartDate(ContentItem content)
-        {
+        private string GetStartDate(ContentItem content) {
             CalendarPart calendar = content == null ? null : content.As<CalendarPart>();
 
             if (calendar == null)
@@ -66,8 +50,7 @@ namespace Laser.Orchard.Events.Tokens
                 return _tokenizer.Replace(calendar.StartDate, new Dictionary<string, object>());
         }
 
-        private string GetEndDate(ContentItem content)
-        {
+        private string GetEndDate(ContentItem content) {
             CalendarPart calendar = content == null ? null : content.As<CalendarPart>();
 
             if (calendar == null)

@@ -99,8 +99,10 @@
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\AdditionalCookieProvider.cs" />
+    <Compile Include="Services\IQuestionnaireHelperServices.cs" />
     <Compile Include="Services\IQuestionnairesServices.cs" />
     <Compile Include="Services\IQuestionAnswerRepositoryService.cs" />
+    <Compile Include="Services\QuestionnaireHelperService.cs" />
     <Compile Include="Services\QuestionnairesServices.cs" />
     <Compile Include="Services\QuestionAnswerRepositoryService.cs" />
     <Compile Include="Settings\GamePartEditorEvents.cs" />

@@ -1,4 +1,5 @@
 ﻿using Orchard;
+using System.Web.Mvc;
 
 namespace Laser.Orchard.StartupConfig.Services {
     public interface IThemeHelperService : IDependency {
@@ -23,5 +24,14 @@ namespace Laser.Orchard.StartupConfig.Services {
         /// </summary>
         /// <returns></returns>
         string GetLocalizedHomeUrl();
+
+        /// <summary>
+        /// Maps the path of a theme asset, "climbing" from the current theme to its
+        /// base themes if necessary.
+        /// </summary>
+        /// <param name="html">An instance of HtmlHelper from the calling view.</param>
+        /// <param name="relPath">The asset's path</param>
+        /// <returns></returns>
+        string ThemeAssetPath(HtmlHelper html, string relPath);
     }
 }
