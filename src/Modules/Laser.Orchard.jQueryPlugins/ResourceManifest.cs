@@ -17,12 +17,12 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("jQuery_Cycle2").SetUrl("jquery.cycle2.min.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_MultiSelect").SetUrl("jquery.multiSelect.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_Tools").SetUrl("jquery.tools.min.js").SetDependencies("jQuery", "jQueryUI_Core", "jQueryMigrate");
-         //   manifest.DefineScript("jQuery_MultiSelect").SetUrl("jquery.multiSelect.js").SetDependencies("jQuery");
+            //   manifest.DefineScript("jQuery_MultiSelect").SetUrl("jquery.multiSelect.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_CarouFredSel").SetUrl("jquery.carouFredSel.min.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_Carousel").SetUrl("jquery.carousel.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_Contactable").SetUrl("jquery.contactable.min.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_UI_Multiselect_Widget").SetUrl("jquery.ui.multiselect.widget.min.js").SetDependencies("jQuery", "jQueryUI_Widget", "jQueryUI_Core", "jQueryUI_Position");
-    
+
             manifest.DefineScript("jQuery_Validate_Unobtrusive").SetUrl("jquery.validate.unobtrusive.min.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_Validate").SetUrl("jquery.validate.min.js").SetDependencies("jQuery");
             manifest.DefineScript("jQuery_Validate_Vsdoc").SetUrl("jquery.validate-vsdoc.js").SetDependencies("jQuery");
@@ -53,7 +53,7 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineScript("jqPlotEnhancedPieLegendRenderer").SetUrl("jqPlot/plugins/jqplot.enhancedPieLegendRenderer.js").SetDependencies("jqPlot");
 
             manifest.DefineScript("jsonViewer").SetUrl("json-browse/jquery.json-browse.js").SetDependencies("jQuery");
-            manifest.DefineScript("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js","https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js").SetDependencies("jQuery");
+            manifest.DefineScript("animsition").SetCdn("https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.min.js", "https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js").SetDependencies("jQuery");
 
             manifest.DefineScript("Select2")
                 .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js")
@@ -80,7 +80,7 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("jsTree_Default_Mini").SetUrl("jsTree/Default/style.min.css");
             manifest.DefineStyle("jsTree_DefaultDark").SetUrl("jsTree/DefaultDark/style.css");
             manifest.DefineStyle("jsTree_DefaultDark_Mini").SetUrl("jsTree/DefaultDark/style.min.css");
-          
+
             manifest.DefineStyle("Accordion").SetUrl("accordion.css");
 
             manifest.DefineStyle("rcswitcher").SetUrl("rcswitcher.min.css");
@@ -135,6 +135,17 @@ namespace Laser.Orchard.jQueryPlugins {
             manifest.DefineStyle("AnimateCss")
                 .SetUrl("Animate/4.1.1/animate.min.css", "Animate/4.1.1/animate.css");
 
+            // LightGallery 1.4.0
+            manifest.DefineStyle("LightGallery")
+                .SetUrl("lightgallery/1.4.0/lightgallery.min.css", "lightgallery/1.4.0//lightgallery.css")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lightgallery.min.css", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lightgallery.css");
+            manifest.DefineStyle("LightGalleryTransitions")
+                .SetUrl("lightgallery/1.4.0/lg-transitions.min.css", "lightgallery/1.4.0//lg-transitions.css")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lg-transitions.min.css", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/css/lg-transitions.css");
+            manifest.DefineScript("LightGallery")
+                .SetUrl("lightgallery/1.4.0/lightgallery.min.js", "lightgallery/1.4.0//lightgallery.js")
+                .SetCdn("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/js/lightgallery.min.js", "https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.4.0/js/lightgallery.js")
+                .SetDependencies("jQuery");
         }
     }
 }
