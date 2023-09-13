@@ -156,6 +156,10 @@ msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/Favicon.Favicon
 msgid "Favicon URL"
 msgstr "Indirizzo virtuale immagine"
 
+msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/Favicon.FaviconSettings.cshtml"
+msgid "Url of the favicon. Can be a relative url and can also be tokenized (e.g.: /Media/{Site.TenantName}/favicon.ico)"
+msgstr "Url della favicon. Può essere un Url relativo e può anche essere tokenizzato (es: /Media/{Site.TenantName}/favicon.ico)"
+
 msgctxt "~/Modules/Laser.Orchard.SEO/Views/EditorTemplates/Parts/KeywordHelper.cshtml"
 msgid " Add keyword"
 msgstr "Aggiungi parola chiave"

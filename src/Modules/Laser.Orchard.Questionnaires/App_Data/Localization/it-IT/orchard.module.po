@@ -893,6 +893,10 @@ msgid "Please, accept our terms and conditions!"
 msgstr "Si prega di accettare i termini e le condizioni!"
 
 msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
+msgid "You have to answer to {0}"
+msgstr "Domanda {0} obbligatoria"
+
+msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
 msgid "Your answer to {0} must be a valid date"
 msgstr "La tua risposta a {0} deve essere una data valida"
 
@@ -952,6 +956,3 @@ msgctxt "Laser.Orchard.Questionnaires.ViewModels.ValidateFrontEndQuestionnaireAt
 msgid "You have to answer to {0}"
 msgstr "Domanda {0} obbligatoria"
 
-msgctxt "Laser.Orchard.Questionnaires.Services.QuestionnaireHelperServices"
-msgid "You have to answer to {0}"
-msgstr "Domanda {0} obbligatoria"
