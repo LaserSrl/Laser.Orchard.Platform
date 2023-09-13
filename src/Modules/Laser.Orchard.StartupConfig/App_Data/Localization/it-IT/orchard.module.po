@@ -333,12 +333,24 @@ msgid "Allow Cross-Origin access to the frontend."
 msgstr "Permetti accessi Cross-Origin al frontend."
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Cookies"
+msgstr "Cookies"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
 msgid "Cross Origin Settings"
 msgstr "Impostazioni per il Cross-Origin"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
 msgid "Don't Alter: keep the attribute value originally set by the feature that added the cookie."
 msgstr "Don't Alter: mantieni il valore di attributo impostato dalla funzionalità che ha aggiunto il cookie."
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Force HttpOnly cookies"
+msgstr "Forza l'attributo HttpOnly per i cookies"
+
+msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
+msgid "Force Secure cookies"
+msgstr "Forza l'attributo Secure per i cookies"
 
 msgctxt "~/Modules/Laser.Orchard.StartupConfig/Views/EditorTemplates/Parts/AllowCrossOriginSettings.cshtml"
 msgid "Forms with antiforgery tokens add the X-Frame-Options header to further harden against XSRF attacks. However this prevents use cases where we want our forms in an iframe. The options above allow removing that header."
@@ -1999,6 +2011,18 @@ msgstr "Il contenuto elaborato"
 msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
 msgid "Parameter:<PartName-PropertyName>"
 msgstr "Parametro:<NomeDellaParte-Proprietà>"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
+msgid "Parameter[Culture]:<PartName-PropertyName>"
+msgstr "Parameter[Culture]:<PartName-PropertyName>"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
+msgid "Parameter[DateTime]:<PartName-PropertyName>"
+msgstr "Parameter[DateTime]:<PartName-PropertyName>"
+
+msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
+msgid "Parameter[Url]:<PartName-PropertyName>"
+msgstr "Parameter[Url]:<PartName-PropertyName>"
 
 msgctxt "Laser.Orchard.StartupConfig.Tokens.ParameterToken"
 msgid "Return the property value of a part specified"

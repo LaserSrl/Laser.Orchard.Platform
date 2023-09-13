@@ -9,12 +9,36 @@
 # > msgstr "{ messaggio }"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Buttons"
+msgstr "Pulsanti"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Defaults is 32"
+msgstr "Il valore di default è 32"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Icon Size"
+msgstr "Dimensioni dell'icona"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
 msgid "Leave empty to use the browser title."
 msgstr "Lasciare in bianco per utilizzare il titolo del browser."
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Leave empty to use the browser URL address."
+msgstr "Lascia vuoto per usare l'indirizzo della pagina."
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
 msgid "Leave empty to use the default."
 msgstr "Lasciare in bianco per utilizzare il predefinito."
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Leave empty to use the defaults."
+msgstr "Lascia vuoto per usare i valori di default."
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "list of available Service Codes: "
+msgstr "lista dei possibili Service Code"
 
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
 msgid "Preview of available modes is available here: "
@@ -36,6 +60,10 @@ msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypeP
 msgid "Share bar title"
 msgstr "Titolo della barra di condivisione"
 
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/DefinitionTemplates/ShareBarTypePartSettings.cshtml"
+msgid "Share bar URL"
+msgstr "URL della barra di condivisione"
+
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
 msgid "AddThis PubId code"
 msgstr "AddThis codice PubId"
@@ -51,6 +79,10 @@ msgstr "Impostazioni di condivisione del contenuto"
 msgctxt "~/Modules/Laser.Orchard.Sharing/Views/EditorTemplates/Parts/Share.Settings.cshtml"
 msgid "PubId is the code that identify your AddThis account, you can find it on https://www.addthis.com/dashboard#dashboard-analytics/ in the GET YOUR CODE tab"
 msgstr "PubId è il codice che identifica l'account di AddThis, si può trovare all'indirizzo https://www.addthis.com/dashboard#dashboard-analytics/ nella pagina"
+
+msgctxt "~/Modules/Laser.Orchard.Sharing/Views/Share.ShareBar.Base.cshtml"
+msgid "Share:"
+msgstr "Condividi:"
 
 msgctxt "Laser.Orchard.Sharing.Drivers.ShareBarSettingsPartDriver"
 msgid "Content sharing settings updated successfully"
