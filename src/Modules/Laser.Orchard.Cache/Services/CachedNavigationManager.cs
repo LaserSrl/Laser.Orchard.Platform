@@ -1,16 +1,16 @@
-﻿using Orchard;
+﻿using Laser.Orchard.Cache.Models;
+using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
-using Orchard.Core.Navigation.Models;
 using Orchard.Core.Navigation.Services;
 using Orchard.Data;
-using Orchard.Environment;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.Mvc;
 using Orchard.Roles.Models;
 using Orchard.Security;
 using Orchard.Security.Permissions;
+using Orchard.UI.Admin;
 using Orchard.UI.Navigation;
 using System;
 using System.Collections.Generic;
@@ -55,16 +55,34 @@ namespace Laser.Orchard.Cache.Services {
         }
 
         public new IEnumerable<MenuItem> BuildMenu(IContent menu) {
+            // Some calls to this should not be serving cached results:
+            // - Calls on the admin side.
+            // - Calls to some menus whose items depend on the specific request.
+            // - ...
+            if (ShouldCache(menu)) {
+                var cachekey = GetMenuCacheKey(menu.Id);
+                var cachedMenuItems = _cacheManager.Get(
+                    cachekey,
+                    ctx => {
+                        ctx.Monitor(_signals.When("NavigationContentItems.Changed"));
+                        return base.BuildMenu(menu).ToArray();
+                    });
 
-            var cachekey = GetMenuCacheKey(menu.Id);
-            var cachedMenuItems = _cacheManager.Get(
-                cachekey,
-                ctx => {
-                    ctx.Monitor(_signals.When("NavigationContentItems.Changed"));
-                    return base.BuildMenu(menu).ToArray();
-                });
+                return TryGetRouteValues(Clone(cachedMenuItems)).ToArray();
+            }
+            // When we are not serving from cache, let the usual NavigationManager handle everything.
+            return base.BuildMenu(menu);
+        }
 
-            return TryGetRouteValues(Clone(cachedMenuItems)).ToArray();
+        private bool ShouldCache(IContent menu) {
+            if (AdminFilter.IsApplied(_httpContextAccessor.Current().Request.RequestContext)) {
+                return false;
+            }
+            var cacheSettings = menu.As<CacheableMenuSettingsPart>();
+            if (cacheSettings != null) {
+                return cacheSettings.IsFrontEndCacheable;
+            }
+            return true;
         }
 
         private string GetMenuCacheKey(int menuId) {
@@ -119,7 +137,7 @@ namespace Laser.Orchard.Cache.Services {
               cacheKey,
               ctx => {
                   ctx.Monitor(_signals.When("NavigationContentItems.Changed"));
-                  var ci = _contentManager.Get(originalContent.Id, 
+                  var ci = _contentManager.Get(originalContent.Id,
                       VersionOptions.Number(originalContent.ContentItem.Version));
                   var cType = originalContent.GetType();
                   if (cType.GetInterface(nameof(IContent)) != null) {
