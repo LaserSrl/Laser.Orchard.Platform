@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Routing;
@@ -98,6 +99,24 @@ namespace Laser.Orchard.Cache.Services {
             return cachedMenuPartContent;
         }
 
+        private IContent GetCachedMenuPartContent(IContent originalContent, string cacheKey) {
+
+            var cachedMenuPartContent = _cacheManager.Get(
+              cacheKey,
+              ctx => {
+                  ctx.Monitor(_signals.When("NavigationContentItems.Changed"));
+                  var ci = _orchardServices.ContentManager.Get(originalContent.Id);
+                  var cType = originalContent.GetType();
+                  if (cType.GetInterface(nameof(IContent)) != null) {
+                      return ci.Get(cType);
+                  } else {
+                      return ci.As<IContent>();
+                  }
+              });
+            return cachedMenuPartContent;
+
+        }
+
 
         private IEnumerable<MenuItem> Clone(IEnumerable<MenuItem> cachedMenuItems) {
 
@@ -122,7 +141,7 @@ namespace Laser.Orchard.Cache.Services {
                     Permissions = Clone(original.Permissions),
                     Content = GetCachedMenuPartContent(
                             original.Content.Id,
-                            $"MenuWidgetPartDriverContetCacheKey_{original.Content.Id}"),
+                            $"MenuWidgetPartDriverContetCacheKey_{original.Content}"),
                     Classes = original.Classes
                 });
         }

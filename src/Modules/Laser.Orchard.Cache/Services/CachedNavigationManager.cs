@@ -4,6 +4,7 @@ using Orchard.ContentManagement;
 using Orchard.Core.Navigation.Models;
 using Orchard.Core.Navigation.Services;
 using Orchard.Data;
+using Orchard.Environment;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.Roles.Models;
@@ -101,27 +102,32 @@ namespace Laser.Orchard.Cache.Services {
                     Items = Clone(original.Items).ToArray(),
                     Permissions = Clone(original.Permissions),
                     Content = GetCachedMenuPartContent(
-                            original.Content.Id,
-                            $"MenuWidgetPartDriverContetCacheKey_{original.Content.Id}"),
+                            original.Content,
+                            $"MenuWidgetPartDriverContentCacheKey_{original.Content.Id}"),
                     Classes = original.Classes
                 });
         }
 
-        private IContent GetCachedMenuPartContent(int contentId, string cacheKey) {
+        private IContent GetCachedMenuPartContent(IContent originalContent, string cacheKey) {
 
             var cachedMenuPartContent = _cacheManager.Get(
               cacheKey,
               ctx => {
                   ctx.Monitor(_signals.When("NavigationContentItems.Changed"));
-                  var ci = _contentManager.Get(contentId);
-                  if (ci.Is<MenuPart>()) {
-                      return ci.As<MenuPart>();
+                  var ci = _contentManager.Get(originalContent.Id, 
+                      VersionOptions.Number(originalContent.ContentItem.Version));
+                  var cType = originalContent.GetType();
+                  if (cType.GetInterface(nameof(IContent)) != null) {
+                      return ci == null
+                        ? (IContent)null // ideally we shouldn't be falling in this condition
+                        : ci.Get(cType);
                   }
                   else {
                       return ci.As<IContent>();
                   }
               });
             return cachedMenuPartContent;
+
         }
 
         private static IEnumerable<Permission> Clone(IEnumerable<Permission> cachedMenuItemPermissions) {
