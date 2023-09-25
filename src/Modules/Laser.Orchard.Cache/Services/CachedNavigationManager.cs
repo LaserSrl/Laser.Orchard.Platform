@@ -7,6 +7,7 @@ using Orchard.Data;
 using Orchard.Environment;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
+using Orchard.Mvc;
 using Orchard.Roles.Models;
 using Orchard.Security;
 using Orchard.Security.Permissions;
@@ -15,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Laser.Orchard.Cache.Services {
     [OrchardFeature("Laser.Orchard.NavigationCache")]
@@ -25,6 +27,7 @@ namespace Laser.Orchard.Cache.Services {
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
         private readonly IContentManager _contentManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public CachedNavigationManager(
             IEnumerable<INavigationProvider> navigationProviders,
@@ -38,7 +41,8 @@ namespace Laser.Orchard.Cache.Services {
             IRepository<UserRolesPartRecord> userRolesRepository,
             ICacheManager cacheManager,
             ISignals signals,
-            IContentManager contentManager)
+            IContentManager contentManager,
+            IHttpContextAccessor httpContextAccessor)
             : base(navigationProviders, menuProviders, authorizationService,
                   navigationFilters, urlHelper, orchardServices, shellSettings) {
 
@@ -47,6 +51,7 @@ namespace Laser.Orchard.Cache.Services {
             _cacheManager = cacheManager;
             _signals = signals;
             _contentManager = contentManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public new IEnumerable<MenuItem> BuildMenu(IContent menu) {
@@ -59,7 +64,7 @@ namespace Laser.Orchard.Cache.Services {
                     return base.BuildMenu(menu).ToArray();
                 });
 
-            return Clone(cachedMenuItems).ToArray();
+            return TryGetRouteValues(Clone(cachedMenuItems)).ToArray();
         }
 
         private string GetMenuCacheKey(int menuId) {
@@ -144,6 +149,36 @@ namespace Laser.Orchard.Cache.Services {
             }
 
             return clone;
+        }
+
+        public IEnumerable<MenuItem> TryGetRouteValues(IEnumerable<MenuItem> menuItems) {
+            foreach (var menuItem in menuItems) {
+                if (menuItem.RouteValues == null) {
+                    if (!String.IsNullOrEmpty(menuItem.Href)) {
+                        menuItem.RouteValues = TryGetRouteValuesFromHref(menuItem.Href);
+                    }
+                }
+                menuItem.Items = TryGetRouteValues(menuItem.Items);
+            }
+            return menuItems;
+        }
+
+        private RouteValueDictionary TryGetRouteValuesFromHref(string href) {
+
+            RouteValueDictionary result = null;
+
+            // Since GetRouteData (which is what Alias overrides) only accepts httpcontext, get context with passed in url
+            //  The only way I can see this working is by using the current url context and see if it equals the href, should fix breadcrumb
+            var httpContext = _httpContextAccessor.Current();
+
+            if (httpContext.Request.Path == href) {
+                var routeData = httpContext.Request.RequestContext.RouteData;
+                if (routeData != null) {
+                    result = new RouteValueDictionary(routeData.Values);
+                }
+            }
+
+            return result;
         }
     }
 }

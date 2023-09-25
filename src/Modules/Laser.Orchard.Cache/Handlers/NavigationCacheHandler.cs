@@ -12,9 +12,11 @@ namespace Laser.Orchard.Cache.Handlers {
             _signals = signals;
 
             // Need to reset the navigation cache (to have the menus rebuilt)
+            OnImported<IContent>((context, content) => ResetNavigationCache());
             OnPublished<IContent>((context, content) => ResetNavigationCache());
             OnUnpublished<IContent>((context, content) => ResetNavigationCache());
             OnRemoved<IContent>((context, content) => ResetNavigationCache());
+            OnDestroyed<IContent>((context, content) => ResetNavigationCache());
         }
 
         public void ResetNavigationCache() {
