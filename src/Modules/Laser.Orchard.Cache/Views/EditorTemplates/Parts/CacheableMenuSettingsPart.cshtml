@@ -1,0 +1,12 @@
+﻿@using Laser.Orchard.Cache.Models;
+@model CacheableMenuSettingsPart
+
+<fieldset>
+    <legend>@T("Cacheable menu")</legend>
+    <div class="checkbox">
+        <label for="@Html.FieldIdFor(m => m.IsFrontEndCacheable)" class="forcheckbox" title="@T("Cache menu before rendering it on frontend.")">
+            @Html.EditorFor(m => m.IsFrontEndCacheable)
+            @T("Cache menu before rendering it on frontend.")
+        </label>
+    </div>
+</fieldset>
