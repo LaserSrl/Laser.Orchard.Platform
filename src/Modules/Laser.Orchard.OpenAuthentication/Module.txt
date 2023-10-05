@@ -9,8 +9,13 @@ Features:
 		Name: Laser OpenAuthentication
 		Description: Provides OAuth functionality to Orchard Site
 		Dependencies: Laser.Orchard.StartupConfig, Orchard.Users
-		Category:Security
+		Category: Security
 	Laser.Orchard.GDPR.OpenAuthExtension:
 		Name: GDPR OpenAuthentication Extensions
 		Description: Enables specialized handling of the information related to oAuth. This feature is enabled automatically when its dependecies are, unless it's been disabled.
 		Dependencies: Laser.Orchard.GDPR, Laser.Orchard.OpenAuthentication
+	Laser.Orchard.OpenAuthentication.Keycloak:
+		Name: Orchard Keycloak integration
+		Description: Allows configuring a tenant as a Relying Party for Keycloak
+		Dependencies: Laser.Orchard.OpenAuthentication
+		Category: Security
