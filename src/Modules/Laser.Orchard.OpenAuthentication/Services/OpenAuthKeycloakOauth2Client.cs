@@ -9,10 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Xml.Linq;
 
 namespace Laser.Orchard.OpenAuthentication.Services {
     [OrchardFeature("Laser.Orchard.OpenAuthentication.Keycloak")]
     public class OpenAuthKeycloakOauth2Client : OAuth2Client {
+        // Keycloak implements the OpenID Connect specification:
+        // https://openid.net/specs/openid-connect-core-1_0.html
         #region endpoints
         // These strings are used in string.Format() calls to have the actual endpoints
         // {0}: the "base url" of the keycloak IDP
@@ -32,12 +35,14 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             "{0}/realms/{1}/protocol/openid-connect/userinfo";
         #endregion
 
-
+        // A client_id is mandatory in most calls to the IDP
         private readonly string _clientId;
 
         private readonly string _idpUrl;
         private readonly string _realm;
         private readonly string[] _requestedScopes;
+        // The specification has some mandatory scopes
+        private static readonly string[] _mandatoryScopes = { "openid" };
 
         public OpenAuthKeycloakOauth2Client(
             string clientId, string idpUrl, string realm, params string[] requestedScopes)
@@ -46,11 +51,15 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             _clientId = clientId;
             _idpUrl = idpUrl;
             _realm = realm;
-            _requestedScopes = requestedScopes ?? new string[] { };
+            _requestedScopes = _mandatoryScopes
+                .Concat(requestedScopes ?? new string[] { })
+                .Distinct()
+                .ToArray()
+                ;
         }
 
-        public OpenAuthKeycloakOauth2Client(string clientId, string idpUrl, string realm) 
-            : this(clientId, idpUrl, realm, new[] { "openid", "email" }) { }
+        protected OpenAuthKeycloakOauth2Client(string clientId, string idpUrl, string realm) 
+            : this(clientId, idpUrl, realm, new[] { "email" }) { }
 
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
             var state = string.IsNullOrEmpty(returnUrl.Query) ? string.Empty : returnUrl.Query.Substring(1);
@@ -71,9 +80,11 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken) {
-            var uri = OAuthHelpers.BuildUri(string.Format(UserInfoEndpointFormat, _idpUrl, _realm), 
-                new NameValueCollection { { "access_token", accessToken } });
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
+            //var uri = OAuthHelpers.BuildUri(string.Format(UserInfoEndpointFormat, _idpUrl, _realm), 
+            //    new NameValueCollection { { "access_token", accessToken } });
+            var webRequest = (HttpWebRequest)WebRequest.Create(
+                string.Format(UserInfoEndpointFormat, _idpUrl, _realm));
+            webRequest.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {accessToken}");
 
             using (var webResponse = webRequest.GetResponse()) {
                 using (var stream = webResponse.GetResponseStream()) {
@@ -98,6 +109,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             var postData = HttpUtility.ParseQueryString(string.Empty);
             postData.Add(new NameValueCollection
                 {
+                    { "client_id", _clientId },
                     { "grant_type", "authorization_code" },
                     { "code", authorizationCode },
                     { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
@@ -105,8 +117,15 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
             var webRequest = (HttpWebRequest)WebRequest.Create(
                 string.Format(TokenEndpointFormat, _idpUrl, _realm));
-            webRequest.Method = "POST";
+            webRequest.Method = WebRequestMethods.Http.Post;
             webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.Headers.Add(HttpRequestHeader.Authorization, $"Bearer {authorizationCode}");
+#if DEBUG
+            // When debugging, also accept selfsigned certificates. We must do this
+            // because TLS is mandatory for this.
+            webRequest.ServerCertificateValidationCallback += 
+                (sender, certificate, chain, sslPolicyErrors) => true;
+#endif
             using (var s = webRequest.GetRequestStream()) {
                 using (var sw = new StreamWriter(s)) {
                     sw.Write(postData.ToString());
