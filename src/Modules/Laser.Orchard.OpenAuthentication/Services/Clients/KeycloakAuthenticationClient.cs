@@ -50,10 +50,21 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         public AuthenticationResult GetUserData(ProviderConfigurationViewModel clientConfiguration, AuthenticationResult previousAuthResult, string userAccessToken) {
             var userData = (Build(clientConfiguration) as OpenAuthKeycloakOauth2Client)
                 .GetUserDataDictionary(userAccessToken);
-            userData["accesstoken"] = userAccessToken;
-            string id = userData["id"];
-            string name = userData["email"];
-            userData["name"] = userData["email"];
+            if (userData.ContainsKey("accesstoken")) {
+                userData["accesstoken"] = userAccessToken;
+            }
+            else {
+                userData.Add("accesstoken", userAccessToken);
+            }
+            string id = userData["sub"];
+            string name;
+            // Keycloak doesn't necessarily return a value for "username".
+            if (!userData.TryGetValue("username", out name)
+                && !userData.TryGetValue("preferred_username", out name)
+                && !userData.TryGetValue("email", out name)) {
+                // as a fall back, use the id
+                name = id;
+            }
             return new AuthenticationResult(true, this.ProviderName, id, name, userData);
         }
 
@@ -68,7 +79,9 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
             string emailAddress = string.Empty;
             foreach (KeyValuePair<string, string> values in clientData.ExtraData) {
                 if (values.Key == "mail") {
-                    retVal.UserName = values.Value.IsEmailAddress() ? values.Value.Substring(0, values.Value.IndexOf('@')) : values.Value;
+                    retVal.UserName = values.Value.IsEmailAddress() 
+                        ? values.Value.Substring(0, values.Value.IndexOf('@')) 
+                        : values.Value;
                 }
             }
             return retVal;

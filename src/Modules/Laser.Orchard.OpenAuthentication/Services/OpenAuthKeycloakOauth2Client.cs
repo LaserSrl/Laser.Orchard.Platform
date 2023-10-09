@@ -1,4 +1,5 @@
-﻿using DotNetOpenAuth.AspNet.Clients;
+﻿using DotNetOpenAuth.AspNet;
+using DotNetOpenAuth.AspNet.Clients;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Orchard.Environment.Extensions;
@@ -145,6 +146,62 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                 }
             }
             return null;
+        }
+
+        /// <summary>
+		/// Check if authentication succeeded after user is redirected back from the service provider.
+		/// </summary>
+		/// <param name="context">The context.</param>
+		/// <param name="returnPageUrl">The return URL which should match the value passed to RequestAuthentication() method.</param>
+		/// <returns>
+		/// An instance of <see cref="AuthenticationResult"/> containing authentication result.
+		/// </returns>
+		public override AuthenticationResult VerifyAuthentication(HttpContextBase context, Uri returnPageUrl) {
+            if (context == null) {
+                throw new ArgumentNullException("context");
+            }
+
+            string code = context.Request.QueryString["code"];
+            if (string.IsNullOrEmpty(code)) {
+                return AuthenticationResult.Failed;
+            }
+
+            string accessToken = this.QueryAccessToken(returnPageUrl, code);
+            if (accessToken == null) {
+                return AuthenticationResult.Failed;
+            }
+
+            IDictionary<string, string> userData = this.GetUserData(accessToken);
+            if (userData == null) {
+                return AuthenticationResult.Failed;
+            }
+
+            string name, id;
+            if (!userData.TryGetValue("sub", out id)) {
+                // the sub (subject) identifies the user
+                return AuthenticationResult.Failed;
+            }
+            // Keycloak doesn't necessarily return a value for "username".
+            if (!userData.TryGetValue("username", out name)
+                && !userData.TryGetValue("preferred_username", out name)
+                && !userData.TryGetValue("email", out name)) {
+                // as a fall back, use the id
+                name = id;
+            }
+
+            // add the access token to the user data dictionary: this is used in registration
+            if (userData.ContainsKey("accesstoken")) {
+                userData["accesstoken"] = accessToken;
+            } else {
+                userData.Add("accesstoken", accessToken);
+            }
+
+            return new AuthenticationResult(
+                isSuccessful: true, 
+                provider: this.ProviderName, 
+                providerUserId: id, 
+                userName: name, 
+                extraData: userData);
         }
     }
 }
