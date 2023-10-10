@@ -57,7 +57,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             _logger = logger;
         }
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
-            return BuildUri(_authorizationEndpoint, new NameValueCollection
+            return OAuthHelpers.BuildUri(_authorizationEndpoint, new NameValueCollection
                 {
                     { "response_type", "code" },
                     { "response_mode", "form_post" },
@@ -67,12 +67,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
                     { "scope", _requestedScopes },
                 });
         }
-        public static Uri BuildUri(string baseUri, NameValueCollection queryParameters) {
-            var keyValuePairs = queryParameters.AllKeys.Select(k => HttpUtility.UrlEncode(k) + "=" + HttpUtility.UrlEncode(queryParameters[k]));
-            var qs = String.Join("&", keyValuePairs);
-            var builder = new UriBuilder(baseUri) { Query = qs };
-            return builder.Uri;
-        }
+
         public IDictionary<string, string> GetUserDataDictionary(string accessToken) {
             return GetUserData(accessToken);
         }

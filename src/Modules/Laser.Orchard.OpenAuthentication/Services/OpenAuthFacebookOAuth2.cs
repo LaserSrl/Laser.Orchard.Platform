@@ -119,7 +119,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         protected override Uri GetServiceLoginUrl(Uri returnUrl) {
             var state = string.IsNullOrEmpty(returnUrl.Query) ? string.Empty : returnUrl.Query.Substring(1);
 
-            return BuildUri(AuthorizationEndpoint, new NameValueCollection
+            return OAuthHelpers.BuildUri(AuthorizationEndpoint, new NameValueCollection
                 {
                     { "client_id", _appId },
                     { "scope", string.Join(" ", _requestedScopes) },
@@ -129,7 +129,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken) {
-            var uri = BuildUri(UserInfoEndpoint, new NameValueCollection { { "access_token", accessToken }, { "fields","id,email,birthday,first_name,last_name,name,locale,link,gender,timezone,updated_time,verified" } });
+            var uri = OAuthHelpers.BuildUri(UserInfoEndpoint, new NameValueCollection { { "access_token", accessToken }, { "fields","id,email,birthday,first_name,last_name,name,locale,link,gender,timezone,updated_time,verified" } });
             
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
 
@@ -182,7 +182,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         }
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode) {
-            var uri = BuildUri(TokenEndpoint, new NameValueCollection
+            var uri = OAuthHelpers.BuildUri(TokenEndpoint, new NameValueCollection
                 {
                     { "code", authorizationCode },
                     { "client_id", _appId },
@@ -209,13 +209,6 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             return accessToken;
         }
 
-        private static Uri BuildUri(string baseUri, NameValueCollection queryParameters) {
-            var keyValuePairs = queryParameters.AllKeys.Select(k => HttpUtility.UrlEncode(k) + "=" + HttpUtility.UrlEncode(queryParameters[k]));
-            var qs = String.Join("&", keyValuePairs);
-
-            var builder = new UriBuilder(baseUri) { Query = qs };
-            return builder.Uri;
-        }
 
         /// <summary>
         /// Facebook works best when return data be packed into a "state" parameter.
@@ -383,15 +376,6 @@ namespace Laser.Orchard.OpenAuthentication.Services {
     //                return results["access_token"];
     //            }
     //        }
-    //    }
-
-    //    private static Uri BuildUri(string baseUri, NameValueCollection queryParameters)
-    //    {
-    //        var keyValuePairs = queryParameters.AllKeys.Select(k => HttpUtility.UrlEncode(k) + "=" + HttpUtility.UrlEncode(queryParameters[k]));
-    //        var qs = String.Join("&", keyValuePairs);
-
-    //        var builder = new UriBuilder(baseUri) { Query = qs };
-    //        return builder.Uri;
     //    }
 
     //    /// <summary>

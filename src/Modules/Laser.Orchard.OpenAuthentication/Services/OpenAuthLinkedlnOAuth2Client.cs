@@ -99,7 +99,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
         {
             var scopes = _requestedScopes.Select(x => !x.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? ScopeBaseUri + x : x);
 
-            return BuildUri(AuthorizationEndpoint, new NameValueCollection
+            return OAuthHelpers.BuildUri(AuthorizationEndpoint, new NameValueCollection
                 {
                     { "response_type", "code" },
                     { "client_id", _clientId },
@@ -111,7 +111,7 @@ namespace Laser.Orchard.OpenAuthentication.Services {
 
         protected override IDictionary<string, string> GetUserData(string accessToken)
         {
-            var uri = BuildUri(UserInfoEndpoint, new NameValueCollection { { "oauth2_access_token", accessToken } });
+            var uri = OAuthHelpers.BuildUri(UserInfoEndpoint, new NameValueCollection { { "oauth2_access_token", accessToken } });
 
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
 
@@ -180,13 +180,6 @@ namespace Laser.Orchard.OpenAuthentication.Services {
             }
         }
 
-        public static Uri BuildUri(string baseUri, NameValueCollection queryParameters)
-        {
-            var q = System.Web.HttpUtility.ParseQueryString(string.Empty);
-            q.Add(queryParameters);
-            var builder = new UriBuilder(baseUri) { Query = q.ToString() };
-            return builder.Uri;
-        }
 
         /// <summary>
         /// LinkedIn requires that all return data be packed into a "state" parameter.
