@@ -75,16 +75,7 @@ namespace Laser.Orchard.OpenAuthentication.Services.Clients {
         }
 
         public OpenAuthCreateUserParams NormalizeData(OpenAuthCreateUserParams clientData) {
-            OpenAuthCreateUserParams retVal = clientData;
-            string emailAddress = string.Empty;
-            foreach (KeyValuePair<string, string> values in clientData.ExtraData) {
-                if (values.Key == "mail") {
-                    retVal.UserName = values.Value.IsEmailAddress() 
-                        ? values.Value.Substring(0, values.Value.IndexOf('@')) 
-                        : values.Value;
-                }
-            }
-            return retVal;
+            return clientData;
         }
 
         public bool RewriteRequest() {
