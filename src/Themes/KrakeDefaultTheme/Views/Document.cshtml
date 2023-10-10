@@ -11,27 +11,30 @@
     WorkContext.TryResolve<ShellSettings>(out _shellsettings);
     string tenantname = _shellsettings.Name.ToLower();
     var tenantLogo = Url.Content(String.Format("~/Media/{0}/AdminResources/Logo/{1}-logo.ico", _shellsettings.Name, tenantname));
-    if (File.Exists(Server.MapPath(tenantLogo))) {
+    if (File.Exists(Server.MapPath(tenantLogo)))
+    {
         RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(tenantLogo) });
-    } else {
+    }
+    else
+    {
         RegisterLink(new LinkEntry { Type = "image/x-icon", Rel = "shortcut icon", Href = Url.Content(subthemePath + "/Images/logo_krake.ico") });
     }
 }
 @{
 
 
-    //Styles    
+    //Styles
     Style.Include("https://fonts.googleapis.com/css?family=Istok+Web").AtHead();
     Style.Include("https://fonts.googleapis.com/css?family=Roboto:400,700").AtHead();
     Style.Require("Bootstrap").AtHead(); //Bootstrap, Orchard current version
-    Style.Include("style.css").AtHead();
-    Style.Include("toggle.css").AtHead();
+    Style.Include("style.css", "style.min.css").AtHead();
+    Style.Include("toggle.css", "toggle.min.css").AtHead();
     Style.Include("fonts/font-awesome-4.6.2/css/font-awesome.min.css").AtHead();
 
     //Scripts
     Script.Require("JQuery"); //jQuery, Orchard current version
     Script.Require("Bootstrap").AtFoot(); //Bootstrap, Orchard current version
-    Script.Include("krake.js").AtFoot(); //Theme custom js
+    Script.Include("krake.js","krake.min.js").AtFoot(); //Theme custom js
 }
 
 <!DOCTYPE html>

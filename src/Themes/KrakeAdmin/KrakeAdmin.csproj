@@ -204,11 +204,11 @@
     <Content Include="Placement.info">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Media-Video.Thumbnail.cshtml" />
-    <Content Include="Views\Media-Image.Thumbnail.cshtml" />
-    <Content Include="Views\Media-Audio.Thumbnail.cshtml" />
-    <Content Include="Views\Media-Document.Thumbnail.cshtml" />
-    <Content Include="Views\Media-OEmbed.Thumbnail.cshtml" />
+    <Content Include="Views\_Media-Video.Thumbnail.cshtml" />
+    <Content Include="Views\_Media-Image.Thumbnail.cshtml" />
+    <Content Include="Views\_Media-Audio.Thumbnail.cshtml" />
+    <Content Include="Views\_Media-Document.Thumbnail.cshtml" />
+    <Content Include="Views\_Media-OEmbed.Thumbnail.cshtml" />
     <Content Include="Views\Message.cshtml" />
     <Content Include="Views\Parts\Common.Metadata.SummaryAdmin.cshtml" />
     <Content Include="Views\Parts\PublishLater.Metadata.SummaryAdmin.cshtml" />
