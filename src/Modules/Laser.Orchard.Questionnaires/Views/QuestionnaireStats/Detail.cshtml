@@ -2,6 +2,7 @@
 @using System.Linq
 @model QuestionnaireStatsViewModel
 @{
+    var dateFormat = "dd/MM/yyyy";
     Style.Require("Bootstrap").AtHead();
     Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
     Style.Require("FontAwesome").AtHead();
@@ -57,11 +58,17 @@
                             <fieldset class="bulk-actions">
                                 <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
                                 <span class="date">
-                                    @Html.TextBox("from", Request.QueryString["from"], new { id = "dateFromResults", @class = "text" })
+                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue? Model.FilterContext.DateFrom.Value.ToString(dateFormat) :"", new { id = "dateFromResults", @class = "text" })
+                                    @Html.HiddenFor(m => m.FilterContext.DateFrom)
                                 </span>
                                 <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
                                 <span class="date">
-                                    @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
+                                    @Html.TextBox("to", Model.FilterContext.DateTo.HasValue ? Model.FilterContext.DateTo.Value.ToString(dateFormat) : "", new { id = "dateToResults", @class = "text" })
+                                    @Html.HiddenFor(m => m.FilterContext.DateTo)
+                                </span>
+                                <label for="dateToResults" class="bulk-filter">@T("Context")</label>
+                                <span class="date">
+                                    @Html.TextBoxFor(m => m.FilterContext.Context, new { @class = "text" })
                                 </span>
                                 @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
                             </fieldset>
@@ -154,22 +161,22 @@
                 <div class="row">
                     <div class="col-12">
                         @{
-                            foreach (var question in Model.QuestionsStatsList) {
+                                        foreach (var question in Model.QuestionsStatsList) {
                                 <div id="answer-@question.QuestionId" class="st-answer">
                                     <div id="answerlist-@question.QuestionId" class="answerlist">
                                         <h5>@question.Question</h5>
                                         @{
-                                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+                                        List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
 
-                                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
-                                            }
-                                            else {
-                                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
-                                            }
+                                        if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                            answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
                                         }
+                                        else {
+                                            answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                                        }
+                                    }
 
-                                        @foreach (var answer in answersList) {
+                                    @foreach (var answer in answersList) {
                                             <div>
                                                 &bull; @answer.Answer
                                                 <span style="font-weight: bold">( @answer.Count )</span>
@@ -208,13 +215,22 @@
 </div>
 @{
     using (Script.Foot()) {
-        <script type="text/javascript">
+    <script type="text/javascript">
             $(document).ready(function () {
                 @{ <Text>
 
                 $("#dateFromResults,#dateToResults").calendarsPicker({
                     showAnim: "",
-                    dateFormat: "dd/mm/YYYY",
+                    dateFormat: "@(dateFormat.ToLower())",
+                    onSelect: function (dates) {
+                        // MVC binding needs the dates to be in the global accepted format "yyyy-mm-dd"
+                        if (this.id.toLowerCase() == 'datetoresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateTo))').val(dates);
+                        }
+                        else if (this.id.toLowerCase() == 'datefromresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateFrom))').val(dates);
+                        }
+                    },
                     renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
                         picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
                         month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:dd MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
@@ -262,6 +278,6 @@
                     }
                 }
             });
-        </script>
+    </script>
     }
 }

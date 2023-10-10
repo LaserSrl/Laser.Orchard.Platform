@@ -38,13 +38,14 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
 
     public class QuestionnaireSearchViewModel {
         public dynamic Pager { get; set; }
-        public string SearchExpression { get; set; }
+        public StatsSearchContext SearchContext { get; set; }
         public IEnumerable<ContentItem> Questionnaires { get; set; }
     }
 
     public class QuestionnaireStatsViewModel {
         public QuestionnaireStatsViewModel() {
             QuestionsStatsList = new List<QuestionStatsViewModel>();
+            FilterContext = new StatsDetailFilterContextBase();
         }
         public string Title { get; set; }
         public int Id { get; set; }
@@ -52,5 +53,6 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public List<QuestionStatsViewModel> QuestionsStatsList { get; set; }
         public int NumberOfQuestions { get; internal set; }
         public int FullyAnsweringPeople { get; internal set; }
+        public StatsDetailFilterContextBase FilterContext { get; internal set; }
     }
 }
