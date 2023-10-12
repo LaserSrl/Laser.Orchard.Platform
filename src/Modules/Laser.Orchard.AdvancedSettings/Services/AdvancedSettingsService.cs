@@ -1,8 +1,12 @@
 ﻿using Laser.Orchard.AdvancedSettings.Models;
+using Orchard;
 using Orchard.Caching;
 using Orchard.ContentManagement;
+using Orchard.ContentManagement.Handlers;
+using Orchard.Logging;
 using Orchard.MediaLibrary.Fields;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Laser.Orchard.AdvancedSettings.Services {
@@ -10,12 +14,23 @@ namespace Laser.Orchard.AdvancedSettings.Services {
         private readonly IContentManager _contentManager;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
+        private readonly Lazy<IEnumerable<IContentHandler>> _handlers;
 
-        public AdvancedSettingsService(IContentManager contentManager, ICacheManager cacheManager, ISignals signals) {
+        public AdvancedSettingsService(IContentManager contentManager, 
+            ICacheManager cacheManager, 
+            ISignals signals,
+            Lazy<IEnumerable<IContentHandler>> handlers) {
             _contentManager = contentManager;
             _cacheManager = cacheManager;
             _signals = signals;
+            _handlers = handlers;
+            Logger = NullLogger.Instance;
         }
+        public ILogger Logger { get; set; }
+        public IEnumerable<IContentHandler> Handlers {
+            get { return _handlers.Value; }
+        }
+
         public string SettingsCacheKey(string settingName) {
             return string.Format("AdvancedSettings-{0}-Cache", settingName);
         }
@@ -42,6 +57,13 @@ namespace Laser.Orchard.AdvancedSettings.Services {
             if (advancedSettings != null) {
                 advancedSettings.ContentManager = _contentManager;
             }
+
+            // create a context with a new instance to load            
+            var context = new LoadContentContext(advancedSettings);
+            // invoke handlers to acquire state, or at least establish lazy loading callbacks
+            Handlers.Invoke(handler => handler.Loading(context), Logger);
+            Handlers.Invoke(handler => handler.Loaded(context), Logger);
+
             return advancedSettings;
         }
 
