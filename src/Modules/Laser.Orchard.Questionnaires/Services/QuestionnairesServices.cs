@@ -32,6 +32,7 @@ using Laser.Orchard.Commons.Services;
 using System.Security.Cryptography;
 using System.Linq.Expressions;
 using Orchard.Core.Contents.Settings;
+using Orchard.Widgets.Models;
 
 namespace Laser.Orchard.Questionnaires.Services {
 
@@ -751,7 +752,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             // to perform the delete query
 
 
-            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID);
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContext());
 
             var answers = qsvm.QuestionsStatsList
                 .Where(x => x.QuestionId == questionID)
@@ -767,7 +768,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             // to perform the delete query
 
 
-            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID);
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContext());
 
             var answers = qsvm.QuestionsStatsList
                 .Where(x => x.QuestionId == questionID)
@@ -787,7 +788,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             _questionAnswerRepositoryService.UpdateQuestion(questionRecord);
         }
 
-        private void SaveAnswer(AnswerEditModel answer, List<AnswerRecord> storedAnswers, IMapper answerMapper, int recordQuestionID, Dictionary<String, String>mappingA) {
+        private void SaveAnswer(AnswerEditModel answer, List<AnswerRecord> storedAnswers, IMapper answerMapper, int recordQuestionID, Dictionary<String, String> mappingA) {
             AnswerRecord answerRecord;
             if (!string.IsNullOrWhiteSpace(answer.GUIdentifier)) {
                 answerRecord = storedAnswers.SingleOrDefault(x => x.GUIdentifier == answer.GUIdentifier) ?? new AnswerRecord(); //Get data of answer by Identifier or create a new answer
@@ -893,29 +894,29 @@ namespace Laser.Orchard.Questionnaires.Services {
                     else {
                         SaveQuestion(quest, questionRecord, questionMapper, PartID, originalQuestionRecordId);
                         var recordQuestionID = questionRecord.Id;
-                            foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
-                                if (answer.Delete) {
-                                    if (answer.Id > 0) {
-                                        if (!CanAnswerBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
-                                            answer.Delete = false;
-                                            answer.Published = false;
-                                            SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
-                                        
-                                            // The user will need to Save/Publish the content to apply the previous changes.
-                                            // Check which operation is needed based on the settings of the content to show it in the error message
-                                            var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
+                        foreach (var answer in quest.Answers) { ///Insert, Update and delete Answer
+                            if (answer.Delete) {
+                                if (answer.Id > 0) {
+                                    if (!CanAnswerBeDeleted(quest.QuestionnairePartRecord_Id, quest.Id)) {
+                                        answer.Delete = false;
+                                        answer.Published = false;
+                                        SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
 
-                                            throw new Exception(T("Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes.", answer.Answer, operation).Text);
-                                        }
-                                        else {
-                                            _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
-                                        }
+                                        // The user will need to Save/Publish the content to apply the previous changes.
+                                        // Check which operation is needed based on the settings of the content to show it in the error message
+                                        var operation = (item.TypeDefinition.Settings.GetModel<ContentTypeSettings>().Draftable) ? T("Publish") : T("Save");
+
+                                        throw new Exception(T("Cannot delete the answer: \"{0}\" since it has already been selected in one or more user answers. The answer has been set to \"not visible\". {1} the content to accept these changes.", answer.Answer, operation).Text);
+                                    }
+                                    else {
+                                        _questionAnswerRepositoryService.DeleteAnswer(answer.Id);
                                     }
                                 }
-                                else {                                    
-                                    SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
-                                }
                             }
+                            else {
+                                SaveAnswer(answer, storedAnswers, answerMapper, recordQuestionID, mappingA);
+                            }
+                        }
                         try {
                             // fix condtions if necessary
                             if (mappingA.Count() > 0 && questionRecord.Condition != null) {
@@ -1018,13 +1019,16 @@ namespace Laser.Orchard.Questionnaires.Services {
             return (_questionAnswerRepositoryService.AnswersRepository().Get(id));
         }
 
-        private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, StatsDetailFilterContext context) {
             var answersQuery = _repositoryUserAnswer.Fetch(x => x.QuestionnairePartRecord_Id == questionnaireId);
-            if (from.HasValue && from.Value > DateTime.MinValue) {
-                answersQuery = answersQuery.Where(w => w.AnswerDate >= from);
+            if (context.DateFrom.HasValue && context.DateFrom.Value > DateTime.MinValue) {
+                answersQuery = answersQuery.Where(w => w.AnswerDate >= context.DateFrom);
             }
-            if (to.HasValue && to.Value > DateTime.MinValue) {
-                answersQuery = answersQuery.Where(w => w.AnswerDate <= to);
+            if (context.DateTo.HasValue && context.DateTo.Value > DateTime.MinValue) {
+                answersQuery = answersQuery.Where(w => w.AnswerDate <= context.DateTo);
+            }
+            if (!string.IsNullOrWhiteSpace(context.Context)) {
+                answersQuery = answersQuery.Where(w => w.Context.Contains(context.Context));
             }
             var result = answersQuery.Select(x => new ExportUserAnswersVM {
                 Answer = x.AnswerText,
@@ -1035,7 +1039,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 Contesto = x.Context
             }).ToList();
             int contentId = 0;
-            TitlePart titlePart = null;
+            var title ="";
             UserPart usrPart = null;
             foreach (var answ in result) {
                 // cerca di rendere più leggibili l'utente sostituendolo con lo username, dove è possibile
@@ -1048,19 +1052,34 @@ namespace Laser.Orchard.Questionnaires.Services {
                 }
                 // cerca di rendere più leggibile il contesto accodando il titolo relativo, dove è possibile
                 if (int.TryParse(answ.Contesto, out contentId)) {
-                    titlePart = _orchardServices.ContentManager.Get<TitlePart>(contentId);
-                    if (titlePart != null) {
-                        answ.Contesto = string.Format("{0} {1}", contentId, titlePart.Title);
+                    var ci = _orchardServices.ContentManager.Get(contentId);
+                    if (ci.As<TitlePart>() != null) {
+                        title = ci.As<TitlePart>().Title;
+                    }
+                    else if (ci.As<WidgetPart>() != null) {
+                        title = ci.As<WidgetPart>().Title;
+                    }
+                    if (!String.IsNullOrWhiteSpace(title)) {
+                        answ.Contesto = string.Format("{0} {1}", contentId, title);
                     }
                 }
             }
             return result;
         }
-        public void SaveQuestionnaireUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        public void SaveQuestionnaireUsersAnswers(int questionnaireId, StatsDetailFilterContext context) {
             string separator = ";";
-            var elenco = GetUsersAnswers(questionnaireId, from, to);
+            var elenco = GetUsersAnswers(questionnaireId, context);
             ContentItem ci = _orchardServices.ContentManager.Get(questionnaireId);
-            string fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), from, to);
+            string fileName = "";
+            if (ci.As<TitlePart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), context.DateFrom.HasValue? context.DateFrom.Value:new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
+            else if (ci.As<WidgetPart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<WidgetPart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
+            else if (ci.As<WidgetPart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", "questionnaire", context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
             string filePath = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Export\QuestionnairesStatistics\" + fileName;
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
@@ -1071,31 +1090,27 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (!fi.Directory.Exists) {
                 System.IO.Directory.CreateDirectory(fi.DirectoryName);
             }
-            using (FileStream fStream = new FileStream(filePath, FileMode.Create)) {
-                using (BinaryWriter bWriter = new BinaryWriter(fStream, Encoding.UTF8)) {
-                    byte[] buffer = null;
-                    string row = string.Format("\"Utente\"{0}\"Data\"{0}\"Domanda\"{0}\"Risposta\"{0}\"Contesto\"\r\n", separator);
+            using (StreamWriter sw = new StreamWriter(filePath, true)) {
+                byte[] buffer = null;
+                string row = string.Format("\"Utente\"{0}\"Data\"{0}\"Domanda\"{0}\"Risposta\"{0}\"Contesto\"", separator);
+                sw.WriteLine(row);
+                foreach (var line in elenco) {
+                    row = string.Format("\"{1}\"{0}\"{2:yyyy-MM-dd}\"{0}\"{3}\"{0}\"{4}\"{0}\"{5}\"",
+                        separator,
+                        EscapeString(line.UserName),
+                        line.AnswerDate,
+                        EscapeString(line.Question),
+                        EscapeString(line.Answer),
+                        EscapeString(line.Contesto));
                     buffer = Encoding.UTF8.GetBytes(row);
-                    buffer = Encoding.UTF8.GetPreamble().Concat(buffer).ToArray(); //GetPreamble è necessario per aggiungere un header UTF8 riconoscibile da Excel
-                    bWriter.Write(buffer);
-                    foreach (var line in elenco) {
-                        row = string.Format("\"{1}\"{0}\"{2:yyyy-MM-dd}\"{0}\"{3}\"{0}\"{4}\"{0}\"{5}\"\r\n",
-                            separator,
-                            EscapeString(line.UserName),
-                            line.AnswerDate,
-                            EscapeString(line.Question),
-                            EscapeString(line.Answer),
-                            EscapeString(line.Contesto));
-                        buffer = Encoding.UTF8.GetBytes(row);
-                        bWriter.Write(buffer);
-                    }
+                    sw.WriteLine(row);
                 }
             }
         }
         private string EscapeString(string text) {
             return (text ?? "").Replace('\"', '\'').Replace('\n', ' ').Replace('\r', ' ');
         }
-        public QuestionnaireStatsViewModel GetStats(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        public QuestionnaireStatsViewModel GetStats(int questionnaireId, StatsDetailFilterContext filterContext) {
             var questionnaireData = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Latest)
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
@@ -1107,27 +1122,39 @@ namespace Laser.Orchard.Questionnaires.Services {
                     (l, r) => new { UserAnswers = l, Questions = r })
                 .Where(w => w.Questions.QuestionnairePartRecord_Id == questionnaireId);
 
-            if (from.HasValue && from.Value > DateTime.MinValue) {
-                questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.AnswerDate >= from);
+            if (filterContext.DateFrom.HasValue && filterContext.DateFrom.Value > DateTime.MinValue) {
+                questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.AnswerDate >= filterContext.DateFrom);
             }
-            if (to.HasValue && to.Value > DateTime.MinValue) {
-                questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.AnswerDate <= to);
+            if (filterContext.DateTo.HasValue && filterContext.DateTo.Value > DateTime.MinValue) {
+                questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.AnswerDate <= filterContext.DateTo);
+            }
+            if (!String.IsNullOrWhiteSpace(filterContext.Context)) {
+                questionnaireStatsQuery = questionnaireStatsQuery.Where(w => w.UserAnswers.Context.Contains(filterContext.Context));
             }
 
             var questionnaireStats = questionnaireStatsQuery.ToList();
+            var title = "";
+            if (questionnaireData.As<TitlePart>() != null) {
+                title = questionnaireData.As<TitlePart>().Title;
+            }
+            else {
+                title = questionnaireData.As<WidgetPart>().Title;
+            }
 
             if (questionnaireStats.Count == 0) {
+
                 QuestionnaireStatsViewModel empty = new QuestionnaireStatsViewModel {
                     Id = questionnaireData.Id,
-                    Title = questionnaireData.As<TitlePart>().Title,
-                    QuestionsStatsList = new List<QuestionStatsViewModel>()
+                    Title = title,
+                    QuestionsStatsList = new List<QuestionStatsViewModel>(),
+                    FilterContext = (StatsDetailFilterContext)filterContext
                 };
                 return empty;
             }
             else {
                 var aggregatedStats = questionnaireStats.Select(s => new QuestionStatsViewModel {
                     QuestionnairePart_Id = s.Questions.QuestionnairePartRecord_Id,
-                    QuestionnaireTitle = questionnaireData.As<TitlePart>().Title,
+                    QuestionnaireTitle = title,
                     QuestionId = s.Questions.Id,
                     Question = s.Questions.Question,
                     Position = s.Questions.Position,
@@ -1161,7 +1188,8 @@ namespace Laser.Orchard.Questionnaires.Services {
                     NumberOfQuestions = questionsCount,
                     ReplyingPeopleCount = questionnaireStats.Select(x => x.UserAnswers.SessionID).Distinct().Count(),
                     FullyAnsweringPeople = FullyAnsweringPeople,
-                    QuestionsStatsList = aggregatedStats.OrderBy(o => o.Position).ToList()
+                    QuestionsStatsList = aggregatedStats.OrderBy(o => o.Position).ToList(),
+                    FilterContext = (StatsDetailFilterContext)filterContext
                 };
             }
         }

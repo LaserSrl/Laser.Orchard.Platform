@@ -2,6 +2,7 @@
 @using System.Linq
 @model QuestionnaireStatsViewModel
 @{
+    var dateFormat = "dd/MM/yyyy";
     Style.Require("Bootstrap").AtHead();
     Style.Include("~/themes/theadmin/styles/site.css").AtHead(); // needs to be rendered after bootstrap
     Style.Require("FontAwesome").AtHead();
@@ -57,11 +58,17 @@
                             <fieldset class="bulk-actions">
                                 <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
                                 <span class="date">
-                                    @Html.TextBox("from", Request.QueryString["from"], new { id = "dateFromResults", @class = "text" })
+                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateFormat) : "", new { id = "dateFromResults", @class = "text" })
+                                    @Html.HiddenFor(m => m.FilterContext.DateFrom)
                                 </span>
                                 <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
                                 <span class="date">
-                                    @Html.TextBox("to", Request.QueryString["to"], new { id = "dateToResults", @class = "text" })
+                                    @Html.TextBox("to", Model.FilterContext.DateTo.HasValue ? Model.FilterContext.DateTo.Value.ToString(dateFormat) : "", new { id = "dateToResults", @class = "text" })
+                                    @Html.HiddenFor(m => m.FilterContext.DateTo)
+                                </span>
+                                <label for="dateToResults" class="bulk-filter">@T("Context")</label>
+                                <span class="date">
+                                    @Html.TextBoxFor(m => m.FilterContext.Context, new { @class = "text" })
                                 </span>
                                 @Html.Hidden("idQuestionario", Request.QueryString["idQuestionario"])
                             </fieldset>
@@ -75,7 +82,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
-                                <button type="submit" name="export" value="true">@T("Export")</button>
+                                <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export")</button>
                                 <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
                             </fieldset>
                         </div>
@@ -183,15 +190,17 @@
                                 </div>
 
                                 if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                                    var routeValues = new RouteValueDictionary();
+                                    routeValues.Add("area", "Laser.Orchard.Questionnaires");
+                                    routeValues.Add("idQuestionario", Model.QuestionsStatsList.First().QuestionnairePart_Id);
+                                    routeValues.Add("idDomanda", question.QuestionId);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.DateFrom), Model.FilterContext.DateFrom);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.DateTo), Model.FilterContext.DateTo);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.Context), Model.FilterContext.Context);
+
                                     <div style="margin-top: 5px; margin-left: 9px;">
-                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
-                           new {
-                               area = "Laser.Orchard.Questionnaires",
-                               idQuestionario = Model.QuestionsStatsList.First().QuestionnairePart_Id,
-                               idDomanda = question.QuestionId,
-                               from = Request.QueryString["from"],
-                               to = Request.QueryString["to"]
-                           })">
+
+                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats", routeValues)">
                                             @T("Show all answers")
                                         </a>
                                     </div>
@@ -214,7 +223,16 @@
 
                 $("#dateFromResults,#dateToResults").calendarsPicker({
                     showAnim: "",
-                    dateFormat: "dd/mm/YYYY",
+                    dateFormat: "@(dateFormat.ToLower())",
+                    onSelect: function (dates) {
+                        // MVC binding needs the dates to be in the global accepted format "yyyy-mm-dd"
+                        if (this.id.toLowerCase() == 'datetoresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateTo))').val(dates);
+                        }
+                        else if (this.id.toLowerCase() == 'datefromresults') {
+                            $('#@(Html.FieldIdFor(m=>m.FilterContext.DateFrom))').val(dates);
+                        }
+                    },
                     renderer: $.extend({}, $.calendarsPicker.themeRollerRenderer, {
                         picker: "<div {popup:start} id='ui-datepicker-div'{popup:end} class='ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all{inline:start} ui-datepicker-inline{inline:end}'><div class='ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all'>{link:prev}{link:today}{link:next}</div>{months}{popup:start}{popup:end}<div class='ui-helper-clearfix'></div></div>",
                         month: "<div class='ui-datepicker-group'><div class='ui-datepicker-month ui-helper-clearfix'>{monthHeader:dd MM yyyy}</div><table class='ui-datepicker-calendar'><thead>{weekHeader}</thead><tbody>{weeks}</tbody></table></div>"
