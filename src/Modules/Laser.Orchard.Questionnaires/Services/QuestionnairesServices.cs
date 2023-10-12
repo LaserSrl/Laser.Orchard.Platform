@@ -1039,7 +1039,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 Contesto = x.Context
             }).ToList();
             int contentId = 0;
-            var title ="";
+            var title = "";
             UserPart usrPart = null;
             foreach (var answ in result) {
                 // cerca di rendere più leggibili l'utente sostituendolo con lo username, dove è possibile
@@ -1072,7 +1072,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             ContentItem ci = _orchardServices.ContentManager.Get(questionnaireId);
             string fileName = "";
             if (ci.As<TitlePart>() != null) {
-                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), context.DateFrom.HasValue? context.DateFrom.Value:new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
             }
             else if (ci.As<WidgetPart>() != null) {
                 fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<WidgetPart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
@@ -1090,8 +1090,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (!fi.Directory.Exists) {
                 System.IO.Directory.CreateDirectory(fi.DirectoryName);
             }
-            using (StreamWriter sw = new StreamWriter(filePath, true)) {
-                byte[] buffer = null;
+            using (var sw = new StreamWriter(File.Open(filePath, FileMode.Create), Encoding.UTF8)) {
                 string row = string.Format("\"Utente\"{0}\"Data\"{0}\"Domanda\"{0}\"Risposta\"{0}\"Contesto\"", separator);
                 sw.WriteLine(row);
                 foreach (var line in elenco) {
@@ -1102,7 +1101,6 @@ namespace Laser.Orchard.Questionnaires.Services {
                         EscapeString(line.Question),
                         EscapeString(line.Answer),
                         EscapeString(line.Contesto));
-                    buffer = Encoding.UTF8.GetBytes(row);
                     sw.WriteLine(row);
                 }
             }
