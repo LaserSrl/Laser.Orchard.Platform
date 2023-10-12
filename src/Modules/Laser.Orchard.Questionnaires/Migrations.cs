@@ -206,7 +206,6 @@ namespace Laser.Orchard.Questionnaires {
                 .Draftable(false)
                 .Creatable(false));
 
-
             // Create function is the complete migration for the module.
             //return 1;
             return 33;

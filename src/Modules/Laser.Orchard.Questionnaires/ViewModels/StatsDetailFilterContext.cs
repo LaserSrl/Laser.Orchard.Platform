@@ -6,8 +6,8 @@ using System.Web;
 using static Laser.Orchard.Questionnaires.ViewModels.StatsSearchContext;
 
 namespace Laser.Orchard.Questionnaires.ViewModels {
-    public class StatsDetailFilterContextBase {
-        public StatsDetailFilterContextBase() {
+    public class StatsDetailFilterContext{
+        public StatsDetailFilterContext() {
             DateFrom = null;
             DateTo = null;
             Context = null;
@@ -15,12 +15,6 @@ namespace Laser.Orchard.Questionnaires.ViewModels {
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
         public string Context { get; set; }
-    }
-    public class StatsDetailFilterContext : StatsDetailFilterContextBase {
-
-        public StatsDetailFilterContext() {
-            Export = false;
-        }
         public bool Export { get; set; }
     }
 }

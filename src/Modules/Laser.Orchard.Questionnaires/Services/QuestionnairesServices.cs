@@ -752,7 +752,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             // to perform the delete query
 
 
-            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContextBase());
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContext());
 
             var answers = qsvm.QuestionsStatsList
                 .Where(x => x.QuestionId == questionID)
@@ -768,7 +768,7 @@ namespace Laser.Orchard.Questionnaires.Services {
             // to perform the delete query
 
 
-            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContextBase());
+            QuestionnaireStatsViewModel qsvm = GetStats(questionnaireID, new StatsDetailFilterContext());
 
             var answers = qsvm.QuestionsStatsList
                 .Where(x => x.QuestionId == questionID)
@@ -1019,13 +1019,16 @@ namespace Laser.Orchard.Questionnaires.Services {
             return (_questionAnswerRepositoryService.AnswersRepository().Get(id));
         }
 
-        private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        private List<ExportUserAnswersVM> GetUsersAnswers(int questionnaireId, StatsDetailFilterContext context) {
             var answersQuery = _repositoryUserAnswer.Fetch(x => x.QuestionnairePartRecord_Id == questionnaireId);
-            if (from.HasValue && from.Value > DateTime.MinValue) {
-                answersQuery = answersQuery.Where(w => w.AnswerDate >= from);
+            if (context.DateFrom.HasValue && context.DateFrom.Value > DateTime.MinValue) {
+                answersQuery = answersQuery.Where(w => w.AnswerDate >= context.DateFrom);
             }
-            if (to.HasValue && to.Value > DateTime.MinValue) {
-                answersQuery = answersQuery.Where(w => w.AnswerDate <= to);
+            if (context.DateTo.HasValue && context.DateTo.Value > DateTime.MinValue) {
+                answersQuery = answersQuery.Where(w => w.AnswerDate <= context.DateTo);
+            }
+            if (!string.IsNullOrWhiteSpace(context.Context)) {
+                answersQuery = answersQuery.Where(w => w.Context.Contains(context.Context));
             }
             var result = answersQuery.Select(x => new ExportUserAnswersVM {
                 Answer = x.AnswerText,
@@ -1036,7 +1039,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                 Contesto = x.Context
             }).ToList();
             int contentId = 0;
-            TitlePart titlePart = null;
+            var title ="";
             UserPart usrPart = null;
             foreach (var answ in result) {
                 // cerca di rendere più leggibili l'utente sostituendolo con lo username, dove è possibile
@@ -1049,19 +1052,34 @@ namespace Laser.Orchard.Questionnaires.Services {
                 }
                 // cerca di rendere più leggibile il contesto accodando il titolo relativo, dove è possibile
                 if (int.TryParse(answ.Contesto, out contentId)) {
-                    titlePart = _orchardServices.ContentManager.Get<TitlePart>(contentId);
-                    if (titlePart != null) {
-                        answ.Contesto = string.Format("{0} {1}", contentId, titlePart.Title);
+                    var ci = _orchardServices.ContentManager.Get(contentId);
+                    if (ci.As<TitlePart>() != null) {
+                        title = ci.As<TitlePart>().Title;
+                    }
+                    else if (ci.As<WidgetPart>() != null) {
+                        title = ci.As<WidgetPart>().Title;
+                    }
+                    if (!String.IsNullOrWhiteSpace(title)) {
+                        answ.Contesto = string.Format("{0} {1}", contentId, title);
                     }
                 }
             }
             return result;
         }
-        public void SaveQuestionnaireUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null) {
+        public void SaveQuestionnaireUsersAnswers(int questionnaireId, StatsDetailFilterContext context) {
             string separator = ";";
-            var elenco = GetUsersAnswers(questionnaireId, from, to);
+            var elenco = GetUsersAnswers(questionnaireId, context);
             ContentItem ci = _orchardServices.ContentManager.Get(questionnaireId);
-            string fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), from, to);
+            string fileName = "";
+            if (ci.As<TitlePart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<TitlePart>().Title, "questionnaire", ' '), context.DateFrom.HasValue? context.DateFrom.Value:new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
+            else if (ci.As<WidgetPart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", new CommonUtils().NormalizeFileName(ci.As<WidgetPart>().Title, "questionnaire", ' '), context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
+            else if (ci.As<WidgetPart>() != null) {
+                fileName = String.Format("{0}-{1:yyyyMMdd}-{2:yyyyMMdd}.csv", "questionnaire", context.DateFrom.HasValue ? context.DateFrom.Value : new DateTime(), context.DateTo.HasValue ? context.DateTo.Value : new DateTime());
+            }
             string filePath = HostingEnvironment.MapPath("~/") + @"App_Data\Sites\" + _shellSettings.Name + @"\Export\QuestionnairesStatistics\" + fileName;
             // Creo la directory Export
             FileInfo fi = new FileInfo(filePath);
@@ -1072,31 +1090,27 @@ namespace Laser.Orchard.Questionnaires.Services {
             if (!fi.Directory.Exists) {
                 System.IO.Directory.CreateDirectory(fi.DirectoryName);
             }
-            using (FileStream fStream = new FileStream(filePath, FileMode.Create)) {
-                using (BinaryWriter bWriter = new BinaryWriter(fStream, Encoding.UTF8)) {
-                    byte[] buffer = null;
-                    string row = string.Format("\"Utente\"{0}\"Data\"{0}\"Domanda\"{0}\"Risposta\"{0}\"Contesto\"\r\n", separator);
+            using (StreamWriter sw = new StreamWriter(filePath, true)) {
+                byte[] buffer = null;
+                string row = string.Format("\"Utente\"{0}\"Data\"{0}\"Domanda\"{0}\"Risposta\"{0}\"Contesto\"", separator);
+                sw.WriteLine(row);
+                foreach (var line in elenco) {
+                    row = string.Format("\"{1}\"{0}\"{2:yyyy-MM-dd}\"{0}\"{3}\"{0}\"{4}\"{0}\"{5}\"",
+                        separator,
+                        EscapeString(line.UserName),
+                        line.AnswerDate,
+                        EscapeString(line.Question),
+                        EscapeString(line.Answer),
+                        EscapeString(line.Contesto));
                     buffer = Encoding.UTF8.GetBytes(row);
-                    buffer = Encoding.UTF8.GetPreamble().Concat(buffer).ToArray(); //GetPreamble è necessario per aggiungere un header UTF8 riconoscibile da Excel
-                    bWriter.Write(buffer);
-                    foreach (var line in elenco) {
-                        row = string.Format("\"{1}\"{0}\"{2:yyyy-MM-dd}\"{0}\"{3}\"{0}\"{4}\"{0}\"{5}\"\r\n",
-                            separator,
-                            EscapeString(line.UserName),
-                            line.AnswerDate,
-                            EscapeString(line.Question),
-                            EscapeString(line.Answer),
-                            EscapeString(line.Contesto));
-                        buffer = Encoding.UTF8.GetBytes(row);
-                        bWriter.Write(buffer);
-                    }
+                    sw.WriteLine(row);
                 }
             }
         }
         private string EscapeString(string text) {
             return (text ?? "").Replace('\"', '\'').Replace('\n', ' ').Replace('\r', ' ');
         }
-        public QuestionnaireStatsViewModel GetStats(int questionnaireId, StatsDetailFilterContextBase filterContext) {
+        public QuestionnaireStatsViewModel GetStats(int questionnaireId, StatsDetailFilterContext filterContext) {
             var questionnaireData = _orchardServices.ContentManager.Query<QuestionnairePart, QuestionnairePartRecord>(VersionOptions.Latest)
                                                        .Where(q => q.Id == questionnaireId)
                                                        .List().FirstOrDefault();
@@ -1133,7 +1147,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     Id = questionnaireData.Id,
                     Title = title,
                     QuestionsStatsList = new List<QuestionStatsViewModel>(),
-                    FilterContext = filterContext
+                    FilterContext = (StatsDetailFilterContext)filterContext
                 };
                 return empty;
             }
@@ -1175,7 +1189,7 @@ namespace Laser.Orchard.Questionnaires.Services {
                     ReplyingPeopleCount = questionnaireStats.Select(x => x.UserAnswers.SessionID).Distinct().Count(),
                     FullyAnsweringPeople = FullyAnsweringPeople,
                     QuestionsStatsList = aggregatedStats.OrderBy(o => o.Position).ToList(),
-                    FilterContext = filterContext
+                    FilterContext = (StatsDetailFilterContext)filterContext
                 };
             }
         }

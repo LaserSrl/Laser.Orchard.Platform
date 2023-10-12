@@ -14,7 +14,7 @@ namespace Laser.Orchard.Questionnaires.Services {
         QuestionnaireWithResultsViewModel BuildViewModelWithResultsForQuestionnairePart(QuestionnairePart part);
         void CreateUserAnswers(UserAnswersRecord answerRecord);
         AnswerRecord GetAnswer(int id);
-        QuestionnaireStatsViewModel GetStats(int questionnaireId, StatsDetailFilterContextBase filterContext);
+        QuestionnaireStatsViewModel GetStats(int questionnaireId, StatsDetailFilterContext filterContext);
         List<QuestStatViewModel> GetStats(QuestionType type);
         bool Save(QuestionnaireWithResultsViewModel editModel, IUser currentUser, string SessionID);
         /// <summary>
@@ -59,6 +59,6 @@ namespace Laser.Orchard.Questionnaires.Services {
         void UnscheduleEmailTask(Int32 gameID);
         List<RankingTemplateVM> QueryForRanking(
            Int32 gameId, string device = "General", int page = 1, int pageSize = 10, bool Ascending = false);
-        void SaveQuestionnaireUsersAnswers(int questionnaireId, DateTime? from = null, DateTime? to = null);
+        void SaveQuestionnaireUsersAnswers(int questionnaireId, StatsDetailFilterContext context);
     }
 }

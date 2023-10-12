@@ -58,7 +58,7 @@
                             <fieldset class="bulk-actions">
                                 <label for="dateFromResults" class="bulk-filter">@T("Date From")</label>
                                 <span class="date">
-                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue? Model.FilterContext.DateFrom.Value.ToString(dateFormat) :"", new { id = "dateFromResults", @class = "text" })
+                                    @Html.TextBox("from", Model.FilterContext.DateFrom.HasValue ? Model.FilterContext.DateFrom.Value.ToString(dateFormat) : "", new { id = "dateFromResults", @class = "text" })
                                     @Html.HiddenFor(m => m.FilterContext.DateFrom)
                                 </span>
                                 <label for="dateToResults" class="bulk-filter">@T("Date To")</label>
@@ -82,7 +82,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <fieldset id="st-export-fieldset" class="bulk-items st-btn-fieldset">
-                                <button type="submit" name="export" value="true">@T("Export")</button>
+                                <button type="submit" name="@Html.FieldNameFor(m=>m.FilterContext.Export)" value="true">@T("Export")</button>
                                 <a href="@Url.Action("Index", "FileDownloader", new { area = "Laser.Orchard.StartupConfig", UrlBack = urlBack })&FolderName=QuestionnairesStatistics" class="button">@T("Show Exported Files")</a>
                             </fieldset>
                         </div>
@@ -161,22 +161,22 @@
                 <div class="row">
                     <div class="col-12">
                         @{
-                                        foreach (var question in Model.QuestionsStatsList) {
+                            foreach (var question in Model.QuestionsStatsList) {
                                 <div id="answer-@question.QuestionId" class="st-answer">
                                     <div id="answerlist-@question.QuestionId" class="answerlist">
                                         <h5>@question.Question</h5>
                                         @{
-                                        List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
+                                            List<AnswerStatsViewModel> answersList = new List<AnswerStatsViewModel>();
 
-                                        if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
-                                            answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
+                                            if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer) {
+                                                answersList = question.Answers.OrderByDescending(x => x.LastDate).ThenByDescending(x => x.Count).ThenBy(x => x.Answer).Take(answersToShow).ToList();
+                                            }
+                                            else {
+                                                answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
+                                            }
                                         }
-                                        else {
-                                            answersList = question.Answers.OrderByDescending(x => x.Count).ThenBy(x => x.Answer).ToList();
-                                        }
-                                    }
 
-                                    @foreach (var answer in answersList) {
+                                        @foreach (var answer in answersList) {
                                             <div>
                                                 &bull; @answer.Answer
                                                 <span style="font-weight: bold">( @answer.Count )</span>
@@ -190,15 +190,17 @@
                                 </div>
 
                                 if (question.QuestionType == Laser.Orchard.Questionnaires.QuestionType.OpenAnswer && question.Answers.Count > answersToShow) {
+                                    var routeValues = new RouteValueDictionary();
+                                    routeValues.Add("area", "Laser.Orchard.Questionnaires");
+                                    routeValues.Add("idQuestionario", Model.QuestionsStatsList.First().QuestionnairePart_Id);
+                                    routeValues.Add("idDomanda", question.QuestionId);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.DateFrom), Model.FilterContext.DateFrom);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.DateTo), Model.FilterContext.DateTo);
+                                    routeValues.Add(Html.FieldNameFor(m => m.FilterContext.Context), Model.FilterContext.Context);
+
                                     <div style="margin-top: 5px; margin-left: 9px;">
-                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats",
-                           new {
-                               area = "Laser.Orchard.Questionnaires",
-                               idQuestionario = Model.QuestionsStatsList.First().QuestionnairePart_Id,
-                               idDomanda = question.QuestionId,
-                               from = Request.QueryString["from"],
-                               to = Request.QueryString["to"]
-                           })">
+
+                                        <a href="@Url.Action("QuestionDetail", "QuestionnaireStats", routeValues)">
                                             @T("Show all answers")
                                         </a>
                                     </div>
@@ -215,7 +217,7 @@
 </div>
 @{
     using (Script.Foot()) {
-    <script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function () {
                 @{ <Text>
 
@@ -278,6 +280,6 @@
                     }
                 }
             });
-    </script>
+        </script>
     }
 }
