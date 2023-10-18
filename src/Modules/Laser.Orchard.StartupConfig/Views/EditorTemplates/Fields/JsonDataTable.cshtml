@@ -3,6 +3,8 @@
 @{
     Style.Require("tabulator").AtHead();
     Script.Require("tabulator").AtHead();
+    Script.Require("luxon").AtHead();
+    
 
     var settings = Model.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
     var columns = settings.ColumnsDefinition;
