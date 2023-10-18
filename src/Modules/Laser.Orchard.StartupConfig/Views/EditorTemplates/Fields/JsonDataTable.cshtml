@@ -3,6 +3,8 @@
 @{
     Style.Require("tabulator").AtHead();
     Script.Require("tabulator").AtHead();
+    Script.Require("luxon").AtHead();
+    
 
     var settings = Model.PartFieldDefinition.Settings.GetModel<JsonDataTableFieldSettings>();
     var columns = settings.ColumnsDefinition;
@@ -29,20 +31,20 @@
                     layout:"fitColumns",
                     movableRows: true,
                     columns: @Html.Raw(columns),
-                    dataEdited:function(newData){
-                        var newVal = JSON.stringify(newData);
-                        $hidden.val(newVal);
-                    },
-                    rowMoved:function(row){
-                        var newData = row.getTable().getData();
-                        var rows = row.getTable().getRows();
-                        for (var i=0; i < rows.length; i++){
-                            newData[i] = rows[i].getData();
-                        }
-                        var newVal = JSON.stringify(newData);
-                        $hidden.val(newVal);
-                    },
                     data: @Html.Raw(Model.TableData)
+                });
+                $table.on("dataChanged", function (data) {
+                    var newVal = JSON.stringify(data);
+                    $hidden.val(newVal);
+                });
+                $table.on("rowMoved", function (row) {
+                    var newData = row.getTable().getData();
+                    var rows = row.getTable().getRows();
+                    for (var i = 0; i < rows.length; i++) {
+                        newData[i] = rows[i].getData();
+                    }
+                    var newVal = JSON.stringify(newData);
+                    $hidden.val(newVal);
                 });
                 $("#btnAddTop-@uniqueId").click(function(){
                     var rows = $table.getRows();
