@@ -23,7 +23,7 @@ namespace Contrib.Widgets.Handlers {
         }
 
         private void SetupFields(ActivatedContentContext context, WidgetExPart part) {
-            part.HostField.Loader(() => part.Record.HostId != null ? _contentManager.Get(part.Record.HostId.Value) : null);
+            part.HostField.Loader(() => part.Record.HostId != null ? _contentManager.Get(part.Record.HostId.Value, VersionOptions.Latest) : null);
             part.HostField.Setter(x => {
                 part.Record.HostId = x != null ? x.Id : default(int?);
                 return x;
