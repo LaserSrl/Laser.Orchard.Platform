@@ -20,6 +20,7 @@ using Contrib.Widgets.Settings;
 using Orchard.Security;
 using Orchard.Localization;
 using Orchard.UI.Notify;
+using System.Runtime.Remoting.Contexts;
 
 namespace Contrib.Widgets.Drivers {
     [OrchardFeature("Contrib.Widgets")]
@@ -284,17 +285,27 @@ namespace Contrib.Widgets.Drivers {
                     _contentManager.Publish(widgetExPart.ContentItem);
                 }
 
-                // se il widget ha una LocalizationPart, la gestisco
                 var clonedLocalization = clonedContentitem.As<LocalizationPart>();
+                // se il widget ha una LocalizationPart, la gestisco
                 if (clonedLocalization != null) {
+                    var routeData = _wca.GetContext().HttpContext.Request.RequestContext.RouteData.Values;
+                    object action, area;
                     clonedLocalization.Culture = destination.As<LocalizationPart>().Culture;
                     var originalLocalization = widget.ContentItem.As<LocalizationPart>();
-                    if (originalLocalization.MasterContentItem == null) {
-                        clonedLocalization.MasterContentItem = widget.ContentItem;
+                    //We need to manage the MasterContentItem only we are translating the widget;
+                    //On the contrary if we are cloning it, we have nothing to do.
+                    if (routeData.TryGetValue("action", out action) &&
+                        routeData.TryGetValue("area", out area) &&
+                        action.ToString().ToUpperInvariant() == "TRANSLATE" &&
+                        area.ToString().ToUpperInvariant() == "ORCHARD.LOCALIZATION") {
+                        if (originalLocalization.MasterContentItem == null) {
+                            clonedLocalization.MasterContentItem = widget.ContentItem;
+                        }
+                        else {
+                            clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
+                        }
                     }
-                    else {
-                        clonedLocalization.MasterContentItem = originalLocalization.MasterContentItem;
-                    }
+
                 }
             }
         }
