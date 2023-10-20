@@ -39,7 +39,9 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
             directionality: directionality";
         public const string DefaultSetup = @"setup: function (editor) {
             $(document).bind(""localization.ui.directionalitychanged"", function (event, directionality) {
-                editor.getBody().dir = directionality;
+                if (editor.getBody() != null) {
+                    editor.getBody().dir = directionality;
+                }
             });
 
             // If the focused editable area is taller than the window, make the menu and the toolbox sticky-positioned within the editor
@@ -108,7 +110,9 @@ namespace Laser.Orchard.StartupConfig.TinyMceEnhancement {
         }";
         public const string FrontendDefaultSetup = @"setup: function (editor) {
             $(document).bind(""localization.ui.directionalitychanged"", function (event, directionality) {
-                editor.getBody().dir = directionality;
+                if (editor.getBody() != null) {
+                    editor.getBody().dir = directionality;
+                }
             });
 
             // If the focused editable area is taller than the window, make the menu and the toolbox sticky-positioned within the editor
