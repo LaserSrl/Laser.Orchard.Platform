@@ -30,7 +30,7 @@ namespace Laser.Orchard.StartupConfig.Handlers {
                 clonedPart.CreatedUtc = DateTime.UtcNow;
                 clonedPart.ModifiedUtc = DateTime.UtcNow;
                 clonedPart.PublishedUtc = null;
-                clonedPart.Owner = _orchardService.WorkContext.CurrentUser;
+                clonedPart.VersionModifiedBy = _orchardService.WorkContext.CurrentUser?.UserName ?? "";
             }
         }
 
@@ -46,8 +46,8 @@ namespace Laser.Orchard.StartupConfig.Handlers {
             var clonedPart = context.CloneContentItem.As<LocalizationPart>();
             // We prevent that, cloning a content, the cloned content results as a duplicated translation of the orginal content
             if (clonedPart != null) {
-                var clonedPartMasterContentItem = clonedPart.MasterContentItem ?? clonedPart;
-                if (_localizationService.GetLocalizations(clonedPartMasterContentItem).Any(l => l.Culture.Culture == clonedPart.Culture.Culture && l.Id != clonedPart.Id)) {
+                if (_localizationService.GetLocalizations(clonedPart, VersionOptions.Latest)
+                    .Any(l => l.Culture.Culture == clonedPart.Culture.Culture && l.Id != clonedPart.Id)) {
                     clonedPart.MasterContentItem = clonedPart;
                 }
             }
