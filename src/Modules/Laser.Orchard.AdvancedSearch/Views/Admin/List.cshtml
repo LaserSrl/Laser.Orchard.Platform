@@ -210,7 +210,7 @@
     </script>
 }
 
-@helper FilterActiveTag(int filter, string text, string target="") {
+@helper FilterActiveTag(int filter, string text, string target = "") {
     <li>
         <a href="javascript:void(0)" onclick="removeFilterAndReload(this, @filter)" data-target="@target" class="btn btn-sm" id="my-btn-outline" title="@T("Click to remove filter")">
             @text <i class="fa fa-times"></i>
@@ -227,33 +227,37 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="col-sm-6 row">
-                        <label class="ml-3 col-form-label align-right gray-label"><input type="checkbox" class="check-all">@T("Select all")</label>
-                        <span class="col-form-label pl-2 pr-2"> | </span>
-                        <label class="col-form-label align-right gray-label">@T("Builk actions:")</label>
-                        <div class="col-sm-8">
-                            <select id="publishActions" name="Options.BulkAction">
-                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.None, T("Choose action...").ToString())
-                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.PublishNow, T("Publish Now").ToString())
-                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Unpublish, T("Unpublish").ToString())
-                                @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Remove, T("Delete").ToString())
-                            </select>
-                            <button type="submit" id="applyManageContentBtn" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <label class="ml-3 col-form-label align-right gray-label"><input type="checkbox" class="check-all mr-1">@T("Select all")</label>
+                            <span class="col-form-label pl-2 pr-2"> | </span>
+                            <label class="col-form-label align-right gray-label">@T("Builk actions:")</label>
+                            <div class="col-sm-8">
+                                <select id="publishActions" name="Options.BulkAction">
+                                    @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.None, T("Choose action...").ToString())
+                                    @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.PublishNow, T("Publish Now").ToString())
+                                    @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Unpublish, T("Unpublish").ToString())
+                                    @Html.SelectOption((ContentsBulkAction)Model.Options.BulkAction, ContentsBulkAction.Remove, T("Delete").ToString())
+                                </select>
+                                <button type="submit" id="applyManageContentBtn" name="submit.BulkEdit" value="yes">@T("Apply")</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 row">
-                        <label class="col-sm-4 col-form-label align-right gray-label">@T("Content creation:")</label>
-                        @{
-                            if (!String.IsNullOrWhiteSpace((string)Model.Options.SelectedFilter)) {
-                                var dummyContent = _orchardServices.ContentManager.New(Model.Options.SelectedFilter);
-                                ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(dummyContent);
-                                var url = Url.RouteUrl(metadata.CreateRouteValues);
-                                <a class="button primaryAction" href="@url">@createLinkText.Text</a>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label align-right gray-label">@T("Content creation:")</label>
+                            @{
+                                if (!String.IsNullOrWhiteSpace((string)Model.Options.SelectedFilter)) {
+                                    var dummyContent = _orchardServices.ContentManager.New(Model.Options.SelectedFilter);
+                                    ContentItemMetadata metadata = _orchardServices.ContentManager.GetItemMetadata(dummyContent);
+                                    var url = Url.RouteUrl(metadata.CreateRouteValues);
+                                    <a class="button primaryAction" href="@url">@createLinkText.Text</a>
+                                }
+                                else {
+                                    @Html.ActionLink(createLinkText.Text, "Create", new { Area = "Contents", Id = (string)Model.Options.SelectedFilter }, new { @class = "button primaryAction" })
+                                }
                             }
-                            else {
-                                @Html.ActionLink(createLinkText.Text, "Create", new { Area = "Contents", Id = (string)Model.Options.SelectedFilter }, new { @class = "button primaryAction" })
-                            }
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
