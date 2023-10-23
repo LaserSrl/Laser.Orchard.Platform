@@ -10,5 +10,11 @@
     "inputFiles": [
       "Scripts/datetime-editor-filter.js"
     ]
+  },
+  {
+    "outputFileName": "Scripts/tabulator/luxon.min.js",
+    "inputFiles": [
+      "Scripts/tabulator/luxon.js"
+    ]
   }
 ]
