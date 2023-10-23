@@ -11,7 +11,7 @@
 @using System.Web.Routing;
 @using Orchard.Mvc.Html;
 @using Orchard.Core.Contents;
-
+@using System.Linq;
 
 @{
     Style.Require("TheAdminWidgetContainerStyle");
@@ -42,8 +42,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 if (localStorage.getItem("widget-container-state") === "open") {
-                    $(".expando-widget-container","#widgetsPlacement").show();
-                    $(".expando-glyph-container","#widgetsPlacement").removeClass("closed").addClass("open");
+                    $(".expando-widget-container", "#widgetsPlacement").show();
+                    $(".expando-glyph-container", "#widgetsPlacement").removeClass("closed").addClass("open");
                 }
             });
         </script>
@@ -94,12 +94,13 @@
                                                     onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">
                                                 @T("Add")
                                             </button>
-                                        } else {
+                                        }
+                                        else {
 
                                             /**/
-                        <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
-                           onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
-                    }
+                                            <a class="button grey add-widget" href="@addWidgetUrl" data-host-id="@contentId"
+                                               onclick="document.getElementById('ContribWidget.ClickedZone').value = '@zone'">@T("Add")</a>
+                                        }
                                     </div>
                                     <ul class="widgets" data-zone="@zone" id="@zone">
                                         @foreach (var widget in widgets) {
@@ -143,15 +144,20 @@
                                                     <div class="row">
                                                         <div class="col-sm-8">
                                                             <h3 class="display-content">
-                                                                @if (Authorizer.Authorize(Permissions.EditContent, widget)) {
-                                                                    <a class="margin-left-5" 
+                                                                @if (Authorizer.Authorize(Permissions.EditContent, widget) &&
+                                                                                (widget.As<LocalizationPart>() != null ||
+                                                                                    (widget.As<LocalizationPart>() != null && widget.As<LocalizationPart>().Culture != null)
+                                                                                   )) {
+                                                                    <a class="margin-left-5"
                                                                        href="@Url.Action("EditWidget", "Admin",
                                                                             new { area = "Contrib.Widgets",
                                                                                 hostId = contentItem.Id,
                                                                                 id = widget.Id,
                                                                                 returnUrl = ViewContext.RequestContext.HttpContext.Request.Url.PathAndQuery })">
-                                                                        @Html.ItemDisplayText(widget) @culture</a>
-                                                                } else {
+                                                                        @Html.ItemDisplayText(widget) @culture
+                                                                    </a>
+                                                                }
+                                                                else {
                                                                     <span class="margin-left-5">@Html.ItemDisplayText(widget) @culture</span>
                                                                 }
                                                             </h3>
@@ -176,7 +182,8 @@
                                                                         @Html.Link(T("Unpublish").Text, Url.Action("Unpublish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                         @T(" | ")
                                                                     }
-                                                                } else {
+                                                                }
+                                                                else {
                                                                     if (Authorizer.Authorize(Permissions.PublishContent, widget)) {
                                                                         @Html.Link(T("Publish").Text, Url.Action("Publish", "Admin", new { area = "Contents", id = widget.ContentItem.Id, returnUrl = Request.RawUrl }), new { itemprop = "UnsafeUrl" })
                                                                         @T(" | ")

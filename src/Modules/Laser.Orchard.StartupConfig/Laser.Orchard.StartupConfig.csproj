@@ -491,6 +491,7 @@
     <Compile Include="ContentSync\Services\SyncService.cs" />
     <Compile Include="Drivers\CacheEvictorPartDriver.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Handlers\PartCloneAlterationHandler.cs" />
     <Compile Include="Projections\ConfigurableSortCriterionProviderForm.cs" />
     <Compile Include="Projections\DateTimeFilterForm.cs" />
     <Compile Include="Projections\UseOtherQueriesFilterProvider.cs" />
