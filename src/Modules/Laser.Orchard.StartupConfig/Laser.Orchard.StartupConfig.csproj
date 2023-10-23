@@ -163,6 +163,10 @@
     <Content Include="Scripts\datetime-editor-filter.min.js">
       <DependentUpon>datetime-editor-filter.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\tabulator\luxon.js" />
+    <Content Include="Scripts\tabulator\luxon.min.js">
+      <DependentUpon>luxon.js</DependentUpon>
+    </Content>
     <Content Include="Styles\tinymce-enhancement.css" />
     <Content Include="Styles\tinymce-enhancement.min.css">
       <DependentUpon>tinymce-enhancement.css</DependentUpon>
