@@ -268,7 +268,7 @@ namespace Contrib.Widgets.Drivers {
                                 clonedWidget = _contentManager.Clone(widget.ContentItem);
                             }
                             else { //skip this widget from cloning and skip the subsequent processing
-                                break;
+                                continue;
                             }
                         }
                         else {
